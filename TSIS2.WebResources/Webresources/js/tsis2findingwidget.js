@@ -146,4 +146,4 @@ async function getChildrenProvisions(provision) {
   var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,qm_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision.qm_rclegislationid}'`);
   results.entities.sort(function(a,b){return a.qm_ordernbr - b.qm_ordernbr});
   return results.entities;
-}
+} 

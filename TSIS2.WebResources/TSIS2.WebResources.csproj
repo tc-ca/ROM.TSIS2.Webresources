@@ -90,6 +90,7 @@
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="Web.config" />
+    <Content Include="Webresources\html\SurveyCreator.html" />
     <Content Include="Webresources\js\tsis2findingwidget.js" />
   </ItemGroup>
   <ItemGroup>
