@@ -1,8 +1,27 @@
-﻿<html>
-<head>
-    <title>SurveyJS Creator</title>
-    <script src="../js/tsis2findingwidget.js"></script>
-</head>
-<body>
-</body>
+<html>
+    <head>
+        <title>SurveyJS Creator</title>
+
+        <meta name="viewport" content="width=device-width">
+
+        <script src="../js/knockout-min.js"></script>
+        <script src="../js/survey.ko.min.js"></script>
+        <script src="../js/ace.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../js/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../js/survey-creator.min.js"></script>
+        <script src="../js/showdown.min.js"></script>
+        <script src="../js/tsis2findingwidget.js"></script>
+
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/survey-creator.min.css">
+    </head>
+
+    <body onfocusout="parent.setEmailRange();" style="overflow-wrap: break-word;">
+
+        <div id="surveyContainer">
+          <div id="creatorElement"></div>
+        </div>
+
+        <script type="text/javascript" src="../js/surveycreator.js"></script>
+    </body>
 </html>

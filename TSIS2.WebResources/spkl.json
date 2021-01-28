@@ -32,9 +32,84 @@
           */
       "files": [
         {
+          "uniquename": "ovs_/css/bootstrap.min.css",
+          "file": "css\\bootstrap.min.css",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
+          "uniquename": "ovs_/css/modern.css",
+          "file": "css\\modern.css",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
+          "uniquename": "ovs_/css/survey-creator.min.css",
+          "file": "css\\survey-creator.min.css",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
+          "uniquename": "ovs_/css/survey.min.css",
+          "file": "css\\survey.min.css",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
           "uniquename": "ovs_/html/SurveyCreator.html",
           "file": "html\\SurveyCreator.html",
           "description": "ROM TSIS 2.0 SurveyJS Creator"
+        },
+        {
+          "uniquename": "ovs_/html/SurveyRender.html",
+          "file": "html\\SurveyRender.html",
+          "description": "ROM TSIS 2.0 SurveyJS Renderer"
+        },
+        {
+          "uniquename": "ovs_/js/ace.min.js",
+          "file": "js\\ace.min.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
+          "uniquename": "ovs_/js/ext-language_tools.js",
+          "file": "js\\ext-language_tools.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
+          "uniquename": "ovs_/js/jquery.js",
+          "file": "js\\jquery.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
+          "uniquename": "ovs_/js/knockout-min.js",
+          "file": "js\\knockout-min.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
+          "uniquename": "ovs_/js/showdown.min.js",
+          "file": "js\\showdown.min.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency for markdown support"
+        },
+        {
+          "uniquename": "ovs_/js/survey-creator.min.js",
+          "file": "js\\survey-creator.min.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
+          "uniquename": "ovs_/js/survey.jquery.min.js",
+          "file": "js\\survey.jquery.min.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
+          "uniquename": "ovs_/js/survey.ko.min.js",
+          "file": "js\\survey.ko.min.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
+          "uniquename": "ovs_/js/surveycreator.js",
+          "file": "js\\surveycreator.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
+          "uniquename": "ovs_/js/surveyRender.js",
+          "file": "js\\surveyRender.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
         },
         {
           "uniquename": "ovs_/js/tsis2findingwidget.js",

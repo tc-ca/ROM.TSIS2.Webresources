@@ -90,11 +90,25 @@
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="Web.config" />
+    <Content Include="Webresources\css\bootstrap.min.css" />
+    <Content Include="Webresources\css\modern.css" />
+    <Content Include="Webresources\css\survey-creator.min.css" />
+    <Content Include="Webresources\css\survey.min.css" />
     <Content Include="Webresources\html\SurveyCreator.html" />
+    <Content Include="Webresources\html\SurveyRender.html" />
+    <Content Include="Webresources\js\ace.min.js" />
+    <Content Include="Webresources\js\ext-language_tools.js" />
+    <Content Include="Webresources\js\jquery.js" />
+    <Content Include="Webresources\js\knockout-min.js" />
+    <Content Include="Webresources\js\showdown.min.js" />
+    <Content Include="Webresources\js\survey-creator.min.js" />
+    <Content Include="Webresources\js\survey.jquery.min.js" />
+    <Content Include="Webresources\js\survey.ko.min.js" />
+    <Content Include="Webresources\js\surveycreator.js" />
+    <Content Include="Webresources\js\surveyRender.js" />
     <Content Include="Webresources\js\tsis2findingwidget.js" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
