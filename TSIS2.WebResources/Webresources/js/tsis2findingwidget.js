@@ -25,8 +25,12 @@
   activatedByChanged: function(activatedBy) {
     //we do not need to check acticatedBy parameter, since we will use our widget for customType only
     //We are creating a new class and derived it from text question type. It means that text model (properties and fuctions) will be available to us
-    //Added comments and file as properties to save the values
-    Survey.JsonObject.metaData.addClass("finding", [{name: "reference", default: ""}, {name: "comments", default: ""},{name: "file", default: ""}], null, "text");
+    Survey.JsonObject.metaData.addClass("finding", [
+      {name: "provision", category: "general", visibleIndex: 0, type: "provisionAutoComplete"},
+      {name: "reference"}, {name: "comments"},
+      {name: "file"}
+    ], null, "text");
+    
   },
   //If you want to use the default question rendering then set this property to true. We do not need any default rendering, we will use our our htmlTemplate
   isDefaultRender: false,
@@ -63,19 +67,23 @@
 
     //set the changed value into question value
     onValueChangedCallback = function() {
-      parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${question.title}'`).then(
+      parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${question.provision}'`).then(
         async function success(result) {
-          question.name = `finding-${result.entities[0].qm_name}`;
-          question.reference = result.entities[0].qm_legislationlbl;
+          if (result.entities.length > 0) {
+            question.title = `Finding ${result.entities[0].qm_legislationlbl}`;
+            question.name = `finding-${result.entities[0].qm_name}`;
+            question.reference = result.entities[0].qm_legislationlbl;
 
-          question.description = await buildProvisionText(result.entities[0]);
+            question.description = await buildProvisionText(result.entities[0]);
 
-          question.value = {
-            provisionReference: question.reference,
-            provisionText: question.description,
-            comments: question.comments,
-            documentaryEvidence: question.file
+            question.value = {
+              provisionReference: question.reference,
+              provisionText: question.description,
+              comments: question.comments,
+              documentaryEvidence: question.file
+            }
           }
+          
             // perform additional operations on retrieved records
         },
         function (error) {
@@ -83,8 +91,6 @@
             // handle error conditions
         }
       );
-
-
     };
     onReadOnlyChangedCallback = function() {
       if (question.isReadOnly) {
