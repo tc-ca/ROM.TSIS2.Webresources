@@ -77,6 +77,11 @@
           "description": "ROM TSIS 2.0 SurveyJS Dependency"
         },
         {
+          "uniquename": "ovs_/js/ckeditor.js",
+          "file": "js\\ckeditor.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
+        },
+        {
           "uniquename": "ovs_/js/ext-language_tools.js",
           "file": "js\\ext-language_tools.js",
           "description": "ROM TSIS 2.0 SurveyJS Dependency"
