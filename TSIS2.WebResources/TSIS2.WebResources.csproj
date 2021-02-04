@@ -68,14 +68,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Webresources\css\bootstrap.min.css" />
-    <Content Include="Webresources\css\easy-autocomplete.css" />
+    <Content Include="Webresources\css\autocomplete.css" />
     <Content Include="Webresources\css\modern.css" />
     <Content Include="Webresources\css\survey-creator.min.css" />
     <Content Include="Webresources\css\survey.min.css" />
     <Content Include="Webresources\html\SurveyCreator.html" />
     <Content Include="Webresources\html\SurveyRender.html" />
     <Content Include="Webresources\js\ace.min.js" />
-    <Content Include="Webresources\js\easy-autocomplete.js" />
+    <Content Include="Webresources\js\autocomplete.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
     <Content Include="Webresources\js\jquery.js" />
     <Content Include="Webresources\js\knockout-min.js" />

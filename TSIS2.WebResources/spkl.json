@@ -37,8 +37,8 @@
           "description": "ROM TSIS 2.0 SurveyJS Dependency"
         },
         {
-          "uniquename": "ovs_/css/easy-autocomplete.css",
-          "file": "css\\easy-autocomplete.css",
+          "uniquename": "ovs_/css/autocomplete.css",
+          "file": "css\\autocomplete.css",
           "description": "ROM TSIS 2.0 SurveyJS Dependency"
         },
         {
@@ -72,8 +72,8 @@
           "description": "ROM TSIS 2.0 SurveyJS Dependency"
         },
         {
-          "uniquename": "ovs_/js/easy-autocomplete.js",
-          "file": "js\\easy-autocomplete.js",
+          "uniquename": "ovs_/js/autocomplete.js",
+          "file": "js\\autocomplete.js",
           "description": "ROM TSIS 2.0 SurveyJS Dependency"
         },
         {
