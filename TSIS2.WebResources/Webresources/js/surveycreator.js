@@ -19,22 +19,29 @@ parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,
 
 var autocompleteEditor = {
     render: function (editor, htmlElement) {
+        var form = document.createElement("form");
+        form.setAttribute("autocomplete", "off");
         var div = document.createElement("div");
         div.className = " autocomplete";
-        div.setAttribute("id", "myInput");
         var input = document.createElement("input");
+        input.setAttribute("id", "myInput");
         autocomplete(input, provisionNames);
         input.className = "form-control svd_editor_control";
-        input.onchange = function () {
-            editor.koValue(input.value);
-        }
         editor.onValueUpdated = function (newValue) {
             input.value = editor.koValue() || "";
         }
         input.value = editor.koValue() || "";
+        var submit = document.createElement("input");
+        submit.setAttribute("type", "submit");
+        submit.setAttribute("class", "btn btn-primary sv-btn svd-toolbar-button");
+        submit.onclick = function () {
+          editor.koValue(input.value);
+        }
         div.appendChild(input);
-        htmlElement.appendChild(div);
-  }
+        form.appendChild(div);
+        htmlElement.appendChild(form);
+        htmlElement.appendChild(submit);
+    }
 };
 
 var CkEditor_ModalEditor = {
@@ -140,28 +147,7 @@ creator
 //When the provision is changed, update the question's data
 creator.onPropertyValueChanging.add(function(sender, options) {
   if(options.propertyName == "provision") {
-    parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${options.newValue}'`).then(
-      async function success(result) {
-        if (result.entities.length > 0) {
-          options.obj.title = `Finding ${result.entities[0].qm_legislationlbl}`;
-          options.obj.name = `finding-${result.entities[0].qm_name}`;
-          options.obj.reference = result.entities[0].qm_legislationlbl;
-
-          options.obj.description = await buildProvisionText(result.entities[0]);
-
-          options.obj.value = {
-            provisionReference: options.obj.reference,
-            provisionText: options.obj.description,
-            comments: options.obj.comments,
-            documentaryEvidence: options.obj.file
-          }
-        }
-      },
-      function (error) {
-          console.log(error.message);
-          // handle error conditions
-      }
-    );
+    updateQuestionProvisionData(options.obj, options.newValue);
   }
 });
   
