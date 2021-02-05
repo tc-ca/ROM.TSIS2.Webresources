@@ -36,7 +36,7 @@
   isDefaultRender: false,
   //You should use it if your set the isDefaultRender to false
   htmlTemplate:
-    '<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">Inspector Comments</span> </label> <textarea type="text" class="form-control comments" rows="3" cols="50"></textarea> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">Documentary Evidence</span> </label> <input type="file" class="sv_q_file_input file" style="padding-top: 2px;"></button> </div> </div>',
+    '<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">Inspector Comments</span> </label> <textarea type="text" class="form-control comments" rows="3" cols="50"></textarea> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">Documentary Evidence</span> </label> <input type="file" class="sv_q_file_input file" style="padding-top: 2px;"></input> </div> </div>',
   //The main function, rendering and two-way binding
   afterRender: function(question, el) {
     //el is our root element in htmlTemplate, is "div" in our case
@@ -67,31 +67,8 @@
 
     //set the changed value into question value
     onValueChangedCallback = function() {
-      parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${question.provision}'`).then(
-        async function success(result) {
-          if (result.entities.length > 0) {
-            question.title = `Finding ${result.entities[0].qm_legislationlbl}`;
-            question.name = `finding-${result.entities[0].qm_name}`;
-            question.reference = result.entities[0].qm_legislationlbl;
-
-            question.description = await buildProvisionText(result.entities[0]);
-
-            question.value = {
-              provisionReference: question.reference,
-              provisionText: question.description,
-              comments: question.comments,
-              documentaryEvidence: question.file
-            }
-          }
-          
-            // perform additional operations on retrieved records
-        },
-        function (error) {
-            console.log(error.message);
-            // handle error conditions
-        }
-      );
-    };
+      updateQuestionProvisionData(question, question.provision);
+    }
     onReadOnlyChangedCallback = function() {
       if (question.isReadOnly) {
         comments.setAttribute("disabled", "disabled");
@@ -122,17 +99,42 @@
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 
 
+function updateQuestionProvisionData(question, provisionName) {
+  parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${provisionName}'`).then(
+    async function success(result) {
+      if (result.entities.length > 0) {
+        question.title = `Finding ${result.entities[0].qm_name}`;
+        question.name = `finding-${result.entities[0].qm_name}`;
+        question.reference = result.entities[0].qm_legislationlbl;
+
+        question.description = await buildProvisionText(result.entities[0]);
+
+        question.value = {
+          provisionReference: question.reference,
+          provisionText: question.description,
+          comments: question.comments,
+          documentaryEvidence: question.file
+        }
+      }
+    },
+    function (error) {
+        console.log(error.message);
+        // handle error conditions
+    }
+  );
+}
+
+
 async function buildProvisionText(provision) {
   let provisionText = "";
-  let parent = await getParentProvision(provision);
-  provisionText += `**${parent.qm_legislationlbl.substr(1)}** ${parent.qm_legislationetxt}<br/>`
-  let siblings = await getSiblingProvisions(provision);
-  for (var i in siblings) {
-    provisionText += `&#160;&#160;&#160;&#160;**${siblings[i].qm_legislationlbl.substr(siblings[i].qm_legislationlbl.length - 3)}** ${siblings[i].qm_legislationetxt}<br/>`;
-    let children = await getChildrenProvisions(siblings[i]);
+  provisionText += `<strong>${provision.qm_legislationlbl}</strong> ${provision.qm_legislationetxt}`
+  let children = await getChildrenProvisions(provision);
+  if (children.length > 0) {
+    provisionText += "<ul style='list-style-type:none;'>";
     for (var j in children) {
-      provisionText += `&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;**${children[j].qm_legislationlbl.substr(children[j].qm_legislationlbl.length - 3)}** ${children[j].qm_legislationetxt}<br/>`;
+      provisionText += `<li><strong>${children[j].qm_legislationlbl}</strong> ${children[j].qm_legislationetxt}</li>`;
     }
+    provisionText += "</ul>"
   }
   return provisionText;
 }
@@ -144,12 +146,12 @@ async function getParentProvision(provision) {
 
 async function getSiblingProvisions(provision) {
   var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,qm_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision._qm_rcparentlegislationid_value}'`);
-  results.entities.sort(function(a,b){return a.qm_ordernbr - b.qm_ordernbr});
+  //results.entities.sort(function(a,b){return a.qm_ordernbr - b.qm_ordernbr});
   return results.entities;
 }
 
 async function getChildrenProvisions(provision) {
   var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,qm_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision.qm_rclegislationid}'`);
-  results.entities.sort(function(a,b){return a.qm_ordernbr - b.qm_ordernbr});
+  //results.entities.sort(function(a,b){return a.qm_ordernbr - b.qm_ordernbr});
   return results.entities;
 } 
