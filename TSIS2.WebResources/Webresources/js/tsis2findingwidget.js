@@ -97,13 +97,14 @@
 
 //Register our widget in singleton custom widget collection
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
+Survey.JsonObject.metaData.findProperty("finding", "name").readOnly = true;
 
 
 function updateQuestionProvisionData(question, provisionName) {
   parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${provisionName}'`).then(
     async function success(result) {
       if (result.entities.length > 0) {
-        question.title = `Finding ${result.entities[0].qm_name}`;
+        question.title = "SATR " + result.entities[0].qm_name; //To be fixed when we have more sources
         question.name = `finding-${result.entities[0].qm_name}`;
         question.reference = result.entities[0].qm_legislationlbl;
 
@@ -124,18 +125,37 @@ function updateQuestionProvisionData(question, provisionName) {
   );
 }
 
-
 async function buildProvisionText(provision) {
   let provisionText = "";
-  provisionText += `<strong>${provision.qm_legislationlbl}</strong> ${provision.qm_legislationetxt}`
-  let children = await getChildrenProvisions(provision);
-  if (children.length > 0) {
-    provisionText += "<ul style='list-style-type:none;'>";
-    for (var j in children) {
-      provisionText += `<li><strong>${children[j].qm_legislationlbl}</strong> ${children[j].qm_legislationetxt}</li>`;
-    }
-    provisionText += "</ul>"
+  provisionText += await gatherAncestorProvisionText(provision);
+  provisionText += await gatherDescendentProvisionText(provision);
+  return provisionText;
+}
+
+async function gatherAncestorProvisionText(provision) {
+  let provisionText = provision.qm_legislationetxt || "";
+  let provisionType = provision[`_qm_tylegislationtypeid_value@OData.Community.Display.V1.FormattedValue`];
+  if (provisionType == "Body") {
+    return "";
   }
+  if (provisionType == "Heading") {
+    return `<strong>${provisionText}</strong></br>`;
+  }
+  let parent = await getParentProvision(provision);
+  return await gatherAncestorProvisionText(parent) + `<strong>${provision.qm_name}</strong>: ${provisionText}</br>`;
+}
+
+async function gatherDescendentProvisionText(provision) {
+  let children = await getChildrenProvisions(provision);
+  if (children.length == 0) {
+    return "";
+  }
+  let provisionText = "<ul style='list-style-type:none;'>";
+    for (var i in children) {
+      let childText = children[i].qm_legislationetxt || "";
+      provisionText += `<li><strong>${children[i].qm_legislationlbl}</strong> ${childText}</li>` +  await gatherDescendentProvisionText(children[i]);
+    }
+  provisionText += "</ul>";
   return provisionText;
 }
 
