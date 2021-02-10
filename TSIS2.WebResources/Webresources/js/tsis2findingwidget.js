@@ -27,6 +27,7 @@
     //We are creating a new class and derived it from text question type. It means that text model (properties and fuctions) will be available to us
     Survey.JsonObject.metaData.addClass("finding", [
       {name: "provision", category: "general", visibleIndex: 0, type: "provisionAutoComplete"},
+      {name: "description", type: "textarea"},
       {name: "reference"}, {name: "comments"},
       {name: "file"}
     ], null, "text");
@@ -104,7 +105,7 @@ function updateQuestionProvisionData(question, provisionName) {
   parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${provisionName}'`).then(
     async function success(result) {
       if (result.entities.length > 0) {
-        question.title = "SATR " + result.entities[0].qm_name; //To be fixed when we have more sources
+        question.title = result.entities[0].qm_name;
         question.name = `finding-${result.entities[0].qm_name}`;
         question.reference = result.entities[0].qm_legislationlbl;
 
@@ -127,6 +128,7 @@ function updateQuestionProvisionData(question, provisionName) {
 
 async function buildProvisionText(provision) {
   let provisionText = "";
+  provision.qm_name = `<mark>${provision.qm_name}</mark>`;
   provisionText += await gatherAncestorProvisionText(provision);
   provisionText += await gatherDescendentProvisionText(provision);
   return provisionText;
@@ -139,7 +141,7 @@ async function gatherAncestorProvisionText(provision) {
     return "";
   }
   if (provisionType == "Heading") {
-    return `<strong>${provisionText}</strong></br>`;
+    return `<strong>${provision.qm_name}</strong></br>`;
   }
   let parent = await getParentProvision(provision);
   return await gatherAncestorProvisionText(parent) + `<strong>${provision.qm_name}</strong>: ${provisionText}</br>`;
