@@ -104,7 +104,7 @@ function updateQuestionProvisionData(question, provisionName) {
   parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${provisionName}'`).then(
     async function success(result) {
       if (result.entities.length > 0) {
-        question.title = "SATR " + result.entities[0].qm_name; //To be fixed when we have more sources
+        question.title = result.entities[0].qm_name;
         question.name = `finding-${result.entities[0].qm_name}`;
         question.reference = result.entities[0].qm_legislationlbl;
 
