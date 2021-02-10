@@ -27,6 +27,7 @@
     //We are creating a new class and derived it from text question type. It means that text model (properties and fuctions) will be available to us
     Survey.JsonObject.metaData.addClass("finding", [
       {name: "provision", category: "general", visibleIndex: 0, type: "provisionAutoComplete"},
+      {name: "description", type: "textarea"},
       {name: "reference"}, {name: "comments"},
       {name: "file"}
     ], null, "text");
@@ -98,7 +99,6 @@
 //Register our widget in singleton custom widget collection
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 Survey.JsonObject.metaData.findProperty("finding", "name").readOnly = true;
-Survey.JsonObject.metaData.findProperty("finding", "description").type = "textarea";
 
 
 function updateQuestionProvisionData(question, provisionName) {
