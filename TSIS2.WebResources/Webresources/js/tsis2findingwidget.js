@@ -98,6 +98,7 @@
 //Register our widget in singleton custom widget collection
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 Survey.JsonObject.metaData.findProperty("finding", "name").readOnly = true;
+Survey.JsonObject.metaData.findProperty("finding", "description").type = "textarea";
 
 
 function updateQuestionProvisionData(question, provisionName) {
@@ -127,6 +128,7 @@ function updateQuestionProvisionData(question, provisionName) {
 
 async function buildProvisionText(provision) {
   let provisionText = "";
+  provision.qm_name = `<mark>${provision.qm_name}</mark>`;
   provisionText += await gatherAncestorProvisionText(provision);
   provisionText += await gatherDescendentProvisionText(provision);
   return provisionText;
@@ -139,7 +141,7 @@ async function gatherAncestorProvisionText(provision) {
     return "";
   }
   if (provisionType == "Heading") {
-    return `<strong>${provisionText}</strong></br>`;
+    return `<strong>${provision.qm_name}</strong></br>`;
   }
   let parent = await getParentProvision(provision);
   return await gatherAncestorProvisionText(parent) + `<strong>${provision.qm_name}</strong>: ${provisionText}</br>`;
