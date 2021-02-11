@@ -29,7 +29,8 @@
       {name: "provision", category: "general", visibleIndex: 0, type: "provisionAutoComplete"},
       {name: "name", readOnly: true},
       {name: "description", type: "textarea"},
-      {name: "reference"}, {name: "comments"},
+      {name: "reference"},
+      {name: "inspectorComments", default: "test"},
       {name: "file"}
     ], null, "text");
     
@@ -38,32 +39,29 @@
   isDefaultRender: false,
   //You should use it if your set the isDefaultRender to false
   htmlTemplate:
-    '<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">Inspector Comments</span> </label> <textarea type="text" class="form-control comments" rows="3" cols="50"></textarea> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">Documentary Evidence</span> </label> <input type="file" class="sv_q_file_input file" style="padding-top: 2px;"></input> </div> </div>',
+    '<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">Inspector Comments</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50"></textarea> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">Documentary Evidence</span> </label> <input type="file" class="sv_q_file_input file" style="padding-top: 2px;"></input> </div> </div>',
   //The main function, rendering and two-way binding
   afterRender: function(question, el) {
     //el is our root element in htmlTemplate, is "div" in our case
     //get the text element
-    var comments = el.getElementsByClassName("comments")[0];
+    var comments = el.getElementsByClassName("inspectorComments")[0];
     var file = el.getElementsByClassName("file")[0];
+    
+    //The form has data to load
+    if (question.value != null) {
+      //Populate question property and form value
+      question.inspectorComments = question.value.comments || "";
+      comments.value = question.value.comments || "";
 
-    //Give comments and file a defined value to start with
-    question.comments = comments.value || "";
-    question.file = file.value || "";
-
-    //Initialize the question json
-    question.value = {
-      provisionReference: question.reference,
-      provisionText: question.description,
-      comments: question.comments,
-      documentaryEvidence: question.file
+      //TODO Populate file with existing file path
     }
-
+    
     comments.onchange = function () {
-      question.comments = comments.value;
+      question.inspectorComments = comments.value;
       question.value = {
         provisionReference: question.reference,
         provisionText: question.description,
-        comments: question.comments,
+        comments: comments.value,
         documentaryEvidence: question.file
       }
     }
@@ -73,7 +71,7 @@
       question.value = {
         provisionReference: question.reference,
         provisionText: question.description,
-        comments: question.comments,
+        comments: comments.value,
         documentaryEvidence: question.file
       }
     }
@@ -84,11 +82,13 @@
       updateQuestionProvisionData(question, question.provision);
     }
     onReadOnlyChangedCallback = function() {
+      /*
       if (question.isReadOnly) {
         comments.setAttribute("disabled", "disabled");
       } else {
         comments.removeAttribute("disabled");
       }
+      */
     };
     //if question becomes readonly/enabled add/remove disabled attribute
     question.readOnlyChangedCallback = onReadOnlyChangedCallback;
@@ -122,13 +122,6 @@ function updateQuestionProvisionData(question, provisionName) {
         question.reference = result.entities[0].qm_legislationlbl;
 
         question.description = await buildProvisionText(result.entities[0]);
-
-        question.value = {
-          provisionReference: question.reference,
-          provisionText: question.description,
-          comments: question.comments,
-          documentaryEvidence: question.file
-        }
       }
     },
     function (error) {
@@ -136,6 +129,12 @@ function updateQuestionProvisionData(question, provisionName) {
         // handle error conditions
     }
   );
+  question.value = {
+    provisionReference: question.reference,
+    provisionText: question.description,
+    comments: question.inspectorComments,
+    documentaryEvidence: question.file
+  }
 }
 
 async function buildProvisionText(provision) {
