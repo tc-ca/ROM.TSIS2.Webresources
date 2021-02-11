@@ -46,6 +46,18 @@
     var comments = el.getElementsByClassName("comments")[0];
     var file = el.getElementsByClassName("file")[0];
 
+    //Give comments and file a defined value to start with
+    question.comments = comments.value || "";
+    question.file = file.value || "";
+
+    //Initialize the question json
+    question.value = {
+      provisionReference: question.reference,
+      provisionText: question.description,
+      comments: question.comments,
+      documentaryEvidence: question.file
+    }
+
     comments.onchange = function () {
       question.comments = comments.value;
       question.value = {
