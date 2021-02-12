@@ -30,6 +30,7 @@
       {name: "name", readOnly: true},
       {name: "description", type: "textarea"},
       {name: "reference"},
+      {name: "nameID"},
       {name: "inspectorComments", default: "test"},
       {name: "file"}
     ], null, "text");
@@ -114,12 +115,17 @@ Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 
 
 function updateQuestionProvisionData(question, provisionName) {
+  /* Questions in the test survey are assigned new question.id's causing duplicate findings in the json.
+  question.nameID will grab the id once and stay the same */
+  if (question.nameID == null) {
+    question.nameID = question.id;
+  }
   parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${provisionName}'`).then(
     async function success(result) {
       if (result.entities.length > 0) {
         question.title = result.entities[0].qm_name;
-        question.name = `finding-${result.entities[0].qm_name}`;
-        question.reference = result.entities[0].qm_legislationlbl;
+        question.name = `finding-${question.nameID}`;
+        question.reference = result.entities[0].qm_name;
 
         question.description = await buildProvisionText(result.entities[0]);
       }
