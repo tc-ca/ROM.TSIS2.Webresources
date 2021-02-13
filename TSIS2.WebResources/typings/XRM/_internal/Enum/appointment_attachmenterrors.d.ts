@@ -1,0 +1,4 @@
+declare const enum appointment_attachmenterrors {
+  None = 0,
+  TheappointmentwassavedasaMicrosoftDynamics365appointmentrecordbutnotalltheattachmentscouldbesavedwithitAnattachmentcannotbesavedifitisblockedorifitsfiletypeisinvalid = 1,
+}

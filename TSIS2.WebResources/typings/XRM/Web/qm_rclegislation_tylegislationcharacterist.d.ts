@@ -1,0 +1,49 @@
+interface qm_rclegislation_tylegislationcharacterist_Base extends WebEntity {
+  qm_rclegislation_tylegislationcharacteristid?: string | null;
+  qm_rclegislationid?: string | null;
+  qm_tylegislationcharacteristicid?: string | null;
+  versionnumber?: number | null;
+}
+interface qm_rclegislation_tylegislationcharacterist_Relationships {
+  qm_rclegislation_tylegislationcharacteristic?: qm_tylegislationcharacteristic_Result[] | null;
+}
+interface qm_rclegislation_tylegislationcharacterist extends qm_rclegislation_tylegislationcharacterist_Base, qm_rclegislation_tylegislationcharacterist_Relationships {
+}
+interface qm_rclegislation_tylegislationcharacterist_Create extends qm_rclegislation_tylegislationcharacterist {
+}
+interface qm_rclegislation_tylegislationcharacterist_Update extends qm_rclegislation_tylegislationcharacterist {
+}
+interface qm_rclegislation_tylegislationcharacterist_Select {
+  qm_rclegislation_tylegislationcharacteristid: WebAttribute<qm_rclegislation_tylegislationcharacterist_Select, { qm_rclegislation_tylegislationcharacteristid: string | null }, {  }>;
+  qm_rclegislationid: WebAttribute<qm_rclegislation_tylegislationcharacterist_Select, { qm_rclegislationid: string | null }, {  }>;
+  qm_tylegislationcharacteristicid: WebAttribute<qm_rclegislation_tylegislationcharacterist_Select, { qm_tylegislationcharacteristicid: string | null }, {  }>;
+  versionnumber: WebAttribute<qm_rclegislation_tylegislationcharacterist_Select, { versionnumber: number | null }, {  }>;
+}
+interface qm_rclegislation_tylegislationcharacterist_Filter {
+  qm_rclegislation_tylegislationcharacteristid: XQW.Guid;
+  qm_rclegislationid: XQW.Guid;
+  qm_tylegislationcharacteristicid: XQW.Guid;
+  versionnumber: number;
+}
+interface qm_rclegislation_tylegislationcharacterist_Expand {
+  qm_rclegislation_tylegislationcharacteristic: WebExpand<qm_rclegislation_tylegislationcharacterist_Expand, qm_tylegislationcharacteristic_Select, qm_tylegislationcharacteristic_Filter, { qm_rclegislation_tylegislationcharacteristic: qm_tylegislationcharacteristic_Result[] }>;
+}
+interface qm_rclegislation_tylegislationcharacterist_FormattedResult {
+}
+interface qm_rclegislation_tylegislationcharacterist_Result extends qm_rclegislation_tylegislationcharacterist_Base, qm_rclegislation_tylegislationcharacterist_Relationships {
+  "@odata.etag": string;
+}
+interface qm_rclegislation_tylegislationcharacterist_RelatedOne {
+}
+interface qm_rclegislation_tylegislationcharacterist_RelatedMany {
+  qm_rclegislation_tylegislationcharacteristic: WebMappingRetrieve<qm_tylegislationcharacteristic_Select,qm_tylegislationcharacteristic_Expand,qm_tylegislationcharacteristic_Filter,qm_tylegislationcharacteristic_Fixed,qm_tylegislationcharacteristic_Result,qm_tylegislationcharacteristic_FormattedResult>;
+}
+interface WebEntitiesRetrieve {
+  qm_rclegislation_tylegislationcharacteristset: WebMappingRetrieve<qm_rclegislation_tylegislationcharacterist_Select,qm_rclegislation_tylegislationcharacterist_Expand,qm_rclegislation_tylegislationcharacterist_Filter,qm_rclegislation_tylegislationcharacterist_Fixed,qm_rclegislation_tylegislationcharacterist_Result,qm_rclegislation_tylegislationcharacterist_FormattedResult>;
+}
+interface WebEntitiesRelated {
+  qm_rclegislation_tylegislationcharacteristset: WebMappingRelated<qm_rclegislation_tylegislationcharacterist_RelatedOne,qm_rclegislation_tylegislationcharacterist_RelatedMany>;
+}
+interface WebEntitiesCUDA {
+  qm_rclegislation_tylegislationcharacteristset: WebMappingCUDA<qm_rclegislation_tylegislationcharacterist_Create,qm_rclegislation_tylegislationcharacterist_Update,qm_rclegislation_tylegislationcharacterist_Select>;
+}

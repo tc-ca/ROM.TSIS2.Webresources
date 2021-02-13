@@ -31,6 +31,13 @@
           Optional when autodetect=yes
           */
       "files": [
+        /* Form Scripts */
+        {
+          "uniquename": "ovs_/js/WorkOrder.js",
+          "file": "js\\WorkOrder.js",
+          "description": "ROM TSIS 2.0 Work Order Scripts"
+        },
+        /* Styles */
         {
           "uniquename": "ovs_/css/bootstrap.min.css",
           "file": "css\\bootstrap.min.css",
@@ -56,6 +63,7 @@
           "file": "css\\survey.min.css",
           "description": "ROM TSIS 2.0 SurveyJS Dependency"
         },
+        /* HTML */
         {
           "uniquename": "ovs_/html/SurveyCreator.html",
           "file": "html\\SurveyCreator.html",
@@ -66,6 +74,7 @@
           "file": "html\\SurveyRender.html",
           "description": "ROM TSIS 2.0 SurveyJS Renderer"
         },
+        /* SurveyJS dependencies */
         {
           "uniquename": "ovs_/js/ace.min.js",
           "file": "js\\ace.min.js",
