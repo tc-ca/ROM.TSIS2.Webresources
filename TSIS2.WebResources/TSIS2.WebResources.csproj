@@ -163,8 +163,11 @@
     <Content Include="XrmDefinitelyTyped\Microsoft.Xrm.Sdk.Workflow.dll" />
     <Content Include="XrmDefinitelyTyped\Microsoft.Xrm.Tooling.Connector.dll" />
     <Content Include="XrmDefinitelyTyped\Newtonsoft.Json.dll" />
+    <Content Include="XrmDefinitelyTyped\Run.fsx" />
+    <Content Include="XrmDefinitelyTyped\Run.ps1" />
     <Content Include="XrmDefinitelyTyped\System.ValueTuple.dll" />
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe" />
+    <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config" />
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -191,9 +194,6 @@
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
-    <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config" />
-    <Content Include="XrmDefinitelyTyped\Run.ps1" />
-    <Content Include="XrmDefinitelyTyped\Run.fsx" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\Account.ts" />
