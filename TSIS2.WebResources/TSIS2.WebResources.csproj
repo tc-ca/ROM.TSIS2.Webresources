@@ -167,7 +167,6 @@
     <Content Include="XrmDefinitelyTyped\Run.ps1" />
     <Content Include="XrmDefinitelyTyped\System.ValueTuple.dll" />
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe" />
-    <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config" />
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.xml" />
   </ItemGroup>
   <ItemGroup>
