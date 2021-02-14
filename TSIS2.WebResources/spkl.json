@@ -33,9 +33,39 @@
       "files": [
         /* Form Scripts */
         {
+          "uniquename": "ovs_/js/Account.js",
+          "file": "js\\Account.js",
+          "description": "ROM TSIS 2.0 Account Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/BookableResourceBooking.js",
+          "file": "js\\BookableResourceBooking.js",
+          "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/IncidentTypeServiceTask.js",
+          "file": "js\\IncidentTypeServiceTask.js",
+          "description": "ROM TSIS 2.0 Incident Type Service Task Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/Questionnaire.js",
+          "file": "js\\Questionnaire.js",
+          "description": "ROM TSIS 2.0 Questionnaire Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/ServiceTaskType.js",
+          "file": "js\\ServiceTaskType.js",
+          "description": "ROM TSIS 2.0 Service Task Type Form Scripts"
+        },
+        {
           "uniquename": "ovs_/js/WorkOrder.js",
           "file": "js\\WorkOrder.js",
-          "description": "ROM TSIS 2.0 Work Order Scripts"
+          "description": "ROM TSIS 2.0 Work Order Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/WorkOrderServiceTask.js",
+          "file": "js\\WorkOrderServiceTask.js",
+          "description": "ROM TSIS 2.0 Work Order Service Task Form Scripts"
         },
         /* Styles */
         {

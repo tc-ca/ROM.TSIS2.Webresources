@@ -133,14 +133,17 @@
     <Content Include="Webresources\css\survey.min.css" />
     <Content Include="Webresources\html\SurveyCreator.html" />
     <Content Include="Webresources\html\SurveyRender.html" />
+    <Content Include="Webresources\js\Account.js" />
     <Content Include="Webresources\js\ace.min.js" />
     <Content Include="Webresources\js\autocomplete.js" />
+    <Content Include="Webresources\js\BookableResourceBooking.js" />
     <Content Include="Webresources\js\ckeditor.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
     <Content Include="Webresources\js\IncidentTypeServiceTask.js" />
     <Content Include="Webresources\js\jquery.js" />
     <Content Include="Webresources\js\knockout-min.js" />
     <Content Include="Webresources\js\Questionnaire.js" />
+    <Content Include="Webresources\js\ServiceTaskType.js" />
     <Content Include="Webresources\js\showdown.min.js" />
     <Content Include="Webresources\js\survey-creator.min.js" />
     <Content Include="Webresources\js\survey.jquery.min.js" />
@@ -149,6 +152,7 @@
     <Content Include="Webresources\js\surveyRender.js" />
     <Content Include="Webresources\js\tsis2findingwidget.js" />
     <Content Include="Webresources\js\WorkOrder.js" />
+    <Content Include="Webresources\js\WorkOrderServiceTask.js" />
     <Content Include="XrmDefinitelyTyped\FSharp.Core.dll" />
     <Content Include="XrmDefinitelyTyped\Microsoft.Crm.Sdk.Proxy.dll" />
     <Content Include="XrmDefinitelyTyped\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
@@ -192,9 +196,13 @@
     <Content Include="XrmDefinitelyTyped\Run.fsx" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\ts\Account.ts" />
+    <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
     <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
+    <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
+    <TypeScriptCompile Include="src\ts\WorkOrderServiceTask.ts" />
     <TypeScriptCompile Include="typings\XRM\dg.xrmquery.web.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\InteractionCentricDashboard\AccountsDashboard.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\Main\Account.d.ts" />

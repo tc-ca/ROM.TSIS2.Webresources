@@ -1,33 +1,33 @@
+/* eslint-disable @typescript-eslint/triple-slash-reference */
 var ROM;
 (function (ROM) {
     var WorkOrder;
     (function (WorkOrder) {
-        var Form;
         // EVENTS
-        function onLoad(executionContext) {
+        function onLoad(eContext) {
             console.log('Onload has been called');
-            console.log('Xrm execution context: ', executionContext);
-            Form = executionContext.getFormContext();
-            switch (Form.ui.getFormType()) {
+            console.log('Xrm execution context: ', eContext);
+            var form = eContext.getFormContext();
+            switch (form.ui.getFormType()) {
                 //Create
                 case 1:
-                    setDefaultFiscalYear(Form);
+                    setDefaultFiscalYear(form);
                 default:
                     break;
             }
             if (!userHasRole("ROM Manager") && !userHasRole("ROM Planner")) {
-                Form.getControl("ovs_revisedquarterid").setDisabled(true);
+                form.getControl("ovs_revisedquarterid").setDisabled(true);
             }
             else {
-                Form.getControl("ovs_revisedquarterid").setDisabled(false);
+                form.getControl("ovs_revisedquarterid").setDisabled(false);
             }
         }
         WorkOrder.onLoad = onLoad;
-        function fiscalYearOnchange(executionContext) {
+        function fiscalYearOnchange(eContext) {
             console.log('fiscalYearOnChange has been called');
-            console.log('Xrm execution context: ', executionContext);
+            console.log('Xrm execution context: ', eContext);
             //if new fiscal year is selected, then previous selection of quarter no longer corresponds
-            removeSelectedFiscalQuarter(executionContext);
+            removeSelectedFiscalQuarter(eContext);
         }
         WorkOrder.fiscalYearOnchange = fiscalYearOnchange;
         // FUNCTIONS
@@ -51,8 +51,8 @@ var ROM;
                 }
             });
         }
-        function removeSelectedFiscalQuarter(executionContext) {
-            var form = executionContext.getFormContext();
+        function removeSelectedFiscalQuarter(eContext) {
+            var form = eContext.getFormContext();
             form.getAttribute('ovs_fiscalquarter').setValue(null);
         }
         function userHasRole(roleName) {
