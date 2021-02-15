@@ -130,6 +130,11 @@
           "uniquename": "ovs_/js/tsis2findingwidget.js",
           "file": "js\\tsis2findingwidget.js",
           "description": "ROM TSIS 2.0 Custom Finding Widget for SurveyJS"
+        },
+        {
+          "uniquename": "ovs_/js/TSIS2OversightActivity.js",
+          "file": "js\\TSIS2OversightActivity.js",
+          "description": "ROM TSIS 2.0 Custom Finding Widget for SurveyJS"
         }
       ]
     }
