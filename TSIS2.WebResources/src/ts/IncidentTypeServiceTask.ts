@@ -2,7 +2,7 @@ namespace ROM.IncidentTypeServiceTask {
   // EVENTS
   const mode = 'display';
   export function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
-    const Form = <Form.msdyn_incidenttypeservicetask.Main.Information>eContext.getFormContext();
+    const Form = <Form.msdyn_incidenttypeservicetask.Main.ROMInformation>eContext.getFormContext();
 
     // Get the web resource control on the form
     const wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
@@ -56,7 +56,7 @@ namespace ROM.IncidentTypeServiceTask {
   }
 
   export function OnTaskTypeChange(eContext: Xrm.ExecutionContext<any, any>): void {
-    const Form = <Form.msdyn_incidenttypeservicetask.Main.Information>eContext.getFormContext();
+    const Form = <Form.msdyn_incidenttypeservicetask.Main.ROMInformation>eContext.getFormContext();
     const wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
     // Get the web resource control on the form
     const tasktype = Form.getAttribute('msdyn_tasktype').getValue();

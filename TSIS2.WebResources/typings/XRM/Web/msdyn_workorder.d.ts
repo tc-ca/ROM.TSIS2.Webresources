@@ -56,6 +56,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ovs_rolluptestdeletemeafter_date?: Date | null;
   ovs_rolluptestdeletemeafter_state?: number | null;
   processid?: string | null;
+  qm_blobpath?: string | null;
   qm_remote?: boolean | null;
   stageid?: string | null;
   statecode?: msdyn_workorder_statecode | null;
@@ -243,6 +244,7 @@ interface msdyn_workorder_Select {
   owningteam_guid: WebAttribute<msdyn_workorder_Select, { owningteam_guid: string | null }, { owningteam_formatted?: string }>;
   owninguser_guid: WebAttribute<msdyn_workorder_Select, { owninguser_guid: string | null }, { owninguser_formatted?: string }>;
   processid: WebAttribute<msdyn_workorder_Select, { processid: string | null }, {  }>;
+  qm_blobpath: WebAttribute<msdyn_workorder_Select, { qm_blobpath: string | null }, {  }>;
   qm_remote: WebAttribute<msdyn_workorder_Select, { qm_remote: boolean | null }, {  }>;
   stageid: WebAttribute<msdyn_workorder_Select, { stageid: string | null }, {  }>;
   statecode: WebAttribute<msdyn_workorder_Select, { statecode: msdyn_workorder_statecode | null }, { statecode_formatted?: string }>;
@@ -356,6 +358,7 @@ interface msdyn_workorder_Filter {
   owningteam_guid: XQW.Guid;
   owninguser_guid: XQW.Guid;
   processid: XQW.Guid;
+  qm_blobpath: string;
   qm_remote: boolean;
   stageid: XQW.Guid;
   statecode: msdyn_workorder_statecode;

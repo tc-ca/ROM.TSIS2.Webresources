@@ -4,7 +4,7 @@ namespace ROM.WorkOrder {
   export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
     console.log('Onload has been called');
     console.log('Xrm execution context: ', eContext);
-    const form = <Form.msdyn_workorder.Main.OversightActivity>eContext.getFormContext();
+    const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
 
     switch (form.ui.getFormType()) {
       //Create
@@ -54,7 +54,7 @@ namespace ROM.WorkOrder {
   }
 
   function removeSelectedFiscalQuarter(eContext: Xrm.ExecutionContext<any, any>): void {
-    const form = <Form.msdyn_workorder.Main.OversightActivity>eContext.getFormContext();
+    const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
     form.getAttribute('ovs_fiscalquarter').setValue(null);
   }
 

@@ -19,6 +19,7 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
   ovs_questionnairedefinition?: string | null;
   ovs_questionnairereponse?: string | null;
   ovs_questionnaireresultjson?: string | null;
+  qm_blobpath?: string | null;
   qm_isquestionnaireupdated?: boolean | null;
   statecode?: msdyn_workorderservicetask_statecode | null;
   statuscode?: msdyn_workorderservicetask_statuscode | null;
@@ -96,6 +97,7 @@ interface msdyn_workorderservicetask_Select {
   owningbusinessunit_guid: WebAttribute<msdyn_workorderservicetask_Select, { owningbusinessunit_guid: string | null }, { owningbusinessunit_formatted?: string }>;
   owningteam_guid: WebAttribute<msdyn_workorderservicetask_Select, { owningteam_guid: string | null }, { owningteam_formatted?: string }>;
   owninguser_guid: WebAttribute<msdyn_workorderservicetask_Select, { owninguser_guid: string | null }, { owninguser_formatted?: string }>;
+  qm_blobpath: WebAttribute<msdyn_workorderservicetask_Select, { qm_blobpath: string | null }, {  }>;
   qm_isquestionnaireupdated: WebAttribute<msdyn_workorderservicetask_Select, { qm_isquestionnaireupdated: boolean | null }, {  }>;
   statecode: WebAttribute<msdyn_workorderservicetask_Select, { statecode: msdyn_workorderservicetask_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<msdyn_workorderservicetask_Select, { statuscode: msdyn_workorderservicetask_statuscode | null }, { statuscode_formatted?: string }>;
@@ -143,6 +145,7 @@ interface msdyn_workorderservicetask_Filter {
   owningbusinessunit_guid: XQW.Guid;
   owningteam_guid: XQW.Guid;
   owninguser_guid: XQW.Guid;
+  qm_blobpath: string;
   qm_isquestionnaireupdated: boolean;
   statecode: msdyn_workorderservicetask_statecode;
   statuscode: msdyn_workorderservicetask_statuscode;

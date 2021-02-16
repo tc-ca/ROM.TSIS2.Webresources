@@ -16,6 +16,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "{b14f3e67-e51b-4b3e-bb7f-a9cf0cf8dc17}"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_2"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_3"): Xrm.PageSection;
+        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -151,7 +152,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "Incidents_List"): Xrm.SubGridControl<"msdyn_workorderincident">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
       get(name: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;
@@ -339,7 +339,6 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "Incidents_List"): Xrm.SubGridControl<"msdyn_workorderincident">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
     getControl(controlName: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;

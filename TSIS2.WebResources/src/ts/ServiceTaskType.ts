@@ -1,7 +1,7 @@
 namespace ROM.ServiceTaskType {
   // EVENTS
   export function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
-    const Form = <Form.msdyn_servicetasktype.Main.Information>eContext.getFormContext();
+    const Form = <Form.msdyn_servicetasktype.Main.ROMInformation>eContext.getFormContext();
 
     // Get the web resource control on the form
     const wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
