@@ -62,6 +62,11 @@
           "file": "js\\WorkOrderServiceTask.js",
           "description": "ROM TSIS 2.0 Work Order Service Task Form Scripts"
         },
+        {
+          "uniquename": "ovs_/js/TSIS2OversightActivity.js",
+          "file": "js\\TSIS2OversightActivity.js",
+          "description": "ROM TSIS 2.0 Work Order Form Scripts for locking and unlocking fields"
+        },
         /* Styles */
         {
           "uniquename": "ovs_/css/bootstrap.min.css",
