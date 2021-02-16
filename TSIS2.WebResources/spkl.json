@@ -31,6 +31,43 @@
           Optional when autodetect=yes
           */
       "files": [
+        /* Form Scripts */
+        {
+          "uniquename": "ovs_/js/BookableResourceBooking.js",
+          "file": "js\\BookableResourceBooking.js",
+          "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/IncidentTypeServiceTask.js",
+          "file": "js\\IncidentTypeServiceTask.js",
+          "description": "ROM TSIS 2.0 Incident Type Service Task Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/Questionnaire.js",
+          "file": "js\\Questionnaire.js",
+          "description": "ROM TSIS 2.0 Questionnaire Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/ServiceTaskType.js",
+          "file": "js\\ServiceTaskType.js",
+          "description": "ROM TSIS 2.0 Service Task Type Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/WorkOrder.js",
+          "file": "js\\WorkOrder.js",
+          "description": "ROM TSIS 2.0 Work Order Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/WorkOrderServiceTask.js",
+          "file": "js\\WorkOrderServiceTask.js",
+          "description": "ROM TSIS 2.0 Work Order Service Task Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/TSIS2OversightActivity.js",
+          "file": "js\\TSIS2OversightActivity.js",
+          "description": "ROM TSIS 2.0 Work Order Form Scripts for locking and unlocking fields"
+        },
+        /* Styles */
         {
           "uniquename": "ovs_/css/bootstrap.min.css",
           "file": "css\\bootstrap.min.css",
@@ -56,6 +93,7 @@
           "file": "css\\survey.min.css",
           "description": "ROM TSIS 2.0 SurveyJS Dependency"
         },
+        /* HTML */
         {
           "uniquename": "ovs_/html/SurveyCreator.html",
           "file": "html\\SurveyCreator.html",
@@ -66,6 +104,7 @@
           "file": "html\\SurveyRender.html",
           "description": "ROM TSIS 2.0 SurveyJS Renderer"
         },
+        /* SurveyJS dependencies */
         {
           "uniquename": "ovs_/js/ace.min.js",
           "file": "js\\ace.min.js",
@@ -129,11 +168,6 @@
         {
           "uniquename": "ovs_/js/tsis2findingwidget.js",
           "file": "js\\tsis2findingwidget.js",
-          "description": "ROM TSIS 2.0 Custom Finding Widget for SurveyJS"
-        },
-        {
-          "uniquename": "ovs_/js/TSIS2OversightActivity.js",
-          "file": "js\\TSIS2OversightActivity.js",
           "description": "ROM TSIS 2.0 Custom Finding Widget for SurveyJS"
         }
       ]

@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -23,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,7 +45,55 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.7.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Core.4.7.2\lib\net45\FSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.23\lib\net462\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=3.19.8.16603, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.19.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform, Version=3.19.8.16603, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.19.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.1.0.51\lib\net462\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.23\lib\net462\Microsoft.Xrm.Sdk.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk.Deployment, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.Deployment.9.0.2.23\lib\net462\Microsoft.Xrm.Sdk.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.Workflow.9.0.2.23\lib\net462\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Tooling.Connector, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.1.0.51\lib\net462\Microsoft.Xrm.Tooling.Connector.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Activities.Presentation" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -53,6 +103,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Workflow.Activities" />
+    <Reference Include="System.Workflow.ComponentModel" />
+    <Reference Include="System.Workflow.Runtime" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -60,6 +113,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="XrmDefinitelyTyped, Version=5.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Delegate.XrmDefinitelyTyped.5.4.2\lib\net462\XrmDefinitelyTyped.exe</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -67,6 +123,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="src\lib\dg.xrmquery.web.js" />
+    <Content Include="src\lib\dg.xrmquery.web.min.js" />
+    <Content Include="src\lib\dg.xrmquery.web.promise.min.js" />
     <Content Include="Webresources\css\bootstrap.min.css" />
     <Content Include="Webresources\css\autocomplete.css" />
     <Content Include="Webresources\css\modern.css" />
@@ -76,10 +135,14 @@
     <Content Include="Webresources\html\SurveyRender.html" />
     <Content Include="Webresources\js\ace.min.js" />
     <Content Include="Webresources\js\autocomplete.js" />
+    <Content Include="Webresources\js\BookableResourceBooking.js" />
     <Content Include="Webresources\js\ckeditor.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
+    <Content Include="Webresources\js\IncidentTypeServiceTask.js" />
     <Content Include="Webresources\js\jquery.js" />
     <Content Include="Webresources\js\knockout-min.js" />
+    <Content Include="Webresources\js\Questionnaire.js" />
+    <Content Include="Webresources\js\ServiceTaskType.js" />
     <Content Include="Webresources\js\showdown.min.js" />
     <Content Include="Webresources\js\survey-creator.min.js" />
     <Content Include="Webresources\js\survey.jquery.min.js" />
@@ -88,11 +151,29 @@
     <Content Include="Webresources\js\surveyRender.js" />
     <Content Include="Webresources\js\tsis2findingwidget.js" />
     <Content Include="Webresources\js\TSIS2OversightActivity.js" />
+    <Content Include="Webresources\js\WorkOrder.js" />
+    <Content Include="Webresources\js\WorkOrderServiceTask.js" />
+    <Content Include="XrmDefinitelyTyped\FSharp.Core.dll" />
+    <Content Include="XrmDefinitelyTyped\Microsoft.Crm.Sdk.Proxy.dll" />
+    <Content Include="XrmDefinitelyTyped\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+    <Content Include="XrmDefinitelyTyped\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll" />
+    <Content Include="XrmDefinitelyTyped\Microsoft.Rest.ClientRuntime.dll" />
+    <Content Include="XrmDefinitelyTyped\Microsoft.Xrm.Sdk.Deployment.dll" />
+    <Content Include="XrmDefinitelyTyped\Microsoft.Xrm.Sdk.dll" />
+    <Content Include="XrmDefinitelyTyped\Microsoft.Xrm.Sdk.Workflow.dll" />
+    <Content Include="XrmDefinitelyTyped\Microsoft.Xrm.Tooling.Connector.dll" />
+    <Content Include="XrmDefinitelyTyped\Newtonsoft.Json.dll" />
+    <Content Include="XrmDefinitelyTyped\Run.fsx" />
+    <Content Include="XrmDefinitelyTyped\Run.ps1" />
+    <Content Include="XrmDefinitelyTyped\System.ValueTuple.dll" />
+    <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe" />
+    <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <None Include="packages.config" />
     <Content Include="spkl\unpack.bat" />
     <Content Include="spkl\pack+import.bat" />
@@ -105,6 +186,7 @@
     <Content Include="spkl.json" />
     <Content Include="release.bat" />
     <Content Include="web.config" />
+    <Content Include="tsconfig.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -112,12 +194,471 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
+    <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
+    <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
+    <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
+    <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
+    <TypeScriptCompile Include="src\ts\WorkOrderServiceTask.ts" />
+    <TypeScriptCompile Include="typings\XRM\dg.xrmquery.web.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\InteractionCentricDashboard\AccountsDashboard.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Main\Account.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Main\AccountforInteractiveexperience.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Main\AccountforMultisessionexperience.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Main\AccountMobile.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Main\Organizations.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Main\RegulatedEntity.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Main\SalesInsights.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Main\TDGOrganizations.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Main\TDGSiteProfile.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\QuickCreate\AccountQuickCreate.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\QuickCreate\Organization.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Quick\accountcard.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Quick\AccountHierarchyTileForm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Quick\AccountReferencePanel.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Quick\AccountSummaryCard.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Quick\AppforOutlookAccountCard.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Quick\AppforOutlookAccountQuickView.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Quick\OrganizationQuickView.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Quick\RecentCasesandEntitlements.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Quick\SocialProfiles.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\account\Quick\TDGPrimaryContact.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\appointment\AppointmentBook\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\appointment\Main\Appointment.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\appointment\Main\AppointmentforInteractiveexperience.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\appointment\Main\Wizard.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\appointment\QuickCreate\Appointmentquickcreateform.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\appointment\Quick\AppointmentReferencePanel.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\appointment\TaskFlowForm\AfterMeeting.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\bookableresourcebooking\Main\BookingandWorkOrder.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\bookableresourcebooking\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\bookableresourcebooking\Main\ResourceBookingMobile.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\bookableresourcecategoryassn\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\bookableresourcecategoryassn\QuickCreate\BookableResourceCategoryAssnQuickCreate.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\bookableresource\Main\AddEditInspectorForm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\bookableresource\Main\BookableResourceMobile.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\bookableresource\Main\MainForm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\bookableresource\Main\TDGInspectors.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\bookingstatus\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\connection\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\InteractionCentricDashboard\ContactsDashboard.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\InteractionCentricDashboard\DefaultContactDashboardTC.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Main\AIforSales.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Main\Contact.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Main\ContactforInteractiveexperience.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Main\ContactforMultisessionexperience.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Main\ContactMainForm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Main\ContactMobile.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Main\ContactsTC.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\QuickCreate\ContactQuickCreate.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\QuickCreate\ContactQuickCreateTC.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Quick\accountcontactcard.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Quick\AppforOutlookContactCard.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Quick\AppforOutlookContactQuickView.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Quick\contactcard.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Quick\ContactQuickForm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Quick\ContactQuickViewTC.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Quick\ContactReferencePanel.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Quick\LivePersonaCardForm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Quick\RecentCasesandEntitlements.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\Quick\SocialProfiles.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\contact\TaskFlowForm\UpdateContact.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incidentresolution\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incidentresolution\QuickCreate\CaseResolutionQuickCreateForm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incidentresolution\Quick\ResolveCaseQuickForm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incident\InteractionCentricDashboard\CasesDashboard.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incident\Main\Case.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incident\Main\CaseforInteractiveexperience.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incident\Main\CaseforMultisessionexperience.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incident\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incident\QuickCreate\AppforOutlookCaseQuickCreate.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incident\QuickCreate\CaseQuickCreate.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incident\QuickCreate\CaseQuickCreateforMultisession.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\incident\Quick\CaseReferencePanel.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_incidenttypeservicetask\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_incidenttype\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_servicetasktype\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_servicetasktype\Main\TDGServiceTaskType.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorderincident\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorderincident\Main\WorkOrderIncidentMobile.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorderservicetask\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorderservicetask\Main\SurveyJS.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorderservicetask\Main\TDGServiceTask.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorderservicetask\Main\TDGServiceTaskQuestionnaire.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorderservicetask\Main\WorkOrderServiceTaskMobile.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workordersubstatus\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workordertype\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorder\Main\mainform.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorder\Main\OversightActivity.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorder\Main\TDGOversightActivity.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorder\Main\TSISOversightActivity.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorder\Main\WorkOrderCustomer.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorder\Main\WorkOrderMobile.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorder\Main\WorkOrderNotes.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorder\Main\WorkOrderService.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorder\QuickCreate\QuickCreateWorkOrder.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorder\Quick\SitesQuickView.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorder\Quick\WorkOrderQuickView.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_cancellationrequest\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_cancellationrequest\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_cyaction\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_cyaction\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_cysafetyassessment\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_cysafetyassessment\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_forecastquarter\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_forecastquarter\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_lob\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_lob\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_operationtype\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_operationtype\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_operation\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_operation\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_oversighttype\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_oversighttype\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_questionnaire\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_questionnaire\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_revisedquarterrequest\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_revisedquarterrequest\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_sitetype\Main\TCSiteTypes.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_sitetype\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_tyrational\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_tyrational\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_unplannedforecast\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ovs_unplannedforecast\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_rclegislation\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_rclegislation\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_sydependencygroupitem\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_sydependencygroupitem\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_sydependencygroup\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_sydependencygroup\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_sygroup\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_sygroup\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_syquestionvalidationrule\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_syquestionvalidationrule\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_syquestion\Main\ChildQuestion.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_syquestion\Main\ParentQuestion.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_syquestion\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_syresponse\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_syresponse\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_sytemplate\Main\Template.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_sytemplate\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_tylegislationcharacteristic\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_tylegislationcharacteristic\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_tylegislationsource\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_tylegislationsource\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_tylegislationtype\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_tylegislationtype\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_tyvalidationruletype\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\qm_tyvalidationruletype\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\serviceappointment\AppointmentBook\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\serviceappointment\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\serviceappointment\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\systemuser\AppointmentBook\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\systemuser\Main\ApplicationUser.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\systemuser\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\systemuser\Main\User.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\systemuser\Main\UserformBusiness.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\systemuser\Quick\UserHierarchyTileForm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\tc_tcfiscalperiod\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\tc_tcfiscalperiod\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\tc_tcfiscalquarter\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\tc_tcfiscalquarter\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\tc_tcfiscalyear\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\tc_tcfiscalyear\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\tc_tcmonth\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\tc_tcmonth\Quick\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\team\Main\Team.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\team\Main\TeamformBusiness.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\territory\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\territory\Quick\TerritoryHierarchyTileForm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\metadata.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\account.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\activityparty.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\appointment.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\bookableresource.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\bookableresourcebooking.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\bookableresourcecategoryassn.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\bookingstatus.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\bulkoperationlog.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\connection.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\contact.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\incident.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\incidentresolution.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\msdyn_incidenttype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\msdyn_incidenttypeservicetask.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\msdyn_servicetasktype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\msdyn_workorder.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\msdyn_workorderincident.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\msdyn_workorderservicetask.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\msdyn_workordersubstatus.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\msdyn_workordertype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_cancellationrequest.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_cyaction.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_cysafetyassessment.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_forecastquarter.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_lob.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_operation.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_operationtype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_oversighttype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_questionnaire.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_revisedquarterrequest.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_sitetype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_tyrational.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ovs_unplannedforecast.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\postfollow.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_account_tylegislationcharacteristic.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_rclegislation.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_rclegislation_tylegislationcharacterist.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_sydependencygroup.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_sydependencygroupitem.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_sygroup.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_syquestion.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_syquestionvalidationrule.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_syresponse.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_syresponse_rclegislation.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_sytemplate.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_sytemplate_sygroup.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_tylegislationcharacteristic.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_tylegislationsource.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_tylegislationtype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\qm_tyvalidationruletype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\serviceappointment.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\systemuser.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\tc_tcfiscalperiod.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\tc_tcfiscalquarter.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\tc_tcfiscalyear.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\tc_tcmonth.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\team.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\territory.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\xrm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_accountcategorycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_accountclassificationcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_accountratingcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_address1_addresstypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_address1_freighttermscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_address1_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_address2_addresstypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_address2_freighttermscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_address2_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_businesstypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_customersizecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_customertypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_industrycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_ownershipcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_paymenttermscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_preferredappointmentdaycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_preferredappointmenttimecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_preferredcontactmethodcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_territorycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\activityparty_instancetypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\activityparty_participationtypemask.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\activitypointer_activitytypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\activitypointer_deliveryprioritycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\appointment_attachmenterrors.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\appointment_instancetypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\appointment_prioritycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\appointment_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\appointment_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\bookableresourcebooking_bookingtype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\bookableresourcebooking_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\bookableresourcebooking_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\bookableresourcecategoryassn_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\bookableresourcecategoryassn_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\bookableresource_resourcetype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\bookableresource_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\bookableresource_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\bookingstatus_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\bookingstatus_status.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\bookingstatus_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\connection_record1objecttypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\connection_record2objecttypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\connection_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\connection_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_accountrolecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_address1_addresstypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_address1_freighttermscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_address1_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_address2_addresstypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_address2_freighttermscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_address2_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_address3_addresstypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_address3_freighttermscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_address3_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_customersizecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_customertypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_educationcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_familystatuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_gendercode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_haschildrencode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_leadsourcecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_msdyn_orgchangestatus.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_paymenttermscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_preferredappointmentdaycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_preferredappointmenttimecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_preferredcontactmethodcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\contact_territorycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incidentresolution_incident_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incidentresolution_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incidentresolution_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incident_caseorigincode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incident_casetypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incident_contractservicelevelcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incident_customersatisfactioncode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incident_firstresponseslastatus.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incident_incidentstagecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incident_prioritycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incident_resolvebyslastatus.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incident_severitycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incident_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\incident_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\LCID.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_bookingsystemstatus.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_crewmembertype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_crewstrategy.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_generictype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_incidenttypeservicetask_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_incidenttypeservicetask_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_incidenttype_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_incidenttype_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_inspectionresult.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_msdyn_workorderservicetask_msdyn_inspectionresult.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_pooltype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_resourceschedulesource.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_serviceappointmentstatus.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_servicetasktype_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_servicetasktype_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_travelchargetype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_worklocation.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_workorderincident_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_workorderincident_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_workorderservicetask_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_workorderservicetask_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_workordersubstatus_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_workordersubstatus_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_workordertype_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_workordertype_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_workorder_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_workorder_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_workstartlocationtype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\msdyn_wosystemstatus.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_bookingdiscrepancyrational.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cancellationrequest_instancetypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cancellationrequest_ovs_cancellationrequestreason.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cancellationrequest_prioritycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cancellationrequest_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cancellationrequest_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cyaction_instancetypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cyaction_prioritycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cyaction_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cyaction_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cyharm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cylikelihoodofharm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cymagnitudeofharm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cysafetyassessment_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_cysafetyassessment_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_forecastquarter_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_forecastquarter_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_lob_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_lob_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_operationtype_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_operationtype_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_operation_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_operation_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_oversighttype_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_oversighttype_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_questionnaire_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_questionnaire_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_revisedquarterrequest_instancetypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_revisedquarterrequest_prioritycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_revisedquarterrequest_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_revisedquarterrequest_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_sitetype_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_sitetype_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_tyrational_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_tyrational_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_unplannedforecast_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ovs_unplannedforecast_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_operatorcd.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_questionresponsetypecd.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_rclegislation_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_rclegislation_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_sydependencygroupitem_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_sydependencygroupitem_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_sydependencygroup_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_sydependencygroup_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_sygroup_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_sygroup_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_syquestionvalidationrule_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_syquestionvalidationrule_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_syquestion_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_syquestion_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_syresponse_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_syresponse_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_sytemplate_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_sytemplate_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_tydependencygroupruletype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_tylegislationcharacteristic_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_tylegislationcharacteristic_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_tylegislationsource_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_tylegislationsource_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_tylegislationtype_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_tylegislationtype_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_tyvalidationruletype_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\qm_tyvalidationruletype_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\resco_appointment_resco_source.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\serviceappointment_prioritycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\serviceappointment_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\serviceappointment_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\servicestage.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\socialactivity_postmessagetype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\socialprofile_community.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_accessmode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_address1_addresstypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_address1_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_address2_addresstypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_address2_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_caltype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_emailrouteraccessapproval.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_incomingemaildeliverymethod.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_invitestatuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_outgoingemaildeliverymethod.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_preferredaddresscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_preferredemailcode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\systemuser_preferredphonecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\tc_tcfiscalperiod_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\tc_tcfiscalperiod_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\tc_tcfiscalquarter_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\tc_tcfiscalquarter_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\tc_tcfiscalyear_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\tc_tcfiscalyear_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\tc_tcmonth_statecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\tc_tcmonth_statuscode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\team_membershiptype.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\team_type.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\_incidentresolution_instancetypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\_incidentresolution_prioritycode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\_serviceappointment_instancetypecode.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\sdk.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\web-entities.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\WebResources.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
