@@ -1,3 +1,4 @@
+"use strict";
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 var ROM;
 (function (ROM) {
@@ -5,8 +6,6 @@ var ROM;
     (function (BookableResourceBooking) {
         // EVENTS
         function starttimeOnChange(eContext) {
-            console.log('starttimeOnChange has been called');
-            console.log('Xrm execution context: ', eContext);
             var form = eContext.getFormContext();
             var starttime = form.getAttribute('starttime').getValue();
             form.getControl('starttime').clearNotification('starttime');
@@ -26,7 +25,6 @@ var ROM;
                                 }
                             }
                         }, function (error) {
-                            console.log(error.message);
                             var alertStrings = { text: error.message };
                             var alertOptions = { height: 120, width: 260 };
                             Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
@@ -37,8 +35,6 @@ var ROM;
         }
         BookableResourceBooking.starttimeOnChange = starttimeOnChange;
         function endtimeOnChange(eContext) {
-            console.log('endtimeOnChange has been called');
-            console.log('Xrm execution context: ', eContext);
             var form = eContext.getFormContext();
             var endtime = form.getAttribute('endtime').getValue();
             form.getControl('endtime').clearNotification('endtime');
@@ -58,7 +54,6 @@ var ROM;
                                 }
                             }
                         }, function (error) {
-                            console.log(error.message);
                             var alertStrings = { text: error.message };
                             var alertOptions = { height: 120, width: 260 };
                             Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });

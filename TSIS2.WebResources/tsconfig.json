@@ -1,8 +1,19 @@
 ﻿{
   "compileOnSave": true,
   "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": [
+      "es6"
+    ],
+    "allowJs": true,
     "outDir": "Webresources/js",
-    "target": "es5"
+    "strict": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "./src/ts/**/*",

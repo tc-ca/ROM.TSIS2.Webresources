@@ -235,6 +235,7 @@
     <TypeScriptCompile Include="typings\XRM\Form\bookableresourcebooking\Main\BookingandWorkOrder.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\bookableresourcebooking\Main\Information.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\bookableresourcebooking\Main\ResourceBookingMobile.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\bookableresourcebooking\Main\ROMInformation.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\bookableresourcecategoryassn\Main\Information.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\bookableresourcecategoryassn\QuickCreate\BookableResourceCategoryAssnQuickCreate.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\bookableresource\Main\AddEditInspectorForm.d.ts" />
@@ -279,8 +280,10 @@
     <TypeScriptCompile Include="typings\XRM\Form\incident\QuickCreate\CaseQuickCreateforMultisession.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\incident\Quick\CaseReferencePanel.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\msdyn_incidenttypeservicetask\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_incidenttypeservicetask\Main\ROMInformation.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\msdyn_incidenttype\Main\Information.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\msdyn_servicetasktype\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\msdyn_servicetasktype\Main\ROMInformation.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\msdyn_servicetasktype\Main\TDGServiceTaskType.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorderincident\Main\Information.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\msdyn_workorderincident\Main\WorkOrderIncidentMobile.d.ts" />
