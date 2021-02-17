@@ -30,6 +30,13 @@ declare namespace Form.msdyn_workorderservicetask.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_8 extends Xrm.SectionCollectionBase {
+        get(name: "tab_8_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "msdyn_actualduration"): Xrm.NumberAttribute;
@@ -57,6 +64,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "WebResource_Attach2Dynamics"): Xrm.WebResourceControl;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
       get(name: "msdyn_actualduration"): Xrm.NumberControl;
       get(name: "msdyn_agreementbookingservicetask"): Xrm.LookupControl<"msdyn_agreementbookingservicetask">;
@@ -93,6 +101,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
+      get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -120,6 +129,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "WebResource_Attach2Dynamics"): Xrm.WebResourceControl;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
     getControl(controlName: "msdyn_actualduration"): Xrm.NumberControl;
     getControl(controlName: "msdyn_agreementbookingservicetask"): Xrm.LookupControl<"msdyn_agreementbookingservicetask">;

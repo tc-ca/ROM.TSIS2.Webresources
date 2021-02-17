@@ -1,3 +1,4 @@
+"use strict";
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 var ROM;
 (function (ROM) {
@@ -5,8 +6,6 @@ var ROM;
     (function (WorkOrder) {
         // EVENTS
         function onLoad(eContext) {
-            console.log('Onload has been called');
-            console.log('Xrm execution context: ', eContext);
             var form = eContext.getFormContext();
             switch (form.ui.getFormType()) {
                 //Create
@@ -24,8 +23,6 @@ var ROM;
         }
         WorkOrder.onLoad = onLoad;
         function fiscalYearOnchange(eContext) {
-            console.log('fiscalYearOnChange has been called');
-            console.log('Xrm execution context: ', eContext);
             //if new fiscal year is selected, then previous selection of quarter no longer corresponds
             removeSelectedFiscalQuarter(eContext);
         }

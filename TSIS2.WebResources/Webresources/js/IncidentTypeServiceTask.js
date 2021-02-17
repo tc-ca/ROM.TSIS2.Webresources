@@ -1,3 +1,4 @@
+"use strict";
 var ROM;
 (function (ROM) {
     var IncidentTypeServiceTask;

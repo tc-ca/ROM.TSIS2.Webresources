@@ -2,8 +2,6 @@
 namespace ROM.BookableResourceBooking {
     // EVENTS
     export function starttimeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        console.log('starttimeOnChange has been called');
-        console.log('Xrm execution context: ', eContext);
         const form = <Form.bookableresourcebooking.Main.ROMInformation>eContext.getFormContext();
         var starttime = form.getAttribute('starttime').getValue();
         form.getControl('starttime').clearNotification('starttime');
@@ -25,7 +23,6 @@ namespace ROM.BookableResourceBooking {
                             }
                         },
                         function (error) {
-                            console.log(error.message);
                             var alertStrings = { text: error.message };
                             var alertOptions = { height: 120, width: 260 };
                             Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
@@ -37,8 +34,6 @@ namespace ROM.BookableResourceBooking {
     }
 
     export function endtimeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        console.log('endtimeOnChange has been called');
-        console.log('Xrm execution context: ', eContext);
         const form = <Form.bookableresourcebooking.Main.ROMInformation>eContext.getFormContext();
         var endtime = form.getAttribute('endtime').getValue();
         form.getControl('endtime').clearNotification('endtime');
@@ -60,7 +55,6 @@ namespace ROM.BookableResourceBooking {
                             }
                         },
                         function (error) {
-                            console.log(error.message);
                             var alertStrings = { text: error.message };
                             var alertOptions = { height: 120, width: 260 };
                             Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });

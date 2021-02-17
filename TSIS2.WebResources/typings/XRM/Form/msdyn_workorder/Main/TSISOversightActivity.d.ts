@@ -14,9 +14,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "tab_3_section_1"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: "{b14f3e67-e51b-4b3e-bb7f-a9cf0cf8dc17}"): Xrm.PageSection;
-        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_2"): Xrm.PageSection;
-        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_3"): Xrm.PageSection;
-        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
+        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_10"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -47,6 +45,7 @@ declare namespace Form.msdyn_workorder.Main {
       interface tab_10 extends Xrm.SectionCollectionBase {
         get(name: "tab_10_section_1"): Xrm.PageSection;
         get(name: "tab_10_section_2"): Xrm.PageSection;
+        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -251,6 +250,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
       get(name: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
       get(name: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
+      get(name: "workorderservicetasksgrid2"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -438,6 +438,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
     getControl(controlName: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
     getControl(controlName: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
+    getControl(controlName: "workorderservicetasksgrid2"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
     getControl(controlName: string): undefined;
   }
 }

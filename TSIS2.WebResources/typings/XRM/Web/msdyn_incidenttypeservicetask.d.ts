@@ -92,16 +92,8 @@ interface msdyn_incidenttypeservicetask_Filter {
   versionnumber: number;
 }
 interface msdyn_incidenttypeservicetask_Expand {
-  createdby: WebExpand<msdyn_incidenttypeservicetask_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
-  createdonbehalfby: WebExpand<msdyn_incidenttypeservicetask_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
-  modifiedby: WebExpand<msdyn_incidenttypeservicetask_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
-  modifiedonbehalfby: WebExpand<msdyn_incidenttypeservicetask_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
-  msdyn_incidenttype: WebExpand<msdyn_incidenttypeservicetask_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { msdyn_incidenttype: msdyn_incidenttype_Result }>;
   msdyn_tasktype: WebExpand<msdyn_incidenttypeservicetask_Expand, msdyn_servicetasktype_Select, msdyn_servicetasktype_Filter, { msdyn_tasktype: msdyn_servicetasktype_Result }>;
   ovs_Questionnaire: WebExpand<msdyn_incidenttypeservicetask_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { ovs_Questionnaire: ovs_Questionnaire_Result }>;
-  ownerid: WebExpand<msdyn_incidenttypeservicetask_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
-  owningteam: WebExpand<msdyn_incidenttypeservicetask_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
-  owninguser: WebExpand<msdyn_incidenttypeservicetask_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
 interface msdyn_incidenttypeservicetask_FormattedResult {
   createdby_formatted?: string;
@@ -138,16 +130,8 @@ interface msdyn_incidenttypeservicetask_Result extends msdyn_incidenttypeservice
   owninguser_guid: string | null;
 }
 interface msdyn_incidenttypeservicetask_RelatedOne {
-  createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  msdyn_incidenttype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   msdyn_tasktype: WebMappingRetrieve<msdyn_servicetasktype_Select,msdyn_servicetasktype_Expand,msdyn_servicetasktype_Filter,msdyn_servicetasktype_Fixed,msdyn_servicetasktype_Result,msdyn_servicetasktype_FormattedResult>;
   ovs_Questionnaire: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface msdyn_incidenttypeservicetask_RelatedMany {
 }

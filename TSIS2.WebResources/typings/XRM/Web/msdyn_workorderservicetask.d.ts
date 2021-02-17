@@ -30,12 +30,6 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
 interface msdyn_workorderservicetask_Relationships {
   msdyn_workorderservicetask_Appointments?: Appointment_Result[] | null;
   msdyn_workorderservicetask_ServiceAppointments?: ServiceAppointment_Result[] | null;
-  msdyn_workorderservicetask_connections1?: Connection_Result[] | null;
-  msdyn_workorderservicetask_connections2?: Connection_Result[] | null;
-  msdyn_workorderservicetask_ovs_CYActions?: ovs_CYAction_Result[] | null;
-  msdyn_workorderservicetask_ovs_cancellationrequests?: ovs_cancellationrequest_Result[] | null;
-  msdyn_workorderservicetask_ovs_revisedquarterrequests?: ovs_revisedquarterrequest_Result[] | null;
-  ovs_CaseId?: Incident_Result | null;
   ovs_Questionnaire?: ovs_Questionnaire_Result | null;
 }
 interface msdyn_workorderservicetask extends msdyn_workorderservicetask_Base, msdyn_workorderservicetask_Relationships {
@@ -154,26 +148,13 @@ interface msdyn_workorderservicetask_Filter {
   versionnumber: number;
 }
 interface msdyn_workorderservicetask_Expand {
-  createdby: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
-  createdonbehalfby: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
-  modifiedby: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
-  modifiedonbehalfby: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_booking: WebExpand<msdyn_workorderservicetask_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_booking: BookableResourceBooking_Result }>;
   msdyn_tasktype: WebExpand<msdyn_workorderservicetask_Expand, msdyn_servicetasktype_Select, msdyn_servicetasktype_Filter, { msdyn_tasktype: msdyn_servicetasktype_Result }>;
   msdyn_workorder: WebExpand<msdyn_workorderservicetask_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_workorder: msdyn_workorder_Result }>;
   msdyn_workorderincident: WebExpand<msdyn_workorderservicetask_Expand, msdyn_workorderincident_Select, msdyn_workorderincident_Filter, { msdyn_workorderincident: msdyn_workorderincident_Result }>;
   msdyn_workorderservicetask_Appointments: WebExpand<msdyn_workorderservicetask_Expand, Appointment_Select, Appointment_Filter, { msdyn_workorderservicetask_Appointments: Appointment_Result[] }>;
   msdyn_workorderservicetask_ServiceAppointments: WebExpand<msdyn_workorderservicetask_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_workorderservicetask_ServiceAppointments: ServiceAppointment_Result[] }>;
-  msdyn_workorderservicetask_connections1: WebExpand<msdyn_workorderservicetask_Expand, Connection_Select, Connection_Filter, { msdyn_workorderservicetask_connections1: Connection_Result[] }>;
-  msdyn_workorderservicetask_connections2: WebExpand<msdyn_workorderservicetask_Expand, Connection_Select, Connection_Filter, { msdyn_workorderservicetask_connections2: Connection_Result[] }>;
-  msdyn_workorderservicetask_ovs_CYActions: WebExpand<msdyn_workorderservicetask_Expand, ovs_CYAction_Select, ovs_CYAction_Filter, { msdyn_workorderservicetask_ovs_CYActions: ovs_CYAction_Result[] }>;
-  msdyn_workorderservicetask_ovs_cancellationrequests: WebExpand<msdyn_workorderservicetask_Expand, ovs_cancellationrequest_Select, ovs_cancellationrequest_Filter, { msdyn_workorderservicetask_ovs_cancellationrequests: ovs_cancellationrequest_Result[] }>;
-  msdyn_workorderservicetask_ovs_revisedquarterrequests: WebExpand<msdyn_workorderservicetask_Expand, ovs_revisedquarterrequest_Select, ovs_revisedquarterrequest_Filter, { msdyn_workorderservicetask_ovs_revisedquarterrequests: ovs_revisedquarterrequest_Result[] }>;
-  ovs_CaseId: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ovs_CaseId: Incident_Result }>;
   ovs_Questionnaire: WebExpand<msdyn_workorderservicetask_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { ovs_Questionnaire: ovs_Questionnaire_Result }>;
-  ownerid: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
-  owningteam: WebExpand<msdyn_workorderservicetask_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
-  owninguser: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
 interface msdyn_workorderservicetask_FormattedResult {
   createdby_formatted?: string;
@@ -226,28 +207,15 @@ interface msdyn_workorderservicetask_Result extends msdyn_workorderservicetask_B
   owninguser_guid: string | null;
 }
 interface msdyn_workorderservicetask_RelatedOne {
-  createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_booking: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
   msdyn_tasktype: WebMappingRetrieve<msdyn_servicetasktype_Select,msdyn_servicetasktype_Expand,msdyn_servicetasktype_Filter,msdyn_servicetasktype_Fixed,msdyn_servicetasktype_Result,msdyn_servicetasktype_FormattedResult>;
   msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_workorderincident: WebMappingRetrieve<msdyn_workorderincident_Select,msdyn_workorderincident_Expand,msdyn_workorderincident_Filter,msdyn_workorderincident_Fixed,msdyn_workorderincident_Result,msdyn_workorderincident_FormattedResult>;
-  ovs_CaseId: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ovs_Questionnaire: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface msdyn_workorderservicetask_RelatedMany {
   msdyn_workorderservicetask_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   msdyn_workorderservicetask_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
-  msdyn_workorderservicetask_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
-  msdyn_workorderservicetask_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
-  msdyn_workorderservicetask_ovs_CYActions: WebMappingRetrieve<ovs_CYAction_Select,ovs_CYAction_Expand,ovs_CYAction_Filter,ovs_CYAction_Fixed,ovs_CYAction_Result,ovs_CYAction_FormattedResult>;
-  msdyn_workorderservicetask_ovs_cancellationrequests: WebMappingRetrieve<ovs_cancellationrequest_Select,ovs_cancellationrequest_Expand,ovs_cancellationrequest_Filter,ovs_cancellationrequest_Fixed,ovs_cancellationrequest_Result,ovs_cancellationrequest_FormattedResult>;
-  msdyn_workorderservicetask_ovs_revisedquarterrequests: WebMappingRetrieve<ovs_revisedquarterrequest_Select,ovs_revisedquarterrequest_Expand,ovs_revisedquarterrequest_Filter,ovs_revisedquarterrequest_Fixed,ovs_revisedquarterrequest_Result,ovs_revisedquarterrequest_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_workorderservicetasks: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
