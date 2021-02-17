@@ -26,7 +26,8 @@ var ROM;
             }
             // Get Questionnaire definition
             var surveyDefinition = null;
-            Xrm.WebApi.retrieveRecord('ovs_questionnaire', questionnaireId[0].id.substr(1, questionnaireId[0].id.length - 2), '$select=ovs_questionnairedefinition').then(function success(result) {
+            Xrm.WebApi.retrieveRecord('ovs_questionnaire', questionnaireId[0].id.substr(1, questionnaireId[0].id.length - 2))
+                .then(function success(result) {
                 InitiateSurvey(wrCtrl, result.ovs_questionnairedefinition, mode);
             }, function error(error) {
                 Xrm.Navigation.openAlertDialog({ text: error.message });

@@ -82,16 +82,9 @@ interface ovs_Questionnaire_Filter {
   versionnumber: number;
 }
 interface ovs_Questionnaire_Expand {
-  createdby: WebExpand<ovs_Questionnaire_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
-  createdonbehalfby: WebExpand<ovs_Questionnaire_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
-  modifiedby: WebExpand<ovs_Questionnaire_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
-  modifiedonbehalfby: WebExpand<ovs_Questionnaire_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ovs_ServiceTask_Questionnaire: WebExpand<ovs_Questionnaire_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ovs_ServiceTask_Questionnaire: msdyn_workorderservicetask_Result[] }>;
   ovs_incidenttypeservicetask_Questionnaire: WebExpand<ovs_Questionnaire_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { ovs_incidenttypeservicetask_Questionnaire: msdyn_incidenttypeservicetask_Result[] }>;
   ovs_msdyn_servicetasktype_Questionnaire_ovs_Q: WebExpand<ovs_Questionnaire_Expand, msdyn_servicetasktype_Select, msdyn_servicetasktype_Filter, { ovs_msdyn_servicetasktype_Questionnaire_ovs_Q: msdyn_servicetasktype_Result[] }>;
-  ownerid: WebExpand<ovs_Questionnaire_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
-  owningteam: WebExpand<ovs_Questionnaire_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
-  owninguser: WebExpand<ovs_Questionnaire_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
 interface ovs_Questionnaire_FormattedResult {
   createdby_formatted?: string;
@@ -122,13 +115,6 @@ interface ovs_Questionnaire_Result extends ovs_Questionnaire_Base, ovs_Questionn
   owninguser_guid: string | null;
 }
 interface ovs_Questionnaire_RelatedOne {
-  createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface ovs_Questionnaire_RelatedMany {
   ovs_ServiceTask_Questionnaire: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;

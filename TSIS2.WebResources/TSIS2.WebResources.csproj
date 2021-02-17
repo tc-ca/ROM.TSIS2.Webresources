@@ -193,6 +193,7 @@
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
+    <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />

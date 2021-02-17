@@ -21,10 +21,6 @@ interface BookingStatus_Base extends WebEntity {
 }
 interface BookingStatus_Relationships {
   bookingstatus_bookableresourcebooking_BookingStatus?: BookableResourceBooking_Result[] | null;
-  createdbyname?: SystemUser_Result | null;
-  createdonbehalfbyname?: SystemUser_Result | null;
-  modifiedbyname?: SystemUser_Result | null;
-  modifiedonbehalfbyname?: SystemUser_Result | null;
 }
 interface BookingStatus extends BookingStatus_Base, BookingStatus_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -97,13 +93,6 @@ interface BookingStatus_Filter {
 }
 interface BookingStatus_Expand {
   bookingstatus_bookableresourcebooking_BookingStatus: WebExpand<BookingStatus_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { bookingstatus_bookableresourcebooking_BookingStatus: BookableResourceBooking_Result[] }>;
-  createdbyname: WebExpand<BookingStatus_Expand, SystemUser_Select, SystemUser_Filter, { createdbyname: SystemUser_Result }>;
-  createdonbehalfbyname: WebExpand<BookingStatus_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfbyname: SystemUser_Result }>;
-  modifiedbyname: WebExpand<BookingStatus_Expand, SystemUser_Select, SystemUser_Filter, { modifiedbyname: SystemUser_Result }>;
-  modifiedonbehalfbyname: WebExpand<BookingStatus_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfbyname: SystemUser_Result }>;
-  ownerid: WebExpand<BookingStatus_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
-  owningteam: WebExpand<BookingStatus_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
-  owninguser: WebExpand<BookingStatus_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
 interface BookingStatus_FormattedResult {
   createdby_formatted?: string;
@@ -137,13 +126,6 @@ interface BookingStatus_Result extends BookingStatus_Base, BookingStatus_Relatio
   transactioncurrencyid_guid: string | null;
 }
 interface BookingStatus_RelatedOne {
-  createdbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  createdonbehalfbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedonbehalfbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface BookingStatus_RelatedMany {
   bookingstatus_bookableresourcebooking_BookingStatus: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;

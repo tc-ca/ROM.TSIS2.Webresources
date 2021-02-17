@@ -50,6 +50,13 @@ declare namespace Form.msdyn_workorder.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_11 extends Xrm.SectionCollectionBase {
+        get(name: "tab_11_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_5 extends Xrm.SectionCollectionBase {
         get(name: "tab_5_section_2"): Xrm.PageSection;
         get(name: string): undefined;
@@ -149,6 +156,7 @@ declare namespace Form.msdyn_workorder.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Violations"): Xrm.SubGridControl<"qm_syresult">;
+      get(name: "WebResource_Attach2Dynamics"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
       get(name: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;
@@ -257,6 +265,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "f1tab_mainsettings"): Xrm.PageTab<Tabs.f1tab_mainsettings>;
       get(name: "f1tab_record_log"): Xrm.PageTab<Tabs.f1tab_record_log>;
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
+      get(name: "tab_11"): Xrm.PageTab<Tabs.tab_11>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
@@ -332,6 +341,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Violations"): Xrm.SubGridControl<"qm_syresult">;
+    getControl(controlName: "WebResource_Attach2Dynamics"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
     getControl(controlName: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;

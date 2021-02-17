@@ -52,27 +52,11 @@ interface Appointment_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface Appointment_Relationships {
-  appointment_PostFollows?: PostFollow_Result[] | null;
-  appointment_activity_parties?: ActivityParty_Result[] | null;
-  appointment_connections1?: Connection_Result[] | null;
-  appointment_connections2?: Connection_Result[] | null;
-  createdby_appointment?: SystemUser_Result | null;
-  createdonbehalfby_appointment?: SystemUser_Result | null;
-  modifiedby_appointment?: SystemUser_Result | null;
-  modifiedonbehalfby_appointment?: SystemUser_Result | null;
   msdyn_appointment_bookableresourcebooking?: BookableResourceBooking_Result[] | null;
-  ownerid_appointment?: Team_Result | null;
-  ownerid_appointment1?: SystemUser_Result | null;
-  owningteam_appointment?: Team_Result | null;
-  owninguser_appointment?: SystemUser_Result | null;
-  regardingobjectid_account_appointment?: Account_Result | null;
   regardingobjectid_bookableresourcebooking_appointment?: BookableResourceBooking_Result | null;
-  regardingobjectid_contact_appointment?: Contact_Result | null;
-  regardingobjectid_incident_appointment?: Incident_Result | null;
   regardingobjectid_msdyn_workorder_appointment?: msdyn_workorder_Result | null;
   regardingobjectid_msdyn_workorderincident_appointment?: msdyn_workorderincident_Result | null;
   regardingobjectid_msdyn_workorderservicetask_appointment?: msdyn_workorderservicetask_Result | null;
-  regardingobjectid_ovs_cysafetyassessment_appointment?: ovs_CYSafetyAssessment_Result | null;
 }
 interface Appointment extends Appointment_Base, Appointment_Relationships {
   ownerid_appointment_bind$systemusers?: string | null;
@@ -313,26 +297,11 @@ interface Appointment_Filter {
   versionnumber: number;
 }
 interface Appointment_Expand {
-  appointment_PostFollows: WebExpand<Appointment_Expand, PostFollow_Select, PostFollow_Filter, { appointment_PostFollows: PostFollow_Result[] }>;
-  appointment_activity_parties: WebExpand<Appointment_Expand, ActivityParty_Select, ActivityParty_Filter, { appointment_activity_parties: ActivityParty_Result[] }>;
-  appointment_connections1: WebExpand<Appointment_Expand, Connection_Select, Connection_Filter, { appointment_connections1: Connection_Result[] }>;
-  appointment_connections2: WebExpand<Appointment_Expand, Connection_Select, Connection_Filter, { appointment_connections2: Connection_Result[] }>;
-  createdby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { createdby_appointment: SystemUser_Result }>;
-  createdonbehalfby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby_appointment: SystemUser_Result }>;
-  modifiedby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby_appointment: SystemUser_Result }>;
-  modifiedonbehalfby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_appointment: SystemUser_Result }>;
   msdyn_appointment_bookableresourcebooking: WebExpand<Appointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_appointment_bookableresourcebooking: BookableResourceBooking_Result[] }>;
-  ownerid_appointment: WebExpand<Appointment_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid_appointment: SystemUser_Result } & { ownerid_appointment: Team_Result }>;
-  owningteam_appointment: WebExpand<Appointment_Expand, Team_Select, Team_Filter, { owningteam_appointment: Team_Result }>;
-  owninguser_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_appointment: SystemUser_Result }>;
-  regardingobjectid_account_appointment: WebExpand<Appointment_Expand, Account_Select, Account_Filter, { regardingobjectid_account_appointment: Account_Result }>;
   regardingobjectid_bookableresourcebooking_appointment: WebExpand<Appointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { regardingobjectid_bookableresourcebooking_appointment: BookableResourceBooking_Result }>;
-  regardingobjectid_contact_appointment: WebExpand<Appointment_Expand, Contact_Select, Contact_Filter, { regardingobjectid_contact_appointment: Contact_Result }>;
-  regardingobjectid_incident_appointment: WebExpand<Appointment_Expand, Incident_Select, Incident_Filter, { regardingobjectid_incident_appointment: Incident_Result }>;
   regardingobjectid_msdyn_workorder_appointment: WebExpand<Appointment_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder_appointment: msdyn_workorder_Result }>;
   regardingobjectid_msdyn_workorderincident_appointment: WebExpand<Appointment_Expand, msdyn_workorderincident_Select, msdyn_workorderincident_Filter, { regardingobjectid_msdyn_workorderincident_appointment: msdyn_workorderincident_Result }>;
   regardingobjectid_msdyn_workorderservicetask_appointment: WebExpand<Appointment_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { regardingobjectid_msdyn_workorderservicetask_appointment: msdyn_workorderservicetask_Result }>;
-  regardingobjectid_ovs_cysafetyassessment_appointment: WebExpand<Appointment_Expand, ovs_CYSafetyAssessment_Select, ovs_CYSafetyAssessment_Filter, { regardingobjectid_ovs_cysafetyassessment_appointment: ovs_CYSafetyAssessment_Result }>;
 }
 interface Appointment_FormattedResult {
   actualend_formatted?: string;
@@ -388,28 +357,12 @@ interface Appointment_Result extends Appointment_Base, Appointment_Relationships
   transactioncurrencyid_guid: string | null;
 }
 interface Appointment_RelatedOne {
-  createdby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  createdonbehalfby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedonbehalfby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid_appointment: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  ownerid_appointment1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  owningteam_appointment: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owninguser_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  regardingobjectid_account_appointment: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   regardingobjectid_bookableresourcebooking_appointment: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
-  regardingobjectid_contact_appointment: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
-  regardingobjectid_incident_appointment: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   regardingobjectid_msdyn_workorder_appointment: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   regardingobjectid_msdyn_workorderincident_appointment: WebMappingRetrieve<msdyn_workorderincident_Select,msdyn_workorderincident_Expand,msdyn_workorderincident_Filter,msdyn_workorderincident_Fixed,msdyn_workorderincident_Result,msdyn_workorderincident_FormattedResult>;
   regardingobjectid_msdyn_workorderservicetask_appointment: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
-  regardingobjectid_ovs_cysafetyassessment_appointment: WebMappingRetrieve<ovs_CYSafetyAssessment_Select,ovs_CYSafetyAssessment_Expand,ovs_CYSafetyAssessment_Filter,ovs_CYSafetyAssessment_Fixed,ovs_CYSafetyAssessment_Result,ovs_CYSafetyAssessment_FormattedResult>;
 }
 interface Appointment_RelatedMany {
-  appointment_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
-  appointment_activity_parties: WebMappingRetrieve<ActivityParty_Select,ActivityParty_Expand,ActivityParty_Filter,ActivityParty_Fixed,ActivityParty_Result,ActivityParty_FormattedResult>;
-  appointment_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
-  appointment_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_appointment_bookableresourcebooking: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
