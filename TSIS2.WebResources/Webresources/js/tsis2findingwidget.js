@@ -1,4 +1,4 @@
-﻿var widget = {
+﻿﻿var widget = {
     //the widget name. It should be unique and written in lowcase.
     name: "finding",
     //the widget title. It is how it will appear on the toolbox of the SurveyJS Editor/Builder
