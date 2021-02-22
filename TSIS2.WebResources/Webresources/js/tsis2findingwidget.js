@@ -32,7 +32,7 @@
             { name: "reference" },
             { name: "nameID" },
             { name: "inspectorComments", default: "test" },
-            { name: "file" }
+            { name: "file"}
         ], null, "text");
 
     },
@@ -40,21 +40,25 @@
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        '<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">Inspector Comments</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50"></textarea> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">Documentary Evidence</span> </label> <input type="file" class="sv_q_file_input file" style="padding-top: 2px;"></input> </div> </div>',
+        '<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">Inspector Comments</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50"></textarea> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">Documentary Evidence</span> </label> <input type="file" class="sv_q_file_input file" multiple="true" style="padding-top: 2px;"></input><p class="evidenceText"></p> </div> </div>',
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         //el is our root element in htmlTemplate, is "div" in our case
         //get the text element
         var comments = el.getElementsByClassName("inspectorComments")[0];
         var file = el.getElementsByClassName("file")[0];
+        var fileText = el.getElementsByClassName("evidenceText")[0];
+        var fileArray = [];
 
         //The form has data to load
         if (question.value != null) {
             //Populate question property and form value
             question.inspectorComments = question.value.comments || "";
             comments.value = question.value.comments || "";
-
-            //TODO Populate file with existing file path
+            
+            question.file = question.value.documentaryEvidence || [];
+            fileArray = question.value.documentaryEvidence || [];
+            fileText.innerText = question.value.documentaryEvidence || [];
         }
 
         comments.onchange = function () {
@@ -68,12 +72,16 @@
         }
 
         file.onchange = function () {
-            question.file = file.value;
+            for (var i = 0; i < file.files.length; i++) {
+                fileArray.push(file.files[i].name);
+            }
+            fileText.innerText = fileArray;
+            question.file = fileArray;
             question.value = {
                 provisionReference: question.reference,
                 provisionText: question.description,
                 comments: comments.value,
-                documentaryEvidence: question.file
+                documentaryEvidence: fileArray
             }
         }
 

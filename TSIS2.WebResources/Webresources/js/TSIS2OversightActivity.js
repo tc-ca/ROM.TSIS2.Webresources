@@ -1,6 +1,9 @@
 function readOnlyOnClosed(eContext, keepLockedList, keepUnlockedList) {
+  var formContext = eContext.getFormContext();
   let isClosed = recordIsClosed(eContext);
   toggleDisabledAllControls(eContext, isClosed, keepLockedList, keepUnlockedList);
+  RefreshGridRibbon(formContext, 'workorderservicetasksgrid2');
+  RefreshGridRibbon(formContext, 'workorderservicetasksgrid');
 }
 
 function recordIsClosed(eContext) {
@@ -20,23 +23,29 @@ function toggleDisabledAllControls(eContext, disable, keepLockedList, keepUnlock
       control.setDisabled(disable);
     }
   });
-//Lock everything in KeepLockedList
-if (keepLockedList) {
-  keepLockedList.forEach(function (attributeName) {
-    var control = formContext.getControl(attributeName);
-    if (control) {
-      control.setDisabled(true);
-    }
-  });
+  //Lock everything in KeepLockedList
+  if (keepLockedList) {
+    keepLockedList.forEach(function (attributeName) {
+      var control = formContext.getControl(attributeName);
+      if (control) {
+        control.setDisabled(true);
+      }
+    });
+  }
+
+  //Unlock everything in KeepUnlockedList
+  if (keepUnlockedList) {
+    keepUnlockedList.forEach(function (attributeName) {
+      var control = formContext.getControl(attributeName);
+      if (control) {
+        control.setDisabled(false);
+      }
+    });
+  }
 }
 
-//Unlock everything in KeepUnlockedList
-if (keepUnlockedList) {
-  keepUnlockedList.forEach(function (attributeName) {
-    var control = formContext.getControl(attributeName);
-    if (control) {
-      control.setDisabled(false);
-    }
-  });
-}
+function RefreshGridRibbon(formContext, gridName) {
+  var gridContext = formContext.getControl(gridName);
+  if (gridContext == null || gridContext == 'undefined') return;
+  gridContext.refreshRibbon();
 }
