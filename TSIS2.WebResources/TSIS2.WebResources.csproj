@@ -150,7 +150,6 @@
     <Content Include="Webresources\js\surveycreator.js" />
     <Content Include="Webresources\js\surveyRender.js" />
     <Content Include="Webresources\js\tsis2findingwidget.js" />
-    <Content Include="Webresources\js\TSIS2OversightActivity.js" />
     <Content Include="Webresources\js\WorkOrder.js" />
     <Content Include="Webresources\js\WorkOrderServiceTask.js" />
     <Content Include="XrmDefinitelyTyped\FSharp.Core.dll" />
