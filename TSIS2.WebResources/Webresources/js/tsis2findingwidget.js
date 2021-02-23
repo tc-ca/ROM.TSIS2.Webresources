@@ -128,7 +128,7 @@ function updateQuestionProvisionData(question, provisionName) {
     if (question.nameID == null) {
         question.nameID = question.id;
     }
-    parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${provisionName}'`).then(
+    parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${provisionName}'`).then(
         async function success(result) {
             if (result.entities.length > 0) {
                 question.title = result.entities[0].qm_name;
@@ -154,53 +154,70 @@ function updateQuestionProvisionData(question, provisionName) {
 }
 
 async function buildProvisionText(provision) {
+    let lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
     let provisionText = "";
     provision.qm_name = `<mark>${provision.qm_name}</mark>`;
-    provisionText += await gatherAncestorProvisionText(provision);
-    provisionText += await gatherDescendentProvisionText(provision);
+    provisionText += await gatherAncestorProvisionText(provision, lang);
+    provisionText += await gatherDescendentProvisionText(provision, lang);
     return provisionText;
 }
 
-async function gatherAncestorProvisionText(provision) {
-    let provisionText = provision.qm_legislationetxt || "";
+async function gatherAncestorProvisionText(provision, lang) {
+    //If language is French, use the french text if it exists, else use English. Empty string if it's null.
+    let provisionText = "";
+    if (lang == 1036) {
+        provisionText = provision.qm_legislationftxt || provision.qm_legislationetxt || "";
+    } else {
+        provisionText = provision.qm_legislationetxt || "";
+    }
     let provisionType = provision[`_qm_tylegislationtypeid_value@OData.Community.Display.V1.FormattedValue`];
+
+    //Base case. Body provisions don't have any text to display.
     if (provisionType == "Body") {
         return "";
     }
+    //Base case. Headings are bold, and have no legislation text next to them
     if (provisionType == "Heading") {
         return `<strong>${provision.qm_name}</strong></br>`;
     }
     let parent = await getParentProvision(provision);
-    return await gatherAncestorProvisionText(parent) + `<strong>${provision.qm_name}</strong>: ${provisionText}</br>`;
+    return await gatherAncestorProvisionText(parent, lang) + `<strong>${provision.qm_name}</strong>: ${provisionText}</br>`;
 }
 
-async function gatherDescendentProvisionText(provision) {
+async function gatherDescendentProvisionText(provision, lang) {
     let children = await getChildrenProvisions(provision);
+    //Base case. Provision has no children.
     if (children.length == 0) {
         return "";
     }
     let provisionText = "<ul style='list-style-type:none;'>";
     for (var i in children) {
-        let childText = children[i].qm_legislationetxt || "";
-        provisionText += `<li><strong>${children[i].qm_legislationlbl}</strong> ${childText}</li>` + await gatherDescendentProvisionText(children[i]);
+        //If language is French, use the french text, else use English. Empty string if it's null.
+        let childText = "";
+        if (lang == 1036) {
+            childText = children[i].qm_legislationftxt || children[i].qm_legislationetxt || "";
+        } else {
+            childText = children[i].qm_legislationetxt || "";
+        }
+        provisionText += `<li><strong>${children[i].qm_legislationlbl}</strong> ${childText}</li>` + await gatherDescendentProvisionText(children[i], lang);
     }
     provisionText += "</ul>";
     return provisionText;
 }
 
 async function getParentProvision(provision) {
-    var result = await parent.Xrm.WebApi.retrieveRecord("qm_rclegislation", provision._qm_rcparentlegislationid_value, `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value`);
+    var result = await parent.Xrm.WebApi.retrieveRecord("qm_rclegislation", provision._qm_rcparentlegislationid_value, `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value`);
     return result;
 }
 
 async function getSiblingProvisions(provision) {
-    var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,qm_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision._qm_rcparentlegislationid_value}'`);
+    var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,qm_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision._qm_rcparentlegislationid_value}'`);
     //results.entities.sort(function(a,b){return a.qm_ordernbr - b.qm_ordernbr});
     return results.entities;
 }
 
 async function getChildrenProvisions(provision) {
-    var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,qm_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision.qm_rclegislationid}'`);
+    var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,qm_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision.qm_rclegislationid}'`);
     //results.entities.sort(function(a,b){return a.qm_ordernbr - b.qm_ordernbr});
     return results.entities;
 } 
