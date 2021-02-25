@@ -20,6 +20,36 @@ namespace ROM.WorkOrder {
         }
     }
 
+    export function operationTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.TSISOversightActivityOpTest>eContext.getFormContext();
+            const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
+
+            if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
+
+                const viewId = form.getControl("msdyn_billingaccount").getDefaultView();
+                const entityName = "account";
+                const viewDisplayName = "Filtered Regulated Entities";
+
+                const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /><cell name="owner" width="125" /></row></grid>';
+
+                // If an operation type is selected, we use the filtered fetchxml, otherwise, use the default
+                let fetchXml = ""
+                if (operationTypeAttribute.getValue() != null && operationTypeAttribute.getValue() != undefined) {
+                    fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ae"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttribute.getValue()[0].id + '" /></filter></link-entity></entity></fetch>';
+                } else {
+                    fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="account"><attribute name="name" /><attribute name="accountid" /><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000" /></filter></entity></fetch>';
+                }
+
+                form.getControl("msdyn_billingaccount").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
+    }
+
     export function fiscalYearOnchange(eContext: Xrm.ExecutionContext<any, any>): void {
         //if new fiscal year is selected, then previous selection of quarter no longer corresponds
         removeSelectedFiscalQuarter(eContext);
@@ -62,4 +92,4 @@ namespace ROM.WorkOrder {
         }
         return false;
     }
-}
+  }

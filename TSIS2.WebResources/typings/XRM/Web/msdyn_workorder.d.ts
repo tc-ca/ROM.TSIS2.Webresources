@@ -109,7 +109,6 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   msdyn_workorderarrivaltimekpiid_bind$slakpiinstances?: string | null;
   msdyn_workorderresolutionkpiid_bind$slakpiinstances?: string | null;
   msdyn_workordertype_bind$msdyn_workordertypes?: string | null;
-  ovs_Country_bind$tc_countries?: string | null;
   ovs_CurrentFiscalQuarter_bind$tc_tcfiscalquarters?: string | null;
   ovs_FiscalQuarter_bind$tc_tcfiscalquarters?: string | null;
   ovs_FiscalYear_bind$tc_tcfiscalyears?: string | null;
@@ -121,6 +120,8 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ovs_SecondaryInspector_bind$bookableresources?: string | null;
   ovs_SiteofViolation_bind$accounts?: string | null;
   ovs_TYRational_bind$ovs_tyrationals?: string | null;
+  ovs_operationtypeid_bind$ovs_operationtypes?: string | null;
+  ovs_ovsCountry_bind$ovs_countries?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   stageid_bind$processstages?: string | null;
@@ -211,14 +212,15 @@ interface msdyn_workorder_Select {
   msdyn_workordersummary: WebAttribute<msdyn_workorder_Select, { msdyn_workordersummary: string | null }, {  }>;
   msdyn_workordertype_guid: WebAttribute<msdyn_workorder_Select, { msdyn_workordertype_guid: string | null }, { msdyn_workordertype_formatted?: string }>;
   overriddencreatedon: WebAttribute<msdyn_workorder_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
-  ovs_country_guid: WebAttribute<msdyn_workorder_Select, { ovs_country_guid: string | null }, { ovs_country_formatted?: string }>;
   ovs_currentfiscalquarter_guid: WebAttribute<msdyn_workorder_Select, { ovs_currentfiscalquarter_guid: string | null }, { ovs_currentfiscalquarter_formatted?: string }>;
   ovs_fiscalquarter_guid: WebAttribute<msdyn_workorder_Select, { ovs_fiscalquarter_guid: string | null }, { ovs_fiscalquarter_formatted?: string }>;
   ovs_fiscalyear_guid: WebAttribute<msdyn_workorder_Select, { ovs_fiscalyear_guid: string | null }, { ovs_fiscalyear_formatted?: string }>;
   ovs_iisid: WebAttribute<msdyn_workorder_Select, { ovs_iisid: string | null }, {  }>;
   ovs_mocid: WebAttribute<msdyn_workorder_Select, { ovs_mocid: string | null }, {  }>;
   ovs_operationid_guid: WebAttribute<msdyn_workorder_Select, { ovs_operationid_guid: string | null }, { ovs_operationid_formatted?: string }>;
+  ovs_operationtypeid_guid: WebAttribute<msdyn_workorder_Select, { ovs_operationtypeid_guid: string | null }, { ovs_operationtypeid_formatted?: string }>;
   ovs_oversighttype_guid: WebAttribute<msdyn_workorder_Select, { ovs_oversighttype_guid: string | null }, { ovs_oversighttype_formatted?: string }>;
+  ovs_ovscountry_guid: WebAttribute<msdyn_workorder_Select, { ovs_ovscountry_guid: string | null }, { ovs_ovscountry_formatted?: string }>;
   ovs_primaryinspector_guid: WebAttribute<msdyn_workorder_Select, { ovs_primaryinspector_guid: string | null }, { ovs_primaryinspector_formatted?: string }>;
   ovs_rational_guid: WebAttribute<msdyn_workorder_Select, { ovs_rational_guid: string | null }, { ovs_rational_formatted?: string }>;
   ovs_revisedquarterid_guid: WebAttribute<msdyn_workorder_Select, { ovs_revisedquarterid_guid: string | null }, { ovs_revisedquarterid_formatted?: string }>;
@@ -325,14 +327,15 @@ interface msdyn_workorder_Filter {
   msdyn_workordersummary: string;
   msdyn_workordertype_guid: XQW.Guid;
   overriddencreatedon: Date;
-  ovs_country_guid: XQW.Guid;
   ovs_currentfiscalquarter_guid: XQW.Guid;
   ovs_fiscalquarter_guid: XQW.Guid;
   ovs_fiscalyear_guid: XQW.Guid;
   ovs_iisid: string;
   ovs_mocid: string;
   ovs_operationid_guid: XQW.Guid;
+  ovs_operationtypeid_guid: XQW.Guid;
   ovs_oversighttype_guid: XQW.Guid;
+  ovs_ovscountry_guid: XQW.Guid;
   ovs_primaryinspector_guid: XQW.Guid;
   ovs_rational_guid: XQW.Guid;
   ovs_revisedquarterid_guid: XQW.Guid;
@@ -359,7 +362,12 @@ interface msdyn_workorder_Filter {
   versionnumber: number;
 }
 interface msdyn_workorder_Expand {
+  createdby: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
+  createdonbehalfby: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
+  modifiedby: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
+  modifiedonbehalfby: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_SupportContact: WebExpand<msdyn_workorder_Expand, BookableResource_Select, BookableResource_Filter, { msdyn_SupportContact: BookableResource_Result }>;
+  msdyn_closedby: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { msdyn_closedby: SystemUser_Result }>;
   msdyn_msdyn_workorder_bookableresourcebooking_WorkOrder: WebExpand<msdyn_workorder_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_msdyn_workorder_bookableresourcebooking_WorkOrder: BookableResourceBooking_Result[] }>;
   msdyn_msdyn_workorder_msdyn_workorder_ParentWorkOrder: WebExpand<msdyn_workorder_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_msdyn_workorder_msdyn_workorder_ParentWorkOrder: msdyn_workorder_Result[] }>;
   msdyn_msdyn_workorder_msdyn_workorderincident_WorkOrder: WebExpand<msdyn_workorder_Expand, msdyn_workorderincident_Select, msdyn_workorderincident_Filter, { msdyn_msdyn_workorder_msdyn_workorderincident_WorkOrder: msdyn_workorderincident_Result[] }>;
@@ -374,6 +382,8 @@ interface msdyn_workorder_Expand {
   ovs_PrimaryInspector: WebExpand<msdyn_workorder_Expand, BookableResource_Select, BookableResource_Filter, { ovs_PrimaryInspector: BookableResource_Result }>;
   ovs_RevisedQuarterId: WebExpand<msdyn_workorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_RevisedQuarterId: tc_TCFiscalQuarter_Result }>;
   ovs_SecondaryInspector: WebExpand<msdyn_workorder_Expand, BookableResource_Select, BookableResource_Filter, { ovs_SecondaryInspector: BookableResource_Result }>;
+  ownerid: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  owninguser: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
 interface msdyn_workorder_FormattedResult {
   createdby_formatted?: string;
@@ -427,12 +437,13 @@ interface msdyn_workorder_FormattedResult {
   msdyn_workorderresolutionkpiid_formatted?: string;
   msdyn_workordertype_formatted?: string;
   overriddencreatedon_formatted?: string;
-  ovs_country_formatted?: string;
   ovs_currentfiscalquarter_formatted?: string;
   ovs_fiscalquarter_formatted?: string;
   ovs_fiscalyear_formatted?: string;
   ovs_operationid_formatted?: string;
+  ovs_operationtypeid_formatted?: string;
   ovs_oversighttype_formatted?: string;
+  ovs_ovscountry_formatted?: string;
   ovs_primaryinspector_formatted?: string;
   ovs_rational_formatted?: string;
   ovs_revisedquarterid_formatted?: string;
@@ -480,12 +491,13 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   msdyn_workorderarrivaltimekpiid_guid: string | null;
   msdyn_workorderresolutionkpiid_guid: string | null;
   msdyn_workordertype_guid: string | null;
-  ovs_country_guid: string | null;
   ovs_currentfiscalquarter_guid: string | null;
   ovs_fiscalquarter_guid: string | null;
   ovs_fiscalyear_guid: string | null;
   ovs_operationid_guid: string | null;
+  ovs_operationtypeid_guid: string | null;
   ovs_oversighttype_guid: string | null;
+  ovs_ovscountry_guid: string | null;
   ovs_primaryinspector_guid: string | null;
   ovs_rational_guid: string | null;
   ovs_revisedquarterid_guid: string | null;
@@ -499,7 +511,12 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   transactioncurrencyid_guid: string | null;
 }
 interface msdyn_workorder_RelatedOne {
+  createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_SupportContact: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
+  msdyn_closedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_parentworkorder_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_preferredresource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   ovs_CurrentFiscalQuarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
@@ -508,6 +525,8 @@ interface msdyn_workorder_RelatedOne {
   ovs_PrimaryInspector: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   ovs_RevisedQuarterId: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ovs_SecondaryInspector: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface msdyn_workorder_RelatedMany {
   msdyn_msdyn_workorder_bookableresourcebooking_WorkOrder: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
