@@ -122,6 +122,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ovs_TYRational_bind$ovs_tyrationals?: string | null;
   ovs_operationtypeid_bind$ovs_operationtypes?: string | null;
   ovs_ovsCountry_bind$ovs_countries?: string | null;
+  ovs_regulatedentity_bind$accounts?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   stageid_bind$processstages?: string | null;
@@ -223,6 +224,7 @@ interface msdyn_workorder_Select {
   ovs_ovscountry_guid: WebAttribute<msdyn_workorder_Select, { ovs_ovscountry_guid: string | null }, { ovs_ovscountry_formatted?: string }>;
   ovs_primaryinspector_guid: WebAttribute<msdyn_workorder_Select, { ovs_primaryinspector_guid: string | null }, { ovs_primaryinspector_formatted?: string }>;
   ovs_rational_guid: WebAttribute<msdyn_workorder_Select, { ovs_rational_guid: string | null }, { ovs_rational_formatted?: string }>;
+  ovs_regulatedentity_guid: WebAttribute<msdyn_workorder_Select, { ovs_regulatedentity_guid: string | null }, { ovs_regulatedentity_formatted?: string }>;
   ovs_revisedquarterid_guid: WebAttribute<msdyn_workorder_Select, { ovs_revisedquarterid_guid: string | null }, { ovs_revisedquarterid_formatted?: string }>;
   ovs_rolluptestdeletemeafter: WebAttribute<msdyn_workorder_Select, { ovs_rolluptestdeletemeafter: Date | null }, { ovs_rolluptestdeletemeafter_formatted?: string }>;
   ovs_rolluptestdeletemeafter_date: WebAttribute<msdyn_workorder_Select, { ovs_rolluptestdeletemeafter_date: Date | null }, { ovs_rolluptestdeletemeafter_date_formatted?: string }>;
@@ -338,6 +340,7 @@ interface msdyn_workorder_Filter {
   ovs_ovscountry_guid: XQW.Guid;
   ovs_primaryinspector_guid: XQW.Guid;
   ovs_rational_guid: XQW.Guid;
+  ovs_regulatedentity_guid: XQW.Guid;
   ovs_revisedquarterid_guid: XQW.Guid;
   ovs_rolluptestdeletemeafter: Date;
   ovs_rolluptestdeletemeafter_date: Date;
@@ -446,6 +449,7 @@ interface msdyn_workorder_FormattedResult {
   ovs_ovscountry_formatted?: string;
   ovs_primaryinspector_formatted?: string;
   ovs_rational_formatted?: string;
+  ovs_regulatedentity_formatted?: string;
   ovs_revisedquarterid_formatted?: string;
   ovs_rolluptestdeletemeafter_date_formatted?: string;
   ovs_rolluptestdeletemeafter_formatted?: string;
@@ -500,6 +504,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ovs_ovscountry_guid: string | null;
   ovs_primaryinspector_guid: string | null;
   ovs_rational_guid: string | null;
+  ovs_regulatedentity_guid: string | null;
   ovs_revisedquarterid_guid: string | null;
   ovs_secondaryinspector_guid: string | null;
   ovs_siteofviolation_guid: string | null;
