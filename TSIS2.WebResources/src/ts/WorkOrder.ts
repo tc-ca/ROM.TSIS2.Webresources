@@ -29,9 +29,15 @@ namespace ROM.WorkOrder {
             if (regionAttribute != null && regionAttribute != undefined) {
 
                 // Clear out all dependent fields' value
-                form.getAttribute("ovs_operationtypeid").setValue(null);
-                form.getAttribute("msdyn_billingaccount").setValue(null);
-                form.getAttribute("msdyn_serviceaccount").setValue(null);
+                if (!form.getControl("ovs_operationtypeid").getDisabled() || form.getAttribute("ovs_operationtypeid").getValue() != null) {
+                    form.getAttribute("ovs_operationtypeid").setValue(null);
+                }
+                if (!form.getControl("msdyn_billingaccount").getDisabled() || form.getAttribute("msdyn_billingaccount").getValue() != null) {
+                    form.getAttribute("msdyn_billingaccount").setValue(null);
+                }
+                if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
+                    form.getAttribute("msdyn_serviceaccount").setValue(null);
+                }
 
                 // Disable all dependent fields
                 form.getControl("ovs_operationtypeid").setDisabled(true);
@@ -71,8 +77,12 @@ namespace ROM.WorkOrder {
             if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
 
                 // Clear out all dependent fields' value
-                form.getAttribute("msdyn_billingaccount").setValue(null);
-                form.getAttribute("msdyn_serviceaccount").setValue(null);
+                if (!form.getControl("msdyn_billingaccount").getDisabled() || form.getAttribute("msdyn_billingaccount").getValue() != null) {
+                    form.getAttribute("msdyn_billingaccount").setValue(null);
+                }
+                if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
+                    form.getAttribute("msdyn_serviceaccount").setValue(null);
+                }
 
                 // Disable all dependent fields
                 form.getControl("msdyn_billingaccount").setDisabled(true);
@@ -111,7 +121,9 @@ namespace ROM.WorkOrder {
             if (regulatedEntityAttribute != null && regulatedEntityAttribute != undefined) {
 
                 // Clear out all dependent fields' value
-                form.getAttribute("msdyn_serviceaccount").setValue(null);
+                if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
+                    form.getAttribute("msdyn_serviceaccount").setValue(null);
+                }
 
                 // Disable all dependent fields
                 form.getControl("msdyn_serviceaccount").setDisabled(true);
