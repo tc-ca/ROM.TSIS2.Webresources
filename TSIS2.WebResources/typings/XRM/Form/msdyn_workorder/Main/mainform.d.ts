@@ -1,5 +1,5 @@
 declare namespace Form.msdyn_workorder.Main {
-  namespace mainform {
+  namespace Mainform {
     namespace Tabs {
       interface DeviceInsightsTab extends Xrm.SectionCollectionBase {
         get(name: "DeviceInsightsSection"): Xrm.PageSection;
@@ -250,7 +250,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface mainform extends Xrm.PageBase<mainform.Attributes,mainform.Tabs,mainform.Controls> {
+  interface Mainform extends Xrm.PageBase<Mainform.Attributes,Mainform.Tabs,Mainform.Controls> {
     getAttribute(attributeName: "createdby"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "createdon"): Xrm.DateAttribute;
     getAttribute(attributeName: "modifiedby"): Xrm.LookupAttribute<"systemuser">;
