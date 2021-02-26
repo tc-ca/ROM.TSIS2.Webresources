@@ -142,6 +142,9 @@ creator
             .onTextMarkdown
             .add(doMarkdown);
     });
+    creator
+    .toolbox
+    .orderedQuestions = ["radiogroup", "checkbox", "dropdown", "finding", "comment", "image", "imagepicker", "file", "boolean", "text", "multipletext", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic" , "flowpanel"];
 
 
 //When the provision is changed, update the question's data
