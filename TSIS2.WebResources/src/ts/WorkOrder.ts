@@ -20,6 +20,40 @@ namespace ROM.WorkOrder {
         }
     }
 
+    export function regionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.TSISOversightActivityOpTest>eContext.getFormContext();
+            const regionAttribute = form.getAttribute("msdyn_serviceterritory");
+
+            if (regionAttribute != null && regionAttribute != undefined) {
+
+                // Set the dependent control that uses this lookup field.
+                const dependentControl = form.getControl("ovs_operationtypeid");
+
+                // If a region is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent field
+                if (regionAttribute.getValue() != null && regionAttribute.getValue() != undefined) {
+                    dependentControl.setDisabled(false);
+
+                    // Setup a custom view
+                    // This value is never saved and only needs to be unique among the other available views for the lookup.
+                    const viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE98}';
+                    const entityName = "ovs_operationtype";
+                    const viewDisplayName = "Filtered Operation Types";
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid" /><attribute name="ovs_name" /><order attribute="ovs_name" descending="false" /><link-entity name="ovs_operation" from="ovs_operationtypeid" to="ovs_operationtypeid" link-type="inner" alias="al"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="am"><filter type="and"><condition attribute="territoryid" operator="eq"  value="' + regionAttribute.getValue()[0].id  + '" /></filter></link-entity></link-entity></entity></fetch>';
+                    const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /><cell name="owner" width="125" /></row></grid>';
+                    dependentControl.addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                } else {
+                    form.getAttribute("ovs_operationtypeid").setValue(null);
+                    dependentControl.setDisabled(true);
+                }
+
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
+    }
+
     export function operationTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
