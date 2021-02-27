@@ -8,15 +8,19 @@ namespace ROM.WorkOrder {
             //Create
             case 1:
                 setDefaultFiscalYear(form);
-            default:
-                break;
-        }
 
-        if (!userHasRole("ROM Manager") && !userHasRole("ROM Planner")) {
-            form.getControl("ovs_revisedquarterid").setDisabled(true);
-        }
-        else {
-            form.getControl("ovs_revisedquarterid").setDisabled(false);
+                // Disable all operation related fields
+                form.getControl("ovs_operationtypeid").setDisabled(true);
+                form.getControl("ovs_regulatedentity").setDisabled(true);
+                form.getControl("msdyn_serviceaccount").setDisabled(true);
+                break;
+            default:
+
+                // Enable all operation related fields
+                form.getControl("ovs_operationtypeid").setDisabled(false);
+                form.getControl("ovs_regulatedentity").setDisabled(false);
+                form.getControl("msdyn_serviceaccount").setDisabled(false);
+                break;
         }
     }
 
@@ -187,16 +191,5 @@ namespace ROM.WorkOrder {
     function removeSelectedFiscalQuarter(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
         form.getAttribute('ovs_fiscalquarter').setValue(null);
-    }
-
-    function userHasRole(roleName): boolean {
-        var currentUserRoles = Xrm.Utility.getGlobalContext().userSettings.roles.get();
-        for (var i = 0; i < currentUserRoles.length; i++) {
-            var userRoleName = currentUserRoles[i].name;
-            if (userRoleName == roleName) {
-                return true;
-            }
-        }
-        return false;
     }
   }

@@ -11,14 +11,17 @@ var ROM;
                 //Create
                 case 1:
                     setDefaultFiscalYear(form);
-                default:
+                    // Disable all operation related fields
+                    form.getControl("ovs_operationtypeid").setDisabled(true);
+                    form.getControl("ovs_regulatedentity").setDisabled(true);
+                    form.getControl("msdyn_serviceaccount").setDisabled(true);
                     break;
-            }
-            if (!userHasRole("ROM Manager") && !userHasRole("ROM Planner")) {
-                form.getControl("ovs_revisedquarterid").setDisabled(true);
-            }
-            else {
-                form.getControl("ovs_revisedquarterid").setDisabled(false);
+                default:
+                    // Enable all operation related fields
+                    form.getControl("ovs_operationtypeid").setDisabled(false);
+                    form.getControl("ovs_regulatedentity").setDisabled(false);
+                    form.getControl("msdyn_serviceaccount").setDisabled(false);
+                    break;
             }
         }
         WorkOrder.onLoad = onLoad;
@@ -168,16 +171,6 @@ var ROM;
         function removeSelectedFiscalQuarter(eContext) {
             var form = eContext.getFormContext();
             form.getAttribute('ovs_fiscalquarter').setValue(null);
-        }
-        function userHasRole(roleName) {
-            var currentUserRoles = Xrm.Utility.getGlobalContext().userSettings.roles.get();
-            for (var i = 0; i < currentUserRoles.length; i++) {
-                var userRoleName = currentUserRoles[i].name;
-                if (userRoleName == roleName) {
-                    return true;
-                }
-            }
-            return false;
         }
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));
