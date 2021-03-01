@@ -11,6 +11,7 @@ var ROM;
                 //Create
                 case 1:
                     setDefaultFiscalYear(form);
+                    setRegion(form);
                     // Disable all operation related fields
                     form.getControl("ovs_operationtypeid").setDisabled(true);
                     form.getControl("ovs_regulatedentity").setDisabled(true);
@@ -171,6 +172,27 @@ var ROM;
         function removeSelectedFiscalQuarter(eContext) {
             var form = eContext.getFormContext();
             form.getAttribute('ovs_fiscalquarter').setValue(null);
+        }
+        function setRegion(form) {
+            var currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId;
+            currentUserId = currentUserId.replace(/[{}]/g, "");
+            Xrm.WebApi.online.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(function success(result) {
+                if (result != null && result["_territoryid_value"] != null) {
+                    var _territoryid_value = result["_territoryid_value"];
+                    var _territoryid_value_formatted = result["_territoryid_value@OData.Community.Display.V1.FormattedValue"];
+                    var _territoryid_value_lookuplogicalname = result["_territoryid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                    var lookup = new Array();
+                    lookup[0] = new Object();
+                    lookup[0].id = _territoryid_value;
+                    lookup[0].name = _territoryid_value_formatted;
+                    lookup[0].entityType = _territoryid_value_lookuplogicalname;
+                    form.getAttribute('msdyn_serviceterritory').setValue(lookup);
+                }
+            }, function (error) {
+                var alertStrings = { text: error.message };
+                var alertOptions = { height: 120, width: 260 };
+                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+            });
         }
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));
