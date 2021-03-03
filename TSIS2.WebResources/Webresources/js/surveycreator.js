@@ -117,6 +117,16 @@ function doMarkdown(survey, options) {
     options.html = str;
 }
 
+//Set locale
+var surveyLocale = 'en';
+if (parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) {
+    surveyLocale = 'fr';
+}
+
+SurveyCreator
+    .localization
+    .currentLocale = surveyLocale;
+
 var creator = new SurveyCreator.SurveyCreator("creatorElement", options);
 creator.showToolbox = "right";
 creator.showPropertyGrid = "right";
