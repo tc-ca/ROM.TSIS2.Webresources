@@ -74,6 +74,7 @@ var CkEditor_ModalEditor = {
   }
 };
 
+Survey.surveyLocalization.supportedLocales = ["en", "fr"];
 
 SurveyCreator
     .SurveyPropertyEditorFactory
