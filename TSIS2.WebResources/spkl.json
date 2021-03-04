@@ -73,6 +73,11 @@
           "file": "js\\WorkOrderServiceTask.js",
           "description": "ROM TSIS 2.0 Work Order Service Task Form Scripts"
         },
+        {
+          "uniquename": "ovs_/js/WorkOrderServiceTaskRibbon.js",
+          "file": "js\\WorkOrderServiceTaskRibbon.js",
+          "description": "ROM TSIS 2.0 Work Order Service Task Ribbon Scripts"
+        },
         /* Styles */
         {
           "uniquename": "ovs_/css/bootstrap.min.css",
