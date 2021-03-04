@@ -7,6 +7,7 @@ var ROM;
         // EVENTS
         function onLoad(eContext) {
             var form = eContext.getFormContext();
+            form.getControl("header_msdyn_systemstatus").getAttribute().addOnChange(closeWorkOrder);
             switch (form.ui.getFormType()) {
                 //Create
                 case 1:
@@ -193,6 +194,22 @@ var ROM;
                 var alertOptions = { height: 120, width: 260 };
                 Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
             });
+        }
+        function closeWorkOrder(eContext) {
+            var formContext = eContext.getFormContext();
+            var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
+            //If system status is set to closed
+            if (systemStatus == 690970004 || systemStatus == 690970005) {
+                //Set state to Inactive
+                formContext.getAttribute("statecode").setValue(1);
+                //Set Status Reason to Closed
+                formContext.getAttribute("statuscode").setValue(918640000);
+            }
+            else {
+                //Keep record Active
+                formContext.getAttribute("statecode").setValue(0);
+                formContext.getAttribute("statuscode").setValue(1);
+            }
         }
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));

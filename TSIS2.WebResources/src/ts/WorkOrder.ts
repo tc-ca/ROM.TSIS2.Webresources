@@ -4,6 +4,8 @@ namespace ROM.WorkOrder {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
 
+        form.getControl("header_msdyn_systemstatus").getAttribute().addOnChange(closeWorkOrder);
+
         switch (form.ui.getFormType()) {
             //Create
             case 1:
@@ -218,5 +220,21 @@ namespace ROM.WorkOrder {
                 Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
             }
         );
+    }
+
+    function closeWorkOrder(eContext) {
+        var formContext = eContext.getFormContext();
+        var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
+        //If system status is set to closed
+        if (systemStatus == 690970004 || systemStatus == 690970005) {
+            //Set state to Inactive
+            formContext.getAttribute("statecode").setValue(1);
+            //Set Status Reason to Closed
+            formContext.getAttribute("statuscode").setValue(918640000);
+        } else {
+            //Keep record Active
+            formContext.getAttribute("statecode").setValue(0);
+            formContext.getAttribute("statuscode").setValue(1);
+        }
     }
   }
