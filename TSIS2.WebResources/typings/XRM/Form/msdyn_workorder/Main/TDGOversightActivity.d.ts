@@ -57,6 +57,14 @@ declare namespace Form.msdyn_workorder.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_12 extends Xrm.SectionCollectionBase {
+        get(name: "tab_12_section_1"): Xrm.PageSection;
+        get(name: "tab_12_section_2"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_5 extends Xrm.SectionCollectionBase {
         get(name: "tab_5_section_2"): Xrm.PageSection;
         get(name: string): undefined;
@@ -155,6 +163,8 @@ declare namespace Form.msdyn_workorder.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_cyaction">;
+      get(name: "Subgrid_2"): Xrm.SubGridControl<"ovs_cysafetyassessment">;
       get(name: "Violations"): Xrm.SubGridControl<"qm_syresult">;
       get(name: "WebResource_Attach2Dynamics"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
@@ -266,6 +276,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "f1tab_record_log"): Xrm.PageTab<Tabs.f1tab_record_log>;
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
       get(name: "tab_11"): Xrm.PageTab<Tabs.tab_11>;
+      get(name: "tab_12"): Xrm.PageTab<Tabs.tab_12>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
@@ -340,6 +351,8 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "qm_remote"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_cyaction">;
+    getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ovs_cysafetyassessment">;
     getControl(controlName: "Violations"): Xrm.SubGridControl<"qm_syresult">;
     getControl(controlName: "WebResource_Attach2Dynamics"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;

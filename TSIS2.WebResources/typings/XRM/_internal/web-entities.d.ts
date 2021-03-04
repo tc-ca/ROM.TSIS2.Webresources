@@ -285,6 +285,29 @@ interface tc_TCFiscalQuarter_Create extends tc_TCFiscalQuarter {
 }
 interface tc_TCFiscalQuarter_Update extends tc_TCFiscalQuarter {
 }
+interface SystemUser_Base extends WebEntity {
+}
+interface SystemUser_Fixed extends WebEntity_Fixed {
+  systemuserid: string;
+}
+interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_Relationships {
+}
+interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_FormattedResult {
+}
+interface SystemUser_Select {
+}
+interface SystemUser_Expand {
+}
+interface SystemUser_Filter {
+}
+interface SystemUser_Create extends SystemUser {
+}
+interface SystemUser_Update extends SystemUser {
+}
 interface BookingStatus_Base extends WebEntity {
 }
 interface BookingStatus_Fixed extends WebEntity_Fixed {

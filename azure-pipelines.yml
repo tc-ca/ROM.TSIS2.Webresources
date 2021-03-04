@@ -37,6 +37,7 @@ steps:
       Webresources/html/**
       Webresources/css/**
       Webresources/js/**
+      Webresources/resx/**
     TargetFolder: '$(build.ArtifactStagingDirectory)'
 
 - task: CopyFiles@2
