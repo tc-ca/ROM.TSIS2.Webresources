@@ -74,6 +74,7 @@ var CkEditor_ModalEditor = {
   }
 };
 
+Survey.surveyLocalization.supportedLocales = ["en", "fr"];
 
 SurveyCreator
     .SurveyPropertyEditorFactory
@@ -116,6 +117,16 @@ function doMarkdown(survey, options) {
     //set html
     options.html = str;
 }
+
+//Set locale
+var surveyLocale = 'en';
+if (parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) {
+    surveyLocale = 'fr';
+}
+
+SurveyCreator
+    .localization
+    .currentLocale = surveyLocale;
 
 var creator = new SurveyCreator.SurveyCreator("creatorElement", options);
 creator.showToolbox = "right";
