@@ -51,10 +51,6 @@ interface BookableResourceBooking_Relationships {
   Resource?: BookableResource_Result | null;
   bookableresourcebooking_Appointments?: Appointment_Result[] | null;
   bookableresourcebooking_ServiceAppointments?: ServiceAppointment_Result[] | null;
-  createdbyname?: SystemUser_Result | null;
-  createdonbehalfbyname?: SystemUser_Result | null;
-  modifiedbyname?: SystemUser_Result | null;
-  modifiedonbehalfbyname?: SystemUser_Result | null;
   msdyn_AppointmentBookingId?: Appointment_Result | null;
   msdyn_Crew?: BookableResource_Result | null;
   msdyn_bookableresourcebooking_msdyn_workorderservicetask_Booking?: msdyn_workorderservicetask_Result[] | null;
@@ -237,10 +233,6 @@ interface BookableResourceBooking_Expand {
   Resource: WebExpand<BookableResourceBooking_Expand, BookableResource_Select, BookableResource_Filter, { Resource: BookableResource_Result }>;
   bookableresourcebooking_Appointments: WebExpand<BookableResourceBooking_Expand, Appointment_Select, Appointment_Filter, { bookableresourcebooking_Appointments: Appointment_Result[] }>;
   bookableresourcebooking_ServiceAppointments: WebExpand<BookableResourceBooking_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { bookableresourcebooking_ServiceAppointments: ServiceAppointment_Result[] }>;
-  createdbyname: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { createdbyname: SystemUser_Result }>;
-  createdonbehalfbyname: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfbyname: SystemUser_Result }>;
-  modifiedbyname: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { modifiedbyname: SystemUser_Result }>;
-  modifiedonbehalfbyname: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfbyname: SystemUser_Result }>;
   msdyn_AppointmentBookingId: WebExpand<BookableResourceBooking_Expand, Appointment_Select, Appointment_Filter, { msdyn_AppointmentBookingId: Appointment_Result }>;
   msdyn_Crew: WebExpand<BookableResourceBooking_Expand, BookableResource_Select, BookableResource_Filter, { msdyn_Crew: BookableResource_Result }>;
   msdyn_bookableresourcebooking_msdyn_workorderservicetask_Booking: WebExpand<BookableResourceBooking_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { msdyn_bookableresourcebooking_msdyn_workorderservicetask_Booking: msdyn_workorderservicetask_Result[] }>;
@@ -250,8 +242,6 @@ interface BookableResourceBooking_Expand {
   ovs_PlannedFiscalQuarter: WebExpand<BookableResourceBooking_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_PlannedFiscalQuarter: tc_TCFiscalQuarter_Result }>;
   ovs_PlannedFiscalYearId: WebExpand<BookableResourceBooking_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ovs_PlannedFiscalYearId: tc_TCFiscalYear_Result }>;
   ovs_RevisedQuarter: WebExpand<BookableResourceBooking_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_RevisedQuarter: tc_TCFiscalQuarter_Result }>;
-  ownerid: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
-  owninguser: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
 interface BookableResourceBooking_FormattedResult {
   bookingstatus_formatted?: string;
@@ -327,10 +317,6 @@ interface BookableResourceBooking_Result extends BookableResourceBooking_Base, B
 interface BookableResourceBooking_RelatedOne {
   BookingStatus: WebMappingRetrieve<BookingStatus_Select,BookingStatus_Expand,BookingStatus_Filter,BookingStatus_Fixed,BookingStatus_Result,BookingStatus_FormattedResult>;
   Resource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
-  createdbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  createdonbehalfbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedonbehalfbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_AppointmentBookingId: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   msdyn_Crew: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   msdyn_resourcegroup: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
@@ -339,8 +325,6 @@ interface BookableResourceBooking_RelatedOne {
   ovs_PlannedFiscalQuarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ovs_PlannedFiscalYearId: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   ovs_RevisedQuarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface BookableResourceBooking_RelatedMany {
   bookableresourcebooking_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;

@@ -162,7 +162,7 @@ namespace ROM.WorkOrder {
         }
     }
 
-    export function fiscalYearOnchange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export function fiscalYearOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         //if new fiscal year is selected, then previous selection of quarter no longer corresponds
         removeSelectedFiscalQuarter(eContext);
     }
@@ -218,5 +218,21 @@ namespace ROM.WorkOrder {
                 Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
             }
         );
+    }
+
+    export function systemStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
+        var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
+        //If system status is set to closed
+        if (systemStatus == 690970004 || systemStatus == 690970005) {
+            //Set state to Inactive
+            formContext.getAttribute("statecode").setValue(1);
+            //Set Status Reason to Closed
+            formContext.getAttribute("statuscode").setValue(918640000);
+        } else {
+            //Keep record Active
+            formContext.getAttribute("statecode").setValue(0);
+            formContext.getAttribute("statuscode").setValue(1);
+        }
     }
   }
