@@ -4,8 +4,6 @@ namespace ROM.WorkOrder {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
 
-        form.getControl("header_msdyn_systemstatus").getAttribute().addOnChange(closeWorkOrder);
-
         switch (form.ui.getFormType()) {
             //Create
             case 1:
@@ -164,7 +162,7 @@ namespace ROM.WorkOrder {
         }
     }
 
-    export function fiscalYearOnchange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export function fiscalYearOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         //if new fiscal year is selected, then previous selection of quarter no longer corresponds
         removeSelectedFiscalQuarter(eContext);
     }
@@ -222,8 +220,8 @@ namespace ROM.WorkOrder {
         );
     }
 
-    function closeWorkOrder(eContext) {
-        var formContext = eContext.getFormContext();
+    export function systemStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
         var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
         //If system status is set to closed
         if (systemStatus == 690970004 || systemStatus == 690970005) {

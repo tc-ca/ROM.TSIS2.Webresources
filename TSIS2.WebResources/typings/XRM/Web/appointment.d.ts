@@ -52,13 +52,7 @@ interface Appointment_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface Appointment_Relationships {
-  createdby_appointment?: SystemUser_Result | null;
-  createdonbehalfby_appointment?: SystemUser_Result | null;
-  modifiedby_appointment?: SystemUser_Result | null;
-  modifiedonbehalfby_appointment?: SystemUser_Result | null;
   msdyn_appointment_bookableresourcebooking?: BookableResourceBooking_Result[] | null;
-  ownerid_appointment?: SystemUser_Result | null;
-  owninguser_appointment?: SystemUser_Result | null;
   regardingobjectid_bookableresourcebooking_appointment?: BookableResourceBooking_Result | null;
   regardingobjectid_msdyn_workorder_appointment?: msdyn_workorder_Result | null;
   regardingobjectid_msdyn_workorderincident_appointment?: msdyn_workorderincident_Result | null;
@@ -303,13 +297,7 @@ interface Appointment_Filter {
   versionnumber: number;
 }
 interface Appointment_Expand {
-  createdby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { createdby_appointment: SystemUser_Result }>;
-  createdonbehalfby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby_appointment: SystemUser_Result }>;
-  modifiedby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby_appointment: SystemUser_Result }>;
-  modifiedonbehalfby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_appointment: SystemUser_Result }>;
   msdyn_appointment_bookableresourcebooking: WebExpand<Appointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_appointment_bookableresourcebooking: BookableResourceBooking_Result[] }>;
-  ownerid_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { ownerid_appointment: SystemUser_Result }>;
-  owninguser_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_appointment: SystemUser_Result }>;
   regardingobjectid_bookableresourcebooking_appointment: WebExpand<Appointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { regardingobjectid_bookableresourcebooking_appointment: BookableResourceBooking_Result }>;
   regardingobjectid_msdyn_workorder_appointment: WebExpand<Appointment_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder_appointment: msdyn_workorder_Result }>;
   regardingobjectid_msdyn_workorderincident_appointment: WebExpand<Appointment_Expand, msdyn_workorderincident_Select, msdyn_workorderincident_Filter, { regardingobjectid_msdyn_workorderincident_appointment: msdyn_workorderincident_Result }>;
@@ -369,12 +357,6 @@ interface Appointment_Result extends Appointment_Base, Appointment_Relationships
   transactioncurrencyid_guid: string | null;
 }
 interface Appointment_RelatedOne {
-  createdby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  createdonbehalfby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  modifiedonbehalfby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  owninguser_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   regardingobjectid_bookableresourcebooking_appointment: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
   regardingobjectid_msdyn_workorder_appointment: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   regardingobjectid_msdyn_workorderincident_appointment: WebMappingRetrieve<msdyn_workorderincident_Select,msdyn_workorderincident_Expand,msdyn_workorderincident_Filter,msdyn_workorderincident_Fixed,msdyn_workorderincident_Result,msdyn_workorderincident_FormattedResult>;

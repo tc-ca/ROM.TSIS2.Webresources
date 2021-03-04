@@ -7,7 +7,6 @@ var ROM;
         // EVENTS
         function onLoad(eContext) {
             var form = eContext.getFormContext();
-            form.getControl("header_msdyn_systemstatus").getAttribute().addOnChange(closeWorkOrder);
             switch (form.ui.getFormType()) {
                 //Create
                 case 1:
@@ -144,11 +143,11 @@ var ROM;
             }
         }
         WorkOrder.regulatedEntityOnChange = regulatedEntityOnChange;
-        function fiscalYearOnchange(eContext) {
+        function fiscalYearOnChange(eContext) {
             //if new fiscal year is selected, then previous selection of quarter no longer corresponds
             removeSelectedFiscalQuarter(eContext);
         }
-        WorkOrder.fiscalYearOnchange = fiscalYearOnchange;
+        WorkOrder.fiscalYearOnChange = fiscalYearOnChange;
         // FUNCTIONS
         function setDefaultFiscalYear(form) {
             XrmQuery.retrieveMultiple(function (x) { return x.tc_tcfiscalyears; })
@@ -195,7 +194,7 @@ var ROM;
                 Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
             });
         }
-        function closeWorkOrder(eContext) {
+        function systemStatusOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
             //If system status is set to closed
@@ -211,5 +210,6 @@ var ROM;
                 formContext.getAttribute("statuscode").setValue(1);
             }
         }
+        WorkOrder.systemStatusOnChange = systemStatusOnChange;
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));

@@ -98,6 +98,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_datewindowend"): Xrm.DateAttribute;
       get(name: "msdyn_datewindowstart"): Xrm.DateAttribute;
       get(name: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
+      get(name: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "msdyn_instructions"): Xrm.Attribute<string>;
       get(name: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
       get(name: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -142,6 +143,8 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+      get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
+      get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -181,6 +184,8 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "header_process_msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype"> | null;
       get(name: "header_process_msdyn_workordertype_1"): Xrm.LookupControl<"msdyn_workordertype"> | null;
       get(name: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
+      get(name: "header_statecode"): Xrm.OptionSetControl<msdyn_workorder_statecode>;
+      get(name: "header_statuscode"): Xrm.OptionSetControl<msdyn_workorder_statuscode>;
       get(name: "modifiedby"): Xrm.LookupControl<"systemuser">;
       get(name: "modifiedon"): Xrm.DateControl;
       get(name: "msdyn_address1"): Xrm.StringControl;
@@ -195,6 +200,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_datewindowend"): Xrm.DateControl;
       get(name: "msdyn_datewindowstart"): Xrm.DateControl;
       get(name: "msdyn_estimatesubtotalamount"): Xrm.NumberControl;
+      get(name: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "msdyn_instructions"): Xrm.StringControl;
       get(name: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
       get(name: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
@@ -286,6 +292,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_datewindowend"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_datewindowstart"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "msdyn_instructions"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
     getAttribute(attributeName: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -330,6 +337,8 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+    getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
+    getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
@@ -364,6 +373,8 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "header_process_msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype"> | null;
     getControl(controlName: "header_process_msdyn_workordertype_1"): Xrm.LookupControl<"msdyn_workordertype"> | null;
     getControl(controlName: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
+    getControl(controlName: "header_statecode"): Xrm.OptionSetControl<msdyn_workorder_statecode>;
+    getControl(controlName: "header_statuscode"): Xrm.OptionSetControl<msdyn_workorder_statuscode>;
     getControl(controlName: "modifiedby"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "modifiedon"): Xrm.DateControl;
     getControl(controlName: "msdyn_address1"): Xrm.StringControl;
@@ -378,6 +389,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_datewindowend"): Xrm.DateControl;
     getControl(controlName: "msdyn_datewindowstart"): Xrm.DateControl;
     getControl(controlName: "msdyn_estimatesubtotalamount"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "msdyn_instructions"): Xrm.StringControl;
     getControl(controlName: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
     getControl(controlName: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;

@@ -156,6 +156,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_siteofviolation"): Xrm.LookupAttribute<"account">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "qm_remote"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "qm_reportcontactid"): Xrm.LookupAttribute<"contact">;
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -259,6 +260,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_siteofviolation"): Xrm.LookupControl<"account">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "qm_remote"): Xrm.OptionSetControl<boolean>;
+      get(name: "qm_reportcontactid"): Xrm.LookupControl<"contact">;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
       get(name: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
@@ -349,6 +351,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ovs_siteofviolation"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "qm_remote"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "qm_reportcontactid"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_cyaction">;
@@ -447,6 +450,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_siteofviolation"): Xrm.LookupControl<"account">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "qm_remote"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "qm_reportcontactid"): Xrm.LookupControl<"contact">;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
     getControl(controlName: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;

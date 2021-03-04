@@ -13,7 +13,6 @@ declare namespace Form.bookableresource.Main {
       }
       interface e37f45244a6642dc974c078756aef3fb extends Xrm.SectionCollectionBase {
         get(name: "tab_4_section_1"): Xrm.PageSection;
-        get(name: "{6bfe3886-a003-47b5-a2c2-7e54ad6213a9}"): Xrm.PageSection;
         get(name: "{9e7dec57-2c62-4d5d-8b21-75d076c5d1a1}"): Xrm.PageSection;
         get(name: "{e37f4524-4a66-42dc-974c-078756aef3fb}_section_6"): Xrm.PageSection;
         get(name: string): undefined;
