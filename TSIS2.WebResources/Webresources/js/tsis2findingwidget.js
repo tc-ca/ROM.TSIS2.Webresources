@@ -88,7 +88,7 @@
 
         //set the changed value into question value
         onValueChangedCallback = function () {
-            updateQuestionProvisionData(question, question.provision);
+
         }
         onReadOnlyChangedCallback = function () {
             /*
@@ -135,7 +135,10 @@ function updateQuestionProvisionData(question, provisionName) {
                 question.name = `finding-${question.nameID}`;
                 question.reference = result.entities[0].qm_name;
 
-                question.description = await buildProvisionText(result.entities[0]);
+                let lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+                question.description = await buildProvisionText(result.entities[0], lang);
+                question.locDescription.values.default = await buildProvisionText(result.entities[0], 1033);
+                question.locDescription.values.fr = await buildProvisionText(result.entities[0], 1036);
             }
         },
         function (error) {
@@ -153,8 +156,7 @@ function updateQuestionProvisionData(question, provisionName) {
     }
 }
 
-async function buildProvisionText(provision) {
-    let lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+async function buildProvisionText(provision, lang) {
     let provisionText = "";
     provision.qm_name = `<mark>${provision.qm_name}</mark>`;
     provisionText += await gatherAncestorProvisionText(provision, lang);
