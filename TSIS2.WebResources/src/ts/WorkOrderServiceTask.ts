@@ -7,7 +7,7 @@ namespace ROM.WorkOrderServiceTask {
         // Get the web resource control on the form
         const wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
         const questionnaireDefinition = Form.getAttribute('ovs_questionnairedefinition').getValue();
-        const questionnaireResponse = Form.getAttribute('ovs_questionnairereponse').getValue();
+        const questionnaireResponse = Form.getAttribute('ovs_questionnaireresponse').getValue();
 
         // Exit if no questionnaire exists
         if (questionnaireDefinition === null) {
