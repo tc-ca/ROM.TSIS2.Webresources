@@ -10,7 +10,7 @@ var ROM;
             // Get the web resource control on the form
             var wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
             var questionnaireDefinition = Form.getAttribute('ovs_questionnairedefinition').getValue();
-            var questionnaireResponse = Form.getAttribute('ovs_questionnairereponse').getValue();
+            var questionnaireResponse = Form.getAttribute('ovs_questionnaireresponse').getValue();
             // Exit if no questionnaire exists
             if (questionnaireDefinition === null) {
                 wrCtrl.setVisible(false);
