@@ -18,7 +18,7 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
   ovs_inspectionstatus?: boolean | null;
   ovs_isquestionnairecomplete?: boolean | null;
   ovs_questionnairedefinition?: string | null;
-  ovs_questionnairereponse?: string | null;
+  ovs_questionnaireresponse?: string | null;
   ovs_questionnaireresultjson?: string | null;
   qm_blobpath?: string | null;
   qm_isquestionnaireupdated?: boolean | null;
@@ -87,7 +87,7 @@ interface msdyn_workorderservicetask_Select {
   ovs_isquestionnairecomplete: WebAttribute<msdyn_workorderservicetask_Select, { ovs_isquestionnairecomplete: boolean | null }, {  }>;
   ovs_questionnaire_guid: WebAttribute<msdyn_workorderservicetask_Select, { ovs_questionnaire_guid: string | null }, { ovs_questionnaire_formatted?: string }>;
   ovs_questionnairedefinition: WebAttribute<msdyn_workorderservicetask_Select, { ovs_questionnairedefinition: string | null }, {  }>;
-  ovs_questionnairereponse: WebAttribute<msdyn_workorderservicetask_Select, { ovs_questionnairereponse: string | null }, {  }>;
+  ovs_questionnairesreponse: WebAttribute<msdyn_workorderservicetask_Select, { ovs_questionnaireresponse: string | null }, {  }>;
   ovs_questionnaireresultjson: WebAttribute<msdyn_workorderservicetask_Select, { ovs_questionnaireresultjson: string | null }, {  }>;
   ownerid_guid: WebAttribute<msdyn_workorderservicetask_Select, { ownerid_guid: string | null }, { ownerid_formatted?: string }>;
   owningbusinessunit_guid: WebAttribute<msdyn_workorderservicetask_Select, { owningbusinessunit_guid: string | null }, { owningbusinessunit_formatted?: string }>;
@@ -136,7 +136,7 @@ interface msdyn_workorderservicetask_Filter {
   ovs_isquestionnairecomplete: boolean;
   ovs_questionnaire_guid: XQW.Guid;
   ovs_questionnairedefinition: string;
-  ovs_questionnairereponse: string;
+  ovs_questionnaireresponse: string;
   ovs_questionnaireresultjson: string;
   ownerid_guid: XQW.Guid;
   owningbusinessunit_guid: XQW.Guid;

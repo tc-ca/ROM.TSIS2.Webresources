@@ -36,7 +36,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "msdyn_workorderincident"): Xrm.LookupAttribute<"msdyn_workorderincident">;
       get(name: "ovs_inspectionstatus"): Xrm.Attribute<any>;
       get(name: "ovs_questionnairedefinition"): Xrm.Attribute<string>;
-      get(name: "ovs_questionnairereponse"): Xrm.Attribute<string>;
+      get(name: "ovs_questionnaireresponse"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
@@ -73,7 +73,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ovs_inspectionstatus"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ovs_questionnairedefinition"): Xrm.StringControl;
-      get(name: "ovs_questionnairereponse"): Xrm.StringControl;
+      get(name: "ovs_questionnaireresponse"): Xrm.StringControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
@@ -111,7 +111,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "msdyn_workorderincident"): Xrm.LookupAttribute<"msdyn_workorderincident">;
     getAttribute(attributeName: "ovs_inspectionstatus"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ovs_questionnairedefinition"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ovs_questionnairereponse"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ovs_questionnaireresponse"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
@@ -143,7 +143,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ovs_inspectionstatus"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ovs_questionnairedefinition"): Xrm.StringControl;
-    getControl(controlName: "ovs_questionnairereponse"): Xrm.StringControl;
+    getControl(controlName: "ovs_questionnaireresponse"): Xrm.StringControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
