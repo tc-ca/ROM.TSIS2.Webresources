@@ -49,10 +49,15 @@ interface ServiceAppointment_Base extends WebEntity {
 }
 interface ServiceAppointment_Relationships {
   msdyn_serviceappointment_bookableresourcebooking_serviceappointment?: BookableResourceBooking_Result[] | null;
+  regardingobjectid_account_serviceappointment?: Account_Result | null;
   regardingobjectid_bookableresourcebooking_serviceappointment?: BookableResourceBooking_Result | null;
+  regardingobjectid_contact_serviceappointment?: Contact_Result | null;
   regardingobjectid_msdyn_workorder_serviceappointment?: msdyn_workorder_Result | null;
   regardingobjectid_msdyn_workorderincident_serviceappointment?: msdyn_workorderincident_Result | null;
   regardingobjectid_msdyn_workorderservicetask_serviceappointment?: msdyn_workorderservicetask_Result | null;
+  serviceappointment_activity_parties?: ActivityParty_Result[] | null;
+  serviceappointment_connections1?: Connection_Result[] | null;
+  serviceappointment_connections2?: Connection_Result[] | null;
 }
 interface ServiceAppointment extends ServiceAppointment_Base, ServiceAppointment_Relationships {
   SLAId_bind$slas?: string | null;
@@ -308,10 +313,15 @@ interface ServiceAppointment_Filter {
 }
 interface ServiceAppointment_Expand {
   msdyn_serviceappointment_bookableresourcebooking_serviceappointment: WebExpand<ServiceAppointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_serviceappointment_bookableresourcebooking_serviceappointment: BookableResourceBooking_Result[] }>;
+  regardingobjectid_account_serviceappointment: WebExpand<ServiceAppointment_Expand, Account_Select, Account_Filter, { regardingobjectid_account_serviceappointment: Account_Result }>;
   regardingobjectid_bookableresourcebooking_serviceappointment: WebExpand<ServiceAppointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { regardingobjectid_bookableresourcebooking_serviceappointment: BookableResourceBooking_Result }>;
+  regardingobjectid_contact_serviceappointment: WebExpand<ServiceAppointment_Expand, Contact_Select, Contact_Filter, { regardingobjectid_contact_serviceappointment: Contact_Result }>;
   regardingobjectid_msdyn_workorder_serviceappointment: WebExpand<ServiceAppointment_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder_serviceappointment: msdyn_workorder_Result }>;
   regardingobjectid_msdyn_workorderincident_serviceappointment: WebExpand<ServiceAppointment_Expand, msdyn_workorderincident_Select, msdyn_workorderincident_Filter, { regardingobjectid_msdyn_workorderincident_serviceappointment: msdyn_workorderincident_Result }>;
   regardingobjectid_msdyn_workorderservicetask_serviceappointment: WebExpand<ServiceAppointment_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { regardingobjectid_msdyn_workorderservicetask_serviceappointment: msdyn_workorderservicetask_Result }>;
+  serviceappointment_activity_parties: WebExpand<ServiceAppointment_Expand, ActivityParty_Select, ActivityParty_Filter, { serviceappointment_activity_parties: ActivityParty_Result[] }>;
+  serviceappointment_connections1: WebExpand<ServiceAppointment_Expand, Connection_Select, Connection_Filter, { serviceappointment_connections1: Connection_Result[] }>;
+  serviceappointment_connections2: WebExpand<ServiceAppointment_Expand, Connection_Select, Connection_Filter, { serviceappointment_connections2: Connection_Result[] }>;
 }
 interface ServiceAppointment_FormattedResult {
   actualend_formatted?: string;
@@ -389,13 +399,18 @@ interface ServiceAppointment_Result extends ServiceAppointment_Base, ServiceAppo
   transactioncurrencyid_guid: string | null;
 }
 interface ServiceAppointment_RelatedOne {
+  regardingobjectid_account_serviceappointment: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   regardingobjectid_bookableresourcebooking_serviceappointment: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
+  regardingobjectid_contact_serviceappointment: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   regardingobjectid_msdyn_workorder_serviceappointment: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   regardingobjectid_msdyn_workorderincident_serviceappointment: WebMappingRetrieve<msdyn_workorderincident_Select,msdyn_workorderincident_Expand,msdyn_workorderincident_Filter,msdyn_workorderincident_Fixed,msdyn_workorderincident_Result,msdyn_workorderincident_FormattedResult>;
   regardingobjectid_msdyn_workorderservicetask_serviceappointment: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
 }
 interface ServiceAppointment_RelatedMany {
   msdyn_serviceappointment_bookableresourcebooking_serviceappointment: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
+  serviceappointment_activity_parties: WebMappingRetrieve<ActivityParty_Select,ActivityParty_Expand,ActivityParty_Filter,ActivityParty_Fixed,ActivityParty_Result,ActivityParty_FormattedResult>;
+  serviceappointment_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  serviceappointment_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   serviceappointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;

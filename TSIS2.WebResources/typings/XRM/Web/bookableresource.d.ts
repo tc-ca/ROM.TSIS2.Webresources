@@ -41,7 +41,10 @@ interface BookableResource_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface BookableResource_Relationships {
+  AccountId?: Account_Result | null;
+  ContactId?: Contact_Result | null;
   bookableresource_bookableresourcebooking_Resource?: BookableResourceBooking_Result[] | null;
+  msdyn_bookableresource_account_PreferredResource?: Account_Result[] | null;
   msdyn_bookableresource_bookableresourcebooking_Crew?: BookableResourceBooking_Result[] | null;
   msdyn_bookableresource_bookableresourcebooking_ResourceGroup?: BookableResourceBooking_Result[] | null;
   msdyn_bookableresource_msdyn_workorder_PreferredResource?: msdyn_workorder_Result[] | null;
@@ -181,7 +184,10 @@ interface BookableResource_Filter {
   versionnumber: number;
 }
 interface BookableResource_Expand {
+  AccountId: WebExpand<BookableResource_Expand, Account_Select, Account_Filter, { AccountId: Account_Result }>;
+  ContactId: WebExpand<BookableResource_Expand, Contact_Select, Contact_Filter, { ContactId: Contact_Result }>;
   bookableresource_bookableresourcebooking_Resource: WebExpand<BookableResource_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { bookableresource_bookableresourcebooking_Resource: BookableResourceBooking_Result[] }>;
+  msdyn_bookableresource_account_PreferredResource: WebExpand<BookableResource_Expand, Account_Select, Account_Filter, { msdyn_bookableresource_account_PreferredResource: Account_Result[] }>;
   msdyn_bookableresource_bookableresourcebooking_Crew: WebExpand<BookableResource_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_bookableresource_bookableresourcebooking_Crew: BookableResourceBooking_Result[] }>;
   msdyn_bookableresource_bookableresourcebooking_ResourceGroup: WebExpand<BookableResource_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_bookableresource_bookableresourcebooking_ResourceGroup: BookableResourceBooking_Result[] }>;
   msdyn_bookableresource_msdyn_workorder_PreferredResource: WebExpand<BookableResource_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_bookableresource_msdyn_workorder_PreferredResource: msdyn_workorder_Result[] }>;
@@ -241,9 +247,12 @@ interface BookableResource_Result extends BookableResource_Base, BookableResourc
   userid_guid: string | null;
 }
 interface BookableResource_RelatedOne {
+  AccountId: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ContactId: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
 }
 interface BookableResource_RelatedMany {
   bookableresource_bookableresourcebooking_Resource: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
+  msdyn_bookableresource_account_PreferredResource: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_bookableresource_bookableresourcebooking_Crew: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
   msdyn_bookableresource_bookableresourcebooking_ResourceGroup: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
   msdyn_bookableresource_msdyn_workorder_PreferredResource: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
