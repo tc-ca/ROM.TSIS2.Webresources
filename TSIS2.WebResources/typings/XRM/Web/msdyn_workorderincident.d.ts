@@ -23,6 +23,8 @@ interface msdyn_workorderincident_Relationships {
   msdyn_msdyn_workorderincident_msdyn_workorderservicetask_WorkOrderIncident?: msdyn_workorderservicetask_Result[] | null;
   msdyn_workorderincident_Appointments?: Appointment_Result[] | null;
   msdyn_workorderincident_ServiceAppointments?: ServiceAppointment_Result[] | null;
+  msdyn_workorderincident_connections1?: Connection_Result[] | null;
+  msdyn_workorderincident_connections2?: Connection_Result[] | null;
 }
 interface msdyn_workorderincident extends msdyn_workorderincident_Base, msdyn_workorderincident_Relationships {
   msdyn_FunctionalLocation_bind$msdyn_functionallocations?: string | null;
@@ -113,6 +115,8 @@ interface msdyn_workorderincident_Expand {
   msdyn_workorder: WebExpand<msdyn_workorderincident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_workorder: msdyn_workorder_Result }>;
   msdyn_workorderincident_Appointments: WebExpand<msdyn_workorderincident_Expand, Appointment_Select, Appointment_Filter, { msdyn_workorderincident_Appointments: Appointment_Result[] }>;
   msdyn_workorderincident_ServiceAppointments: WebExpand<msdyn_workorderincident_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_workorderincident_ServiceAppointments: ServiceAppointment_Result[] }>;
+  msdyn_workorderincident_connections1: WebExpand<msdyn_workorderincident_Expand, Connection_Select, Connection_Filter, { msdyn_workorderincident_connections1: Connection_Result[] }>;
+  msdyn_workorderincident_connections2: WebExpand<msdyn_workorderincident_Expand, Connection_Select, Connection_Filter, { msdyn_workorderincident_connections2: Connection_Result[] }>;
 }
 interface msdyn_workorderincident_FormattedResult {
   createdby_formatted?: string;
@@ -159,6 +163,8 @@ interface msdyn_workorderincident_RelatedMany {
   msdyn_msdyn_workorderincident_msdyn_workorderservicetask_WorkOrderIncident: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   msdyn_workorderincident_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   msdyn_workorderincident_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
+  msdyn_workorderincident_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  msdyn_workorderincident_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_workorderincidents: WebMappingRetrieve<msdyn_workorderincident_Select,msdyn_workorderincident_Expand,msdyn_workorderincident_Filter,msdyn_workorderincident_Fixed,msdyn_workorderincident_Result,msdyn_workorderincident_FormattedResult>;

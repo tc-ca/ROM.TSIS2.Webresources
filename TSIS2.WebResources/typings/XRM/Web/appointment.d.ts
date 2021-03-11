@@ -52,8 +52,14 @@ interface Appointment_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface Appointment_Relationships {
+  appointment_PostFollows?: PostFollow_Result[] | null;
+  appointment_activity_parties?: ActivityParty_Result[] | null;
+  appointment_connections1?: Connection_Result[] | null;
+  appointment_connections2?: Connection_Result[] | null;
   msdyn_appointment_bookableresourcebooking?: BookableResourceBooking_Result[] | null;
+  regardingobjectid_account_appointment?: Account_Result | null;
   regardingobjectid_bookableresourcebooking_appointment?: BookableResourceBooking_Result | null;
+  regardingobjectid_contact_appointment?: Contact_Result | null;
   regardingobjectid_msdyn_workorder_appointment?: msdyn_workorder_Result | null;
   regardingobjectid_msdyn_workorderincident_appointment?: msdyn_workorderincident_Result | null;
   regardingobjectid_msdyn_workorderservicetask_appointment?: msdyn_workorderservicetask_Result | null;
@@ -297,8 +303,14 @@ interface Appointment_Filter {
   versionnumber: number;
 }
 interface Appointment_Expand {
+  appointment_PostFollows: WebExpand<Appointment_Expand, PostFollow_Select, PostFollow_Filter, { appointment_PostFollows: PostFollow_Result[] }>;
+  appointment_activity_parties: WebExpand<Appointment_Expand, ActivityParty_Select, ActivityParty_Filter, { appointment_activity_parties: ActivityParty_Result[] }>;
+  appointment_connections1: WebExpand<Appointment_Expand, Connection_Select, Connection_Filter, { appointment_connections1: Connection_Result[] }>;
+  appointment_connections2: WebExpand<Appointment_Expand, Connection_Select, Connection_Filter, { appointment_connections2: Connection_Result[] }>;
   msdyn_appointment_bookableresourcebooking: WebExpand<Appointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_appointment_bookableresourcebooking: BookableResourceBooking_Result[] }>;
+  regardingobjectid_account_appointment: WebExpand<Appointment_Expand, Account_Select, Account_Filter, { regardingobjectid_account_appointment: Account_Result }>;
   regardingobjectid_bookableresourcebooking_appointment: WebExpand<Appointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { regardingobjectid_bookableresourcebooking_appointment: BookableResourceBooking_Result }>;
+  regardingobjectid_contact_appointment: WebExpand<Appointment_Expand, Contact_Select, Contact_Filter, { regardingobjectid_contact_appointment: Contact_Result }>;
   regardingobjectid_msdyn_workorder_appointment: WebExpand<Appointment_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder_appointment: msdyn_workorder_Result }>;
   regardingobjectid_msdyn_workorderincident_appointment: WebExpand<Appointment_Expand, msdyn_workorderincident_Select, msdyn_workorderincident_Filter, { regardingobjectid_msdyn_workorderincident_appointment: msdyn_workorderincident_Result }>;
   regardingobjectid_msdyn_workorderservicetask_appointment: WebExpand<Appointment_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { regardingobjectid_msdyn_workorderservicetask_appointment: msdyn_workorderservicetask_Result }>;
@@ -357,12 +369,18 @@ interface Appointment_Result extends Appointment_Base, Appointment_Relationships
   transactioncurrencyid_guid: string | null;
 }
 interface Appointment_RelatedOne {
+  regardingobjectid_account_appointment: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   regardingobjectid_bookableresourcebooking_appointment: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
+  regardingobjectid_contact_appointment: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   regardingobjectid_msdyn_workorder_appointment: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   regardingobjectid_msdyn_workorderincident_appointment: WebMappingRetrieve<msdyn_workorderincident_Select,msdyn_workorderincident_Expand,msdyn_workorderincident_Filter,msdyn_workorderincident_Fixed,msdyn_workorderincident_Result,msdyn_workorderincident_FormattedResult>;
   regardingobjectid_msdyn_workorderservicetask_appointment: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
 }
 interface Appointment_RelatedMany {
+  appointment_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
+  appointment_activity_parties: WebMappingRetrieve<ActivityParty_Select,ActivityParty_Expand,ActivityParty_Filter,ActivityParty_Fixed,ActivityParty_Result,ActivityParty_FormattedResult>;
+  appointment_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  appointment_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_appointment_bookableresourcebooking: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
