@@ -4,6 +4,11 @@ namespace ROM.WorkOrder {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
 
+        //Set required field
+        form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
+        form.getAttribute("msdyn_primaryincidenttype").setRequiredLevel("required");
+        form.getAttribute("ovs_regulatedentity").setRequiredLevel("required");
+
         switch (form.ui.getFormType()) {
             //Create
             case 1:
