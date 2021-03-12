@@ -27,7 +27,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     survey.onComplete.add(function (survey, options) {
         // When survey is completed, parse the resulting JSON and save it to ovs_questionnaireresponse
         var data = JSON.stringify(survey.data, null, 3);
-        window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data);
+        window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data.trim());
 
         // In order to keep the survey in place without showing a thank you or blank page
         // Set the state to running, keep the data and go to the first page
@@ -43,7 +43,8 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     survey.onValueChanging.add(function (survey, options) {
         // Trigger form to be "dirty" when there is a change to the questionnaire by clearing out the ovs_questionnaireresponse
         // This looks dangerous but the response will be reparsed and saved on completing the questionnaire.
-        window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue("{}");
+        var data = JSON.stringify(survey.data, null, 3) + " ";
+        window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data);
     });
 
     survey.onValueChanged.add(function (survey, options) {

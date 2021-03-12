@@ -105,7 +105,7 @@
         //question.valueChangedCallback = onValueChangedCallback;
 
         //set initial value
-        onValueChangedCallback();
+        updateQuestionValue(question);
         //set initial readOnly if needed
         onReadOnlyChangedCallback();
     },
@@ -121,6 +121,14 @@
 //Register our widget in singleton custom widget collection
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 
+function updateQuestionValue(question) {
+    question.value = {
+        provisionReference: question.reference,
+        provisionText: question.description,
+        comments: question.inspectorComments,
+        documentaryEvidence: question.file
+    }
+}
 
 function updateQuestionProvisionData(question, provisionName) {
     /* Questions in the test survey are assigned new question.id's causing duplicate findings in the json.
