@@ -41,8 +41,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     });
 
     survey.onValueChanging.add(function (survey, options) {
-        // Trigger form to be "dirty" when there is a change to the questionnaire by clearing out the ovs_questionnaireresponse
-        // This looks dangerous but the response will be reparsed and saved on completing the questionnaire.
+        //Adding a space to the questionnaireresponse to make the form dirty. The space gets trimmed off in survey.onComplete.
         var data = JSON.stringify(survey.data, null, 3) + " ";
         window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data);
     });
