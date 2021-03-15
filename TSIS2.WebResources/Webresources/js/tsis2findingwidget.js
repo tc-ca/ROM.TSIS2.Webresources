@@ -73,7 +73,13 @@
 
         file.onchange = function () {
             for (var i = 0; i < file.files.length; i++) {
-                fileArray.push(file.files[i].name);
+                alert("File size: " + file.files[i].size);
+                if(file.files[i].size > 10240000){
+                    alert("The maximum file size of 10 MB has been exceeded. Please choose another file.");
+                }
+                else{
+                    fileArray.push(file.files[i]);
+                }
             }
             fileText.innerText = fileArray;
             question.file = fileArray;
