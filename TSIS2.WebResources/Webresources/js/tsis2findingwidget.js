@@ -73,10 +73,7 @@
 
         file.onchange = function () {
             for (var i = 0; i < file.files.length; i++) {
-                if(file.files[i].size > 10240000){
-                    alert("The maximum file size of 10 MB has been exceeded. Please choose another file.");
-                }
-                else{
+                if(validateFile(file.files[i])){
                     fileArray.push(file.files[i]);
                 }
             }
@@ -125,6 +122,23 @@
 
 //Register our widget in singleton custom widget collection
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
+
+function validateFile(file){
+    if(file.size > 10240000){
+        var alertString = {title: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "MaxFileSizeAlertTitle"), text: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "MaxFileSizeAlertText") };
+        var confirmOptions = { height: 150, width: 450 };
+        parent.Xrm.Navigation.openAlertDialog(alertString).then(
+            function (success) {
+                console.log("Alert dialog closed");
+            },
+            function (error) {
+                console.log(error.message);
+            }
+      );
+      return false;
+    }
+    return true;
+}
 
 function updateQuestionValue(question) {
     question.value = {
