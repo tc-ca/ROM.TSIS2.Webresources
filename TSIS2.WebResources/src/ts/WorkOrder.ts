@@ -315,4 +315,20 @@ namespace ROM.WorkOrder {
             formContext.getAttribute("statuscode").setValue(1);
         }
     }
+
+    export function stateCodeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
+        var stateCode = formContext.getAttribute("statecode").getValue();
+        //If statecode changed to Active
+        if (stateCode == 0) {
+            var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
+            //If systemStatus is currently Closed
+            if (systemStatus == 690970004 || systemStatus == 690970005) {
+                //Change systemstatus to Open - Completed
+                formContext.getAttribute("msdyn_systemstatus").setValue(690970003);
+                //Prevent User from discarding status change
+                formContext.data.save();
+            }
+        }
+    }
   }
