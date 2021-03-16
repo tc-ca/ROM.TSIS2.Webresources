@@ -126,7 +126,10 @@
     <data name="FilteredSites" xml:space="preserve">
         <value>Filtered Sites (FR)</value>
     </data>
-    <data name="MaxFileSizeAlert" xml:space="preserve">
+    <data name="MaxFileSizeAlertText" xml:space="preserve">
         <value>Taille de fichier maximum de 10Mb atteint. Veuillez choisir un autre fichier.</value>
+    </data>
+    <data name="MaxFileSizeAlertTitle" xml:space="preserve">
+        <value>Taille de fichier maximale atteinte !</value>
     </data>
 </root>

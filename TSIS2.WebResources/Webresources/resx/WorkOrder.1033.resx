@@ -126,7 +126,10 @@
     <data name="FilteredSites" xml:space="preserve">
         <value>Filtered Sites</value>
     </data>
-    <data name="MaxFileSizeAlert" xml:space="preserve">
+    <data name="MaxFileSizeAlertText" xml:space="preserve">
         <value>The maximum file size of 10 MB has been exceeded. Please choose another file.</value>
+    </data>
+    <data name="MaxFileSizeAlertTitle" xml:space="preserve">
+        <value>Maximum file size exceeded !</value>
     </data>
 </root>
