@@ -20,7 +20,7 @@ function surveyHasErrors(primaryControl) {
             hasError = win.survey.visiblePages[i].hasErrors(true) || hasError; 
         }
         if (hasError) {
-            var alertStrings = { text: "All required questions in the survey must be anserwed before the survey can be marked complete", title: "Survey Incomplete" };
+            var alertStrings = { text: "All required questions in the survey must be answered before the survey can be marked complete", title: "Survey Incomplete" };
             var alertOptions = { height: 200, width: 450 };
             Xrm.Navigation.openConfirmDialog(alertStrings, alertOptions);
         } else {
