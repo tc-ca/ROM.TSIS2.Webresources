@@ -1,4 +1,31 @@
-﻿var widget = {
+﻿var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+
+var MaxFileSizeAlertText;
+var MaxFileSizeAlertTitle;
+var InspectorComments;
+var ChooseFiles;
+var NoFileChosen;
+var DocumentaryEvidence;
+
+if (lang == 1036){
+    MaxFileSizeAlertText = "Taille de fichier maximum de 10Mb atteinte. Veuillez choisir un autre fichier.";
+    MaxFileSizeAlertTitle = "Taille de fichier maximale atteinte !";
+    InspectorComments = "Commentaires de l'inspecteur";
+    ChooseFiles = "Choisir les fichiers";
+    NoFileChosen = "Aucun fichier choisi";
+    DocumentaryEvidence = "La preuve documentaire";
+}
+else{
+    MaxFileSizeAlertText = "The maximum file size of 10 MB has been exceeded. Please choose another file.";
+    MaxFileSizeAlertTitle = "Maximum file size exceeded !";
+    InspectorComments = "Inspector Comments";
+    ChooseFiles = "Choose Files";
+    NoFileChosen = "No file chosen";
+    DocumentaryEvidence = "Documentary Evidence";
+}
+
+var widget = {
     //the widget name. It should be unique and written in lowcase.
     name: "finding",
     //the widget title. It is how it will appear on the toolbox of the SurveyJS Editor/Builder
@@ -40,7 +67,7 @@
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${parent.Xrm.Utility.getResourceString("ovs_/resx/tsis2findingwidget", "InspectorComments")}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50"></textarea> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">${parent.Xrm.Utility.getResourceString("ovs_/resx/tsis2findingwidget", "DocumentaryEvidence")}</span> </label> <input type="file" class="sv_q_file_input file" multiple="true" style="padding-top: 2px;"></input><p class="evidenceText"></p> </div> </div>`,
+        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${InspectorComments}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50"></textarea> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">${DocumentaryEvidence}</span> </label> <input type="file" class="sv_q_file_input file" multiple="true" style="padding-top: 2px;"></input><p class="evidenceText"></p> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         //el is our root element in htmlTemplate, is "div" in our case
@@ -120,12 +147,14 @@
     }
 };
 
+
+
 //Register our widget in singleton custom widget collection
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 
 function validateFile(file){
     if(file.size > 10240000){
-        var alertString = { title: parent.Xrm.Utility.getResourceString("ovs_/resx/tsis2findingwidget", "MaxFileSizeAlertTitle"), text: parent.Xrm.Utility.getResourceString("ovs_/resx/tsis2findingwidget", "MaxFileSizeAlertText") };
+        var alertString = { title: MaxFileSizeAlertTitle, text: MaxFileSizeAlertText };
         var alertOptions = { height: 150, width: 450 };
         parent.Xrm.Navigation.openAlertDialog(alertString, alertOptions).then(
             function (success) {
@@ -162,7 +191,6 @@ function updateQuestionProvisionData(question, provisionName) {
                 question.name = `finding-${question.nameID}`;
                 question.reference = result.entities[0].qm_name;
 
-                let lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
                 question.description = await buildProvisionText(result.entities[0], lang);
                 question.locDescription.values.default = await buildProvisionText(result.entities[0], 1033);
                 question.locDescription.values.fr = await buildProvisionText(result.entities[0], 1036);
