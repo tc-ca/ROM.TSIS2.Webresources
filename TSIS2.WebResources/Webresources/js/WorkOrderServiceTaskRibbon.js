@@ -36,7 +36,7 @@ function completeConfirmation(formContext, survey) {
       function (success) {
         if (success.confirmed) {
             console.log("Dialog closed using OK button.");
-            formContext.getAttribute("ovs_inspectionstatus").setValue(true);
+            formContext.getAttribute("msdyn_percentcomplete").setValue(100.00);
             formContext.data.save().then(
                 function success(result) {
                     formContext.ui.close();
