@@ -22,14 +22,14 @@ namespace TSIS2.WebResources.Webresources.resx {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class tsis2findingwidget_1036 {
+    internal class Questionnaire_1033 {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal tsis2findingwidget_1036() {
+        internal Questionnaire_1033() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TSIS2.WebResources.Webresources.resx.tsis2findingwidget.1036", typeof(tsis2findingwidget_1036).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TSIS2.WebResources.Webresources.resx.Questionnaire.1033", typeof(Questionnaire_1033).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,34 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Taille de fichier maximum de 10Mb atteint. Veuillez choisir un autre fichier..
+        ///   Looks up a localized string similar to Choose Files.
+        /// </summary>
+        internal static string ChooseFiles {
+            get {
+                return ResourceManager.GetString("ChooseFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Documentary Evidence.
+        /// </summary>
+        internal static string DocumentaryEvidence {
+            get {
+                return ResourceManager.GetString("DocumentaryEvidence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspector Comments.
+        /// </summary>
+        internal static string InspectorComments {
+            get {
+                return ResourceManager.GetString("InspectorComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum file size of 10 MB has been exceeded. Please choose another file..
         /// </summary>
         internal static string MaxFileSizeAlertText {
             get {
@@ -70,47 +97,20 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Taille de fichier maximale atteinte !.
+        ///   Looks up a localized string similar to Maximum file size exceeded!.
         /// </summary>
         internal static string MaxFileSizeAlertTitle {
             get {
                 return ResourceManager.GetString("MaxFileSizeAlertTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Maximum file size exceeded!.
-        /// </summary>
-        internal static string InspectorComments {
-            get {
-                return ResourceManager.GetString("InspectorComments", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Maximum file size exceeded!.
-        /// </summary>
-        internal static string ChooseFiles {
-            get {
-                return ResourceManager.GetString("ChooseFiles", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Maximum file size exceeded!.
+        ///   Looks up a localized string similar to No file chosen.
         /// </summary>
         internal static string NoFileChosen {
             get {
                 return ResourceManager.GetString("NoFileChosen", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Maximum file size exceeded!.
-        /// </summary>
-        internal static string DocumentaryEvidence {
-            get {
-                return ResourceManager.GetString("DocumentaryEvidence", resourceCulture);
             }
         }
     }

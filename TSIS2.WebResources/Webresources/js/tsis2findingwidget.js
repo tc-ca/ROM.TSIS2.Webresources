@@ -40,7 +40,7 @@
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${parent.Xrm.Utility.getResourceString("ovs_/resx/tsis2findingwidget", "InspectorComments")}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50"></textarea> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">${parent.Xrm.Utility.getResourceString("ovs_/resx/tsis2findingwidget", "DocumentaryEvidence")}</span> </label> <input type="file" class="sv_q_file_input file" multiple="true" style="padding-top: 2px;"></input><p class="evidenceText"></p> </div> </div>`,
+        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${parent.Xrm.Utility.getResourceString("ovs_/resx/Questionnaire", "InspectorComments")}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50"></textarea> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">${parent.Xrm.Utility.getResourceString("ovs_/resx/tsis2findingwidget", "DocumentaryEvidence")}</span> </label> <input type="file" class="sv_q_file_input file" multiple="true" style="padding-top: 2px;"></input><p class="evidenceText"></p> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         //el is our root element in htmlTemplate, is "div" in our case
@@ -125,7 +125,7 @@ Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 
 function validateFile(file){
     if(file.size > 10240000){
-        var alertString = { title: parent.Xrm.Utility.getResourceString("ovs_/resx/tsis2findingwidget", "MaxFileSizeAlertTitle"), text: parent.Xrm.Utility.getResourceString("ovs_/resx/tsis2findingwidget", "MaxFileSizeAlertText") };
+        var alertString = { title: parent.Xrm.Utility.getResourceString("ovs_/resx/Questionnaire", "MaxFileSizeAlertTitle"), text: parent.Xrm.Utility.getResourceString("ovs_/resx/Questionnaire", "MaxFileSizeAlertText") };
         var alertOptions = { height: 150, width: 450 };
         parent.Xrm.Navigation.openAlertDialog(alertString, alertOptions).then(
             function (success) {
