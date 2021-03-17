@@ -172,13 +172,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Webresources\resx\Questionnaire.1033.Designer.cs">
-      <DependentUpon>Questionnaire.1033.resx</DependentUpon>
+    <Compile Include="Webresources\resx\tsis2findingwidget.1033.Designer.cs">
+      <DependentUpon>tsis2findingwidget.1033.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Webresources\resx\Questionnaire.1036.Designer.cs">
-      <DependentUpon>Questionnaire.1036.resx</DependentUpon>
+    <Compile Include="Webresources\resx\tsis2findingwidget.1036.Designer.cs">
+      <DependentUpon>tsis2findingwidget.1036.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -680,13 +680,13 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Webresources\resx\Questionnaire.1033.resx">
+    <EmbeddedResource Include="Webresources\resx\tsis2findingwidget.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Questionnaire.1033.Designer.cs</LastGenOutput>
+      <LastGenOutput>tsis2findingwidget.1033.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Webresources\resx\Questionnaire.1036.resx">
+    <EmbeddedResource Include="Webresources\resx\tsis2findingwidget.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Questionnaire.1036.Designer.cs</LastGenOutput>
+      <LastGenOutput>tsis2findingwidget.1036.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\WorkOrder.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
