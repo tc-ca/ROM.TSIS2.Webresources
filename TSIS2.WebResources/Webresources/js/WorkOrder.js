@@ -77,6 +77,7 @@ var ROM;
                 var form = eContext.getFormContext();
                 var regionAttribute = form.getAttribute("msdyn_serviceterritory");
                 var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
+                var countryAttribute = form.getAttribute("ovs_ovscountry");
                 if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
                     // Clear out all dependent fields' value
                     if (!form.getControl("ovs_regulatedentity").getDisabled() || form.getAttribute("ovs_regulatedentity").getValue() != null) {
@@ -91,8 +92,18 @@ var ROM;
                     // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                     var regionAttributeValue = regionAttribute.getValue();
                     var operationTypeAttributeValue = operationTypeAttribute.getValue();
+                    var countryAttributeValue = countryAttribute.getValue();
                     if (regionAttributeValue != null && regionAttributeValue != undefined &&
                         operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
+                        var countryXML = "";
+                        if (countryAttributeValue != null && countryAttributeValue != undefined) {
+                            if (regionAttributeValue[0].name != "International") {
+                                form.getControl("msdyn_serviceaccount").setDisabled(false);
+                            }
+                            else {
+                                countryXML = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
+                            }
+                        }
                         // Enable direct dependent field
                         form.getControl("ovs_regulatedentity").setDisabled(false);
                         // Setup a custom view
@@ -101,7 +112,7 @@ var ROM;
                         var entityName = "account";
                         var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredRegulatedEntities");
                         var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /><cell name="owner" width="125" /></row></grid>';
-                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000" /></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /></filter><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="msdyn_serviceterritory" operator="eq" value="' + regionAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000" /></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /></filter><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="msdyn_serviceterritory" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryXML + '</filter></link-entity></link-entity></entity></fetch>';
                         form.getControl("ovs_regulatedentity").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     }
                 }
@@ -263,5 +274,21 @@ var ROM;
             }
         }
         WorkOrder.systemStatusOnChange = systemStatusOnChange;
+        function stateCodeOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var stateCode = formContext.getAttribute("statecode").getValue();
+            //If statecode changed to Active
+            if (stateCode == 0) {
+                var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
+                //If systemStatus is currently Closed
+                if (systemStatus == 690970004 || systemStatus == 690970005) {
+                    //Change systemstatus to Open - Completed
+                    formContext.getAttribute("msdyn_systemstatus").setValue(690970003);
+                    //Prevent User from discarding status change
+                    formContext.data.save();
+                }
+            }
+        }
+        WorkOrder.stateCodeOnChange = stateCodeOnChange;
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));
