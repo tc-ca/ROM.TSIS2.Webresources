@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FilteredOperationTypes" xml:space="preserve">
-    <value>Filtered Operation Types (FR)</value>
+  <data name="MaxFileSizeAlertText" xml:space="preserve">
+    <value>Taille de fichier maximum de 10Mb atteint. Veuillez choisir un autre fichier.</value>
   </data>
-  <data name="FilteredRegulatedEntities" xml:space="preserve">
-    <value>Filtered Regulated Entities (FR)</value>
-  </data>
-  <data name="FilteredSites" xml:space="preserve">
-    <value>Filtered Sites (FR)</value>
+  <data name="MaxFileSizeAlertTitle" xml:space="preserve">
+    <value>Taille de fichier maximale atteinte !</value>
   </data>
 </root>
