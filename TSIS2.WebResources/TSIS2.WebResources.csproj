@@ -133,6 +133,7 @@
     <Content Include="Webresources\css\survey.min.css" />
     <Content Include="Webresources\html\SurveyCreator.html" />
     <Content Include="Webresources\html\SurveyRender.html" />
+    <Content Include="Webresources\js\Account.js" />
     <Content Include="Webresources\js\ace.min.js" />
     <Content Include="Webresources\js\autocomplete.js" />
     <Content Include="Webresources\js\BookableResourceBooking.js" />
@@ -171,6 +172,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Webresources\resx\tsis2findingwidget.1033.Designer.cs">
+      <DependentUpon>tsis2findingwidget.1033.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Webresources\resx\tsis2findingwidget.1036.Designer.cs">
+      <DependentUpon>tsis2findingwidget.1036.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Webresources\resx\WorkOrder.1036.Designer.cs">
       <DependentUpon>WorkOrder.1036.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -206,6 +217,7 @@
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\ts\Account.ts" />
     <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
     <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
@@ -668,6 +680,14 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Webresources\resx\tsis2findingwidget.1033.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>tsis2findingwidget.1033.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\tsis2findingwidget.1036.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>tsis2findingwidget.1036.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\WorkOrder.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkOrder.1036.Designer.cs</LastGenOutput>
