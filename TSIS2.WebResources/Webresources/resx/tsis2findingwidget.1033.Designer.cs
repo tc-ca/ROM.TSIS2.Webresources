@@ -77,5 +77,41 @@ namespace TSIS2.WebResources.Webresources.resx {
                 return ResourceManager.GetString("MaxFileSizeAlertTitle", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum file size exceeded!.
+        /// </summary>
+        internal static string InspectorComments {
+            get {
+                return ResourceManager.GetString("InspectorComments", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum file size exceeded!.
+        /// </summary>
+        internal static string ChooseFiles {
+            get {
+                return ResourceManager.GetString("ChooseFiles", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum file size exceeded!.
+        /// </summary>
+        internal static string NoFileChosen {
+            get {
+                return ResourceManager.GetString("NoFileChosen", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum file size exceeded!.
+        /// </summary>
+        internal static string DocumentaryEvidence {
+            get {
+                return ResourceManager.GetString("DocumentaryEvidence", resourceCulture);
+            }
+        }
     }
 }
