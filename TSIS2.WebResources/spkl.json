@@ -43,14 +43,14 @@
           "description": "ROM TSIS 2.0 WorkOrder.js French Resource Strings"
         },
         {
-          "uniquename": "ovs_/resx/Questionnaire.1033.resx",
-          "file": "resx\\Questionnaire.1033.resx",
-          "description": "ROM TSIS 2.0 Questionnaire.js English Resource Strings"
+          "uniquename": "ovs_/resx/tsis2findingwidget.1033.resx",
+          "file": "resx\\tsis2findingwidget.1033.resx",
+          "description": "ROM TSIS 2.0 tsis2findingwidget.js English Resource Strings"
         },
         {
-          "uniquename": "ovs_/resx/Questionnaire.1036.resx",
-          "file": "resx\\Questionnaire.1036.resx",
-          "description": "ROM TSIS 2.0 Questionnaire.js French Resource Strings"
+          "uniquename": "ovs_/resx/tsis2findingwidget.1036.resx",
+          "file": "resx\\tsis2findingwidget.1036.resx",
+          "description": "ROM TSIS 2.0 tsis2findingwidget.js French Resource Strings"
         },
         /* Form Scripts */
         {
