@@ -125,9 +125,9 @@ Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 
 function validateFile(file){
     if(file.size > 10240000){
-        var alertString = {title: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "MaxFileSizeAlertTitle"), text: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "MaxFileSizeAlertText") };
-        var confirmOptions = { height: 150, width: 450 };
-        parent.Xrm.Navigation.openAlertDialog(alertString).then(
+        var alertString = { title: parent.Xrm.Utility.getResourceString("ovs_/resx/tsis2findingwidget", "MaxFileSizeAlertTitle"), text: parent.Xrm.Utility.getResourceString("ovs_/resx/tsis2findingwidget", "MaxFileSizeAlertText") };
+        var alertOptions = { height: 150, width: 450 };
+        parent.Xrm.Navigation.openAlertDialog(alertString, alertOptions).then(
             function (success) {
                 console.log("Alert dialog closed");
             },
