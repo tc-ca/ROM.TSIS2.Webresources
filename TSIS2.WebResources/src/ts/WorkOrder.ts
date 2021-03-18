@@ -80,6 +80,38 @@ namespace ROM.WorkOrder {
         }
     }
 
+    export function countryOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
+            const countryAttribute = form.getAttribute("ovs_ovscountry");
+
+            if (countryAttribute != null && countryAttribute != undefined) {
+
+                // Clear out all dependent fields' value
+                if (!form.getControl("ovs_operationtypeid").getDisabled() || form.getAttribute("ovs_operationtypeid").getValue() != null) {
+                    form.getAttribute("ovs_operationtypeid").setValue(null);
+                }
+                if (!form.getControl("ovs_regulatedentity").getDisabled() || form.getAttribute("ovs_regulatedentity").getValue() != null) {
+                    form.getAttribute("ovs_regulatedentity").setValue(null);
+                }
+                if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
+                    form.getAttribute("msdyn_serviceaccount").setValue(null);
+                }
+                
+                // Enable direct dependent field
+                form.getControl("ovs_operationtypeid").setDisabled(false);
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
+    }
+
+    export function fiscalYearOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        //if new fiscal year is selected, then previous selection of quarter no longer corresponds
+        removeSelectedFiscalQuarter(eContext);
+    }
+
     export function operationTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
@@ -196,38 +228,6 @@ namespace ROM.WorkOrder {
         } catch (e) {
             throw new Error(e.Message);
         }
-    }
-
-    export function countryOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        try {
-
-            const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
-            const countryAttribute = form.getAttribute("ovs_ovscountry");
-
-            if (countryAttribute != null && countryAttribute != undefined) {
-
-                // Clear out all dependent fields' value
-                if (!form.getControl("ovs_operationtypeid").getDisabled() || form.getAttribute("ovs_operationtypeid").getValue() != null) {
-                    form.getAttribute("ovs_operationtypeid").setValue(null);
-                }
-                if (!form.getControl("ovs_regulatedentity").getDisabled() || form.getAttribute("ovs_regulatedentity").getValue() != null) {
-                    form.getAttribute("ovs_regulatedentity").setValue(null);
-                }
-                if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
-                    form.getAttribute("msdyn_serviceaccount").setValue(null);
-                }
-                
-                // Enable direct dependent field
-                form.getControl("ovs_operationtypeid").setDisabled(false);
-            }
-        } catch (e) {
-            throw new Error(e.Message);
-        }
-    }
-
-    export function fiscalYearOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        //if new fiscal year is selected, then previous selection of quarter no longer corresponds
-        removeSelectedFiscalQuarter(eContext);
     }
 
     // FUNCTIONS
