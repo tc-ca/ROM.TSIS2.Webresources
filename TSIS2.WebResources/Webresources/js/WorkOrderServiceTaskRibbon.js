@@ -20,9 +20,12 @@ function surveyHasErrors(primaryControl) {
             hasError = win.survey.visiblePages[i].hasErrors(true) || hasError; 
         }
         if (hasError) {
-            var alertStrings = { text: "All required questions in the survey must be answered before the survey can be marked complete", title: "Survey Incomplete" };
+            var alertStrings = {
+                text: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteValidationText"),
+                title: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteValidationTitle"),
+            };
             var alertOptions = { height: 200, width: 450 };
-            Xrm.Navigation.openConfirmDialog(alertStrings, alertOptions);
+            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
         } else {
             completeConfirmation(formContext, win.survey);
         }
@@ -30,12 +33,14 @@ function surveyHasErrors(primaryControl) {
 }
 
 function completeConfirmation(formContext, survey) {
-    var confirmStrings = { text: "By clicking OK, the survey will lock and you will NOT be able to modify the information on this page.", title: "Confirmation Survey Complete" };
+    var confirmStrings = {
+        text: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteConfirmationText"),
+        title: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteConfirmationTitle"),
+    };
     var confirmOptions = { height: 200, width: 450 };
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
       function (success) {
         if (success.confirmed) {
-            console.log("Dialog closed using OK button.");
             formContext.getAttribute("msdyn_percentcomplete").setValue(100.00);
             //Set Status Reason to Complete
             formContext.getAttribute("statuscode").setValue(918640002);
@@ -43,9 +48,6 @@ function completeConfirmation(formContext, survey) {
                 function success(result) {
                     formContext.ui.close();
                 });
-        }
-        else {
-          console.log("Dialog closed using Cancel button or X.");
         }
       });
 }
