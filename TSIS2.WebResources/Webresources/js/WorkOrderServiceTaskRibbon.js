@@ -37,6 +37,8 @@ function completeConfirmation(formContext, survey) {
         if (success.confirmed) {
             console.log("Dialog closed using OK button.");
             formContext.getAttribute("msdyn_percentcomplete").setValue(100.00);
+            //Set Status Reason to Complete
+            formContext.getAttribute("statuscode").setValue(918640002);
             formContext.data.save().then(
                 function success(result) {
                     formContext.ui.close();
