@@ -44,12 +44,12 @@
         },
         {
           "uniquename": "ovs_/resx/WorkOrderServiceTaskRibbon.1033.resx",
-          "file": "resx\\WorkOrder.1033.resx",
+          "file": "resx\\WorkOrderServiceTaskRibbon.1033.resx",
           "description": "ROM TSIS 2.0 WorkOrderServiceTaskRibbon.js English Resource Strings"
         },
         {
           "uniquename": "ovs_/resx/WorkOrderServiceTaskRibbon.1036.resx",
-          "file": "resx\\WorkOrder.1036.resx",
+          "file": "resx\\WorkOrderServiceTaskRibbon.1036.resx",
           "description": "ROM TSIS 2.0 WorkOrderServiceTaskRibbon.js French Resource Strings"
         },
         /* Form Scripts */

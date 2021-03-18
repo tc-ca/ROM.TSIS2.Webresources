@@ -21,8 +21,8 @@ function surveyHasErrors(primaryControl) {
         }
         if (hasError) {
             var alertStrings = {
-                text: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteValidationText"),
-                title: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteValidationTitle"),
+                text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteValidationText"),
+                title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteValidationTitle"),
             };
             var alertOptions = { height: 200, width: 450 };
             Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
