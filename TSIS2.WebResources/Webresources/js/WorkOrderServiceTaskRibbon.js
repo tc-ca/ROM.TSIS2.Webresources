@@ -18,7 +18,6 @@ else {
     MarkCompleteConfirmationTitle = "Confirmation - Survey Complete";
 }
 
-
 function isROMInspector() {
     var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
     var enable = false;
@@ -26,6 +25,17 @@ function isROMInspector() {
   
         if (item.name == "ROM - Inspector") enable = true;
   
+    });
+    return enable;
+}
+
+function isSystemAdministrator() {
+    var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
+    var enable = false;
+    roles.forEach(function (item) {
+
+        if (item.name == "System Administrator") enable = true;
+
     });
     return enable;
 }
