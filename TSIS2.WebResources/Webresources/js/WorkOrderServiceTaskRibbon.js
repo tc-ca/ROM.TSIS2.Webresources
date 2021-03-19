@@ -18,6 +18,11 @@ else {
     MarkCompleteConfirmationTitle = "Confirmation - Survey Complete";
 }
 
+//Used to hide buttons for ROM - Inspectors unless they're an admin as well
+function isROMInspectorAndNotSystemAdministrator() {
+    return (isROMInspector() && !isSystemAdministrator())
+}
+
 function isROMInspector() {
     var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
     var enable = false;
