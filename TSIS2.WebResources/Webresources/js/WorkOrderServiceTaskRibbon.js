@@ -1,3 +1,24 @@
+var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+var MarkCompleteValidationText;
+var MarkCompleteValidationTitle;
+var MarkCompleteConfirmationText;
+var MarkCompleteConfirmationTitle;
+
+if (lang == 1036) {
+    MarkCompleteValidationText = "All required questions in the survey must be answered before the survey can be Marked Complete.";
+    MarkCompleteValidationTitle = "Survey Incomplete";
+    MarkCompleteConfirmationText = "By clicking OK, the survey status will change to Complete and the survey answers will be saved.";
+    MarkCompleteConfirmationTitle = "Confirmation - Survey Complete";
+}
+else {
+    MarkCompleteValidationText = "Toutes les questions requises du sondage doivent être répondues avant que le sondage puissent être marqué comme « Terminé ».";
+    MarkCompleteValidationTitle = "Sondage Incomplet";
+    MarkCompleteConfirmationText = "En cliquant sur OK, le statut du sondage passera à « Terminé » et les réponses seront enregistrées.";
+    MarkCompleteConfirmationTitle = "Confirmation - Sondage complété";
+}
+
+
 function isROMInspector() {
     var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
     var enable = false;
@@ -21,8 +42,8 @@ function surveyHasErrors(primaryControl) {
         }
         if (hasError) {
             var alertStrings = {
-                text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteValidationText"),
-                title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteValidationTitle"),
+                text: MarkCompleteValidationText,
+                title: MarkCompleteValidationTitle
             };
             var alertOptions = { height: 200, width: 450 };
             Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
@@ -34,8 +55,8 @@ function surveyHasErrors(primaryControl) {
 
 function completeConfirmation(formContext, survey) {
     var confirmStrings = {
-        text: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteConfirmationText"),
-        title: parent.Xrm.Utility.getResourceString("ovs_/resx/WorkOrderServiceTaskRibbon", "MarkCompleteConfirmationTitle"),
+        text: MarkCompleteConfirmationText,
+        title: MarkCompleteConfirmationTitle
     };
     var confirmOptions = { height: 200, width: 450 };
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
