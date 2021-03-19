@@ -6,10 +6,10 @@ var MarkCompleteConfirmationText;
 var MarkCompleteConfirmationTitle;
 
 if (lang == 1036) {
-    MarkCompleteValidationText = "Toutes les questions requises du sondage doivent être répondues avant que le sondage puissent être marqué comme Terminé.";
+    MarkCompleteValidationText = "Toutes les questions requises du sondage doivent Ãªtre rÃ©pondues avant que le sondage puissent Ãªtre marquÃ© comme TerminÃ©.";
     MarkCompleteValidationTitle = "Sondage Incomplet";
-    MarkCompleteConfirmationText = "En cliquant sur OK, le statut du sondage passera à Terminé et les réponses seront enregistrées.";
-    MarkCompleteConfirmationTitle = "Confirmation - Sondage complété";
+    MarkCompleteConfirmationText = "En cliquant sur OK, le statut du sondage passera Ã  TerminÃ© et les rÃ©ponses seront enregistrÃ©es.";
+    MarkCompleteConfirmationTitle = "Confirmation - Sondage complÃ©tÃ©";
 }
 else {
     MarkCompleteValidationText = "All required questions in the survey must be answered before the survey can be Marked Complete.";
