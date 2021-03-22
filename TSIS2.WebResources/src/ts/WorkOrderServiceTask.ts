@@ -4,6 +4,10 @@ namespace ROM.WorkOrderServiceTask {
     export function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
 
+        if(Form.getAttribute('msdyn_actualduration').getValue() == 0){
+            Form.getAttribute('msdyn_actualduration').setValue();
+        }
+
         // Get the web resource control on the form
         const wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
         const questionnaireDefinition = Form.getAttribute('ovs_questionnairedefinition').getValue();
