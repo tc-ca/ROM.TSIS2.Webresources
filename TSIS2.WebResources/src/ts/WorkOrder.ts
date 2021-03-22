@@ -80,6 +80,38 @@ namespace ROM.WorkOrder {
         }
     }
 
+    export function countryOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
+            const countryAttribute = form.getAttribute("ovs_ovscountry");
+
+            if (countryAttribute != null && countryAttribute != undefined) {
+
+                // Clear out all dependent fields' value
+                if (!form.getControl("ovs_operationtypeid").getDisabled() || form.getAttribute("ovs_operationtypeid").getValue() != null) {
+                    form.getAttribute("ovs_operationtypeid").setValue(null);
+                }
+                if (!form.getControl("ovs_regulatedentity").getDisabled() || form.getAttribute("ovs_regulatedentity").getValue() != null) {
+                    form.getAttribute("ovs_regulatedentity").setValue(null);
+                }
+                if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
+                    form.getAttribute("msdyn_serviceaccount").setValue(null);
+                }
+                
+                // Enable direct dependent field
+                form.getControl("ovs_operationtypeid").setDisabled(false);
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
+    }
+
+    export function fiscalYearOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        //if new fiscal year is selected, then previous selection of quarter no longer corresponds
+        removeSelectedFiscalQuarter(eContext);
+    }
+
     export function operationTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
@@ -135,6 +167,7 @@ namespace ROM.WorkOrder {
                 }
             }
         } catch (e) {
+
             throw new Error(e.Message);
         }
     }
@@ -198,36 +231,90 @@ namespace ROM.WorkOrder {
         }
     }
 
-    export function countryOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export function functionalLocationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
             const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
-            const countryAttribute = form.getAttribute("ovs_ovscountry");
+            const assetCategoryAttribute = form.getAttribute("ovs_assetcategory");
+            const functionalLocationAttribute = form.getAttribute("msdyn_functionallocation");
 
-            if (countryAttribute != null && countryAttribute != undefined) {
+            if (functionalLocationAttribute != null && functionalLocationAttribute != undefined) {
 
                 // Clear out all dependent fields' value
-                if (!form.getControl("ovs_operationtypeid").getDisabled() || form.getAttribute("ovs_operationtypeid").getValue() != null) {
-                    form.getAttribute("ovs_operationtypeid").setValue(null);
+                if (!form.getControl("ovs_assetcategory").getDisabled() || form.getAttribute("ovs_assetcategory").getValue() != null) {
+                    form.getAttribute("ovs_assetcategory").setValue(null);
                 }
-                if (!form.getControl("ovs_regulatedentity").getDisabled() || form.getAttribute("ovs_regulatedentity").getValue() != null) {
-                    form.getAttribute("ovs_regulatedentity").setValue(null);
-                }
-                if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
-                    form.getAttribute("msdyn_serviceaccount").setValue(null);
+
+                // Disable all dependent fields
+                form.getControl("ovs_assetcategory").setDisabled(true);
+
+                // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                const functionalLocationAttributeValue = functionalLocationAttribute.getValue();
+
+                if (functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined) {
+
+                    // Enable direct dependent field
+                    form.getControl("ovs_assetcategory").setVisible(true);
+                    form.getControl("ovs_assetcategory").setDisabled(false);
+
+                    // Setup a custom view
+                    // This value is never saved and only needs to be unique among the other available views for the lookup.
+                    const viewId = '{1A58459F-F987-5478-5823-49AB823644B1}';
+                    const entityName = "msdyn_customerassetcategory";
+                    const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredAssets");
+                    const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetcategoryid"><cell name="msdyn_name" width="200" /></row></grid>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" ><entity name="msdyn_customerassetcategory" ><attribute name="msdyn_name" /><attribute name="msdyn_customerassetcategoryid" /><filter type="and" ><condition attribute="ovs_functionallocation" operator="eq" value="' + functionalLocationAttributeValue[0].id + '" /></filter> </entity></fetch>';
+                    form.getControl("ovs_assetcategory").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    
                 }
                 
-                // Enable direct dependent field
-                form.getControl("ovs_operationtypeid").setDisabled(false);
             }
         } catch (e) {
             throw new Error(e.Message);
         }
     }
 
-    export function fiscalYearOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        //if new fiscal year is selected, then previous selection of quarter no longer corresponds
-        removeSelectedFiscalQuarter(eContext);
+    export function assetCategoryOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
+            const assetAttribute = form.getAttribute("ovs_asset");
+            const assetCategoryAttribute = form.getAttribute("ovs_assetcategory");
+
+            if (assetCategoryAttribute != null && assetCategoryAttribute != undefined) {
+
+                // Clear out all dependent fields' value
+                if (!form.getControl("ovs_asset").getDisabled() || form.getAttribute("ovs_asset").getValue() != null) {
+                    form.getAttribute("ovs_asset").setValue(null);
+                }
+
+                // Disable all dependent fields
+                form.getControl("ovs_asset").setDisabled(true);
+
+                // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                const assetCategoryAttributeValue = assetCategoryAttribute.getValue();
+
+                if (assetCategoryAttributeValue != null && assetCategoryAttributeValue != undefined) {
+
+                    // Enable direct dependent field
+                    form.getControl("ovs_asset").setVisible(true);
+                    form.getControl("ovs_asset").setDisabled(false);
+
+                    // Setup a custom view
+                    // This value is never saved and only needs to be unique among the other available views for the lookup.
+                    const viewId = '{3A58459F-F182-5428-4871-49AA825243B3}';
+                    const entityName = "msdyn_customerasset";
+                    const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredAssetCategories");
+                    const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetid"><cell name="msdyn_name" width="200" /></row></grid>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" ><entity name="msdyn_customerasset" ><attribute name="msdyn_name" /><attribute name="msdyn_customerassetid" /><filter type="and" ><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + assetCategoryAttributeValue[0].id + '" /></filter> </entity></fetch>';
+                    form.getControl("ovs_asset").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    
+                }
+                
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
     }
 
     // FUNCTIONS

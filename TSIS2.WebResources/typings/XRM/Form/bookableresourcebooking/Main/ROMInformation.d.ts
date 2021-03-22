@@ -37,7 +37,6 @@ declare namespace Form.bookableresourcebooking.Main {
       get(name: "msdyn_cascadecrewchanges"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_crew"): Xrm.LookupAttribute<"bookableresource">;
       get(name: "msdyn_crewmembertype"): Xrm.OptionSetAttribute<boolean>;
-      get(name: "msdyn_effort"): Xrm.NumberAttribute;
       get(name: "msdyn_estimatedarrivaltime"): Xrm.DateAttribute;
       get(name: "msdyn_estimatedtravelduration"): Xrm.NumberAttribute;
       get(name: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -55,9 +54,6 @@ declare namespace Form.bookableresourcebooking.Main {
       get(name: "msdyn_worklocation"): Xrm.OptionSetAttribute<msdyn_worklocation>;
       get(name: "msdyn_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: "name"): Xrm.Attribute<string>;
-      get(name: "ovs_plannedfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
-      get(name: "ovs_plannedfiscalyearid"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
-      get(name: "ovs_revisedquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "resource"): Xrm.LookupAttribute<"bookableresource">;
       get(name: "starttime"): Xrm.DateAttribute;
       get(name: string): undefined;
@@ -81,7 +77,6 @@ declare namespace Form.bookableresourcebooking.Main {
       get(name: "msdyn_cascadecrewchanges"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_crew"): Xrm.LookupControl<"bookableresource">;
       get(name: "msdyn_crewmembertype"): Xrm.OptionSetControl<boolean>;
-      get(name: "msdyn_effort"): Xrm.NumberControl;
       get(name: "msdyn_estimatedarrivaltime"): Xrm.DateControl;
       get(name: "msdyn_estimatedtravelduration"): Xrm.NumberControl;
       get(name: "msdyn_latitude"): Xrm.NumberControl;
@@ -100,9 +95,6 @@ declare namespace Form.bookableresourcebooking.Main {
       get(name: "msdyn_workorder"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: "name"): Xrm.StringControl;
       get(name: "notescontrol"): Xrm.BaseControl;
-      get(name: "ovs_plannedfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
-      get(name: "ovs_plannedfiscalyearid"): Xrm.LookupControl<"tc_tcfiscalyear">;
-      get(name: "ovs_revisedquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "resource"): Xrm.LookupControl<"bookableresource">;
       get(name: "starttime"): Xrm.DateControl;
       get(name: string): undefined;
@@ -133,7 +125,6 @@ declare namespace Form.bookableresourcebooking.Main {
     getAttribute(attributeName: "msdyn_cascadecrewchanges"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_crew"): Xrm.LookupAttribute<"bookableresource">;
     getAttribute(attributeName: "msdyn_crewmembertype"): Xrm.OptionSetAttribute<boolean>;
-    getAttribute(attributeName: "msdyn_effort"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_estimatedarrivaltime"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_estimatedtravelduration"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -151,9 +142,6 @@ declare namespace Form.bookableresourcebooking.Main {
     getAttribute(attributeName: "msdyn_worklocation"): Xrm.OptionSetAttribute<msdyn_worklocation>;
     getAttribute(attributeName: "msdyn_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: "name"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ovs_plannedfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
-    getAttribute(attributeName: "ovs_plannedfiscalyearid"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
-    getAttribute(attributeName: "ovs_revisedquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "resource"): Xrm.LookupAttribute<"bookableresource">;
     getAttribute(attributeName: "starttime"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
@@ -172,7 +160,6 @@ declare namespace Form.bookableresourcebooking.Main {
     getControl(controlName: "msdyn_cascadecrewchanges"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_crew"): Xrm.LookupControl<"bookableresource">;
     getControl(controlName: "msdyn_crewmembertype"): Xrm.OptionSetControl<boolean>;
-    getControl(controlName: "msdyn_effort"): Xrm.NumberControl;
     getControl(controlName: "msdyn_estimatedarrivaltime"): Xrm.DateControl;
     getControl(controlName: "msdyn_estimatedtravelduration"): Xrm.NumberControl;
     getControl(controlName: "msdyn_latitude"): Xrm.NumberControl;
@@ -191,9 +178,6 @@ declare namespace Form.bookableresourcebooking.Main {
     getControl(controlName: "msdyn_workorder"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: "name"): Xrm.StringControl;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
-    getControl(controlName: "ovs_plannedfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
-    getControl(controlName: "ovs_plannedfiscalyearid"): Xrm.LookupControl<"tc_tcfiscalyear">;
-    getControl(controlName: "ovs_revisedquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "resource"): Xrm.LookupControl<"bookableresource">;
     getControl(controlName: "starttime"): Xrm.DateControl;
     getControl(controlName: string): undefined;
