@@ -130,11 +130,11 @@
     <comment/>
   </data>
   <data name="FilteredAssets" xml:space="preserve">
-    <value>Filter Assets (FR)</value>
+    <value>Filtered Assets (FR)</value>
     <comment/>
   </data>
   <data name="FilteredAssetCategories" xml:space="preserve">
-    <value>Filter Asset Categories</value>
+    <value>Filtered Asset Categories (FR)</value>
     <comment/>
   </data>
 </root>
