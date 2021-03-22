@@ -7,6 +7,9 @@ var ROM;
         var mode = '';
         function ToggleQuestionnaire(eContext) {
             var Form = eContext.getFormContext();
+            if (Form.getAttribute('msdyn_actualduration').getValue() == 0) {
+                Form.getAttribute('msdyn_actualduration').setValue();
+            }
             // Get the web resource control on the form
             var wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
             var questionnaireDefinition = Form.getAttribute('ovs_questionnairedefinition').getValue();

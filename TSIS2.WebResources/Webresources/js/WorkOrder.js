@@ -213,8 +213,6 @@ var ROM;
                     // Disable all dependent fields
                     form.getControl("ovs_assetcategory").setDisabled(true);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
-                    // const regionAttributeValue = regionAttribute.getValue();
-                    // const operationTypeAttributeValue = operationTypeAttribute.getValue();
                     var functionalLocationAttributeValue = functionalLocationAttribute.getValue();
                     if (functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined) {
                         // Enable direct dependent field
@@ -224,8 +222,7 @@ var ROM;
                         // This value is never saved and only needs to be unique among the other available views for the lookup.
                         var viewId = '{1A58459F-F987-5478-5823-49AB823644B1}';
                         var entityName = "msdyn_customerassetcategory";
-                        //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredAssets");
-                        var viewDisplayName = "tmp";
+                        var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredAssets");
                         var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetcategoryid"><cell name="msdyn_name" width="200" /></row></grid>';
                         var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" ><entity name="msdyn_customerassetcategory" ><attribute name="msdyn_name" /><attribute name="msdyn_customerassetcategoryid" /><filter type="and" ><condition attribute="ovs_functionallocation" operator="eq" value="' + functionalLocationAttributeValue[0].id + '" /></filter> </entity></fetch>';
                         form.getControl("ovs_assetcategory").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
@@ -250,8 +247,6 @@ var ROM;
                     // Disable all dependent fields
                     form.getControl("ovs_asset").setDisabled(true);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
-                    // const regionAttributeValue = regionAttribute.getValue();
-                    // const operationTypeAttributeValue = operationTypeAttribute.getValue();
                     var assetCategoryAttributeValue = assetCategoryAttribute.getValue();
                     if (assetCategoryAttributeValue != null && assetCategoryAttributeValue != undefined) {
                         // Enable direct dependent field
@@ -261,8 +256,7 @@ var ROM;
                         // This value is never saved and only needs to be unique among the other available views for the lookup.
                         var viewId = '{3A58459F-F182-5428-4871-49AA825243B3}';
                         var entityName = "msdyn_customerasset";
-                        //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredAssets");
-                        var viewDisplayName = "TMP2";
+                        var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredAssetCategories");
                         var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetid"><cell name="msdyn_name" width="200" /></row></grid>';
                         var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" ><entity name="msdyn_customerasset" ><attribute name="msdyn_name" /><attribute name="msdyn_customerassetid" /><filter type="and" ><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + assetCategoryAttributeValue[0].id + '" /></filter> </entity></fetch>';
                         form.getControl("ovs_asset").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
