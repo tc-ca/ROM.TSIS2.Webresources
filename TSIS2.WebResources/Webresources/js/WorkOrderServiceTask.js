@@ -21,16 +21,6 @@ var ROM;
             InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
         }
         WorkOrderServiceTask.ToggleQuestionnaire = ToggleQuestionnaire;
-        function onLoad(eContext) {
-            // Get formContext
-            var Form = eContext.getFormContext();
-            var percentComplete = Form.getAttribute("msdyn_percentcomplete").getValue();
-            if (percentComplete == 0.00) {
-                //Set Status Reason to New
-                Form.getAttribute("statuscode").setValue(918640001);
-            }
-        }
-        WorkOrderServiceTask.onLoad = onLoad;
         function onSave(eContext) {
             // Get formContext
             var Form = eContext.getFormContext();
@@ -38,8 +28,8 @@ var ROM;
             if (percentComplete != 100.00) {
                 //Set percentComplete to 50.00
                 Form.getAttribute("msdyn_percentcomplete").setValue(50.00);
-                //Set Status Reason to Active
-                Form.getAttribute("statuscode").setValue(1);
+                //Set Status Reason to In-Progress
+                Form.getAttribute("statuscode").setValue(918640004);
             }
             // Get the web resource control on the form
             var wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
