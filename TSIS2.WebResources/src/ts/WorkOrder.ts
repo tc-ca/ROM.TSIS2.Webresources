@@ -249,8 +249,6 @@ namespace ROM.WorkOrder {
                 form.getControl("ovs_assetcategory").setDisabled(true);
 
                 // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
-                // const regionAttributeValue = regionAttribute.getValue();
-                // const operationTypeAttributeValue = operationTypeAttribute.getValue();
                 const functionalLocationAttributeValue = functionalLocationAttribute.getValue();
 
                 if (functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined) {
@@ -294,8 +292,6 @@ namespace ROM.WorkOrder {
                 form.getControl("ovs_asset").setDisabled(true);
 
                 // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
-                // const regionAttributeValue = regionAttribute.getValue();
-                // const operationTypeAttributeValue = operationTypeAttribute.getValue();
                 const assetCategoryAttributeValue = assetCategoryAttribute.getValue();
 
                 if (assetCategoryAttributeValue != null && assetCategoryAttributeValue != undefined) {
