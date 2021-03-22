@@ -88,7 +88,7 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Filtered Sites.
+        ///   Looks up a localized string similar to Filtered Assets.
         /// </summary>
         internal static string FilteredAssets {
             get {
@@ -97,7 +97,7 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Filtered Sites (FR).
+        ///   Looks up a localized string similar to Filtered Asset Categories.
         /// </summary>
         internal static string FilteredAssetCategories {
             get {
