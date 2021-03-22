@@ -114,6 +114,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   msdyn_workorderarrivaltimekpiid_bind$slakpiinstances?: string | null;
   msdyn_workorderresolutionkpiid_bind$slakpiinstances?: string | null;
   msdyn_workordertype_bind$msdyn_workordertypes?: string | null;
+  ovs_AssetCategory_bind$msdyn_customerassetcategories?: string | null;
   ovs_CurrentFiscalQuarter_bind$tc_tcfiscalquarters?: string | null;
   ovs_FiscalQuarter_bind$tc_tcfiscalquarters?: string | null;
   ovs_FiscalYear_bind$tc_tcfiscalyears?: string | null;
@@ -125,6 +126,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ovs_SecondaryInspector_bind$bookableresources?: string | null;
   ovs_SiteofViolation_bind$accounts?: string | null;
   ovs_TYRational_bind$ovs_tyrationals?: string | null;
+  ovs_asset_bind$msdyn_customerassets?: string | null;
   ovs_operationtypeid_bind$ovs_operationtypes?: string | null;
   ovs_ovsCountry_bind$ovs_countries?: string | null;
   ovs_regulatedentity_bind$accounts?: string | null;
@@ -219,6 +221,8 @@ interface msdyn_workorder_Select {
   msdyn_workordersummary: WebAttribute<msdyn_workorder_Select, { msdyn_workordersummary: string | null }, {  }>;
   msdyn_workordertype_guid: WebAttribute<msdyn_workorder_Select, { msdyn_workordertype_guid: string | null }, { msdyn_workordertype_formatted?: string }>;
   overriddencreatedon: WebAttribute<msdyn_workorder_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
+  ovs_asset_guid: WebAttribute<msdyn_workorder_Select, { ovs_asset_guid: string | null }, { ovs_asset_formatted?: string }>;
+  ovs_assetcategory_guid: WebAttribute<msdyn_workorder_Select, { ovs_assetcategory_guid: string | null }, { ovs_assetcategory_formatted?: string }>;
   ovs_currentfiscalquarter_guid: WebAttribute<msdyn_workorder_Select, { ovs_currentfiscalquarter_guid: string | null }, { ovs_currentfiscalquarter_formatted?: string }>;
   ovs_fiscalquarter_guid: WebAttribute<msdyn_workorder_Select, { ovs_fiscalquarter_guid: string | null }, { ovs_fiscalquarter_formatted?: string }>;
   ovs_fiscalyear_guid: WebAttribute<msdyn_workorder_Select, { ovs_fiscalyear_guid: string | null }, { ovs_fiscalyear_formatted?: string }>;
@@ -336,6 +340,8 @@ interface msdyn_workorder_Filter {
   msdyn_workordersummary: string;
   msdyn_workordertype_guid: XQW.Guid;
   overriddencreatedon: Date;
+  ovs_asset_guid: XQW.Guid;
+  ovs_assetcategory_guid: XQW.Guid;
   ovs_currentfiscalquarter_guid: XQW.Guid;
   ovs_fiscalquarter_guid: XQW.Guid;
   ovs_fiscalyear_guid: XQW.Guid;
@@ -450,6 +456,8 @@ interface msdyn_workorder_FormattedResult {
   msdyn_workorderresolutionkpiid_formatted?: string;
   msdyn_workordertype_formatted?: string;
   overriddencreatedon_formatted?: string;
+  ovs_asset_formatted?: string;
+  ovs_assetcategory_formatted?: string;
   ovs_currentfiscalquarter_formatted?: string;
   ovs_fiscalquarter_formatted?: string;
   ovs_fiscalyear_formatted?: string;
@@ -506,6 +514,8 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   msdyn_workorderarrivaltimekpiid_guid: string | null;
   msdyn_workorderresolutionkpiid_guid: string | null;
   msdyn_workordertype_guid: string | null;
+  ovs_asset_guid: string | null;
+  ovs_assetcategory_guid: string | null;
   ovs_currentfiscalquarter_guid: string | null;
   ovs_fiscalquarter_guid: string | null;
   ovs_fiscalyear_guid: string | null;

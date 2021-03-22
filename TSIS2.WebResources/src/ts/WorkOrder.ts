@@ -167,6 +167,7 @@ namespace ROM.WorkOrder {
                 }
             }
         } catch (e) {
+
             throw new Error(e.Message);
         }
     }
@@ -221,6 +222,96 @@ namespace ROM.WorkOrder {
                     const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /><cell name="owner" width="125" /></row></grid>';
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010001" /><condition attribute="msdyn_serviceterritory" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryXML + '</filter><link-entity name="ovs_operation" from="ovs_siteid" to="accountid" link-type="inner" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="ovs_regulatedentityid" operator="eq" value="' + regulatedEntityAttributeValue[0].id + '" /></filter></link-entity></entity></fetch>';
                     form.getControl("msdyn_serviceaccount").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    
+                }
+                
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
+    }
+
+    export function functionalLocationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
+            const assetCategoryAttribute = form.getAttribute("ovs_assetcategory");
+            const functionalLocationAttribute = form.getAttribute("msdyn_functionallocation");
+
+            if (functionalLocationAttribute != null && functionalLocationAttribute != undefined) {
+
+                // Clear out all dependent fields' value
+                if (!form.getControl("ovs_assetcategory").getDisabled() || form.getAttribute("ovs_assetcategory").getValue() != null) {
+                    form.getAttribute("ovs_assetcategory").setValue(null);
+                }
+
+                // Disable all dependent fields
+                form.getControl("ovs_assetcategory").setDisabled(true);
+
+                // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                // const regionAttributeValue = regionAttribute.getValue();
+                // const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                const functionalLocationAttributeValue = functionalLocationAttribute.getValue();
+
+                if (functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined) {
+
+                    // Enable direct dependent field
+                    form.getControl("ovs_assetcategory").setVisible(true);
+                    form.getControl("ovs_assetcategory").setDisabled(false);
+
+                    // Setup a custom view
+                    // This value is never saved and only needs to be unique among the other available views for the lookup.
+                    const viewId = '{1A58459F-F987-5478-5823-49AB823644B1}';
+                    const entityName = "msdyn_customerassetcategory";
+                    const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredAssets");
+                    const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetcategoryid"><cell name="msdyn_name" width="200" /></row></grid>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" ><entity name="msdyn_customerassetcategory" ><attribute name="msdyn_name" /><attribute name="msdyn_customerassetcategoryid" /><filter type="and" ><condition attribute="ovs_functionallocation" operator="eq" value="' + functionalLocationAttributeValue[0].id + '" /></filter> </entity></fetch>';
+                    form.getControl("ovs_assetcategory").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    
+                }
+                
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
+    }
+
+    export function assetCategoryOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
+            const assetAttribute = form.getAttribute("ovs_asset");
+            const assetCategoryAttribute = form.getAttribute("ovs_assetcategory");
+
+            if (assetCategoryAttribute != null && assetCategoryAttribute != undefined) {
+
+                // Clear out all dependent fields' value
+                if (!form.getControl("ovs_asset").getDisabled() || form.getAttribute("ovs_asset").getValue() != null) {
+                    form.getAttribute("ovs_asset").setValue(null);
+                }
+
+                // Disable all dependent fields
+                form.getControl("ovs_asset").setDisabled(true);
+
+                // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                // const regionAttributeValue = regionAttribute.getValue();
+                // const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                const assetCategoryAttributeValue = assetCategoryAttribute.getValue();
+
+                if (assetCategoryAttributeValue != null && assetCategoryAttributeValue != undefined) {
+
+                    // Enable direct dependent field
+                    form.getControl("ovs_asset").setVisible(true);
+                    form.getControl("ovs_asset").setDisabled(false);
+
+                    // Setup a custom view
+                    // This value is never saved and only needs to be unique among the other available views for the lookup.
+                    const viewId = '{3A58459F-F182-5428-4871-49AA825243B3}';
+                    const entityName = "msdyn_customerasset";
+                    const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredAssetCategories");
+                    const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetid"><cell name="msdyn_name" width="200" /></row></grid>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" ><entity name="msdyn_customerasset" ><attribute name="msdyn_name" /><attribute name="msdyn_customerassetid" /><filter type="and" ><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + assetCategoryAttributeValue[0].id + '" /></filter> </entity></fetch>';
+                    form.getControl("ovs_asset").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     
                 }
                 

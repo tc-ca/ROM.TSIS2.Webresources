@@ -72,6 +72,35 @@ var ROM;
             }
         }
         WorkOrder.regionOnChange = regionOnChange;
+        function countryOnChange(eContext) {
+            try {
+                var form = eContext.getFormContext();
+                var countryAttribute = form.getAttribute("ovs_ovscountry");
+                if (countryAttribute != null && countryAttribute != undefined) {
+                    // Clear out all dependent fields' value
+                    if (!form.getControl("ovs_operationtypeid").getDisabled() || form.getAttribute("ovs_operationtypeid").getValue() != null) {
+                        form.getAttribute("ovs_operationtypeid").setValue(null);
+                    }
+                    if (!form.getControl("ovs_regulatedentity").getDisabled() || form.getAttribute("ovs_regulatedentity").getValue() != null) {
+                        form.getAttribute("ovs_regulatedentity").setValue(null);
+                    }
+                    if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
+                        form.getAttribute("msdyn_serviceaccount").setValue(null);
+                    }
+                    // Enable direct dependent field
+                    form.getControl("ovs_operationtypeid").setDisabled(false);
+                }
+            }
+            catch (e) {
+                throw new Error(e.Message);
+            }
+        }
+        WorkOrder.countryOnChange = countryOnChange;
+        function fiscalYearOnChange(eContext) {
+            //if new fiscal year is selected, then previous selection of quarter no longer corresponds
+            removeSelectedFiscalQuarter(eContext);
+        }
+        WorkOrder.fiscalYearOnChange = fiscalYearOnChange;
         function operationTypeOnChange(eContext) {
             try {
                 var form = eContext.getFormContext();
@@ -171,35 +200,80 @@ var ROM;
             }
         }
         WorkOrder.regulatedEntityOnChange = regulatedEntityOnChange;
-        function countryOnChange(eContext) {
+        function functionalLocationOnChange(eContext) {
             try {
                 var form = eContext.getFormContext();
-                var countryAttribute = form.getAttribute("ovs_ovscountry");
-                if (countryAttribute != null && countryAttribute != undefined) {
+                var assetCategoryAttribute = form.getAttribute("ovs_assetcategory");
+                var functionalLocationAttribute = form.getAttribute("msdyn_functionallocation");
+                if (functionalLocationAttribute != null && functionalLocationAttribute != undefined) {
                     // Clear out all dependent fields' value
-                    if (!form.getControl("ovs_operationtypeid").getDisabled() || form.getAttribute("ovs_operationtypeid").getValue() != null) {
-                        form.getAttribute("ovs_operationtypeid").setValue(null);
+                    if (!form.getControl("ovs_assetcategory").getDisabled() || form.getAttribute("ovs_assetcategory").getValue() != null) {
+                        form.getAttribute("ovs_assetcategory").setValue(null);
                     }
-                    if (!form.getControl("ovs_regulatedentity").getDisabled() || form.getAttribute("ovs_regulatedentity").getValue() != null) {
-                        form.getAttribute("ovs_regulatedentity").setValue(null);
+                    // Disable all dependent fields
+                    form.getControl("ovs_assetcategory").setDisabled(true);
+                    // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                    // const regionAttributeValue = regionAttribute.getValue();
+                    // const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                    var functionalLocationAttributeValue = functionalLocationAttribute.getValue();
+                    if (functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined) {
+                        // Enable direct dependent field
+                        form.getControl("ovs_assetcategory").setVisible(true);
+                        form.getControl("ovs_assetcategory").setDisabled(false);
+                        // Setup a custom view
+                        // This value is never saved and only needs to be unique among the other available views for the lookup.
+                        var viewId = '{1A58459F-F987-5478-5823-49AB823644B1}';
+                        var entityName = "msdyn_customerassetcategory";
+                        //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredAssets");
+                        var viewDisplayName = "tmp";
+                        var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetcategoryid"><cell name="msdyn_name" width="200" /></row></grid>';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" ><entity name="msdyn_customerassetcategory" ><attribute name="msdyn_name" /><attribute name="msdyn_customerassetcategoryid" /><filter type="and" ><condition attribute="ovs_functionallocation" operator="eq" value="' + functionalLocationAttributeValue[0].id + '" /></filter> </entity></fetch>';
+                        form.getControl("ovs_assetcategory").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     }
-                    if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
-                        form.getAttribute("msdyn_serviceaccount").setValue(null);
-                    }
-                    // Enable direct dependent field
-                    form.getControl("ovs_operationtypeid").setDisabled(false);
                 }
             }
             catch (e) {
                 throw new Error(e.Message);
             }
         }
-        WorkOrder.countryOnChange = countryOnChange;
-        function fiscalYearOnChange(eContext) {
-            //if new fiscal year is selected, then previous selection of quarter no longer corresponds
-            removeSelectedFiscalQuarter(eContext);
+        WorkOrder.functionalLocationOnChange = functionalLocationOnChange;
+        function assetCategoryOnChange(eContext) {
+            try {
+                var form = eContext.getFormContext();
+                var assetAttribute = form.getAttribute("ovs_asset");
+                var assetCategoryAttribute = form.getAttribute("ovs_assetcategory");
+                if (assetCategoryAttribute != null && assetCategoryAttribute != undefined) {
+                    // Clear out all dependent fields' value
+                    if (!form.getControl("ovs_asset").getDisabled() || form.getAttribute("ovs_asset").getValue() != null) {
+                        form.getAttribute("ovs_asset").setValue(null);
+                    }
+                    // Disable all dependent fields
+                    form.getControl("ovs_asset").setDisabled(true);
+                    // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                    // const regionAttributeValue = regionAttribute.getValue();
+                    // const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                    var assetCategoryAttributeValue = assetCategoryAttribute.getValue();
+                    if (assetCategoryAttributeValue != null && assetCategoryAttributeValue != undefined) {
+                        // Enable direct dependent field
+                        form.getControl("ovs_asset").setVisible(true);
+                        form.getControl("ovs_asset").setDisabled(false);
+                        // Setup a custom view
+                        // This value is never saved and only needs to be unique among the other available views for the lookup.
+                        var viewId = '{3A58459F-F182-5428-4871-49AA825243B3}';
+                        var entityName = "msdyn_customerasset";
+                        //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredAssets");
+                        var viewDisplayName = "TMP2";
+                        var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetid"><cell name="msdyn_name" width="200" /></row></grid>';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" ><entity name="msdyn_customerasset" ><attribute name="msdyn_name" /><attribute name="msdyn_customerassetid" /><filter type="and" ><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + assetCategoryAttributeValue[0].id + '" /></filter> </entity></fetch>';
+                        form.getControl("ovs_asset").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    }
+                }
+            }
+            catch (e) {
+                throw new Error(e.Message);
+            }
         }
-        WorkOrder.fiscalYearOnChange = fiscalYearOnChange;
+        WorkOrder.assetCategoryOnChange = assetCategoryOnChange;
         // FUNCTIONS
         function setDefaultFiscalYear(form) {
             XrmQuery.retrieveMultiple(function (x) { return x.tc_tcfiscalyears; })

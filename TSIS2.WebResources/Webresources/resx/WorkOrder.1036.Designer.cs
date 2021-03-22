@@ -86,5 +86,23 @@ namespace TSIS2.WebResources.Webresources.resx {
                 return ResourceManager.GetString("FilteredSites", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered Sites (FR).
+        /// </summary>
+        internal static string FilteredAssets {
+            get {
+                return ResourceManager.GetString("FilteredAssets", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered Sites (FR).
+        /// </summary>
+        internal static string FilteredAssetCategories {
+            get {
+                return ResourceManager.GetString("FilteredAssetCategories", resourceCulture);
+            }
+        }
     }
 }
