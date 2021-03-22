@@ -20,16 +20,6 @@ namespace ROM.WorkOrderServiceTask {
         InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
     }
 
-    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
-        // Get formContext
-        const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
-        const percentComplete = Form.getAttribute("msdyn_percentcomplete").getValue();
-        if (percentComplete == 0.00) {
-            //Set Status Reason to New
-            Form.getAttribute("statuscode").setValue(918640001);
-        }
-    }
-
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         // Get formContext
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
@@ -38,8 +28,8 @@ namespace ROM.WorkOrderServiceTask {
         if (percentComplete != 100.00) {
             //Set percentComplete to 50.00
             Form.getAttribute("msdyn_percentcomplete").setValue(50.00);
-            //Set Status Reason to Active
-            Form.getAttribute("statuscode").setValue(1);
+            //Set Status Reason to In-Progress
+            Form.getAttribute("statuscode").setValue(918640004);
         }
 
         // Get the web resource control on the form
