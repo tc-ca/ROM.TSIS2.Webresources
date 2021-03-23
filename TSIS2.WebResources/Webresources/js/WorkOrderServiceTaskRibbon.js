@@ -19,17 +19,18 @@ else {
 }
 
 //Used to hide buttons for ROM - Inspectors unless they're an admin as well
-function isROMInspectorAndNotSystemAdministrator() {
-    return (isROMInspector() && !isSystemAdministrator())
+function isROMRoleAndNotSystemAdministrator() {
+    return (isROMRole() && !isSystemAdministrator())
 }
 
-function isROMInspector() {
+function isROMRole() {
+    romRoles = ["ROM - Inspector", "ROM - Base", "ROM - Business Admin", "ROM - Planner", "ROM - Analyst"]
     var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
     var enable = false;
     roles.forEach(function (item) {
-  
-        if (item.name == "ROM - Inspector") enable = true;
-  
+
+        if (romRoles.includes(item.name)) enable = true;
+
     });
     return enable;
 }
