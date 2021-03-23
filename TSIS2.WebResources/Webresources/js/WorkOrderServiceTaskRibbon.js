@@ -24,15 +24,11 @@ function isROMRoleAndNotSystemAdministrator() {
 }
 
 function isROMRole() {
-    romRoles = ["ROM - Inspector", "ROM - Base", "ROM - Business Admin", "ROM - Planner", "ROM - Analyst"]
+    romRoles = ["ROM - Inspector", "ROM - Base", "ROM - Business Admin", "ROM - Planner", "ROM - Analyst"];
     var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
-    var enable = false;
-    roles.forEach(function (item) {
 
-        if (romRoles.includes(item.name)) enable = true;
-
-    });
-    return enable;
+    //Returns true if a user's role is in romRoles[]
+    return roles.every((role) => romRoles.includes(role.name));
 }
 
 function isSystemAdministrator() {
