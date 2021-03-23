@@ -7,10 +7,14 @@ var ROM;
         // EVENTS
         function onLoad(eContext) {
             var form = eContext.getFormContext();
+            var state = form.getAttribute("statecode").getValue();
             //Set required field
             form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
             form.getAttribute("msdyn_primaryincidenttype").setRequiredLevel("required");
             form.getAttribute("ovs_regulatedentity").setRequiredLevel("required");
+            //Prevent enabling controls if record is Inactive
+            if (state == 1)
+                return;
             switch (form.ui.getFormType()) {
                 //Create
                 case 1:
