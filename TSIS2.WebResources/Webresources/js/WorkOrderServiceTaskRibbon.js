@@ -24,11 +24,18 @@ function isROMRoleAndNotSystemAdministrator() {
 }
 
 function isROMRole() {
-    romRoles = ["ROM - Inspector", "ROM - Base", "ROM - Business Admin", "ROM - Planner", "ROM - Analyst"];
-    var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
-
-    //Returns true if a user's role is in romRoles[]
-    return roles.every((role) => romRoles.includes(role.name));
+    romRoles = ["ROM - Inspector", "ROM - Base", "ROM - Business Admin", "ROM - Planner", "ROM - Analyst"]
+    var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+    //return true when a romRole matches a userRole
+    for (var i = 0; i < romRoles.length; i++) {
+        for (var j = 0; j < userRoles.getLength(); j++) {
+            if (romRoles[i] == userRoles._getByIndex(j).name) {
+                return true;
+            }
+        }
+    }
+    //No match
+    return false;
 }
 
 function isSystemAdministrator() {
