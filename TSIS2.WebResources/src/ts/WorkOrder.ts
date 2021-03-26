@@ -265,8 +265,8 @@ namespace ROM.WorkOrder {
                     const viewId = '{1A58459F-F987-5478-5823-49AB823644B1}';
                     const entityName = "msdyn_customerassetcategory";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredAssets");
-                    const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetcategoryid"><cell name="msdyn_name" width="200" /></row></grid>';
-                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" ><entity name="msdyn_customerassetcategory" ><attribute name="msdyn_name" /><attribute name="msdyn_customerassetcategoryid" /><filter type="and" ><condition attribute="ovs_functionallocation" operator="eq" value="' + functionalLocationAttributeValue[0].id + '" /></filter> </entity></fetch>';
+                    const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetcategoryid"><cell name="msdyn_name" width="200" /><cell name="msdyn_customerassetcategoryid" width="200" /></row></grid>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_customerassetcategory"><attribute name="msdyn_name"/><attribute name="msdyn_customerassetcategoryid"/><link-entity name="msdyn_functionallocation" from="ovs_msdyn_customerassetcategory" to="msdyn_customerassetcategoryid"><filter type="and"><condition attribute="msdyn_functionallocationid" operator="eq" value="' + functionalLocationAttributeValue[0].id + '"/></filter></link-entity></entity></fetch>';
                     form.getControl("ovs_assetcategory").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     
                 }
@@ -370,6 +370,9 @@ namespace ROM.WorkOrder {
                             lookup[0].name = territoryName;
                             lookup[0].entityType = territoryLogicalName;
                             form.getAttribute('msdyn_serviceterritory').setValue(lookup);
+                            if(lookup[0].name = "International"){
+                                form.getControl("ovs_ovscountry").setVisible(true);
+                            }
                             // Enable the Operation Type if we've successfully set the Region
                             form.getControl("ovs_operationtypeid").setDisabled(false);
                         },
