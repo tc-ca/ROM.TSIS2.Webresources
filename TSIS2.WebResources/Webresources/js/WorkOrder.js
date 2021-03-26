@@ -314,7 +314,7 @@ var ROM;
                         lookup[0].name = territoryName;
                         lookup[0].entityType = territoryLogicalName;
                         form.getAttribute('msdyn_serviceterritory').setValue(lookup);
-                        if (lookup[0].name = "International") {
+                        if (lookup[0].name == "International") {
                             form.getControl("ovs_ovscountry").setVisible(true);
                         }
                         // Enable the Operation Type if we've successfully set the Region
