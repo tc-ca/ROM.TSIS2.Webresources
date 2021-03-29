@@ -139,6 +139,7 @@
     <Content Include="Webresources\js\BookableResourceBooking.js" />
     <Content Include="Webresources\js\ckeditor.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
+    <Content Include="Webresources\js\Incident.js" />
     <Content Include="Webresources\js\IncidentTypeServiceTask.js" />
     <Content Include="Webresources\js\jquery.js" />
     <Content Include="Webresources\js\knockout-min.js" />
@@ -182,6 +183,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Webresources\resx\Incident.1033.Designer.cs" />
+    <Compile Include="Webresources\resx\Incident.1036.Designer.cs" />
     <Compile Include="Webresources\resx\WorkOrder.1036.Designer.cs">
       <DependentUpon>WorkOrder.1036.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -219,6 +222,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\Account.ts" />
     <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
+    <TypeScriptCompile Include="src\ts\Incident.ts" />
     <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
     <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
@@ -688,6 +692,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BookableResourceBooking.1036.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\Incident.1033.resx" />
+    <EmbeddedResource Include="Webresources\resx\Incident.1036.resx" />
     <EmbeddedResource Include="Webresources\resx\WorkOrder.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkOrder.1036.Designer.cs</LastGenOutput>
