@@ -150,7 +150,9 @@ interface Account_Relationships {
   Account_Appointments?: Appointment_Result[] | null;
   Account_ServiceAppointments?: ServiceAppointment_Result[] | null;
   CreatedAccount_BulkOperationLogs2?: BulkOperationLog_Result[] | null;
+  Incident_RegulatedEntity_Account?: Incident_Result[] | null;
   SourceAccount_BulkOperationLogs?: BulkOperationLog_Result[] | null;
+  account_IncidentResolutions?: IncidentResolution_Result[] | null;
   account_PostFollows?: PostFollow_Result[] | null;
   account_activity_parties?: ActivityParty_Result[] | null;
   account_bookableresource_AccountId?: BookableResource_Result[] | null;
@@ -159,11 +161,13 @@ interface Account_Relationships {
   account_master_account?: Account_Result[] | null;
   account_parent_account?: Account_Result[] | null;
   contact_customer_accounts?: Contact_Result[] | null;
+  incident_customer_accounts?: Incident_Result[] | null;
   msdyn_PreferredResource?: BookableResource_Result | null;
   msdyn_account_account_BillingAccount?: Account_Result[] | null;
   msdyn_account_msdyn_workorder_BillingAccount?: msdyn_workorder_Result[] | null;
   msdyn_account_msdyn_workorder_ServiceAccount?: msdyn_workorder_Result[] | null;
   msdyn_billingaccount_account?: Account_Result | null;
+  ovs_Incident_Site_Account?: Incident_Result[] | null;
   ovs_msdyn_workorder_regulatedentity_account?: msdyn_workorder_Result[] | null;
   ovs_regulated_entity_ovs_operation?: ovs_operation_Result[] | null;
   ovs_site_ovs_operation?: ovs_operation_Result[] | null;
@@ -551,7 +555,9 @@ interface Account_Expand {
   Account_Appointments: WebExpand<Account_Expand, Appointment_Select, Appointment_Filter, { Account_Appointments: Appointment_Result[] }>;
   Account_ServiceAppointments: WebExpand<Account_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { Account_ServiceAppointments: ServiceAppointment_Result[] }>;
   CreatedAccount_BulkOperationLogs2: WebExpand<Account_Expand, BulkOperationLog_Select, BulkOperationLog_Filter, { CreatedAccount_BulkOperationLogs2: BulkOperationLog_Result[] }>;
+  Incident_RegulatedEntity_Account: WebExpand<Account_Expand, Incident_Select, Incident_Filter, { Incident_RegulatedEntity_Account: Incident_Result[] }>;
   SourceAccount_BulkOperationLogs: WebExpand<Account_Expand, BulkOperationLog_Select, BulkOperationLog_Filter, { SourceAccount_BulkOperationLogs: BulkOperationLog_Result[] }>;
+  account_IncidentResolutions: WebExpand<Account_Expand, IncidentResolution_Select, IncidentResolution_Filter, { account_IncidentResolutions: IncidentResolution_Result[] }>;
   account_PostFollows: WebExpand<Account_Expand, PostFollow_Select, PostFollow_Filter, { account_PostFollows: PostFollow_Result[] }>;
   account_activity_parties: WebExpand<Account_Expand, ActivityParty_Select, ActivityParty_Filter, { account_activity_parties: ActivityParty_Result[] }>;
   account_bookableresource_AccountId: WebExpand<Account_Expand, BookableResource_Select, BookableResource_Filter, { account_bookableresource_AccountId: BookableResource_Result[] }>;
@@ -560,17 +566,26 @@ interface Account_Expand {
   account_master_account: WebExpand<Account_Expand, Account_Select, Account_Filter, { account_master_account: Account_Result[] }>;
   account_parent_account: WebExpand<Account_Expand, Account_Select, Account_Filter, { account_parent_account: Account_Result[] }>;
   contact_customer_accounts: WebExpand<Account_Expand, Contact_Select, Contact_Filter, { contact_customer_accounts: Contact_Result[] }>;
+  createdby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
+  createdonbehalfby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
+  incident_customer_accounts: WebExpand<Account_Expand, Incident_Select, Incident_Filter, { incident_customer_accounts: Incident_Result[] }>;
   masterid: WebExpand<Account_Expand, Account_Select, Account_Filter, { masterid: Account_Result }>;
+  modifiedby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
+  modifiedonbehalfby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_PreferredResource: WebExpand<Account_Expand, BookableResource_Select, BookableResource_Filter, { msdyn_PreferredResource: BookableResource_Result }>;
   msdyn_account_account_BillingAccount: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_account_account_BillingAccount: Account_Result[] }>;
   msdyn_account_msdyn_workorder_BillingAccount: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_account_msdyn_workorder_BillingAccount: msdyn_workorder_Result[] }>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_account_msdyn_workorder_ServiceAccount: msdyn_workorder_Result[] }>;
   msdyn_billingaccount_account: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_billingaccount_account: Account_Result }>;
+  ovs_Incident_Site_Account: WebExpand<Account_Expand, Incident_Select, Incident_Filter, { ovs_Incident_Site_Account: Incident_Result[] }>;
   ovs_msdyn_workorder_regulatedentity_account: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_msdyn_workorder_regulatedentity_account: msdyn_workorder_Result[] }>;
   ovs_regulated_entity_ovs_operation: WebExpand<Account_Expand, ovs_operation_Select, ovs_operation_Filter, { ovs_regulated_entity_ovs_operation: ovs_operation_Result[] }>;
   ovs_site_ovs_operation: WebExpand<Account_Expand, ovs_operation_Select, ovs_operation_Filter, { ovs_site_ovs_operation: ovs_operation_Result[] }>;
   ovs_workorder_SiteofViolation_Account: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_workorder_SiteofViolation_Account: msdyn_workorder_Result[] }>;
+  ownerid: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  owninguser: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   parentaccountid: WebExpand<Account_Expand, Account_Select, Account_Filter, { parentaccountid: Account_Result }>;
+  preferredsystemuserid: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { preferredsystemuserid: SystemUser_Result }>;
   primarycontactid: WebExpand<Account_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
 }
 interface Account_FormattedResult {
@@ -683,17 +698,26 @@ interface Account_Result extends Account_Base, Account_Relationships {
   transactioncurrencyid_guid: string | null;
 }
 interface Account_RelatedOne {
+  createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   masterid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_PreferredResource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   msdyn_billingaccount_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   parentaccountid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  preferredsystemuserid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   primarycontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
 }
 interface Account_RelatedMany {
   Account_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   Account_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   CreatedAccount_BulkOperationLogs2: WebMappingRetrieve<BulkOperationLog_Select,BulkOperationLog_Expand,BulkOperationLog_Filter,BulkOperationLog_Fixed,BulkOperationLog_Result,BulkOperationLog_FormattedResult>;
+  Incident_RegulatedEntity_Account: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   SourceAccount_BulkOperationLogs: WebMappingRetrieve<BulkOperationLog_Select,BulkOperationLog_Expand,BulkOperationLog_Filter,BulkOperationLog_Fixed,BulkOperationLog_Result,BulkOperationLog_FormattedResult>;
+  account_IncidentResolutions: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   account_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   account_activity_parties: WebMappingRetrieve<ActivityParty_Select,ActivityParty_Expand,ActivityParty_Filter,ActivityParty_Fixed,ActivityParty_Result,ActivityParty_FormattedResult>;
   account_bookableresource_AccountId: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
@@ -702,9 +726,11 @@ interface Account_RelatedMany {
   account_master_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   account_parent_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   contact_customer_accounts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  incident_customer_accounts: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_account_account_BillingAccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_account_msdyn_workorder_BillingAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ovs_Incident_Site_Account: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ovs_msdyn_workorder_regulatedentity_account: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_regulated_entity_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ovs_site_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;

@@ -1,6 +1,13 @@
 declare namespace Form.msdyn_workorderservicetask.Main {
   namespace SurveyJS {
     namespace Tabs {
+      interface tab_5 extends Xrm.SectionCollectionBase {
+        get(name: "tab_6_section_2"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_6 extends Xrm.SectionCollectionBase {
         get(name: "tab_6_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -45,6 +52,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
       get(name: "msdyn_actualduration"): Xrm.NumberControl;
@@ -81,6 +89,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: string): undefined;
@@ -113,6 +122,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
     getControl(controlName: "msdyn_actualduration"): Xrm.NumberControl;

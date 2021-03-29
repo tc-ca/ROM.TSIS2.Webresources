@@ -111,12 +111,18 @@ interface msdyn_workorderincident_Filter {
   versionnumber: number;
 }
 interface msdyn_workorderincident_Expand {
+  createdby: WebExpand<msdyn_workorderincident_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
+  createdonbehalfby: WebExpand<msdyn_workorderincident_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
+  modifiedby: WebExpand<msdyn_workorderincident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
+  modifiedonbehalfby: WebExpand<msdyn_workorderincident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_msdyn_workorderincident_msdyn_workorderservicetask_WorkOrderIncident: WebExpand<msdyn_workorderincident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { msdyn_msdyn_workorderincident_msdyn_workorderservicetask_WorkOrderIncident: msdyn_workorderservicetask_Result[] }>;
   msdyn_workorder: WebExpand<msdyn_workorderincident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_workorder: msdyn_workorder_Result }>;
   msdyn_workorderincident_Appointments: WebExpand<msdyn_workorderincident_Expand, Appointment_Select, Appointment_Filter, { msdyn_workorderincident_Appointments: Appointment_Result[] }>;
   msdyn_workorderincident_ServiceAppointments: WebExpand<msdyn_workorderincident_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_workorderincident_ServiceAppointments: ServiceAppointment_Result[] }>;
   msdyn_workorderincident_connections1: WebExpand<msdyn_workorderincident_Expand, Connection_Select, Connection_Filter, { msdyn_workorderincident_connections1: Connection_Result[] }>;
   msdyn_workorderincident_connections2: WebExpand<msdyn_workorderincident_Expand, Connection_Select, Connection_Filter, { msdyn_workorderincident_connections2: Connection_Result[] }>;
+  ownerid: WebExpand<msdyn_workorderincident_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  owninguser: WebExpand<msdyn_workorderincident_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
 interface msdyn_workorderincident_FormattedResult {
   createdby_formatted?: string;
@@ -157,7 +163,13 @@ interface msdyn_workorderincident_Result extends msdyn_workorderincident_Base, m
   owninguser_guid: string | null;
 }
 interface msdyn_workorderincident_RelatedOne {
+  createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface msdyn_workorderincident_RelatedMany {
   msdyn_msdyn_workorderincident_msdyn_workorderservicetask_WorkOrderIncident: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;

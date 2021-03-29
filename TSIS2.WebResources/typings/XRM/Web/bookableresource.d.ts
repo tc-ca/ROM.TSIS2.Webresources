@@ -43,7 +43,12 @@ interface BookableResource_Base extends WebEntity {
 interface BookableResource_Relationships {
   AccountId?: Account_Result | null;
   ContactId?: Contact_Result | null;
+  UserId?: SystemUser_Result | null;
   bookableresource_bookableresourcebooking_Resource?: BookableResourceBooking_Result[] | null;
+  createdbyname?: SystemUser_Result | null;
+  createdonbehalfbyname?: SystemUser_Result | null;
+  modifiedbyname?: SystemUser_Result | null;
+  modifiedonbehalfbyname?: SystemUser_Result | null;
   msdyn_bookableresource_account_PreferredResource?: Account_Result[] | null;
   msdyn_bookableresource_bookableresourcebooking_Crew?: BookableResourceBooking_Result[] | null;
   msdyn_bookableresource_bookableresourcebooking_ResourceGroup?: BookableResourceBooking_Result[] | null;
@@ -186,7 +191,12 @@ interface BookableResource_Filter {
 interface BookableResource_Expand {
   AccountId: WebExpand<BookableResource_Expand, Account_Select, Account_Filter, { AccountId: Account_Result }>;
   ContactId: WebExpand<BookableResource_Expand, Contact_Select, Contact_Filter, { ContactId: Contact_Result }>;
+  UserId: WebExpand<BookableResource_Expand, SystemUser_Select, SystemUser_Filter, { UserId: SystemUser_Result }>;
   bookableresource_bookableresourcebooking_Resource: WebExpand<BookableResource_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { bookableresource_bookableresourcebooking_Resource: BookableResourceBooking_Result[] }>;
+  createdbyname: WebExpand<BookableResource_Expand, SystemUser_Select, SystemUser_Filter, { createdbyname: SystemUser_Result }>;
+  createdonbehalfbyname: WebExpand<BookableResource_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfbyname: SystemUser_Result }>;
+  modifiedbyname: WebExpand<BookableResource_Expand, SystemUser_Select, SystemUser_Filter, { modifiedbyname: SystemUser_Result }>;
+  modifiedonbehalfbyname: WebExpand<BookableResource_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfbyname: SystemUser_Result }>;
   msdyn_bookableresource_account_PreferredResource: WebExpand<BookableResource_Expand, Account_Select, Account_Filter, { msdyn_bookableresource_account_PreferredResource: Account_Result[] }>;
   msdyn_bookableresource_bookableresourcebooking_Crew: WebExpand<BookableResource_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_bookableresource_bookableresourcebooking_Crew: BookableResourceBooking_Result[] }>;
   msdyn_bookableresource_bookableresourcebooking_ResourceGroup: WebExpand<BookableResource_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_bookableresource_bookableresourcebooking_ResourceGroup: BookableResourceBooking_Result[] }>;
@@ -194,6 +204,8 @@ interface BookableResource_Expand {
   msdyn_bookableresource_msdyn_workorder_SupportContact: WebExpand<BookableResource_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_bookableresource_msdyn_workorder_SupportContact: msdyn_workorder_Result[] }>;
   ovs_msdyn_workorder_PrimaryInspector_Bookable: WebExpand<BookableResource_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_msdyn_workorder_PrimaryInspector_Bookable: msdyn_workorder_Result[] }>;
   ovs_msdyn_workorder_SecondaryInspector_Bookab: WebExpand<BookableResource_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_msdyn_workorder_SecondaryInspector_Bookab: msdyn_workorder_Result[] }>;
+  ownerid: WebExpand<BookableResource_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  owninguser: WebExpand<BookableResource_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
 interface BookableResource_FormattedResult {
   accountid_formatted?: string;
@@ -249,6 +261,13 @@ interface BookableResource_Result extends BookableResource_Base, BookableResourc
 interface BookableResource_RelatedOne {
   AccountId: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ContactId: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  UserId: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  createdbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  createdonbehalfbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  modifiedbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  modifiedonbehalfbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface BookableResource_RelatedMany {
   bookableresource_bookableresourcebooking_Resource: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
