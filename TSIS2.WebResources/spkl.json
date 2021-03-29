@@ -52,11 +52,26 @@
           "file": "resx\\BookableResourceBooking.1036.resx",
           "description": "ROM TSIS 2.0 BookableResourceBooking.js French Resource Strings"
         },
+        {
+          "uniquename": "ovs_/resx/Incident.1033.resx",
+          "file": "resx\\Incident.1033.resx",
+          "description": "ROM TSIS 2.0 Incident.js English Resource Strings"
+        },
+        {
+          "uniquename": "ovs_/resx/Incident.1036.resx",
+          "file": "resx\\Incident.1036.resx",
+          "description": "ROM TSIS 2.0 Incident.js French Resource Strings"
+        },
         /* Form Scripts */
         {
           "uniquename": "ovs_/js/BookableResourceBooking.js",
           "file": "js\\BookableResourceBooking.js",
           "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"
+        },
+        {
+          "uniquename": "ovs_/js/Incident.js",
+          "file": "js\\Incident.js",
+          "description": "ROM TSIS 2.0 Incident Form Scripts"
         },
         {
           "uniquename": "ovs_/js/IncidentTypeServiceTask.js",

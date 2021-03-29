@@ -61,6 +61,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filtered Operation Types.
+        /// </summary>
+        internal static string FilteredOperationTypes {
+            get {
+                return ResourceManager.GetString("FilteredOperationTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filtered Regulated Entities.
         /// </summary>
         internal static string FilteredRegulatedEntities {
@@ -68,15 +77,5 @@ namespace TSIS2.WebResources.Webresources.resx {
                 return ResourceManager.GetString("FilteredRegulatedEntities", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Filtered Sites.
-        /// </summary>
-        internal static string FilteredSites {
-            get {
-                return ResourceManager.GetString("FilteredSites", resourceCulture);
-            }
-        }
-
     }
 }
