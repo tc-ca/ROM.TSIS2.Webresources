@@ -31,8 +31,8 @@ namespace ROM.BookableResourceBooking {
                             if (startTimeAttribute != null && startTimeAttribute != undefined) {
                                 const startTimeAttributeValue = startTimeAttribute.getValue();
                                 if (startTimeAttributeValue != null && startTimeAttributeValue != undefined) {
-                                    const startTimeDiff = startTimeAttributeValue.getTime() - currentDateTime.getTime();
-                                    const startTimeDiffMins = Math.round(((startTimeDiff % 86400000) % 3600000) / 60000);
+                                    const startTimeDiff = ((startTimeAttributeValue.getTime() - currentDateTime.getTime()) / 1000) / 60;
+                                    const startTimeDiffMins = Math.abs(Math.round(startTimeDiff));
                                     if (startTimeDiffMins > 0) {
                                         beforeStartTime = true;
                                     }
@@ -42,8 +42,8 @@ namespace ROM.BookableResourceBooking {
                             if (endTimeAttribute != null && endTimeAttribute != undefined) {
                                 const endTimeAttributeValue = endTimeAttribute.getValue();
                                 if (endTimeAttributeValue != null && endTimeAttributeValue != undefined) {
-                                    const endTimeDiff = endTimeAttributeValue.getTime() - currentDateTime.getTime();
-                                    const endTimeDiffMins = Math.round(((endTimeDiff % 86400000) % 3600000) / 60000);
+                                    const endTimeDiff = ((endTimeAttributeValue.getTime() - currentDateTime.getTime()) / 1000) / 60;
+                                    const endTimeDiffMins = Math.abs(Math.round(endTimeDiff));
                                     if (endTimeDiffMins < 0) {
                                         afterEndTime = true;
                                     }

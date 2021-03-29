@@ -28,8 +28,8 @@ var ROM;
                                 if (startTimeAttribute_1 != null && startTimeAttribute_1 != undefined) {
                                     var startTimeAttributeValue = startTimeAttribute_1.getValue();
                                     if (startTimeAttributeValue != null && startTimeAttributeValue != undefined) {
-                                        var startTimeDiff = startTimeAttributeValue.getTime() - currentDateTime_1.getTime();
-                                        var startTimeDiffMins = Math.round(((startTimeDiff % 86400000) % 3600000) / 60000);
+                                        var startTimeDiff = ((startTimeAttributeValue.getTime() - currentDateTime_1.getTime()) / 1000) / 60;
+                                        var startTimeDiffMins = Math.abs(Math.round(startTimeDiff));
                                         if (startTimeDiffMins > 0) {
                                             beforeStartTime_1 = true;
                                         }
@@ -38,8 +38,8 @@ var ROM;
                                 if (endTimeAttribute_1 != null && endTimeAttribute_1 != undefined) {
                                     var endTimeAttributeValue = endTimeAttribute_1.getValue();
                                     if (endTimeAttributeValue != null && endTimeAttributeValue != undefined) {
-                                        var endTimeDiff = endTimeAttributeValue.getTime() - currentDateTime_1.getTime();
-                                        var endTimeDiffMins = Math.round(((endTimeDiff % 86400000) % 3600000) / 60000);
+                                        var endTimeDiff = ((endTimeAttributeValue.getTime() - currentDateTime_1.getTime()) / 1000) / 60;
+                                        var endTimeDiffMins = Math.abs(Math.round(endTimeDiff));
                                         if (endTimeDiffMins < 0) {
                                             afterEndTime_1 = true;
                                         }
