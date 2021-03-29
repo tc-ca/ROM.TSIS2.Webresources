@@ -24,6 +24,30 @@ var ROM;
             InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
         }
         WorkOrderServiceTask.ToggleQuestionnaire = ToggleQuestionnaire;
+        function onLoad(eContext) {
+            UpdateQuestionnaireDefinition(eContext);
+        }
+        WorkOrderServiceTask.onLoad = onLoad;
+        //If Status Reason is Active, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
+        function UpdateQuestionnaireDefinition(eContext) {
+            var Form = eContext.getFormContext();
+            var statusReason = Form.getAttribute("statuscode").getValue();
+            //If Status Reason is Active
+            if (statusReason == 1) {
+                var taskType = Form.getAttribute("msdyn_tasktype").getValue();
+                if (taskType != null) {
+                    var taskTypeID = taskType[0].id;
+                    Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name&$expand=ovs_Questionnaire").then(function success(result) {
+                        var newDefinition = result.ovs_Questionnaire.ovs_questionnairedefinition;
+                        Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
+                        ToggleQuestionnaire(eContext);
+                    });
+                }
+            }
+            else {
+                ToggleQuestionnaire(eContext);
+            }
+        }
         function onSave(eContext) {
             // Get formContext
             var Form = eContext.getFormContext();
