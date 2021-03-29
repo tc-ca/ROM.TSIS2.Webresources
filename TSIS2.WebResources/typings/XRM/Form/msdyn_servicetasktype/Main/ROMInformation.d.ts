@@ -1,6 +1,13 @@
 declare namespace Form.msdyn_servicetasktype.Main {
   namespace ROMInformation {
     namespace Tabs {
+      interface tab_3 extends Xrm.SectionCollectionBase {
+        get(name: "{d55543e7-10be-4e88-975c-1762a586fa72}_section_4"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "msdyn_description"): Xrm.Attribute<string>;
@@ -19,6 +26,7 @@ declare namespace Form.msdyn_servicetasktype.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Provisions"): Xrm.SubGridControl<"qm_rclegislation">;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_servicetasktype_statecode>;
       get(name: "msdyn_description"): Xrm.StringControl;
@@ -37,6 +45,7 @@ declare namespace Form.msdyn_servicetasktype.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -55,6 +64,7 @@ declare namespace Form.msdyn_servicetasktype.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_servicetasktype_statecode>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Provisions"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_servicetasktype_statecode>;
     getControl(controlName: "msdyn_description"): Xrm.StringControl;

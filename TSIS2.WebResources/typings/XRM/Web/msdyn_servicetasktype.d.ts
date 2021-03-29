@@ -98,10 +98,16 @@ interface msdyn_servicetasktype_Filter {
   versionnumber: number;
 }
 interface msdyn_servicetasktype_Expand {
+  createdby: WebExpand<msdyn_servicetasktype_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
+  createdonbehalfby: WebExpand<msdyn_servicetasktype_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
+  modifiedby: WebExpand<msdyn_servicetasktype_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
+  modifiedonbehalfby: WebExpand<msdyn_servicetasktype_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_msdyn_servicetasktype_msdyn_incidenttypeservicetask_TaskType: WebExpand<msdyn_servicetasktype_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { msdyn_msdyn_servicetasktype_msdyn_incidenttypeservicetask_TaskType: msdyn_incidenttypeservicetask_Result[] }>;
   msdyn_msdyn_servicetasktype_msdyn_workorderservicetask_TaskType: WebExpand<msdyn_servicetasktype_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { msdyn_msdyn_servicetasktype_msdyn_workorderservicetask_TaskType: msdyn_workorderservicetask_Result[] }>;
   ovs_Questionnaire: WebExpand<msdyn_servicetasktype_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { ovs_Questionnaire: ovs_Questionnaire_Result }>;
   ovs_QuestionnaireTemplate: WebExpand<msdyn_servicetasktype_Expand, qm_sytemplate_Select, qm_sytemplate_Filter, { ovs_QuestionnaireTemplate: qm_sytemplate_Result }>;
+  ownerid: WebExpand<msdyn_servicetasktype_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  owninguser: WebExpand<msdyn_servicetasktype_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
 interface msdyn_servicetasktype_FormattedResult {
   createdby_formatted?: string;
@@ -136,8 +142,14 @@ interface msdyn_servicetasktype_Result extends msdyn_servicetasktype_Base, msdyn
   owninguser_guid: string | null;
 }
 interface msdyn_servicetasktype_RelatedOne {
+  createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ovs_Questionnaire: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
   ovs_QuestionnaireTemplate: WebMappingRetrieve<qm_sytemplate_Select,qm_sytemplate_Expand,qm_sytemplate_Filter,qm_sytemplate_Fixed,qm_sytemplate_Result,qm_sytemplate_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface msdyn_servicetasktype_RelatedMany {
   msdyn_msdyn_servicetasktype_msdyn_incidenttypeservicetask_TaskType: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
