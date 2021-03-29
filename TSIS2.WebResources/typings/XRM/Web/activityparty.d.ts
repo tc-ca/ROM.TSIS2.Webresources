@@ -19,9 +19,12 @@ interface ActivityParty_Base extends WebEntity {
 }
 interface ActivityParty_Relationships {
   activityid_appointment?: Appointment_Result | null;
+  activityid_incidentresolution?: IncidentResolution_Result | null;
   activityid_serviceappointment?: ServiceAppointment_Result | null;
   partyid_account?: Account_Result | null;
   partyid_contact?: Contact_Result | null;
+  partyid_incident?: Incident_Result | null;
+  partyid_systemuser?: SystemUser_Result | null;
 }
 interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships {
   activityid_activitypointer_bind$activitypointers?: string | null;
@@ -118,9 +121,12 @@ interface ActivityParty_Filter {
 }
 interface ActivityParty_Expand {
   activityid_appointment: WebExpand<ActivityParty_Expand, Appointment_Select, Appointment_Filter, { activityid_appointment: Appointment_Result }>;
+  activityid_incidentresolution: WebExpand<ActivityParty_Expand, IncidentResolution_Select, IncidentResolution_Filter, { activityid_incidentresolution: IncidentResolution_Result }>;
   activityid_serviceappointment: WebExpand<ActivityParty_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { activityid_serviceappointment: ServiceAppointment_Result }>;
   partyid_account: WebExpand<ActivityParty_Expand, Account_Select, Account_Filter, { partyid_account: Account_Result }>;
   partyid_contact: WebExpand<ActivityParty_Expand, Contact_Select, Contact_Filter, { partyid_contact: Contact_Result }>;
+  partyid_incident: WebExpand<ActivityParty_Expand, Incident_Select, Incident_Filter, { partyid_incident: Incident_Result }>;
+  partyid_systemuser: WebExpand<ActivityParty_Expand, SystemUser_Select, SystemUser_Filter, { partyid_systemuser: SystemUser_Result }>;
 }
 interface ActivityParty_FormattedResult {
   activityid_formatted?: string;
@@ -141,9 +147,12 @@ interface ActivityParty_Result extends ActivityParty_Base, ActivityParty_Relatio
 }
 interface ActivityParty_RelatedOne {
   activityid_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  activityid_incidentresolution: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   activityid_serviceappointment: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   partyid_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   partyid_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  partyid_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  partyid_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface ActivityParty_RelatedMany {
 }
