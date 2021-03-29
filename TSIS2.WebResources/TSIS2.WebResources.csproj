@@ -139,6 +139,7 @@
     <Content Include="Webresources\js\BookableResourceBooking.js" />
     <Content Include="Webresources\js\ckeditor.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
+    <Content Include="Webresources\js\Incident.js" />
     <Content Include="Webresources\js\IncidentTypeServiceTask.js" />
     <Content Include="Webresources\js\jquery.js" />
     <Content Include="Webresources\js\knockout-min.js" />
@@ -172,6 +173,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Webresources\resx\BookableResourceBooking.1033.Designer.cs">
+      <DependentUpon>BookableResourceBooking.1033.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Webresources\resx\BookableResourceBooking.1036.Designer.cs">
+      <DependentUpon>BookableResourceBooking.1036.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Webresources\resx\Incident.1033.Designer.cs" />
+    <Compile Include="Webresources\resx\Incident.1036.Designer.cs" />
     <Compile Include="Webresources\resx\WorkOrder.1036.Designer.cs">
       <DependentUpon>WorkOrder.1036.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -209,6 +222,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\Account.ts" />
     <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
+    <TypeScriptCompile Include="src\ts\Incident.ts" />
     <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
     <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
@@ -670,6 +684,16 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Webresources\resx\BookableResourceBooking.1033.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BookableResourceBooking.1033.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\BookableResourceBooking.1036.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BookableResourceBooking.1036.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\Incident.1033.resx" />
+    <EmbeddedResource Include="Webresources\resx\Incident.1036.resx" />
     <EmbeddedResource Include="Webresources\resx\WorkOrder.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkOrder.1036.Designer.cs</LastGenOutput>

@@ -42,6 +42,16 @@
           "file": "resx\\WorkOrder.1036.resx",
           "description": "ROM TSIS 2.0 WorkOrder.js French Resource Strings"
         },
+        {
+          "uniquename": "ovs_/resx/BookableResourceBooking.1033.resx",
+          "file": "resx\\BookableResourceBooking.1033.resx",
+          "description": "ROM TSIS 2.0 BookableResourceBooking.js English Resource Strings"
+        },
+        {
+          "uniquename": "ovs_/resx/BookableResourceBooking.1036.resx",
+          "file": "resx\\BookableResourceBooking.1036.resx",
+          "description": "ROM TSIS 2.0 BookableResourceBooking.js French Resource Strings"
+        },
         /* Form Scripts */
         {
           "uniquename": "ovs_/js/BookableResourceBooking.js",
