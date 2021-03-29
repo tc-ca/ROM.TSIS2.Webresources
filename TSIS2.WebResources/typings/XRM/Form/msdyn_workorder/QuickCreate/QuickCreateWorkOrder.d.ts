@@ -29,6 +29,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
       get(name: "msdyn_systemstatus"): Xrm.OptionSetAttribute<msdyn_wosystemstatus>;
       get(name: "msdyn_workordersummary"): Xrm.Attribute<string>;
       get(name: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
+      get(name: "ovs_ovscountry"): Xrm.LookupAttribute<"ovs_country">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -74,6 +75,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
       get(name: "msdyn_systemstatus"): Xrm.OptionSetControl<msdyn_wosystemstatus>;
       get(name: "msdyn_workordersummary"): Xrm.StringControl;
       get(name: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
+      get(name: "ovs_ovscountry"): Xrm.LookupControl<"ovs_country">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -105,6 +107,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     getAttribute(attributeName: "msdyn_systemstatus"): Xrm.OptionSetAttribute<msdyn_wosystemstatus>;
     getAttribute(attributeName: "msdyn_workordersummary"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
+    getAttribute(attributeName: "ovs_ovscountry"): Xrm.LookupAttribute<"ovs_country">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_process_msdyn_billingaccount"): Xrm.LookupControl<"account"> | null;
     getControl(controlName: "header_process_msdyn_billingaccount_1"): Xrm.LookupControl<"account"> | null;
@@ -145,6 +148,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     getControl(controlName: "msdyn_systemstatus"): Xrm.OptionSetControl<msdyn_wosystemstatus>;
     getControl(controlName: "msdyn_workordersummary"): Xrm.StringControl;
     getControl(controlName: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
+    getControl(controlName: "ovs_ovscountry"): Xrm.LookupControl<"ovs_country">;
     getControl(controlName: string): undefined;
   }
 }
