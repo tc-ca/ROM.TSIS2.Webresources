@@ -23,7 +23,29 @@ namespace ROM.WorkOrderServiceTask {
         wrCtrl.setVisible(true);
         InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
     }
-
+    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+        //Update the questionnaire definition before possibly initiating the survey.
+        UpdateQuestionnaireDefinition(eContext).then(result => {
+            ToggleQuestionnaire(eContext)
+        });
+    }
+    //If Status Reason is Active, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
+    async function UpdateQuestionnaireDefinition(eContext: Xrm.ExecutionContext<any, any>) {
+        const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
+        const statusReason = Form.getAttribute("statuscode").getValue();
+        //If Status Reason is Active
+        if (statusReason == 1) {
+            const taskType = Form.getAttribute("msdyn_tasktype").getValue();
+            if (taskType != null) {
+                const taskTypeID = taskType[0].id;
+                await Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name&$expand=ovs_Questionnaire").then(
+                    function success(result) {
+                        const newDefinition = result.ovs_Questionnaire.ovs_questionnairedefinition;
+                        Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
+                    });
+            }
+        }
+    }
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         // Get formContext
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
