@@ -2,15 +2,15 @@
 namespace ROM.Incident {
     // EVENTS
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.incident.Main.CaseH>eContext.getFormContext();
+        const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
     }
 
     export function regionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
-            const form = <Form.incident.Main.CaseH>eContext.getFormContext();
+            const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
             const regionAttribute = form.getAttribute("ovs_region");
-            const countryAttribute = form.getAttribute("ovs_country");
+            const countryAttribute = form.getAttribute("ovs_countryid");
 
             if (regionAttribute != null && regionAttribute != undefined) {
 
@@ -56,8 +56,8 @@ namespace ROM.Incident {
     export function countryOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
-            const form = <Form.incident.Main.CaseH>eContext.getFormContext();
-            const countryAttribute = form.getAttribute("ovs_country");
+            const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
+            const countryAttribute = form.getAttribute("ovs_countryid");
             const regionAttribute = form.getAttribute("ovs_region");
 
             if (countryAttribute != null && countryAttribute != undefined) {
@@ -84,7 +84,7 @@ namespace ROM.Incident {
                     const viewId = '{5482C38D-8BB4-3B95-BD05-493398FEAE95}';
                     const entityName = "account";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredRegulatedEntities");
-                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name"/><attribute name="accountid"/><order attribute="name" descending="false"/><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000"/></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/></filter></link-entity></link-entity></entity></fetch>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name"/><attribute name="accountid"/><order attribute="name" descending="false"/><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000"/></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="ovs_countryid" operator="eq" value="' + countryAttributeValue[0].id + '"/></filter></link-entity></link-entity></entity></fetch>';
                     const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /><cell name="accountid" width="125" /></row></grid>';
                     form.getControl("ovs_regulatedentity").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
 
@@ -99,11 +99,11 @@ namespace ROM.Incident {
     export function regulatedEntityOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
-            const form = <Form.incident.Main.CaseH>eContext.getFormContext();
+            const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
             const regionAttribute = form.getAttribute("ovs_region");
             const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
             const regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
-            const countryAttribute = form.getAttribute("ovs_country");
+            const countryAttribute = form.getAttribute("ovs_countryid");
 
             if (regulatedEntityAttribute != null && regulatedEntityAttribute != undefined) {
 
@@ -130,7 +130,7 @@ namespace ROM.Incident {
                             form.getControl("ovs_site").setDisabled(false);
                         }
                         else{
-                            countryXML = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
+                            countryXML = '<condition attribute="ovs_countryid" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
                         }
                     } 
                     // Enable direct dependent field
@@ -161,7 +161,7 @@ namespace ROM.Incident {
         // Get the user's territory
         Xrm.WebApi.online.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(
             function success(result) {
-                const form = <Form.incident.Main.CaseH>eContext.getFormContext();
+                const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
                 if (result != null && result["_territoryid_value"] != null) {
 
                     // NOTE: Our localization plugin can't localize the territory name on system user
@@ -178,7 +178,7 @@ namespace ROM.Incident {
                             lookup[0].entityType = territoryLogicalName;
                             form.getAttribute('ovs_region').setValue(lookup);
                             if(lookup[0].name == "International"){
-                                form.getControl("ovs_country").setVisible(true);
+                                form.getControl("ovs_countryid").setVisible(true);
                             }
                             else{
                                 regionOnChange(eContext);

@@ -116,6 +116,7 @@ declare namespace Form.incident.Main {
       get(name: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
+      get(name: "ovs_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "parentcaseid"): Xrm.LookupAttribute<"incident">;
       get(name: "primarycontactid"): Xrm.LookupAttribute<"contact">;
@@ -189,6 +190,7 @@ declare namespace Form.incident.Main {
       get(name: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
       get(name: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
+      get(name: "ovs_region"): Xrm.LookupControl<"territory">;
       get(name: "parentcaseid"): Xrm.LookupControl<"incident">;
       get(name: "primarycontactid"): Xrm.LookupControl<"contact">;
       get(name: "productid"): Xrm.LookupControl<"product">;
@@ -246,6 +248,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
+    getAttribute(attributeName: "ovs_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "parentcaseid"): Xrm.LookupAttribute<"incident">;
     getAttribute(attributeName: "primarycontactid"): Xrm.LookupAttribute<"contact">;
@@ -314,6 +317,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
     getControl(controlName: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
+    getControl(controlName: "ovs_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "parentcaseid"): Xrm.LookupControl<"incident">;
     getControl(controlName: "primarycontactid"): Xrm.LookupControl<"contact">;
     getControl(controlName: "productid"): Xrm.LookupControl<"product">;

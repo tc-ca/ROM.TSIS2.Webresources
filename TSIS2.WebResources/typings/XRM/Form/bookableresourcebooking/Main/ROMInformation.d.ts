@@ -13,7 +13,6 @@ declare namespace Form.bookableresourcebooking.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_2 extends Xrm.SectionCollectionBase {
-        get(name: "tab_2_section_1"): Xrm.PageSection;
         get(name: "tab_2_section_2"): Xrm.PageSection;
         get(name: "tab_2_section_4"): Xrm.PageSection;
         get(name: "tab_2_section_5"): Xrm.PageSection;
@@ -68,6 +67,7 @@ declare namespace Form.bookableresourcebooking.Main {
       get(name: "bookingtype"): Xrm.OptionSetControl<bookableresourcebooking_bookingtype>;
       get(name: "duration"): Xrm.NumberControl;
       get(name: "endtime"): Xrm.DateControl;
+      get(name: "header_msdyn_workorder"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: "msdyn_acceptcascadecrewchanges"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_actualarrivaltime"): Xrm.DateControl;
       get(name: "msdyn_actualtravelduration"): Xrm.NumberControl;
@@ -151,6 +151,7 @@ declare namespace Form.bookableresourcebooking.Main {
     getControl(controlName: "bookingtype"): Xrm.OptionSetControl<bookableresourcebooking_bookingtype>;
     getControl(controlName: "duration"): Xrm.NumberControl;
     getControl(controlName: "endtime"): Xrm.DateControl;
+    getControl(controlName: "header_msdyn_workorder"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: "msdyn_acceptcascadecrewchanges"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_actualarrivaltime"): Xrm.DateControl;
     getControl(controlName: "msdyn_actualtravelduration"): Xrm.NumberControl;

@@ -84,8 +84,8 @@ interface Incident extends Incident_Base, Incident_Relationships {
   msdyn_FunctionalLocation_bind$msdyn_functionallocations?: string | null;
   msdyn_IoTAlert_bind$msdyn_iotalerts?: string | null;
   msdyn_incidenttype_bind$msdyn_incidenttypes?: string | null;
-  ovs_Country_bind$tc_countries?: string | null;
-  ovs_Region_bind$tc_provinces?: string | null;
+  ovs_CountryId_bind$ovs_countries?: string | null;
+  ovs_Region_bind$territories?: string | null;
   ovs_RegulatedEntity_bind$accounts?: string | null;
   ovs_Site_bind$accounts?: string | null;
   ownerid_bind$systemusers?: string | null;
@@ -160,7 +160,7 @@ interface Incident_Select {
   numberofchildincidents: WebAttribute<Incident_Select, { numberofchildincidents: number | null }, {  }>;
   onholdtime: WebAttribute<Incident_Select, { onholdtime: number | null }, {  }>;
   overriddencreatedon: WebAttribute<Incident_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
-  ovs_country_guid: WebAttribute<Incident_Select, { ovs_country_guid: string | null }, { ovs_country_formatted?: string }>;
+  ovs_countryid_guid: WebAttribute<Incident_Select, { ovs_countryid_guid: string | null }, { ovs_countryid_formatted?: string }>;
   ovs_region_guid: WebAttribute<Incident_Select, { ovs_region_guid: string | null }, { ovs_region_formatted?: string }>;
   ovs_regulatedentity_guid: WebAttribute<Incident_Select, { ovs_regulatedentity_guid: string | null }, { ovs_regulatedentity_formatted?: string }>;
   ovs_site_guid: WebAttribute<Incident_Select, { ovs_site_guid: string | null }, { ovs_site_formatted?: string }>;
@@ -252,7 +252,7 @@ interface Incident_Filter {
   numberofchildincidents: number;
   onholdtime: number;
   overriddencreatedon: Date;
-  ovs_country_guid: XQW.Guid;
+  ovs_countryid_guid: XQW.Guid;
   ovs_region_guid: XQW.Guid;
   ovs_regulatedentity_guid: XQW.Guid;
   ovs_site_guid: XQW.Guid;
@@ -352,7 +352,7 @@ interface Incident_FormattedResult {
   msdyn_incidenttype_formatted?: string;
   msdyn_iotalert_formatted?: string;
   overriddencreatedon_formatted?: string;
-  ovs_country_formatted?: string;
+  ovs_countryid_formatted?: string;
   ovs_region_formatted?: string;
   ovs_regulatedentity_formatted?: string;
   ovs_site_formatted?: string;
@@ -400,7 +400,7 @@ interface Incident_Result extends Incident_Base, Incident_Relationships {
   msdyn_functionallocation_guid: string | null;
   msdyn_incidenttype_guid: string | null;
   msdyn_iotalert_guid: string | null;
-  ovs_country_guid: string | null;
+  ovs_countryid_guid: string | null;
   ovs_region_guid: string | null;
   ovs_regulatedentity_guid: string | null;
   ovs_site_guid: string | null;

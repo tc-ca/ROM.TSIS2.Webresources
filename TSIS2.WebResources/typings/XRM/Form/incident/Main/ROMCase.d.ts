@@ -1,5 +1,5 @@
 declare namespace Form.incident.Main {
-  namespace CaseH {
+  namespace ROMCase {
     namespace Tabs {
       interface ADDITIONALDETAILS_TAB extends Xrm.SectionCollectionBase {
         get(name: "escalations"): Xrm.PageSection;
@@ -116,8 +116,8 @@ declare namespace Form.incident.Main {
       get(name: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
-      get(name: "ovs_country"): Xrm.LookupAttribute<"tc_country">;
-      get(name: "ovs_region"): Xrm.LookupAttribute<"tc_province">;
+      get(name: "ovs_countryid"): Xrm.LookupAttribute<"ovs_country">;
+      get(name: "ovs_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
       get(name: "ovs_site"): Xrm.LookupAttribute<"account">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -193,8 +193,8 @@ declare namespace Form.incident.Main {
       get(name: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
       get(name: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
-      get(name: "ovs_country"): Xrm.LookupControl<"tc_country">;
-      get(name: "ovs_region"): Xrm.LookupControl<"tc_province">;
+      get(name: "ovs_countryid"): Xrm.LookupControl<"ovs_country">;
+      get(name: "ovs_region"): Xrm.LookupControl<"territory">;
       get(name: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
       get(name: "ovs_site"): Xrm.LookupControl<"account">;
       get(name: "parentcaseid"): Xrm.LookupControl<"incident">;
@@ -231,7 +231,7 @@ declare namespace Form.incident.Main {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface CaseH extends Xrm.PageBase<CaseH.Attributes,CaseH.Tabs,CaseH.Controls> {
+  interface ROMCase extends Xrm.PageBase<ROMCase.Attributes,ROMCase.Tabs,ROMCase.Controls> {
     getAttribute(attributeName: "blockedprofile"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "caseorigincode"): Xrm.OptionSetAttribute<incident_caseorigincode>;
     getAttribute(attributeName: "casetypecode"): Xrm.OptionSetAttribute<incident_casetypecode>;
@@ -254,8 +254,8 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
-    getAttribute(attributeName: "ovs_country"): Xrm.LookupAttribute<"tc_country">;
-    getAttribute(attributeName: "ovs_region"): Xrm.LookupAttribute<"tc_province">;
+    getAttribute(attributeName: "ovs_countryid"): Xrm.LookupAttribute<"ovs_country">;
+    getAttribute(attributeName: "ovs_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ovs_site"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -326,8 +326,8 @@ declare namespace Form.incident.Main {
     getControl(controlName: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
     getControl(controlName: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
-    getControl(controlName: "ovs_country"): Xrm.LookupControl<"tc_country">;
-    getControl(controlName: "ovs_region"): Xrm.LookupControl<"tc_province">;
+    getControl(controlName: "ovs_countryid"): Xrm.LookupControl<"ovs_country">;
+    getControl(controlName: "ovs_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
     getControl(controlName: "ovs_site"): Xrm.LookupControl<"account">;
     getControl(controlName: "parentcaseid"): Xrm.LookupControl<"incident">;
