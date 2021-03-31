@@ -13,7 +13,7 @@ var ROM;
             try {
                 var form = eContext.getFormContext();
                 var regionAttribute = form.getAttribute("ovs_region");
-                var countryAttribute = form.getAttribute("ovs_country");
+                var countryAttribute = form.getAttribute("ovs_countryid");
                 if (regionAttribute != null && regionAttribute != undefined) {
                     // Clear out all dependent fields' value
                     if (!form.getControl("ovs_regulatedentity").getDisabled() || form.getAttribute("ovs_regulatedentity").getValue() != null) {
@@ -51,7 +51,7 @@ var ROM;
         function countryOnChange(eContext) {
             try {
                 var form = eContext.getFormContext();
-                var countryAttribute = form.getAttribute("ovs_country");
+                var countryAttribute = form.getAttribute("ovs_countryid");
                 var regionAttribute = form.getAttribute("ovs_region");
                 if (countryAttribute != null && countryAttribute != undefined) {
                     // Clear out all dependent fields' value
@@ -71,7 +71,7 @@ var ROM;
                         var viewId = '{5482C38D-8BB4-3B95-BD05-493398FEAE95}';
                         var entityName = "account";
                         var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredRegulatedEntities");
-                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name"/><attribute name="accountid"/><order attribute="name" descending="false"/><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000"/></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/></filter></link-entity></link-entity></entity></fetch>';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name"/><attribute name="accountid"/><order attribute="name" descending="false"/><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000"/></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="ovs_countryid" operator="eq" value="' + countryAttributeValue[0].id + '"/></filter></link-entity></link-entity></entity></fetch>';
                         var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /><cell name="accountid" width="125" /></row></grid>';
                         form.getControl("ovs_regulatedentity").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     }
@@ -88,7 +88,7 @@ var ROM;
                 var regionAttribute = form.getAttribute("ovs_region");
                 var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
                 var regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
-                var countryAttribute = form.getAttribute("ovs_country");
+                var countryAttribute = form.getAttribute("ovs_countryid");
                 if (regulatedEntityAttribute != null && regulatedEntityAttribute != undefined) {
                     // Clear out all dependent fields' value
                     if (!form.getControl("ovs_site").getDisabled() || form.getAttribute("ovs_site").getValue() != null) {
@@ -108,7 +108,7 @@ var ROM;
                                 form.getControl("ovs_site").setDisabled(false);
                             }
                             else {
-                                countryXML = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
+                                countryXML = '<condition attribute="ovs_countryid" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
                             }
                         }
                         // Enable direct dependent field
@@ -150,7 +150,7 @@ var ROM;
                         lookup[0].entityType = territoryLogicalName;
                         form.getAttribute('ovs_region').setValue(lookup);
                         if (lookup[0].name == "International") {
-                            form.getControl("ovs_country").setVisible(true);
+                            form.getControl("ovs_countryid").setVisible(true);
                         }
                         else {
                             regionOnChange(eContext);
