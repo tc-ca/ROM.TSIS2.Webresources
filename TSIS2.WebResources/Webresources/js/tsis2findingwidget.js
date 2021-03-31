@@ -12,6 +12,7 @@ if (lang == 1036){
     MaxFileSizeAlertText = "Taille de fichier maximum de 10Mb atteinte. Veuillez choisir un autre fichier.";
     MaxFileSizeAlertTitle = "Taille de fichier maximale atteinte !";
     InspectorComments = "Commentaires de l'inspecteur";
+    CharactersRemaining = "caractères restants";
     ChooseFiles = "Choisir les fichiers";
     NoFileChosen = "Aucun fichier choisi";
     DocumentaryEvidence = "La preuve documentaire";
@@ -20,6 +21,7 @@ else{
     MaxFileSizeAlertText = "The maximum file size of 10 MB has been exceeded. Please choose another file.";
     MaxFileSizeAlertTitle = "Maximum file size exceeded !";
     InspectorComments = "Inspector Comments";
+    CharactersRemaining = "characters remaining";
     ChooseFiles = "Choose Files";
     NoFileChosen = "No file chosen";
     DocumentaryEvidence = "Documentary Evidence";
@@ -67,12 +69,13 @@ var widget = {
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${InspectorComments}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50"></textarea> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">${DocumentaryEvidence}</span> </label> <input type="file" class="sv_q_file_input file" multiple="true" style="padding-top: 2px;"></input><p class="evidenceText"></p> </div> </div>`,
+        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${InspectorComments}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000"></textarea> <span class="character-count"></span> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">${DocumentaryEvidence}</span> </label> <input type="file" class="sv_q_file_input file" multiple="true" style="padding-top: 2px;"></input> <p class="evidenceText"></p> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         //el is our root element in htmlTemplate, is "div" in our case
         //get the text element
         var comments = el.getElementsByClassName("inspectorComments")[0];
+        var characterCount = el.getElementsByClassName("character-count")[0];
         var file = el.getElementsByClassName("file")[0];
         var fileText = el.getElementsByClassName("evidenceText")[0];
         var fileArray = [];
@@ -87,6 +90,12 @@ var widget = {
             fileArray = question.value.documentaryEvidence || [];
             fileText.innerText = question.value.documentaryEvidence || [];
         }
+
+        function updateCharacterCount() {
+            characterCount.innerText = (1000 - comments.value.length) + " " + CharactersRemaining;
+        }
+        updateCharacterCount();
+        comments.onkeyup = updateCharacterCount;
 
         comments.onchange = function () {
             question.inspectorComments = comments.value;
