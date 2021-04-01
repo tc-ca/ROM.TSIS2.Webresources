@@ -94,6 +94,11 @@
           "description": "ROM TSIS 2.0 Work Order Form Scripts"
         },
         {
+          "uniquename": "ovs_/js/WorkOrderRibbon.js",
+          "file": "js\\WorkOrderRibbon.js",
+          "description": "ROM TSIS 2.0 Work Order Ribbon Scripts"
+        },
+        {
           "uniquename": "ovs_/js/WorkOrderServiceTask.js",
           "file": "js\\WorkOrderServiceTask.js",
           "description": "ROM TSIS 2.0 Work Order Service Task Form Scripts"

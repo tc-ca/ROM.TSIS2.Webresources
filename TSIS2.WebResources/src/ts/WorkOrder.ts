@@ -556,7 +556,4 @@ namespace ROM.WorkOrder {
             form.getControl("bookings").getViewSelector().setCurrentView(bookingsView);
         }
     }
-    
   }
-
-
