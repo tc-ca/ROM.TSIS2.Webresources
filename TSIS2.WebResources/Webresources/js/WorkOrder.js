@@ -11,9 +11,16 @@ var ROM;
             //Set required field
             form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
             form.getAttribute("ovs_regulatedentity").setRequiredLevel("required");
-            //Prevent enabling controls if record is Inactive
-            if (state == 1)
+            //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
+            if (state == 1) {
+                setWorkOrderServiceTasksView(form, false);
+                setBookableResourceBookingsView(form, false);
                 return;
+            }
+            else { //If the work order is active, show the active views
+                setWorkOrderServiceTasksView(form, true);
+                setBookableResourceBookingsView(form, true);
+            }
             switch (form.ui.getFormType()) {
                 //Create
                 case 1:
@@ -33,6 +40,32 @@ var ROM;
             }
         }
         WorkOrder.onLoad = onLoad;
+        function onSave(eContext) {
+            var form = eContext.getFormContext();
+            var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
+            var workOrderServiceTaskData;
+            var bookableResourceBookingData;
+            if (systemStatus == 690970004) { //Only close associated entities when Record Status is set to Closed - Posted
+                workOrderServiceTaskData =
+                    {
+                        "statecode": 1,
+                        "statuscode": 918640003 //open -> 918640002
+                    };
+                bookableResourceBookingData =
+                    {
+                        "statecode": 1,
+                        "statuscode": 2 //open -> 1
+                    };
+                //Close/Open associated work order service task(s)
+                closeWorkOrderServiceTasks(form, workOrderServiceTaskData);
+                //Close/Open Bookable Resource Booking
+                //closeBookableResourceBookings(form, bookableResourceBookingData); //disabled until we know the usage of bookings
+                //Set inactive views
+                setWorkOrderServiceTasksView(form, false);
+                setBookableResourceBookingsView(form, false);
+            }
+        }
+        WorkOrder.onSave = onSave;
         function regionOnChange(eContext) {
             try {
                 var form = eContext.getFormContext();
@@ -271,6 +304,39 @@ var ROM;
             }
         }
         WorkOrder.assetCategoryOnChange = assetCategoryOnChange;
+        function systemStatusOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
+            //If system status is set to closed
+            if (systemStatus == 690970004 || systemStatus == 690970005) {
+                //Set state to Inactive
+                formContext.getAttribute("statecode").setValue(1);
+                //Set Status Reason to Closed
+                formContext.getAttribute("statuscode").setValue(918640000);
+            }
+            else {
+                //Keep record Active
+                formContext.getAttribute("statecode").setValue(0);
+                formContext.getAttribute("statuscode").setValue(1);
+            }
+        }
+        WorkOrder.systemStatusOnChange = systemStatusOnChange;
+        function stateCodeOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var stateCode = formContext.getAttribute("statecode").getValue();
+            //If statecode changed to Active
+            if (stateCode == 0) {
+                var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
+                //If systemStatus is currently Closed
+                if (systemStatus == 690970004 || systemStatus == 690970005) {
+                    //Change systemstatus to Open - Completed
+                    formContext.getAttribute("msdyn_systemstatus").setValue(690970003);
+                    //Prevent User from discarding status change
+                    formContext.data.save();
+                }
+            }
+        }
+        WorkOrder.stateCodeOnChange = stateCodeOnChange;
         // FUNCTIONS
         function setDefaultFiscalYear(form) {
             XrmQuery.retrieveMultiple(function (x) { return x.tc_tcfiscalyears; })
@@ -331,38 +397,73 @@ var ROM;
                 Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
             });
         }
-        function systemStatusOnChange(eContext) {
-            var formContext = eContext.getFormContext();
-            var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
-            //If system status is set to closed
-            if (systemStatus == 690970004 || systemStatus == 690970005) {
-                //Set state to Inactive
-                formContext.getAttribute("statecode").setValue(1);
-                //Set Status Reason to Closed
-                formContext.getAttribute("statuscode").setValue(918640000);
+        function closeWorkOrderServiceTasks(formContext, workOrderServiceTaskData) {
+            Xrm.WebApi.online.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {
+                for (var i = 0; i < result.entities.length; i++) {
+                    Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(function success(result) {
+                        //work order service task closed successfully
+                    }, function (error) {
+                        //error
+                    });
+                }
+            }, function (error) {
+            });
+        }
+        function closeBookableResourceBookings(formContext, bookableResourceBookingData) {
+            Xrm.WebApi.online.retrieveMultipleRecords("bookableresourcebooking", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {
+                for (var i = 0; i < result.entities.length; i++) {
+                    Xrm.WebApi.updateRecord("bookableresourcebooking", result.entities[i].bookableresourcebookingid, bookableResourceBookingData).then(function success(result) {
+                        //bookable resource booking closed successfully
+                    }, function (error) {
+                        //error
+                    });
+                }
+            }, function (error) {
+            });
+        }
+        function setWorkOrderServiceTasksView(form, active) {
+            var workOrderView;
+            if (active) {
+                workOrderView =
+                    {
+                        entityType: "savedquery",
+                        id: "{C9FD8F4D-8184-4DDB-A31A-89E66E8E710E}",
+                        name: "Active Work Order Service Tasks"
+                    };
             }
             else {
-                //Keep record Active
-                formContext.getAttribute("statecode").setValue(0);
-                formContext.getAttribute("statuscode").setValue(1);
+                workOrderView =
+                    {
+                        entityType: "savedquery",
+                        id: "{2F145106-BCB3-4F0F-9D02-E8C3B6BB25E8}",
+                        name: "Inactive Work Order Service Tasks"
+                    };
+            }
+            if (form.getControl("workorderservicetasksgrid").getViewSelector().getCurrentView() != workOrderView) {
+                form.getControl("workorderservicetasksgrid").getViewSelector().setCurrentView(workOrderView);
             }
         }
-        WorkOrder.systemStatusOnChange = systemStatusOnChange;
-        function stateCodeOnChange(eContext) {
-            var formContext = eContext.getFormContext();
-            var stateCode = formContext.getAttribute("statecode").getValue();
-            //If statecode changed to Active
-            if (stateCode == 0) {
-                var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
-                //If systemStatus is currently Closed
-                if (systemStatus == 690970004 || systemStatus == 690970005) {
-                    //Change systemstatus to Open - Completed
-                    formContext.getAttribute("msdyn_systemstatus").setValue(690970003);
-                    //Prevent User from discarding status change
-                    formContext.data.save();
-                }
+        function setBookableResourceBookingsView(form, active) {
+            var bookingsView;
+            if (active) {
+                bookingsView =
+                    {
+                        entityType: "savedquery",
+                        id: "{8AF53D0E-07FE-49D4-BBBA-CA524DD6551B}",
+                        name: "Active Resource Bookings (Field Service Information)"
+                    };
+            }
+            else {
+                bookingsView =
+                    {
+                        entityType: "savedquery",
+                        id: "{B74D2E1A-37CB-4DA9-AA06-156CBF7BC3DD}",
+                        name: "Inactive Bookable Resource Bookings"
+                    };
+            }
+            if (form.getControl("bookings").getViewSelector().getCurrentView() != bookingsView) {
+                form.getControl("bookings").getViewSelector().setCurrentView(bookingsView);
             }
         }
-        WorkOrder.stateCodeOnChange = stateCodeOnChange;
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));

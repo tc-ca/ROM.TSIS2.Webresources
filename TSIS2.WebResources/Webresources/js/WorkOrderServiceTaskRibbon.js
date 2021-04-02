@@ -94,7 +94,7 @@ function completeConfirmation(formContext, survey) {
 
 function ActivateWorkOrderServiceTask(primaryControl) {
     const formContext = primaryControl;
-    formContext.getAttribute("ovs_inspectionstatus").setValue(true);
+    //formContext.getAttribute("ovs_inspectionstatus").setValue(true);
     formContext.getAttribute("statecode").setValue(0);
     formContext.getAttribute("statuscode").setValue(1);
 }
