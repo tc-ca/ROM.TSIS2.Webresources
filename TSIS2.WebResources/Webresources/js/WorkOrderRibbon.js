@@ -6,7 +6,7 @@ function ActivateWorkOrder(primaryControl) {
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
         function (success) {
             if (success.confirmed){
-                console.log("Dialog closed using OK button.");
+                
                 formContext.getAttribute("statecode").setValue(0);
                 formContext.getAttribute("statuscode").setValue(1);
                 formContext.getAttribute("msdyn_systemstatus").setValue(690970003); //Open - Completed
@@ -19,9 +19,7 @@ function ActivateWorkOrder(primaryControl) {
 
                 formContext.data.save();
             }
-            else{
-                console.log("Dialog closed using Cancel button or X.");
-            }
+
         },
         function (error) {
             console.log(error.message);
@@ -39,14 +37,11 @@ function openWorkOrderServiceTasks(formContext) {
     Xrm.WebApi.online.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
         function success(result) {
             for (var i = 0; i < result.entities.length; i++) {
-                console.log("Found workorderservicetask : " + result.entities[i].msdyn_workorderservicetaskid);
                 Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(
                     function success(result) {
-                        //work order service task opened successfully
-                        console.log("Work Order Service task opened");
                     },
                     function (error) {
-                        console.log("Err");
+                        console.log(error.message);
                     }
                 );
             }
@@ -65,15 +60,11 @@ function openBookableResourceBookings(formContext) {
     Xrm.WebApi.online.retrieveMultipleRecords("bookableresourcebooking", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
         function success(result) {
             for (var i = 0; i < result.entities.length; i++) {
-                console.log("Found bookable : " + result.entities[i].bookableresourcebookingid);
                 Xrm.WebApi.updateRecord("bookableresourcebooking", result.entities[i].bookableresourcebookingid, bookableResourceBookingData).then(
                     function success(result) {
-                        //bookable resource booking opened successfully
-                        console.log("Bookable Resource Booking opened");
                     },
                     function (error) {
-                        //error
-                        console.log("Err");
+                        console.log(error.message);
                     }
                 );
             }

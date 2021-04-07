@@ -25,6 +25,10 @@ var ROM;
         }
         WorkOrderServiceTask.ToggleQuestionnaire = ToggleQuestionnaire;
         function onLoad(eContext) {
+            var Form = eContext.getFormContext();
+            if (Form.getAttribute('statecode').getValue() == 1) {
+                mode = "display";
+            }
             UpdateQuestionnaireDefinition(eContext);
         }
         WorkOrderServiceTask.onLoad = onLoad;

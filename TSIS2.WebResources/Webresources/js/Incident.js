@@ -7,6 +7,18 @@ var ROM;
         // EVENTS
         function onLoad(eContext) {
             var form = eContext.getFormContext();
+            var regionAttribute = form.getAttribute("ovs_region");
+            if (regionAttribute != null && regionAttribute != undefined) {
+                var regionAttributeValue = regionAttribute.getValue();
+                if (regionAttributeValue != null && regionAttributeValue != undefined) {
+                    if (regionAttributeValue[0].name == "International") {
+                        form.getControl("ovs_countryid").setVisible(false);
+                    }
+                }
+                else {
+                    form.getControl("ovs_countryid").setVisible(false);
+                }
+            }
         }
         Incident.onLoad = onLoad;
         function regionOnChange(eContext) {
@@ -28,18 +40,25 @@ var ROM;
                     // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                     var regionAttributeValue = regionAttribute.getValue();
                     var countryAttributeValue = countryAttribute.getValue();
-                    if (regionAttributeValue != null && regionAttributeValue != undefined
-                        && regionAttributeValue[0].name != "International") {
-                        // Enable direct dependent field
-                        form.getControl("ovs_regulatedentity").setDisabled(false);
-                        // Setup a custom view
-                        // This value is never saved and only needs to be unique among the other available views for the lookup.
-                        var viewId = '{5463C38B-8BC4-4C95-BD05-491798FEAE23}';
-                        var entityName = "account";
-                        var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredRegulatedEntities");
-                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name"/><attribute name="accountid"/><order attribute="name" descending="false"/><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000"/></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="msdyn_serviceterritory" operator="eq" value="' + regionAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
-                        var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /><cell name="accountid" width="125" /></row></grid>';
-                        form.getControl("ovs_regulatedentity").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    if (regionAttributeValue != null && regionAttributeValue != undefined) {
+                        if (regionAttributeValue[0].name != "International") {
+                            // Enable direct dependent field
+                            form.getControl("ovs_regulatedentity").setDisabled(false);
+                            // Setup a custom view
+                            // This value is never saved and only needs to be unique among the other available views for the lookup.
+                            var viewId = '{5463C38B-8BC4-4C95-BD05-491798FEAE23}';
+                            var entityName = "account";
+                            var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredRegulatedEntities");
+                            var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name"/><attribute name="accountid"/><order attribute="name" descending="false"/><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000"/></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="msdyn_serviceterritory" operator="eq" value="' + regionAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
+                            var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /><cell name="accountid" width="125" /></row></grid>';
+                            form.getControl("ovs_regulatedentity").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                        }
+                        else {
+                            form.getControl("ovs_countryid").setVisible(true);
+                        }
+                    }
+                    else {
+                        form.getControl("ovs_countryid").setVisible(false);
                     }
                 }
             }
@@ -71,7 +90,7 @@ var ROM;
                         var viewId = '{5482C38D-8BB4-3B95-BD05-493398FEAE95}';
                         var entityName = "account";
                         var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredRegulatedEntities");
-                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name"/><attribute name="accountid"/><order attribute="name" descending="false"/><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000"/></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="ovs_countryid" operator="eq" value="' + countryAttributeValue[0].id + '"/></filter></link-entity></link-entity></entity></fetch>';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name"/><attribute name="accountid"/><order attribute="name" descending="false"/><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000"/></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/></filter></link-entity></link-entity></entity></fetch>';
                         var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /><cell name="accountid" width="125" /></row></grid>';
                         form.getControl("ovs_regulatedentity").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     }
