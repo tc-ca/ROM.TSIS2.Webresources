@@ -62,7 +62,6 @@ function openBookableResourceBookings(formContext) {
             for (var i = 0; i < result.entities.length; i++) {
                 Xrm.WebApi.updateRecord("bookableresourcebooking", result.entities[i].bookableresourcebookingid, bookableResourceBookingData).then(
                     function success(result) {
-
                     },
                     function (error) {
                         console.log(error.message);
