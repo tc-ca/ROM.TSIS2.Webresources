@@ -77,5 +77,14 @@ namespace TSIS2.WebResources.Webresources.resx {
                 return ResourceManager.GetString("FilteredRegulatedEntities", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered Regulated Entities.
+        /// </summary>
+        internal static string FilteredSites {
+            get {
+                return ResourceManager.GetString("FilteredSites", resourceCulture);
+            }
+        }
     }
 }
