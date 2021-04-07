@@ -1,6 +1,6 @@
 namespace ROM.WorkOrderServiceTask {
     // EVENTS
-    const mode = '';
+    var mode = '';
     export function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
 
@@ -24,6 +24,11 @@ namespace ROM.WorkOrderServiceTask {
         InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
     }
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+        const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
+
+        if(Form.getAttribute('statecode').getValue() == 1){
+            mode = "display";
+        }
         UpdateQuestionnaireDefinition(eContext);
     }
     //If Status Reason is Active, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field

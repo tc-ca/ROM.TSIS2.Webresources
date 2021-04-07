@@ -7,6 +7,7 @@ function ActivateWorkOrder(primaryControl) {
         function (success) {
             if (success.confirmed){
                 console.log("Dialog closed using OK button.");
+                
                 formContext.getAttribute("statecode").setValue(0);
                 formContext.getAttribute("statuscode").setValue(1);
                 formContext.getAttribute("msdyn_systemstatus").setValue(690970003); //Open - Completed
