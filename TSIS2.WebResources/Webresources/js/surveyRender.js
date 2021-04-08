@@ -1,3 +1,14 @@
+var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+var CharactersRemaining;
+
+if (lang == 1036) {
+    CharactersRemaining = "caractères restants";
+}
+else {
+    CharactersRemaining = "characters remaining";
+}
+
 'use strict';
 window.parentExecutionContext = null;
 window.parentFormContext = null;
@@ -64,6 +75,25 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         //set html
         options.html = str;
     });
+
+    survey.onAfterRenderQuestion.add(function (survey, options) {
+        if (options.question.getType() !== "comment") return;
+        var comment = options.htmlElement.getElementsByTagName('textarea')[0];
+        var maxLength = options.question.maxLength;
+        if (maxLength !== -1) {
+            comment.setAttribute("maxLength", maxLength);
+            var div = document.createElement("div");
+            div.style.textAlign = "left";
+            comment.parentNode.appendChild(div);
+            var changingHandler = function () {
+                var currLength = comment.value.length;
+                div.innerText = (options.question.maxLength - currLength) + " " + CharactersRemaining;
+            }
+            changingHandler();
+            comment.onkeyup = changingHandler;
+        }
+    });
+
 
     $('#surveyElement').Survey({
         model: survey
