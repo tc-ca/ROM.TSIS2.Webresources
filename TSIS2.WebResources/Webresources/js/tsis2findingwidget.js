@@ -101,7 +101,8 @@ var widget = {
             question.inspectorComments = comments.value;
             question.value = {
                 provisionReference: question.reference,
-                provisionText: question.description,
+                provisionTextEn: question.locDescription.values.default,
+                provisionTextFr: question.locDescription.values.fr,
                 comments: comments.value,
                 documentaryEvidence: question.file
             }
@@ -117,7 +118,8 @@ var widget = {
             question.file = fileArray;
             question.value = {
                 provisionReference: question.reference,
-                provisionText: question.description,
+                provisionTextEn: question.locDescription.values.default,
+                provisionTextFr: question.locDescription.values.fr,
                 comments: comments.value,
                 documentaryEvidence: fileArray
             }
@@ -181,7 +183,8 @@ function validateFile(file){
 function updateQuestionValue(question) {
     question.value = {
         provisionReference: question.reference,
-        provisionText: question.description,
+        provisionTextEn: question.locDescription.values.default,
+        provisionTextFr: question.locDescription.values.fr,
         comments: question.inspectorComments,
         documentaryEvidence: question.file
     }
@@ -213,7 +216,8 @@ function updateQuestionProvisionData(question, provisionName) {
     if (question.value == null) {
         question.value = {
             provisionReference: question.reference,
-            provisionText: question.description,
+            provisionTextEn: question.locDescription.values.default,
+            provisionTextFr: question.locDescription.values.fr,
             comments: question.inspectorComments,
             documentaryEvidence: question.file
         }
