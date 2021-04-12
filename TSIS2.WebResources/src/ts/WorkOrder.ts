@@ -275,6 +275,46 @@ namespace ROM.WorkOrder {
         }
     }
 
+    export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
+            const siteAttribute = form.getAttribute("msdyn_serviceaccount");
+
+            if (siteAttribute != null && siteAttribute != undefined) {
+
+                // Clear out all dependent fields' value
+                if (!form.getControl("msdyn_functionallocation").getDisabled() || form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                    form.getAttribute("msdyn_functionallocation").setValue(null);
+                }
+
+                // Disable all dependent fields
+                form.getControl("msdyn_functionallocation").setDisabled(true);
+
+                // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                const siteAttributeValue = siteAttribute.getValue();
+
+                if (siteAttributeValue != null && siteAttributeValue != undefined) {
+
+                    // Enable direct dependent field
+                    form.getControl("msdyn_functionallocation").setDisabled(false);
+
+                    // Setup a custom view
+                    // This value is never saved and only needs to be unique among the other available views for the lookup.
+                    const viewId = '{C0DAF55B-505E-410C-B0CD-CD0F24F63231}';
+                    const entityName = "msdyn_functionallocation";
+                    const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
+                    const layoutXml = '<grid name="resultset" object="10300" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_functionallocation"><attribute name="msdyn_name"/><link-entity name="msdyn_msdyn_functionallocation_account" from="msdyn_functionallocationid" to="msdyn_functionallocationid" link-type="inner"><filter><condition attribute="accountid" operator="eq" value="' + siteAttributeValue[0].id + '"/></filter></link-entity></entity></fetch>';
+                    form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                }
+                
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
+    }
+
     export function functionalLocationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
