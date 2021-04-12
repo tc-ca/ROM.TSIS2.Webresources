@@ -1,0 +1,16 @@
+﻿<html>
+<head>
+</head>
+<body style="overflow-wrap: break-word;" onfocusout="parent.setEmailRange();">
+    <div id="div1">
+
+    </div>
+    <script language="javascript">
+        var provisionText = parent.Xrm.Page.getAttribute("ovs_findingprovisiontext").getValue();
+        var span = document.createElement("Span");
+        span.innerHTML = provisionText;
+
+        document.getElementById("div1").appendChild(span);
+    </script>
+</body>
+</html>

@@ -131,6 +131,7 @@
     <Content Include="Webresources\css\modern.css" />
     <Content Include="Webresources\css\survey-creator.min.css" />
     <Content Include="Webresources\css\survey.min.css" />
+    <Content Include="Webresources\html\FindingProvisionText.html" />
     <Content Include="Webresources\html\SurveyCreator.html" />
     <Content Include="Webresources\html\SurveyRender.html" />
     <Content Include="Webresources\js\Account.js" />
