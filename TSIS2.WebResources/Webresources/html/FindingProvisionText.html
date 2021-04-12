@@ -6,10 +6,14 @@
 
     </div>
     <script language="javascript">
-        var provisionText = parent.Xrm.Page.getAttribute("ovs_findingprovisiontext").getValue();
+        var globalContext = parent.Xrm.Utility.getGlobalContext();
+        if (globalContext.userSettings.languageId == 1036) {
+            var provisionText = parent.Xrm.Page.getAttribute("ts_findingprovisiontextfr").getValue();
+        } else {
+            var provisionText = parent.Xrm.Page.getAttribute("ts_findingprovisiontexten").getValue();
+        }
         var span = document.createElement("Span");
         span.innerHTML = provisionText;
-
         document.getElementById("div1").appendChild(span);
     </script>
 </body>
