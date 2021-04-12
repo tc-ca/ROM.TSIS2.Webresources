@@ -11,6 +11,13 @@ var ROM;
             //Set required field
             form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
             form.getAttribute("ovs_regulatedentity").setRequiredLevel("required");
+            //Set visible fields
+            if (form.getAttribute("ovs_assetcategory").getValue != null) {
+                form.getControl("ovs_assetcategory").setVisible(true);
+            }
+            if (form.getAttribute("ovs_asset").getValue != null) {
+                form.getControl("ovs_asset").setVisible(true);
+            }
             //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
             if (state == 1) {
                 setWorkOrderServiceTasksView(form, false);
