@@ -7,6 +7,11 @@ var ROM;
         // EVENTS
         function onLoad(eContext) {
             var form = eContext.getFormContext();
+            switch (form.ui.getFormType()) {
+                case 1:
+                    setRegion(eContext);
+                    break;
+            }
             var regionAttribute = form.getAttribute("ovs_region");
             if (regionAttribute != null && regionAttribute != undefined) {
                 var regionAttributeValue = regionAttribute.getValue();

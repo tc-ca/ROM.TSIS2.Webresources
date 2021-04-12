@@ -4,6 +4,12 @@ namespace ROM.Incident {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
 
+        switch (form.ui.getFormType()) {
+            case 1:
+                setRegion(eContext);
+            break;
+        }
+
         const regionAttribute = form.getAttribute("ovs_region");
         if (regionAttribute != null && regionAttribute != undefined) {
             const regionAttributeValue = regionAttribute.getValue();
