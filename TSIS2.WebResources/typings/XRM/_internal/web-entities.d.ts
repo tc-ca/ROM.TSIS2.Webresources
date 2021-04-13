@@ -55,29 +55,6 @@ interface BookableResourceBooking_Create extends BookableResourceBooking {
 }
 interface BookableResourceBooking_Update extends BookableResourceBooking {
 }
-interface Incident_Base extends WebEntity {
-}
-interface Incident_Fixed extends WebEntity_Fixed {
-  incidentid: string;
-}
-interface Incident extends Incident_Base, Incident_Relationships {
-}
-interface Incident_Relationships {
-}
-interface Incident_Result extends Incident_Base, Incident_Relationships {
-}
-interface Incident_FormattedResult {
-}
-interface Incident_Select {
-}
-interface Incident_Expand {
-}
-interface Incident_Filter {
-}
-interface Incident_Create extends Incident {
-}
-interface Incident_Update extends Incident {
-}
 interface msdyn_incidenttypeservicetask_Base extends WebEntity {
 }
 interface msdyn_incidenttypeservicetask_Fixed extends WebEntity_Fixed {
@@ -193,29 +170,6 @@ interface ovs_Questionnaire_Create extends ovs_Questionnaire {
 }
 interface ovs_Questionnaire_Update extends ovs_Questionnaire {
 }
-interface msdyn_workorderincident_Base extends WebEntity {
-}
-interface msdyn_workorderincident_Fixed extends WebEntity_Fixed {
-  msdyn_workorderincidentid: string;
-}
-interface msdyn_workorderincident extends msdyn_workorderincident_Base, msdyn_workorderincident_Relationships {
-}
-interface msdyn_workorderincident_Relationships {
-}
-interface msdyn_workorderincident_Result extends msdyn_workorderincident_Base, msdyn_workorderincident_Relationships {
-}
-interface msdyn_workorderincident_FormattedResult {
-}
-interface msdyn_workorderincident_Select {
-}
-interface msdyn_workorderincident_Expand {
-}
-interface msdyn_workorderincident_Filter {
-}
-interface msdyn_workorderincident_Create extends msdyn_workorderincident {
-}
-interface msdyn_workorderincident_Update extends msdyn_workorderincident {
-}
 interface BulkOperationLog_Base extends WebEntity {
 }
 interface BulkOperationLog_Fixed extends WebEntity_Fixed {
@@ -239,29 +193,6 @@ interface BulkOperationLog_Create extends BulkOperationLog {
 }
 interface BulkOperationLog_Update extends BulkOperationLog {
 }
-interface Connection_Base extends WebEntity {
-}
-interface Connection_Fixed extends WebEntity_Fixed {
-  connectionid: string;
-}
-interface Connection extends Connection_Base, Connection_Relationships {
-}
-interface Connection_Relationships {
-}
-interface Connection_Result extends Connection_Base, Connection_Relationships {
-}
-interface Connection_FormattedResult {
-}
-interface Connection_Select {
-}
-interface Connection_Expand {
-}
-interface Connection_Filter {
-}
-interface Connection_Create extends Connection {
-}
-interface Connection_Update extends Connection {
-}
 interface Contact_Base extends WebEntity {
 }
 interface Contact_Fixed extends WebEntity_Fixed {
@@ -284,6 +215,29 @@ interface Contact_Filter {
 interface Contact_Create extends Contact {
 }
 interface Contact_Update extends Contact {
+}
+interface Connection_Base extends WebEntity {
+}
+interface Connection_Fixed extends WebEntity_Fixed {
+  connectionid: string;
+}
+interface Connection extends Connection_Base, Connection_Relationships {
+}
+interface Connection_Relationships {
+}
+interface Connection_Result extends Connection_Base, Connection_Relationships {
+}
+interface Connection_FormattedResult {
+}
+interface Connection_Select {
+}
+interface Connection_Expand {
+}
+interface Connection_Filter {
+}
+interface Connection_Create extends Connection {
+}
+interface Connection_Update extends Connection {
 }
 interface ServiceAppointment_Base extends WebEntity {
 }
@@ -353,29 +307,6 @@ interface PostFollow_Filter {
 interface PostFollow_Create extends PostFollow {
 }
 interface PostFollow_Update extends PostFollow {
-}
-interface IncidentResolution_Base extends WebEntity {
-}
-interface IncidentResolution_Fixed extends WebEntity_Fixed {
-  activityid: string;
-}
-interface IncidentResolution extends IncidentResolution_Base, IncidentResolution_Relationships {
-}
-interface IncidentResolution_Relationships {
-}
-interface IncidentResolution_Result extends IncidentResolution_Base, IncidentResolution_Relationships {
-}
-interface IncidentResolution_FormattedResult {
-}
-interface IncidentResolution_Select {
-}
-interface IncidentResolution_Expand {
-}
-interface IncidentResolution_Filter {
-}
-interface IncidentResolution_Create extends IncidentResolution {
-}
-interface IncidentResolution_Update extends IncidentResolution {
 }
 interface ovs_operation_Base extends WebEntity {
 }
@@ -491,29 +422,6 @@ interface tc_TCFiscalQuarter_Filter {
 interface tc_TCFiscalQuarter_Create extends tc_TCFiscalQuarter {
 }
 interface tc_TCFiscalQuarter_Update extends tc_TCFiscalQuarter {
-}
-interface qm_sytemplate_Base extends WebEntity {
-}
-interface qm_sytemplate_Fixed extends WebEntity_Fixed {
-  qm_sytemplateid: string;
-}
-interface qm_sytemplate extends qm_sytemplate_Base, qm_sytemplate_Relationships {
-}
-interface qm_sytemplate_Relationships {
-}
-interface qm_sytemplate_Result extends qm_sytemplate_Base, qm_sytemplate_Relationships {
-}
-interface qm_sytemplate_FormattedResult {
-}
-interface qm_sytemplate_Select {
-}
-interface qm_sytemplate_Expand {
-}
-interface qm_sytemplate_Filter {
-}
-interface qm_sytemplate_Create extends qm_sytemplate {
-}
-interface qm_sytemplate_Update extends qm_sytemplate {
 }
 interface SystemUser_Base extends WebEntity {
 }

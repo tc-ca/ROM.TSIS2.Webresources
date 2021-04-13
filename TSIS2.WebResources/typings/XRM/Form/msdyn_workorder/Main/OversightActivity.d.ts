@@ -128,7 +128,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
       get(name: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
-      get(name: "ovs_oversighttype"): Xrm.LookupAttribute<"ovs_oversighttype">;
       get(name: "ovs_primaryinspector"): Xrm.LookupAttribute<"bookableresource">;
       get(name: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
@@ -230,7 +229,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
-      get(name: "ovs_oversighttype"): Xrm.LookupControl<"ovs_oversighttype">;
       get(name: "ovs_primaryinspector"): Xrm.LookupControl<"bookableresource">;
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
@@ -318,7 +316,6 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
     getAttribute(attributeName: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
-    getAttribute(attributeName: "ovs_oversighttype"): Xrm.LookupAttribute<"ovs_oversighttype">;
     getAttribute(attributeName: "ovs_primaryinspector"): Xrm.LookupAttribute<"bookableresource">;
     getAttribute(attributeName: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
     getAttribute(attributeName: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
@@ -415,7 +412,6 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
-    getControl(controlName: "ovs_oversighttype"): Xrm.LookupControl<"ovs_oversighttype">;
     getControl(controlName: "ovs_primaryinspector"): Xrm.LookupControl<"bookableresource">;
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;

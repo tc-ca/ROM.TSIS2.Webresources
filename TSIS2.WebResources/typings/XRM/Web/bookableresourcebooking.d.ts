@@ -11,6 +11,7 @@ interface BookableResourceBooking_Base extends WebEntity {
   msdyn_actualarrivaltime?: Date | null;
   msdyn_actualtravelduration?: number | null;
   msdyn_allowoverlapping?: boolean | null;
+  msdyn_basetravelduration?: number | null;
   msdyn_bookingmethod?: msdyn_resourceschedulesource | null;
   msdyn_cascadecrewchanges?: boolean | null;
   msdyn_crewmembertype?: msdyn_crewmembertype | null;
@@ -23,6 +24,7 @@ interface BookableResourceBooking_Base extends WebEntity {
   msdyn_milestraveled?: number | null;
   msdyn_offlinetimestamp?: Date | null;
   msdyn_preventtimestampcreation?: boolean | null;
+  msdyn_quickNoteAction?: msdyn_quicknote_type | null;
   msdyn_signature?: string | null;
   msdyn_slottext?: string | null;
   msdyn_totalbillableduration?: number | null;
@@ -30,6 +32,7 @@ interface BookableResourceBooking_Base extends WebEntity {
   msdyn_totalcost?: number | null;
   msdyn_totalcost_base?: number | null;
   msdyn_totaldurationinprogress?: number | null;
+  msdyn_traveltimecalculationtype?: msdyn_traveltimetype | null;
   msdyn_traveltimerescheduling?: boolean | null;
   msdyn_ursinternalflags?: string | null;
   msdyn_worklocation?: msdyn_worklocation | null;
@@ -50,7 +53,6 @@ interface BookableResourceBooking_Relationships {
   BookingStatus?: BookingStatus_Result | null;
   Resource?: BookableResource_Result | null;
   bookableresourcebooking_Appointments?: Appointment_Result[] | null;
-  bookableresourcebooking_IncidentResolutions?: IncidentResolution_Result[] | null;
   bookableresourcebooking_ServiceAppointments?: ServiceAppointment_Result[] | null;
   createdbyname?: SystemUser_Result | null;
   createdonbehalfbyname?: SystemUser_Result | null;
@@ -110,6 +112,7 @@ interface BookableResourceBooking_Select {
   msdyn_agreementbookingdate_guid: WebAttribute<BookableResourceBooking_Select, { msdyn_agreementbookingdate_guid: string | null }, { msdyn_agreementbookingdate_formatted?: string }>;
   msdyn_allowoverlapping: WebAttribute<BookableResourceBooking_Select, { msdyn_allowoverlapping: boolean | null }, {  }>;
   msdyn_appointmentbookingid_guid: WebAttribute<BookableResourceBooking_Select, { msdyn_appointmentbookingid_guid: string | null }, { msdyn_appointmentbookingid_formatted?: string }>;
+  msdyn_basetravelduration: WebAttribute<BookableResourceBooking_Select, { msdyn_basetravelduration: number | null }, {  }>;
   msdyn_bookingmethod: WebAttribute<BookableResourceBooking_Select, { msdyn_bookingmethod: msdyn_resourceschedulesource | null }, { msdyn_bookingmethod_formatted?: string }>;
   msdyn_bookingsetupmetadataid_guid: WebAttribute<BookableResourceBooking_Select, { msdyn_bookingsetupmetadataid_guid: string | null }, { msdyn_bookingsetupmetadataid_formatted?: string }>;
   msdyn_cascadecrewchanges: WebAttribute<BookableResourceBooking_Select, { msdyn_cascadecrewchanges: boolean | null }, {  }>;
@@ -124,6 +127,7 @@ interface BookableResourceBooking_Select {
   msdyn_milestraveled: WebAttribute<BookableResourceBooking_Select, { msdyn_milestraveled: number | null }, {  }>;
   msdyn_offlinetimestamp: WebAttribute<BookableResourceBooking_Select, { msdyn_offlinetimestamp: Date | null }, { msdyn_offlinetimestamp_formatted?: string }>;
   msdyn_preventtimestampcreation: WebAttribute<BookableResourceBooking_Select, { msdyn_preventtimestampcreation: boolean | null }, {  }>;
+  msdyn_quickNoteAction: WebAttribute<BookableResourceBooking_Select, { msdyn_quickNoteAction: msdyn_quicknote_type | null }, { msdyn_quickNoteAction_formatted?: string }>;
   msdyn_requirementgroupid_guid: WebAttribute<BookableResourceBooking_Select, { msdyn_requirementgroupid_guid: string | null }, { msdyn_requirementgroupid_formatted?: string }>;
   msdyn_resourcegroup_guid: WebAttribute<BookableResourceBooking_Select, { msdyn_resourcegroup_guid: string | null }, { msdyn_resourcegroup_formatted?: string }>;
   msdyn_resourcerequirement_guid: WebAttribute<BookableResourceBooking_Select, { msdyn_resourcerequirement_guid: string | null }, { msdyn_resourcerequirement_formatted?: string }>;
@@ -136,6 +140,7 @@ interface BookableResourceBooking_Select {
   msdyn_totalcost: WebAttribute<BookableResourceBooking_Select, { msdyn_totalcost: number | null; transactioncurrencyid_guid: string | null }, { msdyn_totalcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   msdyn_totalcost_base: WebAttribute<BookableResourceBooking_Select, { msdyn_totalcost_base: number | null; transactioncurrencyid_guid: string | null }, { msdyn_totalcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   msdyn_totaldurationinprogress: WebAttribute<BookableResourceBooking_Select, { msdyn_totaldurationinprogress: number | null }, {  }>;
+  msdyn_traveltimecalculationtype: WebAttribute<BookableResourceBooking_Select, { msdyn_traveltimecalculationtype: msdyn_traveltimetype | null }, { msdyn_traveltimecalculationtype_formatted?: string }>;
   msdyn_traveltimerescheduling: WebAttribute<BookableResourceBooking_Select, { msdyn_traveltimerescheduling: boolean | null }, {  }>;
   msdyn_ursinternalflags: WebAttribute<BookableResourceBooking_Select, { msdyn_ursinternalflags: string | null }, {  }>;
   msdyn_worklocation: WebAttribute<BookableResourceBooking_Select, { msdyn_worklocation: msdyn_worklocation | null }, { msdyn_worklocation_formatted?: string }>;
@@ -182,6 +187,7 @@ interface BookableResourceBooking_Filter {
   msdyn_agreementbookingdate_guid: XQW.Guid;
   msdyn_allowoverlapping: boolean;
   msdyn_appointmentbookingid_guid: XQW.Guid;
+  msdyn_basetravelduration: number;
   msdyn_bookingmethod: msdyn_resourceschedulesource;
   msdyn_bookingsetupmetadataid_guid: XQW.Guid;
   msdyn_cascadecrewchanges: boolean;
@@ -196,6 +202,7 @@ interface BookableResourceBooking_Filter {
   msdyn_milestraveled: number;
   msdyn_offlinetimestamp: Date;
   msdyn_preventtimestampcreation: boolean;
+  msdyn_quickNoteAction: msdyn_quicknote_type;
   msdyn_requirementgroupid_guid: XQW.Guid;
   msdyn_resourcegroup_guid: XQW.Guid;
   msdyn_resourcerequirement_guid: XQW.Guid;
@@ -208,6 +215,7 @@ interface BookableResourceBooking_Filter {
   msdyn_totalcost: number;
   msdyn_totalcost_base: number;
   msdyn_totaldurationinprogress: number;
+  msdyn_traveltimecalculationtype: msdyn_traveltimetype;
   msdyn_traveltimerescheduling: boolean;
   msdyn_ursinternalflags: string;
   msdyn_worklocation: msdyn_worklocation;
@@ -237,7 +245,6 @@ interface BookableResourceBooking_Expand {
   BookingStatus: WebExpand<BookableResourceBooking_Expand, BookingStatus_Select, BookingStatus_Filter, { BookingStatus: BookingStatus_Result }>;
   Resource: WebExpand<BookableResourceBooking_Expand, BookableResource_Select, BookableResource_Filter, { Resource: BookableResource_Result }>;
   bookableresourcebooking_Appointments: WebExpand<BookableResourceBooking_Expand, Appointment_Select, Appointment_Filter, { bookableresourcebooking_Appointments: Appointment_Result[] }>;
-  bookableresourcebooking_IncidentResolutions: WebExpand<BookableResourceBooking_Expand, IncidentResolution_Select, IncidentResolution_Filter, { bookableresourcebooking_IncidentResolutions: IncidentResolution_Result[] }>;
   bookableresourcebooking_ServiceAppointments: WebExpand<BookableResourceBooking_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { bookableresourcebooking_ServiceAppointments: ServiceAppointment_Result[] }>;
   createdbyname: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { createdbyname: SystemUser_Result }>;
   createdonbehalfbyname: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfbyname: SystemUser_Result }>;
@@ -275,6 +282,7 @@ interface BookableResourceBooking_FormattedResult {
   msdyn_crewmembertype_formatted?: string;
   msdyn_estimatedarrivaltime_formatted?: string;
   msdyn_offlinetimestamp_formatted?: string;
+  msdyn_quickNoteAction_formatted?: string;
   msdyn_requirementgroupid_formatted?: string;
   msdyn_resourcegroup_formatted?: string;
   msdyn_resourcerequirement_formatted?: string;
@@ -282,6 +290,7 @@ interface BookableResourceBooking_FormattedResult {
   msdyn_timegroupdetailselected_formatted?: string;
   msdyn_totalcost_base_formatted?: string;
   msdyn_totalcost_formatted?: string;
+  msdyn_traveltimecalculationtype_formatted?: string;
   msdyn_worklocation_formatted?: string;
   msdyn_workorder_formatted?: string;
   overriddencreatedon_formatted?: string;
@@ -346,7 +355,6 @@ interface BookableResourceBooking_RelatedOne {
 }
 interface BookableResourceBooking_RelatedMany {
   bookableresourcebooking_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
-  bookableresourcebooking_IncidentResolutions: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   bookableresourcebooking_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   msdyn_bookableresourcebooking_msdyn_workorderservicetask_Booking: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
 }

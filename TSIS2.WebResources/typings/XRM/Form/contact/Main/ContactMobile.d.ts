@@ -40,7 +40,7 @@ declare namespace Form.contact.Main {
       get(name: "address1_city"): Xrm.Attribute<string> | null;
       get(name: "address1_composite"): Xrm.Attribute<string> | null;
       get(name: "address1_country"): Xrm.Attribute<string> | null;
-      get(name: "address1_line1"): Xrm.Attribute<string> | null;
+      get(name: "address1_line1"): Xrm.Attribute<string>;
       get(name: "address1_line2"): Xrm.Attribute<string> | null;
       get(name: "address1_line3"): Xrm.Attribute<string> | null;
       get(name: "address1_postalcode"): Xrm.Attribute<string> | null;
@@ -82,6 +82,7 @@ declare namespace Form.contact.Main {
       get(name: "address1_composite_compositionLinkControl_address1_line3"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_postalcode"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_stateorprovince"): Xrm.StringControl | null;
+      get(name: "address1_line1"): Xrm.StringControl;
       get(name: "emailaddress1"): Xrm.StringControl;
       get(name: "fax"): Xrm.StringControl;
       get(name: "fullname"): Xrm.StringControl | null;
@@ -125,7 +126,7 @@ declare namespace Form.contact.Main {
     getAttribute(attributeName: "address1_city"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_composite"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_country"): Xrm.Attribute<string> | null;
-    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<string> | null;
+    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<string>;
     getAttribute(attributeName: "address1_line2"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_line3"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_postalcode"): Xrm.Attribute<string> | null;
@@ -162,6 +163,7 @@ declare namespace Form.contact.Main {
     getControl(controlName: "address1_composite_compositionLinkControl_address1_line3"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_postalcode"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_stateorprovince"): Xrm.StringControl | null;
+    getControl(controlName: "address1_line1"): Xrm.StringControl;
     getControl(controlName: "emailaddress1"): Xrm.StringControl;
     getControl(controlName: "fax"): Xrm.StringControl;
     getControl(controlName: "fullname"): Xrm.StringControl | null;

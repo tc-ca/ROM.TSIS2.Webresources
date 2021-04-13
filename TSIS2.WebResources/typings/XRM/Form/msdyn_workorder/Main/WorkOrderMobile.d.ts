@@ -10,6 +10,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "fstab_summary_section_primary_incident"): Xrm.PageSection;
         get(name: "fstab_summary_section_sales_tax"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_column_2_section_1"): Xrm.PageSection;
+        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_9"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -44,6 +45,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_pricelist"): Xrm.LookupAttribute<"pricelevel">;
       get(name: "msdyn_primaryincidentdescription"): Xrm.Attribute<string>;
       get(name: "msdyn_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
+      get(name: "msdyn_primaryresolution"): Xrm.LookupAttribute<"msdyn_resolution">;
       get(name: "msdyn_priority"): Xrm.LookupAttribute<"msdyn_priority">;
       get(name: "msdyn_reportedbycontact"): Xrm.LookupAttribute<"contact">;
       get(name: "msdyn_serviceaccount"): Xrm.LookupAttribute<"account">;
@@ -70,6 +72,7 @@ declare namespace Form.msdyn_workorder.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Incidents_List"): Xrm.SubGridControl<"msdyn_workorderincident">;
+      get(name: "KnowledgeArticlesSubGrid"): Xrm.SubGridControl<"knowledgearticle">;
       get(name: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;
       get(name: "header_msdyn_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "header_msdyn_serviceaccount"): Xrm.LookupControl<"account">;
@@ -119,6 +122,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_pricelist"): Xrm.LookupControl<"pricelevel">;
       get(name: "msdyn_primaryincidentdescription"): Xrm.StringControl;
       get(name: "msdyn_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
+      get(name: "msdyn_primaryresolution"): Xrm.LookupControl<"msdyn_resolution">;
       get(name: "msdyn_priority"): Xrm.LookupControl<"msdyn_priority">;
       get(name: "msdyn_reportedbycontact"): Xrm.LookupControl<"contact">;
       get(name: "msdyn_serviceaccount"): Xrm.LookupControl<"account">;
@@ -177,6 +181,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_pricelist"): Xrm.LookupAttribute<"pricelevel">;
     getAttribute(attributeName: "msdyn_primaryincidentdescription"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
+    getAttribute(attributeName: "msdyn_primaryresolution"): Xrm.LookupAttribute<"msdyn_resolution">;
     getAttribute(attributeName: "msdyn_priority"): Xrm.LookupAttribute<"msdyn_priority">;
     getAttribute(attributeName: "msdyn_reportedbycontact"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "msdyn_serviceaccount"): Xrm.LookupAttribute<"account">;
@@ -198,6 +203,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Incidents_List"): Xrm.SubGridControl<"msdyn_workorderincident">;
+    getControl(controlName: "KnowledgeArticlesSubGrid"): Xrm.SubGridControl<"knowledgearticle">;
     getControl(controlName: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;
     getControl(controlName: "header_msdyn_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "header_msdyn_serviceaccount"): Xrm.LookupControl<"account">;
@@ -247,6 +253,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_pricelist"): Xrm.LookupControl<"pricelevel">;
     getControl(controlName: "msdyn_primaryincidentdescription"): Xrm.StringControl;
     getControl(controlName: "msdyn_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
+    getControl(controlName: "msdyn_primaryresolution"): Xrm.LookupControl<"msdyn_resolution">;
     getControl(controlName: "msdyn_priority"): Xrm.LookupControl<"msdyn_priority">;
     getControl(controlName: "msdyn_reportedbycontact"): Xrm.LookupControl<"contact">;
     getControl(controlName: "msdyn_serviceaccount"): Xrm.LookupControl<"account">;

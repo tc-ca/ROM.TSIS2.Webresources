@@ -182,14 +182,11 @@ interface Contact_Relationships {
   account_primary_contact?: Account_Result[] | null;
   contact_PostFollows?: PostFollow_Result[] | null;
   contact_activity_parties?: ActivityParty_Result[] | null;
-  contact_as_primary_contact?: Incident_Result[] | null;
-  contact_as_responsible_contact?: Incident_Result[] | null;
   contact_bookableresource_ContactId?: BookableResource_Result[] | null;
   contact_connections1?: Connection_Result[] | null;
   contact_connections2?: Connection_Result[] | null;
   contact_customer_contacts?: Contact_Result[] | null;
   contact_master_contact?: Contact_Result[] | null;
-  incident_customer_contacts?: Incident_Result[] | null;
   msdyn_contact_msdyn_workorder_ReportedByContact?: msdyn_workorder_Result[] | null;
   parentcustomerid_account?: Account_Result | null;
   parentcustomerid_contact?: Contact_Result | null;
@@ -615,8 +612,6 @@ interface Contact_Expand {
   account_primary_contact: WebExpand<Contact_Expand, Account_Select, Account_Filter, { account_primary_contact: Account_Result[] }>;
   contact_PostFollows: WebExpand<Contact_Expand, PostFollow_Select, PostFollow_Filter, { contact_PostFollows: PostFollow_Result[] }>;
   contact_activity_parties: WebExpand<Contact_Expand, ActivityParty_Select, ActivityParty_Filter, { contact_activity_parties: ActivityParty_Result[] }>;
-  contact_as_primary_contact: WebExpand<Contact_Expand, Incident_Select, Incident_Filter, { contact_as_primary_contact: Incident_Result[] }>;
-  contact_as_responsible_contact: WebExpand<Contact_Expand, Incident_Select, Incident_Filter, { contact_as_responsible_contact: Incident_Result[] }>;
   contact_bookableresource_ContactId: WebExpand<Contact_Expand, BookableResource_Select, BookableResource_Filter, { contact_bookableresource_ContactId: BookableResource_Result[] }>;
   contact_connections1: WebExpand<Contact_Expand, Connection_Select, Connection_Filter, { contact_connections1: Connection_Result[] }>;
   contact_connections2: WebExpand<Contact_Expand, Connection_Select, Connection_Filter, { contact_connections2: Connection_Result[] }>;
@@ -624,7 +619,6 @@ interface Contact_Expand {
   contact_master_contact: WebExpand<Contact_Expand, Contact_Select, Contact_Filter, { contact_master_contact: Contact_Result[] }>;
   createdby: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
   createdonbehalfby: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
-  incident_customer_contacts: WebExpand<Contact_Expand, Incident_Select, Incident_Filter, { incident_customer_contacts: Incident_Result[] }>;
   masterid: WebExpand<Contact_Expand, Contact_Select, Contact_Filter, { masterid: Contact_Result }>;
   modifiedby: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
@@ -748,14 +742,11 @@ interface Contact_RelatedMany {
   account_primary_contact: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   contact_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   contact_activity_parties: WebMappingRetrieve<ActivityParty_Select,ActivityParty_Expand,ActivityParty_Filter,ActivityParty_Fixed,ActivityParty_Result,ActivityParty_FormattedResult>;
-  contact_as_primary_contact: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
-  contact_as_responsible_contact: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   contact_bookableresource_ContactId: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   contact_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   contact_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   contact_customer_contacts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   contact_master_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
-  incident_customer_contacts: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_contact_msdyn_workorder_ReportedByContact: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   qm_contact_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
