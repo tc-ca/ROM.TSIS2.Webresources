@@ -64,6 +64,11 @@
         },
         /* Form Scripts */
         {
+          "uniquename": "ovs_/js/dg.xrmquery.web.min.js",
+          "file": "js\\dg.xrmquery.web.min.js",
+          "description": "ROM TSIS 2.0 XrmQuery Library"
+        },
+        {
           "uniquename": "ovs_/js/BookableResourceBooking.js",
           "file": "js\\BookableResourceBooking.js",
           "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"
