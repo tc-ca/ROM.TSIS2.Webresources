@@ -55,6 +55,29 @@ interface BookableResourceBooking_Create extends BookableResourceBooking {
 }
 interface BookableResourceBooking_Update extends BookableResourceBooking {
 }
+interface Incident_Base extends WebEntity {
+}
+interface Incident_Fixed extends WebEntity_Fixed {
+  incidentid: string;
+}
+interface Incident extends Incident_Base, Incident_Relationships {
+}
+interface Incident_Relationships {
+}
+interface Incident_Result extends Incident_Base, Incident_Relationships {
+}
+interface Incident_FormattedResult {
+}
+interface Incident_Select {
+}
+interface Incident_Expand {
+}
+interface Incident_Filter {
+}
+interface Incident_Create extends Incident {
+}
+interface Incident_Update extends Incident {
+}
 interface msdyn_incidenttypeservicetask_Base extends WebEntity {
 }
 interface msdyn_incidenttypeservicetask_Fixed extends WebEntity_Fixed {
@@ -193,29 +216,6 @@ interface BulkOperationLog_Create extends BulkOperationLog {
 }
 interface BulkOperationLog_Update extends BulkOperationLog {
 }
-interface Contact_Base extends WebEntity {
-}
-interface Contact_Fixed extends WebEntity_Fixed {
-  contactid: string;
-}
-interface Contact extends Contact_Base, Contact_Relationships {
-}
-interface Contact_Relationships {
-}
-interface Contact_Result extends Contact_Base, Contact_Relationships {
-}
-interface Contact_FormattedResult {
-}
-interface Contact_Select {
-}
-interface Contact_Expand {
-}
-interface Contact_Filter {
-}
-interface Contact_Create extends Contact {
-}
-interface Contact_Update extends Contact {
-}
 interface Connection_Base extends WebEntity {
 }
 interface Connection_Fixed extends WebEntity_Fixed {
@@ -238,6 +238,29 @@ interface Connection_Filter {
 interface Connection_Create extends Connection {
 }
 interface Connection_Update extends Connection {
+}
+interface Contact_Base extends WebEntity {
+}
+interface Contact_Fixed extends WebEntity_Fixed {
+  contactid: string;
+}
+interface Contact extends Contact_Base, Contact_Relationships {
+}
+interface Contact_Relationships {
+}
+interface Contact_Result extends Contact_Base, Contact_Relationships {
+}
+interface Contact_FormattedResult {
+}
+interface Contact_Select {
+}
+interface Contact_Expand {
+}
+interface Contact_Filter {
+}
+interface Contact_Create extends Contact {
+}
+interface Contact_Update extends Contact {
 }
 interface ServiceAppointment_Base extends WebEntity {
 }
@@ -307,6 +330,29 @@ interface PostFollow_Filter {
 interface PostFollow_Create extends PostFollow {
 }
 interface PostFollow_Update extends PostFollow {
+}
+interface IncidentResolution_Base extends WebEntity {
+}
+interface IncidentResolution_Fixed extends WebEntity_Fixed {
+  activityid: string;
+}
+interface IncidentResolution extends IncidentResolution_Base, IncidentResolution_Relationships {
+}
+interface IncidentResolution_Relationships {
+}
+interface IncidentResolution_Result extends IncidentResolution_Base, IncidentResolution_Relationships {
+}
+interface IncidentResolution_FormattedResult {
+}
+interface IncidentResolution_Select {
+}
+interface IncidentResolution_Expand {
+}
+interface IncidentResolution_Filter {
+}
+interface IncidentResolution_Create extends IncidentResolution {
+}
+interface IncidentResolution_Update extends IncidentResolution {
 }
 interface ovs_operation_Base extends WebEntity {
 }
