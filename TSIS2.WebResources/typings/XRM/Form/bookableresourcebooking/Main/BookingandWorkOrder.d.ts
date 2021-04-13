@@ -3,8 +3,15 @@ declare namespace Form.bookableresourcebooking.Main {
     namespace Tabs {
       interface fstab_Notes extends Xrm.SectionCollectionBase {
         get(name: "fstab_notes_section_general"): Xrm.PageSection;
+        get(name: "fstab_notes_section_quicknotes"): Xrm.PageSection;
         get(name: "fstab_notes_section_signature"): Xrm.PageSection;
-        get(name: "fstab_notes_section_timeline"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface fstab_Timeline extends Xrm.SectionCollectionBase {
+        get(name: "fstab_timeline_section_new"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -56,6 +63,7 @@ declare namespace Form.bookableresourcebooking.Main {
       get(name: "msdyn_estimatedtravelduration"): Xrm.NumberAttribute;
       get(name: "msdyn_milestraveled"): Xrm.Attribute<any>;
       get(name: "msdyn_offlinetimestamp"): Xrm.DateAttribute;
+      get(name: "msdyn_quickNoteAction"): Xrm.Attribute<string>;
       get(name: "msdyn_resourcegroup"): Xrm.LookupAttribute<"bookableresource">;
       get(name: "msdyn_signature"): Xrm.Attribute<any>;
       get(name: "msdyn_timegroupdetailselected"): Xrm.LookupAttribute<"msdyn_timegroupdetail">;
@@ -84,6 +92,8 @@ declare namespace Form.bookableresourcebooking.Main {
       get(name: "msdyn_estimatedtravelduration"): Xrm.NumberControl;
       get(name: "msdyn_milestraveled"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_offlinetimestamp"): Xrm.DateControl;
+      get(name: "msdyn_quickNoteAction"): Xrm.StringControl;
+      get(name: "msdyn_quicknotescontrol"): Xrm.BaseControl;
       get(name: "msdyn_resourcegroup"): Xrm.LookupControl<"bookableresource">;
       get(name: "msdyn_signature"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_timegroupdetailselected"): Xrm.LookupControl<"msdyn_timegroupdetail">;
@@ -102,6 +112,7 @@ declare namespace Form.bookableresourcebooking.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "fstab_Notes"): Xrm.PageTab<Tabs.fstab_Notes>;
+      get(name: "fstab_Timeline"): Xrm.PageTab<Tabs.fstab_Timeline>;
       get(name: "fstab_customer"): Xrm.PageTab<Tabs.fstab_customer>;
       get(name: "fstab_fieldservice"): Xrm.PageTab<Tabs.fstab_fieldservice>;
       get(name: "fstab_general"): Xrm.PageTab<Tabs.fstab_general>;
@@ -126,6 +137,7 @@ declare namespace Form.bookableresourcebooking.Main {
     getAttribute(attributeName: "msdyn_estimatedtravelduration"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_milestraveled"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_offlinetimestamp"): Xrm.DateAttribute;
+    getAttribute(attributeName: "msdyn_quickNoteAction"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_resourcegroup"): Xrm.LookupAttribute<"bookableresource">;
     getAttribute(attributeName: "msdyn_signature"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_timegroupdetailselected"): Xrm.LookupAttribute<"msdyn_timegroupdetail">;
@@ -149,6 +161,8 @@ declare namespace Form.bookableresourcebooking.Main {
     getControl(controlName: "msdyn_estimatedtravelduration"): Xrm.NumberControl;
     getControl(controlName: "msdyn_milestraveled"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_offlinetimestamp"): Xrm.DateControl;
+    getControl(controlName: "msdyn_quickNoteAction"): Xrm.StringControl;
+    getControl(controlName: "msdyn_quicknotescontrol"): Xrm.BaseControl;
     getControl(controlName: "msdyn_resourcegroup"): Xrm.LookupControl<"bookableresource">;
     getControl(controlName: "msdyn_signature"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_timegroupdetailselected"): Xrm.LookupControl<"msdyn_timegroupdetail">;

@@ -12,7 +12,6 @@ interface PostFollow_Relationships {
   regardingobjectid_account?: Account_Result | null;
   regardingobjectid_appointment?: Appointment_Result | null;
   regardingobjectid_contact?: Contact_Result | null;
-  regardingobjectid_incident?: Incident_Result | null;
   regardingobjectid_systemuser?: SystemUser_Result | null;
 }
 interface PostFollow extends PostFollow_Base, PostFollow_Relationships {
@@ -79,7 +78,6 @@ interface PostFollow_Expand {
   regardingobjectid_account: WebExpand<PostFollow_Expand, Account_Select, Account_Filter, { regardingobjectid_account: Account_Result }>;
   regardingobjectid_appointment: WebExpand<PostFollow_Expand, Appointment_Select, Appointment_Filter, { regardingobjectid_appointment: Appointment_Result }>;
   regardingobjectid_contact: WebExpand<PostFollow_Expand, Contact_Select, Contact_Filter, { regardingobjectid_contact: Contact_Result }>;
-  regardingobjectid_incident: WebExpand<PostFollow_Expand, Incident_Select, Incident_Filter, { regardingobjectid_incident: Incident_Result }>;
   regardingobjectid_systemuser: WebExpand<PostFollow_Expand, SystemUser_Select, SystemUser_Filter, { regardingobjectid_systemuser: SystemUser_Result }>;
 }
 interface PostFollow_FormattedResult {
@@ -110,7 +108,6 @@ interface PostFollow_RelatedOne {
   regardingobjectid_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   regardingobjectid_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   regardingobjectid_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
-  regardingobjectid_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   regardingobjectid_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface PostFollow_RelatedMany {

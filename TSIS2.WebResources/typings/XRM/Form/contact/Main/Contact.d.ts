@@ -19,6 +19,7 @@ declare namespace Form.contact.Main {
         get(name: "CUSTOMER_DETAILS_TAB"): Xrm.PageSection;
         get(name: "MapSection"): Xrm.PageSection;
         get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
+        get(name: "SUMMARY_TAB_section_6"): Xrm.PageSection;
         get(name: "Summary_section_6"): Xrm.PageSection;
         get(name: "TalkingPoints_section"): Xrm.PageSection;
         get(name: string): undefined;
@@ -49,7 +50,7 @@ declare namespace Form.contact.Main {
       get(name: "address1_country"): Xrm.Attribute<string> | null;
       get(name: "address1_freighttermscode"): Xrm.OptionSetAttribute<contact_address1_freighttermscode>;
       get(name: "address1_latitude"): Xrm.NumberAttribute;
-      get(name: "address1_line1"): Xrm.Attribute<string> | null;
+      get(name: "address1_line1"): Xrm.Attribute<any>;
       get(name: "address1_line2"): Xrm.Attribute<string> | null;
       get(name: "address1_line3"): Xrm.Attribute<string> | null;
       get(name: "address1_longitude"): Xrm.NumberAttribute;
@@ -111,6 +112,7 @@ declare namespace Form.contact.Main {
       get(name: "address1_composite_compositionLinkControl_address1_stateorprovince"): Xrm.StringControl | null;
       get(name: "address1_freighttermscode"): Xrm.OptionSetControl<contact_address1_freighttermscode>;
       get(name: "address1_latitude"): Xrm.NumberControl;
+      get(name: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "address1_longitude"): Xrm.NumberControl;
       get(name: "address1_shippingmethodcode"): Xrm.OptionSetControl<contact_address1_shippingmethodcode>;
       get(name: "anniversary"): Xrm.DateControl;
@@ -184,7 +186,7 @@ declare namespace Form.contact.Main {
     getAttribute(attributeName: "address1_country"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_freighttermscode"): Xrm.OptionSetAttribute<contact_address1_freighttermscode>;
     getAttribute(attributeName: "address1_latitude"): Xrm.NumberAttribute;
-    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<string> | null;
+    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<any>;
     getAttribute(attributeName: "address1_line2"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_line3"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_longitude"): Xrm.NumberAttribute;
@@ -241,6 +243,7 @@ declare namespace Form.contact.Main {
     getControl(controlName: "address1_composite_compositionLinkControl_address1_stateorprovince"): Xrm.StringControl | null;
     getControl(controlName: "address1_freighttermscode"): Xrm.OptionSetControl<contact_address1_freighttermscode>;
     getControl(controlName: "address1_latitude"): Xrm.NumberControl;
+    getControl(controlName: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "address1_longitude"): Xrm.NumberControl;
     getControl(controlName: "address1_shippingmethodcode"): Xrm.OptionSetControl<contact_address1_shippingmethodcode>;
     getControl(controlName: "anniversary"): Xrm.DateControl;
