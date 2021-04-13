@@ -62,6 +62,12 @@
           "file": "resx\\Incident.1036.resx",
           "description": "ROM TSIS 2.0 Incident.js French Resource Strings"
         },
+        /* Libraries */
+        {
+          "uniquename": "ovs_/lib/dg.xrmquery.web.min.js",
+          "file": "lib\\dg.xrmquery.web.min.js",
+          "description": "ROM TSIS 2.0 XrmQuery Library"
+        },
         /* Form Scripts */
         {
           "uniquename": "ovs_/js/BookableResourceBooking.js",

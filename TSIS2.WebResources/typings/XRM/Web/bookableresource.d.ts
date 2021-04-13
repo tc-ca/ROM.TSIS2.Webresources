@@ -9,6 +9,7 @@ interface BookableResource_Base extends WebEntity {
   msdyn_derivecapacity?: boolean | null;
   msdyn_displayonscheduleassistant?: boolean | null;
   msdyn_displayonscheduleboard?: boolean | null;
+  msdyn_enableappointments?: msdyn_enableappointmentsoption | null;
   msdyn_enabledforfieldservicemobile?: boolean | null;
   msdyn_enabledripscheduling?: boolean | null;
   msdyn_endlocation?: msdyn_workstartlocationtype | null;
@@ -92,6 +93,7 @@ interface BookableResource_Select {
   msdyn_derivecapacity: WebAttribute<BookableResource_Select, { msdyn_derivecapacity: boolean | null }, {  }>;
   msdyn_displayonscheduleassistant: WebAttribute<BookableResource_Select, { msdyn_displayonscheduleassistant: boolean | null }, {  }>;
   msdyn_displayonscheduleboard: WebAttribute<BookableResource_Select, { msdyn_displayonscheduleboard: boolean | null }, {  }>;
+  msdyn_enableappointments: WebAttribute<BookableResource_Select, { msdyn_enableappointments: msdyn_enableappointmentsoption | null }, { msdyn_enableappointments_formatted?: string }>;
   msdyn_enabledforfieldservicemobile: WebAttribute<BookableResource_Select, { msdyn_enabledforfieldservicemobile: boolean | null }, {  }>;
   msdyn_enabledripscheduling: WebAttribute<BookableResource_Select, { msdyn_enabledripscheduling: boolean | null }, {  }>;
   msdyn_endlocation: WebAttribute<BookableResource_Select, { msdyn_endlocation: msdyn_workstartlocationtype | null }, { msdyn_endlocation_formatted?: string }>;
@@ -149,6 +151,7 @@ interface BookableResource_Filter {
   msdyn_derivecapacity: boolean;
   msdyn_displayonscheduleassistant: boolean;
   msdyn_displayonscheduleboard: boolean;
+  msdyn_enableappointments: msdyn_enableappointmentsoption;
   msdyn_enabledforfieldservicemobile: boolean;
   msdyn_enabledripscheduling: boolean;
   msdyn_endlocation: msdyn_workstartlocationtype;
@@ -218,6 +221,7 @@ interface BookableResource_FormattedResult {
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
   msdyn_crewstrategy_formatted?: string;
+  msdyn_enableappointments_formatted?: string;
   msdyn_endlocation_formatted?: string;
   msdyn_facilityequipmentid_formatted?: string;
   msdyn_generictype_formatted?: string;

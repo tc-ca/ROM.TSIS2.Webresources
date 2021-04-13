@@ -12,7 +12,9 @@ declare namespace Form.bookableresource.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface e37f45244a6642dc974c078756aef3fb extends Xrm.SectionCollectionBase {
+        get(name: "msdyn_userinformation"): Xrm.PageSection;
         get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: "{6bfe3886-a003-47b5-a2c2-7e54ad6213a9}"): Xrm.PageSection;
         get(name: "{9e7dec57-2c62-4d5d-8b21-75d076c5d1a1}"): Xrm.PageSection;
         get(name: "{e37f4524-4a66-42dc-974c-078756aef3fb}_section_6"): Xrm.PageSection;
         get(name: string): undefined;
@@ -45,6 +47,7 @@ declare namespace Form.bookableresource.Main {
       get(name: "msdyn_derivecapacity"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_displayonscheduleassistant"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_displayonscheduleboard"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "msdyn_enableappointments"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_enabledforfieldservicemobile"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_enabledripscheduling"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_endlocation"): Xrm.OptionSetAttribute<msdyn_workstartlocationtype>;
@@ -78,6 +81,7 @@ declare namespace Form.bookableresource.Main {
       get(name: "msdyn_derivecapacity"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_displayonscheduleassistant"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_displayonscheduleboard"): Xrm.OptionSetControl<boolean>;
+      get(name: "msdyn_enableappointments"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_enabledforfieldservicemobile"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_enabledripscheduling"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_endlocation"): Xrm.OptionSetControl<msdyn_workstartlocationtype>;
@@ -94,6 +98,7 @@ declare namespace Form.bookableresource.Main {
       get(name: "resourcetype"): Xrm.OptionSetControl<bookableresource_resourcetype>;
       get(name: "timezone"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "userid"): Xrm.LookupControl<"systemuser">;
+      get(name: "userid1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -119,6 +124,7 @@ declare namespace Form.bookableresource.Main {
     getAttribute(attributeName: "msdyn_derivecapacity"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_displayonscheduleassistant"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_displayonscheduleboard"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "msdyn_enableappointments"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_enabledforfieldservicemobile"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_enabledripscheduling"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_endlocation"): Xrm.OptionSetAttribute<msdyn_workstartlocationtype>;
@@ -147,6 +153,7 @@ declare namespace Form.bookableresource.Main {
     getControl(controlName: "msdyn_derivecapacity"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_displayonscheduleassistant"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_displayonscheduleboard"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "msdyn_enableappointments"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_enabledforfieldservicemobile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_enabledripscheduling"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_endlocation"): Xrm.OptionSetControl<msdyn_workstartlocationtype>;
@@ -163,6 +170,7 @@ declare namespace Form.bookableresource.Main {
     getControl(controlName: "resourcetype"): Xrm.OptionSetControl<bookableresource_resourcetype>;
     getControl(controlName: "timezone"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "userid"): Xrm.LookupControl<"systemuser">;
+    getControl(controlName: "userid1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: string): undefined;
   }
 }

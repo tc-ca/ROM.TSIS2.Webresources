@@ -123,9 +123,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="src\lib\dg.xrmquery.web.js" />
-    <Content Include="src\lib\dg.xrmquery.web.min.js" />
-    <Content Include="src\lib\dg.xrmquery.web.promise.min.js" />
     <Content Include="Webresources\css\bootstrap.min.css" />
     <Content Include="Webresources\css\autocomplete.css" />
     <Content Include="Webresources\css\modern.css" />
@@ -158,6 +155,9 @@
     <Content Include="Webresources\js\WorkOrderRibbon.js" />
     <Content Include="Webresources\js\WorkOrderServiceTask.js" />
     <Content Include="Webresources\js\WorkOrderServiceTaskRibbon.js" />
+    <Content Include="Webresources\lib\dg.xrmquery.web.js" />
+    <Content Include="Webresources\lib\dg.xrmquery.web.min.js" />
+    <Content Include="Webresources\lib\dg.xrmquery.web.promise.min.js" />
     <Content Include="XrmDefinitelyTyped\FSharp.Core.dll" />
     <Content Include="XrmDefinitelyTyped\Microsoft.Crm.Sdk.Proxy.dll" />
     <Content Include="XrmDefinitelyTyped\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
