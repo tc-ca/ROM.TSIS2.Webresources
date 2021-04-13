@@ -11,6 +11,13 @@ var ROM;
             //Set required field
             form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
             form.getAttribute("ovs_regulatedentity").setRequiredLevel("required");
+            //Set visible fields
+            if (form.getAttribute("ovs_assetcategory").getValue != null) {
+                form.getControl("ovs_assetcategory").setVisible(true);
+            }
+            if (form.getAttribute("ovs_asset").getValue != null) {
+                form.getControl("ovs_asset").setVisible(true);
+            }
             //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
             if (state == 1) {
                 setWorkOrderServiceTasksView(form, false);
@@ -236,6 +243,38 @@ var ROM;
             }
         }
         WorkOrder.regulatedEntityOnChange = regulatedEntityOnChange;
+        function siteOnChange(eContext) {
+            try {
+                var form = eContext.getFormContext();
+                var siteAttribute = form.getAttribute("msdyn_serviceaccount");
+                if (siteAttribute != null && siteAttribute != undefined) {
+                    // Clear out all dependent fields' value
+                    if (!form.getControl("msdyn_functionallocation").getDisabled() || form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                        form.getAttribute("msdyn_functionallocation").setValue(null);
+                    }
+                    // Disable all dependent fields
+                    form.getControl("msdyn_functionallocation").setDisabled(true);
+                    // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                    var siteAttributeValue = siteAttribute.getValue();
+                    if (siteAttributeValue != null && siteAttributeValue != undefined) {
+                        // Enable direct dependent field
+                        form.getControl("msdyn_functionallocation").setDisabled(false);
+                        // Setup a custom view
+                        // This value is never saved and only needs to be unique among the other available views for the lookup.
+                        var viewId = '{C0DAF55B-505E-410C-B0CD-CD0F24F63231}';
+                        var entityName = "msdyn_functionallocation";
+                        var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredLocations");
+                        var layoutXml = '<grid name="resultset" object="10300" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_functionallocation"><attribute name="msdyn_name"/><link-entity name="msdyn_msdyn_functionallocation_account" from="msdyn_functionallocationid" to="msdyn_functionallocationid" link-type="inner"><filter><condition attribute="accountid" operator="eq" value="' + siteAttributeValue[0].id + '"/></filter></link-entity></entity></fetch>';
+                        form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    }
+                }
+            }
+            catch (e) {
+                throw new Error(e.Message);
+            }
+        }
+        WorkOrder.siteOnChange = siteOnChange;
         function functionalLocationOnChange(eContext) {
             try {
                 var form = eContext.getFormContext();

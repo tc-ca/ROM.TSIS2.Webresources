@@ -137,4 +137,8 @@
     <value>Filtered Asset Categories</value>
     <comment/>
   </data>
+  <data name="FilteredLocations" xml:space="preserve">
+    <value>Filtered Locations</value>
+    <comment/>
+  </data>
 </root>
