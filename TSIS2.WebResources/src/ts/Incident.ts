@@ -156,7 +156,7 @@ namespace ROM.Incident {
                             form.getControl("ovs_site").setDisabled(false);
                         }
                         else{
-                            countryXML = '<condition attribute="ovs_countryid" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
+                            countryXML = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
                         }
                     } 
                     // Enable direct dependent field
