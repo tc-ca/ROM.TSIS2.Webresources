@@ -16,6 +16,7 @@ To generate TypeScript declaration files based on our Dynamics 365 solution, we 
 2. The contents of this configuration file should be similar to the following:
 
 ```xml
+
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <appSettings>
@@ -25,7 +26,7 @@ To generate TypeScript declaration files based on our Dynamics 365 solution, we 
     <add key="solutions" value="<your solution>" />
     <add key="entities" value="<comma separated list of entities>" />
     <add key="web" value="" />
-    <add key="jsLib" value="../src/lib" />
+    <add key="jsLib" value="../Webresources/lib" />
     <add key="mfaAppId" value="51f81489-12ee-4a9e-aaae-a2591f45987d" />
     <add key="mfaReturnUrl" value="app://58145b91-0c36-4500-8554-080854f2ac97"/>
     <add key="method" value="OAuth"/>

@@ -32,6 +32,7 @@ steps:
       Webresources/html/**
       Webresources/css/**
       Webresources/js/**
+      Webresources/lib/**
       Webresources/resx/**
     TargetFolder: '$(build.ArtifactStagingDirectory)'
 

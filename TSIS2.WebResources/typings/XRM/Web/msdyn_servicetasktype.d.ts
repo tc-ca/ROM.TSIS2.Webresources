@@ -22,11 +22,9 @@ interface msdyn_servicetasktype_Relationships {
   msdyn_msdyn_servicetasktype_msdyn_incidenttypeservicetask_TaskType?: msdyn_incidenttypeservicetask_Result[] | null;
   msdyn_msdyn_servicetasktype_msdyn_workorderservicetask_TaskType?: msdyn_workorderservicetask_Result[] | null;
   ovs_Questionnaire?: ovs_Questionnaire_Result | null;
-  ovs_QuestionnaireTemplate?: qm_sytemplate_Result | null;
 }
 interface msdyn_servicetasktype extends msdyn_servicetasktype_Base, msdyn_servicetasktype_Relationships {
   msdyn_Inspection_bind$msdyn_inspections?: string | null;
-  ovs_QuestionnaireTemplate_bind$qm_sytemplates?: string | null;
   ovs_Questionnaire_bind$ovs_questionnaires?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
@@ -53,7 +51,6 @@ interface msdyn_servicetasktype_Select {
   ovs_questionnaire_guid: WebAttribute<msdyn_servicetasktype_Select, { ovs_questionnaire_guid: string | null }, { ovs_questionnaire_formatted?: string }>;
   ovs_questionnaireenabled: WebAttribute<msdyn_servicetasktype_Select, { ovs_questionnaireenabled: boolean | null }, {  }>;
   ovs_questionnaireresultjson: WebAttribute<msdyn_servicetasktype_Select, { ovs_questionnaireresultjson: string | null }, {  }>;
-  ovs_questionnairetemplate_guid: WebAttribute<msdyn_servicetasktype_Select, { ovs_questionnairetemplate_guid: string | null }, { ovs_questionnairetemplate_formatted?: string }>;
   ovs_servicetasktypenameenglish: WebAttribute<msdyn_servicetasktype_Select, { ovs_servicetasktypenameenglish: string | null }, {  }>;
   ovs_servicetasktypenamefrench: WebAttribute<msdyn_servicetasktype_Select, { ovs_servicetasktypenamefrench: string | null }, {  }>;
   ownerid_guid: WebAttribute<msdyn_servicetasktype_Select, { ownerid_guid: string | null }, { ownerid_formatted?: string }>;
@@ -84,7 +81,6 @@ interface msdyn_servicetasktype_Filter {
   ovs_questionnaire_guid: XQW.Guid;
   ovs_questionnaireenabled: boolean;
   ovs_questionnaireresultjson: string;
-  ovs_questionnairetemplate_guid: XQW.Guid;
   ovs_servicetasktypenameenglish: string;
   ovs_servicetasktypenamefrench: string;
   ownerid_guid: XQW.Guid;
@@ -105,7 +101,6 @@ interface msdyn_servicetasktype_Expand {
   msdyn_msdyn_servicetasktype_msdyn_incidenttypeservicetask_TaskType: WebExpand<msdyn_servicetasktype_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { msdyn_msdyn_servicetasktype_msdyn_incidenttypeservicetask_TaskType: msdyn_incidenttypeservicetask_Result[] }>;
   msdyn_msdyn_servicetasktype_msdyn_workorderservicetask_TaskType: WebExpand<msdyn_servicetasktype_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { msdyn_msdyn_servicetasktype_msdyn_workorderservicetask_TaskType: msdyn_workorderservicetask_Result[] }>;
   ovs_Questionnaire: WebExpand<msdyn_servicetasktype_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { ovs_Questionnaire: ovs_Questionnaire_Result }>;
-  ovs_QuestionnaireTemplate: WebExpand<msdyn_servicetasktype_Expand, qm_sytemplate_Select, qm_sytemplate_Filter, { ovs_QuestionnaireTemplate: qm_sytemplate_Result }>;
   ownerid: WebExpand<msdyn_servicetasktype_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<msdyn_servicetasktype_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
@@ -119,7 +114,6 @@ interface msdyn_servicetasktype_FormattedResult {
   msdyn_inspection_formatted?: string;
   overriddencreatedon_formatted?: string;
   ovs_questionnaire_formatted?: string;
-  ovs_questionnairetemplate_formatted?: string;
   ownerid_formatted?: string;
   owningbusinessunit_formatted?: string;
   owningteam_formatted?: string;
@@ -135,7 +129,6 @@ interface msdyn_servicetasktype_Result extends msdyn_servicetasktype_Base, msdyn
   modifiedonbehalfby_guid: string | null;
   msdyn_inspection_guid: string | null;
   ovs_questionnaire_guid: string | null;
-  ovs_questionnairetemplate_guid: string | null;
   ownerid_guid: string | null;
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
@@ -147,7 +140,6 @@ interface msdyn_servicetasktype_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ovs_Questionnaire: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
-  ovs_QuestionnaireTemplate: WebMappingRetrieve<qm_sytemplate_Select,qm_sytemplate_Expand,qm_sytemplate_Filter,qm_sytemplate_Fixed,qm_sytemplate_Result,qm_sytemplate_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }

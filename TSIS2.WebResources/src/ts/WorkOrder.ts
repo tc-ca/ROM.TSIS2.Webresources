@@ -9,6 +9,14 @@ namespace ROM.WorkOrder {
         form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
         form.getAttribute("ovs_regulatedentity").setRequiredLevel("required");
 
+        //Set visible fields
+        if( form.getAttribute("ovs_assetcategory").getValue != null){
+            form.getControl("ovs_assetcategory").setVisible(true);  
+        }
+        if( form.getAttribute("ovs_asset").getValue != null){
+            form.getControl("ovs_asset").setVisible(true);  
+        }
+
         //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
         if (state == 1){
 
@@ -267,6 +275,46 @@ namespace ROM.WorkOrder {
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010001" /><condition attribute="msdyn_serviceterritory" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryXML + '</filter><link-entity name="ovs_operation" from="ovs_siteid" to="accountid" link-type="inner" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="ovs_regulatedentityid" operator="eq" value="' + regulatedEntityAttributeValue[0].id + '" /></filter></link-entity></entity></fetch>';
                     form.getControl("msdyn_serviceaccount").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     
+                }
+                
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
+    }
+
+    export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
+            const siteAttribute = form.getAttribute("msdyn_serviceaccount");
+
+            if (siteAttribute != null && siteAttribute != undefined) {
+
+                // Clear out all dependent fields' value
+                if (!form.getControl("msdyn_functionallocation").getDisabled() || form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                    form.getAttribute("msdyn_functionallocation").setValue(null);
+                }
+
+                // Disable all dependent fields
+                form.getControl("msdyn_functionallocation").setDisabled(true);
+
+                // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                const siteAttributeValue = siteAttribute.getValue();
+
+                if (siteAttributeValue != null && siteAttributeValue != undefined) {
+
+                    // Enable direct dependent field
+                    form.getControl("msdyn_functionallocation").setDisabled(false);
+
+                    // Setup a custom view
+                    // This value is never saved and only needs to be unique among the other available views for the lookup.
+                    const viewId = '{C0DAF55B-505E-410C-B0CD-CD0F24F63231}';
+                    const entityName = "msdyn_functionallocation";
+                    const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredLocations");
+                    const layoutXml = '<grid name="resultset" object="10300" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_functionallocation"><attribute name="msdyn_name"/><link-entity name="msdyn_msdyn_functionallocation_account" from="msdyn_functionallocationid" to="msdyn_functionallocationid" link-type="inner"><filter><condition attribute="accountid" operator="eq" value="' + siteAttributeValue[0].id + '"/></filter></link-entity></entity></fetch>';
+                    form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 }
                 
             }

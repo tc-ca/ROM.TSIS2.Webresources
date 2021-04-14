@@ -23,6 +23,8 @@ declare namespace Form.account.Main {
       interface FieldService extends Xrm.SectionCollectionBase {
         get(name: "DETAILS_TAB_section_7"): Xrm.PageSection;
         get(name: "DETAILS_TAB_section_8"): Xrm.PageSection;
+        get(name: "FieldService_section_3"): Xrm.PageSection;
+        get(name: "FieldService_section_4"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -63,7 +65,7 @@ declare namespace Form.account.Main {
       get(name: "address1_country"): Xrm.Attribute<string> | null;
       get(name: "address1_freighttermscode"): Xrm.OptionSetAttribute<account_address1_freighttermscode>;
       get(name: "address1_latitude"): Xrm.NumberAttribute;
-      get(name: "address1_line1"): Xrm.Attribute<string> | null;
+      get(name: "address1_line1"): Xrm.Attribute<string>;
       get(name: "address1_line2"): Xrm.Attribute<string> | null;
       get(name: "address1_line3"): Xrm.Attribute<string> | null;
       get(name: "address1_longitude"): Xrm.NumberAttribute;
@@ -114,6 +116,7 @@ declare namespace Form.account.Main {
       get(name: "ChildAccounts"): Xrm.SubGridControl<"account">;
       get(name: "Contacts"): Xrm.SubGridControl<"contact">;
       get(name: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
+      get(name: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;
@@ -124,7 +127,10 @@ declare namespace Form.account.Main {
       get(name: "address1_composite_compositionLinkControl_address1_stateorprovince"): Xrm.StringControl | null;
       get(name: "address1_freighttermscode"): Xrm.OptionSetControl<account_address1_freighttermscode>;
       get(name: "address1_latitude"): Xrm.NumberControl;
+      get(name: "address1_latitude1"): Xrm.NumberControl;
+      get(name: "address1_line1"): Xrm.StringControl;
       get(name: "address1_longitude"): Xrm.NumberControl;
+      get(name: "address1_longitude1"): Xrm.NumberControl;
       get(name: "address1_shippingmethodcode"): Xrm.OptionSetControl<account_address1_shippingmethodcode>;
       get(name: "creditlimit"): Xrm.NumberControl;
       get(name: "creditonhold"): Xrm.OptionSetControl<boolean>;
@@ -187,7 +193,7 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "address1_country"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_freighttermscode"): Xrm.OptionSetAttribute<account_address1_freighttermscode>;
     getAttribute(attributeName: "address1_latitude"): Xrm.NumberAttribute;
-    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<string> | null;
+    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<string>;
     getAttribute(attributeName: "address1_line2"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_line3"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_longitude"): Xrm.NumberAttribute;
@@ -233,6 +239,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "ChildAccounts"): Xrm.SubGridControl<"account">;
     getControl(controlName: "Contacts"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
+    getControl(controlName: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;
@@ -243,7 +250,10 @@ declare namespace Form.account.Main {
     getControl(controlName: "address1_composite_compositionLinkControl_address1_stateorprovince"): Xrm.StringControl | null;
     getControl(controlName: "address1_freighttermscode"): Xrm.OptionSetControl<account_address1_freighttermscode>;
     getControl(controlName: "address1_latitude"): Xrm.NumberControl;
+    getControl(controlName: "address1_latitude1"): Xrm.NumberControl;
+    getControl(controlName: "address1_line1"): Xrm.StringControl;
     getControl(controlName: "address1_longitude"): Xrm.NumberControl;
+    getControl(controlName: "address1_longitude1"): Xrm.NumberControl;
     getControl(controlName: "address1_shippingmethodcode"): Xrm.OptionSetControl<account_address1_shippingmethodcode>;
     getControl(controlName: "creditlimit"): Xrm.NumberControl;
     getControl(controlName: "creditonhold"): Xrm.OptionSetControl<boolean>;

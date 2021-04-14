@@ -193,29 +193,6 @@ interface ovs_Questionnaire_Create extends ovs_Questionnaire {
 }
 interface ovs_Questionnaire_Update extends ovs_Questionnaire {
 }
-interface msdyn_workorderincident_Base extends WebEntity {
-}
-interface msdyn_workorderincident_Fixed extends WebEntity_Fixed {
-  msdyn_workorderincidentid: string;
-}
-interface msdyn_workorderincident extends msdyn_workorderincident_Base, msdyn_workorderincident_Relationships {
-}
-interface msdyn_workorderincident_Relationships {
-}
-interface msdyn_workorderincident_Result extends msdyn_workorderincident_Base, msdyn_workorderincident_Relationships {
-}
-interface msdyn_workorderincident_FormattedResult {
-}
-interface msdyn_workorderincident_Select {
-}
-interface msdyn_workorderincident_Expand {
-}
-interface msdyn_workorderincident_Filter {
-}
-interface msdyn_workorderincident_Create extends msdyn_workorderincident {
-}
-interface msdyn_workorderincident_Update extends msdyn_workorderincident {
-}
 interface BulkOperationLog_Base extends WebEntity {
 }
 interface BulkOperationLog_Fixed extends WebEntity_Fixed {
@@ -491,29 +468,6 @@ interface tc_TCFiscalQuarter_Filter {
 interface tc_TCFiscalQuarter_Create extends tc_TCFiscalQuarter {
 }
 interface tc_TCFiscalQuarter_Update extends tc_TCFiscalQuarter {
-}
-interface qm_sytemplate_Base extends WebEntity {
-}
-interface qm_sytemplate_Fixed extends WebEntity_Fixed {
-  qm_sytemplateid: string;
-}
-interface qm_sytemplate extends qm_sytemplate_Base, qm_sytemplate_Relationships {
-}
-interface qm_sytemplate_Relationships {
-}
-interface qm_sytemplate_Result extends qm_sytemplate_Base, qm_sytemplate_Relationships {
-}
-interface qm_sytemplate_FormattedResult {
-}
-interface qm_sytemplate_Select {
-}
-interface qm_sytemplate_Expand {
-}
-interface qm_sytemplate_Filter {
-}
-interface qm_sytemplate_Create extends qm_sytemplate {
-}
-interface qm_sytemplate_Update extends qm_sytemplate {
 }
 interface SystemUser_Base extends WebEntity {
 }
