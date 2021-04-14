@@ -1,0 +1,20 @@
+﻿<html>
+<head>
+</head>
+<body style="overflow-wrap: break-word;" onfocusout="parent.setEmailRange();">
+    <div id="div1">
+
+    </div>
+    <script language="javascript">
+        var globalContext = parent.Xrm.Utility.getGlobalContext();
+        if (globalContext.userSettings.languageId == 1036) {
+            var provisionText = parent.Xrm.Page.getAttribute("ts_findingprovisiontextfr").getValue();
+        } else {
+            var provisionText = parent.Xrm.Page.getAttribute("ts_findingprovisiontexten").getValue();
+        }
+        var span = document.createElement("Span");
+        span.innerHTML = provisionText;
+        document.getElementById("div1").appendChild(span);
+    </script>
+</body>
+</html>
