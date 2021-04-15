@@ -12,11 +12,12 @@ namespace ROM.Incident {
 
         const regionAttribute = form.getAttribute("ovs_region");
         if (regionAttribute != null && regionAttribute != undefined) {
+
             const regionAttributeValue = regionAttribute.getValue();
 
-            if (regionAttributeValue != null && regionAttributeValue != undefined){
+            if (regionAttributeValue != null && regionAttributeValue != undefined){                
                 if(regionAttributeValue[0].name == "International"){
-                    form.getControl("ovs_countryid").setVisible(false);
+                    form.getControl("ovs_countryid").setVisible(true);
                 }
             }
             else{
