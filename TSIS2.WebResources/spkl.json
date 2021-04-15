@@ -151,6 +151,11 @@
           "file": "html\\SurveyRender.html",
           "description": "ROM TSIS 2.0 SurveyJS Renderer"
         },
+        {
+          "uniquename": "ts_/html/FindingProvisionText.html",
+          "file": "html\\FindingProvisionText.html",
+          "description": "ROM TSIS 2.0 Web Resource to display full Provision Text on Finding records"
+        },
         /* SurveyJS dependencies */
         {
           "uniquename": "ovs_/js/ace.min.js",
