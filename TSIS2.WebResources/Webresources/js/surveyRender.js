@@ -3,7 +3,7 @@ var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 var CharactersRemaining;
 
 if (lang == 1036) {
-    CharactersRemaining = "caractères restants";
+    CharactersRemaining = "caractÃ¨res restants";
 }
 else {
     CharactersRemaining = "characters remaining";
