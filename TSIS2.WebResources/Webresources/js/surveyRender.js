@@ -109,5 +109,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 }
 
 function DoComplete() {
+    var currentPageNo = survey.currentPageNo;
     window.survey.doComplete();
+    survey.currentPage = currentPageNo;
 } 
