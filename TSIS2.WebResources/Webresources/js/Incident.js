@@ -17,7 +17,7 @@ var ROM;
                 var regionAttributeValue = regionAttribute.getValue();
                 if (regionAttributeValue != null && regionAttributeValue != undefined) {
                     if (regionAttributeValue[0].name == "International") {
-                        form.getControl("ovs_countryid").setVisible(false);
+                        form.getControl("ovs_countryid").setVisible(true);
                     }
                 }
                 else {
