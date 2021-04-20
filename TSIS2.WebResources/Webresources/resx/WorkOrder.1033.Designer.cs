@@ -113,5 +113,14 @@ namespace TSIS2.WebResources.Webresources.resx {
                 return ResourceManager.GetString("FilteredLocations", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered Cases.
+        /// </summary>
+        internal static string FilteredCases {
+            get {
+                return ResourceManager.GetString("FilteredCases", resourceCulture);
+            }
+        }
     }
 }
