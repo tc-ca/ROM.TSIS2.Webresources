@@ -35,6 +35,8 @@ var autocompleteEditor = {
         submit.setAttribute("type", "submit");
         submit.setAttribute("class", "btn btn-primary sv-btn svd-toolbar-button");
         submit.onclick = function () {
+        //Change to empty string first to trigger onChange event even on resubmission of same provision name. Needed to update existing provisions.
+          editor.koValue("");
           editor.koValue(input.value);
         }
         div.appendChild(input);
@@ -158,9 +160,9 @@ creator
     .orderedQuestions = ["radiogroup", "checkbox", "dropdown", "finding", "comment", "image", "imagepicker", "file", "boolean", "text", "multipletext", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic" , "flowpanel"];
 
 
-//When the provision is changed, update the question's data
-creator.onPropertyValueChanging.add(function(sender, options) {
-  if(options.propertyName == "provision") {
+//When the provision is changed, update the question's data. Ignore changes to empty strings
+creator.onPropertyValueChanging.add(function (sender, options) {
+    if (options.propertyName == "provision" && options.newValue != "") {
     updateQuestionProvisionData(options.obj, options.newValue);
   }
 });
