@@ -3,7 +3,7 @@ var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 var CharactersRemaining;
 
 if (lang == 1036) {
-    CharactersRemaining = "caractères restants";
+    CharactersRemaining = "caractÃ¨res restants";
 }
 else {
     CharactersRemaining = "characters remaining";
@@ -109,5 +109,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 }
 
 function DoComplete() {
+    var currentPageNo = survey.currentPageNo;
     window.survey.doComplete();
+    survey.currentPage = currentPageNo;
 } 
