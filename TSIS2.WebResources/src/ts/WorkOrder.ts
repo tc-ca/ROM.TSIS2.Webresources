@@ -5,6 +5,8 @@ namespace ROM.WorkOrder {
         const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
         const state = form.getAttribute("statecode").getValue();
 
+        updateCaseView(eContext);
+
         //Set required field
         form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
         form.getAttribute("ovs_regulatedentity").setRequiredLevel("required");
@@ -42,13 +44,13 @@ namespace ROM.WorkOrder {
                 form.getControl("msdyn_serviceaccount").setDisabled(true);
                 break;
             default:
-
                 // Enable all operation related fields
                 form.getControl("ovs_operationtypeid").setDisabled(false);
                 form.getControl("ovs_regulatedentity").setDisabled(false);
                 form.getControl("msdyn_serviceaccount").setDisabled(false);
                 break;
         }
+        
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -121,9 +123,8 @@ namespace ROM.WorkOrder {
                     const entityName = "ovs_operationtype";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid" /><attribute name="ovs_name" /><order attribute="ovs_name" descending="false" /><link-entity name="ovs_operation" from="ovs_operationtypeid" to="ovs_operationtypeid" link-type="inner" alias="al"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="am"><filter type="and"><condition attribute="msdyn_serviceterritory" operator="eq"  value="' + regionAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
-                    const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /><cell name="owner" width="125" /></row></grid>';
+                    const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="title" width="200" /></row></grid>';
                     form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
-
                 }
 
             }
@@ -194,14 +195,14 @@ namespace ROM.WorkOrder {
                     operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
 
                     
-                    var countryXML = "";
+                    var countryCondition = "";
 
                     if(countryAttributeValue != null && countryAttributeValue != undefined ){
                         if(regionAttributeValue[0].name != "International"){
                             form.getControl("msdyn_serviceaccount").setDisabled(false);
                         }
                         else{
-                            countryXML = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
+                            countryCondition = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
                         }
                     } 
 
@@ -214,7 +215,7 @@ namespace ROM.WorkOrder {
                     const entityName = "account";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredRegulatedEntities");
                     const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /><cell name="owner" width="125" /></row></grid>';
-                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000" /></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /></filter><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="msdyn_serviceterritory" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryXML +'</filter></link-entity></link-entity></entity></fetch>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000" /></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /></filter><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="msdyn_serviceterritory" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryCondition +'</filter></link-entity></link-entity></entity></fetch>';
                     form.getControl("ovs_regulatedentity").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 }
             }
@@ -253,14 +254,14 @@ namespace ROM.WorkOrder {
                     operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
                     regulatedEntityAttributeValue != null && regulatedEntityAttributeValue != undefined) {
 
-                    var countryXML = "";
+                    var countryCondition = "";
 
                     if(countryAttributeValue != null && countryAttributeValue != undefined ){
                         if(regionAttributeValue[0].name != "International"){
                             form.getControl("msdyn_serviceaccount").setDisabled(false);
                         }
                         else{
-                            countryXML = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
+                            countryCondition = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
                         }
                     } 
                     // Enable direct dependent field
@@ -272,7 +273,7 @@ namespace ROM.WorkOrder {
                     const entityName = "account";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
                     const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /><cell name="owner" width="125" /></row></grid>';
-                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010001" /><condition attribute="msdyn_serviceterritory" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryXML + '</filter><link-entity name="ovs_operation" from="ovs_siteid" to="accountid" link-type="inner" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="ovs_regulatedentityid" operator="eq" value="' + regulatedEntityAttributeValue[0].id + '" /></filter></link-entity></entity></fetch>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010001" /><condition attribute="msdyn_serviceterritory" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryCondition + '</filter><link-entity name="ovs_operation" from="ovs_siteid" to="accountid" link-type="inner" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="ovs_regulatedentityid" operator="eq" value="' + regulatedEntityAttributeValue[0].id + '" /></filter></link-entity></entity></fetch>';
                     form.getControl("msdyn_serviceaccount").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     
                 }
@@ -441,6 +442,63 @@ namespace ROM.WorkOrder {
                 //Prevent User from discarding status change
                 formContext.data.save();
             }
+        }
+    }
+
+    export function updateCaseView(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
+            const caseAttribute = form.getAttribute("msdyn_servicerequest");
+            const regionAttribute = form.getAttribute("msdyn_serviceterritory");
+            const countryAttribute = form.getAttribute("ovs_ovscountry");
+            const regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
+            const siteAttribute = form.getAttribute("msdyn_serviceaccount");
+
+            const caseAttributeValue = caseAttribute.getValue();
+            const regionAttributeValue = regionAttribute.getValue();
+            const countryAttributeValue = countryAttribute.getValue();
+            const regulatedEntityAttributeValue = regulatedEntityAttribute.getValue();
+            const siteAttributeValue = siteAttribute.getValue();
+
+            var regionCondition = regionAttributeValue == null ? "" : '<condition attribute="ovs_region" operator="eq" value="' + regionAttributeValue[0].id + '" />' ;
+
+            var countryCondition = countryAttributeValue == null ? "" : '<condition attribute="ovs_countryid" operator="eq" value="' + countryAttributeValue[0].id + '" />' ;
+
+            var regulateEntityCondition = regulatedEntityAttributeValue == null ? "" : '<condition attribute="ovs_regulatedentity" operator="eq" value="' + regulatedEntityAttributeValue[0].id + '" />' ;
+
+            var siteCondition = siteAttributeValue == null ? "" : '<condition attribute="ovs_site" operator="eq" value="' + siteAttributeValue[0].id + '" />' ;
+
+            var caseData;
+            if(caseAttribute != null && caseAttribute != undefined){
+                if(caseAttributeValue != null ){
+                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g,''), "?$select=_ovs_region_value, _ovs_countryid_value, _ovs_regulatedentity_value, _ovs_site_value").then(
+                        function success(result) {
+                            if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
+                                (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_countryid_value.toUpperCase())) ||
+                                (regulateEntityCondition != "" && (result != null && regulatedEntityAttributeValue != null && regulatedEntityAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_regulatedentity_value.toUpperCase())) ||
+                                (siteCondition != "" && (result != null && siteAttributeValue != null && siteAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_site_value.toUpperCase()))) {
+
+                                form.getAttribute("msdyn_servicerequest").setValue(null);
+                            }
+                    },
+                        function (error) {
+                            
+                        }
+                    );
+                }
+                // Setup a custom view
+                // This value is never saved and only needs to be unique among the other available views for the lookup.
+                const viewId = '{5B58559F-F162-5428-4771-79BC825240B3}';
+                const entityName = "incident";
+                const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredCases");
+                const layoutXml = '<grid name="resultset" object="10010" jump="title" select="1" icon="1" preview="1"><row name="result" id="incidentid"><cell name="title" width="200" /><cell name="customerid" width="200" /></row></grid>';
+                const fetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false" > <entity name="incident" > <attribute name="statecode" /> <attribute name="title" /> <attribute name="customerid" /> <attribute name="incidentid" /> <filter type="and" >' + regionCondition + countryCondition + regulateEntityCondition + siteCondition + '</filter> <order attribute="title" descending="false" /> </entity> </fetch>';
+                form.getControl("msdyn_servicerequest").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+            }
+            
+        } catch (e) {
+            throw new Error(e.Message);
         }
     }
 
