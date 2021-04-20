@@ -141,4 +141,8 @@
     <value>Filtered Locations (FR)</value>
     <comment/>
   </data>
+  <data name="FilteredCases" xml:space="preserve">
+    <value>Filtered Cases (FR)</value>
+    <comment/>
+  </data>
 </root>
