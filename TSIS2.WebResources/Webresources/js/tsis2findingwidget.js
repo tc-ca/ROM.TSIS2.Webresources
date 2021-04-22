@@ -225,10 +225,11 @@ function updateQuestionProvisionData(question, provisionName) {
 }
 
 async function buildProvisionText(provision, lang) {
-    let provisionText = "";
+    let provisionText = "<html>";
     provision.qm_name = `<mark>${provision.qm_name}</mark>`;
     provisionText += await gatherAncestorProvisionText(provision, lang);
     provisionText += await gatherDescendentProvisionText(provision, lang);
+    provisionText += "</html>";
     return provisionText;
 }
 
