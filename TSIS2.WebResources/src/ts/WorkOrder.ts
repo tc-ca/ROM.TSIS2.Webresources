@@ -13,10 +13,10 @@ namespace ROM.WorkOrder {
 
         //Set visible fields
         if( form.getAttribute("ovs_assetcategory").getValue() != null){
-            form.getControl("ovs_assetcategory").setVisible(true);  
+            form.getControl("ovs_assetcategory").setVisible(true);
         }
         if(form.getAttribute("ovs_asset").getValue() != null){
-            form.getControl("ovs_asset").setVisible(true);  
+            form.getControl("ovs_asset").setVisible(true);
         }
 
         //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
@@ -50,7 +50,7 @@ namespace ROM.WorkOrder {
                 form.getControl("msdyn_serviceaccount").setDisabled(false);
                 break;
         }
-        
+
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -61,12 +61,12 @@ namespace ROM.WorkOrder {
         var bookableResourceBookingData;
 
         if(systemStatus == 690970004){ //Only close associated entities when Record Status is set to Closed - Posted
-            workOrderServiceTaskData = 
+            workOrderServiceTaskData =
             {
                 "statecode" :  1,           //open -> 0
                 "statuscode" : 918640003    //open -> 918640002
             };
-            bookableResourceBookingData = 
+            bookableResourceBookingData =
             {
                 "statecode" :  1,           //open -> 0
                 "statuscode" : 2            //open -> 1
@@ -123,7 +123,7 @@ namespace ROM.WorkOrder {
                     const entityName = "ovs_operationtype";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid" /><attribute name="ovs_name" /><order attribute="ovs_name" descending="false" /><link-entity name="ovs_operation" from="ovs_operationtypeid" to="ovs_operationtypeid" link-type="inner" alias="al"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="am"><filter type="and"><condition attribute="msdyn_serviceterritory" operator="eq"  value="' + regionAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
-                    const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /><cell name="createdon" width="200" /></row></grid>';
+                    const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
                     form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 }
 
@@ -151,7 +151,7 @@ namespace ROM.WorkOrder {
                 if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                     form.getAttribute("msdyn_serviceaccount").setValue(null);
                 }
-                
+
                 // Enable direct dependent field
                 form.getControl("ovs_operationtypeid").setDisabled(false);
             }
@@ -194,7 +194,7 @@ namespace ROM.WorkOrder {
                 if (regionAttributeValue != null && regionAttributeValue != undefined &&
                     operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
 
-                    
+
                     var countryCondition = "";
 
                     if(countryAttributeValue != null && countryAttributeValue != undefined ){
@@ -204,7 +204,7 @@ namespace ROM.WorkOrder {
                         else{
                             countryCondition = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
                         }
-                    } 
+                    }
 
                     // Enable direct dependent field
                     form.getControl("ovs_regulatedentity").setDisabled(false);
@@ -263,7 +263,7 @@ namespace ROM.WorkOrder {
                         else{
                             countryCondition = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
                         }
-                    } 
+                    }
                     // Enable direct dependent field
                     form.getControl("msdyn_serviceaccount").setDisabled(false);
 
@@ -275,9 +275,9 @@ namespace ROM.WorkOrder {
                     const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /><cell name="owner" width="125" /></row></grid>';
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010001" /><condition attribute="msdyn_serviceterritory" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryCondition + '</filter><link-entity name="ovs_operation" from="ovs_siteid" to="accountid" link-type="inner" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="ovs_regulatedentityid" operator="eq" value="' + regulatedEntityAttributeValue[0].id + '" /></filter></link-entity></entity></fetch>';
                     form.getControl("msdyn_serviceaccount").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
-                    
+
                 }
-                
+
             }
         } catch (e) {
             throw new Error(e.Message);
@@ -317,7 +317,7 @@ namespace ROM.WorkOrder {
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_functionallocation"><attribute name="msdyn_name"/><link-entity name="msdyn_msdyn_functionallocation_account" from="msdyn_functionallocationid" to="msdyn_functionallocationid" link-type="inner"><filter><condition attribute="accountid" operator="eq" value="' + siteAttributeValue[0].id + '"/></filter></link-entity></entity></fetch>';
                     form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 }
-                
+
             }
         } catch (e) {
             throw new Error(e.Message);
@@ -358,9 +358,9 @@ namespace ROM.WorkOrder {
                     const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetcategoryid"><cell name="msdyn_name" width="200" /><cell name="msdyn_customerassetcategoryid" width="200" /></row></grid>';
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_customerassetcategory"><attribute name="msdyn_name"/><attribute name="msdyn_customerassetcategoryid"/><link-entity name="msdyn_functionallocation" from="ovs_msdyn_customerassetcategory" to="msdyn_customerassetcategoryid"><filter type="and"><condition attribute="msdyn_functionallocationid" operator="eq" value="' + functionalLocationAttributeValue[0].id + '"/></filter></link-entity></entity></fetch>';
                     form.getControl("ovs_assetcategory").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
-                    
+
                 }
-                
+
             }
         } catch (e) {
             throw new Error(e.Message);
@@ -401,9 +401,9 @@ namespace ROM.WorkOrder {
                     const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetid"><cell name="msdyn_name" width="200" /></row></grid>';
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" ><entity name="msdyn_customerasset" ><attribute name="msdyn_name" /><attribute name="msdyn_customerassetid" /><filter type="and" ><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + assetCategoryAttributeValue[0].id + '" /></filter> </entity></fetch>';
                     form.getControl("ovs_asset").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
-                    
+
                 }
-                
+
             }
         } catch (e) {
             throw new Error(e.Message);
@@ -421,7 +421,7 @@ namespace ROM.WorkOrder {
             //Set Status Reason to Closed
             formContext.getAttribute("statuscode").setValue(918640000);
 
-            
+
         } else {
             //Keep record Active
             formContext.getAttribute("statecode").setValue(0);
@@ -483,7 +483,7 @@ namespace ROM.WorkOrder {
                             }
                     },
                         function (error) {
-                            
+
                         }
                     );
                 }
@@ -496,7 +496,7 @@ namespace ROM.WorkOrder {
                 const fetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false" > <entity name="incident" > <attribute name="statecode" /> <attribute name="title" /> <attribute name="customerid" /> <attribute name="incidentid" /> <filter type="and" >' + regionCondition + countryCondition + regulateEntityCondition + siteCondition + '</filter> <order attribute="title" descending="false" /> </entity> </fetch>';
                 form.getControl("msdyn_servicerequest").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
             }
-            
+
         } catch (e) {
             throw new Error(e.Message);
         }
@@ -615,9 +615,9 @@ namespace ROM.WorkOrder {
 
     function setWorkOrderServiceTasksView(form: Form.msdyn_workorder.Main.TSISOversightActivity, active: boolean){
         var workOrderView;
-        
+
         if(active){
-            workOrderView = 
+            workOrderView =
                 {
                     entityType: "savedquery",
                     id: "{C9FD8F4D-8184-4DDB-A31A-89E66E8E710E}",
@@ -625,39 +625,39 @@ namespace ROM.WorkOrder {
                 }
         }
         else{
-            workOrderView = 
+            workOrderView =
                 {
                     entityType: "savedquery",
                     id: "{2F145106-BCB3-4F0F-9D02-E8C3B6BB25E8}",
                     name: "Inactive Work Order Service Tasks"
                 };
         }
-    
+
         if (form.getControl("workorderservicetasksgrid").getViewSelector().getCurrentView() != workOrderView) {
             form.getControl("workorderservicetasksgrid").getViewSelector().setCurrentView(workOrderView);
         }
     }
-    
+
     function setBookableResourceBookingsView(form: Form.msdyn_workorder.Main.TSISOversightActivity, active: boolean){
         var bookingsView;
-        
+
         if(active){
-            bookingsView = 
+            bookingsView =
                 {
                     entityType: "savedquery",
                     id: "{8AF53D0E-07FE-49D4-BBBA-CA524DD6551B}",
                     name: "Active Resource Bookings (Field Service Information)"
-                };  
+                };
         }
         else{
-            bookingsView = 
+            bookingsView =
                 {
                     entityType: "savedquery",
                     id: "{B74D2E1A-37CB-4DA9-AA06-156CBF7BC3DD}",
                     name: "Inactive Bookable Resource Bookings"
-                }; 
+                };
         }
-    
+
         if (form.getControl("bookings").getViewSelector().getCurrentView() != bookingsView) {
             form.getControl("bookings").getViewSelector().setCurrentView(bookingsView);
         }
