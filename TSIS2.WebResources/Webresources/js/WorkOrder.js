@@ -174,7 +174,7 @@ var ROM;
                                 form.getControl("msdyn_serviceaccount").setDisabled(false);
                             }
                             else {
-                                countryCondition = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
+                                countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
                             }
                         }
                         // Enable direct dependent field
@@ -223,7 +223,7 @@ var ROM;
                                 form.getControl("msdyn_serviceaccount").setDisabled(false);
                             }
                             else {
-                                countryCondition = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
+                                countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
                             }
                         }
                         // Enable direct dependent field
@@ -391,15 +391,15 @@ var ROM;
                 var regulatedEntityAttributeValue_1 = regulatedEntityAttribute.getValue();
                 var siteAttributeValue_1 = siteAttribute.getValue();
                 var regionCondition = regionAttributeValue_1 == null ? "" : '<condition attribute="ovs_region" operator="eq" value="' + regionAttributeValue_1[0].id + '" />';
-                var countryCondition = countryAttributeValue_1 == null ? "" : '<condition attribute="ovs_countryid" operator="eq" value="' + countryAttributeValue_1[0].id + '" />';
+                var countryCondition = countryAttributeValue_1 == null ? "" : '<condition attribute="tc_country" operator="eq" value="' + countryAttributeValue_1[0].id + '" />';
                 var regulateEntityCondition = regulatedEntityAttributeValue_1 == null ? "" : '<condition attribute="ovs_regulatedentity" operator="eq" value="' + regulatedEntityAttributeValue_1[0].id + '" />';
                 var siteCondition = siteAttributeValue_1 == null ? "" : '<condition attribute="ovs_site" operator="eq" value="' + siteAttributeValue_1[0].id + '" />';
                 var caseData;
                 if (caseAttribute != null && caseAttribute != undefined) {
                     if (caseAttributeValue != null) {
-                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ovs_countryid_value, _ovs_regulatedentity_value, _ovs_site_value").then(function success(result) {
+                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _tc_country_value, _ovs_regulatedentity_value, _ovs_site_value").then(function success(result) {
                             if ((regionCondition != "" && (result != null && regionAttributeValue_1 != null && regionAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
-                                (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_countryid_value.toUpperCase())) ||
+                                (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != result._tc_country_value.toUpperCase())) ||
                                 (regulateEntityCondition != "" && (result != null && regulatedEntityAttributeValue_1 != null && regulatedEntityAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_regulatedentity_value.toUpperCase())) ||
                                 (siteCondition != "" && (result != null && siteAttributeValue_1 != null && siteAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_site_value.toUpperCase()))) {
                                 form_1.getAttribute("msdyn_servicerequest").setValue(null);
