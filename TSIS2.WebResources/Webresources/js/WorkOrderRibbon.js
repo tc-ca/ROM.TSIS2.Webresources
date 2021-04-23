@@ -62,7 +62,7 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
         }
     },
     function(error){
-        console.log(error);
+        showErrorMessageAlert(error);
     });
 }
 
@@ -88,12 +88,9 @@ function ActivateWorkOrder(primaryControl) {
 
                 formContext.data.save();
             }
-
         },
         function (error) {
-            var alertStrings = { text: error.message };
-            var alertOptions = { height: 120, width: 260 };
-            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+            showErrorMessageAlert(error);
         }
     );
 }
@@ -112,17 +109,13 @@ function openWorkOrderServiceTasks(formContext) {
                     function success(result) {
                     },
                     function (error) {
-                        var alertStrings = { text: error.message };
-                        var alertOptions = { height: 120, width: 260 };
-                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                        showErrorMessageAlert(error);
                     }
                 );
             }
         },
         function (error) {
-            var alertStrings = { text: error.message };
-            var alertOptions = { height: 120, width: 260 };
-            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+            showErrorMessageAlert(error);
         }
     );
 }
@@ -140,14 +133,13 @@ function openBookableResourceBookings(formContext) {
                     function success(result) {
                     },
                     function (error) {
-                        var alertStrings = { text: error.message };
-                        var alertOptions = { height: 120, width: 260 };
-                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                        showErrorMessageAlert(error);
                     }
                 );
             }
         },
         function (error) {
+            showErrorMessageAlert(error);
         }
     );
 }
