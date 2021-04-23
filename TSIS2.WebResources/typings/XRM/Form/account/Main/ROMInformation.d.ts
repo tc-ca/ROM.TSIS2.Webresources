@@ -76,6 +76,7 @@ declare namespace Form.account.Main {
       get(name: "preferredcontactmethodcode"): Xrm.OptionSetAttribute<account_preferredcontactmethodcode>;
       get(name: "primarycontactid"): Xrm.LookupAttribute<"contact">;
       get(name: "telephone1"): Xrm.Attribute<string>;
+      get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "websiteurl"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -122,6 +123,7 @@ declare namespace Form.account.Main {
       get(name: "regulated_entities_subgrid"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "sites_subgrid"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "telephone1"): Xrm.StringControl;
+      get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "websiteurl"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -171,6 +173,7 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "preferredcontactmethodcode"): Xrm.OptionSetAttribute<account_preferredcontactmethodcode>;
     getAttribute(attributeName: "primarycontactid"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "telephone1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ActionCards"): Xrm.BaseControl;
@@ -212,6 +215,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "regulated_entities_subgrid"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "sites_subgrid"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "telephone1"): Xrm.StringControl;
+    getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "websiteurl"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
