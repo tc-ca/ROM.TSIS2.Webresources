@@ -99,6 +99,7 @@ interface Incident extends Incident_Base, Incident_Relationships {
   stageid_processstage_bind$processstages?: string | null;
   subjectid_bind$subjects?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
+  ts_Country_bind$tc_countries?: string | null;
 }
 interface Incident_Create extends Incident {
   incidentid_childincidentcount_bind$childincidentcounts?: string | null;
@@ -195,6 +196,7 @@ interface Incident_Select {
   title: WebAttribute<Incident_Select, { title: string | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<Incident_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Incident_Select, { traversedpath: string | null }, {  }>;
+  ts_country_guid: WebAttribute<Incident_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<Incident_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<Incident_Select, { versionnumber: number | null }, {  }>;
 }
@@ -287,6 +289,7 @@ interface Incident_Filter {
   title: string;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_country_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -378,6 +381,7 @@ interface Incident_FormattedResult {
   statuscode_formatted?: string;
   subjectid_formatted?: string;
   transactioncurrencyid_formatted?: string;
+  ts_country_formatted?: string;
 }
 interface Incident_Result extends Incident_Base, Incident_Relationships {
   "@odata.etag": string;
@@ -418,6 +422,7 @@ interface Incident_Result extends Incident_Base, Incident_Relationships {
   socialprofileid_guid: string | null;
   subjectid_guid: string | null;
   transactioncurrencyid_guid: string | null;
+  ts_country_guid: string | null;
 }
 interface Incident_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;

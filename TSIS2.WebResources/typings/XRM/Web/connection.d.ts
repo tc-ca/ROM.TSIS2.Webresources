@@ -141,9 +141,6 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_msfp_surveyinvite_bind$msfp_surveyinvites?: string | null;
   record1id_msfp_surveyresponse_bind$msfp_surveyresponses?: string | null;
   record1id_opportunity_bind$opportunities?: string | null;
-  record1id_ovs_cancellationrequest_bind$ovs_cancellationrequests?: string | null;
-  record1id_ovs_cyaction_bind$ovs_cyactions?: string | null;
-  record1id_ovs_revisedquarterrequest_bind$ovs_revisedquarterrequests?: string | null;
   record1id_phonecall_bind$phonecalls?: string | null;
   record1id_position_bind$positions?: string | null;
   record1id_pricelevel_bind$pricelevels?: string | null;
@@ -261,9 +258,6 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_msfp_surveyinvite_bind$msfp_surveyinvites?: string | null;
   record2id_msfp_surveyresponse_bind$msfp_surveyresponses?: string | null;
   record2id_opportunity_bind$opportunities?: string | null;
-  record2id_ovs_cancellationrequest_bind$ovs_cancellationrequests?: string | null;
-  record2id_ovs_cyaction_bind$ovs_cyactions?: string | null;
-  record2id_ovs_revisedquarterrequest_bind$ovs_revisedquarterrequests?: string | null;
   record2id_phonecall_bind$phonecalls?: string | null;
   record2id_position_bind$positions?: string | null;
   record2id_pricelevel_bind$pricelevels?: string | null;

@@ -41,9 +41,6 @@ interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships 
   activityid_msfp_surveyresponse_activityparty_bind$msfp_surveyresponses?: string | null;
   activityid_opportunityclose_bind$opportunitycloses?: string | null;
   activityid_orderclose_bind$ordercloses?: string | null;
-  activityid_ovs_cancellationrequest_activityparty_bind$ovs_cancellationrequests?: string | null;
-  activityid_ovs_cyaction_activityparty_bind$ovs_cyactions?: string | null;
-  activityid_ovs_revisedquarterrequest_activityparty_bind$ovs_revisedquarterrequests?: string | null;
   activityid_phonecall_bind$phonecalls?: string | null;
   activityid_quoteclose_bind$quotecloses?: string | null;
   activityid_recurringappointmentmaster_bind$recurringappointmentmasters?: string | null;

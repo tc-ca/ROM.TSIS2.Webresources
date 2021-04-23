@@ -32,6 +32,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
       get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ovs_ovscountry"): Xrm.LookupAttribute<"ovs_country">;
       get(name: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
+      get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -79,6 +80,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ovs_ovscountry"): Xrm.LookupControl<"ovs_country">;
       get(name: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
+      get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -113,6 +115,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ovs_ovscountry"): Xrm.LookupAttribute<"ovs_country">;
     getAttribute(attributeName: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_process_msdyn_billingaccount"): Xrm.LookupControl<"account"> | null;
     getControl(controlName: "header_process_msdyn_billingaccount_1"): Xrm.LookupControl<"account"> | null;
@@ -155,6 +158,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ovs_ovscountry"): Xrm.LookupControl<"ovs_country">;
     getControl(controlName: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
+    getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: string): undefined;
   }
 }

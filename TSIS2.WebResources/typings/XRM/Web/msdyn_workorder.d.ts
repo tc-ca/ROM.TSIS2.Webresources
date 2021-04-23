@@ -132,7 +132,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   qm_ReportContactId_bind$contacts?: string | null;
   stageid_bind$processstages?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
-  ts_Country_bind$ovs_countries?: string | null;
+  ts_Country_bind$tc_countries?: string | null;
 }
 interface msdyn_workorder_Create extends msdyn_workorder {
 }
