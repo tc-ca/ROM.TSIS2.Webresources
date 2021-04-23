@@ -44,7 +44,7 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface FieldService extends Xrm.SectionCollectionBase {
-        get(name: "tab_8_section_1"): Xrm.PageSection;
+        get(name: "FieldService_section_4"): Xrm.PageSection;
         get(name: "tab_8_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -70,9 +70,9 @@ declare namespace Form.incident.Main {
       }
       interface general extends Xrm.SectionCollectionBase {
         get(name: "Applicable SLA(STANDARD)"): Xrm.PageSection;
-        get(name: "Customer"): Xrm.PageSection;
         get(name: "Details"): Xrm.PageSection;
-        get(name: "TabsControl"): Xrm.PageSection;
+        get(name: "general_section_7"): Xrm.PageSection;
+        get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -87,6 +87,13 @@ declare namespace Form.incident.Main {
       }
       interface tab_11 extends Xrm.SectionCollectionBase {
         get(name: "tab_11_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_13 extends Xrm.SectionCollectionBase {
+        get(name: "tab_13_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -225,6 +232,7 @@ declare namespace Form.incident.Main {
       get(name: "general"): Xrm.PageTab<Tabs.general>;
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
       get(name: "tab_11"): Xrm.PageTab<Tabs.tab_11>;
+      get(name: "tab_13"): Xrm.PageTab<Tabs.tab_13>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;

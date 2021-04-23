@@ -52,9 +52,6 @@ interface msdyn_workorder_Base extends WebEntity {
   overriddencreatedon?: Date | null;
   ovs_iisid?: string | null;
   ovs_mocid?: string | null;
-  ovs_rolluptestdeletemeafter?: Date | null;
-  ovs_rolluptestdeletemeafter_date?: Date | null;
-  ovs_rolluptestdeletemeafter_state?: number | null;
   processid?: string | null;
   qm_blobpath?: string | null;
   qm_remote?: boolean | null;
@@ -64,6 +61,7 @@ interface msdyn_workorder_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   transactioncurrencyid_guid?: string | null;
   traversedpath?: string | null;
+  ts_workordernumber?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -134,6 +132,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   qm_ReportContactId_bind$contacts?: string | null;
   stageid_bind$processstages?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
+  ts_Country_bind$ovs_countries?: string | null;
 }
 interface msdyn_workorder_Create extends msdyn_workorder {
 }
@@ -235,9 +234,6 @@ interface msdyn_workorder_Select {
   ovs_rational_guid: WebAttribute<msdyn_workorder_Select, { ovs_rational_guid: string | null }, { ovs_rational_formatted?: string }>;
   ovs_regulatedentity_guid: WebAttribute<msdyn_workorder_Select, { ovs_regulatedentity_guid: string | null }, { ovs_regulatedentity_formatted?: string }>;
   ovs_revisedquarterid_guid: WebAttribute<msdyn_workorder_Select, { ovs_revisedquarterid_guid: string | null }, { ovs_revisedquarterid_formatted?: string }>;
-  ovs_rolluptestdeletemeafter: WebAttribute<msdyn_workorder_Select, { ovs_rolluptestdeletemeafter: Date | null }, { ovs_rolluptestdeletemeafter_formatted?: string }>;
-  ovs_rolluptestdeletemeafter_date: WebAttribute<msdyn_workorder_Select, { ovs_rolluptestdeletemeafter_date: Date | null }, { ovs_rolluptestdeletemeafter_date_formatted?: string }>;
-  ovs_rolluptestdeletemeafter_state: WebAttribute<msdyn_workorder_Select, { ovs_rolluptestdeletemeafter_state: number | null }, {  }>;
   ovs_secondaryinspector_guid: WebAttribute<msdyn_workorder_Select, { ovs_secondaryinspector_guid: string | null }, { ovs_secondaryinspector_formatted?: string }>;
   ovs_siteofviolation_guid: WebAttribute<msdyn_workorder_Select, { ovs_siteofviolation_guid: string | null }, { ovs_siteofviolation_formatted?: string }>;
   ovs_tyrational_guid: WebAttribute<msdyn_workorder_Select, { ovs_tyrational_guid: string | null }, { ovs_tyrational_formatted?: string }>;
@@ -255,6 +251,8 @@ interface msdyn_workorder_Select {
   timezoneruleversionnumber: WebAttribute<msdyn_workorder_Select, { timezoneruleversionnumber: number | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<msdyn_workorder_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<msdyn_workorder_Select, { traversedpath: string | null }, {  }>;
+  ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_workordernumber: WebAttribute<msdyn_workorder_Select, { ts_workordernumber: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<msdyn_workorder_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_workorder_Select, { versionnumber: number | null }, {  }>;
 }
@@ -354,9 +352,6 @@ interface msdyn_workorder_Filter {
   ovs_rational_guid: XQW.Guid;
   ovs_regulatedentity_guid: XQW.Guid;
   ovs_revisedquarterid_guid: XQW.Guid;
-  ovs_rolluptestdeletemeafter: Date;
-  ovs_rolluptestdeletemeafter_date: Date;
-  ovs_rolluptestdeletemeafter_state: number;
   ovs_secondaryinspector_guid: XQW.Guid;
   ovs_siteofviolation_guid: XQW.Guid;
   ovs_tyrational_guid: XQW.Guid;
@@ -374,6 +369,8 @@ interface msdyn_workorder_Filter {
   timezoneruleversionnumber: number;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_country_guid: XQW.Guid;
+  ts_workordernumber: string;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -475,8 +472,6 @@ interface msdyn_workorder_FormattedResult {
   ovs_rational_formatted?: string;
   ovs_regulatedentity_formatted?: string;
   ovs_revisedquarterid_formatted?: string;
-  ovs_rolluptestdeletemeafter_date_formatted?: string;
-  ovs_rolluptestdeletemeafter_formatted?: string;
   ovs_secondaryinspector_formatted?: string;
   ovs_siteofviolation_formatted?: string;
   ovs_tyrational_formatted?: string;
@@ -488,6 +483,7 @@ interface msdyn_workorder_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   transactioncurrencyid_formatted?: string;
+  ts_country_formatted?: string;
 }
 interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_Relationships {
   "@odata.etag": string;
@@ -542,6 +538,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   owninguser_guid: string | null;
   qm_reportcontactid_guid: string | null;
   transactioncurrencyid_guid: string | null;
+  ts_country_guid: string | null;
 }
 interface msdyn_workorder_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;

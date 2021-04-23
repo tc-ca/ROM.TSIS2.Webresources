@@ -1,5 +1,5 @@
 declare namespace Form.msdyn_workorder.Main {
-  namespace TSISOversightActivity {
+  namespace ROMOversightActivity {
     namespace Tabs {
       interface DeviceInsightsTab extends Xrm.SectionCollectionBase {
         get(name: "DeviceInsightsSection"): Xrm.PageSection;
@@ -11,6 +11,7 @@ declare namespace Form.msdyn_workorder.Main {
       interface b8e326ee5c214a18ba55e3b56966c249 extends Xrm.SectionCollectionBase {
         get(name: "f1tab_mainsettings_section_3"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_5"): Xrm.PageSection;
+        get(name: "physical_assets_section"): Xrm.PageSection;
         get(name: "tab_3_section_1"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: "{b14f3e67-e51b-4b3e-bb7f-a9cf0cf8dc17}"): Xrm.PageSection;
@@ -148,13 +149,13 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
-      get(name: "ts_country"): Xrm.LookupAttribute<"ovs_country">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
       get(name: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;
@@ -253,7 +254,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
-      get(name: "ts_country"): Xrm.LookupControl<"ovs_country">;
       get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
       get(name: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
       get(name: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
@@ -280,7 +280,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface TSISOversightActivity extends Xrm.PageBase<TSISOversightActivity.Attributes,TSISOversightActivity.Tabs,TSISOversightActivity.Controls> {
+  interface ROMOversightActivity extends Xrm.PageBase<ROMOversightActivity.Attributes,ROMOversightActivity.Tabs,ROMOversightActivity.Controls> {
     getAttribute(attributeName: "createdby"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "createdon"): Xrm.DateAttribute;
     getAttribute(attributeName: "modifiedby"): Xrm.LookupAttribute<"systemuser">;
@@ -348,8 +348,8 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
-    getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"ovs_country">;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
     getControl(controlName: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;
@@ -448,7 +448,6 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
-    getControl(controlName: "ts_country"): Xrm.LookupControl<"ovs_country">;
     getControl(controlName: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
     getControl(controlName: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
     getControl(controlName: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
