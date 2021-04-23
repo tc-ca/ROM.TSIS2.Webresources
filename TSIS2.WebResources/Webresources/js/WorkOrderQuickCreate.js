@@ -13,16 +13,16 @@ var ROM;
             try {
                 var form = eContext.getFormContext();
                 var regionAttribute = form.getAttribute("msdyn_serviceterritory");
-                var countryAttribute = form.getAttribute("ovs_ovscountry");
+                var countryAttribute = form.getAttribute("ts_country");
                 if (regionAttribute != null && regionAttribute != undefined) {
                     var regionAttributeValue = regionAttribute.getValue();
                     if (regionAttributeValue != null && regionAttributeValue != undefined) {
                         if (regionAttributeValue[0].name == "International") {
-                            form.getControl("ovs_ovscountry").setVisible(true);
+                            form.getControl("ts_country").setVisible(true);
                         }
                     }
                     else {
-                        form.getControl("ovs_ovscountry").setVisible(false);
+                        form.getControl("ts_country").setVisible(false);
                     }
                 }
             }
