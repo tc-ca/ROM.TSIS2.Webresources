@@ -17,11 +17,11 @@ namespace ROM.Incident {
 
             if (regionAttributeValue != null && regionAttributeValue != undefined){                
                 if(regionAttributeValue[0].name == "International"){
-                    form.getControl("ovs_countryid").setVisible(true);
+                    form.getControl("ts_country").setVisible(true);
                 }
             }
             else{
-                form.getControl("ovs_countryid").setVisible(false);
+                form.getControl("ts_country").setVisible(false);
             }
         }
     }
@@ -31,7 +31,7 @@ namespace ROM.Incident {
 
             const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
             const regionAttribute = form.getAttribute("ovs_region");
-            const countryAttribute = form.getAttribute("ovs_countryid");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (regionAttribute != null && regionAttribute != undefined) {
 
@@ -67,11 +67,11 @@ namespace ROM.Incident {
                         form.getControl("ovs_regulatedentity").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     }
                     else{
-                        form.getControl("ovs_countryid").setVisible(true);
+                        form.getControl("ts_country").setVisible(true);
                     }
                 }
                 else{
-                    form.getControl("ovs_countryid").setVisible(false);
+                    form.getControl("ts_country").setVisible(false);
                 }
 
             }
@@ -84,7 +84,7 @@ namespace ROM.Incident {
         try {
 
             const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
-            const countryAttribute = form.getAttribute("ovs_countryid");
+            const countryAttribute = form.getAttribute("ts_country");
             const regionAttribute = form.getAttribute("ovs_region");
 
             if (countryAttribute != null && countryAttribute != undefined) {
@@ -130,7 +130,7 @@ namespace ROM.Incident {
             const regionAttribute = form.getAttribute("ovs_region");
             const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
             const regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
-            const countryAttribute = form.getAttribute("ovs_countryid");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (regulatedEntityAttribute != null && regulatedEntityAttribute != undefined) {
 
@@ -205,7 +205,7 @@ namespace ROM.Incident {
                             lookup[0].entityType = territoryLogicalName;
                             form.getAttribute('ovs_region').setValue(lookup);
                             if(lookup[0].name == "International"){
-                                form.getControl("ovs_countryid").setVisible(true);
+                                form.getControl("ts_country").setVisible(true);
                             }
                             else{
                                 regionOnChange(eContext);

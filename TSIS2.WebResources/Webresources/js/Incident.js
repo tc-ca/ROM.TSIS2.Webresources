@@ -17,11 +17,11 @@ var ROM;
                 var regionAttributeValue = regionAttribute.getValue();
                 if (regionAttributeValue != null && regionAttributeValue != undefined) {
                     if (regionAttributeValue[0].name == "International") {
-                        form.getControl("ovs_countryid").setVisible(true);
+                        form.getControl("ts_country").setVisible(true);
                     }
                 }
                 else {
-                    form.getControl("ovs_countryid").setVisible(false);
+                    form.getControl("ts_country").setVisible(false);
                 }
             }
         }
@@ -30,7 +30,7 @@ var ROM;
             try {
                 var form = eContext.getFormContext();
                 var regionAttribute = form.getAttribute("ovs_region");
-                var countryAttribute = form.getAttribute("ovs_countryid");
+                var countryAttribute = form.getAttribute("ts_country");
                 if (regionAttribute != null && regionAttribute != undefined) {
                     // Clear out all dependent fields' value
                     if (!form.getControl("ovs_regulatedentity").getDisabled() || form.getAttribute("ovs_regulatedentity").getValue() != null) {
@@ -59,11 +59,11 @@ var ROM;
                             form.getControl("ovs_regulatedentity").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                         }
                         else {
-                            form.getControl("ovs_countryid").setVisible(true);
+                            form.getControl("ts_country").setVisible(true);
                         }
                     }
                     else {
-                        form.getControl("ovs_countryid").setVisible(false);
+                        form.getControl("ts_country").setVisible(false);
                     }
                 }
             }
@@ -75,7 +75,7 @@ var ROM;
         function countryOnChange(eContext) {
             try {
                 var form = eContext.getFormContext();
-                var countryAttribute = form.getAttribute("ovs_countryid");
+                var countryAttribute = form.getAttribute("ts_country");
                 var regionAttribute = form.getAttribute("ovs_region");
                 if (countryAttribute != null && countryAttribute != undefined) {
                     // Clear out all dependent fields' value
@@ -112,7 +112,7 @@ var ROM;
                 var regionAttribute = form.getAttribute("ovs_region");
                 var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
                 var regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
-                var countryAttribute = form.getAttribute("ovs_countryid");
+                var countryAttribute = form.getAttribute("ts_country");
                 if (regulatedEntityAttribute != null && regulatedEntityAttribute != undefined) {
                     // Clear out all dependent fields' value
                     if (!form.getControl("ovs_site").getDisabled() || form.getAttribute("ovs_site").getValue() != null) {
@@ -174,7 +174,7 @@ var ROM;
                         lookup[0].entityType = territoryLogicalName;
                         form.getAttribute('ovs_region').setValue(lookup);
                         if (lookup[0].name == "International") {
-                            form.getControl("ovs_countryid").setVisible(true);
+                            form.getControl("ts_country").setVisible(true);
                         }
                         else {
                             regionOnChange(eContext);
