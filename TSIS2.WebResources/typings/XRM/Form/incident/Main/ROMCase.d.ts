@@ -142,6 +142,7 @@ declare namespace Form.incident.Main {
       get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
       get(name: "ticketnumber"): Xrm.Attribute<string>;
       get(name: "title"): Xrm.Attribute<string>;
+      get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -215,6 +216,7 @@ declare namespace Form.incident.Main {
       get(name: "subjectid"): Xrm.LookupControl<"subject">;
       get(name: "ticketnumber"): Xrm.StringControl;
       get(name: "title"): Xrm.StringControl;
+      get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -281,6 +283,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
     getAttribute(attributeName: "ticketnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Associated_Articles"): Xrm.SubGridControl<"knowledgebaserecord">;
     getControl(controlName: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
@@ -349,6 +352,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
     getControl(controlName: "ticketnumber"): Xrm.StringControl;
     getControl(controlName: "title"): Xrm.StringControl;
+    getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: string): undefined;
   }
 }
