@@ -137,7 +137,7 @@ namespace ROM.WorkOrder {
         try {
 
             const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
-            const countryAttribute = form.getAttribute("ovs_ovscountry");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (countryAttribute != null && countryAttribute != undefined) {
 
@@ -171,7 +171,7 @@ namespace ROM.WorkOrder {
             const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
             const regionAttribute = form.getAttribute("msdyn_serviceterritory");
             const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
-            const countryAttribute = form.getAttribute("ovs_ovscountry");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
 
@@ -232,7 +232,7 @@ namespace ROM.WorkOrder {
             const regionAttribute = form.getAttribute("msdyn_serviceterritory");
             const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
             const regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
-            const countryAttribute = form.getAttribute("ovs_ovscountry");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (regulatedEntityAttribute != null && regulatedEntityAttribute != undefined) {
 
@@ -451,7 +451,7 @@ namespace ROM.WorkOrder {
             const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
             const caseAttribute = form.getAttribute("msdyn_servicerequest");
             const regionAttribute = form.getAttribute("msdyn_serviceterritory");
-            const countryAttribute = form.getAttribute("ovs_ovscountry");
+            const countryAttribute = form.getAttribute("ts_country");
             const regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
             const siteAttribute = form.getAttribute("msdyn_serviceaccount");
 
@@ -553,7 +553,7 @@ namespace ROM.WorkOrder {
                             lookup[0].entityType = territoryLogicalName;
                             form.getAttribute('msdyn_serviceterritory').setValue(lookup);
                             if(lookup[0].name == "International"){
-                                form.getControl("ovs_ovscountry").setVisible(true);
+                                form.getControl("ts_country").setVisible(true);
                             }
                             // Enable the Operation Type if we've successfully set the Region
                             form.getControl("ovs_operationtypeid").setDisabled(false);

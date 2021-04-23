@@ -119,7 +119,7 @@ var ROM;
         function countryOnChange(eContext) {
             try {
                 var form = eContext.getFormContext();
-                var countryAttribute = form.getAttribute("ovs_ovscountry");
+                var countryAttribute = form.getAttribute("ts_country");
                 if (countryAttribute != null && countryAttribute != undefined) {
                     // Clear out all dependent fields' value
                     if (!form.getControl("ovs_operationtypeid").getDisabled() || form.getAttribute("ovs_operationtypeid").getValue() != null) {
@@ -150,7 +150,7 @@ var ROM;
                 var form = eContext.getFormContext();
                 var regionAttribute = form.getAttribute("msdyn_serviceterritory");
                 var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
-                var countryAttribute = form.getAttribute("ovs_ovscountry");
+                var countryAttribute = form.getAttribute("ts_country");
                 if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
                     // Clear out all dependent fields' value
                     if (!form.getControl("ovs_regulatedentity").getDisabled() || form.getAttribute("ovs_regulatedentity").getValue() != null) {
@@ -201,7 +201,7 @@ var ROM;
                 var regionAttribute = form.getAttribute("msdyn_serviceterritory");
                 var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
                 var regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
-                var countryAttribute = form.getAttribute("ovs_ovscountry");
+                var countryAttribute = form.getAttribute("ts_country");
                 if (regulatedEntityAttribute != null && regulatedEntityAttribute != undefined) {
                     // Clear out all dependent fields' value
                     if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
@@ -382,7 +382,7 @@ var ROM;
                 var form_1 = eContext.getFormContext();
                 var caseAttribute = form_1.getAttribute("msdyn_servicerequest");
                 var regionAttribute = form_1.getAttribute("msdyn_serviceterritory");
-                var countryAttribute = form_1.getAttribute("ovs_ovscountry");
+                var countryAttribute = form_1.getAttribute("ts_country");
                 var regulatedEntityAttribute = form_1.getAttribute("ovs_regulatedentity");
                 var siteAttribute = form_1.getAttribute("msdyn_serviceaccount");
                 var caseAttributeValue = caseAttribute.getValue();
@@ -466,7 +466,7 @@ var ROM;
                         lookup[0].entityType = territoryLogicalName;
                         form.getAttribute('msdyn_serviceterritory').setValue(lookup);
                         if (lookup[0].name == "International") {
-                            form.getControl("ovs_ovscountry").setVisible(true);
+                            form.getControl("ts_country").setVisible(true);
                         }
                         // Enable the Operation Type if we've successfully set the Region
                         form.getControl("ovs_operationtypeid").setDisabled(false);
