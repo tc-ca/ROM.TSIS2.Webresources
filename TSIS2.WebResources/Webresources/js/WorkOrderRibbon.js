@@ -62,7 +62,7 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
         }
     },
     function(error){
-        console.log(error);
+        showErrorMessageAlert(error);
     });
 }
 
@@ -88,10 +88,9 @@ function ActivateWorkOrder(primaryControl) {
 
                 formContext.data.save();
             }
-
         },
         function (error) {
-            console.log(error.message);
+            showErrorMessageAlert(error);
         }
     );
 }
@@ -100,7 +99,7 @@ function openWorkOrderServiceTasks(formContext) {
     workOrderServiceTaskData = 
     {
         "statecode" :  0,           //closed -> 1
-        "statuscode" : 918640002    //closed -> 918640003
+        "statuscode" : 1    //closed -> 918640003
     };
 
     Xrm.WebApi.online.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
@@ -110,12 +109,13 @@ function openWorkOrderServiceTasks(formContext) {
                     function success(result) {
                     },
                     function (error) {
-                        console.log(error.message);
+                        showErrorMessageAlert(error);
                     }
                 );
             }
         },
         function (error) {
+            showErrorMessageAlert(error);
         }
     );
 }
@@ -133,12 +133,13 @@ function openBookableResourceBookings(formContext) {
                     function success(result) {
                     },
                     function (error) {
-                        console.log(error.message);
+                        showErrorMessageAlert(error);
                     }
                 );
             }
         },
         function (error) {
+            showErrorMessageAlert(error);
         }
     );
 }
@@ -163,4 +164,10 @@ function setBookableResourceBookingsView(formContext){
     };   
 
     formContext.getControl("bookings").getViewSelector().setCurrentView(activeBookingsView);
+}
+
+function showErrorMessageAlert(error){
+    var alertStrings = { text: error.message };
+    var alertOptions = { height: 120, width: 260 };
+    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
 }

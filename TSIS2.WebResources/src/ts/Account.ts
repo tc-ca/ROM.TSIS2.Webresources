@@ -10,7 +10,7 @@ namespace ROM.Account {
     }
     export function countryOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
-        const countryAttr = form.getAttribute("ovs_country").getValue();
+        const countryAttr = form.getAttribute("ts_country").getValue();
 
         if(countryAttr != null && countryAttr != undefined){
             var countryName = countryAttr[0].name;

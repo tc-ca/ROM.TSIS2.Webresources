@@ -10,18 +10,18 @@ namespace ROM.WorkOrderQuickCreate {
 
             const form = <Form.msdyn_workorder.QuickCreate.QuickCreateWorkOrder>eContext.getFormContext();
             const regionAttribute = form.getAttribute("msdyn_serviceterritory");
-            const countryAttribute = form.getAttribute("ovs_ovscountry");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (regionAttribute != null && regionAttribute != undefined) {
 
                 const regionAttributeValue = regionAttribute.getValue();
                 if (regionAttributeValue != null && regionAttributeValue != undefined) {
                     if(regionAttributeValue[0].name == "International"){
-                        form.getControl("ovs_ovscountry").setVisible(true);
+                        form.getControl("ts_country").setVisible(true);
                     }
                 }
                 else{
-                    form.getControl("ovs_ovscountry").setVisible(false);
+                    form.getControl("ts_country").setVisible(false);
                 }
 
             }

@@ -153,7 +153,6 @@ interface ServiceAppointment extends ServiceAppointment_Base, ServiceAppointment
   regardingobjectid_msdyn_workorderservicetask_serviceappointment_bind$msdyn_workorderservicetasks?: string | null;
   regardingobjectid_new_interactionforemail_serviceappointment_bind$interactionforemails?: string | null;
   regardingobjectid_opportunity_serviceappointment_bind$opportunities?: string | null;
-  regardingobjectid_ovs_cysafetyassessment_serviceappointment_bind$ovs_cysafetyassessments?: string | null;
   regardingobjectid_ppp_traveller_serviceappointment_bind$ppp_travellers?: string | null;
   regardingobjectid_quote_serviceappointment_bind$quotes?: string | null;
   regardingobjectid_salesorder_serviceappointment_bind$salesorders?: string | null;

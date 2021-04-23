@@ -119,7 +119,7 @@ var ROM;
         function countryOnChange(eContext) {
             try {
                 var form = eContext.getFormContext();
-                var countryAttribute = form.getAttribute("ovs_ovscountry");
+                var countryAttribute = form.getAttribute("ts_country");
                 if (countryAttribute != null && countryAttribute != undefined) {
                     // Clear out all dependent fields' value
                     if (!form.getControl("ovs_operationtypeid").getDisabled() || form.getAttribute("ovs_operationtypeid").getValue() != null) {
@@ -150,7 +150,7 @@ var ROM;
                 var form = eContext.getFormContext();
                 var regionAttribute = form.getAttribute("msdyn_serviceterritory");
                 var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
-                var countryAttribute = form.getAttribute("ovs_ovscountry");
+                var countryAttribute = form.getAttribute("ts_country");
                 if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
                     // Clear out all dependent fields' value
                     if (!form.getControl("ovs_regulatedentity").getDisabled() || form.getAttribute("ovs_regulatedentity").getValue() != null) {
@@ -174,7 +174,7 @@ var ROM;
                                 form.getControl("msdyn_serviceaccount").setDisabled(false);
                             }
                             else {
-                                countryCondition = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
+                                countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
                             }
                         }
                         // Enable direct dependent field
@@ -201,7 +201,7 @@ var ROM;
                 var regionAttribute = form.getAttribute("msdyn_serviceterritory");
                 var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
                 var regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
-                var countryAttribute = form.getAttribute("ovs_ovscountry");
+                var countryAttribute = form.getAttribute("ts_country");
                 if (regulatedEntityAttribute != null && regulatedEntityAttribute != undefined) {
                     // Clear out all dependent fields' value
                     if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
@@ -223,7 +223,7 @@ var ROM;
                                 form.getControl("msdyn_serviceaccount").setDisabled(false);
                             }
                             else {
-                                countryCondition = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
+                                countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
                             }
                         }
                         // Enable direct dependent field
@@ -382,7 +382,7 @@ var ROM;
                 var form_1 = eContext.getFormContext();
                 var caseAttribute = form_1.getAttribute("msdyn_servicerequest");
                 var regionAttribute = form_1.getAttribute("msdyn_serviceterritory");
-                var countryAttribute = form_1.getAttribute("ovs_ovscountry");
+                var countryAttribute = form_1.getAttribute("ts_country");
                 var regulatedEntityAttribute = form_1.getAttribute("ovs_regulatedentity");
                 var siteAttribute = form_1.getAttribute("msdyn_serviceaccount");
                 var caseAttributeValue = caseAttribute.getValue();
@@ -391,15 +391,15 @@ var ROM;
                 var regulatedEntityAttributeValue_1 = regulatedEntityAttribute.getValue();
                 var siteAttributeValue_1 = siteAttribute.getValue();
                 var regionCondition = regionAttributeValue_1 == null ? "" : '<condition attribute="ovs_region" operator="eq" value="' + regionAttributeValue_1[0].id + '" />';
-                var countryCondition = countryAttributeValue_1 == null ? "" : '<condition attribute="ovs_countryid" operator="eq" value="' + countryAttributeValue_1[0].id + '" />';
+                var countryCondition = countryAttributeValue_1 == null ? "" : '<condition attribute="tc_country" operator="eq" value="' + countryAttributeValue_1[0].id + '" />';
                 var regulateEntityCondition = regulatedEntityAttributeValue_1 == null ? "" : '<condition attribute="ovs_regulatedentity" operator="eq" value="' + regulatedEntityAttributeValue_1[0].id + '" />';
                 var siteCondition = siteAttributeValue_1 == null ? "" : '<condition attribute="ovs_site" operator="eq" value="' + siteAttributeValue_1[0].id + '" />';
                 var caseData;
                 if (caseAttribute != null && caseAttribute != undefined) {
                     if (caseAttributeValue != null) {
-                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ovs_countryid_value, _ovs_regulatedentity_value, _ovs_site_value").then(function success(result) {
+                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _tc_country_value, _ovs_regulatedentity_value, _ovs_site_value").then(function success(result) {
                             if ((regionCondition != "" && (result != null && regionAttributeValue_1 != null && regionAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
-                                (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_countryid_value.toUpperCase())) ||
+                                (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != result._tc_country_value.toUpperCase())) ||
                                 (regulateEntityCondition != "" && (result != null && regulatedEntityAttributeValue_1 != null && regulatedEntityAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_regulatedentity_value.toUpperCase())) ||
                                 (siteCondition != "" && (result != null && siteAttributeValue_1 != null && siteAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_site_value.toUpperCase()))) {
                                 form_1.getAttribute("msdyn_servicerequest").setValue(null);
@@ -466,7 +466,7 @@ var ROM;
                         lookup[0].entityType = territoryLogicalName;
                         form.getAttribute('msdyn_serviceterritory').setValue(lookup);
                         if (lookup[0].name == "International") {
-                            form.getControl("ovs_ovscountry").setVisible(true);
+                            form.getControl("ts_country").setVisible(true);
                         }
                         // Enable the Operation Type if we've successfully set the Region
                         form.getControl("ovs_operationtypeid").setDisabled(false);
@@ -488,10 +488,15 @@ var ROM;
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(function success(result) {
                         //work order service task closed successfully
                     }, function (error) {
-                        //error
+                        var alertStrings = { text: error.message };
+                        var alertOptions = { height: 120, width: 260 };
+                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
                     });
                 }
             }, function (error) {
+                var alertStrings = { text: error.message };
+                var alertOptions = { height: 120, width: 260 };
+                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
             });
         }
         function closeBookableResourceBookings(formContext, bookableResourceBookingData) {
@@ -500,10 +505,15 @@ var ROM;
                     Xrm.WebApi.updateRecord("bookableresourcebooking", result.entities[i].bookableresourcebookingid, bookableResourceBookingData).then(function success(result) {
                         //bookable resource booking closed successfully
                     }, function (error) {
-                        //error
+                        var alertStrings = { text: error.message };
+                        var alertOptions = { height: 120, width: 260 };
+                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
                     });
                 }
             }, function (error) {
+                var alertStrings = { text: error.message };
+                var alertOptions = { height: 120, width: 260 };
+                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
             });
         }
         function setWorkOrderServiceTasksView(form, active) {

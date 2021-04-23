@@ -17,11 +17,11 @@ namespace ROM.Incident {
 
             if (regionAttributeValue != null && regionAttributeValue != undefined){                
                 if(regionAttributeValue[0].name == "International"){
-                    form.getControl("ovs_countryid").setVisible(true);
+                    form.getControl("ts_country").setVisible(true);
                 }
             }
             else{
-                form.getControl("ovs_countryid").setVisible(false);
+                form.getControl("ts_country").setVisible(false);
             }
         }
     }
@@ -31,7 +31,7 @@ namespace ROM.Incident {
 
             const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
             const regionAttribute = form.getAttribute("ovs_region");
-            const countryAttribute = form.getAttribute("ovs_countryid");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (regionAttribute != null && regionAttribute != undefined) {
 
@@ -67,11 +67,11 @@ namespace ROM.Incident {
                         form.getControl("ovs_regulatedentity").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     }
                     else{
-                        form.getControl("ovs_countryid").setVisible(true);
+                        form.getControl("ts_country").setVisible(true);
                     }
                 }
                 else{
-                    form.getControl("ovs_countryid").setVisible(false);
+                    form.getControl("ts_country").setVisible(false);
                 }
 
             }
@@ -84,7 +84,7 @@ namespace ROM.Incident {
         try {
 
             const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
-            const countryAttribute = form.getAttribute("ovs_countryid");
+            const countryAttribute = form.getAttribute("ts_country");
             const regionAttribute = form.getAttribute("ovs_region");
 
             if (countryAttribute != null && countryAttribute != undefined) {
@@ -111,7 +111,7 @@ namespace ROM.Incident {
                     const viewId = '{5482C38D-8BB4-3B95-BD05-493398FEAE95}';
                     const entityName = "account";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredRegulatedEntities");
-                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name"/><attribute name="accountid"/><order attribute="name" descending="false"/><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000"/></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/></filter></link-entity></link-entity></entity></fetch>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name"/><attribute name="accountid"/><order attribute="name" descending="false"/><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000"/></filter><link-entity name="ovs_operation" from="ovs_regulatedentityid" to="accountid" link-type="inner" alias="ag"><link-entity name="account" from="accountid" to="ovs_siteid" link-type="inner" alias="ah"><filter type="and"><condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '"/></filter></link-entity></link-entity></entity></fetch>';
                     const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
                     form.getControl("ovs_regulatedentity").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
 
@@ -130,7 +130,7 @@ namespace ROM.Incident {
             const regionAttribute = form.getAttribute("ovs_region");
             const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
             const regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
-            const countryAttribute = form.getAttribute("ovs_countryid");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (regulatedEntityAttribute != null && regulatedEntityAttribute != undefined) {
 
@@ -157,7 +157,7 @@ namespace ROM.Incident {
                             form.getControl("ovs_site").setDisabled(false);
                         }
                         else{
-                            countryXML = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
+                            countryXML = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
                         }
                     } 
                     // Enable direct dependent field
@@ -205,7 +205,7 @@ namespace ROM.Incident {
                             lookup[0].entityType = territoryLogicalName;
                             form.getAttribute('ovs_region').setValue(lookup);
                             if(lookup[0].name == "International"){
-                                form.getControl("ovs_countryid").setVisible(true);
+                                form.getControl("ts_country").setVisible(true);
                             }
                             else{
                                 regionOnChange(eContext);

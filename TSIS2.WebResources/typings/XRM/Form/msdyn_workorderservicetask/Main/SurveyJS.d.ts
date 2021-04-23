@@ -24,12 +24,10 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "msdyn_actualduration"): Xrm.NumberAttribute;
       get(name: "msdyn_agreementbookingservicetask"): Xrm.LookupAttribute<"msdyn_agreementbookingservicetask">;
       get(name: "msdyn_booking"): Xrm.LookupAttribute<"bookableresourcebooking">;
       get(name: "msdyn_customerasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
       get(name: "msdyn_description"): Xrm.Attribute<string>;
-      get(name: "msdyn_estimatedduration"): Xrm.NumberAttribute;
       get(name: "msdyn_inspection"): Xrm.LookupAttribute<"msdyn_inspection">;
       get(name: "msdyn_inspectiondefinitionid"): Xrm.LookupAttribute<"msdyn_inspectiondefinition">;
       get(name: "msdyn_inspectionenabled"): Xrm.OptionSetAttribute<boolean>;
@@ -39,7 +37,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "msdyn_percentcomplete"): Xrm.NumberAttribute;
       get(name: "msdyn_surveyboundedoutput"): Xrm.Attribute<any>;
       get(name: "msdyn_tasktype"): Xrm.LookupAttribute<"msdyn_servicetasktype">;
-      get(name: "msdyn_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
+      get(name: "msdyn_workorder"): Xrm.Attribute<any>;
       get(name: "msdyn_workorderincident"): Xrm.LookupAttribute<"msdyn_workorderincident">;
       get(name: "ovs_questionnairedefinition"): Xrm.Attribute<string>;
       get(name: "ovs_questionnaireresponse"): Xrm.Attribute<string>;
@@ -55,7 +53,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
-      get(name: "msdyn_actualduration"): Xrm.NumberControl;
       get(name: "msdyn_agreementbookingservicetask"): Xrm.LookupControl<"msdyn_agreementbookingservicetask">;
       get(name: "msdyn_agreementbookingservicetask1"): Xrm.LookupControl<"msdyn_agreementbookingservicetask">;
       get(name: "msdyn_booking"): Xrm.LookupControl<"bookableresourcebooking">;
@@ -64,7 +61,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "msdyn_customerasset1"): Xrm.LookupControl<"msdyn_customerasset">;
       get(name: "msdyn_description"): Xrm.StringControl;
       get(name: "msdyn_description1"): Xrm.StringControl;
-      get(name: "msdyn_estimatedduration"): Xrm.NumberControl;
       get(name: "msdyn_inspection"): Xrm.LookupControl<"msdyn_inspection">;
       get(name: "msdyn_inspectiondefinitionid"): Xrm.LookupControl<"msdyn_inspectiondefinition">;
       get(name: "msdyn_inspectionenabled"): Xrm.OptionSetControl<boolean>;
@@ -99,12 +95,10 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     }
   }
   interface SurveyJS extends Xrm.PageBase<SurveyJS.Attributes,SurveyJS.Tabs,SurveyJS.Controls> {
-    getAttribute(attributeName: "msdyn_actualduration"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_agreementbookingservicetask"): Xrm.LookupAttribute<"msdyn_agreementbookingservicetask">;
     getAttribute(attributeName: "msdyn_booking"): Xrm.LookupAttribute<"bookableresourcebooking">;
     getAttribute(attributeName: "msdyn_customerasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
     getAttribute(attributeName: "msdyn_description"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "msdyn_estimatedduration"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_inspection"): Xrm.LookupAttribute<"msdyn_inspection">;
     getAttribute(attributeName: "msdyn_inspectiondefinitionid"): Xrm.LookupAttribute<"msdyn_inspectiondefinition">;
     getAttribute(attributeName: "msdyn_inspectionenabled"): Xrm.OptionSetAttribute<boolean>;
@@ -114,7 +108,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "msdyn_percentcomplete"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_surveyboundedoutput"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_tasktype"): Xrm.LookupAttribute<"msdyn_servicetasktype">;
-    getAttribute(attributeName: "msdyn_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
+    getAttribute(attributeName: "msdyn_workorder"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_workorderincident"): Xrm.LookupAttribute<"msdyn_workorderincident">;
     getAttribute(attributeName: "ovs_questionnairedefinition"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ovs_questionnaireresponse"): Xrm.Attribute<string>;
@@ -125,7 +119,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
-    getControl(controlName: "msdyn_actualduration"): Xrm.NumberControl;
     getControl(controlName: "msdyn_agreementbookingservicetask"): Xrm.LookupControl<"msdyn_agreementbookingservicetask">;
     getControl(controlName: "msdyn_agreementbookingservicetask1"): Xrm.LookupControl<"msdyn_agreementbookingservicetask">;
     getControl(controlName: "msdyn_booking"): Xrm.LookupControl<"bookableresourcebooking">;
@@ -134,7 +127,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "msdyn_customerasset1"): Xrm.LookupControl<"msdyn_customerasset">;
     getControl(controlName: "msdyn_description"): Xrm.StringControl;
     getControl(controlName: "msdyn_description1"): Xrm.StringControl;
-    getControl(controlName: "msdyn_estimatedduration"): Xrm.NumberControl;
     getControl(controlName: "msdyn_inspection"): Xrm.LookupControl<"msdyn_inspection">;
     getControl(controlName: "msdyn_inspectiondefinitionid"): Xrm.LookupControl<"msdyn_inspectiondefinition">;
     getControl(controlName: "msdyn_inspectionenabled"): Xrm.OptionSetControl<boolean>;

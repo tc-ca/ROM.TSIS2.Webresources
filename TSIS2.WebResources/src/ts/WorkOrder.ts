@@ -137,7 +137,7 @@ namespace ROM.WorkOrder {
         try {
 
             const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
-            const countryAttribute = form.getAttribute("ovs_ovscountry");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (countryAttribute != null && countryAttribute != undefined) {
 
@@ -171,7 +171,7 @@ namespace ROM.WorkOrder {
             const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
             const regionAttribute = form.getAttribute("msdyn_serviceterritory");
             const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
-            const countryAttribute = form.getAttribute("ovs_ovscountry");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
 
@@ -202,7 +202,7 @@ namespace ROM.WorkOrder {
                             form.getControl("msdyn_serviceaccount").setDisabled(false);
                         }
                         else{
-                            countryCondition = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
+                            countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
                         }
                     }
 
@@ -220,7 +220,6 @@ namespace ROM.WorkOrder {
                 }
             }
         } catch (e) {
-
             throw new Error(e.Message);
         }
     }
@@ -232,7 +231,7 @@ namespace ROM.WorkOrder {
             const regionAttribute = form.getAttribute("msdyn_serviceterritory");
             const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
             const regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
-            const countryAttribute = form.getAttribute("ovs_ovscountry");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (regulatedEntityAttribute != null && regulatedEntityAttribute != undefined) {
 
@@ -261,7 +260,7 @@ namespace ROM.WorkOrder {
                             form.getControl("msdyn_serviceaccount").setDisabled(false);
                         }
                         else{
-                            countryCondition = '<condition attribute="ovs_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
+                            countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
                         }
                     }
                     // Enable direct dependent field
@@ -451,7 +450,7 @@ namespace ROM.WorkOrder {
             const form = <Form.msdyn_workorder.Main.TSISOversightActivity>eContext.getFormContext();
             const caseAttribute = form.getAttribute("msdyn_servicerequest");
             const regionAttribute = form.getAttribute("msdyn_serviceterritory");
-            const countryAttribute = form.getAttribute("ovs_ovscountry");
+            const countryAttribute = form.getAttribute("ts_country");
             const regulatedEntityAttribute = form.getAttribute("ovs_regulatedentity");
             const siteAttribute = form.getAttribute("msdyn_serviceaccount");
 
@@ -463,7 +462,7 @@ namespace ROM.WorkOrder {
 
             var regionCondition = regionAttributeValue == null ? "" : '<condition attribute="ovs_region" operator="eq" value="' + regionAttributeValue[0].id + '" />' ;
 
-            var countryCondition = countryAttributeValue == null ? "" : '<condition attribute="ovs_countryid" operator="eq" value="' + countryAttributeValue[0].id + '" />' ;
+            var countryCondition = countryAttributeValue == null ? "" : '<condition attribute="tc_country" operator="eq" value="' + countryAttributeValue[0].id + '" />' ;
 
             var regulateEntityCondition = regulatedEntityAttributeValue == null ? "" : '<condition attribute="ovs_regulatedentity" operator="eq" value="' + regulatedEntityAttributeValue[0].id + '" />' ;
 
@@ -472,10 +471,10 @@ namespace ROM.WorkOrder {
             var caseData;
             if(caseAttribute != null && caseAttribute != undefined){
                 if(caseAttributeValue != null ){
-                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g,''), "?$select=_ovs_region_value, _ovs_countryid_value, _ovs_regulatedentity_value, _ovs_site_value").then(
+                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g,''), "?$select=_ovs_region_value, _tc_country_value, _ovs_regulatedentity_value, _ovs_site_value").then(
                         function success(result) {
                             if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
-                                (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_countryid_value.toUpperCase())) ||
+                                (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._tc_country_value.toUpperCase())) ||
                                 (regulateEntityCondition != "" && (result != null && regulatedEntityAttributeValue != null && regulatedEntityAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_regulatedentity_value.toUpperCase())) ||
                                 (siteCondition != "" && (result != null && siteAttributeValue != null && siteAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_site_value.toUpperCase()))) {
 
@@ -483,7 +482,7 @@ namespace ROM.WorkOrder {
                             }
                     },
                         function (error) {
-
+                            showErrorMessageAlert(error);
                         }
                     );
                 }
@@ -503,6 +502,12 @@ namespace ROM.WorkOrder {
     }
 
     // FUNCTIONS
+    function showErrorMessageAlert(error){
+        var alertStrings = { text: error.message };
+        var alertOptions = { height: 120, width: 260 };
+        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+    }
+
     function setDefaultFiscalYear(form: Form.msdyn_workorder.Main.TSISOversightActivity): void {
         XrmQuery.retrieveMultiple((x) => x.tc_tcfiscalyears)
             .select((x) => [x.tc_name])
@@ -553,24 +558,20 @@ namespace ROM.WorkOrder {
                             lookup[0].entityType = territoryLogicalName;
                             form.getAttribute('msdyn_serviceterritory').setValue(lookup);
                             if(lookup[0].name == "International"){
-                                form.getControl("ovs_ovscountry").setVisible(true);
+                                form.getControl("ts_country").setVisible(true);
                             }
                             // Enable the Operation Type if we've successfully set the Region
                             form.getControl("ovs_operationtypeid").setDisabled(false);
                         },
                         function (error) {
-                            var alertStrings = { text: error.message };
-                            var alertOptions = { height: 120, width: 260 };
-                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                            showErrorMessageAlert(error);
                         }
                     );
 
                 }
             },
             function (error) {
-                var alertStrings = { text: error.message };
-                var alertOptions = { height: 120, width: 260 };
-                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                showErrorMessageAlert(error);
             }
         );
     }
@@ -584,12 +585,13 @@ namespace ROM.WorkOrder {
                             //work order service task closed successfully
                         },
                         function (error) {
-                            //error
+                            showErrorMessageAlert(error);
                         }
                     );
                 }
             },
             function (error) {
+                showErrorMessageAlert(error);
             }
         );
     }
@@ -603,12 +605,13 @@ namespace ROM.WorkOrder {
                             //bookable resource booking closed successfully
                         },
                         function (error) {
-                            //error
+                            showErrorMessageAlert(error);
                         }
                     );
                 }
             },
             function (error) {
+                showErrorMessageAlert(error);
             }
         );
     }

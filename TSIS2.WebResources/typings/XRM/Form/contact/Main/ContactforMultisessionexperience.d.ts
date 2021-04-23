@@ -22,6 +22,13 @@ declare namespace Form.contact.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_recordwall extends Xrm.SectionCollectionBase {
+        get(name: "tab_recordwall_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "address1_city"): Xrm.Attribute<string> | null;
@@ -75,6 +82,7 @@ declare namespace Form.contact.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "RelatedCases"): Xrm.SubGridControl<"incident">;
+      get(name: "WebResource_RecordWall"): Xrm.WebResourceControl;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;
@@ -138,6 +146,7 @@ declare namespace Form.contact.Main {
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
+      get(name: "tab_recordwall"): Xrm.PageTab<Tabs.tab_recordwall>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -191,6 +200,7 @@ declare namespace Form.contact.Main {
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "RelatedCases"): Xrm.SubGridControl<"incident">;
+    getControl(controlName: "WebResource_RecordWall"): Xrm.WebResourceControl;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;

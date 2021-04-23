@@ -194,6 +194,7 @@ interface Account extends Account_Base, Account_Relationships {
   stageid_processstage_bind$processstages?: string | null;
   territoryid_bind$territories?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
+  ts_Country_bind$tc_countries?: string | null;
 }
 interface Account_Create extends Account {
   originatingleadid_bind$leads?: string | null;
@@ -373,6 +374,7 @@ interface Account_Select {
   timezoneruleversionnumber: WebAttribute<Account_Select, { timezoneruleversionnumber: number | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<Account_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Account_Select, { traversedpath: string | null }, {  }>;
+  ts_country_guid: WebAttribute<Account_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<Account_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<Account_Select, { versionnumber: number | null }, {  }>;
   websiteurl: WebAttribute<Account_Select, { websiteurl: string | null }, {  }>;
@@ -550,6 +552,7 @@ interface Account_Filter {
   timezoneruleversionnumber: number;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_country_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
   websiteurl: string;
@@ -667,6 +670,7 @@ interface Account_FormattedResult {
   territorycode_formatted?: string;
   territoryid_formatted?: string;
   transactioncurrencyid_formatted?: string;
+  ts_country_formatted?: string;
 }
 interface Account_Result extends Account_Base, Account_Relationships {
   "@odata.etag": string;
@@ -699,6 +703,7 @@ interface Account_Result extends Account_Base, Account_Relationships {
   slainvokedid_guid: string | null;
   territoryid_guid: string | null;
   transactioncurrencyid_guid: string | null;
+  ts_country_guid: string | null;
 }
 interface Account_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;

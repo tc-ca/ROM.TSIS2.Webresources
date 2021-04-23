@@ -13,7 +13,7 @@ var ROM;
         Account.onLoad = onLoad;
         function countryOnChange(eContext) {
             var form = eContext.getFormContext();
-            var countryAttr = form.getAttribute("ovs_country").getValue();
+            var countryAttr = form.getAttribute("ts_country").getValue();
             if (countryAttr != null && countryAttr != undefined) {
                 var countryName = countryAttr[0].name;
                 var address1Country = form.getAttribute("address1_country");

@@ -44,7 +44,7 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface FieldService extends Xrm.SectionCollectionBase {
-        get(name: "tab_8_section_1"): Xrm.PageSection;
+        get(name: "FieldService_section_4"): Xrm.PageSection;
         get(name: "tab_8_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -70,9 +70,9 @@ declare namespace Form.incident.Main {
       }
       interface general extends Xrm.SectionCollectionBase {
         get(name: "Applicable SLA(STANDARD)"): Xrm.PageSection;
-        get(name: "Customer"): Xrm.PageSection;
         get(name: "Details"): Xrm.PageSection;
-        get(name: "TabsControl"): Xrm.PageSection;
+        get(name: "general_section_7"): Xrm.PageSection;
+        get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -87,6 +87,13 @@ declare namespace Form.incident.Main {
       }
       interface tab_11 extends Xrm.SectionCollectionBase {
         get(name: "tab_11_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_13 extends Xrm.SectionCollectionBase {
+        get(name: "tab_13_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -135,6 +142,7 @@ declare namespace Form.incident.Main {
       get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
       get(name: "ticketnumber"): Xrm.Attribute<string>;
       get(name: "title"): Xrm.Attribute<string>;
+      get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -208,6 +216,7 @@ declare namespace Form.incident.Main {
       get(name: "subjectid"): Xrm.LookupControl<"subject">;
       get(name: "ticketnumber"): Xrm.StringControl;
       get(name: "title"): Xrm.StringControl;
+      get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -225,6 +234,7 @@ declare namespace Form.incident.Main {
       get(name: "general"): Xrm.PageTab<Tabs.general>;
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
       get(name: "tab_11"): Xrm.PageTab<Tabs.tab_11>;
+      get(name: "tab_13"): Xrm.PageTab<Tabs.tab_13>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -273,6 +283,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
     getAttribute(attributeName: "ticketnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Associated_Articles"): Xrm.SubGridControl<"knowledgebaserecord">;
     getControl(controlName: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
@@ -341,6 +352,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
     getControl(controlName: "ticketnumber"): Xrm.StringControl;
     getControl(controlName: "title"): Xrm.StringControl;
+    getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: string): undefined;
   }
 }
