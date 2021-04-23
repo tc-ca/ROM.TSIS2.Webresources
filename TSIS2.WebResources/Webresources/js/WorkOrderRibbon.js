@@ -91,7 +91,9 @@ function ActivateWorkOrder(primaryControl) {
 
         },
         function (error) {
-            console.log(error.message);
+            var alertStrings = { text: error.message };
+            var alertOptions = { height: 120, width: 260 };
+            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
         }
     );
 }
@@ -110,12 +112,17 @@ function openWorkOrderServiceTasks(formContext) {
                     function success(result) {
                     },
                     function (error) {
-                        console.log(error.message);
+                        var alertStrings = { text: error.message };
+                        var alertOptions = { height: 120, width: 260 };
+                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
                     }
                 );
             }
         },
         function (error) {
+            var alertStrings = { text: error.message };
+            var alertOptions = { height: 120, width: 260 };
+            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
         }
     );
 }
@@ -133,7 +140,9 @@ function openBookableResourceBookings(formContext) {
                     function success(result) {
                     },
                     function (error) {
-                        console.log(error.message);
+                        var alertStrings = { text: error.message };
+                        var alertOptions = { height: 120, width: 260 };
+                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
                     }
                 );
             }
@@ -163,4 +172,10 @@ function setBookableResourceBookingsView(formContext){
     };   
 
     formContext.getControl("bookings").getViewSelector().setCurrentView(activeBookingsView);
+}
+
+function showErrorMessageAlert(error){
+    var alertStrings = { text: error.message };
+    var alertOptions = { height: 120, width: 260 };
+    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
 }

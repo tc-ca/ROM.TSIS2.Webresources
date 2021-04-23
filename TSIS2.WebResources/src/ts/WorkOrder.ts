@@ -482,7 +482,7 @@ namespace ROM.WorkOrder {
                             }
                     },
                         function (error) {
-                            
+                            showErrorMessageAlert(error);
                         }
                     );
                 }
@@ -502,6 +502,12 @@ namespace ROM.WorkOrder {
     }
 
     // FUNCTIONS
+    function showErrorMessageAlert(error){
+        var alertStrings = { text: error.message };
+        var alertOptions = { height: 120, width: 260 };
+        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+    }
+
     function setDefaultFiscalYear(form: Form.msdyn_workorder.Main.TSISOversightActivity): void {
         XrmQuery.retrieveMultiple((x) => x.tc_tcfiscalyears)
             .select((x) => [x.tc_name])
@@ -558,18 +564,14 @@ namespace ROM.WorkOrder {
                             form.getControl("ovs_operationtypeid").setDisabled(false);
                         },
                         function (error) {
-                            var alertStrings = { text: error.message };
-                            var alertOptions = { height: 120, width: 260 };
-                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                            showErrorMessageAlert(error);
                         }
                     );
 
                 }
             },
             function (error) {
-                var alertStrings = { text: error.message };
-                var alertOptions = { height: 120, width: 260 };
-                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                showErrorMessageAlert(error);
             }
         );
     }
@@ -583,17 +585,13 @@ namespace ROM.WorkOrder {
                             //work order service task closed successfully
                         },
                         function (error) {
-                            var alertStrings = { text: error.message };
-                            var alertOptions = { height: 120, width: 260 };
-                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                            showErrorMessageAlert(error);
                         }
                     );
                 }
             },
             function (error) {
-                var alertStrings = { text: error.message };
-                var alertOptions = { height: 120, width: 260 };
-                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                showErrorMessageAlert(error);
             }
         );
     }
@@ -607,17 +605,13 @@ namespace ROM.WorkOrder {
                             //bookable resource booking closed successfully
                         },
                         function (error) {
-                            var alertStrings = { text: error.message };
-                            var alertOptions = { height: 120, width: 260 };
-                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                            showErrorMessageAlert(error);
                         }
                     );
                 }
             },
             function (error) {
-                var alertStrings = { text: error.message };
-                var alertOptions = { height: 120, width: 260 };
-                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                showErrorMessageAlert(error);
             }
         );
     }
