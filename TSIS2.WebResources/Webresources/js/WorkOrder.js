@@ -488,10 +488,15 @@ var ROM;
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(function success(result) {
                         //work order service task closed successfully
                     }, function (error) {
-                        //error
+                        var alertStrings = { text: error.message };
+                        var alertOptions = { height: 120, width: 260 };
+                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
                     });
                 }
             }, function (error) {
+                var alertStrings = { text: error.message };
+                var alertOptions = { height: 120, width: 260 };
+                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
             });
         }
         function closeBookableResourceBookings(formContext, bookableResourceBookingData) {
@@ -500,10 +505,15 @@ var ROM;
                     Xrm.WebApi.updateRecord("bookableresourcebooking", result.entities[i].bookableresourcebookingid, bookableResourceBookingData).then(function success(result) {
                         //bookable resource booking closed successfully
                     }, function (error) {
-                        //error
+                        var alertStrings = { text: error.message };
+                        var alertOptions = { height: 120, width: 260 };
+                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
                     });
                 }
             }, function (error) {
+                var alertStrings = { text: error.message };
+                var alertOptions = { height: 120, width: 260 };
+                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
             });
         }
         function setWorkOrderServiceTasksView(form, active) {
