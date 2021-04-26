@@ -99,7 +99,7 @@ function openWorkOrderServiceTasks(formContext) {
     workOrderServiceTaskData = 
     {
         "statecode" :  0,           //closed -> 1
-        "statuscode" : 1    //closed -> 918640003
+        "statuscode" : 918640002    //closed -> 918640003
     };
 
     Xrm.WebApi.online.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
