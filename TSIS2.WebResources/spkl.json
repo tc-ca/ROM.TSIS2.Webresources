@@ -70,6 +70,11 @@
         },
         /* Form Scripts */
         {
+          "uniquename": "ovs_/js/Account.js",
+          "file": "js\\Account.js",
+          "description": "ROM TSIS 2.0 Account Form Scripts"
+        },
+        {
           "uniquename": "ovs_/js/BookableResourceBooking.js",
           "file": "js\\BookableResourceBooking.js",
           "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"
