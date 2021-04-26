@@ -1,30 +1,15 @@
 ﻿var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 
-
-var MaxFileSizeAlertText;
-var MaxFileSizeAlertTitle;
 var InspectorComments;
-var ChooseFiles;
-var NoFileChosen;
-var DocumentaryEvidence;
+var CharactersRemaining;
 
 if (lang == 1036){
-    MaxFileSizeAlertText = "Taille de fichier maximum de 10Mb atteinte. Veuillez choisir un autre fichier.";
-    MaxFileSizeAlertTitle = "Taille de fichier maximale atteinte !";
     InspectorComments = "Commentaires de l'inspecteur";
     CharactersRemaining = "caractères restants";
-    ChooseFiles = "Choisir les fichiers";
-    NoFileChosen = "Aucun fichier choisi";
-    DocumentaryEvidence = "La preuve documentaire";
 }
 else{
-    MaxFileSizeAlertText = "The maximum file size of 10 MB has been exceeded. Please choose another file.";
-    MaxFileSizeAlertTitle = "Maximum file size exceeded !";
     InspectorComments = "Inspector Comments";
     CharactersRemaining = "characters remaining";
-    ChooseFiles = "Choose Files";
-    NoFileChosen = "No file chosen";
-    DocumentaryEvidence = "Documentary Evidence";
 }
 
 var widget = {
@@ -61,7 +46,6 @@ var widget = {
             { name: "reference" },
             { name: "nameID" },
             { name: "inspectorComments", default: "test" },
-            { name: "file"}
         ], null, "text");
 
     },
@@ -69,26 +53,19 @@ var widget = {
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${InspectorComments}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000"></textarea> <span class="character-count"></span> </div> <div class="form-group" style="padding-top: 10px;"> <label for="file" style="padding-bottom: 2px; margin-bottom: 0px;"> <span class="field-name">${DocumentaryEvidence}</span> </label> <input type="file" class="sv_q_file_input file" multiple="true" style="padding-top: 2px;"></input> <p class="evidenceText"></p> </div> </div>`,
+        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${InspectorComments}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000"></textarea> <span class="character-count"> </span> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         //el is our root element in htmlTemplate, is "div" in our case
         //get the text element
         var comments = el.getElementsByClassName("inspectorComments")[0];
         var characterCount = el.getElementsByClassName("character-count")[0];
-        var file = el.getElementsByClassName("file")[0];
-        var fileText = el.getElementsByClassName("evidenceText")[0];
-        var fileArray = [];
 
         //The form has data to load
         if (question.value != null) {
             //Populate question property and form value
             question.inspectorComments = question.value.comments || "";
             comments.value = question.value.comments || "";
-            
-            question.file = question.value.documentaryEvidence || [];
-            fileArray = question.value.documentaryEvidence || [];
-            fileText.innerText = question.value.documentaryEvidence || [];
         }
 
         function updateCharacterCount() {
@@ -104,27 +81,8 @@ var widget = {
                 provisionTextEn: question.locDescription.values.default,
                 provisionTextFr: question.locDescription.values.fr,
                 comments: comments.value,
-                documentaryEvidence: question.file
             }
         }
-
-        file.onchange = function () {
-            for (var i = 0; i < file.files.length; i++) {
-                if(validateFile(file.files[i])){
-                    fileArray.push(file.files[i]);
-                }
-            }
-            fileText.innerText = fileArray;
-            question.file = fileArray;
-            question.value = {
-                provisionReference: question.reference,
-                provisionTextEn: question.locDescription.values.default,
-                provisionTextFr: question.locDescription.values.fr,
-                comments: comments.value,
-                documentaryEvidence: fileArray
-            }
-        }
-
 
         //set the changed value into question value
         onValueChangedCallback = function () {
@@ -163,30 +121,12 @@ var widget = {
 //Register our widget in singleton custom widget collection
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 
-function validateFile(file){
-    if(file.size > 10240000){
-        var alertString = { title: MaxFileSizeAlertTitle, text: MaxFileSizeAlertText };
-        var alertOptions = { height: 150, width: 450 };
-        parent.Xrm.Navigation.openAlertDialog(alertString, alertOptions).then(
-            function (success) {
-                console.log("Alert dialog closed");
-            },
-            function (error) {
-                console.log(error.message);
-            }
-      );
-      return false;
-    }
-    return true;
-}
-
 function updateQuestionValue(question) {
     question.value = {
         provisionReference: question.reference,
         provisionTextEn: question.locDescription.values.default,
         provisionTextFr: question.locDescription.values.fr,
         comments: question.inspectorComments,
-        documentaryEvidence: question.file
     }
 }
 
@@ -219,7 +159,6 @@ function updateQuestionProvisionData(question, provisionName) {
             provisionTextEn: question.locDescription.values.default,
             provisionTextFr: question.locDescription.values.fr,
             comments: question.inspectorComments,
-            documentaryEvidence: question.file
         }
     }
 }
