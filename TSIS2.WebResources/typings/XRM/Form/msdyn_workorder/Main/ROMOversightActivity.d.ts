@@ -141,7 +141,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
-      get(name: "ovs_ovscountry"): Xrm.LookupAttribute<"ovs_country">;
       get(name: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
       get(name: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
@@ -251,7 +250,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
-      get(name: "ovs_ovscountry"): Xrm.LookupControl<"ovs_country">;
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
@@ -344,7 +342,6 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
-    getAttribute(attributeName: "ovs_ovscountry"): Xrm.LookupAttribute<"ovs_country">;
     getAttribute(attributeName: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
     getAttribute(attributeName: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
@@ -449,7 +446,6 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
-    getControl(controlName: "ovs_ovscountry"): Xrm.LookupControl<"ovs_country">;
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;

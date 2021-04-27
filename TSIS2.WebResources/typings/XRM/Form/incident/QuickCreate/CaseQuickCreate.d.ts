@@ -20,7 +20,6 @@ declare namespace Form.incident.QuickCreate {
       get(name: "existingcase"): Xrm.LookupAttribute<"incident"> | null;
       get(name: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
-      get(name: "ovs_countryid"): Xrm.LookupAttribute<"ovs_country">;
       get(name: "ovs_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "parentcaseid"): Xrm.LookupAttribute<"incident">;
@@ -60,7 +59,6 @@ declare namespace Form.incident.QuickCreate {
       get(name: "header_process_title_1"): Xrm.StringControl | null;
       get(name: "msdyn_incidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
-      get(name: "ovs_countryid"): Xrm.LookupControl<"ovs_country">;
       get(name: "ovs_region"): Xrm.LookupControl<"territory">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "parentcaseid"): Xrm.LookupControl<"incident">;
@@ -93,7 +91,6 @@ declare namespace Form.incident.QuickCreate {
     getAttribute(attributeName: "existingcase"): Xrm.LookupAttribute<"incident"> | null;
     getAttribute(attributeName: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
-    getAttribute(attributeName: "ovs_countryid"): Xrm.LookupAttribute<"ovs_country">;
     getAttribute(attributeName: "ovs_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "parentcaseid"): Xrm.LookupAttribute<"incident">;
@@ -128,7 +125,6 @@ declare namespace Form.incident.QuickCreate {
     getControl(controlName: "header_process_title_1"): Xrm.StringControl | null;
     getControl(controlName: "msdyn_incidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
-    getControl(controlName: "ovs_countryid"): Xrm.LookupControl<"ovs_country">;
     getControl(controlName: "ovs_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "parentcaseid"): Xrm.LookupControl<"incident">;
