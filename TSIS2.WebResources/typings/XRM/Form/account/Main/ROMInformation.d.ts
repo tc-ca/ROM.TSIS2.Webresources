@@ -67,7 +67,6 @@ declare namespace Form.account.Main {
       get(name: "industrycode"): Xrm.OptionSetAttribute<account_industrycode>;
       get(name: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
       get(name: "name"): Xrm.Attribute<string>;
-      get(name: "ovs_country"): Xrm.LookupAttribute<"ovs_country">;
       get(name: "ovs_naicscode"): Xrm.Attribute<string>;
       get(name: "ovs_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -113,7 +112,6 @@ declare namespace Form.account.Main {
       get(name: "name"): Xrm.StringControl;
       get(name: "name1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
-      get(name: "ovs_country"): Xrm.LookupControl<"ovs_country">;
       get(name: "ovs_naicscode"): Xrm.StringControl;
       get(name: "ovs_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
       get(name: "ownershipcode"): Xrm.OptionSetControl<account_ownershipcode>;
@@ -164,7 +162,6 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "industrycode"): Xrm.OptionSetAttribute<account_industrycode>;
     getAttribute(attributeName: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "name"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ovs_country"): Xrm.LookupAttribute<"ovs_country">;
     getAttribute(attributeName: "ovs_naicscode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ovs_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -205,7 +202,6 @@ declare namespace Form.account.Main {
     getControl(controlName: "name"): Xrm.StringControl;
     getControl(controlName: "name1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
-    getControl(controlName: "ovs_country"): Xrm.LookupControl<"ovs_country">;
     getControl(controlName: "ovs_naicscode"): Xrm.StringControl;
     getControl(controlName: "ovs_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
     getControl(controlName: "ownershipcode"): Xrm.OptionSetControl<account_ownershipcode>;

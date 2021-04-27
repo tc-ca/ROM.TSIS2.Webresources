@@ -61,7 +61,6 @@ interface msdyn_workorder_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   transactioncurrencyid_guid?: string | null;
   traversedpath?: string | null;
-  ts_workordernumber?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -133,6 +132,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   stageid_bind$processstages?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_Country_bind$tc_countries?: string | null;
+  ts_Region_bind$territories?: string | null;
 }
 interface msdyn_workorder_Create extends msdyn_workorder {
 }
@@ -252,7 +252,7 @@ interface msdyn_workorder_Select {
   transactioncurrencyid_guid: WebAttribute<msdyn_workorder_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<msdyn_workorder_Select, { traversedpath: string | null }, {  }>;
   ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
-  ts_workordernumber: WebAttribute<msdyn_workorder_Select, { ts_workordernumber: string | null }, {  }>;
+  ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_workorder_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_workorder_Select, { versionnumber: number | null }, {  }>;
 }
@@ -370,7 +370,7 @@ interface msdyn_workorder_Filter {
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
   ts_country_guid: XQW.Guid;
-  ts_workordernumber: string;
+  ts_region_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -484,6 +484,7 @@ interface msdyn_workorder_FormattedResult {
   statuscode_formatted?: string;
   transactioncurrencyid_formatted?: string;
   ts_country_formatted?: string;
+  ts_region_formatted?: string;
 }
 interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_Relationships {
   "@odata.etag": string;
@@ -539,6 +540,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   qm_reportcontactid_guid: string | null;
   transactioncurrencyid_guid: string | null;
   ts_country_guid: string | null;
+  ts_region_guid: string | null;
 }
 interface msdyn_workorder_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
