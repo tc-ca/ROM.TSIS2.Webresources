@@ -30,6 +30,7 @@ declare namespace Form.incident.QuickCreate {
       get(name: "responseby"): Xrm.DateAttribute;
       get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
       get(name: "title"): Xrm.Attribute<string>;
+      get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -69,6 +70,7 @@ declare namespace Form.incident.QuickCreate {
       get(name: "responseby"): Xrm.DateControl;
       get(name: "subjectid"): Xrm.LookupControl<"subject">;
       get(name: "title"): Xrm.StringControl;
+      get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -101,6 +103,7 @@ declare namespace Form.incident.QuickCreate {
     getAttribute(attributeName: "responseby"): Xrm.DateAttribute;
     getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
     getControl(controlName: "casetypecode"): Xrm.OptionSetControl<incident_casetypecode>;
@@ -135,6 +138,7 @@ declare namespace Form.incident.QuickCreate {
     getControl(controlName: "responseby"): Xrm.DateControl;
     getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
     getControl(controlName: "title"): Xrm.StringControl;
+    getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: string): undefined;
   }
 }
