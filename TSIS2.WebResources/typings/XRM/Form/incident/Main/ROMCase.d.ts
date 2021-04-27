@@ -123,7 +123,6 @@ declare namespace Form.incident.Main {
       get(name: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
-      get(name: "ovs_countryid"): Xrm.LookupAttribute<"ovs_country">;
       get(name: "ovs_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
       get(name: "ovs_site"): Xrm.LookupAttribute<"account">;
@@ -201,7 +200,6 @@ declare namespace Form.incident.Main {
       get(name: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
       get(name: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
-      get(name: "ovs_countryid"): Xrm.LookupControl<"ovs_country">;
       get(name: "ovs_region"): Xrm.LookupControl<"territory">;
       get(name: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
       get(name: "ovs_site"): Xrm.LookupControl<"account">;
@@ -264,7 +262,6 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
-    getAttribute(attributeName: "ovs_countryid"): Xrm.LookupAttribute<"ovs_country">;
     getAttribute(attributeName: "ovs_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ovs_site"): Xrm.LookupAttribute<"account">;
@@ -337,7 +334,6 @@ declare namespace Form.incident.Main {
     getControl(controlName: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
     getControl(controlName: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
-    getControl(controlName: "ovs_countryid"): Xrm.LookupControl<"ovs_country">;
     getControl(controlName: "ovs_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
     getControl(controlName: "ovs_site"): Xrm.LookupControl<"account">;

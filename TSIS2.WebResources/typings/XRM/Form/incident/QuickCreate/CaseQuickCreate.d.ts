@@ -20,7 +20,6 @@ declare namespace Form.incident.QuickCreate {
       get(name: "existingcase"): Xrm.LookupAttribute<"incident"> | null;
       get(name: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
-      get(name: "ovs_countryid"): Xrm.LookupAttribute<"ovs_country">;
       get(name: "ovs_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "parentcaseid"): Xrm.LookupAttribute<"incident">;
@@ -30,6 +29,7 @@ declare namespace Form.incident.QuickCreate {
       get(name: "responseby"): Xrm.DateAttribute;
       get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
       get(name: "title"): Xrm.Attribute<string>;
+      get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -59,7 +59,6 @@ declare namespace Form.incident.QuickCreate {
       get(name: "header_process_title_1"): Xrm.StringControl | null;
       get(name: "msdyn_incidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
-      get(name: "ovs_countryid"): Xrm.LookupControl<"ovs_country">;
       get(name: "ovs_region"): Xrm.LookupControl<"territory">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "parentcaseid"): Xrm.LookupControl<"incident">;
@@ -69,6 +68,7 @@ declare namespace Form.incident.QuickCreate {
       get(name: "responseby"): Xrm.DateControl;
       get(name: "subjectid"): Xrm.LookupControl<"subject">;
       get(name: "title"): Xrm.StringControl;
+      get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -91,7 +91,6 @@ declare namespace Form.incident.QuickCreate {
     getAttribute(attributeName: "existingcase"): Xrm.LookupAttribute<"incident"> | null;
     getAttribute(attributeName: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
-    getAttribute(attributeName: "ovs_countryid"): Xrm.LookupAttribute<"ovs_country">;
     getAttribute(attributeName: "ovs_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "parentcaseid"): Xrm.LookupAttribute<"incident">;
@@ -101,6 +100,7 @@ declare namespace Form.incident.QuickCreate {
     getAttribute(attributeName: "responseby"): Xrm.DateAttribute;
     getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
     getControl(controlName: "casetypecode"): Xrm.OptionSetControl<incident_casetypecode>;
@@ -125,7 +125,6 @@ declare namespace Form.incident.QuickCreate {
     getControl(controlName: "header_process_title_1"): Xrm.StringControl | null;
     getControl(controlName: "msdyn_incidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
-    getControl(controlName: "ovs_countryid"): Xrm.LookupControl<"ovs_country">;
     getControl(controlName: "ovs_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "parentcaseid"): Xrm.LookupControl<"incident">;
@@ -135,6 +134,7 @@ declare namespace Form.incident.QuickCreate {
     getControl(controlName: "responseby"): Xrm.DateControl;
     getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
     getControl(controlName: "title"): Xrm.StringControl;
+    getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: string): undefined;
   }
 }
