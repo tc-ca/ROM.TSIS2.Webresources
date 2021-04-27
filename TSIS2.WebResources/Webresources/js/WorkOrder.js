@@ -391,13 +391,13 @@ var ROM;
                 var regulatedEntityAttributeValue_1 = regulatedEntityAttribute.getValue();
                 var siteAttributeValue_1 = siteAttribute.getValue();
                 var regionCondition = regionAttributeValue_1 == null ? "" : '<condition attribute="ovs_region" operator="eq" value="' + regionAttributeValue_1[0].id + '" />';
-                var countryCondition = countryAttributeValue_1 == null ? "" : '<condition attribute="tc_country" operator="eq" value="' + countryAttributeValue_1[0].id + '" />';
+                var countryCondition = countryAttributeValue_1 == null ? "" : '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue_1[0].id + '" />';
                 var regulateEntityCondition = regulatedEntityAttributeValue_1 == null ? "" : '<condition attribute="ovs_regulatedentity" operator="eq" value="' + regulatedEntityAttributeValue_1[0].id + '" />';
                 var siteCondition = siteAttributeValue_1 == null ? "" : '<condition attribute="ovs_site" operator="eq" value="' + siteAttributeValue_1[0].id + '" />';
                 var caseData;
                 if (caseAttribute != null && caseAttribute != undefined) {
                     if (caseAttributeValue != null) {
-                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _tc_country_value, _ovs_regulatedentity_value, _ovs_site_value").then(function success(result) {
+                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _ovs_regulatedentity_value, _ovs_site_value").then(function success(result) {
                             if ((regionCondition != "" && (result != null && regionAttributeValue_1 != null && regionAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
                                 (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != result._tc_country_value.toUpperCase())) ||
                                 (regulateEntityCondition != "" && (result != null && regulatedEntityAttributeValue_1 != null && regulatedEntityAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_regulatedentity_value.toUpperCase())) ||
@@ -405,6 +405,7 @@ var ROM;
                                 form_1.getAttribute("msdyn_servicerequest").setValue(null);
                             }
                         }, function (error) {
+                            showErrorMessageAlert(error);
                         });
                     }
                     // Setup a custom view
@@ -423,6 +424,11 @@ var ROM;
         }
         WorkOrder.updateCaseView = updateCaseView;
         // FUNCTIONS
+        function showErrorMessageAlert(error) {
+            var alertStrings = { text: error.message };
+            var alertOptions = { height: 120, width: 260 };
+            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+        }
         function setDefaultFiscalYear(form) {
             XrmQuery.retrieveMultiple(function (x) { return x.tc_tcfiscalyears; })
                 .select(function (x) { return [x.tc_name]; })
@@ -471,15 +477,11 @@ var ROM;
                         // Enable the Operation Type if we've successfully set the Region
                         form.getControl("ovs_operationtypeid").setDisabled(false);
                     }, function (error) {
-                        var alertStrings = { text: error.message };
-                        var alertOptions = { height: 120, width: 260 };
-                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                        showErrorMessageAlert(error);
                     });
                 }
             }, function (error) {
-                var alertStrings = { text: error.message };
-                var alertOptions = { height: 120, width: 260 };
-                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                showErrorMessageAlert(error);
             });
         }
         function closeWorkOrderServiceTasks(formContext, workOrderServiceTaskData) {
@@ -488,15 +490,11 @@ var ROM;
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(function success(result) {
                         //work order service task closed successfully
                     }, function (error) {
-                        var alertStrings = { text: error.message };
-                        var alertOptions = { height: 120, width: 260 };
-                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                        showErrorMessageAlert(error);
                     });
                 }
             }, function (error) {
-                var alertStrings = { text: error.message };
-                var alertOptions = { height: 120, width: 260 };
-                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                showErrorMessageAlert(error);
             });
         }
         function closeBookableResourceBookings(formContext, bookableResourceBookingData) {
@@ -505,15 +503,11 @@ var ROM;
                     Xrm.WebApi.updateRecord("bookableresourcebooking", result.entities[i].bookableresourcebookingid, bookableResourceBookingData).then(function success(result) {
                         //bookable resource booking closed successfully
                     }, function (error) {
-                        var alertStrings = { text: error.message };
-                        var alertOptions = { height: 120, width: 260 };
-                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                        showErrorMessageAlert(error);
                     });
                 }
             }, function (error) {
-                var alertStrings = { text: error.message };
-                var alertOptions = { height: 120, width: 260 };
-                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                showErrorMessageAlert(error);
             });
         }
         function setWorkOrderServiceTasksView(form, active) {
