@@ -152,7 +152,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 
         if (survey.getValue(options.question.name + "-Detail") != null) {
             detailBox.value = survey.getValue(options.question.name + "-Detail");
-            content.style.display = "inline";
+            content.style.display = "block";
             detailText.innerHTML = detailTextMinus;
         } else {
             content.style.display = "none";
@@ -173,11 +173,11 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         }
 
         header.onclick = function () {
-            if (content.style.display == "inline" && detailBox.value == "") {
+            if (content.style.display == "block" && detailBox.value == "") {
                 content.style.display = "none";
                 detailText.innerHTML = detailTextAdd;
             } else {
-                content.style.display = "inline";
+                content.style.display = "block";
                 detailText.innerHTML = detailTextMinus;
             }
         };
