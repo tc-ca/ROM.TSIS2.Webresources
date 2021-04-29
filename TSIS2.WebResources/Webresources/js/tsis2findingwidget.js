@@ -1,7 +1,7 @@
 ﻿var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 
-var inspectorComments;
-var charactersRemaining;
+var inspectorCommentsLocalizedText;
+var charactersRemainingLocalizedText;
 
 if (lang == 1036){
     inspectorCommentsLocalizedText = "Commentaires de l'inspecteur";
