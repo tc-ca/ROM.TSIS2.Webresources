@@ -20,7 +20,7 @@ window.parentExecutionContext = null;
 window.parentFormContext = null;
 Survey.StylesManager.applyTheme('default');
 
-//add hasDetail property to all questions in hasDetailQuestions array
+//add hasDetail property to all questions in hasDetailQuestions array. Required to load hasDetail value from JSON definition.
 var hasDetailQuestions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
 hasDetailQuestions.forEach(function (questionName) {
     Survey.JsonObject.metaData.addProperty(questionName, {
@@ -127,7 +127,18 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         var detailBox = document.createElement("textarea");
         var characterCount = document.createElement("span");
 
-        //Append HTML elements to each other
+        /* Append HTML elements to each other forming the following structure
+
+        <div id="detailContainer">
+            <div id="header">
+                <span id="detailText"></span>
+            </div>
+            <div id="content">
+                <textarea id="detailBox"></textarea>
+                <span id="characterCount"></span>
+            </div>
+        </div>
+        */
 
         header.appendChild(detailText);
         content.appendChild(detailBox);
@@ -150,6 +161,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         detailBox.style.resize = "vertical";
         characterCount.style.textAlign = "left";
 
+        //Expand content if detailBox has text saved previously, and load previous detailBox text
         if (survey.getValue(options.question.name + "-Detail") != null) {
             detailBox.value = survey.getValue(options.question.name + "-Detail");
             content.style.display = "block";
@@ -161,6 +173,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 
         //Add functionality to HTML elements
 
+        //Update character count onKeyUp in detailBox
         var detailBoxOnKeyUpHandler = function () {
             var currLength = detailBox.value.length;
             characterCount.innerText = (1000 - currLength) + " " + CharactersRemaining;
@@ -168,10 +181,12 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         detailBoxOnKeyUpHandler();
         detailBox.onkeyup = detailBoxOnKeyUpHandler;
 
+        //Update detail text in survey response
         detailBox.onchange = function () {
             survey.setValue((options.question.name + "-Detail"), detailBox.value);
         }
 
+        //Toggle visibilty of content when header is clicked
         header.onclick = function () {
             if (content.style.display == "block" && detailBox.value == "") {
                 content.style.display = "none";
@@ -184,6 +199,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 
     }
 
+    //Add Detail content to questions when they are rendered in the survey
     survey
         .onAfterRenderQuestion
         .add(function (survey, options) {

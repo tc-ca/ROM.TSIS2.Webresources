@@ -202,7 +202,18 @@ function appendDetailToQuestion(survey, options) {
     var detailBox = document.createElement("textarea");
     var characterCount = document.createElement("span");
 
-    //Append HTML elements to each other
+    /* Append HTML elements to each other forming the following structure
+
+    <div id="detailContainer">
+        <div id="header">
+            <span id="detailText"></span>
+        </div>
+        <div id="content">
+            <textarea id="detailBox"></textarea>
+            <span id="characterCount"></span>
+        </div>
+    </div>
+    */
 
     header.appendChild(detailText);
     content.appendChild(detailBox);
@@ -225,6 +236,7 @@ function appendDetailToQuestion(survey, options) {
     detailBox.style.resize = "vertical";
     characterCount.style.textAlign = "left";
 
+    //Expand content if detailBox has text saved previously, and load previous detailBox text
     if (survey.getValue(options.question.name + "-Detail") != null) {
         detailBox.value = survey.getValue(options.question.name + "-Detail");
         content.style.display = "block";
@@ -236,6 +248,7 @@ function appendDetailToQuestion(survey, options) {
 
     //Add functionality to HTML elements
 
+    //Update character count onKeyUp in detailBox
     var detailBoxOnKeyUpHandler = function () {
         var currLength = detailBox.value.length;
         characterCount.innerText = (1000 - currLength) + " " + CharactersRemaining;
@@ -243,10 +256,12 @@ function appendDetailToQuestion(survey, options) {
     detailBoxOnKeyUpHandler();
     detailBox.onkeyup = detailBoxOnKeyUpHandler;
 
+    //Update detail text in survey response
     detailBox.onchange = function () {
         survey.setValue((options.question.name +"-Detail"), detailBox.value);
     }
 
+    //Toggle visibilty of content when header is clicked
     header.onclick = function () {
         if (content.style.display == "block" && detailBox.value == "") {
             content.style.display = "none";
@@ -257,6 +272,7 @@ function appendDetailToQuestion(survey, options) {
         }
     };
 
+    //Toggle visibilty of Detail when hasDetail property is changed in creator
     options.question.registerFunctionOnPropertyValueChanged("hasDetail", function () {
         if (options.question.hasDetail == true) {
             detailContainer.style.display = "block";
@@ -266,6 +282,7 @@ function appendDetailToQuestion(survey, options) {
     });
 }
 
+//Add Detail content to questions when they are rendered in the survey designer and test survey
 creator
     .onSurveyInstanceCreated
     .add(function (sender, options) {
