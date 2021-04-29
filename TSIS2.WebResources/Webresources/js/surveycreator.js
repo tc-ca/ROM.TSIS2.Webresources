@@ -319,6 +319,55 @@ creator
         }
     });
 
+// Add a character count and limit to Comment questions.
+// If the maxLength is the default value of -1, set maxLength to 1000.
+// No character count if maxLength was set to 0
+function appendCharacterCountToQuestion(survey, options) {
+    var comment = options.htmlElement.getElementsByTagName('textarea')[0];
+    var maxLength = options.question.maxLength;
+    if (maxLength == -1) {
+        maxLength = 1000;
+    }
+    if (maxLength !== 0) {
+        comment.setAttribute("maxLength", maxLength);
+        var div = document.createElement("div");
+        div.style.textAlign = "left";
+        comment.parentNode.appendChild(div);
+        var changingHandler = function () {
+            var currLength = comment.value.length;
+            div.innerText = (maxLength - currLength) + " " + charactersRemainingLocalizedText;
+        }
+        changingHandler();
+        comment.onkeyup = changingHandler;
+    }
+}
+
+//Add Character Count to Comment questions when they are rendered in the survey designer and test survey
+creator
+    .onSurveyInstanceCreated
+    .add(function (sender, options) {
+        //If we are creating a surface for designer surface
+        if (options.reason == "designer") {
+            options
+                .survey
+                .onAfterRenderQuestion
+                .add(function (survey, options) {
+                    if (options.question.getType() !== "comment") return;
+                    appendCharacterCountToQuestion(survey, options);
+                });
+        }
+        //If we are creating a surface for "Test Survey" tab
+        if (options.reason == "test") {
+            options
+                .survey
+                .onAfterRenderQuestion
+                .add(function (survey, options) {
+                    if (options.question.getType() !== "comment") return;
+                    appendCharacterCountToQuestion(survey, options);
+                });
+        }
+    });
+
 //When the provision is changed, update the question's data. Ignore changes to empty strings
 creator.onPropertyValueChanging.add(function (sender, options) {
     if (options.propertyName == "provision" && options.newValue != "") {
