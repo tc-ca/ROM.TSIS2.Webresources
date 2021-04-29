@@ -1,20 +1,20 @@
 var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 
-var CharactersRemaining;
-var detailTextAdd;
-var detailTextMinus;
+var charactersRemainingLocalizedText;
+var detailTextAddLocalizedText;
+var detailTextMinusLocalizedText;
 var submitLocalizedText;
 
 if (lang == 1036) {
-    CharactersRemaining = "caractères restants";
-    detailTextAdd = "+ Détail";
-    detailTextMinus = "- Détail";
+    charactersRemainingLocalizedText = "caractères restants";
+    detailTextAddLocalizedText = "+ Détail";
+    detailTextMinusLocalizedText = "- Détail";
     submitLocalizedText = "Soumettre";
 }
 else {
-    CharactersRemaining = "characters remaining";
-    detailTextAdd = "+ Detail";
-    detailTextMinus = "- Detail";
+    charactersRemainingLocalizedText = "characters remaining";
+    detailTextAddLocalizedText = "+ Detail";
+    detailTextMinusLocalizedText = "- Detail";
     submitLocalizedText = "Submit";
 }
 
@@ -251,10 +251,10 @@ function appendDetailToQuestion(survey, options) {
     if (survey.getValue(options.question.name + "-Detail") != null) {
         detailBox.value = survey.getValue(options.question.name + "-Detail");
         content.style.display = "block";
-        detailText.innerHTML = detailTextMinus;
+        detailText.innerHTML = detailTextMinusLocalizedText;
     } else {
         content.style.display = "none";
-        detailText.innerHTML = detailTextAdd;
+        detailText.innerHTML = detailTextAddLocalizedText;
     }
 
     //Add functionality to HTML elements
@@ -262,7 +262,7 @@ function appendDetailToQuestion(survey, options) {
     //Update character count onKeyUp in detailBox
     var detailBoxOnKeyUpHandler = function () {
         var currLength = detailBox.value.length;
-        characterCount.innerText = (1000 - currLength) + " " + CharactersRemaining;
+        characterCount.innerText = (1000 - currLength) + " " + charactersRemainingLocalizedText;
     }
     detailBoxOnKeyUpHandler();
     detailBox.onkeyup = detailBoxOnKeyUpHandler;
@@ -276,10 +276,10 @@ function appendDetailToQuestion(survey, options) {
     header.onclick = function () {
         if (content.style.display == "block" && detailBox.value == "") {
             content.style.display = "none";
-            detailText.innerHTML = detailTextAdd;
+            detailText.innerHTML = detailTextAddLocalizedText;
         } else {
             content.style.display = "block";
-            detailText.innerHTML = detailTextMinus;
+            detailText.innerHTML = detailTextMinusLocalizedText;
         }
     };
 

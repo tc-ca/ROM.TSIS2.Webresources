@@ -1,18 +1,18 @@
 var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 
-var CharactersRemaining;
-var detailTextAdd;
-var detailTextMinus;
+var charactersRemainingLocalizedText;
+var detailTextAddLocalizedText;
+var detailTextMinusLocalizedText;
 
 if (lang == 1036) {
-    CharactersRemaining = "caractères restants";
-    detailTextAdd = "+ Détail";
-    detailTextMinus = "- Détail";
+    charactersRemainingLocalizedText = "caractères restants";
+    detailTextAddLocalizedText = "+ Détail";
+    detailTextMinusLocalizedText = "- Détail";
 }
 else {
-    CharactersRemaining = "characters remaining";
-    detailTextAdd = "+ Detail";
-    detailTextMinus = "- Detail";
+    charactersRemainingLocalizedText = "characters remaining";
+    detailTextAddLocalizedText = "+ Detail";
+    detailTextMinusLocalizedText = "- Detail";
 }
 
 'use strict';
@@ -109,7 +109,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             comment.parentNode.appendChild(div);
             var changingHandler = function () {
                 var currLength = comment.value.length;
-                div.innerText = (maxLength - currLength) + " " + CharactersRemaining;
+                div.innerText = (maxLength - currLength) + " " + charactersRemainingLocalizedText;
             }
             changingHandler();
             comment.onkeyup = changingHandler;
@@ -165,10 +165,10 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         if (survey.getValue(options.question.name + "-Detail") != null) {
             detailBox.value = survey.getValue(options.question.name + "-Detail");
             content.style.display = "block";
-            detailText.innerHTML = detailTextMinus;
+            detailText.innerHTML = detailTextMinusLocalizedText;
         } else {
             content.style.display = "none";
-            detailText.innerHTML = detailTextAdd;
+            detailText.innerHTML = detailTextAddLocalizedText;
         }
 
         //Add functionality to HTML elements
@@ -176,7 +176,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         //Update character count onKeyUp in detailBox
         var detailBoxOnKeyUpHandler = function () {
             var currLength = detailBox.value.length;
-            characterCount.innerText = (1000 - currLength) + " " + CharactersRemaining;
+            characterCount.innerText = (1000 - currLength) + " " + charactersRemainingLocalizedText;
         }
         detailBoxOnKeyUpHandler();
         detailBox.onkeyup = detailBoxOnKeyUpHandler;
@@ -190,10 +190,10 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         header.onclick = function () {
             if (content.style.display == "block" && detailBox.value == "") {
                 content.style.display = "none";
-                detailText.innerHTML = detailTextAdd;
+                detailText.innerHTML = detailTextAddLocalizedText;
             } else {
                 content.style.display = "block";
-                detailText.innerHTML = detailTextMinus;
+                detailText.innerHTML = detailTextMinusLocalizedText;
             }
         };
 
