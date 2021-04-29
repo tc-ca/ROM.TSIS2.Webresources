@@ -124,7 +124,6 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ovs_TYRational_bind$ovs_tyrationals?: string | null;
   ovs_asset_bind$msdyn_customerassets?: string | null;
   ovs_operationtypeid_bind$ovs_operationtypes?: string | null;
-  ovs_ovsCountry_bind$ovs_countries?: string | null;
   ovs_regulatedentity_bind$accounts?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
@@ -229,7 +228,6 @@ interface msdyn_workorder_Select {
   ovs_mocid: WebAttribute<msdyn_workorder_Select, { ovs_mocid: string | null }, {  }>;
   ovs_operationid_guid: WebAttribute<msdyn_workorder_Select, { ovs_operationid_guid: string | null }, { ovs_operationid_formatted?: string }>;
   ovs_operationtypeid_guid: WebAttribute<msdyn_workorder_Select, { ovs_operationtypeid_guid: string | null }, { ovs_operationtypeid_formatted?: string }>;
-  ovs_ovscountry_guid: WebAttribute<msdyn_workorder_Select, { ovs_ovscountry_guid: string | null }, { ovs_ovscountry_formatted?: string }>;
   ovs_primaryinspector_guid: WebAttribute<msdyn_workorder_Select, { ovs_primaryinspector_guid: string | null }, { ovs_primaryinspector_formatted?: string }>;
   ovs_rational_guid: WebAttribute<msdyn_workorder_Select, { ovs_rational_guid: string | null }, { ovs_rational_formatted?: string }>;
   ovs_regulatedentity_guid: WebAttribute<msdyn_workorder_Select, { ovs_regulatedentity_guid: string | null }, { ovs_regulatedentity_formatted?: string }>;
@@ -347,7 +345,6 @@ interface msdyn_workorder_Filter {
   ovs_mocid: string;
   ovs_operationid_guid: XQW.Guid;
   ovs_operationtypeid_guid: XQW.Guid;
-  ovs_ovscountry_guid: XQW.Guid;
   ovs_primaryinspector_guid: XQW.Guid;
   ovs_rational_guid: XQW.Guid;
   ovs_regulatedentity_guid: XQW.Guid;
@@ -467,7 +464,6 @@ interface msdyn_workorder_FormattedResult {
   ovs_fiscalyear_formatted?: string;
   ovs_operationid_formatted?: string;
   ovs_operationtypeid_formatted?: string;
-  ovs_ovscountry_formatted?: string;
   ovs_primaryinspector_formatted?: string;
   ovs_rational_formatted?: string;
   ovs_regulatedentity_formatted?: string;
@@ -525,7 +521,6 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ovs_fiscalyear_guid: string | null;
   ovs_operationid_guid: string | null;
   ovs_operationtypeid_guid: string | null;
-  ovs_ovscountry_guid: string | null;
   ovs_primaryinspector_guid: string | null;
   ovs_rational_guid: string | null;
   ovs_regulatedentity_guid: string | null;

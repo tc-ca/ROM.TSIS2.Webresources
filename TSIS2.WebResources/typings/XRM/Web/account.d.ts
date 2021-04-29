@@ -181,7 +181,6 @@ interface Account extends Account_Base, Account_Relationships {
   msdyn_salestaxcode_bind$msdyn_taxcodes?: string | null;
   msdyn_serviceterritory_bind$territories?: string | null;
   msdyn_workhourtemplate_bind$msdyn_workhourtemplates?: string | null;
-  ovs_Country_bind$ovs_countries?: string | null;
   ovs_SiteType_bind$ovs_sitetypes?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
@@ -327,7 +326,6 @@ interface Account_Select {
   overriddencreatedon: WebAttribute<Account_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
   ovs_accountnameenglish: WebAttribute<Account_Select, { ovs_accountnameenglish: string | null }, {  }>;
   ovs_accountnamefrench: WebAttribute<Account_Select, { ovs_accountnamefrench: string | null }, {  }>;
-  ovs_country_guid: WebAttribute<Account_Select, { ovs_country_guid: string | null }, { ovs_country_formatted?: string }>;
   ovs_iisid: WebAttribute<Account_Select, { ovs_iisid: string | null }, {  }>;
   ovs_legalname: WebAttribute<Account_Select, { ovs_legalname: string | null }, {  }>;
   ovs_naicscode: WebAttribute<Account_Select, { ovs_naicscode: string | null }, {  }>;
@@ -505,7 +503,6 @@ interface Account_Filter {
   overriddencreatedon: Date;
   ovs_accountnameenglish: string;
   ovs_accountnamefrench: string;
-  ovs_country_guid: XQW.Guid;
   ovs_iisid: string;
   ovs_legalname: string;
   ovs_naicscode: string;
@@ -644,7 +641,6 @@ interface Account_FormattedResult {
   openrevenue_formatted?: string;
   originatingleadid_formatted?: string;
   overriddencreatedon_formatted?: string;
-  ovs_country_formatted?: string;
   ovs_sitetype_formatted?: string;
   ownerid_formatted?: string;
   ownershipcode_formatted?: string;
@@ -688,7 +684,6 @@ interface Account_Result extends Account_Base, Account_Relationships {
   msdyn_serviceterritory_guid: string | null;
   msdyn_workhourtemplate_guid: string | null;
   originatingleadid_guid: string | null;
-  ovs_country_guid: string | null;
   ovs_sitetype_guid: string | null;
   ownerid_guid: string | null;
   owningbusinessunit_guid: string | null;
