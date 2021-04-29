@@ -4,7 +4,7 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
     const caseId = Xrm.Page.data.entity.getId().replace(/({|})/g,'');
         
     const regionAttribute = formContext.getAttribute("ovs_region");
-    const countryAttribute = formContext.getAttribute("ovs_countryid");
+    const countryAttribute = formContext.getAttribute("ts_country");
     const regulatedEntityAttribute = formContext.getAttribute("ovs_regulatedentity");
     const siteAttribute = formContext.getAttribute("ovs_site");
 
@@ -17,7 +17,7 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
     var countryCondition = "";
 
     if(countryAttributeValue != null){
-         countryCondition = `<condition attribute="ovs_ovscountry" operator="eq" value="${countryAttributeValue[0].id}" />`;
+         countryCondition = `<condition attribute="ts_country" operator="eq" value="${countryAttributeValue[0].id}" />`;
     }
 
     var lookupOptions = 

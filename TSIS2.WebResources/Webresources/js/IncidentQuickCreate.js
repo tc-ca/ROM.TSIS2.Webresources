@@ -19,16 +19,16 @@ var ROM;
             try {
                 var form = eContext.getFormContext();
                 var regionAttribute = form.getAttribute("ovs_region");
-                var countryAttribute = form.getAttribute("ovs_countryid");
+                var countryAttribute = form.getAttribute("ts_country");
                 if (regionAttribute != null && regionAttribute != undefined) {
                     var regionAttributeValue = regionAttribute.getValue();
                     if (regionAttributeValue != null && regionAttributeValue != undefined) {
-                        if (regionAttributeValue[0].name == "International") {
-                            form.getControl("ovs_countryid").setVisible(true);
+                        if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
+                            form.getControl("ts_country").setVisible(true);
                         }
                     }
                     else {
-                        form.getControl("ovs_countryid").setVisible(false);
+                        form.getControl("ts_country").setVisible(false);
                     }
                 }
             }
@@ -57,8 +57,8 @@ var ROM;
                         lookup[0].name = territoryName;
                         lookup[0].entityType = territoryLogicalName;
                         form.getAttribute('ovs_region').setValue(lookup);
-                        if (lookup[0].name == "International") {
-                            form.getControl("ovs_countryid").setVisible(true);
+                        if (lookup[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
+                            form.getControl("ts_country").setVisible(true);
                         }
                         else {
                             regionOnChange(eContext);

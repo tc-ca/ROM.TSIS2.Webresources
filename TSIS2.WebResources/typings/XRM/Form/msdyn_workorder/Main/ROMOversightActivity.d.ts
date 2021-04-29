@@ -141,7 +141,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
-      get(name: "ovs_ovscountry"): Xrm.LookupAttribute<"ovs_country">;
+      get(name: "ovs_ovscountry"): Xrm.LookupAttribute<"NoAttribute">;
       get(name: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
       get(name: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
@@ -149,13 +149,15 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
+      get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+      get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_customerasset">;
+      get(name: "PhysicalAssets"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
       get(name: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;
@@ -249,11 +251,13 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
-      get(name: "ovs_ovscountry"): Xrm.LookupControl<"ovs_country">;
+      get(name: "ovs_ovscountry"): Xrm.LookupControl<"NoAttribute">;
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
+      get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
+      get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
       get(name: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
       get(name: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
@@ -340,7 +344,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
-    getAttribute(attributeName: "ovs_ovscountry"): Xrm.LookupAttribute<"ovs_country">;
+    getAttribute(attributeName: "ovs_ovscountry"): Xrm.LookupAttribute<"NoAttribute">;
     getAttribute(attributeName: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
     getAttribute(attributeName: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
@@ -348,8 +352,10 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
+    getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+    getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_customerasset">;
+    getControl(controlName: "PhysicalAssets"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
     getControl(controlName: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;
@@ -443,11 +449,13 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
-    getControl(controlName: "ovs_ovscountry"): Xrm.LookupControl<"ovs_country">;
+    getControl(controlName: "ovs_ovscountry"): Xrm.LookupControl<"NoAttribute">;
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
+    getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
+    getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
     getControl(controlName: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
     getControl(controlName: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;

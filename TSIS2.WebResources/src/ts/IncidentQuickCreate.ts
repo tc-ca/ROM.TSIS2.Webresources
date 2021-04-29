@@ -17,18 +17,18 @@ namespace ROM.IncidentQuickCreate {
 
             const form = <Form.incident.QuickCreate.CaseQuickCreate>eContext.getFormContext();
             const regionAttribute = form.getAttribute("ovs_region");
-            const countryAttribute = form.getAttribute("ovs_countryid");
+            const countryAttribute = form.getAttribute("ts_country");
 
             if (regionAttribute != null && regionAttribute != undefined) {
 
                 const regionAttributeValue = regionAttribute.getValue();
                 if (regionAttributeValue != null && regionAttributeValue != undefined) {
-                    if(regionAttributeValue[0].name == "International"){
-                        form.getControl("ovs_countryid").setVisible(true);
+                    if(regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}"){ //International
+                        form.getControl("ts_country").setVisible(true);
                     }
                 }
                 else{
-                    form.getControl("ovs_countryid").setVisible(false);
+                    form.getControl("ts_country").setVisible(false);
                 }
 
             }
@@ -61,8 +61,8 @@ namespace ROM.IncidentQuickCreate {
                             lookup[0].name = territoryName;
                             lookup[0].entityType = territoryLogicalName;
                             form.getAttribute('ovs_region').setValue(lookup);
-                            if(lookup[0].name == "International"){
-                                form.getControl("ovs_countryid").setVisible(true);
+                            if(lookup[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}"){ //International
+                                form.getControl("ts_country").setVisible(true);
                             }
                             else{
                                 regionOnChange(eContext);

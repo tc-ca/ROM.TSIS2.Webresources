@@ -30,7 +30,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
       get(name: "msdyn_workordersummary"): Xrm.Attribute<string>;
       get(name: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
       get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
-      get(name: "ovs_ovscountry"): Xrm.LookupAttribute<"ovs_country">;
+      get(name: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
       get(name: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: string): undefined;
@@ -78,7 +78,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
       get(name: "msdyn_workordersummary"): Xrm.StringControl;
       get(name: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
-      get(name: "ovs_ovscountry"): Xrm.LookupControl<"ovs_country">;
+      get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: string): undefined;
@@ -113,7 +113,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     getAttribute(attributeName: "msdyn_workordersummary"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
     getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
-    getAttribute(attributeName: "ovs_ovscountry"): Xrm.LookupAttribute<"ovs_country">;
+    getAttribute(attributeName: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
     getAttribute(attributeName: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: string): undefined;
@@ -156,7 +156,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     getControl(controlName: "msdyn_workordersummary"): Xrm.StringControl;
     getControl(controlName: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
-    getControl(controlName: "ovs_ovscountry"): Xrm.LookupControl<"ovs_country">;
+    getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: string): undefined;

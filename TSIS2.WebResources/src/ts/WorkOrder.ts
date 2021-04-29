@@ -462,7 +462,7 @@ namespace ROM.WorkOrder {
 
             var regionCondition = regionAttributeValue == null ? "" : '<condition attribute="ovs_region" operator="eq" value="' + regionAttributeValue[0].id + '" />' ;
 
-            var countryCondition = countryAttributeValue == null ? "" : '<condition attribute="tc_country" operator="eq" value="' + countryAttributeValue[0].id + '" />' ;
+            var countryCondition = countryAttributeValue == null ? "" : '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" />' ;
 
             var regulateEntityCondition = regulatedEntityAttributeValue == null ? "" : '<condition attribute="ovs_regulatedentity" operator="eq" value="' + regulatedEntityAttributeValue[0].id + '" />' ;
 
@@ -471,7 +471,7 @@ namespace ROM.WorkOrder {
             var caseData;
             if(caseAttribute != null && caseAttribute != undefined){
                 if(caseAttributeValue != null ){
-                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g,''), "?$select=_ovs_region_value, _tc_country_value, _ovs_regulatedentity_value, _ovs_site_value").then(
+                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g,''), "?$select=_ovs_region_value, _ts_country_value, _ovs_regulatedentity_value, _ovs_site_value").then(
                         function success(result) {
                             if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
                                 (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._tc_country_value.toUpperCase())) ||
@@ -557,7 +557,7 @@ namespace ROM.WorkOrder {
                             lookup[0].name = territoryName;
                             lookup[0].entityType = territoryLogicalName;
                             form.getAttribute('msdyn_serviceterritory').setValue(lookup);
-                            if(lookup[0].name == "International"){
+                            if(lookup[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}"){ //International
                                 form.getControl("ts_country").setVisible(true);
                             }
                             // Enable the Operation Type if we've successfully set the Region
