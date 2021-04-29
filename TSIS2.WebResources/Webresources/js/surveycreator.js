@@ -183,7 +183,7 @@ hasDetailQuestions.forEach(function (questionName) {
     Survey
         .Serializer
         .addProperty(questionName, {
-            name: "hasDetail:boolean",
+            name: "hasDetail:switch",
             category: "general",
             default: true
         });
