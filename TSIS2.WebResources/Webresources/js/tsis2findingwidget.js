@@ -53,7 +53,7 @@ var widget = {
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${InspectorComments}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000"></textarea> <span class="character-count"> </span> </div> </div>`,
+        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${InspectorComments}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"> </span> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         //el is our root element in htmlTemplate, is "div" in our case

@@ -1,3 +1,21 @@
+var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+var CharactersRemaining;
+var detailTextAdd;
+var detailTextMinus;
+
+if (lang == 1036) {
+    CharactersRemaining = "caractères restants";
+    detailTextAdd = "+ Détail";
+    detailTextMinus = "- Détail";
+}
+else {
+    CharactersRemaining = "characters remaining";
+    detailTextAdd = "+ Detail";
+    detailTextMinus = "- Detail";
+}
+
+
 // Show Designer, Test Survey, JSON Editor and additionally Logic tabs
 var options = {
     showLogicTab: true,
@@ -159,6 +177,112 @@ creator
     .toolbox
     .orderedQuestions = ["radiogroup", "checkbox", "dropdown", "finding", "comment", "image", "imagepicker", "file", "boolean", "text", "multipletext", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic" , "flowpanel"];
 
+//add hasDetail property to all questions in hasDetailQuestions array
+var hasDetailQuestions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
+hasDetailQuestions.forEach(function (questionName) {
+    Survey
+        .Serializer
+        .addProperty(questionName, {
+            name: "hasDetail:boolean",
+            category: "general",
+            default: true
+        });
+});
+
+
+
+function appendDetailToQuestion(survey, options) {
+    //Create HTML elements
+
+    var question = options.htmlElement;
+    var detailContainer = document.createElement("div");
+    var header = document.createElement("div");
+    var content = document.createElement("div");
+    var detailText = document.createElement("span");
+    var detailBox = document.createElement("textarea");
+    var characterCount = document.createElement("span");
+
+    //Append HTML elements to each other
+
+    header.appendChild(detailText);
+    content.appendChild(detailBox);
+    content.appendChild(characterCount);
+    detailContainer.appendChild(header);
+    detailContainer.appendChild(content);
+    question.appendChild(detailContainer);
+
+    //Set Styles, Classes, and text
+
+    detailContainer.style.marginTop = "10px";
+    header.style.backgroundColor = "#d3d3d3";
+    header.style.padding = "2px";
+    header.style.cursor = "pointer";
+    header.style.fontWeight = "bold";
+    detailBox.className = "form-control";
+    detailBox.rows = 3;
+    detailBox.cols = 50;
+    detailBox.maxLength = 1000;
+    detailBox.style.resize = "vertical";
+    characterCount.style.textAlign = "left";
+
+    if (survey.getValue(options.question.name + "-Detail") != null) {
+        detailBox.value = survey.getValue(options.question.name + "-Detail");
+        content.style.display = "inline";
+        detailText.innerHTML = detailTextMinus;
+    } else {
+        content.style.display = "none";
+        detailText.innerHTML = detailTextAdd;
+    }
+
+    //Add functionality to HTML elements
+
+    var detailBoxOnKeyUpHandler = function () {
+        var currLength = detailBox.value.length;
+        characterCount.innerText = (1000 - currLength) + " " + CharactersRemaining;
+    }
+    detailBoxOnKeyUpHandler();
+    detailBox.onkeyup = detailBoxOnKeyUpHandler;
+
+    detailBox.onchange = function () {
+        survey.setValue((options.question.name +"-Detail"), detailBox.value);
+    }
+
+    header.onclick = function () {
+        if (content.style.display == "inline" && detailBox.value == "") {
+            content.style.display = "none";
+            detailText.innerHTML = detailTextAdd;
+        } else {
+            content.style.display = "inline";
+            detailText.innerHTML = detailTextMinus;
+        }
+    };
+
+}
+
+creator
+    .onSurveyInstanceCreated
+    .add(function (sender, options) {
+        //If we are creating a surface for designer surface
+        if (options.reason == "designer") {
+            options
+                .survey
+                .onAfterRenderQuestion
+                .add(function (survey, options) {
+                    if (options.question.hasDetail != true) return;
+                    appendDetailToQuestion(survey, options);
+                });
+        }
+        //If we are creating a surface for "Test Survey" tab
+        if (options.reason == "test") {
+            options
+                .survey
+                .onAfterRenderQuestion
+                .add(function (survey, options) {
+                    if (options.question.hasDetail != true) return;
+                    appendDetailToQuestion(survey, options);
+                });
+        }
+    });
 
 //When the provision is changed, update the question's data. Ignore changes to empty strings
 creator.onPropertyValueChanging.add(function (sender, options) {
