@@ -11,6 +11,21 @@ namespace ROM.WorkOrderQuickCreate {
         rationalLookUpValue[0].entityType = "ovs_tyrational";
 
         form.getAttribute("ovs_rational").setValue(rationalLookUpValue);
+
+        const regionAttribute = form.getAttribute("msdyn_serviceterritory");
+        if (regionAttribute != null && regionAttribute != undefined) {
+
+            const regionAttributeValue = regionAttribute.getValue();
+
+            if (regionAttributeValue != null && regionAttributeValue != undefined){                
+                if(regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}"){ //international
+                    form.getControl("ts_country").setVisible(true);
+                }
+            }
+            else{
+                form.getControl("ts_country").setVisible(false);
+            }
+        }
     }
 
     export function regionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
