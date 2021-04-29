@@ -1,18 +1,33 @@
 var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 
-var CharactersRemaining;
+var charactersRemainingLocalizedText;
+var detailTextAddLocalizedText;
+var detailTextMinusLocalizedText;
 
 if (lang == 1036) {
-    CharactersRemaining = "caractères restants";
+    charactersRemainingLocalizedText = "caractères restants";
+    detailTextAddLocalizedText = "+ Détail";
+    detailTextMinusLocalizedText = "- Détail";
 }
 else {
-    CharactersRemaining = "characters remaining";
+    charactersRemainingLocalizedText = "characters remaining";
+    detailTextAddLocalizedText = "+ Detail";
+    detailTextMinusLocalizedText = "- Detail";
 }
 
 'use strict';
 window.parentExecutionContext = null;
 window.parentFormContext = null;
 Survey.StylesManager.applyTheme('default');
+
+//add hasDetail property to all questions in hasDetailQuestions array. Required to load hasDetail value from JSON definition.
+var hasDetailQuestions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
+hasDetailQuestions.forEach(function (questionName) {
+    Survey.JsonObject.metaData.addProperty(questionName, {
+            name: "hasDetail:boolean",
+            default: true
+        });
+});
 
 function InitialContext(executionContext) {
     window.parentExecutionContext = executionContext;
@@ -94,12 +109,104 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             comment.parentNode.appendChild(div);
             var changingHandler = function () {
                 var currLength = comment.value.length;
-                div.innerText = (maxLength - currLength) + " " + CharactersRemaining;
+                div.innerText = (maxLength - currLength) + " " + charactersRemainingLocalizedText;
             }
             changingHandler();
             comment.onkeyup = changingHandler;
         }
     });
+
+    function appendDetailToQuestion(survey, options) {
+        //Create HTML elements
+
+        var question = options.htmlElement;
+        var detailContainer = document.createElement("div");
+        var header = document.createElement("div");
+        var content = document.createElement("div");
+        var detailText = document.createElement("span");
+        var detailBox = document.createElement("textarea");
+        var characterCount = document.createElement("span");
+
+        /* Append HTML elements to each other forming the following structure
+
+        <div id="detailContainer">
+            <div id="header">
+                <span id="detailText"></span>
+            </div>
+            <div id="content">
+                <textarea id="detailBox"></textarea>
+                <span id="characterCount"></span>
+            </div>
+        </div>
+        */
+
+        header.appendChild(detailText);
+        content.appendChild(detailBox);
+        content.appendChild(characterCount);
+        detailContainer.appendChild(header);
+        detailContainer.appendChild(content);
+        question.appendChild(detailContainer);
+
+        //Set Styles, Classes, and text
+
+        detailContainer.style.marginTop = "10px";
+        header.style.backgroundColor = "#d3d3d3";
+        header.style.padding = "2px";
+        header.style.cursor = "pointer";
+        header.style.fontWeight = "bold";
+        detailBox.className = "form-control";
+        detailBox.rows = 3;
+        detailBox.cols = 50;
+        detailBox.maxLength = 1000;
+        detailBox.style.resize = "vertical";
+        characterCount.style.textAlign = "left";
+
+        //Expand content if detailBox has text saved previously, and load previous detailBox text
+        if (survey.getValue(options.question.name + "-Detail") != null) {
+            detailBox.value = survey.getValue(options.question.name + "-Detail");
+            content.style.display = "block";
+            detailText.innerHTML = detailTextMinusLocalizedText;
+        } else {
+            content.style.display = "none";
+            detailText.innerHTML = detailTextAddLocalizedText;
+        }
+
+        //Add functionality to HTML elements
+
+        //Update character count onKeyUp in detailBox
+        var detailBoxOnKeyUpHandler = function () {
+            var currLength = detailBox.value.length;
+            characterCount.innerText = (1000 - currLength) + " " + charactersRemainingLocalizedText;
+        }
+        detailBoxOnKeyUpHandler();
+        detailBox.onkeyup = detailBoxOnKeyUpHandler;
+
+        //Update detail text in survey response
+        detailBox.onchange = function () {
+            survey.setValue((options.question.name + "-Detail"), detailBox.value);
+        }
+
+        //Toggle visibilty of content when header is clicked
+        header.onclick = function () {
+            if (content.style.display == "block" && detailBox.value == "") {
+                content.style.display = "none";
+                detailText.innerHTML = detailTextAddLocalizedText;
+            } else {
+                content.style.display = "block";
+                detailText.innerHTML = detailTextMinusLocalizedText;
+            }
+        };
+
+    }
+
+    //Add Detail content to questions when they are rendered in the survey
+    survey
+        .onAfterRenderQuestion
+        .add(function (survey, options) {
+            //Load JSON definition, find current question, check hasDetail
+            if (options.question.hasDetail != true) return;
+            appendDetailToQuestion(survey, options);
+        });
 
 
     $('#surveyElement').Survey({

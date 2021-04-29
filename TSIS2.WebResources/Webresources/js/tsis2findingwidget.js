@@ -1,15 +1,15 @@
 ﻿var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 
-var InspectorComments;
-var CharactersRemaining;
+var inspectorCommentsLocalizedText;
+var charactersRemainingLocalizedText;
 
 if (lang == 1036){
-    InspectorComments = "Commentaires de l'inspecteur";
-    CharactersRemaining = "caractères restants";
+    inspectorCommentsLocalizedText = "Commentaires de l'inspecteur";
+    charactersRemainingLocalizedText = "caractères restants";
 }
 else{
-    InspectorComments = "Inspector Comments";
-    CharactersRemaining = "characters remaining";
+    inspectorCommentsLocalizedText = "Inspector Comments";
+    charactersRemainingLocalizedText = "characters remaining";
 }
 
 var widget = {
@@ -53,7 +53,7 @@ var widget = {
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${InspectorComments}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000"></textarea> <span class="character-count"> </span> </div> </div>`,
+        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${inspectorCommentsLocalizedText}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"> </span> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         //el is our root element in htmlTemplate, is "div" in our case
@@ -69,7 +69,7 @@ var widget = {
         }
 
         function updateCharacterCount() {
-            characterCount.innerText = (1000 - comments.value.length) + " " + CharactersRemaining;
+            characterCount.innerText = (1000 - comments.value.length) + " " + charactersRemainingLocalizedText;
         }
         updateCharacterCount();
         comments.onkeyup = updateCharacterCount;
