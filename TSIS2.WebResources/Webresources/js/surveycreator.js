@@ -3,18 +3,20 @@ var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 var CharactersRemaining;
 var detailTextAdd;
 var detailTextMinus;
+var submitLocalizedText;
 
 if (lang == 1036) {
     CharactersRemaining = "caractères restants";
     detailTextAdd = "+ Détail";
     detailTextMinus = "- Détail";
+    submitLocalizedText = "Soumettre";
 }
 else {
     CharactersRemaining = "characters remaining";
     detailTextAdd = "+ Detail";
     detailTextMinus = "- Detail";
+    submitLocalizedText = "Submit";
 }
-
 
 // Show Designer, Test Survey, JSON Editor and additionally Logic tabs
 var options = {
@@ -52,6 +54,7 @@ var autocompleteEditor = {
         var submit = document.createElement("input");
         submit.setAttribute("type", "submit");
         submit.setAttribute("class", "btn btn-primary sv-btn svd-toolbar-button");
+        submit.value = submitLocalizedText;
         submit.onclick = function () {
         //Change to empty string first to trigger onChange event even on resubmission of same provision name. Needed to update existing provisions.
           editor.koValue("");
@@ -143,6 +146,14 @@ var surveyLocale = 'en';
 if (parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) {
     surveyLocale = 'fr';
 }
+
+//Add custom property text localization
+SurveyCreator
+    .localization
+    .locales["fr"].p.hasDetail = "Champ Détail";
+SurveyCreator
+    .localization
+    .locales["fr"].p.provision = "Dispositions";
 
 SurveyCreator
     .localization
