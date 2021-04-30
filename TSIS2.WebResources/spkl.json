@@ -229,7 +229,7 @@
         },
         {
           "uniquename": "ts_/js/buildprovisiontext.js",
-          "file": "js\\buildprovisiontext.js.js",
+          "file": "js\\buildprovisiontext.js",
           "description": "Function library to build provision text"
         }
       ]
