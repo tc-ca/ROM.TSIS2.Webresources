@@ -226,6 +226,11 @@
           "uniquename": "ovs_/js/tsis2findingwidget.js",
           "file": "js\\tsis2findingwidget.js",
           "description": "ROM TSIS 2.0 Custom Finding Widget for SurveyJS"
+        },
+        {
+          "uniquename": "ts_/js/buildprovisiontext.js",
+          "file": "js\\buildprovisiontext.js.js",
+          "description": "Function library to build provision text"
         }
       ]
     }

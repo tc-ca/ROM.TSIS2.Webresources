@@ -135,6 +135,7 @@
     <Content Include="Webresources\js\ace.min.js" />
     <Content Include="Webresources\js\autocomplete.js" />
     <Content Include="Webresources\js\BookableResourceBooking.js" />
+    <Content Include="Webresources\js\buildprovisiontext.js" />
     <Content Include="Webresources\js\ckeditor.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
     <Content Include="Webresources\js\Incident.js" />
