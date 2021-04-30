@@ -6,9 +6,9 @@ var detailTextMinusLocalizedText;
 var submitLocalizedText;
 
 if (lang == 1036) {
-    charactersRemainingLocalizedText = "caractËres restants";
-    detailTextAddLocalizedText = "+ DÈtail";
-    detailTextMinusLocalizedText = "- DÈtail";
+    charactersRemainingLocalizedText = "caract√®res restants";
+    detailTextAddLocalizedText = "+ D√©tail";
+    detailTextMinusLocalizedText = "- D√©tail";
     submitLocalizedText = "Soumettre";
 }
 else {
@@ -150,7 +150,7 @@ if (parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) {
 //Add custom property text localization
 SurveyCreator
     .localization
-    .locales["fr"].p.hasDetail = "Champ DÈtail";
+    .locales["fr"].p.hasDetail = "Champ d√©tail ?";
 SurveyCreator
     .localization
     .locales["fr"].p.provision = "Dispositions";
