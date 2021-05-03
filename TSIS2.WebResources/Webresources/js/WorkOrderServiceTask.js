@@ -29,12 +29,12 @@ var ROM;
             UpdateQuestionnaireDefinition(eContext);
         }
         WorkOrderServiceTask.onLoad = onLoad;
-        //If Status Reason is Active, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
+        //If Status Reason is New, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
         function UpdateQuestionnaireDefinition(eContext) {
             var Form = eContext.getFormContext();
             var statusReason = Form.getAttribute("statuscode").getValue();
-            //If Status Reason is Active
-            if (statusReason == 1) {
+            //If Status Reason is New
+            if (statusReason == 918640005) {
                 var taskType = Form.getAttribute("msdyn_tasktype").getValue();
                 if (taskType != null) {
                     var taskTypeID = taskType[0].id;
