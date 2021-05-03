@@ -1,0 +1,38 @@
+<html>
+<head>
+    <title>Provision Render</title>
+    <script src="../js/buildprovisiontext.js"></script>
+</head>
+<body style="overflow-wrap: break-word;">
+    <div id="div1">
+
+    </div>
+    <script language="javascript">
+        var globalContext = parent.Xrm.Utility.getGlobalContext();
+        var langId = globalContext.userSettings.languageId;
+        var _ParentRecordId = parent.Xrm.Page.data.entity.getId().replace("{", "").replace("}", "");
+        var provisionText = "";
+        parent.Xrm.WebApi.online.retrieveMultipleRecords("ovs_workorderservicetaskprovision", "?$select=_ovs_provisionid_value&$filter=_ovs_workorderservicetaskid_value eq " + _ParentRecordId + "&$orderby=ovs_name asc").then(
+           async function success(results) {
+                for (var i = 0; i < results.entities.length; i++) {
+                    var _ovs_provisionid_value = results.entities[i]["_ovs_provisionid_value"];
+                    parent.Xrm.WebApi.online.retrieveRecord("qm_rclegislation", _ovs_provisionid_value, "?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value").then(
+                        async  function success(result) {
+                            provisionText += await buildProvisionText(result, langId);
+                            var span = document.createElement("Span");
+                            span.innerHTML = provisionText;
+                            document.getElementById("div1").appendChild(span);
+                        },
+                        function (error) {
+                            parent.Xrm.Utility.alertDialog(error.message);
+                        }
+                    );
+                }
+            },
+            function (error) {
+                parent.Xrm.Utility.alertDialog(error.message);
+            }
+        );
+    </script>
+</body>
+</html>
