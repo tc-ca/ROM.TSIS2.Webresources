@@ -7,10 +7,11 @@ var ROM;
         // EVENTS
         function onLoad(eContext) {
             var form = eContext.getFormContext();
-            switch (form.ui.getFormType()) {
-                case 1:
-                    setRegion(eContext);
-                    break;
+            if (form.ui.getFormType() == 1) {
+                setRegion(eContext);
+            }
+            else if (form.ui.getFormType() == 2 || form.ui.getFormType() == 3 || form.ui.getFormType() == 4) {
+                injectCSS(form);
             }
             var regionAttribute = form.getAttribute("ovs_region");
             if (regionAttribute != null && regionAttribute != undefined) {
@@ -190,6 +191,23 @@ var ROM;
                 var alertOptions = { height: 120, width: 260 };
                 Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
             });
+        }
+        function injectCSS(form) {
+            var path = "./WebResources/ts_/css/Incident.css";
+            var head;
+            if (frameElement != null && frameElement.parentElement != null && frameElement.parentElement.parentElement) {
+                head = frameElement.parentElement.parentElement.children[0];
+            }
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = path;
+            link.media = 'all';
+            head.appendChild(link);
+            //Replace header title with ID
+            var style = document.createElement('style');
+            style.innerText = "h1[data-id=\"header_title\"]:after { visibility: visible; position: absolute; top: 0; left: 0; content: \"" + form.getAttribute("ticketnumber").getValue() + "\";}";
+            head.appendChild(style);
         }
     })(Incident = ROM.Incident || (ROM.Incident = {}));
 })(ROM || (ROM = {}));

@@ -4,10 +4,12 @@ namespace ROM.Incident {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
 
-        switch (form.ui.getFormType()) {
-            case 1:
-                setRegion(eContext);
-            break;
+
+        if(form.ui.getFormType() == 1){
+            setRegion(eContext);
+        }
+        else if(form.ui.getFormType() == 2 || form.ui.getFormType() == 3 || form.ui.getFormType() == 4){
+            injectCSS(form);
         }
 
         const regionAttribute = form.getAttribute("ovs_region");
@@ -228,4 +230,24 @@ namespace ROM.Incident {
         );
     }
 
+    function injectCSS(form){
+        var path = "./WebResources/ts_/css/Incident.css";
+        var head;
+        if(frameElement != null && frameElement.parentElement != null && frameElement.parentElement.parentElement){
+            head = frameElement.parentElement.parentElement.children[0];
+        }
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = path;
+        link.media = 'all';
+        head.appendChild(link);
+
+
+        //Replace header title with ID
+        var style = document.createElement('style');
+        style.innerText = `h1[data-id="header_title"]:after { visibility: visible; position: absolute; top: 0; left: 0; content: "${form.getAttribute("ticketnumber").getValue()}";}`
+        head.appendChild(style);
+
+    }
   }

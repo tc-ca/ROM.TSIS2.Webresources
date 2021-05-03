@@ -1,0 +1,15 @@
+/* Remove the inner border of customer details */
+div[data-id="customerpane_qfc-QuickFormContainer"] {
+    border: none;
+}
+  
+/* Remove the heading of customer details quickview */
+div[data-id^="customerpane_qfc-"] div[role="heading"]{
+    display:none
+}
+
+/* Hide the header title */
+h1[data-id="header_title"] {
+    visibility: hidden;
+    position: relative;
+}
