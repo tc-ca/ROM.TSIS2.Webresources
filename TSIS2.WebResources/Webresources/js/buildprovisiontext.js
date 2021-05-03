@@ -1,20 +1,12 @@
-//provisionName is the string value of the legislation name you wish to build the text for (ex: "SATR 4.1 (1)")
-//lang is the integer value of the language you want the text to be built in (1033 for english, 1036 for french)
-//Will return the the provision family text as a string of html
-async function buildProvisionText(provisionName, lang) {
+//provision parameter is a retrieved qm_legislation entity with the following selected fields (qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value)
+//Retrieval code example: Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${provisionName}'`)
+//lang is the language id. 1033 for english, 1036 for french
+async function buildProvisionText(provision, lang) {
     var provisionText = "";
-    parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${provisionName}'`).then(
-        async function success(result) {
-            if (result.entities.length > 0) {
-                provision = result.entities[0];
-                provisionText += await gatherAncestorProvisionText(provision, lang);
-                provisionText += await gatherDescendentProvisionText(provision, lang);
-                return provisionText;
-            }
-        },
-        function (error) {
-            console.log(error.message);
-        });
+    provision.qm_name = `<mark>${provision.qm_name}</mark>`;
+    provisionText += await gatherAncestorProvisionText(provision, lang);
+    provisionText += await gatherDescendentProvisionText(provision, lang);
+    return provisionText;
 }
 
 async function gatherAncestorProvisionText(provision, lang) {
