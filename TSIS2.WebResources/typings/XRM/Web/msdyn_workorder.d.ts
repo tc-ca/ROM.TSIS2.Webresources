@@ -132,6 +132,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_Country_bind$tc_countries?: string | null;
   ts_Region_bind$territories?: string | null;
+  ts_Site_bind$msdyn_functionallocations?: string | null;
 }
 interface msdyn_workorder_Create extends msdyn_workorder {
 }
@@ -251,6 +252,7 @@ interface msdyn_workorder_Select {
   traversedpath: WebAttribute<msdyn_workorder_Select, { traversedpath: string | null }, {  }>;
   ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
+  ts_site_guid: WebAttribute<msdyn_workorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_workorder_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_workorder_Select, { versionnumber: number | null }, {  }>;
 }
@@ -368,6 +370,7 @@ interface msdyn_workorder_Filter {
   traversedpath: string;
   ts_country_guid: XQW.Guid;
   ts_region_guid: XQW.Guid;
+  ts_site_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -481,6 +484,7 @@ interface msdyn_workorder_FormattedResult {
   transactioncurrencyid_formatted?: string;
   ts_country_formatted?: string;
   ts_region_formatted?: string;
+  ts_site_formatted?: string;
 }
 interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_Relationships {
   "@odata.etag": string;
@@ -536,6 +540,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   transactioncurrencyid_guid: string | null;
   ts_country_guid: string | null;
   ts_region_guid: string | null;
+  ts_site_guid: string | null;
 }
 interface msdyn_workorder_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
