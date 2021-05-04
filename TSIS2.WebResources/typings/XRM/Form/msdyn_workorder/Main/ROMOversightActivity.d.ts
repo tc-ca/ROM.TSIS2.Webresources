@@ -151,6 +151,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
+      get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -258,6 +259,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
+      get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
       get(name: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
       get(name: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
@@ -354,6 +356,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
+    getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "PhysicalAssets"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
@@ -456,6 +459,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
+    getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
     getControl(controlName: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
     getControl(controlName: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;

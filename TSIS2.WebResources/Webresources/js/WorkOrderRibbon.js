@@ -2,7 +2,7 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
     const formContext = primaryControl;
 
     const caseId = Xrm.Page.data.entity.getId().replace(/({|})/g,'');
-        
+
     const regionAttribute = formContext.getAttribute("ovs_region");
     const countryAttribute = formContext.getAttribute("ts_country");
     const regulatedEntityAttribute = formContext.getAttribute("ovs_regulatedentity");
@@ -20,7 +20,7 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
          countryCondition = `<condition attribute="ts_country" operator="eq" value="${countryAttributeValue[0].id}" />`;
     }
 
-    var lookupOptions = 
+    var lookupOptions =
     {
         defaultEntityType: "msdyn_workorder",
         entityTypes: ["msdyn_workorder"],
@@ -29,7 +29,7 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
         disableMru: true,
         filters: [
             {
-                filterXml: `<filter type="and">` + 
+                filterXml: `<filter type="and">` +
                     `<condition attribute="msdyn_serviceterritory" operator="eq" value="${regionAttributeValue[0].id}" />` +
                     countryCondition +
                     `<condition attribute="ovs_regulatedentity" operator="eq" value="${regulatedEntityAttributeValue[0].id}" />` +
@@ -46,14 +46,14 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
         console.log(result);
         for (var i = 0; i < result.length; i++) {
             var req = new XMLHttpRequest();
-            
+
             req.open("PATCH", formContext.context.getClientUrl() + "/api/data/v9.0/" + "msdyn_workorders" + "(" + result[i].id.replace(/({|})/g,'') + ")");
             req.setRequestHeader("Content-Type", "application/json");
             req.setRequestHeader("Accept", "application/json");
             req.setRequestHeader("OData-MaxVersion", "4.0");
             req.setRequestHeader("OData-Version", "4.0");
 
-            var payload = 
+            var payload =
                 {
                     "msdyn_servicerequest@odata.bind" : formContext.context.getClientUrl() + "/api/data/v9.0/" + "incidents" + "(" + caseId + ")"
                 };
@@ -66,7 +66,6 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
     });
 }
 
-
 function ActivateWorkOrder(primaryControl) {
     const formContext = primaryControl;
 
@@ -75,11 +74,11 @@ function ActivateWorkOrder(primaryControl) {
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
         function (success) {
             if (success.confirmed){
-                
+
                 formContext.getAttribute("statecode").setValue(0);
                 formContext.getAttribute("statuscode").setValue(1);
                 formContext.getAttribute("msdyn_systemstatus").setValue(690970003); //Open - Completed
-            
+
                 openWorkOrderServiceTasks(formContext);
                 openBookableResourceBookings(formContext);
 
@@ -96,7 +95,7 @@ function ActivateWorkOrder(primaryControl) {
 }
 
 function openWorkOrderServiceTasks(formContext) {
-    workOrderServiceTaskData = 
+    workOrderServiceTaskData =
     {
         "statecode" :  0,           //closed -> 1
         "statuscode" : 918640002    //closed -> 918640003
@@ -121,7 +120,7 @@ function openWorkOrderServiceTasks(formContext) {
 }
 
 function openBookableResourceBookings(formContext) {
-    bookableResourceBookingData = 
+    bookableResourceBookingData =
             {
                 "statecode" :  0,           //closed -> 1
                 "statuscode" : 1            //closed -> 2
@@ -145,23 +144,23 @@ function openBookableResourceBookings(formContext) {
 }
 
 function setWorkOrderServiceTasksView(formContext){
-    var activeWorkOrderServiceTasksView = 
+    var activeWorkOrderServiceTasksView =
     {
         entityType: "savedquery",
         id: "{C9FD8F4D-8184-4DDB-A31A-89E66E8E710E}",
         name: "Active Work Order Service Tasks"
     }
-    
+
     formContext.getControl("workorderservicetasksgrid").getViewSelector().setCurrentView(activeWorkOrderServiceTasksView);
 }
 
 function setBookableResourceBookingsView(formContext){
-    var activeBookingsView = 
+    var activeBookingsView =
     {
         entityType: "savedquery",
         id: "{8AF53D0E-07FE-49D4-BBBA-CA524DD6551B}",
         name: "Active Resource Bookings (Field Service Information)"
-    };   
+    };
 
     formContext.getControl("bookings").getViewSelector().setCurrentView(activeBookingsView);
 }

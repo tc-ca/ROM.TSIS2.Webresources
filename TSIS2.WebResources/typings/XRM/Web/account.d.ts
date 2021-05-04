@@ -110,7 +110,6 @@ interface Account_Base extends WebEntity {
   overriddencreatedon?: Date | null;
   ovs_accountnameenglish?: string | null;
   ovs_accountnamefrench?: string | null;
-  ovs_iisid?: string | null;
   ovs_legalname?: string | null;
   ovs_naicscode?: string | null;
   ovs_primarycontactemail?: string | null;
@@ -326,7 +325,6 @@ interface Account_Select {
   overriddencreatedon: WebAttribute<Account_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
   ovs_accountnameenglish: WebAttribute<Account_Select, { ovs_accountnameenglish: string | null }, {  }>;
   ovs_accountnamefrench: WebAttribute<Account_Select, { ovs_accountnamefrench: string | null }, {  }>;
-  ovs_iisid: WebAttribute<Account_Select, { ovs_iisid: string | null }, {  }>;
   ovs_legalname: WebAttribute<Account_Select, { ovs_legalname: string | null }, {  }>;
   ovs_naicscode: WebAttribute<Account_Select, { ovs_naicscode: string | null }, {  }>;
   ovs_primarycontactemail: WebAttribute<Account_Select, { ovs_primarycontactemail: string | null }, {  }>;
@@ -503,7 +501,6 @@ interface Account_Filter {
   overriddencreatedon: Date;
   ovs_accountnameenglish: string;
   ovs_accountnamefrench: string;
-  ovs_iisid: string;
   ovs_legalname: string;
   ovs_naicscode: string;
   ovs_primarycontactemail: string;

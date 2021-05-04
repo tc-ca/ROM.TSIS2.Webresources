@@ -4,4 +4,5 @@ declare const enum msdyn_workorderservicetask_statuscode {
   Complete = 918640002,
   Closed = 918640003,
   InProgress = 918640004,
+  New = 918640005,
 }
