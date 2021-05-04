@@ -20,7 +20,7 @@
                         async  function success(result) {
                             provisionText += await buildProvisionText(result, langId);
                             var span = document.createElement("Span");
-                            span.innerHTML = provisionText;
+                            span.innerHTML = provisionText + "<br><br>";
                             document.getElementById("div1").appendChild(span);
                         },
                         function (error) {
