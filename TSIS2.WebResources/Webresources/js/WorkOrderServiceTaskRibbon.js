@@ -57,7 +57,7 @@ function surveyHasErrors(primaryControl) {
         var hasError = false;
         for(var i = 0; i < win.survey.visiblePages.length; i ++) {
             //the first parameter, fireCallback, is set to true to show errors in UI
-            hasError = win.survey.visiblePages[i].hasErrors(true) || hasError; 
+            hasError = win.survey.visiblePages[i].hasErrors(true) || hasError;
         }
         if (hasError) {
             var alertStrings = {

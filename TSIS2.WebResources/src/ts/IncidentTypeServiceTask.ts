@@ -36,6 +36,7 @@ namespace ROM.IncidentTypeServiceTask {
             }
         );
     }
+
     // Get surveyJS locale
     function getSurveyLocal(): string {
         const languageCode = Xrm.Utility.getGlobalContext().userSettings.languageId;
