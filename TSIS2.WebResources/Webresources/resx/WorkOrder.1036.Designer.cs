@@ -61,20 +61,74 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filtered Activity Type (FR).
+        /// </summary>
+        internal static string FilteredActivityType {
+            get {
+                return ResourceManager.GetString("FilteredActivityType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered Asset Categories (FR).
+        /// </summary>
+        internal static string FilteredAssetCategories {
+            get {
+                return ResourceManager.GetString("FilteredAssetCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered Assets (FR).
+        /// </summary>
+        internal static string FilteredAssets {
+            get {
+                return ResourceManager.GetString("FilteredAssets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered Cases (FR).
+        /// </summary>
+        internal static string FilteredCases {
+            get {
+                return ResourceManager.GetString("FilteredCases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered Countries (FR).
+        /// </summary>
+        internal static string FilteredCountries {
+            get {
+                return ResourceManager.GetString("FilteredCountries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered Locations (FR).
+        /// </summary>
+        internal static string FilteredLocations {
+            get {
+                return ResourceManager.GetString("FilteredLocations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered Operations (FR).
+        /// </summary>
+        internal static string FilteredOperations {
+            get {
+                return ResourceManager.GetString("FilteredOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filtered Operation Types (FR).
         /// </summary>
         internal static string FilteredOperationTypes {
             get {
                 return ResourceManager.GetString("FilteredOperationTypes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Filtered Regulated Entities (FR).
-        /// </summary>
-        internal static string FilteredRegulatedEntities {
-            get {
-                return ResourceManager.GetString("FilteredRegulatedEntities", resourceCulture);
             }
         }
         
@@ -86,40 +140,13 @@ namespace TSIS2.WebResources.Webresources.resx {
                 return ResourceManager.GetString("FilteredSites", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Filtered Assets (FR).
+        ///   Looks up a localized string similar to Filtered Stakeholders (FR).
         /// </summary>
-        internal static string FilteredAssets {
+        internal static string FilteredStakeholders {
             get {
-                return ResourceManager.GetString("FilteredAssets", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Filtered AssetCategories (FR).
-        /// </summary>
-        internal static string FilteredAssetCategories {
-            get {
-                return ResourceManager.GetString("FilteredAssetCategories", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Filtered Locations (FR).
-        /// </summary>
-        internal static string FilteredLocations {
-            get {
-                return ResourceManager.GetString("FilteredLocations", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Filtered Cases (FR).
-        /// </summary>
-        internal static string FilteredCases {
-            get {
-                return ResourceManager.GetString("FilteredCases", resourceCulture);
+                return ResourceManager.GetString("FilteredStakeholders", resourceCulture);
             }
         }
     }
