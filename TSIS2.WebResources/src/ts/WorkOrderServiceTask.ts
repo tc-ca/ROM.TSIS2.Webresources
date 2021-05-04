@@ -19,6 +19,7 @@ namespace ROM.WorkOrderServiceTask {
         wrCtrl.setVisible(true);
         InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
     }
+
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
 
@@ -27,12 +28,13 @@ namespace ROM.WorkOrderServiceTask {
         }
         UpdateQuestionnaireDefinition(eContext);
     }
-    //If Status Reason is Active, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
+
+    //If Status Reason is New, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
     function UpdateQuestionnaireDefinition(eContext: Xrm.ExecutionContext<any, any>) {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
         const statusReason = Form.getAttribute("statuscode").getValue();
-        //If Status Reason is Active
-        if (statusReason == 1) {
+        //If Status Reason is New
+        if (statusReason == 918640005) {
             const taskType = Form.getAttribute("msdyn_tasktype").getValue();
             if (taskType != null) {
                 const taskTypeID = taskType[0].id;
@@ -47,6 +49,7 @@ namespace ROM.WorkOrderServiceTask {
             ToggleQuestionnaire(eContext);
         }
     }
+
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         // Get formContext
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
@@ -67,6 +70,7 @@ namespace ROM.WorkOrderServiceTask {
         // Get the web resource inner content window
         CompleteQuestionnaire(wrCtrl);
     }
+
     // Get surveyJS locale
     function getSurveyLocal(): string {
         const languageCode = Xrm.Utility.getGlobalContext().userSettings.languageId;
