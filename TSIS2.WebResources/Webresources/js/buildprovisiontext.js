@@ -82,12 +82,31 @@ async function getParentProvision(provision) {
 
 async function getSiblingProvisions(provision) {
     var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,qm_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision._qm_rcparentlegislationid_value}'`);
-    //results.entities.sort(function(a,b){return a.qm_ordernbr - b.qm_ordernbr});
-    return results.entities;
+    return sortProvisions(results.entities);
 }
 
 async function getChildrenProvisions(provision) {
     var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,qm_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision.qm_rclegislationid}'`);
-    //results.entities.sort(function(a,b){return a.qm_ordernbr - b.qm_ordernbr});
-    return results.entities;
-} 
+    return sortProvisions(results.entities);
+}
+
+//Returns a sorted array of provisions using the provision's order number.
+//Places provisions with no order number at the end without changing the order they came.
+function sortProvisions(provisionArray) {
+    var hasOrderNumber = [];
+    var noOrderNumber = [];
+
+    //Split the provisions based on if they have an order number to sort with
+    provisionArray.forEach(provision => {
+        if (provision.qm_ordernbr != null) {
+            hasOrderNumber.push(provision);
+        } else {
+            noOrderNumber.push(provision);
+        }
+    });
+    //Sort the provisions with order numbers
+    hasOrderNumber.sort(function (a, b) { return a.qm_ordernbr - b.qm_ordernbr });
+    //Add the unsorted provisions to the end of the sorted array
+    sortedProvisions = hasOrderNumber.concat(noOrderNumber);
+    return sortedProvisions;
+}
