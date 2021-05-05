@@ -181,6 +181,7 @@ namespace ROM.WorkOrder {
                         setOperationTypeFilteredView(form, regionAttributeValue[0].id, "");
 
                     } else {
+                        form.getControl("ts_country").setDisabled(false);
                         setCountryFilteredView(form);
                     }
 
