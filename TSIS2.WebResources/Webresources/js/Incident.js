@@ -200,7 +200,7 @@ var ROM;
                 body.setAttribute("entity", "case");
                 console.log("ok");
             }
-            var path = "./WebResources/ts_/css/Incident.css";
+            var path = "./WebResources/ovs_/css/Incident.css";
             var head;
             if (frameElement != null && frameElement.parentElement != null && frameElement.parentElement.parentElement) {
                 head = frameElement.parentElement.parentElement.children[0];
