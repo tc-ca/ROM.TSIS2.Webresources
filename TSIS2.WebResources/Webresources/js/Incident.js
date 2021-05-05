@@ -9,16 +9,19 @@ var ROM;
             var form = eContext.getFormContext();
             //Set required fields
             form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
-            switch (form.ui.getFormType()) {
-                case 1:
-                    setRegion(eContext);
-                    form.getControl("customerid").setDisabled(true);
-                    form.getControl("msdyn_functionallocation").setDisabled(true);
-                    break;
-                default:
-                    form.getControl("customerid").setDisabled(false);
-                    form.getControl("msdyn_functionallocation").setDisabled(false);
-                    break;
+            if (form.ui.getFormType() == 1) {
+                setRegion(eContext);
+                form.getControl("customerid").setDisabled(true);
+                form.getControl("msdyn_functionallocation").setDisabled(true);
+            }
+            else if (form.ui.getFormType() == 2 || form.ui.getFormType() == 3 || form.ui.getFormType() == 4) {
+                injectCSS(form);
+                form.getControl("customerid").setDisabled(true);
+                form.getControl("msdyn_functionallocation").setDisabled(true);
+            }
+            else {
+                form.getControl("customerid").setDisabled(true);
+                form.getControl("msdyn_functionallocation").setDisabled(true);
             }
         }
         Incident.onLoad = onLoad;
@@ -190,6 +193,24 @@ var ROM;
             var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="tc_country"><attribute name="tc_countryid" /><attribute name="tc_name" /><order attribute="tc_name" descending="false" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="msdyn_functionallocation" from="ts_country" to="tc_countryid" link-type="inner" alias="ae"><filter type="and"><condition attribute="ts_region" operator="eq" value="{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}" /></filter></link-entity></entity></fetch>';
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="tc_countryid"><cell name="tc_name" width="200" /></row></grid>';
             form.getControl("ts_country").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+        }
+        function injectCSS(form) {
+            var body = document.querySelector('h1[data-id="header_title"]');
+            if (body != null) {
+                body.setAttribute("entity", "case");
+                console.log("ok");
+            }
+            var path = "./WebResources/ts_/css/Incident.css";
+            var head;
+            if (frameElement != null && frameElement.parentElement != null && frameElement.parentElement.parentElement) {
+                head = frameElement.parentElement.parentElement.children[0];
+            }
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = path;
+            link.media = 'all';
+            head.appendChild(link);
         }
     })(Incident = ROM.Incident || (ROM.Incident = {}));
 })(ROM || (ROM = {}));

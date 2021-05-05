@@ -4,7 +4,8 @@
     "target": "es5",
     "module": "commonjs",
     "lib": [
-      "es6, dom"
+      "es6",
+      "dom"
     ],
     "allowJs": true,
     "outDir": "Webresources/js",
