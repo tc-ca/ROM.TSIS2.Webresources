@@ -153,6 +153,12 @@ SurveyCreator
     .locales["fr"].p.hasDetail = "Champ détail ?";
 SurveyCreator
     .localization
+    .locales["fr"].p.detailLabelEn = "Description champ détail En";
+SurveyCreator
+    .localization
+    .locales["fr"].p.detailLabelFr = "Description champ détail Fr";
+SurveyCreator
+    .localization
     .locales["fr"].p.provision = "Dispositions";
 
 SurveyCreator
@@ -188,7 +194,7 @@ creator
     .toolbox
     .orderedQuestions = ["radiogroup", "checkbox", "dropdown", "finding", "comment", "image", "imagepicker", "file", "boolean", "text", "multipletext", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic" , "flowpanel"];
 
-//add hasDetail property to all questions in hasDetailQuestions array
+//add hasDetail and detailLabel properties to all questions in hasDetailQuestions array
 var hasDetailQuestions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
 hasDetailQuestions.forEach(function (questionName) {
     Survey
@@ -198,11 +204,41 @@ hasDetailQuestions.forEach(function (questionName) {
             category: "general",
             default: true
         });
+    Survey
+        .Serializer
+        .addProperty(questionName, {
+            name: "detailLabelEn:string",
+            category: "general",
+            dependsOn: ["hasDetail"],
+            visibleIf: function (obj) {
+                return (obj.hasDetail == true);
+            },
+            default: "Detail"
+        });
+    Survey
+        .Serializer
+        .addProperty(questionName, {
+            name: "detailLabelFr:string",
+            category: "general",
+            dependsOn: ["hasDetail"],
+            visibleIf: function (obj) {
+                return (obj.hasDetail == true);
+            },
+            default: "Détail"
+        });
 });
 
 
 
 function appendDetailToQuestion(survey, options) {
+    var detailSurveyId = options.question.name + "-Detail";
+    var detailLabel = "";
+    if (lang == 1036) {
+        detailLabel = options.question.detailLabelfr || "Détail";
+    } else {
+        detailLabel = options.question.detailLabelEn || "Detail";
+    }
+
     //Create HTML elements
 
     var question = options.htmlElement;
@@ -210,6 +246,7 @@ function appendDetailToQuestion(survey, options) {
     var header = document.createElement("div");
     var content = document.createElement("div");
     var detailText = document.createElement("span");
+    var detailSymbol = document.createElement("span");
     var detailBox = document.createElement("textarea");
     var characterCount = document.createElement("span");
 
@@ -217,6 +254,7 @@ function appendDetailToQuestion(survey, options) {
 
     <div id="detailContainer">
         <div id="header">
+            <span id="detailSymbol"></span>
             <span id="detailText"></span>
         </div>
         <div id="content">
@@ -226,6 +264,7 @@ function appendDetailToQuestion(survey, options) {
     </div>
     */
 
+    header.appendChild(detailSymbol);
     header.appendChild(detailText);
     content.appendChild(detailBox);
     content.appendChild(characterCount);
@@ -246,15 +285,16 @@ function appendDetailToQuestion(survey, options) {
     detailBox.maxLength = 1000;
     detailBox.style.resize = "vertical";
     characterCount.style.textAlign = "left";
+    detailText.innerHTML = detailLabel;
 
     //Expand content if detailBox has text saved previously, and load previous detailBox text
-    if (survey.getValue(options.question.name + "-Detail") != null) {
-        detailBox.value = survey.getValue(options.question.name + "-Detail");
+    if (survey.getValue(detailSurveyId) != null) {
+        detailBox.value = survey.getValue(detailSurveyId);
         content.style.display = "block";
-        detailText.innerHTML = detailTextMinusLocalizedText;
+        detailSymbol.innerHTML = "- ";
     } else {
         content.style.display = "none";
-        detailText.innerHTML = detailTextAddLocalizedText;
+        detailSymbol.innerHTML = "+ ";
     }
 
     //Add functionality to HTML elements
@@ -276,10 +316,10 @@ function appendDetailToQuestion(survey, options) {
     header.onclick = function () {
         if (content.style.display == "block" && detailBox.value == "") {
             content.style.display = "none";
-            detailText.innerHTML = detailTextAddLocalizedText;
+            detailSymbol.innerHTML = "+ ";
         } else {
             content.style.display = "block";
-            detailText.innerHTML = detailTextMinusLocalizedText;
+            detailSymbol.innerHTML = "- ";
         }
     };
 
@@ -291,6 +331,18 @@ function appendDetailToQuestion(survey, options) {
             detailContainer.style.display = "none";
         }
     });
+
+    //Change detailText text when detailLabel property of current language is changed
+    if (lang == 1036) {
+        options.question.registerFunctionOnPropertyValueChanged("detailLabelFr", function () {
+            detailText.innerHTML = options.question.detailLabelFr
+        });
+    } else {
+        options.question.registerFunctionOnPropertyValueChanged("detailLabelEn", function () {
+            detailText.innerHTML = options.question.detailLabelEn
+        });
+    }
+    
 }
 
 //Add Detail content to questions when they are rendered in the survey designer and test survey
