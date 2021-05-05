@@ -123,6 +123,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="jest.config.js" />
     <Content Include="Webresources\css\bootstrap.min.css" />
     <Content Include="Webresources\css\autocomplete.css" />
     <Content Include="Webresources\css\modern.css" />
@@ -212,6 +213,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="package.json" />
     <None Include="packages.config" />
     <Content Include="spkl\unpack.bat" />
     <Content Include="spkl\pack+import.bat" />
@@ -232,10 +234,12 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config" />
+    <Content Include="yarn.lock" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\Account.ts" />
     <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
+    <TypeScriptCompile Include="src\ts\Contact.ts" />
     <TypeScriptCompile Include="src\ts\Incident.ts" />
     <TypeScriptCompile Include="src\ts\IncidentQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
@@ -244,6 +248,7 @@
     <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderServiceTask.ts" />
+    <TypeScriptCompile Include="test\Contact.test.ts" />
     <TypeScriptCompile Include="typings\XRM\dg.xrmquery.web.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\InteractionCentricDashboard\AccountsDashboard.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\Main\Account.d.ts" />

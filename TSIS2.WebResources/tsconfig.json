@@ -3,8 +3,9 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
+    "moduleResolution": "node",
     "lib": [
-      "es6"
+      "es6", "es5", "dom"
     ],
     "allowJs": true,
     "outDir": "Webresources/js",
@@ -12,11 +13,21 @@
     "noImplicitAny": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./typings/**/*"
+    ],
+    "rootDirs": [
+      "./src/ts",
+      "./tests"
+    ]
+ },
   "include": [
     "./src/ts/**/*",
     "./typings/**/*"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
