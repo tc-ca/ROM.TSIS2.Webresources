@@ -3,6 +3,7 @@ namespace ROM.Incident {
     // EVENTS
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
+        const regionAttribute = form.getAttribute("ovs_region");
 
         //Set required fields
         form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
@@ -15,6 +16,18 @@ namespace ROM.Incident {
                 break;
 
             default:
+                if (regionAttribute != null && regionAttribute != undefined) {
+                    const regionAttributeValue = regionAttribute.getValue();
+                    if (regionAttributeValue != null && regionAttributeValue != undefined) {
+                        if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
+                            form.getControl("ts_country").setVisible(true);
+                            form.getAttribute("ts_country").setRequiredLevel("required");
+                        }
+                    }
+                    else {
+                        form.getControl("ts_country").setVisible(false);
+                    }
+                }
                 form.getControl("customerid").setDisabled(false);
                 form.getControl("msdyn_functionallocation").setDisabled(false);
                 break;

@@ -7,6 +7,7 @@ var ROM;
         // EVENTS
         function onLoad(eContext) {
             var form = eContext.getFormContext();
+            var regionAttribute = form.getAttribute("ovs_region");
             //Set required fields
             form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
             switch (form.ui.getFormType()) {
@@ -16,6 +17,18 @@ var ROM;
                     form.getControl("msdyn_functionallocation").setDisabled(true);
                     break;
                 default:
+                    if (regionAttribute != null && regionAttribute != undefined) {
+                        var regionAttributeValue = regionAttribute.getValue();
+                        if (regionAttributeValue != null && regionAttributeValue != undefined) {
+                            if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
+                                form.getControl("ts_country").setVisible(true);
+                                form.getAttribute("ts_country").setRequiredLevel("required");
+                            }
+                        }
+                        else {
+                            form.getControl("ts_country").setVisible(false);
+                        }
+                    }
                     form.getControl("customerid").setDisabled(false);
                     form.getControl("msdyn_functionallocation").setDisabled(false);
                     break;
