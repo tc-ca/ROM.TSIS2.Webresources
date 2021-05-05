@@ -10,8 +10,7 @@ if (lang == 1036) {
     MarkCompleteValidationTitle = "Sondage Incomplet";
     MarkCompleteConfirmationText = "En cliquant sur OK, le statut du sondage passera à Terminé et les réponses seront enregistrées.";
     MarkCompleteConfirmationTitle = "Confirmation - Sondage complété";
-}
-else {
+} else {
     MarkCompleteValidationText = "All required questions in the survey must be answered before the survey can be Marked Complete.";
     MarkCompleteValidationTitle = "Survey Incomplete";
     MarkCompleteConfirmationText = "By clicking OK, the survey status will change to Complete and the survey answers will be saved.";
@@ -42,9 +41,7 @@ function isSystemAdministrator() {
     var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
     var enable = false;
     roles.forEach(function (item) {
-
         if (item.name == "System Administrator") enable = true;
-
     });
     return enable;
 }
@@ -57,7 +54,7 @@ function surveyHasErrors(primaryControl) {
         var hasError = false;
         for(var i = 0; i < win.survey.visiblePages.length; i ++) {
             //the first parameter, fireCallback, is set to true to show errors in UI
-            hasError = win.survey.visiblePages[i].hasErrors(true) || hasError; 
+            hasError = win.survey.visiblePages[i].hasErrors(true) || hasError;
         }
         if (hasError) {
             var alertStrings = {
