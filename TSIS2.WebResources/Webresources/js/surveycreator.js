@@ -7,14 +7,10 @@ var submitLocalizedText;
 
 if (lang == 1036) {
     charactersRemainingLocalizedText = "caractères restants";
-    detailTextAddLocalizedText = "+ Détail";
-    detailTextMinusLocalizedText = "- Détail";
     submitLocalizedText = "Soumettre";
 }
 else {
     charactersRemainingLocalizedText = "characters remaining";
-    detailTextAddLocalizedText = "+ Detail";
-    detailTextMinusLocalizedText = "- Detail";
     submitLocalizedText = "Submit";
 }
 
@@ -153,10 +149,10 @@ SurveyCreator
     .locales["fr"].p.hasDetail = "Champ détail ?";
 SurveyCreator
     .localization
-    .locales["fr"].p.detailLabelEn = "Description champ détail En";
+    .locales["fr"].p.detailEnglishText = "Description champ détail englais";
 SurveyCreator
     .localization
-    .locales["fr"].p.detailLabelFr = "Description champ détail Fr";
+    .locales["fr"].p.detailFrenchText = "Description champ détail français";
 SurveyCreator
     .localization
     .locales["fr"].p.provision = "Dispositions";
@@ -194,7 +190,7 @@ creator
     .toolbox
     .orderedQuestions = ["radiogroup", "checkbox", "dropdown", "finding", "comment", "image", "imagepicker", "file", "boolean", "text", "multipletext", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic" , "flowpanel"];
 
-//add hasDetail and detailLabel properties to all questions in hasDetailQuestions array
+//add hasDetail and detail Text properties to all questions in hasDetailQuestions array
 var hasDetailQuestions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
 hasDetailQuestions.forEach(function (questionName) {
     Survey
@@ -207,7 +203,7 @@ hasDetailQuestions.forEach(function (questionName) {
     Survey
         .Serializer
         .addProperty(questionName, {
-            name: "detailLabelEn:string",
+            name: "detailEnglishText:string",
             category: "general",
             dependsOn: ["hasDetail"],
             visibleIf: function (obj) {
@@ -218,7 +214,7 @@ hasDetailQuestions.forEach(function (questionName) {
     Survey
         .Serializer
         .addProperty(questionName, {
-            name: "detailLabelFr:string",
+            name: "detailFrenchText:string",
             category: "general",
             dependsOn: ["hasDetail"],
             visibleIf: function (obj) {
@@ -234,9 +230,9 @@ function appendDetailToQuestion(survey, options) {
     var detailSurveyId = options.question.name + "-Detail";
     var detailLabel = "";
     if (lang == 1036) {
-        detailLabel = options.question.detailLabelfr || "Détail";
+        detailLabel = options.question.detailFrenchText || "Détail";
     } else {
-        detailLabel = options.question.detailLabelEn || "Detail";
+        detailLabel = options.question.detailEnglishText || "Detail";
     }
 
     //Create HTML elements
@@ -332,14 +328,14 @@ function appendDetailToQuestion(survey, options) {
         }
     });
 
-    //Change detailText text when detailLabel property of current language is changed
+    //Change detailText text when detail Text property of current language is changed
     if (lang == 1036) {
-        options.question.registerFunctionOnPropertyValueChanged("detailLabelFr", function () {
-            detailText.innerHTML = options.question.detailLabelFr
+        options.question.registerFunctionOnPropertyValueChanged("detailFrenchText", function () {
+            detailText.innerHTML = options.question.detailFrenchText
         });
     } else {
-        options.question.registerFunctionOnPropertyValueChanged("detailLabelEn", function () {
-            detailText.innerHTML = options.question.detailLabelEn
+        options.question.registerFunctionOnPropertyValueChanged("detailEnglishText", function () {
+            detailText.innerHTML = options.question.detailEnglishText
         });
     }
     
