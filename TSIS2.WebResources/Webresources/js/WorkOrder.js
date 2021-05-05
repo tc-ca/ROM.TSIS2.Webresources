@@ -54,11 +54,6 @@ var ROM;
                         "statecode": 1,
                         "statuscode": 918640003 //open -> 918640002
                     };
-                bookableResourceBookingData =
-                    {
-                        "statecode": 1,
-                        "statuscode": 2 //open -> 1
-                    };
                 //Close/Open associated work order service task(s)
                 closeWorkOrderServiceTasks(form, workOrderServiceTaskData);
                 //Set inactive views

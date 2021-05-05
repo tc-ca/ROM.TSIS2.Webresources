@@ -58,11 +58,6 @@ namespace ROM.WorkOrder {
                 "statecode": 1,           //open -> 0
                 "statuscode": 918640003    //open -> 918640002
             };
-            bookableResourceBookingData =
-            {
-                "statecode": 1,           //open -> 0
-                "statuscode": 2            //open -> 1
-            };
 
             //Close/Open associated work order service task(s)
             closeWorkOrderServiceTasks(form, workOrderServiceTaskData);
