@@ -16,12 +16,10 @@ var ROM;
             //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
             if (state == 1) {
                 setWorkOrderServiceTasksView(form, false);
-                //setBookableResourceBookingsView(form, false);
                 return;
             }
             else { //If the work order is active, show the active views
                 setWorkOrderServiceTasksView(form, true);
-                //setBookableResourceBookingsView(form, true);
             }
             switch (form.ui.getFormType()) {
                 //Create
@@ -50,7 +48,6 @@ var ROM;
             var form = eContext.getFormContext();
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var workOrderServiceTaskData;
-            var bookableResourceBookingData;
             if (systemStatus == 690970004) { //Only close associated entities when Record Status is set to Closed - Posted
                 workOrderServiceTaskData =
                     {
@@ -64,11 +61,8 @@ var ROM;
                     };
                 //Close/Open associated work order service task(s)
                 closeWorkOrderServiceTasks(form, workOrderServiceTaskData);
-                //Close/Open Bookable Resource Booking
-                //closeBookableResourceBookings(form, bookableResourceBookingData); //disabled until we know the usage of bookings
                 //Set inactive views
                 setWorkOrderServiceTasksView(form, false);
-                //setBookableResourceBookingsView(form, false);
             }
         }
         WorkOrder.onSave = onSave;
@@ -541,19 +535,6 @@ var ROM;
                 showErrorMessageAlert(error);
             });
         }
-        function closeBookableResourceBookings(formContext, bookableResourceBookingData) {
-            Xrm.WebApi.online.retrieveMultipleRecords("bookableresourcebooking", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {
-                for (var i = 0; i < result.entities.length; i++) {
-                    Xrm.WebApi.updateRecord("bookableresourcebooking", result.entities[i].bookableresourcebookingid, bookableResourceBookingData).then(function success(result) {
-                        //bookable resource booking closed successfully
-                    }, function (error) {
-                        showErrorMessageAlert(error);
-                    });
-                }
-            }, function (error) {
-                showErrorMessageAlert(error);
-            });
-        }
         function setWorkOrderServiceTasksView(form, active) {
             var workOrderView;
             if (active) {
@@ -574,28 +555,6 @@ var ROM;
             }
             if (form.getControl("workorderservicetasksgrid").getViewSelector().getCurrentView() != workOrderView) {
                 form.getControl("workorderservicetasksgrid").getViewSelector().setCurrentView(workOrderView);
-            }
-        }
-        function setBookableResourceBookingsView(form, active) {
-            var bookingsView;
-            if (active) {
-                bookingsView =
-                    {
-                        entityType: "savedquery",
-                        id: "{8AF53D0E-07FE-49D4-BBBA-CA524DD6551B}",
-                        name: "Active Resource Bookings (Field Service Information)"
-                    };
-            }
-            else {
-                bookingsView =
-                    {
-                        entityType: "savedquery",
-                        id: "{B74D2E1A-37CB-4DA9-AA06-156CBF7BC3DD}",
-                        name: "Inactive Bookable Resource Bookings"
-                    };
-            }
-            if (form.getControl("bookings").getViewSelector().getCurrentView() != bookingsView) {
-                form.getControl("bookings").getViewSelector().setCurrentView(bookingsView);
             }
         }
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
