@@ -150,7 +150,6 @@ interface Account_Relationships {
   Account_Appointments?: Appointment_Result[] | null;
   Account_ServiceAppointments?: ServiceAppointment_Result[] | null;
   CreatedAccount_BulkOperationLogs2?: BulkOperationLog_Result[] | null;
-  Incident_RegulatedEntity_Account?: Incident_Result[] | null;
   SourceAccount_BulkOperationLogs?: BulkOperationLog_Result[] | null;
   account_IncidentResolutions?: IncidentResolution_Result[] | null;
   account_PostFollows?: PostFollow_Result[] | null;
@@ -167,11 +166,11 @@ interface Account_Relationships {
   msdyn_account_msdyn_workorder_BillingAccount?: msdyn_workorder_Result[] | null;
   msdyn_account_msdyn_workorder_ServiceAccount?: msdyn_workorder_Result[] | null;
   msdyn_billingaccount_account?: Account_Result | null;
-  ovs_Incident_Site_Account?: Incident_Result[] | null;
   ovs_msdyn_workorder_regulatedentity_account?: msdyn_workorder_Result[] | null;
   ovs_regulated_entity_ovs_operation?: ovs_operation_Result[] | null;
   ovs_site_ovs_operation?: ovs_operation_Result[] | null;
   ovs_workorder_SiteofViolation_Account?: msdyn_workorder_Result[] | null;
+  ts_Incident_Stakeholder_Account?: Incident_Result[] | null;
 }
 interface Account extends Account_Base, Account_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
@@ -555,7 +554,6 @@ interface Account_Expand {
   Account_Appointments: WebExpand<Account_Expand, Appointment_Select, Appointment_Filter, { Account_Appointments: Appointment_Result[] }>;
   Account_ServiceAppointments: WebExpand<Account_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { Account_ServiceAppointments: ServiceAppointment_Result[] }>;
   CreatedAccount_BulkOperationLogs2: WebExpand<Account_Expand, BulkOperationLog_Select, BulkOperationLog_Filter, { CreatedAccount_BulkOperationLogs2: BulkOperationLog_Result[] }>;
-  Incident_RegulatedEntity_Account: WebExpand<Account_Expand, Incident_Select, Incident_Filter, { Incident_RegulatedEntity_Account: Incident_Result[] }>;
   SourceAccount_BulkOperationLogs: WebExpand<Account_Expand, BulkOperationLog_Select, BulkOperationLog_Filter, { SourceAccount_BulkOperationLogs: BulkOperationLog_Result[] }>;
   account_IncidentResolutions: WebExpand<Account_Expand, IncidentResolution_Select, IncidentResolution_Filter, { account_IncidentResolutions: IncidentResolution_Result[] }>;
   account_PostFollows: WebExpand<Account_Expand, PostFollow_Select, PostFollow_Filter, { account_PostFollows: PostFollow_Result[] }>;
@@ -577,7 +575,6 @@ interface Account_Expand {
   msdyn_account_msdyn_workorder_BillingAccount: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_account_msdyn_workorder_BillingAccount: msdyn_workorder_Result[] }>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_account_msdyn_workorder_ServiceAccount: msdyn_workorder_Result[] }>;
   msdyn_billingaccount_account: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_billingaccount_account: Account_Result }>;
-  ovs_Incident_Site_Account: WebExpand<Account_Expand, Incident_Select, Incident_Filter, { ovs_Incident_Site_Account: Incident_Result[] }>;
   ovs_msdyn_workorder_regulatedentity_account: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_msdyn_workorder_regulatedentity_account: msdyn_workorder_Result[] }>;
   ovs_regulated_entity_ovs_operation: WebExpand<Account_Expand, ovs_operation_Select, ovs_operation_Filter, { ovs_regulated_entity_ovs_operation: ovs_operation_Result[] }>;
   ovs_site_ovs_operation: WebExpand<Account_Expand, ovs_operation_Select, ovs_operation_Filter, { ovs_site_ovs_operation: ovs_operation_Result[] }>;
@@ -587,6 +584,7 @@ interface Account_Expand {
   parentaccountid: WebExpand<Account_Expand, Account_Select, Account_Filter, { parentaccountid: Account_Result }>;
   preferredsystemuserid: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { preferredsystemuserid: SystemUser_Result }>;
   primarycontactid: WebExpand<Account_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
+  ts_Incident_Stakeholder_Account: WebExpand<Account_Expand, Incident_Select, Incident_Filter, { ts_Incident_Stakeholder_Account: Incident_Result[] }>;
 }
 interface Account_FormattedResult {
   accountcategorycode_formatted?: string;
@@ -715,7 +713,6 @@ interface Account_RelatedMany {
   Account_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   Account_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   CreatedAccount_BulkOperationLogs2: WebMappingRetrieve<BulkOperationLog_Select,BulkOperationLog_Expand,BulkOperationLog_Filter,BulkOperationLog_Fixed,BulkOperationLog_Result,BulkOperationLog_FormattedResult>;
-  Incident_RegulatedEntity_Account: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   SourceAccount_BulkOperationLogs: WebMappingRetrieve<BulkOperationLog_Select,BulkOperationLog_Expand,BulkOperationLog_Filter,BulkOperationLog_Fixed,BulkOperationLog_Result,BulkOperationLog_FormattedResult>;
   account_IncidentResolutions: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   account_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
@@ -730,11 +727,11 @@ interface Account_RelatedMany {
   msdyn_account_account_BillingAccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_account_msdyn_workorder_BillingAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
-  ovs_Incident_Site_Account: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ovs_msdyn_workorder_regulatedentity_account: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_regulated_entity_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ovs_site_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ovs_workorder_SiteofViolation_Account: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_Incident_Stakeholder_Account: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   accounts: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

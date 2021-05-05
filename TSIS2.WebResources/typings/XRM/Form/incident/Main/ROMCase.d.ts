@@ -124,8 +124,6 @@ declare namespace Form.incident.Main {
       get(name: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
       get(name: "ovs_region"): Xrm.LookupAttribute<"territory">;
-      get(name: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
-      get(name: "ovs_site"): Xrm.LookupAttribute<"account">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "parentcaseid"): Xrm.LookupAttribute<"incident">;
       get(name: "primarycontactid"): Xrm.LookupAttribute<"contact">;
@@ -201,8 +199,6 @@ declare namespace Form.incident.Main {
       get(name: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ovs_region"): Xrm.LookupControl<"territory">;
-      get(name: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
-      get(name: "ovs_site"): Xrm.LookupControl<"account">;
       get(name: "parentcaseid"): Xrm.LookupControl<"incident">;
       get(name: "primarycontactid"): Xrm.LookupControl<"contact">;
       get(name: "productid"): Xrm.LookupControl<"product">;
@@ -263,8 +259,6 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
     getAttribute(attributeName: "ovs_region"): Xrm.LookupAttribute<"territory">;
-    getAttribute(attributeName: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
-    getAttribute(attributeName: "ovs_site"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "parentcaseid"): Xrm.LookupAttribute<"incident">;
     getAttribute(attributeName: "primarycontactid"): Xrm.LookupAttribute<"contact">;
@@ -335,8 +329,6 @@ declare namespace Form.incident.Main {
     getControl(controlName: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ovs_region"): Xrm.LookupControl<"territory">;
-    getControl(controlName: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
-    getControl(controlName: "ovs_site"): Xrm.LookupControl<"account">;
     getControl(controlName: "parentcaseid"): Xrm.LookupControl<"incident">;
     getControl(controlName: "primarycontactid"): Xrm.LookupControl<"contact">;
     getControl(controlName: "productid"): Xrm.LookupControl<"product">;

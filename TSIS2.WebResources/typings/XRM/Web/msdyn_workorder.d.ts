@@ -61,6 +61,8 @@ interface msdyn_workorder_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   transactioncurrencyid_guid?: string | null;
   traversedpath?: string | null;
+  ts_workorderenddate?: Date | null;
+  ts_workorderstartdate?: Date | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -253,6 +255,8 @@ interface msdyn_workorder_Select {
   ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_site_guid: WebAttribute<msdyn_workorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
+  ts_workorderenddate: WebAttribute<msdyn_workorder_Select, { ts_workorderenddate: Date | null }, { ts_workorderenddate_formatted?: string }>;
+  ts_workorderstartdate: WebAttribute<msdyn_workorder_Select, { ts_workorderstartdate: Date | null }, { ts_workorderstartdate_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_workorder_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_workorder_Select, { versionnumber: number | null }, {  }>;
 }
@@ -371,6 +375,8 @@ interface msdyn_workorder_Filter {
   ts_country_guid: XQW.Guid;
   ts_region_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
+  ts_workorderenddate: Date;
+  ts_workorderstartdate: Date;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -485,6 +491,8 @@ interface msdyn_workorder_FormattedResult {
   ts_country_formatted?: string;
   ts_region_formatted?: string;
   ts_site_formatted?: string;
+  ts_workorderenddate_formatted?: string;
+  ts_workorderstartdate_formatted?: string;
 }
 interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_Relationships {
   "@odata.etag": string;
