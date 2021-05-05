@@ -195,11 +195,6 @@ var ROM;
             form.getControl("ts_country").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
         function injectCSS(form) {
-            var body = document.querySelector('h1[data-id="header_title"]');
-            if (body != null) {
-                body.setAttribute("entity", "case");
-                console.log("ok");
-            }
             var path = "./WebResources/ovs_/css/Incident.css";
             var head;
             if (frameElement != null && frameElement.parentElement != null && frameElement.parentElement.parentElement) {
