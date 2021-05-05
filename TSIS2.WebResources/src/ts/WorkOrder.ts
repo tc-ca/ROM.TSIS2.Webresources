@@ -7,7 +7,7 @@ namespace ROM.WorkOrder {
 
         updateCaseView(eContext);
 
-        //Set required field
+        //Set required fields
         form.getAttribute("ts_region").setRequiredLevel("required");
         form.getAttribute("ovs_assetcategory").setRequiredLevel("required");
         form.getAttribute("ts_site").setRequiredLevel("required");
@@ -345,14 +345,10 @@ namespace ROM.WorkOrder {
 
                     var countryCondition = "";
 
-                    if (countryAttributeValue != null && countryAttributeValue != undefined) {
-                        if (regionAttributeValue[0].name != "International") {
-                            form.getControl("ts_site").setDisabled(false);
-                        }
-                        else {
-                            countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
-                        }
+                    if (countryAttributeValue != null && countryAttributeValue != undefined && regionAttributeValue[0].name == "International") {
+                        countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
                     }
+
                     // Enable direct dependent field
                     form.getControl("ts_site").setDisabled(false);
 
@@ -466,17 +462,13 @@ namespace ROM.WorkOrder {
             const siteAttributeValue = siteAttribute.getValue();
 
             var regionCondition = regionAttributeValue == null ? "" : '<condition attribute="ovs_region" operator="eq" value="' + regionAttributeValue[0].id + '" />';
-
             var countryCondition = countryAttributeValue == null ? "" : '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
+            var stakeholderCondition = stakeholderAttributeValue == null ? "" : '<condition attribute="customerid" operator="eq" value="' + stakeholderAttributeValue[0].id + '" />';
+            var siteCondition = siteAttributeValue == null ? "" : '<condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue[0].id + '" />';
 
-            var stakeholderCondition = stakeholderAttributeValue == null ? "" : '<condition attribute="ovs_regulatedentity" operator="eq" value="' + stakeholderAttributeValue[0].id + '" />';
-
-            var siteCondition = siteAttributeValue == null ? "" : '<condition attribute="ovs_site" operator="eq" value="' + siteAttributeValue[0].id + '" />';
-
-            var caseData;
             if (caseAttribute != null && caseAttribute != undefined) {
                 if (caseAttributeValue != null) {
-                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _ovs_regulatedentity_value, _ovs_site_value").then(
+                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(
                         function success(result) {
                             if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
                                 (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._tc_country_value.toUpperCase())) ||
@@ -491,13 +483,14 @@ namespace ROM.WorkOrder {
                         }
                     );
                 }
+
                 // Setup a custom view
                 // This value is never saved and only needs to be unique among the other available views for the lookup.
                 const viewId = '{5B58559F-F162-5428-4771-79BC825240B3}';
                 const entityName = "incident";
                 const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredCases");
-                const layoutXml = '<grid name="resultset" object="10010" jump="title" select="1" icon="1" preview="1"><row name="result" id="incidentid"><cell name="title" width="200" /><cell name="customerid" width="200" /></row></grid>';
-                const fetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false" > <entity name="incident" > <attribute name="statecode" /> <attribute name="title" /> <attribute name="customerid" /> <attribute name="incidentid" /> <filter type="and" >' + regionCondition + countryCondition + stakeholderCondition + siteCondition + '</filter> <order attribute="title" descending="false" /> </entity> </fetch>';
+                const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="incident"> <attribute name="ticketnumber" /> <attribute name="incidentid" /> <order attribute="ticketnumber" descending="false" /> <filter type="and">' + regionCondition + countryCondition + stakeholderCondition + siteCondition + ' </filter> </entity> </fetch>';
+                const layoutXml = '<grid name="resultset" object="10010" jump="title" select="1" icon="1" preview="1"><row name="result" id="incidentid"><cell name="title" width="200" /></row></grid>';
                 form.getControl("msdyn_servicerequest").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
             }
 
@@ -568,6 +561,7 @@ namespace ROM.WorkOrder {
                                 form.getControl("ts_country").setDisabled(true);
                             } else {
                                 setOperationTypeFilteredView(form, territoryId, "");
+                                form.getControl("ovs_assetcategory").setDisabled(true);
                             }
                             form.getControl("ts_region").setDisabled(false);
                         },
