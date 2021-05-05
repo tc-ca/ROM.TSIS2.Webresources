@@ -17,20 +17,18 @@ namespace ROM.IncidentQuickCreate {
 
             const form = <Form.incident.QuickCreate.CaseQuickCreate>eContext.getFormContext();
             const regionAttribute = form.getAttribute("ovs_region");
-            const countryAttribute = form.getAttribute("ts_country");
 
             if (regionAttribute != null && regionAttribute != undefined) {
 
                 const regionAttributeValue = regionAttribute.getValue();
                 if (regionAttributeValue != null && regionAttributeValue != undefined) {
-                    if(regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}"){ //International
+                    if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
                         form.getControl("ts_country").setVisible(true);
                     }
                 }
                 else{
                     form.getControl("ts_country").setVisible(false);
                 }
-
             }
         } catch (e) {
             throw new Error(e.Message);

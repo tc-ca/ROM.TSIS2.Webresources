@@ -17,7 +17,7 @@ namespace ROM.WorkOrderQuickCreate {
 
             const regionAttributeValue = regionAttribute.getValue();
 
-            if (regionAttributeValue != null && regionAttributeValue != undefined){                
+            if (regionAttributeValue != null && regionAttributeValue != undefined){
                 if(regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}"){ //International
                     form.getControl("ts_country").setVisible(true);
                 }

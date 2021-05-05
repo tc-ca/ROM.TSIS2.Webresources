@@ -19,7 +19,6 @@ var ROM;
             try {
                 var form = eContext.getFormContext();
                 var regionAttribute = form.getAttribute("ovs_region");
-                var countryAttribute = form.getAttribute("ts_country");
                 if (regionAttribute != null && regionAttribute != undefined) {
                     var regionAttributeValue = regionAttribute.getValue();
                     if (regionAttributeValue != null && regionAttributeValue != undefined) {

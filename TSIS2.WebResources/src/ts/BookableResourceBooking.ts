@@ -3,7 +3,7 @@ namespace ROM.BookableResourceBooking {
     // EVENTS
     export function bookingStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.bookableresourcebooking.Main.ROMInformation>eContext.getFormContext();
-        const bookingStatusAttribute = form.getAttribute("bookingstatus");    
+        const bookingStatusAttribute = form.getAttribute("bookingstatus");
         const actualArrivalTimeAttribute = form.getAttribute("msdyn_actualarrivaltime");
 
         // Only do this if arrival time hasn't been set before
