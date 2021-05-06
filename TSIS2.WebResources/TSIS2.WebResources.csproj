@@ -227,6 +227,7 @@
     <Content Include="release.bat" />
     <Content Include="web.config" />
     <Content Include="tsconfig.json" />
+    <Content Include="tsconfig-build.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

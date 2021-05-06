@@ -26,10 +26,10 @@
   "include": [
     "src/ts/**/*",
     "typings/**/*",
-    "tests"
   ],
   "exclude": [
     "node_modules",
-    "Webresources/**/*"
+    "Webresources/**/*",
+    "tests"
   ]
 }
