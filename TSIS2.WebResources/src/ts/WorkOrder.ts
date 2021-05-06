@@ -30,7 +30,6 @@ namespace ROM.WorkOrder {
                 // Disable all operation related fields
                 form.getControl("ts_region").setDisabled(true);
                 form.getControl("ovs_assetcategory").setDisabled(true);
-                form.getControl("msdyn_serviceaccount").setDisabled(true);
                 form.getControl("ts_site").setDisabled(true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                 break;
@@ -174,9 +173,7 @@ namespace ROM.WorkOrder {
                         form.getControl("ts_country").setDisabled(false);
                         setCountryFilteredView(form);
                     }
-
                 }
-
             }
         } catch (e) {
             throw new Error(e.Message);
@@ -300,7 +297,6 @@ namespace ROM.WorkOrder {
                     const fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="ts_operationtype" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_defaultworkordertype" operator="eq" value="' + workOrderTypeAttributeValue[0].id + '" /></filter></entity></fetch>';
                     const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
                     form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
-
                 }
             }
         } catch (e) {
@@ -346,8 +342,7 @@ namespace ROM.WorkOrder {
                     // Enable direct dependent field
                     form.getControl("ts_site").setDisabled(false);
 
-                    // Setup a custom view
-                    // This value is never saved and only needs to be unique among the other available views for the lookup.
+                    // Custom view
                     const viewId = '{6E57251F-F695-4076-9498-49AB892154B7}';
                     const entityName = "msdyn_functionallocation";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");

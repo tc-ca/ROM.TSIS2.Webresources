@@ -29,7 +29,6 @@ var ROM;
                     // Disable all operation related fields
                     form.getControl("ts_region").setDisabled(true);
                     form.getControl("ovs_assetcategory").setDisabled(true);
-                    form.getControl("msdyn_serviceaccount").setDisabled(true);
                     form.getControl("ts_site").setDisabled(true);
                     form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                     break;
@@ -303,8 +302,7 @@ var ROM;
                         }
                         // Enable direct dependent field
                         form.getControl("ts_site").setDisabled(false);
-                        // Setup a custom view
-                        // This value is never saved and only needs to be unique among the other available views for the lookup.
+                        // Custom view
                         var viewId = '{6E57251F-F695-4076-9498-49AB892154B7}';
                         var entityName = "msdyn_functionallocation";
                         var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
