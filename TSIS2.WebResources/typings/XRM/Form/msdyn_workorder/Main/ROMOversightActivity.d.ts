@@ -12,8 +12,8 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "activity_details_section"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_5"): Xrm.PageSection;
         get(name: "general_section"): Xrm.PageSection;
-        get(name: "inspection_details_section"): Xrm.PageSection;
         get(name: "related_to_section"): Xrm.PageSection;
+        get(name: "service_tasks_section"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
