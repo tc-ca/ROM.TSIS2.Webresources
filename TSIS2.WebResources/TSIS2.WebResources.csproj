@@ -234,7 +234,6 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config" />
-    <Content Include="yarn.lock" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\Account.ts" />
@@ -248,7 +247,7 @@
     <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderServiceTask.ts" />
-    <TypeScriptCompile Include="test\Contact.test.ts" />
+    <TypeScriptCompile Include="tests\Contact.test.ts" />
     <TypeScriptCompile Include="typings\XRM\dg.xrmquery.web.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\InteractionCentricDashboard\AccountsDashboard.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\Main\Account.d.ts" />

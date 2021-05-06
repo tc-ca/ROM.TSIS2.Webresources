@@ -15,19 +15,21 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "typeRoots": [
-      "./node_modules/@types",
-      "./typings/**/*"
+      "node_modules/@types",
+      "typings/**/*"
     ],
     "rootDirs": [
-      "./src/ts",
-      "./tests"
+      "src/ts",
+      "tests"
     ]
  },
   "include": [
-    "./src/ts/**/*",
-    "./typings/**/*"
+    "src/ts/**/*",
+    "typings/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "tests",
+    "Webresources/**/*"
   ]
 }
