@@ -22,8 +22,7 @@ var ROM;
                 setWorkOrderServiceTasksView(form, true);
             }
             switch (form.ui.getFormType()) {
-                //Create
-                case 1:
+                case 1: //Create New Work Order
                     setDefaultFiscalYear(form);
                     setRegion(form);
                     // Disable all operation related fields
@@ -39,6 +38,19 @@ var ROM;
                     form.getControl("msdyn_serviceaccount").setDisabled(false);
                     form.getControl("ts_site").setDisabled(false);
                     form.getControl("msdyn_primaryincidenttype").setDisabled(false);
+                    var regionAttribute = form.getAttribute("ts_region");
+                    if (regionAttribute != null && regionAttribute != undefined) {
+                        var regionAttributeValue = regionAttribute.getValue();
+                        if (regionAttributeValue != null && regionAttributeValue != undefined) {
+                            if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
+                                form.getControl("ts_country").setVisible(true);
+                                form.getAttribute("ts_country").setRequiredLevel("required");
+                            }
+                        }
+                        else {
+                            form.getControl("ts_country").setVisible(false);
+                        }
+                    }
                     break;
             }
         }

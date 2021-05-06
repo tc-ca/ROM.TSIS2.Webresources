@@ -22,8 +22,7 @@ namespace ROM.WorkOrder {
         }
 
         switch (form.ui.getFormType()) {
-            //Create
-            case 1:
+            case 1:  //Create New Work Order
                 setDefaultFiscalYear(form);
                 setRegion(form);
 
@@ -33,6 +32,7 @@ namespace ROM.WorkOrder {
                 form.getControl("ts_site").setDisabled(true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                 break;
+
             default:
                 // Enable all operation related fields
                 form.getControl("ts_region").setDisabled(false);
@@ -40,6 +40,21 @@ namespace ROM.WorkOrder {
                 form.getControl("msdyn_serviceaccount").setDisabled(false);
                 form.getControl("ts_site").setDisabled(false);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(false);
+
+                const regionAttribute = form.getAttribute("ts_region");
+                if (regionAttribute != null && regionAttribute != undefined) {
+                    const regionAttributeValue = regionAttribute.getValue();
+                    if (regionAttributeValue != null && regionAttributeValue != undefined) {
+                        if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
+                            form.getControl("ts_country").setVisible(true);
+                            form.getAttribute("ts_country").setRequiredLevel("required");
+                        }
+                    }
+                    else {
+                        form.getControl("ts_country").setVisible(false);
+                    }
+                }
+
                 break;
         }
 
