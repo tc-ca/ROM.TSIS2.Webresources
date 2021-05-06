@@ -21,15 +21,16 @@
     "rootDirs": [
       "src/ts",
       "tests"
-    ]
+    ],
+    "skipLibCheck": true
  },
   "include": [
     "src/ts/**/*",
-    "typings/**/*"
+    "typings/**/*",
+    "tests"
   ],
   "exclude": [
     "node_modules",
-    "tests",
     "Webresources/**/*"
   ]
 }
