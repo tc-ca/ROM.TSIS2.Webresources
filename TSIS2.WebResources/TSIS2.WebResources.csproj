@@ -215,6 +215,7 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="package.json" />
+    <Content Include="package-lock.json" />
     <None Include="packages.config" />
     <Content Include="spkl\unpack.bat" />
     <Content Include="spkl\pack+import.bat" />
