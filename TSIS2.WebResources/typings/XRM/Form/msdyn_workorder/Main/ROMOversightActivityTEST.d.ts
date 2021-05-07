@@ -1,5 +1,5 @@
 declare namespace Form.msdyn_workorder.Main {
-  namespace ROMOversightActivity {
+  namespace ROMOversightActivityTEST {
     namespace Tabs {
       interface DeviceInsightsTab extends Xrm.SectionCollectionBase {
         get(name: "DeviceInsightsSection"): Xrm.PageSection;
@@ -9,12 +9,13 @@ declare namespace Form.msdyn_workorder.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface b8e326ee5c214a18ba55e3b56966c249 extends Xrm.SectionCollectionBase {
-        get(name: "activity_details_section"): Xrm.PageSection;
+        get(name: "f1tab_mainsettings_section_3"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_5"): Xrm.PageSection;
-        get(name: "general_section"): Xrm.PageSection;
-        get(name: "inspection_details_section"): Xrm.PageSection;
-        get(name: "related_to_section"): Xrm.PageSection;
+        get(name: "physical_assets_section"): Xrm.PageSection;
+        get(name: "tab_3_section_1"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
+        get(name: "{b14f3e67-e51b-4b3e-bb7f-a9cf0cf8dc17}"): Xrm.PageSection;
+        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_10"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -79,13 +80,6 @@ declare namespace Form.msdyn_workorder.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tags_tab extends Xrm.SectionCollectionBase {
-        get(name: "physical_assets_section"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "createdby"): Xrm.LookupAttribute<"systemuser">;
@@ -105,6 +99,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_datewindowend"): Xrm.DateAttribute;
       get(name: "msdyn_datewindowstart"): Xrm.DateAttribute;
       get(name: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
+      get(name: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "msdyn_instructions"): Xrm.Attribute<string>;
       get(name: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
       get(name: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -145,7 +140,10 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
       get(name: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
+      get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+      get(name: "ovs_ovscountry"): Xrm.LookupAttribute<"NoAttribute">;
       get(name: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
+      get(name: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
@@ -154,17 +152,16 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
-      get(name: "ts_workorderenddate"): Xrm.DateAttribute;
-      get(name: "ts_workorderstartdate"): Xrm.DateAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
+      get(name: "PhysicalAssets"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
+      get(name: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
       get(name: "createdon"): Xrm.DateControl;
       get(name: "footer_msdyn_substatus"): Xrm.LookupControl<"msdyn_workordersubstatus">;
@@ -210,6 +207,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_datewindowend"): Xrm.DateControl;
       get(name: "msdyn_datewindowstart"): Xrm.DateControl;
       get(name: "msdyn_estimatesubtotalamount"): Xrm.NumberControl;
+      get(name: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "msdyn_instructions"): Xrm.StringControl;
       get(name: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
       get(name: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
@@ -253,14 +251,15 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
       get(name: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
+      get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+      get(name: "ovs_ovscountry"): Xrm.LookupControl<"NoAttribute">;
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
+      get(name: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
-      get(name: "ts_workorderenddate"): Xrm.DateControl;
-      get(name: "ts_workorderstartdate"): Xrm.DateControl;
       get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
       get(name: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
       get(name: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
@@ -281,14 +280,13 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
-      get(name: "tags_tab"): Xrm.PageTab<Tabs.tags_tab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface ROMOversightActivity extends Xrm.PageBase<ROMOversightActivity.Attributes,ROMOversightActivity.Tabs,ROMOversightActivity.Controls> {
+  interface ROMOversightActivityTEST extends Xrm.PageBase<ROMOversightActivityTEST.Attributes,ROMOversightActivityTEST.Tabs,ROMOversightActivityTEST.Controls> {
     getAttribute(attributeName: "createdby"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "createdon"): Xrm.DateAttribute;
     getAttribute(attributeName: "modifiedby"): Xrm.LookupAttribute<"systemuser">;
@@ -306,6 +304,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_datewindowend"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_datewindowstart"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "msdyn_instructions"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
     getAttribute(attributeName: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -346,7 +345,10 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
     getAttribute(attributeName: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
+    getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+    getAttribute(attributeName: "ovs_ovscountry"): Xrm.LookupAttribute<"NoAttribute">;
     getAttribute(attributeName: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
+    getAttribute(attributeName: "ovs_regulatedentity"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
@@ -355,12 +357,11 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
-    getAttribute(attributeName: "ts_workorderenddate"): Xrm.DateAttribute;
-    getAttribute(attributeName: "ts_workorderstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
+    getControl(controlName: "PhysicalAssets"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
+    getControl(controlName: "bookings"): Xrm.SubGridControl<"bookableresourcebooking">;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "createdon"): Xrm.DateControl;
     getControl(controlName: "footer_msdyn_substatus"): Xrm.LookupControl<"msdyn_workordersubstatus">;
@@ -406,6 +407,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_datewindowend"): Xrm.DateControl;
     getControl(controlName: "msdyn_datewindowstart"): Xrm.DateControl;
     getControl(controlName: "msdyn_estimatesubtotalamount"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "msdyn_instructions"): Xrm.StringControl;
     getControl(controlName: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
     getControl(controlName: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
@@ -449,14 +451,15 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
     getControl(controlName: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
+    getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+    getControl(controlName: "ovs_ovscountry"): Xrm.LookupControl<"NoAttribute">;
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
+    getControl(controlName: "ovs_regulatedentity"): Xrm.LookupControl<"account">;
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
-    getControl(controlName: "ts_workorderenddate"): Xrm.DateControl;
-    getControl(controlName: "ts_workorderstartdate"): Xrm.DateControl;
     getControl(controlName: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
     getControl(controlName: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
     getControl(controlName: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;

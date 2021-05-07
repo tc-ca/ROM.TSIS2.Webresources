@@ -8,7 +8,6 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
     const stakeholderAttribute = formContext.getAttribute("customerid");
     const siteAttribute = formContext.getAttribute("msdyn_functionallocation");
 
-
     const regionAttributeValue = regionAttribute.getValue();
     const countryAttributeValue = countryAttribute.getValue();
     const stakeholderAttributeValue = stakeholderAttribute.getValue();
@@ -80,10 +79,7 @@ function ActivateWorkOrder(primaryControl){
                 formContext.getAttribute("msdyn_systemstatus").setValue(690970003); //Open - Completed
 
                 openWorkOrderServiceTasks(formContext);
-                openBookableResourceBookings(formContext);
-
                 setWorkOrderServiceTasksView(formContext);
-                setBookableResourceBookingsView(formContext);
 
                 formContext.data.save();
             }
@@ -119,30 +115,6 @@ function openWorkOrderServiceTasks(formContext){
     );
 }
 
-function openBookableResourceBookings(formContext){
-    bookableResourceBookingData =
-            {
-                "statecode" :  0,           //closed -> 1
-                "statuscode" : 1            //closed -> 2
-            };
-    Xrm.WebApi.online.retrieveMultipleRecords("bookableresourcebooking", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
-        function success(result){
-            for (var i = 0; i < result.entities.length; i++) {
-                Xrm.WebApi.updateRecord("bookableresourcebooking", result.entities[i].bookableresourcebookingid, bookableResourceBookingData).then(
-                    function success(result) {
-                    },
-                    function (error) {
-                        showErrorMessageAlert(error);
-                    }
-                );
-            }
-        },
-        function (error){
-            showErrorMessageAlert(error);
-        }
-    );
-}
-
 function setWorkOrderServiceTasksView(formContext){
     var activeWorkOrderServiceTasksView =
     {
@@ -152,17 +124,6 @@ function setWorkOrderServiceTasksView(formContext){
     }
 
     formContext.getControl("workorderservicetasksgrid").getViewSelector().setCurrentView(activeWorkOrderServiceTasksView);
-}
-
-function setBookableResourceBookingsView(formContext){
-    var activeBookingsView =
-    {
-        entityType: "savedquery",
-        id: "{8AF53D0E-07FE-49D4-BBBA-CA524DD6551B}",
-        name: "Active Resource Bookings (Field Service Information)"
-    };
-
-    formContext.getControl("bookings").getViewSelector().setCurrentView(activeBookingsView);
 }
 
 function showErrorMessageAlert(error){

@@ -67,9 +67,8 @@ interface Incident_Relationships {
   incident_master_incident?: Incident_Result[] | null;
   incident_parent_incident?: Incident_Result[] | null;
   msdyn_incident_msdyn_workorder_ServiceRequest?: msdyn_workorder_Result[] | null;
-  ovs_RegulatedEntity?: Account_Result | null;
-  ovs_Site?: Account_Result | null;
   ovs_incident_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result[] | null;
+  ts_Stakeholder?: Account_Result | null;
 }
 interface Incident extends Incident_Base, Incident_Relationships {
   contractdetailid_bind$contractdetails?: string | null;
@@ -85,8 +84,6 @@ interface Incident extends Incident_Base, Incident_Relationships {
   msdyn_IoTAlert_bind$msdyn_iotalerts?: string | null;
   msdyn_incidenttype_bind$msdyn_incidenttypes?: string | null;
   ovs_Region_bind$territories?: string | null;
-  ovs_RegulatedEntity_bind$accounts?: string | null;
-  ovs_Site_bind$accounts?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   parentcaseid_bind$incidents?: string | null;
@@ -99,6 +96,7 @@ interface Incident extends Incident_Base, Incident_Relationships {
   subjectid_bind$subjects?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_Country_bind$tc_countries?: string | null;
+  ts_Stakeholder_bind$accounts?: string | null;
 }
 interface Incident_Create extends Incident {
   incidentid_childincidentcount_bind$childincidentcounts?: string | null;
@@ -161,8 +159,6 @@ interface Incident_Select {
   onholdtime: WebAttribute<Incident_Select, { onholdtime: number | null }, {  }>;
   overriddencreatedon: WebAttribute<Incident_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
   ovs_region_guid: WebAttribute<Incident_Select, { ovs_region_guid: string | null }, { ovs_region_formatted?: string }>;
-  ovs_regulatedentity_guid: WebAttribute<Incident_Select, { ovs_regulatedentity_guid: string | null }, { ovs_regulatedentity_formatted?: string }>;
-  ovs_site_guid: WebAttribute<Incident_Select, { ovs_site_guid: string | null }, { ovs_site_formatted?: string }>;
   ownerid_guid: WebAttribute<Incident_Select, { ownerid_guid: string | null }, { ownerid_formatted?: string }>;
   owningbusinessunit_guid: WebAttribute<Incident_Select, { owningbusinessunit_guid: string | null }, { owningbusinessunit_formatted?: string }>;
   owningteam_guid: WebAttribute<Incident_Select, { owningteam_guid: string | null }, { owningteam_formatted?: string }>;
@@ -195,6 +191,7 @@ interface Incident_Select {
   transactioncurrencyid_guid: WebAttribute<Incident_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Incident_Select, { traversedpath: string | null }, {  }>;
   ts_country_guid: WebAttribute<Incident_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_stakeholder_guid: WebAttribute<Incident_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<Incident_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<Incident_Select, { versionnumber: number | null }, {  }>;
 }
@@ -253,8 +250,6 @@ interface Incident_Filter {
   onholdtime: number;
   overriddencreatedon: Date;
   ovs_region_guid: XQW.Guid;
-  ovs_regulatedentity_guid: XQW.Guid;
-  ovs_site_guid: XQW.Guid;
   ownerid_guid: XQW.Guid;
   owningbusinessunit_guid: XQW.Guid;
   owningteam_guid: XQW.Guid;
@@ -287,6 +282,7 @@ interface Incident_Filter {
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
   ts_country_guid: XQW.Guid;
+  ts_stakeholder_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -310,14 +306,13 @@ interface Incident_Expand {
   modifiedby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_incident_msdyn_workorder_ServiceRequest: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_incident_msdyn_workorder_ServiceRequest: msdyn_workorder_Result[] }>;
-  ovs_RegulatedEntity: WebExpand<Incident_Expand, Account_Select, Account_Filter, { ovs_RegulatedEntity: Account_Result }>;
-  ovs_Site: WebExpand<Incident_Expand, Account_Select, Account_Filter, { ovs_Site: Account_Result }>;
   ovs_incident_msdyn_workorderservicetask: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ovs_incident_msdyn_workorderservicetask: msdyn_workorderservicetask_Result[] }>;
   ownerid: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   parentcaseid: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { parentcaseid: Incident_Result }>;
   primarycontactid: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
   responsiblecontactid: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { responsiblecontactid: Contact_Result }>;
+  ts_Stakeholder: WebExpand<Incident_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
 }
 interface Incident_FormattedResult {
   accountid_formatted?: string;
@@ -353,8 +348,6 @@ interface Incident_FormattedResult {
   msdyn_iotalert_formatted?: string;
   overriddencreatedon_formatted?: string;
   ovs_region_formatted?: string;
-  ovs_regulatedentity_formatted?: string;
-  ovs_site_formatted?: string;
   ownerid_formatted?: string;
   owningbusinessunit_formatted?: string;
   owningteam_formatted?: string;
@@ -378,6 +371,7 @@ interface Incident_FormattedResult {
   subjectid_formatted?: string;
   transactioncurrencyid_formatted?: string;
   ts_country_formatted?: string;
+  ts_stakeholder_formatted?: string;
 }
 interface Incident_Result extends Incident_Base, Incident_Relationships {
   "@odata.etag": string;
@@ -401,8 +395,6 @@ interface Incident_Result extends Incident_Base, Incident_Relationships {
   msdyn_incidenttype_guid: string | null;
   msdyn_iotalert_guid: string | null;
   ovs_region_guid: string | null;
-  ovs_regulatedentity_guid: string | null;
-  ovs_site_guid: string | null;
   ownerid_guid: string | null;
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
@@ -418,6 +410,7 @@ interface Incident_Result extends Incident_Base, Incident_Relationships {
   subjectid_guid: string | null;
   transactioncurrencyid_guid: string | null;
   ts_country_guid: string | null;
+  ts_stakeholder_guid: string | null;
 }
 interface Incident_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -428,13 +421,12 @@ interface Incident_RelatedOne {
   masterid: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ovs_RegulatedEntity: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
-  ovs_Site: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   parentcaseid: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   primarycontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   responsiblecontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface Incident_RelatedMany {
   Incident_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;

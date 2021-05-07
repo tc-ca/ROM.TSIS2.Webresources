@@ -15,28 +15,24 @@ namespace ROM.WorkOrder {
         //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
         if (state == 1) {
             setWorkOrderServiceTasksView(form, false);
-            //setBookableResourceBookingsView(form, false);
-
             return;
         }
         else { //If the work order is active, show the active views
             setWorkOrderServiceTasksView(form, true);
-            //setBookableResourceBookingsView(form, true);
         }
 
         switch (form.ui.getFormType()) {
-            //Create
-            case 1:
+            case 1:  //Create New Work Order
                 setDefaultFiscalYear(form);
                 setRegion(form);
 
                 // Disable all operation related fields
                 form.getControl("ts_region").setDisabled(true);
                 form.getControl("ovs_assetcategory").setDisabled(true);
-                form.getControl("msdyn_serviceaccount").setDisabled(true);
                 form.getControl("ts_site").setDisabled(true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                 break;
+
             default:
                 // Enable all operation related fields
                 form.getControl("ts_region").setDisabled(false);
@@ -44,6 +40,21 @@ namespace ROM.WorkOrder {
                 form.getControl("msdyn_serviceaccount").setDisabled(false);
                 form.getControl("ts_site").setDisabled(false);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(false);
+
+                const regionAttribute = form.getAttribute("ts_region");
+                if (regionAttribute != null && regionAttribute != undefined) {
+                    const regionAttributeValue = regionAttribute.getValue();
+                    if (regionAttributeValue != null && regionAttributeValue != undefined) {
+                        if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
+                            form.getControl("ts_country").setVisible(true);
+                            form.getAttribute("ts_country").setRequiredLevel("required");
+                        }
+                    }
+                    else {
+                        form.getControl("ts_country").setVisible(false);
+                    }
+                }
+
                 break;
         }
 
@@ -54,7 +65,6 @@ namespace ROM.WorkOrder {
         const systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
 
         var workOrderServiceTaskData;
-        var bookableResourceBookingData;
 
         if (systemStatus == 690970004) { //Only close associated entities when Record Status is set to Closed - Posted
             workOrderServiceTaskData =
@@ -62,21 +72,12 @@ namespace ROM.WorkOrder {
                 "statecode": 1,           //open -> 0
                 "statuscode": 918640003    //open -> 918640002
             };
-            bookableResourceBookingData =
-            {
-                "statecode": 1,           //open -> 0
-                "statuscode": 2            //open -> 1
-            };
 
             //Close/Open associated work order service task(s)
             closeWorkOrderServiceTasks(form, workOrderServiceTaskData);
 
-            //Close/Open Bookable Resource Booking
-            //closeBookableResourceBookings(form, bookableResourceBookingData); //disabled until we know the usage of bookings
-
             //Set inactive views
             setWorkOrderServiceTasksView(form, false);
-            //setBookableResourceBookingsView(form, false);
         }
     }
 
@@ -120,7 +121,7 @@ namespace ROM.WorkOrder {
 
                     if (regionAttributeValue != null && regionAttributeValue != undefined) {
                         if (regionAttributeValue[0].name != "International") {
-                            setOperationTypeFilteredView(form, regionAttributeValue[0].id, "");
+                            setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id);
 
                         } else {
                             form.getControl("ts_country").setDisabled(false);
@@ -128,7 +129,7 @@ namespace ROM.WorkOrder {
 
                             if (countryAttributeValue != null && countryAttributeValue != undefined) {
                                 var countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
-                                setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition);
+                                setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id);
                             }
                         }
                     }
@@ -143,6 +144,7 @@ namespace ROM.WorkOrder {
         try {
 
             const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+            const workOrderTypeAttribute = form.getAttribute("msdyn_workordertype");
             const regionAttribute = form.getAttribute("ts_region");
 
             if (regionAttribute != null && regionAttribute != undefined) {
@@ -173,20 +175,20 @@ namespace ROM.WorkOrder {
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
+                const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                 const regionAttributeValue = regionAttribute.getValue();
-                if (regionAttributeValue != null && regionAttributeValue != undefined) {
+                if (workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined &&
+                    regionAttributeValue != null && regionAttributeValue != undefined) {
 
                     // Enable direct dependent field
                     if (regionAttributeValue[0].name != "International") {
-                        setOperationTypeFilteredView(form, regionAttributeValue[0].id, "");
+                        setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id);
 
                     } else {
                         form.getControl("ts_country").setDisabled(false);
                         setCountryFilteredView(form);
                     }
-
                 }
-
             }
         } catch (e) {
             throw new Error(e.Message);
@@ -197,6 +199,7 @@ namespace ROM.WorkOrder {
         try {
 
             const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+            const workOrderTypeAttribute = form.getAttribute("msdyn_workordertype");
             const regionAttribute = form.getAttribute("ts_region");
             const countryAttribute = form.getAttribute("ts_country");
 
@@ -222,12 +225,14 @@ namespace ROM.WorkOrder {
                 form.getControl("ts_site").setDisabled(true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
 
+                const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                 const regionAttributeValue = regionAttribute.getValue();
                 const countryAttributeValue = countryAttribute.getValue();
-                if (regionAttributeValue != null && regionAttributeValue != undefined &&
+                if (workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined &&
+                    regionAttributeValue != null && regionAttributeValue != undefined &&
                     countryAttributeValue != null && countryAttributeValue != undefined) {
                     var countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
-                    setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition);
+                    setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id);
                 }
             }
         } catch (e) {
@@ -307,7 +312,6 @@ namespace ROM.WorkOrder {
                     const fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="ts_operationtype" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_defaultworkordertype" operator="eq" value="' + workOrderTypeAttributeValue[0].id + '" /></filter></entity></fetch>';
                     const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
                     form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
-
                 }
             }
         } catch (e) {
@@ -353,8 +357,7 @@ namespace ROM.WorkOrder {
                     // Enable direct dependent field
                     form.getControl("ts_site").setDisabled(false);
 
-                    // Setup a custom view
-                    // This value is never saved and only needs to be unique among the other available views for the lookup.
+                    // Custom view
                     const viewId = '{6E57251F-F695-4076-9498-49AB892154B7}';
                     const entityName = "msdyn_functionallocation";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
@@ -561,8 +564,8 @@ namespace ROM.WorkOrder {
                                 form.getAttribute("ts_country").setRequiredLevel("required");
                                 form.getControl("ts_country").setDisabled(true);
                             } else {
-                                setOperationTypeFilteredView(form, territoryId, "");
-                                form.getControl("ovs_assetcategory").setDisabled(true);
+                                //setOperationTypeFilteredView(form, territoryId, "", "");
+                                //form.getControl("ovs_assetcategory").setDisabled(true);
                             }
                             form.getControl("ts_region").setDisabled(false);
                         },
@@ -591,13 +594,13 @@ namespace ROM.WorkOrder {
         form.getControl("ts_country").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 
-    function setOperationTypeFilteredView(form: Form.msdyn_workorder.Main.ROMOversightActivity, regionAttributeId: string, countryCondition: string): void {
+    function setOperationTypeFilteredView(form: Form.msdyn_workorder.Main.ROMOversightActivity, regionAttributeId: string, countryCondition: string, workOrderTypeAttributeId: string): void {
         form.getControl("ovs_assetcategory").setDisabled(false);
 
         const viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE99}';
         const entityName = "msdyn_customerassetcategory";
         const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
-        const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_customerassetcategory"><attribute name="msdyn_name" /><attribute name="msdyn_customerassetcategoryid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="ts_assetcategorytype" operator="eq" value="717750000" /></filter><link-entity name="msdyn_customerasset" from="msdyn_customerassetcategory" to="msdyn_customerassetcategoryid" link-type="inner" alias="ac"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_functionallocation" link-type="inner" alias="ad"><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '" />' + countryCondition + '</filter></link-entity></link-entity></entity></fetch>';
+        const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"> <entity name="msdyn_customerassetcategory"> <attribute name="msdyn_name" /> <attribute name="msdyn_customerassetcategoryid" /> <order attribute="msdyn_name" descending="false" /> <filter type="and"> <condition attribute="ts_assetcategorytype" operator="eq" value="717750000" /> </filter> <link-entity name="msdyn_customerasset" from="msdyn_customerassetcategory" to="msdyn_customerassetcategoryid" link-type="inner" alias="ac"> <link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_functionallocation" link-type="inner" alias="ad"> <filter type="and"> <condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '" />' + countryCondition + '</filter> </link-entity> </link-entity> <link-entity name="msdyn_incidenttype" from="ts_operationtype" to="msdyn_customerassetcategoryid" link-type="inner" alias="ar"> <filter type="and"> <condition attribute="msdyn_defaultworkordertype" operator="eq" value="' + workOrderTypeAttributeId + '" /> </filter> </link-entity> </entity> </fetch>';
         const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetcategoryid"><cell name="msdyn_name" width="200" /></row></grid>';
         form.getControl("ovs_assetcategory").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
@@ -609,26 +612,6 @@ namespace ROM.WorkOrder {
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(
                         function success(result) {
                             //work order service task closed successfully
-                        },
-                        function (error) {
-                            showErrorMessageAlert(error);
-                        }
-                    );
-                }
-            },
-            function (error) {
-                showErrorMessageAlert(error);
-            }
-        );
-    }
-
-    function closeBookableResourceBookings(formContext: Form.msdyn_workorder.Main.ROMOversightActivity, bookableResourceBookingData: any) {
-        Xrm.WebApi.online.retrieveMultipleRecords("bookableresourcebooking", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
-            function success(result) {
-                for (var i = 0; i < result.entities.length; i++) {
-                    Xrm.WebApi.updateRecord("bookableresourcebooking", result.entities[i].bookableresourcebookingid, bookableResourceBookingData).then(
-                        function success(result) {
-                            //bookable resource booking closed successfully
                         },
                         function (error) {
                             showErrorMessageAlert(error);
@@ -664,31 +647,6 @@ namespace ROM.WorkOrder {
 
         if (form.getControl("workorderservicetasksgrid").getViewSelector().getCurrentView() != workOrderView) {
             form.getControl("workorderservicetasksgrid").getViewSelector().setCurrentView(workOrderView);
-        }
-    }
-
-    function setBookableResourceBookingsView(form: Form.msdyn_workorder.Main.ROMOversightActivity, active: boolean) {
-        var bookingsView;
-
-        if (active) {
-            bookingsView =
-            {
-                entityType: "savedquery",
-                id: "{8AF53D0E-07FE-49D4-BBBA-CA524DD6551B}",
-                name: "Active Resource Bookings (Field Service Information)"
-            };
-        }
-        else {
-            bookingsView =
-            {
-                entityType: "savedquery",
-                id: "{B74D2E1A-37CB-4DA9-AA06-156CBF7BC3DD}",
-                name: "Inactive Bookable Resource Bookings"
-            };
-        }
-
-        if (form.getControl("bookings").getViewSelector().getCurrentView() != bookingsView) {
-            form.getControl("bookings").getViewSelector().setCurrentView(bookingsView);
         }
     }
 }
