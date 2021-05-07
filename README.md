@@ -46,7 +46,7 @@ To generate TypeScript declaration files based on our Dynamics 365 solution, we 
 
 ### Writing Tests
 1. Tests are located in the `tests` folder.
-2. Tests are written using (Jest)[https://github.com/facebook/jest] and Xrm is mocked using (xrm-mock)[https://github.com/camelCaseDave/xrm-mock].
+2. Tests are written using [Jest](https://github.com/facebook/jest) and Xrm is mocked using [xrm-mock](https://github.com/camelCaseDave/xrm-mock).
 3. To run tests, open a terminal and be sure to be in the `TSIS2.Webresources` directory.
 
 ```
