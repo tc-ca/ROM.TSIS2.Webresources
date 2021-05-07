@@ -23,8 +23,18 @@ namespace ROM.WorkOrder {
 
         switch (form.ui.getFormType()) {
             case 1:  //Create New Work Order
+
+                // Set default values
                 setDefaultFiscalYear(form);
                 setRegion(form);
+
+                var lookup = new Array();
+                lookup[0] = new Object();
+                lookup[0].id = "{47F438C7-C104-EB11-A813-000D3AF3A7A7}"
+                lookup[0].name = "Unplanned";
+                lookup[0].entityType = "ovs_tyrational";
+                form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
+
 
                 // Disable all operation related fields
                 form.getControl("ts_region").setDisabled(true);
