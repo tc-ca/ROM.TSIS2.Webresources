@@ -27,9 +27,9 @@ To generate TypeScript declaration files based on our Dynamics 365 solution, we 
     <add key="entities" value="<comma separated list of entities>" />
     <add key="web" value="" />
     <add key="jsLib" value="../Webresources/lib" />
-    <add key="mfaAppId" value="51f81489-12ee-4a9e-aaae-a2591f45987d" />
-    <add key="mfaReturnUrl" value="app://58145b91-0c36-4500-8554-080854f2ac97"/>
-    <add key="method" value="OAuth"/>
+    <add key="mfaAppId" value="<Your App Id>" />
+    <add key="mfaClientSecret" value="<Your Client Secret>"/>
+    <add key="method" value="ClientSecret"/>
   </appSettings>
 </configuration>
 ```
@@ -40,9 +40,18 @@ To generate TypeScript declaration files based on our Dynamics 365 solution, we 
 
 ### Coding Scripts
 1. TypeScript source is located in the `src\ts` folder.
-2. Whenever the solution is built, the TypeScript files are transpiled to `Webresources\js`. If you don't see the transpiled file, be sure the `Show All Files` option in the `Solution Explorer` is on.
+2. TypeScript files are transpiled to `Webresources\js`. If you don't see the transpiled file, be sure the `Show All Files` option in the `Solution Explorer` is on.
 3. The JavaScript source files are the files that are mapped for deployment in our D365 environment as defined in the `spkl.json` configuration file.
 4. When creating a new script, start with TypeScript and be sure to map the resulting transpiled JavaScript in the `spkl.json` file.
+
+### Writing Tests
+1. Tests are located in the `tests` folder.
+2. Tests are written using (Jest)[https://github.com/facebook/jest] and Xrm is mocked using (xrm-mock)[https://github.com/camelCaseDave/xrm-mock].
+3. To run tests, open a terminal and be sure to be in the `TSIS2.Webresources` directory.
+
+```
+npm run test
+```
 
 ### Other Web Resources (HTML, CSS)
 1. These can be directly created in the `Webresources` folder under the subfolder matching the type of web resource (i.e. html or css).
@@ -50,9 +59,14 @@ To generate TypeScript declaration files based on our Dynamics 365 solution, we 
 
 
 ### Manually Deploying WebResources
-1. To manually deploy web resources, open a Developer Command Prompt.
-2. Be sure to be in the `TSIS2.WebResources\spkl` directory.
-3. Use the `deploy-webresources.bat` batch file to deploy web resources.
+1. To manually deploy web resources, open a terminal and be sure to be in the `TSIS2.WebResources` directory.
+2. To transpile the Typescript source to Javascript, run the following command
+
+```
+npm run build
+```
+
+3. Run the `.\spkl\deploy-webresources.bat` batch file to deploy the web resources manually.
 
 **NOTE:** The solution that the web resources are deployed is configurable in the `spkl.json` configuration file.
 
