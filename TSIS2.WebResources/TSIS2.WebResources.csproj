@@ -239,7 +239,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\Account.ts" />
     <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
-    <TypeScriptCompile Include="src\ts\Contact.ts" />
     <TypeScriptCompile Include="src\ts\Incident.ts" />
     <TypeScriptCompile Include="src\ts\IncidentQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
@@ -248,7 +247,7 @@
     <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderServiceTask.ts" />
-    <TypeScriptCompile Include="tests\Contact.test.ts" />
+    <TypeScriptCompile Include="tests\Account.test.ts" />
     <TypeScriptCompile Include="typings\XRM\dg.xrmquery.web.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\InteractionCentricDashboard\AccountsDashboard.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\Main\Account.d.ts" />
