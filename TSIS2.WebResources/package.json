@@ -1,14 +1,21 @@
 {
-  "scripts": {
-    "build": "tsc -p tsconfig-build.json",
-    "test": "jest"
-  },
-  "devDependencies": {
-    "@types/jest": "^25.2.1",
-    "jest": "^25.4.0",
-    "ts-jest": "^25.4.0",
-    "ts-node": "^8.9.0",
-    "typescript": "^3.8.3",
-    "xrm-mock": "^3.4.17"
-  }
+    "scripts": {
+        "build": "tsc -p tsconfig-build.json",
+        "test": "jest",
+        "test:ci": "npm run test -- --watchAll=false --reporters=default --reporters=jest-junit"
+    },
+    "devDependencies": {
+        "@types/jest": "^25.2.1",
+        "jest": "^25.4.0",
+        "jest-junit": "^12.0.0",
+        "ts-jest": "^25.4.0",
+        "ts-node": "^8.9.0",
+        "typescript": "^3.8.3",
+        "xrm-mock": "^3.4.17"
+    },
+    "jest-junit": {
+        "suiteNameTemplate": "{filepath}",
+        "outputDirectory": ".",
+        "outputName": "junit.xml"
+    }
 }
