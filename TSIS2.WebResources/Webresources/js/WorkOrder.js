@@ -65,8 +65,7 @@ var ROM;
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
-                    //Lock fields
-                    form.getControl("msdyn_serviceterritory").setDisabled(true);
+                    form.getControl("ts_region").setDisabled(true);
                     form.getControl("ts_country").setDisabled(true);
                     form.getControl("msdyn_serviceaccount").setDisabled(true);
                     form.getControl("ts_site").setDisabled(true);
@@ -439,7 +438,7 @@ var ROM;
                         Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(function success(result) {
                             if ((regionCondition != "" && (result != null && regionAttributeValue_1 != null && regionAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
                                 (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != result._tc_country_value.toUpperCase())) ||
-                                (stakeholderCondition != "" && (result != null && stakeholderAttributeValue_1 != null && stakeholderAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_regulatedentity_value.toUpperCase())) ||
+                                (stakeholderCondition != "" && (result != null && stakeholderAttributeValue_1 != null && stakeholderAttributeValue_1[0].id.replace(/({|})/g, '') != result._customerid_value.toUpperCase())) ||
                                 (siteCondition != "" && (result != null && siteAttributeValue_1 != null && siteAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_site_value.toUpperCase()))) {
                                 form_1.getAttribute("msdyn_servicerequest").setValue(null);
                             }
