@@ -64,9 +64,26 @@ namespace ROM.WorkOrder {
                         form.getControl("ts_country").setVisible(false);
                     }
                 }
-
                 break;
         }
+
+        // Lock some fields if there exist a Case that has this WO associated to it
+        var fetchXML = `<fetch><entity name="msdyn_workorder"><attribute name="msdyn_workorderid"/><filter><condition attribute="msdyn_workorderid" operator="eq" value="${form.data.entity.getId()}"/></filter><link-entity name="incident" from="incidentid" to="msdyn_servicerequest"/></entity></fetch>`;
+
+        fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
+
+        Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(
+            function success(result) {
+                if(result.entities.length > 0){
+                    form.getControl("ts_region").setDisabled(true);
+                    form.getControl("ts_country").setDisabled(true);
+                    form.getControl("msdyn_serviceaccount").setDisabled(true);
+                    form.getControl("ts_site").setDisabled(true);
+                }
+            },
+            function (error) {
+            }
+        );
 
     }
 
@@ -426,35 +443,48 @@ namespace ROM.WorkOrder {
     }
 
     export function systemStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const formContext = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
-        var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+        var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
 
         //If system status is set to closed
         if (systemStatus == 690970004 || systemStatus == 690970005) {
             //Set state to Inactive
-            formContext.getAttribute("statecode").setValue(1);
+            form.getAttribute("statecode").setValue(1);
             //Set Status Reason to Closed
-            formContext.getAttribute("statuscode").setValue(918640000);
+            form.getAttribute("statuscode").setValue(918640000);
 
         } else {
             //Keep record Active
-            formContext.getAttribute("statecode").setValue(0);
-            formContext.getAttribute("statuscode").setValue(1);
+            form.getAttribute("statecode").setValue(0);
+            form.getAttribute("statuscode").setValue(1);
+        }
+    }
+
+    export function caseOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+    
+        const caseAttribute = form.getAttribute("msdyn_servicerequest");
+
+        if(caseAttribute.getValue() == null){
+            form.getControl("ts_region").setDisabled(false);
+            form.getControl("ts_country").setDisabled(false);
+            form.getControl("msdyn_serviceaccount").setDisabled(false);
+            form.getControl("ts_site").setDisabled(false);
         }
     }
 
     export function stateCodeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const formContext = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
-        var stateCode = formContext.getAttribute("statecode").getValue();
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+        var stateCode = form.getAttribute("statecode").getValue();
         //If statecode changed to Active
         if (stateCode == 0) {
-            var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
+            var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             //If systemStatus is currently Closed
             if (systemStatus == 690970004 || systemStatus == 690970005) {
                 //Change systemstatus to Open - Completed
-                formContext.getAttribute("msdyn_systemstatus").setValue(690970003);
+                form.getAttribute("msdyn_systemstatus").setValue(690970003);
                 //Prevent User from discarding status change
-                formContext.data.save();
+                form.data.save();
             }
         }
     }
@@ -486,7 +516,7 @@ namespace ROM.WorkOrder {
                         function success(result) {
                             if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
                                 (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._tc_country_value.toUpperCase())) ||
-                                (stakeholderCondition != "" && (result != null && stakeholderAttributeValue != null && stakeholderAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_regulatedentity_value.toUpperCase())) ||
+                                (stakeholderCondition != "" && (result != null && stakeholderAttributeValue != null && stakeholderAttributeValue[0].id.replace(/({|})/g, '') != result._ts_stakeholder_value.toUpperCase())) ||
                                 (siteCondition != "" && (result != null && siteAttributeValue != null && siteAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_site_value.toUpperCase()))) {
 
                                 form.getAttribute("msdyn_servicerequest").setValue(null);

@@ -32,6 +32,24 @@ namespace ROM.Incident {
                 form.getControl("msdyn_functionallocation").setDisabled(false);
                 break;
         }
+
+                // Lock some fields if there are associated WOs
+                var fetchXML = `<fetch> <entity name="incident" > <attribute name="incidentid" /> <filter> <condition attribute="incidentid" operator="eq" value="${form.data.entity.getId()}" /> </filter> <link-entity name="msdyn_workorder" from="msdyn_servicerequest" to="incidentid" /> </entity> </fetch>`;
+
+                fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
+        
+                Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(
+                    function success(result) {
+                        if(result.entities.length > 0){
+                            form.getControl("ovs_region").setDisabled(true);
+                            form.getControl("ts_country").setDisabled(true);
+                            form.getControl("ts_stakeholder").setDisabled(true);
+                            form.getControl("msdyn_functionallocation").setDisabled(true);
+                        }
+                    },
+                    function (error) {
+                    }
+                );
     }
 
     export function regionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
