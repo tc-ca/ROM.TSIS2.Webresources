@@ -60,6 +60,19 @@ var ROM;
                     }
                     break;
             }
+            // Lock some fields if there exist a Case that has this WO associated to it
+            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>";
+            fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
+                if (result.entities.length > 0) {
+                    //Lock fields
+                    form.getControl("msdyn_serviceterritory").setDisabled(true);
+                    form.getControl("ts_country").setDisabled(true);
+                    form.getControl("msdyn_serviceaccount").setDisabled(true);
+                    form.getControl("ts_site").setDisabled(true);
+                }
+            }, function (error) {
+            });
         }
         WorkOrder.onLoad = onLoad;
         function onSave(eContext) {
