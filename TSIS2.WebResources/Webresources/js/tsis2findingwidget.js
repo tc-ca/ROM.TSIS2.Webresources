@@ -102,7 +102,7 @@ var widget = {
         //if the question value changed in the code, for example you have changed it in JavaScript
         //question.valueChangedCallback = onValueChangedCallback;
 
-        //Assign nameID if not already assigned in surveyCreator
+        //Assign nameID if it was not assigned in surveyCreator
         if (question.nameID == null) {
             question.nameID = question.id;
         }
