@@ -64,7 +64,7 @@ namespace ROM.WorkOrder {
                         form.getControl("ts_country").setVisible(false);
                     }
                 }
-            break;
+                break;
         }
 
         // Lock some fields if there exist a Case that has this WO associated to it

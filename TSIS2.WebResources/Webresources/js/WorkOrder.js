@@ -412,17 +412,17 @@ var ROM;
         }
         WorkOrder.caseOnChange = caseOnChange;
         function stateCodeOnChange(eContext) {
-            var formContext = eContext.getFormContext();
-            var stateCode = formContext.getAttribute("statecode").getValue();
+            var form = eContext.getFormContext();
+            var stateCode = form.getAttribute("statecode").getValue();
             //If statecode changed to Active
             if (stateCode == 0) {
-                var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
+                var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
                 //If systemStatus is currently Closed
                 if (systemStatus == 690970004 || systemStatus == 690970005) {
                     //Change systemstatus to Open - Completed
-                    formContext.getAttribute("msdyn_systemstatus").setValue(690970003);
+                    form.getAttribute("msdyn_systemstatus").setValue(690970003);
                     //Prevent User from discarding status change
-                    formContext.data.save();
+                    form.data.save();
                 }
             }
         }
