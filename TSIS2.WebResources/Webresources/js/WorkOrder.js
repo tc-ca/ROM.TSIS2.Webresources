@@ -384,22 +384,33 @@ var ROM;
         }
         WorkOrder.siteOnChange = siteOnChange;
         function systemStatusOnChange(eContext) {
-            var formContext = eContext.getFormContext();
-            var systemStatus = formContext.getAttribute("msdyn_systemstatus").getValue();
+            var form = eContext.getFormContext();
+            var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             //If system status is set to closed
             if (systemStatus == 690970004 || systemStatus == 690970005) {
                 //Set state to Inactive
-                formContext.getAttribute("statecode").setValue(1);
+                form.getAttribute("statecode").setValue(1);
                 //Set Status Reason to Closed
-                formContext.getAttribute("statuscode").setValue(918640000);
+                form.getAttribute("statuscode").setValue(918640000);
             }
             else {
                 //Keep record Active
-                formContext.getAttribute("statecode").setValue(0);
-                formContext.getAttribute("statuscode").setValue(1);
+                form.getAttribute("statecode").setValue(0);
+                form.getAttribute("statuscode").setValue(1);
             }
         }
         WorkOrder.systemStatusOnChange = systemStatusOnChange;
+        function caseOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var caseAttribute = form.getAttribute("msdyn_servicerequest");
+            if (caseAttribute.getValue() == null) {
+                form.getControl("ts_region").setDisabled(false);
+                form.getControl("ts_country").setDisabled(false);
+                form.getControl("msdyn_serviceaccount").setDisabled(false);
+                form.getControl("ts_site").setDisabled(false);
+            }
+        }
+        WorkOrder.caseOnChange = caseOnChange;
         function stateCodeOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var stateCode = formContext.getAttribute("statecode").getValue();
