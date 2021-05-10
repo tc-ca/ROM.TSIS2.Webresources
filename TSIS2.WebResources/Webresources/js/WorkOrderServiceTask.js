@@ -23,6 +23,10 @@ var ROM;
         WorkOrderServiceTask.ToggleQuestionnaire = ToggleQuestionnaire;
         function onLoad(eContext) {
             var Form = eContext.getFormContext();
+            //Lock Task Type field if it has a value.
+            if (Form.getAttribute("msdyn_tasktype").getValue() != null) {
+                Form.getControl("msdyn_tasktype").setDisabled(true);
+            }
             if (Form.getAttribute('statecode').getValue() == 1) {
                 mode = "display";
             }
@@ -58,6 +62,10 @@ var ROM;
                 Form.getAttribute("msdyn_percentcomplete").setValue(50.00);
                 //Set Status Reason to In-Progress
                 Form.getAttribute("statuscode").setValue(918640004);
+            }
+            //Lock Task Type field if it has a value.
+            if (Form.getAttribute("msdyn_tasktype").getValue() != null) {
+                Form.getControl("msdyn_tasktype").setDisabled(true);
             }
             // Get the web resource control on the form
             var wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
