@@ -5,7 +5,7 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
 
     const regionAttribute = formContext.getAttribute("ovs_region");
     const countryAttribute = formContext.getAttribute("ts_country");
-    const stakeholderAttribute = formContext.getAttribute("customerid");
+    const stakeholderAttribute = formContext.getAttribute("ts_stakeholder");
     const siteAttribute = formContext.getAttribute("msdyn_functionallocation");
 
     const regionAttributeValue = regionAttribute.getValue();
