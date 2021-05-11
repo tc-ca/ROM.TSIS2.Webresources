@@ -135,7 +135,7 @@ namespace ROM.WorkOrder {
                 // Disable all dependent fields
                 form.getControl("ts_country").setDisabled(true);
                 form.getControl("ovs_assetcategory").setDisabled(true);
-                form.getControl("msdyn_serviceaccount").setDisabled(true);
+                if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 form.getControl("ts_site").setDisabled(true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
 
@@ -295,7 +295,7 @@ namespace ROM.WorkOrder {
                 }
 
                 // Disable all dependent fields
-                form.getControl("msdyn_serviceaccount").setDisabled(true);
+                if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 form.getControl("ts_site").setDisabled(true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
 
