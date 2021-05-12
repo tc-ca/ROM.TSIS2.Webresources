@@ -1,4 +1,4 @@
-import * as SourceUnderTest from "../src/ts/Account";
+import MainForm from "../src/Account/MainForm";
 import { XrmMockGenerator } from "xrm-mock";
 
 describe("Account", () => {
@@ -20,7 +20,7 @@ describe("Account", () => {
 
   it("should initially have address 1 country hidden", () => {
     const formContext = XrmMockGenerator.eventContext.getFormContext() as Form.account.Main.ROMInformation;
-    SourceUnderTest.ROM.Account.onLoad(XrmMockGenerator.eventContext);
+    MainForm.onLoad(XrmMockGenerator.eventContext);
     const countryControl = formContext.getControl("address1_composite_compositionLinkControl_address1_country");
     expect(countryControl?.getVisible()).toBe(false);
   });
@@ -33,7 +33,8 @@ describe("Account", () => {
       id: "{00000000-0000-0000-0000-000000000001}",
       name: "Canada",
     });
-    SourceUnderTest.ROM.Account.countryOnChange(XrmMockGenerator.eventContext);
+    XrmMockGenerator.Attribute.createString("msdyn_serviceterritory", "Ontario");
+    MainForm.countryOnChange(XrmMockGenerator.eventContext);
     const countryAttributeValue = formContext.getAttribute("address1_country")?.getValue();
     expect(countryAttributeValue).toBe(tsCountryAttribute.getValue()[0].name);
   });

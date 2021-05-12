@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="jest.config.js" />
+    <Content Include="rollup.config.js" />
     <Content Include="Webresources\css\bootstrap.min.css" />
     <Content Include="Webresources\css\autocomplete.css" />
     <Content Include="Webresources\css\modern.css" />
@@ -229,7 +230,6 @@
     <Content Include="release.bat" />
     <Content Include="web.config" />
     <Content Include="tsconfig.json" />
-    <Content Include="tsconfig-build.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -268,16 +268,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\ts\Account.ts" />
-    <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
-    <TypeScriptCompile Include="src\ts\Incident.ts" />
-    <TypeScriptCompile Include="src\ts\IncidentQuickCreate.ts" />
-    <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
-    <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
-    <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
-    <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
-    <TypeScriptCompile Include="src\ts\WorkOrderQuickCreate.ts" />
-    <TypeScriptCompile Include="src\ts\WorkOrderServiceTask.ts" />
+    <TypeScriptCompile Include="src\Account\MainForm.ts" />
+    <TypeScriptCompile Include="src\Account.ts" />
+    <TypeScriptCompile Include="src\BookableResourceBooking.ts" />
+    <TypeScriptCompile Include="src\Incident.ts" />
+    <TypeScriptCompile Include="src\IncidentQuickCreate.ts" />
+    <TypeScriptCompile Include="src\IncidentTypeServiceTask.ts" />
+    <TypeScriptCompile Include="src\Questionnaire.ts" />
+    <TypeScriptCompile Include="src\ServiceTaskType.ts" />
+    <TypeScriptCompile Include="src\WorkOrder.ts" />
+    <TypeScriptCompile Include="src\WorkOrderQuickCreate.ts" />
+    <TypeScriptCompile Include="src\WorkOrderServiceTask.ts" />
     <TypeScriptCompile Include="tests\Account.test.ts" />
     <TypeScriptCompile Include="typings\XRM\dg.xrmquery.web.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\InteractionCentricDashboard\AccountsDashboard.d.ts" />

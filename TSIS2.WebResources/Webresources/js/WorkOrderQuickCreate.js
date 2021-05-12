@@ -1,30 +1,24 @@
-"use strict";
-/* eslint-disable @typescript-eslint/triple-slash-reference */
+'use strict';
+
 var ROM;
 (function (ROM) {
-    var WorkOrderQuickCreate;
     (function (WorkOrderQuickCreate) {
-        // EVENTS
         function onLoad(eContext) {
             var form = eContext.getFormContext();
-            // Disable all operation related fields
             form.getControl("ovs_assetcategory").setDisabled(true);
             form.getControl("msdyn_primaryincidenttype").setDisabled(true);
-            //Set required fields
             form.getAttribute("ovs_assetcategory").setRequiredLevel("required");
-            // Set default value of Rationale to Unplanned
             var rationalLookUpValue = new Array();
             rationalLookUpValue[0] = new Object();
             rationalLookUpValue[0].id = "{47F438C7-C104-EB11-A813-000D3AF3A7A7}";
             rationalLookUpValue[0].name = "Unplanned";
             rationalLookUpValue[0].entityType = "ovs_tyrational";
             form.getAttribute("ovs_rational").setValue(rationalLookUpValue);
-            // Show/Hide country field
             var regionAttribute = form.getAttribute("msdyn_serviceterritory");
             if (regionAttribute != null && regionAttribute != undefined) {
                 var regionAttributeValue = regionAttribute.getValue();
                 if (regionAttributeValue != null && regionAttributeValue != undefined) {
-                    if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
+                    if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
                         form.getControl("ts_country").setVisible(true);
                     }
                 }
@@ -41,7 +35,7 @@ var ROM;
                 if (regionAttribute != null && regionAttribute != undefined) {
                     var regionAttributeValue = regionAttribute.getValue();
                     if (regionAttributeValue != null && regionAttributeValue != undefined) {
-                        if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
+                        if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
                             form.getControl("ts_country").setVisible(true);
                         }
                     }
@@ -64,7 +58,6 @@ var ROM;
                 if (workOrderTypeAttribute != null && workOrderTypeAttribute != undefined &&
                     stakeholderAttribute != null && stakeholderAttribute != undefined &&
                     siteAttribute != null && siteAttribute != undefined) {
-                    // Clear out & disable all dependent fields' value
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() || form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                     }
@@ -79,9 +72,7 @@ var ROM;
                     if (workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined &&
                         stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
                         siteAttributeValue != null && siteAttributeValue != undefined) {
-                        // Enable direct dependent field
                         form.getControl("ovs_assetcategory").setDisabled(false);
-                        //Custom view: Filter Operation Type
                         var viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE99}';
                         var entityName = "msdyn_customerassetcategory";
                         var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
@@ -102,19 +93,15 @@ var ROM;
                 var workOrderTypeAttribute = form.getAttribute("msdyn_workordertype");
                 var operationTypeAttribute = form.getAttribute("ovs_assetcategory");
                 if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
-                    // Clear out & disable all dependent fields' value
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() || form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                     }
                     form.getControl("msdyn_primaryincidenttype").setDisabled(true);
-                    // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                     var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                     var operationTypeAttributeValue = operationTypeAttribute.getValue();
                     if (operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
                         workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined) {
-                        // Enable direct dependent field
                         form.getControl("msdyn_primaryincidenttype").setDisabled(false);
-                        //Custom view for Activity Type
                         var viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
                         var entityNameActivity = "msdyn_incidenttype";
                         var viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
@@ -129,5 +116,5 @@ var ROM;
             }
         }
         WorkOrderQuickCreate.operationTypeOnChange = operationTypeOnChange;
-    })(WorkOrderQuickCreate = ROM.WorkOrderQuickCreate || (ROM.WorkOrderQuickCreate = {}));
+    })(ROM.WorkOrderQuickCreate || (ROM.WorkOrderQuickCreate = {}));
 })(ROM || (ROM = {}));

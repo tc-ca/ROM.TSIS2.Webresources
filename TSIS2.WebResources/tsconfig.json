@@ -18,13 +18,13 @@
       "typings/**/*"
     ],
     "rootDirs": [
-      "src/ts",
+      "src",
       "tests"
     ],
     "skipLibCheck": true
  },
   "include": [
-    "src/ts/**/*",
+    "src/**/*",
     "typings/**/*",
     "tests"
   ],
