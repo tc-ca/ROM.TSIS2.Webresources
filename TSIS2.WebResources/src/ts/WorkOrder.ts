@@ -118,26 +118,26 @@ namespace ROM.WorkOrder {
 
             if (workOrderTypeAttribute != null && workOrderTypeAttribute != undefined) {
 
-                // Clear out all dependent fields' value
-                if (!form.getControl("ovs_assetcategory").getDisabled() || form.getAttribute("ovs_assetcategory").getValue() != null) {
+                // Clear out all dependent fields' value if they are not already disabled and not already empty
+                if (!form.getControl("ovs_assetcategory").getDisabled() && form.getAttribute("ovs_assetcategory").getValue() != null) {
                     form.getAttribute("ovs_assetcategory").setValue(null);
                 }
-                if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
+                if (!form.getControl("msdyn_serviceaccount").getDisabled() && form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                     form.getAttribute("msdyn_serviceaccount").setValue(null);
                 }
-                if (!form.getControl("ts_site").getDisabled() || form.getAttribute("ts_site").getValue() != null) {
+                if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                     form.getAttribute("ts_site").setValue(null);
                 }
-                if (!form.getControl("msdyn_primaryincidenttype").getDisabled() || form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
+                if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                 }
 
                 // Disable all dependent fields
-                form.getControl("ts_country").setDisabled(true);
-                form.getControl("ovs_assetcategory").setDisabled(true);
+                if (form.getControl("ts_country").getDisabled() == false) form.getControl("ts_country").setDisabled(true);
+                if (form.getControl("ovs_assetcategory").getDisabled() == false) form.getControl("ovs_assetcategory").setDisabled(true);
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
-                form.getControl("ts_site").setDisabled(true);
-                form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
+                if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
 
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                 const regionAttributeValue = regionAttribute.getValue();
@@ -176,30 +176,30 @@ namespace ROM.WorkOrder {
 
             if (regionAttribute != null && regionAttribute != undefined) {
 
-                // Clear out all dependent fields' value
-                if (!form.getControl("ts_country").getDisabled() || form.getAttribute("ts_country").getValue() != null) {
+                // Clear out all dependent fields' value if they are not already disabled and not already empty
+                if (!form.getControl("ts_country").getDisabled() && form.getAttribute("ts_country").getValue() != null) {
                     form.getAttribute("ts_country").setValue(null);
                 }
-                if (!form.getControl("ovs_assetcategory").getDisabled() || form.getAttribute("ovs_assetcategory").getValue() != null) {
+                if (!form.getControl("ovs_assetcategory").getDisabled() && form.getAttribute("ovs_assetcategory").getValue() != null) {
                     form.getAttribute("ovs_assetcategory").setValue(null);
                 }
-                if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
+                if (!form.getControl("msdyn_serviceaccount").getDisabled() && form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                     form.getAttribute("msdyn_serviceaccount").setValue(null);
                 }
-                if (!form.getControl("ts_site").getDisabled() || form.getAttribute("ts_site").getValue() != null) {
+                if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                     form.getAttribute("ts_site").setValue(null);
                 }
-                if (!form.getControl("msdyn_primaryincidenttype").getDisabled() || form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
+                if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                 }
 
                 // Disable all dependent fields
                 form.getAttribute("ts_country").setRequiredLevel("none");
-                form.getControl("ts_country").setVisible(false);
-                form.getControl("ovs_assetcategory").setDisabled(true);
-                form.getControl("msdyn_serviceaccount").setDisabled(true);
-                form.getControl("ts_site").setDisabled(true);
-                form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                if (form.getControl("ts_country").getDisabled() == false) form.getControl("ts_country").setVisible(false);
+                if (form.getControl("ovs_assetcategory").getDisabled() == false) form.getControl("ovs_assetcategory").setDisabled(true);
+                if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
+                if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
+                if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
@@ -232,25 +232,25 @@ namespace ROM.WorkOrder {
 
             if (countryAttribute != null && countryAttribute != undefined) {
 
-                // Clear out all dependent fields' value
-                if (!form.getControl("ovs_assetcategory").getDisabled() || form.getAttribute("ovs_assetcategory").getValue() != null) {
+                // Clear out all dependent fields' value if they are not already disabled and not already empty
+                if (!form.getControl("ovs_assetcategory").getDisabled() && form.getAttribute("ovs_assetcategory").getValue() != null) {
                     form.getAttribute("ovs_assetcategory").setValue(null);
                 }
-                if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
+                if (!form.getControl("msdyn_serviceaccount").getDisabled() && form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                     form.getAttribute("msdyn_serviceaccount").setValue(null);
                 }
-                if (!form.getControl("ts_site").getDisabled() || form.getAttribute("ts_site").getValue() != null) {
+                if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                     form.getAttribute("ts_site").setValue(null);
                 }
-                if (!form.getControl("msdyn_primaryincidenttype").getDisabled() || form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
+                if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                 }
 
                 // Disable all dependent fields
-                form.getControl("ovs_assetcategory").setDisabled(true);
-                form.getControl("msdyn_serviceaccount").setDisabled(true);
-                form.getControl("ts_site").setDisabled(true);
-                form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                if (form.getControl("ovs_assetcategory").getDisabled() == false) form.getControl("ovs_assetcategory").setDisabled(true);
+                if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
+                if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
+                if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
 
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                 const regionAttributeValue = regionAttribute.getValue();
@@ -283,21 +283,21 @@ namespace ROM.WorkOrder {
 
             if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
 
-                // Clear out all dependent fields' value
-                if (!form.getControl("msdyn_serviceaccount").getDisabled() || form.getAttribute("msdyn_serviceaccount").getValue() != null) {
+                // Clear out all dependent fields' value if they are not already disabled and not already empty
+                if (!form.getControl("msdyn_serviceaccount").getDisabled() && form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                     form.getAttribute("msdyn_serviceaccount").setValue(null);
                 }
-                if (!form.getControl("ts_site").getDisabled() || form.getAttribute("ts_site").getValue() != null) {
+                if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                     form.getAttribute("ts_site").setValue(null);
                 }
-                if (!form.getControl("msdyn_primaryincidenttype").getDisabled() || form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
+                if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                 }
 
                 // Disable all dependent fields
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
-                form.getControl("ts_site").setDisabled(true);
-                form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
+                if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
@@ -357,13 +357,13 @@ namespace ROM.WorkOrder {
 
             if (stakeholderAttribute != null && stakeholderAttribute != undefined) {
 
-                // Clear out all dependent fields' value
-                if (!form.getControl("ts_site").getDisabled() || form.getAttribute("ts_site").getValue() != null) {
+                // Clear out all dependent fields' value if they are not already disabled and not already empty
+                if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                     form.getAttribute("ts_site").setValue(null);
                 }
 
                 // Disable all dependent fields
-                form.getControl("ts_site").setDisabled(true);
+                if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
 
                 // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                 const regionAttributeValue = regionAttribute.getValue();
@@ -408,13 +408,13 @@ namespace ROM.WorkOrder {
 
             if (siteAttribute != null && siteAttribute != undefined) {
 
-                // Clear out all dependent fields' value
-                if (!form.getControl("ovs_asset").getDisabled() || form.getAttribute("ovs_asset").getValue() != null) {
+                // Clear out all dependent fields' value if they are not already disabled and not already empty
+                if (!form.getControl("ovs_asset").getDisabled() && form.getAttribute("ovs_asset").getValue() != null) {
                     form.getAttribute("ovs_asset").setValue(null);
                 }
 
                 // Disable all dependent fields
-                form.getControl("ovs_asset").setDisabled(true);
+                if (form.getControl("ovs_asset").getDisabled() == false) form.getControl("ovs_asset").setDisabled(true);
 
                 // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                 const operationTypeAttributeValue = operationTypeAttribute.getValue();
