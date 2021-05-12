@@ -1,11 +1,9 @@
-declare namespace Form.ovs_operation.Quick {
+declare namespace Form.msdyn_functionallocation.Quick {
   namespace Information {
     namespace Tabs {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "ovs_name"): Xrm.Attribute<string>;
-      get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
-      get(name: "ovs_regulatedentityid"): Xrm.LookupAttribute<"account">;
+      get(name: "msdyn_name"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -13,9 +11,7 @@ declare namespace Form.ovs_operation.Quick {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "ovs_name"): Xrm.StringControl;
-      get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
-      get(name: "ovs_regulatedentityid"): Xrm.LookupControl<"account">;
+      get(name: "msdyn_name"): Xrm.StringControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -30,14 +26,10 @@ declare namespace Form.ovs_operation.Quick {
     }
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
-    getAttribute(attributeName: "ovs_name"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
-    getAttribute(attributeName: "ovs_regulatedentityid"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "ovs_name"): Xrm.StringControl;
-    getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
-    getControl(controlName: "ovs_regulatedentityid"): Xrm.LookupControl<"account">;
+    getControl(controlName: "msdyn_name"): Xrm.StringControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: string): undefined;
   }

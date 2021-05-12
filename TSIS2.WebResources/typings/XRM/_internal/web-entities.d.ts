@@ -78,6 +78,29 @@ interface Incident_Create extends Incident {
 }
 interface Incident_Update extends Incident {
 }
+interface msdyn_FunctionalLocation_Base extends WebEntity {
+}
+interface msdyn_FunctionalLocation_Fixed extends WebEntity_Fixed {
+  msdyn_functionallocationid: string;
+}
+interface msdyn_FunctionalLocation extends msdyn_FunctionalLocation_Base, msdyn_FunctionalLocation_Relationships {
+}
+interface msdyn_FunctionalLocation_Relationships {
+}
+interface msdyn_FunctionalLocation_Result extends msdyn_FunctionalLocation_Base, msdyn_FunctionalLocation_Relationships {
+}
+interface msdyn_FunctionalLocation_FormattedResult {
+}
+interface msdyn_FunctionalLocation_Select {
+}
+interface msdyn_FunctionalLocation_Expand {
+}
+interface msdyn_FunctionalLocation_Filter {
+}
+interface msdyn_FunctionalLocation_Create extends msdyn_FunctionalLocation {
+}
+interface msdyn_FunctionalLocation_Update extends msdyn_FunctionalLocation {
+}
 interface msdyn_incidenttypeservicetask_Base extends WebEntity {
 }
 interface msdyn_incidenttypeservicetask_Fixed extends WebEntity_Fixed {
@@ -100,6 +123,29 @@ interface msdyn_incidenttypeservicetask_Filter {
 interface msdyn_incidenttypeservicetask_Create extends msdyn_incidenttypeservicetask {
 }
 interface msdyn_incidenttypeservicetask_Update extends msdyn_incidenttypeservicetask {
+}
+interface msdyn_msdyn_functionallocation_account_Base extends WebEntity {
+}
+interface msdyn_msdyn_functionallocation_account_Fixed extends WebEntity_Fixed {
+  msdyn_msdyn_functionallocation_accountid: string;
+}
+interface msdyn_msdyn_functionallocation_account extends msdyn_msdyn_functionallocation_account_Base, msdyn_msdyn_functionallocation_account_Relationships {
+}
+interface msdyn_msdyn_functionallocation_account_Relationships {
+}
+interface msdyn_msdyn_functionallocation_account_Result extends msdyn_msdyn_functionallocation_account_Base, msdyn_msdyn_functionallocation_account_Relationships {
+}
+interface msdyn_msdyn_functionallocation_account_FormattedResult {
+}
+interface msdyn_msdyn_functionallocation_account_Select {
+}
+interface msdyn_msdyn_functionallocation_account_Expand {
+}
+interface msdyn_msdyn_functionallocation_account_Filter {
+}
+interface msdyn_msdyn_functionallocation_account_Create extends msdyn_msdyn_functionallocation_account {
+}
+interface msdyn_msdyn_functionallocation_account_Update extends msdyn_msdyn_functionallocation_account {
 }
 interface msdyn_servicetasktype_Base extends WebEntity {
 }
@@ -353,29 +399,6 @@ interface IncidentResolution_Filter {
 interface IncidentResolution_Create extends IncidentResolution {
 }
 interface IncidentResolution_Update extends IncidentResolution {
-}
-interface ovs_operation_Base extends WebEntity {
-}
-interface ovs_operation_Fixed extends WebEntity_Fixed {
-  ovs_operationid: string;
-}
-interface ovs_operation extends ovs_operation_Base, ovs_operation_Relationships {
-}
-interface ovs_operation_Relationships {
-}
-interface ovs_operation_Result extends ovs_operation_Base, ovs_operation_Relationships {
-}
-interface ovs_operation_FormattedResult {
-}
-interface ovs_operation_Select {
-}
-interface ovs_operation_Expand {
-}
-interface ovs_operation_Filter {
-}
-interface ovs_operation_Create extends ovs_operation {
-}
-interface ovs_operation_Update extends ovs_operation {
 }
 interface Appointment_Base extends WebEntity {
 }
