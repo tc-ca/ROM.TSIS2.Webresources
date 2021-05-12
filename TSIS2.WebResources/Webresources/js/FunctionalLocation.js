@@ -9,9 +9,9 @@ var ROM;
             if (ownerAttribute != null && ownerAttribute != undefined) {
                 var ownerAttributeValue = ownerAttribute.getValue();
                 if (ownerAttributeValue != null && ownerAttributeValue != undefined) {
-                    Xrm.WebApi.retrieveRecord("systemusers", ownerAttributeValue[0].id.replace(/[{}]/g, ""), "?$select=_businessunitid_value").then(function success(result) {
-                        Xrm.WebApi.retrieveRecord("businessunits", result._businessunitid_value, "?$select=name").then(function success(result) {
-                            form.getAttribute("ts_businessunit").setValue(result._businessunitid_value);
+                    Xrm.WebApi.retrieveRecord("systemuser", ownerAttributeValue[0].id.replace(/[{}]/g, ""), "?$select=_businessunitid_value").then(function success(result) {
+                        Xrm.WebApi.retrieveRecord("businessunit", result._businessunitid_value, "?$select=name").then(function success(result) {
+                            form.getAttribute("ts_businessunit").setValue(result.name);
                         }, function (error) {
                         });
                     }, function (error) {
