@@ -40,8 +40,11 @@ To generate TypeScript declaration files based on our Dynamics 365 solution, we 
 
 ### Coding Scripts
 1. TypeScript source is located in the `src` folder.
+
     a. Namespaced code is located at the root of `src`. This is the source that will ultimately be referenced in D365.
+    
     b. Module code is located in individual folders in `src` (i.e. Account). This is the source can be imported and in tests and in the namespaced code.
+    
 2. TypeScript files are transpiled to `Webresources\js`. If you don't see the transpiled file, be sure the `Show All Files` option in the `Solution Explorer` is on.
 3. The JavaScript source files are the files that are mapped for deployment in our D365 environment as defined in the `spkl.json` configuration file.
 4. When creating a new script, start with TypeScript and be sure to map the resulting transpiled JavaScript in the `spkl.json` file.
