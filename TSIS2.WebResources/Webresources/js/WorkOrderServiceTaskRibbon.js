@@ -46,6 +46,12 @@ function isSystemAdministrator() {
     return enable;
 }
 
+//Returns true if WOST Status Reason is New
+function isStatusReasonNew(primaryControl) {
+    var statusReason = primaryControl.getAttribute("statuscode").getValue();
+    return (statusReason == 918640005);
+}
+
 function surveyHasErrors(primaryControl) {
     const formContext = primaryControl;
     // Get the web resource control on the form
