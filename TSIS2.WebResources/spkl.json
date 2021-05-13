@@ -85,6 +85,11 @@
           "description": "ROM TSIS 2.0 Customer Asset Ribbon Scripts"
         },
         {
+          "uniquename": "ts_/js/FunctionalLocation.js",
+          "file": "js\\FunctionalLocation.js",
+          "description": "ROM TSIS 2.0 Functional Location Scripts"
+        },
+        {
           "uniquename": "ovs_/js/Incident.js",
           "file": "js\\Incident.js",
           "description": "ROM TSIS 2.0 Incident Form Scripts"
