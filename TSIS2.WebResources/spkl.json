@@ -80,8 +80,8 @@
           "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"
         },
         {
-          "uniquename": "ts_/js/CustomerAssetRibbon.js",
-          "file": "js\\WorkOrderRibbon.js",
+          "uniquename": "ovs_/js/CustomerAssetRibbon.js",
+          "file": "js\\CustomerAssetRibbon.js",
           "description": "ROM TSIS 2.0 Customer Asset Ribbon Scripts"
         },
         {

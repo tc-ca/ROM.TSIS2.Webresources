@@ -127,6 +127,7 @@ namespace ROM.WorkOrder {
                 }
                 if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                     form.getAttribute("ts_site").setValue(null);
+                    form.getAttribute("ovs_asset").setValue(null);
                 }
                 if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
@@ -188,6 +189,7 @@ namespace ROM.WorkOrder {
                 }
                 if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                     form.getAttribute("ts_site").setValue(null);
+                    form.getAttribute("ovs_asset").setValue(null);
                 }
                 if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
@@ -241,6 +243,7 @@ namespace ROM.WorkOrder {
                 }
                 if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                     form.getAttribute("ts_site").setValue(null);
+                    form.getAttribute("ovs_asset").setValue(null);
                 }
                 if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
@@ -289,6 +292,7 @@ namespace ROM.WorkOrder {
                 }
                 if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                     form.getAttribute("ts_site").setValue(null);
+                    form.getAttribute("ovs_asset").setValue(null);
                 }
                 if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
@@ -360,6 +364,7 @@ namespace ROM.WorkOrder {
                 // Clear out all dependent fields' value if they are not already disabled and not already empty
                 if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                     form.getAttribute("ts_site").setValue(null);
+                    form.getAttribute("ovs_asset").setValue(null);
                 }
 
                 // Disable all dependent fields
@@ -404,38 +409,46 @@ namespace ROM.WorkOrder {
 
             const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
             const operationTypeAttribute = form.getAttribute("ovs_assetcategory");
+            const stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
             const siteAttribute = form.getAttribute("ts_site");
 
             if (siteAttribute != null && siteAttribute != undefined) {
 
-                // Clear out all dependent fields' value if they are not already disabled and not already empty
-                if (!form.getControl("ovs_asset").getDisabled() && form.getAttribute("ovs_asset").getValue() != null) {
-                    form.getAttribute("ovs_asset").setValue(null);
-                }
-
-                // Disable all dependent fields
-                if (form.getControl("ovs_asset").getDisabled() == false) form.getControl("ovs_asset").setDisabled(true);
+                // Clear out operation value if not already empty
+                if (form.getAttribute("ovs_asset").getValue() != null) form.getAttribute("ovs_asset").setValue(null);
 
                 // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                 const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                const stakeholderAttributeValue = stakeholderAttribute.getValue();
                 const siteAttributeValue = siteAttribute.getValue();
 
                 if (siteAttributeValue != null && siteAttributeValue != undefined &&
+                    stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
                     operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
 
-                    // Enable direct dependent field
-                    form.getControl("ovs_asset").setDisabled(false);
-
-                    // Setup a custom view
-                    // This value is never saved and only needs to be unique among the other available views for the lookup.
-                    const viewId = '{C0DAF55B-505E-410C-B0CD-CD0F24F63233}';
-                    const entityName = "msdyn_customerasset";
-                    const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperations");
+                    // Populate operation asset
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_customerasset"><attribute name="msdyn_account" /><attribute name="msdyn_name" /><attribute name="msdyn_functionallocation" /><attribute name="msdyn_customerassetid" /><order attribute="msdyn_name" descending="true" /><filter type="and"><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue[0].id + '" /></filter></entity></fetch>';
-                    const layoutXml = '<grid name="resultset" object="10300" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetid"><cell name="msdyn_name" width="200" /></row></grid>';
-                    form.getControl("ovs_asset").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
-                }
+                    var encodedFetchXml = encodeURIComponent(fetchXml);
+                    Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", "?fetchXml=" + encodedFetchXml).then(
+                        function success(result) {
+                            if (result.entities.length == 1) {
+                                const targetOperation = result.entities[0];
+                                const lookup = new Array();
+                                lookup[0] = new Object();
+                                lookup[0].id = targetOperation.msdyn_customerassetid;
+                                lookup[0].name = targetOperation.msdyn_name;
+                                lookup[0].entityType = 'msdyn_customerasset';
 
+                                form.getAttribute('ovs_asset').setValue(lookup);
+                            } else {
+                                // do not set a default if multiple records are found, error.
+                            }
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
+                }
             }
         } catch (e) {
             throw new Error(e.Message);
@@ -462,7 +475,7 @@ namespace ROM.WorkOrder {
 
     export function caseOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
-    
+
         const caseAttribute = form.getAttribute("msdyn_servicerequest");
 
         if(caseAttribute.getValue() == null){

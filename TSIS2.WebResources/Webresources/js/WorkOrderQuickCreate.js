@@ -70,6 +70,7 @@ var ROM;
                     }
                     if (!form.getControl("ovs_assetcategory").getDisabled() || form.getAttribute("ovs_assetcategory").getValue() != null) {
                         form.getAttribute("ovs_assetcategory").setValue(null);
+                        form.getAttribute("ovs_asset").setValue(null);
                     }
                     form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                     form.getControl("ovs_assetcategory").setDisabled(true);
@@ -98,29 +99,50 @@ var ROM;
         WorkOrderQuickCreate.workOrderTypeOnChange = workOrderTypeOnChange;
         function operationTypeOnChange(eContext) {
             try {
-                var form = eContext.getFormContext();
-                var workOrderTypeAttribute = form.getAttribute("msdyn_workordertype");
-                var operationTypeAttribute = form.getAttribute("ovs_assetcategory");
+                var form_1 = eContext.getFormContext();
+                var workOrderTypeAttribute = form_1.getAttribute("msdyn_workordertype");
+                var operationTypeAttribute = form_1.getAttribute("ovs_assetcategory");
+                var siteAttribute = form_1.getAttribute("ts_site");
                 if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
                     // Clear out & disable all dependent fields' value
-                    if (!form.getControl("msdyn_primaryincidenttype").getDisabled() || form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
-                        form.getAttribute("msdyn_primaryincidenttype").setValue(null);
+                    if (!form_1.getControl("msdyn_primaryincidenttype").getDisabled() || form_1.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
+                        form_1.getAttribute("msdyn_primaryincidenttype").setValue(null);
                     }
-                    form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    form_1.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    form_1.getAttribute("ovs_asset").setValue(null);
                     // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                     var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                     var operationTypeAttributeValue = operationTypeAttribute.getValue();
+                    var siteAttributeValue = siteAttribute.getValue();
                     if (operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
-                        workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined) {
+                        workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined &&
+                        siteAttributeValue != null && siteAttributeValue != undefined) {
                         // Enable direct dependent field
-                        form.getControl("msdyn_primaryincidenttype").setDisabled(false);
+                        form_1.getControl("msdyn_primaryincidenttype").setDisabled(false);
                         //Custom view for Activity Type
                         var viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
                         var entityNameActivity = "msdyn_incidenttype";
                         var viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
                         var fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="ts_operationtype" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_defaultworkordertype" operator="eq" value="' + workOrderTypeAttributeValue[0].id + '" /></filter></entity></fetch>';
                         var layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
-                        form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                        form_1.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                        // Populate operation asset
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_customerasset"><attribute name="msdyn_account" /><attribute name="msdyn_name" /><attribute name="msdyn_functionallocation" /><attribute name="msdyn_customerassetid" /><order attribute="msdyn_name" descending="true" /><filter type="and"><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue[0].id + '" /></filter></entity></fetch>';
+                        var encodedFetchXml = encodeURIComponent(fetchXml);
+                        Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", "?fetchXml=" + encodedFetchXml).then(function success(result) {
+                            if (result.entities.length == 1) {
+                                var targetOperation = result.entities[0];
+                                var lookup = new Array();
+                                lookup[0] = new Object();
+                                lookup[0].id = targetOperation.msdyn_customerassetid;
+                                lookup[0].name = targetOperation.msdyn_name;
+                                lookup[0].entityType = 'msdyn_customerasset';
+                                form_1.getAttribute('ovs_asset').setValue(lookup);
+                            }
+                            else {
+                                // do not set a default if multiple records are found, error.
+                            }
+                        });
                     }
                 }
             }
