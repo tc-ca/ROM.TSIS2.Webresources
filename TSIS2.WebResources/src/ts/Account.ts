@@ -19,6 +19,7 @@ namespace ROM.Account {
         if (address1CountryAttribute != null && address1CountryAttribute != undefined){
             const regionAttributeValue = regionAttribute.getValue();
             const countryAttributeValue = countryAttribute.getValue();
+            const address1CountryAttributeValue = address1CountryAttribute.getValue();
 
             if (regionAttributeValue != null && regionAttributeValue != undefined){
 
@@ -34,9 +35,11 @@ namespace ROM.Account {
                     address1CountryAttribute.setValue("CANADA");
                 }
                 else {
-                    if (countryAttributeValue != null && countryAttributeValue != undefined &&
-                        countryAttributeValue[0].id == "{208EF8A1-8E75-EB11-A812-000D3AF3FAC7}"){ //Canada
+                    if (countryAttributeValue != null && countryAttributeValue[0].id == "{208EF8A1-8E75-EB11-A812-000D3AF3FAC7}") { //Canada
                         countryAttribute.setValue(null);
+                    }
+                    if (address1CountryAttributeValue == "CANADA") {
+                        address1CountryAttribute.setValue(null);
                     }
                 }
             }
@@ -72,11 +75,17 @@ namespace ROM.Account {
                     form.getControl("msdyn_serviceterritory").setDisabled(true);
                 }
                 else {
-                    if (regionAttributeValue != null && regionAttributeValue[0].id != "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}"){ //International
+                    if (regionAttributeValue != null && regionAttributeValue[0].id != "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
                         regionAttribute.setValue(null);
-                        if (address1CountryAttributeValue == "CANADA"){
+                        if (address1CountryAttributeValue == "CANADA") {
                             address1CountryAttribute.setValue(null);
                         }
+                        if (countryAttribute != null && countryAttributeValue[0].id == "{208EF8A1-8E75-EB11-A812-000D3AF3FAC7}") {
+                            countryAttribute.setValue(null);
+                        }
+                    }
+                    else{
+                        regionAttribute.setValue(null);
                     }
                 }
             }
