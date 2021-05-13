@@ -101,31 +101,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         options.html = str;
     });
 
-
-    // Add a character count and limit to Comment questions.
-    // If the maxLength is the default value of -1, set maxLength to 1000.
-    // No character count if maxLength was set to 0
-    survey.onAfterRenderQuestion.add(function (survey, options) {
-        if (options.question.getType() !== "comment") return;
-        var comment = options.htmlElement.getElementsByTagName('textarea')[0];
-        var maxLength = options.question.maxLength;
-        if (maxLength == -1) {
-            maxLength = 1000;
-        }
-        if (maxLength !== 0) {
-            comment.setAttribute("maxLength", maxLength);
-            var div = document.createElement("div");
-            div.style.textAlign = "left";
-            comment.parentNode.appendChild(div);
-            var changingHandler = function () {
-                var currLength = comment.value.length;
-                div.innerText = (maxLength - currLength) + " " + charactersRemainingLocalizedText;
-            }
-            changingHandler();
-            comment.onkeyup = changingHandler;
-        }
-    });
-
     function appendDetailToQuestion(survey, options) {
         var detailSurveyId = options.question.name + "-Detail";
         var detailLabel = "";
@@ -143,7 +118,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         var detailText = document.createElement("span");
         var detailSymbol = document.createElement("span");
         var detailBox = document.createElement("textarea");
-        var characterCount = document.createElement("span");
 
         /* Append HTML elements to each other forming the following structure
 
@@ -154,7 +128,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             </div>
             <div id="content">
                 <textarea id="detailBox"></textarea>
-                <span id="characterCount"></span>
             </div>
         </div>
         */
@@ -162,7 +135,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         header.appendChild(detailSymbol);
         header.appendChild(detailText);
         content.appendChild(detailBox);
-        content.appendChild(characterCount);
         detailContainer.appendChild(header);
         detailContainer.appendChild(content);
         question.appendChild(detailContainer);
@@ -175,48 +147,13 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         header.style.cursor = "pointer";
         header.style.fontWeight = "bold";
         detailBox.className = "form-control";
-        detailBox.rows = 3;
+        detailBox.rows = 5;
         detailBox.cols = 50;
         detailBox.maxLength = 1000;
         detailBox.style.resize = "vertical";
-        characterCount.style.textAlign = "left";
         detailText.innerHTML = detailLabel;
+        content.style.display = "block";
 
-        //Expand content if detailBox has text saved previously, and load previous detailBox text
-        if (survey.getValue(detailSurveyId) != null) {
-            detailBox.value = survey.getValue(detailSurveyId);
-            content.style.display = "block";
-            detailSymbol.innerHTML = "- ";
-        } else {
-            content.style.display = "none";
-            detailSymbol.innerHTML = "+ ";
-        }
-
-        //Add functionality to HTML elements
-
-        //Update character count onKeyUp in detailBox
-        var detailBoxOnKeyUpHandler = function () {
-            var currLength = detailBox.value.length;
-            characterCount.innerText = (1000 - currLength) + " " + charactersRemainingLocalizedText;
-        }
-        detailBoxOnKeyUpHandler();
-        detailBox.onkeyup = detailBoxOnKeyUpHandler;
-
-        //Update detail text in survey response
-        detailBox.onchange = function () {
-            survey.setValue((options.question.name + "-Detail"), detailBox.value);
-        }
-
-        //Toggle visibilty of content when header is clicked
-        header.onclick = function () {
-            if (content.style.display == "block" && detailBox.value == "") {
-                content.style.display = "none";
-                detailSymbol.innerHTML = "+ ";
-            } else {
-                content.style.display = "block";
-                detailSymbol.innerHTML = "- ";
-            }
-        };
 
     }
 
