@@ -9,16 +9,20 @@ var ROM;
             var Form = eContext.getFormContext();
             // Get the web resource control on the form
             var wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
+            var wrCtrlPrint = Form.getControl('WebResource_SurveyRenderPrint');
             var questionnaireDefinition = Form.getAttribute('ovs_questionnairedefinition').getValue();
             var questionnaireResponse = Form.getAttribute('ovs_questionnaireresponse').getValue();
             // Exit if no questionnaire exists
             if (questionnaireDefinition === null) {
                 wrCtrl.setVisible(false);
+                wrCtrlPrint.setVisible(false);
                 return;
             }
             // Get Questionnaire definition
             wrCtrl.setVisible(true);
+            wrCtrlPrint.setVisible(true);
             InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
+            InitiateSurvey(eContext, wrCtrlPrint, questionnaireDefinition, questionnaireResponse, mode);
         }
         WorkOrderServiceTask.ToggleQuestionnaire = ToggleQuestionnaire;
         function onLoad(eContext) {

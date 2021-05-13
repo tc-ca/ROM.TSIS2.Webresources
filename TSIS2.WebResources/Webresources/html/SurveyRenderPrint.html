@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Render</title>
+
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../ovs_/js/jquery.js"></script>
+    <script src="../../ovs_/js/survey.jquery.min.js"></script>
+    <script src="../../ovs_/js/showdown.min.js"></script>
+    <script src="../../ovs_/js/tsis2findingwidget.js"></script>
+
+    <link rel="stylesheet" href="../../ovs_/css/survey.min.css">
+</head>
+
+<body style="overflow-wrap: break-word;">
+    <input type="button" onclick="printDiv('printableArea')" value="Print Survey" />
+    <div id="printableArea">
+        <div id="surveyElementPrint" style="display:inline-block;width:100%;"></div>
+    </div>
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+    
+    <div id="surveyResult"></div>
+
+    <script type="text/javascript" src="../js/surveyRenderPrint.js"></script>
+</body>
+</html>
