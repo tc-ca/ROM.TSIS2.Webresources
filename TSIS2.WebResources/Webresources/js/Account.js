@@ -18,6 +18,7 @@ var MainForm =  (function () {
         if (address1CountryAttribute != null && address1CountryAttribute != undefined) {
             var regionAttributeValue = regionAttribute.getValue();
             var countryAttributeValue = countryAttribute.getValue();
+            var address1CountryAttributeValue = address1CountryAttribute.getValue();
             if (regionAttributeValue != null && regionAttributeValue != undefined) {
                 if (regionAttributeValue[0].id != "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
                     var lookup = new Array();
@@ -29,9 +30,11 @@ var MainForm =  (function () {
                     address1CountryAttribute.setValue("CANADA");
                 }
                 else {
-                    if (countryAttributeValue != null && countryAttributeValue != undefined &&
-                        countryAttributeValue[0].id == "{208EF8A1-8E75-EB11-A812-000D3AF3FAC7}") {
+                    if (countryAttributeValue != null && countryAttributeValue[0].id == "{208EF8A1-8E75-EB11-A812-000D3AF3FAC7}") {
                         countryAttribute.setValue(null);
+                    }
+                    if (address1CountryAttributeValue == "CANADA") {
+                        address1CountryAttribute.setValue(null);
                     }
                 }
             }
@@ -63,6 +66,12 @@ var MainForm =  (function () {
                         if (address1CountryAttributeValue == "CANADA") {
                             address1CountryAttribute.setValue(null);
                         }
+                        if (countryAttribute != null && countryAttributeValue[0].id == "{208EF8A1-8E75-EB11-A812-000D3AF3FAC7}") {
+                            countryAttribute.setValue(null);
+                        }
+                    }
+                    else {
+                        regionAttribute.setValue(null);
                     }
                 }
             }

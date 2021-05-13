@@ -19,6 +19,7 @@ export default class MainForm {
     if (address1CountryAttribute != null && address1CountryAttribute != undefined) {
       const regionAttributeValue = regionAttribute.getValue();
       const countryAttributeValue = countryAttribute.getValue();
+      const address1CountryAttributeValue = address1CountryAttribute.getValue();
 
       if (regionAttributeValue != null && regionAttributeValue != undefined) {
 
@@ -34,9 +35,11 @@ export default class MainForm {
           address1CountryAttribute.setValue("CANADA");
         }
         else {
-          if (countryAttributeValue != null && countryAttributeValue != undefined &&
-            countryAttributeValue[0].id == "{208EF8A1-8E75-EB11-A812-000D3AF3FAC7}") { //Canada
+          if (countryAttributeValue != null && countryAttributeValue[0].id == "{208EF8A1-8E75-EB11-A812-000D3AF3FAC7}") { //Canada
             countryAttribute.setValue(null);
+          }
+          if (address1CountryAttributeValue == "CANADA") {
+            address1CountryAttribute.setValue(null);
           }
         }
       }
@@ -77,6 +80,12 @@ export default class MainForm {
             if (address1CountryAttributeValue == "CANADA") {
               address1CountryAttribute.setValue(null);
             }
+            if (countryAttribute != null && countryAttributeValue[0].id == "{208EF8A1-8E75-EB11-A812-000D3AF3FAC7}") {
+              countryAttribute.setValue(null);
+            }
+          }
+          else {
+            regionAttribute.setValue(null);
           }
         }
       }
