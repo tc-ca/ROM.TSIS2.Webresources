@@ -1,5 +1,5 @@
 declare namespace Form.msdyn_workorder.Quick {
-  namespace quickviewform {
+  namespace WorkOrderFindingQuickView {
     namespace Tabs {
       interface tab_1 extends Xrm.SectionCollectionBase {
         get(name: "tab_1_column_1_section_1"): Xrm.PageSection;
@@ -18,7 +18,7 @@ declare namespace Form.msdyn_workorder.Quick {
       get(name: "msdyn_substatus"): Xrm.LookupAttribute<"msdyn_workordersubstatus"> | null;
       get(name: "msdyn_systemstatus"): Xrm.OptionSetAttribute<msdyn_wosystemstatus> | null;
       get(name: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype"> | null;
-      get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+      get(name: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -52,7 +52,7 @@ declare namespace Form.msdyn_workorder.Quick {
       get(name: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
       get(name: "msdyn_name"): Xrm.StringControl;
       get(name: "msdyn_serviceaccount"): Xrm.LookupControl<"account">;
-      get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+      get(name: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
@@ -69,7 +69,7 @@ declare namespace Form.msdyn_workorder.Quick {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface quickviewform extends Xrm.PageBase<quickviewform.Attributes,quickviewform.Tabs,quickviewform.Controls> {
+  interface WorkOrderFindingQuickView extends Xrm.PageBase<WorkOrderFindingQuickView.Attributes,WorkOrderFindingQuickView.Tabs,WorkOrderFindingQuickView.Controls> {
     getAttribute(attributeName: "msdyn_billingaccount"): Xrm.LookupAttribute<"account"> | null;
     getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype"> | null;
@@ -78,7 +78,7 @@ declare namespace Form.msdyn_workorder.Quick {
     getAttribute(attributeName: "msdyn_substatus"): Xrm.LookupAttribute<"msdyn_workordersubstatus"> | null;
     getAttribute(attributeName: "msdyn_systemstatus"): Xrm.OptionSetAttribute<msdyn_wosystemstatus> | null;
     getAttribute(attributeName: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype"> | null;
-    getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+    getAttribute(attributeName: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -107,7 +107,7 @@ declare namespace Form.msdyn_workorder.Quick {
     getControl(controlName: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
     getControl(controlName: "msdyn_name"): Xrm.StringControl;
     getControl(controlName: "msdyn_serviceaccount"): Xrm.LookupControl<"account">;
-    getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+    getControl(controlName: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
