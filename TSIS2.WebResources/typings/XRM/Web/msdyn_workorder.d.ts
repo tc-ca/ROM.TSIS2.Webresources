@@ -79,7 +79,6 @@ interface msdyn_workorder_Relationships {
   ovs_CurrentFiscalQuarter?: tc_TCFiscalQuarter_Result | null;
   ovs_FiscalQuarter?: tc_TCFiscalQuarter_Result | null;
   ovs_FiscalYear?: tc_TCFiscalYear_Result | null;
-  ovs_OperationId?: ovs_operation_Result | null;
   ovs_PrimaryInspector?: BookableResource_Result | null;
   ovs_RevisedQuarterId?: tc_TCFiscalQuarter_Result | null;
   ovs_SecondaryInspector?: BookableResource_Result | null;
@@ -403,7 +402,6 @@ interface msdyn_workorder_Expand {
   ovs_CurrentFiscalQuarter: WebExpand<msdyn_workorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_CurrentFiscalQuarter: tc_TCFiscalQuarter_Result }>;
   ovs_FiscalQuarter: WebExpand<msdyn_workorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_FiscalQuarter: tc_TCFiscalQuarter_Result }>;
   ovs_FiscalYear: WebExpand<msdyn_workorder_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ovs_FiscalYear: tc_TCFiscalYear_Result }>;
-  ovs_OperationId: WebExpand<msdyn_workorder_Expand, ovs_operation_Select, ovs_operation_Filter, { ovs_OperationId: ovs_operation_Result }>;
   ovs_PrimaryInspector: WebExpand<msdyn_workorder_Expand, BookableResource_Select, BookableResource_Filter, { ovs_PrimaryInspector: BookableResource_Result }>;
   ovs_RevisedQuarterId: WebExpand<msdyn_workorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_RevisedQuarterId: tc_TCFiscalQuarter_Result }>;
   ovs_SecondaryInspector: WebExpand<msdyn_workorder_Expand, BookableResource_Select, BookableResource_Filter, { ovs_SecondaryInspector: BookableResource_Result }>;
@@ -566,7 +564,6 @@ interface msdyn_workorder_RelatedOne {
   ovs_CurrentFiscalQuarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ovs_FiscalQuarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ovs_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
-  ovs_OperationId: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ovs_PrimaryInspector: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   ovs_RevisedQuarterId: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ovs_SecondaryInspector: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;

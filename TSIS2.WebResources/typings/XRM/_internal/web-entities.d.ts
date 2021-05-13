@@ -354,29 +354,6 @@ interface IncidentResolution_Create extends IncidentResolution {
 }
 interface IncidentResolution_Update extends IncidentResolution {
 }
-interface ovs_operation_Base extends WebEntity {
-}
-interface ovs_operation_Fixed extends WebEntity_Fixed {
-  ovs_operationid: string;
-}
-interface ovs_operation extends ovs_operation_Base, ovs_operation_Relationships {
-}
-interface ovs_operation_Relationships {
-}
-interface ovs_operation_Result extends ovs_operation_Base, ovs_operation_Relationships {
-}
-interface ovs_operation_FormattedResult {
-}
-interface ovs_operation_Select {
-}
-interface ovs_operation_Expand {
-}
-interface ovs_operation_Filter {
-}
-interface ovs_operation_Create extends ovs_operation {
-}
-interface ovs_operation_Update extends ovs_operation {
-}
 interface Appointment_Base extends WebEntity {
 }
 interface Appointment_Fixed extends WebEntity_Fixed {

@@ -19,7 +19,6 @@ var ROM;
             if (address1CountryAttribute != null && address1CountryAttribute != undefined) {
                 var regionAttributeValue = regionAttribute.getValue();
                 var countryAttributeValue = countryAttribute.getValue();
-                var address1CountryAttributeValue = address1CountryAttribute.getValue();
                 if (regionAttributeValue != null && regionAttributeValue != undefined) {
                     //Set Country to Canada if Region Is Not International
                     if (regionAttributeValue[0].id != "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
