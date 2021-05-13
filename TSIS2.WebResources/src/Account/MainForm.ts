@@ -1,16 +1,16 @@
 export default class MainForm {
-  static onLoad(executionContext: Xrm.ExecutionContext<Form.account.Main.ROMInformation, any>) {
-    const formContext = executionContext.getFormContext() as Form.account.Main.ROMInformation;
+  static onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+    const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
 
-    const addressControl = formContext.getControl("address1_composite_compositionLinkControl_address1_country");
+    const addressControl = form.getControl("address1_composite_compositionLinkControl_address1_country");
 
     if (addressControl != null && addressControl != undefined) {
       addressControl.setVisible(false);
     }
   }
 
-  static regionOnChange(executionContext: Xrm.ExecutionContext<any, any>): void {
-    const form = <Form.account.Main.ROMInformation>executionContext.getFormContext();
+  static regionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
 
     const countryAttribute = form.getAttribute("ts_country");
     const regionAttribute = form.getAttribute("msdyn_serviceterritory");
@@ -19,7 +19,6 @@ export default class MainForm {
     if (address1CountryAttribute != null && address1CountryAttribute != undefined) {
       const regionAttributeValue = regionAttribute.getValue();
       const countryAttributeValue = countryAttribute.getValue();
-      const address1CountryAttributeValue = address1CountryAttribute.getValue();
 
       if (regionAttributeValue != null && regionAttributeValue != undefined) {
 
@@ -44,8 +43,8 @@ export default class MainForm {
     }
   }
 
-  static countryOnChange(executionContext: Xrm.ExecutionContext<any, any>): void {
-    const form = <Form.account.Main.ROMInformation>executionContext.getFormContext();
+  static countryOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
 
     const countryAttribute = form.getAttribute("ts_country");
     const regionAttribute = form.getAttribute("msdyn_serviceterritory");

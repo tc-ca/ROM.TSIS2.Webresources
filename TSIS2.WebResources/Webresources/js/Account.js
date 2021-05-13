@@ -3,22 +3,21 @@
 var MainForm =  (function () {
     function MainForm() {
     }
-    MainForm.onLoad = function (executionContext) {
-        var formContext = executionContext.getFormContext();
-        var addressControl = formContext.getControl("address1_composite_compositionLinkControl_address1_country");
+    MainForm.onLoad = function (eContext) {
+        var form = eContext.getFormContext();
+        var addressControl = form.getControl("address1_composite_compositionLinkControl_address1_country");
         if (addressControl != null && addressControl != undefined) {
             addressControl.setVisible(false);
         }
     };
-    MainForm.regionOnChange = function (executionContext) {
-        var form = executionContext.getFormContext();
+    MainForm.regionOnChange = function (eContext) {
+        var form = eContext.getFormContext();
         var countryAttribute = form.getAttribute("ts_country");
         var regionAttribute = form.getAttribute("msdyn_serviceterritory");
         var address1CountryAttribute = form.getAttribute("address1_country");
         if (address1CountryAttribute != null && address1CountryAttribute != undefined) {
             var regionAttributeValue = regionAttribute.getValue();
             var countryAttributeValue = countryAttribute.getValue();
-            address1CountryAttribute.getValue();
             if (regionAttributeValue != null && regionAttributeValue != undefined) {
                 if (regionAttributeValue[0].id != "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
                     var lookup = new Array();
@@ -38,8 +37,8 @@ var MainForm =  (function () {
             }
         }
     };
-    MainForm.countryOnChange = function (executionContext) {
-        var form = executionContext.getFormContext();
+    MainForm.countryOnChange = function (eContext) {
+        var form = eContext.getFormContext();
         var countryAttribute = form.getAttribute("ts_country");
         var regionAttribute = form.getAttribute("msdyn_serviceterritory");
         var address1CountryAttribute = form.getAttribute("address1_country");

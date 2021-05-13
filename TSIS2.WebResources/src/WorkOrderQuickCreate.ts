@@ -76,6 +76,7 @@ namespace ROM.WorkOrderQuickCreate {
                 }
                 if (!form.getControl("ovs_assetcategory").getDisabled() || form.getAttribute("ovs_assetcategory").getValue() != null) {
                     form.getAttribute("ovs_assetcategory").setValue(null);
+                    form.getAttribute("ovs_asset").setValue(null);
                 }
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                 form.getControl("ovs_assetcategory").setDisabled(true);
@@ -109,6 +110,7 @@ namespace ROM.WorkOrderQuickCreate {
             const form = <Form.msdyn_workorder.QuickCreate.QuickCreateWorkOrder>eContext.getFormContext();
             const workOrderTypeAttribute = form.getAttribute("msdyn_workordertype");
             const operationTypeAttribute = form.getAttribute("ovs_assetcategory");
+            const siteAttribute = form.getAttribute("ts_site");
 
             if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
 
@@ -117,12 +119,15 @@ namespace ROM.WorkOrderQuickCreate {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                 }
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                form.getAttribute("ovs_asset").setValue(null);
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                 const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                const siteAttributeValue = siteAttribute.getValue();
                 if (operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
-                    workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined) {
+                    workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined &&
+                    siteAttributeValue != null && siteAttributeValue != undefined) {
 
                     // Enable direct dependent field
                     form.getControl("msdyn_primaryincidenttype").setDisabled(false);
@@ -135,6 +140,25 @@ namespace ROM.WorkOrderQuickCreate {
                     const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
                     form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
 
+                    // Populate operation asset
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_customerasset"><attribute name="msdyn_account" /><attribute name="msdyn_name" /><attribute name="msdyn_functionallocation" /><attribute name="msdyn_customerassetid" /><order attribute="msdyn_name" descending="true" /><filter type="and"><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue[0].id + '" /></filter></entity></fetch>';
+                    var encodedFetchXml = encodeURIComponent(fetchXml);
+                    Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", "?fetchXml=" + encodedFetchXml).then(
+                        function success(result) {
+                            if (result.entities.length == 1) {
+                                const targetOperation = result.entities[0];
+                                const lookup = new Array();
+                                lookup[0] = new Object();
+                                lookup[0].id = targetOperation.msdyn_customerassetid;
+                                lookup[0].name = targetOperation.msdyn_name;
+                                lookup[0].entityType = 'msdyn_customerasset';
+
+                                form.getAttribute('ovs_asset').setValue(lookup);
+                            } else {
+                                // do not set a default if multiple records are found, error.
+                            }
+                        }
+                    );
                 }
             }
         } catch (e) {
