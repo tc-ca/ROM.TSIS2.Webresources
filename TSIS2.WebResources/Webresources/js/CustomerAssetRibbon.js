@@ -1,12 +1,12 @@
 function addExistingAssetsToEntity(primaryControl, selectedEntityTypeName, selectedControl){
     const formContext = primaryControl;
     Xrm.Utility.getEntityMetadata(primaryControl._entityName).then(function (primaryEntityData) {
-        const EntitySetName = primaryEntityData.EntitySetName;
+        const entitySetName = primaryEntityData.EntitySetName;
         const entityID = Xrm.Page.data.entity.getId().replace(/({|})/g,'');
         var customerAssetsAlreadyAssociatedCondition = "";
 
         var req = new XMLHttpRequest();
-        req.open("GET", formContext.context.getClientUrl() + "/api/data/v9.0/" + EntitySetName + "(" + entityID+ ")" + "/" + selectedControl.getRelationship().name, false);
+        req.open("GET", formContext.context.getClientUrl() + "/api/data/v9.0/" + entitySetName + "(" + entityID+ ")" + "/" + selectedControl.getRelationship().name, false);
         req.setRequestHeader("Content-Type", "application/json");
         req.setRequestHeader("Accept", "application/json");
         req.setRequestHeader("OData-MaxVersion", "4.0");
@@ -60,7 +60,7 @@ function addExistingAssetsToEntity(primaryControl, selectedEntityTypeName, selec
 
                 var payload =
                     {
-                        "@odata.id" : formContext.context.getClientUrl() + "/api/data/v9.0/" + EntitySetName + "(" + entityID + ")"
+                        "@odata.id" : formContext.context.getClientUrl() + "/api/data/v9.0/" + entitySetName + "(" + entityID + ")"
                     };
             
                 req.onreadystatechange = function() {
