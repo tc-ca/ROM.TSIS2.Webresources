@@ -525,12 +525,12 @@ namespace ROM.WorkOrder {
 
             if (caseAttribute != null && caseAttribute != undefined) {
                 if (caseAttributeValue != null) {
-                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(
+                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value, _ts_stakeholder_value").then(
                         function success(result) {
                             if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
-                                (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._tc_country_value.toUpperCase())) ||
+                                (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._ts_country_value.toUpperCase())) ||
                                 (stakeholderCondition != "" && (result != null && stakeholderAttributeValue != null && stakeholderAttributeValue[0].id.replace(/({|})/g, '') != result._ts_stakeholder_value.toUpperCase())) ||
-                                (siteCondition != "" && (result != null && siteAttributeValue != null && siteAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_site_value.toUpperCase()))) {
+                                (siteCondition != "" && (result != null && siteAttributeValue != null && siteAttributeValue[0].id.replace(/({|})/g, '') != result._msdyn_functionallocation_value.toUpperCase()))) {
 
                                 form.getAttribute("msdyn_servicerequest").setValue(null);
                             }

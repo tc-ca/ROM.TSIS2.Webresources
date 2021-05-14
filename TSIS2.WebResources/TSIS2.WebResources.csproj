@@ -138,7 +138,9 @@
     <Content Include="Webresources\js\BookableResourceBooking.js" />
     <Content Include="Webresources\js\buildprovisiontext.js" />
     <Content Include="Webresources\js\ckeditor.js" />
+    <Content Include="Webresources\js\CustomerAssetRibbon.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
+    <Content Include="Webresources\js\FunctionalLocation.js" />
     <Content Include="Webresources\js\Incident.js" />
     <Content Include="Webresources\js\IncidentQuickCreate.js" />
     <Content Include="Webresources\js\IncidentTypeServiceTask.js" />
