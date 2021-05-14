@@ -270,15 +270,21 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\Account\MainForm.ts" />
     <TypeScriptCompile Include="src\Account.ts" />
-    <TypeScriptCompile Include="src\BookableResourceBooking.ts" />
     <TypeScriptCompile Include="src\Incident.ts" />
     <TypeScriptCompile Include="src\IncidentQuickCreate.ts" />
     <TypeScriptCompile Include="src\IncidentTypeServiceTask.ts" />
+    <TypeScriptCompile Include="src\IncidentTypeServiceTask\MainForm.ts" />
+    <TypeScriptCompile Include="src\Incident\MainForm.ts" />
+    <TypeScriptCompile Include="src\Incident\QuickCreate.ts" />
     <TypeScriptCompile Include="src\Questionnaire.ts" />
+    <TypeScriptCompile Include="src\Questionnaire\MainForm.ts" />
     <TypeScriptCompile Include="src\ServiceTaskType.ts" />
+    <TypeScriptCompile Include="src\ServiceTaskType\MainForm.ts" />
     <TypeScriptCompile Include="src\WorkOrder.ts" />
     <TypeScriptCompile Include="src\WorkOrderQuickCreate.ts" />
     <TypeScriptCompile Include="src\WorkOrderServiceTask.ts" />
+    <TypeScriptCompile Include="src\WorkOrder\MainForm.ts" />
+    <TypeScriptCompile Include="src\WorkOrder\QuickCreate.ts" />
     <TypeScriptCompile Include="tests\Account.test.ts" />
     <TypeScriptCompile Include="typings\XRM\dg.xrmquery.web.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\InteractionCentricDashboard\AccountsDashboard.d.ts" />
