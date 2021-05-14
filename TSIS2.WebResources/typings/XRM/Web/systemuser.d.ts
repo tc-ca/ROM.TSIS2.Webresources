@@ -149,6 +149,10 @@ interface SystemUser_Relationships {
   lk_incidentresolution_createdonbehalfby?: IncidentResolution_Result[] | null;
   lk_incidentresolution_modifiedby?: IncidentResolution_Result[] | null;
   lk_incidentresolution_modifiedonbehalfby?: IncidentResolution_Result[] | null;
+  lk_msdyn_functionallocation_createdby?: msdyn_FunctionalLocation_Result[] | null;
+  lk_msdyn_functionallocation_createdonbehalfby?: msdyn_FunctionalLocation_Result[] | null;
+  lk_msdyn_functionallocation_modifiedby?: msdyn_FunctionalLocation_Result[] | null;
+  lk_msdyn_functionallocation_modifiedonbehalfby?: msdyn_FunctionalLocation_Result[] | null;
   lk_msdyn_incidenttypeservicetask_createdby?: msdyn_incidenttypeservicetask_Result[] | null;
   lk_msdyn_incidenttypeservicetask_createdonbehalfby?: msdyn_incidenttypeservicetask_Result[] | null;
   lk_msdyn_incidenttypeservicetask_modifiedby?: msdyn_incidenttypeservicetask_Result[] | null;
@@ -204,6 +208,7 @@ interface SystemUser_Relationships {
   user_bookingstatus?: BookingStatus_Result[] | null;
   user_bulkoperationlog?: BulkOperationLog_Result[] | null;
   user_incidentresolution?: IncidentResolution_Result[] | null;
+  user_msdyn_functionallocation?: msdyn_FunctionalLocation_Result[] | null;
   user_msdyn_incidenttypeservicetask?: msdyn_incidenttypeservicetask_Result[] | null;
   user_msdyn_servicetasktype?: msdyn_servicetasktype_Result[] | null;
   user_msdyn_workorder?: msdyn_workorder_Result[] | null;
@@ -524,6 +529,10 @@ interface SystemUser_Expand {
   lk_incidentresolution_createdonbehalfby: WebExpand<SystemUser_Expand, IncidentResolution_Select, IncidentResolution_Filter, { lk_incidentresolution_createdonbehalfby: IncidentResolution_Result[] }>;
   lk_incidentresolution_modifiedby: WebExpand<SystemUser_Expand, IncidentResolution_Select, IncidentResolution_Filter, { lk_incidentresolution_modifiedby: IncidentResolution_Result[] }>;
   lk_incidentresolution_modifiedonbehalfby: WebExpand<SystemUser_Expand, IncidentResolution_Select, IncidentResolution_Filter, { lk_incidentresolution_modifiedonbehalfby: IncidentResolution_Result[] }>;
+  lk_msdyn_functionallocation_createdby: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { lk_msdyn_functionallocation_createdby: msdyn_FunctionalLocation_Result[] }>;
+  lk_msdyn_functionallocation_createdonbehalfby: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { lk_msdyn_functionallocation_createdonbehalfby: msdyn_FunctionalLocation_Result[] }>;
+  lk_msdyn_functionallocation_modifiedby: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { lk_msdyn_functionallocation_modifiedby: msdyn_FunctionalLocation_Result[] }>;
+  lk_msdyn_functionallocation_modifiedonbehalfby: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { lk_msdyn_functionallocation_modifiedonbehalfby: msdyn_FunctionalLocation_Result[] }>;
   lk_msdyn_incidenttypeservicetask_createdby: WebExpand<SystemUser_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { lk_msdyn_incidenttypeservicetask_createdby: msdyn_incidenttypeservicetask_Result[] }>;
   lk_msdyn_incidenttypeservicetask_createdonbehalfby: WebExpand<SystemUser_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { lk_msdyn_incidenttypeservicetask_createdonbehalfby: msdyn_incidenttypeservicetask_Result[] }>;
   lk_msdyn_incidenttypeservicetask_modifiedby: WebExpand<SystemUser_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { lk_msdyn_incidenttypeservicetask_modifiedby: msdyn_incidenttypeservicetask_Result[] }>;
@@ -582,6 +591,7 @@ interface SystemUser_Expand {
   user_bookingstatus: WebExpand<SystemUser_Expand, BookingStatus_Select, BookingStatus_Filter, { user_bookingstatus: BookingStatus_Result[] }>;
   user_bulkoperationlog: WebExpand<SystemUser_Expand, BulkOperationLog_Select, BulkOperationLog_Filter, { user_bulkoperationlog: BulkOperationLog_Result[] }>;
   user_incidentresolution: WebExpand<SystemUser_Expand, IncidentResolution_Select, IncidentResolution_Filter, { user_incidentresolution: IncidentResolution_Result[] }>;
+  user_msdyn_functionallocation: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { user_msdyn_functionallocation: msdyn_FunctionalLocation_Result[] }>;
   user_msdyn_incidenttypeservicetask: WebExpand<SystemUser_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { user_msdyn_incidenttypeservicetask: msdyn_incidenttypeservicetask_Result[] }>;
   user_msdyn_servicetasktype: WebExpand<SystemUser_Expand, msdyn_servicetasktype_Select, msdyn_servicetasktype_Filter, { user_msdyn_servicetasktype: msdyn_servicetasktype_Result[] }>;
   user_msdyn_workorder: WebExpand<SystemUser_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { user_msdyn_workorder: msdyn_workorder_Result[] }>;
@@ -687,6 +697,10 @@ interface SystemUser_RelatedMany {
   lk_incidentresolution_createdonbehalfby: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   lk_incidentresolution_modifiedby: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   lk_incidentresolution_modifiedonbehalfby: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
+  lk_msdyn_functionallocation_createdby: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  lk_msdyn_functionallocation_createdonbehalfby: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  lk_msdyn_functionallocation_modifiedby: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  lk_msdyn_functionallocation_modifiedonbehalfby: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   lk_msdyn_incidenttypeservicetask_createdby: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
   lk_msdyn_incidenttypeservicetask_createdonbehalfby: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
   lk_msdyn_incidenttypeservicetask_modifiedby: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
@@ -742,6 +756,7 @@ interface SystemUser_RelatedMany {
   user_bookingstatus: WebMappingRetrieve<BookingStatus_Select,BookingStatus_Expand,BookingStatus_Filter,BookingStatus_Fixed,BookingStatus_Result,BookingStatus_FormattedResult>;
   user_bulkoperationlog: WebMappingRetrieve<BulkOperationLog_Select,BulkOperationLog_Expand,BulkOperationLog_Filter,BulkOperationLog_Fixed,BulkOperationLog_Result,BulkOperationLog_FormattedResult>;
   user_incidentresolution: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
+  user_msdyn_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   user_msdyn_incidenttypeservicetask: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
   user_msdyn_servicetasktype: WebMappingRetrieve<msdyn_servicetasktype_Select,msdyn_servicetasktype_Expand,msdyn_servicetasktype_Filter,msdyn_servicetasktype_Fixed,msdyn_servicetasktype_Result,msdyn_servicetasktype_FormattedResult>;
   user_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
