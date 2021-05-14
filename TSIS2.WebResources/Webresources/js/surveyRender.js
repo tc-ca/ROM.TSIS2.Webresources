@@ -65,6 +65,29 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         survey.render();
     });
 
+    /*
+    survey.onAfterRenderPage.add(function (survey, options) {
+        var printSurveyButton = document.createElement("button");
+        printSurveyButton.type = "button";
+        printSurveyButton.className = "btn btn-primary sv-btn svd-toolbar-button";
+        printSurveyButton.innerHTML = "Print Survey";
+        printSurveyButton.onclick = function () {
+            var wrCtrlPrint = parentFormContext.getControl('WebResource_SurveyRenderPrint');
+            wrCtrlPrint.getContentWindow().then(function (win) {
+                var printContents = win.document.getElementById("printableSurvey").innerHTML;
+                var originalContents = document.body.innerHTML;
+                document.body.innerHTML = printContents;
+                window.print();
+                document.body.innerHTML = originalContents;
+            });
+        }
+        var header = options
+            .htmlElement
+            .querySelector("h4");
+        header.appendChild(printSurveyButton);
+    });
+    */
+
     survey.onAfterRenderSurvey.add(function (survey, options) {
         // Hide complete button after survey renders.
         $('.sv_complete_btn').hide();
@@ -228,6 +251,17 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         model: survey
     });
 
+}
+
+function printSurvey() {
+    var wrCtrlPrint = parentFormContext.getControl('WebResource_SurveyRenderPrint');
+    wrCtrlPrint.getContentWindow().then(function (win) {
+        var printContents = win.document.getElementById("printableSurvey").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    });
 }
 
 function DoComplete() {

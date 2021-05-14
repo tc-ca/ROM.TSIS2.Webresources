@@ -52,6 +52,17 @@ function isStatusReasonNew(primaryControl) {
     return (statusReason == 918640005);
 }
 
+function printSurvey(primaryControl) {
+    var wrCtrlPrint = primaryControl.getControl('WebResource_SurveyRenderPrint');
+    wrCtrlPrint.getContentWindow().then(function (win) {
+        var printContents = win.document.getElementById("printableSurvey").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    });
+}
+
 function surveyHasErrors(primaryControl) {
     const formContext = primaryControl;
     // Get the web resource control on the form

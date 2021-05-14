@@ -14,22 +14,9 @@
 </head>
 
 <body style="overflow-wrap: break-word;">
-    <input type="button" onclick="printDiv('printableArea')" value="Print Survey" />
-    <div id="printableArea">
+    <div id="printableSurvey">
         <div id="surveyElementPrint" style="display:inline-block;width:100%;"></div>
     </div>
-    <script>
-        function printDiv(divName) {
-            var printContents = document.getElementById(divName).innerHTML;
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents;
-
-            window.print();
-
-            document.body.innerHTML = originalContents;
-        }
-    </script>
     
     <div id="surveyResult"></div>
 

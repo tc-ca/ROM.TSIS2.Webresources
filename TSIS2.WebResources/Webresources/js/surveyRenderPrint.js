@@ -45,7 +45,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     }
 
     var questionnaireDefinition = JSON.parse(surveyDefinition);
-    var questionnaireDefinition = JSON.parse(surveyDefinition);
     questionnaireDefinition.pages.forEach(function (page) {
         for (var i = 0; i < page.elements.length; i++) {
             page.elements[i].visibleIf = null;
@@ -60,33 +59,14 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         survey.data = JSON.parse(surveyResponse);
     }
 
-    survey.onComplete.add(function (survey, options) {
-        // When survey is completed, parse the resulting JSON and save it to ovs_questionnaireresponse
-        var data = JSON.stringify(survey.data, null, 3);
-        window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data.trim());
-
-        // In order to keep the survey in place without showing a thank you or blank page
-        // Set the state to running, keep the data and go to the first page
-        survey.clear(false, true);
-        survey.render();
+    survey.onAfterRenderHeader.add(function (survey, options) {
+        // Hide complete button after survey renders.
+        $('.sv_complete_btn').hide();
     });
 
     survey.onAfterRenderSurvey.add(function (survey, options) {
         // Hide complete button after survey renders.
         $('.sv_complete_btn').hide();
-    });
-
-    survey.onValueChanging.add(function (survey, options) {
-        //Adding a space to the questionnaireresponse to make the form dirty. The space gets trimmed off in survey.onComplete.
-        var data = JSON.stringify(survey.data, null, 3) + " ";
-        window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data);
-    });
-
-    survey.onValueChanged.add(function (survey, options) {
-        const el = document.getElementById(options.name);
-        if (el) {
-            el.value = options.value;
-        }
     });
 
     //Create showdown markdown converter
@@ -173,8 +153,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 
 }
 
-function DoComplete() {
-    var currentPageNo = survey.currentPageNo;
-    window.survey.doComplete();
-    survey.currentPage = currentPageNo;
-} 
+function printSurvey() {
+    
+}
