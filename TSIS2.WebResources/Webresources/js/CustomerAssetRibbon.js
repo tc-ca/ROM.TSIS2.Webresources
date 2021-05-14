@@ -18,7 +18,7 @@ function addExistingAssetsToWorkOrder(primaryControl, selectedEntityTypeName, se
         for (var i = 0; i < result.length; i++) {
             var req = new XMLHttpRequest();
 
-            req.open("PATCH", formContext.context.getClientUrl() + "/api/data/v9.0/" + "msdyn_customerassets" + "(" + result[i].id.replace(/({|})/g,'') + ")");
+            req.open("POST", formContext.context.getClientUrl() + "/api/data/v9.0/" + "msdyn_customerassets" + "(" + result[i].id.replace(/({|})/g,'') + ")" + "/" + "ts_msdyn_customerasset_msdyn_workorder_msdyn" + "/$ref");
             req.setRequestHeader("Content-Type", "application/json");
             req.setRequestHeader("Accept", "application/json");
             req.setRequestHeader("OData-MaxVersion", "4.0");
@@ -26,7 +26,7 @@ function addExistingAssetsToWorkOrder(primaryControl, selectedEntityTypeName, se
 
             var payload =
                 {
-                    "msdyn_servicerequest@odata.bind" : formContext.context.getClientUrl() + "/api/data/v9.0/" + "msdyn_workorders" + "(" + workOrderID + ")"
+                    "@odata.id" : formContext.context.getClientUrl() + "/api/data/v9.0/" + "msdyn_workorders" + "(" + workOrderID + ")"
                 };
 
             req.send(JSON.stringify(payload));
