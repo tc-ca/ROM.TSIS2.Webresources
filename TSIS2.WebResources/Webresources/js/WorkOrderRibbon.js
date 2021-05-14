@@ -57,6 +57,17 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
                     "msdyn_servicerequest@odata.bind" : formContext.context.getClientUrl() + "/api/data/v9.0/" + "incidents" + "(" + caseId + ")"
                 };
 
+            req.onreadystatechange = function() {
+                if (this.readyState === 4) {
+                    req.onreadystatechange = null;
+                    if (this.status === 204) {
+                        selectedControl.refresh();
+                    } else {
+                        showErrorMessageAlert(this.statusText);
+                    }
+                }
+            };
+
             req.send(JSON.stringify(payload));
         }
     },
