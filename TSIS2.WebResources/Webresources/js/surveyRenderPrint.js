@@ -133,6 +133,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         detailBox.className = "form-control";
         detailBox.rows = 5;
         detailBox.cols = 50;
+        detailBox.readOnly = true;
         detailBox.maxLength = 1000;
         detailBox.style.resize = "vertical";
         detailText.innerHTML = detailLabel;
