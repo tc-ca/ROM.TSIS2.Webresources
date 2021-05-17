@@ -3,8 +3,6 @@
 <head>
     <title>Survey Render</title>
 
-    <meta name="viewport" content="width=device-width">
-
     <script src="../../ovs_/js/jquery.js"></script>
     <script src="../../ovs_/js/survey.jquery.min.js"></script>
     <script src="../../ovs_/js/showdown.min.js"></script>
@@ -14,12 +12,11 @@
 </head>
 
 <body style="overflow-wrap: break-word;">
-    <div id="printableSurvey">
-        <div id="surveyElementPrint" style="display:inline-block;width:100%;"></div>
-    </div>
-    
-    <div id="surveyResult"></div>
+    <div id="surveyElementPrint" style="display:inline-block;width:100%;"></div>
 
     <script type="text/javascript" src="../js/surveyRenderPrint.js"></script>
+    <script>
+        InitializeSurveyRender(questionnaireDefinition, "{}", "en", "display");
+    </script>
 </body>
 </html>

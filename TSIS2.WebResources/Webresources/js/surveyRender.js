@@ -253,17 +253,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 
 }
 
-function printSurvey() {
-    var wrCtrlPrint = parentFormContext.getControl('WebResource_SurveyRenderPrint');
-    wrCtrlPrint.getContentWindow().then(function (win) {
-        var printContents = win.document.getElementById("printableSurvey").innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-    });
-}
-
 function DoComplete() {
     var currentPageNo = survey.currentPageNo;
     window.survey.doComplete();

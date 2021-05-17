@@ -53,14 +53,14 @@ function isStatusReasonNew(primaryControl) {
 }
 
 function printSurvey(primaryControl) {
-    var wrCtrlPrint = primaryControl.getControl('WebResource_SurveyRenderPrint');
-    wrCtrlPrint.getContentWindow().then(function (win) {
-        var printContents = win.document.getElementById("printableSurvey").innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-    });
+    var printWindow = window.open('../WebResources/ts_/html/surveyRenderPrint.html', 'SurveyPrint');
+    printWindow.questionnaireDefinition = primaryControl.getAttribute('ovs_questionnairedefinition').getValue();
+
+    //mywindow.document.close(); // necessary for IE >= 10
+    //mywindow.focus(); // necessary for IE >= 10*/
+
+    //mywindow.print();
+    //mywindow.close();
 }
 
 function surveyHasErrors(primaryControl) {
