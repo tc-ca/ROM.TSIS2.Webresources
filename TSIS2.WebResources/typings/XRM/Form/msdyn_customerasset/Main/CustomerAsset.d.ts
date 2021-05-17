@@ -75,13 +75,13 @@ declare namespace Form.msdyn_customerasset.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "AlertsGrid"): Xrm.SubGridControl<"msdyn_iotalert">;
       get(name: "Asset_SubAsset"): Xrm.SubGridControl<"msdyn_customerasset">;
-      get(name: "Asset_WorkOrder"): Xrm.SubGridControl<"msdyn_workorder">;
+      get(name: "Asset_WorkOrder_Operations"): Xrm.SubGridControl<"msdyn_workorder">;
+      get(name: "Asset_WorkOrder_Tags"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "CommandsGrid"): Xrm.SubGridControl<"msdyn_iotdevicecommand">;
       get(name: "ConnectedDevices"): Xrm.SubGridControl<"connection">;
       get(name: "CurrentPropertyValuesSubgrid"): Xrm.SubGridControl<"msdyn_propertylog">;
       get(name: "KnowledgeArticlesSubGrid"): Xrm.SubGridControl<"knowledgearticle">;
       get(name: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
-      get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "WebResource_PowerBIConnectedDevices"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "msdyn_account"): Xrm.LookupControl<"account">;
@@ -135,13 +135,13 @@ declare namespace Form.msdyn_customerasset.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "AlertsGrid"): Xrm.SubGridControl<"msdyn_iotalert">;
     getControl(controlName: "Asset_SubAsset"): Xrm.SubGridControl<"msdyn_customerasset">;
-    getControl(controlName: "Asset_WorkOrder"): Xrm.SubGridControl<"msdyn_workorder">;
+    getControl(controlName: "Asset_WorkOrder_Operations"): Xrm.SubGridControl<"msdyn_workorder">;
+    getControl(controlName: "Asset_WorkOrder_Tags"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "CommandsGrid"): Xrm.SubGridControl<"msdyn_iotdevicecommand">;
     getControl(controlName: "ConnectedDevices"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "CurrentPropertyValuesSubgrid"): Xrm.SubGridControl<"msdyn_propertylog">;
     getControl(controlName: "KnowledgeArticlesSubGrid"): Xrm.SubGridControl<"knowledgearticle">;
     getControl(controlName: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
-    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "WebResource_PowerBIConnectedDevices"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "msdyn_account"): Xrm.LookupControl<"account">;
