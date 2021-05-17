@@ -18,7 +18,6 @@ namespace ROM.CustomerAsset {
                     else{
                         relatedWorkOrdersTagsSubGrid.setVisible(true);
                         relatedWorkOrdersOperationSubGrid.setVisible(false);
-
                     }
                 },
                 function (error) {
