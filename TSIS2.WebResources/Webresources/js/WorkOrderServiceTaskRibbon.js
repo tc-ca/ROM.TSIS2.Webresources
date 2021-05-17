@@ -55,6 +55,9 @@ function isStatusReasonNew(primaryControl) {
 function printSurvey(primaryControl) {
     var printWindow = window.open('../WebResources/ts_/html/surveyRenderPrint.html', 'SurveyPrint');
     printWindow.questionnaireDefinition = primaryControl.getAttribute('ovs_questionnairedefinition').getValue();
+    printWindow.questionnaireResponse = primaryControl.getAttribute('ovs_questionnaireresponse').getValue();
+    languageId = Xrm.Utility.getGlobalContext().userSettings.languageId;
+    printWindow.locale = (languageId == 1036) ?  'fr' : 'en';
 
     //mywindow.document.close(); // necessary for IE >= 10
     //mywindow.focus(); // necessary for IE >= 10*/

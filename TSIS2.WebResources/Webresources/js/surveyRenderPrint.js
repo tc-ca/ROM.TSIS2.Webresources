@@ -1,8 +1,4 @@
-﻿if (parent.Xrm == null) {
-    var lang = 1033
-} else {
-    var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
-}
+﻿var lang = (locale == 'fr') ? 1036 : 1033;
 
 var charactersRemainingLocalizedText;
 var detailTextAddLocalizedText;
@@ -139,7 +135,9 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         detailText.innerHTML = detailLabel;
         content.style.display = "block";
 
-
+        //Load previous detailBox text
+        if (survey.getValue(detailSurveyId) != null) detailBox.value = survey.getValue(detailSurveyId);
+ 
     }
 
     //Add Detail content to questions when they are rendered in the survey

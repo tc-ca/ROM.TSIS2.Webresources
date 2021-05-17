@@ -1,9 +1,4 @@
-﻿if (parent.Xrm == null) {
-    var lang = 1033
-} else {
-    var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
-}
-
+﻿var lang = (locale == 'fr') ? 1036 : 1033;
 
 var inspectorCommentsLocalizedText;
 var charactersRemainingLocalizedText;
