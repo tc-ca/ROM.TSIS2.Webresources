@@ -8,9 +8,16 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface properties_tab extends Xrm.SectionCollectionBase {
+        get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_3 extends Xrm.SectionCollectionBase {
         get(name: "AddressSection"): Xrm.PageSection;
-        get(name: "tab_3_column_3_section_1"): Xrm.PageSection;
+        get(name: "_section_72"): Xrm.PageSection;
         get(name: "tab_3_section_1"): Xrm.PageSection;
         get(name: "tab_3_section_2"): Xrm.PageSection;
         get(name: string): undefined;
@@ -43,6 +50,9 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "CurrentPropertyValuesSubgrid"): Xrm.SubGridControl<"msdyn_propertylog">;
+      get(name: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
+      get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_address2"): Xrm.StringControl;
       get(name: "msdyn_address3"): Xrm.StringControl;
@@ -56,7 +66,6 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_parentfunctionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "msdyn_postalcode"): Xrm.StringControl;
       get(name: "msdyn_stateorprovince"): Xrm.StringControl;
-      get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_businessunit"): Xrm.StringControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
@@ -68,6 +77,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "AssetsAndLocationsTab"): Xrm.PageTab<Tabs.AssetsAndLocationsTab>;
+      get(name: "properties_tab"): Xrm.PageTab<Tabs.properties_tab>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -94,6 +104,9 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "CurrentPropertyValuesSubgrid"): Xrm.SubGridControl<"msdyn_propertylog">;
+    getControl(controlName: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
+    getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_address2"): Xrm.StringControl;
     getControl(controlName: "msdyn_address3"): Xrm.StringControl;
@@ -107,7 +120,6 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "msdyn_parentfunctionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "msdyn_postalcode"): Xrm.StringControl;
     getControl(controlName: "msdyn_stateorprovince"): Xrm.StringControl;
-    getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_businessunit"): Xrm.StringControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;

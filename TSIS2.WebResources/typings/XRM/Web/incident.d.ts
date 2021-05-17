@@ -67,6 +67,7 @@ interface Incident_Relationships {
   incident_master_incident?: Incident_Result[] | null;
   incident_parent_incident?: Incident_Result[] | null;
   msdyn_FunctionalLocation?: msdyn_FunctionalLocation_Result | null;
+  msdyn_incident_msdyn_customerasset?: msdyn_customerasset_Result[] | null;
   msdyn_incident_msdyn_workorder_ServiceRequest?: msdyn_workorder_Result[] | null;
   ovs_incident_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result[] | null;
   ts_Stakeholder?: Account_Result | null;
@@ -307,6 +308,7 @@ interface Incident_Expand {
   modifiedby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_FunctionalLocation: WebExpand<Incident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_FunctionalLocation: msdyn_FunctionalLocation_Result }>;
+  msdyn_incident_msdyn_customerasset: WebExpand<Incident_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { msdyn_incident_msdyn_customerasset: msdyn_customerasset_Result[] }>;
   msdyn_incident_msdyn_workorder_ServiceRequest: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_incident_msdyn_workorder_ServiceRequest: msdyn_workorder_Result[] }>;
   ovs_incident_msdyn_workorderservicetask: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ovs_incident_msdyn_workorderservicetask: msdyn_workorderservicetask_Result[] }>;
   ownerid: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
@@ -442,6 +444,7 @@ interface Incident_RelatedMany {
   incident_existingcase: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   incident_master_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   incident_parent_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  msdyn_incident_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_incident_msdyn_workorder_ServiceRequest: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_incident_msdyn_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
 }
