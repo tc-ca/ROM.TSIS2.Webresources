@@ -238,6 +238,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\Account.ts" />
     <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
+    <TypeScriptCompile Include="src\ts\CustomerAsset.ts" />
+    <TypeScriptCompile Include="src\ts\FunctionalLocation.ts" />
     <TypeScriptCompile Include="src\ts\Incident.ts" />
     <TypeScriptCompile Include="src\ts\IncidentQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
