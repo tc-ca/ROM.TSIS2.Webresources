@@ -1,4 +1,8 @@
-﻿var lang = (locale == 'fr') ? 1036 : 1033;
+﻿if (parent.Xrm == null && locale != null) {
+    var lang = (locale == 'fr') ? 1036 : 1033;
+} else {
+    var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+}
 
 var charactersRemainingLocalizedText;
 var detailTextAddLocalizedText;
@@ -156,3 +160,5 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     });
 
 }
+
+InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, locale, "display");

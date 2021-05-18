@@ -54,10 +54,65 @@ function isStatusReasonNew(primaryControl) {
 
 function printSurvey(primaryControl) {
     var printWindow = window.open('../WebResources/ts_/html/surveyRenderPrint.html', 'SurveyPrint');
+    //Provide printWindow with data required to render survey before survey is initialized in surveyRenderPrintScript below
     printWindow.questionnaireDefinition = primaryControl.getAttribute('ovs_questionnairedefinition').getValue();
     printWindow.questionnaireResponse = primaryControl.getAttribute('ovs_questionnaireresponse').getValue();
     languageId = Xrm.Utility.getGlobalContext().userSettings.languageId;
-    printWindow.locale = (languageId == 1036) ?  'fr' : 'en';
+    printWindow.locale = (languageId == 1036) ? 'fr' : 'en';
+    printWindow.onload = function () {
+
+        //Run surveyRenderPrint.js in printWindow
+        var surveyRenderPrintScript = printWindow.document.createElement('script');
+        surveyRenderPrintScript.src = "../../ts_/js/surveyRenderPrint.js";
+        printWindow.document.body.appendChild(surveyRenderPrintScript);
+
+        //Add Word Order Service Task and Work Order Details at the top
+
+        //WOST Details
+        var taskTypeLabel = primaryControl.getControl('msdyn_tasktype').getLabel();
+        var taskTypeValue = primaryControl.getAttribute('msdyn_tasktype').getValue()[0].name;
+        var statusLabel = primaryControl.getControl('statuscode').getLabel();
+        var statusValue = primaryControl.getAttribute('statuscode').getText();
+
+        var workOrderServiceTaskDetailsList = printWindow.document.createElement('ul');
+        workOrderServiceTaskDetailsList.style.listStyleType = "none";
+        workOrderServiceTaskDetailsList.innerHTML += '<li>' + taskTypeLabel + ': ' + taskTypeValue + '</li>';
+        workOrderServiceTaskDetailsList.innerHTML += '<li>' + statusLabel + ': ' + statusValue + '</li>';
+
+        //Work Order Details
+        var WorkOrderQuickView = primaryControl.ui.quickForms.get('WorkOrderQuickView');
+
+        var regionLabel = WorkOrderQuickView.getControl('ts_region').getLabel();
+        var regionValue = WorkOrderQuickView.getAttribute('ts_region').getValue();
+        var regionText = (regionValue != null) ? regionValue[0].name : "";
+
+        var countryLabel = WorkOrderQuickView.getControl('ts_country').getLabel();
+        var countryValue = WorkOrderQuickView.getAttribute('ts_country').getValue();
+        var countryText = (countryValue != null) ? countryValue[0].name : "";
+
+        var operationTypeLabel = WorkOrderQuickView.getControl('ovs_assetcategory').getLabel();
+        var operationTypeValue = WorkOrderQuickView.getAttribute('ovs_assetcategory').getValue();
+        var operationTypeText = (operationTypeValue != null) ? operationTypeValue[0].name : "";
+
+        var stakeholderLabel = WorkOrderQuickView.getControl('msdyn_serviceaccount').getLabel();
+        var stakeholderValue = WorkOrderQuickView.getAttribute('msdyn_serviceaccount').getValue();
+        var stakeholderText = (stakeholderValue != null) ? stakeholderValue[0].name : "";
+
+        var siteLabel = WorkOrderQuickView.getControl('ts_site').getLabel();
+        var siteValue = WorkOrderQuickView.getAttribute('ts_site').getValue();
+        var siteText = (siteValue != null) ? siteValue[0].name : "";
+
+        var workOrderDetailsList = printWindow.document.createElement('ul');
+        workOrderDetailsList.style.listStyleType = "none";
+        workOrderDetailsList.innerHTML += '<li>' + regionLabel + ': ' + regionText + '</li>';
+        workOrderDetailsList.innerHTML += '<li>' + countryLabel + ': ' + countryText + '</li>';
+        workOrderDetailsList.innerHTML += '<li>' + operationTypeLabel + ': ' + operationTypeText + '</li>';
+        workOrderDetailsList.innerHTML += '<li>' + stakeholderLabel + ': ' + stakeholderText + '</li>';
+        workOrderDetailsList.innerHTML += '<li>' + siteLabel + ': ' + siteText + '</li>';
+
+        printWindow.document.getElementById('workOrderServiceTaskDetails').appendChild(workOrderServiceTaskDetailsList);
+        printWindow.document.getElementById('workOrderServiceTaskDetails').appendChild(workOrderDetailsList);
+    }
 
     //mywindow.document.close(); // necessary for IE >= 10
     //mywindow.focus(); // necessary for IE >= 10*/
