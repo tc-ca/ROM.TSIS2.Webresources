@@ -69,37 +69,49 @@ function printSurvey(primaryControl) {
         //Add Word Order Service Task and Work Order Details at the top
 
         //WOST Details
+        var wostNameText = primaryControl.getAttribute('msdyn_name').getValue();
+
         var taskTypeLabel = primaryControl.getControl('msdyn_tasktype').getLabel();
-        var taskTypeValue = primaryControl.getAttribute('msdyn_tasktype').getValue()[0].name;
+        var taskTypeValue = primaryControl.getAttribute('msdyn_tasktype').getValue()
+        var taskTypeText = (taskTypeValue != null) ? taskTypeValue[0].name : "";
+
         var statusLabel = primaryControl.getControl('statuscode').getLabel();
         var statusValue = primaryControl.getAttribute('statuscode').getText();
 
+        var wostName = printWindow.document.createElement('h1');
+        wostName.innerHTML = wostNameText;
+
+        var wostHeader = printWindow.document.createElement('h2');
+        wostHeader.innerHTML = "Work Order Service Task Details";
+
         var workOrderServiceTaskDetailsList = printWindow.document.createElement('ul');
         workOrderServiceTaskDetailsList.style.listStyleType = "none";
-        workOrderServiceTaskDetailsList.innerHTML += '<li>' + taskTypeLabel + ': ' + taskTypeValue + '</li>';
+        workOrderServiceTaskDetailsList.innerHTML += '<li>' + taskTypeLabel + ': ' + taskTypeText + '</li>';
         workOrderServiceTaskDetailsList.innerHTML += '<li>' + statusLabel + ': ' + statusValue + '</li>';
 
         //Work Order Details
-        var WorkOrderQuickView = primaryControl.ui.quickForms.get('WorkOrderQuickView');
+        var workOrderHeader = printWindow.document.createElement('h2');
+        workOrderHeader.innerHTML = "Work Order Details";
+        var workOrderQuickView = primaryControl.ui.quickForms.get('WorkOrderQuickView');
 
-        var regionLabel = WorkOrderQuickView.getControl('ts_region').getLabel();
-        var regionValue = WorkOrderQuickView.getAttribute('ts_region').getValue();
+        var regionLabel = workOrderQuickView.getControl('ts_region').getLabel();
+        var regionValue = workOrderQuickView.getAttribute('ts_region').getValue();
         var regionText = (regionValue != null) ? regionValue[0].name : "";
 
-        var countryLabel = WorkOrderQuickView.getControl('ts_country').getLabel();
-        var countryValue = WorkOrderQuickView.getAttribute('ts_country').getValue();
+        var countryLabel = workOrderQuickView.getControl('ts_country').getLabel();
+        var countryValue = workOrderQuickView.getAttribute('ts_country').getValue();
         var countryText = (countryValue != null) ? countryValue[0].name : "";
 
-        var operationTypeLabel = WorkOrderQuickView.getControl('ovs_assetcategory').getLabel();
-        var operationTypeValue = WorkOrderQuickView.getAttribute('ovs_assetcategory').getValue();
+        var operationTypeLabel = workOrderQuickView.getControl('ovs_assetcategory').getLabel();
+        var operationTypeValue = workOrderQuickView.getAttribute('ovs_assetcategory').getValue();
         var operationTypeText = (operationTypeValue != null) ? operationTypeValue[0].name : "";
 
-        var stakeholderLabel = WorkOrderQuickView.getControl('msdyn_serviceaccount').getLabel();
-        var stakeholderValue = WorkOrderQuickView.getAttribute('msdyn_serviceaccount').getValue();
+        var stakeholderLabel = workOrderQuickView.getControl('msdyn_serviceaccount').getLabel();
+        var stakeholderValue = workOrderQuickView.getAttribute('msdyn_serviceaccount').getValue();
         var stakeholderText = (stakeholderValue != null) ? stakeholderValue[0].name : "";
 
-        var siteLabel = WorkOrderQuickView.getControl('ts_site').getLabel();
-        var siteValue = WorkOrderQuickView.getAttribute('ts_site').getValue();
+        var siteLabel = workOrderQuickView.getControl('ts_site').getLabel();
+        var siteValue = workOrderQuickView.getAttribute('ts_site').getValue();
         var siteText = (siteValue != null) ? siteValue[0].name : "";
 
         var workOrderDetailsList = printWindow.document.createElement('ul');
@@ -110,15 +122,19 @@ function printSurvey(primaryControl) {
         workOrderDetailsList.innerHTML += '<li>' + stakeholderLabel + ': ' + stakeholderText + '</li>';
         workOrderDetailsList.innerHTML += '<li>' + siteLabel + ': ' + siteText + '</li>';
 
-        printWindow.document.getElementById('workOrderServiceTaskDetails').appendChild(workOrderServiceTaskDetailsList);
-        printWindow.document.getElementById('workOrderServiceTaskDetails').appendChild(workOrderDetailsList);
+        var workOrderServiceTaskDetails = printWindow.document.getElementById('workOrderServiceTaskDetails');
+        workOrderServiceTaskDetails.appendChild(wostName);
+        workOrderServiceTaskDetails.appendChild(wostHeader);
+        workOrderServiceTaskDetails.appendChild(workOrderServiceTaskDetailsList);
+        workOrderServiceTaskDetails.appendChild(workOrderHeader);
+        workOrderServiceTaskDetails.appendChild(workOrderDetailsList);
+
+        //mywindow.document.close(); // necessary for IE >= 10
+        //mywindow.focus(); // necessary for IE >= 10*/
+
+        //mywindow.print();
+        //mywindow.close();
     }
-
-    //mywindow.document.close(); // necessary for IE >= 10
-    //mywindow.focus(); // necessary for IE >= 10*/
-
-    //mywindow.print();
-    //mywindow.close();
 }
 
 function surveyHasErrors(primaryControl) {

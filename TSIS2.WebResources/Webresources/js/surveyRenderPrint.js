@@ -70,8 +70,9 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     });
 
     survey.onAfterRenderSurvey.add(function (survey, options) {
-        // Hide complete button after survey renders.
+        // Hide complete and next button after survey renders.
         $('.sv_complete_btn').hide();
+        $('.sv_next_btn').hide();
     });
 
     //Create showdown markdown converter
@@ -162,3 +163,5 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 }
 
 InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, locale, "display");
+window.print();
+window.close();
