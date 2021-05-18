@@ -163,6 +163,7 @@ interface Account_Relationships {
   incident_customer_accounts?: Incident_Result[] | null;
   msdyn_PreferredResource?: BookableResource_Result | null;
   msdyn_account_account_BillingAccount?: Account_Result[] | null;
+  msdyn_account_msdyn_customerasset_Account?: msdyn_customerasset_Result[] | null;
   msdyn_account_msdyn_workorder_BillingAccount?: msdyn_workorder_Result[] | null;
   msdyn_account_msdyn_workorder_ServiceAccount?: msdyn_workorder_Result[] | null;
   msdyn_billingaccount_account?: Account_Result | null;
@@ -571,6 +572,7 @@ interface Account_Expand {
   modifiedonbehalfby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_PreferredResource: WebExpand<Account_Expand, BookableResource_Select, BookableResource_Filter, { msdyn_PreferredResource: BookableResource_Result }>;
   msdyn_account_account_BillingAccount: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_account_account_BillingAccount: Account_Result[] }>;
+  msdyn_account_msdyn_customerasset_Account: WebExpand<Account_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { msdyn_account_msdyn_customerasset_Account: msdyn_customerasset_Result[] }>;
   msdyn_account_msdyn_workorder_BillingAccount: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_account_msdyn_workorder_BillingAccount: msdyn_workorder_Result[] }>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_account_msdyn_workorder_ServiceAccount: msdyn_workorder_Result[] }>;
   msdyn_billingaccount_account: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_billingaccount_account: Account_Result }>;
@@ -723,6 +725,7 @@ interface Account_RelatedMany {
   contact_customer_accounts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   incident_customer_accounts: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_account_account_BillingAccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  msdyn_account_msdyn_customerasset_Account: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_account_msdyn_workorder_BillingAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_msdyn_functionallocation_account: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;

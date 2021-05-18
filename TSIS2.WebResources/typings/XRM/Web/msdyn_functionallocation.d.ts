@@ -26,6 +26,7 @@ interface msdyn_FunctionalLocation_Base extends WebEntity {
 interface msdyn_FunctionalLocation_Relationships {
   msdyn_FunctionalLocation_ParentFunctional?: msdyn_FunctionalLocation_Result[] | null;
   msdyn_ParentFunctionalLocation?: msdyn_FunctionalLocation_Result | null;
+  msdyn_customerasset_FunctionalLocation_ms?: msdyn_customerasset_Result[] | null;
   msdyn_msdyn_functionallocation_account?: Account_Result[] | null;
   msdyn_msdyn_functionallocation_incident_FunctionalLocation?: Incident_Result[] | null;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation?: msdyn_workorder_Result[] | null;
@@ -124,6 +125,7 @@ interface msdyn_FunctionalLocation_Expand {
   modifiedonbehalfby: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_FunctionalLocation_ParentFunctional: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_FunctionalLocation_ParentFunctional: msdyn_FunctionalLocation_Result[] }>;
   msdyn_ParentFunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_ParentFunctionalLocation: msdyn_FunctionalLocation_Result }>;
+  msdyn_customerasset_FunctionalLocation_ms: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { msdyn_customerasset_FunctionalLocation_ms: msdyn_customerasset_Result[] }>;
   msdyn_msdyn_functionallocation_account: WebExpand<msdyn_FunctionalLocation_Expand, Account_Select, Account_Filter, { msdyn_msdyn_functionallocation_account: Account_Result[] }>;
   msdyn_msdyn_functionallocation_incident_FunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, Incident_Select, Incident_Filter, { msdyn_msdyn_functionallocation_incident_FunctionalLocation: Incident_Result[] }>;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: msdyn_workorder_Result[] }>;
@@ -176,6 +178,7 @@ interface msdyn_FunctionalLocation_RelatedOne {
 }
 interface msdyn_FunctionalLocation_RelatedMany {
   msdyn_FunctionalLocation_ParentFunctional: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  msdyn_customerasset_FunctionalLocation_ms: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_msdyn_functionallocation_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_msdyn_functionallocation_incident_FunctionalLocation: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;

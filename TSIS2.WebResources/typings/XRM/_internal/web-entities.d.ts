@@ -78,6 +78,29 @@ interface Incident_Create extends Incident {
 }
 interface Incident_Update extends Incident {
 }
+interface msdyn_customerasset_Base extends WebEntity {
+}
+interface msdyn_customerasset_Fixed extends WebEntity_Fixed {
+  msdyn_customerassetid: string;
+}
+interface msdyn_customerasset extends msdyn_customerasset_Base, msdyn_customerasset_Relationships {
+}
+interface msdyn_customerasset_Relationships {
+}
+interface msdyn_customerasset_Result extends msdyn_customerasset_Base, msdyn_customerasset_Relationships {
+}
+interface msdyn_customerasset_FormattedResult {
+}
+interface msdyn_customerasset_Select {
+}
+interface msdyn_customerasset_Expand {
+}
+interface msdyn_customerasset_Filter {
+}
+interface msdyn_customerasset_Create extends msdyn_customerasset {
+}
+interface msdyn_customerasset_Update extends msdyn_customerasset {
+}
 interface msdyn_FunctionalLocation_Base extends WebEntity {
 }
 interface msdyn_FunctionalLocation_Fixed extends WebEntity_Fixed {
@@ -100,6 +123,29 @@ interface msdyn_FunctionalLocation_Filter {
 interface msdyn_FunctionalLocation_Create extends msdyn_FunctionalLocation {
 }
 interface msdyn_FunctionalLocation_Update extends msdyn_FunctionalLocation {
+}
+interface msdyn_incident_msdyn_customerasset_Base extends WebEntity {
+}
+interface msdyn_incident_msdyn_customerasset_Fixed extends WebEntity_Fixed {
+  msdyn_incident_msdyn_customerassetid: string;
+}
+interface msdyn_incident_msdyn_customerasset extends msdyn_incident_msdyn_customerasset_Base, msdyn_incident_msdyn_customerasset_Relationships {
+}
+interface msdyn_incident_msdyn_customerasset_Relationships {
+}
+interface msdyn_incident_msdyn_customerasset_Result extends msdyn_incident_msdyn_customerasset_Base, msdyn_incident_msdyn_customerasset_Relationships {
+}
+interface msdyn_incident_msdyn_customerasset_FormattedResult {
+}
+interface msdyn_incident_msdyn_customerasset_Select {
+}
+interface msdyn_incident_msdyn_customerasset_Expand {
+}
+interface msdyn_incident_msdyn_customerasset_Filter {
+}
+interface msdyn_incident_msdyn_customerasset_Create extends msdyn_incident_msdyn_customerasset {
+}
+interface msdyn_incident_msdyn_customerasset_Update extends msdyn_incident_msdyn_customerasset {
 }
 interface msdyn_incidenttypeservicetask_Base extends WebEntity {
 }
@@ -238,6 +284,29 @@ interface ovs_Questionnaire_Filter {
 interface ovs_Questionnaire_Create extends ovs_Questionnaire {
 }
 interface ovs_Questionnaire_Update extends ovs_Questionnaire {
+}
+interface ts_msdyn_customerasset_msdyn_workorder_Base extends WebEntity {
+}
+interface ts_msdyn_customerasset_msdyn_workorder_Fixed extends WebEntity_Fixed {
+  ts_msdyn_customerasset_msdyn_workorderid: string;
+}
+interface ts_msdyn_customerasset_msdyn_workorder extends ts_msdyn_customerasset_msdyn_workorder_Base, ts_msdyn_customerasset_msdyn_workorder_Relationships {
+}
+interface ts_msdyn_customerasset_msdyn_workorder_Relationships {
+}
+interface ts_msdyn_customerasset_msdyn_workorder_Result extends ts_msdyn_customerasset_msdyn_workorder_Base, ts_msdyn_customerasset_msdyn_workorder_Relationships {
+}
+interface ts_msdyn_customerasset_msdyn_workorder_FormattedResult {
+}
+interface ts_msdyn_customerasset_msdyn_workorder_Select {
+}
+interface ts_msdyn_customerasset_msdyn_workorder_Expand {
+}
+interface ts_msdyn_customerasset_msdyn_workorder_Filter {
+}
+interface ts_msdyn_customerasset_msdyn_workorder_Create extends ts_msdyn_customerasset_msdyn_workorder {
+}
+interface ts_msdyn_customerasset_msdyn_workorder_Update extends ts_msdyn_customerasset_msdyn_workorder {
 }
 interface BulkOperationLog_Base extends WebEntity {
 }
@@ -491,6 +560,29 @@ interface tc_TCFiscalQuarter_Filter {
 interface tc_TCFiscalQuarter_Create extends tc_TCFiscalQuarter {
 }
 interface tc_TCFiscalQuarter_Update extends tc_TCFiscalQuarter {
+}
+interface msdyn_customerassetcategory_Base extends WebEntity {
+}
+interface msdyn_customerassetcategory_Fixed extends WebEntity_Fixed {
+  msdyn_customerassetcategoryid: string;
+}
+interface msdyn_customerassetcategory extends msdyn_customerassetcategory_Base, msdyn_customerassetcategory_Relationships {
+}
+interface msdyn_customerassetcategory_Relationships {
+}
+interface msdyn_customerassetcategory_Result extends msdyn_customerassetcategory_Base, msdyn_customerassetcategory_Relationships {
+}
+interface msdyn_customerassetcategory_FormattedResult {
+}
+interface msdyn_customerassetcategory_Select {
+}
+interface msdyn_customerassetcategory_Expand {
+}
+interface msdyn_customerassetcategory_Filter {
+}
+interface msdyn_customerassetcategory_Create extends msdyn_customerassetcategory {
+}
+interface msdyn_customerassetcategory_Update extends msdyn_customerassetcategory {
 }
 interface BookingStatus_Base extends WebEntity {
 }
