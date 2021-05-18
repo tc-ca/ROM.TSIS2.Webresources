@@ -45,9 +45,10 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     }
 
     var questionnaireDefinition = JSON.parse(surveyDefinition);
-    questionnaireDefinition.pages.forEach(function (page) {
+    questionnaireDefinition.pages.forEach(function (page, index) {
         for (var i = 0; i < page.elements.length; i++) {
             page.elements[i].visibleIf = null;
+            if (index >= 1) questionnaireDefinition.pages[0].elements.push(page.elements[i]);
         }
     });
     window.survey = new Survey.Model(questionnaireDefinition);
