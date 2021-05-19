@@ -78,11 +78,14 @@ function printSurvey(primaryControl) {
         var statusLabel = primaryControl.getControl('statuscode').getLabel();
         var statusValue = primaryControl.getAttribute('statuscode').getText();
 
-        var wostName = printWindow.document.createElement('h1');
+        var wostHeader = printWindow.document.createElement('h1');
+        wostHeader.innerHTML = "Work Order Service Task";
+
+        var wostName = printWindow.document.createElement('h2');
         wostName.innerHTML = wostNameText;
 
-        var wostHeader = printWindow.document.createElement('h2');
-        wostHeader.innerHTML = "Work Order Service Task Details";
+        var wostDetailsHeader = printWindow.document.createElement('h3');
+        wostDetailsHeader.innerHTML = "Work Order Service Task Details";
 
         var workOrderServiceTaskDetailsList = printWindow.document.createElement('ul');
         workOrderServiceTaskDetailsList.style.listStyleType = "none";
@@ -90,7 +93,7 @@ function printSurvey(primaryControl) {
         workOrderServiceTaskDetailsList.innerHTML += '<li>' + statusLabel + ': ' + statusValue + '</li>';
 
         //Work Order Details
-        var workOrderHeader = printWindow.document.createElement('h2');
+        var workOrderHeader = printWindow.document.createElement('h3');
         workOrderHeader.innerHTML = "Work Order Details";
         var workOrderQuickView = primaryControl.ui.quickForms.get('WorkOrderQuickView');
 
@@ -123,8 +126,9 @@ function printSurvey(primaryControl) {
         workOrderDetailsList.innerHTML += '<li>' + siteLabel + ': ' + siteText + '</li>';
 
         var workOrderServiceTaskDetails = printWindow.document.getElementById('workOrderServiceTaskDetails');
-        workOrderServiceTaskDetails.appendChild(wostName);
         workOrderServiceTaskDetails.appendChild(wostHeader);
+        workOrderServiceTaskDetails.appendChild(wostName);
+        workOrderServiceTaskDetails.appendChild(wostDetailsHeader);
         workOrderServiceTaskDetails.appendChild(workOrderServiceTaskDetailsList);
         workOrderServiceTaskDetails.appendChild(workOrderHeader);
         workOrderServiceTaskDetails.appendChild(workOrderDetailsList);

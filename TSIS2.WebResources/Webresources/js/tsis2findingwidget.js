@@ -67,7 +67,7 @@ var widget = {
         var comments = el.getElementsByClassName("inspectorComments")[0];
         var characterCount = el.getElementsByClassName("character-count")[0];
 
-        if (Survey.mode = "display") {
+        if (survey.isDisplayMode) {
             comments.rows = 5;
             comments.readOnly = true;
             characterCount.style.display = 'none';
