@@ -7,6 +7,7 @@ namespace ROM.Incident {
 
         //Set required fields
         form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
+        form.getAttribute("ts_stakeholder").setRequiredLevel("required");
 
         switch (form.ui.getFormType()) {
             case 1:
@@ -37,7 +38,7 @@ namespace ROM.Incident {
                 var fetchXML = `<fetch> <entity name="incident" > <attribute name="incidentid" /> <filter> <condition attribute="incidentid" operator="eq" value="${form.data.entity.getId()}" /> </filter> <link-entity name="msdyn_workorder" from="msdyn_servicerequest" to="incidentid" /> </entity> </fetch>`;
 
                 fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
-        
+
                 Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(
                     function success(result) {
                         if(result.entities.length > 0){
