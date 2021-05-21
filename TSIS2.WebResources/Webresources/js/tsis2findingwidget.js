@@ -67,11 +67,6 @@ var widget = {
         var comments = el.getElementsByClassName("inspectorComments")[0];
         var characterCount = el.getElementsByClassName("character-count")[0];
 
-        if (survey.isDisplayMode) {
-            comments.rows = 5;
-            comments.readOnly = true;
-            characterCount.style.display = 'none';
-        }
         //The form has data to load
         if (question.value != null) {
             //Populate question property and form value

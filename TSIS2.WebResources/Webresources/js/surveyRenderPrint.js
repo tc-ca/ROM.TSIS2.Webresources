@@ -162,6 +162,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 
 }
 
-InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, locale, "display");
-//window.print();
-//window.close();
+InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, locale, "edit");
+window.print();
+window.close();
