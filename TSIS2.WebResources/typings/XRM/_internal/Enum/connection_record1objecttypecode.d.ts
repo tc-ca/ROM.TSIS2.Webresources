@@ -41,6 +41,7 @@ declare const enum connection_record1objecttypecode {
   KnowledgeBaseRecord = 9930,
   KnowledgeArticle = 9953,
   CustomerAsset = 10114,
+  FunctionalLocation = 10117,
   IoTAlert = 10124,
   IoTDevice = 10125,
   IoTDeviceCategory = 10126,

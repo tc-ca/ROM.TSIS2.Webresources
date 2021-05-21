@@ -44,7 +44,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "msdyn_percentcomplete"): Xrm.NumberAttribute;
       get(name: "msdyn_surveyboundedoutput"): Xrm.Attribute<any>;
       get(name: "msdyn_tasktype"): Xrm.LookupAttribute<"msdyn_servicetasktype">;
-      get(name: "msdyn_workorder"): Xrm.Attribute<any>;
+      get(name: "msdyn_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: "msdyn_workorderincident"): Xrm.LookupAttribute<"msdyn_workorderincident">;
       get(name: "ovs_questionnairedefinition"): Xrm.Attribute<string>;
       get(name: "ovs_questionnaireresponse"): Xrm.Attribute<string>;
@@ -117,7 +117,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "msdyn_percentcomplete"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_surveyboundedoutput"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_tasktype"): Xrm.LookupAttribute<"msdyn_servicetasktype">;
-    getAttribute(attributeName: "msdyn_workorder"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "msdyn_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: "msdyn_workorderincident"): Xrm.LookupAttribute<"msdyn_workorderincident">;
     getAttribute(attributeName: "ovs_questionnairedefinition"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ovs_questionnaireresponse"): Xrm.Attribute<string>;

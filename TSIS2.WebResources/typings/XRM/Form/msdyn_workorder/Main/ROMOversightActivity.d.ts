@@ -143,6 +143,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
       get(name: "ovs_asset"): Xrm.LookupAttribute<"msdyn_customerasset">;
       get(name: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
+      get(name: "ovs_currentfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
@@ -251,6 +252,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ovs_asset"): Xrm.LookupControl<"msdyn_customerasset">;
       get(name: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
+      get(name: "ovs_currentfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
@@ -344,6 +346,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
     getAttribute(attributeName: "ovs_asset"): Xrm.LookupAttribute<"msdyn_customerasset">;
     getAttribute(attributeName: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
+    getAttribute(attributeName: "ovs_currentfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
@@ -447,6 +450,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ovs_asset"): Xrm.LookupControl<"msdyn_customerasset">;
     getControl(controlName: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
+    getControl(controlName: "ovs_currentfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
