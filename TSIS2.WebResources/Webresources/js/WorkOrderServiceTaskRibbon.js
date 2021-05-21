@@ -1,20 +1,27 @@
 var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 
-var MarkCompleteValidationText;
-var MarkCompleteValidationTitle;
-var MarkCompleteConfirmationText;
-var MarkCompleteConfirmationTitle;
+var markCompleteValidationTextLocalized;
+var markCompleteValidationTitleLocalized;
+var markCompleteConfirmationTextLocalized;
+var markCompleteConfirmationTitleLocalized;
 
 if (lang == 1036) {
-    MarkCompleteValidationText = "Toutes les questions requises du sondage doivent être répondues avant que le sondage puissent être marqué comme Terminé.";
-    MarkCompleteValidationTitle = "Sondage Incomplet";
-    MarkCompleteConfirmationText = "En cliquant sur OK, le statut du sondage passera à Terminé et les réponses seront enregistrées.";
-    MarkCompleteConfirmationTitle = "Confirmation - Sondage complété";
+    markCompleteValidationTextLocalized = "Toutes les questions requises du sondage doivent être répondues avant que le sondage puissent être marqué comme Terminé.";
+    markCompleteValidationTitleLocalized = "Sondage Incomplet";
+    markCompleteConfirmationTextLocalized = "En cliquant sur OK, le statut du sondage passera à Terminé et les réponses seront enregistrées.";
+    markCompleteConfirmationTitleLocalized = "Confirmation - Sondage complété";
+    workOrderServiceTaskDetailsLocalized = "Détails de la tâche du service d'ordre de travail";
+    workOrderServiceTaskLocalized = "Tâche de service de l'ordre de travail";
+    workOrderDetailsLocalized = "Détails de l'ordre de travail";
+    
 } else {
-    MarkCompleteValidationText = "All required questions in the survey must be answered before the survey can be Marked Complete.";
-    MarkCompleteValidationTitle = "Survey Incomplete";
-    MarkCompleteConfirmationText = "By clicking OK, the survey status will change to Complete and the survey answers will be saved.";
-    MarkCompleteConfirmationTitle = "Confirmation - Survey Complete";
+    markCompleteValidationTextLocalized = "All required questions in the survey must be answered before the survey can be Marked Complete.";
+    markCompleteValidationTitleLocalized = "Survey Incomplete";
+    markCompleteConfirmationTextLocalized = "By clicking OK, the survey status will change to Complete and the survey answers will be saved.";
+    markCompleteConfirmationTitleLocalized = "Confirmation - Survey Complete";
+    workOrderServiceTaskDetailsLocalized = "Work Order Service Task Details";
+    workOrderServiceTaskLocalized = "Work Order Service Task";
+    workOrderDetailsLocalized = "Work Order Details";
 }
 
 //Used to hide buttons for ROM - Inspectors unless they're an admin as well
@@ -52,7 +59,14 @@ function isStatusReasonNew(primaryControl) {
     return (statusReason == 918640005);
 }
 
-function printSurvey(primaryControl) {
+//Returns true if the Work Order Service Task has a questionnaire definition.
+//Used for hiding Print Questionnaire ribbon button when no survey exists.
+function hasQuestionnaireDefinition(primaryControl) {
+    var questionnaireDefinition = primaryControl.getAttribute('ovs_questionnairedefinition').getValue();
+    return (questionnaireDefinition != null);
+}
+
+function printQuestionnaire(primaryControl) {
     var printWindow = window.open('../WebResources/ts_/html/surveyRenderPrint.html', 'SurveyPrint');
     //Provide printWindow with data required to render survey before survey is initialized in surveyRenderPrintScript below
     printWindow.questionnaireDefinition = primaryControl.getAttribute('ovs_questionnairedefinition').getValue();
@@ -79,13 +93,13 @@ function printSurvey(primaryControl) {
         var statusValue = primaryControl.getAttribute('statuscode').getText();
 
         var wostHeader = printWindow.document.createElement('h1');
-        wostHeader.innerHTML = "Work Order Service Task";
+        wostHeader.innerHTML = workOrderServiceTaskLocalized;
 
         var wostName = printWindow.document.createElement('h2');
         wostName.innerHTML = wostNameText;
 
         var wostDetailsHeader = printWindow.document.createElement('h3');
-        wostDetailsHeader.innerHTML = "Work Order Service Task Details";
+        wostDetailsHeader.innerHTML = workOrderServiceTaskDetailsLocalized;
 
         var workOrderServiceTaskDetailsList = printWindow.document.createElement('ul');
         workOrderServiceTaskDetailsList.style.listStyleType = "none";
@@ -94,8 +108,12 @@ function printSurvey(primaryControl) {
 
         //Work Order Details
         var workOrderHeader = printWindow.document.createElement('h3');
-        workOrderHeader.innerHTML = "Work Order Details";
+        workOrderHeader.innerHTML = workOrderDetailsLocalized
         var workOrderQuickView = primaryControl.ui.quickForms.get('WorkOrderQuickView');
+
+        var workOrderLabel = primaryControl.getControl('msdyn_workorder').getLabel();
+        var workOrderValue = primaryControl.getAttribute('msdyn_workorder').getValue();
+        var workOrderText = workOrderValue != null ? workOrderValue[0].name : "";
 
         var regionLabel = workOrderQuickView.getControl('ts_region').getLabel();
         var regionValue = workOrderQuickView.getAttribute('ts_region').getValue();
@@ -119,6 +137,7 @@ function printSurvey(primaryControl) {
 
         var workOrderDetailsList = printWindow.document.createElement('ul');
         workOrderDetailsList.style.listStyleType = "none";
+        workOrderDetailsList.innerHTML += '<li>' + workOrderLabel + ': ' + workOrderText + '</li>';
         workOrderDetailsList.innerHTML += '<li>' + regionLabel + ': ' + regionText + '</li>';
         workOrderDetailsList.innerHTML += '<li>' + countryLabel + ': ' + countryText + '</li>';
         workOrderDetailsList.innerHTML += '<li>' + operationTypeLabel + ': ' + operationTypeText + '</li>';
@@ -153,8 +172,8 @@ function surveyHasErrors(primaryControl) {
         }
         if (hasError) {
             var alertStrings = {
-                text: MarkCompleteValidationText,
-                title: MarkCompleteValidationTitle
+                text: markCompleteValidationTextLocalized,
+                title: markCompleteValidationTitleLocalized
             };
             var alertOptions = { height: 200, width: 450 };
             Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
@@ -166,8 +185,8 @@ function surveyHasErrors(primaryControl) {
 
 function completeConfirmation(formContext, survey) {
     var confirmStrings = {
-        text: MarkCompleteConfirmationText,
-        title: MarkCompleteConfirmationTitle
+        text: markCompleteConfirmationTextLocalized,
+        title: markCompleteConfirmationTitleLocalized
     };
     var confirmOptions = { height: 200, width: 450 };
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(

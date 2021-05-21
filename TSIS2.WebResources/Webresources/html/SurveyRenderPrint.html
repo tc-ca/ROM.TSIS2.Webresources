@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="../../ovs_/css/survey.min.css">
     <style>
         @media print {
+            .sv_row {
+                display: block;
+                page-break-inside: avoid;
+            }
             .sv_main .sv_container .sv_body .sv_p_root table.sv_q_matrix td {
                 text-align: left;
             }
@@ -20,6 +24,6 @@
 
 <body style="overflow-wrap: break-word;">
     <div id="workOrderServiceTaskDetails"></div>
-    <div id="surveyElementPrint" style="display:inline-block;width:100%;"></div>
+    <div id="surveyElementPrint" style="display:block;width:100%;"></div>
 </body>
 </html>
