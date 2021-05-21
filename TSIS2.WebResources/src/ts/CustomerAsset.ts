@@ -8,14 +8,14 @@ namespace ROM.CustomerAsset {
         const relatedWorkOrdersOperationSubGrid = form.getControl("Asset_WorkOrder_Operations");
         const relatedWorkOrdersTagsSubGrid = form.getControl("Asset_WorkOrder_Tags");
 
-        if(assetCategoryAttribute != null && assetCategoryAttribute != undefined && assetCategoryAttributeValue != null){
+        if (assetCategoryAttribute != null && assetCategoryAttribute != undefined && assetCategoryAttributeValue != null){
             Xrm.WebApi.retrieveRecord("msdyn_customerassetcategory", assetCategoryAttributeValue[0].id.replace(/[{}]/g, ""), "?$select=ts_assetcategorytype").then(
                 function success(result) {
-                    if(result.ts_assetcategorytype == 717750000){
+                    if (result.ts_assetcategorytype == 717750000){
                         relatedWorkOrdersOperationSubGrid.setVisible(true);
                         relatedWorkOrdersTagsSubGrid.setVisible(false);
                     }
-                    else{
+                    else {
                         relatedWorkOrdersTagsSubGrid.setVisible(true);
                         relatedWorkOrdersOperationSubGrid.setVisible(false);
                     }

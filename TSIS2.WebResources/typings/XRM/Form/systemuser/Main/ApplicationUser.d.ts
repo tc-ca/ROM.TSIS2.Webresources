@@ -9,6 +9,13 @@ declare namespace Form.systemuser.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_3 extends Xrm.SectionCollectionBase {
+        get(name: "tab_3_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "applicationid"): Xrm.Attribute<string>;
@@ -24,6 +31,7 @@ declare namespace Form.systemuser.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "applicationid"): Xrm.StringControl;
       get(name: "applicationiduri"): Xrm.StringControl;
       get(name: "azureactivedirectoryobjectid"): Xrm.StringControl;
@@ -38,6 +46,7 @@ declare namespace Form.systemuser.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
+      get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -53,6 +62,7 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: "internalemailaddress"): Xrm.Attribute<string>;
     getAttribute(attributeName: "isdisabled"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "applicationid"): Xrm.StringControl;
     getControl(controlName: "applicationiduri"): Xrm.StringControl;
     getControl(controlName: "azureactivedirectoryobjectid"): Xrm.StringControl;

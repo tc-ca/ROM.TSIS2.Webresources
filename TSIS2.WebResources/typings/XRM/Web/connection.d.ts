@@ -24,6 +24,7 @@ interface Connection_Relationships {
   record1id_contact?: Contact_Result | null;
   record1id_incident?: Incident_Result | null;
   record1id_msdyn_customerasset?: msdyn_customerasset_Result | null;
+  record1id_msdyn_functionallocation?: msdyn_FunctionalLocation_Result | null;
   record1id_msdyn_workorder?: msdyn_workorder_Result | null;
   record1id_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result | null;
   record1id_serviceappointment?: ServiceAppointment_Result | null;
@@ -33,6 +34,7 @@ interface Connection_Relationships {
   record2id_contact?: Contact_Result | null;
   record2id_incident?: Incident_Result | null;
   record2id_msdyn_customerasset?: msdyn_customerasset_Result | null;
+  record2id_msdyn_functionallocation?: msdyn_FunctionalLocation_Result | null;
   record2id_msdyn_workorder?: msdyn_workorder_Result | null;
   record2id_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result | null;
   record2id_serviceappointment?: ServiceAppointment_Result | null;
@@ -87,6 +89,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_msdyn_bookingrule_bind$msdyn_bookingrules?: string | null;
   record1id_msdyn_bookingtimestamp_bind$msdyn_bookingtimestamps?: string | null;
   record1id_msdyn_customerasset_bind$msdyn_customerassets?: string | null;
+  record1id_msdyn_functionallocation_bind$msdyn_functionallocations?: string | null;
   record1id_msdyn_incidenttypecharacteristic_bind$msdyn_incidenttypecharacteristics?: string | null;
   record1id_msdyn_incidenttypeproduct_bind$msdyn_incidenttypeproducts?: string | null;
   record1id_msdyn_incidenttypeservice_bind$msdyn_incidenttypeservices?: string | null;
@@ -204,6 +207,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_msdyn_bookingrule_bind$msdyn_bookingrules?: string | null;
   record2id_msdyn_bookingtimestamp_bind$msdyn_bookingtimestamps?: string | null;
   record2id_msdyn_customerasset_bind$msdyn_customerassets?: string | null;
+  record2id_msdyn_functionallocation_bind$msdyn_functionallocations?: string | null;
   record2id_msdyn_incidenttypecharacteristic_bind$msdyn_incidenttypecharacteristics?: string | null;
   record2id_msdyn_incidenttypeproduct_bind$msdyn_incidenttypeproducts?: string | null;
   record2id_msdyn_incidenttypeservice_bind$msdyn_incidenttypeservices?: string | null;
@@ -361,6 +365,7 @@ interface Connection_Expand {
   record1id_contact: WebExpand<Connection_Expand, Contact_Select, Contact_Filter, { record1id_contact: Contact_Result }>;
   record1id_incident: WebExpand<Connection_Expand, Incident_Select, Incident_Filter, { record1id_incident: Incident_Result }>;
   record1id_msdyn_customerasset: WebExpand<Connection_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { record1id_msdyn_customerasset: msdyn_customerasset_Result }>;
+  record1id_msdyn_functionallocation: WebExpand<Connection_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { record1id_msdyn_functionallocation: msdyn_FunctionalLocation_Result }>;
   record1id_msdyn_workorder: WebExpand<Connection_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { record1id_msdyn_workorder: msdyn_workorder_Result }>;
   record1id_msdyn_workorderservicetask: WebExpand<Connection_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { record1id_msdyn_workorderservicetask: msdyn_workorderservicetask_Result }>;
   record1id_serviceappointment: WebExpand<Connection_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { record1id_serviceappointment: ServiceAppointment_Result }>;
@@ -370,6 +375,7 @@ interface Connection_Expand {
   record2id_contact: WebExpand<Connection_Expand, Contact_Select, Contact_Filter, { record2id_contact: Contact_Result }>;
   record2id_incident: WebExpand<Connection_Expand, Incident_Select, Incident_Filter, { record2id_incident: Incident_Result }>;
   record2id_msdyn_customerasset: WebExpand<Connection_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { record2id_msdyn_customerasset: msdyn_customerasset_Result }>;
+  record2id_msdyn_functionallocation: WebExpand<Connection_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { record2id_msdyn_functionallocation: msdyn_FunctionalLocation_Result }>;
   record2id_msdyn_workorder: WebExpand<Connection_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { record2id_msdyn_workorder: msdyn_workorder_Result }>;
   record2id_msdyn_workorderservicetask: WebExpand<Connection_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { record2id_msdyn_workorderservicetask: msdyn_workorderservicetask_Result }>;
   record2id_serviceappointment: WebExpand<Connection_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { record2id_serviceappointment: ServiceAppointment_Result }>;
@@ -429,6 +435,7 @@ interface Connection_RelatedOne {
   record1id_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   record1id_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   record1id_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
+  record1id_msdyn_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   record1id_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   record1id_msdyn_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   record1id_serviceappointment: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
@@ -438,6 +445,7 @@ interface Connection_RelatedOne {
   record2id_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   record2id_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   record2id_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
+  record2id_msdyn_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   record2id_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   record2id_msdyn_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   record2id_serviceappointment: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;

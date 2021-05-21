@@ -504,6 +504,27 @@ var ROM;
             }
         }
         WorkOrder.updateCaseView = updateCaseView;
+        function revisedQuarterOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var revisedQuarterAttribute = form.getAttribute("ovs_revisedquarterid");
+            var currentFiscalQuarterAttribute = form.getAttribute("ovs_currentfiscalquarter");
+            var plannedFiscalQuarterAttribute = form.getAttribute("ovs_fiscalquarter");
+            var revisedQuarterAttributeValue = revisedQuarterAttribute.getValue();
+            var currentFiscalQuarterAttributeValue = currentFiscalQuarterAttribute.getValue();
+            var plannedFiscalQuarterAttributeValue = plannedFiscalQuarterAttribute.getValue();
+            if (revisedQuarterAttributeValue != null) {
+                currentFiscalQuarterAttribute.setValue(revisedQuarterAttributeValue);
+            }
+            else {
+                if (plannedFiscalQuarterAttribute != null) {
+                    currentFiscalQuarterAttribute.setValue(plannedFiscalQuarterAttributeValue);
+                }
+                else {
+                    currentFiscalQuarterAttribute.setValue(null);
+                }
+            }
+        }
+        WorkOrder.revisedQuarterOnChange = revisedQuarterOnChange;
         // FUNCTIONS
         function showErrorMessageAlert(error) {
             var alertStrings = { text: error.message };

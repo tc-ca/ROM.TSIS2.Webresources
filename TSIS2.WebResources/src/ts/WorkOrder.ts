@@ -556,6 +556,30 @@ namespace ROM.WorkOrder {
         }
     }
 
+    export function revisedQuarterOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+        
+        const revisedQuarterAttribute = form.getAttribute("ovs_revisedquarterid");
+        const currentFiscalQuarterAttribute = form.getAttribute("ovs_currentfiscalquarter");
+        const plannedFiscalQuarterAttribute = form.getAttribute("ovs_fiscalquarter");
+    
+        const revisedQuarterAttributeValue = revisedQuarterAttribute.getValue();
+        const currentFiscalQuarterAttributeValue = currentFiscalQuarterAttribute.getValue();
+        const plannedFiscalQuarterAttributeValue = plannedFiscalQuarterAttribute.getValue();
+
+        if(revisedQuarterAttributeValue != null){
+            currentFiscalQuarterAttribute.setValue(revisedQuarterAttributeValue);
+        }
+        else{
+            if(plannedFiscalQuarterAttribute != null){
+                currentFiscalQuarterAttribute.setValue(plannedFiscalQuarterAttributeValue);
+            }
+            else{
+                currentFiscalQuarterAttribute.setValue(null);
+            }
+        }
+    }
+
     // FUNCTIONS
     function showErrorMessageAlert(error) {
         var alertStrings = { text: error.message };

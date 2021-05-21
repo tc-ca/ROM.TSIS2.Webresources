@@ -10,6 +10,7 @@ var ROM;
             var regionAttribute = form.getAttribute("ovs_region");
             //Set required fields
             form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
+            form.getAttribute("ts_stakeholder").setRequiredLevel("required");
             switch (form.ui.getFormType()) {
                 case 1:
                     setRegion(eContext);
