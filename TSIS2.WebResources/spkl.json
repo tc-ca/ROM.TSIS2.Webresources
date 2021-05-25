@@ -176,6 +176,11 @@
           "file": "html\\FindingProvisionText.html",
           "description": "ROM TSIS 2.0 Web Resource to display full Provision Text on Finding records"
         },
+        {
+          "uniquename": "ts_/html/SurveyRenderPrint.html",
+          "file": "html\\SurveyRenderPrint.html",
+          "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
+        },
         /* SurveyJS dependencies */
         {
           "uniquename": "ovs_/js/ace.min.js",
@@ -246,6 +251,11 @@
           "uniquename": "ts_/js/buildprovisiontext.js",
           "file": "js\\buildprovisiontext.js",
           "description": "Function library to build provision text"
+        },
+        {
+          "uniquename": "ts_/js/surveyRenderPrint.js",
+          "file": "js\\surveyRenderPrint.js",
+          "description": "ROM TSIS 2.0 SurveyJS Dependency"
         }
       ]
     }

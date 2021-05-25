@@ -1,4 +1,10 @@
-﻿var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+﻿//Set to 1033 by default. Update with parent.Xrm if it can, else use locale if it's been set in time.
+var lang = '1033';
+if (parent.Xrm != null) {
+    lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+} else if (locale != undefined) {
+    lang = (locale == 'fr') ? 1036 : 1033;
+}
 
 var inspectorCommentsLocalizedText;
 var charactersRemainingLocalizedText;
