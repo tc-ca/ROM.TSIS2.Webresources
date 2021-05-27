@@ -61,6 +61,24 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changing the status to Closed will set the Work Order to Read-Only next time the record is saved, preventing all items within the Work Order from being altered after it is saved. Do you wish to proceed?.
+        /// </summary>
+        internal static string CloseWorkOrderConfirmationText {
+            get {
+                return ResourceManager.GetString("CloseWorkOrderConfirmationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation - Close Work Order.
+        /// </summary>
+        internal static string CloseWorkOrderConfirmationTitle {
+            get {
+                return ResourceManager.GetString("CloseWorkOrderConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filtered Activity Type.
         /// </summary>
         internal static string FilteredActivityType {

@@ -8,6 +8,8 @@ var ROM;
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             var state = form.getAttribute("statecode").getValue();
+            //Keep track of the current system status, to be used when cancelling a status change.
+            globalThis.currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             updateCaseView(eContext);
             //Set required fields
             form.getAttribute("ts_region").setRequiredLevel("required");
@@ -417,18 +419,33 @@ var ROM;
         WorkOrder.siteOnChange = siteOnChange;
         function systemStatusOnChange(eContext) {
             var form = eContext.getFormContext();
-            var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
+            var newSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             //If system status is set to closed
-            if (systemStatus == 690970004 || systemStatus == 690970005) {
-                //Set state to Inactive
-                form.getAttribute("statecode").setValue(1);
-                //Set Status Reason to Closed
-                form.getAttribute("statuscode").setValue(918640000);
+            if (newSystemStatus == 690970004 || newSystemStatus == 690970005) {
+                var confirmStrings = {
+                    text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationText"),
+                    title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationTitle")
+                };
+                var confirmOptions = { height: 200, width: 450 };
+                Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(function (success) {
+                    if (success.confirmed) {
+                        //Set state to Inactive
+                        form.getAttribute("statecode").setValue(1);
+                        //Set Status Reason to Closed
+                        form.getAttribute("statuscode").setValue(918640000);
+                        globalThis.currentSystemStatus = newSystemStatus;
+                    }
+                    else {
+                        //Undo the system status change
+                        form.getAttribute("msdyn_systemstatus").setValue(globalThis.currentSystemStatus);
+                    }
+                });
             }
             else {
                 //Keep record Active
                 form.getAttribute("statecode").setValue(0);
                 form.getAttribute("statuscode").setValue(1);
+                globalThis.currentSystemStatus = newSystemStatus;
             }
         }
         WorkOrder.systemStatusOnChange = systemStatusOnChange;

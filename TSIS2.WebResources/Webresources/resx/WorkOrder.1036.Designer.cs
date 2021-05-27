@@ -61,6 +61,24 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changer le statut a &quot;Fermé&quot; va mettre l&apos;ordre de travail en mode lecture-seul une fois que l&apos;enregistrement sera enregistré. Ceci empêchera les modifications aux items de l&apos;ordre de travail. Souhaitez-vous procéder?.
+        /// </summary>
+        internal static string CloseWorkOrderConfirmationText {
+            get {
+                return ResourceManager.GetString("CloseWorkOrderConfirmationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation - Fermer l&apos;ordre de travail.
+        /// </summary>
+        internal static string CloseWorkOrderConfirmationTitle {
+            get {
+                return ResourceManager.GetString("CloseWorkOrderConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filtered Activity Type (FR).
         /// </summary>
         internal static string FilteredActivityType {
