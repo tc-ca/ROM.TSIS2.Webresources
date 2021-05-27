@@ -147,4 +147,10 @@
   <data name="FilteredStakeholders" xml:space="preserve">
     <value>Filtered Stakeholders (FR)</value>
   </data>
+  <data name="CloseWorkOrderConfirmationText" xml:space="preserve">
+    <value>Changer le statut a "Fermé" va mettre l'ordre de travail en mode lecture-seul une fois que l'enregistrement sera enregistré. Ceci empêchera les modifications aux items de l'ordre de travail. Souhaitez-vous procéder?</value>
+  </data>
+  <data name="CloseWorkOrderConfirmationTitle" xml:space="preserve">
+    <value>Confirmation - Fermer l'ordre de travail</value>
+  </data>
 </root>

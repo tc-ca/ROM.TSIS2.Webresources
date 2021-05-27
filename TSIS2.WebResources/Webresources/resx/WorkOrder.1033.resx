@@ -147,4 +147,10 @@
   <data name="FilteredStakeholders" xml:space="preserve">
     <value>Filtered Stakeholders</value>
   </data>
+  <data name="CloseWorkOrderConfirmationText" xml:space="preserve">
+    <value>Changing the status to Closed will set the Work Order to Read-Only next time the record is saved, preventing all items within the Work Order from being altered after it is saved. Do you wish to proceed?</value>
+  </data>
+  <data name="CloseWorkOrderConfirmationTitle" xml:space="preserve">
+    <value>Confirmation - Close Work Order</value>
+  </data>
 </root>
