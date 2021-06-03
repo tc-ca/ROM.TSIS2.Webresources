@@ -142,3 +142,39 @@ function showErrorMessageAlert(error){
     var alertOptions = { height: 120, width: 260 };
     Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
 }
+
+function exportWorkOrder(primaryControl) {
+    var exportWindow = window.open();
+
+
+    //Show Work Order Fields
+
+    //Stakeholder Name msdyn_serviceaccount
+    var stakeholderLabel = primaryControl.getControl('msdyn_serviceaccount').getLabel();
+    var stakeholderValue = primaryControl.getAttribute('msdyn_serviceaccount').getValue();
+    var stakeholderText = (stakeholderValue != null) ? stakeholderValue[0].name : "";
+    //Site Name ts_site
+    var siteLabel = primaryControl.getControl('ts_site').getLabel();
+    var siteValue = primaryControl.getAttribute('ts_site').getValue();
+    var siteText = (siteValue != null) ? siteValue[0].name : "";
+    //Acitivity Type Name msdyn_primaryincidenttype
+    var activityTypeLabel = primaryControl.getControl('msdyn_primaryincidenttype').getLabel();
+    var activityTypeValue = primaryControl.getAttribute('msdyn_primaryincidenttype').getValue();
+    var activityTypeText = (activityTypeValue != null) ? activityTypeValue[0].name : "";
+
+    var workOrderDetailsList = exportWindow.document.createElement('ul');
+    workOrderDetailsList.style.listStyleType = "none";
+    workOrderDetailsList.innerHTML += '<li>' + stakeholderLabel + ': ' + stakeholderText + '</li>';
+    workOrderDetailsList.innerHTML += '<li>' + siteLabel + ': ' + siteText + '</li>';
+    workOrderDetailsList.innerHTML += '<li>' + activityTypeLabel + ': ' + activityTypeText + '</li>';
+
+    var exportWindowBody = exportWindow.document.body;
+    exportWindowBody.appendChild(workOrderDetailsList);
+
+    //Service Task Type(s)
+
+
+    //Load Service Tasks
+
+    //Show Service Task Fields
+}
