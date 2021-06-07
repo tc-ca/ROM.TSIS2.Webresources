@@ -146,8 +146,14 @@ function showErrorMessageAlert(error){
 function exportWorkOrder(primaryControl) {
     var exportWindow = window.open();
 
+    var workOrderHeader = exportWindow.document.createElement('h1');
+    workOrderHeader.innerText = "Work Order";
 
-    //Show Work Order Fields
+    var workOrderName = exportWindow.document.createElement('h2');
+    workOrderName.innerText = primaryControl.getAttribute("msdyn_name").getValue();
+
+    workOrderDetailsHeader = exportWindow.document.createElement('h3');
+    workOrderDetailsHeader.innerText = "Work Order Details";
 
     //Stakeholder Name msdyn_serviceaccount
     var stakeholderLabel = primaryControl.getControl('msdyn_serviceaccount').getLabel();
@@ -168,12 +174,67 @@ function exportWorkOrder(primaryControl) {
     workOrderDetailsList.innerHTML += '<li>' + siteLabel + ': ' + siteText + '</li>';
     workOrderDetailsList.innerHTML += '<li>' + activityTypeLabel + ': ' + activityTypeText + '</li>';
 
+    WOSTDetailsHeader = exportWindow.document.createElement('h3');
+    WOSTDetailsHeader.innerText = "Work Order Service Tasks Details";
+
     var exportWindowBody = exportWindow.document.body;
+    exportWindowBody.appendChild(workOrderHeader);
+    exportWindowBody.appendChild(workOrderName);
+    exportWindowBody.appendChild(workOrderDetailsHeader);
     exportWindowBody.appendChild(workOrderDetailsList);
+    exportWindowBody.appendChild(WOSTDetailsHeader);
+    
 
     //Service Task Type(s)
+    var workOrderName = primaryControl.getAttribute("msdyn_name").getValue();
+    Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_name,_msdyn_tasktype_value,ovs_questionnaireresponse,ovs_questionnairedefinition&$filter=msdyn_workorder/msdyn_name eq '${workOrderName}'`).then(
+        async function success(result) {
+            if (result.entities.length > 0) {
+                result.entities.forEach(function (entity) {
+                    var WOSTName = entity.msdyn_name;
+                    var WOSTTaskType = entity["_msdyn_tasktype_value@OData.Community.Display.V1.FormattedValue"];
+                    var WOSTDefinition = entity.ovs_questionnairedefinition;
+                    var WOSTResponse = JSON.parse(entity.ovs_questionnaireresponse);
 
+                    var WOSTDetailsList = exportWindow.document.createElement('ul');
+                    WOSTDetailsList.style.listStyleType = "none";
+                    WOSTDetailsList.innerHTML += '<li>Service Task: ' + WOSTName + '</li>';
+                    WOSTDetailsList.innerHTML += '<li>Task Type: ' + WOSTTaskType + '</li>';
 
+                    var responseKeys = Object.keys(WOSTResponse);
+                    var findings = [];
+                    var inspectionCommentText = "";
+                    responseKeys.forEach(function (key) {
+                        if (key.startsWith("finding-")) {
+                            findings.push(WOSTResponse[key]);
+                        } else if (key.startsWith("Overall")) {
+                            inspectionCommentText = WOSTResponse[key];
+                        }
+                    });
+                    WOSTDetailsList.innerHTML += "Inspection Comment: " + inspectionCommentText;
+                    var findingsList = exportWindow.document.createElement('ul');
+                    findingsList.style.listStyleType = "none";
+                    findingsList.innerHTML = "Findings: ";
+                    findings.forEach(function (finding) {
+                        var findingInfo = exportWindow.document.createElement('ul');
+                        findingInfo.style.listStyleType = "none";
+                        findingInfo.innerHTML += '<li>Provision: ' + finding.provisionReference + '</li>';
+                        findingInfo.innerHTML += '<li>Provision Text: ' + finding.provisionTextEn + '</li>';
+                        findingInfo.innerHTML += '<li>Inspector Comment: ' + finding.comments + '</li>';
+                        findingsList.appendChild(findingInfo);
+                    });
+
+                    exportWindowBody.appendChild(WOSTDetailsList);
+                    exportWindowBody.appendChild(findingsList);
+                });
+                
+            }
+        },
+        function (error) {
+            console.log(error.message);
+            // handle error conditions
+        }
+    );
     //Load Service Tasks
 
     //Show Service Task Fields
