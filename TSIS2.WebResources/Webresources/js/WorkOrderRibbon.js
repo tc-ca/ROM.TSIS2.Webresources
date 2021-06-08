@@ -148,12 +148,9 @@ function exportWorkOrder(primaryControl) {
     exportWindow.document.write('<html><head><title>Work Order Export</title><link rel="stylesheet" type="text/css" href="../WebResources/ts_/css/WorkOrderExport.css"></head><body></body></html>');
 
     var workOrderHeader = exportWindow.document.createElement('h1');
-    workOrderHeader.innerText = "Work Order";
+    workOrderHeader.innerText = "Work Order " + primaryControl.getAttribute("msdyn_name").getValue();;
 
-    var workOrderName = exportWindow.document.createElement('h2');
-    workOrderName.innerText = primaryControl.getAttribute("msdyn_name").getValue();
-
-    workOrderDetailsHeader = exportWindow.document.createElement('h3');
+    workOrderDetailsHeader = exportWindow.document.createElement('h2');
     workOrderDetailsHeader.innerText = "Work Order Details";
 
     //Stakeholder Name msdyn_serviceaccount
@@ -171,16 +168,15 @@ function exportWorkOrder(primaryControl) {
 
     var workOrderDetailsList = exportWindow.document.createElement('ul');
     workOrderDetailsList.style.listStyleType = "none";
-    workOrderDetailsList.innerHTML += '<li>' + stakeholderLabel + ': ' + stakeholderText + '</li>';
-    workOrderDetailsList.innerHTML += '<li>' + siteLabel + ': ' + siteText + '</li>';
-    workOrderDetailsList.innerHTML += '<li>' + activityTypeLabel + ': ' + activityTypeText + '</li>';
+    workOrderDetailsList.innerHTML += '<li><strong>' + stakeholderLabel + ':</strong> ' + stakeholderText + '</li>';
+    workOrderDetailsList.innerHTML += '<li><strong>' + siteLabel + ':</strong> ' + siteText + '</li>';
+    workOrderDetailsList.innerHTML += '<li><strong>' + activityTypeLabel + ':</strong> ' + activityTypeText + '</li>';
 
-    WOSTDetailsHeader = exportWindow.document.createElement('h3');
+    WOSTDetailsHeader = exportWindow.document.createElement('h2');
     WOSTDetailsHeader.innerText = "Work Order Service Tasks Details";
 
     var exportWindowBody = exportWindow.document.body;
     exportWindowBody.appendChild(workOrderHeader);
-    exportWindowBody.appendChild(workOrderName);
     exportWindowBody.appendChild(workOrderDetailsHeader);
     exportWindowBody.appendChild(workOrderDetailsList);
     exportWindowBody.appendChild(WOSTDetailsHeader);
@@ -188,20 +184,32 @@ function exportWorkOrder(primaryControl) {
 
     //Service Task Type(s)
     var workOrderName = primaryControl.getAttribute("msdyn_name").getValue();
-    Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_name,_msdyn_tasktype_value,ovs_questionnaireresponse,ovs_questionnairedefinition&$filter=msdyn_workorder/msdyn_name eq '${workOrderName}'`).then(
+    Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_name,_msdyn_tasktype_value,ovs_questionnaireresponse,statuscode,ovs_questionnairedefinition&$filter=msdyn_workorder/msdyn_name eq '${workOrderName}'`).then(
         async function success(result) {
             if (result.entities.length > 0) {
                 result.entities.forEach(function (entity) {
                     var WOSTName = entity.msdyn_name;
                     var WOSTTaskType = entity["_msdyn_tasktype_value@OData.Community.Display.V1.FormattedValue"];
-                    var WOSTDefinition = entity.ovs_questionnairedefinition;
+                    var WOSTStatus = entity["statuscode@OData.Community.Display.V1.FormattedValue"];
                     var WOSTResponse = JSON.parse(entity.ovs_questionnaireresponse);
+                    var totalFindings = 0;
+
+                    var WOSTDetailsNameHeader = exportWindow.document.createElement('h3');
+                    WOSTDetailsNameHeader.innerText = "Service Task " + WOSTName;
 
                     var WOSTDetailsList = exportWindow.document.createElement('ul');
                     WOSTDetailsList.style.listStyleType = "none";
-                    WOSTDetailsList.innerHTML += '<li>Service Task: ' + WOSTName + '</li>';
-                    WOSTDetailsList.innerHTML += '<li>Task Type: ' + WOSTTaskType + '</li>';
+                    WOSTDetailsList.innerHTML += '<li><strong>Task Type:</strong> ' + WOSTTaskType + '</li>';
+                    WOSTDetailsList.innerHTML += '<li><strong>Status Reason:</strong> ' + WOSTStatus + '</li>';
 
+                    var totalFindings = exportWindow.document.createElement('li');
+                    totalFindings.innerHTML = "<strong>Total Findings:</strong> 0";
+
+                    WOSTDetailsList.appendChild(totalFindings);
+                    exportWindowBody.appendChild(WOSTDetailsNameHeader);
+                    exportWindowBody.appendChild(WOSTDetailsList);
+
+                    if (WOSTResponse == null) return;
                     var responseKeys = Object.keys(WOSTResponse);
                     var findings = [];
                     var inspectionCommentText = "";
@@ -212,7 +220,11 @@ function exportWorkOrder(primaryControl) {
                             inspectionCommentText = WOSTResponse[key];
                         }
                     });
-                    WOSTDetailsList.innerHTML += "Overall Inspection Comment: " + inspectionCommentText;
+                    if (findings.length == 0) return;
+
+                    totalFindings.innerHTML = "<strong>Total Findings:</strong> " + findings.length;
+
+                    WOSTDetailsList.innerHTML += "<strong>Overall Inspection Comment:</strong> " + inspectionCommentText;
 
                     var findingsTable = exportWindow.document.createElement('table');
                     var findingsTableHeaderRow = exportWindow.document.createElement('tr');
@@ -234,9 +246,8 @@ function exportWorkOrder(primaryControl) {
                         findingsDataRow.appendChild(findingsData);
                         findingsTable.appendChild(findingsDataRow);
                     });
-
-                    exportWindowBody.appendChild(WOSTDetailsList);
                     exportWindowBody.appendChild(findingsTable);
+                    exportWindowBody.innerHTML += '<hr>';
                 });
                 
             }

@@ -1,11 +1,16 @@
 ﻿body {
+    font-family: SegoeUI, "Segoe UI";
+}
+
+h1, h2, h3 {
+    font-family: SegoeUI-Semibold, "Segoe UI Semibold", "Segoe UI Regular", "Segoe UI";
 }
 
 table {
-    font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
     page-break-inside: auto;
+    margin-bottom: 30px;
 }
 
 th {
