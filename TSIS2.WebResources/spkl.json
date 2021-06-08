@@ -160,6 +160,11 @@
           "file": "css\\survey.min.css",
           "description": "ROM TSIS 2.0 SurveyJS Dependency"
         },
+        {
+          "uniquename": "ts_/css/WorkOrderExport.css",
+          "file": "css\\WorkOrderExport.css",
+          "description": "ROM TSIS 2.0 Work Order Export Stylesheet"
+        },
         /* HTML */
         {
           "uniquename": "ovs_/html/SurveyCreator.html",

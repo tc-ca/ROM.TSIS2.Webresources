@@ -145,6 +145,7 @@ function showErrorMessageAlert(error){
 
 function exportWorkOrder(primaryControl) {
     var exportWindow = window.open();
+    exportWindow.document.write('<html><head><title>Work Order Export</title><link rel="stylesheet" type="text/css" href="../WebResources/ts_/css/WorkOrderExport.css"></head><body></body></html>');
 
     var workOrderHeader = exportWindow.document.createElement('h1');
     workOrderHeader.innerText = "Work Order";
@@ -211,21 +212,31 @@ function exportWorkOrder(primaryControl) {
                             inspectionCommentText = WOSTResponse[key];
                         }
                     });
-                    WOSTDetailsList.innerHTML += "Inspection Comment: " + inspectionCommentText;
-                    var findingsList = exportWindow.document.createElement('ul');
-                    findingsList.style.listStyleType = "none";
-                    findingsList.innerHTML = "Findings: ";
+                    WOSTDetailsList.innerHTML += "Overall Inspection Comment: " + inspectionCommentText;
+
+                    var findingsTable = exportWindow.document.createElement('table');
+                    var findingsTableHeaderRow = exportWindow.document.createElement('tr');
+                    var findingsTableHeader = exportWindow.document.createElement('th');
+
+                    findingsTableHeader.innerText = "Findings";
+
+                    findingsTableHeaderRow.appendChild(findingsTableHeader);
+                    findingsTable.appendChild(findingsTableHeaderRow);
+
                     findings.forEach(function (finding) {
-                        var findingInfo = exportWindow.document.createElement('ul');
-                        findingInfo.style.listStyleType = "none";
-                        findingInfo.innerHTML += '<li>Provision: ' + finding.provisionReference + '</li>';
-                        findingInfo.innerHTML += '<li>Provision Text: ' + finding.provisionTextEn + '</li>';
-                        findingInfo.innerHTML += '<li>Inspector Comment: ' + finding.comments + '</li>';
-                        findingsList.appendChild(findingInfo);
+                        var findingsDataRow = exportWindow.document.createElement('tr');
+                        var findingsData = exportWindow.document.createElement('td');
+
+                        findingsData.innerHTML += "<strong>Provision Reference:</strong> " + finding.provisionReference + "<br>";
+                        findingsData.innerHTML += finding.provisionTextEn + "<br>";
+                        findingsData.innerHTML += "<strong>Inspector Comment:</strong> " + finding.comments + "<br>";
+
+                        findingsDataRow.appendChild(findingsData);
+                        findingsTable.appendChild(findingsDataRow);
                     });
 
                     exportWindowBody.appendChild(WOSTDetailsList);
-                    exportWindowBody.appendChild(findingsList);
+                    exportWindowBody.appendChild(findingsTable);
                 });
                 
             }
