@@ -307,8 +307,11 @@ function exportWorkOrder(primaryControl) {
                         var findingsDataRow = exportWindow.document.createElement('tr');
                         var findingsData = exportWindow.document.createElement('td');
                         var provisionReference = finding.provisionReference || "";
+                        var provisiontText = finding.provisionTextEn || "";
+                        if (lang == 1036 && finding.provisionTextFr != undefined) provisiontText = finding.provisionTextFr;
+
                         findingsData.innerHTML += "<strong>" + provisionReferenceLocalized + ":</strong> " + provisionReference + "<br>";
-                        findingsData.innerHTML += ((lang == 1036) ? finding.provisionTextFr : finding.provisionTextEn) + "<br>";
+                        findingsData.innerHTML += provisiontText + "<br>";
                         findingsData.innerHTML += "<strong>" + inspectorCommentLocalized + ":</strong> " + finding.comments + "<br>";
                         findingsDataRow.appendChild(findingsData);
                         findingsTable.appendChild(findingsDataRow);
