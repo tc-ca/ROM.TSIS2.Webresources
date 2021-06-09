@@ -213,17 +213,13 @@ function exportWorkOrder(primaryControl) {
     workOrderDetailsList.innerHTML += '<li><strong>' + siteLabel + ':</strong> ' + siteText + '</li>';
     workOrderDetailsList.innerHTML += '<li><strong>' + activityTypeLabel + ':</strong> ' + activityTypeText + '</li>';
 
-    //Create Work Order Service Task Details Header
-    WOSTDetailsHeader = exportWindow.document.createElement('h2');
-    WOSTDetailsHeader.innerText = WorkOrderServiceTaskDetailsLocalized;
+    
 
     //Append Headers and details list to exportWindow's document body
     var exportWindowBody = exportWindow.document.body;
     exportWindowBody.appendChild(workOrderHeader);
     exportWindowBody.appendChild(workOrderDetailsHeader);
     exportWindowBody.appendChild(workOrderDetailsList);
-    exportWindowBody.appendChild(WOSTDetailsHeader);
-    
 
     //Grab the Work Order's name to use when retrieving all the Service Tasks associated to the work Order
     var workOrderName = primaryControl.getAttribute("msdyn_name").getValue();
@@ -232,6 +228,12 @@ function exportWorkOrder(primaryControl) {
     Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_name,_msdyn_tasktype_value,ovs_questionnaireresponse,statuscode,ovs_questionnairedefinition&$filter=msdyn_workorder/msdyn_name eq '${workOrderName}'`).then(
         async function success(result) {
             if (result.entities.length > 0) {
+
+                //Create Work Order Service Task Details Header
+                WOSTDetailsHeader = exportWindow.document.createElement('h2');
+                WOSTDetailsHeader.innerText = WorkOrderServiceTaskDetailsLocalized;
+                exportWindowBody.appendChild(WOSTDetailsHeader);
+
                 //Sort Service Tasks based on end number
                 result.entities.sort(function (a, b) { return a.msdyn_name.split("-").pop() - b.msdyn_name.split("-").pop() });
                 //Render Details for every Service Task Retrieved
@@ -318,11 +320,15 @@ function exportWorkOrder(primaryControl) {
                 });
                 exportWindow.print();
                 exportWindow.close();
+            } else {
+                exportWindow.print();
+                exportWindow.close();
             }
         },
         function (error) {
             console.log(error.message);
             // handle error conditions
         }
+
     );
 }
