@@ -171,39 +171,48 @@ function showErrorMessageAlert(error){
     Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
 }
 
+//Opens a new window and renders the details of the Work Order and its associated Service Tasks to the opened page to be printed
 function exportWorkOrder(primaryControl) {
     var workOrderTitle = workOrderLocalized + " " + primaryControl.getAttribute("msdyn_name").getValue();
     var exportWindow = window.open();
+    //Write HTML page template to export Window
     exportWindow.document.write(`<html><head><title>${workOrderTitle}</title><link rel="stylesheet" type="text/css" href="../WebResources/ts_/css/WorkOrderExport.css"></head><body></body></html>`);
-    
+
+    //Create Work Order Header
     var workOrderHeader = exportWindow.document.createElement('h1');
     workOrderHeader.innerText = workOrderTitle
 
+    //Create Work Order Details Header
     workOrderDetailsHeader = exportWindow.document.createElement('h2');
     workOrderDetailsHeader.innerText = workOrderDetailsLocalized;
 
-    //Stakeholder Name msdyn_serviceaccount
+    //Load Work Order Field Labels and Values
+
+    //Load properties for Stakeholder field
     var stakeholderLabel = primaryControl.getControl('msdyn_serviceaccount').getLabel();
     var stakeholderValue = primaryControl.getAttribute('msdyn_serviceaccount').getValue();
     var stakeholderText = (stakeholderValue != null) ? stakeholderValue[0].name : "";
-    //Site Name ts_site
+    //Load properties for Site field
     var siteLabel = primaryControl.getControl('ts_site').getLabel();
     var siteValue = primaryControl.getAttribute('ts_site').getValue();
     var siteText = (siteValue != null) ? siteValue[0].name : "";
-    //Acitivity Type Name msdyn_primaryincidenttype
+    //Load properties for Activity Type field
     var activityTypeLabel = primaryControl.getControl('msdyn_primaryincidenttype').getLabel();
     var activityTypeValue = primaryControl.getAttribute('msdyn_primaryincidenttype').getValue();
     var activityTypeText = (activityTypeValue != null) ? activityTypeValue[0].name : "";
 
+    //Create unordered list and add in Work Order Field Values
     var workOrderDetailsList = exportWindow.document.createElement('ul');
     workOrderDetailsList.style.listStyleType = "none";
     workOrderDetailsList.innerHTML += '<li><strong>' + stakeholderLabel + ':</strong> ' + stakeholderText + '</li>';
     workOrderDetailsList.innerHTML += '<li><strong>' + siteLabel + ':</strong> ' + siteText + '</li>';
     workOrderDetailsList.innerHTML += '<li><strong>' + activityTypeLabel + ':</strong> ' + activityTypeText + '</li>';
 
+    //Create Work Order Service Task Details Header
     WOSTDetailsHeader = exportWindow.document.createElement('h2');
     WOSTDetailsHeader.innerText = WorkOrderServiceTaskDetailsLocalized;
 
+    //Append Headers and details list to exportWindow's document body
     var exportWindowBody = exportWindow.document.body;
     exportWindowBody.appendChild(workOrderHeader);
     exportWindowBody.appendChild(workOrderDetailsHeader);
@@ -211,37 +220,52 @@ function exportWorkOrder(primaryControl) {
     exportWindowBody.appendChild(WOSTDetailsHeader);
     
 
-    //Service Task Type(s)
+    //Grab the Work Order's name to use when retrieving all the Service Tasks associated to the work Order
     var workOrderName = primaryControl.getAttribute("msdyn_name").getValue();
+
+    //Retrieve all Service Tasks associated to the Work Order
     Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_name,_msdyn_tasktype_value,ovs_questionnaireresponse,statuscode,ovs_questionnairedefinition&$filter=msdyn_workorder/msdyn_name eq '${workOrderName}'`).then(
         async function success(result) {
             if (result.entities.length > 0) {
+                //Render Details for every Service Task Retrieved
                 result.entities.forEach(function (entity) {
+                    //Load needed values from the current entity
                     var WOSTName = entity.msdyn_name;
                     var WOSTTaskType = entity["_msdyn_tasktype_value@OData.Community.Display.V1.FormattedValue"];
                     var WOSTStatus = entity["statuscode@OData.Community.Display.V1.FormattedValue"];
                     var WOSTResponse = JSON.parse(entity.ovs_questionnaireresponse);
                     var totalFindings = 0;
 
+                    //Create Service Task Details Header
                     var WOSTDetailsNameHeader = exportWindow.document.createElement('h3');
                     WOSTDetailsNameHeader.innerText = serviceTaskLocalized + " " + WOSTName;
 
+                    //Create unordered list and add in Service Task Values
                     var WOSTDetailsList = exportWindow.document.createElement('ul');
                     WOSTDetailsList.style.listStyleType = "none";
                     WOSTDetailsList.innerHTML += '<li><strong>' + taskTypeLocalized + ':</strong> ' + WOSTTaskType + '</li>';
                     WOSTDetailsList.innerHTML += '<li><strong>' + statusReasonLocalized + ':</strong > ' + WOSTStatus + '</li > ';
 
+                    //Add Total Findings: 0, will be updated when findings are retrieved
                     var totalFindings = exportWindow.document.createElement('li');
                     totalFindings.innerHTML = "<strong>" + totalFindingsLocalized + ":</strong> 0";
 
+                    //Append Total Findings to Service Task Value List
                     WOSTDetailsList.appendChild(totalFindings);
+
+                    //Append Header and Service Task List to exportWindow's document body
                     exportWindowBody.appendChild(WOSTDetailsNameHeader);
                     exportWindowBody.appendChild(WOSTDetailsList);
 
+                    //If no Questionnaire Response is in the current Service Task, nothing else needs to be done so return
                     if (WOSTResponse == null) return;
                     var responseKeys = Object.keys(WOSTResponse);
                     var findings = [];
                     var inspectionCommentText = "";
+
+                    //Check every key in the survey questionnaire response. 
+                    //If a key starts with "finding-", add its value to findings array
+                    //If it starts with "Overall Inspection Comment", set inspectionCommentText to its value
                     responseKeys.forEach(function (key) {
                         if (key.startsWith("finding-")) {
                             findings.push(WOSTResponse[key]);
@@ -249,21 +273,22 @@ function exportWorkOrder(primaryControl) {
                             inspectionCommentText = WOSTResponse[key];
                         }
                     });
+                    //If no findings were found, nothing else needs to be done so return
                     if (findings.length == 0) return;
-
+                    //Update total findings count
                     totalFindings.innerHTML = "<strong>" + totalFindingsLocalized + ":</strong> " + findings.length;
-
+                    //Add the Overall Inspection Comment to the Service Task details list
                     WOSTDetailsList.innerHTML += "<strong>" + overallInspectionCommentLocalized + ":</strong> " + inspectionCommentText;
 
+                    //Create a table to display all findings
                     var findingsTable = exportWindow.document.createElement('table');
                     var findingsTableHeaderRow = exportWindow.document.createElement('tr');
                     var findingsTableHeader = exportWindow.document.createElement('th');
-
                     findingsTableHeader.innerText = findingsLocalized;
-
                     findingsTableHeaderRow.appendChild(findingsTableHeader);
                     findingsTable.appendChild(findingsTableHeaderRow);
 
+                    //For each finding, create a table row add the findings data to that row
                     findings.forEach(function (finding) {
                         var findingsDataRow = exportWindow.document.createElement('tr');
                         var findingsData = exportWindow.document.createElement('td');
@@ -271,14 +296,16 @@ function exportWorkOrder(primaryControl) {
                         findingsData.innerHTML += "<strong>" + provisionReferenceLocalized + ":</strong> " + finding.provisionReference + "<br>";
                         findingsData.innerHTML += ((lang == 1036) ? finding.provisionTextFr : finding.provisionTextEn) + "<br>";
                         findingsData.innerHTML += "<strong>" + inspectorCommentLocalized + ":</strong> " + finding.comments + "<br>";
-
                         findingsDataRow.appendChild(findingsData);
                         findingsTable.appendChild(findingsDataRow);
                     });
+                    //Add the table to the export window's document body
                     exportWindowBody.appendChild(findingsTable);
+                    //Add a line to divide all service tasks
                     exportWindowBody.innerHTML += '<hr>';
                 });
-                
+                exportWindow.print();
+                exportWindow.close();
             }
         },
         function (error) {
@@ -286,7 +313,4 @@ function exportWorkOrder(primaryControl) {
             // handle error conditions
         }
     );
-    //Load Service Tasks
-
-    //Show Service Task Fields
 }
