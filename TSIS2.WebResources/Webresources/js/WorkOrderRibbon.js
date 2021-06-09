@@ -238,6 +238,10 @@ function exportWorkOrder(primaryControl) {
                     var WOSTResponse = JSON.parse(entity.ovs_questionnaireresponse);
                     var totalFindings = 0;
 
+                    //Create Div to contain WOST Details, assigning class to prevent page breaking during printing
+                    var WOSTDetailsDiv = exportWindow.document.createElement('div');
+                    WOSTDetailsDiv.className = "WOSTDetailsContainer";
+
                     //Create Service Task Details Header
                     var WOSTDetailsNameHeader = exportWindow.document.createElement('h3');
                     WOSTDetailsNameHeader.innerText = serviceTaskLocalized + " " + WOSTName;
@@ -256,8 +260,9 @@ function exportWorkOrder(primaryControl) {
                     WOSTDetailsList.appendChild(totalFindings);
 
                     //Append Header and Service Task List to exportWindow's document body
-                    exportWindowBody.appendChild(WOSTDetailsNameHeader);
-                    exportWindowBody.appendChild(WOSTDetailsList);
+                    WOSTDetailsDiv.appendChild(WOSTDetailsNameHeader);
+                    WOSTDetailsDiv.appendChild(WOSTDetailsList);
+                    exportWindowBody.appendChild(WOSTDetailsDiv);
 
                     //If no Questionnaire Response is in the current Service Task, nothing else needs to be done so return
                     if (WOSTResponse == null) return;

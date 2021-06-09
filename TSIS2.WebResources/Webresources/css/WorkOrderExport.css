@@ -6,6 +6,10 @@ h1, h2, h3 {
     font-family: SegoeUI-Semibold, "Segoe UI Semibold", "Segoe UI Regular", "Segoe UI";
 }
 
+.WOSTDetailsContainer {
+    page-break-inside: avoid;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
