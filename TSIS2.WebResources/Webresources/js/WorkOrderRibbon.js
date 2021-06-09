@@ -1,4 +1,32 @@
-function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, selectedControl){
+var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+var workOrderLocalized = "Work Order";
+var workOrderDetailsLocalized = "Work Order Details";
+var WorkOrderServiceTaskDetailsLocalized = "Work Order Service Task Details";
+var serviceTaskLocalized = "Service Task";
+var taskTypeLocalized = "Task Type";
+var statusReasonLocalized = "Status Reason";
+var totalFindingsLocalized = "Total Findings";
+var overallInspectionCommentLocalized = "Overall Inspection Comment";
+var findingsLocalized = "Findings";
+var provisionReferenceLocalized = "Provision Reference";
+var inspectorCommentLocalized = "Inspector Comment";
+
+if (lang == 1036) {
+    workOrderLocalized = "Ordre de travail";
+    workOrderDetailsLocalized = "Détails de l'ordre de travail";
+    WorkOrderServiceTaskDetailsLocalized = "Détails de la tâche du service d'ordre de travail";
+    serviceTaskLocalized = "Tâche du service";
+    taskTypeLocalized = "Type de tâche";
+    statusReasonLocalized = "Raison du statut";
+    totalFindingsLocalized = "Nombre de constatations";
+    overallInspectionCommentLocalized = "Commentaires généraux sur l'inspection";
+    findingsLocalized = "Constatations"; 
+    provisionReferenceLocalized = "Référence de la disposition";
+    inspectorCommentLocalized = "Commentaires de l'inspecteur";
+}
+
+function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, selectedControl) {
     const formContext = primaryControl;
 
     const caseId = Xrm.Page.data.entity.getId().replace(/({|})/g,'');
@@ -144,14 +172,15 @@ function showErrorMessageAlert(error){
 }
 
 function exportWorkOrder(primaryControl) {
+    var workOrderTitle = workOrderLocalized + " " + primaryControl.getAttribute("msdyn_name").getValue();
     var exportWindow = window.open();
-    exportWindow.document.write('<html><head><title>Work Order Export</title><link rel="stylesheet" type="text/css" href="../WebResources/ts_/css/WorkOrderExport.css"></head><body></body></html>');
-
+    exportWindow.document.write(`<html><head><title>${workOrderTitle}</title><link rel="stylesheet" type="text/css" href="../WebResources/ts_/css/WorkOrderExport.css"></head><body></body></html>`);
+    
     var workOrderHeader = exportWindow.document.createElement('h1');
-    workOrderHeader.innerText = "Work Order " + primaryControl.getAttribute("msdyn_name").getValue();;
+    workOrderHeader.innerText = workOrderTitle
 
     workOrderDetailsHeader = exportWindow.document.createElement('h2');
-    workOrderDetailsHeader.innerText = "Work Order Details";
+    workOrderDetailsHeader.innerText = workOrderDetailsLocalized;
 
     //Stakeholder Name msdyn_serviceaccount
     var stakeholderLabel = primaryControl.getControl('msdyn_serviceaccount').getLabel();
@@ -173,7 +202,7 @@ function exportWorkOrder(primaryControl) {
     workOrderDetailsList.innerHTML += '<li><strong>' + activityTypeLabel + ':</strong> ' + activityTypeText + '</li>';
 
     WOSTDetailsHeader = exportWindow.document.createElement('h2');
-    WOSTDetailsHeader.innerText = "Work Order Service Tasks Details";
+    WOSTDetailsHeader.innerText = WorkOrderServiceTaskDetailsLocalized;
 
     var exportWindowBody = exportWindow.document.body;
     exportWindowBody.appendChild(workOrderHeader);
@@ -195,15 +224,15 @@ function exportWorkOrder(primaryControl) {
                     var totalFindings = 0;
 
                     var WOSTDetailsNameHeader = exportWindow.document.createElement('h3');
-                    WOSTDetailsNameHeader.innerText = "Service Task " + WOSTName;
+                    WOSTDetailsNameHeader.innerText = serviceTaskLocalized + " " + WOSTName;
 
                     var WOSTDetailsList = exportWindow.document.createElement('ul');
                     WOSTDetailsList.style.listStyleType = "none";
-                    WOSTDetailsList.innerHTML += '<li><strong>Task Type:</strong> ' + WOSTTaskType + '</li>';
-                    WOSTDetailsList.innerHTML += '<li><strong>Status Reason:</strong> ' + WOSTStatus + '</li>';
+                    WOSTDetailsList.innerHTML += '<li><strong>' + taskTypeLocalized + ':</strong> ' + WOSTTaskType + '</li>';
+                    WOSTDetailsList.innerHTML += '<li><strong>' + statusReasonLocalized + ':</strong > ' + WOSTStatus + '</li > ';
 
                     var totalFindings = exportWindow.document.createElement('li');
-                    totalFindings.innerHTML = "<strong>Total Findings:</strong> 0";
+                    totalFindings.innerHTML = "<strong>" + totalFindingsLocalized + ":</strong> 0";
 
                     WOSTDetailsList.appendChild(totalFindings);
                     exportWindowBody.appendChild(WOSTDetailsNameHeader);
@@ -222,15 +251,15 @@ function exportWorkOrder(primaryControl) {
                     });
                     if (findings.length == 0) return;
 
-                    totalFindings.innerHTML = "<strong>Total Findings:</strong> " + findings.length;
+                    totalFindings.innerHTML = "<strong>" + totalFindingsLocalized + ":</strong> " + findings.length;
 
-                    WOSTDetailsList.innerHTML += "<strong>Overall Inspection Comment:</strong> " + inspectionCommentText;
+                    WOSTDetailsList.innerHTML += "<strong>" + overallInspectionCommentLocalized + ":</strong> " + inspectionCommentText;
 
                     var findingsTable = exportWindow.document.createElement('table');
                     var findingsTableHeaderRow = exportWindow.document.createElement('tr');
                     var findingsTableHeader = exportWindow.document.createElement('th');
 
-                    findingsTableHeader.innerText = "Findings";
+                    findingsTableHeader.innerText = findingsLocalized;
 
                     findingsTableHeaderRow.appendChild(findingsTableHeader);
                     findingsTable.appendChild(findingsTableHeaderRow);
@@ -239,9 +268,9 @@ function exportWorkOrder(primaryControl) {
                         var findingsDataRow = exportWindow.document.createElement('tr');
                         var findingsData = exportWindow.document.createElement('td');
 
-                        findingsData.innerHTML += "<strong>Provision Reference:</strong> " + finding.provisionReference + "<br>";
-                        findingsData.innerHTML += finding.provisionTextEn + "<br>";
-                        findingsData.innerHTML += "<strong>Inspector Comment:</strong> " + finding.comments + "<br>";
+                        findingsData.innerHTML += "<strong>" + provisionReferenceLocalized + ":</strong> " + finding.provisionReference + "<br>";
+                        findingsData.innerHTML += ((lang == 1036) ? finding.provisionTextFr : finding.provisionTextEn) + "<br>";
+                        findingsData.innerHTML += "<strong>" + inspectorCommentLocalized + ":</strong> " + finding.comments + "<br>";
 
                         findingsDataRow.appendChild(findingsData);
                         findingsTable.appendChild(findingsDataRow);
