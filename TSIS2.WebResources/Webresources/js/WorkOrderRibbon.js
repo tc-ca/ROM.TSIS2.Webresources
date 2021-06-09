@@ -306,8 +306,8 @@ function exportWorkOrder(primaryControl) {
                     findings.forEach(function (finding) {
                         var findingsDataRow = exportWindow.document.createElement('tr');
                         var findingsData = exportWindow.document.createElement('td');
-
-                        findingsData.innerHTML += "<strong>" + provisionReferenceLocalized + ":</strong> " + finding.provisionReference + "<br>";
+                        var provisionReference = finding.provisionReference || "";
+                        findingsData.innerHTML += "<strong>" + provisionReferenceLocalized + ":</strong> " + provisionReference + "<br>";
                         findingsData.innerHTML += ((lang == 1036) ? finding.provisionTextFr : finding.provisionTextEn) + "<br>";
                         findingsData.innerHTML += "<strong>" + inspectorCommentLocalized + ":</strong> " + finding.comments + "<br>";
                         findingsDataRow.appendChild(findingsData);
