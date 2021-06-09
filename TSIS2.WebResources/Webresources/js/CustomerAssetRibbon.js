@@ -32,7 +32,7 @@ function addExistingAssetsToEntity(primaryControl, selectedEntityTypeName, selec
             defaultEntityType: "msdyn_customerasset",
             entityTypes: ["msdyn_customerasset"],
             allowMultiSelect: true,
-            defaultViewId:"bf49a9fc-82a7-eb11-9442-000d3a8410dc",
+            defaultViewId:(Xrm.Page.ui.tabs.get("assets_tab").getDisplayState() == "expanded" ? "bf49a9fc-82a7-eb11-9442-000d3a8410dc" : "6d5b19df-82a7-eb11-9442-000d3a8419e6"), //show corresponding view (physical asset/operations)
             disableMru: true,
             filters: [
                 {
