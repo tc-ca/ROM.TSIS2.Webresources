@@ -227,6 +227,8 @@ function exportWorkOrder(primaryControl) {
     Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_name,_msdyn_tasktype_value,ovs_questionnaireresponse,statuscode,ovs_questionnairedefinition&$filter=msdyn_workorder/msdyn_name eq '${workOrderName}'`).then(
         async function success(result) {
             if (result.entities.length > 0) {
+                //Sort Service Tasks based on end number
+                result.entities.sort(function (a, b) { return a.msdyn_name.split("-").pop() - b.msdyn_name.split("-").pop() });
                 //Render Details for every Service Task Retrieved
                 result.entities.forEach(function (entity) {
                     //Load needed values from the current entity
