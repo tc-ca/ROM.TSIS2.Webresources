@@ -416,11 +416,32 @@ creator
         }
     });
 
+//Add isOverallInspectionComment property to comment questions
+Survey
+    .Serializer
+    .addProperty("comment", {
+        name: "isOverallInspectionComments:switch",
+        category: "general",
+        default: false
+    });
+
+//When isOverallInspectionComment property is toggled to true, change the name of the question to Overall Inspection Comment
+//Consistent naming is needed for the Work Order Inspection Report
+creator.onPropertyValueChanging.add(function (sender, options) {
+    if (options.propertyName == "isOverallInspectionComments") {
+        if (options.newValue == true) {
+            options.obj.name = "Overall Inspection Comments"
+        } else {
+            options.obj.name = options.obj.title;
+        }
+    }
+});
+
 //When the provision is changed, update the question's data. Ignore changes to empty strings
 creator.onPropertyValueChanging.add(function (sender, options) {
     if (options.propertyName == "provision" && options.newValue != "") {
-    updateQuestionProvisionData(options.obj, options.newValue);
-  }
+        updateQuestionProvisionData(options.obj, options.newValue);
+    }
 });
   
 function InitializeSurveyCreator(surveyDefinition, surveyLocale) {

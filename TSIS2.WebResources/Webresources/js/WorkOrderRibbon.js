@@ -7,7 +7,7 @@ var serviceTaskLocalized = "Service Task";
 var taskTypeLocalized = "Task Type";
 var statusReasonLocalized = "Status Reason";
 var totalFindingsLocalized = "Total Findings";
-var overallInspectionCommentLocalized = "Overall Inspection Comment";
+var overallInspectionCommentLocalized = "Overall Inspection Comments";
 var findingsLocalized = "Findings";
 var provisionReferenceLocalized = "Provision Reference";
 var inspectorCommentLocalized = "Inspector Comment";
@@ -245,7 +245,7 @@ function exportWorkOrder(primaryControl) {
                     responseKeys.forEach(function (key) {
                         if (key.startsWith("finding-")) {
                             findings.push(WOSTResponse[key]);
-                        } else if (key.startsWith("Overall")) {
+                        } else if (key.startsWith("Overall Inspection Comment")) {
                             inspectionCommentText = WOSTResponse[key];
                         }
                     });
