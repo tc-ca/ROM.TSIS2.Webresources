@@ -171,6 +171,11 @@ function showErrorMessageAlert(error){
     Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
 }
 
+//Returns true if the Work Order has a name, meaning it has been saved/created. Used for Hiding/Showing Ribbon buttons.
+function hasWorkOrderName(primaryControl) {
+    return (primaryControl.getAttribute("msdyn_name").getValue() != null);
+}
+
 //Opens a new window and renders the details of the Work Order and its associated Service Tasks to the opened page to be printed
 function exportWorkOrder(primaryControl) {
     var workOrderTitle = workOrderLocalized + " " + primaryControl.getAttribute("msdyn_name").getValue();
