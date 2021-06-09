@@ -12,6 +12,7 @@ function addExistingAssetsToEntity(primaryControl, selectedEntityTypeName, selec
         req.setRequestHeader("OData-MaxVersion", "4.0");
         req.setRequestHeader("OData-Version", "4.0");
 
+        //Xrm.Page.ui.tabs.get("operations_tab"|"assets_tab").getDisplayState()
         req.onreadystatechange = function() {
             if (this.readyState === 4) {
                 req.onreadystatechange = null;
@@ -32,7 +33,7 @@ function addExistingAssetsToEntity(primaryControl, selectedEntityTypeName, selec
             defaultEntityType: "msdyn_customerasset",
             entityTypes: ["msdyn_customerasset"],
             allowMultiSelect: true,
-            defaultViewId:"bf49a9fc-82a7-eb11-9442-000d3a8410dc",
+            defaultViewId:(Xrm.Page.ui.tabs.get("assets_tab").getDisplayState() == "expanded" ? "bf49a9fc-82a7-eb11-9442-000d3a8410dc" : "6d5b19df-82a7-eb11-9442-000d3a8419e6"), //show corresponding view (physical asset/operations)
             disableMru: true,
             filters: [
                 {
