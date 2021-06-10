@@ -1,0 +1,44 @@
+﻿body {
+    font-family: SegoeUI, "Segoe UI";
+}
+
+h1, h2, h3 {
+    font-family: SegoeUI-Semibold, "Segoe UI Semibold", "Segoe UI Regular", "Segoe UI";
+}
+
+.WOSTDetailsContainer {
+    page-break-inside: avoid;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    page-break-inside: auto;
+    margin-bottom: 30px;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #262626;
+    color: white;
+}
+tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    word-wrap: break-word;
+}
+
+td.ul {
+    list-style-type: none;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
