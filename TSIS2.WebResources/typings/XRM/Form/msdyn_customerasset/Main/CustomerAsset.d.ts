@@ -67,6 +67,8 @@ declare namespace Form.msdyn_customerasset.Main {
       get(name: "msdyn_registrationstatus"): Xrm.OptionSetAttribute<msdyn_customerasset_msdyn_registrationstatus>;
       get(name: "msdyn_workorderproduct"): Xrm.LookupAttribute<"msdyn_workorderproduct">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+      get(name: "ts_customerassetenglish"): Xrm.Attribute<string>;
+      get(name: "ts_customerassetfrench"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -100,6 +102,8 @@ declare namespace Form.msdyn_customerasset.Main {
       get(name: "msdyn_registrationstatus"): Xrm.OptionSetControl<msdyn_customerasset_msdyn_registrationstatus>;
       get(name: "msdyn_workorderproduct"): Xrm.LookupControl<"msdyn_workorderproduct">;
       get(name: "notescontrol"): Xrm.BaseControl;
+      get(name: "ts_customerassetenglish"): Xrm.StringControl;
+      get(name: "ts_customerassetfrench"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -132,6 +136,8 @@ declare namespace Form.msdyn_customerasset.Main {
     getAttribute(attributeName: "msdyn_registrationstatus"): Xrm.OptionSetAttribute<msdyn_customerasset_msdyn_registrationstatus>;
     getAttribute(attributeName: "msdyn_workorderproduct"): Xrm.LookupAttribute<"msdyn_workorderproduct">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+    getAttribute(attributeName: "ts_customerassetenglish"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_customerassetfrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "AlertsGrid"): Xrm.SubGridControl<"msdyn_iotalert">;
     getControl(controlName: "Asset_SubAsset"): Xrm.SubGridControl<"msdyn_customerasset">;
@@ -160,6 +166,8 @@ declare namespace Form.msdyn_customerasset.Main {
     getControl(controlName: "msdyn_registrationstatus"): Xrm.OptionSetControl<msdyn_customerasset_msdyn_registrationstatus>;
     getControl(controlName: "msdyn_workorderproduct"): Xrm.LookupControl<"msdyn_workorderproduct">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
+    getControl(controlName: "ts_customerassetenglish"): Xrm.StringControl;
+    getControl(controlName: "ts_customerassetfrench"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
 }

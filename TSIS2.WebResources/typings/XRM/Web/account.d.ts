@@ -192,6 +192,7 @@ interface Account extends Account_Base, Account_Relationships {
   territoryid_bind$territories?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_Country_bind$tc_countries?: string | null;
+  ts_msdyn_workorder_bind$msdyn_workorders?: string | null;
 }
 interface Account_Create extends Account {
   originatingleadid_bind$leads?: string | null;
@@ -370,6 +371,7 @@ interface Account_Select {
   transactioncurrencyid_guid: WebAttribute<Account_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Account_Select, { traversedpath: string | null }, {  }>;
   ts_country_guid: WebAttribute<Account_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_msdyn_workorder_guid: WebAttribute<Account_Select, { ts_msdyn_workorder_guid: string | null }, { ts_msdyn_workorder_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<Account_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<Account_Select, { versionnumber: number | null }, {  }>;
   websiteurl: WebAttribute<Account_Select, { websiteurl: string | null }, {  }>;
@@ -546,6 +548,7 @@ interface Account_Filter {
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
   ts_country_guid: XQW.Guid;
+  ts_msdyn_workorder_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
   websiteurl: string;
@@ -585,6 +588,7 @@ interface Account_Expand {
   preferredsystemuserid: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { preferredsystemuserid: SystemUser_Result }>;
   primarycontactid: WebExpand<Account_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
   ts_Incident_Stakeholder_Account: WebExpand<Account_Expand, Incident_Select, Incident_Filter, { ts_Incident_Stakeholder_Account: Incident_Result[] }>;
+  ts_msdyn_workorder: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder: msdyn_workorder_Result }>;
 }
 interface Account_FormattedResult {
   accountcategorycode_formatted?: string;
@@ -662,6 +666,7 @@ interface Account_FormattedResult {
   territoryid_formatted?: string;
   transactioncurrencyid_formatted?: string;
   ts_country_formatted?: string;
+  ts_msdyn_workorder_formatted?: string;
 }
 interface Account_Result extends Account_Base, Account_Relationships {
   "@odata.etag": string;
@@ -694,6 +699,7 @@ interface Account_Result extends Account_Base, Account_Relationships {
   territoryid_guid: string | null;
   transactioncurrencyid_guid: string | null;
   ts_country_guid: string | null;
+  ts_msdyn_workorder_guid: string | null;
 }
 interface Account_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -708,6 +714,7 @@ interface Account_RelatedOne {
   parentaccountid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   preferredsystemuserid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   primarycontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  ts_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface Account_RelatedMany {
   Account_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;

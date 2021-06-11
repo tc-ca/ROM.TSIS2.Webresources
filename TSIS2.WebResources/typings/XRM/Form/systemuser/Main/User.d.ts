@@ -40,6 +40,13 @@ declare namespace Form.systemuser.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_6 extends Xrm.SectionCollectionBase {
+        get(name: "tab_6_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface usrstab extends Xrm.SectionCollectionBase {
         get(name: "tab_5_section_2"): Xrm.PageSection;
         get(name: "tab_5_section_3"): Xrm.PageSection;
@@ -104,6 +111,7 @@ declare namespace Form.systemuser.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "DirectReports"): Xrm.SubGridControl<"systemuser">;
       get(name: "PrivateQueuesSubGrid"): Xrm.SubGridControl<"queue">;
+      get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "TeamsSubGrid"): Xrm.SubGridControl<"team">;
       get(name: "accessmode"): Xrm.OptionSetControl<systemuser_accessmode>;
       get(name: "address1_composite"): Xrm.StringControl | null;
@@ -166,6 +174,7 @@ declare namespace Form.systemuser.Main {
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
       get(name: "MobileOfflineProfile_TAB"): Xrm.PageTab<Tabs.MobileOfflineProfile_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
+      get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "usrstab"): Xrm.PageTab<Tabs.usrstab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -222,6 +231,7 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "DirectReports"): Xrm.SubGridControl<"systemuser">;
     getControl(controlName: "PrivateQueuesSubGrid"): Xrm.SubGridControl<"queue">;
+    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "TeamsSubGrid"): Xrm.SubGridControl<"team">;
     getControl(controlName: "accessmode"): Xrm.OptionSetControl<systemuser_accessmode>;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;

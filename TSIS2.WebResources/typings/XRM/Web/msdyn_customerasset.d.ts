@@ -20,6 +20,8 @@ interface msdyn_customerasset_Base extends WebEntity {
   statecode?: msdyn_customerasset_statecode | null;
   statuscode?: msdyn_customerasset_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_customerassetenglish?: string | null;
+  ts_customerassetfrench?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -94,6 +96,8 @@ interface msdyn_customerasset_Select {
   statecode: WebAttribute<msdyn_customerasset_Select, { statecode: msdyn_customerasset_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<msdyn_customerasset_Select, { statuscode: msdyn_customerasset_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<msdyn_customerasset_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_customerassetenglish: WebAttribute<msdyn_customerasset_Select, { ts_customerassetenglish: string | null }, {  }>;
+  ts_customerassetfrench: WebAttribute<msdyn_customerasset_Select, { ts_customerassetfrench: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<msdyn_customerasset_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_customerasset_Select, { versionnumber: number | null }, {  }>;
 }
@@ -135,6 +139,8 @@ interface msdyn_customerasset_Filter {
   statecode: msdyn_customerasset_statecode;
   statuscode: msdyn_customerasset_statuscode;
   timezoneruleversionnumber: number;
+  ts_customerassetenglish: string;
+  ts_customerassetfrench: string;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }

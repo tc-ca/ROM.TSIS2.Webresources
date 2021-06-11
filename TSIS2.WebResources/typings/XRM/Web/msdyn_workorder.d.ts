@@ -88,6 +88,7 @@ interface msdyn_workorder_Relationships {
   qm_ReportContactId?: Contact_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_msdyn_customerasset_msdyn_workorder_msdyn?: msdyn_customerasset_Result[] | null;
+  ts_msdyn_workorder_msdyn_workorder_Account?: Account_Result[] | null;
 }
 interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relationships {
   msdyn_FunctionalLocation_bind$msdyn_functionallocations?: string | null;
@@ -420,6 +421,7 @@ interface msdyn_workorder_Expand {
   qm_ReportContactId: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { qm_ReportContactId: Contact_Result }>;
   ts_Site: WebExpand<msdyn_workorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_msdyn_customerasset_msdyn_workorder_msdyn: WebExpand<msdyn_workorder_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ts_msdyn_customerasset_msdyn_workorder_msdyn: msdyn_customerasset_Result[] }>;
+  ts_msdyn_workorder_msdyn_workorder_Account: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ts_msdyn_workorder_msdyn_workorder_Account: Account_Result[] }>;
 }
 interface msdyn_workorder_FormattedResult {
   createdby_formatted?: string;
@@ -597,6 +599,7 @@ interface msdyn_workorder_RelatedMany {
   msdyn_workorder_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_workorder_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ts_msdyn_customerasset_msdyn_workorder_msdyn: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
+  ts_msdyn_workorder_msdyn_workorder_Account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_workorders: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
