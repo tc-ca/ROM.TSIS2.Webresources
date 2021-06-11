@@ -78,15 +78,13 @@ var widget = {
 
         operationsContainer.style.paddingBottom = "20px";
 
-        var operationList = [{ name: "operation1", id: 123 }, { name: "operation2", id: 456 }, { name: "operation3", id: 789 }];
-
         operationList.forEach(function (operation) {
             operationCheckbox = document.createElement("input");
             operationCheckbox.type = "checkbox";
             operationCheckbox.className = "operationCheckbox";
             operationCheckbox.value = operation.id;
 
-            if (question.accountableOperations != undefined && question.accountableOperations.includes(operation.id.toString())) {
+            if (question.accountableOperations != undefined && question.accountableOperations.includes(operation.id)) {
                 operationCheckbox.checked = true;
             }
             operationLabel = document.createElement("label");
@@ -108,6 +106,8 @@ var widget = {
             operationsContainer.appendChild(operationLabel);
             operationsContainer.appendChild(lineBreak);
         });
+
+        
 
         function updateCharacterCount() {
             characterCount.innerText = (1000 - comments.value.length) + " " + charactersRemainingLocalizedText;

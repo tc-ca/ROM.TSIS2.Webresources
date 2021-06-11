@@ -96,7 +96,54 @@ namespace ROM.WorkOrderServiceTask {
         wrCtrl.getContentWindow().then(function (win) {
             const surveyLocale = getSurveyLocal();
             win.InitialContext(eContext);
-            win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
+
+
+            //Get associated work order's id
+            var workOrderAttribute = eContext.getFormContext().getAttribute('msdyn_workorder').getValue();
+            var workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
+            win.operationList = [];
+
+            var fetchXml = [
+                "<fetch top='50'>",
+                "  <entity name='msdyn_customerasset'>",
+                "    <attribute name='msdyn_name' />",
+                "    <attribute name='msdyn_customerassetid' />",
+                "    <link-entity name='ts_msdyn_customerasset_msdyn_workorder' from='msdyn_customerassetid' to='msdyn_customerassetid' intersect='true'>",
+                "      <filter>",
+                "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+                "      </filter>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml).then(
+                async function success(result) {
+                    result.entities.forEach(function (operation) {
+                        win.operationList.push({
+                            id: operation.msdyn_customerassetid,
+                            name: operation.msdyn_name
+                        });
+                    });
+                    Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid)").then(
+                        async function success(results) {
+                            win.operationList.push({
+                                id: results.ovs_asset.msdyn_customerassetid,
+                                name: results.ovs_asset.msdyn_name
+                            });
+                            win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode)
+                        },
+                        function (error) {
+                            //console.log(error.message);
+                            win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode)
+                        }
+                    );
+                },
+                function (error) {
+                    //console.log(error.message);
+                    win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode)
+                }
+            );
         });
     }
 }
