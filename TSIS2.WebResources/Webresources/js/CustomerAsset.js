@@ -27,6 +27,7 @@ var ROM;
                 Xrm.WebApi.retrieveRecord("msdyn_customerassetcategory", assetCategoryAttributeValue[0].id.replace(/[{}]/g, ""), "?$select=ts_assetcategorytype").then(function success(result) {
                     //717750000 = Operations
                     //717750001 = Physical
+                    globalThis.currentOperationCategory = result.ts_assetcategorytype;
                     if (result.ts_assetcategorytype == 717750000) {
                         relatedWorkOrdersOperationSubGrid.setVisible(true);
                         relatedWorkOrdersTagsSubGrid.setVisible(false);
@@ -108,46 +109,52 @@ var ROM;
             var assetCategoryAttribute = form.getAttribute("msdyn_customerassetcategory");
             var nameAttribute = form.getAttribute("msdyn_name");
             if (assetCategoryAttribute != null) {
-                var assetCategoryAttributeValue = assetCategoryAttribute.getValue();
-                if (assetCategoryAttributeValue != null && assetCategoryAttributeValue != undefined) {
-                    Xrm.WebApi.retrieveRecord("msdyn_customerassetcategory", assetCategoryAttributeValue[0].id.replace(/[{}]/g, ""), "?$select=ts_assetcategorytype").then(function success(result) {
+                var assetCategoryAttributeValue_1 = assetCategoryAttribute.getValue();
+                if (assetCategoryAttributeValue_1 != null && assetCategoryAttributeValue_1 != undefined) {
+                    Xrm.WebApi.retrieveRecord("msdyn_customerassetcategory", assetCategoryAttributeValue_1[0].id.replace(/[{}]/g, ""), "?$select=ts_assetcategorytype").then(function success(result) {
                         //717750000 = Operations
                         //717750001 = Physical
                         if (result.ts_assetcategorytype == 717750000) { //Operations
                             form.getControl("ts_customerassetenglish").setVisible(false);
                             form.getControl("ts_customerassetfrench").setVisible(false);
+                            //Keep track of the category change, to be used when saving the asset and determining whether to generate a name or not
+                            globalThis.currentOperationCategory = result.ts_assetcategorytype;
+                            globalThis.generatedName["category"] = assetCategoryAttributeValue_1[0].name;
+                            nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
+                                + " / " +
+                                (globalThis.generatedName["category"] != undefined && globalThis.generatedName["category"] != null ? globalThis.generatedName["category"] : "")
+                                + " / " +
+                                (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"][0] != null ? globalThis.generatedName["functionalLocation"] : ""));
                         }
                         else { //Physical Asset}
-                            form.getControl("ts_customerassetenglish").setVisible(true);
-                            form.getControl("ts_customerassetfrench").setVisible(true);
+                            if (Xrm.Utility.getGlobalContext().userSettings.languageId == 1033) {
+                                form.getControl("ts_customerassetenglish").setVisible(true);
+                            }
+                            else {
+                                form.getControl("ts_customerassetfrench").setVisible(true);
+                            }
                         }
-                        //Keep track of the category change, to be used when saving the asset
-                        globalThis.currentOperationCategory = result.ts_assetcategorytype;
                     }, function (error) {
                     });
-                    globalThis.generatedName["category"] = assetCategoryAttributeValue[0].name;
-                    nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
-                        + " / " +
-                        (globalThis.generatedName["category"] != undefined && globalThis.generatedName["category"] != null ? globalThis.generatedName["category"] : "")
-                        + " / " +
-                        (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"][0] != null ? globalThis.generatedName["functionalLocation"] : ""));
                 }
             }
         }
         CustomerAsset.categoryOnChange = categoryOnChange;
         function accountOnChange(eContext) {
             var form = eContext.getFormContext();
-            var nameAttribute = form.getAttribute("msdyn_name");
-            var accountAttribute = form.getAttribute("msdyn_account");
-            if (accountAttribute != null) {
-                var accountAttributeValue = accountAttribute.getValue();
-                if (accountAttributeValue != null && accountAttributeValue != undefined) {
-                    globalThis.generatedName["account"] = accountAttributeValue[0].name;
-                    nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
-                        + " / " +
-                        (globalThis.generatedName["category"] != undefined && globalThis.generatedName["category"] != null ? globalThis.generatedName["category"] : "")
-                        + " / " +
-                        (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : ""));
+            if (globalThis.currentOperationCategory == 717750000) {
+                var nameAttribute = form.getAttribute("msdyn_name");
+                var accountAttribute = form.getAttribute("msdyn_account");
+                if (accountAttribute != null) {
+                    var accountAttributeValue = accountAttribute.getValue();
+                    if (accountAttributeValue != null && accountAttributeValue != undefined) {
+                        globalThis.generatedName["account"] = accountAttributeValue[0].name;
+                        nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
+                            + " / " +
+                            (globalThis.generatedName["category"] != undefined && globalThis.generatedName["category"] != null ? globalThis.generatedName["category"] : "")
+                            + " / " +
+                            (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : ""));
+                    }
                 }
             }
         }
@@ -156,15 +163,17 @@ var ROM;
             var form = eContext.getFormContext();
             var nameAttribute = form.getAttribute("msdyn_name");
             var functionalLocationAttribute = form.getAttribute("msdyn_functionallocation");
-            if (functionalLocationAttribute != null) {
-                var functionalLocationAttributeValue = functionalLocationAttribute.getValue();
-                if (functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined) {
-                    globalThis.generatedName["functionalLocation"] = functionalLocationAttributeValue[0].name;
-                    nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
-                        + " / " +
-                        (globalThis.generatedName["category"] != undefined && globalThis.generatedName["category"] != null ? globalThis.generatedName["category"] : "")
-                        + " / " +
-                        (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : ""));
+            if (globalThis.currentOperationCategory == 717750000) {
+                if (functionalLocationAttribute != null) {
+                    var functionalLocationAttributeValue = functionalLocationAttribute.getValue();
+                    if (functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined) {
+                        globalThis.generatedName["functionalLocation"] = functionalLocationAttributeValue[0].name;
+                        nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
+                            + " / " +
+                            (globalThis.generatedName["category"] != undefined && globalThis.generatedName["category"] != null ? globalThis.generatedName["category"] : "")
+                            + " / " +
+                            (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : ""));
+                    }
                 }
             }
         }

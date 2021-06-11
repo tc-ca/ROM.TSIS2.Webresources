@@ -29,6 +29,7 @@ namespace ROM.CustomerAsset {
                 function success(result) {
                     //717750000 = Operations
                     //717750001 = Physical
+                    globalThis.currentOperationCategory = result.ts_assetcategorytype;
                     if (result.ts_assetcategorytype == 717750000){
                         relatedWorkOrdersOperationSubGrid.setVisible(true);
                         relatedWorkOrdersTagsSubGrid.setVisible(false);
@@ -142,25 +143,31 @@ namespace ROM.CustomerAsset {
                         if (result.ts_assetcategorytype == 717750000){ //Operations
                             form.getControl("ts_customerassetenglish").setVisible(false);
                             form.getControl("ts_customerassetfrench").setVisible(false);
+
+                            //Keep track of the category change, to be used when saving the asset and determining whether to generate a name or not
+                            globalThis.currentOperationCategory = result.ts_assetcategorytype;
+                            globalThis.generatedName["category"] = assetCategoryAttributeValue[0].name;
+                            nameAttribute.setValue(
+                                (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
+                                + " / " +
+                                (globalThis.generatedName["category"]!= undefined && globalThis.generatedName["category"] != null? globalThis.generatedName["category"]: "")
+                                    + " / " + 
+                                (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"][0] != null ? globalThis.generatedName["functionalLocation"] : "")
+                            );
                         }
                         else{ //Physical Asset}
-                            form.getControl("ts_customerassetenglish").setVisible(true);
-                            form.getControl("ts_customerassetfrench").setVisible(true);
+                            if(Xrm.Utility.getGlobalContext().userSettings.languageId == 1033){
+                                form.getControl("ts_customerassetenglish").setVisible(true);
+                            }
+                            else{
+                                form.getControl("ts_customerassetfrench").setVisible(true);
+                            }
                         }
-                        //Keep track of the category change, to be used when saving the asset
-                        globalThis.currentOperationCategory = result.ts_assetcategorytype;
                     },
                     function (error) {
                     }
                 );
-                globalThis.generatedName["category"] = assetCategoryAttributeValue[0].name;
-                nameAttribute.setValue(
-                    (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
-                     + " / " +
-                    (globalThis.generatedName["category"]!= undefined && globalThis.generatedName["category"] != null? globalThis.generatedName["category"]: "")
-                     + " / " + 
-                    (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"][0] != null ? globalThis.generatedName["functionalLocation"] : "")
-                );
+                
             } 
         }
     }
@@ -168,22 +175,25 @@ namespace ROM.CustomerAsset {
     export function accountOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_customerasset.Main.CustomerAsset>eContext.getFormContext();
 
-        const nameAttribute = form.getAttribute("msdyn_name");
-        const accountAttribute = form.getAttribute("msdyn_account");
+        if(globalThis.currentOperationCategory == 717750000){
+            const nameAttribute = form.getAttribute("msdyn_name");
+            const accountAttribute = form.getAttribute("msdyn_account");
 
-        if(accountAttribute != null){
-            const accountAttributeValue = accountAttribute.getValue();
-            if(accountAttributeValue != null && accountAttributeValue != undefined){
-                globalThis.generatedName["account"] = accountAttributeValue[0].name;
-                nameAttribute.setValue(
-                    (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
-                     + " / " +
-                    (globalThis.generatedName["category"]!= undefined && globalThis.generatedName["category"] != null? globalThis.generatedName["category"]: "")
-                     + " / " + 
-                    (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : "")
-                );
-            }
-        } 
+            if(accountAttribute != null){
+                const accountAttributeValue = accountAttribute.getValue();
+                if(accountAttributeValue != null && accountAttributeValue != undefined){
+                    globalThis.generatedName["account"] = accountAttributeValue[0].name;
+                    nameAttribute.setValue(
+                        (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
+                            + " / " +
+                        (globalThis.generatedName["category"]!= undefined && globalThis.generatedName["category"] != null? globalThis.generatedName["category"]: "")
+                            + " / " + 
+                        (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : "")
+                    );
+                }
+            } 
+        }
+        
     }
 
     export function functionalLocationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -192,17 +202,19 @@ namespace ROM.CustomerAsset {
         const nameAttribute = form.getAttribute("msdyn_name");
         const functionalLocationAttribute = form.getAttribute("msdyn_functionallocation");
 
-        if(functionalLocationAttribute != null){
-            const functionalLocationAttributeValue = functionalLocationAttribute.getValue();
-            if(functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined){
-                globalThis.generatedName["functionalLocation"] = functionalLocationAttributeValue[0].name;
-                nameAttribute.setValue(
-                    (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
-                     + " / " +
-                    (globalThis.generatedName["category"]!= undefined && globalThis.generatedName["category"] != null? globalThis.generatedName["category"]: "")
-                     + " / " + 
-                    (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : "")
-                );
+        if(globalThis.currentOperationCategory == 717750000){
+            if(functionalLocationAttribute != null){
+                const functionalLocationAttributeValue = functionalLocationAttribute.getValue();
+                if(functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined){
+                    globalThis.generatedName["functionalLocation"] = functionalLocationAttributeValue[0].name;
+                    nameAttribute.setValue(
+                        (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
+                        + " / " +
+                        (globalThis.generatedName["category"]!= undefined && globalThis.generatedName["category"] != null? globalThis.generatedName["category"]: "")
+                        + " / " + 
+                        (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : "")
+                    );
+                }
             }
         }
     }
