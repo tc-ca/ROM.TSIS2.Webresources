@@ -66,13 +66,16 @@ function hasQuestionnaireDefinition(primaryControl) {
     return (questionnaireDefinition != null);
 }
 
-function printQuestionnaire(primaryControl) {
+async function printQuestionnaire(primaryControl) {
     var printWindow = window.open('../WebResources/ts_/html/surveyRenderPrint.html', 'SurveyPrint');
     //Provide printWindow with data required to render survey before survey is initialized in surveyRenderPrintScript below
     printWindow.questionnaireDefinition = primaryControl.getAttribute('ovs_questionnairedefinition').getValue();
     printWindow.questionnaireResponse = primaryControl.getAttribute('ovs_questionnaireresponse').getValue();
     languageId = Xrm.Utility.getGlobalContext().userSettings.languageId;
     printWindow.locale = (languageId == 1036) ? 'fr' : 'en';
+    printWindow.operationList = await retrieveWorkOrderOperations(primaryControl);
+    
+
     printWindow.onload = function () {
 
         //Run surveyRenderPrint.js in printWindow
@@ -152,11 +155,6 @@ function printQuestionnaire(primaryControl) {
         workOrderServiceTaskDetails.appendChild(workOrderHeader);
         workOrderServiceTaskDetails.appendChild(workOrderDetailsList);
 
-        //mywindow.document.close(); // necessary for IE >= 10
-        //mywindow.focus(); // necessary for IE >= 10*/
-
-        //mywindow.print();
-        //mywindow.close();
     }
 }
 
