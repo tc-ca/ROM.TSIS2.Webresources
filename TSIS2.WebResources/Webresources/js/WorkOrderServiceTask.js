@@ -125,62 +125,83 @@ var ROM;
         function InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
             wrCtrl.setVisible(true);
             wrCtrl.getContentWindow().then(function (win) {
-                var surveyLocale = getSurveyLocal();
-                win.InitialContext(eContext);
-                //Get parent work order's id
-                var workOrderAttribute = eContext.getFormContext().getAttribute('msdyn_workorder').getValue();
-                var workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
-                //Array to be populated with opertations associated with parent work order before initializing the survey
-                win.operationList = [];
-                var fetchXml = [
-                    "<fetch top='50'>",
-                    "  <entity name='msdyn_customerasset'>",
-                    "    <attribute name='msdyn_name' />",
-                    "    <attribute name='msdyn_customerassetid' />",
-                    "    <link-entity name='ts_msdyn_customerasset_msdyn_workorder' from='msdyn_customerassetid' to='msdyn_customerassetid' intersect='true'>",
-                    "      <filter>",
-                    "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
-                    "      </filter>",
-                    "    </link-entity>",
-                    "  </entity>",
-                    "</fetch>",
-                ].join("");
-                fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
-                //Retrieve operations (customer assets) associated to the parent Work Order
-                Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml).then(function success(result) {
-                    return __awaiter(this, void 0, void 0, function () {
-                        return __generator(this, function (_a) {
-                            //Add the id and name of customer assets to the operationList array
-                            result.entities.forEach(function (operation) {
-                                win.operationList.push({
-                                    id: operation.msdyn_customerassetid,
-                                    name: operation.msdyn_name
-                                });
-                            });
-                            //Retrieve the operation (customer asset) in the ovs_asset field of the parent work order
-                            Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid)").then(function success(results) {
-                                return __awaiter(this, void 0, void 0, function () {
-                                    return __generator(this, function (_a) {
-                                        //Add the operation's id and name to the operationListarray
-                                        win.operationList.push({
-                                            id: results.ovs_asset.msdyn_customerassetid,
-                                            name: results.ovs_asset.msdyn_name
-                                        });
-                                        //operationList has been filled, so survey is initialized
-                                        win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
-                                        return [2 /*return*/];
-                                    });
-                                });
-                            }, function (error) {
-                                //Failed to retrieve parent work order's ovs_asset, initialize survey anyway
+                return __awaiter(this, void 0, void 0, function () {
+                    var surveyLocale, _a;
+                    return __generator(this, function (_b) {
+                        switch (_b.label) {
+                            case 0:
+                                surveyLocale = getSurveyLocal();
+                                win.InitialContext(eContext);
+                                _a = win;
+                                return [4 /*yield*/, retrieveWorkOrderOperations(eContext)];
+                            case 1:
+                                _a.operationList = _b.sent();
                                 win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
-                            });
-                            return [2 /*return*/];
-                        });
+                                return [2 /*return*/];
+                        }
                     });
-                }, function (error) {
-                    //Failed to retrieve parent work order's associated operations, initialize survey anyway
-                    win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
+                });
+            });
+        }
+        function retrieveWorkOrderOperations(eContext) {
+            return __awaiter(this, void 0, void 0, function () {
+                var workOrderAttribute, workOrderId, operationList, fetchXml;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            workOrderAttribute = eContext.getFormContext().getAttribute('msdyn_workorder').getValue();
+                            workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
+                            operationList = [];
+                            //Retrieve the operation (customer asset) in the ovs_asset field of the parent work order
+                            return [4 /*yield*/, Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid)").then(function success(results) {
+                                    return __awaiter(this, void 0, void 0, function () {
+                                        return __generator(this, function (_a) {
+                                            //Add the operation's id and name to the operationListarray
+                                            operationList.push({
+                                                id: results.ovs_asset.msdyn_customerassetid,
+                                                name: results.ovs_asset.msdyn_name
+                                            });
+                                            return [2 /*return*/];
+                                        });
+                                    });
+                                })];
+                        case 1:
+                            //Retrieve the operation (customer asset) in the ovs_asset field of the parent work order
+                            _a.sent();
+                            fetchXml = [
+                                "<fetch top='50'>",
+                                "  <entity name='msdyn_customerasset'>",
+                                "    <attribute name='msdyn_name' />",
+                                "    <attribute name='msdyn_customerassetid' />",
+                                "    <link-entity name='ts_msdyn_customerasset_msdyn_workorder' from='msdyn_customerassetid' to='msdyn_customerassetid' intersect='true'>",
+                                "      <filter>",
+                                "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+                                "      </filter>",
+                                "    </link-entity>",
+                                "  </entity>",
+                                "</fetch>",
+                            ].join("");
+                            fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+                            //Retrieve operations (customer assets) associated to the parent Work Order
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml).then(function success(result) {
+                                    return __awaiter(this, void 0, void 0, function () {
+                                        return __generator(this, function (_a) {
+                                            //Add the id and name of customer assets to the operationList array
+                                            result.entities.forEach(function (operation) {
+                                                operationList.push({
+                                                    id: operation.msdyn_customerassetid,
+                                                    name: operation.msdyn_name
+                                                });
+                                            });
+                                            return [2 /*return*/];
+                                        });
+                                    });
+                                })];
+                        case 2:
+                            //Retrieve operations (customer assets) associated to the parent Work Order
+                            _a.sent();
+                            return [2 /*return*/, operationList];
+                    }
                 });
             });
         }
