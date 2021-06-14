@@ -145,29 +145,14 @@ var ROM;
         }
         function retrieveWorkOrderOperations(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var workOrderAttribute, workOrderId, operationList, fetchXml;
+                var workOrderAttribute, workOrderId, operations, operationPromise1, fetchXml, operationPromise2;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             workOrderAttribute = eContext.getFormContext().getAttribute('msdyn_workorder').getValue();
                             workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
-                            operationList = [];
-                            //Retrieve the operation (customer asset) in the ovs_asset field of the parent work order
-                            return [4 /*yield*/, Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid)").then(function success(results) {
-                                    return __awaiter(this, void 0, void 0, function () {
-                                        return __generator(this, function (_a) {
-                                            //Add the operation's id and name to the operationListarray
-                                            operationList.push({
-                                                id: results.ovs_asset.msdyn_customerassetid,
-                                                name: results.ovs_asset.msdyn_name
-                                            });
-                                            return [2 /*return*/];
-                                        });
-                                    });
-                                })];
-                        case 1:
-                            //Retrieve the operation (customer asset) in the ovs_asset field of the parent work order
-                            _a.sent();
+                            operations = [];
+                            operationPromise1 = Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid)");
                             fetchXml = [
                                 "<fetch top='50'>",
                                 "  <entity name='msdyn_customerasset'>",
@@ -182,25 +167,24 @@ var ROM;
                                 "</fetch>",
                             ].join("");
                             fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
-                            //Retrieve operations (customer assets) associated to the parent Work Order
-                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml).then(function success(result) {
-                                    return __awaiter(this, void 0, void 0, function () {
-                                        return __generator(this, function (_a) {
-                                            //Add the id and name of customer assets to the operationList array
-                                            result.entities.forEach(function (operation) {
-                                                operationList.push({
-                                                    id: operation.msdyn_customerassetid,
-                                                    name: operation.msdyn_name
-                                                });
-                                            });
-                                            return [2 /*return*/];
+                            operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml);
+                            return [4 /*yield*/, Promise.all([operationPromise1, operationPromise2]).then(function (operationRetrievalPromises) {
+                                    //Add the work order operation field's id and name to the operationListarray
+                                    operations.push({
+                                        id: operationRetrievalPromises[0].ovs_asset.msdyn_customerassetid,
+                                        name: operationRetrievalPromises[0].ovs_asset.msdyn_name
+                                    });
+                                    //Add the id and name of the work order's N:N operations to the operationList array
+                                    operationRetrievalPromises[1].entities.forEach(function (operation) {
+                                        operations.push({
+                                            id: operation.msdyn_customerassetid,
+                                            name: operation.msdyn_name
                                         });
                                     });
                                 })];
-                        case 2:
-                            //Retrieve operations (customer assets) associated to the parent Work Order
+                        case 1:
                             _a.sent();
-                            return [2 /*return*/, operationList];
+                            return [2 /*return*/, operations];
                     }
                 });
             });

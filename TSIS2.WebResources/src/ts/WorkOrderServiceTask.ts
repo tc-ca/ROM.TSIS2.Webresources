@@ -105,19 +105,11 @@ namespace ROM.WorkOrderServiceTask {
         //Get parent work order's id
         var workOrderAttribute = eContext.getFormContext().getAttribute('msdyn_workorder').getValue();
         var workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
-        //Array to be populated with opertations associated with parent work order
-        let operationList: Object[] = [];
+        //Array to be populated with opertations associated with parent work order before initializing the survey
+        let operations : Object[] = [];
 
         //Retrieve the operation (customer asset) in the ovs_asset field of the parent work order
-        await Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid)").then(
-            async function success(results) {
-                //Add the operation's id and name to the operationListarray
-                operationList.push({
-                    id: results.ovs_asset.msdyn_customerassetid,
-                    name: results.ovs_asset.msdyn_name
-                });
-            }
-        );
+        let operationPromise1 = Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid)");
 
         var fetchXml = [
             "<fetch top='50'>",
@@ -134,19 +126,24 @@ namespace ROM.WorkOrderServiceTask {
         ].join("");
         fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
         //Retrieve operations (customer assets) associated to the parent Work Order
-        await Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml).then(
-            async function success(result) {
-                //Add the id and name of customer assets to the operationList array
-                result.entities.forEach(function (operation) {
-                    operationList.push({
-                        id: operation.msdyn_customerassetid,
-                        name: operation.msdyn_name
-                    });
-                });
-            }
-        );
+        let operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml);
 
-        return operationList;
+        await Promise.all([operationPromise1, operationPromise2]).then((operationRetrievalPromises) => {
+            //Add the work order operation field's id and name to the operationListarray
+            operations.push({
+                id: operationRetrievalPromises[0].ovs_asset.msdyn_customerassetid,
+                name: operationRetrievalPromises[0].ovs_asset.msdyn_name
+            });
+            //Add the id and name of the work order's N:N operations to the operationList array
+            operationRetrievalPromises[1].entities.forEach(function (operation) {
+                operations.push({
+                    id: operation.msdyn_customerassetid,
+                    name: operation.msdyn_name
+                });
+            });
+        });
+
+        return operations;
     }
 }
 

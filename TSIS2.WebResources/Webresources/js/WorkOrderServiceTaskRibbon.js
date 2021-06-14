@@ -67,17 +67,15 @@ function hasQuestionnaireDefinition(primaryControl) {
 }
 
 async function printQuestionnaire(primaryControl) {
+    let operationList = await retrieveWorkOrderOperations(primaryControl);
     var printWindow = window.open('../WebResources/ts_/html/surveyRenderPrint.html', 'SurveyPrint');
     //Provide printWindow with data required to render survey before survey is initialized in surveyRenderPrintScript below
     printWindow.questionnaireDefinition = primaryControl.getAttribute('ovs_questionnairedefinition').getValue();
     printWindow.questionnaireResponse = primaryControl.getAttribute('ovs_questionnaireresponse').getValue();
     languageId = Xrm.Utility.getGlobalContext().userSettings.languageId;
     printWindow.locale = (languageId == 1036) ? 'fr' : 'en';
-    printWindow.operationList = await retrieveWorkOrderOperations(primaryControl);
-    
-
+    printWindow.operationList = operationList;
     printWindow.onload = function () {
-
         //Run surveyRenderPrint.js in printWindow
         var surveyRenderPrintScript = printWindow.document.createElement('script');
         surveyRenderPrintScript.src = "../../ts_/js/surveyRenderPrint.js";
@@ -156,6 +154,51 @@ async function printQuestionnaire(primaryControl) {
         workOrderServiceTaskDetails.appendChild(workOrderDetailsList);
 
     }
+}
+
+async function retrieveWorkOrderOperations(primaryControl) {
+    //Get parent work order's id
+    var workOrderAttribute = primaryControl.getAttribute('msdyn_workorder').getValue();
+    var workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
+    //Array to be populated with opertations associated with parent work order before initializing the survey
+    let operations = [];
+
+    //Retrieve the operation (customer asset) in the ovs_asset field of the parent work order
+    let operationPromise1 = Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid)");
+
+    var fetchXml = [
+        "<fetch top='50'>",
+        "  <entity name='msdyn_customerasset'>",
+        "    <attribute name='msdyn_name' />",
+        "    <attribute name='msdyn_customerassetid' />",
+        "    <link-entity name='ts_msdyn_customerasset_msdyn_workorder' from='msdyn_customerassetid' to='msdyn_customerassetid' intersect='true'>",
+        "      <filter>",
+        "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+        "      </filter>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>",
+    ].join("");
+    fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+    //Retrieve operations (customer assets) associated to the parent Work Order
+    let operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml);
+
+    await Promise.all([operationPromise1, operationPromise2]).then((operationRetrievalPromises) => {
+        //Add the work order operation field's id and name to the operationListarray
+        operations.push({
+            id: operationRetrievalPromises[0].ovs_asset.msdyn_customerassetid,
+            name: operationRetrievalPromises[0].ovs_asset.msdyn_name
+        });
+        //Add the id and name of the work order's N:N operations to the operationList array
+        operationRetrievalPromises[1].entities.forEach(function (operation) {
+            operations.push({
+                id: operation.msdyn_customerassetid,
+                name: operation.msdyn_name
+            });
+        });
+    });
+
+    return operations;
 }
 
 function surveyHasErrors(primaryControl) {
