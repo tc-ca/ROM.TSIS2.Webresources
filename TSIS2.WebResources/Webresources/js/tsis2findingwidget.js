@@ -78,12 +78,14 @@ var widget = {
 
         operationsContainer.style.paddingBottom = "20px";
 
+        //Create a checkbox for each operation in the operationList array
         operationList.forEach(function (operation) {
             operationCheckbox = document.createElement("input");
             operationCheckbox.type = "checkbox";
             operationCheckbox.className = "operationCheckbox";
             operationCheckbox.value = operation.id;
 
+            //Check all boxes that have been checked before
             if (question.accountableOperations != undefined && question.accountableOperations.includes(operation.id)) {
                 operationCheckbox.checked = true;
             }
@@ -91,6 +93,7 @@ var widget = {
             operationLabel.innerText = operation.name;
             lineBreak = document.createElement("br");
 
+            //When a checkbox is changed, update the accountOperations question's value object to match the current state of the checkboxes
             operationCheckbox.onchange = function () {
                 operationCheckboxArray = operationsContainer.getElementsByClassName("operationCheckbox");
                 question.accountableOperations = [];
