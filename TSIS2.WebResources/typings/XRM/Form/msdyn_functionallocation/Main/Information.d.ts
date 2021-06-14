@@ -52,6 +52,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "CurrentPropertyValuesSubgrid"): Xrm.SubGridControl<"msdyn_propertylog">;
       get(name: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
+      get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_address2"): Xrm.StringControl;
@@ -106,6 +107,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "CurrentPropertyValuesSubgrid"): Xrm.SubGridControl<"msdyn_propertylog">;
     getControl(controlName: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
+    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_address2"): Xrm.StringControl;
