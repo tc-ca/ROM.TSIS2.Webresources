@@ -184,12 +184,12 @@ async function retrieveWorkOrderOperations(primaryControl) {
     let operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml);
 
     await Promise.all([operationPromise1, operationPromise2]).then((operationRetrievalPromises) => {
-        //Add the work order operation field's id and name to the operationListarray
+        //Add the work order operation field's id and name to the operations array
         operations.push({
             id: operationRetrievalPromises[0].ovs_asset.msdyn_customerassetid,
             name: operationRetrievalPromises[0].ovs_asset.msdyn_name
         });
-        //Add the id and name of the work order's N:N operations to the operationList array
+        //Add the id and name of the work order's N:N operations to the operations array
         operationRetrievalPromises[1].entities.forEach(function (operation) {
             operations.push({
                 id: operation.msdyn_customerassetid,
