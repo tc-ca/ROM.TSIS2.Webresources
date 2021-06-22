@@ -78,39 +78,43 @@ var widget = {
 
         operationsContainer.style.paddingBottom = "20px";
 
-        //Create a checkbox for each operation in the operationList array
-        operationList.forEach(function (operation) {
-            operationCheckbox = document.createElement("input");
-            operationCheckbox.type = "checkbox";
-            operationCheckbox.className = "operationCheckbox";
-            operationCheckbox.value = operation.id;
+        //If there's just one operation, just add it to the array and skip rendering the checkboxes
+        if (operationList.length == 1) {
+            question.accountableOperations = [operationList[0].id];
+            operationsContainer.style.display = "none";
+        } else {
+            //Create a checkbox for each operation in the operationList array
+            operationList.forEach(function (operation) {
+                operationCheckbox = document.createElement("input");
+                operationCheckbox.type = "checkbox";
+                operationCheckbox.className = "operationCheckbox";
+                operationCheckbox.value = operation.id;
 
-            //Check all boxes that have been checked before
-            if (question.accountableOperations != undefined && question.accountableOperations.includes(operation.id)) {
-                operationCheckbox.checked = true;
-            }
-            operationLabel = document.createElement("label");
-            operationLabel.innerText = operation.name;
-            lineBreak = document.createElement("br");
+                //Check all boxes that have been checked before
+                if (question.accountableOperations != undefined && question.accountableOperations.includes(operation.id)) {
+                    operationCheckbox.checked = true;
+                }
+                operationLabel = document.createElement("label");
+                operationLabel.innerText = operation.name;
+                lineBreak = document.createElement("br");
 
-            //When a checkbox is changed, update the accountOperations question's value object to match the current state of the checkboxes
-            operationCheckbox.onchange = function () {
-                operationCheckboxArray = operationsContainer.getElementsByClassName("operationCheckbox");
-                question.accountableOperations = [];
-                Array.from(operationCheckboxArray).forEach(function (currentOperationCheckbox) {
-                    if (currentOperationCheckbox.checked) {
-                        question.accountableOperations.push(currentOperationCheckbox.value);
-                    }
-                });
-                question.value.operations = question.accountableOperations;
-                console.log(question.value);
-            }
-            operationsContainer.appendChild(operationCheckbox);
-            operationsContainer.appendChild(operationLabel);
-            operationsContainer.appendChild(lineBreak);
-        });
-
-        
+                //When a checkbox is changed, update the accountOperations question's value object to match the current state of the checkboxes
+                operationCheckbox.onchange = function () {
+                    operationCheckboxArray = operationsContainer.getElementsByClassName("operationCheckbox");
+                    question.accountableOperations = [];
+                    Array.from(operationCheckboxArray).forEach(function (currentOperationCheckbox) {
+                        if (currentOperationCheckbox.checked) {
+                            question.accountableOperations.push(currentOperationCheckbox.value);
+                        }
+                    });
+                    question.value.operations = question.accountableOperations;
+                    console.log(question.value);
+                }
+                operationsContainer.appendChild(operationCheckbox);
+                operationsContainer.appendChild(operationLabel);
+                operationsContainer.appendChild(lineBreak);
+            });
+        }
 
         function updateCharacterCount() {
             characterCount.innerText = (1000 - comments.value.length) + " " + charactersRemainingLocalizedText;
