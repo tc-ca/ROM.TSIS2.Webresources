@@ -109,17 +109,21 @@ namespace ROM.WorkOrderServiceTask {
         let operations : Object[] = [];
 
         //Retrieve the operation (customer asset) in the ovs_asset field of the parent work order
-        let operationPromise1 = Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid)");
+        let operationPromise1 = Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset,msdyn_serviceaccount&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid),msdyn_serviceaccount($select=name)");
 
         var fetchXml = [
             "<fetch top='50'>",
             "  <entity name='msdyn_customerasset'>",
-            "    <attribute name='msdyn_name' />",
             "    <attribute name='msdyn_customerassetid' />",
+            "    <attribute name='msdyn_name' />",
+            "    <attribute name='msdyn_account' />",
             "    <link-entity name='ts_msdyn_customerasset_msdyn_workorder' from='msdyn_customerassetid' to='msdyn_customerassetid' intersect='true'>",
             "      <filter>",
             "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
             "      </filter>",
+            "    </link-entity>",
+            "    <link-entity name='account' from='accountid' to='msdyn_account' intersect='true'>",
+            "      <attribute name='name' />",
             "    </link-entity>",
             "  </entity>",
             "</fetch>",
@@ -132,13 +136,13 @@ namespace ROM.WorkOrderServiceTask {
             //Add the work order operation field's id and name to the operations array
             operations.push({
                 id: operationRetrievalPromises[0].ovs_asset.msdyn_customerassetid,
-                name: operationRetrievalPromises[0].ovs_asset.msdyn_name
+                name: operationRetrievalPromises[0].msdyn_serviceaccount.name + " : " + operationRetrievalPromises[0].ovs_asset.msdyn_name
             });
             //Add the id and name of the work order's N:N operations to the operations array
             operationRetrievalPromises[1].entities.forEach(function (operation) {
                 operations.push({
                     id: operation.msdyn_customerassetid,
-                    name: operation.msdyn_name
+                    name: operation["account2.name"] + " : " + operation.msdyn_name
                 });
             });
         });
