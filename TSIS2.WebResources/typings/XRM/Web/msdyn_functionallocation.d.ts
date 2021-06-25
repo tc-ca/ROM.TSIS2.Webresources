@@ -20,6 +20,8 @@ interface msdyn_FunctionalLocation_Base extends WebEntity {
   statuscode?: msdyn_functionallocation_statuscode | null;
   timezoneruleversionnumber?: number | null;
   ts_businessunit?: string | null;
+  ts_functionallocationnameenglish?: string | null;
+  ts_functionallocationnamefrench?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -78,6 +80,8 @@ interface msdyn_FunctionalLocation_Select {
   timezoneruleversionnumber: WebAttribute<msdyn_FunctionalLocation_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_businessunit: WebAttribute<msdyn_FunctionalLocation_Select, { ts_businessunit: string | null }, {  }>;
   ts_country_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_functionallocationnameenglish: WebAttribute<msdyn_FunctionalLocation_Select, { ts_functionallocationnameenglish: string | null }, {  }>;
+  ts_functionallocationnamefrench: WebAttribute<msdyn_FunctionalLocation_Select, { ts_functionallocationnamefrench: string | null }, {  }>;
   ts_region_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_sitetype_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitetype_guid: string | null }, { ts_sitetype_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_FunctionalLocation_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -115,6 +119,8 @@ interface msdyn_FunctionalLocation_Filter {
   timezoneruleversionnumber: number;
   ts_businessunit: string;
   ts_country_guid: XQW.Guid;
+  ts_functionallocationnameenglish: string;
+  ts_functionallocationnamefrench: string;
   ts_region_guid: XQW.Guid;
   ts_sitetype_guid: XQW.Guid;
   utcconversiontimezonecode: number;

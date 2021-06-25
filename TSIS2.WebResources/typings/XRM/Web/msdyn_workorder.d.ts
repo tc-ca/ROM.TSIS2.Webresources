@@ -139,6 +139,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ts_Country_bind$tc_countries?: string | null;
   ts_Region_bind$territories?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
+  ts_WorkOrderCreationWizardId_bind$ts_workordercreationwizards?: string | null;
 }
 interface msdyn_workorder_Create extends msdyn_workorder {
 }
@@ -259,6 +260,7 @@ interface msdyn_workorder_Select {
   ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_site_guid: WebAttribute<msdyn_workorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
+  ts_workordercreationwizardid_guid: WebAttribute<msdyn_workorder_Select, { ts_workordercreationwizardid_guid: string | null }, { ts_workordercreationwizardid_formatted?: string }>;
   ts_workorderenddate: WebAttribute<msdyn_workorder_Select, { ts_workorderenddate: Date | null }, { ts_workorderenddate_formatted?: string }>;
   ts_workorderstartdate: WebAttribute<msdyn_workorder_Select, { ts_workorderstartdate: Date | null }, { ts_workorderstartdate_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_workorder_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -379,6 +381,7 @@ interface msdyn_workorder_Filter {
   ts_country_guid: XQW.Guid;
   ts_region_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
+  ts_workordercreationwizardid_guid: XQW.Guid;
   ts_workorderenddate: Date;
   ts_workorderstartdate: Date;
   utcconversiontimezonecode: number;
@@ -501,6 +504,7 @@ interface msdyn_workorder_FormattedResult {
   ts_country_formatted?: string;
   ts_region_formatted?: string;
   ts_site_formatted?: string;
+  ts_workordercreationwizardid_formatted?: string;
   ts_workorderenddate_formatted?: string;
   ts_workorderstartdate_formatted?: string;
 }
@@ -559,6 +563,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ts_country_guid: string | null;
   ts_region_guid: string | null;
   ts_site_guid: string | null;
+  ts_workordercreationwizardid_guid: string | null;
 }
 interface msdyn_workorder_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;

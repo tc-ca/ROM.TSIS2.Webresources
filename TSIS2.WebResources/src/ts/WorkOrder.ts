@@ -396,7 +396,7 @@ namespace ROM.WorkOrder {
                     const viewId = '{6E57251F-F695-4076-9498-49AB892154B7}';
                     const entityName = "msdyn_functionallocation";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
-                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_functionallocation"><attribute name="msdyn_functionallocationid" /><attribute name="msdyn_name" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryCondition + '</filter><link-entity name="msdyn_customerasset" from="msdyn_functionallocation" to="msdyn_functionallocationid" link-type="inner" alias="aq"><filter type="and"><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_account" operator="eq" value="' + stakeholderAttributeValue[0].id + '" /></filter></link-entity></entity></fetch>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_functionallocation"><attribute name="msdyn_functionallocationid" /><attribute name="msdyn_name" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '" /></filter><link-entity name="msdyn_msdyn_functionallocation_account" from="msdyn_functionallocationid" to="msdyn_functionallocationid" visible="false" intersect="true"><link-entity name="account" from="accountid" to="accountid" alias="ai"><filter type="and"><condition attribute="accountid" operator="eq" value="' + stakeholderAttributeValue[0].id + '" /></filter></link-entity></link-entity>< /entity></fetch > ';
                     const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
                     form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 }
@@ -408,29 +408,30 @@ namespace ROM.WorkOrder {
     }
 
     export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    }
+
+    export function functionalLocationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
             const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
             const operationTypeAttribute = form.getAttribute("ovs_assetcategory");
             const stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
-            const siteAttribute = form.getAttribute("ts_site");
-
-            if (siteAttribute != null && siteAttribute != undefined) {
-
+            const functionalLocationAttribute = form.getAttribute("msdyn_functionallocation");
+            if (functionalLocationAttribute != null && functionalLocationAttribute != undefined) {
                 // Clear out operation value if not already empty
                 if (form.getAttribute("ovs_asset").getValue() != null) form.getAttribute("ovs_asset").setValue(null);
 
                 // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                 const operationTypeAttributeValue = operationTypeAttribute.getValue();
                 const stakeholderAttributeValue = stakeholderAttribute.getValue();
-                const siteAttributeValue = siteAttribute.getValue();
+                const functionalLocationAttributeValue = functionalLocationAttribute.getValue();
 
-                if (siteAttributeValue != null && siteAttributeValue != undefined &&
+                if (functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined &&
                     stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
                     operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
 
                     // Populate operation asset
-                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_customerasset"><attribute name="msdyn_account" /><attribute name="msdyn_name" /><attribute name="msdyn_functionallocation" /><attribute name="msdyn_customerassetid" /><order attribute="msdyn_name" descending="true" /><filter type="and"><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue[0].id + '" /></filter></entity></fetch>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_customerasset"><attribute name="msdyn_account" /><attribute name="msdyn_name" /><attribute name="msdyn_functionallocation" /><attribute name="msdyn_customerassetid" /><order attribute="msdyn_name" descending="true" /><filter type="and"><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_functionallocation" operator="eq" value="' + functionalLocationAttributeValue[0].id + '" /></filter></entity></fetch>';
                     var encodedFetchXml = encodeURIComponent(fetchXml);
                     Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", "?fetchXml=" + encodedFetchXml).then(
                         function success(result) {

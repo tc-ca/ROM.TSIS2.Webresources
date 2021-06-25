@@ -42,6 +42,8 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "ts_businessunit"): Xrm.Attribute<string>;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+      get(name: "ts_functionallocationnameenglish"): Xrm.Attribute<string>;
+      get(name: "ts_functionallocationnamefrench"): Xrm.Attribute<string>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
       get(name: string): undefined;
@@ -69,6 +71,8 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_stateorprovince"): Xrm.StringControl;
       get(name: "ts_businessunit"): Xrm.StringControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
+      get(name: "ts_functionallocationnameenglish"): Xrm.StringControl;
+      get(name: "ts_functionallocationnamefrench"): Xrm.StringControl;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
       get(name: string): undefined;
@@ -102,6 +106,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "ts_businessunit"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+    getAttribute(attributeName: "ts_functionallocationnameenglish"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_functionallocationnamefrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
     getAttribute(attributeName: string): undefined;
@@ -124,6 +130,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "msdyn_stateorprovince"): Xrm.StringControl;
     getControl(controlName: "ts_businessunit"): Xrm.StringControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
+    getControl(controlName: "ts_functionallocationnameenglish"): Xrm.StringControl;
+    getControl(controlName: "ts_functionallocationnamefrench"): Xrm.StringControl;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
     getControl(controlName: string): undefined;
