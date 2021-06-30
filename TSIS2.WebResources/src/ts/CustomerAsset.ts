@@ -15,6 +15,7 @@ namespace ROM.CustomerAsset {
         const customerAssetCategoryAttributeValue = form.getAttribute("msdyn_customerassetcategory").getValue();
         const functionalLocationAttributeValue = form.getAttribute("msdyn_functionallocation").getValue();
 
+        //Save the current values of the fields used in the name generation if they exist
         globalThis.generatedName = [];
         if(accountAttribute != null && customerAssetCategoryAttribute != null && functionalLocationAttribute != null){
             if(accountAttributeValue != null && customerAssetCategoryAttributeValue != null && functionalLocationAttributeValue != null){
@@ -116,6 +117,7 @@ namespace ROM.CustomerAsset {
                                                     nameAttributeEnglish.setValue(generatedAlternateLangName);
                                                     nameAttribute.setValue(`${accountAttributeValue[0].name} / ${customerAssetCategoryAttributeValue[0].name} / ${functionalLocationAttributeValue[0].name}`);
                                                 }
+                                                form.data.entity.save();
                                             },
                                         );
                                     },
@@ -144,7 +146,7 @@ namespace ROM.CustomerAsset {
                             form.getControl("ts_customerassetenglish").setVisible(false);
                             form.getControl("ts_customerassetfrench").setVisible(false);
 
-                            //Keep track of the category change, to be used when saving the asset and determining whether to generate a name or not
+                            //Keep track of the category change, to be used when saving the asset and determining whether to generate a name or not because we only generate name when the Category is an Operation
                             globalThis.currentOperationCategory = result.ts_assetcategorytype;
                             globalThis.generatedName["category"] = assetCategoryAttributeValue[0].name;
                             nameAttribute.setValue(
@@ -157,17 +159,16 @@ namespace ROM.CustomerAsset {
                         }
                         else{ //Physical Asset}
                             if(Xrm.Utility.getGlobalContext().userSettings.languageId == 1033){
-                                form.getControl("ts_customerassetenglish").setVisible(true);
+                                form.getControl("ts_customerassetfrench").setVisible(true);
                             }
                             else{
-                                form.getControl("ts_customerassetfrench").setVisible(true);
+                                form.getControl("ts_customerassetenglish").setVisible(true);
                             }
                         }
                     },
                     function (error) {
                     }
                 );
-                
             } 
         }
     }
@@ -175,14 +176,14 @@ namespace ROM.CustomerAsset {
     export function accountOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_customerasset.Main.CustomerAsset>eContext.getFormContext();
 
-        if(globalThis.currentOperationCategory == 717750000){
-            const nameAttribute = form.getAttribute("msdyn_name");
-            const accountAttribute = form.getAttribute("msdyn_account");
+        const nameAttribute = form.getAttribute("msdyn_name");
+        const accountAttribute = form.getAttribute("msdyn_account");
 
-            if(accountAttribute != null){
-                const accountAttributeValue = accountAttribute.getValue();
-                if(accountAttributeValue != null && accountAttributeValue != undefined){
-                    globalThis.generatedName["account"] = accountAttributeValue[0].name;
+        if(accountAttribute != null){
+            const accountAttributeValue = accountAttribute.getValue();
+            if(accountAttributeValue != null && accountAttributeValue != undefined){
+                globalThis.generatedName["account"] = accountAttributeValue[0].name;
+                if(globalThis.currentOperationCategory == 717750000){
                     nameAttribute.setValue(
                         (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
                             + " / " +
@@ -191,9 +192,8 @@ namespace ROM.CustomerAsset {
                         (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : "")
                     );
                 }
-            } 
-        }
-        
+            }
+        } 
     }
 
     export function functionalLocationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -202,11 +202,11 @@ namespace ROM.CustomerAsset {
         const nameAttribute = form.getAttribute("msdyn_name");
         const functionalLocationAttribute = form.getAttribute("msdyn_functionallocation");
 
-        if(globalThis.currentOperationCategory == 717750000){
-            if(functionalLocationAttribute != null){
-                const functionalLocationAttributeValue = functionalLocationAttribute.getValue();
-                if(functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined){
-                    globalThis.generatedName["functionalLocation"] = functionalLocationAttributeValue[0].name;
+        if(functionalLocationAttribute != null){
+            const functionalLocationAttributeValue = functionalLocationAttribute.getValue();
+            if(functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined){
+                globalThis.generatedName["functionalLocation"] = functionalLocationAttributeValue[0].name;
+                if(globalThis.currentOperationCategory == 717750000){
                     nameAttribute.setValue(
                         (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
                         + " / " +

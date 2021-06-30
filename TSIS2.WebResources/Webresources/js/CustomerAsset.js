@@ -15,6 +15,7 @@ var ROM;
             var accountAttributeValue = form.getAttribute("msdyn_account").getValue();
             var customerAssetCategoryAttributeValue = form.getAttribute("msdyn_customerassetcategory").getValue();
             var functionalLocationAttributeValue = form.getAttribute("msdyn_functionallocation").getValue();
+            //Save the current values of the fields used in the name generation if they exist
             globalThis.generatedName = [];
             if (accountAttribute != null && customerAssetCategoryAttribute != null && functionalLocationAttribute != null) {
                 if (accountAttributeValue != null && customerAssetCategoryAttributeValue != null && functionalLocationAttributeValue != null) {
@@ -95,6 +96,7 @@ var ROM;
                                             nameAttributeEnglish_1.setValue(generatedAlternateLangName);
                                             nameAttribute_1.setValue(accountAttributeValue_1[0].name + " / " + customerAssetCategoryAttributeValue_1[0].name + " / " + functionalLocationAttributeValue_1[0].name);
                                         }
+                                        form.data.entity.save();
                                     });
                                 });
                             });
@@ -117,7 +119,7 @@ var ROM;
                         if (result.ts_assetcategorytype == 717750000) { //Operations
                             form.getControl("ts_customerassetenglish").setVisible(false);
                             form.getControl("ts_customerassetfrench").setVisible(false);
-                            //Keep track of the category change, to be used when saving the asset and determining whether to generate a name or not
+                            //Keep track of the category change, to be used when saving the asset and determining whether to generate a name or not because we only generate name when the Category is an Operation
                             globalThis.currentOperationCategory = result.ts_assetcategorytype;
                             globalThis.generatedName["category"] = assetCategoryAttributeValue_1[0].name;
                             nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
@@ -128,10 +130,10 @@ var ROM;
                         }
                         else { //Physical Asset}
                             if (Xrm.Utility.getGlobalContext().userSettings.languageId == 1033) {
-                                form.getControl("ts_customerassetenglish").setVisible(true);
+                                form.getControl("ts_customerassetfrench").setVisible(true);
                             }
                             else {
-                                form.getControl("ts_customerassetfrench").setVisible(true);
+                                form.getControl("ts_customerassetenglish").setVisible(true);
                             }
                         }
                     }, function (error) {
@@ -142,13 +144,13 @@ var ROM;
         CustomerAsset.categoryOnChange = categoryOnChange;
         function accountOnChange(eContext) {
             var form = eContext.getFormContext();
-            if (globalThis.currentOperationCategory == 717750000) {
-                var nameAttribute = form.getAttribute("msdyn_name");
-                var accountAttribute = form.getAttribute("msdyn_account");
-                if (accountAttribute != null) {
-                    var accountAttributeValue = accountAttribute.getValue();
-                    if (accountAttributeValue != null && accountAttributeValue != undefined) {
-                        globalThis.generatedName["account"] = accountAttributeValue[0].name;
+            var nameAttribute = form.getAttribute("msdyn_name");
+            var accountAttribute = form.getAttribute("msdyn_account");
+            if (accountAttribute != null) {
+                var accountAttributeValue = accountAttribute.getValue();
+                if (accountAttributeValue != null && accountAttributeValue != undefined) {
+                    globalThis.generatedName["account"] = accountAttributeValue[0].name;
+                    if (globalThis.currentOperationCategory == 717750000) {
                         nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
                             + " / " +
                             (globalThis.generatedName["category"] != undefined && globalThis.generatedName["category"] != null ? globalThis.generatedName["category"] : "")
@@ -163,11 +165,11 @@ var ROM;
             var form = eContext.getFormContext();
             var nameAttribute = form.getAttribute("msdyn_name");
             var functionalLocationAttribute = form.getAttribute("msdyn_functionallocation");
-            if (globalThis.currentOperationCategory == 717750000) {
-                if (functionalLocationAttribute != null) {
-                    var functionalLocationAttributeValue = functionalLocationAttribute.getValue();
-                    if (functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined) {
-                        globalThis.generatedName["functionalLocation"] = functionalLocationAttributeValue[0].name;
+            if (functionalLocationAttribute != null) {
+                var functionalLocationAttributeValue = functionalLocationAttribute.getValue();
+                if (functionalLocationAttributeValue != null && functionalLocationAttributeValue != undefined) {
+                    globalThis.generatedName["functionalLocation"] = functionalLocationAttributeValue[0].name;
+                    if (globalThis.currentOperationCategory == 717750000) {
                         nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
                             + " / " +
                             (globalThis.generatedName["category"] != undefined && globalThis.generatedName["category"] != null ? globalThis.generatedName["category"] : "")
