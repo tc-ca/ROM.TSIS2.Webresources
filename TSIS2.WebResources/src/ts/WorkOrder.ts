@@ -498,6 +498,9 @@ namespace ROM.WorkOrder {
                             showErrorMessageAlert(error);
                         }
                     );
+                } else {
+                    // Fall back to siteOnChange if functional location is cleared
+                    siteOnChange(eContext);
                 }
             }
         } catch (e) {
