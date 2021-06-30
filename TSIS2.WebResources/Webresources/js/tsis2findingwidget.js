@@ -78,10 +78,13 @@ var widget = {
 
         operationsContainer.style.paddingBottom = "20px";
 
-        //If there's just one operation, just add it to the array and skip rendering the checkboxes
+        //If there's just one operation, add it to the operations array, skip rendering checkboxes, hide the accountable operations label
         if (operationList.length <= 1) {
-            question.accountableOperations = [operationList[0].id];
             operationsContainer.style.display = "none";
+            //Operations is required so there should always be one, but handle an empty array just in case
+            if (operationList.length == 1) {
+                question.accountableOperations = [operationList[0].id];
+            }
         } else {
             //Create a checkbox for each operation in the operationList array
             operationList.forEach(function (operation) {
