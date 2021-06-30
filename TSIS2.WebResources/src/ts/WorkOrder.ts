@@ -408,6 +408,52 @@ namespace ROM.WorkOrder {
     }
 
     export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+            const operationTypeAttribute = form.getAttribute("ovs_assetcategory");
+            const stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
+            const siteAttribute = form.getAttribute("ts_site");
+            if (siteAttribute != null && siteAttribute != undefined) {
+                // Clear out operation value if not already empty
+                if (form.getAttribute("ovs_asset").getValue() != null) form.getAttribute("ovs_asset").setValue(null);
+
+                // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                const stakeholderAttributeValue = stakeholderAttribute.getValue();
+                const siteAttributeValue = siteAttribute.getValue();
+
+                if (siteAttributeValue != null && siteAttributeValue != undefined &&
+                    stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
+                    operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
+
+                    // Populate operation asset
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_customerasset"><attribute name="msdyn_account" /><attribute name="msdyn_name" /><attribute name="msdyn_functionallocation" /><attribute name="msdyn_customerassetid" /><order attribute="msdyn_name" descending="true" /><filter type="and"><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue[0].id + '" /></filter></entity></fetch>';
+                    var encodedFetchXml = encodeURIComponent(fetchXml);
+                    Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", "?fetchXml=" + encodedFetchXml).then(
+                        function success(result) {
+                            if (result.entities.length == 1) {
+                                const targetOperation = result.entities[0];
+                                const lookup = new Array();
+                                lookup[0] = new Object();
+                                lookup[0].id = targetOperation.msdyn_customerassetid;
+                                lookup[0].name = targetOperation.msdyn_name;
+                                lookup[0].entityType = 'msdyn_customerasset';
+
+                                form.getAttribute('ovs_asset').setValue(lookup);
+                            } else {
+                                // do not set a default if multiple records are found, error.
+                            }
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
+                }
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
     }
 
     export function functionalLocationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {

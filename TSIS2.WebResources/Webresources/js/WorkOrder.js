@@ -374,18 +374,59 @@ var ROM;
         }
         WorkOrder.stakeholderOnChange = stakeholderOnChange;
         function siteOnChange(eContext) {
-        }
-        WorkOrder.siteOnChange = siteOnChange;
-        function functionalLocationOnChange(eContext) {
             try {
                 var form_1 = eContext.getFormContext();
                 var operationTypeAttribute = form_1.getAttribute("ovs_assetcategory");
                 var stakeholderAttribute = form_1.getAttribute("msdyn_serviceaccount");
-                var functionalLocationAttribute = form_1.getAttribute("msdyn_functionallocation");
-                if (functionalLocationAttribute != null && functionalLocationAttribute != undefined) {
+                var siteAttribute = form_1.getAttribute("ts_site");
+                if (siteAttribute != null && siteAttribute != undefined) {
                     // Clear out operation value if not already empty
                     if (form_1.getAttribute("ovs_asset").getValue() != null)
                         form_1.getAttribute("ovs_asset").setValue(null);
+                    // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                    var operationTypeAttributeValue = operationTypeAttribute.getValue();
+                    var stakeholderAttributeValue = stakeholderAttribute.getValue();
+                    var siteAttributeValue = siteAttribute.getValue();
+                    if (siteAttributeValue != null && siteAttributeValue != undefined &&
+                        stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
+                        operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
+                        // Populate operation asset
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_customerasset"><attribute name="msdyn_account" /><attribute name="msdyn_name" /><attribute name="msdyn_functionallocation" /><attribute name="msdyn_customerassetid" /><order attribute="msdyn_name" descending="true" /><filter type="and"><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue[0].id + '" /></filter></entity></fetch>';
+                        var encodedFetchXml = encodeURIComponent(fetchXml);
+                        Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", "?fetchXml=" + encodedFetchXml).then(function success(result) {
+                            if (result.entities.length == 1) {
+                                var targetOperation = result.entities[0];
+                                var lookup = new Array();
+                                lookup[0] = new Object();
+                                lookup[0].id = targetOperation.msdyn_customerassetid;
+                                lookup[0].name = targetOperation.msdyn_name;
+                                lookup[0].entityType = 'msdyn_customerasset';
+                                form_1.getAttribute('ovs_asset').setValue(lookup);
+                            }
+                            else {
+                                // do not set a default if multiple records are found, error.
+                            }
+                        }, function (error) {
+                            showErrorMessageAlert(error);
+                        });
+                    }
+                }
+            }
+            catch (e) {
+                throw new Error(e.Message);
+            }
+        }
+        WorkOrder.siteOnChange = siteOnChange;
+        function functionalLocationOnChange(eContext) {
+            try {
+                var form_2 = eContext.getFormContext();
+                var operationTypeAttribute = form_2.getAttribute("ovs_assetcategory");
+                var stakeholderAttribute = form_2.getAttribute("msdyn_serviceaccount");
+                var functionalLocationAttribute = form_2.getAttribute("msdyn_functionallocation");
+                if (functionalLocationAttribute != null && functionalLocationAttribute != undefined) {
+                    // Clear out operation value if not already empty
+                    if (form_2.getAttribute("ovs_asset").getValue() != null)
+                        form_2.getAttribute("ovs_asset").setValue(null);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                     var operationTypeAttributeValue = operationTypeAttribute.getValue();
                     var stakeholderAttributeValue = stakeholderAttribute.getValue();
@@ -404,7 +445,7 @@ var ROM;
                                 lookup[0].id = targetOperation.msdyn_customerassetid;
                                 lookup[0].name = targetOperation.msdyn_name;
                                 lookup[0].entityType = 'msdyn_customerasset';
-                                form_1.getAttribute('ovs_asset').setValue(lookup);
+                                form_2.getAttribute('ovs_asset').setValue(lookup);
                             }
                             else {
                                 // do not set a default if multiple records are found, error.
@@ -481,12 +522,12 @@ var ROM;
         WorkOrder.stateCodeOnChange = stateCodeOnChange;
         function updateCaseView(eContext) {
             try {
-                var form_2 = eContext.getFormContext();
-                var caseAttribute = form_2.getAttribute("msdyn_servicerequest");
-                var regionAttribute = form_2.getAttribute("ts_region");
-                var countryAttribute = form_2.getAttribute("ts_country");
-                var stakeholderAttribute = form_2.getAttribute("msdyn_serviceaccount");
-                var siteAttribute = form_2.getAttribute("ts_site");
+                var form_3 = eContext.getFormContext();
+                var caseAttribute = form_3.getAttribute("msdyn_servicerequest");
+                var regionAttribute = form_3.getAttribute("ts_region");
+                var countryAttribute = form_3.getAttribute("ts_country");
+                var stakeholderAttribute = form_3.getAttribute("msdyn_serviceaccount");
+                var siteAttribute = form_3.getAttribute("ts_site");
                 var caseAttributeValue = caseAttribute.getValue();
                 var regionAttributeValue_1 = regionAttribute.getValue();
                 var countryAttributeValue_1 = countryAttribute.getValue();
@@ -503,7 +544,7 @@ var ROM;
                                 (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != result._ts_country_value.toUpperCase())) ||
                                 (stakeholderCondition != "" && (result != null && stakeholderAttributeValue_1 != null && stakeholderAttributeValue_1[0].id.replace(/({|})/g, '') != result._ts_stakeholder_value.toUpperCase())) ||
                                 (siteCondition != "" && (result != null && siteAttributeValue_1 != null && siteAttributeValue_1[0].id.replace(/({|})/g, '') != result._msdyn_functionallocation_value.toUpperCase()))) {
-                                form_2.getAttribute("msdyn_servicerequest").setValue(null);
+                                form_3.getAttribute("msdyn_servicerequest").setValue(null);
                             }
                         }, function (error) {
                             showErrorMessageAlert(error);
@@ -516,7 +557,7 @@ var ROM;
                     var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredCases");
                     var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="incident"> <attribute name="ticketnumber" /> <attribute name="incidentid" /> <order attribute="ticketnumber" descending="false" /> <filter type="and">' + regionCondition + countryCondition + stakeholderCondition + siteCondition + ' </filter> </entity> </fetch>';
                     var layoutXml = '<grid name="resultset" object="10010" jump="title" select="1" icon="1" preview="1"><row name="result" id="incidentid"><cell name="title" width="200" /></row></grid>';
-                    form_2.getControl("msdyn_servicerequest").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    form_3.getControl("msdyn_servicerequest").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 }
             }
             catch (e) {
