@@ -339,6 +339,7 @@ function exportWorkOrder(primaryControl) {
                     );
                     findingPromises.push(findingPromise);
                 });
+                //Wait for all the retrievals of the findings in all the retrievals of the service tasks to finish, then print.
                 Promise.all(findingPromises).then(() => {
                     exportWindow.print();
                     exportWindow.close();
