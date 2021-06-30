@@ -34,6 +34,8 @@ interface msdyn_FunctionalLocation_Relationships {
   msdyn_msdyn_functionallocation_account?: Account_Result[] | null;
   msdyn_msdyn_functionallocation_incident_FunctionalLocation?: Incident_Result[] | null;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation?: msdyn_workorder_Result[] | null;
+  ts_msdyn_functionallocation_ts_workordercrea?: ts_workordercreationwizard_Result[] | null;
+  ts_msdyn_functionallocation_ts_workordercw?: ts_workordercreationwizard_Result[] | null;
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca?: msdyn_workorder_Result[] | null;
 }
 interface msdyn_FunctionalLocation extends msdyn_FunctionalLocation_Base, msdyn_FunctionalLocation_Relationships {
@@ -141,6 +143,8 @@ interface msdyn_FunctionalLocation_Expand {
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: msdyn_workorder_Result[] }>;
   ownerid: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_msdyn_functionallocation_ts_workordercrea: WebExpand<msdyn_FunctionalLocation_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_msdyn_functionallocation_ts_workordercrea: ts_workordercreationwizard_Result[] }>;
+  ts_msdyn_functionallocation_ts_workordercw: WebExpand<msdyn_FunctionalLocation_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_msdyn_functionallocation_ts_workordercw: ts_workordercreationwizard_Result[] }>;
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_Site_msdyn_FunctionalLoca: msdyn_workorder_Result[] }>;
 }
 interface msdyn_FunctionalLocation_FormattedResult {
@@ -194,6 +198,8 @@ interface msdyn_FunctionalLocation_RelatedMany {
   msdyn_msdyn_functionallocation_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_msdyn_functionallocation_incident_FunctionalLocation: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_msdyn_functionallocation_ts_workordercrea: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
+  ts_msdyn_functionallocation_ts_workordercw: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
