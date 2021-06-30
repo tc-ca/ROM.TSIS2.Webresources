@@ -174,16 +174,20 @@ var ROM;
                             operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml);
                             return [4 /*yield*/, Promise.all([operationPromise1, operationPromise2]).then(function (operationRetrievalPromises) {
                                     //Add the work order operation field's id and name to the operations array
-                                    operations.push({
-                                        id: operationRetrievalPromises[0].ovs_asset.msdyn_customerassetid,
-                                        name: operationRetrievalPromises[0].msdyn_serviceaccount.name + " : " + operationRetrievalPromises[0].ovs_asset.msdyn_name
-                                    });
+                                    if (operationRetrievalPromises[0].ovs_asset != null && operationRetrievalPromises[0].msdyn_serviceaccount != null) {
+                                        operations.push({
+                                            id: operationRetrievalPromises[0].ovs_asset.msdyn_customerassetid,
+                                            name: operationRetrievalPromises[0].msdyn_serviceaccount.name + " : " + operationRetrievalPromises[0].ovs_asset.msdyn_name
+                                        });
+                                    }
                                     //Add the id and name of the work order's N:N operations to the operations array
                                     operationRetrievalPromises[1].entities.forEach(function (operation) {
-                                        operations.push({
-                                            id: operation.msdyn_customerassetid,
-                                            name: operation["account2.name"] + " : " + operation.msdyn_name
-                                        });
+                                        if (operation.ovs_asset != null && operation.msdyn_serviceaccount != null) {
+                                            operations.push({
+                                                id: operation.msdyn_customerassetid,
+                                                name: operation["account2.name"] + " : " + operation.msdyn_name
+                                            });
+                                        }
                                     });
                                 })];
                         case 1:
