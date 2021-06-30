@@ -164,7 +164,7 @@ declare namespace Form.incident.Main {
       get(name: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"ovs_finding">;
-      get(name: "Subgrid_3"): Xrm.SubGridControl<"msdyn_customerasset">;
+      get(name: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
       get(name: "casetypecode"): Xrm.OptionSetControl<incident_casetypecode>;
@@ -298,7 +298,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ovs_finding">;
-    getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"msdyn_customerasset">;
+    getControl(controlName: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
     getControl(controlName: "casetypecode"): Xrm.OptionSetControl<incident_casetypecode>;
