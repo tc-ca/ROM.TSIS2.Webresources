@@ -20,6 +20,8 @@ interface msdyn_FunctionalLocation_Base extends WebEntity {
   statuscode?: msdyn_functionallocation_statuscode | null;
   timezoneruleversionnumber?: number | null;
   ts_businessunit?: string | null;
+  ts_functionallocationnameenglish?: string | null;
+  ts_functionallocationnamefrench?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -32,6 +34,8 @@ interface msdyn_FunctionalLocation_Relationships {
   msdyn_msdyn_functionallocation_account?: Account_Result[] | null;
   msdyn_msdyn_functionallocation_incident_FunctionalLocation?: Incident_Result[] | null;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation?: msdyn_workorder_Result[] | null;
+  ts_msdyn_functionallocation_ts_workordercrea?: ts_workordercreationwizard_Result[] | null;
+  ts_msdyn_functionallocation_ts_workordercw?: ts_workordercreationwizard_Result[] | null;
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca?: msdyn_workorder_Result[] | null;
 }
 interface msdyn_FunctionalLocation extends msdyn_FunctionalLocation_Base, msdyn_FunctionalLocation_Relationships {
@@ -78,6 +82,8 @@ interface msdyn_FunctionalLocation_Select {
   timezoneruleversionnumber: WebAttribute<msdyn_FunctionalLocation_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_businessunit: WebAttribute<msdyn_FunctionalLocation_Select, { ts_businessunit: string | null }, {  }>;
   ts_country_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_functionallocationnameenglish: WebAttribute<msdyn_FunctionalLocation_Select, { ts_functionallocationnameenglish: string | null }, {  }>;
+  ts_functionallocationnamefrench: WebAttribute<msdyn_FunctionalLocation_Select, { ts_functionallocationnamefrench: string | null }, {  }>;
   ts_region_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_sitetype_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitetype_guid: string | null }, { ts_sitetype_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_FunctionalLocation_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -115,6 +121,8 @@ interface msdyn_FunctionalLocation_Filter {
   timezoneruleversionnumber: number;
   ts_businessunit: string;
   ts_country_guid: XQW.Guid;
+  ts_functionallocationnameenglish: string;
+  ts_functionallocationnamefrench: string;
   ts_region_guid: XQW.Guid;
   ts_sitetype_guid: XQW.Guid;
   utcconversiontimezonecode: number;
@@ -135,6 +143,8 @@ interface msdyn_FunctionalLocation_Expand {
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: msdyn_workorder_Result[] }>;
   ownerid: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_msdyn_functionallocation_ts_workordercrea: WebExpand<msdyn_FunctionalLocation_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_msdyn_functionallocation_ts_workordercrea: ts_workordercreationwizard_Result[] }>;
+  ts_msdyn_functionallocation_ts_workordercw: WebExpand<msdyn_FunctionalLocation_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_msdyn_functionallocation_ts_workordercw: ts_workordercreationwizard_Result[] }>;
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_Site_msdyn_FunctionalLoca: msdyn_workorder_Result[] }>;
 }
 interface msdyn_FunctionalLocation_FormattedResult {
@@ -188,6 +198,8 @@ interface msdyn_FunctionalLocation_RelatedMany {
   msdyn_msdyn_functionallocation_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_msdyn_functionallocation_incident_FunctionalLocation: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_msdyn_functionallocation_ts_workordercrea: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
+  ts_msdyn_functionallocation_ts_workordercw: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

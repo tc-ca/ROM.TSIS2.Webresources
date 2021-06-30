@@ -17,6 +17,7 @@ interface msdyn_customerassetcategory_Base extends WebEntity {
 interface msdyn_customerassetcategory_Relationships {
   msdyn_msdyn_customerassetcategory_msdyn_customerasset_CustomerAssetCategory?: msdyn_customerasset_Result[] | null;
   ovs_msdyn_workorder_AssetCategory_msdyn_custo?: msdyn_workorder_Result[] | null;
+  ts_msdyn_customerassetcategory_ts_workorderc?: ts_workordercreationwizard_Result[] | null;
 }
 interface msdyn_customerassetcategory extends msdyn_customerassetcategory_Base, msdyn_customerassetcategory_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -83,6 +84,7 @@ interface msdyn_customerassetcategory_Expand {
   ovs_msdyn_workorder_AssetCategory_msdyn_custo: WebExpand<msdyn_customerassetcategory_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_msdyn_workorder_AssetCategory_msdyn_custo: msdyn_workorder_Result[] }>;
   ownerid: WebExpand<msdyn_customerassetcategory_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<msdyn_customerassetcategory_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_msdyn_customerassetcategory_ts_workorderc: WebExpand<msdyn_customerassetcategory_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_msdyn_customerassetcategory_ts_workorderc: ts_workordercreationwizard_Result[] }>;
 }
 interface msdyn_customerassetcategory_FormattedResult {
   createdby_formatted?: string;
@@ -122,6 +124,7 @@ interface msdyn_customerassetcategory_RelatedOne {
 interface msdyn_customerassetcategory_RelatedMany {
   msdyn_msdyn_customerassetcategory_msdyn_customerasset_CustomerAssetCategory: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   ovs_msdyn_workorder_AssetCategory_msdyn_custo: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_msdyn_customerassetcategory_ts_workorderc: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_customerassetcategories: WebMappingRetrieve<msdyn_customerassetcategory_Select,msdyn_customerassetcategory_Expand,msdyn_customerassetcategory_Filter,msdyn_customerassetcategory_Fixed,msdyn_customerassetcategory_Result,msdyn_customerassetcategory_FormattedResult>;

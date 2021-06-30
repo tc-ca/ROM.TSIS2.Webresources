@@ -159,6 +159,7 @@
     <Content Include="Webresources\js\surveyRenderPrint.js" />
     <Content Include="Webresources\js\tsis2findingwidget.js" />
     <Content Include="Webresources\js\WorkOrder.js" />
+    <Content Include="Webresources\js\WorkOrderCreationWizard.js" />
     <Content Include="Webresources\js\WorkOrderQuickCreate.js" />
     <Content Include="Webresources\js\WorkOrderRibbon.js" />
     <Content Include="Webresources\js\WorkOrderServiceTask.js" />
@@ -248,6 +249,7 @@
     <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
     <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
+    <TypeScriptCompile Include="src\ts\WorkOrderCreationWizard.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderServiceTask.ts" />

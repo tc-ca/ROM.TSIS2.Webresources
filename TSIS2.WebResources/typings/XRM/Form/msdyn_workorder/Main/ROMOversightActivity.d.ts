@@ -8,6 +8,13 @@ declare namespace Form.msdyn_workorder.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface assets_tab extends Xrm.SectionCollectionBase {
+        get(name: "physical_assets_section"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface b8e326ee5c214a18ba55e3b56966c249 extends Xrm.SectionCollectionBase {
         get(name: "activity_details_section"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_5"): Xrm.PageSection;
@@ -37,6 +44,13 @@ declare namespace Form.msdyn_workorder.Main {
       }
       interface f1tab_record_log extends Xrm.SectionCollectionBase {
         get(name: "tab_6_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface operations_tab extends Xrm.SectionCollectionBase {
+        get(name: "tab_12_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -79,13 +93,6 @@ declare namespace Form.msdyn_workorder.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tags_tab extends Xrm.SectionCollectionBase {
-        get(name: "physical_assets_section"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "createdby"): Xrm.LookupAttribute<"systemuser">;
@@ -105,6 +112,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_datewindowend"): Xrm.DateAttribute;
       get(name: "msdyn_datewindowstart"): Xrm.DateAttribute;
       get(name: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
+      get(name: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "msdyn_instructions"): Xrm.Attribute<string>;
       get(name: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
       get(name: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -163,6 +171,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Inspectors"): Xrm.SubGridControl<"systemuser">;
       get(name: "Operations"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
@@ -212,6 +221,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_datewindowend"): Xrm.DateControl;
       get(name: "msdyn_datewindowstart"): Xrm.DateControl;
       get(name: "msdyn_estimatesubtotalamount"): Xrm.NumberControl;
+      get(name: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "msdyn_instructions"): Xrm.StringControl;
       get(name: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
       get(name: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
@@ -275,16 +285,17 @@ declare namespace Form.msdyn_workorder.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "DeviceInsightsTab"): Xrm.PageTab<Tabs.DeviceInsightsTab>;
+      get(name: "assets_tab"): Xrm.PageTab<Tabs.assets_tab>;
       get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}"): Xrm.PageTab<Tabs.b8e326ee5c214a18ba55e3b56966c249>;
       get(name: "f1tab_additionalsettings"): Xrm.PageTab<Tabs.f1tab_additionalsettings>;
       get(name: "f1tab_mainsettings"): Xrm.PageTab<Tabs.f1tab_mainsettings>;
       get(name: "f1tab_record_log"): Xrm.PageTab<Tabs.f1tab_record_log>;
+      get(name: "operations_tab"): Xrm.PageTab<Tabs.operations_tab>;
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
-      get(name: "tags_tab"): Xrm.PageTab<Tabs.tags_tab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -309,6 +320,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_datewindowend"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_datewindowstart"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "msdyn_instructions"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
     getAttribute(attributeName: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -362,6 +374,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_workorderenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_workorderstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Inspectors"): Xrm.SubGridControl<"systemuser">;
     getControl(controlName: "Operations"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
@@ -411,6 +424,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_datewindowend"): Xrm.DateControl;
     getControl(controlName: "msdyn_datewindowstart"): Xrm.DateControl;
     getControl(controlName: "msdyn_estimatesubtotalamount"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "msdyn_instructions"): Xrm.StringControl;
     getControl(controlName: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
     getControl(controlName: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
