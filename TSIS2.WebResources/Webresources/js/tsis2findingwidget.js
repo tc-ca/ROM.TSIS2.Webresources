@@ -59,11 +59,12 @@ var widget = {
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div> <div class="form-group"> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${inspectorCommentsLocalizedText}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"> </span> </div> </div>`,
+        `<div> <div class="form-group"> <div class="operationsContainer"> <span>Accountable Operations:</span><br> </div> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${inspectorCommentsLocalizedText}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         //el is our root element in htmlTemplate, is "div" in our case
         //get the text element
+        var operationsContainer = el.getElementsByClassName("operationsContainer")[0];
         var comments = el.getElementsByClassName("inspectorComments")[0];
         var characterCount = el.getElementsByClassName("character-count")[0];
 
@@ -72,6 +73,50 @@ var widget = {
             //Populate question property and form value
             question.inspectorComments = question.value.comments || "";
             comments.value = question.value.comments || "";
+            question.accountableOperations = question.value.operations || []
+        }
+
+        operationsContainer.style.paddingBottom = "20px";
+
+        //If there's just one operation, add it to the operations array, skip rendering checkboxes, hide the accountable operations label
+        if (operationList.length <= 1) {
+            operationsContainer.style.display = "none";
+            //Operations is required so there should always be one, but handle an empty array just in case
+            if (operationList.length == 1) {
+                question.accountableOperations = [operationList[0].id];
+            }
+        } else {
+            //Create a checkbox for each operation in the operationList array
+            operationList.forEach(function (operation) {
+                operationCheckbox = document.createElement("input");
+                operationCheckbox.type = "checkbox";
+                operationCheckbox.className = "operationCheckbox";
+                operationCheckbox.value = operation.id;
+
+                //Check all boxes that have been checked before
+                if (question.accountableOperations != undefined && question.accountableOperations.includes(operation.id)) {
+                    operationCheckbox.checked = true;
+                }
+                operationLabel = document.createElement("label");
+                operationLabel.innerText = operation.name;
+                lineBreak = document.createElement("br");
+
+                //When a checkbox is changed, update the accountOperations question's value object to match the current state of the checkboxes
+                operationCheckbox.onchange = function () {
+                    operationCheckboxArray = operationsContainer.getElementsByClassName("operationCheckbox");
+                    question.accountableOperations = [];
+                    Array.from(operationCheckboxArray).forEach(function (currentOperationCheckbox) {
+                        if (currentOperationCheckbox.checked) {
+                            question.accountableOperations.push(currentOperationCheckbox.value);
+                        }
+                    });
+                    question.value.operations = question.accountableOperations;
+                    console.log(question.value);
+                }
+                operationsContainer.appendChild(operationCheckbox);
+                operationsContainer.appendChild(operationLabel);
+                operationsContainer.appendChild(lineBreak);
+            });
         }
 
         function updateCharacterCount() {
@@ -87,6 +132,7 @@ var widget = {
                 provisionTextEn: question.locDescription.values.default,
                 provisionTextFr: question.locDescription.values.fr,
                 comments: comments.value,
+                operations: question.accountableOperations
             }
         }
 
@@ -138,6 +184,7 @@ function updateQuestionValue(question) {
         provisionTextEn: question.locDescription.values.default,
         provisionTextFr: question.locDescription.values.fr,
         comments: question.inspectorComments,
+        operations: question.accountableOperations
     }
 }
 
@@ -169,6 +216,7 @@ function updateQuestionProvisionData(question, provisionName) {
             provisionTextEn: question.locDescription.values.default,
             provisionTextFr: question.locDescription.values.fr,
             comments: question.inspectorComments,
+            operations: question.accountableOperations
         }
     }
 }
