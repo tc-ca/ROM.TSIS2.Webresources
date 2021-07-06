@@ -93,11 +93,65 @@ namespace ROM.WorkOrderServiceTask {
 
     function InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
         wrCtrl.setVisible(true);
-        wrCtrl.getContentWindow().then(function (win) {
+        wrCtrl.getContentWindow().then(async function (win) {
             const surveyLocale = getSurveyLocal();
             win.InitialContext(eContext);
-            win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
+            win.operationList = await retrieveWorkOrderOperations(eContext);
+            win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode)
         });
+    }
+
+    async function retrieveWorkOrderOperations(eContext) {
+        //Get parent work order's id
+        var workOrderAttribute = eContext.getFormContext().getAttribute('msdyn_workorder').getValue();
+        var workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
+        //Array to be populated with opertations associated with parent work order before initializing the survey
+        let operations : Object[] = [];
+
+        //Retrieve the operation (customer asset) in the ovs_asset field of the parent work order
+        let operationPromise1 = Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset,msdyn_serviceaccount&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid),msdyn_serviceaccount($select=name)");
+
+        var fetchXml = [
+            "<fetch top='50'>",
+            "  <entity name='msdyn_customerasset'>",
+            "    <attribute name='msdyn_customerassetid' />",
+            "    <attribute name='msdyn_name' />",
+            "    <attribute name='msdyn_account' />",
+            "    <link-entity name='ts_msdyn_customerasset_msdyn_workorder' from='msdyn_customerassetid' to='msdyn_customerassetid' intersect='true'>",
+            "      <filter>",
+            "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "    <link-entity name='account' from='accountid' to='msdyn_account' intersect='true'>",
+            "      <attribute name='name' />",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+        fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+        //Retrieve operations (customer assets) associated to the parent Work Order
+        let operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml);
+
+        await Promise.all([operationPromise1, operationPromise2]).then((operationRetrievalPromises) => {
+            //Add the work order operation field's id and name to the operations array
+            if (operationRetrievalPromises[0].ovs_asset != null && operationRetrievalPromises[0].msdyn_serviceaccount != null) {
+                operations.push({
+                    id: operationRetrievalPromises[0].ovs_asset.msdyn_customerassetid,
+                    name: operationRetrievalPromises[0].msdyn_serviceaccount.name + " : " + operationRetrievalPromises[0].ovs_asset.msdyn_name
+                });
+            }
+            //Add the id and name of the work order's N:N operations to the operations array
+            operationRetrievalPromises[1].entities.forEach(function (operation) {
+                if (operation.msdyn_customerassetid != null && operation["account2.name"] != null) {
+                    operations.push({
+                        id: operation.msdyn_customerassetid,
+                        name: operation["account2.name"] + " : " + operation.msdyn_name
+                    });
+                }
+            });
+        });
+
+        return operations;
     }
 }
 

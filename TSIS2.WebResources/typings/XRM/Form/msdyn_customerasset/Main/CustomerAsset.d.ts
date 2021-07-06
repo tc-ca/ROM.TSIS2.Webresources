@@ -22,6 +22,13 @@ declare namespace Form.msdyn_customerasset.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface RelatedOperationsTab extends Xrm.SectionCollectionBase {
+        get(name: "RelatedOperationsSection"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface assets_and_locations_tab extends Xrm.SectionCollectionBase {
         get(name: "tab_5_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -84,6 +91,7 @@ declare namespace Form.msdyn_customerasset.Main {
       get(name: "CurrentPropertyValuesSubgrid"): Xrm.SubGridControl<"msdyn_propertylog">;
       get(name: "KnowledgeArticlesSubGrid"): Xrm.SubGridControl<"knowledgearticle">;
       get(name: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
+      get(name: "RelatedOperationsSubGrid"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "WebResource_PowerBIConnectedDevices"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "msdyn_account"): Xrm.LookupControl<"account">;
@@ -113,6 +121,7 @@ declare namespace Form.msdyn_customerasset.Main {
       get(name: "AlertsTab"): Xrm.PageTab<Tabs.AlertsTab>;
       get(name: "CommandsTab"): Xrm.PageTab<Tabs.CommandsTab>;
       get(name: "DeviceInsightsTab"): Xrm.PageTab<Tabs.DeviceInsightsTab>;
+      get(name: "RelatedOperationsTab"): Xrm.PageTab<Tabs.RelatedOperationsTab>;
       get(name: "assets_and_locations_tab"): Xrm.PageTab<Tabs.assets_and_locations_tab>;
       get(name: "{b3f36061-1f16-4bbb-bd74-44fac42c9094}"): Xrm.PageTab<Tabs.b3f360611f164bbbbd7444fac42c9094>;
       get(name: "properties_tab"): Xrm.PageTab<Tabs.properties_tab>;
@@ -148,6 +157,7 @@ declare namespace Form.msdyn_customerasset.Main {
     getControl(controlName: "CurrentPropertyValuesSubgrid"): Xrm.SubGridControl<"msdyn_propertylog">;
     getControl(controlName: "KnowledgeArticlesSubGrid"): Xrm.SubGridControl<"knowledgearticle">;
     getControl(controlName: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
+    getControl(controlName: "RelatedOperationsSubGrid"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "WebResource_PowerBIConnectedDevices"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "msdyn_account"): Xrm.LookupControl<"account">;
