@@ -193,7 +193,7 @@ async function retrieveWorkOrderOperations(primaryControl) {
         }
         //Add the id and name of the work order's N:N operations to the operations array
         operationRetrievalPromises[1].entities.forEach(function (operation) {
-            if (operation.ovs_asset != null && operation.msdyn_serviceaccount != null) {
+            if (operation.msdyn_customerassetid != null && operation["account2.name"] != null) {
                 operations.push({
                     id: operation.msdyn_customerassetid,
                     name: operation["account2.name"] + " : " + operation.msdyn_name

@@ -10,6 +10,8 @@ var totalFindingsLocalized = "Total Findings";
 var overallInspectionCommentLocalized = "Overall Inspection Comments";
 var findingsLocalized = "Findings";
 var provisionReferenceLocalized = "Provision Reference";
+var stakeholderLocalized = "Stakeholder";
+var operationLocalized = "Operation";
 var inspectorCommentLocalized = "Inspector Comment";
 
 if (lang == 1036) {
@@ -23,6 +25,8 @@ if (lang == 1036) {
     overallInspectionCommentLocalized = "Commentaires généraux sur l'inspection";
     findingsLocalized = "Constatations"; 
     provisionReferenceLocalized = "Référence de la disposition";
+    stakeholderLocalized = "Intervenant";
+    operationLocalized = "Opération";
     inspectorCommentLocalized = "Commentaires de l'inspecteur";
 }
 
@@ -224,8 +228,11 @@ function exportWorkOrder(primaryControl) {
     //Grab the Work Order's name to use when retrieving all the Service Tasks associated to the work Order
     var workOrderName = primaryControl.getAttribute("msdyn_name").getValue();
 
+    //Start a list of service task containers. These will be filled below and then sorted when they're all full
+    var WOSTContainerList = [];
+
     //Retrieve all Service Tasks associated to the Work Order
-    Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_name,_msdyn_tasktype_value,ovs_questionnaireresponse,statuscode,ovs_questionnairedefinition&$filter=msdyn_workorder/msdyn_name eq '${workOrderName}'`).then(
+    Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_workorderservicetaskid,msdyn_name,_msdyn_tasktype_value,ovs_questionnaireresponse,statuscode,ovs_questionnairedefinition&$filter=msdyn_workorder/msdyn_name eq '${workOrderName}'`).then(
         async function success(result) {
             if (result.entities.length > 0) {
 
@@ -234,8 +241,8 @@ function exportWorkOrder(primaryControl) {
                 WOSTDetailsHeader.innerText = WorkOrderServiceTaskDetailsLocalized;
                 exportWindowBody.appendChild(WOSTDetailsHeader);
 
-                //Sort Service Tasks based on end number
-                result.entities.sort(function (a, b) { return a.msdyn_name.split("-").pop() - b.msdyn_name.split("-").pop() });
+                var findingPromises = [];
+
                 //Render Details for every Service Task Retrieved
                 result.entities.forEach(function (entity) {
                     //Load needed values from the current entity
@@ -243,7 +250,6 @@ function exportWorkOrder(primaryControl) {
                     var WOSTTaskType = entity["_msdyn_tasktype_value@OData.Community.Display.V1.FormattedValue"];
                     var WOSTStatus = entity["statuscode@OData.Community.Display.V1.FormattedValue"];
                     var WOSTResponse = JSON.parse(entity.ovs_questionnaireresponse);
-                    var totalFindings = 0;
 
                     //Create Div to contain WOST Details, assigning class to prevent page breaking during printing
                     var WOSTDetailsDiv = exportWindow.document.createElement('div');
@@ -261,69 +267,90 @@ function exportWorkOrder(primaryControl) {
 
                     //Add Total Findings: 0, will be updated when findings are retrieved
                     var totalFindings = exportWindow.document.createElement('li');
-                    totalFindings.innerHTML = "<strong>" + totalFindingsLocalized + ":</strong> 0";
+                    var activeFindingsCount = 0;
 
-                    //Append Total Findings to Service Task Value List
-                    WOSTDetailsList.appendChild(totalFindings);
+                    //Create Container to hold everything related to this service task
+                    var WOSTContainer = exportWindow.document.createElement('div');
 
                     //Append Header and Service Task List to exportWindow's document body
                     WOSTDetailsDiv.appendChild(WOSTDetailsNameHeader);
                     WOSTDetailsDiv.appendChild(WOSTDetailsList);
-                    exportWindowBody.appendChild(WOSTDetailsDiv);
+                    WOSTContainer.appendChild(WOSTDetailsDiv);
 
                     //If no Questionnaire Response is in the current Service Task, nothing else needs to be done so return
                     if (WOSTResponse == null) return;
                     var responseKeys = Object.keys(WOSTResponse);
-                    var findings = [];
                     var inspectionCommentText = "";
 
-                    //Check every key in the survey questionnaire response. 
-                    //If a key starts with "finding-", add its value to findings array
                     //If it starts with "Overall Inspection Comment", set inspectionCommentText to its value
                     responseKeys.forEach(function (key) {
-                        if (key.startsWith("finding-")) {
-                            findings.push(WOSTResponse[key]);
-                        } else if (key.startsWith("Overall Inspection Comment")) {
+                        if (key.startsWith("Overall Inspection Comment")) {
                             inspectionCommentText = WOSTResponse[key];
                         }
                     });
-                    //If no findings were found, nothing else needs to be done so return
-                    if (findings.length == 0) return;
-                    //Update total findings count
-                    totalFindings.innerHTML = "<strong>" + totalFindingsLocalized + ":</strong> " + findings.length;
+
                     //Add the Overall Inspection Comment to the Service Task details list
                     WOSTDetailsList.innerHTML += "<strong>" + overallInspectionCommentLocalized + ":</strong> " + inspectionCommentText;
 
-                    //Create a table to display all findings
-                    var findingsTable = exportWindow.document.createElement('table');
-                    var findingsTableHeaderRow = exportWindow.document.createElement('tr');
-                    var findingsTableHeader = exportWindow.document.createElement('th');
-                    findingsTableHeader.innerText = findingsLocalized;
-                    findingsTableHeaderRow.appendChild(findingsTableHeader);
-                    findingsTable.appendChild(findingsTableHeaderRow);
+                    var WOSTId = entity.msdyn_workorderservicetaskid;
+                    var findingPromise = Xrm.WebApi.retrieveMultipleRecords("ovs_finding", `?$select=ovs_findingprovisionreference,ts_findingprovisiontexten,ts_findingprovisiontextfr,ovs_findingcomments,statecode,_ts_assetid_value,_ts_accountid_value&$filter=_ovs_workorderservicetaskid_value eq '${WOSTId}'`).then(
+                        async function success(result, index) {
+                            if (result.entities.length > 0) {
+                                //Create a table to display all findings
+                                var findingsTable = exportWindow.document.createElement('table');
+                                var findingsTableHeaderRow = exportWindow.document.createElement('tr');
+                                var findingsTableHeader = exportWindow.document.createElement('th');
+                                findingsTableHeader.innerText = findingsLocalized;
+                                findingsTableHeaderRow.appendChild(findingsTableHeader);
+                                findingsTable.appendChild(findingsTableHeaderRow);
+                                //For each finding, create a table row add the findings data to that row
+                                result.entities.forEach(function (finding) {
+                                    if (finding.statecode == 1) return;
+                                    activeFindingsCount += 1;
+                                    var findingsDataRow = exportWindow.document.createElement('tr');
+                                    var findingsData = exportWindow.document.createElement('td');
+                                    var provisionReference = finding.ovs_findingprovisionreference || "";
+                                    var provisiontText = finding.ts_findingprovisiontexten || "";
+                                    var accountableOperation = finding["_ts_assetid_value@OData.Community.Display.V1.FormattedValue"] || "";
+                                    var accountableStakeholder = finding["_ts_accountid_value@OData.Community.Display.V1.FormattedValue"] || "";
+                                    var findingComments = finding.ovs_findingcomments || "";
+                                    if (lang == 1036 && finding.ts_findingprovisiontextfr != undefined) provisiontText = finding.ts_findingprovisiontextfr;
+                                    findingsData.innerHTML += "<strong>" + provisionReferenceLocalized + ":</strong> " + provisionReference + "<br>";
+                                    findingsData.innerHTML += provisiontText + "<br>";
+                                    findingsData.innerHTML += "<strong>" + stakeholderLocalized + ":</strong> " + accountableOperation + "<br>";
+                                    findingsData.innerHTML += "<strong>" + operationLocalized + ":</strong> " + accountableStakeholder + "<br>";
+                                    findingsData.innerHTML += "<strong>" + inspectorCommentLocalized + ":</strong> " + findingComments + "<br>";
+                                    findingsDataRow.appendChild(findingsData);
+                                    findingsTable.appendChild(findingsDataRow);
+                                });
+                                WOSTContainer.appendChild(findingsTable);
+                            }
+                            //Update total findings count
+                            totalFindings.innerHTML = "<strong>" + totalFindingsLocalized + ":</strong> " + activeFindingsCount;
+                            //Append Total Findings to Service Task Value List
+                            WOSTDetailsList.appendChild(totalFindings);
 
-                    //For each finding, create a table row add the findings data to that row
-                    findings.forEach(function (finding) {
-                        var findingsDataRow = exportWindow.document.createElement('tr');
-                        var findingsData = exportWindow.document.createElement('td');
-                        var provisionReference = finding.provisionReference || "";
-                        var provisiontText = finding.provisionTextEn || "";
-                        if (lang == 1036 && finding.provisionTextFr != undefined) provisiontText = finding.provisionTextFr;
-
-                        findingsData.innerHTML += "<strong>" + provisionReferenceLocalized + ":</strong> " + provisionReference + "<br>";
-                        findingsData.innerHTML += provisiontText + "<br>";
-                        findingsData.innerHTML += "<strong>" + inspectorCommentLocalized + ":</strong> " + finding.comments + "<br>";
-                        findingsDataRow.appendChild(findingsData);
-                        findingsTable.appendChild(findingsDataRow);
-                    });
-                    //Add the table to the export window's document body
-                    exportWindowBody.appendChild(findingsTable);
-                    //Add a line to divide all service tasks
-                    exportWindowBody.innerHTML += '<hr>';
+                            WOSTContainerList.push({
+                                WOSTNumber: WOSTName.split('-').pop(),
+                                container: WOSTContainer
+                            });
+                        }
+                    );
+                    findingPromises.push(findingPromise);
                 });
-                exportWindow.print();
-                exportWindow.close();
+                //Wait for all the retrievals of the findings in all the retrievals of the service tasks to finish, then print.
+                Promise.all(findingPromises).then(() => {
+                    //Sort the WOST Containers in order of the service task numbers, then append to the exportWindow in sorted order
+                    WOSTContainerList.sort(function (a, b) { return a.WOSTNumber - b.WOSTNumber });
+                    WOSTContainerList.forEach((WOSTC) => {
+                        exportWindowBody.appendChild(WOSTC.container);
+                        exportWindowBody.innerHTML += '<hr>';
+                    });
+                    exportWindow.print();
+                    exportWindow.close();
+                });
             } else {
+                //No service tasks, so print
                 exportWindow.print();
                 exportWindow.close();
             }
@@ -332,6 +359,5 @@ function exportWorkOrder(primaryControl) {
             console.log(error.message);
             // handle error conditions
         }
-
     );
 }
