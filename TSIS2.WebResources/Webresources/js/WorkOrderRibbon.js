@@ -228,6 +228,9 @@ function exportWorkOrder(primaryControl) {
     //Grab the Work Order's name to use when retrieving all the Service Tasks associated to the work Order
     var workOrderName = primaryControl.getAttribute("msdyn_name").getValue();
 
+    //Start a list of service task containers. These will be filled below and then sorted when they're all full
+    var WOSTContainerList = [];
+
     //Retrieve all Service Tasks associated to the Work Order
     Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_workorderservicetaskid,msdyn_name,_msdyn_tasktype_value,ovs_questionnaireresponse,statuscode,ovs_questionnairedefinition&$filter=msdyn_workorder/msdyn_name eq '${workOrderName}'`).then(
         async function success(result) {
@@ -238,9 +241,6 @@ function exportWorkOrder(primaryControl) {
                 WOSTDetailsHeader.innerText = WorkOrderServiceTaskDetailsLocalized;
                 exportWindowBody.appendChild(WOSTDetailsHeader);
 
-                //Sort Service Tasks based on end number
-                result.entities.sort(function (a, b) { return a.msdyn_name.split("-").pop() - b.msdyn_name.split("-").pop() });
-
                 var findingPromises = [];
 
                 //Render Details for every Service Task Retrieved
@@ -250,7 +250,6 @@ function exportWorkOrder(primaryControl) {
                     var WOSTTaskType = entity["_msdyn_tasktype_value@OData.Community.Display.V1.FormattedValue"];
                     var WOSTStatus = entity["statuscode@OData.Community.Display.V1.FormattedValue"];
                     var WOSTResponse = JSON.parse(entity.ovs_questionnaireresponse);
-                    var totalFindings = 0;
 
                     //Create Div to contain WOST Details, assigning class to prevent page breaking during printing
                     var WOSTDetailsDiv = exportWindow.document.createElement('div');
@@ -324,23 +323,29 @@ function exportWorkOrder(primaryControl) {
                                     findingsDataRow.appendChild(findingsData);
                                     findingsTable.appendChild(findingsDataRow);
                                 });
-                                //Update total findings count
-                                totalFindings.innerHTML = "<strong>" + totalFindingsLocalized + ":</strong> " + activeFindingsCount;
-                                //Append Total Findings to Service Task Value List
-                                WOSTDetailsList.appendChild(totalFindings);
                                 WOSTContainer.appendChild(findingsTable);
-
-                                exportWindowBody.appendChild(WOSTContainer);
-                                
-                                //Add a line to divide all service tasks
-                                exportWindowBody.innerHTML += '<hr>';
                             }
+                            //Update total findings count
+                            totalFindings.innerHTML = "<strong>" + totalFindingsLocalized + ":</strong> " + activeFindingsCount;
+                            //Append Total Findings to Service Task Value List
+                            WOSTDetailsList.appendChild(totalFindings);
+
+                            WOSTContainerList.push({
+                                WOSTNumber: WOSTName.split('-').pop(),
+                                container: WOSTContainer
+                            });
                         }
                     );
                     findingPromises.push(findingPromise);
                 });
                 //Wait for all the retrievals of the findings in all the retrievals of the service tasks to finish, then print.
                 Promise.all(findingPromises).then(() => {
+                    //Sort the WOST Containers in order of the service task numbers, then append to the exportWindow in sorted order
+                    WOSTContainerList.sort(function (a, b) { return a.WOSTNumber - b.WOSTNumber });
+                    WOSTContainerList.forEach((WOSTC) => {
+                        exportWindowBody.appendChild(WOSTC.container);
+                        exportWindowBody.innerHTML += '<hr>';
+                    });
                     exportWindow.print();
                     exportWindow.close();
                 });
