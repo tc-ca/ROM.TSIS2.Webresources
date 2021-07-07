@@ -278,7 +278,7 @@ function setCaseLookupControl(formContext, selectedControl, entitySetName, recor
 
 function removeAsset(selectedEntityTypeName, selectedControl, FirstSelectedItemId){
     //removal of the current operation from the related operations both ways (many to many)
-    if(selectedControl.getParentForm().data.entity.getEntityName() == "msdyn_customerassets"){
+    if(selectedControl.getParentForm().data.entity.getEntityName() == "msdyn_customerasset"){
         var req = new XMLHttpRequest();
         selectedControl.getGrid().getSelectedRows().forEach(row => 
             {
