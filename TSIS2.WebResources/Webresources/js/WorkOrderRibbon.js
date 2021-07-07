@@ -278,7 +278,19 @@ function exportWorkOrder(primaryControl) {
                     WOSTContainer.appendChild(WOSTDetailsDiv);
 
                     //If no Questionnaire Response is in the current Service Task, nothing else needs to be done so return
-                    if (WOSTResponse == null) return;
+                    if (WOSTResponse == null) {
+                        //Set a blank overall inspection comment
+                        WOSTDetailsList.innerHTML += "<strong>" + overallInspectionCommentLocalized + ":</strong> ";
+                        //Show 0 Total Findings
+                        totalFindings.innerHTML = "<strong>" + totalFindingsLocalized + ":</strong> 0";
+                        //Append Total Findings to Service Task Value List
+                        WOSTDetailsList.appendChild(totalFindings);
+                        WOSTContainerList.push({
+                            WOSTNumber: WOSTName.split('-').pop(),
+                            container: WOSTContainer
+                        });
+                        return;
+                    } 
                     var responseKeys = Object.keys(WOSTResponse);
                     var inspectionCommentText = "";
 
