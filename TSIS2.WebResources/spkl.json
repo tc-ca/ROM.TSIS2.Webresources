@@ -85,6 +85,11 @@
           "description": "ROM TSIS 2.0 Customer Asset Scripts"
         },
         {
+          "uniquename": "ts_/js/CustomerAssetQuickCreate.js",
+          "file": "js\\CustomerAssetQuickCreate.js",
+          "description": "ROM TSIS 2.0 Customer Asset Quick Create Scripts"
+        },
+        {
           "uniquename": "ts_/js/CustomerAssetRibbon.js",
           "file": "js\\CustomerAssetRibbon.js",
           "description": "ROM TSIS 2.0 Customer Asset Ribbon Scripts"
