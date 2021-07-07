@@ -20,6 +20,9 @@ else{
     accountableOperationsLocalized = "Accountable Operations";
 }
 
+//operationList is set in WOST onLoad. If it doesn't exist, set it to an empty list to avoid null reference exception.
+var operationList = operationList || [];
+
 var widget = {
     //the widget name. It should be unique and written in lowcase.
     name: "finding",
@@ -79,7 +82,7 @@ var widget = {
         }
 
         operationsContainer.style.paddingBottom = "20px";
-
+        
         //If there's just one operation, add it to the operations array, skip rendering checkboxes, hide the accountable operations label
         if (operationList.length <= 1) {
             operationsContainer.style.display = "none";
