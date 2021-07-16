@@ -149,10 +149,10 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_worklocation"): Xrm.OptionSetAttribute<msdyn_worklocation>;
       get(name: "msdyn_workordersummary"): Xrm.Attribute<string>;
       get(name: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
-      get(name: "ovs_asset"): Xrm.LookupAttribute<"msdyn_customerasset">;
       get(name: "ovs_currentfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
+      get(name: "ovs_operationid"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
@@ -261,10 +261,10 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_workordersummary"): Xrm.StringControl;
       get(name: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
       get(name: "notescontrol"): Xrm.BaseControl;
-      get(name: "ovs_asset"): Xrm.LookupControl<"msdyn_customerasset">;
       get(name: "ovs_currentfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
+      get(name: "ovs_operationid"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
@@ -357,10 +357,10 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_worklocation"): Xrm.OptionSetAttribute<msdyn_worklocation>;
     getAttribute(attributeName: "msdyn_workordersummary"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
-    getAttribute(attributeName: "ovs_asset"): Xrm.LookupAttribute<"msdyn_customerasset">;
     getAttribute(attributeName: "ovs_currentfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
+    getAttribute(attributeName: "ovs_operationid"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
     getAttribute(attributeName: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
@@ -464,10 +464,10 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_workordersummary"): Xrm.StringControl;
     getControl(controlName: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
-    getControl(controlName: "ovs_asset"): Xrm.LookupControl<"msdyn_customerasset">;
     getControl(controlName: "ovs_currentfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
+    getControl(controlName: "ovs_operationid"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
