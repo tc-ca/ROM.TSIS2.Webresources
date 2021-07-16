@@ -14,8 +14,7 @@ namespace ROM.WorkOrder {
         form.getAttribute("ts_region").setRequiredLevel("required");
         form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
         form.getAttribute("ts_site").setRequiredLevel("required");
-        form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
-
+        
         //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
         if (state == 1) {
             setWorkOrderServiceTasksView(form, false);
@@ -45,6 +44,7 @@ namespace ROM.WorkOrder {
                 form.getControl("ovs_operationtypeid").setDisabled(true);
                 form.getControl("ts_site").setDisabled(true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                form.getControl("msdyn_functionallocation").setDisabled(true);
                 break;
 
             default:
