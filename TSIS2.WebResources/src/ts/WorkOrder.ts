@@ -44,6 +44,7 @@ namespace ROM.WorkOrder {
                 form.getControl("ovs_operationtypeid").setDisabled(true);
                 form.getControl("ts_site").setDisabled(true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                form.getControl("msdyn_functionallocation").setDisabled(true);
                 break;
 
             default:
