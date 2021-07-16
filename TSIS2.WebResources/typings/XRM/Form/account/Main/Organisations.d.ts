@@ -30,13 +30,6 @@ declare namespace Form.account.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_4 extends Xrm.SectionCollectionBase {
-        get(name: "tab_4_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "address1_city"): Xrm.Attribute<string> | null;
@@ -110,8 +103,6 @@ declare namespace Form.account.Main {
       get(name: "parentaccountid"): Xrm.LookupControl<"account">;
       get(name: "preferredcontactmethodcode"): Xrm.OptionSetControl<account_preferredcontactmethodcode>;
       get(name: "primarycontactid"): Xrm.LookupControl<"contact">;
-      get(name: "regulated_entities_subgrid"): Xrm.SubGridControl<"ovs_operation">;
-      get(name: "sites_subgrid"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "telephone1"): Xrm.StringControl;
       get(name: "territoryid"): Xrm.LookupControl<"territory">;
       get(name: "websiteurl"): Xrm.StringControl;
@@ -124,7 +115,6 @@ declare namespace Form.account.Main {
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: "documents_sharepoint"): Xrm.PageTab<Tabs.documents_sharepoint>;
-      get(name: "tab_4"): Xrm.PageTab<Tabs.tab_4>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -198,8 +188,6 @@ declare namespace Form.account.Main {
     getControl(controlName: "parentaccountid"): Xrm.LookupControl<"account">;
     getControl(controlName: "preferredcontactmethodcode"): Xrm.OptionSetControl<account_preferredcontactmethodcode>;
     getControl(controlName: "primarycontactid"): Xrm.LookupControl<"contact">;
-    getControl(controlName: "regulated_entities_subgrid"): Xrm.SubGridControl<"ovs_operation">;
-    getControl(controlName: "sites_subgrid"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "telephone1"): Xrm.StringControl;
     getControl(controlName: "territoryid"): Xrm.LookupControl<"territory">;
     getControl(controlName: "websiteurl"): Xrm.StringControl;
