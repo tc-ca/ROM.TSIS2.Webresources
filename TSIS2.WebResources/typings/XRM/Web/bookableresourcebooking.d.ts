@@ -25,6 +25,7 @@ interface BookableResourceBooking_Base extends WebEntity {
   msdyn_offlinetimestamp?: Date | null;
   msdyn_preventtimestampcreation?: boolean | null;
   msdyn_quickNoteAction?: msdyn_quicknote_type | null;
+  msdyn_requirementgroupset?: string | null;
   msdyn_signature?: string | null;
   msdyn_slottext?: string | null;
   msdyn_totalbillableduration?: number | null;
@@ -130,6 +131,7 @@ interface BookableResourceBooking_Select {
   msdyn_preventtimestampcreation: WebAttribute<BookableResourceBooking_Select, { msdyn_preventtimestampcreation: boolean | null }, {  }>;
   msdyn_quickNoteAction: WebAttribute<BookableResourceBooking_Select, { msdyn_quickNoteAction: msdyn_quicknote_type | null }, { msdyn_quickNoteAction_formatted?: string }>;
   msdyn_requirementgroupid_guid: WebAttribute<BookableResourceBooking_Select, { msdyn_requirementgroupid_guid: string | null }, { msdyn_requirementgroupid_formatted?: string }>;
+  msdyn_requirementgroupset: WebAttribute<BookableResourceBooking_Select, { msdyn_requirementgroupset: string | null }, {  }>;
   msdyn_resourcegroup_guid: WebAttribute<BookableResourceBooking_Select, { msdyn_resourcegroup_guid: string | null }, { msdyn_resourcegroup_formatted?: string }>;
   msdyn_resourcerequirement_guid: WebAttribute<BookableResourceBooking_Select, { msdyn_resourcerequirement_guid: string | null }, { msdyn_resourcerequirement_formatted?: string }>;
   msdyn_serviceappointment_guid: WebAttribute<BookableResourceBooking_Select, { msdyn_serviceappointment_guid: string | null }, { msdyn_serviceappointment_formatted?: string }>;
@@ -205,6 +207,7 @@ interface BookableResourceBooking_Filter {
   msdyn_preventtimestampcreation: boolean;
   msdyn_quickNoteAction: msdyn_quicknote_type;
   msdyn_requirementgroupid_guid: XQW.Guid;
+  msdyn_requirementgroupset: string;
   msdyn_resourcegroup_guid: XQW.Guid;
   msdyn_resourcerequirement_guid: XQW.Guid;
   msdyn_serviceappointment_guid: XQW.Guid;
