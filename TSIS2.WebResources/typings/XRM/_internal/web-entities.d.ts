@@ -331,6 +331,29 @@ interface ts_msdyn_customerasset_msdyn_workorder_Create extends ts_msdyn_custome
 }
 interface ts_msdyn_customerasset_msdyn_workorder_Update extends ts_msdyn_customerasset_msdyn_workorder {
 }
+interface ts_workordercreationwizard_Base extends WebEntity {
+}
+interface ts_workordercreationwizard_Fixed extends WebEntity_Fixed {
+  ts_workordercreationwizardid: string;
+}
+interface ts_workordercreationwizard extends ts_workordercreationwizard_Base, ts_workordercreationwizard_Relationships {
+}
+interface ts_workordercreationwizard_Relationships {
+}
+interface ts_workordercreationwizard_Result extends ts_workordercreationwizard_Base, ts_workordercreationwizard_Relationships {
+}
+interface ts_workordercreationwizard_FormattedResult {
+}
+interface ts_workordercreationwizard_Select {
+}
+interface ts_workordercreationwizard_Expand {
+}
+interface ts_workordercreationwizard_Filter {
+}
+interface ts_workordercreationwizard_Create extends ts_workordercreationwizard {
+}
+interface ts_workordercreationwizard_Update extends ts_workordercreationwizard {
+}
 interface BulkOperationLog_Base extends WebEntity {
 }
 interface BulkOperationLog_Fixed extends WebEntity_Fixed {
