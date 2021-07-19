@@ -13,7 +13,7 @@ var ROM;
             updateCaseView(eContext);
             //Set required fields
             form.getAttribute("ts_region").setRequiredLevel("required");
-            form.getAttribute("ovs_assetcategory").setRequiredLevel("required");
+            form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
             form.getAttribute("ts_site").setRequiredLevel("required");
             //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
             if (state == 1) {
@@ -36,14 +36,15 @@ var ROM;
                     form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
                     // Disable all operation related fields
                     form.getControl("ts_region").setDisabled(true);
-                    form.getControl("ovs_assetcategory").setDisabled(true);
+                    form.getControl("ovs_operationtypeid").setDisabled(true);
                     form.getControl("ts_site").setDisabled(true);
                     form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    form.getControl("msdyn_functionallocation").setDisabled(true);
                     break;
                 default:
                     // Enable all operation related fields
                     form.getControl("ts_region").setDisabled(false);
-                    form.getControl("ovs_assetcategory").setDisabled(false);
+                    form.getControl("ovs_operationtypeid").setDisabled(false);
                     form.getControl("msdyn_serviceaccount").setDisabled(false);
                     form.getControl("ts_site").setDisabled(false);
                     form.getControl("msdyn_primaryincidenttype").setDisabled(false);
@@ -101,15 +102,15 @@ var ROM;
                 var countryAttribute = form.getAttribute("ts_country");
                 if (workOrderTypeAttribute != null && workOrderTypeAttribute != undefined) {
                     // Clear out all dependent fields' value if they are not already disabled and not already empty
-                    if (!form.getControl("ovs_assetcategory").getDisabled() && form.getAttribute("ovs_assetcategory").getValue() != null) {
-                        form.getAttribute("ovs_assetcategory").setValue(null);
+                    if (!form.getControl("ovs_operationtypeid").getDisabled() && form.getAttribute("ovs_operationtypeid").getValue() != null) {
+                        form.getAttribute("ovs_operationtypeid").setValue(null);
                     }
                     if (!form.getControl("msdyn_serviceaccount").getDisabled() && form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                         form.getAttribute("msdyn_serviceaccount").setValue(null);
                     }
                     if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                         form.getAttribute("ts_site").setValue(null);
-                        form.getAttribute("ovs_asset").setValue(null);
+                        form.getAttribute("ovs_operationid").setValue(null);
                     }
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
@@ -117,8 +118,8 @@ var ROM;
                     // Disable all dependent fields
                     if (form.getControl("ts_country").getDisabled() == false)
                         form.getControl("ts_country").setDisabled(true);
-                    if (form.getControl("ovs_assetcategory").getDisabled() == false)
-                        form.getControl("ovs_assetcategory").setDisabled(true);
+                    if (form.getControl("ovs_operationtypeid").getDisabled() == false)
+                        form.getControl("ovs_operationtypeid").setDisabled(true);
                     if (form.getControl("msdyn_serviceaccount").getDisabled() == false)
                         form.getControl("msdyn_serviceaccount").setDisabled(true);
                     if (form.getControl("ts_site").getDisabled() == false)
@@ -162,15 +163,15 @@ var ROM;
                     if (!form.getControl("ts_country").getDisabled() && form.getAttribute("ts_country").getValue() != null) {
                         form.getAttribute("ts_country").setValue(null);
                     }
-                    if (!form.getControl("ovs_assetcategory").getDisabled() && form.getAttribute("ovs_assetcategory").getValue() != null) {
-                        form.getAttribute("ovs_assetcategory").setValue(null);
+                    if (!form.getControl("ovs_operationtypeid").getDisabled() && form.getAttribute("ovs_operationtypeid").getValue() != null) {
+                        form.getAttribute("ovs_operationtypeid").setValue(null);
                     }
                     if (!form.getControl("msdyn_serviceaccount").getDisabled() && form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                         form.getAttribute("msdyn_serviceaccount").setValue(null);
                     }
                     if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                         form.getAttribute("ts_site").setValue(null);
-                        form.getAttribute("ovs_asset").setValue(null);
+                        form.getAttribute("ovs_operationid").setValue(null);
                     }
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
@@ -179,8 +180,8 @@ var ROM;
                     form.getAttribute("ts_country").setRequiredLevel("none");
                     if (form.getControl("ts_country").getDisabled() == false)
                         form.getControl("ts_country").setVisible(false);
-                    if (form.getControl("ovs_assetcategory").getDisabled() == false)
-                        form.getControl("ovs_assetcategory").setDisabled(true);
+                    if (form.getControl("ovs_operationtypeid").getDisabled() == false)
+                        form.getControl("ovs_operationtypeid").setDisabled(true);
                     if (form.getControl("msdyn_serviceaccount").getDisabled() == false)
                         form.getControl("msdyn_serviceaccount").setDisabled(true);
                     if (form.getControl("ts_site").getDisabled() == false)
@@ -216,22 +217,22 @@ var ROM;
                 var countryAttribute = form.getAttribute("ts_country");
                 if (countryAttribute != null && countryAttribute != undefined) {
                     // Clear out all dependent fields' value if they are not already disabled and not already empty
-                    if (!form.getControl("ovs_assetcategory").getDisabled() && form.getAttribute("ovs_assetcategory").getValue() != null) {
-                        form.getAttribute("ovs_assetcategory").setValue(null);
+                    if (!form.getControl("ovs_operationtypeid").getDisabled() && form.getAttribute("ovs_operationtypeid").getValue() != null) {
+                        form.getAttribute("ovs_operationtypeid").setValue(null);
                     }
                     if (!form.getControl("msdyn_serviceaccount").getDisabled() && form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                         form.getAttribute("msdyn_serviceaccount").setValue(null);
                     }
                     if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                         form.getAttribute("ts_site").setValue(null);
-                        form.getAttribute("ovs_asset").setValue(null);
+                        form.getAttribute("ovs_operationid").setValue(null);
                     }
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                     }
                     // Disable all dependent fields
-                    if (form.getControl("ovs_assetcategory").getDisabled() == false)
-                        form.getControl("ovs_assetcategory").setDisabled(true);
+                    if (form.getControl("ovs_operationtypeid").getDisabled() == false)
+                        form.getControl("ovs_operationtypeid").setDisabled(true);
                     if (form.getControl("msdyn_serviceaccount").getDisabled() == false)
                         form.getControl("msdyn_serviceaccount").setDisabled(true);
                     if (form.getControl("ts_site").getDisabled() == false)
@@ -264,7 +265,7 @@ var ROM;
                 var form = eContext.getFormContext();
                 var workOrderTypeAttribute = form.getAttribute("msdyn_workordertype");
                 var regionAttribute = form.getAttribute("ts_region");
-                var operationTypeAttribute = form.getAttribute("ovs_assetcategory");
+                var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
                 var countryAttribute = form.getAttribute("ts_country");
                 if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
                     // Clear out all dependent fields' value if they are not already disabled and not already empty
@@ -273,7 +274,7 @@ var ROM;
                     }
                     if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                         form.getAttribute("ts_site").setValue(null);
-                        form.getAttribute("ovs_asset").setValue(null);
+                        form.getAttribute("ovs_operationid").setValue(null);
                     }
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
@@ -310,7 +311,7 @@ var ROM;
                         var viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F660}';
                         var entityName = "account";
                         var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredStakeholders");
-                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><filter type="and"><condition attribute="customertypecode" operator="eq" value="948010000" /><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="msdyn_customerasset" from="msdyn_account" to="accountid" link-type="inner" alias="af"><filter type="and"><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /></filter><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_functionallocation" link-type="inner" alias="ag"><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryCondition + '</filter></link-entity></link-entity></entity></fetch>';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" no-lock="false"><entity name="account"><attribute name="name"/><attribute name="accountid"/><order attribute="name" descending="false"/><link-entity name="ovs_operation" from="ts_stakeholder" to="accountid" link-type="inner" alias="af"><filter/><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" link-type="inner" alias="ag"><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '"/></filter></link-entity><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid"><filter><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/>' + countryCondition + '</filter></link-entity></link-entity></entity></fetch>';
                         var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
                         form.getControl("msdyn_serviceaccount").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                         //Custom view for Activity Type
@@ -332,14 +333,14 @@ var ROM;
             try {
                 var form = eContext.getFormContext();
                 var regionAttribute = form.getAttribute("ts_region");
-                var operationTypeAttribute = form.getAttribute("ovs_assetcategory");
+                var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
                 var stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
                 var countryAttribute = form.getAttribute("ts_country");
                 if (stakeholderAttribute != null && stakeholderAttribute != undefined) {
                     // Clear out all dependent fields' value if they are not already disabled and not already empty
                     if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                         form.getAttribute("ts_site").setValue(null);
-                        form.getAttribute("ovs_asset").setValue(null);
+                        form.getAttribute("ovs_operationid").setValue(null);
                     }
                     // Disable all dependent fields
                     if (form.getControl("ts_site").getDisabled() == false)
@@ -362,7 +363,7 @@ var ROM;
                         var viewId = '{6E57251F-F695-4076-9498-49AB892154B7}';
                         var entityName = "msdyn_functionallocation";
                         var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
-                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_functionallocation"><attribute name="msdyn_functionallocationid" /><attribute name="msdyn_name" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '" /></filter><link-entity name="msdyn_msdyn_functionallocation_account" from="msdyn_functionallocationid" to="msdyn_functionallocationid" visible="false" intersect="true"><link-entity name="account" from="accountid" to="accountid" alias="ai"><filter type="and"><condition attribute="accountid" operator="eq" value="' + stakeholderAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch > ';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/><link-entity name="ovs_operation" from="ts_site" to="msdyn_functionallocationid"><filter><condition attribute="ovs_operationtypeid" operator="eq" value=" ' + operationTypeAttributeValue[0].id + '"/></filter><filter><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></link-entity></entity></fetch>';
                         var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
                         form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     }
@@ -376,13 +377,13 @@ var ROM;
         function siteOnChange(eContext) {
             try {
                 var form_1 = eContext.getFormContext();
-                var operationTypeAttribute = form_1.getAttribute("ovs_assetcategory");
+                var operationTypeAttribute = form_1.getAttribute("ovs_operationtypeid");
                 var stakeholderAttribute = form_1.getAttribute("msdyn_serviceaccount");
                 var siteAttribute = form_1.getAttribute("ts_site");
                 if (siteAttribute != null && siteAttribute != undefined) {
                     // Clear out operation value if not already empty
-                    if (form_1.getAttribute("ovs_asset").getValue() != null)
-                        form_1.getAttribute("ovs_asset").setValue(null);
+                    if (form_1.getAttribute("ovs_operationid").getValue() != null)
+                        form_1.getAttribute("ovs_operationid").setValue(null);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                     var operationTypeAttributeValue = operationTypeAttribute.getValue();
                     var stakeholderAttributeValue = stakeholderAttribute.getValue();
@@ -391,17 +392,17 @@ var ROM;
                         stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
                         operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
                         // Populate operation asset
-                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_customerasset"><attribute name="msdyn_account" /><attribute name="msdyn_name" /><attribute name="msdyn_functionallocation" /><attribute name="msdyn_customerassetid" /><order attribute="msdyn_name" descending="true" /><filter type="and"><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue[0].id + '" /></filter></entity></fetch>';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
                         var encodedFetchXml = encodeURIComponent(fetchXml);
-                        Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", "?fetchXml=" + encodedFetchXml).then(function success(result) {
+                        Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXml).then(function success(result) {
                             if (result.entities.length == 1) {
                                 var targetOperation = result.entities[0];
                                 var lookup = new Array();
                                 lookup[0] = new Object();
-                                lookup[0].id = targetOperation.msdyn_customerassetid;
-                                lookup[0].name = targetOperation.msdyn_name;
-                                lookup[0].entityType = 'msdyn_customerasset';
-                                form_1.getAttribute('ovs_asset').setValue(lookup);
+                                lookup[0].id = targetOperation.ovs_operationid;
+                                lookup[0].name = targetOperation.ovs_name;
+                                lookup[0].entityType = 'ovs_operation';
+                                form_1.getAttribute('ovs_operationid').setValue(lookup);
                             }
                             else {
                                 // do not set a default if multiple records are found, error.
@@ -409,6 +410,13 @@ var ROM;
                         }, function (error) {
                             showErrorMessageAlert(error);
                         });
+                        form_1.getControl('msdyn_functionallocation').setDisabled(false);
+                        var viewId = '{1B59589F-F122-5428-4771-79BC925240C3}';
+                        var entityName = "msdyn_functionallocation";
+                        var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredCases");
+                        var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+                        var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                        form_1.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
                     }
                 }
             }
@@ -420,13 +428,13 @@ var ROM;
         function functionalLocationOnChange(eContext) {
             try {
                 var form_2 = eContext.getFormContext();
-                var operationTypeAttribute = form_2.getAttribute("ovs_assetcategory");
+                var operationTypeAttribute = form_2.getAttribute("ovs_operationtypeid");
                 var stakeholderAttribute = form_2.getAttribute("msdyn_serviceaccount");
                 var functionalLocationAttribute = form_2.getAttribute("msdyn_functionallocation");
                 if (functionalLocationAttribute != null && functionalLocationAttribute != undefined) {
                     // Clear out operation value if not already empty
-                    if (form_2.getAttribute("ovs_asset").getValue() != null)
-                        form_2.getAttribute("ovs_asset").setValue(null);
+                    if (form_2.getAttribute("ovs_operationid").getValue() != null)
+                        form_2.getAttribute("ovs_operationid").setValue(null);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                     var operationTypeAttributeValue = operationTypeAttribute.getValue();
                     var stakeholderAttributeValue = stakeholderAttribute.getValue();
@@ -435,17 +443,17 @@ var ROM;
                         stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
                         operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
                         // Populate operation asset
-                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_customerasset"><attribute name="msdyn_account" /><attribute name="msdyn_name" /><attribute name="msdyn_functionallocation" /><attribute name="msdyn_customerassetid" /><order attribute="msdyn_name" descending="true" /><filter type="and"><condition attribute="msdyn_customerassetcategory" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /><condition attribute="msdyn_functionallocation" operator="eq" value="' + functionalLocationAttributeValue[0].id + '" /></filter></entity></fetch>';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + functionalLocationAttributeValue[0].id + '"/></filter></entity></fetch>';
                         var encodedFetchXml = encodeURIComponent(fetchXml);
-                        Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", "?fetchXml=" + encodedFetchXml).then(function success(result) {
+                        Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXml).then(function success(result) {
                             if (result.entities.length == 1) {
                                 var targetOperation = result.entities[0];
                                 var lookup = new Array();
                                 lookup[0] = new Object();
-                                lookup[0].id = targetOperation.msdyn_customerassetid;
-                                lookup[0].name = targetOperation.msdyn_name;
-                                lookup[0].entityType = 'msdyn_customerasset';
-                                form_2.getAttribute('ovs_asset').setValue(lookup);
+                                lookup[0].id = targetOperation.ovs_operationid;
+                                lookup[0].name = targetOperation.ovs_name;
+                                lookup[0].entityType = 'ovs_operation';
+                                form_2.getAttribute('ovs_operationid').setValue(lookup);
                             }
                             else {
                                 // do not set a default if multiple records are found, error.
@@ -645,7 +653,7 @@ var ROM;
                         }
                         else {
                             //setOperationTypeFilteredView(form, territoryId, "", "");
-                            //form.getControl("ovs_assetcategory").setDisabled(true);
+                            //form.getControl("ovs_operationtypeid").setDisabled(true);
                         }
                         form.getControl("ts_region").setDisabled(false);
                     }, function (error) {
@@ -662,18 +670,18 @@ var ROM;
             var viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F662}';
             var entityName = "tc_country";
             var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredCountries");
-            var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"> <entity name="tc_country"> <attribute name="tc_countryid" /> <attribute name="tc_name" /> <order attribute="tc_name" descending="false" /> <filter type="and"> <condition attribute="statecode" operator="eq" value="0" /> </filter> <link-entity name="msdyn_functionallocation" from="ts_country" to="tc_countryid" link-type="inner" alias="aq"> <filter type="and"> <condition attribute="ts_region" operator="eq" value="{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}" /> </filter> <link-entity name="msdyn_customerasset" from="msdyn_functionallocation" to="msdyn_functionallocationid" link-type="inner" alias="ar"> <link-entity name="msdyn_customerassetcategory" from="msdyn_customerassetcategoryid" to="msdyn_customerassetcategory" link-type="inner" alias="as"> <filter type="and"> <condition attribute="ts_assetcategorytype" operator="eq" value="717750000" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
+            var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="tc_country"><attribute name="tc_countryid"/><attribute name="tc_name"/><order attribute="tc_name" descending="false"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><link-entity name="msdyn_functionallocation" from="ts_country" to="tc_countryid" link-type="inner" alias="aq"><filter type="and"><condition attribute="ts_region" operator="eq" value="{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}" uiname="International" uitype="territory"/></filter></link-entity></entity></fetch>';
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="tc_countryid"><cell name="tc_name" width="200" /></row></grid>';
             form.getControl("ts_country").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
         function setOperationTypeFilteredView(form, regionAttributeId, countryCondition, workOrderTypeAttributeId) {
-            form.getControl("ovs_assetcategory").setDisabled(false);
+            form.getControl("ovs_operationtypeid").setDisabled(false);
             var viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE99}';
-            var entityName = "msdyn_customerassetcategory";
+            var entityName = "ovs_operationtype";
             var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
-            var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"> <entity name="msdyn_customerassetcategory"> <attribute name="msdyn_name" /> <attribute name="msdyn_customerassetcategoryid" /> <order attribute="msdyn_name" descending="false" /> <filter type="and"> <condition attribute="ts_assetcategorytype" operator="eq" value="717750000" /> </filter> <link-entity name="msdyn_customerasset" from="msdyn_customerassetcategory" to="msdyn_customerassetcategoryid" link-type="inner" alias="ac"> <link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_functionallocation" link-type="inner" alias="ad"> <filter type="and"> <condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '" />' + countryCondition + '</filter> </link-entity> </link-entity> <link-entity name="msdyn_incidenttype" from="ts_operationtype" to="msdyn_customerassetcategoryid" link-type="inner" alias="ar"> <filter type="and"> <condition attribute="msdyn_defaultworkordertype" operator="eq" value="' + workOrderTypeAttributeId + '" /> </filter> </link-entity> </entity> </fetch>';
-            var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_customerassetcategoryid"><cell name="msdyn_name" width="200" /></row></grid>';
-            form.getControl("ovs_assetcategory").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+            var fetchXml = '<fetch distinct="true" page="1"><entity name="ovs_operationtype"><attribute name="statecode"/><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="createdon"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><order attribute="ovs_name" descending="false"/><link-entity name="ovs_operation" from="ovs_operationtypeid" to="ovs_operationtypeid" link-type="inner"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site"><filter><condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '"/>' + countryCondition + '</filter></link-entity></link-entity><link-entity name="msdyn_incidenttype" from="ts_operationtype" to="ovs_operationtypeid"><filter><condition attribute="msdyn_defaultworkordertype" operator="eq" value="' + workOrderTypeAttributeId + '" uiname="Inspection" uitype="msdyn_workordertype"/></filter></link-entity></entity></fetch>';
+            var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
+            form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
         function closeWorkOrderServiceTasks(formContext, workOrderServiceTaskData) {
             Xrm.WebApi.online.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {

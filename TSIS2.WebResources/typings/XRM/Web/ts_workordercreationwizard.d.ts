@@ -15,7 +15,6 @@ interface ts_workordercreationwizard_Relationships {
   ts_CaseId?: Incident_Result | null;
   ts_FunctionalLocationId?: msdyn_FunctionalLocation_Result | null;
   ts_OperationId?: msdyn_customerasset_Result | null;
-  ts_OperationTypeId?: msdyn_customerassetcategory_Result | null;
   ts_SiteId?: msdyn_FunctionalLocation_Result | null;
   ts_StakeholderId?: Account_Result | null;
   ts_ts_workordercreationwizard_msdyn_workorde?: msdyn_workorder_Result[] | null;
@@ -27,7 +26,7 @@ interface ts_workordercreationwizard extends ts_workordercreationwizard_Base, ts
   ts_CountryId_bind$tc_countries?: string | null;
   ts_FunctionalLocationId_bind$msdyn_functionallocations?: string | null;
   ts_OperationId_bind$msdyn_customerassets?: string | null;
-  ts_OperationTypeId_bind$msdyn_customerassetcategories?: string | null;
+  ts_OperationTypeId_bind$ovs_operationtypes?: string | null;
   ts_RegionId_bind$territories?: string | null;
   ts_SiteId_bind$msdyn_functionallocations?: string | null;
   ts_StakeholderId_bind$accounts?: string | null;
@@ -107,7 +106,6 @@ interface ts_workordercreationwizard_Expand {
   ts_CaseId: WebExpand<ts_workordercreationwizard_Expand, Incident_Select, Incident_Filter, { ts_CaseId: Incident_Result }>;
   ts_FunctionalLocationId: WebExpand<ts_workordercreationwizard_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_FunctionalLocationId: msdyn_FunctionalLocation_Result }>;
   ts_OperationId: WebExpand<ts_workordercreationwizard_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ts_OperationId: msdyn_customerasset_Result }>;
-  ts_OperationTypeId: WebExpand<ts_workordercreationwizard_Expand, msdyn_customerassetcategory_Select, msdyn_customerassetcategory_Filter, { ts_OperationTypeId: msdyn_customerassetcategory_Result }>;
   ts_SiteId: WebExpand<ts_workordercreationwizard_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_SiteId: msdyn_FunctionalLocation_Result }>;
   ts_StakeholderId: WebExpand<ts_workordercreationwizard_Expand, Account_Select, Account_Filter, { ts_StakeholderId: Account_Result }>;
   ts_ts_workordercreationwizard_msdyn_workorde: WebExpand<ts_workordercreationwizard_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_ts_workordercreationwizard_msdyn_workorde: msdyn_workorder_Result[] }>;
@@ -166,7 +164,6 @@ interface ts_workordercreationwizard_RelatedOne {
   ts_CaseId: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_FunctionalLocationId: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_OperationId: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
-  ts_OperationTypeId: WebMappingRetrieve<msdyn_customerassetcategory_Select,msdyn_customerassetcategory_Expand,msdyn_customerassetcategory_Filter,msdyn_customerassetcategory_Fixed,msdyn_customerassetcategory_Result,msdyn_customerassetcategory_FormattedResult>;
   ts_SiteId: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_StakeholderId: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
