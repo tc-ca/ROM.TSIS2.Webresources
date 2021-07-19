@@ -152,40 +152,40 @@ var ROM;
                             workOrderAttribute = eContext.getFormContext().getAttribute('msdyn_workorder').getValue();
                             workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
                             operations = [];
-                            operationPromise1 = Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_asset,msdyn_serviceaccount&$expand=ovs_asset($select=msdyn_name,msdyn_customerassetid),msdyn_serviceaccount($select=name)");
+                            operationPromise1 = Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_OperationId,msdyn_serviceaccount&$expand=ovs_OperationId($select=ovs_name,ovs_operationid),msdyn_serviceaccount($select=name)");
                             fetchXml = [
                                 "<fetch top='50'>",
-                                "  <entity name='msdyn_customerasset'>",
-                                "    <attribute name='msdyn_customerassetid' />",
-                                "    <attribute name='msdyn_name' />",
-                                "    <attribute name='msdyn_account' />",
-                                "    <link-entity name='ts_msdyn_customerasset_msdyn_workorder' from='msdyn_customerassetid' to='msdyn_customerassetid' intersect='true'>",
+                                "  <entity name='ovs_operation'>",
+                                "    <attribute name='ts_stakeholder' />",
+                                "    <attribute name='ovs_operationid' />",
+                                "    <attribute name='ovs_name' />",
+                                "    <link-entity name='msdyn_workorder' from='msdyn_workorderid' to='ts_relatedoperations'>",
                                 "      <filter>",
                                 "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
                                 "      </filter>",
                                 "    </link-entity>",
-                                "    <link-entity name='account' from='accountid' to='msdyn_account' intersect='true'>",
+                                "    <link-entity name='account' from='accountid' to='ts_stakeholder'>",
                                 "      <attribute name='name' />",
                                 "    </link-entity>",
                                 "  </entity>",
                                 "</fetch>",
                             ].join("");
                             fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
-                            operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("msdyn_customerasset", fetchXml);
+                            operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("ovs_operation", fetchXml);
                             return [4 /*yield*/, Promise.all([operationPromise1, operationPromise2]).then(function (operationRetrievalPromises) {
                                     //Add the work order operation field's id and name to the operations array
-                                    if (operationRetrievalPromises[0].ovs_asset != null && operationRetrievalPromises[0].msdyn_serviceaccount != null) {
+                                    if (operationRetrievalPromises[0].ovs_OperationId != null && operationRetrievalPromises[0].msdyn_serviceaccount != null) {
                                         operations.push({
-                                            id: operationRetrievalPromises[0].ovs_asset.msdyn_customerassetid,
-                                            name: operationRetrievalPromises[0].msdyn_serviceaccount.name + " : " + operationRetrievalPromises[0].ovs_asset.msdyn_name
+                                            id: operationRetrievalPromises[0].ovs_OperationId.ovs_operationid,
+                                            name: operationRetrievalPromises[0].msdyn_serviceaccount.name + " : " + operationRetrievalPromises[0].ovs_OperationId.ovs_name
                                         });
                                     }
                                     //Add the id and name of the work order's N:N operations to the operations array
                                     operationRetrievalPromises[1].entities.forEach(function (operation) {
-                                        if (operation.msdyn_customerassetid != null && operation["account2.name"] != null) {
+                                        if (operation.ovs_operationid != null && operation["account2.name"] != null) {
                                             operations.push({
-                                                id: operation.msdyn_customerassetid,
-                                                name: operation["account2.name"] + " : " + operation.msdyn_name
+                                                id: operation.ovs_operationid,
+                                                name: operation["account2.name"] + " : " + operation.ovs_name
                                             });
                                         }
                                     });
