@@ -110,7 +110,7 @@ var ROM;
                     }
                     if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                         form.getAttribute("ts_site").setValue(null);
-                        form.getAttribute("ovs_asset").setValue(null);
+                        form.getAttribute("ovs_operationid").setValue(null);
                     }
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
@@ -171,7 +171,7 @@ var ROM;
                     }
                     if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                         form.getAttribute("ts_site").setValue(null);
-                        form.getAttribute("ovs_asset").setValue(null);
+                        form.getAttribute("ovs_operationid").setValue(null);
                     }
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
@@ -225,7 +225,7 @@ var ROM;
                     }
                     if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                         form.getAttribute("ts_site").setValue(null);
-                        form.getAttribute("ovs_asset").setValue(null);
+                        form.getAttribute("ovs_operationid").setValue(null);
                     }
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
@@ -274,7 +274,7 @@ var ROM;
                     }
                     if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                         form.getAttribute("ts_site").setValue(null);
-                        form.getAttribute("ovs_asset").setValue(null);
+                        form.getAttribute("ovs_operationid").setValue(null);
                     }
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
@@ -340,7 +340,7 @@ var ROM;
                     // Clear out all dependent fields' value if they are not already disabled and not already empty
                     if (!form.getControl("ts_site").getDisabled() && form.getAttribute("ts_site").getValue() != null) {
                         form.getAttribute("ts_site").setValue(null);
-                        form.getAttribute("ovs_asset").setValue(null);
+                        form.getAttribute("ovs_operationid").setValue(null);
                     }
                     // Disable all dependent fields
                     if (form.getControl("ts_site").getDisabled() == false)
@@ -382,8 +382,8 @@ var ROM;
                 var siteAttribute = form_1.getAttribute("ts_site");
                 if (siteAttribute != null && siteAttribute != undefined) {
                     // Clear out operation value if not already empty
-                    if (form_1.getAttribute("ovs_asset").getValue() != null)
-                        form_1.getAttribute("ovs_asset").setValue(null);
+                    if (form_1.getAttribute("ovs_operationid").getValue() != null)
+                        form_1.getAttribute("ovs_operationid").setValue(null);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                     var operationTypeAttributeValue = operationTypeAttribute.getValue();
                     var stakeholderAttributeValue = stakeholderAttribute.getValue();
@@ -402,7 +402,7 @@ var ROM;
                                 lookup[0].id = targetOperation.ovs_operationid;
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
-                                form_1.getAttribute('ovs_asset').setValue(lookup);
+                                form_1.getAttribute('ovs_operationid').setValue(lookup);
                             }
                             else {
                                 // do not set a default if multiple records are found, error.
@@ -433,8 +433,8 @@ var ROM;
                 var functionalLocationAttribute = form_2.getAttribute("msdyn_functionallocation");
                 if (functionalLocationAttribute != null && functionalLocationAttribute != undefined) {
                     // Clear out operation value if not already empty
-                    if (form_2.getAttribute("ovs_asset").getValue() != null)
-                        form_2.getAttribute("ovs_asset").setValue(null);
+                    if (form_2.getAttribute("ovs_operationid").getValue() != null)
+                        form_2.getAttribute("ovs_operationid").setValue(null);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                     var operationTypeAttributeValue = operationTypeAttribute.getValue();
                     var stakeholderAttributeValue = stakeholderAttribute.getValue();
@@ -453,7 +453,7 @@ var ROM;
                                 lookup[0].id = targetOperation.ovs_operationid;
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
-                                form_2.getAttribute('ovs_asset').setValue(lookup);
+                                form_2.getAttribute('ovs_operationid').setValue(lookup);
                             }
                             else {
                                 // do not set a default if multiple records are found, error.
