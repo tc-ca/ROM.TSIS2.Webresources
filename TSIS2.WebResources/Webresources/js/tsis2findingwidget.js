@@ -51,12 +51,13 @@ var widget = {
         //we do not need to check acticatedBy parameter, since we will use our widget for customType only
         //We are creating a new class and derived it from text question type. It means that text model (properties and fuctions) will be available to us
         Survey.JsonObject.metaData.addClass("finding", [
-            { name: "provision", category: "general", visibleIndex: 0, type: "provisionAutoComplete" },
+            { name: "provision", category: "general", visibleIndex: 1, type: "provisionAutoComplete" },
             { name: "name", readOnly: true },
             { name: "description", type: "textarea" },
             { name: "reference" },
             { name: "nameID" },
             { name: "inspectorComments", default: "test" },
+            { name: "findingType", type: "dropdown", category: "general", visibleIndex: 0, default: "Undecided", choices: ["Undecided", "Observation", "Non-compliance"]},
         ], null, "text");
 
     },
@@ -64,11 +65,11 @@ var widget = {
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div> <div class="form-group"> <div class="operationsContainer"> <span><strong>${accountableOperationsLocalized}</strong>:</span><br> </div> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${inspectorCommentsLocalizedText}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
+        `<div> <div class="form-group"><div class="findingTypeContainer"><span><strong>${"Finding Type"}</strong>:</span><br></div> <div class="operationsContainer"> <span><strong>${accountableOperationsLocalized}</strong>:</span><br> </div> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${inspectorCommentsLocalizedText}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         //el is our root element in htmlTemplate, is "div" in our case
-        //get the text element
+        var typeContainer = el.getElementsByClassName("findingTypeContainer")[0];
         var operationsContainer = el.getElementsByClassName("operationsContainer")[0];
         var comments = el.getElementsByClassName("inspectorComments")[0];
         var characterCount = el.getElementsByClassName("character-count")[0];
@@ -78,7 +79,57 @@ var widget = {
             //Populate question property and form value
             question.inspectorComments = question.value.comments || "";
             comments.value = question.value.comments || "";
-            question.accountableOperations = question.value.operations || []
+            question.accountableOperations = question.value.operations || [];
+        } else {
+            question.value = {
+                provisionReference: question.reference,
+                provisionTextEn: question.locDescription.values.default,
+                provisionTextFr: question.locDescription.values.fr,
+                operations: question.accountableOperations,
+                findingType: question.findingType
+            };
+        }
+
+        var findingTypeDropdown = document.createElement("select");
+        findingTypeDropdown.style.webkitAppearance = "auto";
+        findingTypeDropdown.style.marginTop = "5px";
+        findingTypeDropdown.style.paddingLeft = "5px";
+
+        var undecidedOption = document.createElement("option");
+        undecidedOption.value = "Undecided";
+        undecidedOption.innerHTML = "Undecided";
+
+        var observationOption = document.createElement("option");
+        observationOption.value = "Observation";
+        observationOption.innerHTML = "Observation";
+
+        var noncomplianceOption = document.createElement("option");
+        noncomplianceOption.value = "Non-compliance";
+        noncomplianceOption.innerHTML = "Non-compliance";
+
+        findingTypeDropdown.appendChild(undecidedOption);
+        findingTypeDropdown.appendChild(observationOption);
+        findingTypeDropdown.appendChild(noncomplianceOption);
+        typeContainer.appendChild(findingTypeDropdown);
+        typeContainer.style.paddingBottom = "10px";
+        typeContainer.style.paddingTop = "10px";
+        typeContainer.style.width = "15%";
+
+        if (question.findingType != null) {
+            findingTypeDropdown.value = question.findingType;
+            question.value.findingType = question.findingType;
+            findingTypeDropdown.disabled = true;
+            findingTypeDropdown.style.webkitAppearance = "none";
+        }
+
+        if (question.value != null) {
+            if (question.value.findingType != null) {
+                findingTypeDropdown.value = question.value.findingType;
+            }
+        }
+
+        findingTypeDropdown.onchange = function () {
+            updateQuestionValue(question, findingTypeDropdown.value)
         }
 
         operationsContainer.style.paddingBottom = "20px";
@@ -115,8 +166,7 @@ var widget = {
                             question.accountableOperations.push(currentOperationCheckbox.value);
                         }
                     });
-                    question.value.operations = question.accountableOperations;
-                    console.log(question.value);
+                    updateQuestionValue(question, findingTypeDropdown.value);
                 }
                 operationsContainer.appendChild(operationCheckbox);
                 operationsContainer.appendChild(operationLabel);
@@ -132,13 +182,7 @@ var widget = {
 
         comments.onchange = function () {
             question.inspectorComments = comments.value;
-            question.value = {
-                provisionReference: question.reference,
-                provisionTextEn: question.locDescription.values.default,
-                provisionTextFr: question.locDescription.values.fr,
-                comments: comments.value,
-                operations: question.accountableOperations
-            }
+            updateQuestionValue(question, findingTypeDropdown.value);
         }
 
         //set the changed value into question value
@@ -165,7 +209,7 @@ var widget = {
         }
         question.name = `finding-${question.nameID}`;
         //set initial value
-        updateQuestionValue(question);
+        //updateQuestionValue(question);
         //set initial readOnly if needed
         onReadOnlyChangedCallback();
     },
@@ -183,13 +227,14 @@ var widget = {
 //Register our widget in singleton custom widget collection
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 
-function updateQuestionValue(question) {
+function updateQuestionValue(question, findingTypeValue) {
     question.value = {
         provisionReference: question.reference,
         provisionTextEn: question.locDescription.values.default,
         provisionTextFr: question.locDescription.values.fr,
         comments: question.inspectorComments,
-        operations: question.accountableOperations
+        operations: question.accountableOperations,
+        findingType: findingTypeValue
     }
 }
 
@@ -215,13 +260,4 @@ function updateQuestionProvisionData(question, provisionName) {
             // handle error conditions
         }
     );
-    if (question.value == null) {
-        question.value = {
-            provisionReference: question.reference,
-            provisionTextEn: question.locDescription.values.default,
-            provisionTextFr: question.locDescription.values.fr,
-            comments: question.inspectorComments,
-            operations: question.accountableOperations
-        }
-    }
 }
