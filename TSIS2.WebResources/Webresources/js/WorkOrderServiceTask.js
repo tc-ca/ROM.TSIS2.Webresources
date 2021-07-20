@@ -159,7 +159,7 @@ var ROM;
                                 "    <attribute name='ts_stakeholder' />",
                                 "    <attribute name='ovs_operationid' />",
                                 "    <attribute name='ovs_name' />",
-                                "    <link-entity name='msdyn_workorder' from='msdyn_workorderid' to='ts_relatedoperations'>",
+                                "    <link-entity name='ts_msdyn_workorder_ovs_operation' from='ovs_operationid' to='ovs_operationid' intersect='true'>",
                                 "      <filter>",
                                 "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
                                 "      </filter>",
