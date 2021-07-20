@@ -9,7 +9,7 @@ declare namespace Form.ts_workordercreationwizard.Main {
       get(name: "ts_functionallocationid"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_operationid"): Xrm.LookupAttribute<"msdyn_customerasset">;
-      get(name: "ts_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+      get(name: "ts_ovs_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_regionid"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_siteid"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_stakeholderid"): Xrm.LookupAttribute<"account">;
@@ -27,7 +27,7 @@ declare namespace Form.ts_workordercreationwizard.Main {
       get(name: "ts_functionallocationid"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_operationid"): Xrm.LookupControl<"msdyn_customerasset">;
-      get(name: "ts_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+      get(name: "ts_ovs_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_regionid"): Xrm.LookupControl<"territory">;
       get(name: "ts_siteid"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_stakeholderid"): Xrm.LookupControl<"account">;
@@ -51,7 +51,7 @@ declare namespace Form.ts_workordercreationwizard.Main {
     getAttribute(attributeName: "ts_functionallocationid"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_operationid"): Xrm.LookupAttribute<"msdyn_customerasset">;
-    getAttribute(attributeName: "ts_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+    getAttribute(attributeName: "ts_ovs_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_regionid"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_siteid"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholderid"): Xrm.LookupAttribute<"account">;
@@ -64,7 +64,7 @@ declare namespace Form.ts_workordercreationwizard.Main {
     getControl(controlName: "ts_functionallocationid"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_operationid"): Xrm.LookupControl<"msdyn_customerasset">;
-    getControl(controlName: "ts_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+    getControl(controlName: "ts_ovs_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_regionid"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_siteid"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_stakeholderid"): Xrm.LookupControl<"account">;

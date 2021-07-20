@@ -101,6 +101,29 @@ interface msdyn_customerasset_Create extends msdyn_customerasset {
 }
 interface msdyn_customerasset_Update extends msdyn_customerasset {
 }
+interface msdyn_customerassetcategory_Base extends WebEntity {
+}
+interface msdyn_customerassetcategory_Fixed extends WebEntity_Fixed {
+  msdyn_customerassetcategoryid: string;
+}
+interface msdyn_customerassetcategory extends msdyn_customerassetcategory_Base, msdyn_customerassetcategory_Relationships {
+}
+interface msdyn_customerassetcategory_Relationships {
+}
+interface msdyn_customerassetcategory_Result extends msdyn_customerassetcategory_Base, msdyn_customerassetcategory_Relationships {
+}
+interface msdyn_customerassetcategory_FormattedResult {
+}
+interface msdyn_customerassetcategory_Select {
+}
+interface msdyn_customerassetcategory_Expand {
+}
+interface msdyn_customerassetcategory_Filter {
+}
+interface msdyn_customerassetcategory_Create extends msdyn_customerassetcategory {
+}
+interface msdyn_customerassetcategory_Update extends msdyn_customerassetcategory {
+}
 interface msdyn_FunctionalLocation_Base extends WebEntity {
 }
 interface msdyn_FunctionalLocation_Fixed extends WebEntity_Fixed {
@@ -285,6 +308,29 @@ interface ovs_Questionnaire_Create extends ovs_Questionnaire {
 }
 interface ovs_Questionnaire_Update extends ovs_Questionnaire {
 }
+interface SystemUser_Base extends WebEntity {
+}
+interface SystemUser_Fixed extends WebEntity_Fixed {
+  systemuserid: string;
+}
+interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_Relationships {
+}
+interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_FormattedResult {
+}
+interface SystemUser_Select {
+}
+interface SystemUser_Expand {
+}
+interface SystemUser_Filter {
+}
+interface SystemUser_Create extends SystemUser {
+}
+interface SystemUser_Update extends SystemUser {
+}
 interface ts_msdyn_customerasset_msdyn_customerasset_Base extends WebEntity {
 }
 interface ts_msdyn_customerasset_msdyn_customerasset_Fixed extends WebEntity_Fixed {
@@ -400,6 +446,29 @@ interface Connection_Create extends Connection {
 }
 interface Connection_Update extends Connection {
 }
+interface Post_Base extends WebEntity {
+}
+interface Post_Fixed extends WebEntity_Fixed {
+  postid: string;
+}
+interface Post extends Post_Base, Post_Relationships {
+}
+interface Post_Relationships {
+}
+interface Post_Result extends Post_Base, Post_Relationships {
+}
+interface Post_FormattedResult {
+}
+interface Post_Select {
+}
+interface Post_Expand {
+}
+interface Post_Filter {
+}
+interface Post_Create extends Post {
+}
+interface Post_Update extends Post {
+}
 interface Contact_Base extends WebEntity {
 }
 interface Contact_Fixed extends WebEntity_Fixed {
@@ -446,52 +515,6 @@ interface ServiceAppointment_Create extends ServiceAppointment {
 }
 interface ServiceAppointment_Update extends ServiceAppointment {
 }
-interface ActivityParty_Base extends WebEntity {
-}
-interface ActivityParty_Fixed extends WebEntity_Fixed {
-  activitypartyid: string;
-}
-interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships {
-}
-interface ActivityParty_Relationships {
-}
-interface ActivityParty_Result extends ActivityParty_Base, ActivityParty_Relationships {
-}
-interface ActivityParty_FormattedResult {
-}
-interface ActivityParty_Select {
-}
-interface ActivityParty_Expand {
-}
-interface ActivityParty_Filter {
-}
-interface ActivityParty_Create extends ActivityParty {
-}
-interface ActivityParty_Update extends ActivityParty {
-}
-interface msdyn_customerassetcategory_Base extends WebEntity {
-}
-interface msdyn_customerassetcategory_Fixed extends WebEntity_Fixed {
-  msdyn_customerassetcategoryid: string;
-}
-interface msdyn_customerassetcategory extends msdyn_customerassetcategory_Base, msdyn_customerassetcategory_Relationships {
-}
-interface msdyn_customerassetcategory_Relationships {
-}
-interface msdyn_customerassetcategory_Result extends msdyn_customerassetcategory_Base, msdyn_customerassetcategory_Relationships {
-}
-interface msdyn_customerassetcategory_FormattedResult {
-}
-interface msdyn_customerassetcategory_Select {
-}
-interface msdyn_customerassetcategory_Expand {
-}
-interface msdyn_customerassetcategory_Filter {
-}
-interface msdyn_customerassetcategory_Create extends msdyn_customerassetcategory {
-}
-interface msdyn_customerassetcategory_Update extends msdyn_customerassetcategory {
-}
 interface PostFollow_Base extends WebEntity {
 }
 interface PostFollow_Fixed extends WebEntity_Fixed {
@@ -514,6 +537,29 @@ interface PostFollow_Filter {
 interface PostFollow_Create extends PostFollow {
 }
 interface PostFollow_Update extends PostFollow {
+}
+interface ActivityParty_Base extends WebEntity {
+}
+interface ActivityParty_Fixed extends WebEntity_Fixed {
+  activitypartyid: string;
+}
+interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships {
+}
+interface ActivityParty_Relationships {
+}
+interface ActivityParty_Result extends ActivityParty_Base, ActivityParty_Relationships {
+}
+interface ActivityParty_FormattedResult {
+}
+interface ActivityParty_Select {
+}
+interface ActivityParty_Expand {
+}
+interface ActivityParty_Filter {
+}
+interface ActivityParty_Create extends ActivityParty {
+}
+interface ActivityParty_Update extends ActivityParty {
 }
 interface IncidentResolution_Base extends WebEntity {
 }
@@ -652,27 +698,4 @@ interface BookingStatus_Filter {
 interface BookingStatus_Create extends BookingStatus {
 }
 interface BookingStatus_Update extends BookingStatus {
-}
-interface SystemUser_Base extends WebEntity {
-}
-interface SystemUser_Fixed extends WebEntity_Fixed {
-  systemuserid: string;
-}
-interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
-}
-interface SystemUser_Relationships {
-}
-interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
-}
-interface SystemUser_FormattedResult {
-}
-interface SystemUser_Select {
-}
-interface SystemUser_Expand {
-}
-interface SystemUser_Filter {
-}
-interface SystemUser_Create extends SystemUser {
-}
-interface SystemUser_Update extends SystemUser {
 }

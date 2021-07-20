@@ -172,8 +172,8 @@ declare namespace Form.msdyn_workorder.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Inspectors"): Xrm.SubGridControl<"systemuser">;
-      get(name: "Operations"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
+      get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
@@ -375,8 +375,8 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_workorderstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Inspectors"): Xrm.SubGridControl<"systemuser">;
-    getControl(controlName: "Operations"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
+    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;
