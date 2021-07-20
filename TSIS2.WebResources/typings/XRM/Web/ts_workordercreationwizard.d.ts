@@ -26,11 +26,11 @@ interface ts_workordercreationwizard extends ts_workordercreationwizard_Base, ts
   ts_CountryId_bind$tc_countries?: string | null;
   ts_FunctionalLocationId_bind$msdyn_functionallocations?: string | null;
   ts_OperationId_bind$msdyn_customerassets?: string | null;
-  ts_OperationTypeId_bind$ovs_operationtypes?: string | null;
   ts_RegionId_bind$territories?: string | null;
   ts_SiteId_bind$msdyn_functionallocations?: string | null;
   ts_StakeholderId_bind$accounts?: string | null;
   ts_WorkOrderTypeId_bind$msdyn_workordertypes?: string | null;
+  ts_ovs_operationtype_bind$ovs_operationtypes?: string | null;
 }
 interface ts_workordercreationwizard_Create extends ts_workordercreationwizard {
 }
@@ -57,7 +57,7 @@ interface ts_workordercreationwizard_Select {
   ts_functionallocationid_guid: WebAttribute<ts_workordercreationwizard_Select, { ts_functionallocationid_guid: string | null }, { ts_functionallocationid_formatted?: string }>;
   ts_name: WebAttribute<ts_workordercreationwizard_Select, { ts_name: string | null }, {  }>;
   ts_operationid_guid: WebAttribute<ts_workordercreationwizard_Select, { ts_operationid_guid: string | null }, { ts_operationid_formatted?: string }>;
-  ts_operationtypeid_guid: WebAttribute<ts_workordercreationwizard_Select, { ts_operationtypeid_guid: string | null }, { ts_operationtypeid_formatted?: string }>;
+  ts_ovs_operationtype_guid: WebAttribute<ts_workordercreationwizard_Select, { ts_ovs_operationtype_guid: string | null }, { ts_ovs_operationtype_formatted?: string }>;
   ts_regionid_guid: WebAttribute<ts_workordercreationwizard_Select, { ts_regionid_guid: string | null }, { ts_regionid_formatted?: string }>;
   ts_siteid_guid: WebAttribute<ts_workordercreationwizard_Select, { ts_siteid_guid: string | null }, { ts_siteid_formatted?: string }>;
   ts_stakeholderid_guid: WebAttribute<ts_workordercreationwizard_Select, { ts_stakeholderid_guid: string | null }, { ts_stakeholderid_formatted?: string }>;
@@ -87,7 +87,7 @@ interface ts_workordercreationwizard_Filter {
   ts_functionallocationid_guid: XQW.Guid;
   ts_name: string;
   ts_operationid_guid: XQW.Guid;
-  ts_operationtypeid_guid: XQW.Guid;
+  ts_ovs_operationtype_guid: XQW.Guid;
   ts_regionid_guid: XQW.Guid;
   ts_siteid_guid: XQW.Guid;
   ts_stakeholderid_guid: XQW.Guid;
@@ -128,7 +128,7 @@ interface ts_workordercreationwizard_FormattedResult {
   ts_countryid_formatted?: string;
   ts_functionallocationid_formatted?: string;
   ts_operationid_formatted?: string;
-  ts_operationtypeid_formatted?: string;
+  ts_ovs_operationtype_formatted?: string;
   ts_regionid_formatted?: string;
   ts_siteid_formatted?: string;
   ts_stakeholderid_formatted?: string;
@@ -148,7 +148,7 @@ interface ts_workordercreationwizard_Result extends ts_workordercreationwizard_B
   ts_countryid_guid: string | null;
   ts_functionallocationid_guid: string | null;
   ts_operationid_guid: string | null;
-  ts_operationtypeid_guid: string | null;
+  ts_ovs_operationtype_guid: string | null;
   ts_regionid_guid: string | null;
   ts_siteid_guid: string | null;
   ts_stakeholderid_guid: string | null;

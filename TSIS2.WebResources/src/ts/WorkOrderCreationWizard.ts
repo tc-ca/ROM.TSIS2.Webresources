@@ -10,7 +10,7 @@ namespace ROM.WorkOrderCreationWizard {
 
         //Set required fields
         form.getAttribute("ts_regionid").setRequiredLevel("required");
-        form.getAttribute("ts_operationtypeid").setRequiredLevel("required");
+        form.getAttribute("ts_ovs_operationtype").setRequiredLevel("required");
         form.getAttribute("ts_siteid").setRequiredLevel("required");
 
         switch (form.ui.getFormType()) {
@@ -21,14 +21,14 @@ namespace ROM.WorkOrderCreationWizard {
 
                 // Disable all operation related fields
                 form.getControl("ts_regionid").setDisabled(true);
-                form.getControl("ts_operationtypeid").setDisabled(true);
+                form.getControl("ts_ovs_operationtype").setDisabled(true);
                 form.getControl("ts_siteid").setDisabled(true);
                 break;
 
             default:
                 // Enable all operation related fields
                 //form.getControl("ts_regionid").setDisabled(false);
-                //form.getControl("ts_operationtypeid").setDisabled(false);
+                //form.getControl("ts_ovs_operationtype").setDisabled(false);
                 //form.getControl("ts_stakeholderid").setDisabled(false);
                 //form.getControl("ts_siteid").setDisabled(false);
 
@@ -72,8 +72,8 @@ namespace ROM.WorkOrderCreationWizard {
             if (workOrderTypeAttribute != null && workOrderTypeAttribute != undefined) {
 
                 // Clear out all dependent fields' value if they are not already disabled and not already empty
-                if (!form.getControl("ts_operationtypeid").getDisabled() && form.getAttribute("ts_operationtypeid").getValue() != null) {
-                    form.getAttribute("ts_operationtypeid").setValue(null);
+                if (!form.getControl("ts_ovs_operationtype").getDisabled() && form.getAttribute("ts_ovs_operationtype").getValue() != null) {
+                    form.getAttribute("ts_ovs_operationtype").setValue(null);
                 }
                 if (!form.getControl("ts_stakeholderid").getDisabled() && form.getAttribute("ts_stakeholderid").getValue() != null) {
                     form.getAttribute("ts_stakeholderid").setValue(null);
@@ -85,7 +85,7 @@ namespace ROM.WorkOrderCreationWizard {
 
                 // Disable all dependent fields
                 if (form.getControl("ts_countryid").getDisabled() == false) form.getControl("ts_countryid").setDisabled(true);
-                if (form.getControl("ts_operationtypeid").getDisabled() == false) form.getControl("ts_operationtypeid").setDisabled(true);
+                if (form.getControl("ts_ovs_operationtype").getDisabled() == false) form.getControl("ts_ovs_operationtype").setDisabled(true);
                 if (form.getControl("ts_stakeholderid").getDisabled() == false) form.getControl("ts_stakeholderid").setDisabled(true);
                 if (form.getControl("ts_siteid").getDisabled() == false) form.getControl("ts_siteid").setDisabled(true);
                 
@@ -130,8 +130,8 @@ namespace ROM.WorkOrderCreationWizard {
                 if (!form.getControl("ts_countryid").getDisabled() && form.getAttribute("ts_countryid").getValue() != null) {
                     form.getAttribute("ts_countryid").setValue(null);
                 }
-                if (!form.getControl("ts_operationtypeid").getDisabled() && form.getAttribute("ts_operationtypeid").getValue() != null) {
-                    form.getAttribute("ts_operationtypeid").setValue(null);
+                if (!form.getControl("ts_ovs_operationtype").getDisabled() && form.getAttribute("ts_ovs_operationtype").getValue() != null) {
+                    form.getAttribute("ts_ovs_operationtype").setValue(null);
                 }
                 if (!form.getControl("ts_stakeholderid").getDisabled() && form.getAttribute("ts_stakeholderid").getValue() != null) {
                     form.getAttribute("ts_stakeholderid").setValue(null);
@@ -144,7 +144,7 @@ namespace ROM.WorkOrderCreationWizard {
                 // Disable all dependent fields
                 form.getAttribute("ts_countryid").setRequiredLevel("none");
                 if (form.getControl("ts_countryid").getDisabled() == false) form.getControl("ts_countryid").setVisible(false);
-                if (form.getControl("ts_operationtypeid").getDisabled() == false) form.getControl("ts_operationtypeid").setDisabled(true);
+                if (form.getControl("ts_ovs_operationtype").getDisabled() == false) form.getControl("ts_ovs_operationtype").setDisabled(true);
                 if (form.getControl("ts_stakeholderid").getDisabled() == false) form.getControl("ts_stakeholderid").setDisabled(true);
                 if (form.getControl("ts_siteid").getDisabled() == false) form.getControl("ts_siteid").setDisabled(true);
 
@@ -180,8 +180,8 @@ namespace ROM.WorkOrderCreationWizard {
             if (countryAttribute != null && countryAttribute != undefined) {
 
                 // Clear out all dependent fields' value if they are not already disabled and not already empty
-                if (!form.getControl("ts_operationtypeid").getDisabled() && form.getAttribute("ts_operationtypeid").getValue() != null) {
-                    form.getAttribute("ts_operationtypeid").setValue(null);
+                if (!form.getControl("ts_ovs_operationtype").getDisabled() && form.getAttribute("ts_ovs_operationtype").getValue() != null) {
+                    form.getAttribute("ts_ovs_operationtype").setValue(null);
                 }
                 if (!form.getControl("ts_stakeholderid").getDisabled() && form.getAttribute("ts_stakeholderid").getValue() != null) {
                     form.getAttribute("ts_stakeholderid").setValue(null);
@@ -192,7 +192,7 @@ namespace ROM.WorkOrderCreationWizard {
                 }
 
                 // Disable all dependent fields
-                if (form.getControl("ts_operationtypeid").getDisabled() == false) form.getControl("ts_operationtypeid").setDisabled(true);
+                if (form.getControl("ts_ovs_operationtype").getDisabled() == false) form.getControl("ts_ovs_operationtype").setDisabled(true);
                 if (form.getControl("ts_stakeholderid").getDisabled() == false) form.getControl("ts_stakeholderid").setDisabled(true);
                 if (form.getControl("ts_siteid").getDisabled() == false) form.getControl("ts_siteid").setDisabled(true);
 
@@ -217,7 +217,7 @@ namespace ROM.WorkOrderCreationWizard {
             const form = <Form.ts_workordercreationwizard.Main.Information>eContext.getFormContext();
             const workOrderTypeAttribute = form.getAttribute("ts_workordertypeid");
             const regionAttribute = form.getAttribute("ts_regionid");
-            const operationTypeAttribute = form.getAttribute("ts_operationtypeid");
+            const operationTypeAttribute = form.getAttribute("ts_ovs_operationtype");
             const countryAttribute = form.getAttribute("ts_countryid");
 
             if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
@@ -278,7 +278,7 @@ namespace ROM.WorkOrderCreationWizard {
 
             const form = <Form.ts_workordercreationwizard.Main.Information>eContext.getFormContext();
             const regionAttribute = form.getAttribute("ts_regionid");
-            const operationTypeAttribute = form.getAttribute("ts_operationtypeid");
+            const operationTypeAttribute = form.getAttribute("ts_ovs_operationtype");
             const stakeholderAttribute = form.getAttribute("ts_stakeholderid");
             const countryAttribute = form.getAttribute("ts_countryid");
 
@@ -330,7 +330,7 @@ namespace ROM.WorkOrderCreationWizard {
     export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
             const form = <Form.ts_workordercreationwizard.Main.Information>eContext.getFormContext();
-            const operationTypeAttribute = form.getAttribute("ts_operationtypeid");
+            const operationTypeAttribute = form.getAttribute("ts_ovs_operationtype");
             const stakeholderAttribute = form.getAttribute("ts_stakeholderid");
             const siteAttribute = form.getAttribute("ts_siteid");
 
@@ -390,7 +390,7 @@ namespace ROM.WorkOrderCreationWizard {
     export function functionalLocationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
             const form = <Form.ts_workordercreationwizard.Main.Information>eContext.getFormContext();
-            const operationTypeAttribute = form.getAttribute("ts_operationtypeid");
+            const operationTypeAttribute = form.getAttribute("ts_ovs_operationtype");
             const stakeholderAttribute = form.getAttribute("ts_stakeholderid");
             const functionalLocationAttribute = form.getAttribute("ts_functionallocationid");
             if (functionalLocationAttribute != null && functionalLocationAttribute != undefined) {
@@ -487,7 +487,7 @@ namespace ROM.WorkOrderCreationWizard {
                                 form.getControl("ts_countryid").setDisabled(true);
                             } else {
                                 //setOperationTypeFilteredView(form, territoryId, "", "");
-                                //form.getControl("ts_operationtypeid").setDisabled(true);
+                                //form.getControl("ts_ovs_operationtype").setDisabled(true);
                             }
                             form.getControl("ts_regionid").setDisabled(false);
                         },
@@ -517,13 +517,13 @@ namespace ROM.WorkOrderCreationWizard {
     }
 
     function setOperationTypeFilteredView(form: Form.ts_workordercreationwizard.Main.Information, regionAttributeId: string, countryCondition: string, workOrderTypeAttributeId: string): void {
-        form.getControl("ts_operationtypeid").setDisabled(false);
+        form.getControl("ts_ovs_operationtype").setDisabled(false);
 
         const viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE99}';
         const entityName = "ovs_operationtype";
         const viewDisplayName = "FilteredOperationTypes";
         const fetchXml = '<fetch distinct="true" page="1"><entity name="ovs_operationtype"><attribute name="statecode"/><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="createdon"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><order attribute="ovs_name" descending="false"/><link-entity name="ovs_operation" from="ovs_operationtypeid" to="ovs_operationtypeid" link-type="inner"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site"><filter><condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '"/>' + countryCondition + '</filter></link-entity></link-entity><link-entity name="msdyn_incidenttype" from="ts_operationtype" to="ovs_operationtypeid"><filter><condition attribute="msdyn_defaultworkordertype" operator="eq" value="' + workOrderTypeAttributeId + '" uiname="Inspection" uitype="msdyn_workordertype"/></filter></link-entity></entity></fetch>';
         const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
-        form.getControl("ts_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+        form.getControl("ts_ovs_operationtype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 }

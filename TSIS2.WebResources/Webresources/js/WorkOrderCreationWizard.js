@@ -12,7 +12,7 @@ var ROM;
             //globalThis.currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             //Set required fields
             form.getAttribute("ts_regionid").setRequiredLevel("required");
-            form.getAttribute("ts_operationtypeid").setRequiredLevel("required");
+            form.getAttribute("ts_ovs_operationtype").setRequiredLevel("required");
             form.getAttribute("ts_siteid").setRequiredLevel("required");
             switch (form.ui.getFormType()) {
                 case 1: //Create New Work Order
@@ -20,13 +20,13 @@ var ROM;
                     setRegion(form);
                     // Disable all operation related fields
                     form.getControl("ts_regionid").setDisabled(true);
-                    form.getControl("ts_operationtypeid").setDisabled(true);
+                    form.getControl("ts_ovs_operationtype").setDisabled(true);
                     form.getControl("ts_siteid").setDisabled(true);
                     break;
                 default:
                     // Enable all operation related fields
                     //form.getControl("ts_regionid").setDisabled(false);
-                    //form.getControl("ts_operationtypeid").setDisabled(false);
+                    //form.getControl("ts_ovs_operationtype").setDisabled(false);
                     //form.getControl("ts_stakeholderid").setDisabled(false);
                     //form.getControl("ts_siteid").setDisabled(false);
                     var regionAttribute = form.getAttribute("ts_regionid");
@@ -65,8 +65,8 @@ var ROM;
                 var countryAttribute = form.getAttribute("ts_countryid");
                 if (workOrderTypeAttribute != null && workOrderTypeAttribute != undefined) {
                     // Clear out all dependent fields' value if they are not already disabled and not already empty
-                    if (!form.getControl("ts_operationtypeid").getDisabled() && form.getAttribute("ts_operationtypeid").getValue() != null) {
-                        form.getAttribute("ts_operationtypeid").setValue(null);
+                    if (!form.getControl("ts_ovs_operationtype").getDisabled() && form.getAttribute("ts_ovs_operationtype").getValue() != null) {
+                        form.getAttribute("ts_ovs_operationtype").setValue(null);
                     }
                     if (!form.getControl("ts_stakeholderid").getDisabled() && form.getAttribute("ts_stakeholderid").getValue() != null) {
                         form.getAttribute("ts_stakeholderid").setValue(null);
@@ -78,8 +78,8 @@ var ROM;
                     // Disable all dependent fields
                     if (form.getControl("ts_countryid").getDisabled() == false)
                         form.getControl("ts_countryid").setDisabled(true);
-                    if (form.getControl("ts_operationtypeid").getDisabled() == false)
-                        form.getControl("ts_operationtypeid").setDisabled(true);
+                    if (form.getControl("ts_ovs_operationtype").getDisabled() == false)
+                        form.getControl("ts_ovs_operationtype").setDisabled(true);
                     if (form.getControl("ts_stakeholderid").getDisabled() == false)
                         form.getControl("ts_stakeholderid").setDisabled(true);
                     if (form.getControl("ts_siteid").getDisabled() == false)
@@ -121,8 +121,8 @@ var ROM;
                     if (!form.getControl("ts_countryid").getDisabled() && form.getAttribute("ts_countryid").getValue() != null) {
                         form.getAttribute("ts_countryid").setValue(null);
                     }
-                    if (!form.getControl("ts_operationtypeid").getDisabled() && form.getAttribute("ts_operationtypeid").getValue() != null) {
-                        form.getAttribute("ts_operationtypeid").setValue(null);
+                    if (!form.getControl("ts_ovs_operationtype").getDisabled() && form.getAttribute("ts_ovs_operationtype").getValue() != null) {
+                        form.getAttribute("ts_ovs_operationtype").setValue(null);
                     }
                     if (!form.getControl("ts_stakeholderid").getDisabled() && form.getAttribute("ts_stakeholderid").getValue() != null) {
                         form.getAttribute("ts_stakeholderid").setValue(null);
@@ -135,8 +135,8 @@ var ROM;
                     form.getAttribute("ts_countryid").setRequiredLevel("none");
                     if (form.getControl("ts_countryid").getDisabled() == false)
                         form.getControl("ts_countryid").setVisible(false);
-                    if (form.getControl("ts_operationtypeid").getDisabled() == false)
-                        form.getControl("ts_operationtypeid").setDisabled(true);
+                    if (form.getControl("ts_ovs_operationtype").getDisabled() == false)
+                        form.getControl("ts_ovs_operationtype").setDisabled(true);
                     if (form.getControl("ts_stakeholderid").getDisabled() == false)
                         form.getControl("ts_stakeholderid").setDisabled(true);
                     if (form.getControl("ts_siteid").getDisabled() == false)
@@ -170,8 +170,8 @@ var ROM;
                 var countryAttribute = form.getAttribute("ts_countryid");
                 if (countryAttribute != null && countryAttribute != undefined) {
                     // Clear out all dependent fields' value if they are not already disabled and not already empty
-                    if (!form.getControl("ts_operationtypeid").getDisabled() && form.getAttribute("ts_operationtypeid").getValue() != null) {
-                        form.getAttribute("ts_operationtypeid").setValue(null);
+                    if (!form.getControl("ts_ovs_operationtype").getDisabled() && form.getAttribute("ts_ovs_operationtype").getValue() != null) {
+                        form.getAttribute("ts_ovs_operationtype").setValue(null);
                     }
                     if (!form.getControl("ts_stakeholderid").getDisabled() && form.getAttribute("ts_stakeholderid").getValue() != null) {
                         form.getAttribute("ts_stakeholderid").setValue(null);
@@ -181,8 +181,8 @@ var ROM;
                         form.getAttribute("ts_operationid").setValue(null);
                     }
                     // Disable all dependent fields
-                    if (form.getControl("ts_operationtypeid").getDisabled() == false)
-                        form.getControl("ts_operationtypeid").setDisabled(true);
+                    if (form.getControl("ts_ovs_operationtype").getDisabled() == false)
+                        form.getControl("ts_ovs_operationtype").setDisabled(true);
                     if (form.getControl("ts_stakeholderid").getDisabled() == false)
                         form.getControl("ts_stakeholderid").setDisabled(true);
                     if (form.getControl("ts_siteid").getDisabled() == false)
@@ -208,7 +208,7 @@ var ROM;
                 var form = eContext.getFormContext();
                 var workOrderTypeAttribute = form.getAttribute("ts_workordertypeid");
                 var regionAttribute = form.getAttribute("ts_regionid");
-                var operationTypeAttribute = form.getAttribute("ts_operationtypeid");
+                var operationTypeAttribute = form.getAttribute("ts_ovs_operationtype");
                 var countryAttribute = form.getAttribute("ts_countryid");
                 if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
                     // Clear out all dependent fields' value if they are not already disabled and not already empty
@@ -263,7 +263,7 @@ var ROM;
             try {
                 var form = eContext.getFormContext();
                 var regionAttribute = form.getAttribute("ts_regionid");
-                var operationTypeAttribute = form.getAttribute("ts_operationtypeid");
+                var operationTypeAttribute = form.getAttribute("ts_ovs_operationtype");
                 var stakeholderAttribute = form.getAttribute("ts_stakeholderid");
                 var countryAttribute = form.getAttribute("ts_countryid");
                 if (stakeholderAttribute != null && stakeholderAttribute != undefined) {
@@ -307,7 +307,7 @@ var ROM;
         function siteOnChange(eContext) {
             try {
                 var form_1 = eContext.getFormContext();
-                var operationTypeAttribute = form_1.getAttribute("ts_operationtypeid");
+                var operationTypeAttribute = form_1.getAttribute("ts_ovs_operationtype");
                 var stakeholderAttribute = form_1.getAttribute("ts_stakeholderid");
                 var siteAttribute = form_1.getAttribute("ts_siteid");
                 if (siteAttribute != null && siteAttribute != undefined) {
@@ -360,7 +360,7 @@ var ROM;
         function functionalLocationOnChange(eContext) {
             try {
                 var form_2 = eContext.getFormContext();
-                var operationTypeAttribute = form_2.getAttribute("ts_operationtypeid");
+                var operationTypeAttribute = form_2.getAttribute("ts_ovs_operationtype");
                 var stakeholderAttribute = form_2.getAttribute("ts_stakeholderid");
                 var functionalLocationAttribute = form_2.getAttribute("ts_functionallocationid");
                 if (functionalLocationAttribute != null && functionalLocationAttribute != undefined) {
@@ -447,7 +447,7 @@ var ROM;
                         }
                         else {
                             //setOperationTypeFilteredView(form, territoryId, "", "");
-                            //form.getControl("ts_operationtypeid").setDisabled(true);
+                            //form.getControl("ts_ovs_operationtype").setDisabled(true);
                         }
                         form.getControl("ts_regionid").setDisabled(false);
                     }, function (error) {
@@ -469,13 +469,13 @@ var ROM;
             form.getControl("ts_countryid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
         function setOperationTypeFilteredView(form, regionAttributeId, countryCondition, workOrderTypeAttributeId) {
-            form.getControl("ts_operationtypeid").setDisabled(false);
+            form.getControl("ts_ovs_operationtype").setDisabled(false);
             var viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE99}';
             var entityName = "ovs_operationtype";
             var viewDisplayName = "FilteredOperationTypes";
             var fetchXml = '<fetch distinct="true" page="1"><entity name="ovs_operationtype"><attribute name="statecode"/><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="createdon"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><order attribute="ovs_name" descending="false"/><link-entity name="ovs_operation" from="ovs_operationtypeid" to="ovs_operationtypeid" link-type="inner"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site"><filter><condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '"/>' + countryCondition + '</filter></link-entity></link-entity><link-entity name="msdyn_incidenttype" from="ts_operationtype" to="ovs_operationtypeid"><filter><condition attribute="msdyn_defaultworkordertype" operator="eq" value="' + workOrderTypeAttributeId + '" uiname="Inspection" uitype="msdyn_workordertype"/></filter></link-entity></entity></fetch>';
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
-            form.getControl("ts_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+            form.getControl("ts_ovs_operationtype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
     })(WorkOrderCreationWizard = ROM.WorkOrderCreationWizard || (ROM.WorkOrderCreationWizard = {}));
 })(ROM || (ROM = {}));
