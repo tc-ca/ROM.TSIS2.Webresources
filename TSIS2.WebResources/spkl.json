@@ -130,14 +130,9 @@
                     "description": "ROM TSIS 2.0 Work Order Form Scripts"
                 },
                 {
-                    "uniquename": "ovs_/js/WorkOrderCreationWizard.js",
+                    "uniquename": "ts_/js/WorkOrderCreationWizard.js",
                     "file": "js\\WorkOrderCreationWizard.js",
                     "description": "ROM TSIS 2.0 Work Order Creation Wizard Scripts"
-                },
-                {
-                    "uniquename": "ovs_/js/WorkOrderQuickCreate.js",
-                    "file": "js\\WorkOrderQuickCreate.js",
-                    "description": "ROM TSIS 2.0 Work Order Quick Create Scripts"
                 },
                 {
                     "uniquename": "ovs_/js/WorkOrderRibbon.js",
