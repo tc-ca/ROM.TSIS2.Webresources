@@ -113,7 +113,7 @@ var widget = {
         typeContainer.appendChild(findingTypeDropdown);
         typeContainer.style.paddingBottom = "10px";
         typeContainer.style.paddingTop = "10px";
-        typeContainer.style.width = "15%";
+        typeContainer.style.width = "20%";
 
         if (question.findingType != null) {
             findingTypeDropdown.value = question.findingType;
@@ -140,6 +140,7 @@ var widget = {
             //Operations is required so there should always be one, but handle an empty array just in case
             if (operationList.length == 1) {
                 question.accountableOperations = [operationList[0].id];
+                updateQuestionValue(question, findingTypeDropdown.value);
             }
         } else {
             //Create a checkbox for each operation in the operationList array
