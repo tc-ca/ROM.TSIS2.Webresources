@@ -96,15 +96,15 @@ var widget = {
         findingTypeDropdown.style.paddingLeft = "5px";
 
         var undecidedOption = document.createElement("option");
-        undecidedOption.value = "Undecided";
+        undecidedOption.value = 717750000;
         undecidedOption.innerHTML = "Undecided";
 
         var observationOption = document.createElement("option");
-        observationOption.value = "Observation";
+        observationOption.value = 717750001;
         observationOption.innerHTML = "Observation";
 
         var noncomplianceOption = document.createElement("option");
-        noncomplianceOption.value = "Non-compliance";
+        noncomplianceOption.value = 717750002;
         noncomplianceOption.innerHTML = "Non-compliance";
 
         findingTypeDropdown.appendChild(undecidedOption);
