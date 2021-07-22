@@ -115,6 +115,11 @@
                     "description": "ROM TSIS 2.0 Incident Type Service Task Form Scripts"
                 },
                 {
+                    "uniquename": "ts_/js/Operation.js",
+                    "file": "js\\Operation.js",
+                    "description": "ROM TSIS 2.0 Operation Form Scripts"
+                },
+                {
                     "uniquename": "ovs_/js/Questionnaire.js",
                     "file": "js\\Questionnaire.js",
                     "description": "ROM TSIS 2.0 Questionnaire Form Scripts"

@@ -101,29 +101,6 @@ interface msdyn_customerasset_Create extends msdyn_customerasset {
 }
 interface msdyn_customerasset_Update extends msdyn_customerasset {
 }
-interface msdyn_customerassetcategory_Base extends WebEntity {
-}
-interface msdyn_customerassetcategory_Fixed extends WebEntity_Fixed {
-  msdyn_customerassetcategoryid: string;
-}
-interface msdyn_customerassetcategory extends msdyn_customerassetcategory_Base, msdyn_customerassetcategory_Relationships {
-}
-interface msdyn_customerassetcategory_Relationships {
-}
-interface msdyn_customerassetcategory_Result extends msdyn_customerassetcategory_Base, msdyn_customerassetcategory_Relationships {
-}
-interface msdyn_customerassetcategory_FormattedResult {
-}
-interface msdyn_customerassetcategory_Select {
-}
-interface msdyn_customerassetcategory_Expand {
-}
-interface msdyn_customerassetcategory_Filter {
-}
-interface msdyn_customerassetcategory_Create extends msdyn_customerassetcategory {
-}
-interface msdyn_customerassetcategory_Update extends msdyn_customerassetcategory {
-}
 interface msdyn_FunctionalLocation_Base extends WebEntity {
 }
 interface msdyn_FunctionalLocation_Fixed extends WebEntity_Fixed {
@@ -285,6 +262,29 @@ interface msdyn_workorderservicetask_Create extends msdyn_workorderservicetask {
 }
 interface msdyn_workorderservicetask_Update extends msdyn_workorderservicetask {
 }
+interface ovs_operation_Base extends WebEntity {
+}
+interface ovs_operation_Fixed extends WebEntity_Fixed {
+  ovs_operationid: string;
+}
+interface ovs_operation extends ovs_operation_Base, ovs_operation_Relationships {
+}
+interface ovs_operation_Relationships {
+}
+interface ovs_operation_Result extends ovs_operation_Base, ovs_operation_Relationships {
+}
+interface ovs_operation_FormattedResult {
+}
+interface ovs_operation_Select {
+}
+interface ovs_operation_Expand {
+}
+interface ovs_operation_Filter {
+}
+interface ovs_operation_Create extends ovs_operation {
+}
+interface ovs_operation_Update extends ovs_operation {
+}
 interface ovs_Questionnaire_Base extends WebEntity {
 }
 interface ovs_Questionnaire_Fixed extends WebEntity_Fixed {
@@ -307,29 +307,6 @@ interface ovs_Questionnaire_Filter {
 interface ovs_Questionnaire_Create extends ovs_Questionnaire {
 }
 interface ovs_Questionnaire_Update extends ovs_Questionnaire {
-}
-interface SystemUser_Base extends WebEntity {
-}
-interface SystemUser_Fixed extends WebEntity_Fixed {
-  systemuserid: string;
-}
-interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
-}
-interface SystemUser_Relationships {
-}
-interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
-}
-interface SystemUser_FormattedResult {
-}
-interface SystemUser_Select {
-}
-interface SystemUser_Expand {
-}
-interface SystemUser_Filter {
-}
-interface SystemUser_Create extends SystemUser {
-}
-interface SystemUser_Update extends SystemUser {
 }
 interface ts_msdyn_customerasset_msdyn_customerasset_Base extends WebEntity {
 }
@@ -377,28 +354,51 @@ interface ts_msdyn_customerasset_msdyn_workorder_Create extends ts_msdyn_custome
 }
 interface ts_msdyn_customerasset_msdyn_workorder_Update extends ts_msdyn_customerasset_msdyn_workorder {
 }
-interface ts_workordercreationwizard_Base extends WebEntity {
+interface ts_msdyn_workorder_ovs_operation_Base extends WebEntity {
 }
-interface ts_workordercreationwizard_Fixed extends WebEntity_Fixed {
-  ts_workordercreationwizardid: string;
+interface ts_msdyn_workorder_ovs_operation_Fixed extends WebEntity_Fixed {
+  ts_msdyn_workorder_ovs_operationid: string;
 }
-interface ts_workordercreationwizard extends ts_workordercreationwizard_Base, ts_workordercreationwizard_Relationships {
+interface ts_msdyn_workorder_ovs_operation extends ts_msdyn_workorder_ovs_operation_Base, ts_msdyn_workorder_ovs_operation_Relationships {
 }
-interface ts_workordercreationwizard_Relationships {
+interface ts_msdyn_workorder_ovs_operation_Relationships {
 }
-interface ts_workordercreationwizard_Result extends ts_workordercreationwizard_Base, ts_workordercreationwizard_Relationships {
+interface ts_msdyn_workorder_ovs_operation_Result extends ts_msdyn_workorder_ovs_operation_Base, ts_msdyn_workorder_ovs_operation_Relationships {
 }
-interface ts_workordercreationwizard_FormattedResult {
+interface ts_msdyn_workorder_ovs_operation_FormattedResult {
 }
-interface ts_workordercreationwizard_Select {
+interface ts_msdyn_workorder_ovs_operation_Select {
 }
-interface ts_workordercreationwizard_Expand {
+interface ts_msdyn_workorder_ovs_operation_Expand {
 }
-interface ts_workordercreationwizard_Filter {
+interface ts_msdyn_workorder_ovs_operation_Filter {
 }
-interface ts_workordercreationwizard_Create extends ts_workordercreationwizard {
+interface ts_msdyn_workorder_ovs_operation_Create extends ts_msdyn_workorder_ovs_operation {
 }
-interface ts_workordercreationwizard_Update extends ts_workordercreationwizard {
+interface ts_msdyn_workorder_ovs_operation_Update extends ts_msdyn_workorder_ovs_operation {
+}
+interface ts_ovs_operation_ovs_operation_Base extends WebEntity {
+}
+interface ts_ovs_operation_ovs_operation_Fixed extends WebEntity_Fixed {
+  ts_ovs_operation_ovs_operationid: string;
+}
+interface ts_ovs_operation_ovs_operation extends ts_ovs_operation_ovs_operation_Base, ts_ovs_operation_ovs_operation_Relationships {
+}
+interface ts_ovs_operation_ovs_operation_Relationships {
+}
+interface ts_ovs_operation_ovs_operation_Result extends ts_ovs_operation_ovs_operation_Base, ts_ovs_operation_ovs_operation_Relationships {
+}
+interface ts_ovs_operation_ovs_operation_FormattedResult {
+}
+interface ts_ovs_operation_ovs_operation_Select {
+}
+interface ts_ovs_operation_ovs_operation_Expand {
+}
+interface ts_ovs_operation_ovs_operation_Filter {
+}
+interface ts_ovs_operation_ovs_operation_Create extends ts_ovs_operation_ovs_operation {
+}
+interface ts_ovs_operation_ovs_operation_Update extends ts_ovs_operation_ovs_operation {
 }
 interface BulkOperationLog_Base extends WebEntity {
 }
@@ -446,29 +446,6 @@ interface Connection_Create extends Connection {
 }
 interface Connection_Update extends Connection {
 }
-interface Post_Base extends WebEntity {
-}
-interface Post_Fixed extends WebEntity_Fixed {
-  postid: string;
-}
-interface Post extends Post_Base, Post_Relationships {
-}
-interface Post_Relationships {
-}
-interface Post_Result extends Post_Base, Post_Relationships {
-}
-interface Post_FormattedResult {
-}
-interface Post_Select {
-}
-interface Post_Expand {
-}
-interface Post_Filter {
-}
-interface Post_Create extends Post {
-}
-interface Post_Update extends Post {
-}
 interface Contact_Base extends WebEntity {
 }
 interface Contact_Fixed extends WebEntity_Fixed {
@@ -515,29 +492,6 @@ interface ServiceAppointment_Create extends ServiceAppointment {
 }
 interface ServiceAppointment_Update extends ServiceAppointment {
 }
-interface PostFollow_Base extends WebEntity {
-}
-interface PostFollow_Fixed extends WebEntity_Fixed {
-  postfollowid: string;
-}
-interface PostFollow extends PostFollow_Base, PostFollow_Relationships {
-}
-interface PostFollow_Relationships {
-}
-interface PostFollow_Result extends PostFollow_Base, PostFollow_Relationships {
-}
-interface PostFollow_FormattedResult {
-}
-interface PostFollow_Select {
-}
-interface PostFollow_Expand {
-}
-interface PostFollow_Filter {
-}
-interface PostFollow_Create extends PostFollow {
-}
-interface PostFollow_Update extends PostFollow {
-}
 interface ActivityParty_Base extends WebEntity {
 }
 interface ActivityParty_Fixed extends WebEntity_Fixed {
@@ -560,6 +514,52 @@ interface ActivityParty_Filter {
 interface ActivityParty_Create extends ActivityParty {
 }
 interface ActivityParty_Update extends ActivityParty {
+}
+interface msdyn_customerassetcategory_Base extends WebEntity {
+}
+interface msdyn_customerassetcategory_Fixed extends WebEntity_Fixed {
+  msdyn_customerassetcategoryid: string;
+}
+interface msdyn_customerassetcategory extends msdyn_customerassetcategory_Base, msdyn_customerassetcategory_Relationships {
+}
+interface msdyn_customerassetcategory_Relationships {
+}
+interface msdyn_customerassetcategory_Result extends msdyn_customerassetcategory_Base, msdyn_customerassetcategory_Relationships {
+}
+interface msdyn_customerassetcategory_FormattedResult {
+}
+interface msdyn_customerassetcategory_Select {
+}
+interface msdyn_customerassetcategory_Expand {
+}
+interface msdyn_customerassetcategory_Filter {
+}
+interface msdyn_customerassetcategory_Create extends msdyn_customerassetcategory {
+}
+interface msdyn_customerassetcategory_Update extends msdyn_customerassetcategory {
+}
+interface PostFollow_Base extends WebEntity {
+}
+interface PostFollow_Fixed extends WebEntity_Fixed {
+  postfollowid: string;
+}
+interface PostFollow extends PostFollow_Base, PostFollow_Relationships {
+}
+interface PostFollow_Relationships {
+}
+interface PostFollow_Result extends PostFollow_Base, PostFollow_Relationships {
+}
+interface PostFollow_FormattedResult {
+}
+interface PostFollow_Select {
+}
+interface PostFollow_Expand {
+}
+interface PostFollow_Filter {
+}
+interface PostFollow_Create extends PostFollow {
+}
+interface PostFollow_Update extends PostFollow {
 }
 interface IncidentResolution_Base extends WebEntity {
 }
@@ -698,4 +698,27 @@ interface BookingStatus_Filter {
 interface BookingStatus_Create extends BookingStatus {
 }
 interface BookingStatus_Update extends BookingStatus {
+}
+interface SystemUser_Base extends WebEntity {
+}
+interface SystemUser_Fixed extends WebEntity_Fixed {
+  systemuserid: string;
+}
+interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_Relationships {
+}
+interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_FormattedResult {
+}
+interface SystemUser_Select {
+}
+interface SystemUser_Expand {
+}
+interface SystemUser_Filter {
+}
+interface SystemUser_Create extends SystemUser {
+}
+interface SystemUser_Update extends SystemUser {
 }
