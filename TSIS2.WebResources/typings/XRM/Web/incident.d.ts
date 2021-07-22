@@ -71,7 +71,6 @@ interface Incident_Relationships {
   msdyn_incident_msdyn_workorder_ServiceRequest?: msdyn_workorder_Result[] | null;
   ovs_incident_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result[] | null;
   ts_Stakeholder?: Account_Result | null;
-  ts_incident_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
 }
 interface Incident extends Incident_Base, Incident_Relationships {
   contractdetailid_bind$contractdetails?: string | null;
@@ -318,7 +317,6 @@ interface Incident_Expand {
   primarycontactid: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
   responsiblecontactid: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { responsiblecontactid: Contact_Result }>;
   ts_Stakeholder: WebExpand<Incident_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
-  ts_incident_ts_workordercreationwizard: WebExpand<Incident_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_incident_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
 }
 interface Incident_FormattedResult {
   accountid_formatted?: string;
@@ -449,7 +447,6 @@ interface Incident_RelatedMany {
   msdyn_incident_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_incident_msdyn_workorder_ServiceRequest: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_incident_msdyn_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
-  ts_incident_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   incidents: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
