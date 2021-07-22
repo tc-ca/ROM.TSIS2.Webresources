@@ -1,18 +1,20 @@
-declare namespace Form.ts_workordercreationwizard.Quick {
+declare namespace Form.ovs_operation.Quick {
   namespace Information {
     namespace Tabs {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
+      get(name: "ovs_name"): Xrm.Attribute<string>;
+      get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
-      get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "ovs_name"): Xrm.StringControl;
+      get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-      get(name: "ts_name"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -26,11 +28,13 @@ declare namespace Form.ts_workordercreationwizard.Quick {
     }
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
+    getAttribute(attributeName: "ovs_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
-    getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "ovs_name"): Xrm.StringControl;
+    getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-    getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
 }
