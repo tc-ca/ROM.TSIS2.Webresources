@@ -115,9 +115,15 @@ var widget = {
         typeContainer.style.paddingTop = "10px";
         typeContainer.style.width = "20%";
 
+        var findingTypeOptions = {
+            "Undecided": 717750000,
+            "Observation": 717750001,
+            "Non-compliance": 717750002
+        }
+
         if (question.findingType != null) {
-            findingTypeDropdown.value = question.findingType;
-            question.value.findingType = question.findingType;
+            findingTypeDropdown.value = findingTypeOptions[question.findingType];
+            question.value.findingType = findingTypeOptions[question.findingType];
             findingTypeDropdown.disabled = true;
             findingTypeDropdown.style.webkitAppearance = "none";
         }
