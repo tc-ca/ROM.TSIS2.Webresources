@@ -13,15 +13,29 @@ if (lang == 1036){
     inspectorCommentsLocalizedText = "Commentaires de l'inspecteur";
     charactersRemainingLocalizedText = "caractères restants";
     accountableOperationsLocalized = "Opération responsable";
+    findingTypeLocalized = "Finding Type (FR)"
+    findingTypeUndecidedLocalized = "Undecided (FR)"
+    findingTypeObservationLocalized = "Observation (FR)"
+    findingTypeNoncomplianceLocalized = "Non-compliance (FR)"
 }
 else{
     inspectorCommentsLocalizedText = "Inspector Comments";
     charactersRemainingLocalizedText = "characters remaining";
     accountableOperationsLocalized = "Accountable Operations";
+    findingTypeLocalized = "Finding Type"
+    findingTypeUndecidedLocalized = "Undecided"
+    findingTypeObservationLocalized = "Observation"
+    findingTypeNoncomplianceLocalized = "Non-compliance"
+}
+
+const findingTypeChoices = {
+    en: [{ value: 717750000, text: "Undecided" }, { value: 717750001, text: "Observation" }, { value: 717750002, text: "Non-compliance" }],
+    fr: [{ value: 717750000, text: "Undecided FR" }, { value: 717750001, text: "Observation FR" }, { value: 717750002, text: "Non-compliance FR" }]
 }
 
 //operationList is set in WOST onLoad. If it doesn't exist, set it to an empty list to avoid null reference exception.
 var operationList = operationList || [];
+
 
 var widget = {
     //the widget name. It should be unique and written in lowcase.
@@ -56,8 +70,21 @@ var widget = {
             { name: "description", type: "textarea" },
             { name: "reference" },
             { name: "nameID" },
-            { name: "inspectorComments", default: "test" },
-            { name: "findingType", type: "dropdown", category: "general", visibleIndex: 0, default: "Undecided", choices: ["Undecided", "Observation", "Non-compliance"]},
+            {
+                name: "findingType",
+                type: "dropdown",
+                category: "general",
+                visibleIndex: 0,
+                defaultValue: 717750000,
+                choices: (obj) => {
+                    if (!obj) return [];
+                    var loc = obj.getLocale();
+                    if (!loc) loc = Survey.surveyLocalization.defaultLocale;
+                    var res = findingTypeChoices[loc];
+                    return !!res ? res : [];
+                }
+            },
+            { name: "inspectorComments"},
         ], null, "text");
 
     },
@@ -65,7 +92,7 @@ var widget = {
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div> <div class="form-group"><div class="findingTypeContainer"><span><strong>${"Finding Type"}</strong>:</span><br></div> <div class="operationsContainer"> <span><strong>${accountableOperationsLocalized}</strong>:</span><br> </div> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${inspectorCommentsLocalizedText}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
+        `<div> <div class="form-group"><div class="findingTypeContainer"><span><strong>${findingTypeLocalized}</strong>:</span><br></div> <div class="operationsContainer"> <span><strong>${accountableOperationsLocalized}</strong>:</span><br> </div> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${inspectorCommentsLocalizedText}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         //el is our root element in htmlTemplate, is "div" in our case
@@ -96,16 +123,16 @@ var widget = {
         findingTypeDropdown.style.paddingLeft = "5px";
 
         var undecidedOption = document.createElement("option");
-        undecidedOption.value = "Undecided";
-        undecidedOption.innerHTML = "Undecided";
+        undecidedOption.value = 717750000;
+        undecidedOption.innerHTML = findingTypeUndecidedLocalized;
 
         var observationOption = document.createElement("option");
-        observationOption.value = "Observation";
-        observationOption.innerHTML = "Observation";
+        observationOption.value = 717750001;
+        observationOption.innerHTML = findingTypeObservationLocalized;
 
         var noncomplianceOption = document.createElement("option");
-        noncomplianceOption.value = "Non-compliance";
-        noncomplianceOption.innerHTML = "Non-compliance";
+        noncomplianceOption.value = 717750002;
+        noncomplianceOption.innerHTML = findingTypeNoncomplianceLocalized;
 
         findingTypeDropdown.appendChild(undecidedOption);
         findingTypeDropdown.appendChild(observationOption);
@@ -113,7 +140,7 @@ var widget = {
         typeContainer.appendChild(findingTypeDropdown);
         typeContainer.style.paddingBottom = "10px";
         typeContainer.style.paddingTop = "10px";
-        typeContainer.style.width = "15%";
+        typeContainer.style.width = "20%";
 
         if (question.findingType != null) {
             findingTypeDropdown.value = question.findingType;
@@ -140,6 +167,7 @@ var widget = {
             //Operations is required so there should always be one, but handle an empty array just in case
             if (operationList.length == 1) {
                 question.accountableOperations = [operationList[0].id];
+                updateQuestionValue(question, findingTypeDropdown.value);
             }
         } else {
             //Create a checkbox for each operation in the operationList array

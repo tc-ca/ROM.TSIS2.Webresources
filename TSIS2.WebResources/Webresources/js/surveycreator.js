@@ -156,6 +156,9 @@ SurveyCreator
 SurveyCreator
     .localization
     .locales["fr"].p.provision = "Dispositions";
+SurveyCreator
+    .localization
+    .locales["fr"].p.findingType = "Finding Type FR";
 
 SurveyCreator
     .localization
