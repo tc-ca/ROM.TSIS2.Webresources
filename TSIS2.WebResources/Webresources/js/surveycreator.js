@@ -146,7 +146,7 @@ if (parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) {
 //Add custom property text localization
 SurveyCreator
     .localization
-    .locales["fr"].p.hasDetail = "Champ détail?";
+    .locales["fr"].p.hasDetail = "Champ détail ?";
 SurveyCreator
     .localization
     .locales["fr"].p.detailEnglishText = "Description champ détail englais";
