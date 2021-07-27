@@ -29,7 +29,6 @@ declare namespace Form.ovs_operation.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "ovs_lobid"): Xrm.LookupControl<"ovs_lob">;
       get(name: "ovs_name"): Xrm.StringControl;
-      get(name: "ovs_name1"): Xrm.StringControl;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
@@ -66,7 +65,6 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "ovs_lobid"): Xrm.LookupControl<"ovs_lob">;
     getControl(controlName: "ovs_name"): Xrm.StringControl;
-    getControl(controlName: "ovs_name1"): Xrm.StringControl;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
