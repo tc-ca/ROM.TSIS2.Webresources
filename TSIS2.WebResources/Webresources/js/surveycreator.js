@@ -357,6 +357,14 @@ creator
                     if (options.question.hasDetail != true) return;
                     appendDetailToQuestion(survey, options);
                 });
+            options
+                .survey
+                .onAfterRenderQuestion
+                .add(function (survey, options) {
+                    if (options.question.getType() !== "finding") return;
+                    options.question.nameID = options.question.id
+                    options.question.name = `finding-${options.question.nameID}`;
+                });
         }
         //If we are creating a surface for "Test Survey" tab
         if (options.reason == "test") {

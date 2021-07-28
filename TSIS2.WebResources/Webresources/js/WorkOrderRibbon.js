@@ -10,6 +10,7 @@ var totalFindingsLocalized = "Total Findings";
 var overallInspectionCommentLocalized = "Overall Inspection Comments";
 var findingsLocalized = "Findings";
 var provisionReferenceLocalized = "Provision Reference";
+var findingTypeLocalized = "Finding Type";
 var stakeholderLocalized = "Stakeholder";
 var operationLocalized = "Operation";
 var inspectorCommentLocalized = "Inspector Comment";
@@ -25,6 +26,7 @@ if (lang == 1036) {
     overallInspectionCommentLocalized = "Commentaires généraux sur l'inspection";
     findingsLocalized = "Constatations"; 
     provisionReferenceLocalized = "Référence de la disposition";
+    findingTypeLocalized = "Finding Type FR";
     stakeholderLocalized = "Intervenant";
     operationLocalized = "Opération";
     inspectorCommentLocalized = "Commentaires de l'inspecteur";
@@ -305,7 +307,7 @@ function exportWorkOrder(primaryControl) {
                     WOSTDetailsList.innerHTML += "<strong>" + overallInspectionCommentLocalized + ":</strong> " + inspectionCommentText;
 
                     var WOSTId = entity.msdyn_workorderservicetaskid;
-                    var findingPromise = Xrm.WebApi.retrieveMultipleRecords("ovs_finding", `?$select=ovs_findingprovisionreference,ts_findingprovisiontexten,ts_findingprovisiontextfr,ovs_findingcomments,statecode,_ts_assetid_value,_ts_accountid_value&$filter=_ovs_workorderservicetaskid_value eq '${WOSTId}'`).then(
+                    var findingPromise = Xrm.WebApi.retrieveMultipleRecords("ovs_finding", `?$select=ovs_findingprovisionreference,ts_findingprovisiontexten,ts_findingprovisiontextfr,ovs_findingcomments,statecode,_ts_operationid_value,_ts_accountid_value,ts_findingtype&$filter=_ovs_workorderservicetaskid_value eq '${WOSTId}'`).then(
                         async function success(result, index) {
                             if (result.entities.length > 0) {
                                 //Create a table to display all findings
@@ -323,12 +325,14 @@ function exportWorkOrder(primaryControl) {
                                     var findingsData = exportWindow.document.createElement('td');
                                     var provisionReference = finding.ovs_findingprovisionreference || "";
                                     var provisiontText = finding.ts_findingprovisiontexten || "";
-                                    var accountableOperation = finding["_ts_assetid_value@OData.Community.Display.V1.FormattedValue"] || "";
+                                    var findingType = finding["ts_findingtype@OData.Community.Display.V1.FormattedValue"] || "";
+                                    var accountableOperation = finding["_ts_operationid_value@OData.Community.Display.V1.FormattedValue"] || "";
                                     var accountableStakeholder = finding["_ts_accountid_value@OData.Community.Display.V1.FormattedValue"] || "";
                                     var findingComments = finding.ovs_findingcomments || "";
                                     if (lang == 1036 && finding.ts_findingprovisiontextfr != undefined) provisiontText = finding.ts_findingprovisiontextfr;
                                     findingsData.innerHTML += "<strong>" + provisionReferenceLocalized + ":</strong> " + provisionReference + "<br>";
                                     findingsData.innerHTML += provisiontText + "<br>";
+                                    findingsData.innerHTML += "<strong>" + findingTypeLocalized + ":</strong> " + findingType + "<br>";
                                     findingsData.innerHTML += "<strong>" + stakeholderLocalized + ":</strong> " + accountableOperation + "<br>";
                                     findingsData.innerHTML += "<strong>" + operationLocalized + ":</strong> " + accountableStakeholder + "<br>";
                                     findingsData.innerHTML += "<strong>" + inspectorCommentLocalized + ":</strong> " + findingComments + "<br>";

@@ -75,7 +75,7 @@ var widget = {
                 type: "dropdown",
                 category: "general",
                 visibleIndex: 0,
-                defaultValue: 717750000,
+                default: 717750000,
                 choices: (obj) => {
                     if (!obj) return [];
                     var loc = obj.getLocale();
