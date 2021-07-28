@@ -16,9 +16,9 @@ function addExistingAssetsToEntity(primaryControl, selectedEntityTypeName, selec
 
         if(entityName == "msdyn_workorder"){ //work order form
 
-            defaultViewId = Xrm.Page.ui.tabs.get("assets_tab").getDisplayState() == "expanded" ? "bf49a9fc-82a7-eb11-9442-000d3a8410dc" : "3d2af424-46cd-eb11-bacc-0022483c043b";
+            defaultViewId = "bf49a9fc-82a7-eb11-9442-000d3a8410dc";
 
-            viewIds = [(Xrm.Page.ui.tabs.get("assets_tab").getDisplayState() == "expanded" ? "bf49a9fc-82a7-eb11-9442-000d3a8410dc" : "3d2af424-46cd-eb11-bacc-0022483c043b", "6d5b19df-82a7-eb11-9442-000d3a8419e6")];
+            viewIds = ["bf49a9fc-82a7-eb11-9442-000d3a8410dc"];
 
             setWorkOrderLookupControl(formContext, selectedControl, entitySetName, recordId, defaultViewId, viewIds, customerAssetsAlreadyAssociatedCondition);
             
@@ -156,9 +156,9 @@ function setOperationLookupControl(formContext, selectedControl, entitySetName, 
 }
 
 function setWorkOrderLookupControl(formContext, selectedControl, entitySetName, recordId, defaultViewId, viewIds, customerAssetsAlreadyAssociatedCondition){
-    var customerAssetValue = formContext.getAttribute("ovs_asset").getValue();
+    var customerAssetValue = formContext.getAttribute("ovs_operationid").getValue();
     var currentCustomerAssetCondition = `<condition attribute="msdyn_customerassetid" operator="neq" value="${customerAssetValue[0].id}" />`;
-    var relatedOperations = `<link-entity name="ts_msdyn_customerasset_msdyn_customerasset" intersect="true" visible="false" to="msdyn_customerassetid" from="msdyn_customerassetidtwo" ><link-entity name="msdyn_customerasset" from="msdyn_customerassetid" to="msdyn_customerassetidone" alias="bb" > <filter type="and" ><condition attribute="msdyn_customerassetid" operator="eq" uitype="msdyn_customerasset" value="${customerAssetValue[0].id}" /></filter></link-entity></link-entity>`
+
 
     var lookupOptions =
     {
@@ -172,7 +172,6 @@ function setWorkOrderLookupControl(formContext, selectedControl, entitySetName, 
                 filterXml: `<filter type="and">` + 
                     `${customerAssetsAlreadyAssociatedCondition}` +
                     `${currentCustomerAssetCondition}` +
-                    `${relatedOperations}` +
                     `</filter> `,
                 entityLogicalName: "msdyn_customerasset"
             }
