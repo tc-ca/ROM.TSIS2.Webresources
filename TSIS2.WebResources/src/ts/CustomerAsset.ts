@@ -4,7 +4,7 @@ namespace ROM.CustomerAsset {
         const assetCategoryAttribute = form.getAttribute("msdyn_customerassetcategory");
         const assetCategoryAttributeValue = form.getAttribute("msdyn_customerassetcategory").getValue();
 
-        const relatedWorkOrdersOperationSubGrid = form.getControl("Asset_WorkOrder_Operations");
+        //const relatedWorkOrdersOperationSubGrid = form.getControl("Asset_WorkOrder_Operations");
         const relatedWorkOrdersTagsSubGrid = form.getControl("Asset_WorkOrder_Tags");
 
         const accountAttribute = form.getAttribute("msdyn_account");
@@ -32,14 +32,14 @@ namespace ROM.CustomerAsset {
                     //717750001 = Physical
                     globalThis.currentOperationCategory = result.ts_assetcategorytype;
                     if (result.ts_assetcategorytype == 717750000){
-                        relatedWorkOrdersOperationSubGrid.setVisible(true);
+                        //relatedWorkOrdersOperationSubGrid.setVisible(true);
                         relatedWorkOrdersTagsSubGrid.setVisible(false);
                         form.getControl("ts_customerassetenglish").setVisible(false);
                         form.getControl("ts_customerassetfrench").setVisible(false);
                     }
                     else {
                         relatedWorkOrdersTagsSubGrid.setVisible(true);
-                        relatedWorkOrdersOperationSubGrid.setVisible(false);
+                        //relatedWorkOrdersOperationSubGrid.setVisible(false);
                     }
                 },
                 function (error) {

@@ -51,7 +51,8 @@ namespace ROM.WorkOrder {
                 // Enable all operation related fields
                 form.getControl("ts_region").setDisabled(false);
                 form.getControl("ovs_operationtypeid").setDisabled(false);
-                form.getControl("msdyn_serviceaccount").setDisabled(false);
+                form.getControl("ts_tradenameid").setDisabled(false);
+                //form.getControl("msdyn_serviceaccount").setDisabled(false);
                 form.getControl("ts_site").setDisabled(false);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(false);
 
@@ -81,6 +82,7 @@ namespace ROM.WorkOrder {
                 if(result.entities.length > 0){
                     form.getControl("ts_region").setDisabled(true);
                     form.getControl("ts_country").setDisabled(true);
+                    form.getControl("ts_tradenameid").setDisabled(true);
                     form.getControl("msdyn_serviceaccount").setDisabled(true);
                     form.getControl("ts_site").setDisabled(true);
                 }
@@ -126,6 +128,9 @@ namespace ROM.WorkOrder {
                 if (!form.getControl("ovs_operationtypeid").getDisabled() && form.getAttribute("ovs_operationtypeid").getValue() != null) {
                     form.getAttribute("ovs_operationtypeid").setValue(null);
                 }
+                if (!form.getControl("ts_tradenameid").getDisabled() && form.getAttribute("ts_tradenameid").getValue() != null) {
+                    form.getAttribute("ts_tradenameid").setValue(null);
+                }
                 if (!form.getControl("msdyn_serviceaccount").getDisabled() && form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                     form.getAttribute("msdyn_serviceaccount").setValue(null);
                 }
@@ -140,6 +145,7 @@ namespace ROM.WorkOrder {
                 // Disable all dependent fields
                 if (form.getControl("ts_country").getDisabled() == false) form.getControl("ts_country").setDisabled(true);
                 if (form.getControl("ovs_operationtypeid").getDisabled() == false) form.getControl("ovs_operationtypeid").setDisabled(true);
+                if (form.getControl("ts_tradenameid").getDisabled() == false) form.getControl("ts_tradenameid").setDisabled(true);
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
@@ -188,6 +194,9 @@ namespace ROM.WorkOrder {
                 if (!form.getControl("ovs_operationtypeid").getDisabled() && form.getAttribute("ovs_operationtypeid").getValue() != null) {
                     form.getAttribute("ovs_operationtypeid").setValue(null);
                 }
+                if (!form.getControl("ts_tradenameid").getDisabled() && form.getAttribute("ts_tradenameid").getValue() != null) {
+                    form.getAttribute("ts_tradenameid").setValue(null);
+                }
                 if (!form.getControl("msdyn_serviceaccount").getDisabled() && form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                     form.getAttribute("msdyn_serviceaccount").setValue(null);
                 }
@@ -203,6 +212,7 @@ namespace ROM.WorkOrder {
                 form.getAttribute("ts_country").setRequiredLevel("none");
                 if (form.getControl("ts_country").getDisabled() == false) form.getControl("ts_country").setVisible(false);
                 if (form.getControl("ovs_operationtypeid").getDisabled() == false) form.getControl("ovs_operationtypeid").setDisabled(true);
+                if (form.getControl("ts_tradenameid").getDisabled() == false) form.getControl("ts_tradenameid").setDisabled(true);
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
@@ -242,6 +252,9 @@ namespace ROM.WorkOrder {
                 if (!form.getControl("ovs_operationtypeid").getDisabled() && form.getAttribute("ovs_operationtypeid").getValue() != null) {
                     form.getAttribute("ovs_operationtypeid").setValue(null);
                 }
+                if (!form.getControl("ts_tradenameid").getDisabled() && form.getAttribute("ts_tradenameid").getValue() != null) {
+                    form.getAttribute("ts_tradenameid").setValue(null);
+                }
                 if (!form.getControl("msdyn_serviceaccount").getDisabled() && form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                     form.getAttribute("msdyn_serviceaccount").setValue(null);
                 }
@@ -255,6 +268,7 @@ namespace ROM.WorkOrder {
 
                 // Disable all dependent fields
                 if (form.getControl("ovs_operationtypeid").getDisabled() == false) form.getControl("ovs_operationtypeid").setDisabled(true);
+                if (form.getControl("ts_tradenameid").getDisabled() == false) form.getControl("ts_tradenameid").setDisabled(true);
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
@@ -291,6 +305,9 @@ namespace ROM.WorkOrder {
             if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
 
                 // Clear out all dependent fields' value if they are not already disabled and not already empty
+                if (!form.getControl("ts_tradenameid").getDisabled() && form.getAttribute("ts_tradenameid").getValue() != null) {
+                    form.getAttribute("ts_tradenameid").setValue(null);
+                }
                 if (!form.getControl("msdyn_serviceaccount").getDisabled() && form.getAttribute("msdyn_serviceaccount").getValue() != null) {
                     form.getAttribute("msdyn_serviceaccount").setValue(null);
                 }
@@ -303,6 +320,7 @@ namespace ROM.WorkOrder {
                 }
 
                 // Disable all dependent fields
+                if (form.getControl("ts_tradenameid").getDisabled() == false) form.getControl("ts_tradenameid").setDisabled(true);
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
@@ -328,7 +346,8 @@ namespace ROM.WorkOrder {
                     }
 
                     // Enable direct dependent field
-                    form.getControl("msdyn_serviceaccount").setDisabled(false);
+                    form.getControl("ts_tradenameid").setDisabled(false);
+                    //form.getControl("msdyn_serviceaccount").setDisabled(false);
                     form.getControl("msdyn_primaryincidenttype").setDisabled(false);
 
                     // Setup a custom view
@@ -340,6 +359,15 @@ namespace ROM.WorkOrder {
                     const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
                     
                     form.getControl("msdyn_serviceaccount").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+
+
+                    const viewIdTradename = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
+                    const entityNameTradename = "ts_tradename";
+                    const viewDisplayNameTradename = "FilteredSTradenames";
+                    const fetchXmlTradename = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" no-lock="false"><entity name="ts_tradename" ><attribute name="ts_tradenameid" /><attribute name="ts_name" /><order attribute="ts_stakeholderidname" /><order attribute="ts_name" /><link-entity name="account" from="accountid" to="ts_stakeholderid" ><link-entity name="ovs_operation" from="ts_stakeholder" to="accountid" link-type="inner" alias="ac"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/></filter><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" link-type="inner" alias="ad"><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '"/>' + countryCondition + '</filter></link-entity></link-entity></link-entity></entity></fetch>';
+                    const layoutXmlTradename = '<grid name="resultset" object="10010" jump="ts_name" select="1" icon="1" preview="1"><row name="result" id="ts_tradenameid"><cell name="ts_name" width="200" /></row></grid>';
+
+                    form.getControl("ts_tradenameid").addCustomView(viewIdTradename, entityNameTradename, viewDisplayNameTradename, fetchXmlTradename, layoutXmlTradename, true);
 
                     //Custom view for Activity Type
                     const viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
@@ -466,6 +494,37 @@ namespace ROM.WorkOrder {
         }
     }
 
+    export function tradenameOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+            const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+            const TradenameAttribute = form.getAttribute("ts_tradenameid");
+            if (TradenameAttribute != null && TradenameAttribute != undefined) {
+                const TradenameAttributeValue = TradenameAttribute.getValue();
+                if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
+                    Xrm.WebApi.online.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(
+                        function success(result) {
+                            var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
+                            var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
+                            var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                            var lookup = new Array();
+                            lookup[0] = new Object();
+                            lookup[0].id = _ts_stakeholderid_value;
+                            lookup[0].name = _ts_stakeholderid_value_formatted;
+                            lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
+                            form.getAttribute('msdyn_serviceaccount').setValue(lookup);
+                            stakeholderOnChange(eContext);
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
+                }
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
+    }
+
     export function functionalLocationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
@@ -558,7 +617,8 @@ namespace ROM.WorkOrder {
         if(caseAttribute.getValue() == null){
             form.getControl("ts_region").setDisabled(false);
             form.getControl("ts_country").setDisabled(false);
-            form.getControl("msdyn_serviceaccount").setDisabled(false);
+            form.getControl("ts_tradenameid").setDisabled(false);
+            //form.getControl("msdyn_serviceaccount").setDisabled(false);
             form.getControl("ts_site").setDisabled(false);
         }
     }

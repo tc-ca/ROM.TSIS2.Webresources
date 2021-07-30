@@ -60,6 +60,7 @@ declare namespace Form.account.Main {
       get(name: "industrycode"): Xrm.OptionSetAttribute<account_industrycode>;
       get(name: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
       get(name: "name"): Xrm.Attribute<string>;
+      get(name: "ovs_legalname"): Xrm.Attribute<string>;
       get(name: "ovs_naicscode"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "ownershipcode"): Xrm.OptionSetAttribute<account_ownershipcode>;
@@ -79,6 +80,7 @@ declare namespace Form.account.Main {
       get(name: "ChildAccounts"): Xrm.SubGridControl<"account">;
       get(name: "Contacts"): Xrm.SubGridControl<"contact">;
       get(name: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
+      get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;
@@ -104,6 +106,7 @@ declare namespace Form.account.Main {
       get(name: "name"): Xrm.StringControl;
       get(name: "name1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
+      get(name: "ovs_legalname"): Xrm.StringControl;
       get(name: "ovs_naicscode"): Xrm.StringControl;
       get(name: "ownershipcode"): Xrm.OptionSetControl<account_ownershipcode>;
       get(name: "parentaccountid"): Xrm.LookupControl<"account">;
@@ -150,6 +153,7 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "industrycode"): Xrm.OptionSetAttribute<account_industrycode>;
     getAttribute(attributeName: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ovs_legalname"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ovs_naicscode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "ownershipcode"): Xrm.OptionSetAttribute<account_ownershipcode>;
@@ -164,6 +168,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "ChildAccounts"): Xrm.SubGridControl<"account">;
     getControl(controlName: "Contacts"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
+    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;
@@ -189,6 +194,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "name"): Xrm.StringControl;
     getControl(controlName: "name1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
+    getControl(controlName: "ovs_legalname"): Xrm.StringControl;
     getControl(controlName: "ovs_naicscode"): Xrm.StringControl;
     getControl(controlName: "ownershipcode"): Xrm.OptionSetControl<account_ownershipcode>;
     getControl(controlName: "parentaccountid"): Xrm.LookupControl<"account">;

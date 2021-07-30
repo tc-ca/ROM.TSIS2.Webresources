@@ -185,10 +185,6 @@ interface SystemUser_Relationships {
   lk_ovs_questionnaire_createdonbehalfby?: ovs_Questionnaire_Result[] | null;
   lk_ovs_questionnaire_modifiedby?: ovs_Questionnaire_Result[] | null;
   lk_ovs_questionnaire_modifiedonbehalfby?: ovs_Questionnaire_Result[] | null;
-  lk_post_createdby?: Post_Result[] | null;
-  lk_post_createdonbehalfby?: Post_Result[] | null;
-  lk_post_modifiedby?: Post_Result[] | null;
-  lk_post_modifiedonbehalfby?: Post_Result[] | null;
   lk_postfollow_createdonbehalfby?: PostFollow_Result[] | null;
   lk_serviceappointment_createdby?: ServiceAppointment_Result[] | null;
   lk_serviceappointment_createdonbehalfby?: ServiceAppointment_Result[] | null;
@@ -206,6 +202,10 @@ interface SystemUser_Relationships {
   lk_tc_tcfiscalyear_createdonbehalfby?: tc_TCFiscalYear_Result[] | null;
   lk_tc_tcfiscalyear_modifiedby?: tc_TCFiscalYear_Result[] | null;
   lk_tc_tcfiscalyear_modifiedonbehalfby?: tc_TCFiscalYear_Result[] | null;
+  lk_ts_tradename_createdby?: ts_tradename_Result[] | null;
+  lk_ts_tradename_createdonbehalfby?: ts_tradename_Result[] | null;
+  lk_ts_tradename_modifiedby?: ts_tradename_Result[] | null;
+  lk_ts_tradename_modifiedonbehalfby?: ts_tradename_Result[] | null;
   lk_ts_workordercreationwizard_createdby?: ts_workordercreationwizard_Result[] | null;
   lk_ts_workordercreationwizard_createdonbehalfby?: ts_workordercreationwizard_Result[] | null;
   lk_ts_workordercreationwizard_modifiedby?: ts_workordercreationwizard_Result[] | null;
@@ -241,6 +241,7 @@ interface SystemUser_Relationships {
   user_parent_user?: SystemUser_Result[] | null;
   user_tc_tcfiscalquarter?: tc_TCFiscalQuarter_Result[] | null;
   user_tc_tcfiscalyear?: tc_TCFiscalYear_Result[] | null;
+  user_ts_tradename?: ts_tradename_Result[] | null;
   user_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
 }
 interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
@@ -589,10 +590,6 @@ interface SystemUser_Expand {
   lk_ovs_questionnaire_createdonbehalfby: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { lk_ovs_questionnaire_createdonbehalfby: ovs_Questionnaire_Result[] }>;
   lk_ovs_questionnaire_modifiedby: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { lk_ovs_questionnaire_modifiedby: ovs_Questionnaire_Result[] }>;
   lk_ovs_questionnaire_modifiedonbehalfby: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { lk_ovs_questionnaire_modifiedonbehalfby: ovs_Questionnaire_Result[] }>;
-  lk_post_createdby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_createdby: Post_Result[] }>;
-  lk_post_createdonbehalfby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_createdonbehalfby: Post_Result[] }>;
-  lk_post_modifiedby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_modifiedby: Post_Result[] }>;
-  lk_post_modifiedonbehalfby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_modifiedonbehalfby: Post_Result[] }>;
   lk_postfollow_createdonbehalfby: WebExpand<SystemUser_Expand, PostFollow_Select, PostFollow_Filter, { lk_postfollow_createdonbehalfby: PostFollow_Result[] }>;
   lk_serviceappointment_createdby: WebExpand<SystemUser_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { lk_serviceappointment_createdby: ServiceAppointment_Result[] }>;
   lk_serviceappointment_createdonbehalfby: WebExpand<SystemUser_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { lk_serviceappointment_createdonbehalfby: ServiceAppointment_Result[] }>;
@@ -610,6 +607,10 @@ interface SystemUser_Expand {
   lk_tc_tcfiscalyear_createdonbehalfby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_createdonbehalfby: tc_TCFiscalYear_Result[] }>;
   lk_tc_tcfiscalyear_modifiedby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_modifiedby: tc_TCFiscalYear_Result[] }>;
   lk_tc_tcfiscalyear_modifiedonbehalfby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_modifiedonbehalfby: tc_TCFiscalYear_Result[] }>;
+  lk_ts_tradename_createdby: WebExpand<SystemUser_Expand, ts_tradename_Select, ts_tradename_Filter, { lk_ts_tradename_createdby: ts_tradename_Result[] }>;
+  lk_ts_tradename_createdonbehalfby: WebExpand<SystemUser_Expand, ts_tradename_Select, ts_tradename_Filter, { lk_ts_tradename_createdonbehalfby: ts_tradename_Result[] }>;
+  lk_ts_tradename_modifiedby: WebExpand<SystemUser_Expand, ts_tradename_Select, ts_tradename_Filter, { lk_ts_tradename_modifiedby: ts_tradename_Result[] }>;
+  lk_ts_tradename_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_tradename_Select, ts_tradename_Filter, { lk_ts_tradename_modifiedonbehalfby: ts_tradename_Result[] }>;
   lk_ts_workordercreationwizard_createdby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_createdby: ts_workordercreationwizard_Result[] }>;
   lk_ts_workordercreationwizard_createdonbehalfby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_createdonbehalfby: ts_workordercreationwizard_Result[] }>;
   lk_ts_workordercreationwizard_modifiedby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_modifiedby: ts_workordercreationwizard_Result[] }>;
@@ -648,6 +649,7 @@ interface SystemUser_Expand {
   user_parent_user: WebExpand<SystemUser_Expand, SystemUser_Select, SystemUser_Filter, { user_parent_user: SystemUser_Result[] }>;
   user_tc_tcfiscalquarter: WebExpand<SystemUser_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { user_tc_tcfiscalquarter: tc_TCFiscalQuarter_Result[] }>;
   user_tc_tcfiscalyear: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { user_tc_tcfiscalyear: tc_TCFiscalYear_Result[] }>;
+  user_ts_tradename: WebExpand<SystemUser_Expand, ts_tradename_Select, ts_tradename_Filter, { user_ts_tradename: ts_tradename_Result[] }>;
   user_ts_workordercreationwizard: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { user_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
 }
 interface SystemUser_FormattedResult {
@@ -781,10 +783,6 @@ interface SystemUser_RelatedMany {
   lk_ovs_questionnaire_createdonbehalfby: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
   lk_ovs_questionnaire_modifiedby: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
   lk_ovs_questionnaire_modifiedonbehalfby: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
-  lk_post_createdby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
-  lk_post_createdonbehalfby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
-  lk_post_modifiedby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
-  lk_post_modifiedonbehalfby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   lk_postfollow_createdonbehalfby: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   lk_serviceappointment_createdby: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   lk_serviceappointment_createdonbehalfby: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
@@ -802,6 +800,10 @@ interface SystemUser_RelatedMany {
   lk_tc_tcfiscalyear_createdonbehalfby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   lk_tc_tcfiscalyear_modifiedby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   lk_tc_tcfiscalyear_modifiedonbehalfby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  lk_ts_tradename_createdby: WebMappingRetrieve<ts_tradename_Select,ts_tradename_Expand,ts_tradename_Filter,ts_tradename_Fixed,ts_tradename_Result,ts_tradename_FormattedResult>;
+  lk_ts_tradename_createdonbehalfby: WebMappingRetrieve<ts_tradename_Select,ts_tradename_Expand,ts_tradename_Filter,ts_tradename_Fixed,ts_tradename_Result,ts_tradename_FormattedResult>;
+  lk_ts_tradename_modifiedby: WebMappingRetrieve<ts_tradename_Select,ts_tradename_Expand,ts_tradename_Filter,ts_tradename_Fixed,ts_tradename_Result,ts_tradename_FormattedResult>;
+  lk_ts_tradename_modifiedonbehalfby: WebMappingRetrieve<ts_tradename_Select,ts_tradename_Expand,ts_tradename_Filter,ts_tradename_Fixed,ts_tradename_Result,ts_tradename_FormattedResult>;
   lk_ts_workordercreationwizard_createdby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   lk_ts_workordercreationwizard_createdonbehalfby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   lk_ts_workordercreationwizard_modifiedby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
@@ -837,6 +839,7 @@ interface SystemUser_RelatedMany {
   user_parent_user: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   user_tc_tcfiscalquarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   user_tc_tcfiscalyear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  user_ts_tradename: WebMappingRetrieve<ts_tradename_Select,ts_tradename_Expand,ts_tradename_Filter,ts_tradename_Fixed,ts_tradename_Result,ts_tradename_FormattedResult>;
   user_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

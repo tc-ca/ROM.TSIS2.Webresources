@@ -163,6 +163,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
       get(name: "ts_workorderenddate"): Xrm.DateAttribute;
       get(name: "ts_workorderstartdate"): Xrm.DateAttribute;
       get(name: string): undefined;
@@ -272,6 +273,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
       get(name: "ts_workorderenddate"): Xrm.DateControl;
       get(name: "ts_workorderstartdate"): Xrm.DateControl;
       get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
@@ -371,6 +373,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
     getAttribute(attributeName: "ts_workorderenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_workorderstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
@@ -475,6 +478,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
     getControl(controlName: "ts_workorderenddate"): Xrm.DateControl;
     getControl(controlName: "ts_workorderstartdate"): Xrm.DateControl;
     getControl(controlName: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
