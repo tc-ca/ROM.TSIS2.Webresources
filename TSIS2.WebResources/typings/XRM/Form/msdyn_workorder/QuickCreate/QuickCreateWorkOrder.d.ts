@@ -29,8 +29,8 @@ declare namespace Form.msdyn_workorder.QuickCreate {
       get(name: "msdyn_systemstatus"): Xrm.OptionSetAttribute<msdyn_wosystemstatus>;
       get(name: "msdyn_workordersummary"): Xrm.Attribute<string>;
       get(name: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
-      get(name: "ovs_asset"): Xrm.LookupAttribute<"msdyn_customerasset">;
       get(name: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
+      get(name: "ovs_operationid"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
@@ -79,8 +79,8 @@ declare namespace Form.msdyn_workorder.QuickCreate {
       get(name: "msdyn_systemstatus"): Xrm.OptionSetControl<msdyn_wosystemstatus>;
       get(name: "msdyn_workordersummary"): Xrm.StringControl;
       get(name: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
-      get(name: "ovs_asset"): Xrm.LookupControl<"msdyn_customerasset">;
       get(name: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
+      get(name: "ovs_operationid"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
@@ -116,8 +116,8 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     getAttribute(attributeName: "msdyn_systemstatus"): Xrm.OptionSetAttribute<msdyn_wosystemstatus>;
     getAttribute(attributeName: "msdyn_workordersummary"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
-    getAttribute(attributeName: "ovs_asset"): Xrm.LookupAttribute<"msdyn_customerasset">;
     getAttribute(attributeName: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
+    getAttribute(attributeName: "ovs_operationid"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
@@ -161,8 +161,8 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     getControl(controlName: "msdyn_systemstatus"): Xrm.OptionSetControl<msdyn_wosystemstatus>;
     getControl(controlName: "msdyn_workordersummary"): Xrm.StringControl;
     getControl(controlName: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
-    getControl(controlName: "ovs_asset"): Xrm.LookupControl<"msdyn_customerasset">;
     getControl(controlName: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
+    getControl(controlName: "ovs_operationid"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;

@@ -7,7 +7,7 @@ var ROM;
             var form = eContext.getFormContext();
             var assetCategoryAttribute = form.getAttribute("msdyn_customerassetcategory");
             var assetCategoryAttributeValue = form.getAttribute("msdyn_customerassetcategory").getValue();
-            var relatedWorkOrdersOperationSubGrid = form.getControl("Asset_WorkOrder_Operations");
+            //const relatedWorkOrdersOperationSubGrid = form.getControl("Asset_WorkOrder_Operations");
             var relatedWorkOrdersTagsSubGrid = form.getControl("Asset_WorkOrder_Tags");
             var accountAttribute = form.getAttribute("msdyn_account");
             var customerAssetCategoryAttribute = form.getAttribute("msdyn_customerassetcategory");
@@ -30,14 +30,14 @@ var ROM;
                     //717750001 = Physical
                     globalThis.currentOperationCategory = result.ts_assetcategorytype;
                     if (result.ts_assetcategorytype == 717750000) {
-                        relatedWorkOrdersOperationSubGrid.setVisible(true);
+                        //relatedWorkOrdersOperationSubGrid.setVisible(true);
                         relatedWorkOrdersTagsSubGrid.setVisible(false);
                         form.getControl("ts_customerassetenglish").setVisible(false);
                         form.getControl("ts_customerassetfrench").setVisible(false);
                     }
                     else {
                         relatedWorkOrdersTagsSubGrid.setVisible(true);
-                        relatedWorkOrdersOperationSubGrid.setVisible(false);
+                        //relatedWorkOrdersOperationSubGrid.setVisible(false);
                     }
                 }, function (error) {
                 });
