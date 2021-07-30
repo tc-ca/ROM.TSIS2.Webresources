@@ -136,6 +136,8 @@ var ROM;
                                 return [4 /*yield*/, retrieveWorkOrderOperations(eContext)];
                             case 1:
                                 _a.operationList = _b.sent();
+                                //win.operationList = [{ id: "123", name: "test1" }, { id: "456", name: "test2" }, { id: "789", name: "test3" }];
+                                //win.operationList = [{ id: "123", name: "test1" }];
                                 win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
                                 return [2 /*return*/];
                         }

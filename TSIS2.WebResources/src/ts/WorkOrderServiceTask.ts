@@ -97,6 +97,8 @@ namespace ROM.WorkOrderServiceTask {
             const surveyLocale = getSurveyLocal();
             win.InitialContext(eContext);
             win.operationList = await retrieveWorkOrderOperations(eContext);
+            //win.operationList = [{ id: "123", name: "test1" }, { id: "456", name: "test2" }, { id: "789", name: "test3" }];
+            //win.operationList = [{ id: "123", name: "test1" }];
             win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode)
         });
     }

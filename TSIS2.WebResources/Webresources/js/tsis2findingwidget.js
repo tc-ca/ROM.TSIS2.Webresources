@@ -92,11 +92,10 @@ var widget = {
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div> <div class="form-group"><div class="findingTypeContainer"><span><strong>${findingTypeLocalized}</strong>:</span><br></div> <div class="operationsContainer"> <span><strong>${accountableOperationsLocalized}</strong>:</span><br> </div> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${inspectorCommentsLocalizedText}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
+        `<div><div class="form-group"><div class="operationsContainer"></div> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${inspectorCommentsLocalizedText}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         //el is our root element in htmlTemplate, is "div" in our case
-        var typeContainer = el.getElementsByClassName("findingTypeContainer")[0];
         var operationsContainer = el.getElementsByClassName("operationsContainer")[0];
         var comments = el.getElementsByClassName("inspectorComments")[0];
         var characterCount = el.getElementsByClassName("character-count")[0];
@@ -107,100 +106,145 @@ var widget = {
             question.inspectorComments = question.value.comments || "";
             comments.value = question.value.comments || "";
             question.accountableOperations = question.value.operations || [];
-        } else {
-            question.value = {
-                provisionReference: question.reference,
-                provisionTextEn: question.locDescription.values.default,
-                provisionTextFr: question.locDescription.values.fr,
-                operations: question.accountableOperations,
-                findingType: question.findingType
-            };
         }
 
-        var findingTypeDropdown = document.createElement("select");
-        findingTypeDropdown.style.webkitAppearance = "auto";
-        findingTypeDropdown.style.marginTop = "5px";
-        findingTypeDropdown.style.paddingLeft = "5px";
+        updateQuestionValue(question);
 
-        var undecidedOption = document.createElement("option");
-        undecidedOption.value = 717750000;
-        undecidedOption.innerHTML = findingTypeUndecidedLocalized;
+        //Create table to contain operation related inputs
+        var operationsTable = document.createElement("table");
+        var operationsTableHeaderRow = document.createElement("tr");
+        var accountableOperationHeader = document.createElement("th");
+        var findingTypeHeader = document.createElement("th");
+        var operationNameHeader = document.createElement("th");
 
-        var observationOption = document.createElement("option");
-        observationOption.value = 717750001;
-        observationOption.innerHTML = findingTypeObservationLocalized;
+        accountableOperationHeader.innerHTML = "Accountable";
+        findingTypeHeader.innerHTML = "Finding Type";
+        operationNameHeader.innerHTML = "Operation Name";
 
-        var noncomplianceOption = document.createElement("option");
-        noncomplianceOption.value = 717750002;
-        noncomplianceOption.innerHTML = findingTypeNoncomplianceLocalized;
+        accountableOperationHeader.style.width = "10%";
+        accountableOperationHeader.style.textAlign = "left";
+        findingTypeHeader.style.width = "15%";
+        findingTypeHeader.style.textAlign = "left";
+        operationNameHeader.style.textAlign = "left";
 
-        findingTypeDropdown.appendChild(undecidedOption);
-        findingTypeDropdown.appendChild(observationOption);
-        findingTypeDropdown.appendChild(noncomplianceOption);
-        typeContainer.appendChild(findingTypeDropdown);
-        typeContainer.style.paddingBottom = "10px";
-        typeContainer.style.paddingTop = "10px";
-        typeContainer.style.width = "20%";
+        operationsTableHeaderRow.appendChild(accountableOperationHeader);
+        operationsTableHeaderRow.appendChild(findingTypeHeader);
+        operationsTableHeaderRow.appendChild(operationNameHeader);
+        operationsTable.appendChild(operationsTableHeaderRow);
 
-        if (question.findingType != null) {
-            findingTypeDropdown.value = question.findingType;
-            question.value.findingType = question.findingType;
-            findingTypeDropdown.disabled = true;
-            findingTypeDropdown.style.webkitAppearance = "none";
-        }
-
-        if (question.value != null) {
-            if (question.value.findingType != null) {
-                findingTypeDropdown.value = question.value.findingType;
-            }
-        }
-
-        findingTypeDropdown.onchange = function () {
-            updateQuestionValue(question, findingTypeDropdown.value)
-        }
-
-        operationsContainer.style.paddingBottom = "20px";
+        //This stores references to the inputs of each table row so that the values can be retrieved together and entered into the question's value json
+        var operationInputs = [];
         
-        //If there's just one operation, add it to the operations array, skip rendering checkboxes, hide the accountable operations label
-        if (operationList.length <= 1) {
-            operationsContainer.style.display = "none";
-            //Operations is required so there should always be one, but handle an empty array just in case
-            if (operationList.length == 1) {
-                question.accountableOperations = [operationList[0].id];
-                updateQuestionValue(question, findingTypeDropdown.value);
+        //Iterate through each operation associated to the Work Order, populate the operation table with inputs
+        operationList.forEach(function (operation) {
+            //Create table elements for this operation
+            var operationTableRow = document.createElement("tr");
+            var accountableOperationData = document.createElement("td");
+            var findingTypeData = document.createElement("td");
+            var operationNameData = document.createElement("td");
+
+            //Create a checkbox to indicate an operation is accountable for the finding
+            operationCheckbox = document.createElement("input");
+            operationCheckbox.type = "checkbox";
+            operationCheckbox.className = "operationCheckbox";
+            operationCheckbox.value = operation.id;
+            accountableOperationData.appendChild(operationCheckbox);
+
+            //Create a dropdown to select the Finding Type of the operation
+            var findingTypeDropdown = document.createElement("select");
+            findingTypeDropdown.style.webkitAppearance = "auto";
+
+            var undecidedOption = document.createElement("option");
+            undecidedOption.value = 717750000;
+            undecidedOption.innerHTML = findingTypeUndecidedLocalized;
+
+            var observationOption = document.createElement("option");
+            observationOption.value = 717750001;
+            observationOption.innerHTML = findingTypeObservationLocalized;
+
+            var noncomplianceOption = document.createElement("option");
+            noncomplianceOption.value = 717750002;
+            noncomplianceOption.innerHTML = findingTypeNoncomplianceLocalized;
+
+            findingTypeDropdown.appendChild(undecidedOption);
+            findingTypeDropdown.appendChild(observationOption);
+            findingTypeDropdown.appendChild(noncomplianceOption);
+
+            //If the findingType was decided in the questionnaire, use its value and lock the dropdown
+            if (question.findingType != null) {
+                findingTypeDropdown.value = question.findingType;
+                findingTypeDropdown.disabled = true;
+                findingTypeDropdown.style.webkitAppearance = "none";
             }
-        } else {
-            //Create a checkbox for each operation in the operationList array
-            operationList.forEach(function (operation) {
-                operationCheckbox = document.createElement("input");
-                operationCheckbox.type = "checkbox";
-                operationCheckbox.className = "operationCheckbox";
-                operationCheckbox.value = operation.id;
 
-                //Check all boxes that have been checked before
-                if (question.accountableOperations != undefined && question.accountableOperations.includes(operation.id)) {
-                    operationCheckbox.checked = true;
-                }
-                operationLabel = document.createElement("label");
-                operationLabel.innerText = operation.name;
-                lineBreak = document.createElement("br");
+            findingTypeData.appendChild(findingTypeDropdown);
 
-                //When a checkbox is changed, update the accountOperations question's value object to match the current state of the checkboxes
-                operationCheckbox.onchange = function () {
-                    operationCheckboxArray = operationsContainer.getElementsByClassName("operationCheckbox");
-                    question.accountableOperations = [];
-                    Array.from(operationCheckboxArray).forEach(function (currentOperationCheckbox) {
-                        if (currentOperationCheckbox.checked) {
-                            question.accountableOperations.push(currentOperationCheckbox.value);
-                        }
-                    });
-                    updateQuestionValue(question, findingTypeDropdown.value);
-                }
-                operationsContainer.appendChild(operationCheckbox);
-                operationsContainer.appendChild(operationLabel);
-                operationsContainer.appendChild(lineBreak);
+            operationNameData.innerHTML = operation.name
+
+            operationTableRow.appendChild(accountableOperationData);
+            operationTableRow.appendChild(findingTypeData);
+            operationTableRow.appendChild(operationNameData);
+            operationsTable.appendChild(operationTableRow);
+
+            //Add references to checkbox and dropdown to the inputs array, so their values can be retrieved together
+            operationInputs.push({
+                checkbox: operationCheckbox,
+                dropdown: findingTypeDropdown
             });
-        }
+
+            //Load old input values if they exist
+            //For each operation saved in the question's value, if its operation ID matches the current operation's ID, load its values
+            question.value.operations.forEach(function (operation) {
+                if (operation.operationID == operationCheckbox.value) {
+                    operationCheckbox.checked = true;
+                    findingTypeDropdown.value = operation.findingType;
+                }
+            });
+
+            //If there's only one operation, it must be accountable, so check the checkbox and lock it, then update the question value
+            if (operationList.length == 1) {
+                operationCheckbox.checked = true;
+                operationCheckbox.disabled = "disabled";
+                question.accountableOperations = [{
+                    operationID: operationCheckbox.value,
+                    findingType: findingTypeDropdown.value
+                }];
+                updateQuestionValue(question);
+            }
+
+            //When the dropdown is changed, update the question's accountable operation object and then update the question value
+            findingTypeDropdown.onchange = function () {
+                question.accountableOperations = [];
+                operationInputs.forEach(function (operationInputs) {
+                    if (operationInputs.checkbox.checked) {
+                        question.accountableOperations.push({
+                            operationID: operationInputs.checkbox.value,
+                            findingType: operationInputs.dropdown.value
+                        });
+                    }
+                });
+                updateQuestionValue(question);
+                console.log(question.value)
+            }
+
+            //When the checkbox is changed, update the accountable operation object and then update the question value
+            operationCheckbox.onchange = function () {
+                question.accountableOperations = [];
+                operationInputs.forEach(function (operationInputs) {
+                    if (operationInputs.checkbox.checked) {
+                        question.accountableOperations.push({
+                            operationID: operationInputs.checkbox.value,
+                            findingType: operationInputs.dropdown.value
+                        });
+                    }
+                });
+                updateQuestionValue(question);
+                console.log(question.value)
+            }
+        });
+        
+
+        operationsContainer.appendChild(operationsTable);
 
         function updateCharacterCount() {
             characterCount.innerText = (1000 - comments.value.length) + " " + charactersRemainingLocalizedText;
@@ -255,14 +299,13 @@ var widget = {
 //Register our widget in singleton custom widget collection
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 
-function updateQuestionValue(question, findingTypeValue) {
+function updateQuestionValue(question) {
     question.value = {
         provisionReference: question.reference,
         provisionTextEn: question.locDescription.values.default,
         provisionTextFr: question.locDescription.values.fr,
-        comments: question.inspectorComments,
-        operations: question.accountableOperations,
-        findingType: findingTypeValue
+        comments: question.inspectorComments || "",
+        operations: question.accountableOperations || [],
     }
 }
 
