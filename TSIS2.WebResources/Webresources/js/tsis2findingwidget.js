@@ -127,10 +127,13 @@ var widget = {
         findingTypeHeader.style.textAlign = "left";
         operationNameHeader.style.textAlign = "left";
 
-        operationsTableHeaderRow.appendChild(accountableOperationHeader);
-        operationsTableHeaderRow.appendChild(findingTypeHeader);
-        operationsTableHeaderRow.appendChild(operationNameHeader);
-        operationsTable.appendChild(operationsTableHeaderRow);
+        //Add table headers if there are operations
+        if (operationList.length > 0) {
+            operationsTableHeaderRow.appendChild(accountableOperationHeader);
+            operationsTableHeaderRow.appendChild(findingTypeHeader);
+            operationsTableHeaderRow.appendChild(operationNameHeader);
+            operationsTable.appendChild(operationsTableHeaderRow);
+        }
 
         //This stores references to the inputs of each table row so that the values can be retrieved together and entered into the question's value json
         var operationInputs = [];
