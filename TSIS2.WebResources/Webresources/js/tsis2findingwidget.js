@@ -254,7 +254,7 @@ var widget = {
 
         comments.onchange = function () {
             question.inspectorComments = comments.value;
-            updateQuestionValue(question, findingTypeDropdown.value);
+            updateQuestionValue(question);
         }
 
         //set the changed value into question value
