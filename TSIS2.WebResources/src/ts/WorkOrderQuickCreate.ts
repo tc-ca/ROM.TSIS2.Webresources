@@ -76,7 +76,7 @@ namespace ROM.WorkOrderQuickCreate {
                 }
                 if (!form.getControl("ovs_assetcategory").getDisabled() || form.getAttribute("ovs_assetcategory").getValue() != null) {
                     form.getAttribute("ovs_assetcategory").setValue(null);
-                    form.getAttribute("ovs_asset").setValue(null);
+                    //form.getAttribute("ovs_asset").setValue(null);
                 }
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                 form.getControl("ovs_assetcategory").setDisabled(true);
@@ -119,7 +119,7 @@ namespace ROM.WorkOrderQuickCreate {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                 }
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
-                form.getAttribute("ovs_asset").setValue(null);
+                //form.getAttribute("ovs_asset").setValue(null);
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
@@ -153,7 +153,7 @@ namespace ROM.WorkOrderQuickCreate {
                                 lookup[0].name = targetOperation.msdyn_name;
                                 lookup[0].entityType = 'msdyn_customerasset';
 
-                                form.getAttribute('ovs_asset').setValue(lookup);
+                                //form.getAttribute('ovs_asset').setValue(lookup);
                             } else {
                                 // do not set a default if multiple records are found, error.
                             }
