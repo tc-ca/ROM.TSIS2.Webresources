@@ -172,7 +172,7 @@ namespace ROM.WorkOrderServiceTask {
             
             //Add the id and name of the work order's N:N operations to the operations array
             operationRetrievalPromises[1].entities.forEach(function (operation) {
-                if (operation.ovs_operationid != null && operation["account2.name"] != null && operation["ovs_operationtype3.ts_regulated"]) {
+                if (operation.ovs_operationid != null && operation["account2.name"] != null && operation["ovs_operationtype3.ts_regulated"] != null) {
                     operations.push({
                         id: operation["ovs_operationid"],
                         name: operation["account2.name"] + " : " + operation["ovs_name"],

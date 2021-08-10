@@ -174,7 +174,11 @@ var widget = {
             findingTypeDropdown.appendChild(noncomplianceOption);
 
             //If the findingType was decided in the questionnaire, use its value and lock the dropdown
-            if (question.findingType != null) {
+            if (!operation.isRegulated) {
+                findingTypeDropdown.value = 717750001;
+                findingTypeDropdown.disabled = true;
+                findingTypeDropdown.style.webkitAppearance = "none";
+            } else if (question.findingType != null) {
                 findingTypeDropdown.value = question.findingType;
                 findingTypeDropdown.disabled = true;
                 findingTypeDropdown.style.webkitAppearance = "none";
