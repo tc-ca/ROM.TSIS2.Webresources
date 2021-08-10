@@ -44,17 +44,17 @@ var ROM;
                         Xrm.WebApi.retrieveRecord("account", accountAttributeValue_1[0].id.replace(/[{}]/g, ""), "?$select=name, ovs_accountnamefrench, ovs_accountnameenglish")
                             .then(function success(result) {
                             if (lang_1 == "english") {
-                                result.ovs_accountnamefrench != null ? generatedAlternateLangName += result.ovs_accountnamefrench + " / " : generatedAlternateLangName += result.name + " / ";
+                                result.ovs_accountnamefrench != null ? generatedAlternateLangName += result.ovs_accountnamefrench + " | " : generatedAlternateLangName += result.name + " | ";
                             }
                             else {
-                                result.ovs_accountnameenglish != null ? generatedAlternateLangName += result.ovs_accountnameenglish + " / " : generatedAlternateLangName += result.name + " / ";
+                                result.ovs_accountnameenglish != null ? generatedAlternateLangName += result.ovs_accountnameenglish + " | " : generatedAlternateLangName += result.name + " | ";
                             }
                             Xrm.WebApi.retrieveRecord("ovs_operationtype", operationTypeAttributeValue_1[0].id.replace(/[{}]/g, ""), "?$select=ovs_name, ovs_operationtypenamefrench, ovs_operationtypenameenglish").then(function success(result) {
                                 if (lang_1 == "english") {
-                                    result.ovs_operationtypenamefrench != null ? generatedAlternateLangName += result.ovs_operationtypenamefrench + " / " : generatedAlternateLangName += result.ovs_name + "/ ";
+                                    result.ovs_operationtypenamefrench != null ? generatedAlternateLangName += result.ovs_operationtypenamefrench + " | " : generatedAlternateLangName += result.ovs_name + "| ";
                                 }
                                 else {
-                                    result.ovs_operationtypenameenglish != null ? generatedAlternateLangName += result.ovs_operationtypenameenglish + " / " : generatedAlternateLangName += result.ovs_name + "/ ";
+                                    result.ovs_operationtypenameenglish != null ? generatedAlternateLangName += result.ovs_operationtypenameenglish + " | " : generatedAlternateLangName += result.ovs_name + "| ";
                                 }
                                 Xrm.WebApi.retrieveRecord("msdyn_functionallocation", siteAttributeValue_1[0].id.replace(/[{}]/g, ""), "?$select=msdyn_name, ts_functionallocationnamefrench, ts_functionallocationnameenglish").then(function success(result) {
                                     if (lang_1 == "english") {
@@ -64,14 +64,14 @@ var ROM;
                                         result.ts_functionallocationnameenglish != null ? generatedAlternateLangName += result.ts_functionallocationnameenglish : generatedAlternateLangName += result.ovs_name;
                                     }
                                     if (lang_1 == "english") {
-                                        nameAttributeEnglish_1.setValue(accountAttributeValue_1[0].name + " / " + operationTypeAttributeValue_1[0].name + " / " + siteAttributeValue_1[0].name);
+                                        nameAttributeEnglish_1.setValue(accountAttributeValue_1[0].name + " | " + operationTypeAttributeValue_1[0].name + " | " + siteAttributeValue_1[0].name);
                                         nameAttributeFrench_1.setValue(generatedAlternateLangName);
-                                        nameAttribute_1.setValue(accountAttributeValue_1[0].name + " / " + operationTypeAttributeValue_1[0].name + " / " + siteAttributeValue_1[0].name);
+                                        nameAttribute_1.setValue(accountAttributeValue_1[0].name + " | " + operationTypeAttributeValue_1[0].name + " | " + siteAttributeValue_1[0].name);
                                     }
                                     else {
-                                        nameAttributeFrench_1.setValue(accountAttributeValue_1[0].name + " / " + operationTypeAttributeValue_1[0].name + " / " + siteAttributeValue_1[0].name);
+                                        nameAttributeFrench_1.setValue(accountAttributeValue_1[0].name + " | " + operationTypeAttributeValue_1[0].name + " | " + siteAttributeValue_1[0].name);
                                         nameAttributeEnglish_1.setValue(generatedAlternateLangName);
-                                        nameAttribute_1.setValue(accountAttributeValue_1[0].name + " / " + operationTypeAttributeValue_1[0].name + " / " + siteAttributeValue_1[0].name);
+                                        nameAttribute_1.setValue(accountAttributeValue_1[0].name + " | " + operationTypeAttributeValue_1[0].name + " | " + siteAttributeValue_1[0].name);
                                     }
                                     form.data.entity.save();
                                 });
@@ -91,9 +91,9 @@ var ROM;
                 if (operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
                     globalThis.generatedName["operationType"] = operationTypeAttributeValue[0].name;
                     nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
-                        + " / " +
+                        + " | " +
                         (globalThis.generatedName["operationType"] != undefined && globalThis.generatedName["operationType"] != null ? globalThis.generatedName["operationType"] : "")
-                        + " / " +
+                        + " | " +
                         (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"][0] != null ? globalThis.generatedName["functionalLocation"] : ""));
                 }
             }
@@ -108,9 +108,9 @@ var ROM;
                 if (accountAttributeValue != null && accountAttributeValue != undefined) {
                     globalThis.generatedName["account"] = accountAttributeValue[0].name;
                     nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
-                        + " / " +
+                        + " | " +
                         (globalThis.generatedName["operationType"] != undefined && globalThis.generatedName["operationType"] != null ? globalThis.generatedName["operationType"] : "")
-                        + " / " +
+                        + " | " +
                         (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : ""));
                 }
             }
@@ -125,9 +125,9 @@ var ROM;
                 if (siteAttributeValue != null && siteAttributeValue != undefined) {
                     globalThis.generatedName["functionalLocation"] = siteAttributeValue[0].name;
                     nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
-                        + " / " +
+                        + " | " +
                         (globalThis.generatedName["operationType"] != undefined && globalThis.generatedName["operationType"] != null ? globalThis.generatedName["operationType"] : "")
-                        + " / " +
+                        + " | " +
                         (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : ""));
                     form.getControl('ts_subsite').setDisabled(false);
                     var viewId = '{6A59549F-F162-5128-4711-79BC929540C3}';
