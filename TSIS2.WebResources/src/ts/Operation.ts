@@ -54,20 +54,20 @@ namespace ROM.Operation {
                         function success(result) {
 
                             if(lang == "english"){
-                                result.ovs_accountnamefrench != null ? generatedAlternateLangName += result.ovs_accountnamefrench + " / " : generatedAlternateLangName += result.name + " / ";
+                                result.ovs_accountnamefrench != null ? generatedAlternateLangName += result.ovs_accountnamefrench + " | " : generatedAlternateLangName += result.name + " | ";
                             }
                             else{
-                                result.ovs_accountnameenglish != null ? generatedAlternateLangName += result.ovs_accountnameenglish + " / " : generatedAlternateLangName += result.name + " / ";
+                                result.ovs_accountnameenglish != null ? generatedAlternateLangName += result.ovs_accountnameenglish + " | " : generatedAlternateLangName += result.name + " | ";
                             }
 
                             Xrm.WebApi.retrieveRecord("ovs_operationtype", operationTypeAttributeValue[0].id.replace(/[{}]/g, ""), "?$select=ovs_name, ovs_operationtypenamefrench, ovs_operationtypenameenglish").then(
                                 function success(result) {
 
                                     if(lang == "english"){
-                                        result.ovs_operationtypenamefrench != null ? generatedAlternateLangName += result.ovs_operationtypenamefrench + " / " : generatedAlternateLangName += result.ovs_name + "/ ";
+                                        result.ovs_operationtypenamefrench != null ? generatedAlternateLangName += result.ovs_operationtypenamefrench + " | " : generatedAlternateLangName += result.ovs_name + "| ";
                                     }
                                     else{
-                                        result.ovs_operationtypenameenglish != null ? generatedAlternateLangName += result.ovs_operationtypenameenglish + " / " : generatedAlternateLangName += result.ovs_name + "/ ";
+                                        result.ovs_operationtypenameenglish != null ? generatedAlternateLangName += result.ovs_operationtypenameenglish + " | " : generatedAlternateLangName += result.ovs_name + "| ";
                                     }
 
                                     Xrm.WebApi.retrieveRecord("msdyn_functionallocation", siteAttributeValue[0].id.replace(/[{}]/g, ""), "?$select=msdyn_name, ts_functionallocationnamefrench, ts_functionallocationnameenglish").then(
@@ -81,14 +81,14 @@ namespace ROM.Operation {
                                             }
 
                                             if(lang == "english"){
-                                                nameAttributeEnglish.setValue(`${accountAttributeValue[0].name} / ${operationTypeAttributeValue[0].name} / ${siteAttributeValue[0].name}`);
+                                                nameAttributeEnglish.setValue(`${accountAttributeValue[0].name} | ${operationTypeAttributeValue[0].name} | ${siteAttributeValue[0].name}`);
                                                 nameAttributeFrench.setValue(generatedAlternateLangName);
-                                                nameAttribute.setValue(`${accountAttributeValue[0].name} / ${operationTypeAttributeValue[0].name} / ${siteAttributeValue[0].name}`);
+                                                nameAttribute.setValue(`${accountAttributeValue[0].name} | ${operationTypeAttributeValue[0].name} | ${siteAttributeValue[0].name}`);
                                             }
                                             else{
-                                                nameAttributeFrench.setValue(`${accountAttributeValue[0].name} / ${operationTypeAttributeValue[0].name} / ${siteAttributeValue[0].name}`);
+                                                nameAttributeFrench.setValue(`${accountAttributeValue[0].name} | ${operationTypeAttributeValue[0].name} | ${siteAttributeValue[0].name}`);
                                                 nameAttributeEnglish.setValue(generatedAlternateLangName);
-                                                nameAttribute.setValue(`${accountAttributeValue[0].name} / ${operationTypeAttributeValue[0].name} / ${siteAttributeValue[0].name}`);
+                                                nameAttribute.setValue(`${accountAttributeValue[0].name} | ${operationTypeAttributeValue[0].name} | ${siteAttributeValue[0].name}`);
                                             }
                                             form.data.entity.save();
                                         },
@@ -114,9 +114,9 @@ namespace ROM.Operation {
                 globalThis.generatedName["operationType"] = operationTypeAttributeValue[0].name;
                 nameAttribute.setValue(
                     (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
-                    + " / " +
+                    + " | " +
                     (globalThis.generatedName["operationType"]!= undefined && globalThis.generatedName["operationType"] != null? globalThis.generatedName["operationType"]: "")
-                        + " / " + 
+                        + " | " + 
                     (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"][0] != null ? globalThis.generatedName["functionalLocation"] : "")
                 );
                 }
@@ -135,9 +135,9 @@ namespace ROM.Operation {
             globalThis.generatedName["account"] = accountAttributeValue[0].name;
                 nameAttribute.setValue(
                     (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
-                        + " / " +
+                        + " | " +
                     (globalThis.generatedName["operationType"]!= undefined && globalThis.generatedName["operationType"] != null? globalThis.generatedName["operationType"]: "")
-                        + " / " + 
+                        + " | " + 
                     (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : "")
                 );
             
@@ -157,9 +157,9 @@ namespace ROM.Operation {
             globalThis.generatedName["functionalLocation"] = siteAttributeValue[0].name;
                 nameAttribute.setValue(
                     (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
-                    + " / " +
+                    + " | " +
                     (globalThis.generatedName["operationType"]!= undefined && globalThis.generatedName["operationType"] != null? globalThis.generatedName["operationType"]: "")
-                    + " / " + 
+                    + " | " + 
                     (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : "")
                 );
 
