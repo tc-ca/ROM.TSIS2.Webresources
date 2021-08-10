@@ -110,7 +110,7 @@ namespace ROM.WorkOrderServiceTask {
 
         //Retrieve the operation in the ovs_operationid field of the parent work order
         let operationPromise1 = Xrm.WebApi.online.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_OperationId,msdyn_serviceaccount&$expand=ovs_OperationId($select=ovs_name,ovs_operationid),msdyn_serviceaccount($select=name)");
-        //Test change
+        
         var fetchXml = [
             "<fetch top='50'>",
             "  <entity name='ovs_operation'>",
