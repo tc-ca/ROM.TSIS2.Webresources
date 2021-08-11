@@ -96,17 +96,21 @@ namespace ROM.WorkOrderServiceTask {
         wrCtrl.getContentWindow().then(async function (win) {
             const surveyLocale = getSurveyLocal();
             win.InitialContext(eContext);
-            win.operationList = await retrieveWorkOrderOperations(eContext);
+            let operationData = await retrieveWorkOrderOperationData(eContext);
+            win.operationList = operationData.operations;
+            win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
             win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode)
         });
     }
 
-    async function retrieveWorkOrderOperations(eContext) {
+    //Retrieves parent Work Order's Operations and parent Work Order's ActivityType's OperationTypes
+    async function retrieveWorkOrderOperationData(eContext) {
         //Get parent work order's id
         var workOrderAttribute = eContext.getFormContext().getAttribute('msdyn_workorder').getValue();
         var workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
         //Array to be populated with opertations associated with parent work order before initializing the survey
-        let operations : Object[] = [];
+        let operations: Object[] = [];
+        let activityTypeOperationTypeIds: Object[] = [];
 
         var parentWorkOrderOperationFetchXml = [
             "<fetch top='50'>",
@@ -122,6 +126,7 @@ namespace ROM.WorkOrderServiceTask {
             "      <attribute name='ovs_name' />",
             "      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
             "        <attribute name='ts_regulated' />",
+            "        <attribute name='ovs_operationtypeid' /> ",
             "      </link-entity>",
             "    </link-entity>",
             "    <link-entity name='account' from='accountid' to='msdyn_serviceaccount'>",
@@ -151,6 +156,7 @@ namespace ROM.WorkOrderServiceTask {
             "    </link-entity>",
             "    <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
             "      <attribute name='ts_regulated' />",
+            "      <attribute name='ovs_operationtypeid' /> ",
             "    </link-entity>",
             "  </entity>",
             "</fetch>",
@@ -159,30 +165,62 @@ namespace ROM.WorkOrderServiceTask {
         //Retrieve operations associated to the parent Work Order
         let operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("ovs_operation", parentWorkOrderRelatedOperationFetchXml);
 
-        await Promise.all([operationPromise1, operationPromise2]).then((operationRetrievalPromises) => {
-            //Add the work order operation field's id and name to the operations array
+        var activityTypeOperationTypesFetchXML = [
+            "<fetch top='50'>",
+            "  <entity name='ovs_operationtype'>",
+            "    <attribute name='ovs_operationtypeid' />",
+            "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
+            "      <link-entity name='msdyn_incidenttype' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' intersect='true'>",
+            "        <link-entity name='msdyn_workorder' from='msdyn_primaryincidenttype' to='msdyn_incidenttypeid'>",
+            "          <filter>",
+            "            <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+            "          </filter>",
+            "        </link-entity>",
+            "      </link-entity>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+        activityTypeOperationTypesFetchXML = "?fetchXml=" + encodeURIComponent(activityTypeOperationTypesFetchXML);
+        //Retrieve operationTypes of parent Work Order's ActivityType
+        let activityTypeOperationTypesPromise = Xrm.WebApi.retrieveMultipleRecords("ovs_operationtype", activityTypeOperationTypesFetchXML);
+
+        await Promise.all([operationPromise1, operationPromise2, activityTypeOperationTypesPromise]).then((operationRetrievalPromises) => {
+            //Add the work order operation operationid, name, operationTypeId, and regulated boolean to the operations array
             var workOrderOperation = operationRetrievalPromises[0].entities[0];
             if (workOrderOperation["ovs_operation1.ovs_operationid"] != null && workOrderOperation["account3.name"] != null && workOrderOperation["ovs_operationtype2.ts_regulated"] != null) {
                 operations.push({
                     id: workOrderOperation["ovs_operation1.ovs_operationid"],
                     name: workOrderOperation["account3.name"] + " : " + workOrderOperation["ovs_operation1.ovs_name"],
+                    operationTypeId: workOrderOperation["ovs_operation1.ovs_operationtypeid"],
                     isRegulated: workOrderOperation["ovs_operationtype2.ts_regulated"]
                 });
             }
             
-            //Add the id and name of the work order's N:N operations to the operations array
+            //Add the operationid, name, operationTypeId, and regulated boolean of the work order's N:N operations to the operations array
             operationRetrievalPromises[1].entities.forEach(function (operation) {
                 if (operation.ovs_operationid != null && operation["account2.name"] != null && operation["ovs_operationtype3.ts_regulated"] != null) {
                     operations.push({
                         id: operation["ovs_operationid"],
                         name: operation["account2.name"] + " : " + operation["ovs_name"],
+                        operationTypeId: operation["ovs_operationtype3.ovs_operationtypeid"],
                         isRegulated: operation["ovs_operationtype3.ts_regulated"]
                     });
                 }
             });
+
+            //collect each operationType Id
+            operationRetrievalPromises[2].entities.forEach(function (operationType) {
+                activityTypeOperationTypeIds.push(operationType["ovs_operationtypeid"]);
+            });
+
         });
 
-        return operations;
+        //Return object containing retrieved operation data
+        return {
+            operations: operations,
+            activityTypeOperationTypeIds: activityTypeOperationTypeIds
+        };
     }
 }
 
