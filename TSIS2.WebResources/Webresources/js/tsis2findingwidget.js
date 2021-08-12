@@ -174,6 +174,15 @@ var widget = {
             findingTypeDropdown.appendChild(observationOption);
             findingTypeDropdown.appendChild(noncomplianceOption);
 
+            //Load old input values if they exist
+            //For each operation saved in the question's value, if its operation ID matches the current operation's ID, load its values
+            question.value.operations.forEach(function (operation) {
+                if (operation.operationID == operationCheckbox.value) {
+                    operationCheckbox.checked = true;
+                    findingTypeDropdown.value = operation.findingType;
+                }
+            });
+
             //if the operationType is not regulated, or the operationType is not one of the parent Work Order's Activity Type's operationTypes
             //Set to Observation and Lock the dropdown
             if (!operation.isRegulated || !activityTypeOperationTypeIdsList.includes(operation.operationTypeId)) {
@@ -186,7 +195,7 @@ var widget = {
                 findingTypeDropdown.disabled = true;
                 findingTypeDropdown.style.webkitAppearance = "none";
             }
-
+            updateQuestionValue(question);
             findingTypeData.appendChild(findingTypeDropdown);
 
             operationNameData.innerHTML = operation.name
@@ -200,15 +209,6 @@ var widget = {
             operationInputs.push({
                 checkbox: operationCheckbox,
                 dropdown: findingTypeDropdown
-            });
-
-            //Load old input values if they exist
-            //For each operation saved in the question's value, if its operation ID matches the current operation's ID, load its values
-            question.value.operations.forEach(function (operation) {
-                if (operation.operationID == operationCheckbox.value) {
-                    operationCheckbox.checked = true;
-                    findingTypeDropdown.value = operation.findingType;
-                }
             });
 
             //If there's only one operation, it must be accountable, so check the checkbox and lock it, then update the question value
