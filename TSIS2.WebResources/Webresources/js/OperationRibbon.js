@@ -15,9 +15,9 @@ function addExistingOperationsToEntity(primaryControl, selectedEntityTypeName, s
 
         if(entityName == "msdyn_workorder"){ //work order form
 
-            defaultViewId = "080302c7-54e9-eb11-bacb-0022483c44f1"; 
+            defaultViewId = "b29c07a0-71fb-eb11-94ef-000d3ae99a90"; 
 
-            viewIds = ["080302c7-54e9-eb11-bacb-0022483c44f1", "cca2cae4-216e-46b5-934e-d9112870f36f"];
+            viewIds = ["b29c07a0-71fb-eb11-94ef-000d3ae99a90"];
 
             setWorkOrderLookupControl(formContext, selectedControl, entitySetName, recordId, defaultViewId, viewIds, operationsAlreadyAssociatedCondition);
             
