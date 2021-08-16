@@ -1,6 +1,20 @@
 declare namespace Form.ovs_operation.Main {
   namespace Information {
     namespace Tabs {
+      interface Connections extends Xrm.SectionCollectionBase {
+        get(name: "tab_3_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface WorkOrders extends Xrm.SectionCollectionBase {
+        get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface rel_operations_tab extends Xrm.SectionCollectionBase {
         get(name: "tab_2_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -26,7 +40,9 @@ declare namespace Form.ovs_operation.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Connections"): Xrm.SubGridControl<"connection">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
+      get(name: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "ovs_lobid"): Xrm.LookupControl<"ovs_lob">;
       get(name: "ovs_name"): Xrm.StringControl;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
@@ -43,6 +59,8 @@ declare namespace Form.ovs_operation.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "Connections"): Xrm.PageTab<Tabs.Connections>;
+      get(name: "WorkOrders"): Xrm.PageTab<Tabs.WorkOrders>;
       get(name: "rel_operations_tab"): Xrm.PageTab<Tabs.rel_operations_tab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -62,7 +80,9 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
+    getControl(controlName: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "ovs_lobid"): Xrm.LookupControl<"ovs_lob">;
     getControl(controlName: "ovs_name"): Xrm.StringControl;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;

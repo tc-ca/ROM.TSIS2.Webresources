@@ -27,6 +27,7 @@ interface Connection_Relationships {
   record1id_msdyn_functionallocation?: msdyn_FunctionalLocation_Result | null;
   record1id_msdyn_workorder?: msdyn_workorder_Result | null;
   record1id_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result | null;
+  record1id_ovs_operation?: ovs_operation_Result | null;
   record1id_serviceappointment?: ServiceAppointment_Result | null;
   record1id_systemuser?: SystemUser_Result | null;
   record2id_account?: Account_Result | null;
@@ -37,6 +38,7 @@ interface Connection_Relationships {
   record2id_msdyn_functionallocation?: msdyn_FunctionalLocation_Result | null;
   record2id_msdyn_workorder?: msdyn_workorder_Result | null;
   record2id_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result | null;
+  record2id_ovs_operation?: ovs_operation_Result | null;
   record2id_serviceappointment?: ServiceAppointment_Result | null;
   record2id_systemuser?: SystemUser_Result | null;
 }
@@ -146,6 +148,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_msfp_surveyinvite_bind$msfp_surveyinvites?: string | null;
   record1id_msfp_surveyresponse_bind$msfp_surveyresponses?: string | null;
   record1id_opportunity_bind$opportunities?: string | null;
+  record1id_ovs_operation_bind$ovs_operations?: string | null;
   record1id_phonecall_bind$phonecalls?: string | null;
   record1id_position_bind$positions?: string | null;
   record1id_pricelevel_bind$pricelevels?: string | null;
@@ -264,6 +267,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_msfp_surveyinvite_bind$msfp_surveyinvites?: string | null;
   record2id_msfp_surveyresponse_bind$msfp_surveyresponses?: string | null;
   record2id_opportunity_bind$opportunities?: string | null;
+  record2id_ovs_operation_bind$ovs_operations?: string | null;
   record2id_phonecall_bind$phonecalls?: string | null;
   record2id_position_bind$positions?: string | null;
   record2id_pricelevel_bind$pricelevels?: string | null;
@@ -368,6 +372,7 @@ interface Connection_Expand {
   record1id_msdyn_functionallocation: WebExpand<Connection_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { record1id_msdyn_functionallocation: msdyn_FunctionalLocation_Result }>;
   record1id_msdyn_workorder: WebExpand<Connection_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { record1id_msdyn_workorder: msdyn_workorder_Result }>;
   record1id_msdyn_workorderservicetask: WebExpand<Connection_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { record1id_msdyn_workorderservicetask: msdyn_workorderservicetask_Result }>;
+  record1id_ovs_operation: WebExpand<Connection_Expand, ovs_operation_Select, ovs_operation_Filter, { record1id_ovs_operation: ovs_operation_Result }>;
   record1id_serviceappointment: WebExpand<Connection_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { record1id_serviceappointment: ServiceAppointment_Result }>;
   record1id_systemuser: WebExpand<Connection_Expand, SystemUser_Select, SystemUser_Filter, { record1id_systemuser: SystemUser_Result }>;
   record2id_account: WebExpand<Connection_Expand, Account_Select, Account_Filter, { record2id_account: Account_Result }>;
@@ -378,6 +383,7 @@ interface Connection_Expand {
   record2id_msdyn_functionallocation: WebExpand<Connection_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { record2id_msdyn_functionallocation: msdyn_FunctionalLocation_Result }>;
   record2id_msdyn_workorder: WebExpand<Connection_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { record2id_msdyn_workorder: msdyn_workorder_Result }>;
   record2id_msdyn_workorderservicetask: WebExpand<Connection_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { record2id_msdyn_workorderservicetask: msdyn_workorderservicetask_Result }>;
+  record2id_ovs_operation: WebExpand<Connection_Expand, ovs_operation_Select, ovs_operation_Filter, { record2id_ovs_operation: ovs_operation_Result }>;
   record2id_serviceappointment: WebExpand<Connection_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { record2id_serviceappointment: ServiceAppointment_Result }>;
   record2id_systemuser: WebExpand<Connection_Expand, SystemUser_Select, SystemUser_Filter, { record2id_systemuser: SystemUser_Result }>;
   relatedconnectionid: WebExpand<Connection_Expand, Connection_Select, Connection_Filter, { relatedconnectionid: Connection_Result }>;
@@ -438,6 +444,7 @@ interface Connection_RelatedOne {
   record1id_msdyn_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   record1id_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   record1id_msdyn_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
+  record1id_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   record1id_serviceappointment: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   record1id_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   record2id_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
@@ -448,6 +455,7 @@ interface Connection_RelatedOne {
   record2id_msdyn_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   record2id_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   record2id_msdyn_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
+  record2id_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   record2id_serviceappointment: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   record2id_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   relatedconnectionid: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;

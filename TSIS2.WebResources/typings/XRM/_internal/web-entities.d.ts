@@ -400,6 +400,29 @@ interface ts_ovs_operation_ovs_operation_Create extends ts_ovs_operation_ovs_ope
 }
 interface ts_ovs_operation_ovs_operation_Update extends ts_ovs_operation_ovs_operation {
 }
+interface ts_questionnaireversion_Base extends WebEntity {
+}
+interface ts_questionnaireversion_Fixed extends WebEntity_Fixed {
+  ts_questionnaireversionid: string;
+}
+interface ts_questionnaireversion extends ts_questionnaireversion_Base, ts_questionnaireversion_Relationships {
+}
+interface ts_questionnaireversion_Relationships {
+}
+interface ts_questionnaireversion_Result extends ts_questionnaireversion_Base, ts_questionnaireversion_Relationships {
+}
+interface ts_questionnaireversion_FormattedResult {
+}
+interface ts_questionnaireversion_Select {
+}
+interface ts_questionnaireversion_Expand {
+}
+interface ts_questionnaireversion_Filter {
+}
+interface ts_questionnaireversion_Create extends ts_questionnaireversion {
+}
+interface ts_questionnaireversion_Update extends ts_questionnaireversion {
+}
 interface ts_tradename_Base extends WebEntity {
 }
 interface ts_tradename_Fixed extends WebEntity_Fixed {

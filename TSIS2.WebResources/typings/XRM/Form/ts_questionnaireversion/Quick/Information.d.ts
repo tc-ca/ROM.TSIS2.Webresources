@@ -1,24 +1,18 @@
-declare namespace Form.ovs_questionnaire.Main {
+declare namespace Form.ts_questionnaireversion.Quick {
   namespace Information {
     namespace Tabs {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "ovs_description"): Xrm.Attribute<string>;
-      get(name: "ovs_name"): Xrm.Attribute<string>;
-      get(name: "ovs_questionnairedefinition"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+      get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_questionnaireversion">;
-      get(name: "WebResource_QuestionnaireCreator"): Xrm.WebResourceControl;
-      get(name: "ovs_description"): Xrm.StringControl;
-      get(name: "ovs_name"): Xrm.StringControl;
-      get(name: "ovs_questionnairedefinition"): Xrm.StringControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "ts_name"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -32,17 +26,11 @@ declare namespace Form.ovs_questionnaire.Main {
     }
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
-    getAttribute(attributeName: "ovs_description"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ovs_name"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ovs_questionnairedefinition"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+    getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_questionnaireversion">;
-    getControl(controlName: "WebResource_QuestionnaireCreator"): Xrm.WebResourceControl;
-    getControl(controlName: "ovs_description"): Xrm.StringControl;
-    getControl(controlName: "ovs_name"): Xrm.StringControl;
-    getControl(controlName: "ovs_questionnairedefinition"): Xrm.StringControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
 }
