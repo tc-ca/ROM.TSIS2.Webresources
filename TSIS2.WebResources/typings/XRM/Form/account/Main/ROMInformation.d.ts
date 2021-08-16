@@ -8,11 +8,25 @@ declare namespace Form.account.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface Connections extends Xrm.SectionCollectionBase {
+        get(name: "tab_6_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface DETAILS_TAB extends Xrm.SectionCollectionBase {
         get(name: "COMPANY_PROFILE"): Xrm.PageSection;
         get(name: "CONTACT_PREFERENCES"): Xrm.PageSection;
         get(name: "ChildAccounts"): Xrm.PageSection;
         get(name: "DETAILS_TAB_section_6"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface Operations extends Xrm.SectionCollectionBase {
+        get(name: "tab_5_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -78,8 +92,10 @@ declare namespace Form.account.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "ActionCards"): Xrm.BaseControl;
       get(name: "ChildAccounts"): Xrm.SubGridControl<"account">;
+      get(name: "Connections"): Xrm.SubGridControl<"connection">;
       get(name: "Contacts"): Xrm.SubGridControl<"contact">;
       get(name: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
+      get(name: "Operations"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
@@ -122,7 +138,9 @@ declare namespace Form.account.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "AssetsAndLocationsTab"): Xrm.PageTab<Tabs.AssetsAndLocationsTab>;
+      get(name: "Connections"): Xrm.PageTab<Tabs.Connections>;
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
+      get(name: "Operations"): Xrm.PageTab<Tabs.Operations>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: "documents_sharepoint"): Xrm.PageTab<Tabs.documents_sharepoint>;
       get(name: string): undefined;
@@ -166,8 +184,10 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ActionCards"): Xrm.BaseControl;
     getControl(controlName: "ChildAccounts"): Xrm.SubGridControl<"account">;
+    getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "Contacts"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
+    getControl(controlName: "Operations"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;

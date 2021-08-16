@@ -8,6 +8,20 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface Connections extends Xrm.SectionCollectionBase {
+        get(name: "tab_5_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface Operations extends Xrm.SectionCollectionBase {
+        get(name: "tab_4_section_2"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface properties_tab extends Xrm.SectionCollectionBase {
         get(name: "tab_4_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -52,7 +66,8 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "CurrentPropertyValuesSubgrid"): Xrm.SubGridControl<"msdyn_propertylog">;
+      get(name: "Connections"): Xrm.SubGridControl<"connection">;
+      get(name: "Operations"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -82,6 +97,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "AssetsAndLocationsTab"): Xrm.PageTab<Tabs.AssetsAndLocationsTab>;
+      get(name: "Connections"): Xrm.PageTab<Tabs.Connections>;
+      get(name: "Operations"): Xrm.PageTab<Tabs.Operations>;
       get(name: "properties_tab"): Xrm.PageTab<Tabs.properties_tab>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: string): undefined;
@@ -111,7 +128,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "CurrentPropertyValuesSubgrid"): Xrm.SubGridControl<"msdyn_propertylog">;
+    getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
+    getControl(controlName: "Operations"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
