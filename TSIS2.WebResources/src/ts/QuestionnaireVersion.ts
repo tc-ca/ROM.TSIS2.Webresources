@@ -45,7 +45,7 @@
         if (wrCtrl !== null && wrCtrl !== undefined) {
             wrCtrl.getContentWindow().then(function (win) {
                 const surveyDefinition = win.GetSurveyDefinition();
-                Form.getAttribute('ovs_questionnairedefinition').setValue(surveyDefinition);
+                Form.getAttribute('ts_questionnairedefinition').setValue(surveyDefinition);
             });
         }
     }

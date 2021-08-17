@@ -79,7 +79,7 @@ var ROM;
                 if (taskType != null) {
                     var taskTypeID = taskType[0].id;
                     Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name&$expand=ovs_Questionnaire").then(function success(result) {
-                        var questionnaireId = result.ovs_Questionnaire.questionnaireId;
+                        var questionnaireId = result.ovs_Questionnaire.ovs_questionnaireid;
                         var fetchXml = [
                             "<fetch>",
                             "  <entity name='ts_questionnaireversion'>",
@@ -93,8 +93,12 @@ var ROM;
                             "</fetch>",
                         ].join("");
                         fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+                        //Retrieve Questionnaire Versions of the Service Task's Questionnaire
                         Xrm.WebApi.retrieveMultipleRecords("ts_questionnaireversion", fetchXml)
                             .then(function success(result) {
+                            if (result.entities[0] == null)
+                                return;
+                            //Set WOST questionnaire definition to the Questionnaire Version's definition
                             var newDefinition = result.entities[0].ts_questionnairedefinition;
                             Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
                             ToggleQuestionnaire(eContext);
