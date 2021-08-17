@@ -26,10 +26,22 @@ var ROM;
                 return;
             }
             // Get Questionnaire definition
-            var surveyDefinition = null;
-            Xrm.WebApi.retrieveRecord('ovs_questionnaire', questionnaireId[0].id.substr(1, questionnaireId[0].id.length - 2))
+            var fetchXml = [
+                "<fetch>",
+                "  <entity name='ts_questionnaireversion'>",
+                "    <attribute name='ts_questionnairedefinition' />",
+                "    <attribute name='ts_name' />",
+                "    <filter>",
+                "      <condition attribute='ts_ovs_questionnaire' operator='eq' value='", questionnaireId[0].id.substr(1, questionnaireId[0].id.length - 2), "'/>",
+                "    </filter>",
+                "    <order attribute='modifiedon' descending='true' />",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+            Xrm.WebApi.retrieveMultipleRecords("ts_questionnaireversion", fetchXml)
                 .then(function success(result) {
-                InitiateSurvey(wrCtrl, result.ovs_questionnairedefinition, mode);
+                InitiateSurvey(wrCtrl, result.entities[0].ts_questionnairedefinition, mode);
             }, function error(error) {
                 Xrm.Navigation.openAlertDialog({ text: error.message });
             });

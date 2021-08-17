@@ -45,9 +45,28 @@ namespace ROM.WorkOrderServiceTask {
                 const taskTypeID = taskType[0].id;
                 Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name&$expand=ovs_Questionnaire").then(
                     function success(result) {
-                        const newDefinition = result.ovs_Questionnaire.ovs_questionnairedefinition;
-                        Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
-                        ToggleQuestionnaire(eContext);
+                        const questionnaireId = result.ovs_Questionnaire.questionnaireId;
+                        var fetchXml = [
+                            "<fetch>",
+                            "  <entity name='ts_questionnaireversion'>",
+                            "    <attribute name='ts_questionnairedefinition' />",
+                            "    <attribute name='ts_name' />",
+                            "    <filter>",
+                            "      <condition attribute='ts_ovs_questionnaire' operator='eq' value='", questionnaireId, "'/>",
+                            "    </filter>",
+                            "    <order attribute='modifiedon' descending='true' />",
+                            "  </entity>",
+                            "</fetch>",
+                        ].join("");
+                        fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+                        Xrm.WebApi.retrieveMultipleRecords("ts_questionnaireversion", fetchXml)
+                            .then(function success(result) {
+                                const newDefinition = result.entities[0].ts_questionnairedefinition;
+                                Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
+                                ToggleQuestionnaire(eContext);
+                            }, function error(error) {
+                                Xrm.Navigation.openAlertDialog({ text: error.message });
+                            });
                     });
             }
         } else {
