@@ -85,7 +85,8 @@ var widget = {
                     return !!res ? res : [];
                 }
             },
-            { name: "inspectorComments"},
+            { name: "inspectorComments" },
+            { name: "provisionData" },
         ], null, "text");
 
     },
@@ -316,6 +317,7 @@ function updateQuestionValue(question) {
         provisionTextFr: question.locDescription.values.fr,
         comments: question.inspectorComments || "",
         operations: question.accountableOperations || [],
+        provisionData: question.provisionData
     }
 }
 
@@ -325,15 +327,20 @@ function updateQuestionProvisionData(question, provisionName) {
     if (question.nameID == null) {
         question.nameID = question.id;
     }
-    parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=qm_name eq '${provisionName}'`).then(
+    parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$filter=qm_name eq '${provisionName}'`).then(
         async function success(result) {
             if (result.entities.length > 0) {
-                question.title = result.entities[0].qm_name;
+                let provision = result.entities[0];
+                question.title = provision.qm_name;
                 question.name = `finding-${question.nameID}`;
-                question.reference = result.entities[0].qm_name;
-                question.description = "<html>" + await buildProvisionText(result.entities[0], lang) + "</html>";
-                question.locDescription.values.default = "<html>" + await buildProvisionText(result.entities[0], 1033) + "</html>";
-                question.locDescription.values.fr = "<html>" + await buildProvisionText(result.entities[0], 1036) + "</html>";
+                question.reference = provision.qm_name;
+                question.description = "<html>" + await buildProvisionText(provision, lang) + "</html>";
+                question.locDescription.values.default = "<html>" + await buildProvisionText(provision, 1033) + "</html>";
+                question.locDescription.values.fr = "<html>" + await buildProvisionText(provision, 1036) + "</html>";
+                question.provisionData = {
+                    legislationid: provision._qm_tylegislationsourceid_value,
+                    provisioncategoryid: provision._ts_provisioncategory_value
+                };
             }
         },
         function (error) {
