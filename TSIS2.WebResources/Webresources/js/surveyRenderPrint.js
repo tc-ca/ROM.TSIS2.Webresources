@@ -29,15 +29,19 @@ hasDetailQuestions.forEach(function (questionName) {
         name: "hasDetail:boolean",
         default: true
     }),
-        Survey.JsonObject.metaData.addProperty(questionName, {
-            name: "detailEnglishText:string",
-            default: "Detail"
-        }),
-        Survey.JsonObject.metaData.addProperty(questionName, {
-            name: "detailFrenchText:string",
-            default: "Détail"
-        })
+    Survey.JsonObject.metaData.addProperty(questionName, {
+        name: "detailEnglishText:string",
+        default: "Detail"
+    }),
+    Survey.JsonObject.metaData.addProperty(questionName, {
+        name: "detailFrenchText:string",
+        default: "Détail"
+    })
 });
+
+Survey.JsonObject.metaData.addProperty("finding", {
+    name: "provisionData"
+}),
 
 function InitialContext(executionContext) {
     window.parentExecutionContext = executionContext;
