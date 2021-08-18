@@ -13,6 +13,9 @@ interface ovs_Questionnaire_Base extends WebEntity {
   statecode?: ovs_questionnaire_statecode | null;
   statuscode?: ovs_questionnaire_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_numberofversions?: number | null;
+  ts_numberofversions_date?: Date | null;
+  ts_numberofversions_state?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -53,6 +56,9 @@ interface ovs_Questionnaire_Select {
   statecode: WebAttribute<ovs_Questionnaire_Select, { statecode: ovs_questionnaire_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ovs_Questionnaire_Select, { statuscode: ovs_questionnaire_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ovs_Questionnaire_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_numberofversions: WebAttribute<ovs_Questionnaire_Select, { ts_numberofversions: number | null }, {  }>;
+  ts_numberofversions_date: WebAttribute<ovs_Questionnaire_Select, { ts_numberofversions_date: Date | null }, { ts_numberofversions_date_formatted?: string }>;
+  ts_numberofversions_state: WebAttribute<ovs_Questionnaire_Select, { ts_numberofversions_state: number | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ovs_Questionnaire_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ovs_Questionnaire_Select, { versionnumber: number | null }, {  }>;
 }
@@ -79,6 +85,9 @@ interface ovs_Questionnaire_Filter {
   statecode: ovs_questionnaire_statecode;
   statuscode: ovs_questionnaire_statuscode;
   timezoneruleversionnumber: number;
+  ts_numberofversions: number;
+  ts_numberofversions_date: Date;
+  ts_numberofversions_state: number;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -110,6 +119,7 @@ interface ovs_Questionnaire_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  ts_numberofversions_date_formatted?: string;
 }
 interface ovs_Questionnaire_Result extends ovs_Questionnaire_Base, ovs_Questionnaire_Relationships {
   "@odata.etag": string;

@@ -4,10 +4,11 @@ var ROM;
     var QuestionnaireVersion;
     (function (QuestionnaireVersion) {
         function onLoad(eContext) {
+            var _a;
             setNotificationMessage(eContext);
             // Get formContext
             var Form = eContext.getFormContext();
-            var surveyDefinition = Form.getAttribute("ts_questionnairedefinition").getValue();
+            var surveyDefinition = (_a = Form.getAttribute("ts_questionnairedefinition")) === null || _a === void 0 ? void 0 : _a.getValue();
             // Get the web resource control on the form
             var wrCtrl = Form.getControl('WebResource_QuestionnaireCreator');
             // Get the web resource inner content window
@@ -62,18 +63,18 @@ var ROM;
             if (dateStartAttributeValue == null && dateEndAttributeValue == null)
                 message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "Draft");
             if (dateStartAttributeValue && dateEndAttributeValue) {
-                var dateStartDate = Date.parse(dateStartAttributeValue);
-                var dateEndDate = Date.parse(dateEndAttributeValue);
-                if (dateStartDate > Date.now() && dateEndDate > Date.now())
+                var dateStartDate = dateStartAttributeValue;
+                var dateEndDate = dateEndAttributeValue;
+                if (dateStartDate.getDate() > Date.now() && dateEndDate.getDate() > Date.now())
                     message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedAwaitingEffectiveDate");
-                if (dateStartDate < Date.now() && dateEndDate < Date.now())
+                if (dateStartDate.getDate() < Date.now() && dateEndDate.getDate() < Date.now())
                     message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedRetired");
-                if (dateStartDate < Date.now() && dateEndDate > Date.now())
+                if (dateStartDate.getDate() < Date.now() && dateEndDate.getDate() > Date.now())
                     message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedInEffect");
             }
             if (dateStartAttributeValue && dateEndAttributeValue == null) {
-                var dateStartDate = Date.parse(dateStartAttributeValue);
-                if (dateStartDate < Date.now())
+                var dateStartDate = dateStartAttributeValue;
+                if (dateStartDate.getDate() < Date.now())
                     message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedInEffect");
             }
             form.ui.setFormNotification(message, "INFO", "notification");

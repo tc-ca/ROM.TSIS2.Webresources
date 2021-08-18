@@ -423,29 +423,6 @@ interface ts_questionnaireversion_Create extends ts_questionnaireversion {
 }
 interface ts_questionnaireversion_Update extends ts_questionnaireversion {
 }
-interface ts_tradename_Base extends WebEntity {
-}
-interface ts_tradename_Fixed extends WebEntity_Fixed {
-  ts_tradenameid: string;
-}
-interface ts_tradename extends ts_tradename_Base, ts_tradename_Relationships {
-}
-interface ts_tradename_Relationships {
-}
-interface ts_tradename_Result extends ts_tradename_Base, ts_tradename_Relationships {
-}
-interface ts_tradename_FormattedResult {
-}
-interface ts_tradename_Select {
-}
-interface ts_tradename_Expand {
-}
-interface ts_tradename_Filter {
-}
-interface ts_tradename_Create extends ts_tradename {
-}
-interface ts_tradename_Update extends ts_tradename {
-}
 interface ts_workordercreationwizard_Base extends WebEntity {
 }
 interface ts_workordercreationwizard_Fixed extends WebEntity_Fixed {

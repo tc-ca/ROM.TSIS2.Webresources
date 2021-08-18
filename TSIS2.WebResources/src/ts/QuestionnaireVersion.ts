@@ -2,8 +2,8 @@
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {        
         setNotificationMessage(eContext);
         // Get formContext
-        const Form = <Form.ovs_questionnaire.Main.Information>eContext.getFormContext();
-        const surveyDefinition = Form.getAttribute("ts_questionnairedefinition").getValue();
+        const Form = <Form.ts_questionnaireversion.Main.Information>eContext.getFormContext();
+        const surveyDefinition = Form.getAttribute("ts_questionnairedefinition")?.getValue();
         // Get the web resource control on the form
         const wrCtrl = Form.getControl('WebResource_QuestionnaireCreator');
 
@@ -13,7 +13,7 @@
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         // Get formContext
-        const Form = <Form.ovs_questionnaire.Main.Information>eContext.getFormContext();
+        const Form = <Form.ts_questionnaireversion.Main.Information>eContext.getFormContext();
 
         // Get the web resource control on the form
         const wrCtrl = Form.getControl('WebResource_QuestionnaireCreator');
@@ -40,7 +40,7 @@
         return surveyLocale;
     }
 
-    function SaveQuestionnaireDefinition(Form: Form.ovs_questionnaire.Main.Information, wrCtrl) {
+    function SaveQuestionnaireDefinition(Form: Form.ts_questionnaireversion.Main.Information, wrCtrl) {
         // Get the web resource inner content window
         if (wrCtrl !== null && wrCtrl !== undefined) {
             wrCtrl.getContentWindow().then(function (win) {
@@ -67,20 +67,20 @@
             
         if (dateStartAttributeValue && dateEndAttributeValue) {
 
-            const dateStartDate = Date.parse(dateStartAttributeValue);
-            const dateEndDate = Date.parse(dateEndAttributeValue);
+            const dateStartDate = dateStartAttributeValue;
+            const dateEndDate = dateEndAttributeValue;
            
-            if (dateStartDate > Date.now() && dateEndDate > Date.now())
+            if (dateStartDate.getDate() > Date.now() && dateEndDate.getDate() > Date.now())
                 message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedAwaitingEffectiveDate"); 
-            if (dateStartDate < Date.now() && dateEndDate < Date.now())
+            if (dateStartDate.getDate() < Date.now() && dateEndDate.getDate() < Date.now())
                 message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedRetired"); 
-            if (dateStartDate < Date.now() && dateEndDate > Date.now())
+            if (dateStartDate.getDate() < Date.now() && dateEndDate.getDate() > Date.now())
                 message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedInEffect");               
         }
 
         if (dateStartAttributeValue && dateEndAttributeValue == null) {
-            const dateStartDate = Date.parse(dateStartAttributeValue);
-            if (dateStartDate < Date.now())
+            const dateStartDate = dateStartAttributeValue;
+            if (dateStartDate.getDate() < Date.now())
                 message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedInEffect");  
         }            
 
