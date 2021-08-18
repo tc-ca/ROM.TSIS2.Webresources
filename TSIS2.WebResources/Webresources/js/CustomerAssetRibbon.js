@@ -10,15 +10,15 @@ function addExistingAssetsToEntity(primaryControl, selectedEntityTypeName, selec
 
         var currentCustomerAsset;
         var defaultViewId = "";
-        var viewIds = "";
+        var viewIds;
 
         var customerAssetsAlreadyAssociatedCondition = filterExistingOperations(formContext, entitySetName, recordId, selectedControl);
 
         if(entityName == "msdyn_workorder"){ //work order form
 
-            defaultViewId = "bf49a9fc-82a7-eb11-9442-000d3a8410dc";
-
-            viewIds = ["bf49a9fc-82a7-eb11-9442-000d3a8410dc"];
+            defaultViewId = "6ecb03a4-acda-44ae-83e3-c60ba8338dbb";
+            //Active Customer Assets, ROC, Security Plan,
+            viewIds = ["6ecb03a4-acda-44ae-83e3-c60ba8338dbb", "339bdf1a-dcfa-eb11-94ef-000d3ae99a90", "4abded8a-dbfa-eb11-94ef-000d3ae99e7a"];
 
             setWorkOrderLookupControl(formContext, selectedControl, entitySetName, recordId, defaultViewId, viewIds, customerAssetsAlreadyAssociatedCondition);
             
@@ -26,7 +26,7 @@ function addExistingAssetsToEntity(primaryControl, selectedEntityTypeName, selec
         else if (entityName == "incident"){ // case form
             setCaseLookupControl(formContext, selectedControl, entitySetName, recordId, defaultViewId, viewIds, customerAssetsAlreadyAssociatedCondition);
         }
-        else if (entityName == "msdyn_customerasset"){ // operation
+        else if (entityName == "msdyn_customerasset"){ // asset
             defaultViewId = "6d5b19df-82a7-eb11-9442-000d3a8419e6";
             viewIds = ["6d5b19df-82a7-eb11-9442-000d3a8419e6"];
 
@@ -156,10 +156,6 @@ function setOperationLookupControl(formContext, selectedControl, entitySetName, 
 }
 
 function setWorkOrderLookupControl(formContext, selectedControl, entitySetName, recordId, defaultViewId, viewIds, customerAssetsAlreadyAssociatedCondition){
-    var customerAssetValue = formContext.getAttribute("ovs_operationid").getValue();
-    var currentCustomerAssetCondition = `<condition attribute="msdyn_customerassetid" operator="neq" value="${customerAssetValue[0].id}" />`;
-
-
     var lookupOptions =
     {
         defaultEntityType: "msdyn_customerasset",
@@ -167,16 +163,15 @@ function setWorkOrderLookupControl(formContext, selectedControl, entitySetName, 
         allowMultiSelect: true,
         defaultViewId: `${defaultViewId}`,
         disableMru: true,
+        viewIds : viewIds,
         filters: [
             {
                 filterXml: `<filter type="and">` + 
                     `${customerAssetsAlreadyAssociatedCondition}` +
-                    `${currentCustomerAssetCondition}` +
                     `</filter> `,
                 entityLogicalName: "msdyn_customerasset"
             }
-        ],
-        viewIds : viewIds
+        ]
     };
 
     Xrm.Utility.lookupObjects(lookupOptions).then(
@@ -276,7 +271,7 @@ function setCaseLookupControl(formContext, selectedControl, entitySetName, recor
 }
 
 function removeAsset(selectedEntityTypeName, selectedControl, FirstSelectedItemId){
-    //removal of the current operation from the related operations both ways (many to many)
+    //removal of the current asset from the related operations both ways (many to many)
     if(selectedControl.getParentForm().data.entity.getEntityName() == "msdyn_customerasset"){
         var req = new XMLHttpRequest();
         selectedControl.getGrid().getSelectedRows().forEach(row => 
