@@ -4,11 +4,10 @@ var ROM;
     var QuestionnaireVersion;
     (function (QuestionnaireVersion) {
         function onLoad(eContext) {
-            var _a;
             setNotificationMessage(eContext);
             // Get formContext
             var Form = eContext.getFormContext();
-            var surveyDefinition = (_a = Form.getAttribute("ts_questionnairedefinition")) === null || _a === void 0 ? void 0 : _a.getValue();
+            var surveyDefinition = Form.getAttribute("ts_questionnairedefinition").getValue();
             // Get the web resource control on the form
             var wrCtrl = Form.getControl('WebResource_QuestionnaireCreator');
             // Get the web resource inner content window

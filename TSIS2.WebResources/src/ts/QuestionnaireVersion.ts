@@ -3,7 +3,7 @@
         setNotificationMessage(eContext);
         // Get formContext
         const Form = <Form.ts_questionnaireversion.Main.Information>eContext.getFormContext();
-        const surveyDefinition = Form.getAttribute("ts_questionnairedefinition")?.getValue();
+        const surveyDefinition = Form.getAttribute("ts_questionnairedefinition").getValue();
         // Get the web resource control on the form
         const wrCtrl = Form.getControl('WebResource_QuestionnaireCreator');
 
