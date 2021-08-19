@@ -4,15 +4,24 @@ declare namespace Form.ts_questionnaireversion.Main {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+      get(name: "ts_effectiveenddate"): Xrm.DateAttribute;
+      get(name: "ts_effectivestartdate"): Xrm.DateAttribute;
       get(name: "ts_name"): Xrm.Attribute<string>;
+      get(name: "ts_ovs_questionnaire"): Xrm.LookupAttribute<"ovs_questionnaire">;
+      get(name: "ts_questionnairedefinition"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "WebResource_QuestionnaireCreator"): Xrm.WebResourceControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "ts_effectiveenddate"): Xrm.DateControl;
+      get(name: "ts_effectivestartdate"): Xrm.DateControl;
       get(name: "ts_name"): Xrm.StringControl;
+      get(name: "ts_ovs_questionnaire"): Xrm.LookupControl<"ovs_questionnaire">;
+      get(name: "ts_questionnairedefinition"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -27,12 +36,19 @@ declare namespace Form.ts_questionnaireversion.Main {
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+    getAttribute(attributeName: "ts_effectiveenddate"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_effectivestartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ts_effectivestartdate"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ts_effectiveenddate"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_ovs_questionnaire"): Xrm.LookupAttribute<"ovs_questionnaire">;
+    getAttribute(attributeName: "ts_questionnairedefinition"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "WebResource_QuestionnaireCreator"): Xrm.WebResourceControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "ts_effectiveenddate"): Xrm.DateControl;
+    getControl(controlName: "ts_effectivestartdate"): Xrm.DateControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;
+    getControl(controlName: "ts_ovs_questionnaire"): Xrm.LookupControl<"ovs_questionnaire">;
+    getControl(controlName: "ts_questionnairedefinition"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
 }

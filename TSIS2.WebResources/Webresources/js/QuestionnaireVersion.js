@@ -62,18 +62,18 @@ var ROM;
             if (dateStartAttributeValue == null && dateEndAttributeValue == null)
                 message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "Draft");
             if (dateStartAttributeValue && dateEndAttributeValue) {
-                var dateStartDate = Date.parse(dateStartAttributeValue);
-                var dateEndDate = Date.parse(dateEndAttributeValue);
-                if (dateStartDate > Date.now() && dateEndDate > Date.now())
+                var dateStartDate = dateStartAttributeValue;
+                var dateEndDate = dateEndAttributeValue;
+                if (dateStartDate.getDate() > Date.now() && dateEndDate.getDate() > Date.now())
                     message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedAwaitingEffectiveDate");
-                if (dateStartDate < Date.now() && dateEndDate < Date.now())
+                if (dateStartDate.getDate() < Date.now() && dateEndDate.getDate() < Date.now())
                     message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedRetired");
-                if (dateStartDate < Date.now() && dateEndDate > Date.now())
+                if (dateStartDate.getDate() < Date.now() && dateEndDate.getDate() > Date.now())
                     message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedInEffect");
             }
             if (dateStartAttributeValue && dateEndAttributeValue == null) {
-                var dateStartDate = Date.parse(dateStartAttributeValue);
-                if (dateStartDate < Date.now())
+                var dateStartDate = dateStartAttributeValue;
+                if (dateStartDate.getDate() < Date.now())
                     message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedInEffect");
             }
             form.ui.setFormNotification(message, "INFO", "notification");
