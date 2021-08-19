@@ -417,12 +417,12 @@ var ROM;
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                     var operationTypeAttributeValue = operationTypeAttribute.getValue();
                     var stakeholderAttributeValue = stakeholderAttribute.getValue();
-                    var siteAttributeValue = siteAttribute.getValue();
-                    if (siteAttributeValue != null && siteAttributeValue != undefined &&
+                    var siteAttributeValue_1 = siteAttribute.getValue();
+                    if (siteAttributeValue_1 != null && siteAttributeValue_1 != undefined &&
                         stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
                         operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
                         // Populate operation asset
-                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue_1[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
                         var encodedFetchXml = encodeURIComponent(fetchXml);
                         Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXml).then(function success(result) {
                             if (result.entities.length == 1) {
@@ -440,13 +440,23 @@ var ROM;
                         }, function (error) {
                             showErrorMessageAlert(error);
                         });
-                        form_1.getControl('msdyn_functionallocation').setDisabled(false);
-                        var viewId = '{1B59589F-F122-5428-4771-79BC925240C3}';
-                        var entityName = "msdyn_functionallocation";
-                        var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
-                        var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
-                        var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-                        form_1.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                        //Check if any subsites exists
+                        var fetchXmlToCheckForSubSites = '<fetch no-lock="false" returntotalrecordcount="true" page="1" count="25"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="B5F6A0B2-75F0-EB11-94EF-000D3AE871E4"/></filter><order attribute="msdyn_name" descending="false"/><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_parentfunctionallocation" alias="bb"><filter type="and"><condition attribute="msdyn_functionallocationid" operator="eq" uitype="msdyn_functionallocation" value="b5f6a0b2-75f0-eb11-94ef-000d3ae871e4"/></filter></link-entity></entity></fetch>';
+                        encodedFetchXml = encodeURIComponent(fetchXmlToCheckForSubSites);
+                        Xrm.WebApi.retrieveMultipleRecords("msdyn_functionallocation", "?fetchXml=" + encodedFetchXml).then(function success(result) {
+                            if (result.entities.length > 0) {
+                                form_1.getControl('msdyn_functionallocation').setDisabled(false);
+                                form_1.getControl('msdyn_functionallocation').setVisible(true);
+                                var viewId = '{1B59589F-F122-5428-4771-79BC925240C3}';
+                                var entityName = "msdyn_functionallocation";
+                                var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
+                                var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue_1[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+                                var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                                form_1.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                            }
+                        }, function (error) {
+                            showErrorMessageAlert(error);
+                        });
                     }
                 }
             }
@@ -604,18 +614,18 @@ var ROM;
                 var regionAttributeValue_1 = regionAttribute.getValue();
                 var countryAttributeValue_1 = countryAttribute.getValue();
                 var stakeholderAttributeValue_1 = stakeholderAttribute.getValue();
-                var siteAttributeValue_1 = siteAttribute.getValue();
+                var siteAttributeValue_2 = siteAttribute.getValue();
                 var regionCondition = regionAttributeValue_1 == null ? "" : '<condition attribute="ovs_region" operator="eq" value="' + regionAttributeValue_1[0].id + '" />';
                 var countryCondition = countryAttributeValue_1 == null ? "" : '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue_1[0].id + '" />';
                 var stakeholderCondition = stakeholderAttributeValue_1 == null ? "" : '<condition attribute="customerid" operator="eq" value="' + stakeholderAttributeValue_1[0].id + '" />';
-                var siteCondition = siteAttributeValue_1 == null ? "" : '<condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue_1[0].id + '" />';
+                var siteCondition = siteAttributeValue_2 == null ? "" : '<condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue_2[0].id + '" />';
                 if (caseAttribute != null && caseAttribute != undefined) {
                     if (caseAttributeValue != null) {
                         Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value, _ts_stakeholder_value").then(function success(result) {
                             if ((regionCondition != "" && (result != null && regionAttributeValue_1 != null && regionAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
                                 (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != result._ts_country_value.toUpperCase())) ||
                                 (stakeholderCondition != "" && (result != null && stakeholderAttributeValue_1 != null && stakeholderAttributeValue_1[0].id.replace(/({|})/g, '') != result._ts_stakeholder_value.toUpperCase())) ||
-                                (siteCondition != "" && (result != null && siteAttributeValue_1 != null && siteAttributeValue_1[0].id.replace(/({|})/g, '') != result._msdyn_functionallocation_value.toUpperCase()))) {
+                                (siteCondition != "" && (result != null && siteAttributeValue_2 != null && siteAttributeValue_2[0].id.replace(/({|})/g, '') != result._msdyn_functionallocation_value.toUpperCase()))) {
                                 form_4.getAttribute("msdyn_servicerequest").setValue(null);
                             }
                         }, function (error) {
