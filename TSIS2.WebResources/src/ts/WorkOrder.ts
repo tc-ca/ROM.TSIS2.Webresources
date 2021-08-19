@@ -478,13 +478,26 @@ namespace ROM.WorkOrder {
                             showErrorMessageAlert(error);
                         }
                     );
-                    form.getControl('msdyn_functionallocation').setDisabled(false);
-                    const viewId = '{1B59589F-F122-5428-4771-79BC925240C3}';
-                    const entityName = "msdyn_functionallocation";
-                    const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
-                    const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
-                    const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-                    form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                    //Check if any subsites exists and only show the field if it's the case
+                    const fetchXmlToCheckForSubSites = '<fetch no-lock="false" returntotalrecordcount="true" page="1" count="25"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="B5F6A0B2-75F0-EB11-94EF-000D3AE871E4"/></filter><order attribute="msdyn_name" descending="false"/><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_parentfunctionallocation" alias="bb"><filter type="and"><condition attribute="msdyn_functionallocationid" operator="eq" uitype="msdyn_functionallocation" value="b5f6a0b2-75f0-eb11-94ef-000d3ae871e4"/></filter></link-entity></entity></fetch>';
+                    encodedFetchXml = encodeURIComponent(fetchXmlToCheckForSubSites);
+                    Xrm.WebApi.retrieveMultipleRecords("msdyn_functionallocation", "?fetchXml=" + encodedFetchXml).then(
+                        function success(result) {
+                            if (result.entities.length > 0) {
+                                form.getControl('msdyn_functionallocation').setDisabled(false);
+                                form.getControl('msdyn_functionallocation').setVisible(true);
+                                const viewId = '{1B59589F-F122-5428-4771-79BC925240C3}';
+                                const entityName = "msdyn_functionallocation";
+                                const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
+                                const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+                                const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                                form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true); 
+                            }
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
                     
                 }
             }
