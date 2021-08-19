@@ -69,18 +69,18 @@
 
             const dateStartDate = dateStartAttributeValue;
             const dateEndDate = dateEndAttributeValue;
-           
-            if (dateStartDate.getDate() > Date.now() && dateEndDate.getDate() > Date.now())
-                message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedAwaitingEffectiveDate"); 
-            if (dateStartDate.getDate() < Date.now() && dateEndDate.getDate() < Date.now())
-                message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedRetired"); 
-            if (dateStartDate.getDate() < Date.now() && dateEndDate.getDate() > Date.now())
+
+            if (Date.parse(dateStartDate.toString()) > Date.now() && Date.parse(dateEndDate.toString()) > Date.now())
+                message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedAwaitingEffectiveDate");
+            if (Date.parse(dateStartDate.toString()) < Date.now() && Date.parse(dateEndDate.toString()) < Date.now())
+                message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedRetired");
+            if (Date.parse(dateStartDate.toString()) < Date.now() && Date.parse(dateEndDate.toString()) > Date.now())
                 message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedInEffect");               
         }
 
         if (dateStartAttributeValue && dateEndAttributeValue == null) {
             const dateStartDate = dateStartAttributeValue;
-            if (dateStartDate.getDate() < Date.now())
+            if (Date.parse(dateStartDate.toString()) < Date.now())
                 message = message = Xrm.Utility.getResourceString("ts_/resx/QuestionnaireVersion", "PublishedInEffect");  
         }            
 
