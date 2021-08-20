@@ -70,6 +70,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is a overlap with .
+        /// </summary>
+        public static string OverlapDates {
+            get {
+                return ResourceManager.GetString("OverlapDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Published (Awaiting Effective Date).
         /// </summary>
         public static string PublishedAwaitingEffectiveDate {
@@ -93,6 +102,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         public static string PublishedRetired {
             get {
                 return ResourceManager.GetString("PublishedRetired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The start date should be before the end date.
+        /// </summary>
+        public static string StartBeforeEnd {
+            get {
+                return ResourceManager.GetString("StartBeforeEnd", resourceCulture);
             }
         }
     }

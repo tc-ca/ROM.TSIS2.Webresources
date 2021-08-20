@@ -120,6 +120,9 @@
   <data name="Draft" xml:space="preserve">
     <value>Brouillon</value>
   </data>
+  <data name="OverlapDates" xml:space="preserve">
+    <value>Il y a un chevauchement avec </value>
+  </data>
   <data name="PublishedAwaitingEffectiveDate" xml:space="preserve">
     <value>Publié (en attente de la date effective)</value>
   </data>
@@ -128,5 +131,8 @@
   </data>
   <data name="PublishedRetired" xml:space="preserve">
     <value>Publié (retraité)</value>
+  </data>
+  <data name="StartBeforeEnd" xml:space="preserve">
+    <value>La date de début doit être antérieure à la date de fin</value>
   </data>
 </root>

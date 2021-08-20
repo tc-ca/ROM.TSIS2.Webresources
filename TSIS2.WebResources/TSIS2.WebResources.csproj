@@ -751,9 +751,10 @@
     <EmbeddedResource Include="Webresources\resx\QuestionnaireVersion.1033.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>QuestionnaireVersion.1033.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\QuestionnaireVersion.1036.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>QuestionnaireVersion.1036.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\WorkOrder.1036.resx">
