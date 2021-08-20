@@ -120,6 +120,9 @@
   <data name="Draft" xml:space="preserve">
     <value>Draft</value>
   </data>
+  <data name="OverlapDates" xml:space="preserve">
+    <value>There is a overlap with </value>
+  </data>
   <data name="PublishedAwaitingEffectiveDate" xml:space="preserve">
     <value>Published (Awaiting Effective Date)</value>
   </data>
@@ -128,5 +131,8 @@
   </data>
   <data name="PublishedRetired" xml:space="preserve">
     <value>Published (Retired)</value>
+  </data>
+  <data name="StartBeforeEnd" xml:space="preserve">
+    <value>The start date should be before the end date</value>
   </data>
 </root>

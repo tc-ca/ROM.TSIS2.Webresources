@@ -22,7 +22,7 @@ namespace TSIS2.WebResources.Webresources.resx {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class QuestionnaireVersion_1036 {
+    public class QuestionnaireVersion_1036 {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace TSIS2.WebResources.Webresources.resx {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TSIS2.WebResources.Webresources.resx.QuestionnaireVersion.1036", typeof(QuestionnaireVersion_1036).Assembly);
@@ -51,7 +51,7 @@ namespace TSIS2.WebResources.Webresources.resx {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,16 +63,25 @@ namespace TSIS2.WebResources.Webresources.resx {
         /// <summary>
         ///   Looks up a localized string similar to Brouillon.
         /// </summary>
-        internal static string Draft {
+        public static string Draft {
             get {
                 return ResourceManager.GetString("Draft", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Il y a un chevauchement avec .
+        /// </summary>
+        public static string OverlapDates {
+            get {
+                return ResourceManager.GetString("OverlapDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Publié (en attente de la date effective).
         /// </summary>
-        internal static string PublishedAwaitingEffectiveDate {
+        public static string PublishedAwaitingEffectiveDate {
             get {
                 return ResourceManager.GetString("PublishedAwaitingEffectiveDate", resourceCulture);
             }
@@ -81,7 +90,7 @@ namespace TSIS2.WebResources.Webresources.resx {
         /// <summary>
         ///   Looks up a localized string similar to Publié (en vigueur).
         /// </summary>
-        internal static string PublishedInEffect {
+        public static string PublishedInEffect {
             get {
                 return ResourceManager.GetString("PublishedInEffect", resourceCulture);
             }
@@ -90,9 +99,18 @@ namespace TSIS2.WebResources.Webresources.resx {
         /// <summary>
         ///   Looks up a localized string similar to Publié (retraité).
         /// </summary>
-        internal static string PublishedRetired {
+        public static string PublishedRetired {
             get {
                 return ResourceManager.GetString("PublishedRetired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La date de début doit être antérieure à la date de fin.
+        /// </summary>
+        public static string StartBeforeEnd {
+            get {
+                return ResourceManager.GetString("StartBeforeEnd", resourceCulture);
             }
         }
     }
