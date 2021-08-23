@@ -24,7 +24,7 @@ var options = {
 
 /*Grab provision labels to populate autocomplete*/
 var provisionNames = [];
-parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_ordernbr`).then(
+parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_ordernbr&$filter=(_ts_provisioncategory_value ne 18adfa7f-33f5-eb11-94ef-000d3af36036)`).then(
   function success(result) {
     result.entities.sort(function(a,b){return a.qm_ordernbr - b.qm_ordernbr});
     for (i in result.entities) {
