@@ -327,6 +327,7 @@ function updateQuestionProvisionData(question, provisionName) {
     if (question.nameID == null) {
         question.nameID = question.id;
     }
+    //Retrieve records with the same provision name that are not Non-Imperative
     parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$filter=(qm_name eq '${provisionName}') and (_ts_provisioncategory_value ne 18adfa7f-33f5-eb11-94ef-000d3af36036)`).then(
         async function success(result) {
             if (result.entities.length > 0) {
