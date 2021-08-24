@@ -41,7 +41,9 @@ var ROM;
             fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
             Xrm.WebApi.retrieveMultipleRecords("ts_questionnaireversion", fetchXml)
                 .then(function success(result) {
-                InitiateSurvey(wrCtrl, result.entities[0].ts_questionnairedefinition, mode);
+                if (result.entities.length > 0) {
+                    InitiateSurvey(wrCtrl, result.entities[0].ts_questionnairedefinition, mode);
+                }
             }, function error(error) {
                 Xrm.Navigation.openAlertDialog({ text: error.message });
             });

@@ -97,6 +97,9 @@ var widget = {
         `<div><div class="form-group"><div class="operationsContainer"></div> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${inspectorCommentsLocalizedText}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
+        // isComplete is set onLoad of WOST form. If it wasn't set there, initialize as false.
+        var isComplete = window.isComplete || false;
+
         //el is our root element in htmlTemplate, is "div" in our case
         var operationsContainer = el.getElementsByClassName("operationsContainer")[0];
         var comments = el.getElementsByClassName("inspectorComments")[0];
@@ -108,6 +111,7 @@ var widget = {
             question.inspectorComments = question.value.comments || "";
             comments.value = question.value.comments || "";
             question.accountableOperations = question.value.operations || [];
+            question.hadValue = true;
         }
 
         updateQuestionValue(question);
@@ -183,14 +187,22 @@ var widget = {
                     findingTypeDropdown.value = operation.findingType;
                 }
             });
-
-            //if the operationType is not regulated, or the operationType is not one of the parent Work Order's Activity Type's operationTypes
-            //Set to Observation and Lock the dropdown
-            if (!operation.isRegulated || !activityTypeOperationTypeIdsList.includes(operation.operationTypeId)) {
-                findingTypeDropdown.value = 717750001;
-                findingTypeDropdown.disabled = true;
-                findingTypeDropdown.style.webkitAppearance = "none";
-            //If the findingType was decided in the questionnaire, use its value and lock the dropdown
+            //No Finding Types should change automatically after the survey has been marked complete
+            //Only check to force a Finding Type change when the survey is incomplete, or the question has not been answered yet.
+            //If the question had a previous value and it wasn't Observation, then it could not have been locked before.
+            if (!(isComplete && question.hadValue && findingTypeDropdown.value != 717750001)) {
+                //if the operationType is not regulated, or the operationType is not one of the parent Work Order's Activity Type's operationTypes
+                //Set to Observation and Lock the dropdown
+                if (!operation.isRegulated || !activityTypeOperationTypeIdsList.includes(operation.operationTypeId)) {
+                    findingTypeDropdown.value = 717750001;
+                    findingTypeDropdown.disabled = true;
+                    findingTypeDropdown.style.webkitAppearance = "none";
+                    //If the findingType was decided in the questionnaire, use its value and lock the dropdown
+                } else if (question.findingType != null) {
+                    findingTypeDropdown.value = question.findingType;
+                    findingTypeDropdown.disabled = true;
+                    findingTypeDropdown.style.webkitAppearance = "none";
+                }
             } else if (question.findingType != null) {
                 findingTypeDropdown.value = question.findingType;
                 findingTypeDropdown.disabled = true;
