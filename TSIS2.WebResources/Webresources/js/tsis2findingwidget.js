@@ -189,7 +189,6 @@ var widget = {
             });
             //No Finding Types should change automatically after the survey has been marked complete
             //Only check to force a Finding Type change when the survey is incomplete, or the question has not been answered yet.
-            //If the question had a previous value and it wasn't Observation, then it could not have been locked before.
             if (!(isComplete && question.hadValue && findingTypeDropdown.value != 717750001)) {
                 //if the operationType is not regulated, or the operationType is not one of the parent Work Order's Activity Type's operationTypes
                 //Set to Observation and Lock the dropdown
