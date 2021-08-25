@@ -146,6 +146,7 @@ var ROM;
             return surveyLocale;
         }
         function InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
+            var Form = eContext.getFormContext();
             wrCtrl.setVisible(true);
             wrCtrl.getContentWindow().then(function (win) {
                 return __awaiter(this, void 0, void 0, function () {
@@ -158,6 +159,7 @@ var ROM;
                                 return [4 /*yield*/, retrieveWorkOrderOperationData(eContext)];
                             case 1:
                                 operationData = _a.sent();
+                                win.isComplete = (Form.getAttribute("msdyn_percentcomplete").getValue() == 100.00);
                                 win.operationList = operationData.operations;
                                 win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
                                 win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);

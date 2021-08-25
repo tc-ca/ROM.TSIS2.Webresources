@@ -114,11 +114,13 @@ namespace ROM.WorkOrderServiceTask {
     }
 
     function InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
+        const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
         wrCtrl.setVisible(true);
         wrCtrl.getContentWindow().then(async function (win) {
             const surveyLocale = getSurveyLocal();
             win.InitialContext(eContext);
             let operationData = await retrieveWorkOrderOperationData(eContext);
+            win.isComplete = (Form.getAttribute("msdyn_percentcomplete").getValue() == 100.00);
             win.operationList = operationData.operations;
             win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
             win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode)
