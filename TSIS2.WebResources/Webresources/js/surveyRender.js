@@ -120,6 +120,13 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         }
     });
 
+    survey.onValidateQuestion.add(function (sender, options) {
+        //If it is a finding that is required, with an empty comment
+        if (options.question.getType() == "finding" && options.question.isRequired && options.value.comments == "") {
+            options.error = "Please provide inspection details.";
+        }
+    });
+
     function appendDetailToQuestion(survey, options) {
         var detailSurveyId = options.question.name + "-Detail";
         var detailLabel = "";
