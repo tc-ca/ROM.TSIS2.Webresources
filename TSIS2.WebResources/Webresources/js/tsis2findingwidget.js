@@ -279,6 +279,11 @@ var widget = {
             updateQuestionValue(question);
         }
 
+        //SurveyJS calling focus on Finding queston will focus the comment box.
+        question.focus = function () {
+            comments.focus();
+        }
+
         //set the changed value into question value
         onValueChangedCallback = function () {
 

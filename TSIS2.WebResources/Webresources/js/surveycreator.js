@@ -427,6 +427,24 @@ creator
         }
     });
 
+//Add custom validation to finding questions during test survey
+creator
+    .onSurveyInstanceCreated
+    .add(function (sender, options) {
+        //If we are creating a surface for "Test Survey" tab
+        if (options.reason == "test") {
+            options
+                .survey
+                .onValidateQuestion
+                .add(function (sender, options) {
+                    //If it is a finding that is required, with an empty comment
+                    if (options.question.getType() == "finding" && options.question.isRequired && options.value.comments == "") {
+                        options.error = "Please provide inspection details.";
+                    }
+                });
+        }
+    });
+
 //Add isOverallInspectionComment property to comment questions
 Survey
     .Serializer
