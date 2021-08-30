@@ -3,12 +3,15 @@ var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 var charactersRemainingLocalizedText;
 var detailTextAddLocalizedText;
 var detailTextMinusLocalizedText;
+var provideDetailsLocalizedText;
 
 if (lang == 1036) {
     charactersRemainingLocalizedText = "caractères restants";
+    provideDetailsLocalizedText = "Veuillez fournir des détails de l'inspection."
 }
 else {
     charactersRemainingLocalizedText = "characters remaining";
+    provideDetailsLocalizedText = "Please provide inspection details.";
 }
 
 'use strict';
@@ -117,6 +120,13 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             }
             changingHandler();
             comment.onkeyup = changingHandler;
+        }
+    });
+
+    survey.onValidateQuestion.add(function (sender, options) {
+        //If it is a finding that is required, with an empty comment
+        if (options.question.getType() == "finding" && options.question.isRequired && options.value.comments == "") {
+            options.error = provideDetailsLocalizedText;
         }
     });
 

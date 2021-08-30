@@ -8,10 +8,12 @@ var submitLocalizedText;
 if (lang == 1036) {
     charactersRemainingLocalizedText = "caractères restants";
     submitLocalizedText = "Soumettre";
+    provideDetailsLocalizedText = "Veuillez fournir des détails de l'inspection.";
 }
 else {
     charactersRemainingLocalizedText = "characters remaining";
     submitLocalizedText = "Submit";
+    provideDetailsLocalizedText = "Please provide inspection details.";
 }
 
 // Show Designer, Test Survey, JSON Editor and additionally Logic tabs
@@ -405,7 +407,7 @@ function appendCharacterCountToQuestion(survey, options) {
 creator
     .onSurveyInstanceCreated
     .add(function (sender, options) {
-        //If we are creating a surface for designer surface
+        //If survey instance in survey designer is created
         if (options.reason == "designer") {
             options
                 .survey
@@ -415,7 +417,7 @@ creator
                     appendCharacterCountToQuestion(survey, options);
                 });
         }
-        //If we are creating a surface for "Test Survey" tab
+        //If Test Survey instance is created
         if (options.reason == "test") {
             options
                 .survey
@@ -423,6 +425,24 @@ creator
                 .add(function (survey, options) {
                     if (options.question.getType() !== "comment") return;
                     appendCharacterCountToQuestion(survey, options);
+                });
+        }
+    });
+
+//Add custom validation to finding questions during test survey
+creator
+    .onSurveyInstanceCreated
+    .add(function (sender, options) {
+        //If Test Survey instance is created
+        if (options.reason == "test") {
+            options
+                .survey
+                .onValidateQuestion
+                .add(function (sender, options) {
+                    //If it is a finding that is required, with an empty comment
+                    if (options.question.getType() == "finding" && options.question.isRequired && options.value.comments == "") {
+                        options.error = provideDetailsLocalizedText;
+                    }
                 });
         }
     });
