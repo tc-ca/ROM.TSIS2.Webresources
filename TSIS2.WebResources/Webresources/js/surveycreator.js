@@ -8,10 +8,12 @@ var submitLocalizedText;
 if (lang == 1036) {
     charactersRemainingLocalizedText = "caractères restants";
     submitLocalizedText = "Soumettre";
+    provideDetailsLocalizedText = "Veuillez fournir des détails de l'inspection.";
 }
 else {
     charactersRemainingLocalizedText = "characters remaining";
     submitLocalizedText = "Submit";
+    provideDetailsLocalizedText = "Please provide inspection details.";
 }
 
 // Show Designer, Test Survey, JSON Editor and additionally Logic tabs
@@ -439,7 +441,7 @@ creator
                 .add(function (sender, options) {
                     //If it is a finding that is required, with an empty comment
                     if (options.question.getType() == "finding" && options.question.isRequired && options.value.comments == "") {
-                        options.error = "Please provide inspection details.";
+                        options.error = provideDetailsLocalizedText;
                     }
                 });
         }
