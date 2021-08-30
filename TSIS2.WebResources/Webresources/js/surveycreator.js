@@ -407,7 +407,7 @@ function appendCharacterCountToQuestion(survey, options) {
 creator
     .onSurveyInstanceCreated
     .add(function (sender, options) {
-        //If we are creating a surface for designer surface
+        //If survey instance in survey designer is created
         if (options.reason == "designer") {
             options
                 .survey
@@ -417,7 +417,7 @@ creator
                     appendCharacterCountToQuestion(survey, options);
                 });
         }
-        //If we are creating a surface for "Test Survey" tab
+        //If Test Survey instance is created
         if (options.reason == "test") {
             options
                 .survey
@@ -433,7 +433,7 @@ creator
 creator
     .onSurveyInstanceCreated
     .add(function (sender, options) {
-        //If we are creating a surface for "Test Survey" tab
+        //If Test Survey instance is created
         if (options.reason == "test") {
             options
                 .survey
