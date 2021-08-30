@@ -11,13 +11,15 @@ var ROM;
             var accountAttributeValue = form.getAttribute("ts_stakeholder").getValue();
             var siteAttribute = form.getAttribute("ts_site");
             var siteAttributeValue = form.getAttribute("ts_site").getValue();
-            //Save the current values of the fields used in the name generation if they exist
+            var nameAttribute = form.getAttribute("ovs_name");
+            //  Save the current values of the fields used in the name generation if they exist
             globalThis.generatedName = [];
-            if (accountAttribute != null && operationTypeAttribute != null && siteAttribute != null) {
-                if (accountAttributeValue != null && operationTypeAttributeValue != null && siteAttributeValue != null) {
+            if (accountAttribute != null || operationTypeAttribute != null || siteAttribute != null) {
+                if (accountAttributeValue != null || operationTypeAttributeValue != null || siteAttributeValue != null) {
                     globalThis.generatedName['operationType'] = operationTypeAttributeValue != null ? operationTypeAttributeValue[0].name : "";
                     globalThis.generatedName['account'] = accountAttributeValue != null ? accountAttributeValue[0].name : "";
                     globalThis.generatedName['functionalLocation'] = siteAttributeValue != null ? siteAttributeValue[0].name : "";
+                    nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : ""));
                 }
             }
         }

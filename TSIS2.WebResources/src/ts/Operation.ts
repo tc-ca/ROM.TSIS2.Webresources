@@ -11,15 +11,18 @@ namespace ROM.Operation {
         const siteAttribute = form.getAttribute("ts_site");
         const siteAttributeValue = form.getAttribute("ts_site").getValue();
 
-        //Save the current values of the fields used in the name generation if they exist
+        const nameAttribute = form.getAttribute("ovs_name");
+      //  Save the current values of the fields used in the name generation if they exist
         globalThis.generatedName = [];
-        if(accountAttribute != null && operationTypeAttribute != null && siteAttribute != null){
-            if(accountAttributeValue != null && operationTypeAttributeValue != null && siteAttributeValue != null){
-                globalThis.generatedName['operationType'] = operationTypeAttributeValue != null ? operationTypeAttributeValue[0].name : "" ;
-                globalThis.generatedName['account'] = accountAttributeValue != null ? accountAttributeValue[0].name  : "" ;
-                globalThis.generatedName['functionalLocation'] = siteAttributeValue != null ? siteAttributeValue[0].name  : "" ;
+        if(accountAttribute != null || operationTypeAttribute != null || siteAttribute != null){
+            if (accountAttributeValue != null || operationTypeAttributeValue != null || siteAttributeValue != null) {
+                globalThis.generatedName['operationType'] = operationTypeAttributeValue != null ? operationTypeAttributeValue[0].name : "";
+                globalThis.generatedName['account'] = accountAttributeValue != null ? accountAttributeValue[0].name : "";
+                globalThis.generatedName['functionalLocation'] = siteAttributeValue != null ? siteAttributeValue[0].name : "";           
+                nameAttribute.setValue(
+                    (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : ""));            
             }
-        }
+        }   
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
