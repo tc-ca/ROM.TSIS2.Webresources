@@ -8,6 +8,8 @@ async function generateSurvey() {
 
     parentFormContext.getAttribute("ovs_questionnairedefinition").setValue(customSurveyDefinition);
     parentFormContext.getAttribute("ovs_questionnaireresponse").setValue("");
+    Xrm = parent.Xrm;
+    ROM.WorkOrderServiceTask.ToggleQuestionnaire(parentExecutionContext);
 }
 
 function InitialContext(executionContext) {
