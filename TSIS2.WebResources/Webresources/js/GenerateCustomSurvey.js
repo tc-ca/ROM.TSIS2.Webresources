@@ -5,13 +5,9 @@ async function generateSurvey() {
     var provisions = provisionPromise.entities;
     if (provisions == null) return;
     var customSurveyDefinition = await generateCustomSurveyDefinitionJSON(provisions);
-    console.log(customSurveyDefinition);
 
-        //Replace survey definition
-
-        //Clear survey response field
-
-        //Initialize survey
+    parentFormContext.getAttribute("ovs_questionnairedefinition").setValue(customSurveyDefinition);
+    parentFormContext.getAttribute("ovs_questionnaireresponse").setValue("");
 }
 
 function InitialContext(executionContext) {
@@ -61,6 +57,7 @@ async function generateCustomSurveyDefinitionJSON(provisions) {
             type: "radiogroup",
             name: radioQuestionName,
             title: provisionName,
+            isRequired: true,
             choices: [
                 {
                     value: "No Finding",
