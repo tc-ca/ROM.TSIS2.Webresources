@@ -32,6 +32,16 @@ namespace ROM.WorkOrderServiceTask {
             mode = "display";
         }
         UpdateQuestionnaireDefinition(eContext);
+
+        var wrGenerateSurveyControl = Form.getControl("WebResource_GenerateCustomSurvey");
+        setControlInitialContext(eContext, wrGenerateSurveyControl);
+
+    }
+
+    function setControlInitialContext(eContext, wrControl) {
+        wrControl.getContentWindow().then(async function (win) {
+            win.InitialContext(eContext);
+        });
     }
 
     //If Status Reason is New, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field

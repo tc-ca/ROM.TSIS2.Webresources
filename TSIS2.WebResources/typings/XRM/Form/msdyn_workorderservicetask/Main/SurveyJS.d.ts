@@ -1,6 +1,20 @@
 declare namespace Form.msdyn_workorderservicetask.Main {
   namespace SurveyJS {
     namespace Tabs {
+      interface tab_10 extends Xrm.SectionCollectionBase {
+        get(name: "tab_10_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_11 extends Xrm.SectionCollectionBase {
+        get(name: "tab_11_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_5 extends Xrm.SectionCollectionBase {
         get(name: "tab_6_section_2"): Xrm.PageSection;
         get(name: string): undefined;
@@ -29,6 +43,14 @@ declare namespace Form.msdyn_workorderservicetask.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_9 extends Xrm.SectionCollectionBase {
+        get(name: "tab_9_section_1"): Xrm.PageSection;
+        get(name: "tab_9_section_3"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "msdyn_agreementbookingservicetask"): Xrm.LookupAttribute<"msdyn_agreementbookingservicetask">;
@@ -46,6 +68,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "msdyn_tasktype"): Xrm.LookupAttribute<"msdyn_servicetasktype">;
       get(name: "msdyn_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: "msdyn_workorderincident"): Xrm.LookupAttribute<"msdyn_workorderincident">;
+      get(name: "ovs_caseid"): Xrm.LookupAttribute<"incident">;
       get(name: "ovs_questionnairedefinition"): Xrm.Attribute<string>;
       get(name: "ovs_questionnaireresponse"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -57,7 +80,11 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "CustomSurveyProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
       get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
+      get(name: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
+      get(name: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
+      get(name: "WebResource_GenerateCustomSurvey"): Xrm.WebResourceControl;
       get(name: "WebResource_Provisions"): Xrm.WebResourceControl;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
@@ -82,6 +109,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "msdyn_workorderincident"): Xrm.LookupControl<"msdyn_workorderincident">;
       get(name: "msdyn_workorderincident1"): Xrm.LookupControl<"msdyn_workorderincident">;
       get(name: "notescontrol"): Xrm.BaseControl;
+      get(name: "ovs_caseid"): Xrm.LookupControl<"incident">;
       get(name: "ovs_questionnairedefinition"): Xrm.StringControl;
       get(name: "ovs_questionnaireresponse"): Xrm.StringControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -93,10 +121,13 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
+      get(name: "tab_11"): Xrm.PageTab<Tabs.tab_11>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
+      get(name: "tab_9"): Xrm.PageTab<Tabs.tab_9>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -119,13 +150,18 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "msdyn_tasktype"): Xrm.LookupAttribute<"msdyn_servicetasktype">;
     getAttribute(attributeName: "msdyn_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: "msdyn_workorderincident"): Xrm.LookupAttribute<"msdyn_workorderincident">;
+    getAttribute(attributeName: "ovs_caseid"): Xrm.LookupAttribute<"incident">;
     getAttribute(attributeName: "ovs_questionnairedefinition"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ovs_questionnaireresponse"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "CustomSurveyProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
+    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
+    getControl(controlName: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
+    getControl(controlName: "WebResource_GenerateCustomSurvey"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_Provisions"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
@@ -150,6 +186,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "msdyn_workorderincident"): Xrm.LookupControl<"msdyn_workorderincident">;
     getControl(controlName: "msdyn_workorderincident1"): Xrm.LookupControl<"msdyn_workorderincident">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
+    getControl(controlName: "ovs_caseid"): Xrm.LookupControl<"incident">;
     getControl(controlName: "ovs_questionnairedefinition"): Xrm.StringControl;
     getControl(controlName: "ovs_questionnaireresponse"): Xrm.StringControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;

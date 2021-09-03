@@ -15,6 +15,13 @@ declare namespace Form.ovs_operation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface bb4b118ea1c94e04ae4d8c6a177ee56c extends Xrm.SectionCollectionBase {
+        get(name: "null_section_3"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface rel_operations_tab extends Xrm.SectionCollectionBase {
         get(name: "tab_2_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -62,6 +69,7 @@ declare namespace Form.ovs_operation.Main {
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "Connections"): Xrm.PageTab<Tabs.Connections>;
       get(name: "WorkOrders"): Xrm.PageTab<Tabs.WorkOrders>;
+      get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}"): Xrm.PageTab<Tabs.bb4b118ea1c94e04ae4d8c6a177ee56c>;
       get(name: "rel_operations_tab"): Xrm.PageTab<Tabs.rel_operations_tab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];

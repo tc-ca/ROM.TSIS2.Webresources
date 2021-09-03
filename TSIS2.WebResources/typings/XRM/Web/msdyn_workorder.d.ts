@@ -61,6 +61,9 @@ interface msdyn_workorder_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   transactioncurrencyid_guid?: string | null;
   traversedpath?: string | null;
+  ts_numberoffindings?: number | null;
+  ts_numberoffindings_date?: Date | null;
+  ts_numberoffindings_state?: number | null;
   ts_workorderenddate?: Date | null;
   ts_workorderstartdate?: Date | null;
   utcconversiontimezonecode?: number | null;
@@ -262,6 +265,9 @@ interface msdyn_workorder_Select {
   transactioncurrencyid_guid: WebAttribute<msdyn_workorder_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<msdyn_workorder_Select, { traversedpath: string | null }, {  }>;
   ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_numberoffindings: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings: number | null }, {  }>;
+  ts_numberoffindings_date: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
+  ts_numberoffindings_state: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_state: number | null }, {  }>;
   ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_site_guid: WebAttribute<msdyn_workorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_tradenameid_guid: WebAttribute<msdyn_workorder_Select, { ts_tradenameid_guid: string | null }, { ts_tradenameid_formatted?: string }>;
@@ -384,6 +390,9 @@ interface msdyn_workorder_Filter {
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
   ts_country_guid: XQW.Guid;
+  ts_numberoffindings: number;
+  ts_numberoffindings_date: Date;
+  ts_numberoffindings_state: number;
   ts_region_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_tradenameid_guid: XQW.Guid;
@@ -511,6 +520,7 @@ interface msdyn_workorder_FormattedResult {
   statuscode_formatted?: string;
   transactioncurrencyid_formatted?: string;
   ts_country_formatted?: string;
+  ts_numberoffindings_date_formatted?: string;
   ts_region_formatted?: string;
   ts_site_formatted?: string;
   ts_tradenameid_formatted?: string;

@@ -67,8 +67,20 @@ var ROM;
                 mode = "display";
             }
             UpdateQuestionnaireDefinition(eContext);
+            var wrGenerateSurveyControl = Form.getControl("WebResource_GenerateCustomSurvey");
+            setControlInitialContext(eContext, wrGenerateSurveyControl);
         }
         WorkOrderServiceTask.onLoad = onLoad;
+        function setControlInitialContext(eContext, wrControl) {
+            wrControl.getContentWindow().then(function (win) {
+                return __awaiter(this, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        win.InitialContext(eContext);
+                        return [2 /*return*/];
+                    });
+                });
+            });
+        }
         //If Status Reason is New, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
         function UpdateQuestionnaireDefinition(eContext) {
             var Form = eContext.getFormContext();
