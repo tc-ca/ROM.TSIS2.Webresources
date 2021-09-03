@@ -1,8 +1,10 @@
 ﻿
 
-function generateSurvey() {
-    var provisions = await retrieveProvisions();
-    var customSurveyDefinition = generateCustomSurveyDefinitionJSON(provisions);
+async function generateSurvey() {
+    var provisionPromise = await retrieveProvisions();
+    var provisions = provisionPromise.entities;
+    if (provisions == null) return;
+    var customSurveyDefinition = await generateCustomSurveyDefinitionJSON(provisions);
     console.log(customSurveyDefinition);
 
         //Replace survey definition
@@ -19,7 +21,7 @@ function InitialContext(executionContext) {
 
 async function retrieveProvisions() {
     //Retrieve Provisions from WOST
-    var workOrderServiceTaskId = parentFormContext.data.entity.getId();
+    var workOrderServiceTaskId = parentFormContext.data.entity.getId().replace("{", "").replace("}", "");
     var fetchXml = [
         "<fetch>",
         "  <entity name='qm_rclegislation'>",
@@ -34,17 +36,10 @@ async function retrieveProvisions() {
     ].join("");
     fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
 
-    Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", fetchXml).then(function success(result) {
-        if (result.entities[0] != null) {
-            return result.entities;
-        }
-    }, function error(error) {
-        Xrm.Navigation.openAlertDialog({ text: error.message });
-        return null;
-    });
+    return parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", fetchXml);
 }
 
-function generateCustomSurveyDefinitionJSON(provisions) {
+async function generateCustomSurveyDefinitionJSON(provisions) {
     var survey = {
         pages: [
             {
@@ -55,7 +50,8 @@ function generateCustomSurveyDefinitionJSON(provisions) {
     };
     var questionCount = 0;
     var questionArray = []
-    provisions.forEach(function (provision) {
+    for (var provision of provisions) {
+        var provisionName = provision.qm_name;
         var provisionTextEn = await buildProvisionText(provision, "1033");
         var provisionTextFr = await buildProvisionText(provision, "1036");
         questionCount++;
@@ -64,7 +60,7 @@ function generateCustomSurveyDefinitionJSON(provisions) {
         var radioQuestion = {
             type: "radiogroup",
             name: radioQuestionName,
-            title: provision.qm_name,
+            title: provisionName,
             choices: [
                 {
                     value: "No Finding",
@@ -86,19 +82,19 @@ function generateCustomSurveyDefinitionJSON(provisions) {
         var observationFinding = {
             type: "finding",
             name: "finding-id" + questionCount,
-            visibleIf: `"{"${radioQuestionName}"}" = 'Observation'`,
-            title: provision.qm_name,
+            visibleIf: `{${radioQuestionName}} = 'Observation'`,
+            title: provisionName,
             description: {
                 default: provisionTextEn,
                 fr: provisionTextFr
             },
-            provision: provision.qm_name,
-            reference: provision.qm_name,
+            provision: provisionName,
+            reference: provisionName,
             nameID: "id" + questionCount,
             findingType: 717750001,
             provisionData: {
-                legislationid: "temp",
-                provisioncategoryid: null
+                legislationid: provision.qm_rclegislationid,
+                provisioncategoryid: provision._qm_tylegislationtypeid_value
             },
         }
         questionArray.push(observationFinding);
@@ -107,24 +103,24 @@ function generateCustomSurveyDefinitionJSON(provisions) {
         var nonComplianceFinding = {
             type: "finding",
             name: "finding-id" + questionCount,
-            visibleIf: `"{"${radioQuestionName}"}" = 'Non-compliance'`,
-            title: provision.qm_name,
+            visibleIf: `{${radioQuestionName}} = 'Non-compliance'`,
+            title: provisionName,
             description: {
                 default: provisionTextEn,
                 fr: provisionTextFr
             },
             isRequired: true,
-            provision: provision.qm_name,
-            reference: provision.qm_name,
+            provision: provisionName,
+            reference: provisionName,
             nameID: "id" + questionCount,
             findingType: 717750002,
             provisionData: {
-                legislationid: "temp",
-                provisioncategoryid: null
+                legislationid: provision.qm_rclegislationid,
+                provisioncategoryid: provision._qm_tylegislationtypeid_value
             },
         }
         questionArray.push(nonComplianceFinding);
-    });
+    };
     survey.pages[0].elements = questionArray;
     return JSON.stringify(survey);
 }
