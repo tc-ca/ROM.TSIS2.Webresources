@@ -668,6 +668,28 @@ var ROM;
             }
         }
         WorkOrder.revisedQuarterOnChange = revisedQuarterOnChange;
+        function dateWindowEndOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var dateWindowEndValue = form.data.entity.attributes.get("msdyn_datewindowend").getValue();
+            var fiscalQuarterAttribute = form.data.entity.attributes.get("ovs_fiscalquarter");
+            var fetchXml = "<fetch distinct=\"false\" mapping=\"logical\" output-format=\"xml-platform\" version=\"1.0\"> <entity name=\"tc_tcfiscalquarter\"> <attribute name=\"tc_name\"/> <attribute name=\"tc_tcfiscalquarterid\"/> <attribute name=\"tc_tcfiscalyearid\"/> <filter type=\"and\"> <condition operator=\"this-fiscal-year\" attribute = \"tc_quarterstart\"/> </filter> </entity> </fetch>";
+            fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+            Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", fetchXml).then(function success(result) {
+                if (result.entities.length > 0) {
+                    if (dateWindowEndValue != null) {
+                        var m = Math.floor(dateWindowEndValue.getMonth() / 3);
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = result.entities[m].tc_tcfiscalquarterid;
+                        lookup[0].name = result.entities[m].tc_name;
+                        lookup[0].entityType = 'tc_tcfiscalquarter';
+                        fiscalQuarterAttribute.setValue(lookup);
+                    }
+                }
+            }, function (error) {
+            });
+        }
+        WorkOrder.dateWindowEndOnChange = dateWindowEndOnChange;
         // FUNCTIONS
         function showErrorMessageAlert(error) {
             var alertStrings = { text: error.message };
