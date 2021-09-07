@@ -14,31 +14,35 @@ async function generateSurvey() {
     var oldResponse = JSON.parse(parentFormContext.getAttribute("ovs_questionnaireresponse").getValue());
     var newResponse = {};
 
-    //Iterate through provisions, check if a radiogroup question key exists for it in the old response
-    for (provision of provisions) {
-        let provisionName = provision.qm_name;
-        //If the same radiogroup question existed in the old response, keep the old values
-        if ((provisionName + "-radiogroup") in oldResponse) {
-            let findingTypeValue = oldResponse[provisionName + "-radiogroup"];
-            newResponse[provisionName + "-radiogroup"] = findingTypeValue;
+    if (oldResponse != null) {
+        //Iterate through provisions, check if a radiogroup question key exists for it in the old response
+        for (provision of provisions) {
+            let provisionName = provision.qm_name;
+            //If the same radiogroup question existed in the old response, keep the old values
+            if ((provisionName + "-radiogroup") in oldResponse) {
+                let findingTypeValue = oldResponse[provisionName + "-radiogroup"];
+                newResponse[provisionName + "-radiogroup"] = findingTypeValue;
 
-            //Check if any finding questions in the custom survey definition can use old values
-            for (oldQuestion of oldDefinition.pages[0].elements) {
-                //If a finding question used the same provision and has the same findingType
-                if (oldQuestion.type == "finding" && oldQuestion.provision == provisionName && oldQuestion.findingType == findingTypes[findingTypeValue]) {
-                    //Retrieve the value in the old response
-                    let oldFindingQuestionValue = oldResponse[oldQuestion.name];
-                    //Determine the question name used in the new definition, then set its value in the new response
-                    for (newQuestion of customSurveyDefinition.pages[0].elements) {
-                        if (newQuestion.provision == provisionName && newQuestion.findingType == findingTypes[findingTypeValue]) {
-                            newQuestionName = newQuestion.name;
-                            newResponse[newQuestionName] = oldFindingQuestionValue;
+                //Check if any finding questions in the custom survey definition can use old values
+                for (oldQuestion of oldDefinition.pages[0].elements) {
+                    //If a finding question used the same provision and has the same findingType
+                    if (oldQuestion.type == "finding" && oldQuestion.provision == provisionName && oldQuestion.findingType == findingTypes[findingTypeValue]) {
+                        //Retrieve the value in the old response
+                        let oldFindingQuestionValue = oldResponse[oldQuestion.name];
+                        //Determine the question name used in the new definition, make it use the same name as before then set its value in the new response
+                        for (newQuestion of customSurveyDefinition.pages[0].elements) {
+                            if (newQuestion.provision == provisionName && newQuestion.findingType == findingTypes[findingTypeValue]) {
+                                newQuestion.name = oldQuestion.name;
+                                newQuestion.nameID = oldQuestion.nameID;
+                                newResponse[oldQuestion.name] = oldFindingQuestionValue;
+                            }
                         }
                     }
                 }
             }
         }
     }
+    
 
         //Check if any finding questions were filled out for the provision
             //Use old value
@@ -135,10 +139,11 @@ async function generateCustomSurveyDefinition(provisions) {
         };
         questionArray.push(radioQuestion);
         questionCount++;
+        let uniqueNum = Date.now();
         //Create Observation Finding
         var observationFinding = {
             type: "finding",
-            name: "finding-id" + questionCount,
+            name: "finding-sq_" + uniqueNum,
             visibleIf: `{${radioQuestionName}} = 'Observation'`,
             title: provisionName,
             description: {
@@ -147,7 +152,7 @@ async function generateCustomSurveyDefinition(provisions) {
             },
             provision: provisionName,
             reference: provisionName,
-            nameID: "id" + questionCount,
+            nameID: "sq_" + uniqueNum,
             findingType: 717750001,
             provisionData: {
                 legislationid: provision.qm_rclegislationid,
@@ -156,10 +161,11 @@ async function generateCustomSurveyDefinition(provisions) {
         }
         questionArray.push(observationFinding);
         questionCount++;
+        uniqueNum = Date.now() + questionCount;
         //Create Non-Compliance Finding
         var nonComplianceFinding = {
             type: "finding",
-            name: "finding-id" + questionCount,
+            name: "finding-sq_" + uniqueNum,
             visibleIf: `{${radioQuestionName}} = 'Non-compliance'`,
             title: provisionName,
             description: {
@@ -169,7 +175,7 @@ async function generateCustomSurveyDefinition(provisions) {
             isRequired: true,
             provision: provisionName,
             reference: provisionName,
-            nameID: "id" + questionCount,
+            nameID: uniqueNum,
             findingType: 717750002,
             provisionData: {
                 legislationid: provision.qm_rclegislationid,
