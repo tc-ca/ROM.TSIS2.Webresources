@@ -229,6 +229,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
       get(name: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
       get(name: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
+      get(name: "ovs_fiscalquarter"): Xrm.LookupAttribute<"ovs_fiscalquarter"> 
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -309,6 +310,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: string): undefined;
+    getAttribute(attributeName: "ovs_fiscalquarter"): Xrm.LookupAttribute<"ovs_fiscalquarter"> 
     getControl(controlName: "Incidents_List"): Xrm.SubGridControl<"msdyn_workorderincident">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
