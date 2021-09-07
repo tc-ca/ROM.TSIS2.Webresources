@@ -7,9 +7,42 @@ async function generateSurvey() {
     var customSurveyDefinition = await generateCustomSurveyDefinitionJSON(provisions);
 
     parentFormContext.getAttribute("ovs_questionnairedefinition").setValue(customSurveyDefinition);
+    var oldResponse = JSON.parse(parentFormContext.getAttribute("ovs_questionnaireresponse").getValue());
+    for (const [questionName, value] of Object.entries(oldResponse)) {
+        console.log(`${questionName}: ${value}`);
+    }
+
+    //Iterate through provisions, check if a radiogroup question key exists for it in the old response
+        //Use old value
+
+        //Check if any finding questions were filled out for the provision
+            //Use old value
+
     parentFormContext.getAttribute("ovs_questionnaireresponse").setValue("");
     Xrm = parent.Xrm;
     ROM.WorkOrderServiceTask.ToggleQuestionnaire(parentExecutionContext);
+}
+
+async function previewProvisionText() {
+    var provisionPromise = await retrieveProvisions();
+    var provisions = provisionPromise.entities;
+    if (provisions == null) return;
+
+    var lang = '1033';
+    if (parent.Xrm != null) {
+        lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+    }
+
+    var provisionText = "";
+    for (var provision of provisions) {
+        provisionText += (await buildProvisionText(provision, lang) + "<br><br>");
+    }
+
+    var provisionTextWindow = window.open("", "Preview Provision Text");
+    provisionTextWindow.document.write("<body></body>");
+    var provisionTextSpan = provisionTextWindow.document.createElement('span');
+    provisionTextSpan.innerHTML = provisionText
+    provisionTextWindow.document.body.appendChild(provisionTextSpan);
 }
 
 function InitialContext(executionContext) {
@@ -53,7 +86,7 @@ async function generateCustomSurveyDefinitionJSON(provisions) {
         var provisionTextEn = await buildProvisionText(provision, "1033");
         var provisionTextFr = await buildProvisionText(provision, "1036");
         questionCount++;
-        var radioQuestionName = "question" + questionCount;
+        var radioQuestionName = provisionName + "-radiogroup";
         //Create Radial question
         var radioQuestion = {
             type: "radiogroup",
