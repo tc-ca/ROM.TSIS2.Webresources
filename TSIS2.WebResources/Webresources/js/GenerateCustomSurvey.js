@@ -156,7 +156,7 @@ async function generateCustomSurveyDefinition(provisions) {
             findingType: 717750001,
             provisionData: {
                 legislationid: provision.qm_rclegislationid,
-                provisioncategoryid: provision._qm_tylegislationtypeid_value
+                provisioncategoryid: provision._ts_provisioncategory_value
             },
         }
         questionArray.push(observationFinding);
@@ -175,11 +175,11 @@ async function generateCustomSurveyDefinition(provisions) {
             isRequired: true,
             provision: provisionName,
             reference: provisionName,
-            nameID: uniqueNum,
+            nameID: "sq_" + uniqueNum,
             findingType: 717750002,
             provisionData: {
                 legislationid: provision.qm_rclegislationid,
-                provisioncategoryid: provision._qm_tylegislationtypeid_value
+                provisioncategoryid: provision._ts_provisioncategory_value
             },
         }
         questionArray.push(nonComplianceFinding);
