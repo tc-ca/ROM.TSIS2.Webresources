@@ -33,7 +33,7 @@ namespace ROM.WorkOrderServiceTask {
         }
         UpdateQuestionnaireDefinition(eContext);
 
-        var wrGenerateSurveyControl = Form.getControl("WebResource_GenerateCustomSurvey");
+        var wrGenerateSurveyControl = Form.getControl("WebResource_BuildCustomQuestionnaire");
         setControlInitialContext(eContext, wrGenerateSurveyControl);
 
     }
