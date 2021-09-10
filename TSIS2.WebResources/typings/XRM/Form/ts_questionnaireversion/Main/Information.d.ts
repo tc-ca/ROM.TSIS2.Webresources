@@ -4,7 +4,6 @@ declare namespace Form.ts_questionnaireversion.Main {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
-      get(name: "ts_documentversion"): Xrm.Attribute<string>;
       get(name: "ts_effectiveenddate"): Xrm.DateAttribute;
       get(name: "ts_effectivestartdate"): Xrm.DateAttribute;
       get(name: "ts_name"): Xrm.Attribute<string>;
@@ -17,7 +16,6 @@ declare namespace Form.ts_questionnaireversion.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "WebResource_QuestionnaireCreator"): Xrm.WebResourceControl;
-      get(name: "header_ts_documentversion"): Xrm.StringControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_effectiveenddate"): Xrm.DateControl;
       get(name: "ts_effectivestartdate"): Xrm.DateControl;
@@ -38,7 +36,6 @@ declare namespace Form.ts_questionnaireversion.Main {
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
-    getAttribute(attributeName: "ts_documentversion"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_effectiveenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_effectivestartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
@@ -46,7 +43,6 @@ declare namespace Form.ts_questionnaireversion.Main {
     getAttribute(attributeName: "ts_questionnairedefinition"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "WebResource_QuestionnaireCreator"): Xrm.WebResourceControl;
-    getControl(controlName: "header_ts_documentversion"): Xrm.StringControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_effectiveenddate"): Xrm.DateControl;
     getControl(controlName: "ts_effectivestartdate"): Xrm.DateControl;

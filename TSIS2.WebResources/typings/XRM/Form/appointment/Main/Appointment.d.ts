@@ -22,7 +22,7 @@ declare namespace Form.appointment.Main {
       get(name: "currentsituation"): Xrm.Attribute<string> | null;
       get(name: "customerneed"): Xrm.Attribute<string> | null;
       get(name: "decisionmaker"): Xrm.OptionSetAttribute<boolean> | null;
-      get(name: "description"): Xrm.Attribute<string>;
+      get(name: "description"): Xrm.Attribute<any>;
       get(name: "emailaddress1"): Xrm.Attribute<string> | null;
       get(name: "estimatedclosedate"): Xrm.DateAttribute | null;
       get(name: "estimatedvalue"): Xrm.NumberAttribute | null;
@@ -67,7 +67,7 @@ declare namespace Form.appointment.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "attachmentsGrid"): Xrm.SubGridControl<"activitymimeattachment">;
-      get(name: "description"): Xrm.StringControl;
+      get(name: "description"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_prioritycode"): Xrm.OptionSetControl<appointment_prioritycode>;
       get(name: "header_process_birthdate"): Xrm.DateControl | null;
@@ -159,7 +159,7 @@ declare namespace Form.appointment.Main {
     getAttribute(attributeName: "currentsituation"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "customerneed"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "decisionmaker"): Xrm.OptionSetAttribute<boolean> | null;
-    getAttribute(attributeName: "description"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "description"): Xrm.Attribute<any>;
     getAttribute(attributeName: "emailaddress1"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "estimatedclosedate"): Xrm.DateAttribute | null;
     getAttribute(attributeName: "estimatedvalue"): Xrm.NumberAttribute | null;
@@ -199,7 +199,7 @@ declare namespace Form.appointment.Main {
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "attachmentsGrid"): Xrm.SubGridControl<"activitymimeattachment">;
-    getControl(controlName: "description"): Xrm.StringControl;
+    getControl(controlName: "description"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_prioritycode"): Xrm.OptionSetControl<appointment_prioritycode>;
     getControl(controlName: "header_process_birthdate"): Xrm.DateControl | null;

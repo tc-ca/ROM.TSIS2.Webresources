@@ -51,6 +51,18 @@ declare namespace Form.msdyn_workorderservicetask.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_summary extends Xrm.SectionCollectionBase {
+        get(name: "InspectionFormSection"): Xrm.PageSection;
+        get(name: "QuestionnaireFormSection"): Xrm.PageSection;
+        get(name: "section_custom_questionnaire"): Xrm.PageSection;
+        get(name: "{1932b377-2e7e-4880-9b0e-477cc529b5fe}_section_2"): Xrm.PageSection;
+        get(name: "{1932b377-2e7e-4880-9b0e-477cc529b5fe}_section_3"): Xrm.PageSection;
+        get(name: "{594a0ad8-a9a3-4509-9e40-52f6789d7512}"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "msdyn_agreementbookingservicetask"): Xrm.LookupAttribute<"msdyn_agreementbookingservicetask">;
@@ -74,17 +86,18 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
+      get(name: "ts_workorderstartdate"): Xrm.DateAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "CustomSurveyProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
+      get(name: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
       get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
       get(name: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
-      get(name: "WebResource_GenerateCustomSurvey"): Xrm.WebResourceControl;
+      get(name: "WebResource_BuildCustomQuestionnaire"): Xrm.WebResourceControl;
       get(name: "WebResource_Provisions"): Xrm.WebResourceControl;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
@@ -115,6 +128,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
+      get(name: "ts_workorderstartdate"): Xrm.DateControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -128,6 +142,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
       get(name: "tab_9"): Xrm.PageTab<Tabs.tab_9>;
+      get(name: "tab_summary"): Xrm.PageTab<Tabs.tab_summary>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -156,12 +171,13 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
+    getAttribute(attributeName: "ts_workorderstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "CustomSurveyProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
+    getControl(controlName: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
     getControl(controlName: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
-    getControl(controlName: "WebResource_GenerateCustomSurvey"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_BuildCustomQuestionnaire"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_Provisions"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
@@ -192,6 +208,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
+    getControl(controlName: "ts_workorderstartdate"): Xrm.DateControl;
     getControl(controlName: string): undefined;
   }
 }
