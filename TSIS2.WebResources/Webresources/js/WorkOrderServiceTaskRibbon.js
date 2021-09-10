@@ -53,6 +53,13 @@ function isSystemAdministrator() {
     return enable;
 }
 
+//Returns true if the associated Task Type is for Custom Questionnaires
+async function isTaskTypeCustomQuestionnaire(primaryControl) {
+    var taskTypeAttribute = primaryControl.getAttribute("msdyn_tasktype").getValue();
+    let taskTypeRecord = await Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeAttribute[0].id);
+    return taskTypeRecord.ts_hascustomquestionnaire;
+}
+
 //Returns true if WOST Status Reason is New
 function isStatusReasonNew(primaryControl) {
     var statusReason = primaryControl.getAttribute("statuscode").getValue();
@@ -331,4 +338,228 @@ function hide() {
     return false;
 }
 
+var findingTypes = {
+    "No Finding": 717750000,
+    "Observation": 717750001,
+    "Non-compliance": 717750002,
+};
 
+async function buildCustomQuestionnaire(primaryControl) {
+    var provisionPromise = await retrieveProvisions(primaryControl);
+    var provisions = provisionPromise.entities;
+    if (provisions == null) return;
+    var customSurveyDefinition = await generateCustomSurveyDefinition(provisions);
+
+    var oldDefinition = JSON.parse(primaryControl.getAttribute("ovs_questionnairedefinition").getValue());
+    var oldResponse = JSON.parse(primaryControl.getAttribute("ovs_questionnaireresponse").getValue());
+    var newResponse = {};
+
+    if (oldResponse != null) {
+        //Iterate through provisions, check if a radiogroup question key exists for it in the old response
+        for (provision of provisions) {
+            let provisionName = provision.qm_name;
+            //If the same radiogroup question existed in the old response, keep the old values
+            if ((provisionName + "-radiogroup") in oldResponse) {
+                let findingTypeValue = oldResponse[provisionName + "-radiogroup"];
+                newResponse[provisionName + "-radiogroup"] = findingTypeValue;
+
+                //Check if any finding questions in the custom survey definition can use old values
+                for (oldQuestion of oldDefinition.pages[0].elements) {
+                    //If a finding question used the same provision and has the same findingType
+                    if (oldQuestion.type == "finding" && oldQuestion.provision == provisionName && oldQuestion.findingType == findingTypes[findingTypeValue]) {
+                        //Retrieve the value in the old response
+                        let oldFindingQuestionValue = oldResponse[oldQuestion.name];
+                        //Determine the question name used in the new definition, make it use the same name as before then set its value in the new response
+                        //The name for the finding widgets must remain the same and unique to maintain the connection with any finding records created
+                        for (newQuestion of customSurveyDefinition.pages[0].elements) {
+                            if (newQuestion.provision == provisionName && newQuestion.findingType == findingTypes[findingTypeValue]) {
+                                newQuestion.name = oldQuestion.name;
+                                newQuestion.nameID = oldQuestion.nameID;
+                                newResponse[oldQuestion.name] = oldFindingQuestionValue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    //Check if any finding questions were filled out for the provision
+    //Use old value
+    primaryControl.getAttribute("ovs_questionnairedefinition").setValue(JSON.stringify(customSurveyDefinition));
+    primaryControl.getAttribute("ovs_questionnaireresponse").setValue(JSON.stringify(newResponse));
+    toggleQuestionnaire(primaryControl);
+}
+
+var mode = '';
+function toggleQuestionnaire(primaryControl) {
+
+        // Get the web resource control on the form
+    const wrCtrl = primaryControl.getControl('WebResource_QuestionnaireRender');
+    const questionnaireDefinition = primaryControl.getAttribute('ovs_questionnairedefinition').getValue();
+    const questionnaireResponse = primaryControl.getAttribute('ovs_questionnaireresponse').getValue();
+
+    // Exit if no questionnaire exists
+    if (questionnaireDefinition === null) {
+        wrCtrl.setVisible(false);
+    return;
+    }
+
+    // Get Questionnaire definition
+    wrCtrl.setVisible(true);
+    initiateSurvey(primaryControl, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
+}
+
+function initiateSurvey(primaryControl, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
+    wrCtrl.setVisible(true);
+    wrCtrl.getContentWindow().then(async function (win) {
+        const surveyLocale = ROM.WorkOrderServiceTask.getSurveyLocal();
+        win.InitialFormContext(primaryControl);
+        let operationData = await retrieveWorkOrderOperationData(primaryControl);
+        win.isComplete = (primaryControl.getAttribute("msdyn_percentcomplete").getValue() == 100.00);
+        win.operationList = operationData.operations;
+        win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
+        win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode)
+    });
+}
+
+async function previewProvisionText(primaryControl) {
+    var provisionPromise = await retrieveProvisions(primaryControl);
+    var provisions = provisionPromise.entities;
+    if (provisions == null) return;
+
+    var lang = '1033';
+    if (parent.Xrm != null) {
+        lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+    }
+
+    var provisionText = "";
+    for (var provision of provisions) {
+        provisionText += (await buildProvisionText(provision, lang) + "<br><br>");
+    }
+
+    var provisionTextWindow = window.open("", "Preview Provision Text");
+    provisionTextWindow.document.write("<body></body>");
+    var provisionTextSpan = provisionTextWindow.document.createElement('span');
+    provisionTextSpan.innerHTML = provisionText
+    provisionTextWindow.document.body.appendChild(provisionTextSpan);
+}
+
+function InitialContext(executionContext) {
+    window.parentExecutionContext = executionContext;
+    window.parentFormContext = executionContext.getFormContext();
+}
+
+async function retrieveProvisions(primaryControl) {
+    //Retrieve Provisions from WOST
+    var workOrderServiceTaskId = primaryControl.data.entity.getId().replace("{", "").replace("}", "");
+    var fetchXml = [
+        "<fetch>",
+        "  <entity name='qm_rclegislation'>",
+        "    <all-attributes />",
+        "    <link-entity name='ts_workorderservicetask_qm_rclegislation' from='qm_rclegislationid' to='qm_rclegislationid' intersect='true'>",
+        "      <filter>",
+        "        <condition attribute='msdyn_workorderservicetaskid' operator='eq' value='", workOrderServiceTaskId, "'/>",
+        "      </filter>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>",
+    ].join("");
+    fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+
+    return Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", fetchXml);
+}
+
+async function generateCustomSurveyDefinition(provisions) {
+    var survey = {
+        pages: [
+            {
+                name: "page1",
+                elements: []
+            }
+        ]
+    };
+    var questionCount = 0;
+    var questionArray = []
+    for (var provision of provisions) {
+        var provisionName = provision.qm_name;
+        var provisionTextEn = await buildProvisionText(provision, "1033");
+        var provisionTextFr = await buildProvisionText(provision, "1036");
+        questionCount++;
+        var radioQuestionName = provisionName + "-radiogroup";
+        //Create radiogroup question
+        var radioQuestion = {
+            type: "radiogroup",
+            name: radioQuestionName,
+            title: provisionName,
+            description: {
+                default: provisionTextEn,
+                fr: provisionTextFr
+            },
+            isRequired: true,
+            choices: [
+                {
+                    value: "No Finding",
+                    text: "No Finding"
+                },
+                {
+                    value: "Observation",
+                    text: "Observation"
+                },
+                {
+                    value: "Non-compliance",
+                    text: "Non-compliance"
+                }
+            ]
+        };
+        questionArray.push(radioQuestion);
+        questionCount++;
+        let uniqueNum = Date.now();
+        //Create Observation Finding
+        var observationFinding = {
+            type: "finding",
+            name: "finding-sq_" + uniqueNum,
+            visibleIf: `{${radioQuestionName}} = 'Observation'`,
+            title: provisionName,
+            description: {
+                default: provisionTextEn,
+                fr: provisionTextFr
+            },
+            provision: provisionName,
+            reference: provisionName,
+            nameID: "sq_" + uniqueNum,
+            findingType: 717750001,
+            provisionData: {
+                legislationid: provision.qm_rclegislationid,
+                provisioncategoryid: provision._ts_provisioncategory_value
+            },
+        }
+        questionArray.push(observationFinding);
+        questionCount++;
+        uniqueNum = Date.now() + questionCount;
+        //Create Non-Compliance Finding
+        var nonComplianceFinding = {
+            type: "finding",
+            name: "finding-sq_" + uniqueNum,
+            visibleIf: `{${radioQuestionName}} = 'Non-compliance'`,
+            title: provisionName,
+            description: {
+                default: provisionTextEn,
+                fr: provisionTextFr
+            },
+            isRequired: true,
+            provision: provisionName,
+            reference: provisionName,
+            nameID: "sq_" + uniqueNum,
+            findingType: 717750002,
+            provisionData: {
+                legislationid: provision.qm_rclegislationid,
+                provisioncategoryid: provision._ts_provisioncategory_value
+            },
+        }
+        questionArray.push(nonComplianceFinding);
+    };
+    survey.pages[0].elements = questionArray;
+    return survey;
+}

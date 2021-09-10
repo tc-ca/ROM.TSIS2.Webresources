@@ -75,34 +75,8 @@ var ROM;
                 mode = "display";
             }
             UpdateQuestionnaireDefinition(eContext);
-            var wrGenerateSurveyControl = Form.getControl("WebResource_BuildCustomQuestionnaire");
-            setControlInitialContext(eContext, wrGenerateSurveyControl);
         }
         WorkOrderServiceTask.onLoad = onLoad;
-        function setControlInitialContext(eContext, wrControl) {
-            wrControl.getContentWindow().then(function (win) {
-                return __awaiter(this, void 0, void 0, function () {
-                    return __generator(this, function (_a) {
-                        win.InitialContext(eContext);
-                        return [2 /*return*/];
-                    });
-                });
-            });
-        }
-        //Returns true if the associated Task Type is for Custom Questionnaires
-        function isTaskTypeCustomQuestionnaire(eContext) {
-            var Form = eContext.getFormContext();
-            var taskType = Form.getAttribute("msdyn_tasktype").getValue();
-            if (taskType != null) {
-                //Retrieve Task Type record
-                Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskType[0].id).then(function success(result) {
-                    return result.ts_hascustomquestionnaire;
-                });
-            }
-            else {
-                return false;
-            }
-        }
         //If Status Reason is New, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
         function UpdateQuestionnaireDefinition(eContext) {
             var Form = eContext.getFormContext();
@@ -179,6 +153,7 @@ var ROM;
             }
             return surveyLocale;
         }
+        WorkOrderServiceTask.getSurveyLocal = getSurveyLocal;
         function InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
             var Form = eContext.getFormContext();
             wrCtrl.setVisible(true);

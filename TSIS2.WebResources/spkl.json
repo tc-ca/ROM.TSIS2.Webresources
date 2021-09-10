@@ -221,11 +221,6 @@
               "file": "html\\SurveyRenderPrint.html",
               "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
             },
-            {
-              "uniquename": "ts_/html/BuildCustomQuestionnaire.html",
-              "file": "html\\BuildCustomQuestionnaire.html",
-              "description": "ROM TSIS 2.0 Custom Questionnaire Creator"
-            },
             /* SurveyJS dependencies */
             {
               "uniquename": "ovs_/js/ace.min.js",
@@ -301,11 +296,6 @@
               "uniquename": "ts_/js/surveyRenderPrint.js",
               "file": "js\\surveyRenderPrint.js",
               "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ts_/js/BuildCustomQuestionnaire.js",
-              "file": "js\\BuildCustomQuestionnaire.js",
-              "description": "Function Library to generate custom SurveyJS questionnaires"
             }
           ]
         }

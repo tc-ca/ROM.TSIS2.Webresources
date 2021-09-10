@@ -130,7 +130,6 @@
     <Content Include="Webresources\css\survey.min.css" />
     <Content Include="Webresources\css\WorkOrderExport.css" />
     <Content Include="Webresources\html\FindingProvisionText.html" />
-    <Content Include="Webresources\html\BuildCustomQuestionnaire.html" />
     <Content Include="Webresources\html\ProvisionRender.html" />
     <Content Include="Webresources\html\SurveyCreator.html" />
     <Content Include="Webresources\html\SurveyRender.html" />
@@ -146,7 +145,6 @@
     <Content Include="Webresources\js\CustomerAssetRibbon.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
     <Content Include="Webresources\js\FunctionalLocation.js" />
-    <Content Include="Webresources\js\BuildCustomQuestionnaire.js" />
     <Content Include="Webresources\js\Incident.js" />
     <Content Include="Webresources\js\IncidentQuickCreate.js" />
     <Content Include="Webresources\js\IncidentTypeServiceTask.js" />

@@ -41,31 +41,6 @@ namespace ROM.WorkOrderServiceTask {
             mode = "display";
         }
         UpdateQuestionnaireDefinition(eContext);
-
-        var wrGenerateSurveyControl = Form.getControl("WebResource_BuildCustomQuestionnaire");
-        setControlInitialContext(eContext, wrGenerateSurveyControl);
-    }
-
-    function setControlInitialContext(eContext, wrControl) {
-        wrControl.getContentWindow().then(async function (win) {
-            win.InitialContext(eContext);
-        });
-    }
-
-    //Returns true if the associated Task Type is for Custom Questionnaires
-    function isTaskTypeCustomQuestionnaire(eContext) {
-        const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
-        var taskType = Form.getAttribute("msdyn_tasktype").getValue();
-        if (taskType != null) {
-            //Retrieve Task Type record
-            Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskType[0].id).then(
-                function success(result) {
-                    return result.ts_hascustomquestionnaire;
-                }
-            );
-        } else {
-            return false;
-        }
     }
 
     //If Status Reason is New, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
@@ -137,7 +112,7 @@ namespace ROM.WorkOrderServiceTask {
     }
 
     // Get surveyJS locale
-    function getSurveyLocal(): string {
+    export function getSurveyLocal(): string {
         const languageCode = Xrm.Utility.getGlobalContext().userSettings.languageId;
         let surveyLocale = 'en';
         if (languageCode == 1036) {
