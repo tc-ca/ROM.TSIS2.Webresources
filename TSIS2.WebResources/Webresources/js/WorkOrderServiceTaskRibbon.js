@@ -354,6 +354,7 @@ async function buildCustomQuestionnaire(primaryControl) {
     var oldResponse = JSON.parse(primaryControl.getAttribute("ovs_questionnaireresponse").getValue());
     var newResponse = {};
 
+    //If there's an old response, reuse values from identical provisions
     if (oldResponse != null) {
         //Iterate through provisions, check if a radiogroup question key exists for it in the old response
         for (provision of provisions) {
@@ -383,10 +384,6 @@ async function buildCustomQuestionnaire(primaryControl) {
             }
         }
     }
-
-
-    //Check if any finding questions were filled out for the provision
-    //Use old value
     primaryControl.getAttribute("ovs_questionnairedefinition").setValue(JSON.stringify(customSurveyDefinition));
     primaryControl.getAttribute("ovs_questionnaireresponse").setValue(JSON.stringify(newResponse));
     toggleQuestionnaire(primaryControl);
@@ -424,6 +421,7 @@ function initiateSurvey(primaryControl, wrCtrl, questionnaireDefinition, questio
     });
 }
 
+//Opens a tab to display the full provision text of each custom questionnaire provision
 async function previewProvisionText(primaryControl) {
     var provisionPromise = await retrieveProvisions(primaryControl);
     var provisions = provisionPromise.entities;
@@ -435,12 +433,13 @@ async function previewProvisionText(primaryControl) {
     }
 
     var provisionText = "";
+    //Build provision text for each provision, concatenate together with line breaks between.
     for (var provision of provisions) {
         provisionText += (await buildProvisionText(provision, lang) + "<br><br>");
     }
 
     var provisionTextWindow = window.open("", "Preview Provision Text");
-    provisionTextWindow.document.write("<body></body>");
+    provisionTextWindow.document.write("<head><title>Provision Text</title></head><body></body>");
     var provisionTextSpan = provisionTextWindow.document.createElement('span');
     provisionTextSpan.innerHTML = provisionText
     provisionTextWindow.document.body.appendChild(provisionTextSpan);
@@ -470,7 +469,7 @@ async function retrieveProvisions(primaryControl) {
 
     return Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", fetchXml);
 }
-
+//Generates a custom survey definition for the given provisions
 async function generateCustomSurveyDefinition(provisions) {
     var survey = {
         pages: [
@@ -480,13 +479,11 @@ async function generateCustomSurveyDefinition(provisions) {
             }
         ]
     };
-    var questionCount = 0;
     var questionArray = []
     for (var provision of provisions) {
         var provisionName = provision.qm_name;
         var provisionTextEn = await buildProvisionText(provision, "1033");
         var provisionTextFr = await buildProvisionText(provision, "1036");
-        questionCount++;
         var radioQuestionName = provisionName + "-radiogroup";
         //Create radiogroup question
         var radioQuestion = {
@@ -514,7 +511,6 @@ async function generateCustomSurveyDefinition(provisions) {
             ]
         };
         questionArray.push(radioQuestion);
-        questionCount++;
         let uniqueNum = Date.now();
         //Create Observation Finding
         var observationFinding = {
@@ -536,8 +532,7 @@ async function generateCustomSurveyDefinition(provisions) {
             },
         }
         questionArray.push(observationFinding);
-        questionCount++;
-        uniqueNum = Date.now() + questionCount;
+        uniqueNum = Date.now() + 1;
         //Create Non-Compliance Finding
         var nonComplianceFinding = {
             type: "finding",
