@@ -7,7 +7,7 @@ declare namespace Form.ts_questionnaireversion.Main {
       get(name: "ts_effectiveenddate"): Xrm.DateAttribute;
       get(name: "ts_effectivestartdate"): Xrm.DateAttribute;
       get(name: "ts_name"): Xrm.Attribute<string>;
-      get(name: "ts_ovs_questionnaire"): Xrm.LookupAttribute<"ovs_questionnaire">;
+      get(name: "ts_ovs_questionnaire"): Xrm.Attribute<any>;
       get(name: "ts_questionnairedefinition"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -39,7 +39,7 @@ declare namespace Form.ts_questionnaireversion.Main {
     getAttribute(attributeName: "ts_effectiveenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_effectivestartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ts_ovs_questionnaire"): Xrm.LookupAttribute<"ovs_questionnaire">;
+    getAttribute(attributeName: "ts_ovs_questionnaire"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_questionnairedefinition"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "WebResource_QuestionnaireCreator"): Xrm.WebResourceControl;
