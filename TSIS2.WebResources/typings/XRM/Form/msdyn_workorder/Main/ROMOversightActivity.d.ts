@@ -161,6 +161,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+      get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
@@ -264,6 +265,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ovs_currentfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
+      get(name: "ovs_fiscalquarter1"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ovs_operationid"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
@@ -271,6 +273,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
+      get(name: "ts_numberoffindings"): Xrm.NumberControl;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
@@ -371,6 +374,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+    getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
@@ -469,6 +473,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ovs_currentfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
+    getControl(controlName: "ovs_fiscalquarter1"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ovs_operationid"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
@@ -476,6 +481,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
+    getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;

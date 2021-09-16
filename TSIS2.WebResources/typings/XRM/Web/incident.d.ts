@@ -50,6 +50,9 @@ interface Incident_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   title?: string | null;
   traversedpath?: string | null;
+  ts_numberoffindings?: number | null;
+  ts_numberoffindings_date?: Date | null;
+  ts_numberoffindings_state?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -194,6 +197,9 @@ interface Incident_Select {
   transactioncurrencyid_guid: WebAttribute<Incident_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Incident_Select, { traversedpath: string | null }, {  }>;
   ts_country_guid: WebAttribute<Incident_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_numberoffindings: WebAttribute<Incident_Select, { ts_numberoffindings: number | null }, {  }>;
+  ts_numberoffindings_date: WebAttribute<Incident_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
+  ts_numberoffindings_state: WebAttribute<Incident_Select, { ts_numberoffindings_state: number | null }, {  }>;
   ts_stakeholder_guid: WebAttribute<Incident_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<Incident_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<Incident_Select, { versionnumber: number | null }, {  }>;
@@ -285,6 +291,9 @@ interface Incident_Filter {
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
   ts_country_guid: XQW.Guid;
+  ts_numberoffindings: number;
+  ts_numberoffindings_date: Date;
+  ts_numberoffindings_state: number;
   ts_stakeholder_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
@@ -377,6 +386,7 @@ interface Incident_FormattedResult {
   subjectid_formatted?: string;
   transactioncurrencyid_formatted?: string;
   ts_country_formatted?: string;
+  ts_numberoffindings_date_formatted?: string;
   ts_stakeholder_formatted?: string;
 }
 interface Incident_Result extends Incident_Base, Incident_Relationships {

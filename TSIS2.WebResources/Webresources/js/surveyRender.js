@@ -41,6 +41,10 @@ function InitialContext(executionContext) {
     window.parentFormContext = executionContext.getFormContext();
 }
 
+function InitialFormContext(formContext) {
+    window.parentFormContext = formContext;
+}
+
 function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, mode) {
 
     if (surveyDefinition == null) {

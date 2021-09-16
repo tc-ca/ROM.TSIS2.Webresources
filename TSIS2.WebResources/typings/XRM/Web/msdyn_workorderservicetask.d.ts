@@ -24,6 +24,7 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
   statecode?: msdyn_workorderservicetask_statecode | null;
   statuscode?: msdyn_workorderservicetask_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_workorderstartdate?: Date | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -99,6 +100,7 @@ interface msdyn_workorderservicetask_Select {
   statecode: WebAttribute<msdyn_workorderservicetask_Select, { statecode: msdyn_workorderservicetask_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<msdyn_workorderservicetask_Select, { statuscode: msdyn_workorderservicetask_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<msdyn_workorderservicetask_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_workorderstartdate: WebAttribute<msdyn_workorderservicetask_Select, { ts_workorderstartdate: Date | null }, { ts_workorderstartdate_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_workorderservicetask_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_workorderservicetask_Select, { versionnumber: number | null }, {  }>;
 }
@@ -147,6 +149,7 @@ interface msdyn_workorderservicetask_Filter {
   statecode: msdyn_workorderservicetask_statecode;
   statuscode: msdyn_workorderservicetask_statuscode;
   timezoneruleversionnumber: number;
+  ts_workorderstartdate: Date;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -195,6 +198,7 @@ interface msdyn_workorderservicetask_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  ts_workorderstartdate_formatted?: string;
 }
 interface msdyn_workorderservicetask_Result extends msdyn_workorderservicetask_Base, msdyn_workorderservicetask_Relationships {
   "@odata.etag": string;

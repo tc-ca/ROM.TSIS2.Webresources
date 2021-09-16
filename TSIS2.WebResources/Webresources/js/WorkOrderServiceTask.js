@@ -59,9 +59,17 @@ var ROM;
         WorkOrderServiceTask.ToggleQuestionnaire = ToggleQuestionnaire;
         function onLoad(eContext) {
             var Form = eContext.getFormContext();
+            var taskType = Form.getAttribute("msdyn_tasktype").getValue();
             //Lock Task Type field if it has a value.
-            if (Form.getAttribute("msdyn_tasktype").getValue() != null) {
+            if (taskType != null) {
                 Form.getControl("msdyn_tasktype").setDisabled(true);
+                //Retrieve Task Type record
+                Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskType[0].id).then(function success(result) {
+                    //If it's for a custom questionnaire, show the custom questionnaire section
+                    if (result.ts_hascustomquestionnaire) {
+                        Form.ui.tabs.get("tab_summary").sections.get("section_custom_questionnaire").setVisible(true);
+                    }
+                });
             }
             if (Form.getAttribute('statecode').getValue() == 1) {
                 mode = "display";
@@ -193,6 +201,7 @@ var ROM;
             }
             return surveyLocale;
         }
+        WorkOrderServiceTask.getSurveyLocal = getSurveyLocal;
         function InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
             var Form = eContext.getFormContext();
             wrCtrl.setVisible(true);

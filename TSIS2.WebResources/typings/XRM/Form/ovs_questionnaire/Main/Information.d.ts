@@ -14,7 +14,6 @@ declare namespace Form.ovs_questionnaire.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_questionnaireversion">;
-      get(name: "WebResource_QuestionnaireCreator"): Xrm.WebResourceControl;
       get(name: "ovs_description"): Xrm.StringControl;
       get(name: "ovs_name"): Xrm.StringControl;
       get(name: "ovs_questionnairedefinition"): Xrm.StringControl;
@@ -38,7 +37,6 @@ declare namespace Form.ovs_questionnaire.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_questionnaireversion">;
-    getControl(controlName: "WebResource_QuestionnaireCreator"): Xrm.WebResourceControl;
     getControl(controlName: "ovs_description"): Xrm.StringControl;
     getControl(controlName: "ovs_name"): Xrm.StringControl;
     getControl(controlName: "ovs_questionnairedefinition"): Xrm.StringControl;

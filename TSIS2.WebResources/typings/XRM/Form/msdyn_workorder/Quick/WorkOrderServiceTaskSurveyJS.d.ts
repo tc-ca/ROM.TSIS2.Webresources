@@ -11,6 +11,7 @@ declare namespace Form.msdyn_workorder.Quick {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "msdyn_billingaccount"): Xrm.LookupAttribute<"account"> | null;
+      get(name: "msdyn_name"): Xrm.Attribute<string>;
       get(name: "msdyn_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype"> | null;
       get(name: "msdyn_priority"): Xrm.LookupAttribute<"msdyn_priority"> | null;
       get(name: "msdyn_serviceaccount"): Xrm.LookupAttribute<"account">;
@@ -49,6 +50,7 @@ declare namespace Form.msdyn_workorder.Quick {
       get(name: "header_process_msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype"> | null;
       get(name: "header_process_msdyn_workordertype_1"): Xrm.LookupControl<"msdyn_workordertype"> | null;
       get(name: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
+      get(name: "msdyn_name"): Xrm.StringControl;
       get(name: "msdyn_serviceaccount"): Xrm.LookupControl<"account">;
       get(name: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
@@ -69,6 +71,7 @@ declare namespace Form.msdyn_workorder.Quick {
   }
   interface WorkOrderServiceTaskSurveyJS extends Xrm.PageBase<WorkOrderServiceTaskSurveyJS.Attributes,WorkOrderServiceTaskSurveyJS.Tabs,WorkOrderServiceTaskSurveyJS.Controls> {
     getAttribute(attributeName: "msdyn_billingaccount"): Xrm.LookupAttribute<"account"> | null;
+    getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype"> | null;
     getAttribute(attributeName: "msdyn_priority"): Xrm.LookupAttribute<"msdyn_priority"> | null;
     getAttribute(attributeName: "msdyn_serviceaccount"): Xrm.LookupAttribute<"account">;
@@ -102,6 +105,7 @@ declare namespace Form.msdyn_workorder.Quick {
     getControl(controlName: "header_process_msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype"> | null;
     getControl(controlName: "header_process_msdyn_workordertype_1"): Xrm.LookupControl<"msdyn_workordertype"> | null;
     getControl(controlName: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
+    getControl(controlName: "msdyn_name"): Xrm.StringControl;
     getControl(controlName: "msdyn_serviceaccount"): Xrm.LookupControl<"account">;
     getControl(controlName: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;

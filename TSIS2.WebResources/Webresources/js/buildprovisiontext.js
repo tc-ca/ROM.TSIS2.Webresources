@@ -6,6 +6,7 @@ async function buildProvisionText(provision, lang) {
     provision.qm_name = `<mark>${provision.qm_name}</mark>`;
     provisionText += await gatherAncestorProvisionText(provision, lang);
     provisionText += await gatherDescendentProvisionText(provision, lang);
+    provision.qm_name = provision.qm_name.replace("<mark>", "").replace("</mark>", "");
     return provisionText;
 }
 
