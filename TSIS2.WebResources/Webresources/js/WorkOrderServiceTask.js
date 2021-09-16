@@ -74,26 +74,38 @@ var ROM;
             if (Form.getAttribute('statecode').getValue() == 1) {
                 mode = "display";
             }
-            UpdateQuestionnaireDefinition(eContext);
+            //If Status Reason is New user is able to change Work Order Start Date
+            var statusReason = Form.getAttribute("statuscode").getValue();
+            if (statusReason == 918640005) {
+                Form.getControl("ts_workorderstartdate").setDisabled(false);
+            }
         }
         WorkOrderServiceTask.onLoad = onLoad;
+        function workOrderStartDateOnChange(eContext) {
+            UpdateQuestionnaireDefinition(eContext);
+        }
+        WorkOrderServiceTask.workOrderStartDateOnChange = workOrderStartDateOnChange;
         //If Status Reason is New, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
         function UpdateQuestionnaireDefinition(eContext) {
             var Form = eContext.getFormContext();
-            var statusReason = Form.getAttribute("statuscode").getValue();
-            //If Status Reason is New
-            if (statusReason == 918640005) {
-                var taskType = Form.getAttribute("msdyn_tasktype").getValue();
-                if (taskType != null) {
-                    var taskTypeID = taskType[0].id;
-                    Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name&$expand=ovs_Questionnaire").then(function success(result) {
-                        var questionnaireId = result.ovs_Questionnaire.ovs_questionnaireid;
+            var workOrderStartDate = Form.getAttribute("ts_workorderstartdate").getValue();
+            var taskType = Form.getAttribute("msdyn_tasktype").getValue();
+            //  Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
+            if (taskType != null) {
+                var taskTypeID = taskType[0].id;
+                Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name&$expand=ovs_Questionnaire").then(function success(result) {
+                    var today = new Date(Date.now()).toISOString().slice(0, 10);
+                    var questionnaireId = result.ovs_Questionnaire.ovs_questionnaireid;
+                    if (workOrderStartDate != null) {
+                        //current questionnaire
                         var fetchXml = [
                             "<fetch>",
                             "  <entity name='ts_questionnaireversion'>",
                             "    <attribute name='ts_questionnairedefinition' />",
                             "    <attribute name='ts_name' />",
-                            "    <filter>",
+                            "    <filter type='and'>",
+                            "      <condition attribute='ts_effectiveenddate' operator='on-or-after' value='", today, "'/>",
+                            "      <condition attribute='ts_effectivestartdate' operator = 'on-or-before' value='", today, "'/>",
                             "      <condition attribute='ts_ovs_questionnaire' operator='eq' value='", questionnaireId, "'/>",
                             "    </filter>",
                             "    <order attribute='modifiedon' descending='true' />",
@@ -106,18 +118,54 @@ var ROM;
                             .then(function success(result) {
                             if (result.entities[0] == null)
                                 return;
-                            //Set WOST questionnaire definition to the Questionnaire Version's definition
-                            var newDefinition = result.entities[0].ts_questionnairedefinition;
-                            Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
-                            ToggleQuestionnaire(eContext);
+                            //The date selected falls within the Start and End Date of the current questionnaire - Display current questionnaire
+                            if (Date.parse(workOrderStartDate.toString()) > Date.parse(result.entities[0].ts_effectivestartdate) && Date.parse(workOrderStartDate.toString()) < Date.parse(result.entities[0].ts_effectiveenddate)) {
+                                //Set WOST questionnaire definition to the Questionnaire Version's definition
+                                var newDefinition = result.entities[0].ts_questionnairedefinition;
+                                Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
+                                ToggleQuestionnaire(eContext);
+                            }
+                            else {
+                                // If the Inspector is connected display the questionnaire that was valid / active on the date selected    
+                                //If not display message
+                                var fetchXml = [
+                                    "<fetch>",
+                                    "  <entity name='ts_questionnaireversion'>",
+                                    "    <attribute name='ts_questionnairedefinition' />",
+                                    "    <attribute name='ts_name' />",
+                                    "    <filter type='and'>",
+                                    "      <condition attribute='ts_effectiveenddate' operator='on-or-after' value='", workOrderStartDate.toISOString().slice(0, 10), "'/>",
+                                    "      <condition attribute='ts_effectivestartdate' operator = 'on-or-before' value='", workOrderStartDate.toISOString().slice(0, 10), "'/>",
+                                    "      <condition attribute='ts_ovs_questionnaire' operator='eq' value='", questionnaireId, "'/>",
+                                    "    </filter>",
+                                    "    <order attribute='modifiedon' descending='true' />",
+                                    "  </entity>",
+                                    "</fetch>",
+                                ].join("");
+                                fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+                                Xrm.WebApi.online.retrieveMultipleRecords("ts_questionnaireversion", fetchXml)
+                                    .then(function success(result) {
+                                    if (result.entities[0] == null) {
+                                        Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
+                                        return;
+                                    }
+                                    //Set WOST questionnaire definition to the Questionnaire Version's definition
+                                    var newDefinition = result.entities[0].ts_questionnairedefinition;
+                                    Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
+                                    ToggleQuestionnaire(eContext);
+                                }, function error(error) {
+                                    //If the Inspector is disconnected display an information message
+                                    Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
+                                    var alertStrings = { confirmButtonLabel: "Ok", text: Xrm.Utility.getResourceString("ts_/resx/WorkOrderServiceTask", "Text"), title: Xrm.Utility.getResourceString("ts_/resx/WorkOrderServiceTask", "Title") };
+                                    var alertOptions = { height: 120, width: 260 };
+                                    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+                                });
+                            }
                         }, function error(error) {
                             Xrm.Navigation.openAlertDialog({ text: error.message });
                         });
-                    });
-                }
-            }
-            else {
-                ToggleQuestionnaire(eContext);
+                    }
+                });
             }
         }
         function onSave(eContext) {
