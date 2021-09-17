@@ -148,7 +148,6 @@ declare namespace Form.incident.Main {
       get(name: "title"): Xrm.Attribute<string>;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
-      get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -222,7 +221,6 @@ declare namespace Form.incident.Main {
       get(name: "title"): Xrm.StringControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
-      get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -289,7 +287,6 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
-    getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Associated_Articles"): Xrm.SubGridControl<"knowledgebaserecord">;
     getControl(controlName: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
@@ -358,7 +355,6 @@ declare namespace Form.incident.Main {
     getControl(controlName: "title"): Xrm.StringControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
-    getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
     getControl(controlName: string): undefined;
   }
 }

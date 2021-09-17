@@ -7,7 +7,6 @@ namespace ROM.Incident {
 
         //Set required fields
         form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
-        form.getAttribute("ts_stakeholder").setRequiredLevel("required");
 
         switch (form.ui.getFormType()) {
             case 1:
@@ -34,23 +33,22 @@ namespace ROM.Incident {
                 break;
         }
 
-                // Lock some fields if there are associated WOs
-                var fetchXML = `<fetch> <entity name="incident" > <attribute name="incidentid" /> <filter> <condition attribute="incidentid" operator="eq" value="${form.data.entity.getId()}" /> </filter> <link-entity name="msdyn_workorder" from="msdyn_servicerequest" to="incidentid" /> </entity> </fetch>`;
+        // Lock some fields if there are associated WOs
+        var fetchXML = `<fetch> <entity name="incident" > <attribute name="incidentid" /> <filter> <condition attribute="incidentid" operator="eq" value="${form.data.entity.getId()}" /> </filter> <link-entity name="msdyn_workorder" from="msdyn_servicerequest" to="incidentid" /> </entity> </fetch>`;
 
-                fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
+        fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
 
-                Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(
-                    function success(result) {
-                        if(result.entities.length > 0){
-                            form.getControl("ovs_region").setDisabled(true);
-                            form.getControl("ts_country").setDisabled(true);
-                            form.getControl("ts_stakeholder").setDisabled(true);
-                            form.getControl("msdyn_functionallocation").setDisabled(true);
-                        }
-                    },
-                    function (error) {
-                    }
-                );
+        Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(
+            function success(result) {
+                if (result.entities.length > 0) {
+                    form.getControl("ovs_region").setDisabled(true);
+                    form.getControl("ts_country").setDisabled(true);
+                    form.getControl("msdyn_functionallocation").setDisabled(true);
+                }
+            },
+            function (error) {
+            }
+        );
     }
 
     export function regionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -90,7 +88,7 @@ namespace ROM.Incident {
                         const viewId = '{5463C38B-8BC4-4C95-BD05-491798FEAE23}';
                         const entityName = "account";
                         const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredStakeholders");
-                        const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"> <entity name="account"> <attribute name="name" /> <attribute name="accountid" /> <order attribute="name" descending="false" /> <filter type="and"> <condition attribute="customertypecode" operator="eq" value="948010000" /> <condition attribute="statecode" operator="eq" value="0" /> </filter> <link-entity name="msdyn_customerasset" from="msdyn_account" to="accountid" link-type="inner" alias="bh"> <link-entity name="msdyn_customerassetcategory" from="msdyn_customerassetcategoryid" to="msdyn_customerassetcategory" link-type="inner" alias="bi"> <filter type="and"> <condition attribute="ts_assetcategorytype" operator="eq" value="717750000" /> </filter> </link-entity> <link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_functionallocation" link-type="inner" alias="bj"> <filter type="and"> <condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '" /> </filter> </link-entity> </link-entity> </entity> </fetch>';
+                        const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><link-entity name="ovs_operation" from="ts_stakeholder" to="accountid" link-type="inner" alias="ai"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" link-type="inner" alias="aj"><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
                         const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
                         form.getControl("customerid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     }
@@ -134,7 +132,7 @@ namespace ROM.Incident {
                     const viewId = '{5482C38D-8BB4-3B95-BD05-493398FEAE95}';
                     const entityName = "account";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredStakeholders");
-                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"> <entity name="account"> <attribute name="name" /> <attribute name="accountid" /> <order attribute="name" descending="false" /> <filter type="and"> <condition attribute="customertypecode" operator="eq" value="948010000" /> <condition attribute="statecode" operator="eq" value="0" /> </filter> <link-entity name="msdyn_customerasset" from="msdyn_account" to="accountid" link-type="inner" alias="bb"> <link-entity name="msdyn_customerassetcategory" from="msdyn_customerassetcategoryid" to="msdyn_customerassetcategory" link-type="inner" alias="bc"> <filter type="and"> <condition attribute="ts_assetcategorytype" operator="eq" value="717750000" /> </filter> </link-entity> <link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_functionallocation" link-type="inner" alias="bd"> <filter type="and"> <condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" /> </filter> </link-entity> </link-entity> </entity> </fetch>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><order attribute="name" descending="false" /><link-entity name="ovs_operation" from="ts_stakeholder" to="accountid" link-type="inner" alias="ac"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" link-type="inner" alias="ad"><filter type="and"><condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
                     const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
                     form.getControl("customerid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 }
@@ -172,7 +170,7 @@ namespace ROM.Incident {
 
                     var countryCondition = "";
 
-                    if (countryAttributeValue != null && countryAttributeValue != undefined && regionAttributeValue[0].name != "International") {
+                    if (countryAttributeValue != null && countryAttributeValue != undefined && regionAttributeValue[0].name == "International") {
                         countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '"/>';
                     }
 
@@ -183,7 +181,7 @@ namespace ROM.Incident {
                     const viewId = '{6C57256F-F695-4576-9438-49AD892152B7}';
                     const entityName = "msdyn_functionallocation";
                     const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredSites");
-                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"> <entity name="msdyn_functionallocation"> <attribute name="msdyn_functionallocationid" /> <attribute name="msdyn_name" /> <order attribute="msdyn_name" descending="false" /> <filter type="and"> <condition attribute="statecode" operator="eq" value="0" /> <condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryCondition + '</filter><link-entity name="msdyn_customerasset" from="msdyn_functionallocation" to="msdyn_functionallocationid" link-type="inner" alias="an"> <filter type="and"> <condition attribute="msdyn_account" operator="eq" value="' + stakeholderAttributeValue[0].id + '" /> </filter> <link-entity name="msdyn_customerassetcategory" from="msdyn_customerassetcategoryid" to="msdyn_customerassetcategory" link-type="inner" alias="ao"> <filter type="and"> <condition attribute="ts_assetcategorytype" operator="eq" value="717750000" /> </filter> </link-entity> </link-entity> </entity> </fetch>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_functionallocation"><attribute name="msdyn_functionallocationid" /><attribute name="msdyn_name" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryCondition + '</filter><link-entity name="ovs_operation" from="ts_site" to="msdyn_functionallocationid" link-type="inner" alias="al"><filter type="and"><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '" /></filter></link-entity></entity></fetch>';
                     const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
                     form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 }
@@ -249,10 +247,10 @@ namespace ROM.Incident {
         // Custom view: Countries that have an international site
         const viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F662}';
         const entityName = "tc_country";
-        const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredCountries");
+        const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredCountries");
         const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="tc_country"><attribute name="tc_countryid" /><attribute name="tc_name" /><order attribute="tc_name" descending="false" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="msdyn_functionallocation" from="ts_country" to="tc_countryid" link-type="inner" alias="ae"><filter type="and"><condition attribute="ts_region" operator="eq" value="{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}" /></filter></link-entity></entity></fetch>';
         const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="tc_countryid"><cell name="tc_name" width="200" /></row></grid>';
         form.getControl("ts_country").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 
-  }
+}
