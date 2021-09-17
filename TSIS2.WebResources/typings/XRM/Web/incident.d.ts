@@ -73,7 +73,6 @@ interface Incident_Relationships {
   msdyn_incident_msdyn_customerasset?: msdyn_customerasset_Result[] | null;
   msdyn_incident_msdyn_workorder_ServiceRequest?: msdyn_workorder_Result[] | null;
   ovs_incident_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result[] | null;
-  ts_Stakeholder?: Account_Result | null;
   ts_incident_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
 }
 interface Incident extends Incident_Base, Incident_Relationships {
@@ -102,7 +101,6 @@ interface Incident extends Incident_Base, Incident_Relationships {
   subjectid_bind$subjects?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_Country_bind$tc_countries?: string | null;
-  ts_Stakeholder_bind$accounts?: string | null;
 }
 interface Incident_Create extends Incident {
   incidentid_childincidentcount_bind$childincidentcounts?: string | null;
@@ -200,7 +198,6 @@ interface Incident_Select {
   ts_numberoffindings: WebAttribute<Incident_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<Incident_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<Incident_Select, { ts_numberoffindings_state: number | null }, {  }>;
-  ts_stakeholder_guid: WebAttribute<Incident_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<Incident_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<Incident_Select, { versionnumber: number | null }, {  }>;
 }
@@ -294,7 +291,6 @@ interface Incident_Filter {
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;
-  ts_stakeholder_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -326,7 +322,6 @@ interface Incident_Expand {
   parentcaseid: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { parentcaseid: Incident_Result }>;
   primarycontactid: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
   responsiblecontactid: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { responsiblecontactid: Contact_Result }>;
-  ts_Stakeholder: WebExpand<Incident_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
   ts_incident_ts_workordercreationwizard: WebExpand<Incident_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_incident_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
 }
 interface Incident_FormattedResult {
@@ -387,7 +382,6 @@ interface Incident_FormattedResult {
   transactioncurrencyid_formatted?: string;
   ts_country_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
-  ts_stakeholder_formatted?: string;
 }
 interface Incident_Result extends Incident_Base, Incident_Relationships {
   "@odata.etag": string;
@@ -426,7 +420,6 @@ interface Incident_Result extends Incident_Base, Incident_Relationships {
   subjectid_guid: string | null;
   transactioncurrencyid_guid: string | null;
   ts_country_guid: string | null;
-  ts_stakeholder_guid: string | null;
 }
 interface Incident_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -443,7 +436,6 @@ interface Incident_RelatedOne {
   parentcaseid: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   primarycontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   responsiblecontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
-  ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface Incident_RelatedMany {
   Incident_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;

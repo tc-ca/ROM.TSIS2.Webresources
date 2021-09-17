@@ -1,5 +1,5 @@
 declare namespace Form.msdyn_workorderservicetask.Main {
-  namespace SurveyJS {
+  namespace SondageJS {
     namespace Tabs {
       interface tab_10 extends Xrm.SectionCollectionBase {
         get(name: "tab_10_section_1"): Xrm.PageSection;
@@ -97,7 +97,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
       get(name: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
-      get(name: "WebResource_BuildCustomQuestionnaire"): Xrm.WebResourceControl;
       get(name: "WebResource_Provisions"): Xrm.WebResourceControl;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
@@ -149,7 +148,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface SurveyJS extends Xrm.PageBase<SurveyJS.Attributes,SurveyJS.Tabs,SurveyJS.Controls> {
+  interface SondageJS extends Xrm.PageBase<SondageJS.Attributes,SondageJS.Tabs,SondageJS.Controls> {
     getAttribute(attributeName: "msdyn_agreementbookingservicetask"): Xrm.LookupAttribute<"msdyn_agreementbookingservicetask">;
     getAttribute(attributeName: "msdyn_booking"): Xrm.LookupAttribute<"bookableresourcebooking">;
     getAttribute(attributeName: "msdyn_customerasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
@@ -177,7 +176,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
     getControl(controlName: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
-    getControl(controlName: "WebResource_BuildCustomQuestionnaire"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_Provisions"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;

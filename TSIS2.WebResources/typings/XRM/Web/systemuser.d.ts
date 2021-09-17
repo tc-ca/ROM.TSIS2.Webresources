@@ -52,6 +52,7 @@ interface SystemUser_Base extends WebEntity {
   createdon?: Date | null;
   defaultfilterspopulated?: boolean | null;
   defaultodbfoldername?: string | null;
+  deletedstate?: systemuser_deletestate | null;
   disabledreason?: string | null;
   displayinserviceviews?: boolean | null;
   domainname?: string | null;
@@ -319,6 +320,7 @@ interface SystemUser_Select {
   defaultfilterspopulated: WebAttribute<SystemUser_Select, { defaultfilterspopulated: boolean | null }, {  }>;
   defaultmailbox_guid: WebAttribute<SystemUser_Select, { defaultmailbox_guid: string | null }, { defaultmailbox_formatted?: string }>;
   defaultodbfoldername: WebAttribute<SystemUser_Select, { defaultodbfoldername: string | null }, {  }>;
+  deletedstate: WebAttribute<SystemUser_Select, { deletedstate: systemuser_deletestate | null }, { deletedstate_formatted?: string }>;
   disabledreason: WebAttribute<SystemUser_Select, { disabledreason: string | null }, {  }>;
   displayinserviceviews: WebAttribute<SystemUser_Select, { displayinserviceviews: boolean | null }, {  }>;
   domainname: WebAttribute<SystemUser_Select, { domainname: string | null }, {  }>;
@@ -446,6 +448,7 @@ interface SystemUser_Filter {
   defaultfilterspopulated: boolean;
   defaultmailbox_guid: XQW.Guid;
   defaultodbfoldername: string;
+  deletedstate: systemuser_deletestate;
   disabledreason: string;
   displayinserviceviews: boolean;
   domainname: string;
@@ -665,6 +668,7 @@ interface SystemUser_FormattedResult {
   createdon_formatted?: string;
   createdonbehalfby_formatted?: string;
   defaultmailbox_formatted?: string;
+  deletedstate_formatted?: string;
   emailrouteraccessapproval_formatted?: string;
   incomingemaildeliverymethod_formatted?: string;
   invitestatuscode_formatted?: string;
