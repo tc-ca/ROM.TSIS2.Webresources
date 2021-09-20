@@ -15,9 +15,9 @@ function addExistingOperationsToEntity(primaryControl, selectedEntityTypeName, s
 
         if(entityName == "msdyn_workorder"){ //work order form
 
-            defaultViewId = "b29c07a0-71fb-eb11-94ef-000d3ae99a90"; 
+            defaultViewId = "cca2cae4-216e-46b5-934e-d9112870f36f";
 
-            viewIds = ["b29c07a0-71fb-eb11-94ef-000d3ae99a90"];
+            viewIds = ["cca2cae4-216e-46b5-934e-d9112870f36f"];
 
             setWorkOrderLookupControl(formContext, selectedControl, entitySetName, recordId, defaultViewId, viewIds, operationsAlreadyAssociatedCondition);
             
@@ -156,8 +156,9 @@ function setOperationLookupControl(formContext, selectedControl, entitySetName, 
 
 function setWorkOrderLookupControl(formContext, selectedControl, entitySetName, recordId, defaultViewId, viewIds, operationsAlreadyAssociatedCondition){
     var operationValue = formContext.getAttribute("ovs_operationid").getValue();
+    var siteValue = formContext.getAttribute("ts_site").getValue();
     var currentOperationCondition = operationValue != null ? `<condition attribute="ovs_operationid" operator="neq" value="${operationValue[0].id}" />` : "";
-    var relatedOperations = operationValue != null ? `<condition entityname="ts_ovs_operation_ovs_operation" attribute="ovs_operationidtwo" operator="eq" value="${operationValue[0].id}" />` : "";
+    var siteOperations = siteValue != null ? `<condition attribute='ts_site' operator='eq' value='${siteValue[0].id}' />` : "";
 
     var lookupOptions =
     {
@@ -171,7 +172,7 @@ function setWorkOrderLookupControl(formContext, selectedControl, entitySetName, 
                 filterXml: `<filter type="and">` + 
                     `${operationsAlreadyAssociatedCondition}` +
                     `${currentOperationCondition}` +
-                    `${relatedOperations}` +
+                    `${siteOperations}` +
                     `</filter> `,
                 entityLogicalName: "ovs_operation"
             }
