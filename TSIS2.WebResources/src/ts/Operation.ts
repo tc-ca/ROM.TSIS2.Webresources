@@ -19,8 +19,6 @@ namespace ROM.Operation {
                 globalThis.generatedName['operationType'] = operationTypeAttributeValue != null ? operationTypeAttributeValue[0].name : "";
                 globalThis.generatedName['account'] = accountAttributeValue != null ? accountAttributeValue[0].name : "";
                 globalThis.generatedName['functionalLocation'] = siteAttributeValue != null ? siteAttributeValue[0].name : "";           
-                nameAttribute.setValue(
-                    (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : ""));            
             }
         }   
     }
