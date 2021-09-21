@@ -78,7 +78,10 @@ var ROM;
             var statusReason = Form.getAttribute("statuscode").getValue();
             if (statusReason == 918640005) {
                 Form.getControl("ts_workorderstartdate").setDisabled(false);
+                Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
             }
+            else
+                ToggleQuestionnaire(eContext);
         }
         WorkOrderServiceTask.onLoad = onLoad;
         function workOrderStartDateOnChange(eContext) {
@@ -123,6 +126,7 @@ var ROM;
                                 //Set WOST questionnaire definition to the Questionnaire Version's definition
                                 var newDefinition = result.entities[0].ts_questionnairedefinition;
                                 Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
+                                //   Form.getControl('WebResource_QuestionnaireRender').setVisible(true);
                                 ToggleQuestionnaire(eContext);
                             }
                             else {
@@ -152,6 +156,7 @@ var ROM;
                                     //Set WOST questionnaire definition to the Questionnaire Version's definition
                                     var newDefinition = result.entities[0].ts_questionnairedefinition;
                                     Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
+                                    //   Form.getControl('WebResource_QuestionnaireRender').setVisible(true);
                                     ToggleQuestionnaire(eContext);
                                 }, function error(error) {
                                     //If the Inspector is disconnected display an information message
