@@ -88,7 +88,6 @@ interface msdyn_workorder_Relationships {
   ovs_PrimaryInspector?: BookableResource_Result | null;
   ovs_RevisedQuarterId?: tc_TCFiscalQuarter_Result | null;
   ovs_SecondaryInspector?: BookableResource_Result | null;
-  ovs_SiteofViolation?: Account_Result | null;
   qm_ReportContactId?: Contact_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_WorkOrderCreationWizardId?: ts_workordercreationwizard_Result | null;
@@ -132,11 +131,9 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ovs_Rational_bind$ovs_tyrationals?: string | null;
   ovs_RevisedQuarterId_bind$tc_tcfiscalquarters?: string | null;
   ovs_SecondaryInspector_bind$bookableresources?: string | null;
-  ovs_SiteofViolation_bind$accounts?: string | null;
   ovs_TYRational_bind$ovs_tyrationals?: string | null;
   ovs_asset_bind$msdyn_customerassets?: string | null;
   ovs_operationtypeid_bind$ovs_operationtypes?: string | null;
-  ovs_regulatedentity_bind$accounts?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   qm_ReportContactId_bind$contacts?: string | null;
@@ -245,10 +242,8 @@ interface msdyn_workorder_Select {
   ovs_operationtypeid_guid: WebAttribute<msdyn_workorder_Select, { ovs_operationtypeid_guid: string | null }, { ovs_operationtypeid_formatted?: string }>;
   ovs_primaryinspector_guid: WebAttribute<msdyn_workorder_Select, { ovs_primaryinspector_guid: string | null }, { ovs_primaryinspector_formatted?: string }>;
   ovs_rational_guid: WebAttribute<msdyn_workorder_Select, { ovs_rational_guid: string | null }, { ovs_rational_formatted?: string }>;
-  ovs_regulatedentity_guid: WebAttribute<msdyn_workorder_Select, { ovs_regulatedentity_guid: string | null }, { ovs_regulatedentity_formatted?: string }>;
   ovs_revisedquarterid_guid: WebAttribute<msdyn_workorder_Select, { ovs_revisedquarterid_guid: string | null }, { ovs_revisedquarterid_formatted?: string }>;
   ovs_secondaryinspector_guid: WebAttribute<msdyn_workorder_Select, { ovs_secondaryinspector_guid: string | null }, { ovs_secondaryinspector_formatted?: string }>;
-  ovs_siteofviolation_guid: WebAttribute<msdyn_workorder_Select, { ovs_siteofviolation_guid: string | null }, { ovs_siteofviolation_formatted?: string }>;
   ovs_tyrational_guid: WebAttribute<msdyn_workorder_Select, { ovs_tyrational_guid: string | null }, { ovs_tyrational_formatted?: string }>;
   ownerid_guid: WebAttribute<msdyn_workorder_Select, { ownerid_guid: string | null }, { ownerid_formatted?: string }>;
   owningbusinessunit_guid: WebAttribute<msdyn_workorder_Select, { owningbusinessunit_guid: string | null }, { owningbusinessunit_formatted?: string }>;
@@ -370,10 +365,8 @@ interface msdyn_workorder_Filter {
   ovs_operationtypeid_guid: XQW.Guid;
   ovs_primaryinspector_guid: XQW.Guid;
   ovs_rational_guid: XQW.Guid;
-  ovs_regulatedentity_guid: XQW.Guid;
   ovs_revisedquarterid_guid: XQW.Guid;
   ovs_secondaryinspector_guid: XQW.Guid;
-  ovs_siteofviolation_guid: XQW.Guid;
   ovs_tyrational_guid: XQW.Guid;
   ownerid_guid: XQW.Guid;
   owningbusinessunit_guid: XQW.Guid;
@@ -432,9 +425,7 @@ interface msdyn_workorder_Expand {
   ovs_PrimaryInspector: WebExpand<msdyn_workorder_Expand, BookableResource_Select, BookableResource_Filter, { ovs_PrimaryInspector: BookableResource_Result }>;
   ovs_RevisedQuarterId: WebExpand<msdyn_workorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_RevisedQuarterId: tc_TCFiscalQuarter_Result }>;
   ovs_SecondaryInspector: WebExpand<msdyn_workorder_Expand, BookableResource_Select, BookableResource_Filter, { ovs_SecondaryInspector: BookableResource_Result }>;
-  ovs_SiteofViolation: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ovs_SiteofViolation: Account_Result }>;
   ovs_asset: WebExpand<msdyn_workorder_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ovs_asset: msdyn_customerasset_Result }>;
-  ovs_regulatedentity: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ovs_regulatedentity: Account_Result }>;
   ownerid: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   qm_ReportContactId: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { qm_ReportContactId: Contact_Result }>;
@@ -506,10 +497,8 @@ interface msdyn_workorder_FormattedResult {
   ovs_operationtypeid_formatted?: string;
   ovs_primaryinspector_formatted?: string;
   ovs_rational_formatted?: string;
-  ovs_regulatedentity_formatted?: string;
   ovs_revisedquarterid_formatted?: string;
   ovs_secondaryinspector_formatted?: string;
-  ovs_siteofviolation_formatted?: string;
   ovs_tyrational_formatted?: string;
   ownerid_formatted?: string;
   owningbusinessunit_formatted?: string;
@@ -569,10 +558,8 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ovs_operationtypeid_guid: string | null;
   ovs_primaryinspector_guid: string | null;
   ovs_rational_guid: string | null;
-  ovs_regulatedentity_guid: string | null;
   ovs_revisedquarterid_guid: string | null;
   ovs_secondaryinspector_guid: string | null;
-  ovs_siteofviolation_guid: string | null;
   ovs_tyrational_guid: string | null;
   ownerid_guid: string | null;
   owningbusinessunit_guid: string | null;
@@ -609,9 +596,7 @@ interface msdyn_workorder_RelatedOne {
   ovs_PrimaryInspector: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   ovs_RevisedQuarterId: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ovs_SecondaryInspector: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
-  ovs_SiteofViolation: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ovs_asset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
-  ovs_regulatedentity: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   qm_ReportContactId: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
