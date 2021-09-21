@@ -45,7 +45,10 @@ namespace ROM.WorkOrderServiceTask {
         const statusReason = Form.getAttribute("statuscode").getValue();
         if (statusReason == 918640005) {
             Form.getControl("ts_workorderstartdate").setDisabled(false);
+            Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
         }
+        else
+            ToggleQuestionnaire(eContext);
     }
 
     export function workOrderStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -92,6 +95,7 @@ namespace ROM.WorkOrderServiceTask {
                                     //Set WOST questionnaire definition to the Questionnaire Version's definition
                                     const newDefinition = result.entities[0].ts_questionnairedefinition;
                                     Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
+                                 //   Form.getControl('WebResource_QuestionnaireRender').setVisible(true);
                                     ToggleQuestionnaire(eContext);
                                 }
                                 else {
@@ -121,6 +125,7 @@ namespace ROM.WorkOrderServiceTask {
                                             //Set WOST questionnaire definition to the Questionnaire Version's definition
                                             const newDefinition = result.entities[0].ts_questionnairedefinition;
                                             Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
+                                         //   Form.getControl('WebResource_QuestionnaireRender').setVisible(true);
                                             ToggleQuestionnaire(eContext);
                                         }, function error(error) {                                          
                                             //If the Inspector is disconnected display an information message
