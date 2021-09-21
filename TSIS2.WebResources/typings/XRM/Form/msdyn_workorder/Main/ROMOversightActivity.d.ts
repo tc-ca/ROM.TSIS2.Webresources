@@ -268,6 +268,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_fiscalquarter1"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ovs_operationid"): Xrm.LookupControl<"ovs_operation">;
+      get(name: "ovs_operationid1"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
@@ -476,6 +477,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_fiscalquarter1"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ovs_operationid"): Xrm.LookupControl<"ovs_operation">;
+    getControl(controlName: "ovs_operationid1"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;

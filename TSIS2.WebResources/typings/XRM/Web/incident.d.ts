@@ -101,6 +101,7 @@ interface Incident extends Incident_Base, Incident_Relationships {
   subjectid_bind$subjects?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_Country_bind$tc_countries?: string | null;
+  ts_TradeNameId_bind$ts_tradenames?: string | null;
 }
 interface Incident_Create extends Incident {
   incidentid_childincidentcount_bind$childincidentcounts?: string | null;
@@ -198,6 +199,7 @@ interface Incident_Select {
   ts_numberoffindings: WebAttribute<Incident_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<Incident_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<Incident_Select, { ts_numberoffindings_state: number | null }, {  }>;
+  ts_tradenameid_guid: WebAttribute<Incident_Select, { ts_tradenameid_guid: string | null }, { ts_tradenameid_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<Incident_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<Incident_Select, { versionnumber: number | null }, {  }>;
 }
@@ -291,6 +293,7 @@ interface Incident_Filter {
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;
+  ts_tradenameid_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -382,6 +385,7 @@ interface Incident_FormattedResult {
   transactioncurrencyid_formatted?: string;
   ts_country_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
+  ts_tradenameid_formatted?: string;
 }
 interface Incident_Result extends Incident_Base, Incident_Relationships {
   "@odata.etag": string;
@@ -420,6 +424,7 @@ interface Incident_Result extends Incident_Base, Incident_Relationships {
   subjectid_guid: string | null;
   transactioncurrencyid_guid: string | null;
   ts_country_guid: string | null;
+  ts_tradenameid_guid: string | null;
 }
 interface Incident_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
