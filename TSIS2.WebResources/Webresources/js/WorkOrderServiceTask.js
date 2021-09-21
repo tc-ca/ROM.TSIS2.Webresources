@@ -41,22 +41,6 @@ var ROM;
     (function (WorkOrderServiceTask) {
         // EVENTS
         var mode = '';
-        function ToggleQuestionnaire(eContext) {
-            var Form = eContext.getFormContext();
-            // Get the web resource control on the form
-            var wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
-            var questionnaireDefinition = Form.getAttribute('ovs_questionnairedefinition').getValue();
-            var questionnaireResponse = Form.getAttribute('ovs_questionnaireresponse').getValue();
-            // Exit if no questionnaire exists
-            if (questionnaireDefinition === null) {
-                wrCtrl.setVisible(false);
-                return;
-            }
-            // Get Questionnaire definition
-            wrCtrl.setVisible(true);
-            InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
-        }
-        WorkOrderServiceTask.ToggleQuestionnaire = ToggleQuestionnaire;
         function onLoad(eContext) {
             var Form = eContext.getFormContext();
             var taskType = Form.getAttribute("msdyn_tasktype").getValue();
@@ -88,6 +72,21 @@ var ROM;
             UpdateQuestionnaireDefinition(eContext);
         }
         WorkOrderServiceTask.workOrderStartDateOnChange = workOrderStartDateOnChange;
+        function ToggleQuestionnaire(eContext) {
+            var Form = eContext.getFormContext();
+            // Get the web resource control on the form
+            var wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
+            var questionnaireDefinition = Form.getAttribute('ovs_questionnairedefinition').getValue();
+            var questionnaireResponse = Form.getAttribute('ovs_questionnaireresponse').getValue();
+            // Exit if no questionnaire exists
+            if (questionnaireDefinition === null) {
+                wrCtrl.setVisible(false);
+                return;
+            }
+            // Get Questionnaire definition
+            wrCtrl.setVisible(true);
+            InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
+        }
         //If Status Reason is New, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
         function UpdateQuestionnaireDefinition(eContext) {
             var Form = eContext.getFormContext();
