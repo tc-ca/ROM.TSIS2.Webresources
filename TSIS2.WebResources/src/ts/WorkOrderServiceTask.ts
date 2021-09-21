@@ -1,24 +1,6 @@
 namespace ROM.WorkOrderServiceTask {
     // EVENTS
-    var mode = '';
-    export function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
-        const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
-
-        // Get the web resource control on the form
-        const wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
-        const questionnaireDefinition = Form.getAttribute('ovs_questionnairedefinition').getValue();
-        const questionnaireResponse = Form.getAttribute('ovs_questionnaireresponse').getValue();
-
-        // Exit if no questionnaire exists
-        if (questionnaireDefinition === null) {
-            wrCtrl.setVisible(false);
-            return;
-        }
-
-        // Get Questionnaire definition
-        wrCtrl.setVisible(true);
-        InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
-    }
+    var mode = '';    
 
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
@@ -53,6 +35,25 @@ namespace ROM.WorkOrderServiceTask {
 
     export function workOrderStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         UpdateQuestionnaireDefinition(eContext);
+    }
+
+    function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
+        const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
+
+        // Get the web resource control on the form
+        const wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
+        const questionnaireDefinition = Form.getAttribute('ovs_questionnairedefinition').getValue();
+        const questionnaireResponse = Form.getAttribute('ovs_questionnaireresponse').getValue();
+
+        // Exit if no questionnaire exists
+        if (questionnaireDefinition === null) {
+            wrCtrl.setVisible(false);
+            return;
+        }
+
+        // Get Questionnaire definition
+        wrCtrl.setVisible(true);
+        InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
     }
 
     //If Status Reason is New, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
