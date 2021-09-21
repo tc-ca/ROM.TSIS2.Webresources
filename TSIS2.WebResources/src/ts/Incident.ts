@@ -43,6 +43,7 @@ namespace ROM.Incident {
                 if (result.entities.length > 0) {
                     form.getControl("ovs_region").setDisabled(true);
                     form.getControl("ts_country").setDisabled(true);
+                    form.getControl("ts_tradenameid").setDisabled(true);
                     form.getControl("msdyn_functionallocation").setDisabled(true);
                 }
             },
