@@ -183,6 +183,9 @@ var ROM;
                         form.getAttribute("ts_site").setValue(null);
                         form.getAttribute("ovs_operationid").setValue(null);
                     }
+                    if (!form.getControl("msdyn_functionallocation").getVisible() && form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                        form.getAttribute("msdyn_functionallocation").setValue(null);
+                    }
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                     }
@@ -198,6 +201,8 @@ var ROM;
                         form.getControl("msdyn_serviceaccount").setDisabled(true);
                     if (form.getControl("ts_site").getDisabled() == false)
                         form.getControl("ts_site").setDisabled(true);
+                    if (form.getControl("msdyn_functionallocation").getDisabled() == false)
+                        form.getControl("msdyn_functionallocation").setVisible(false);
                     if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
                         form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                     // If previous fields have values, we use the filtered fetchxml in a custom lookup view
@@ -242,6 +247,9 @@ var ROM;
                         form.getAttribute("ts_site").setValue(null);
                         form.getAttribute("ovs_operationid").setValue(null);
                     }
+                    if (!form.getControl("msdyn_functionallocation").getVisible() && form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                        form.getAttribute("msdyn_functionallocation").setValue(null);
+                    }
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                     }
@@ -254,6 +262,8 @@ var ROM;
                         form.getControl("msdyn_serviceaccount").setDisabled(true);
                     if (form.getControl("ts_site").getDisabled() == false)
                         form.getControl("ts_site").setDisabled(true);
+                    if (form.getControl("msdyn_functionallocation").getDisabled() == false)
+                        form.getControl("msdyn_functionallocation").setVisible(false);
                     if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
                         form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                     var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
@@ -296,6 +306,9 @@ var ROM;
                         form.getAttribute("ts_site").setValue(null);
                         form.getAttribute("ovs_operationid").setValue(null);
                     }
+                    if (!form.getControl("msdyn_functionallocation").getVisible() && form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                        form.getAttribute("msdyn_functionallocation").setValue(null);
+                    }
                     if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                         form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                     }
@@ -306,6 +319,8 @@ var ROM;
                         form.getControl("msdyn_serviceaccount").setDisabled(true);
                     if (form.getControl("ts_site").getDisabled() == false)
                         form.getControl("ts_site").setDisabled(true);
+                    if (form.getControl("msdyn_functionallocation").getDisabled() == false)
+                        form.getControl("msdyn_functionallocation").setVisible(false);
                     if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
                         form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                     // If previous fields have values, we use the filtered fetchxml in a custom lookup view
@@ -372,9 +387,14 @@ var ROM;
                         form.getAttribute("ts_site").setValue(null);
                         form.getAttribute("ovs_operationid").setValue(null);
                     }
+                    if (!form.getControl("msdyn_functionallocation").getVisible() && form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                        form.getAttribute("msdyn_functionallocation").setValue(null);
+                    }
                     // Disable all dependent fields
                     if (form.getControl("ts_site").getDisabled() == false)
                         form.getControl("ts_site").setDisabled(true);
+                    if (form.getControl("msdyn_functionallocation").getDisabled() == false)
+                        form.getControl("msdyn_functionallocation").setVisible(false);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                     var regionAttributeValue = regionAttribute.getValue();
                     var operationTypeAttributeValue = operationTypeAttribute.getValue();
@@ -411,7 +431,7 @@ var ROM;
                 var stakeholderAttribute = form_1.getAttribute("msdyn_serviceaccount");
                 var siteAttribute = form_1.getAttribute("ts_site");
                 if (siteAttribute != null && siteAttribute != undefined) {
-                    // Clear out operation value if not already empty
+                    // Clear out operation and subsite value if not already empty
                     if (form_1.getAttribute("ovs_operationid").getValue() != null)
                         form_1.getAttribute("ovs_operationid").setValue(null);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
@@ -454,9 +474,17 @@ var ROM;
                                 var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
                                 form_1.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
                             }
+                            else {
+                                form_1.getAttribute("msdyn_functionallocation").setValue(null);
+                                form_1.getControl('msdyn_functionallocation').setVisible(false);
+                            }
                         }, function (error) {
                             showErrorMessageAlert(error);
                         });
+                    }
+                    else {
+                        form_1.getAttribute("msdyn_functionallocation").setValue(null);
+                        form_1.getControl('msdyn_functionallocation').setVisible(false);
                     }
                 }
             }

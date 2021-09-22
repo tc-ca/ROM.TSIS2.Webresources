@@ -204,6 +204,9 @@ namespace ROM.WorkOrder {
                     form.getAttribute("ts_site").setValue(null);
                     form.getAttribute("ovs_operationid").setValue(null);
                 }
+                if (!form.getControl("msdyn_functionallocation").getVisible() && form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                    form.getAttribute("msdyn_functionallocation").setValue(null);
+                }
                 if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                 }
@@ -215,6 +218,7 @@ namespace ROM.WorkOrder {
                 if (form.getControl("ts_tradenameid").getDisabled() == false) form.getControl("ts_tradenameid").setDisabled(true);
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
+                if (form.getControl("msdyn_functionallocation").getDisabled() == false) form.getControl("msdyn_functionallocation").setVisible(false);
                 if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
@@ -262,6 +266,9 @@ namespace ROM.WorkOrder {
                     form.getAttribute("ts_site").setValue(null);
                     form.getAttribute("ovs_operationid").setValue(null);
                 }
+                if (!form.getControl("msdyn_functionallocation").getVisible() && form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                    form.getAttribute("msdyn_functionallocation").setValue(null);
+                }
                 if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                 }
@@ -271,6 +278,7 @@ namespace ROM.WorkOrder {
                 if (form.getControl("ts_tradenameid").getDisabled() == false) form.getControl("ts_tradenameid").setDisabled(true);
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
+                if (form.getControl("msdyn_functionallocation").getDisabled() == false) form.getControl("msdyn_functionallocation").setVisible(false);
                 if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
 
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
@@ -315,6 +323,9 @@ namespace ROM.WorkOrder {
                     form.getAttribute("ts_site").setValue(null);
                     form.getAttribute("ovs_operationid").setValue(null);
                 }
+                if (!form.getControl("msdyn_functionallocation").getVisible() && form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                    form.getAttribute("msdyn_functionallocation").setValue(null);
+                }
                 if (!form.getControl("msdyn_primaryincidenttype").getDisabled() && form.getAttribute("msdyn_primaryincidenttype").getValue() != null) {
                     form.getAttribute("msdyn_primaryincidenttype").setValue(null);
                 }
@@ -323,6 +334,7 @@ namespace ROM.WorkOrder {
                 if (form.getControl("ts_tradenameid").getDisabled() == false) form.getControl("ts_tradenameid").setDisabled(true);
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
+                if (form.getControl("msdyn_functionallocation").getDisabled() == false) form.getControl("msdyn_functionallocation").setVisible(false);
                 if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
@@ -398,9 +410,13 @@ namespace ROM.WorkOrder {
                     form.getAttribute("ts_site").setValue(null);
                     form.getAttribute("ovs_operationid").setValue(null);
                 }
+                if (!form.getControl("msdyn_functionallocation").getVisible() && form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                    form.getAttribute("msdyn_functionallocation").setValue(null);
+                }
 
                 // Disable all dependent fields
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
+                if (form.getControl("msdyn_functionallocation").getDisabled() == false) form.getControl("msdyn_functionallocation").setVisible(false);
 
                 // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                 const regionAttributeValue = regionAttribute.getValue();
@@ -444,7 +460,7 @@ namespace ROM.WorkOrder {
             const stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
             const siteAttribute = form.getAttribute("ts_site");
             if (siteAttribute != null && siteAttribute != undefined) {
-                // Clear out operation value if not already empty
+                // Clear out operation and subsite value if not already empty
                 if (form.getAttribute("ovs_operationid").getValue() != null) form.getAttribute("ovs_operationid").setValue(null);
 
                 // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
@@ -452,6 +468,8 @@ namespace ROM.WorkOrder {
                 const stakeholderAttributeValue = stakeholderAttribute.getValue();
                 const siteAttributeValue = siteAttribute.getValue();
 
+
+                
                 if (siteAttributeValue != null && siteAttributeValue != undefined &&
                     stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
                     operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
@@ -493,12 +511,19 @@ namespace ROM.WorkOrder {
                                 const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
                                 form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true); 
                             }
+                            else{
+                                form.getAttribute("msdyn_functionallocation").setValue(null);
+                                form.getControl('msdyn_functionallocation').setVisible(false);
+                            }
                         },
                         function (error) {
                             showErrorMessageAlert(error);
                         }
                     );
-                    
+                }
+                else{
+                    form.getAttribute("msdyn_functionallocation").setValue(null);
+                    form.getControl('msdyn_functionallocation').setVisible(false);
                 }
             }
         } catch (e) {
