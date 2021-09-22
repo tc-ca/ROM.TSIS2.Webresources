@@ -19,7 +19,7 @@ if (lang == 1036){
     findingTypeNoncomplianceLocalized = "Non-conformité"
 }
 else{
-    inspectorCommentsLocalizedText = "Provide details:";
+    inspectorCommentsLocalizedText = "Provide Details:";
     charactersRemainingLocalizedText = "characters remaining";
     accountableOperationsLocalized = "Accountable Operations";
     findingTypeLocalized = "Finding Type"
@@ -94,7 +94,7 @@ var widget = {
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div><div class="form-group"><div class="operationsContainer"></div> <label for="comment" style="padding-top: 15px;"> <span class="field-name">${inspectorCommentsLocalizedText}</span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
+        `<div><div class="form-group"><div class="operationsContainer"></div> <label for="comment" style="padding-top: 15px;"> <span class="field-name"><strong>${inspectorCommentsLocalizedText}</strong></span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="1000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         // isComplete is set onLoad of WOST form. If it wasn't set there, initialize as false.
