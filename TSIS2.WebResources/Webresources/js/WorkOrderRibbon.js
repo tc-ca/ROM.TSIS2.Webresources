@@ -35,23 +35,13 @@ if (lang == 1036) {
 function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, selectedControl) {
     const formContext = primaryControl;
 
-    const caseId = Xrm.Page.data.entity.getId().replace(/({|})/g,'');
+    const caseId = Xrm.Page.data.entity.getId().replace(/({|})/g, '');
 
-    const regionAttribute = formContext.getAttribute("ovs_region");
-    const countryAttribute = formContext.getAttribute("ts_country");
-    const stakeholderAttribute = formContext.getAttribute("ts_stakeholder");
+    const stakeholderAttribute = formContext.getAttribute("customerid");
     const siteAttribute = formContext.getAttribute("msdyn_functionallocation");
 
-    const regionAttributeValue = regionAttribute.getValue();
-    const countryAttributeValue = countryAttribute.getValue();
     const stakeholderAttributeValue = stakeholderAttribute.getValue();
     const siteAttributeValue = siteAttribute.getValue();
-
-    var countryCondition = "";
-
-    if (countryAttributeValue != null) {
-         countryCondition = `<condition attribute="ts_country" operator="eq" value="${countryAttributeValue[0].id}" />`;
-    }
 
     var lookupOptions =
     {
@@ -63,8 +53,6 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
         filters: [
             {
                 filterXml: `<filter type="and">` +
-                    `<condition attribute="ts_region" operator="eq" value="${regionAttributeValue[0].id}" />` +
-                    countryCondition +
                     `<condition attribute="msdyn_serviceaccount" operator="eq" value="${stakeholderAttributeValue[0].id}" />` +
                     `<condition attribute="ts_site" operator="eq" value="${siteAttributeValue[0].id}" />` +
                     `<condition attribute="msdyn_servicerequest" operator="neq" value="${Xrm.Page.data.entity.getId()}" />` +
