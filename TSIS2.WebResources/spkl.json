@@ -169,6 +169,11 @@
               "file": "js\\WorkOrderServiceTaskRibbon.js",
               "description": "ROM TSIS 2.0 Work Order Service Task Ribbon Scripts"
             },
+            {
+              "uniquename": "ts_/js/LegislationRibbon.js",
+              "file": "js\\LegislationRibbon.js",
+              "description": "ROM TSIS 2.0 Legislation Ribbon Scripts"
+            },
             /* Styles */
             {
               "uniquename": "ovs_/css/bootstrap.min.css",

@@ -150,6 +150,7 @@
     <Content Include="Webresources\js\IncidentTypeServiceTask.js" />
     <Content Include="Webresources\js\jquery.js" />
     <Content Include="Webresources\js\knockout-min.js" />
+    <Content Include="Webresources\js\LegislationRibbon.js" />
     <Content Include="Webresources\js\Operation.js" />
     <Content Include="Webresources\js\OperationRibbon.js" />
     <Content Include="Webresources\js\Questionnaire.js" />
