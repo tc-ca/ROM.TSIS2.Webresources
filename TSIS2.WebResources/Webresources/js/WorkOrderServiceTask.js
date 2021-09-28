@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -46,9 +46,9 @@ var ROM;
         var confirmTitle = "Message";
         var confirmDisconnectedText = "You cannot retrieve the Inspection valid/active on the date selected";
         if (lang == 1036) {
-            enterStartDateToProceedText = "Entrez une date de d�but pour continue";
+            enterStartDateToProceedText = "Entrez une date de début pour continue";
             confirmTitle = "Message";
-            confirmDisconnectedText = "Vous ne pouvez pas r�cup�rer l'inspection valide/active � la date s�lectionn�e";
+            confirmDisconnectedText = "Vous ne pouvez pas récupérer l'inspection valide/active à la date sélectionnée";
         }
         function onLoad(eContext) {
             var Form = eContext.getFormContext();
