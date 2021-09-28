@@ -87,7 +87,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
       get(name: "ts_operationtypefilter"): Xrm.LookupAttribute<"ovs_operationtype">;
-      get(name: "ts_workorderstartdate"): Xrm.DateAttribute;
+      get(name: "ts_servicetaskstartdate"): Xrm.DateAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -129,7 +129,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
       get(name: "ts_operationtypefilter"): Xrm.LookupControl<"ovs_operationtype">;
-      get(name: "ts_workorderstartdate"): Xrm.DateControl;
+      get(name: "ts_servicetaskstartdate"): Xrm.DateControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -173,7 +173,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
     getAttribute(attributeName: "ts_operationtypefilter"): Xrm.LookupAttribute<"ovs_operationtype">;
-    getAttribute(attributeName: "ts_workorderstartdate"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_servicetaskstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
@@ -210,7 +210,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
     getControl(controlName: "ts_operationtypefilter"): Xrm.LookupControl<"ovs_operationtype">;
-    getControl(controlName: "ts_workorderstartdate"): Xrm.DateControl;
+    getControl(controlName: "ts_servicetaskstartdate"): Xrm.DateControl;
     getControl(controlName: string): undefined;
   }
 }

@@ -312,6 +312,7 @@ function completeConfirmation(formContext, survey) {
         text: markCompleteConfirmationTextLocalized,
         title: markCompleteConfirmationTitleLocalized
     };
+      
     var confirmOptions = { height: 200, width: 450 };
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
       function (success) {
@@ -319,6 +320,8 @@ function completeConfirmation(formContext, survey) {
             formContext.getAttribute("msdyn_percentcomplete").setValue(100.00);
             //Set Status Reason to Complete
             formContext.getAttribute("statuscode").setValue(918640002);
+            //Set Service Task End Date to current date
+            formContext.getAttribute("ts_servicetaskenddate").setValue(new Date());
             formContext.data.save().then(
                 function success(result) {
                     formContext.ui.close();

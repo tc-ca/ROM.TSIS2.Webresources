@@ -230,16 +230,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkOrder.1033.resx</DependentUpon>
     </Compile>
-    <Compile Include="Webresources\resx\WorkOrderServiceTask.1036.Designer.cs">
-      <DependentUpon>WorkOrderServiceTask.1036.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Webresources\resx\WorkOrderServiceTask.1033.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WorkOrderServiceTask.1033.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
@@ -774,14 +764,6 @@
     <EmbeddedResource Include="Webresources\resx\WorkOrder.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkOrder.1033.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Webresources\resx\WorkOrderServiceTask.1036.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>WorkOrderServiceTask.1036.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Webresources\resx\WorkOrderServiceTask.1033.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>WorkOrderServiceTask.1033.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
