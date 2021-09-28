@@ -30,274 +30,274 @@
           Required - files - List the webresources to deploy relatative to the root of this file (or the the root parameter above)
           Optional when autodetect=yes
           */
-          "files": [
-            /* Resource Files */
-            {
-              "uniquename": "ovs_/resx/WorkOrder.1033.resx",
-              "file": "resx\\WorkOrder.1033.resx",
-              "description": "ROM TSIS 2.0 WorkOrder.js English Resource Strings"
-            },
-            {
-              "uniquename": "ovs_/resx/WorkOrder.1036.resx",
-              "file": "resx\\WorkOrder.1036.resx",
-              "description": "ROM TSIS 2.0 WorkOrder.js French Resource Strings"
-            },
-            {
-              "uniquename": "ovs_/resx/BookableResourceBooking.1033.resx",
-              "file": "resx\\BookableResourceBooking.1033.resx",
-              "description": "ROM TSIS 2.0 BookableResourceBooking.js English Resource Strings"
-            },
-            {
-              "uniquename": "ovs_/resx/BookableResourceBooking.1036.resx",
-              "file": "resx\\BookableResourceBooking.1036.resx",
-              "description": "ROM TSIS 2.0 BookableResourceBooking.js French Resource Strings"
-            },
-            {
-              "uniquename": "ovs_/resx/Incident.1033.resx",
-              "file": "resx\\Incident.1033.resx",
-              "description": "ROM TSIS 2.0 Incident.js English Resource Strings"
-            },
-            {
-              "uniquename": "ovs_/resx/Incident.1036.resx",
-              "file": "resx\\Incident.1036.resx",
-              "description": "ROM TSIS 2.0 Incident.js French Resource Strings"
-            },
-            {
-              "uniquename": "ts_/resx/QuestionnaireVersion.1033.resx",
-              "file": "resx\\QuestionnaireVersion.1033.resx",
-              "description": "ROM TSIS 2.0 QuestionnaireVersion.js English Resource Strings"
-            },
-            {
-              "uniquename": "ts_/resx/QuestionnaireVersion.1036.resx",
-              "file": "resx\\QuestionnaireVersion.1036.resx",
-              "description": "ROM TSIS 2.0 QuestionnaireVersion.js French Resource Strings"
-            },
-            /* Libraries */
-            {
-              "uniquename": "ovs_/lib/dg.xrmquery.web.min.js",
-              "file": "lib\\dg.xrmquery.web.min.js",
-              "description": "ROM TSIS 2.0 XrmQuery Library"
-            },
-            /* Form Scripts */
-            {
-              "uniquename": "ovs_/js/Account.js",
-              "file": "js\\Account.js",
-              "description": "ROM TSIS 2.0 Account Form Scripts"
-            },
-            {
-              "uniquename": "ovs_/js/BookableResourceBooking.js",
-              "file": "js\\BookableResourceBooking.js",
-              "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"
-            },
-            {
-              "uniquename": "ts_/js/CustomerAsset.js",
-              "file": "js\\CustomerAsset.js",
-              "description": "ROM TSIS 2.0 Customer Asset Scripts"
-            },
-            {
-              "uniquename": "ts_/js/CustomerAssetQuickCreate.js",
-              "file": "js\\CustomerAssetQuickCreate.js",
-              "description": "ROM TSIS 2.0 Customer Asset Quick Create Scripts"
-            },
-            {
-              "uniquename": "ts_/js/CustomerAssetRibbon.js",
-              "file": "js\\CustomerAssetRibbon.js",
-              "description": "ROM TSIS 2.0 Customer Asset Ribbon Scripts"
-            },
-            {
-              "uniquename": "ts_/js/OperationRibbon.js",
-              "file": "js\\OperationRibbon.js",
-              "description": "ROM TSIS 2.0 Operation Ribbon Scripts"
-            },
-            {
-              "uniquename": "ts_/js/FunctionalLocation.js",
-              "file": "js\\FunctionalLocation.js",
-              "description": "ROM TSIS 2.0 Functional Location Scripts"
-            },
-            {
-              "uniquename": "ovs_/js/Incident.js",
-              "file": "js\\Incident.js",
-              "description": "ROM TSIS 2.0 Incident Form Scripts"
-            },
-            {
-              "uniquename": "ovs_/js/IncidentTypeServiceTask.js",
-              "file": "js\\IncidentTypeServiceTask.js",
-              "description": "ROM TSIS 2.0 Incident Type Service Task Form Scripts"
-            },
-            {
-              "uniquename": "ts_/js/Operation.js",
-              "file": "js\\Operation.js",
-              "description": "ROM TSIS 2.0 Operation Form Scripts"
-            },
-            {
-              "uniquename": "ovs_/js/Questionnaire.js",
-              "file": "js\\Questionnaire.js",
-              "description": "ROM TSIS 2.0 Questionnaire Form Scripts"
-            },
-            {
-              "uniquename": "ts_/js/QuestionnaireVersion.js",
-              "file": "js\\QuestionnaireVersion.js",
-              "description": "ROM TSIS 2.0 Questionnaire Version Form Scripts"
-            },
-            {
-              "uniquename": "ovs_/js/ServiceTaskType.js",
-              "file": "js\\ServiceTaskType.js",
-              "description": "ROM TSIS 2.0 Service Task Type Form Scripts"
-            },
-            {
-              "uniquename": "ovs_/js/WorkOrder.js",
-              "file": "js\\WorkOrder.js",
-              "description": "ROM TSIS 2.0 Work Order Form Scripts"
-            },
-            {
-              "uniquename": "ts_/js/WorkOrderCreationWizard.js",
-              "file": "js\\WorkOrderCreationWizard.js",
-              "description": "ROM TSIS 2.0 Work Order Creation Wizard Scripts"
-            },
-            {
-              "uniquename": "ovs_/js/WorkOrderRibbon.js",
-              "file": "js\\WorkOrderRibbon.js",
-              "description": "ROM TSIS 2.0 Work Order Ribbon Scripts"
-            },
-            {
-              "uniquename": "ovs_/js/WorkOrderServiceTask.js",
-              "file": "js\\WorkOrderServiceTask.js",
-              "description": "ROM TSIS 2.0 Work Order Service Task Form Scripts"
-            },
-            {
-              "uniquename": "ovs_/js/WorkOrderServiceTaskRibbon.js",
-              "file": "js\\WorkOrderServiceTaskRibbon.js",
-              "description": "ROM TSIS 2.0 Work Order Service Task Ribbon Scripts"
-            },
-            /* Styles */
-            {
-              "uniquename": "ovs_/css/bootstrap.min.css",
-              "file": "css\\bootstrap.min.css",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/css/autocomplete.css",
-              "file": "css\\autocomplete.css",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/css/modern.css",
-              "file": "css\\modern.css",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/css/survey-creator.min.css",
-              "file": "css\\survey-creator.min.css",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/css/survey.min.css",
-              "file": "css\\survey.min.css",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ts_/css/WorkOrderExport.css",
-              "file": "css\\WorkOrderExport.css",
-              "description": "ROM TSIS 2.0 Work Order Export Stylesheet"
-            },
-            /* HTML */
-            {
-              "uniquename": "ovs_/html/SurveyCreator.html",
-              "file": "html\\SurveyCreator.html",
-              "description": "ROM TSIS 2.0 SurveyJS Creator"
-            },
-            {
-              "uniquename": "ovs_/html/SurveyRender.html",
-              "file": "html\\SurveyRender.html",
-              "description": "ROM TSIS 2.0 SurveyJS Renderer"
-            },
-            {
-              "uniquename": "ts_/html/FindingProvisionText.html",
-              "file": "html\\FindingProvisionText.html",
-              "description": "ROM TSIS 2.0 Web Resource to display full Provision Text on Finding records"
-            },
-            {
-              "uniquename": "ts_/html/SurveyRenderPrint.html",
-              "file": "html\\SurveyRenderPrint.html",
-              "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
-            },
-            /* SurveyJS dependencies */
-            {
-              "uniquename": "ovs_/js/ace.min.js",
-              "file": "js\\ace.min.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/js/autocomplete.js",
-              "file": "js\\autocomplete.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/js/ckeditor.js",
-              "file": "js\\ckeditor.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/js/ext-language_tools.js",
-              "file": "js\\ext-language_tools.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/js/jquery.js",
-              "file": "js\\jquery.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/js/knockout-min.js",
-              "file": "js\\knockout-min.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/js/showdown.min.js",
-              "file": "js\\showdown.min.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency for markdown support"
-            },
-            {
-              "uniquename": "ovs_/js/survey-creator.min.js",
-              "file": "js\\survey-creator.min.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/js/survey.jquery.min.js",
-              "file": "js\\survey.jquery.min.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/js/survey.ko.min.js",
-              "file": "js\\survey.ko.min.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/js/surveycreator.js",
-              "file": "js\\surveycreator.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/js/surveyRender.js",
-              "file": "js\\surveyRender.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            },
-            {
-              "uniquename": "ovs_/js/tsis2findingwidget.js",
-              "file": "js\\tsis2findingwidget.js",
-              "description": "ROM TSIS 2.0 Custom Finding Widget for SurveyJS"
-            },
-            {
-              "uniquename": "ts_/js/buildprovisiontext.js",
-              "file": "js\\buildprovisiontext.js",
-              "description": "Function library to build provision text"
-            },
-            {
-              "uniquename": "ts_/js/surveyRenderPrint.js",
-              "file": "js\\surveyRenderPrint.js",
-              "description": "ROM TSIS 2.0 SurveyJS Dependency"
-            }
-          ]
+            "files": [
+                /* Resource Files */
+                {
+                    "uniquename": "ovs_/resx/BookableResourceBooking.1033.resx",
+                    "file": "resx\\BookableResourceBooking.1033.resx",
+                    "description": "ROM TSIS 2.0 BookableResourceBooking.js English Resource Strings"
+                },
+                {
+                    "uniquename": "ovs_/resx/BookableResourceBooking.1036.resx",
+                    "file": "resx\\BookableResourceBooking.1036.resx",
+                    "description": "ROM TSIS 2.0 BookableResourceBooking.js French Resource Strings"
+                },
+                {
+                    "uniquename": "ovs_/resx/Incident.1033.resx",
+                    "file": "resx\\Incident.1033.resx",
+                    "description": "ROM TSIS 2.0 Incident.js English Resource Strings"
+                },
+                {
+                    "uniquename": "ovs_/resx/Incident.1036.resx",
+                    "file": "resx\\Incident.1036.resx",
+                    "description": "ROM TSIS 2.0 Incident.js French Resource Strings"
+                },
+                {
+                    "uniquename": "ts_/resx/QuestionnaireVersion.1033.resx",
+                    "file": "resx\\QuestionnaireVersion.1033.resx",
+                    "description": "ROM TSIS 2.0 QuestionnaireVersion.js English Resource Strings"
+                },
+                {
+                    "uniquename": "ts_/resx/QuestionnaireVersion.1036.resx",
+                    "file": "resx\\QuestionnaireVersion.1036.resx",
+                    "description": "ROM TSIS 2.0 QuestionnaireVersion.js French Resource Strings"
+                },
+                {
+                    "uniquename": "ovs_/resx/WorkOrder.1033.resx",
+                    "file": "resx\\WorkOrder.1033.resx",
+                    "description": "ROM TSIS 2.0 WorkOrder.js English Resource Strings"
+                },
+                {
+                    "uniquename": "ovs_/resx/WorkOrder.1036.resx",
+                    "file": "resx\\WorkOrder.1036.resx",
+                    "description": "ROM TSIS 2.0 WorkOrder.js French Resource Strings"
+                },
+                /* Libraries */
+                {
+                    "uniquename": "ovs_/lib/dg.xrmquery.web.min.js",
+                    "file": "lib\\dg.xrmquery.web.min.js",
+                    "description": "ROM TSIS 2.0 XrmQuery Library"
+                },
+                /* Form Scripts */
+                {
+                    "uniquename": "ovs_/js/Account.js",
+                    "file": "js\\Account.js",
+                    "description": "ROM TSIS 2.0 Account Form Scripts"
+                },
+                {
+                    "uniquename": "ovs_/js/BookableResourceBooking.js",
+                    "file": "js\\BookableResourceBooking.js",
+                    "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"
+                },
+                {
+                    "uniquename": "ts_/js/CustomerAsset.js",
+                    "file": "js\\CustomerAsset.js",
+                    "description": "ROM TSIS 2.0 Customer Asset Scripts"
+                },
+                {
+                    "uniquename": "ts_/js/CustomerAssetQuickCreate.js",
+                    "file": "js\\CustomerAssetQuickCreate.js",
+                    "description": "ROM TSIS 2.0 Customer Asset Quick Create Scripts"
+                },
+                {
+                    "uniquename": "ts_/js/CustomerAssetRibbon.js",
+                    "file": "js\\CustomerAssetRibbon.js",
+                    "description": "ROM TSIS 2.0 Customer Asset Ribbon Scripts"
+                },
+                {
+                    "uniquename": "ts_/js/OperationRibbon.js",
+                    "file": "js\\OperationRibbon.js",
+                    "description": "ROM TSIS 2.0 Operation Ribbon Scripts"
+                },
+                {
+                    "uniquename": "ts_/js/FunctionalLocation.js",
+                    "file": "js\\FunctionalLocation.js",
+                    "description": "ROM TSIS 2.0 Functional Location Scripts"
+                },
+                {
+                    "uniquename": "ovs_/js/Incident.js",
+                    "file": "js\\Incident.js",
+                    "description": "ROM TSIS 2.0 Incident Form Scripts"
+                },
+                {
+                    "uniquename": "ovs_/js/IncidentTypeServiceTask.js",
+                    "file": "js\\IncidentTypeServiceTask.js",
+                    "description": "ROM TSIS 2.0 Incident Type Service Task Form Scripts"
+                },
+                {
+                    "uniquename": "ts_/js/Operation.js",
+                    "file": "js\\Operation.js",
+                    "description": "ROM TSIS 2.0 Operation Form Scripts"
+                },
+                {
+                    "uniquename": "ovs_/js/Questionnaire.js",
+                    "file": "js\\Questionnaire.js",
+                    "description": "ROM TSIS 2.0 Questionnaire Form Scripts"
+                },
+                {
+                    "uniquename": "ts_/js/QuestionnaireVersion.js",
+                    "file": "js\\QuestionnaireVersion.js",
+                    "description": "ROM TSIS 2.0 Questionnaire Version Form Scripts"
+                },
+                {
+                    "uniquename": "ovs_/js/ServiceTaskType.js",
+                    "file": "js\\ServiceTaskType.js",
+                    "description": "ROM TSIS 2.0 Service Task Type Form Scripts"
+                },
+                {
+                    "uniquename": "ovs_/js/WorkOrder.js",
+                    "file": "js\\WorkOrder.js",
+                    "description": "ROM TSIS 2.0 Work Order Form Scripts"
+                },
+                {
+                    "uniquename": "ts_/js/WorkOrderCreationWizard.js",
+                    "file": "js\\WorkOrderCreationWizard.js",
+                    "description": "ROM TSIS 2.0 Work Order Creation Wizard Scripts"
+                },
+                {
+                    "uniquename": "ovs_/js/WorkOrderRibbon.js",
+                    "file": "js\\WorkOrderRibbon.js",
+                    "description": "ROM TSIS 2.0 Work Order Ribbon Scripts"
+                },
+                {
+                    "uniquename": "ovs_/js/WorkOrderServiceTask.js",
+                    "file": "js\\WorkOrderServiceTask.js",
+                    "description": "ROM TSIS 2.0 Work Order Service Task Form Scripts"
+                },
+                {
+                    "uniquename": "ovs_/js/WorkOrderServiceTaskRibbon.js",
+                    "file": "js\\WorkOrderServiceTaskRibbon.js",
+                    "description": "ROM TSIS 2.0 Work Order Service Task Ribbon Scripts"
+                },
+                /* Styles */
+                {
+                    "uniquename": "ovs_/css/bootstrap.min.css",
+                    "file": "css\\bootstrap.min.css",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/css/autocomplete.css",
+                    "file": "css\\autocomplete.css",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/css/modern.css",
+                    "file": "css\\modern.css",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/css/survey-creator.min.css",
+                    "file": "css\\survey-creator.min.css",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/css/survey.min.css",
+                    "file": "css\\survey.min.css",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ts_/css/WorkOrderExport.css",
+                    "file": "css\\WorkOrderExport.css",
+                    "description": "ROM TSIS 2.0 Work Order Export Stylesheet"
+                },
+                /* HTML */
+                {
+                    "uniquename": "ovs_/html/SurveyCreator.html",
+                    "file": "html\\SurveyCreator.html",
+                    "description": "ROM TSIS 2.0 SurveyJS Creator"
+                },
+                {
+                    "uniquename": "ovs_/html/SurveyRender.html",
+                    "file": "html\\SurveyRender.html",
+                    "description": "ROM TSIS 2.0 SurveyJS Renderer"
+                },
+                {
+                    "uniquename": "ts_/html/FindingProvisionText.html",
+                    "file": "html\\FindingProvisionText.html",
+                    "description": "ROM TSIS 2.0 Web Resource to display full Provision Text on Finding records"
+                },
+                {
+                    "uniquename": "ts_/html/SurveyRenderPrint.html",
+                    "file": "html\\SurveyRenderPrint.html",
+                    "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
+                },
+                /* SurveyJS dependencies */
+                {
+                    "uniquename": "ovs_/js/ace.min.js",
+                    "file": "js\\ace.min.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/js/autocomplete.js",
+                    "file": "js\\autocomplete.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/js/ckeditor.js",
+                    "file": "js\\ckeditor.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/js/ext-language_tools.js",
+                    "file": "js\\ext-language_tools.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/js/jquery.js",
+                    "file": "js\\jquery.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/js/knockout-min.js",
+                    "file": "js\\knockout-min.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/js/showdown.min.js",
+                    "file": "js\\showdown.min.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency for markdown support"
+                },
+                {
+                    "uniquename": "ovs_/js/survey-creator.min.js",
+                    "file": "js\\survey-creator.min.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/js/survey.jquery.min.js",
+                    "file": "js\\survey.jquery.min.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/js/survey.ko.min.js",
+                    "file": "js\\survey.ko.min.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/js/surveycreator.js",
+                    "file": "js\\surveycreator.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/js/surveyRender.js",
+                    "file": "js\\surveyRender.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                },
+                {
+                    "uniquename": "ovs_/js/tsis2findingwidget.js",
+                    "file": "js\\tsis2findingwidget.js",
+                    "description": "ROM TSIS 2.0 Custom Finding Widget for SurveyJS"
+                },
+                {
+                    "uniquename": "ts_/js/buildprovisiontext.js",
+                    "file": "js\\buildprovisiontext.js",
+                    "description": "Function library to build provision text"
+                },
+                {
+                    "uniquename": "ts_/js/surveyRenderPrint.js",
+                    "file": "js\\surveyRenderPrint.js",
+                    "description": "ROM TSIS 2.0 SurveyJS Dependency"
+                }
+            ]
         }
     ]
 }

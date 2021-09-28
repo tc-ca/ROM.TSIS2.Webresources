@@ -41,6 +41,15 @@ var ROM;
     (function (WorkOrderServiceTask) {
         // EVENTS
         var mode = '';
+        var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+        var enterStartDateToProceedText = "Enter a start date to proceed";
+        var confirmTitle = "Message";
+        var confirmDisconnectedText = "You cannot retrieve the Inspection valid/active on the date selected";
+        if (lang == 1036) {
+            enterStartDateToProceedText = "Entrez une date de d�but pour continue";
+            confirmTitle = "Message";
+            confirmDisconnectedText = "Vous ne pouvez pas r�cup�rer l'inspection valide/active � la date s�lectionn�e";
+        }
         function onLoad(eContext) {
             var Form = eContext.getFormContext();
             var taskType = Form.getAttribute("msdyn_tasktype").getValue();
@@ -60,12 +69,15 @@ var ROM;
             }
             //If Status Reason is New user is able to change Work Order Start Date
             var statusReason = Form.getAttribute("statuscode").getValue();
+            var workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
             if (statusReason == 918640005) {
-                Form.getControl("ts_servicetaskstartdate").setDisabled(false);
+                workOrderStartDateCtl.setDisabled(false);
+                // Also, add a message that work order service task start date should be filled in to proceed.
+                workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
                 Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
             }
             else {
-                Form.getControl("ts_servicetaskstartdate").setDisabled(true);
+                workOrderStartDateCtl.setDisabled(true);
                 ToggleQuestionnaire(eContext);
             }
         }
@@ -94,13 +106,15 @@ var ROM;
             var Form = eContext.getFormContext();
             var serviceTaskStartDate = Form.getAttribute("ts_servicetaskstartdate").getValue();
             var taskType = Form.getAttribute("msdyn_tasktype").getValue();
-            //  Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
             if (taskType != null) {
                 var taskTypeID = taskType[0].id;
                 Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name&$expand=ovs_Questionnaire").then(function success(result) {
                     var today = new Date(Date.now()).toISOString().slice(0, 10);
                     var questionnaireId = result.ovs_Questionnaire.ovs_questionnaireid;
+                    var workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
                     if (serviceTaskStartDate != null) {
+                        // Clear out the message that a work order service task start date must be entered to proceed
+                        workOrderStartDateCtl.clearNotification("ts_servicetaskstartdate_entertoproceed");
                         //current questionnaire
                         var fetchXml = [
                             "<fetch>",
@@ -162,7 +176,7 @@ var ROM;
                                 }, function error(error) {
                                     //If the Inspector is disconnected display an information message
                                     Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
-                                    var alertStrings = { confirmButtonLabel: "Ok", text: Xrm.Utility.getResourceString("ts_/resx/WorkOrderServiceTask", "Text"), title: Xrm.Utility.getResourceString("ts_/resx/WorkOrderServiceTask", "Title") };
+                                    var alertStrings = { confirmButtonLabel: "Ok", text: confirmDisconnectedText, title: confirmTitle };
                                     var alertOptions = { height: 120, width: 260 };
                                     Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
                                 });
@@ -170,6 +184,10 @@ var ROM;
                         }, function error(error) {
                             Xrm.Navigation.openAlertDialog({ text: error.message });
                         });
+                    }
+                    else {
+                        // Work order service task start date is empty so display message to enter it before proceeding
+                        workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
                     }
                 });
             }
