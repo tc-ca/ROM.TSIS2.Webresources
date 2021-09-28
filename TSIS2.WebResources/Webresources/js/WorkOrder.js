@@ -28,18 +28,35 @@ var ROM;
                     // Set default values
                     setDefaultFiscalYear(form);
                     setRegion(form);
-                    var lookup = new Array();
-                    lookup[0] = new Object();
-                    lookup[0].id = "{47F438C7-C104-EB11-A813-000D3AF3A7A7}";
-                    lookup[0].name = "Unplanned";
-                    lookup[0].entityType = "ovs_tyrational";
-                    form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
+                    //If the new work order is coming from a case, set default rational to planned
+                    if (form.getAttribute("msdyn_servicerequest").getValue() != null) {
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = "{994c3ec1-c104-eb11-a813-000d3af3a7a7}";
+                        lookup[0].name = "Planned";
+                        lookup[0].entityType = "ovs_tyrational";
+                        form.getAttribute("ovs_rational").setValue(lookup); //Planned
+                    }
+                    else {
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = "{47F438C7-C104-EB11-A813-000D3AF3A7A7}";
+                        lookup[0].name = "Unplanned";
+                        lookup[0].entityType = "ovs_tyrational";
+                        form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
+                    }
                     // Disable all operation related fields
                     form.getControl("ts_region").setDisabled(true);
                     form.getControl("ovs_operationtypeid").setDisabled(true);
                     form.getControl("ts_site").setDisabled(true);
                     form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                     form.getControl("msdyn_functionallocation").setDisabled(true);
+                    var regionValue = form.getAttribute("ts_region").getValue();
+                    //If the new work order is coming from a case, and region is international, show the country lookup
+                    if (form.getAttribute("msdyn_servicerequest").getValue() != null && regionValue && regionValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
+                        form.getControl("ts_country").setVisible(true);
+                        form.getControl("ts_country").setDisabled(true);
+                    }
                     break;
                 default:
                     // Enable all operation related fields
@@ -649,11 +666,12 @@ var ROM;
                 var siteCondition = siteAttributeValue_2 == null ? "" : '<condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue_2[0].id + '" />';
                 if (caseAttribute != null && caseAttribute != undefined) {
                     if (caseAttributeValue != null) {
-                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value, _customerid_value").then(function success(result) {
-                            if ((regionCondition != "" && (result != null && regionAttributeValue_1 != null && regionAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
-                                (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != result._ts_country_value.toUpperCase())) ||
-                                (stakeholderCondition != "" && (result != null && stakeholderAttributeValue_1 != null && stakeholderAttributeValue_1[0].id.replace(/({|})/g, '') != result._ts_stakeholder_value.toUpperCase())) ||
-                                (siteCondition != "" && (result != null && siteAttributeValue_2 != null && siteAttributeValue_2[0].id.replace(/({|})/g, '') != result._msdyn_functionallocation_value.toUpperCase()))) {
+                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(function success(result) {
+                            var _a, _b, _c, _d;
+                            if ((regionCondition != "" && (result != null && regionAttributeValue_1 != null && regionAttributeValue_1[0].id.replace(/({|})/g, '') != ((_a = result._ovs_region_value) === null || _a === void 0 ? void 0 : _a.toUpperCase()))) ||
+                                (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != ((_b = result._ts_country_value) === null || _b === void 0 ? void 0 : _b.toUpperCase()))) ||
+                                (stakeholderCondition != "" && (result != null && stakeholderAttributeValue_1 != null && stakeholderAttributeValue_1[0].id.replace(/({|})/g, '') != ((_c = result._customerid_value) === null || _c === void 0 ? void 0 : _c.toUpperCase()))) ||
+                                (siteCondition != "" && (result != null && siteAttributeValue_2 != null && siteAttributeValue_2[0].id.replace(/({|})/g, '') != ((_d = result._msdyn_functionallocation_value) === null || _d === void 0 ? void 0 : _d.toUpperCase())))) {
                                 form_4.getAttribute("msdyn_servicerequest").setValue(null);
                             }
                         }, function (error) {

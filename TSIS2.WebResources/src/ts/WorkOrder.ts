@@ -31,13 +31,22 @@ namespace ROM.WorkOrder {
                 setDefaultFiscalYear(form);
                 setRegion(form);
 
-                var lookup = new Array();
-                lookup[0] = new Object();
-                lookup[0].id = "{47F438C7-C104-EB11-A813-000D3AF3A7A7}"
-                lookup[0].name = "Unplanned";
-                lookup[0].entityType = "ovs_tyrational";
-                form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
-
+                //If the new work order is coming from a case, set default rational to planned
+                if (form.getAttribute("msdyn_servicerequest").getValue() != null) {
+                    var lookup = new Array();
+                    lookup[0] = new Object();
+                    lookup[0].id = "{994c3ec1-c104-eb11-a813-000d3af3a7a7}"
+                    lookup[0].name = "Planned";
+                    lookup[0].entityType = "ovs_tyrational";
+                    form.getAttribute("ovs_rational").setValue(lookup); //Planned
+                } else {
+                    var lookup = new Array();
+                    lookup[0] = new Object();
+                    lookup[0].id = "{47F438C7-C104-EB11-A813-000D3AF3A7A7}"
+                    lookup[0].name = "Unplanned";
+                    lookup[0].entityType = "ovs_tyrational";
+                    form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
+                }
 
                 // Disable all operation related fields
                 form.getControl("ts_region").setDisabled(true);
@@ -45,6 +54,13 @@ namespace ROM.WorkOrder {
                 form.getControl("ts_site").setDisabled(true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                 form.getControl("msdyn_functionallocation").setDisabled(true);
+
+                let regionValue = form.getAttribute("ts_region").getValue();
+                //If the new work order is coming from a case, and region is international, show the country lookup
+                if (form.getAttribute("msdyn_servicerequest").getValue() != null && regionValue && regionValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
+                    form.getControl("ts_country").setVisible(true);
+                    form.getControl("ts_country").setDisabled(true);
+                }
                 break;
 
             default:
@@ -699,12 +715,12 @@ namespace ROM.WorkOrder {
 
             if (caseAttribute != null && caseAttribute != undefined) {
                 if (caseAttributeValue != null) {
-                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value, _customerid_value").then(
+                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(
                         function success(result) {
-                            if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
-                                (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._ts_country_value.toUpperCase())) ||
-                                (stakeholderCondition != "" && (result != null && stakeholderAttributeValue != null && stakeholderAttributeValue[0].id.replace(/({|})/g, '') != result._ts_stakeholder_value.toUpperCase())) ||
-                                (siteCondition != "" && (result != null && siteAttributeValue != null && siteAttributeValue[0].id.replace(/({|})/g, '') != result._msdyn_functionallocation_value.toUpperCase()))) {
+                            if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value?.toUpperCase())) ||
+                                (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._ts_country_value?.toUpperCase())) ||
+                                (stakeholderCondition != "" && (result != null && stakeholderAttributeValue != null && stakeholderAttributeValue[0].id.replace(/({|})/g, '') != result._customerid_value?.toUpperCase())) ||
+                                (siteCondition != "" && (result != null && siteAttributeValue != null && siteAttributeValue[0].id.replace(/({|})/g, '') != result._msdyn_functionallocation_value?.toUpperCase()))) {
 
                                 form.getAttribute("msdyn_servicerequest").setValue(null);
                             }
