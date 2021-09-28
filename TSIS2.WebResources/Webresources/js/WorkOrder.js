@@ -4,6 +4,7 @@ var ROM;
 (function (ROM) {
     var WorkOrder;
     (function (WorkOrder) {
+        var isFromCase = false; //Boolean status to track if the work order is being created from a case
         // EVENTS
         function onLoad(eContext) {
             var form = eContext.getFormContext();
@@ -25,21 +26,42 @@ var ROM;
             }
             switch (form.ui.getFormType()) {
                 case 1: //Create New Work Order
+                    //If work order is New (case 1) and it already has a case on form load, the work order must be coming from a case
+                    if (form.getAttribute("msdyn_servicerequest").getValue() != null) {
+                        isFromCase = true;
+                    }
                     // Set default values
                     setDefaultFiscalYear(form);
                     setRegion(form);
-                    var lookup = new Array();
-                    lookup[0] = new Object();
-                    lookup[0].id = "{47F438C7-C104-EB11-A813-000D3AF3A7A7}";
-                    lookup[0].name = "Unplanned";
-                    lookup[0].entityType = "ovs_tyrational";
-                    form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
+                    //If the new work order is coming from a case, set default rational to planned
+                    if (form.getAttribute("msdyn_servicerequest").getValue() != null) {
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = "{994c3ec1-c104-eb11-a813-000d3af3a7a7}";
+                        lookup[0].name = "Planned";
+                        lookup[0].entityType = "ovs_tyrational";
+                        form.getAttribute("ovs_rational").setValue(lookup); //Planned
+                    }
+                    else {
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = "{47F438C7-C104-EB11-A813-000D3AF3A7A7}";
+                        lookup[0].name = "Unplanned";
+                        lookup[0].entityType = "ovs_tyrational";
+                        form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
+                    }
                     // Disable all operation related fields
                     form.getControl("ts_region").setDisabled(true);
                     form.getControl("ovs_operationtypeid").setDisabled(true);
                     form.getControl("ts_site").setDisabled(true);
                     form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                     form.getControl("msdyn_functionallocation").setDisabled(true);
+                    var regionValue = form.getAttribute("ts_region").getValue();
+                    //If the new work order is coming from a case, and region is international, show the country lookup
+                    if (isFromCase && regionValue && regionValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
+                        form.getControl("ts_country").setVisible(true);
+                        form.getControl("ts_country").setDisabled(true);
+                    }
                     break;
                 default:
                     // Enable all operation related fields
@@ -74,6 +96,7 @@ var ROM;
                     form.getControl("ts_tradenameid").setDisabled(true);
                     form.getControl("msdyn_serviceaccount").setDisabled(true);
                     form.getControl("ts_site").setDisabled(true);
+                    form.getControl("ovs_operationtypeid").setDisabled(true);
                 }
             }, function (error) {
             });
@@ -102,6 +125,8 @@ var ROM;
                 var workOrderTypeAttribute = form.getAttribute("msdyn_workordertype");
                 var regionAttribute = form.getAttribute("ts_region");
                 var countryAttribute = form.getAttribute("ts_country");
+                var stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
+                var siteAttribute = form.getAttribute("ts_site");
                 if (workOrderTypeAttribute != null && workOrderTypeAttribute != undefined) {
                     // Clear out all dependent fields' value if they are not already disabled and not already empty
                     if (!form.getControl("ovs_operationtypeid").getDisabled() && form.getAttribute("ovs_operationtypeid").getValue() != null) {
@@ -136,19 +161,28 @@ var ROM;
                     var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                     var regionAttributeValue = regionAttribute.getValue();
                     var countryAttributeValue = countryAttribute.getValue();
+                    var stakeholderAttributeValue = stakeholderAttribute.getValue();
+                    var siteAttributeValue = siteAttribute.getValue();
                     if (workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined) {
                         // Enable direct dependent field
-                        form.getControl("ts_region").setDisabled(false);
+                        if (!isFromCase)
+                            form.getControl("ts_region").setDisabled(false);
                         if (regionAttributeValue != null && regionAttributeValue != undefined) {
-                            if (regionAttributeValue[0].name != "International") {
-                                setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id);
+                            if (regionAttributeValue[0].id != "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
+                                setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id, "", "");
                             }
                             else {
-                                form.getControl("ts_country").setDisabled(false);
+                                if (!isFromCase)
+                                    form.getControl("ts_country").setDisabled(false);
                                 setCountryFilteredView(form);
                                 if (countryAttributeValue != null && countryAttributeValue != undefined) {
                                     var countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
-                                    setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id);
+                                    if (isFromCase && stakeholderAttributeValue != null && siteAttributeValue != null) {
+                                        setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, stakeholderAttributeValue[0].id, siteAttributeValue[0].id);
+                                    }
+                                    else {
+                                        setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "");
+                                    }
                                 }
                             }
                         }
@@ -212,7 +246,7 @@ var ROM;
                         regionAttributeValue != null && regionAttributeValue != undefined) {
                         // Enable direct dependent field
                         if (regionAttributeValue[0].name != "International") {
-                            setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id);
+                            setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id, "", "");
                         }
                         else {
                             form.getControl("ts_country").setDisabled(false);
@@ -273,7 +307,7 @@ var ROM;
                         regionAttributeValue != null && regionAttributeValue != undefined &&
                         countryAttributeValue != null && countryAttributeValue != undefined) {
                         var countryCondition = '<condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" />';
-                        setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id);
+                        setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "");
                     }
                 }
             }
@@ -294,7 +328,7 @@ var ROM;
                 var regionAttribute = form.getAttribute("ts_region");
                 var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
                 var countryAttribute = form.getAttribute("ts_country");
-                if (operationTypeAttribute != null && operationTypeAttribute != undefined) {
+                if (operationTypeAttribute != null && operationTypeAttribute != undefined && !isFromCase) {
                     // Clear out all dependent fields' value if they are not already disabled and not already empty
                     if (!form.getControl("ts_tradenameid").getDisabled() && form.getAttribute("ts_tradenameid").getValue() != null) {
                         form.getAttribute("ts_tradenameid").setValue(null);
@@ -366,6 +400,21 @@ var ROM;
                         var fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeValue[0].id + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
                         var layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
                         form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                    }
+                }
+                else if (operationTypeAttribute != null && operationTypeAttribute != undefined && isFromCase) {
+                    var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
+                    var operationTypeAttributeValue = operationTypeAttribute.getValue();
+                    if (workOrderTypeAttributeValue != null && operationTypeAttributeValue != null) {
+                        form.getControl("msdyn_primaryincidenttype").setDisabled(false);
+                        // Custom view for Activity Type
+                        var viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
+                        var entityNameActivity = "msdyn_incidenttype";
+                        var viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
+                        var fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeValue[0].id + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
+                        var layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
+                        form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                        functionalLocationOnChange(eContext);
                     }
                 }
             }
@@ -649,11 +698,12 @@ var ROM;
                 var siteCondition = siteAttributeValue_2 == null ? "" : '<condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue_2[0].id + '" />';
                 if (caseAttribute != null && caseAttribute != undefined) {
                     if (caseAttributeValue != null) {
-                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value, _customerid_value").then(function success(result) {
-                            if ((regionCondition != "" && (result != null && regionAttributeValue_1 != null && regionAttributeValue_1[0].id.replace(/({|})/g, '') != result._ovs_region_value.toUpperCase())) ||
-                                (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != result._ts_country_value.toUpperCase())) ||
-                                (stakeholderCondition != "" && (result != null && stakeholderAttributeValue_1 != null && stakeholderAttributeValue_1[0].id.replace(/({|})/g, '') != result._ts_stakeholder_value.toUpperCase())) ||
-                                (siteCondition != "" && (result != null && siteAttributeValue_2 != null && siteAttributeValue_2[0].id.replace(/({|})/g, '') != result._msdyn_functionallocation_value.toUpperCase()))) {
+                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(function success(result) {
+                            var _a, _b, _c, _d;
+                            if ((regionCondition != "" && (result != null && regionAttributeValue_1 != null && regionAttributeValue_1[0].id.replace(/({|})/g, '') != ((_a = result._ovs_region_value) === null || _a === void 0 ? void 0 : _a.toUpperCase()))) ||
+                                (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != ((_b = result._ts_country_value) === null || _b === void 0 ? void 0 : _b.toUpperCase()))) ||
+                                (stakeholderCondition != "" && (result != null && stakeholderAttributeValue_1 != null && stakeholderAttributeValue_1[0].id.replace(/({|})/g, '') != ((_c = result._customerid_value) === null || _c === void 0 ? void 0 : _c.toUpperCase()))) ||
+                                (siteCondition != "" && (result != null && siteAttributeValue_2 != null && siteAttributeValue_2[0].id.replace(/({|})/g, '') != ((_d = result._msdyn_functionallocation_value) === null || _d === void 0 ? void 0 : _d.toUpperCase())))) {
                                 form_4.getAttribute("msdyn_servicerequest").setValue(null);
                             }
                         }, function (error) {
@@ -794,12 +844,12 @@ var ROM;
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="tc_countryid"><cell name="tc_name" width="200" /></row></grid>';
             form.getControl("ts_country").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
-        function setOperationTypeFilteredView(form, regionAttributeId, countryCondition, workOrderTypeAttributeId) {
+        function setOperationTypeFilteredView(form, regionAttributeId, countryCondition, workOrderTypeAttributeId, stakeholderTypeAttributeId, siteAttributeId) {
             form.getControl("ovs_operationtypeid").setDisabled(false);
             var viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE99}';
             var entityName = "ovs_operationtype";
             var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
-            var fetchXml = '<fetch distinct="true" page="1"><entity name="ovs_operationtype"><attribute name="statecode"/><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="createdon"/><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="ovs_operationtypeid" to="ovs_operationtypeid" visible="false" intersect="true"><link-entity name="msdyn_incidenttype" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" alias="ad"><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" value="' + workOrderTypeAttributeId + '" /></filter></link-entity></link-entity><link-entity name="ovs_operation" from="ovs_operationtypeid" to="ovs_operationtypeid" link-type="inner" alias="ae"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" link-type="inner" alias="af"><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '" />' + countryCondition + '</filter></link-entity></link-entity></entity></fetch>';
+            var fetchXml = (isFromCase) ? '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"> <entity name="ovs_operationtype"> <attribute name="ovs_operationtypeid" /> <attribute name="ovs_name" /> <attribute name="createdon" /> <order attribute="ovs_name" descending="false" /> <link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="ovs_operationtypeid" to="ovs_operationtypeid" visible="false" intersect="true"> <link-entity name="msdyn_incidenttype" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" alias="ah"> <filter type="and"> <condition attribute="msdyn_defaultworkordertype" operator="eq" value="' + workOrderTypeAttributeId + '" /> </filter> </link-entity> </link-entity> <link-entity name="ovs_operation" from="ovs_operationtypeid" to="ovs_operationtypeid" link-type="inner" alias="ai"> <filter type="and"> <condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderTypeAttributeId + '" /> </filter> <link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" link-type="inner" alias="aj"> <filter type="and"> <condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '" />' + countryCondition + '<condition attribute="msdyn_functionallocationid" operator="eq" value="' + siteAttributeId + '" /> </filter> </link-entity> </link-entity> </entity> </fetch>' : '<fetch distinct="true" page="1"><entity name="ovs_operationtype"><attribute name="statecode"/><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="createdon"/><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="ovs_operationtypeid" to="ovs_operationtypeid" visible="false" intersect="true"><link-entity name="msdyn_incidenttype" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" alias="ad"><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" value="' + workOrderTypeAttributeId + '" /></filter></link-entity></link-entity><link-entity name="ovs_operation" from="ovs_operationtypeid" to="ovs_operationtypeid" link-type="inner" alias="ae"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" link-type="inner" alias="af"><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '" />' + countryCondition + '</filter></link-entity></link-entity></entity></fetch>';
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
             form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
