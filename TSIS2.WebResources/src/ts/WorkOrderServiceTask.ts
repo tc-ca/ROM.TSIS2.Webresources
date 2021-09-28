@@ -26,14 +26,17 @@ namespace ROM.WorkOrderServiceTask {
         //If Status Reason is New user is able to change Work Order Start Date
         const statusReason = Form.getAttribute("statuscode").getValue();
         if (statusReason == 918640005) {
-            Form.getControl("ts_workorderstartdate").setDisabled(false);
+            Form.getControl("ts_servicetaskstartdate").setDisabled(false);
             Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
         }
-        else
+        else {
+            Form.getControl("ts_servicetaskstartdate").setDisabled(true);
             ToggleQuestionnaire(eContext);
+        }
+            
     }
 
-    export function workOrderStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export function serviceTaskStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         UpdateQuestionnaireDefinition(eContext);
     }
 
@@ -59,7 +62,7 @@ namespace ROM.WorkOrderServiceTask {
     //If Status Reason is New, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
     function UpdateQuestionnaireDefinition(eContext: Xrm.ExecutionContext<any, any>) {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
-        const workOrderStartDate = Form.getAttribute("ts_workorderstartdate").getValue();
+        const serviceTaskStartDate = Form.getAttribute("ts_servicetaskstartdate").getValue();
         const taskType = Form.getAttribute("msdyn_tasktype").getValue();
         //  Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
 
@@ -69,7 +72,7 @@ namespace ROM.WorkOrderServiceTask {
                 function success(result) {
                     const today = new Date(Date.now()).toISOString().slice(0, 10);
                     const questionnaireId = result.ovs_Questionnaire.ovs_questionnaireid;
-                    if (workOrderStartDate != null) {
+                    if (serviceTaskStartDate != null) {
                         //current questionnaire
                         var fetchXml = [
                             "<fetch>",
@@ -92,7 +95,7 @@ namespace ROM.WorkOrderServiceTask {
                             .then(function success(result) {
                                 if (result.entities[0] == null) return;
                                 //The date selected falls within the Start and End Date of the current questionnaire - Display current questionnaire
-                                if (Date.parse(workOrderStartDate.toString()) > Date.parse(result.entities[0].ts_effectivestartdate) && Date.parse(workOrderStartDate.toString()) < Date.parse(result.entities[0].ts_effectiveenddate)) {
+                                if (Date.parse(serviceTaskStartDate.toString()) > Date.parse(result.entities[0].ts_effectivestartdate) && Date.parse(serviceTaskStartDate.toString()) < Date.parse(result.entities[0].ts_effectiveenddate)) {
                                     //Set WOST questionnaire definition to the Questionnaire Version's definition
                                     const newDefinition = result.entities[0].ts_questionnairedefinition;
                                     Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
@@ -108,8 +111,8 @@ namespace ROM.WorkOrderServiceTask {
                                         "    <attribute name='ts_questionnairedefinition' />",
                                         "    <attribute name='ts_name' />",
                                         "    <filter type='and'>",
-                                        "      <condition attribute='ts_effectiveenddate' operator='on-or-after' value='", workOrderStartDate.toISOString().slice(0, 10), "'/>",
-                                        "      <condition attribute='ts_effectivestartdate' operator = 'on-or-before' value='", workOrderStartDate.toISOString().slice(0, 10), "'/>",
+                                        "      <condition attribute='ts_effectiveenddate' operator='on-or-after' value='", serviceTaskStartDate.toISOString().slice(0, 10), "'/>",
+                                        "      <condition attribute='ts_effectivestartdate' operator = 'on-or-before' value='", serviceTaskStartDate.toISOString().slice(0, 10), "'/>",
                                         "      <condition attribute='ts_ovs_questionnaire' operator='eq' value='", questionnaireId, "'/>",
                                         "    </filter>",
                                         "    <order attribute='modifiedon' descending='true' />",
