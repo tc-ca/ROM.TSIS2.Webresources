@@ -11,7 +11,7 @@ namespace ROM.Incident {
         switch (form.ui.getFormType()) {
             case 1:
                 setRegion(eContext);
-                form.getControl("customerid").setDisabled(true);
+                form.getControl("ts_tradenameid").setDisabled(true);
                 form.getControl("msdyn_functionallocation").setDisabled(true);
                 break;
 
@@ -28,7 +28,7 @@ namespace ROM.Incident {
                         form.getControl("ts_country").setVisible(false);
                     }
                 }
-                form.getControl("customerid").setDisabled(false);
+                form.getControl("ts_tradenameid").setDisabled(false);
                 form.getControl("msdyn_functionallocation").setDisabled(false);
                 break;
         }
@@ -43,6 +43,7 @@ namespace ROM.Incident {
                 if (result.entities.length > 0) {
                     form.getControl("ovs_region").setDisabled(true);
                     form.getControl("ts_country").setDisabled(true);
+                    form.getControl("ts_tradenameid").setDisabled(true);
                     form.getControl("msdyn_functionallocation").setDisabled(true);
                 }
             },
@@ -63,6 +64,9 @@ namespace ROM.Incident {
                 if (!form.getControl("ts_country").getDisabled() || form.getAttribute("ts_country").getValue() != null) {
                     form.getAttribute("ts_country").setValue(null);
                 }
+                if (!form.getControl("ts_tradenameid").getDisabled() || form.getAttribute("ts_tradenameid").getValue() != null) {
+                    form.getAttribute("ts_tradenameid").setValue(null);
+                }
                 if (!form.getControl("customerid").getDisabled() || form.getAttribute("customerid").getValue() != null) {
                     form.getAttribute("customerid").setValue(null);
                 }
@@ -73,7 +77,7 @@ namespace ROM.Incident {
                 // Disable all dependent fields
                 form.getControl("ts_country").setVisible(false);
                 form.getAttribute("ts_country").setRequiredLevel("none");
-                form.getControl("customerid").setDisabled(true);
+                form.getControl("ts_tradenameid").setDisabled(true);
                 form.getControl("msdyn_functionallocation").setDisabled(true);
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
@@ -82,15 +86,15 @@ namespace ROM.Incident {
 
                     if (regionAttributeValue[0].name != "International") {
                         // Enable direct dependent field
-                        form.getControl("customerid").setDisabled(false);
+                        form.getControl("ts_tradenameid").setDisabled(false);
 
-                        // Custom view: Stakeholders that have operations at a site in the specified region
-                        const viewId = '{5463C38B-8BC4-4C95-BD05-491798FEAE23}';
-                        const entityName = "account";
-                        const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredStakeholders");
-                        const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><attribute name="accountid" /><order attribute="name" descending="false" /><link-entity name="ovs_operation" from="ts_stakeholder" to="accountid" link-type="inner" alias="ai"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" link-type="inner" alias="aj"><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
-                        const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
-                        form.getControl("customerid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                        // Custom view for Trade Names
+                        const viewIdTradename = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
+                        const entityNameTradename = "ts_tradename";
+                        const viewDisplayNameTradename = "FilteredSTradenames";
+                        const fetchXmlTradename = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" no-lock="false"><entity name="ts_tradename" ><attribute name="ts_tradenameid" /><attribute name="ts_name" /><order attribute="ts_stakeholderidname" /><order attribute="ts_name" /><link-entity name="account" from="accountid" to="ts_stakeholderid" ><link-entity name="ovs_operation" from="ts_stakeholder" to="accountid" link-type="inner" alias="ac"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" link-type="inner" alias="ad"><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '"/></filter></link-entity></link-entity></link-entity></entity></fetch>';
+                        const layoutXmlTradename = '<grid name="resultset" object="10010" jump="ts_name" select="1" icon="1" preview="1"><row name="result" id="ts_tradenameid"><cell name="ts_name" width="200" /></row></grid>';
+                        form.getControl("ts_tradenameid").addCustomView(viewIdTradename, entityNameTradename, viewDisplayNameTradename, fetchXmlTradename, layoutXmlTradename, true);
                     }
                     else {
                         setCountryFilteredView(form);
@@ -111,6 +115,9 @@ namespace ROM.Incident {
             if (countryAttribute != null && countryAttribute != undefined) {
 
                 // Clear out all dependent fields' value
+                if (!form.getControl("ts_tradenameid").getDisabled() || form.getAttribute("ts_tradenameid").getValue() != null) {
+                    form.getAttribute("ts_tradenameid").setValue(null);
+                }
                 if (!form.getControl("customerid").getDisabled() || form.getAttribute("customerid").getValue() != null) {
                     form.getAttribute("customerid").setValue(null);
                 }
@@ -119,22 +126,22 @@ namespace ROM.Incident {
                 }
 
                 // Disable all dependent fields
-                form.getControl("customerid").setDisabled(true);
+                form.getControl("ts_tradenameid").setDisabled(true);
                 form.getControl("msdyn_functionallocation").setDisabled(true);
 
                 const countryAttributeValue = countryAttribute.getValue();
                 if (countryAttributeValue != null && countryAttributeValue != undefined) {
 
                     // Enable direct dependent field
-                    form.getControl("customerid").setDisabled(false);
+                    form.getControl("ts_tradenameid").setDisabled(false);
 
-                    // Custom view: Stakeholders that have operations at a site in the specified country
-                    const viewId = '{5482C38D-8BB4-3B95-BD05-493398FEAE95}';
-                    const entityName = "account";
-                    const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/Incident", "FilteredStakeholders");
-                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="account"><attribute name="name" /><order attribute="name" descending="false" /><link-entity name="ovs_operation" from="ts_stakeholder" to="accountid" link-type="inner" alias="ac"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" link-type="inner" alias="ad"><filter type="and"><condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
-                    const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
-                    form.getControl("customerid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    // Custom view for Trade Names
+                    const viewIdTradename = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
+                    const entityNameTradename = "ts_tradename";
+                    const viewDisplayNameTradename = "FilteredSTradenames";
+                    const fetchXmlTradename = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" no-lock="false"><entity name="ts_tradename" ><attribute name="ts_tradenameid" /><attribute name="ts_name" /><order attribute="ts_stakeholderidname" /><order attribute="ts_name" /><link-entity name="account" from="accountid" to="ts_stakeholderid" ><link-entity name="ovs_operation" from="ts_stakeholder" to="accountid" link-type="inner" alias="ac"><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" link-type="inner" alias="ad"><filter type="and"><condition attribute="ts_region" operator="eq" value="{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}" /><condition attribute="ts_country" operator="eq" value="' + countryAttributeValue[0].id + '"/></filter></link-entity></link-entity></link-entity></entity></fetch>';
+                    const layoutXmlTradename = '<grid name="resultset" object="10010" jump="ts_name" select="1" icon="1" preview="1"><row name="result" id="ts_tradenameid"><cell name="ts_name" width="200" /></row></grid>';
+                    form.getControl("ts_tradenameid").addCustomView(viewIdTradename, entityNameTradename, viewDisplayNameTradename, fetchXmlTradename, layoutXmlTradename, true);
                 }
             }
         } catch (e) {
@@ -184,6 +191,39 @@ namespace ROM.Incident {
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="msdyn_functionallocation"><attribute name="msdyn_functionallocationid" /><attribute name="msdyn_name" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="ts_region" operator="eq" value="' + regionAttributeValue[0].id + '" />' + countryCondition + '</filter><link-entity name="ovs_operation" from="ts_site" to="msdyn_functionallocationid" link-type="inner" alias="al"><filter type="and"><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '" /></filter></link-entity></entity></fetch>';
                     const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
                     form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                }
+            }
+        } catch (e) {
+            throw new Error(e.Message);
+        }
+    }
+
+    export function tradenameOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+            const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
+            const TradenameAttribute = form.getAttribute("ts_tradenameid");
+            if (TradenameAttribute != null && TradenameAttribute != undefined) {
+                const TradenameAttributeValue = TradenameAttribute.getValue();
+                if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
+                    Xrm.WebApi.online.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(
+                        function success(result) {
+                            var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
+                            var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
+                            var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                            var lookup = new Array();
+                            lookup[0] = new Object();
+                            lookup[0].id = _ts_stakeholderid_value;
+                            lookup[0].name = _ts_stakeholderid_value_formatted;
+                            lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
+                            form.getAttribute('customerid').setValue(lookup);
+                            stakeholderOnChange(eContext);
+                        },
+                        function (error) {
+                            var alertStrings = { text: error.message };
+                            var alertOptions = { height: 120, width: 260 };
+                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                        }
+                    );
                 }
             }
         } catch (e) {

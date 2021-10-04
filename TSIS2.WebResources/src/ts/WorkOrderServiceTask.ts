@@ -1,23 +1,16 @@
 namespace ROM.WorkOrderServiceTask {
     // EVENTS
     var mode = '';
-    export function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
-        const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
-
-        // Get the web resource control on the form
-        const wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
-        const questionnaireDefinition = Form.getAttribute('ovs_questionnairedefinition').getValue();
-        const questionnaireResponse = Form.getAttribute('ovs_questionnaireresponse').getValue();
-
-        // Exit if no questionnaire exists
-        if (questionnaireDefinition === null) {
-            wrCtrl.setVisible(false);
-            return;
-        }
-
-        // Get Questionnaire definition
-        wrCtrl.setVisible(true);
-        InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
+    const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+    var enterStartDateToProceedText = "Enter a start date to proceed";
+    var enterTaskTypeToProccedText = "Enter a task type to proceed";
+    var confirmTitle = "Message";
+    var confirmDisconnectedText = "You cannot retrieve the Inspection valid/active on the date selected";
+    if (lang == 1036) {
+        enterStartDateToProceedText = "Entrez une date de début pour continue";
+        enterTaskTypeToProccedText = "Entez un type de tâche pour continuer";
+        confirmTitle = "Message";
+        confirmDisconnectedText = "Vous ne pouvez pas récupérer l'inspection valide/active à la date sélectionnée";
     }
 
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -43,29 +36,75 @@ namespace ROM.WorkOrderServiceTask {
 
         //If Status Reason is New user is able to change Work Order Start Date
         const statusReason = Form.getAttribute("statuscode").getValue();
+        const workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
+        const workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
+
         if (statusReason == 918640005) {
-            Form.getControl("ts_workorderstartdate").setDisabled(false);
+            workOrderStartDateCtl.setDisabled(false);
+
+            // Also, add a message that work order service task start date should be filled in to proceed.
+            workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
+
+            // Also, add a message that task type start date should be filled in to proceed.
+            workOrderTaskTypeCtl.setNotification(enterTaskTypeToProccedText, "ts_tasktype_entertoproceed");
+
+            Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
+        } else {
+            workOrderStartDateCtl.setDisabled(true);
+            ToggleQuestionnaire(eContext);
         }
     }
 
-    export function workOrderStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export function serviceTaskStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         UpdateQuestionnaireDefinition(eContext);
+    }
+
+    export function taskTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+       UpdateQuestionnaireDefinition(eContext);
+    }
+
+    function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
+        const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
+
+        // Get the web resource control on the form
+        const wrCtrl = Form.getControl('WebResource_QuestionnaireRender');
+        const questionnaireDefinition = Form.getAttribute('ovs_questionnairedefinition').getValue();
+        const questionnaireResponse = Form.getAttribute('ovs_questionnaireresponse').getValue();
+
+        // Exit if no questionnaire exists
+        if (questionnaireDefinition === null) {
+            wrCtrl.setVisible(false);
+            return;
+        }
+
+        // Get Questionnaire definition
+        wrCtrl.setVisible(true);
+        InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
     }
 
     //If Status Reason is New, replace ovs_questionnairedefinition with definition from the Service Task Type Lookup field
     function UpdateQuestionnaireDefinition(eContext: Xrm.ExecutionContext<any, any>) {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
-        const workOrderStartDate = Form.getAttribute("ts_workorderstartdate").getValue();
+        const serviceTaskStartDate = Form.getAttribute("ts_servicetaskstartdate").getValue();
         const taskType = Form.getAttribute("msdyn_tasktype").getValue();
-        //  Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
-
+        const workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
+        const workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");       
         if (taskType != null) {
+            workOrderTaskTypeCtl.clearNotification("ts_tasktype_entertoproceed");
+            workOrderStartDateCtl.setDisabled(false);
             const taskTypeID = taskType[0].id;
             Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name&$expand=ovs_Questionnaire").then(
                 function success(result) {
+
                     const today = new Date(Date.now()).toISOString().slice(0, 10);
                     const questionnaireId = result.ovs_Questionnaire.ovs_questionnaireid;
-                    if (workOrderStartDate != null) {
+                    const workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
+
+                    if (serviceTaskStartDate != null) {
+
+                        // Clear out the message that a work order service task start date must be entered to proceed
+                        workOrderStartDateCtl.clearNotification("ts_servicetaskstartdate_entertoproceed");
+
                         //current questionnaire
                         var fetchXml = [
                             "<fetch>",
@@ -88,7 +127,7 @@ namespace ROM.WorkOrderServiceTask {
                             .then(function success(result) {
                                 if (result.entities[0] == null) return;
                                 //The date selected falls within the Start and End Date of the current questionnaire - Display current questionnaire
-                                if (Date.parse(workOrderStartDate.toString()) > Date.parse(result.entities[0].ts_effectivestartdate) && Date.parse(workOrderStartDate.toString()) < Date.parse(result.entities[0].ts_effectiveenddate)) {
+                                if (Date.parse(serviceTaskStartDate.toString()) > Date.parse(result.entities[0].ts_effectivestartdate) && Date.parse(serviceTaskStartDate.toString()) < Date.parse(result.entities[0].ts_effectiveenddate)) {
                                     //Set WOST questionnaire definition to the Questionnaire Version's definition
                                     const newDefinition = result.entities[0].ts_questionnairedefinition;
                                     Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
@@ -103,8 +142,8 @@ namespace ROM.WorkOrderServiceTask {
                                         "    <attribute name='ts_questionnairedefinition' />",
                                         "    <attribute name='ts_name' />",
                                         "    <filter type='and'>",
-                                        "      <condition attribute='ts_effectiveenddate' operator='on-or-after' value='", workOrderStartDate.toISOString().slice(0, 10), "'/>",
-                                        "      <condition attribute='ts_effectivestartdate' operator = 'on-or-before' value='", workOrderStartDate.toISOString().slice(0, 10), "'/>",
+                                        "      <condition attribute='ts_effectiveenddate' operator='on-or-after' value='", serviceTaskStartDate.toISOString().slice(0, 10), "'/>",
+                                        "      <condition attribute='ts_effectivestartdate' operator = 'on-or-before' value='", serviceTaskStartDate.toISOString().slice(0, 10), "'/>",
                                         "      <condition attribute='ts_ovs_questionnaire' operator='eq' value='", questionnaireId, "'/>",
                                         "    </filter>",
                                         "    <order attribute='modifiedon' descending='true' />",
@@ -120,12 +159,12 @@ namespace ROM.WorkOrderServiceTask {
                                             }
                                             //Set WOST questionnaire definition to the Questionnaire Version's definition
                                             const newDefinition = result.entities[0].ts_questionnairedefinition;
-                                            Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
+                                            Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);                                            
                                             ToggleQuestionnaire(eContext);
-                                        }, function error(error) {                                          
+                                        }, function error(error) {
                                             //If the Inspector is disconnected display an information message
                                             Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
-                                            var alertStrings = { confirmButtonLabel: "Ok", text: Xrm.Utility.getResourceString("ts_/resx/WorkOrderServiceTask", "Text"), title: Xrm.Utility.getResourceString("ts_/resx/WorkOrderServiceTask", "Title") };
+                                            var alertStrings = { confirmButtonLabel: "Ok", text: confirmDisconnectedText, title: confirmTitle };
                                             var alertOptions = { height: 120, width: 260 };
                                             Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
                                         });
@@ -133,9 +172,23 @@ namespace ROM.WorkOrderServiceTask {
                             }, function error(error) {
                                 Xrm.Navigation.openAlertDialog({ text: error.message });
                             });
+                    } else {                       
+                        // Work order service task start date is empty so display message to enter it before proceeding
+                        workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
+                        Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
                     }
                 });
         }
+        else {
+            // Task Type is empty so display message to enter it before proceeding
+            if (serviceTaskStartDate != null)
+                workOrderStartDateCtl.clearNotification("ts_servicetaskstartdate_entertoproceed");
+            else
+                workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
+            const workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
+            workOrderTaskTypeCtl.setNotification(enterTaskTypeToProccedText, "ts_tasktype_entertoproceed");
+            Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
+        }            
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {

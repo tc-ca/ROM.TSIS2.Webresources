@@ -1,22 +1,24 @@
 ﻿{
-  "compileOnSave": true,
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "lib": [
-      "es6"
-    ],
-    "allowJs": true,
-    "outDir": "Webresources/js",
-    "strict": true,
-    "noImplicitAny": false,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": [
-    "./src/ts/**/*",
-    "./typings/**/*"
-  ]
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "lib": [
+            "es6"
+        ],
+        "allowJs": true,
+        "outDir": "Webresources/js",
+        "strict": true,
+        "noImplicitAny": false,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "emitBOM": true,
+        "charset": "utf8"
+    },
+    "include": [
+        "./src/ts/**/*",
+        "./typings/**/*"
+    ]
 }

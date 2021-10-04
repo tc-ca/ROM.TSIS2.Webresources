@@ -168,8 +168,6 @@ interface Account_Relationships {
   msdyn_account_msdyn_workorder_ServiceAccount?: msdyn_workorder_Result[] | null;
   msdyn_billingaccount_account?: Account_Result | null;
   msdyn_msdyn_functionallocation_account?: msdyn_FunctionalLocation_Result[] | null;
-  ovs_msdyn_workorder_regulatedentity_account?: msdyn_workorder_Result[] | null;
-  ovs_workorder_SiteofViolation_Account?: msdyn_workorder_Result[] | null;
   ts_account_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
   ts_ovs_operation_stakeholder_account?: ovs_operation_Result[] | null;
 }
@@ -581,8 +579,6 @@ interface Account_Expand {
   msdyn_account_msdyn_workorder_ServiceAccount: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_account_msdyn_workorder_ServiceAccount: msdyn_workorder_Result[] }>;
   msdyn_billingaccount_account: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_billingaccount_account: Account_Result }>;
   msdyn_msdyn_functionallocation_account: WebExpand<Account_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_msdyn_functionallocation_account: msdyn_FunctionalLocation_Result[] }>;
-  ovs_msdyn_workorder_regulatedentity_account: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_msdyn_workorder_regulatedentity_account: msdyn_workorder_Result[] }>;
-  ovs_workorder_SiteofViolation_Account: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_workorder_SiteofViolation_Account: msdyn_workorder_Result[] }>;
   ownerid: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   parentaccountid: WebExpand<Account_Expand, Account_Select, Account_Filter, { parentaccountid: Account_Result }>;
@@ -738,8 +734,6 @@ interface Account_RelatedMany {
   msdyn_account_msdyn_workorder_BillingAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_msdyn_functionallocation_account: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
-  ovs_msdyn_workorder_regulatedentity_account: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
-  ovs_workorder_SiteofViolation_Account: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_account_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_ovs_operation_stakeholder_account: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
 }
