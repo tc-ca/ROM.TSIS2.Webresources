@@ -64,7 +64,23 @@ namespace ROM.WorkOrder {
                 form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                 form.getControl("msdyn_functionallocation").setDisabled(true);
 
+
+                /* Localize the labels shown in the region and country lookups when coming from a case.
+                 * Workaround for localization plugin running after mapped case fields have already been retrieved.
+                 * Split("::") the field name, using left side if in english and right if in french.
+                 */ 
                 let regionValue = form.getAttribute("ts_region").getValue();
+                if (regionValue != null) {
+                    regionValue[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId === 1036) ? regionValue[0]?.name?.split("::")[1] : regionValue[0]?.name?.split("::")[0];
+                    form.getAttribute("ts_region").setValue(regionValue);
+                }
+                let countryValue = form.getAttribute("ts_country").getValue();
+                if (countryValue != null) {
+                    countryValue[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId === 1036) ? countryValue[0]?.name?.split("::")[1] : countryValue[0]?.name?.split("::")[0];
+                    form.getAttribute("ts_country").setValue(countryValue);
+                }
+                
+
                 //If the new work order is coming from a case, and region is international, show the country lookup
                 if (isFromCase && regionValue && regionValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
                     form.getControl("ts_country").setVisible(true);

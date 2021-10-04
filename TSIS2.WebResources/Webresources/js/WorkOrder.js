@@ -7,7 +7,7 @@ var ROM;
         var isFromCase = false; //Boolean status to track if the work order is being created from a case
         // EVENTS
         function onLoad(eContext) {
-            var _a;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j;
             var form = eContext.getFormContext();
             var state = (_a = form.getAttribute("statecode").getValue()) !== null && _a !== void 0 ? _a : null;
             var regionAttribute = form.getAttribute("ts_region");
@@ -59,7 +59,20 @@ var ROM;
                     form.getControl("ts_site").setDisabled(true);
                     form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                     form.getControl("msdyn_functionallocation").setDisabled(true);
+                    /* Localize the labels shown in the region and country lookups when coming from a case.
+                     * Workaround for localization plugin running after mapped case fields have already been retrieved.
+                     * Split("::") the field name, using left side if in english and right if in french.
+                     */
                     var regionValue = form.getAttribute("ts_region").getValue();
+                    if (regionValue != null) {
+                        regionValue[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId === 1036) ? (_c = (_b = regionValue[0]) === null || _b === void 0 ? void 0 : _b.name) === null || _c === void 0 ? void 0 : _c.split("::")[1] : (_e = (_d = regionValue[0]) === null || _d === void 0 ? void 0 : _d.name) === null || _e === void 0 ? void 0 : _e.split("::")[0];
+                        form.getAttribute("ts_region").setValue(regionValue);
+                    }
+                    var countryValue = form.getAttribute("ts_country").getValue();
+                    if (countryValue != null) {
+                        countryValue[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId === 1036) ? (_g = (_f = countryValue[0]) === null || _f === void 0 ? void 0 : _f.name) === null || _g === void 0 ? void 0 : _g.split("::")[1] : (_j = (_h = countryValue[0]) === null || _h === void 0 ? void 0 : _h.name) === null || _j === void 0 ? void 0 : _j.split("::")[0];
+                        form.getAttribute("ts_country").setValue(countryValue);
+                    }
                     //If the new work order is coming from a case, and region is international, show the country lookup
                     if (isFromCase && regionValue && regionValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
                         form.getControl("ts_country").setVisible(true);
