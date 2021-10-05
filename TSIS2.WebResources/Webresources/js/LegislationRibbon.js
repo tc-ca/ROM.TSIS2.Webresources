@@ -149,8 +149,6 @@ function setLegislationLookupControl(formContext, selectedControl, entitySetName
 }
 
 function setWorkOrderServiceTaskLookupControl(formContext, selectedControl, entitySetName, recordId, defaultViewId, viewIds, legislationsAlreadyAssociatedCondition) {
-    //var operationTypeFilterValue = formContext.getAttribute("ts_operationtypefilter").getValue();
-    //var operationTypeLegislations = operationTypeFilterValue != null ? `<condition attribute='ts_operationtype' operator='eq' value='${operationTypeFilterValue[0].id}' />` : "";
     var legislationSourceFilterValue = formContext.getAttribute("ts_legislationsourcefilter").getValue();
     var legislationSourceLegislations = legislationSourceFilterValue != null ? `<condition attribute='qm_tylegislationsourceid' operator='eq' value='${legislationSourceFilterValue[0].id}' />` : "";
 
@@ -170,6 +168,7 @@ function setWorkOrderServiceTaskLookupControl(formContext, selectedControl, enti
                     `${legislationsAlreadyAssociatedCondition}` +
                     `${legislationSourceLegislations}` +
                     `${legislationTypeLegislations}` +
+                    `<condition attribute="ts_provisioncategory" operator="ne" value="{18ADFA7F-33F5-EB11-94EF-000D3AF36036}" />` + //Filter out Non-Imperative Legislations
                     `</filter> `,
                 entityLogicalName: "qm_rclegislation"
             }
