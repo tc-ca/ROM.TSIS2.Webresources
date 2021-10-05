@@ -43,12 +43,16 @@ var ROM;
         var mode = '';
         var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
         var enterStartDateToProceedText = "Enter a start date to proceed";
+        var enterTaskTypeToProccedText = "Enter a task type to proceed";
         var confirmTitle = "Message";
+        var noQuestionnaireText = "There is no questionnaire available for this date.";
         var confirmDisconnectedText = "You cannot retrieve the Inspection valid/active on the date selected";
         if (lang == 1036) {
             enterStartDateToProceedText = "Entrez une date de début pour continue";
+            enterTaskTypeToProccedText = "Entrez un type de tâche pour continuer";
             confirmTitle = "Message";
             confirmDisconnectedText = "Vous ne pouvez pas récupérer l'inspection valide/active à la date sélectionnée";
+            noQuestionnaireText = "Il n'y a pas de questionnaire disponible pour cette date.";
         }
         function onLoad(eContext) {
             var Form = eContext.getFormContext();
@@ -70,10 +74,13 @@ var ROM;
             //If Status Reason is New user is able to change Work Order Start Date
             var statusReason = Form.getAttribute("statuscode").getValue();
             var workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
+            var workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
             if (statusReason == 918640005) {
                 workOrderStartDateCtl.setDisabled(false);
                 // Also, add a message that work order service task start date should be filled in to proceed.
                 workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
+                // Also, add a message that task type start date should be filled in to proceed.
+                workOrderTaskTypeCtl.setNotification(enterTaskTypeToProccedText, "ts_tasktype_entertoproceed");
                 Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
             }
             else {
@@ -86,6 +93,10 @@ var ROM;
             UpdateQuestionnaireDefinition(eContext);
         }
         WorkOrderServiceTask.serviceTaskStartDateOnChange = serviceTaskStartDateOnChange;
+        function taskTypeOnChange(eContext) {
+            UpdateQuestionnaireDefinition(eContext);
+        }
+        WorkOrderServiceTask.taskTypeOnChange = taskTypeOnChange;
         function ToggleQuestionnaire(eContext) {
             var Form = eContext.getFormContext();
             // Get the web resource control on the form
@@ -106,7 +117,11 @@ var ROM;
             var Form = eContext.getFormContext();
             var serviceTaskStartDate = Form.getAttribute("ts_servicetaskstartdate").getValue();
             var taskType = Form.getAttribute("msdyn_tasktype").getValue();
+            var workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
+            var workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
             if (taskType != null) {
+                workOrderTaskTypeCtl.clearNotification("ts_tasktype_entertoproceed");
+                workOrderStartDateCtl.setDisabled(false);
                 var taskTypeID = taskType[0].id;
                 Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name&$expand=ovs_Questionnaire").then(function success(result) {
                     var today = new Date(Date.now()).toISOString().slice(0, 10);
@@ -134,14 +149,15 @@ var ROM;
                         //Retrieve Questionnaire Versions of the Service Task's Questionnaire
                         Xrm.WebApi.retrieveMultipleRecords("ts_questionnaireversion", fetchXml)
                             .then(function success(result) {
-                            if (result.entities[0] == null)
+                            if (result.entities[0] == null) {
+                                workOrderStartDateCtl.setNotification(noQuestionnaireText, "ts_servicetaskstartdate_entertoproceed");
                                 return;
+                            }
                             //The date selected falls within the Start and End Date of the current questionnaire - Display current questionnaire
                             if (Date.parse(serviceTaskStartDate.toString()) > Date.parse(result.entities[0].ts_effectivestartdate) && Date.parse(serviceTaskStartDate.toString()) < Date.parse(result.entities[0].ts_effectiveenddate)) {
                                 //Set WOST questionnaire definition to the Questionnaire Version's definition
                                 var newDefinition = result.entities[0].ts_questionnairedefinition;
                                 Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
-                                //   Form.getControl('WebResource_QuestionnaireRender').setVisible(true);
                                 ToggleQuestionnaire(eContext);
                             }
                             else {
@@ -166,12 +182,12 @@ var ROM;
                                     .then(function success(result) {
                                     if (result.entities[0] == null) {
                                         Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
+                                        workOrderStartDateCtl.setNotification(noQuestionnaireText, "ts_servicetaskstartdate_entertoproceed");
                                         return;
                                     }
                                     //Set WOST questionnaire definition to the Questionnaire Version's definition
                                     var newDefinition = result.entities[0].ts_questionnairedefinition;
                                     Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
-                                    //   Form.getControl('WebResource_QuestionnaireRender').setVisible(true);
                                     ToggleQuestionnaire(eContext);
                                 }, function error(error) {
                                     //If the Inspector is disconnected display an information message
@@ -188,8 +204,19 @@ var ROM;
                     else {
                         // Work order service task start date is empty so display message to enter it before proceeding
                         workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
+                        Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
                     }
                 });
+            }
+            else {
+                // Task Type is empty so display message to enter it before proceeding
+                if (serviceTaskStartDate != null)
+                    workOrderStartDateCtl.clearNotification("ts_servicetaskstartdate_entertoproceed");
+                else
+                    workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
+                var workOrderTaskTypeCtl_1 = Form.getControl("msdyn_tasktype");
+                workOrderTaskTypeCtl_1.setNotification(enterTaskTypeToProccedText, "ts_tasktype_entertoproceed");
+                Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
             }
         }
         function onSave(eContext) {
