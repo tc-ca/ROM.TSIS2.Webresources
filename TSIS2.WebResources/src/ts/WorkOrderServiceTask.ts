@@ -95,12 +95,19 @@ namespace ROM.WorkOrderServiceTask {
             workOrderTaskTypeCtl.clearNotification("ts_tasktype_entertoproceed");
             workOrderStartDateCtl.setDisabled(false);
             const taskTypeID = taskType[0].id;
-            Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name&$expand=ovs_Questionnaire").then(
+            Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name,ts_hascustomquestionnaire&$expand=ovs_Questionnaire").then(
                 function success(result) {
 
+                    const workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
+                    //Custom questionnaires do not have a questionnaire definition
+                    //Remove notification and skip remaining steps
+                    if (result.ts_hascustomquestionnaire) {
+                        // Clear out the message that a work order service task start date must be entered to proceed
+                        workOrderStartDateCtl.clearNotification("ts_servicetaskstartdate_entertoproceed");
+                        return;
+                    }
                     const today = new Date(Date.now()).toISOString().slice(0, 10);
                     const questionnaireId = result.ovs_Questionnaire.ovs_questionnaireid;
-                    const workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
 
                     if (serviceTaskStartDate != null) {
 
