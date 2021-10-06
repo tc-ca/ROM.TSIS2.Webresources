@@ -111,7 +111,6 @@ var widget = {
             question.inspectorComments = question.value.comments || "";
             comments.value = question.value.comments || "";
             question.accountableOperations = question.value.operations || [];
-            question.hadValue = true;
         }
 
         updateQuestionValue(question);
@@ -179,17 +178,26 @@ var widget = {
             findingTypeDropdown.appendChild(observationOption);
             findingTypeDropdown.appendChild(noncomplianceOption);
 
+            //Create an empty dropdown to replace finding type dropdowns with when the operation is not accountable
+            let emptyDropdown = document.createElement("select");
+            emptyDropdown.style.display = 'none';
+            emptyDropdown.style.webkitAppearance = "none";
+            emptyDropdown.disabled = true;
+
+            //Track if a value was loaded for this operation specifically
+            let operationHadValue = false;
             //Load old input values if they exist
             //For each operation saved in the question's value, if its operation ID matches the current operation's ID, load its values
             question.value.operations.forEach(function (operation) {
                 if (operation.operationID == operationCheckbox.value) {
                     operationCheckbox.checked = true;
                     findingTypeDropdown.value = operation.findingType;
+                    operationHadValue = true;
                 }
             });
             //No Finding Types should change automatically after the survey has been marked complete
-            //Only check to force a Finding Type change when the survey is incomplete, or the question has not been answered yet.
-            if (!(isComplete && question.hadValue && findingTypeDropdown.value != 717750001)) {
+            //Only check to force a Finding Type change when the survey is incomplete, or the operation was not previously accountable.
+            if (!(isComplete && operationHadValue && findingTypeDropdown.value != 717750001)) {
                 //if the operationType is not regulated, or the operationType is not one of the parent Work Order's Activity Type's operationTypes
                 //Set to Observation and Lock the dropdown
                 if (!operation.isRegulated || !activityTypeOperationTypeIdsList.includes(operation.operationTypeId)) {
@@ -209,6 +217,7 @@ var widget = {
             }
             updateQuestionValue(question);
             findingTypeData.appendChild(findingTypeDropdown);
+            findingTypeData.appendChild(emptyDropdown);
 
             operationNameData.innerHTML = operation.name
 
@@ -220,7 +229,8 @@ var widget = {
             //Add references to checkbox and dropdown to the inputs array, so their values can be retrieved together
             operationInputs.push({
                 checkbox: operationCheckbox,
-                dropdown: findingTypeDropdown
+                dropdown: findingTypeDropdown,
+                emptyDropdown: emptyDropdown
             });
 
             //If there's only one operation, it must be accountable, so check the checkbox and lock it, then update the question value
@@ -233,6 +243,8 @@ var widget = {
                 }];
                 updateQuestionValue(question);
             }
+
+            updateOperationInputVisibilities(operationInputs);
 
             //When the dropdown is changed, update the question's accountable operation object and then update the question value
             findingTypeDropdown.onchange = function () {
@@ -260,6 +272,7 @@ var widget = {
                         });
                     }
                 });
+                updateOperationInputVisibilities(operationInputs)
                 updateQuestionValue(question);
                 console.log(question.value)
             }
@@ -335,6 +348,21 @@ function updateQuestionValue(question) {
         operations: question.accountableOperations || [],
         provisionData: question.provisionData
     }
+}
+
+//Iterate through the operation inputs. 
+//Show the finding types dropdown when the operation is accountable
+//Show a blank dropdown when the operation is not accountable
+function updateOperationInputVisibilities(operationInputs) {
+    operationInputs.forEach(function (operationInput) {
+        if (operationInput.checkbox.checked) {
+            operationInput.dropdown.style.display = 'block';
+            operationInput.emptyDropdown.style.display = 'none';
+        } else {
+            operationInput.dropdown.style.display = 'none';
+            operationInput.emptyDropdown.style.display = 'block';
+        }
+    });
 }
 
 function updateQuestionProvisionData(question, provisionName) {
