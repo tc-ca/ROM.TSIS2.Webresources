@@ -74,7 +74,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 
     survey.onAfterRenderSurvey.add(function (survey, options) {
         // Hide complete button after survey renders.
-        $('.sv_complete_btn').hide();
+        $('.sv_complete_btn').remove();
     });
 
     survey.onValueChanging.add(function (survey, options) {
