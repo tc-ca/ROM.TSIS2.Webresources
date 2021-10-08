@@ -88,6 +88,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
       get(name: "ts_operationtypefilter"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_servicetaskstartdate"): Xrm.DateAttribute;
+      get(name: "ts_servicetaskenddate"): Xrm.DateAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -130,6 +131,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
       get(name: "ts_operationtypefilter"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_servicetaskstartdate"): Xrm.DateControl;
+      get(name: "ts_servicetaskenddate"): Xrm.DateControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -174,6 +176,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
     getAttribute(attributeName: "ts_operationtypefilter"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_servicetaskstartdate"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_servicetaskenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
@@ -211,6 +214,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
     getControl(controlName: "ts_operationtypefilter"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_servicetaskstartdate"): Xrm.DateControl;
+    getControl(controlName: "ts_servicetaskenddate"): Xrm.DateControl;
     getControl(controlName: string): undefined;
   }
 }

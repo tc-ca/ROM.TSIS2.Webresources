@@ -74,13 +74,17 @@ var ROM;
             //If Status Reason is New user is able to change Work Order Start Date
             var statusReason = Form.getAttribute("statuscode").getValue();
             var workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
+            var workOrderEndDateCtl = Form.getControl("ts_servicetaskenddate");
             var workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
+            workOrderEndDateCtl.setDisabled(true);
             if (statusReason == 918640005) {
                 workOrderStartDateCtl.setDisabled(false);
                 // Also, add a message that work order service task start date should be filled in to proceed.
                 workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
                 // Also, add a message that task type start date should be filled in to proceed.
-                workOrderTaskTypeCtl.setNotification(enterTaskTypeToProccedText, "ts_tasktype_entertoproceed");
+                if (taskType == null) {
+                    workOrderTaskTypeCtl.setNotification(enterTaskTypeToProccedText, "ts_tasktype_entertoproceed");
+                }
                 Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
             }
             else {
@@ -123,7 +127,7 @@ var ROM;
                 workOrderTaskTypeCtl.clearNotification("ts_tasktype_entertoproceed");
                 workOrderStartDateCtl.setDisabled(false);
                 var taskTypeID = taskType[0].id;
-                Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name,ts_hascustomquestionnaire&$expand=ovs_Questionnaire").then(function success(result) {
+                Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name,ts_hascustomquestionnaire,ovs_questionnaireenabled&$expand=ovs_Questionnaire").then(function success(result) {
                     var workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
                     //Custom questionnaires do not have a questionnaire definition
                     //Remove notification and skip remaining steps
@@ -132,6 +136,9 @@ var ROM;
                         workOrderStartDateCtl.clearNotification("ts_servicetaskstartdate_entertoproceed");
                         return;
                     }
+                    //Service Task Type does not have a questionnaire
+                    if (!result.ovs_questionnaireenabled)
+                        workOrderStartDateCtl.setNotification(noQuestionnaireText, "ts_servicetaskstartdate_entertoproceed");
                     var today = new Date(Date.now()).toISOString().slice(0, 10);
                     var questionnaireId = result.ovs_Questionnaire.ovs_questionnaireid;
                     if (serviceTaskStartDate != null) {
