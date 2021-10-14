@@ -23,26 +23,47 @@ var options = {
     haveCommercialLicense: true 
   };
 
-
-/*Grab provision labels to populate autocomplete. Filter out Non-Imperative provisions*/
-var provisionNames = [];
-parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_ordernbr&$filter=(_ts_provisioncategory_value ne 18adfa7f-33f5-eb11-94ef-000d3af36036)`).then(
-  function success(result) {
-    result.entities.sort(function(a,b){return a.qm_ordernbr - b.qm_ordernbr});
-    for (i in result.entities) {
-      provisionNames.push(result.entities[i].qm_name);
+//Returns a sorted array of all Provision names that are not non-imperative
+async function retrieveProvisionNames() {
+    //Initialize array to collect retrieved provisions
+    var provisions = [];
+    //Retrieve first 5000 provisions that are not non-imperative
+    let result = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_ordernbr&$filter=(_ts_provisioncategory_value ne 18adfa7f-33f5-eb11-94ef-000d3af36036)`);
+    //Add results to provisions array
+    provisions = provisions.concat(result.entities);
+    //result.nextLink is a URL to the next page of 5000 provisions 
+    //Track nextLink URL
+    let nextLink = result.nextLink;
+    //Continue to retrieve provisions in groups of 5000 until no more pages remain
+    while (nextLink != null) {
+        //Parse the search options from the nextLink URL
+        let options = new URL(nextLink).search;
+        //Retrieve next page of provisions
+        let nextLinkResult = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", options);
+        //Add the retrieved provisions to the previously retrieved provisions
+        provisions = provisions.concat(nextLinkResult.entities);
+        //update nextLink value
+        nextLink = nextLinkResult.nextLink;
     }
-  }
-);
+    //Sort the provisions by order numbers
+    provisions.sort(function (a, b) { return a.qm_ordernbr - b.qm_ordernbr });
+    let provisionNames = [];
+    //Populate an array of just the provision names
+    for (provision of provisions) {
+        provisionNames.push(provision.qm_name);
+    }
+    return provisionNames;
+}
 
 var autocompleteEditor = {
-    render: function (editor, htmlElement) {
+    render: async function (editor, htmlElement) {
         var form = document.createElement("form");
         form.setAttribute("autocomplete", "off");
         var div = document.createElement("div");
         div.className = " autocomplete";
         var input = document.createElement("input");
         input.setAttribute("id", "myInput");
+        let provisionNames = await retrieveProvisionNames();
         autocomplete(input, provisionNames);
         input.className = "form-control svd_editor_control";
         editor.onValueUpdated = function (newValue) {
