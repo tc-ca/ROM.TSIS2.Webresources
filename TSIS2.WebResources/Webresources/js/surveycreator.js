@@ -55,6 +55,8 @@ async function retrieveProvisionNames() {
     return provisionNames;
 }
 
+let provisionNames = [];
+
 var autocompleteEditor = {
     render: async function (editor, htmlElement) {
         var form = document.createElement("form");
@@ -63,7 +65,7 @@ var autocompleteEditor = {
         div.className = " autocomplete";
         var input = document.createElement("input");
         input.setAttribute("id", "myInput");
-        let provisionNames = await retrieveProvisionNames();
+        if (provisionNames.length === 0) provisionNames = await retrieveProvisionNames();
         autocomplete(input, provisionNames);
         input.className = "form-control svd_editor_control";
         editor.onValueUpdated = function (newValue) {
