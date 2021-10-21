@@ -56,6 +56,10 @@ var ROM;
         }
         function onLoad(eContext) {
             var Form = eContext.getFormContext();
+            //If there's a related Work Order, filter the Task Type Lookup to match the Work Order's Activity Type Filter
+            if (Form.getAttribute("msdyn_workorder").getValue() != null) {
+                setTaskTypeFilteredView(Form);
+            }
             var taskType = Form.getAttribute("msdyn_tasktype").getValue();
             //Lock Task Type field if it has a value.
             if (taskType != null) {
@@ -256,6 +260,18 @@ var ROM;
             CompleteQuestionnaire(wrCtrl);
         }
         WorkOrderServiceTask.onSave = onSave;
+        function setTaskTypeFilteredView(form) {
+            var workOrderValue = form.getAttribute("msdyn_workorder").getValue();
+            var workOrderId = workOrderValue ? workOrderValue[0].id : "";
+            Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_workordertype_value,_ovs_operationtypeid_value").then(function success(result) {
+                var viewId = '{ae0d8547-6871-4854-91ba-03b0c619dbe1}';
+                var entityName = "msdyn_servicetasktype";
+                var viewDisplayName = (lang == 1036) ? "Task Types (FR)" : "Task Types";
+                var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\"> <entity name=\"msdyn_servicetasktype\"> <attribute name=\"msdyn_name\" /> <attribute name=\"createdon\" /> <attribute name=\"msdyn_estimatedduration\" /> <attribute name=\"msdyn_description\" /> <attribute name=\"msdyn_servicetasktypeid\" /> <order attribute=\"msdyn_name\" descending=\"false\" /> <link-entity name=\"msdyn_incidenttypeservicetask\" from=\"msdyn_tasktype\" to=\"msdyn_servicetasktypeid\" link-type=\"inner\" alias=\"ae\"> <link-entity name=\"msdyn_incidenttype\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttype\" link-type=\"inner\" alias=\"af\"> <filter type=\"and\"> <condition attribute=\"msdyn_defaultworkordertype\" operator=\"eq\" value=\"" + result._msdyn_workordertype_value + "\" /> </filter> <link-entity name=\"ts_ovs_operationtypes_msdyn_incidenttypes\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttypeid\" visible=\"false\" intersect=\"true\"> <link-entity name=\"ovs_operationtype\" from=\"ovs_operationtypeid\" to=\"ovs_operationtypeid\" alias=\"ag\"> <filter type=\"and\"> <condition attribute=\"ovs_operationtypeid\" operator=\"eq\" value=\"" + result._ovs_operationtypeid_value + "\" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>";
+                var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_servicetasktype"><cell name="msdyn_name" width="200" /></row></grid>';
+                form.getControl("msdyn_tasktype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+            });
+        }
         // Get surveyJS locale
         function getSurveyLocal() {
             var languageCode = Xrm.Utility.getGlobalContext().userSettings.languageId;
