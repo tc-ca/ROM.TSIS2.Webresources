@@ -119,7 +119,7 @@ namespace ROM.WorkOrderServiceTask {
                         workOrderStartDateCtl.setNotification(noQuestionnaireText, "ts_servicetaskstartdate_entertoproceed");
 
                     const today = new Date(Date.now()).toISOString().slice(0, 10);
-                    const questionnaireId = result.ovs_Questionnaire.ovs_questionnaireid;
+                    const questionnaireId = result.ovs_Questionnaire?.ovs_questionnaireid;
 
                     if (serviceTaskStartDate != null) {
 

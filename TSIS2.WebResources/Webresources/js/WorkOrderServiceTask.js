@@ -132,6 +132,7 @@ var ROM;
                 workOrderStartDateCtl.setDisabled(false);
                 var taskTypeID = taskType[0].id;
                 Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeID, "?$select=msdyn_name,ts_hascustomquestionnaire,ovs_questionnaireenabled&$expand=ovs_Questionnaire").then(function success(result) {
+                    var _a;
                     var workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
                     //Custom questionnaires do not have a questionnaire definition
                     //Remove notification and skip remaining steps
@@ -144,7 +145,7 @@ var ROM;
                     if (!result.ovs_questionnaireenabled)
                         workOrderStartDateCtl.setNotification(noQuestionnaireText, "ts_servicetaskstartdate_entertoproceed");
                     var today = new Date(Date.now()).toISOString().slice(0, 10);
-                    var questionnaireId = result.ovs_Questionnaire.ovs_questionnaireid;
+                    var questionnaireId = (_a = result.ovs_Questionnaire) === null || _a === void 0 ? void 0 : _a.ovs_questionnaireid;
                     if (serviceTaskStartDate != null) {
                         // Clear out the message that a work order service task start date must be entered to proceed
                         workOrderStartDateCtl.clearNotification("ts_servicetaskstartdate_entertoproceed");
