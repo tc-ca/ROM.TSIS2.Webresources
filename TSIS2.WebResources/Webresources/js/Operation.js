@@ -1,8 +1,9 @@
-"use strict";
+﻿"use strict";
 var ROM;
 (function (ROM) {
     var Operation;
     (function (Operation) {
+        var generatedName = [];
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
@@ -12,13 +13,13 @@ var ROM;
             var siteAttribute = form.getAttribute("ts_site");
             var siteAttributeValue = form.getAttribute("ts_site").getValue();
             var nameAttribute = form.getAttribute("ovs_name");
-            //  Save the current values of the fields used in the name generation if they exist
-            globalThis.generatedName = [];
+            //  Save the current values of the fields used in the name generation if they exist+++++
+            generatedName = [];
             if (accountAttribute != null || operationTypeAttribute != null || siteAttribute != null) {
                 if (accountAttributeValue != null || operationTypeAttributeValue != null || siteAttributeValue != null) {
-                    globalThis.generatedName['operationType'] = operationTypeAttributeValue != null ? operationTypeAttributeValue[0].name : "";
-                    globalThis.generatedName['account'] = accountAttributeValue != null ? accountAttributeValue[0].name : "";
-                    globalThis.generatedName['functionalLocation'] = siteAttributeValue != null ? siteAttributeValue[0].name : "";
+                    generatedName['operationType'] = operationTypeAttributeValue != null ? operationTypeAttributeValue[0].name : "";
+                    generatedName['account'] = accountAttributeValue != null ? accountAttributeValue[0].name : "";
+                    generatedName['functionalLocation'] = siteAttributeValue != null ? siteAttributeValue[0].name : "";
                 }
             }
         }
@@ -90,12 +91,12 @@ var ROM;
             if (operationTypeAttribute != null) {
                 var operationTypeAttributeValue = operationTypeAttribute.getValue();
                 if (operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
-                    globalThis.generatedName["operationType"] = operationTypeAttributeValue[0].name;
-                    nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
+                    generatedName["operationType"] = operationTypeAttributeValue[0].name;
+                    nameAttribute.setValue((generatedName["account"] != undefined && generatedName["account"] != null ? generatedName["account"] : "")
                         + " | " +
-                        (globalThis.generatedName["operationType"] != undefined && globalThis.generatedName["operationType"] != null ? globalThis.generatedName["operationType"] : "")
+                        (generatedName["operationType"] != undefined && generatedName["operationType"] != null ? generatedName["operationType"] : "")
                         + " | " +
-                        (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"][0] != null ? globalThis.generatedName["functionalLocation"] : ""));
+                        (generatedName["functionalLocation"] != undefined && generatedName["functionalLocation"][0] != null ? generatedName["functionalLocation"] : ""));
                 }
             }
         }
@@ -107,12 +108,12 @@ var ROM;
             if (accountAttribute != null) {
                 var accountAttributeValue = accountAttribute.getValue();
                 if (accountAttributeValue != null && accountAttributeValue != undefined) {
-                    globalThis.generatedName["account"] = accountAttributeValue[0].name;
-                    nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
+                    generatedName["account"] = accountAttributeValue[0].name;
+                    nameAttribute.setValue((generatedName["account"] != undefined && generatedName["account"] != null ? generatedName["account"] : "")
                         + " | " +
-                        (globalThis.generatedName["operationType"] != undefined && globalThis.generatedName["operationType"] != null ? globalThis.generatedName["operationType"] : "")
+                        (generatedName["operationType"] != undefined && generatedName["operationType"] != null ? generatedName["operationType"] : "")
                         + " | " +
-                        (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : ""));
+                        (generatedName["functionalLocation"] != undefined && generatedName["functionalLocation"] != null ? generatedName["functionalLocation"] : ""));
                 }
             }
         }
@@ -124,12 +125,12 @@ var ROM;
             if (siteAttribute != null) {
                 var siteAttributeValue = siteAttribute.getValue();
                 if (siteAttributeValue != null && siteAttributeValue != undefined) {
-                    globalThis.generatedName["functionalLocation"] = siteAttributeValue[0].name;
-                    nameAttribute.setValue((globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"] : "")
+                    generatedName["functionalLocation"] = siteAttributeValue[0].name;
+                    nameAttribute.setValue((generatedName["account"] != undefined && generatedName["account"] != null ? generatedName["account"] : "")
                         + " | " +
-                        (globalThis.generatedName["operationType"] != undefined && globalThis.generatedName["operationType"] != null ? globalThis.generatedName["operationType"] : "")
+                        (generatedName["operationType"] != undefined && generatedName["operationType"] != null ? generatedName["operationType"] : "")
                         + " | " +
-                        (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : ""));
+                        (generatedName["functionalLocation"] != undefined && generatedName["functionalLocation"] != null ? generatedName["functionalLocation"] : ""));
                     form.getControl('ts_subsite').setDisabled(false);
                     var viewId = '{6A59549F-F162-5128-4711-79BC929540C3}';
                     var entityName = "msdyn_functionallocation";
