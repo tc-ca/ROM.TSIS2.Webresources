@@ -595,44 +595,23 @@ namespace ROM.WorkOrder {
             if (TradenameAttribute != null && TradenameAttribute != undefined) {
                 const TradenameAttributeValue = TradenameAttribute.getValue();
                 if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
-                    try {
-                        Xrm.WebApi.offline.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(
-                            function success(result) {
-                                var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
-                                var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
-                                var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
-                                var lookup = new Array();
-                                lookup[0] = new Object();
-                                lookup[0].id = _ts_stakeholderid_value;
-                                lookup[0].name = _ts_stakeholderid_value_formatted;
-                                lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
-                                form.getAttribute('msdyn_serviceaccount').setValue(lookup);
-                                stakeholderOnChange(eContext);
-                            },
-                            function (error) {
-                                showErrorMessageAlert(error);
-                            }
-                        );
-                    }
-                    catch (e) {
-                        Xrm.WebApi.online.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(
-                            function success(result) {
-                                var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
-                                var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
-                                var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
-                                var lookup = new Array();
-                                lookup[0] = new Object();
-                                lookup[0].id = _ts_stakeholderid_value;
-                                lookup[0].name = _ts_stakeholderid_value_formatted;
-                                lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
-                                form.getAttribute('msdyn_serviceaccount').setValue(lookup);
-                                stakeholderOnChange(eContext);
-                            },
-                            function (error) {
-                                showErrorMessageAlert(error);
-                            }
-                        );
-                    }
+                    Xrm.WebApi.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(
+                        function success(result) {
+                            var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
+                            var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
+                            var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                            var lookup = new Array();
+                            lookup[0] = new Object();
+                            lookup[0].id = _ts_stakeholderid_value;
+                            lookup[0].name = _ts_stakeholderid_value_formatted;
+                            lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
+                            form.getAttribute('msdyn_serviceaccount').setValue(lookup);
+                            stakeholderOnChange(eContext);
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
                 }
             }
         } catch (e) {
@@ -777,38 +756,20 @@ namespace ROM.WorkOrder {
 
             if (caseAttribute != null && caseAttribute != undefined) {
                 if (caseAttributeValue != null) {
-                    try {
-                        Xrm.WebApi.offline.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(
-                            function success(result) {
-                                if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value?.toUpperCase())) ||
-                                    (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._ts_country_value?.toUpperCase())) ||
-                                    (stakeholderCondition != "" && (result != null && stakeholderAttributeValue != null && stakeholderAttributeValue[0].id.replace(/({|})/g, '') != result._customerid_value?.toUpperCase())) ||
-                                    (siteCondition != "" && (result != null && siteAttributeValue != null && siteAttributeValue[0].id.replace(/({|})/g, '') != result._msdyn_functionallocation_value?.toUpperCase()))) {
+                    Xrm.WebApi.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(
+                        function success(result) {
+                            if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value?.toUpperCase())) ||
+                                (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._ts_country_value?.toUpperCase())) ||
+                                (stakeholderCondition != "" && (result != null && stakeholderAttributeValue != null && stakeholderAttributeValue[0].id.replace(/({|})/g, '') != result._customerid_value?.toUpperCase())) ||
+                                (siteCondition != "" && (result != null && siteAttributeValue != null && siteAttributeValue[0].id.replace(/({|})/g, '') != result._msdyn_functionallocation_value?.toUpperCase()))) {
 
-                                    form.getAttribute("msdyn_servicerequest").setValue(null);
-                                }
-                            },
-                            function (error) {
-                                showErrorMessageAlert(error);
+                                form.getAttribute("msdyn_servicerequest").setValue(null);
                             }
-                        );
-                    }
-                    catch (e) {
-                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(
-                            function success(result) {
-                                if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value?.toUpperCase())) ||
-                                    (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._ts_country_value?.toUpperCase())) ||
-                                    (stakeholderCondition != "" && (result != null && stakeholderAttributeValue != null && stakeholderAttributeValue[0].id.replace(/({|})/g, '') != result._customerid_value?.toUpperCase())) ||
-                                    (siteCondition != "" && (result != null && siteAttributeValue != null && siteAttributeValue[0].id.replace(/({|})/g, '') != result._msdyn_functionallocation_value?.toUpperCase()))) {
-
-                                    form.getAttribute("msdyn_servicerequest").setValue(null);
-                                }
-                            },
-                            function (error) {
-                                showErrorMessageAlert(error);
-                            }
-                        );
-                    }
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
                 }
 
                 // Setup a custom view
@@ -918,83 +879,42 @@ namespace ROM.WorkOrder {
 
         if(!regionAttributeValue?.[0].name){
              // Get the user's territory
-            try {
-                Xrm.WebApi.offline.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(
-                    function success(result) {
-                        if (result != null && result["_territoryid_value"] != null) {
-                            // NOTE: Our localization plugin can't localize the territory name on system user
-                            // So we do an extra call to the territory table to get the localized name
-                            Xrm.WebApi.offline.retrieveRecord("territory", result["_territoryid_value"], "?$select=name").then(
-                                function success(result) {
-                                    const territoryId = result["territoryid"];
-                                    var territoryName = result["name"];
-                                    var territoryLogicalName = "territory";
-                                    var lookup = new Array();
-                                    lookup[0] = new Object();
-                                    lookup[0].id = territoryId;
-                                    lookup[0].name = territoryName;
-                                    lookup[0].entityType = territoryLogicalName;
-                                    form.getAttribute('ts_region').setValue(lookup);
-                                    form.getControl("ts_region").setDisabled(false);
-                                    if (lookup[0].name == "International") {
-                                        form.getControl("ts_country").setVisible(true);
-                                        form.getAttribute("ts_country").setRequiredLevel("required");
-                                        form.getControl("ts_country").setDisabled(false);
-                                    } else {
-                                        //setOperationTypeFilteredView(form, territoryId, "", "");
-                                        //form.getControl("ovs_operationtypeid").setDisabled(true);
-                                    }
-                                },
-                                function (error) {
-                                    showErrorMessageAlert(error);
+            Xrm.WebApi.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(
+                function success(result) {
+                    if (result != null && result["_territoryid_value"] != null) {
+                        // NOTE: Our localization plugin can't localize the territory name on system user
+                        // So we do an extra call to the territory table to get the localized name
+                        Xrm.WebApi.retrieveRecord("territory", result["_territoryid_value"], "?$select=name").then(
+                            function success(result) {
+                                const territoryId = result["territoryid"];
+                                var territoryName = result["name"];
+                                var territoryLogicalName = "territory";
+                                var lookup = new Array();
+                                lookup[0] = new Object();
+                                lookup[0].id = territoryId;
+                                lookup[0].name = territoryName;
+                                lookup[0].entityType = territoryLogicalName;
+                                form.getAttribute('ts_region').setValue(lookup);
+                                form.getControl("ts_region").setDisabled(false);
+                                if (lookup[0].name == "International") {
+                                    form.getControl("ts_country").setVisible(true);
+                                    form.getAttribute("ts_country").setRequiredLevel("required");
+                                    form.getControl("ts_country").setDisabled(false);
+                                } else {
+                                    //setOperationTypeFilteredView(form, territoryId, "", "");
+                                    //form.getControl("ovs_operationtypeid").setDisabled(true);
                                 }
-                            );
-                        }
-                    },
-                    function (error) {
-                        showErrorMessageAlert(error);
+                            },
+                            function (error) {
+                                showErrorMessageAlert(error);
+                            }
+                        );
                     }
-                );
-            }
-            catch (e) {
-                //e.message = "API can be accessed only when offline."
-                Xrm.WebApi.online.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(
-                    function success(result) {
-                        if (result != null && result["_territoryid_value"] != null) {
-                            // NOTE: Our localization plugin can't localize the territory name on system user
-                            // So we do an extra call to the territory table to get the localized name
-                            Xrm.WebApi.online.retrieveRecord("territory", result["_territoryid_value"], "?$select=name").then(
-                                function success(result) {
-                                    const territoryId = result["territoryid"];
-                                    var territoryName = result["name"];
-                                    var territoryLogicalName = "territory";
-                                    var lookup = new Array();
-                                    lookup[0] = new Object();
-                                    lookup[0].id = territoryId;
-                                    lookup[0].name = territoryName;
-                                    lookup[0].entityType = territoryLogicalName;
-                                    form.getAttribute('ts_region').setValue(lookup);
-                                    form.getControl("ts_region").setDisabled(false);
-                                    if (lookup[0].name == "International") {
-                                        form.getControl("ts_country").setVisible(true);
-                                        form.getAttribute("ts_country").setRequiredLevel("required");
-                                        form.getControl("ts_country").setDisabled(false);
-                                    } else {
-                                        //setOperationTypeFilteredView(form, territoryId, "", "");
-                                        //form.getControl("ovs_operationtypeid").setDisabled(true);
-                                    }
-                                },
-                                function (error) {
-                                    showErrorMessageAlert(error);
-                                }
-                            );
-                        }
-                    },
-                    function (error) {
-                        showErrorMessageAlert(error);
-                    }
-                );
-            }
+                },
+                function (error) {
+                    showErrorMessageAlert(error);
+                }
+            );
         }
     }
 
@@ -1066,44 +986,23 @@ namespace ROM.WorkOrder {
 
 
     function closeWorkOrderServiceTasks(formContext: Form.msdyn_workorder.Main.ROMOversightActivity, workOrderServiceTaskData: any) {
-        try {
-            Xrm.WebApi.offline.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
-                function success(result) {
-                    for (var i = 0; i < result.entities.length; i++) {
-                        Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(
-                            function success(result) {
-                                //work order service task closed successfully
-                            },
-                            function (error) {
-                                showErrorMessageAlert(error);
-                            }
-                        );
-                    }
-                },
-                function (error) {
-                    showErrorMessageAlert(error);
+        Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
+            function success(result) {
+                for (var i = 0; i < result.entities.length; i++) {
+                    Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(
+                        function success(result) {
+                            //work order service task closed successfully
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
                 }
-            );
-        }
-        catch (e) {
-            Xrm.WebApi.online.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
-                function success(result) {
-                    for (var i = 0; i < result.entities.length; i++) {
-                        Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(
-                            function success(result) {
-                                //work order service task closed successfully
-                            },
-                            function (error) {
-                                showErrorMessageAlert(error);
-                            }
-                        );
-                    }
-                },
-                function (error) {
-                    showErrorMessageAlert(error);
-                }
-            );
-        }
+            },
+            function (error) {
+                showErrorMessageAlert(error);
+            }
+        );
     }
 
     function setWorkOrderServiceTasksView(form: Form.msdyn_workorder.Main.ROMOversightActivity, active: boolean) {
