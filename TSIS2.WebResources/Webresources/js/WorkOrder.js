@@ -14,7 +14,6 @@ var ROM;
             var regionAttribute = form.getAttribute("ts_region");
             var regionAttributeValue = regionAttribute.getValue();
             //Keep track of the current system status, to be used when cancelling a status change.
-            //globalThis.currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             updateCaseView(eContext);
             //Set required fields
@@ -663,12 +662,10 @@ var ROM;
                         form.getAttribute("statecode").setValue(1);
                         //Set Status Reason to Closed
                         form.getAttribute("statuscode").setValue(918640000);
-                        //globalThis.currentSystemStatus = newSystemStatus;
                         currentSystemStatus = newSystemStatus;
                     }
                     else {
                         //Undo the system status change
-                        //form.getAttribute("msdyn_systemstatus").setValue(globalThis.currentSystemStatus);
                         form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
                     }
                 });
@@ -677,7 +674,6 @@ var ROM;
                 //Keep record Active
                 form.getAttribute("statecode").setValue(0);
                 form.getAttribute("statuscode").setValue(1);
-                //globalThis.currentSystemStatus = newSystemStatus;
                 currentSystemStatus = newSystemStatus;
             }
         }
