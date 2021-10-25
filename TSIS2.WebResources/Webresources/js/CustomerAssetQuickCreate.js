@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 var ROM;
 (function (ROM) {
     var CustomerAssetQuickCreate;

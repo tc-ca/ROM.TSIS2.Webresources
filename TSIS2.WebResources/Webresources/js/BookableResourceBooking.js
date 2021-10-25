@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 var ROM;
 (function (ROM) {
