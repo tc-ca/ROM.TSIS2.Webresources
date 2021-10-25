@@ -1,4 +1,5 @@
 namespace ROM.Operation {
+    var generatedName = []
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
 
@@ -12,13 +13,13 @@ namespace ROM.Operation {
         const siteAttributeValue = form.getAttribute("ts_site").getValue();
 
         const nameAttribute = form.getAttribute("ovs_name");
-      //  Save the current values of the fields used in the name generation if they exist
-        globalThis.generatedName = [];
+      //  Save the current values of the fields used in the name generation if they exist+++++
+        generatedName = [];
         if(accountAttribute != null || operationTypeAttribute != null || siteAttribute != null){
             if (accountAttributeValue != null || operationTypeAttributeValue != null || siteAttributeValue != null) {
-                globalThis.generatedName['operationType'] = operationTypeAttributeValue != null ? operationTypeAttributeValue[0].name : "";
-                globalThis.generatedName['account'] = accountAttributeValue != null ? accountAttributeValue[0].name : "";
-                globalThis.generatedName['functionalLocation'] = siteAttributeValue != null ? siteAttributeValue[0].name : "";           
+                generatedName['operationType'] = operationTypeAttributeValue != null ? operationTypeAttributeValue[0].name : "";
+                generatedName['account'] = accountAttributeValue != null ? accountAttributeValue[0].name : "";
+                generatedName['functionalLocation'] = siteAttributeValue != null ? siteAttributeValue[0].name : "";           
             }
         }   
     }
@@ -112,13 +113,13 @@ namespace ROM.Operation {
         if(operationTypeAttribute != null){
             const operationTypeAttributeValue = operationTypeAttribute.getValue();
             if(operationTypeAttributeValue != null && operationTypeAttributeValue != undefined){
-                globalThis.generatedName["operationType"] = operationTypeAttributeValue[0].name;
+                generatedName["operationType"] = operationTypeAttributeValue[0].name;
                 nameAttribute.setValue(
-                    (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
+                    (generatedName["account"] != undefined && generatedName["account"] != null ? generatedName["account"]: "")
                     + " | " +
-                    (globalThis.generatedName["operationType"]!= undefined && globalThis.generatedName["operationType"] != null? globalThis.generatedName["operationType"]: "")
+                    (generatedName["operationType"]!= undefined && generatedName["operationType"] != null? generatedName["operationType"]: "")
                         + " | " + 
-                    (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"][0] != null ? globalThis.generatedName["functionalLocation"] : "")
+                    (generatedName["functionalLocation"] != undefined && generatedName["functionalLocation"][0] != null ? generatedName["functionalLocation"] : "")
                 );
                 }
         }
@@ -133,13 +134,13 @@ namespace ROM.Operation {
         if(accountAttribute != null){
             const accountAttributeValue = accountAttribute.getValue();
             if(accountAttributeValue != null && accountAttributeValue != undefined){
-            globalThis.generatedName["account"] = accountAttributeValue[0].name;
+            generatedName["account"] = accountAttributeValue[0].name;
                 nameAttribute.setValue(
-                    (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
+                    (generatedName["account"] != undefined && generatedName["account"] != null ? generatedName["account"]: "")
                         + " | " +
-                    (globalThis.generatedName["operationType"]!= undefined && globalThis.generatedName["operationType"] != null? globalThis.generatedName["operationType"]: "")
+                    (generatedName["operationType"]!= undefined && generatedName["operationType"] != null? generatedName["operationType"]: "")
                         + " | " + 
-                    (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : "")
+                    (generatedName["functionalLocation"] != undefined && generatedName["functionalLocation"] != null ? generatedName["functionalLocation"] : "")
                 );
             
             }
@@ -155,13 +156,13 @@ namespace ROM.Operation {
         if(siteAttribute != null){
             const siteAttributeValue = siteAttribute.getValue();
             if(siteAttributeValue != null && siteAttributeValue != undefined){
-            globalThis.generatedName["functionalLocation"] = siteAttributeValue[0].name;
+            generatedName["functionalLocation"] = siteAttributeValue[0].name;
                 nameAttribute.setValue(
-                    (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
+                    (generatedName["account"] != undefined && generatedName["account"] != null ? generatedName["account"]: "")
                     + " | " +
-                    (globalThis.generatedName["operationType"]!= undefined && globalThis.generatedName["operationType"] != null? globalThis.generatedName["operationType"]: "")
+                    (generatedName["operationType"]!= undefined && generatedName["operationType"] != null? generatedName["operationType"]: "")
                     + " | " + 
-                    (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"] : "")
+                    (generatedName["functionalLocation"] != undefined && generatedName["functionalLocation"] != null ? generatedName["functionalLocation"] : "")
                 );
 
                 form.getControl('ts_subsite').setDisabled(false);
