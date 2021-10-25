@@ -1,4 +1,7 @@
 namespace ROM.CustomerAssetQuickCreate {
+
+    var generatedName;
+    var currentOperationCategory;
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_customerasset.QuickCreate.CustomerAssetQuickCreate>eContext.getFormContext();
         const assetCategoryAttribute = form.getAttribute("msdyn_customerassetcategory");
@@ -12,13 +15,13 @@ namespace ROM.CustomerAssetQuickCreate {
         const customerAssetCategoryAttributeValue = form.getAttribute("msdyn_customerassetcategory").getValue();
         //@ts-ignore
         const functionalLocationAttributeValue = Xrm.Utility.getPageContext().input.data.msdyn_functionallocation;
-        globalThis.generatedName = [];
-        globalThis.generatedName['functionalLocation'] = functionalLocationAttributeValue != null ? functionalLocationAttributeValue  : "" ;
+        generatedName = [];
+        generatedName['functionalLocation'] = functionalLocationAttributeValue != null ? functionalLocationAttributeValue  : "" ;
 
         if(accountAttribute != null && customerAssetCategoryAttribute != null){
             if(accountAttributeValue != null && customerAssetCategoryAttributeValue != null){
-                globalThis.generatedName['category'] = customerAssetCategoryAttributeValue != null ? customerAssetCategoryAttributeValue[0].name : "" ;
-                globalThis.generatedName['account'] = accountAttributeValue != null ? accountAttributeValue[0].name  : "" ;
+                generatedName['category'] = customerAssetCategoryAttributeValue != null ? customerAssetCategoryAttributeValue[0].name : "" ;
+                generatedName['account'] = accountAttributeValue != null ? accountAttributeValue[0].name  : "" ;
             }
         }
 
@@ -27,7 +30,7 @@ namespace ROM.CustomerAssetQuickCreate {
                 function success(result) {
                     //717750000 = Operations
                     //717750001 = Physical
-                    globalThis.currentOperationCategory = result.ts_assetcategorytype;
+                    currentOperationCategory = result.ts_assetcategorytype;
                 },
                 function (error) {
                 }
@@ -39,7 +42,7 @@ namespace ROM.CustomerAssetQuickCreate {
         const form = <Form.msdyn_customerasset.Main.CustomerAsset>eContext.getFormContext();
         
         if(form.ui.getFormType() == 1){
-            if(globalThis.currentOperationCategory == 717750000){
+            if(currentOperationCategory == 717750000){
                 const nameAttribute = form.getAttribute("msdyn_name");
                 const nameAttributeEnglish = form.getAttribute("ts_customerassetenglish");
                 const nameAttributeFrench = form.getAttribute("ts_customerassetfrench");
@@ -133,14 +136,14 @@ namespace ROM.CustomerAssetQuickCreate {
                             form.getControl("ts_customerassetfrench").setVisible(false);
 
                             //Keep track of the category change, to be used when saving the asset and determining whether to generate a name or not
-                            globalThis.currentOperationCategory = result.ts_assetcategorytype;
-                            globalThis.generatedName["category"] = assetCategoryAttributeValue[0].name;
+                            currentOperationCategory = result.ts_assetcategorytype;
+                            generatedName["category"] = assetCategoryAttributeValue[0].name;
                             nameAttribute.setValue(
-                                (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
+                                (generatedName["account"] != undefined && generatedName["account"] != null ? generatedName["account"]: "")
                                 + " / " +
-                                (globalThis.generatedName["category"]!= undefined && globalThis.generatedName["category"] != null? globalThis.generatedName["category"]: "")
+                                (generatedName["category"]!= undefined && generatedName["category"] != null? generatedName["category"]: "")
                                     + " / " + 
-                                (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"].name : "")
+                                (generatedName["functionalLocation"] != undefined && generatedName["functionalLocation"] != null ? generatedName["functionalLocation"].name : "")
                             );
                         }
                         else{ //Physical Asset}
@@ -170,14 +173,14 @@ namespace ROM.CustomerAssetQuickCreate {
             if(accountAttribute != null){
                 const accountAttributeValue = accountAttribute.getValue();
                 if(accountAttributeValue != null && accountAttributeValue != undefined){
-                    globalThis.generatedName["account"] = accountAttributeValue[0].name;
-                    if(globalThis.currentOperationCategory == 717750000){
+                    generatedName["account"] = accountAttributeValue[0].name;
+                    if(currentOperationCategory == 717750000){
                         nameAttribute.setValue(
-                            (globalThis.generatedName["account"] != undefined && globalThis.generatedName["account"] != null ? globalThis.generatedName["account"]: "")
+                            (generatedName["account"] != undefined && generatedName["account"] != null ? generatedName["account"]: "")
                                 + " / " +
-                            (globalThis.generatedName["category"]!= undefined && globalThis.generatedName["category"] != null? globalThis.generatedName["category"]: "")
+                            (generatedName["category"]!= undefined && generatedName["category"] != null? generatedName["category"]: "")
                                 + " / " + 
-                            (globalThis.generatedName["functionalLocation"] != undefined && globalThis.generatedName["functionalLocation"] != null ? globalThis.generatedName["functionalLocation"].name : "")
+                            (generatedName["functionalLocation"] != undefined && generatedName["functionalLocation"] != null ? generatedName["functionalLocation"].name : "")
                         );
                     }
                 }
