@@ -77,7 +77,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         $('.sv_complete_btn').remove();
     });
 
-    survey.onValueChanging.add(function (survey, options) {
+    survey.onValueChanged.add(function (survey, options) {
         //Adding a space to the questionnaireresponse to make the form dirty. The space gets trimmed off in survey.onComplete.
         var data = JSON.stringify(survey.data, null, 3) + " ";
         if (window.parentFormContext != null) window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data);
