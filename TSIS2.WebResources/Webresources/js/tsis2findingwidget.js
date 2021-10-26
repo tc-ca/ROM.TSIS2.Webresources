@@ -8,24 +8,36 @@ if (parent.Xrm != null) {
 
 var inspectorCommentsLocalizedText;
 var charactersRemainingLocalizedText;
+var accountableOperationsLocalized;
+var findingTypeLocalized;
+var findingTypeUndecided;
+var findingTypeObservationLocalized;
+var findingTypeNoncomplianceLocalized;
+var accountableTableHeaderLocalized;
+var operationNameTableHeaderLocalized;
 
 if (lang == 1036){
     inspectorCommentsLocalizedText = "Fournir des détails";
     charactersRemainingLocalizedText = "caractères restants";
     accountableOperationsLocalized = "Opération responsable";
-    findingTypeLocalized = "Type de finding"
-    findingTypeUndecidedLocalized = "Indécis"
-    findingTypeObservationLocalized = "Observation "
-    findingTypeNoncomplianceLocalized = "Non-conformité"
+    findingTypeLocalized = "Type de finding";
+    findingTypeUndecidedLocalized = "Indécis";
+    findingTypeObservationLocalized = "Observation ";
+    findingTypeNoncomplianceLocalized = "Non-conformité";
+    accountableTableHeaderLocalized = "Est responsable";
+    operationNameTableHeaderLocalized = "Nom de l'opération";
 }
 else{
     inspectorCommentsLocalizedText = "Provide Details:";
     charactersRemainingLocalizedText = "characters remaining";
     accountableOperationsLocalized = "Accountable Operations";
-    findingTypeLocalized = "Finding Type"
-    findingTypeUndecidedLocalized = "Undecided"
-    findingTypeObservationLocalized = "Observation"
-    findingTypeNoncomplianceLocalized = "Non-compliance"
+    findingTypeLocalized = "Finding Type";
+    findingTypeUndecidedLocalized = "Undecided";
+    findingTypeObservationLocalized = "Observation";
+    findingTypeNoncomplianceLocalized = "Non-compliance";
+    accountableTableHeaderLocalized = "Accountable";
+    operationNameTableHeaderLocalized = "Operation Name";
+    
 }
 
 const findingTypeChoices = {
@@ -122,9 +134,9 @@ var widget = {
         var findingTypeHeader = document.createElement("th");
         var operationNameHeader = document.createElement("th");
 
-        accountableOperationHeader.innerHTML = "Accountable";
-        findingTypeHeader.innerHTML = "Finding Type";
-        operationNameHeader.innerHTML = "Operation Name";
+        accountableOperationHeader.innerHTML = accountableTableHeaderLocalized;
+        findingTypeHeader.innerHTML = findingTypeLocalized;
+        operationNameHeader.innerHTML = operationNameTableHeaderLocalized;
 
         accountableOperationHeader.style.width = "10%";
         accountableOperationHeader.style.textAlign = "left";
