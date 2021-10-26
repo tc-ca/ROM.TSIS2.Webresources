@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 namespace ROM.WorkOrder {
     let isFromCase = false; //Boolean status to track if the work order is being created from a case
+    var currentSystemStatus;
     // EVENTS
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
@@ -10,8 +11,7 @@ namespace ROM.WorkOrder {
         const regionAttributeValue = regionAttribute.getValue();
 
         //Keep track of the current system status, to be used when cancelling a status change.
-        globalThis.currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
-
+        currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
         updateCaseView(eContext);
 
         //Set required fields
@@ -595,7 +595,7 @@ namespace ROM.WorkOrder {
             if (TradenameAttribute != null && TradenameAttribute != undefined) {
                 const TradenameAttributeValue = TradenameAttribute.getValue();
                 if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
-                    Xrm.WebApi.online.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(
+                    Xrm.WebApi.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(
                         function success(result) {
                             var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
                             var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
@@ -689,17 +689,17 @@ namespace ROM.WorkOrder {
                         form.getAttribute("statecode").setValue(1);
                         //Set Status Reason to Closed
                         form.getAttribute("statuscode").setValue(918640000);
-                        globalThis.currentSystemStatus = newSystemStatus;
+                        currentSystemStatus = newSystemStatus;
                     } else {
                         //Undo the system status change
-                        form.getAttribute("msdyn_systemstatus").setValue(globalThis.currentSystemStatus);
+                        form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
                     }
             });
         } else {
             //Keep record Active
             form.getAttribute("statecode").setValue(0);
             form.getAttribute("statuscode").setValue(1);
-            globalThis.currentSystemStatus = newSystemStatus;
+            currentSystemStatus = newSystemStatus;
         }
     }
 
@@ -756,7 +756,7 @@ namespace ROM.WorkOrder {
 
             if (caseAttribute != null && caseAttribute != undefined) {
                 if (caseAttributeValue != null) {
-                    Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(
+                    Xrm.WebApi.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(
                         function success(result) {
                             if ((regionCondition != "" && (result != null && regionAttributeValue != null && regionAttributeValue[0].id.replace(/({|})/g, '') != result._ovs_region_value?.toUpperCase())) ||
                                 (countryCondition != "" && (result != null && countryAttributeValue != null && countryAttributeValue[0].id.replace(/({|})/g, '') != result._ts_country_value?.toUpperCase())) ||
@@ -879,13 +879,12 @@ namespace ROM.WorkOrder {
 
         if(!regionAttributeValue?.[0].name){
              // Get the user's territory
-            Xrm.WebApi.online.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(
+            Xrm.WebApi.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(
                 function success(result) {
-
                     if (result != null && result["_territoryid_value"] != null) {
                         // NOTE: Our localization plugin can't localize the territory name on system user
                         // So we do an extra call to the territory table to get the localized name
-                        Xrm.WebApi.online.retrieveRecord("territory", result["_territoryid_value"], "?$select=name").then(
+                        Xrm.WebApi.retrieveRecord("territory", result["_territoryid_value"], "?$select=name").then(
                             function success(result) {
                                 const territoryId = result["territoryid"];
                                 var territoryName = result["name"];
@@ -910,7 +909,7 @@ namespace ROM.WorkOrder {
                                 showErrorMessageAlert(error);
                             }
                         );
-                    }     
+                    }
                 },
                 function (error) {
                     showErrorMessageAlert(error);
@@ -987,7 +986,7 @@ namespace ROM.WorkOrder {
 
 
     function closeWorkOrderServiceTasks(formContext: Form.msdyn_workorder.Main.ROMOversightActivity, workOrderServiceTaskData: any) {
-        Xrm.WebApi.online.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
+        Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
             function success(result) {
                 for (var i = 0; i < result.entities.length; i++) {
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(

@@ -5,6 +5,7 @@ var ROM;
     var WorkOrder;
     (function (WorkOrder) {
         var isFromCase = false; //Boolean status to track if the work order is being created from a case
+        var currentSystemStatus;
         // EVENTS
         function onLoad(eContext) {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
@@ -13,7 +14,7 @@ var ROM;
             var regionAttribute = form.getAttribute("ts_region");
             var regionAttributeValue = regionAttribute.getValue();
             //Keep track of the current system status, to be used when cancelling a status change.
-            globalThis.currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
+            currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             updateCaseView(eContext);
             //Set required fields
             form.getAttribute("ts_region").setRequiredLevel("required");
@@ -557,7 +558,7 @@ var ROM;
                 if (TradenameAttribute != null && TradenameAttribute != undefined) {
                     var TradenameAttributeValue = TradenameAttribute.getValue();
                     if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
-                        Xrm.WebApi.online.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(function success(result) {
+                        Xrm.WebApi.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(function success(result) {
                             var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
                             var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
                             var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
@@ -643,11 +644,11 @@ var ROM;
                         form.getAttribute("statecode").setValue(1);
                         //Set Status Reason to Closed
                         form.getAttribute("statuscode").setValue(918640000);
-                        globalThis.currentSystemStatus = newSystemStatus;
+                        currentSystemStatus = newSystemStatus;
                     }
                     else {
                         //Undo the system status change
-                        form.getAttribute("msdyn_systemstatus").setValue(globalThis.currentSystemStatus);
+                        form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
                     }
                 });
             }
@@ -655,7 +656,7 @@ var ROM;
                 //Keep record Active
                 form.getAttribute("statecode").setValue(0);
                 form.getAttribute("statuscode").setValue(1);
-                globalThis.currentSystemStatus = newSystemStatus;
+                currentSystemStatus = newSystemStatus;
             }
         }
         WorkOrder.systemStatusOnChange = systemStatusOnChange;
@@ -706,7 +707,7 @@ var ROM;
                 var siteCondition = siteAttributeValue_2 == null ? "" : '<condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue_2[0].id + '" />';
                 if (caseAttribute != null && caseAttribute != undefined) {
                     if (caseAttributeValue != null) {
-                        Xrm.WebApi.online.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(function success(result) {
+                        Xrm.WebApi.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value, _ts_country_value, _customerid_value, _msdyn_functionallocation_value").then(function success(result) {
                             var _a, _b, _c, _d;
                             if ((regionCondition != "" && (result != null && regionAttributeValue_1 != null && regionAttributeValue_1[0].id.replace(/({|})/g, '') != ((_a = result._ovs_region_value) === null || _a === void 0 ? void 0 : _a.toUpperCase()))) ||
                                 (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != ((_b = result._ts_country_value) === null || _b === void 0 ? void 0 : _b.toUpperCase()))) ||
@@ -813,11 +814,11 @@ var ROM;
             currentUserId = currentUserId.replace(/[{}]/g, "");
             if (!(regionAttributeValue === null || regionAttributeValue === void 0 ? void 0 : regionAttributeValue[0].name)) {
                 // Get the user's territory
-                Xrm.WebApi.online.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(function success(result) {
+                Xrm.WebApi.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(function success(result) {
                     if (result != null && result["_territoryid_value"] != null) {
                         // NOTE: Our localization plugin can't localize the territory name on system user
                         // So we do an extra call to the territory table to get the localized name
-                        Xrm.WebApi.online.retrieveRecord("territory", result["_territoryid_value"], "?$select=name").then(function success(result) {
+                        Xrm.WebApi.retrieveRecord("territory", result["_territoryid_value"], "?$select=name").then(function success(result) {
                             var territoryId = result["territoryid"];
                             var territoryName = result["name"];
                             var territoryLogicalName = "territory";
@@ -902,7 +903,7 @@ var ROM;
             return "";
         }
         function closeWorkOrderServiceTasks(formContext, workOrderServiceTaskData) {
-            Xrm.WebApi.online.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {
                 for (var i = 0; i < result.entities.length; i++) {
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(function success(result) {
                         //work order service task closed successfully
