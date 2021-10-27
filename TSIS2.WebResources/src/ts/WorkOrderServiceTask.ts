@@ -8,10 +8,10 @@ namespace ROM.WorkOrderServiceTask {
     var noQuestionnaireText = "There is no questionnaire available for this date.";
     var confirmDisconnectedText = "You cannot retrieve the Inspection valid/active on the date selected";
     if (lang == 1036) {
-        enterStartDateToProceedText = "Entrez une date de dÈbut pour continue";
-        enterTaskTypeToProccedText = "Entrez un type de t‚che pour continuer";
+        enterStartDateToProceedText = "Entrez une date de d√©but pour continue";
+        enterTaskTypeToProccedText = "Entrez un type de t√¢che pour continuer";
         confirmTitle = "Message";
-        confirmDisconnectedText = "Vous ne pouvez pas rÈcupÈrer l'inspection valide/active ‡ la date sÈlectionnÈe";
+        confirmDisconnectedText = "Vous ne pouvez pas r√©cup√©rer l'inspection valide/active √† la date s√©lectionn√©e";
         noQuestionnaireText = "Il n'y a pas de questionnaire disponible pour cette date.";
     }
 
@@ -249,7 +249,7 @@ namespace ROM.WorkOrderServiceTask {
             function success(result) {
                 const viewId = '{ae0d8547-6871-4854-91ba-03b0c619dbe1}';
                 const entityName = "msdyn_servicetasktype";
-                const viewDisplayName = (lang == 1036) ? "Type de t‚che relative au service" : "Service Task Types";
+                const viewDisplayName = (lang == 1036) ? "Type de t√¢che relative au service" : "Service Task Types";
                 const fetchXml = `<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"> <entity name="msdyn_servicetasktype"> <attribute name="msdyn_name" /> <attribute name="createdon" /> <attribute name="msdyn_estimatedduration" /> <attribute name="msdyn_description" /> <attribute name="msdyn_servicetasktypeid" /> <order attribute="msdyn_name" descending="false" /> <link-entity name="msdyn_incidenttypeservicetask" from="msdyn_tasktype" to="msdyn_servicetasktypeid" link-type="inner" alias="ae"> <link-entity name="msdyn_incidenttype" from="msdyn_incidenttypeid" to="msdyn_incidenttype" link-type="inner" alias="af"> <filter type="and"> <condition attribute="msdyn_defaultworkordertype" operator="eq" value="${result._msdyn_workordertype_value}" /> </filter> <link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"> <link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ag"> <filter type="and"> <condition attribute="ovs_operationtypeid" operator="eq" value="${result._ovs_operationtypeid_value}" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>`;
                 const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_servicetasktype"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("msdyn_tasktype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
