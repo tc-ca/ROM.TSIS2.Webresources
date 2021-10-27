@@ -20,7 +20,7 @@ if (lang == 1036){
     inspectorCommentsLocalizedText = "Fournir des détails";
     charactersRemainingLocalizedText = "caractères restants";
     accountableOperationsLocalized = "Opération responsable";
-    findingTypeLocalized = "Type de finding";
+    findingTypeLocalized = "Type de constatation";
     findingTypeUndecidedLocalized = "Indécis";
     findingTypeObservationLocalized = "Observation ";
     findingTypeNoncomplianceLocalized = "Non-conformité";
