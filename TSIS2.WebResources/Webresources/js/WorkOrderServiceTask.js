@@ -334,6 +334,12 @@ var ROM;
                                 "      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
                                 "        <attribute name='ts_regulated' />",
                                 "        <attribute name='ovs_operationtypeid' /> ",
+                                "        <attribute name='ovs_operationtypenameenglish' />",
+                                "        <attribute name='ovs_operationtypenamefrench' />",
+                                "      </link-entity>",
+                                "      <link-entity name = 'msdyn_functionallocation' from = 'msdyn_functionallocationid' to = 'ts_site' > ",
+                                "        <attribute name='ts_functionallocationnamefrench' />",
+                                "        <attribute name='ts_functionallocationnameenglish' />",
                                 "      </link-entity>",
                                 "    </link-entity>",
                                 "    <link-entity name='account' from='accountid' to='msdyn_serviceaccount'>",
@@ -361,6 +367,12 @@ var ROM;
                                 "    <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
                                 "      <attribute name='ts_regulated' />",
                                 "      <attribute name='ovs_operationtypeid' /> ",
+                                "      <attribute name='ovs_operationtypenameenglish' />",
+                                "      <attribute name='ovs_operationtypenamefrench' />",
+                                "    </link-entity>",
+                                "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
+                                "      <attribute name='ts_functionallocationnamefrench' />",
+                                "      <attribute name='ts_functionallocationnameenglish' />",
                                 "    </link-entity>",
                                 "  </entity>",
                                 "</fetch>",
@@ -388,20 +400,26 @@ var ROM;
                             return [4 /*yield*/, Promise.all([operationPromise1, operationPromise2, activityTypeOperationTypesPromise]).then(function (operationRetrievalPromises) {
                                     //Add the work order operation operationid, name, operationTypeId, and regulated boolean to the operations array
                                     var workOrderOperation = operationRetrievalPromises[0].entities[0];
-                                    if (workOrderOperation["ovs_operation1.ovs_operationid"] != null && workOrderOperation["account3.name"] != null && workOrderOperation["ovs_operationtype2.ts_regulated"] != null) {
+                                    var stakeholderName = workOrderOperation["account4.name"];
+                                    var operationTypeName = (lang == 1036) ? workOrderOperation["ovs_operationtype2.ovs_operationtypenamefrench"] : workOrderOperation["ovs_operationtype2.ovs_operationtypenameenglish"];
+                                    var siteName = (lang == 1036) ? workOrderOperation["msdyn_functionallocation3.ts_functionallocationnamefrench"] : workOrderOperation["msdyn_functionallocation3.ts_functionallocationnameenglish"];
+                                    if (workOrderOperation["ovs_operation1.ovs_operationid"] != null && workOrderOperation["account4.name"] != null && workOrderOperation["ovs_operationtype2.ts_regulated"] != null) {
                                         operations.push({
                                             id: workOrderOperation["ovs_operation1.ovs_operationid"],
-                                            name: workOrderOperation["account3.name"] + " : " + workOrderOperation["ovs_operation1.ovs_name"],
+                                            name: stakeholderName + " | " + operationTypeName + " | " + siteName,
                                             operationTypeId: workOrderOperation["ovs_operation1.ovs_operationtypeid"],
                                             isRegulated: workOrderOperation["ovs_operationtype2.ts_regulated"]
                                         });
                                     }
                                     //Add the operationid, name, operationTypeId, and regulated boolean of the work order's N:N operations to the operations array
                                     operationRetrievalPromises[1].entities.forEach(function (operation) {
+                                        var stakeholderName = operation["account2.name"];
+                                        var operationTypeName = (lang == 1036) ? operation["ovs_operationtype3.ovs_operationtypenamefrench"] : operation["ovs_operationtype3.ovs_operationtypenameenglish"];
+                                        var siteName = (lang == 1036) ? operation["msdyn_functionallocation4.ts_functionallocationnamefrench"] : operation["msdyn_functionallocation4.ts_functionallocationnameenglish"];
                                         if (operation.ovs_operationid != null && operation["account2.name"] != null && operation["ovs_operationtype3.ts_regulated"] != null) {
                                             operations.push({
                                                 id: operation["ovs_operationid"],
-                                                name: operation["account2.name"] + " : " + operation["ovs_name"],
+                                                name: stakeholderName + " | " + operationTypeName + " | " + siteName,
                                                 operationTypeId: operation["ovs_operationtype3.ovs_operationtypeid"],
                                                 isRegulated: operation["ovs_operationtype3.ts_regulated"]
                                             });
