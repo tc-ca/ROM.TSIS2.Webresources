@@ -76,9 +76,9 @@ declare namespace Form.bookableresourcebooking.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "PRODUCTS"): Xrm.SubGridControl<"msdyn_workorderproduct">;
-      get(name: "SERVICES"): Xrm.SubGridControl<"msdyn_workorderservice">;
-      get(name: "SERVICE_TASKS"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
+      get(name: "PRODUCTS"): Xrm.BaseControl;
+      get(name: "SERVICES"): Xrm.BaseControl;
+      get(name: "SERVICE_TASKS"): Xrm.BaseControl;
       get(name: "ServiceTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
       get(name: "bookingstatus"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "bookingtype"): Xrm.OptionSetControl<bookableresourcebooking_bookingtype>;
@@ -158,9 +158,9 @@ declare namespace Form.bookableresourcebooking.Main {
     getAttribute(attributeName: "starttime"): Xrm.DateAttribute;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "PRODUCTS"): Xrm.SubGridControl<"msdyn_workorderproduct">;
-    getControl(controlName: "SERVICES"): Xrm.SubGridControl<"msdyn_workorderservice">;
-    getControl(controlName: "SERVICE_TASKS"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
+    getControl(controlName: "PRODUCTS"): Xrm.BaseControl;
+    getControl(controlName: "SERVICES"): Xrm.BaseControl;
+    getControl(controlName: "SERVICE_TASKS"): Xrm.BaseControl;
     getControl(controlName: "ServiceTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
     getControl(controlName: "bookingstatus"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "bookingtype"): Xrm.OptionSetControl<bookableresourcebooking_bookingtype>;

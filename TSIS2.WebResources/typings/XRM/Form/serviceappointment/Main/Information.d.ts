@@ -67,6 +67,7 @@ declare namespace Form.serviceappointment.Main {
       get(name: "scheduledstart"): Xrm.DateControl;
       get(name: "serviceid"): Xrm.LookupControl<"service">;
       get(name: "siteid"): Xrm.LookupControl<"site">;
+      get(name: "statecode"): Xrm.OptionSetControl<serviceappointment_statecode>;
       get(name: "statuscode"): Xrm.OptionSetControl<serviceappointment_statuscode>;
       get(name: "subcategory"): Xrm.StringControl;
       get(name: "subject"): Xrm.StringControl;
@@ -122,6 +123,7 @@ declare namespace Form.serviceappointment.Main {
     getControl(controlName: "scheduledstart"): Xrm.DateControl;
     getControl(controlName: "serviceid"): Xrm.LookupControl<"service">;
     getControl(controlName: "siteid"): Xrm.LookupControl<"site">;
+    getControl(controlName: "statecode"): Xrm.OptionSetControl<serviceappointment_statecode>;
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<serviceappointment_statuscode>;
     getControl(controlName: "subcategory"): Xrm.StringControl;
     getControl(controlName: "subject"): Xrm.StringControl;

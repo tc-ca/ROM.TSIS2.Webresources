@@ -8,8 +8,7 @@ interface ovs_operation_Base extends WebEntity {
   statecode?: ovs_operation_statecode | null;
   statuscode?: ovs_operation_statuscode | null;
   timezoneruleversionnumber?: number | null;
-  ts_operationnameenglish?: string | null;
-  ts_operationnamefrench?: string | null;
+  ts_operationstatus?: ts_operationstatus | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -53,8 +52,7 @@ interface ovs_operation_Select {
   statecode: WebAttribute<ovs_operation_Select, { statecode: ovs_operation_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ovs_operation_Select, { statuscode: ovs_operation_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ovs_operation_Select, { timezoneruleversionnumber: number | null }, {  }>;
-  ts_operationnameenglish: WebAttribute<ovs_operation_Select, { ts_operationnameenglish: string | null }, {  }>;
-  ts_operationnamefrench: WebAttribute<ovs_operation_Select, { ts_operationnamefrench: string | null }, {  }>;
+  ts_operationstatus: WebAttribute<ovs_operation_Select, { ts_operationstatus: ts_operationstatus | null }, { ts_operationstatus_formatted?: string }>;
   ts_site_guid: WebAttribute<ovs_operation_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ovs_operation_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   ts_subsite_guid: WebAttribute<ovs_operation_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
@@ -81,8 +79,7 @@ interface ovs_operation_Filter {
   statecode: ovs_operation_statecode;
   statuscode: ovs_operation_statuscode;
   timezoneruleversionnumber: number;
-  ts_operationnameenglish: string;
-  ts_operationnamefrench: string;
+  ts_operationstatus: ts_operationstatus;
   ts_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
   ts_subsite_guid: XQW.Guid;
@@ -121,6 +118,7 @@ interface ovs_operation_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  ts_operationstatus_formatted?: string;
   ts_site_formatted?: string;
   ts_stakeholder_formatted?: string;
   ts_subsite_formatted?: string;

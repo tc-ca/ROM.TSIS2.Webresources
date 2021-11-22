@@ -24,6 +24,8 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
   statecode?: msdyn_workorderservicetask_statecode | null;
   statuscode?: msdyn_workorderservicetask_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_servicetaskenddate?: Date | null;
+  ts_servicetaskstartdate?: Date | null;
   ts_workorderstartdate?: Date | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
@@ -50,6 +52,8 @@ interface msdyn_workorderservicetask extends msdyn_workorderservicetask_Base, ms
   ovs_Questionnaire_bind$ovs_questionnaires?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  ts_legislationsourcefilter_bind$qm_tylegislationsources?: string | null;
+  ts_legislationtypefilter_bind$qm_tylegislationtypes?: string | null;
   ts_operationtypefilter_bind$ovs_operationtypes?: string | null;
 }
 interface msdyn_workorderservicetask_Create extends msdyn_workorderservicetask {
@@ -101,7 +105,11 @@ interface msdyn_workorderservicetask_Select {
   statecode: WebAttribute<msdyn_workorderservicetask_Select, { statecode: msdyn_workorderservicetask_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<msdyn_workorderservicetask_Select, { statuscode: msdyn_workorderservicetask_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<msdyn_workorderservicetask_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_legislationsourcefilter_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_legislationsourcefilter_guid: string | null }, { ts_legislationsourcefilter_formatted?: string }>;
+  ts_legislationtypefilter_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_legislationtypefilter_guid: string | null }, { ts_legislationtypefilter_formatted?: string }>;
   ts_operationtypefilter_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_operationtypefilter_guid: string | null }, { ts_operationtypefilter_formatted?: string }>;
+  ts_servicetaskenddate: WebAttribute<msdyn_workorderservicetask_Select, { ts_servicetaskenddate: Date | null }, { ts_servicetaskenddate_formatted?: string }>;
+  ts_servicetaskstartdate: WebAttribute<msdyn_workorderservicetask_Select, { ts_servicetaskstartdate: Date | null }, { ts_servicetaskstartdate_formatted?: string }>;
   ts_workorderstartdate: WebAttribute<msdyn_workorderservicetask_Select, { ts_workorderstartdate: Date | null }, { ts_workorderstartdate_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_workorderservicetask_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_workorderservicetask_Select, { versionnumber: number | null }, {  }>;
@@ -151,7 +159,11 @@ interface msdyn_workorderservicetask_Filter {
   statecode: msdyn_workorderservicetask_statecode;
   statuscode: msdyn_workorderservicetask_statuscode;
   timezoneruleversionnumber: number;
+  ts_legislationsourcefilter_guid: XQW.Guid;
+  ts_legislationtypefilter_guid: XQW.Guid;
   ts_operationtypefilter_guid: XQW.Guid;
+  ts_servicetaskenddate: Date;
+  ts_servicetaskstartdate: Date;
   ts_workorderstartdate: Date;
   utcconversiontimezonecode: number;
   versionnumber: number;
@@ -201,7 +213,11 @@ interface msdyn_workorderservicetask_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  ts_legislationsourcefilter_formatted?: string;
+  ts_legislationtypefilter_formatted?: string;
   ts_operationtypefilter_formatted?: string;
+  ts_servicetaskenddate_formatted?: string;
+  ts_servicetaskstartdate_formatted?: string;
   ts_workorderstartdate_formatted?: string;
 }
 interface msdyn_workorderservicetask_Result extends msdyn_workorderservicetask_Base, msdyn_workorderservicetask_Relationships {
@@ -225,6 +241,8 @@ interface msdyn_workorderservicetask_Result extends msdyn_workorderservicetask_B
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
   owninguser_guid: string | null;
+  ts_legislationsourcefilter_guid: string | null;
+  ts_legislationtypefilter_guid: string | null;
   ts_operationtypefilter_guid: string | null;
 }
 interface msdyn_workorderservicetask_RelatedOne {

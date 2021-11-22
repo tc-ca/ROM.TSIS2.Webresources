@@ -145,9 +145,9 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
-      get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
-      get(name: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
-      get(name: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
+      get(name: "workorderproductsgrid"): Xrm.BaseControl;
+      get(name: "workorderservicesgrid"): Xrm.BaseControl;
+      get(name: "workorderservicetasksgrid"): Xrm.BaseControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -278,9 +278,9 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
-    getControl(controlName: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
-    getControl(controlName: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
-    getControl(controlName: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
+    getControl(controlName: "workorderproductsgrid"): Xrm.BaseControl;
+    getControl(controlName: "workorderservicesgrid"): Xrm.BaseControl;
+    getControl(controlName: "workorderservicetasksgrid"): Xrm.BaseControl;
     getControl(controlName: string): undefined;
   }
 }

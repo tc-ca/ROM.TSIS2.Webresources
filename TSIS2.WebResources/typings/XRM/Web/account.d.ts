@@ -142,6 +142,7 @@ interface Account_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   transactioncurrencyid_guid?: string | null;
   traversedpath?: string | null;
+  ts_stakeholderstatus?: ts_stakeholderstatus | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
   websiteurl?: string | null;
@@ -371,6 +372,7 @@ interface Account_Select {
   traversedpath: WebAttribute<Account_Select, { traversedpath: string | null }, {  }>;
   ts_country_guid: WebAttribute<Account_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_msdyn_workorder_guid: WebAttribute<Account_Select, { ts_msdyn_workorder_guid: string | null }, { ts_msdyn_workorder_formatted?: string }>;
+  ts_stakeholderstatus: WebAttribute<Account_Select, { ts_stakeholderstatus: ts_stakeholderstatus | null }, { ts_stakeholderstatus_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<Account_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<Account_Select, { versionnumber: number | null }, {  }>;
   websiteurl: WebAttribute<Account_Select, { websiteurl: string | null }, {  }>;
@@ -548,6 +550,7 @@ interface Account_Filter {
   traversedpath: string;
   ts_country_guid: XQW.Guid;
   ts_msdyn_workorder_guid: XQW.Guid;
+  ts_stakeholderstatus: ts_stakeholderstatus;
   utcconversiontimezonecode: number;
   versionnumber: number;
   websiteurl: string;
@@ -665,6 +668,7 @@ interface Account_FormattedResult {
   transactioncurrencyid_formatted?: string;
   ts_country_formatted?: string;
   ts_msdyn_workorder_formatted?: string;
+  ts_stakeholderstatus_formatted?: string;
 }
 interface Account_Result extends Account_Base, Account_Relationships {
   "@odata.etag": string;

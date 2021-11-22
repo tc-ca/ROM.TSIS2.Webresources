@@ -20,6 +20,7 @@ declare namespace Form.account.Main {
         get(name: "MapSection"): Xrm.PageSection;
         get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
         get(name: "SUMMARY_TAB_section_6"): Xrm.PageSection;
+        get(name: "Summary_CadenceWidget"): Xrm.PageSection;
         get(name: "Summary_section_6"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -73,6 +74,7 @@ declare namespace Form.account.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "ActionCards"): Xrm.BaseControl;
+      get(name: "CadenceWidgetControl"): Xrm.BaseControl;
       get(name: "ChildAccounts"): Xrm.SubGridControl<"account">;
       get(name: "Contacts"): Xrm.SubGridControl<"contact">;
       get(name: "accountopportunitiesgrid"): Xrm.SubGridControl<"opportunity">;
@@ -171,6 +173,7 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ActionCards"): Xrm.BaseControl;
+    getControl(controlName: "CadenceWidgetControl"): Xrm.BaseControl;
     getControl(controlName: "ChildAccounts"): Xrm.SubGridControl<"account">;
     getControl(controlName: "Contacts"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "accountopportunitiesgrid"): Xrm.SubGridControl<"opportunity">;

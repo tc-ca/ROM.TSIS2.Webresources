@@ -20,7 +20,7 @@ declare namespace Form.appointment.QuickCreate {
       get(name: "currentsituation"): Xrm.Attribute<string> | null;
       get(name: "customerneed"): Xrm.Attribute<string> | null;
       get(name: "decisionmaker"): Xrm.OptionSetAttribute<boolean> | null;
-      get(name: "description"): Xrm.Attribute<string>;
+      get(name: "description"): Xrm.Attribute<any>;
       get(name: "emailaddress1"): Xrm.Attribute<string> | null;
       get(name: "estimatedclosedate"): Xrm.DateAttribute | null;
       get(name: "estimatedvalue"): Xrm.NumberAttribute | null;
@@ -63,7 +63,7 @@ declare namespace Form.appointment.QuickCreate {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "description"): Xrm.StringControl;
+      get(name: "description"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "header_process_birthdate"): Xrm.DateControl | null;
       get(name: "header_process_budgetamount"): Xrm.NumberControl | null;
       get(name: "header_process_budgetamount_1"): Xrm.NumberControl | null;
@@ -154,7 +154,7 @@ declare namespace Form.appointment.QuickCreate {
     getAttribute(attributeName: "currentsituation"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "customerneed"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "decisionmaker"): Xrm.OptionSetAttribute<boolean> | null;
-    getAttribute(attributeName: "description"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "description"): Xrm.Attribute<any>;
     getAttribute(attributeName: "emailaddress1"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "estimatedclosedate"): Xrm.DateAttribute | null;
     getAttribute(attributeName: "estimatedvalue"): Xrm.NumberAttribute | null;
@@ -192,7 +192,7 @@ declare namespace Form.appointment.QuickCreate {
     getAttribute(attributeName: "title"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "description"): Xrm.StringControl;
+    getControl(controlName: "description"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "header_process_birthdate"): Xrm.DateControl | null;
     getControl(controlName: "header_process_budgetamount"): Xrm.NumberControl | null;
     getControl(controlName: "header_process_budgetamount_1"): Xrm.NumberControl | null;

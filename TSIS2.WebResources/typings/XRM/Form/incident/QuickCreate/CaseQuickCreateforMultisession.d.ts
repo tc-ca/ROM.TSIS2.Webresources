@@ -22,7 +22,7 @@ declare namespace Form.incident.QuickCreate {
       get(name: "primarycontactid"): Xrm.LookupAttribute<"contact"> | null;
       get(name: "prioritycode"): Xrm.OptionSetAttribute<incident_prioritycode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<incident_statuscode>;
-      get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
+      get(name: "subjectid"): Xrm.Attribute<any>;
       get(name: "title"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -53,7 +53,7 @@ declare namespace Form.incident.QuickCreate {
       get(name: "parentcaseid"): Xrm.LookupControl<"incident">;
       get(name: "prioritycode"): Xrm.OptionSetControl<incident_prioritycode>;
       get(name: "statuscode"): Xrm.OptionSetControl<incident_statuscode>;
-      get(name: "subjectid"): Xrm.LookupControl<"subject">;
+      get(name: "subjectid"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "title"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -79,7 +79,7 @@ declare namespace Form.incident.QuickCreate {
     getAttribute(attributeName: "primarycontactid"): Xrm.LookupAttribute<"contact"> | null;
     getAttribute(attributeName: "prioritycode"): Xrm.OptionSetAttribute<incident_prioritycode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<incident_statuscode>;
-    getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
+    getAttribute(attributeName: "subjectid"): Xrm.Attribute<any>;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "casetypecode"): Xrm.OptionSetControl<incident_casetypecode>;
@@ -105,7 +105,7 @@ declare namespace Form.incident.QuickCreate {
     getControl(controlName: "parentcaseid"): Xrm.LookupControl<"incident">;
     getControl(controlName: "prioritycode"): Xrm.OptionSetControl<incident_prioritycode>;
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<incident_statuscode>;
-    getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
+    getControl(controlName: "subjectid"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "title"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }

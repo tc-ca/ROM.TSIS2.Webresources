@@ -31,13 +31,10 @@ declare namespace Form.ovs_operation.Main {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "ovs_lobid"): Xrm.LookupAttribute<"ovs_lob">;
       get(name: "ovs_name"): Xrm.Attribute<string>;
       get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<ovs_operation_statecode>;
-      get(name: "ts_operationnameenglish"): Xrm.Attribute<string>;
-      get(name: "ts_operationnamefrench"): Xrm.Attribute<string>;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
       get(name: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -51,13 +48,11 @@ declare namespace Form.ovs_operation.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"connection">;
       get(name: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
-      get(name: "ovs_lobid"): Xrm.LookupControl<"ovs_lob">;
+      get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ovs_name"): Xrm.StringControl;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
-      get(name: "ts_operationnameenglish"): Xrm.StringControl;
-      get(name: "ts_operationnamefrench"): Xrm.StringControl;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
       get(name: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
@@ -78,13 +73,10 @@ declare namespace Form.ovs_operation.Main {
     }
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
-    getAttribute(attributeName: "ovs_lobid"): Xrm.LookupAttribute<"ovs_lob">;
     getAttribute(attributeName: "ovs_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ovs_operation_statecode>;
-    getAttribute(attributeName: "ts_operationnameenglish"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ts_operationnamefrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -93,13 +85,11 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
-    getControl(controlName: "ovs_lobid"): Xrm.LookupControl<"ovs_lob">;
+    getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ovs_name"): Xrm.StringControl;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
-    getControl(controlName: "ts_operationnameenglish"): Xrm.StringControl;
-    getControl(controlName: "ts_operationnamefrench"): Xrm.StringControl;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
