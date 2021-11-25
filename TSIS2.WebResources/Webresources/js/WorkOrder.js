@@ -20,6 +20,10 @@ var ROM;
             form.getAttribute("ts_region").setRequiredLevel("required");
             form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
             form.getAttribute("ts_site").setRequiredLevel("required");
+            //If the Work Order has a Case, set the case lookup to required to prevent saving a Work Order without a Case
+            if (form.getAttribute("msdyn_servicerequest").getValue() != null) {
+                form.getAttribute("msdyn_servicerequest").setRequiredLevel("required");
+            }
             //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
             if (state == 1) {
                 setWorkOrderServiceTasksView(form, false);
