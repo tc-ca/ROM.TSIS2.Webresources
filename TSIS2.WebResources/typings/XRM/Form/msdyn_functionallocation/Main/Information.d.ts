@@ -84,6 +84,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_parentfunctionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "msdyn_postalcode"): Xrm.StringControl;
       get(name: "msdyn_stateorprovince"): Xrm.StringControl;
+      get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ts_businessunit"): Xrm.StringControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_functionallocationnameenglish"): Xrm.StringControl;
@@ -146,6 +147,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "msdyn_parentfunctionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "msdyn_postalcode"): Xrm.StringControl;
     getControl(controlName: "msdyn_stateorprovince"): Xrm.StringControl;
+    getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ts_businessunit"): Xrm.StringControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_functionallocationnameenglish"): Xrm.StringControl;
