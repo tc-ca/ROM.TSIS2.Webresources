@@ -90,6 +90,7 @@ declare namespace Form.account.Main {
       get(name: "primarycontactid"): Xrm.LookupAttribute<"contact">;
       get(name: "telephone1"): Xrm.Attribute<string>;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+      get(name: "ts_stakeholderstatus"): Xrm.OptionSetAttribute<ts_stakeholderstatus>;
       get(name: "websiteurl"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -138,6 +139,7 @@ declare namespace Form.account.Main {
       get(name: "primarycontactid"): Xrm.LookupControl<"contact">;
       get(name: "telephone1"): Xrm.StringControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
+      get(name: "ts_stakeholderstatus"): Xrm.OptionSetControl<ts_stakeholderstatus>;
       get(name: "websiteurl"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -189,6 +191,7 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "primarycontactid"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "telephone1"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+    getAttribute(attributeName: "ts_stakeholderstatus"): Xrm.OptionSetAttribute<ts_stakeholderstatus>;
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ActionCards"): Xrm.BaseControl;
@@ -232,6 +235,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "primarycontactid"): Xrm.LookupControl<"contact">;
     getControl(controlName: "telephone1"): Xrm.StringControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
+    getControl(controlName: "ts_stakeholderstatus"): Xrm.OptionSetControl<ts_stakeholderstatus>;
     getControl(controlName: "websiteurl"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }

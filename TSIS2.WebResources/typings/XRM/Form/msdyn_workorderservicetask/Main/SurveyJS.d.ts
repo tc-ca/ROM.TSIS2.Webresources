@@ -1,5 +1,5 @@
 declare namespace Form.msdyn_workorderservicetask.Main {
-  namespace SondageJS {
+  namespace SurveyJS {
     namespace Tabs {
       interface tab_10 extends Xrm.SectionCollectionBase {
         get(name: "tab_10_section_1"): Xrm.PageSection;
@@ -154,7 +154,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface SondageJS extends Xrm.PageBase<SondageJS.Attributes,SondageJS.Tabs,SondageJS.Controls> {
+  interface SurveyJS extends Xrm.PageBase<SurveyJS.Attributes,SurveyJS.Tabs,SurveyJS.Controls> {
     getAttribute(attributeName: "msdyn_agreementbookingservicetask"): Xrm.LookupAttribute<"msdyn_agreementbookingservicetask">;
     getAttribute(attributeName: "msdyn_booking"): Xrm.LookupAttribute<"bookableresourcebooking">;
     getAttribute(attributeName: "msdyn_customerasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
