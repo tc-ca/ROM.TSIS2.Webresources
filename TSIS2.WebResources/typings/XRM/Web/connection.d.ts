@@ -86,6 +86,8 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_msdyn_agreementinvoicedate_bind$msdyn_agreementinvoicedates?: string | null;
   record1id_msdyn_agreementinvoiceproduct_bind$msdyn_agreementinvoiceproducts?: string | null;
   record1id_msdyn_agreementinvoicesetup_bind$msdyn_agreementinvoicesetups?: string | null;
+  record1id_msdyn_assignmentmap_bind$msdyn_assignmentmaps?: string | null;
+  record1id_msdyn_assignmentrule_bind$msdyn_assignmentrules?: string | null;
   record1id_msdyn_bookingalert_bind$msdyn_bookingalerts?: string | null;
   record1id_msdyn_bookingalertstatus_bind$msdyn_bookingalertstatuses?: string | null;
   record1id_msdyn_bookingrule_bind$msdyn_bookingrules?: string | null;
@@ -130,6 +132,8 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_msdyn_rtv_bind$msdyn_rtvs?: string | null;
   record1id_msdyn_rtvproduct_bind$msdyn_rtvproducts?: string | null;
   record1id_msdyn_rtvsubstatus_bind$msdyn_rtvsubstatuses?: string | null;
+  record1id_msdyn_sequence_bind$msdyn_sequences?: string | null;
+  record1id_msdyn_sequencetarget_bind$msdyn_sequencetargets?: string | null;
   record1id_msdyn_shipvia_bind$msdyn_shipvias?: string | null;
   record1id_msdyn_systemuserschedulersetting_bind$msdyn_systemuserschedulersettinges?: string | null;
   record1id_msdyn_taxcode_bind$msdyn_taxcodes?: string | null;
@@ -205,6 +209,8 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_msdyn_agreementinvoicedate_bind$msdyn_agreementinvoicedates?: string | null;
   record2id_msdyn_agreementinvoiceproduct_bind$msdyn_agreementinvoiceproducts?: string | null;
   record2id_msdyn_agreementinvoicesetup_bind$msdyn_agreementinvoicesetups?: string | null;
+  record2id_msdyn_assignmentmap_bind$msdyn_assignmentmaps?: string | null;
+  record2id_msdyn_assignmentrule_bind$msdyn_assignmentrules?: string | null;
   record2id_msdyn_bookingalert_bind$msdyn_bookingalerts?: string | null;
   record2id_msdyn_bookingalertstatus_bind$msdyn_bookingalertstatuses?: string | null;
   record2id_msdyn_bookingrule_bind$msdyn_bookingrules?: string | null;
@@ -249,6 +255,8 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_msdyn_rtv_bind$msdyn_rtvs?: string | null;
   record2id_msdyn_rtvproduct_bind$msdyn_rtvproducts?: string | null;
   record2id_msdyn_rtvsubstatus_bind$msdyn_rtvsubstatuses?: string | null;
+  record2id_msdyn_sequence_bind$msdyn_sequences?: string | null;
+  record2id_msdyn_sequencetarget_bind$msdyn_sequencetargets?: string | null;
   record2id_msdyn_shipvia_bind$msdyn_shipvias?: string | null;
   record2id_msdyn_systemuserschedulersetting_bind$msdyn_systemuserschedulersettinges?: string | null;
   record2id_msdyn_taxcode_bind$msdyn_taxcodes?: string | null;

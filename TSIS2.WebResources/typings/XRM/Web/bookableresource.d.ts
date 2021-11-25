@@ -12,6 +12,7 @@ interface BookableResource_Base extends WebEntity {
   msdyn_enableappointments?: msdyn_enableappointmentsoption | null;
   msdyn_enabledforfieldservicemobile?: boolean | null;
   msdyn_enabledripscheduling?: boolean | null;
+  msdyn_enableoutlookschedules?: msdyn_enableappointmentsoption | null;
   msdyn_endlocation?: msdyn_workstartlocationtype | null;
   msdyn_generictype?: msdyn_generictype | null;
   msdyn_hourlyrate?: number | null;
@@ -96,6 +97,7 @@ interface BookableResource_Select {
   msdyn_enableappointments: WebAttribute<BookableResource_Select, { msdyn_enableappointments: msdyn_enableappointmentsoption | null }, { msdyn_enableappointments_formatted?: string }>;
   msdyn_enabledforfieldservicemobile: WebAttribute<BookableResource_Select, { msdyn_enabledforfieldservicemobile: boolean | null }, {  }>;
   msdyn_enabledripscheduling: WebAttribute<BookableResource_Select, { msdyn_enabledripscheduling: boolean | null }, {  }>;
+  msdyn_enableoutlookschedules: WebAttribute<BookableResource_Select, { msdyn_enableoutlookschedules: msdyn_enableappointmentsoption | null }, { msdyn_enableoutlookschedules_formatted?: string }>;
   msdyn_endlocation: WebAttribute<BookableResource_Select, { msdyn_endlocation: msdyn_workstartlocationtype | null }, { msdyn_endlocation_formatted?: string }>;
   msdyn_facilityequipmentid_guid: WebAttribute<BookableResource_Select, { msdyn_facilityequipmentid_guid: string | null }, { msdyn_facilityequipmentid_formatted?: string }>;
   msdyn_generictype: WebAttribute<BookableResource_Select, { msdyn_generictype: msdyn_generictype | null }, { msdyn_generictype_formatted?: string }>;
@@ -154,6 +156,7 @@ interface BookableResource_Filter {
   msdyn_enableappointments: msdyn_enableappointmentsoption;
   msdyn_enabledforfieldservicemobile: boolean;
   msdyn_enabledripscheduling: boolean;
+  msdyn_enableoutlookschedules: msdyn_enableappointmentsoption;
   msdyn_endlocation: msdyn_workstartlocationtype;
   msdyn_facilityequipmentid_guid: XQW.Guid;
   msdyn_generictype: msdyn_generictype;
@@ -222,6 +225,7 @@ interface BookableResource_FormattedResult {
   modifiedonbehalfby_formatted?: string;
   msdyn_crewstrategy_formatted?: string;
   msdyn_enableappointments_formatted?: string;
+  msdyn_enableoutlookschedules_formatted?: string;
   msdyn_endlocation_formatted?: string;
   msdyn_facilityequipmentid_formatted?: string;
   msdyn_generictype_formatted?: string;

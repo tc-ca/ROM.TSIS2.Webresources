@@ -83,7 +83,7 @@ declare namespace Form.incident.Main {
       get(name: "sentimentvalue"): Xrm.NumberAttribute;
       get(name: "socialprofileid"): Xrm.LookupAttribute<"socialprofile">;
       get(name: "statuscode"): Xrm.OptionSetAttribute<incident_statuscode>;
-      get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
+      get(name: "subjectid"): Xrm.Attribute<any>;
       get(name: "ticketnumber"): Xrm.Attribute<string>;
       get(name: "title"): Xrm.Attribute<string>;
       get(name: string): undefined;
@@ -148,8 +148,8 @@ declare namespace Form.incident.Main {
       get(name: "sentimentvalue"): Xrm.NumberControl;
       get(name: "similarCaseRecordcontrol_id"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "socialprofileid"): Xrm.LookupControl<"socialprofile">;
-      get(name: "subjectid"): Xrm.LookupControl<"subject">;
-      get(name: "subjectid1"): Xrm.LookupControl<"subject">;
+      get(name: "subjectid"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "subjectid1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ticketnumber"): Xrm.StringControl;
       get(name: "ticketnumber1"): Xrm.StringControl;
       get(name: "title"): Xrm.StringControl;
@@ -201,7 +201,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "sentimentvalue"): Xrm.NumberAttribute;
     getAttribute(attributeName: "socialprofileid"): Xrm.LookupAttribute<"socialprofile">;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<incident_statuscode>;
-    getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
+    getAttribute(attributeName: "subjectid"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ticketnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
@@ -261,8 +261,8 @@ declare namespace Form.incident.Main {
     getControl(controlName: "sentimentvalue"): Xrm.NumberControl;
     getControl(controlName: "similarCaseRecordcontrol_id"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "socialprofileid"): Xrm.LookupControl<"socialprofile">;
-    getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
-    getControl(controlName: "subjectid1"): Xrm.LookupControl<"subject">;
+    getControl(controlName: "subjectid"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "subjectid1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ticketnumber"): Xrm.StringControl;
     getControl(controlName: "ticketnumber1"): Xrm.StringControl;
     getControl(controlName: "title"): Xrm.StringControl;

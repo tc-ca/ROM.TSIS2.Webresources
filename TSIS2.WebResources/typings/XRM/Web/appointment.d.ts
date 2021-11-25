@@ -31,6 +31,10 @@ interface Appointment_Base extends WebEntity {
   overriddencreatedon?: Date | null;
   prioritycode?: appointment_prioritycode | null;
   processid?: string | null;
+  resco_eventid?: string | null;
+  resco_externalid?: string | null;
+  resco_islocal?: boolean | null;
+  resco_source?: resco_appointment_resco_source | null;
   scheduleddurationminutes?: number | null;
   scheduledend?: Date | null;
   scheduledstart?: Date | null;
@@ -66,6 +70,7 @@ interface Appointment_Relationships {
   regardingobjectid_msdyn_customerasset_appointment?: msdyn_customerasset_Result | null;
   regardingobjectid_msdyn_workorder_appointment?: msdyn_workorder_Result | null;
   regardingobjectid_msdyn_workorderservicetask_appointment?: msdyn_workorderservicetask_Result | null;
+  regardingobjectid_ovs_operation_appointment?: ovs_operation_Result | null;
 }
 interface Appointment extends Appointment_Base, Appointment_Relationships {
   ownerid_appointment_bind$systemusers?: string | null;
@@ -152,6 +157,7 @@ interface Appointment extends Appointment_Base, Appointment_Relationships {
   regardingobjectid_msdyn_workorderservice_appointment_bind$msdyn_workorderservices?: string | null;
   regardingobjectid_msdyn_workorderservicetask_appointment_bind$msdyn_workorderservicetasks?: string | null;
   regardingobjectid_opportunity_appointment_bind$opportunities?: string | null;
+  regardingobjectid_ovs_operation_appointment_bind$ovs_operations?: string | null;
   regardingobjectid_ppp_traveller_appointment_bind$ppp_travellers?: string | null;
   regardingobjectid_quote_appointment_bind$quotes?: string | null;
   regardingobjectid_salesorder_appointment_bind$salesorders?: string | null;
@@ -212,6 +218,10 @@ interface Appointment_Select {
   processid: WebAttribute<Appointment_Select, { processid: string | null }, {  }>;
   regardingobjectid_guid: WebAttribute<Appointment_Select, { regardingobjectid_guid: string | null }, { regardingobjectid_formatted?: string }>;
   requiredattendees_guid: WebAttribute<Appointment_Select, { requiredattendees_guid: string | null }, { requiredattendees_formatted?: string }>;
+  resco_eventid: WebAttribute<Appointment_Select, { resco_eventid: string | null }, {  }>;
+  resco_externalid: WebAttribute<Appointment_Select, { resco_externalid: string | null }, {  }>;
+  resco_islocal: WebAttribute<Appointment_Select, { resco_islocal: boolean | null }, {  }>;
+  resco_source: WebAttribute<Appointment_Select, { resco_source: resco_appointment_resco_source | null }, { resco_source_formatted?: string }>;
   scheduleddurationminutes: WebAttribute<Appointment_Select, { scheduleddurationminutes: number | null }, {  }>;
   scheduledend: WebAttribute<Appointment_Select, { scheduledend: Date | null }, { scheduledend_formatted?: string }>;
   scheduledstart: WebAttribute<Appointment_Select, { scheduledstart: Date | null }, { scheduledstart_formatted?: string }>;
@@ -277,6 +287,10 @@ interface Appointment_Filter {
   processid: XQW.Guid;
   regardingobjectid_guid: XQW.Guid;
   requiredattendees_guid: XQW.Guid;
+  resco_eventid: string;
+  resco_externalid: string;
+  resco_islocal: boolean;
+  resco_source: resco_appointment_resco_source;
   scheduleddurationminutes: number;
   scheduledend: Date;
   scheduledstart: Date;
@@ -316,6 +330,7 @@ interface Appointment_Expand {
   regardingobjectid_msdyn_customerasset_appointment: WebExpand<Appointment_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { regardingobjectid_msdyn_customerasset_appointment: msdyn_customerasset_Result }>;
   regardingobjectid_msdyn_workorder_appointment: WebExpand<Appointment_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder_appointment: msdyn_workorder_Result }>;
   regardingobjectid_msdyn_workorderservicetask_appointment: WebExpand<Appointment_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { regardingobjectid_msdyn_workorderservicetask_appointment: msdyn_workorderservicetask_Result }>;
+  regardingobjectid_ovs_operation_appointment: WebExpand<Appointment_Expand, ovs_operation_Select, ovs_operation_Filter, { regardingobjectid_ovs_operation_appointment: ovs_operation_Result }>;
 }
 interface Appointment_FormattedResult {
   actualend_formatted?: string;
@@ -340,6 +355,7 @@ interface Appointment_FormattedResult {
   prioritycode_formatted?: string;
   regardingobjectid_formatted?: string;
   requiredattendees_formatted?: string;
+  resco_source_formatted?: string;
   scheduledend_formatted?: string;
   scheduledstart_formatted?: string;
   serviceid_formatted?: string;
@@ -383,6 +399,7 @@ interface Appointment_RelatedOne {
   regardingobjectid_msdyn_customerasset_appointment: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   regardingobjectid_msdyn_workorder_appointment: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   regardingobjectid_msdyn_workorderservicetask_appointment: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
+  regardingobjectid_ovs_operation_appointment: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
 }
 interface Appointment_RelatedMany {
   appointment_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;

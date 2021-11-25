@@ -118,4 +118,8 @@ declare const enum connection_record2objecttypecode {
   EntityConfiguration = 10409,
   InogicLicenseDetails = 10411,
   Operation = 10426,
+  Sequence = 10699,
+  SequenceTarget = 10700,
+  AssignmentRule = 10704,
+  AssignmentMap = 10707,
 }

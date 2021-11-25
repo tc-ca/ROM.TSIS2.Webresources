@@ -50,6 +50,7 @@ declare namespace Form.bookableresource.Main {
       get(name: "msdyn_enableappointments"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_enabledforfieldservicemobile"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_enabledripscheduling"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "msdyn_enableoutlookschedules"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_endlocation"): Xrm.OptionSetAttribute<msdyn_workstartlocationtype>;
       get(name: "msdyn_facilityequipmentid"): Xrm.LookupAttribute<"equipment">;
       get(name: "msdyn_generictype"): Xrm.OptionSetAttribute<msdyn_generictype>;
@@ -84,6 +85,7 @@ declare namespace Form.bookableresource.Main {
       get(name: "msdyn_enableappointments"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_enabledforfieldservicemobile"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_enabledripscheduling"): Xrm.OptionSetControl<boolean>;
+      get(name: "msdyn_enableoutlookschedules"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_endlocation"): Xrm.OptionSetControl<msdyn_workstartlocationtype>;
       get(name: "msdyn_facilityequipmentid"): Xrm.LookupControl<"equipment">;
       get(name: "msdyn_generictype"): Xrm.OptionSetControl<msdyn_generictype>;
@@ -127,6 +129,7 @@ declare namespace Form.bookableresource.Main {
     getAttribute(attributeName: "msdyn_enableappointments"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_enabledforfieldservicemobile"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_enabledripscheduling"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "msdyn_enableoutlookschedules"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_endlocation"): Xrm.OptionSetAttribute<msdyn_workstartlocationtype>;
     getAttribute(attributeName: "msdyn_facilityequipmentid"): Xrm.LookupAttribute<"equipment">;
     getAttribute(attributeName: "msdyn_generictype"): Xrm.OptionSetAttribute<msdyn_generictype>;
@@ -156,6 +159,7 @@ declare namespace Form.bookableresource.Main {
     getControl(controlName: "msdyn_enableappointments"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_enabledforfieldservicemobile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_enabledripscheduling"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "msdyn_enableoutlookschedules"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_endlocation"): Xrm.OptionSetControl<msdyn_workstartlocationtype>;
     getControl(controlName: "msdyn_facilityequipmentid"): Xrm.LookupControl<"equipment">;
     getControl(controlName: "msdyn_generictype"): Xrm.OptionSetControl<msdyn_generictype>;

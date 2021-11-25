@@ -1,5 +1,5 @@
 declare namespace Form.msdyn_workorderservicetask.Main {
-  namespace SurveyJS {
+  namespace SondageJS {
     namespace Tabs {
       interface tab_10 extends Xrm.SectionCollectionBase {
         get(name: "tab_10_section_1"): Xrm.PageSection;
@@ -86,9 +86,10 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
-      get(name: "ts_operationtypefilter"): Xrm.LookupAttribute<"ovs_operationtype">;
-      get(name: "ts_servicetaskstartdate"): Xrm.DateAttribute;
+      get(name: "ts_legislationsourcefilter"): Xrm.LookupAttribute<"qm_tylegislationsource">;
+      get(name: "ts_legislationtypefilter"): Xrm.LookupAttribute<"qm_tylegislationtype">;
       get(name: "ts_servicetaskenddate"): Xrm.DateAttribute;
+      get(name: "ts_servicetaskstartdate"): Xrm.DateAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -129,9 +130,10 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
-      get(name: "ts_operationtypefilter"): Xrm.LookupControl<"ovs_operationtype">;
-      get(name: "ts_servicetaskstartdate"): Xrm.DateControl;
+      get(name: "ts_legislationsourcefilter"): Xrm.LookupControl<"qm_tylegislationsource">;
+      get(name: "ts_legislationtypefilter"): Xrm.LookupControl<"qm_tylegislationtype">;
       get(name: "ts_servicetaskenddate"): Xrm.DateControl;
+      get(name: "ts_servicetaskstartdate"): Xrm.DateControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -152,7 +154,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface SurveyJS extends Xrm.PageBase<SurveyJS.Attributes,SurveyJS.Tabs,SurveyJS.Controls> {
+  interface SondageJS extends Xrm.PageBase<SondageJS.Attributes,SondageJS.Tabs,SondageJS.Controls> {
     getAttribute(attributeName: "msdyn_agreementbookingservicetask"): Xrm.LookupAttribute<"msdyn_agreementbookingservicetask">;
     getAttribute(attributeName: "msdyn_booking"): Xrm.LookupAttribute<"bookableresourcebooking">;
     getAttribute(attributeName: "msdyn_customerasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
@@ -174,9 +176,10 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
-    getAttribute(attributeName: "ts_operationtypefilter"): Xrm.LookupAttribute<"ovs_operationtype">;
-    getAttribute(attributeName: "ts_servicetaskstartdate"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_legislationsourcefilter"): Xrm.LookupAttribute<"qm_tylegislationsource">;
+    getAttribute(attributeName: "ts_legislationtypefilter"): Xrm.LookupAttribute<"qm_tylegislationtype">;
     getAttribute(attributeName: "ts_servicetaskenddate"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_servicetaskstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
@@ -212,9 +215,10 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
-    getControl(controlName: "ts_operationtypefilter"): Xrm.LookupControl<"ovs_operationtype">;
-    getControl(controlName: "ts_servicetaskstartdate"): Xrm.DateControl;
+    getControl(controlName: "ts_legislationsourcefilter"): Xrm.LookupControl<"qm_tylegislationsource">;
+    getControl(controlName: "ts_legislationtypefilter"): Xrm.LookupControl<"qm_tylegislationtype">;
     getControl(controlName: "ts_servicetaskenddate"): Xrm.DateControl;
+    getControl(controlName: "ts_servicetaskstartdate"): Xrm.DateControl;
     getControl(controlName: string): undefined;
   }
 }

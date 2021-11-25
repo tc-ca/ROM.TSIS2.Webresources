@@ -27,7 +27,7 @@ declare namespace Form.incident.QuickCreate {
       get(name: "productid"): Xrm.LookupAttribute<"product">;
       get(name: "resolveby"): Xrm.DateAttribute;
       get(name: "responseby"): Xrm.DateAttribute;
-      get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
+      get(name: "subjectid"): Xrm.Attribute<any>;
       get(name: "title"): Xrm.Attribute<string>;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: string): undefined;
@@ -66,7 +66,7 @@ declare namespace Form.incident.QuickCreate {
       get(name: "productid"): Xrm.LookupControl<"product">;
       get(name: "resolveby"): Xrm.DateControl;
       get(name: "responseby"): Xrm.DateControl;
-      get(name: "subjectid"): Xrm.LookupControl<"subject">;
+      get(name: "subjectid"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "title"): Xrm.StringControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: string): undefined;
@@ -98,7 +98,7 @@ declare namespace Form.incident.QuickCreate {
     getAttribute(attributeName: "productid"): Xrm.LookupAttribute<"product">;
     getAttribute(attributeName: "resolveby"): Xrm.DateAttribute;
     getAttribute(attributeName: "responseby"): Xrm.DateAttribute;
-    getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
+    getAttribute(attributeName: "subjectid"): Xrm.Attribute<any>;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: string): undefined;
@@ -132,7 +132,7 @@ declare namespace Form.incident.QuickCreate {
     getControl(controlName: "productid"): Xrm.LookupControl<"product">;
     getControl(controlName: "resolveby"): Xrm.DateControl;
     getControl(controlName: "responseby"): Xrm.DateControl;
-    getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
+    getControl(controlName: "subjectid"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "title"): Xrm.StringControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: string): undefined;

@@ -25,6 +25,7 @@ interface msdyn_FunctionalLocation_Base extends WebEntity {
   ts_functionallocationnamefrench?: string | null;
   ts_iatacode?: string | null;
   ts_icaocode?: string | null;
+  ts_sitestatus?: ts_sitestatus | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -93,6 +94,7 @@ interface msdyn_FunctionalLocation_Select {
   ts_iatacode: WebAttribute<msdyn_FunctionalLocation_Select, { ts_iatacode: string | null }, {  }>;
   ts_icaocode: WebAttribute<msdyn_FunctionalLocation_Select, { ts_icaocode: string | null }, {  }>;
   ts_region_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
+  ts_sitestatus: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitestatus: ts_sitestatus | null }, { ts_sitestatus_formatted?: string }>;
   ts_sitetype_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitetype_guid: string | null }, { ts_sitetype_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_FunctionalLocation_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_FunctionalLocation_Select, { versionnumber: number | null }, {  }>;
@@ -135,6 +137,7 @@ interface msdyn_FunctionalLocation_Filter {
   ts_iatacode: string;
   ts_icaocode: string;
   ts_region_guid: XQW.Guid;
+  ts_sitestatus: ts_sitestatus;
   ts_sitetype_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
@@ -178,6 +181,7 @@ interface msdyn_FunctionalLocation_FormattedResult {
   ts_class_formatted?: string;
   ts_country_formatted?: string;
   ts_region_formatted?: string;
+  ts_sitestatus_formatted?: string;
   ts_sitetype_formatted?: string;
 }
 interface msdyn_FunctionalLocation_Result extends msdyn_FunctionalLocation_Base, msdyn_FunctionalLocation_Relationships {
