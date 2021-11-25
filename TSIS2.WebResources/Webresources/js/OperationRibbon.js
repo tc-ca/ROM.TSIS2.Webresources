@@ -159,6 +159,7 @@ function setWorkOrderLookupControl(formContext, selectedControl, entitySetName, 
     var siteValue = formContext.getAttribute("ts_site").getValue();
     var currentOperationCondition = operationValue != null ? `<condition attribute="ovs_operationid" operator="neq" value="${operationValue[0].id}" />` : "";
     var siteOperations = siteValue != null ? `<condition attribute='ts_site' operator='eq' value='${siteValue[0].id}' />` : "";
+    var operationalCondition = `<condition attribute="ts_operationstatus" operator="ne" value="717750001" />`;
 
     var lookupOptions =
     {
@@ -172,6 +173,7 @@ function setWorkOrderLookupControl(formContext, selectedControl, entitySetName, 
                 filterXml: `<filter type="and">` + 
                     `${operationsAlreadyAssociatedCondition}` +
                     `${currentOperationCondition}` +
+                    `${operationalCondition}` +
                     `${siteOperations}` +
                     `</filter> `,
                 entityLogicalName: "ovs_operation"
