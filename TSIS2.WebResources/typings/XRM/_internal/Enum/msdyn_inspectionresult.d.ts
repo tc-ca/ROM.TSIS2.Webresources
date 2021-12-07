@@ -3,4 +3,5 @@ declare const enum msdyn_inspectionresult {
   Fail = 192350001,
   PartialSuccess = 192350002,
   NA = 192350003,
+  Observations = 447390000,
 }

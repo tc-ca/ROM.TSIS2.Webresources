@@ -94,6 +94,7 @@ interface msdyn_workorder_Relationships {
   ts_msdyn_customerasset_msdyn_workorder_msdyn?: msdyn_customerasset_Result[] | null;
   ts_msdyn_workorder_msdyn_workorder_Account?: Account_Result[] | null;
   ts_msdyn_workorder_ovs_operation_ovs_operati?: ovs_operation_Result[] | null;
+  ts_tradenameId?: ts_tradename_Result | null;
 }
 interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relationships {
   msdyn_FunctionalLocation_bind$msdyn_functionallocations?: string | null;
@@ -434,6 +435,7 @@ interface msdyn_workorder_Expand {
   ts_msdyn_customerasset_msdyn_workorder_msdyn: WebExpand<msdyn_workorder_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ts_msdyn_customerasset_msdyn_workorder_msdyn: msdyn_customerasset_Result[] }>;
   ts_msdyn_workorder_msdyn_workorder_Account: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ts_msdyn_workorder_msdyn_workorder_Account: Account_Result[] }>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<msdyn_workorder_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: ovs_operation_Result[] }>;
+  ts_tradenameId: WebExpand<msdyn_workorder_Expand, ts_tradename_Select, ts_tradename_Filter, { ts_tradenameId: ts_tradename_Result }>;
 }
 interface msdyn_workorder_FormattedResult {
   createdby_formatted?: string;
@@ -602,6 +604,7 @@ interface msdyn_workorder_RelatedOne {
   qm_ReportContactId: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_WorkOrderCreationWizardId: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
+  ts_tradenameId: WebMappingRetrieve<ts_tradename_Select,ts_tradename_Expand,ts_tradename_Filter,ts_tradename_Fixed,ts_tradename_Result,ts_tradename_FormattedResult>;
 }
 interface msdyn_workorder_RelatedMany {
   msdyn_msdyn_workorder_bookableresourcebooking_WorkOrder: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;

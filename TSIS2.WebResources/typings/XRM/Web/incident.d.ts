@@ -73,6 +73,7 @@ interface Incident_Relationships {
   msdyn_incident_msdyn_customerasset?: msdyn_customerasset_Result[] | null;
   msdyn_incident_msdyn_workorder_ServiceRequest?: msdyn_workorder_Result[] | null;
   ovs_incident_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result[] | null;
+  ts_TradeNameId?: ts_tradename_Result | null;
   ts_incident_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
 }
 interface Incident extends Incident_Base, Incident_Relationships {
@@ -325,6 +326,7 @@ interface Incident_Expand {
   parentcaseid: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { parentcaseid: Incident_Result }>;
   primarycontactid: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
   responsiblecontactid: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { responsiblecontactid: Contact_Result }>;
+  ts_TradeNameId: WebExpand<Incident_Expand, ts_tradename_Select, ts_tradename_Filter, { ts_TradeNameId: ts_tradename_Result }>;
   ts_incident_ts_workordercreationwizard: WebExpand<Incident_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_incident_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
 }
 interface Incident_FormattedResult {
@@ -441,6 +443,7 @@ interface Incident_RelatedOne {
   parentcaseid: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   primarycontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   responsiblecontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  ts_TradeNameId: WebMappingRetrieve<ts_tradename_Select,ts_tradename_Expand,ts_tradename_Filter,ts_tradename_Fixed,ts_tradename_Result,ts_tradename_FormattedResult>;
 }
 interface Incident_RelatedMany {
   Incident_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
