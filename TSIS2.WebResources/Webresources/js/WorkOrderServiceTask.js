@@ -155,6 +155,8 @@ var ROM;
                             "  <entity name='ts_questionnaireversion'>",
                             "    <attribute name='ts_questionnairedefinition' />",
                             "    <attribute name='ts_name' />",
+                            "    <attribute name='ts_effectivestartdate' />",
+                            "    <attribute name='ts_effectiveenddate' />",
                             "    <filter type='and'>",
                             "      <condition attribute='ts_effectiveenddate' operator='on-or-after' value='", today, "'/>",
                             "      <condition attribute='ts_effectivestartdate' operator = 'on-or-before' value='", today, "'/>",
@@ -173,7 +175,7 @@ var ROM;
                                 return;
                             }
                             //The date selected falls within the Start and End Date of the current questionnaire - Display current questionnaire
-                            if (Date.parse(serviceTaskStartDate.toString()) > Date.parse(result.entities[0].ts_effectivestartdate) && Date.parse(serviceTaskStartDate.toString()) < Date.parse(result.entities[0].ts_effectiveenddate)) {
+                            if (Date.parse(serviceTaskStartDate.toString()) > Date.parse(result.entities[0].ts_effectivestartdate) && result.entities[0].ts_effectiveenddate == null || Date.parse(serviceTaskStartDate.toString()) < Date.parse(result.entities[0].ts_effectiveenddate)) {
                                 //Set WOST questionnaire definition to the Questionnaire Version's definition
                                 var newDefinition = result.entities[0].ts_questionnairedefinition;
                                 Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
