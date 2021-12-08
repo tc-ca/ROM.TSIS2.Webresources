@@ -129,18 +129,25 @@ namespace ROM.WorkOrderServiceTask {
                         //current questionnaire
                         var fetchXml = [
                             "<fetch>",
-                            "  <entity name='ts_questionnaireversion'>",
-                            "    <attribute name='ts_questionnairedefinition' />",
-                            "    <attribute name='ts_name' />",
-                            "    <attribute name='ts_effectivestartdate' />",
-                            "    <attribute name='ts_effectiveenddate' />",
-                            "    <filter type='and'>",
-                            "      <condition attribute='ts_effectiveenddate' operator='on-or-after' value='", today, "'/>",
-                            "      <condition attribute='ts_effectivestartdate' operator = 'on-or-before' value='", today, "'/>",
-                            "      <condition attribute='ts_ovs_questionnaire' operator='eq' value='", questionnaireId, "'/>",
-                            "    </filter>",
-                            "    <order attribute='modifiedon' descending='true' />",
-                            "  </entity>",
+                            " <entity name='ts_questionnaireversion'>",
+                            "	<attribute name='ts_questionnairedefinition' />",
+                            "	<attribute name='ts_name' />",
+                            "	<attribute name='ts_effectivestartdate' />",
+                            "	<attribute name='ts_effectiveenddate' />",
+                            "	<filter type='or'>",
+                            "	  <filter>",
+                            "		<condition attribute='ts_effectiveenddate' operator='on-or-after' value='", today, "'/>",
+                            "		<filter>",
+                            "		  <condition attribute='ts_effectivestartdate' operator='on-or-before' value='", today, "'/>",
+                            "		  <condition attribute='ts_ovs_questionnaire' operator='eq' value='", questionnaireId, "'/>",
+                            "		</filter>",
+                            "	  </filter>",
+                            "	  <filter>",
+                            "		<condition attribute='ts_effectivestartdate' operator='on-or-before' value='", today, "'/>",
+                            "		<condition attribute='ts_ovs_questionnaire' operator='eq' value='", questionnaireId, "'/>",
+                            "	  </filter>",
+                            "	</filter>",
+                            " </entity>",
                             "</fetch>",
                         ].join("");
                         fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
@@ -153,7 +160,10 @@ namespace ROM.WorkOrderServiceTask {
                                     return;
                                 }
                                 //The date selected falls within the Start and End Date of the current questionnaire - Display current questionnaire
-                                if (Date.parse(serviceTaskStartDate.toString()) > Date.parse(result.entities[0].ts_effectivestartdate) && result.entities[0].ts_effectiveenddate == null || Date.parse(serviceTaskStartDate.toString()) < Date.parse(result.entities[0].ts_effectiveenddate)) {
+                                var effectiveStartDate = new Date(result.entities[0].ts_effectivestartdate);
+                                var effectiveEndDate = new Date(result.entities[0].ts_effectiveenddate);
+
+                                if ((serviceTaskStartDate >= effectiveStartDate) && (effectiveEndDate.toString() == "Invalid Date" || serviceTaskStartDate <= effectiveEndDate)) {
                                     //Set WOST questionnaire definition to the Questionnaire Version's definition
                                     const newDefinition = result.entities[0].ts_questionnairedefinition;
                                     Form.getAttribute("ovs_questionnairedefinition").setValue(newDefinition);
