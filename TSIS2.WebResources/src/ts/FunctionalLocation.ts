@@ -49,5 +49,5 @@ namespace ROM.FunctionalLocation {
                 form.getControl("ts_statusenddate").setVisible(false);
             }
         }
-    }   
+    }
 }
