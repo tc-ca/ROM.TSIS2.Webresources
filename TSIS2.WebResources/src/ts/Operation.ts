@@ -53,13 +53,18 @@ namespace ROM.Operation {
             if(operationStatusAttributeValue != null && operationStatusAttributeValue != undefined){
                 if(operationStatusAttributeValue == 717750001){
                     form.getAttribute("ts_startdate").setRequiredLevel("required");
+                    
                     form.getControl("ts_startdate").setVisible(true);
                     form.getControl("ts_enddate").setVisible(true);
                 }
                 else{
                     form.getAttribute("ts_startdate").setRequiredLevel("none");
+
                     form.getControl("ts_startdate").setVisible(false);
                     form.getControl("ts_enddate").setVisible(false);
+
+                    form.getAttribute("ts_startdate").setValue(null);
+                    form.getAttribute("ts_enddate").setValue(null);
                 }
             }
         }
