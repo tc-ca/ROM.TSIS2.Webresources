@@ -9,6 +9,7 @@ var ROM;
             if (addressControl != null && addressControl != undefined) {
                 addressControl.setVisible(false);
             }
+            setDateRangeVisibility(eContext);
         }
         Account.onLoad = onLoad;
         function regionOnChange(eContext) {
@@ -87,5 +88,25 @@ var ROM;
             }
         }
         Account.countryOnChange = countryOnChange;
+        function stakeholderStatusOnChange(eContext) {
+            setDateRangeVisibility(eContext);
+        }
+        Account.stakeholderStatusOnChange = stakeholderStatusOnChange;
+        function setDateRangeVisibility(eContext) {
+            var form = eContext.getFormContext();
+            var stakeholderStatus = form.getAttribute("ts_stakeholderstatus");
+            if (stakeholderStatus != null && stakeholderStatus != undefined) {
+                var stakeholderStatusValue = stakeholderStatus.getValue();
+                //if status is Non-Operational set Start Date and End Date visible
+                if ((stakeholderStatusValue === null || stakeholderStatusValue === void 0 ? void 0 : stakeholderStatusValue.toString()) == "717750001") {
+                    form.getControl("ts_statusstartdate").setVisible(true);
+                    form.getControl("ts_statusenddate").setVisible(true);
+                }
+                else {
+                    form.getControl("ts_statusstartdate").setVisible(false);
+                    form.getControl("ts_statusenddate").setVisible(false);
+                }
+            }
+        }
     })(Account = ROM.Account || (ROM.Account = {}));
 })(ROM || (ROM = {}));
