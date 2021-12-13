@@ -3,6 +3,18 @@ var ROM;
 (function (ROM) {
     var Operation;
     (function (Operation) {
+        function onLoad(eContext) {
+            var form = eContext.getFormContext();
+            var operationStatusAttribute = form.getAttribute("ts_operationstatus");
+            var operationStatusAttributeValue = operationStatusAttribute.getValue();
+            if (operationStatusAttributeValue != null && operationStatusAttributeValue != undefined) {
+                if (operationStatusAttributeValue == 717750001) {
+                    form.getControl("ts_startdate").setVisible(true);
+                    form.getControl("ts_enddate").setVisible(true);
+                }
+            }
+        }
+        Operation.onLoad = onLoad;
         function siteOnChange(eContext) {
             var form = eContext.getFormContext();
             var siteAttribute = form.getAttribute("ts_site");
@@ -24,5 +36,29 @@ var ROM;
             }
         }
         Operation.siteOnChange = siteOnChange;
+        function operationStatusOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var operationStatusAttribute = form.getAttribute("ts_operationstatus");
+            var startDateAttribute = form.getAttribute("ts_startdate");
+            var endDateAttribute = form.getAttribute("ts_enddate");
+            if (operationStatusAttribute != null) {
+                var operationStatusAttributeValue = operationStatusAttribute.getValue();
+                var startDateAttributeValue = startDateAttribute.getValue();
+                var endDateAttributeValue = endDateAttribute.getValue();
+                if (operationStatusAttributeValue != null && operationStatusAttributeValue != undefined) {
+                    if (operationStatusAttributeValue == 717750001) {
+                        form.getAttribute("ts_startdate").setRequiredLevel("required");
+                        form.getControl("ts_startdate").setVisible(true);
+                        form.getControl("ts_enddate").setVisible(true);
+                    }
+                    else {
+                        form.getAttribute("ts_startdate").setRequiredLevel("none");
+                        form.getControl("ts_startdate").setVisible(false);
+                        form.getControl("ts_enddate").setVisible(false);
+                    }
+                }
+            }
+        }
+        Operation.operationStatusOnChange = operationStatusOnChange;
     })(Operation = ROM.Operation || (ROM.Operation = {}));
 })(ROM || (ROM = {}));
