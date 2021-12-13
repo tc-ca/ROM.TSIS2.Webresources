@@ -55,6 +55,8 @@ var ROM;
                         form.getAttribute("ts_startdate").setRequiredLevel("none");
                         form.getControl("ts_startdate").setVisible(false);
                         form.getControl("ts_enddate").setVisible(false);
+                        form.getAttribute("ts_startdate").setValue(null);
+                        form.getAttribute("ts_enddate").setValue(null);
                     }
                 }
             }

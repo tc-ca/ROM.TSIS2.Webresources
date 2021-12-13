@@ -550,7 +550,7 @@ namespace ROM.WorkOrder {
                                 lookup[0].entityType = 'ovs_operation';
 
                                 if(targetOperation.ts_operationstatus == 717750001){
-                                    form.ui.setFormNotification("The operation " + targetOperation.ovs_name + " is non-operational", "ERROR", "non-operational-operation");
+                                    form.ui.setFormNotification("The operation \"" + targetOperation.ovs_name + "\" is non-operational.", "ERROR", "non-operational-operation");
                                     form.getAttribute('ts_site').setValue(null);
                                 }
                                 else{
