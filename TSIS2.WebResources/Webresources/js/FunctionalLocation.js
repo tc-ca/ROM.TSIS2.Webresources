@@ -18,28 +18,34 @@ var ROM;
                     });
                 }
             }
-            setDateRangeVisibility(eContext);
+            if (form.getAttribute("ts_statusstartdate").getValue() == null)
+                form.getControl("ts_statusenddate").setDisabled(true);
         }
         FunctionalLocation.onLoad = onLoad;
         function siteStatusOnChange(eContext) {
-            setDateRangeVisibility(eContext);
-        }
-        FunctionalLocation.siteStatusOnChange = siteStatusOnChange;
-        function setDateRangeVisibility(eContext) {
             var form = eContext.getFormContext();
             var siteStatus = form.getAttribute("ts_sitestatus");
             if (siteStatus != null && siteStatus != undefined) {
                 var siteStatusValue = siteStatus.getValue();
-                //if status is Non-Operational set Start Date and End Date visible
+                //if status is Non-Operational 
                 if (siteStatusValue == "717750001") {
-                    form.getControl("ts_statusstartdate").setVisible(true);
-                    form.getControl("ts_statusenddate").setVisible(true);
+                    form.getAttribute("ts_statusstartdate").setValue(new Date(Date.now()));
+                    form.getAttribute("ts_statusenddate").setValue(null);
+                    form.getControl("ts_statusenddate").setDisabled(false);
                 }
                 else {
-                    form.getControl("ts_statusstartdate").setVisible(false);
-                    form.getControl("ts_statusenddate").setVisible(false);
+                    form.getAttribute("ts_statusstartdate").setValue(null);
+                    form.getAttribute("ts_statusenddate").setValue(null);
+                    form.getControl("ts_statusenddate").setDisabled(true);
                 }
             }
         }
+        FunctionalLocation.siteStatusOnChange = siteStatusOnChange;
+        function statusStartDateOnChange(eContext) {
+            var form = eContext.getFormContext();
+            if (form.getAttribute("ts_statusstartdate").getValue() != null)
+                form.getControl("ts_statusenddate").setDisabled(false);
+        }
+        FunctionalLocation.statusStartDateOnChange = statusStartDateOnChange;
     })(FunctionalLocation = ROM.FunctionalLocation || (ROM.FunctionalLocation = {}));
 })(ROM || (ROM = {}));
