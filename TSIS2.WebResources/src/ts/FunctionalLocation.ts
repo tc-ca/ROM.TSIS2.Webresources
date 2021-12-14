@@ -25,29 +25,32 @@ namespace ROM.FunctionalLocation {
             }
         }
 
-        setDateRangeVisibility(eContext);
-
+        if (form.getAttribute("ts_statusstartdate").getValue() == null)
+            form.getControl("ts_statusenddate").setDisabled(true);
     }
 
     export function siteStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        setDateRangeVisibility(eContext);
-    }
-
-    function setDateRangeVisibility(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
         const siteStatus = form.getAttribute("ts_sitestatus");
-
+       
         if (siteStatus != null && siteStatus != undefined) {
             const siteStatusValue = siteStatus.getValue();
-            //if status is Non-Operational set Start Date and End Date visible
+            //if status is Non-Operational 
             if (siteStatusValue == "717750001") {
-                form.getControl("ts_statusstartdate").setVisible(true);
-                form.getControl("ts_statusenddate").setVisible(true);
+                form.getAttribute("ts_statusstartdate").setValue(new Date(Date.now()));
+                form.getAttribute("ts_statusenddate").setValue(null);
+                form.getControl("ts_statusenddate").setDisabled(false);
             }
             else {
-                form.getControl("ts_statusstartdate").setVisible(false);
-                form.getControl("ts_statusenddate").setVisible(false);
+                form.getAttribute("ts_statusstartdate").setValue(null);
+                form.getAttribute("ts_statusenddate").setValue(null);
+                form.getControl("ts_statusenddate").setDisabled(true);                
             }
         }
+    }
+    export function statusStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
+        if (form.getAttribute("ts_statusstartdate").getValue() != null)
+            form.getControl("ts_statusenddate").setDisabled(false);
     }
 }
