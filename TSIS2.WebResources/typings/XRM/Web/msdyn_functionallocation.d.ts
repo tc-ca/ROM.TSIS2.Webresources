@@ -21,6 +21,7 @@ interface msdyn_FunctionalLocation_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   ts_businessunit?: string | null;
   ts_class?: ts_msdyn_functionallocation_ts_class | null;
+  ts_description?: string | null;
   ts_functionallocationnameenglish?: string | null;
   ts_functionallocationnamefrench?: string | null;
   ts_iatacode?: string | null;
@@ -35,6 +36,7 @@ interface msdyn_FunctionalLocation_Relationships {
   msdyn_FunctionalLocation_ParentFunctional?: msdyn_FunctionalLocation_Result[] | null;
   msdyn_ParentFunctionalLocation?: msdyn_FunctionalLocation_Result | null;
   msdyn_customerasset_FunctionalLocation_ms?: msdyn_customerasset_Result[] | null;
+  msdyn_functionallocation_PostFollows?: PostFollow_Result[] | null;
   msdyn_functionallocation_connections1?: Connection_Result[] | null;
   msdyn_functionallocation_connections2?: Connection_Result[] | null;
   msdyn_msdyn_functionallocation_account?: Account_Result[] | null;
@@ -91,15 +93,16 @@ interface msdyn_FunctionalLocation_Select {
   ts_businessunit: WebAttribute<msdyn_FunctionalLocation_Select, { ts_businessunit: string | null }, {  }>;
   ts_class: WebAttribute<msdyn_FunctionalLocation_Select, { ts_class: ts_msdyn_functionallocation_ts_class | null }, { ts_class_formatted?: string }>;
   ts_country_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_description: WebAttribute<msdyn_FunctionalLocation_Select, { ts_description: string | null }, {  }>;
   ts_functionallocationnameenglish: WebAttribute<msdyn_FunctionalLocation_Select, { ts_functionallocationnameenglish: string | null }, {  }>;
   ts_functionallocationnamefrench: WebAttribute<msdyn_FunctionalLocation_Select, { ts_functionallocationnamefrench: string | null }, {  }>;
   ts_iatacode: WebAttribute<msdyn_FunctionalLocation_Select, { ts_iatacode: string | null }, {  }>;
   ts_icaocode: WebAttribute<msdyn_FunctionalLocation_Select, { ts_icaocode: string | null }, {  }>;
   ts_region_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_sitestatus: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitestatus: ts_sitestatus | null }, { ts_sitestatus_formatted?: string }>;
-  ts_statusstartdate: WebAttribute<msdyn_FunctionalLocation_Select, { ts_statusstartdate: Date | null }, { ts_statusstartdate_formatted?: string }>;
-  ts_statusenddate: WebAttribute<msdyn_FunctionalLocation_Select, { ts_statusenddate: Date | null }, { ts_statusenddate_formatted?: string }>;
   ts_sitetype_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitetype_guid: string | null }, { ts_sitetype_formatted?: string }>;
+  ts_statusenddate: WebAttribute<msdyn_FunctionalLocation_Select, { ts_statusenddate: Date | null }, { ts_statusenddate_formatted?: string }>;
+  ts_statusstartdate: WebAttribute<msdyn_FunctionalLocation_Select, { ts_statusstartdate: Date | null }, { ts_statusstartdate_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_FunctionalLocation_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_FunctionalLocation_Select, { versionnumber: number | null }, {  }>;
 }
@@ -136,15 +139,16 @@ interface msdyn_FunctionalLocation_Filter {
   ts_businessunit: string;
   ts_class: ts_msdyn_functionallocation_ts_class;
   ts_country_guid: XQW.Guid;
+  ts_description: string;
   ts_functionallocationnameenglish: string;
   ts_functionallocationnamefrench: string;
   ts_iatacode: string;
   ts_icaocode: string;
   ts_region_guid: XQW.Guid;
   ts_sitestatus: ts_sitestatus;
+  ts_sitetype_guid: XQW.Guid;
   ts_statusenddate: Date;
   ts_statusstartdate: Date;
-  ts_sitetype_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -156,6 +160,7 @@ interface msdyn_FunctionalLocation_Expand {
   msdyn_FunctionalLocation_ParentFunctional: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_FunctionalLocation_ParentFunctional: msdyn_FunctionalLocation_Result[] }>;
   msdyn_ParentFunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_ParentFunctionalLocation: msdyn_FunctionalLocation_Result }>;
   msdyn_customerasset_FunctionalLocation_ms: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { msdyn_customerasset_FunctionalLocation_ms: msdyn_customerasset_Result[] }>;
+  msdyn_functionallocation_PostFollows: WebExpand<msdyn_FunctionalLocation_Expand, PostFollow_Select, PostFollow_Filter, { msdyn_functionallocation_PostFollows: PostFollow_Result[] }>;
   msdyn_functionallocation_connections1: WebExpand<msdyn_FunctionalLocation_Expand, Connection_Select, Connection_Filter, { msdyn_functionallocation_connections1: Connection_Result[] }>;
   msdyn_functionallocation_connections2: WebExpand<msdyn_FunctionalLocation_Expand, Connection_Select, Connection_Filter, { msdyn_functionallocation_connections2: Connection_Result[] }>;
   msdyn_msdyn_functionallocation_account: WebExpand<msdyn_FunctionalLocation_Expand, Account_Select, Account_Filter, { msdyn_msdyn_functionallocation_account: Account_Result[] }>;
@@ -189,6 +194,8 @@ interface msdyn_FunctionalLocation_FormattedResult {
   ts_region_formatted?: string;
   ts_sitestatus_formatted?: string;
   ts_sitetype_formatted?: string;
+  ts_statusenddate_formatted?: string;
+  ts_statusstartdate_formatted?: string;
 }
 interface msdyn_FunctionalLocation_Result extends msdyn_FunctionalLocation_Base, msdyn_FunctionalLocation_Relationships {
   "@odata.etag": string;
@@ -217,6 +224,7 @@ interface msdyn_FunctionalLocation_RelatedOne {
 interface msdyn_FunctionalLocation_RelatedMany {
   msdyn_FunctionalLocation_ParentFunctional: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   msdyn_customerasset_FunctionalLocation_ms: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
+  msdyn_functionallocation_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   msdyn_functionallocation_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_functionallocation_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_msdyn_functionallocation_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

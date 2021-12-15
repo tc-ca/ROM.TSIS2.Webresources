@@ -423,29 +423,6 @@ interface ts_questionnaireversion_Create extends ts_questionnaireversion {
 }
 interface ts_questionnaireversion_Update extends ts_questionnaireversion {
 }
-interface ts_tradename_Base extends WebEntity {
-}
-interface ts_tradename_Fixed extends WebEntity_Fixed {
-  ts_tradenameid: string;
-}
-interface ts_tradename extends ts_tradename_Base, ts_tradename_Relationships {
-}
-interface ts_tradename_Relationships {
-}
-interface ts_tradename_Result extends ts_tradename_Base, ts_tradename_Relationships {
-}
-interface ts_tradename_FormattedResult {
-}
-interface ts_tradename_Select {
-}
-interface ts_tradename_Expand {
-}
-interface ts_tradename_Filter {
-}
-interface ts_tradename_Create extends ts_tradename {
-}
-interface ts_tradename_Update extends ts_tradename {
-}
 interface ts_workordercreationwizard_Base extends WebEntity {
 }
 interface ts_workordercreationwizard_Fixed extends WebEntity_Fixed {
@@ -468,6 +445,29 @@ interface ts_workordercreationwizard_Filter {
 interface ts_workordercreationwizard_Create extends ts_workordercreationwizard {
 }
 interface ts_workordercreationwizard_Update extends ts_workordercreationwizard {
+}
+interface PostFollow_Base extends WebEntity {
+}
+interface PostFollow_Fixed extends WebEntity_Fixed {
+  postfollowid: string;
+}
+interface PostFollow extends PostFollow_Base, PostFollow_Relationships {
+}
+interface PostFollow_Relationships {
+}
+interface PostFollow_Result extends PostFollow_Base, PostFollow_Relationships {
+}
+interface PostFollow_FormattedResult {
+}
+interface PostFollow_Select {
+}
+interface PostFollow_Expand {
+}
+interface PostFollow_Filter {
+}
+interface PostFollow_Create extends PostFollow {
+}
+interface PostFollow_Update extends PostFollow {
 }
 interface BulkOperationLog_Base extends WebEntity {
 }
@@ -583,29 +583,6 @@ interface ActivityParty_Filter {
 interface ActivityParty_Create extends ActivityParty {
 }
 interface ActivityParty_Update extends ActivityParty {
-}
-interface PostFollow_Base extends WebEntity {
-}
-interface PostFollow_Fixed extends WebEntity_Fixed {
-  postfollowid: string;
-}
-interface PostFollow extends PostFollow_Base, PostFollow_Relationships {
-}
-interface PostFollow_Relationships {
-}
-interface PostFollow_Result extends PostFollow_Base, PostFollow_Relationships {
-}
-interface PostFollow_FormattedResult {
-}
-interface PostFollow_Select {
-}
-interface PostFollow_Expand {
-}
-interface PostFollow_Filter {
-}
-interface PostFollow_Create extends PostFollow {
-}
-interface PostFollow_Update extends PostFollow {
 }
 interface IncidentResolution_Base extends WebEntity {
 }

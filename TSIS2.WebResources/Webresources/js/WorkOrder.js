@@ -514,7 +514,7 @@ var ROM;
                                 lookup[0].id = targetOperation.ovs_operationid;
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
-                                if (targetOperation.ts_operationstatus == 717750001) {
+                                if (targetOperation.ts_operationalstatus == 717750001) {
                                     form_1.ui.setFormNotification("The operation \"" + targetOperation.ovs_name + "\" is non-operational.", "ERROR", "non-operational-operation");
                                     form_1.getAttribute('ts_site').setValue(null);
                                 }

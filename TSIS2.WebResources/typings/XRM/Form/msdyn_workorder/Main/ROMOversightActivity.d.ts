@@ -65,6 +65,20 @@ declare namespace Form.msdyn_workorder.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_13 extends Xrm.SectionCollectionBase {
+        get(name: "tab_13_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_14 extends Xrm.SectionCollectionBase {
+        get(name: "tab_14_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_5 extends Xrm.SectionCollectionBase {
         get(name: "tab_5_section_2"): Xrm.PageSection;
         get(name: string): undefined;
@@ -176,6 +190,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "Inspectors"): Xrm.SubGridControl<"systemuser">;
       get(name: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
+      get(name: "Subgrid_2"): Xrm.SubGridControl<"sharepointdocument">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
@@ -233,6 +248,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_longitude1"): Xrm.NumberControl;
       get(name: "msdyn_mapcontrol"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_name"): Xrm.StringControl;
+      get(name: "msdyn_name1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_opportunityid"): Xrm.LookupControl<"opportunity">;
       get(name: "msdyn_parentworkorder"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: "msdyn_postalcode"): Xrm.StringControl;
@@ -298,6 +314,8 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "f1tab_record_log"): Xrm.PageTab<Tabs.f1tab_record_log>;
       get(name: "operations_tab"): Xrm.PageTab<Tabs.operations_tab>;
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
+      get(name: "tab_13"): Xrm.PageTab<Tabs.tab_13>;
+      get(name: "tab_14"): Xrm.PageTab<Tabs.tab_14>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
@@ -385,6 +403,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "Inspectors"): Xrm.SubGridControl<"systemuser">;
     getControl(controlName: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
+    getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"sharepointdocument">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;
@@ -442,6 +461,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_longitude1"): Xrm.NumberControl;
     getControl(controlName: "msdyn_mapcontrol"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_name"): Xrm.StringControl;
+    getControl(controlName: "msdyn_name1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_opportunityid"): Xrm.LookupControl<"opportunity">;
     getControl(controlName: "msdyn_parentworkorder"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: "msdyn_postalcode"): Xrm.StringControl;

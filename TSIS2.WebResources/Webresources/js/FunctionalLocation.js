@@ -28,7 +28,7 @@ var ROM;
             if (siteStatus != null && siteStatus != undefined) {
                 var siteStatusValue = siteStatus.getValue();
                 //if status is Non-Operational 
-                if (siteStatusValue == "717750001") {
+                if (siteStatusValue == 717750001) {
                     form.getAttribute("ts_statusstartdate").setValue(new Date(Date.now()));
                     form.getAttribute("ts_statusenddate").setValue(null);
                     form.getControl("ts_statusenddate").setDisabled(false);
