@@ -1,18 +1,18 @@
 namespace ROM.Operation {
 
-    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();       
+    // export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+    //     const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();       
 
-        const operationStatusAttribute = form.getAttribute("ts_operationstatus");
-        const operationStatusAttributeValue = operationStatusAttribute.getValue();
+    //     const operationStatusAttribute = form.getAttribute("ts_operationstatus");
+    //     const operationStatusAttributeValue = operationStatusAttribute.getValue();
 
-        if(operationStatusAttributeValue != null && operationStatusAttributeValue != undefined){
-            if(operationStatusAttributeValue == 717750001){
-                form.getControl("ts_startdate").setVisible(true);
-                form.getControl("ts_enddate").setVisible(true);
-            }
-        }
-    }
+    //     if(operationStatusAttributeValue != null && operationStatusAttributeValue != undefined){
+    //         if(operationStatusAttributeValue == 717750001){
+    //             form.getControl("ts_startdate").setVisible(true);
+    //             form.getControl("ts_enddate").setVisible(true);
+    //         }
+    //     }
+    // }
 
     export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
@@ -39,34 +39,39 @@ namespace ROM.Operation {
 
     export function operationStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+        const operationStatusAttribute = form.getAttribute("ts_operationalstatus");
 
-        const operationStatusAttribute = form.getAttribute("ts_operationstatus");
-
-        const startDateAttribute = form.getAttribute("ts_startdate");
-        const endDateAttribute = form.getAttribute("ts_enddate");
-        
-        if(operationStatusAttribute != null){
+        if(operationStatusAttribute != null && operationStatusAttribute != null){
             const operationStatusAttributeValue = operationStatusAttribute.getValue();
-            const startDateAttributeValue = startDateAttribute.getValue();
-            const endDateAttributeValue = endDateAttribute.getValue();
 
-            if(operationStatusAttributeValue != null && operationStatusAttributeValue != undefined){
-                if(operationStatusAttributeValue == 717750001){
-                    form.getAttribute("ts_startdate").setRequiredLevel("required");
-                    
-                    form.getControl("ts_startdate").setVisible(true);
-                    form.getControl("ts_enddate").setVisible(true);
-                }
-                else{
-                    form.getAttribute("ts_startdate").setRequiredLevel("none");
+            if(operationStatusAttributeValue == 717750001){
+                // form.getAttribute("ts_startdate").setRequiredLevel("required");
+                // form.getControl("ts_startdate").setVisible(true);
+                // form.getControl("ts_enddate").setVisible(true);
 
-                    form.getControl("ts_startdate").setVisible(false);
-                    form.getControl("ts_enddate").setVisible(false);
-
-                    form.getAttribute("ts_startdate").setValue(null);
-                    form.getAttribute("ts_enddate").setValue(null);
-                }
+                form.getAttribute("ts_statusstartdate").setValue(new Date(Date.now()));
+                form.getAttribute("ts_statusenddate").setValue(null);
+                form.getControl("ts_statusenddate").setDisabled(false);
             }
+            else{
+                // form.getAttribute("ts_startdate").setRequiredLevel("none");
+
+                // form.getControl("ts_startdate").setVisible(false);
+                // form.getControl("ts_enddate").setVisible(false);
+
+                // form.getAttribute("ts_startdate").setValue(null);
+                // form.getAttribute("ts_enddate").setValue(null);
+
+                form.getAttribute("ts_statusstartdate").setValue(null);
+                form.getAttribute("ts_statusenddate").setValue(null);
+                form.getControl("ts_statusenddate").setDisabled(true);       
+            }    
         }
+    }
+
+    export function statusStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+        if (form.getAttribute("ts_statusstartdate").getValue() != null)
+            form.getControl("ts_statusenddate").setDisabled(false);
     }
 }

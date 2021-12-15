@@ -143,6 +143,9 @@ interface Account_Base extends WebEntity {
   transactioncurrencyid_guid?: string | null;
   traversedpath?: string | null;
   ts_stakeholderstatus?: ts_stakeholderstatus | null;
+  ts_statusdescription?: string | null;
+  ts_statusenddate?: Date | null;
+  ts_statusstartdate?: Date | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
   websiteurl?: string | null;
@@ -171,7 +174,6 @@ interface Account_Relationships {
   msdyn_msdyn_functionallocation_account?: msdyn_FunctionalLocation_Result[] | null;
   ts_account_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
   ts_ovs_operation_stakeholder_account?: ovs_operation_Result[] | null;
-  ts_tradename_StakeholderId_Account?: ts_tradename_Result[] | null;
 }
 interface Account extends Account_Base, Account_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
@@ -374,6 +376,9 @@ interface Account_Select {
   ts_country_guid: WebAttribute<Account_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_msdyn_workorder_guid: WebAttribute<Account_Select, { ts_msdyn_workorder_guid: string | null }, { ts_msdyn_workorder_formatted?: string }>;
   ts_stakeholderstatus: WebAttribute<Account_Select, { ts_stakeholderstatus: ts_stakeholderstatus | null }, { ts_stakeholderstatus_formatted?: string }>;
+  ts_statusdescription: WebAttribute<Account_Select, { ts_statusdescription: string | null }, {  }>;
+  ts_statusenddate: WebAttribute<Account_Select, { ts_statusenddate: Date | null }, { ts_statusenddate_formatted?: string }>;
+  ts_statusstartdate: WebAttribute<Account_Select, { ts_statusstartdate: Date | null }, { ts_statusstartdate_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<Account_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<Account_Select, { versionnumber: number | null }, {  }>;
   websiteurl: WebAttribute<Account_Select, { websiteurl: string | null }, {  }>;
@@ -552,6 +557,9 @@ interface Account_Filter {
   ts_country_guid: XQW.Guid;
   ts_msdyn_workorder_guid: XQW.Guid;
   ts_stakeholderstatus: ts_stakeholderstatus;
+  ts_statusdescription: string;
+  ts_statusenddate: Date;
+  ts_statusstartdate: Date;
   utcconversiontimezonecode: number;
   versionnumber: number;
   websiteurl: string;
@@ -591,7 +599,6 @@ interface Account_Expand {
   ts_account_ts_workordercreationwizard: WebExpand<Account_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_account_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
   ts_msdyn_workorder: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder: msdyn_workorder_Result }>;
   ts_ovs_operation_stakeholder_account: WebExpand<Account_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_stakeholder_account: ovs_operation_Result[] }>;
-  ts_tradename_StakeholderId_Account: WebExpand<Account_Expand, ts_tradename_Select, ts_tradename_Filter, { ts_tradename_StakeholderId_Account: ts_tradename_Result[] }>;
 }
 interface Account_FormattedResult {
   accountcategorycode_formatted?: string;
@@ -671,6 +678,8 @@ interface Account_FormattedResult {
   ts_country_formatted?: string;
   ts_msdyn_workorder_formatted?: string;
   ts_stakeholderstatus_formatted?: string;
+  ts_statusenddate_formatted?: string;
+  ts_statusstartdate_formatted?: string;
 }
 interface Account_Result extends Account_Base, Account_Relationships {
   "@odata.etag": string;
@@ -742,7 +751,6 @@ interface Account_RelatedMany {
   msdyn_msdyn_functionallocation_account: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_account_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_ovs_operation_stakeholder_account: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
-  ts_tradename_StakeholderId_Account: WebMappingRetrieve<ts_tradename_Select,ts_tradename_Expand,ts_tradename_Filter,ts_tradename_Fixed,ts_tradename_Result,ts_tradename_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   accounts: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

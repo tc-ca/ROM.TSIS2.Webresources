@@ -16,7 +16,10 @@ declare namespace Form.ovs_operation.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface bb4b118ea1c94e04ae4d8c6a177ee56c extends Xrm.SectionCollectionBase {
+        get(name: "_section_186"): Xrm.PageSection;
         get(name: "null_section_3"): Xrm.PageSection;
+        get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}_section_5"): Xrm.PageSection;
+        get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}_section_6"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -35,12 +38,12 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<ovs_operation_statecode>;
-      get(name: "ts_details"): Xrm.Attribute<string>;
-      get(name: "ts_enddate"): Xrm.DateAttribute;
-      get(name: "ts_operationstatus"): Xrm.OptionSetAttribute<ts_operationstatustest>;
+      get(name: "ts_description"): Xrm.Attribute<string>;
+      get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
-      get(name: "ts_startdate"): Xrm.DateAttribute;
+      get(name: "ts_statusenddate"): Xrm.DateAttribute;
+      get(name: "ts_statusstartdate"): Xrm.DateAttribute;
       get(name: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -57,12 +60,12 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
-      get(name: "ts_details"): Xrm.StringControl;
-      get(name: "ts_enddate"): Xrm.DateControl;
-      get(name: "ts_operationstatus"): Xrm.OptionSetControl<ts_operationstatustest>;
+      get(name: "ts_description"): Xrm.StringControl;
+      get(name: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
-      get(name: "ts_startdate"): Xrm.DateControl;
+      get(name: "ts_statusenddate"): Xrm.DateControl;
+      get(name: "ts_statusstartdate"): Xrm.DateControl;
       get(name: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -85,12 +88,12 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ovs_operation_statecode>;
-    getAttribute(attributeName: "ts_details"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ts_enddate"): Xrm.DateAttribute;
-    getAttribute(attributeName: "ts_operationstatus"): Xrm.OptionSetAttribute<ts_operationstatustest>;
+    getAttribute(attributeName: "ts_description"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
-    getAttribute(attributeName: "ts_startdate"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_statusenddate"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_statusstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
@@ -102,12 +105,12 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
-    getControl(controlName: "ts_details"): Xrm.StringControl;
-    getControl(controlName: "ts_enddate"): Xrm.DateControl;
-    getControl(controlName: "ts_operationstatus"): Xrm.OptionSetControl<ts_operationstatustest>;
+    getControl(controlName: "ts_description"): Xrm.StringControl;
+    getControl(controlName: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
-    getControl(controlName: "ts_startdate"): Xrm.DateControl;
+    getControl(controlName: "ts_statusenddate"): Xrm.DateControl;
+    getControl(controlName: "ts_statusstartdate"): Xrm.DateControl;
     getControl(controlName: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: string): undefined;
   }

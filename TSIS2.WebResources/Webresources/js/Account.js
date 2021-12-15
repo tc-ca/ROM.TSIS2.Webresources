@@ -98,7 +98,7 @@ var ROM;
             if (stakeholderStatus != null && stakeholderStatus != undefined) {
                 var stakeholderStatusValue = stakeholderStatus.getValue();
                 //if status is Non-Operational set Start Date and End Date visible
-                if ((stakeholderStatusValue === null || stakeholderStatusValue === void 0 ? void 0 : stakeholderStatusValue.toString()) == "717750001") {
+                if (stakeholderStatusValue == 717750001) {
                     form.getControl("ts_statusstartdate").setVisible(true);
                     form.getControl("ts_statusenddate").setVisible(true);
                 }

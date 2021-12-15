@@ -8,15 +8,16 @@ interface ovs_operation_Base extends WebEntity {
   statecode?: ovs_operation_statecode | null;
   statuscode?: ovs_operation_statuscode | null;
   timezoneruleversionnumber?: number | null;
-  ts_details?: string | null;
-  ts_enddate?: Date | null;
-  ts_operationstatus?: ts_operationstatustest | null;
-  ts_startdate?: Date | null;
+  ts_description?: string | null;
+  ts_operationalstatus?: ts_operationalstatus | null;
+  ts_statusenddate?: Date | null;
+  ts_statusstartdate?: Date | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
 interface ovs_operation_Relationships {
   ovs_operation_Appointments?: Appointment_Result[] | null;
+  ovs_operation_PostFollows?: PostFollow_Result[] | null;
   ovs_operation_ServiceAppointments?: ServiceAppointment_Result[] | null;
   ovs_operation_connections1?: Connection_Result[] | null;
   ovs_operation_connections2?: Connection_Result[] | null;
@@ -57,12 +58,12 @@ interface ovs_operation_Select {
   statecode: WebAttribute<ovs_operation_Select, { statecode: ovs_operation_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ovs_operation_Select, { statuscode: ovs_operation_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ovs_operation_Select, { timezoneruleversionnumber: number | null }, {  }>;
-  ts_details: WebAttribute<ovs_operation_Select, { ts_details: string | null }, {  }>;
-  ts_enddate: WebAttribute<ovs_operation_Select, { ts_enddate: Date | null }, { ts_enddate_formatted?: string }>;
-  ts_operationstatus: WebAttribute<ovs_operation_Select, { ts_operationstatus: ts_operationstatustest | null }, { ts_operationstatus_formatted?: string }>;
+  ts_description: WebAttribute<ovs_operation_Select, { ts_description: string | null }, {  }>;
+  ts_operationalstatus: WebAttribute<ovs_operation_Select, { ts_operationalstatus: ts_operationalstatus | null }, { ts_operationalstatus_formatted?: string }>;
   ts_site_guid: WebAttribute<ovs_operation_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ovs_operation_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
-  ts_startdate: WebAttribute<ovs_operation_Select, { ts_startdate: Date | null }, { ts_startdate_formatted?: string }>;
+  ts_statusenddate: WebAttribute<ovs_operation_Select, { ts_statusenddate: Date | null }, { ts_statusenddate_formatted?: string }>;
+  ts_statusstartdate: WebAttribute<ovs_operation_Select, { ts_statusstartdate: Date | null }, { ts_statusstartdate_formatted?: string }>;
   ts_subsite_guid: WebAttribute<ovs_operation_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ovs_operation_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ovs_operation_Select, { versionnumber: number | null }, {  }>;
@@ -87,12 +88,12 @@ interface ovs_operation_Filter {
   statecode: ovs_operation_statecode;
   statuscode: ovs_operation_statuscode;
   timezoneruleversionnumber: number;
-  ts_details: string;
-  ts_enddate: Date;
-  ts_operationstatus: ts_operationstatustest;
+  ts_description: string;
+  ts_operationalstatus: ts_operationalstatus;
   ts_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
-  ts_startdate: Date;
+  ts_statusenddate: Date;
+  ts_statusstartdate: Date;
   ts_subsite_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
@@ -103,6 +104,7 @@ interface ovs_operation_Expand {
   modifiedby: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ovs_operation_Appointments: WebExpand<ovs_operation_Expand, Appointment_Select, Appointment_Filter, { ovs_operation_Appointments: Appointment_Result[] }>;
+  ovs_operation_PostFollows: WebExpand<ovs_operation_Expand, PostFollow_Select, PostFollow_Filter, { ovs_operation_PostFollows: PostFollow_Result[] }>;
   ovs_operation_ServiceAppointments: WebExpand<ovs_operation_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ovs_operation_ServiceAppointments: ServiceAppointment_Result[] }>;
   ovs_operation_connections1: WebExpand<ovs_operation_Expand, Connection_Select, Connection_Filter, { ovs_operation_connections1: Connection_Result[] }>;
   ovs_operation_connections2: WebExpand<ovs_operation_Expand, Connection_Select, Connection_Filter, { ovs_operation_connections2: Connection_Result[] }>;
@@ -131,11 +133,11 @@ interface ovs_operation_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
-  ts_enddate_formatted?: string;
-  ts_operationstatus_formatted?: string;
+  ts_operationalstatus_formatted?: string;
   ts_site_formatted?: string;
   ts_stakeholder_formatted?: string;
-  ts_startdate_formatted?: string;
+  ts_statusenddate_formatted?: string;
+  ts_statusstartdate_formatted?: string;
   ts_subsite_formatted?: string;
 }
 interface ovs_operation_Result extends ovs_operation_Base, ovs_operation_Relationships {
@@ -167,6 +169,7 @@ interface ovs_operation_RelatedOne {
 }
 interface ovs_operation_RelatedMany {
   ovs_operation_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  ovs_operation_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   ovs_operation_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   ovs_operation_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ovs_operation_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;

@@ -18,6 +18,7 @@ interface Appointment_Base extends WebEntity {
   isbilled?: boolean | null;
   isdraft?: boolean | null;
   ismapiprivate?: boolean | null;
+  isonlinemeeting?: boolean | null;
   isregularactivity?: boolean | null;
   isunsafe?: number | null;
   isworkflowcreated?: boolean | null;
@@ -26,6 +27,10 @@ interface Appointment_Base extends WebEntity {
   modifiedfieldsmask?: string | null;
   modifiedon?: Date | null;
   onholdtime?: number | null;
+  onlinemeetingchatid?: string | null;
+  onlinemeetingid?: string | null;
+  onlinemeetingjoinurl?: string | null;
+  onlinemeetingtype?: onlinemeetingtype | null;
   originalstartdate?: Date | null;
   outlookownerapptid?: number | null;
   overriddencreatedon?: Date | null;
@@ -195,6 +200,7 @@ interface Appointment_Select {
   isbilled: WebAttribute<Appointment_Select, { isbilled: boolean | null }, {  }>;
   isdraft: WebAttribute<Appointment_Select, { isdraft: boolean | null }, {  }>;
   ismapiprivate: WebAttribute<Appointment_Select, { ismapiprivate: boolean | null }, {  }>;
+  isonlinemeeting: WebAttribute<Appointment_Select, { isonlinemeeting: boolean | null }, {  }>;
   isregularactivity: WebAttribute<Appointment_Select, { isregularactivity: boolean | null }, {  }>;
   isunsafe: WebAttribute<Appointment_Select, { isunsafe: number | null }, {  }>;
   isworkflowcreated: WebAttribute<Appointment_Select, { isworkflowcreated: boolean | null }, {  }>;
@@ -205,6 +211,10 @@ interface Appointment_Select {
   modifiedon: WebAttribute<Appointment_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Appointment_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
   onholdtime: WebAttribute<Appointment_Select, { onholdtime: number | null }, {  }>;
+  onlinemeetingchatid: WebAttribute<Appointment_Select, { onlinemeetingchatid: string | null }, {  }>;
+  onlinemeetingid: WebAttribute<Appointment_Select, { onlinemeetingid: string | null }, {  }>;
+  onlinemeetingjoinurl: WebAttribute<Appointment_Select, { onlinemeetingjoinurl: string | null }, {  }>;
+  onlinemeetingtype: WebAttribute<Appointment_Select, { onlinemeetingtype: onlinemeetingtype | null }, { onlinemeetingtype_formatted?: string }>;
   optionalattendees_guid: WebAttribute<Appointment_Select, { optionalattendees_guid: string | null }, { optionalattendees_formatted?: string }>;
   organizer_guid: WebAttribute<Appointment_Select, { organizer_guid: string | null }, { organizer_formatted?: string }>;
   originalstartdate: WebAttribute<Appointment_Select, { originalstartdate: Date | null }, { originalstartdate_formatted?: string }>;
@@ -264,6 +274,7 @@ interface Appointment_Filter {
   isbilled: boolean;
   isdraft: boolean;
   ismapiprivate: boolean;
+  isonlinemeeting: boolean;
   isregularactivity: boolean;
   isunsafe: number;
   isworkflowcreated: boolean;
@@ -274,6 +285,10 @@ interface Appointment_Filter {
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
   onholdtime: number;
+  onlinemeetingchatid: string;
+  onlinemeetingid: string;
+  onlinemeetingjoinurl: string;
+  onlinemeetingtype: onlinemeetingtype;
   optionalattendees_guid: XQW.Guid;
   organizer_guid: XQW.Guid;
   originalstartdate: Date;
@@ -344,6 +359,7 @@ interface Appointment_FormattedResult {
   modifiedby_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  onlinemeetingtype_formatted?: string;
   optionalattendees_formatted?: string;
   organizer_formatted?: string;
   originalstartdate_formatted?: string;
