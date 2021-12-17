@@ -25,8 +25,11 @@ namespace ROM.FunctionalLocation {
             }
         }
 
-        if (form.getAttribute("ts_statusstartdate").getValue() == null)
+        if (form.getAttribute("ts_statusstartdate").getValue() == null) {
+            form.getAttribute("ts_description").setValue(null);
             form.getControl("ts_statusenddate").setDisabled(true);
+            form.getControl("ts_description").setDisabled(true);
+        }
     }
 
     export function siteStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -40,17 +43,22 @@ namespace ROM.FunctionalLocation {
                 form.getAttribute("ts_statusstartdate").setValue(new Date(Date.now()));
                 form.getAttribute("ts_statusenddate").setValue(null);
                 form.getControl("ts_statusenddate").setDisabled(false);
+                form.getControl("ts_description").setDisabled(false);
             }
             else {
                 form.getAttribute("ts_statusstartdate").setValue(null);
                 form.getAttribute("ts_statusenddate").setValue(null);
-                form.getControl("ts_statusenddate").setDisabled(true);                
+                form.getAttribute("ts_description").setValue(null);
+                form.getControl("ts_statusenddate").setDisabled(true);  
+                form.getControl("ts_description").setDisabled(true);
             }
         }
     }
     export function statusStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
-        if (form.getAttribute("ts_statusstartdate").getValue() != null)
+        if (form.getAttribute("ts_statusstartdate").getValue() != null) {
             form.getControl("ts_statusenddate").setDisabled(false);
+            form.getControl("ts_description").setDisabled(false);
+        }           
     }
 }

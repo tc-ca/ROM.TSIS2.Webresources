@@ -9,7 +9,11 @@ var ROM;
             if (addressControl != null && addressControl != undefined) {
                 addressControl.setVisible(false);
             }
-            setDateRangeVisibility(eContext);
+            if (form.getAttribute("ts_statusstartdate").getValue() == null) {
+                form.getAttribute("ts_statusdescription").setValue(null);
+                form.getControl("ts_statusenddate").setDisabled(true);
+                form.getControl("ts_statusdescription").setDisabled(true);
+            }
         }
         Account.onLoad = onLoad;
         function regionOnChange(eContext) {
@@ -89,24 +93,34 @@ var ROM;
         }
         Account.countryOnChange = countryOnChange;
         function stakeholderStatusOnChange(eContext) {
-            setDateRangeVisibility(eContext);
-        }
-        Account.stakeholderStatusOnChange = stakeholderStatusOnChange;
-        function setDateRangeVisibility(eContext) {
             var form = eContext.getFormContext();
             var stakeholderStatus = form.getAttribute("ts_stakeholderstatus");
             if (stakeholderStatus != null && stakeholderStatus != undefined) {
                 var stakeholderStatusValue = stakeholderStatus.getValue();
-                //if status is Non-Operational set Start Date and End Date visible
+                //if status is Non-Operational 
                 if (stakeholderStatusValue == 717750001) {
-                    form.getControl("ts_statusstartdate").setVisible(true);
-                    form.getControl("ts_statusenddate").setVisible(true);
+                    form.getAttribute("ts_statusstartdate").setValue(new Date(Date.now()));
+                    form.getAttribute("ts_statusenddate").setValue(null);
+                    form.getControl("ts_statusenddate").setDisabled(false);
+                    form.getControl("ts_statusdescription").setDisabled(false);
                 }
                 else {
-                    form.getControl("ts_statusstartdate").setVisible(false);
-                    form.getControl("ts_statusenddate").setVisible(false);
+                    form.getAttribute("ts_statusstartdate").setValue(null);
+                    form.getAttribute("ts_statusenddate").setValue(null);
+                    form.getAttribute("ts_statusdescription").setValue(null);
+                    form.getControl("ts_statusenddate").setDisabled(true);
+                    form.getControl("ts_statusdescription").setDisabled(true);
                 }
             }
         }
+        Account.stakeholderStatusOnChange = stakeholderStatusOnChange;
+        function statusStartDateOnChange(eContext) {
+            var form = eContext.getFormContext();
+            if (form.getAttribute("ts_statusstartdate").getValue() != null) {
+                form.getControl("ts_statusenddate").setDisabled(false);
+                form.getControl("ts_statusdescription").setDisabled(false);
+            }
+        }
+        Account.statusStartDateOnChange = statusStartDateOnChange;
     })(Account = ROM.Account || (ROM.Account = {}));
 })(ROM || (ROM = {}));

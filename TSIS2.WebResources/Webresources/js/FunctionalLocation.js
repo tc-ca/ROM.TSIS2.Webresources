@@ -18,8 +18,11 @@ var ROM;
                     });
                 }
             }
-            if (form.getAttribute("ts_statusstartdate").getValue() == null)
+            if (form.getAttribute("ts_statusstartdate").getValue() == null) {
+                form.getAttribute("ts_description").setValue(null);
                 form.getControl("ts_statusenddate").setDisabled(true);
+                form.getControl("ts_description").setDisabled(true);
+            }
         }
         FunctionalLocation.onLoad = onLoad;
         function siteStatusOnChange(eContext) {
@@ -32,19 +35,24 @@ var ROM;
                     form.getAttribute("ts_statusstartdate").setValue(new Date(Date.now()));
                     form.getAttribute("ts_statusenddate").setValue(null);
                     form.getControl("ts_statusenddate").setDisabled(false);
+                    form.getControl("ts_description").setDisabled(false);
                 }
                 else {
                     form.getAttribute("ts_statusstartdate").setValue(null);
                     form.getAttribute("ts_statusenddate").setValue(null);
+                    form.getAttribute("ts_description").setValue(null);
                     form.getControl("ts_statusenddate").setDisabled(true);
+                    form.getControl("ts_description").setDisabled(true);
                 }
             }
         }
         FunctionalLocation.siteStatusOnChange = siteStatusOnChange;
         function statusStartDateOnChange(eContext) {
             var form = eContext.getFormContext();
-            if (form.getAttribute("ts_statusstartdate").getValue() != null)
+            if (form.getAttribute("ts_statusstartdate").getValue() != null) {
                 form.getControl("ts_statusenddate").setDisabled(false);
+                form.getControl("ts_description").setDisabled(false);
+            }
         }
         FunctionalLocation.statusStartDateOnChange = statusStartDateOnChange;
     })(FunctionalLocation = ROM.FunctionalLocation || (ROM.FunctionalLocation = {}));
