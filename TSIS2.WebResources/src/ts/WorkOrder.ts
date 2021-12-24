@@ -537,7 +537,7 @@ namespace ROM.WorkOrder {
                     operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
 
                     // Populate operation asset
-                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="eq" value="717750000"/</filter></entity></fetch>';
                     var encodedFetchXml = encodeURIComponent(fetchXml);
                     Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXml).then(
                         function success(result) {
@@ -548,15 +548,7 @@ namespace ROM.WorkOrder {
                                 lookup[0].id = targetOperation.ovs_operationid;
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
-
-                                if(targetOperation.ts_operationalstatus == 717750001){
-                                    form.ui.setFormNotification("The operation \"" + targetOperation.ovs_name + "\" is non-operational.", "ERROR", "non-operational-operation");
-                                    form.getAttribute('ts_site').setValue(null);
-                                }
-                                else{
-                                    form.ui.clearFormNotification("non-operational-operation")
-                                    form.getAttribute('ovs_operationid').setValue(lookup);
-                                }   
+                                form.getAttribute('ovs_operationid').setValue(lookup); 
                             } else {
                                 // do not set a default if multiple records are found, error.
                             }
