@@ -3,17 +3,15 @@ var ROM;
 (function (ROM) {
     var Operation;
     (function (Operation) {
-        // export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
-        //     const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();       
-        //     const operationStatusAttribute = form.getAttribute("ts_operationstatus");
-        //     const operationStatusAttributeValue = operationStatusAttribute.getValue();
-        //     if(operationStatusAttributeValue != null && operationStatusAttributeValue != undefined){
-        //         if(operationStatusAttributeValue == 717750001){
-        //             form.getControl("ts_startdate").setVisible(true);
-        //             form.getControl("ts_enddate").setVisible(true);
-        //         }
-        //     }
-        // }
+        function onLoad(eContext) {
+            var form = eContext.getFormContext();
+            if (form.getAttribute("ts_statusstartdate").getValue() == null) {
+                form.getAttribute("ts_description").setValue(null);
+                form.getControl("ts_statusenddate").setDisabled(true);
+                form.getControl("ts_description").setDisabled(true);
+            }
+        }
+        Operation.onLoad = onLoad;
         function siteOnChange(eContext) {
             var form = eContext.getFormContext();
             var siteAttribute = form.getAttribute("ts_site");
@@ -41,22 +39,17 @@ var ROM;
             if (operationStatusAttribute != null && operationStatusAttribute != null) {
                 var operationStatusAttributeValue = operationStatusAttribute.getValue();
                 if (operationStatusAttributeValue == 717750001) {
-                    // form.getAttribute("ts_startdate").setRequiredLevel("required");
-                    // form.getControl("ts_startdate").setVisible(true);
-                    // form.getControl("ts_enddate").setVisible(true);
                     form.getAttribute("ts_statusstartdate").setValue(new Date(Date.now()));
                     form.getAttribute("ts_statusenddate").setValue(null);
                     form.getControl("ts_statusenddate").setDisabled(false);
+                    form.getControl("ts_description").setDisabled(false);
                 }
                 else {
-                    // form.getAttribute("ts_startdate").setRequiredLevel("none");
-                    // form.getControl("ts_startdate").setVisible(false);
-                    // form.getControl("ts_enddate").setVisible(false);
-                    // form.getAttribute("ts_startdate").setValue(null);
-                    // form.getAttribute("ts_enddate").setValue(null);
                     form.getAttribute("ts_statusstartdate").setValue(null);
                     form.getAttribute("ts_statusenddate").setValue(null);
+                    form.getAttribute("ts_description").setValue(null);
                     form.getControl("ts_statusenddate").setDisabled(true);
+                    form.getControl("ts_description").setDisabled(true);
                 }
             }
         }
@@ -65,6 +58,7 @@ var ROM;
             var form = eContext.getFormContext();
             if (form.getAttribute("ts_statusstartdate").getValue() != null)
                 form.getControl("ts_statusenddate").setDisabled(false);
+            form.getControl("ts_description").setDisabled(false);
         }
         Operation.statusStartDateOnChange = statusStartDateOnChange;
     })(Operation = ROM.Operation || (ROM.Operation = {}));
