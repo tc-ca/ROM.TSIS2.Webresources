@@ -548,8 +548,11 @@ namespace ROM.WorkOrder {
                                 lookup[0].id = targetOperation.ovs_operationid;
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
+
+                                var caca = Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "eng" : "fr";
+
                                 if (targetOperation.ts_operationalstatus == 717750001) {
-                                    form.ui.setFormNotification("The operation \"" + targetOperation.ovs_name + "\" is non-operational.", "ERROR", "non-operational-operation");
+                                    form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
                                     form.getAttribute('ts_site').setValue(null);
                                 }
                                 else {
