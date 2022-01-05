@@ -548,7 +548,14 @@ namespace ROM.WorkOrder {
                                 lookup[0].id = targetOperation.ovs_operationid;
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
-                                form.getAttribute('ovs_operationid').setValue(lookup); 
+                                if (targetOperation.ts_operationalstatus == 717750001) {
+                                    form.ui.setFormNotification("The operation \"" + targetOperation.ovs_name + "\" is non-operational.", "ERROR", "non-operational-operation");
+                                    form.getAttribute('ts_site').setValue(null);
+                                }
+                                else {
+                                    form.ui.clearFormNotification("non-operational-operation");
+                                    form.getAttribute('ovs_operationid').setValue(lookup);
+                                }
                             } else {
                                 // do not set a default if multiple records are found, error.
                             }

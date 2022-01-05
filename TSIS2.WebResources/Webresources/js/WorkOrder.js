@@ -514,7 +514,14 @@ var ROM;
                                 lookup[0].id = targetOperation.ovs_operationid;
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
-                                form_1.getAttribute('ovs_operationid').setValue(lookup);
+                                if (targetOperation.ts_operationalstatus == 717750001) {
+                                    form_1.ui.setFormNotification("The operation \"" + targetOperation.ovs_name + "\" is non-operational.", "ERROR", "non-operational-operation");
+                                    form_1.getAttribute('ts_site').setValue(null);
+                                }
+                                else {
+                                    form_1.ui.clearFormNotification("non-operational-operation");
+                                    form_1.getAttribute('ovs_operationid').setValue(lookup);
+                                }
                             }
                             else {
                                 // do not set a default if multiple records are found, error.
