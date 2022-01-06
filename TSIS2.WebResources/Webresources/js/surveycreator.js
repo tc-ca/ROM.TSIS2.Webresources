@@ -310,15 +310,12 @@ function appendDetailToQuestion(survey, options) {
     detailBox.style.resize = "vertical";
     characterCount.style.textAlign = "left";
     detailText.innerHTML = detailLabel;
+    content.style.display = "block";
+    detailSymbol.innerHTML = "- ";
 
-    //Expand content if detailBox has text saved previously, and load previous detailBox text
+    //Load previous detailBox text
     if (survey.getValue(detailSurveyId) != null) {
         detailBox.value = survey.getValue(detailSurveyId);
-        content.style.display = "block";
-        detailSymbol.innerHTML = "- ";
-    } else {
-        content.style.display = "none";
-        detailSymbol.innerHTML = "+ ";
     }
 
     //Add functionality to HTML elements
