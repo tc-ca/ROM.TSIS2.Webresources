@@ -104,7 +104,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         options.html = str;
     });
 
-    
+
     // Add a character count and limit to Comment questions.
     // If the maxLength is the default value of -1, set maxLength to 1000.
     // No character count if maxLength was set to 0
@@ -130,11 +130,32 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     });
 
     survey.onValidateQuestion.add(function (sender, options) {
-        //If it is a finding that is required, with an empty comment
-        if (options.question.getType() == "finding" && options.question.isRequired && options.value.comments == "") {
-            options.error = provideDetailsLocalizedText;
+        //If it is a finding that is required
+        if (options.question.getType() == "finding" && options.question.isRequired) {
+            //Add error if any findingTypes are Undecided
+            if (options.value.operations != null) {
+                let hasUndecided = false;
+                for (let operation of options.value.operations) {
+                    if (operation.findingType == 717750000) {
+                        hasUndecided = true;
+                    }
+                }
+                if (hasUndecided) {
+                    options.error = "Undecided Operations";
+                }
+            }
+            //Add error if comment is empty
+            if (options.value.comments == "") {
+                //If there's already error text, add a line break
+                if (options.error != null) {
+                    options.error += "<br>" + provideDetailsLocalizedText;
+                } else {
+                    options.error = provideDetailsLocalizedText;
+                }
+            }
         }
     });
+    
 
     function appendDetailToQuestion(survey, options) {
         var detailSurveyId = options.question.name + "-Detail";
