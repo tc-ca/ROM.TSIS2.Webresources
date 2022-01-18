@@ -8,12 +8,12 @@ var provideDetailsLocalizedText;
 if (lang == 1036) {
     charactersRemainingLocalizedText = "caractères restants";
     provideDetailsLocalizedText = "Veuillez fournir des détails de l'inspection.";
-    undecidedFindingTypeErrorLocalizedText = "Please select a Finding Type for any Accountable Operations (fr)";
+    undecidedFindingTypeErrorLocalizedText = "Veuillez selectionner un Type de constatation.";
 }
 else {
     charactersRemainingLocalizedText = "characters remaining";
     provideDetailsLocalizedText = "Please provide inspection details.";
-    undecidedFindingTypeErrorLocalizedText = "Please select a Finding Type for any Accountable Operations";
+    undecidedFindingTypeErrorLocalizedText = "Please decide on a Finding Type.";
 }
 
 'use strict';
