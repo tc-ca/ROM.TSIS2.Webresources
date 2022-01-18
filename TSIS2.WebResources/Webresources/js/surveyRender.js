@@ -132,7 +132,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     });
 
     survey.onValidateQuestion.add(function (sender, options) {
-        //If it is a finding that is required
         if (options.question.getType() == "finding") {
             //Add error if any findingTypes are Undecided
             if (options.value.operations != null) {
