@@ -7,11 +7,13 @@ var provideDetailsLocalizedText;
 
 if (lang == 1036) {
     charactersRemainingLocalizedText = "caractères restants";
-    provideDetailsLocalizedText = "Veuillez fournir des détails de l'inspection."
+    provideDetailsLocalizedText = "Veuillez fournir des détails de l'inspection.";
+    undecidedFindingTypeErrorLocalizedText = "Please select a Finding Type for any Accountable Operations (fr)";
 }
 else {
     charactersRemainingLocalizedText = "characters remaining";
     provideDetailsLocalizedText = "Please provide inspection details.";
+    undecidedFindingTypeErrorLocalizedText = "Please select a Finding Type for any Accountable Operations";
 }
 
 'use strict';
@@ -131,7 +133,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 
     survey.onValidateQuestion.add(function (sender, options) {
         //If it is a finding that is required
-        if (options.question.getType() == "finding" && options.question.isRequired) {
+        if (options.question.getType() == "finding") {
             //Add error if any findingTypes are Undecided
             if (options.value.operations != null) {
                 let hasUndecided = false;
@@ -141,11 +143,11 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
                     }
                 }
                 if (hasUndecided) {
-                    options.error = "Undecided Operations";
+                    options.error = undecidedFindingTypeErrorLocalizedText;
                 }
             }
             //Add error if comment is empty
-            if (options.value.comments == "") {
+            if (options.value.comments == "" && options.question.isRequired) {
                 //If there's already error text, add a line break
                 if (options.error != null) {
                     options.error += "<br>" + provideDetailsLocalizedText;
