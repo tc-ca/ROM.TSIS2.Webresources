@@ -51,6 +51,14 @@ declare namespace Form.msdyn_workorderservicetask.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_files extends Xrm.SectionCollectionBase {
+        get(name: "tab_12_section_1"): Xrm.PageSection;
+        get(name: "tab_files_section_2"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_summary extends Xrm.SectionCollectionBase {
         get(name: "InspectionFormSection"): Xrm.PageSection;
         get(name: "QuestionnaireFormSection"): Xrm.PageSection;
@@ -74,7 +82,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "msdyn_inspectionenabled"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_inspectiontaskresult"): Xrm.OptionSetAttribute<msdyn_inspectionresult>;
       get(name: "msdyn_lineorder"): Xrm.NumberAttribute;
-      get(name: "msdyn_name"): Xrm.Attribute<string>;
+      get(name: "msdyn_name"): Xrm.Attribute<any>;
       get(name: "msdyn_percentcomplete"): Xrm.NumberAttribute;
       get(name: "msdyn_surveyboundedoutput"): Xrm.Attribute<any>;
       get(name: "msdyn_tasktype"): Xrm.LookupAttribute<"msdyn_servicetasktype">;
@@ -99,6 +107,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
       get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
+      get(name: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "WebResource_Provisions"): Xrm.WebResourceControl;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
@@ -116,7 +125,8 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "msdyn_inspectionenabled"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_inspectiontaskresult"): Xrm.OptionSetControl<msdyn_inspectionresult>;
       get(name: "msdyn_lineorder"): Xrm.NumberControl;
-      get(name: "msdyn_name"): Xrm.StringControl;
+      get(name: "msdyn_name"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "msdyn_name1"): Xrm.StringControl;
       get(name: "msdyn_percentcomplete"): Xrm.NumberControl;
       get(name: "msdyn_surveyboundedoutput"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_tasktype"): Xrm.LookupControl<"msdyn_servicetasktype">;
@@ -147,6 +157,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
       get(name: "tab_9"): Xrm.PageTab<Tabs.tab_9>;
+      get(name: "tab_files"): Xrm.PageTab<Tabs.tab_files>;
       get(name: "tab_summary"): Xrm.PageTab<Tabs.tab_summary>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -164,7 +175,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "msdyn_inspectionenabled"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_inspectiontaskresult"): Xrm.OptionSetAttribute<msdyn_inspectionresult>;
     getAttribute(attributeName: "msdyn_lineorder"): Xrm.NumberAttribute;
-    getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_percentcomplete"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_surveyboundedoutput"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_tasktype"): Xrm.LookupAttribute<"msdyn_servicetasktype">;
@@ -184,6 +195,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
+    getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "WebResource_Provisions"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
@@ -201,7 +213,8 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "msdyn_inspectionenabled"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_inspectiontaskresult"): Xrm.OptionSetControl<msdyn_inspectionresult>;
     getControl(controlName: "msdyn_lineorder"): Xrm.NumberControl;
-    getControl(controlName: "msdyn_name"): Xrm.StringControl;
+    getControl(controlName: "msdyn_name"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "msdyn_name1"): Xrm.StringControl;
     getControl(controlName: "msdyn_percentcomplete"): Xrm.NumberControl;
     getControl(controlName: "msdyn_surveyboundedoutput"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_tasktype"): Xrm.LookupControl<"msdyn_servicetasktype">;

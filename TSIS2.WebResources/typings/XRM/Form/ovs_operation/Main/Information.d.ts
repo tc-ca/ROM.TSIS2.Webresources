@@ -16,6 +16,7 @@ declare namespace Form.ovs_operation.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface bb4b118ea1c94e04ae4d8c6a177ee56c extends Xrm.SectionCollectionBase {
+        get(name: "_section_156"): Xrm.PageSection;
         get(name: "_section_186"): Xrm.PageSection;
         get(name: "null_section_3"): Xrm.PageSection;
         get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}_section_5"): Xrm.PageSection;
@@ -27,6 +28,14 @@ declare namespace Form.ovs_operation.Main {
       }
       interface rel_operations_tab extends Xrm.SectionCollectionBase {
         get(name: "tab_2_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_5 extends Xrm.SectionCollectionBase {
+        get(name: "tab_5_section_1"): Xrm.PageSection;
+        get(name: "tab_5_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -54,6 +63,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "Connections"): Xrm.SubGridControl<"connection">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"connection">;
+      get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ovs_name"): Xrm.StringControl;
@@ -62,6 +72,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
       get(name: "ts_description"): Xrm.StringControl;
       get(name: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
+      get(name: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
       get(name: "ts_statusenddate"): Xrm.DateControl;
@@ -77,6 +88,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "WorkOrders"): Xrm.PageTab<Tabs.WorkOrders>;
       get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}"): Xrm.PageTab<Tabs.bb4b118ea1c94e04ae4d8c6a177ee56c>;
       get(name: "rel_operations_tab"): Xrm.PageTab<Tabs.rel_operations_tab>;
+      get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -99,6 +111,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"connection">;
+    getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ovs_name"): Xrm.StringControl;
@@ -107,6 +120,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
     getControl(controlName: "ts_description"): Xrm.StringControl;
     getControl(controlName: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
+    getControl(controlName: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_statusenddate"): Xrm.DateControl;

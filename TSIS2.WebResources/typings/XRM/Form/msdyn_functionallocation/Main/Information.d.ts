@@ -16,6 +16,7 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface Operations extends Xrm.SectionCollectionBase {
+        get(name: "Operations_section_4"): Xrm.PageSection;
         get(name: "tab_4_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -35,6 +36,14 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(name: "tab_3_section_1"): Xrm.PageSection;
         get(name: "tab_3_section_2"): Xrm.PageSection;
         get(name: "tab_3_section_6"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_6 extends Xrm.SectionCollectionBase {
+        get(name: "tab_6_section_1"): Xrm.PageSection;
+        get(name: "tab_6_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -60,6 +69,8 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_description"): Xrm.Attribute<string>;
       get(name: "ts_functionallocationnameenglish"): Xrm.Attribute<string>;
       get(name: "ts_functionallocationnamefrench"): Xrm.Attribute<string>;
+      get(name: "ts_iatacode"): Xrm.Attribute<string>;
+      get(name: "ts_icaocode"): Xrm.Attribute<string>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
       get(name: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
@@ -75,6 +86,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "Operations"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
+      get(name: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_address2"): Xrm.StringControl;
@@ -86,6 +98,8 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_longitude"): Xrm.NumberControl;
       get(name: "msdyn_name"): Xrm.StringControl;
       get(name: "msdyn_name1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "msdyn_name2"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "msdyn_name3"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_parentfunctionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "msdyn_postalcode"): Xrm.StringControl;
       get(name: "msdyn_stateorprovince"): Xrm.StringControl;
@@ -95,6 +109,8 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_description"): Xrm.StringControl;
       get(name: "ts_functionallocationnameenglish"): Xrm.StringControl;
       get(name: "ts_functionallocationnamefrench"): Xrm.StringControl;
+      get(name: "ts_iatacode"): Xrm.StringControl;
+      get(name: "ts_icaocode"): Xrm.StringControl;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;
       get(name: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
@@ -111,6 +127,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "Operations"): Xrm.PageTab<Tabs.Operations>;
       get(name: "properties_tab"): Xrm.PageTab<Tabs.properties_tab>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
+      get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -136,6 +153,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "ts_description"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_functionallocationnameenglish"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_functionallocationnamefrench"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_iatacode"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_icaocode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
     getAttribute(attributeName: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
@@ -146,6 +165,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "Operations"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
+    getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_address2"): Xrm.StringControl;
@@ -157,6 +177,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "msdyn_longitude"): Xrm.NumberControl;
     getControl(controlName: "msdyn_name"): Xrm.StringControl;
     getControl(controlName: "msdyn_name1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "msdyn_name2"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "msdyn_name3"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_parentfunctionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "msdyn_postalcode"): Xrm.StringControl;
     getControl(controlName: "msdyn_stateorprovince"): Xrm.StringControl;
@@ -166,6 +188,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "ts_description"): Xrm.StringControl;
     getControl(controlName: "ts_functionallocationnameenglish"): Xrm.StringControl;
     getControl(controlName: "ts_functionallocationnamefrench"): Xrm.StringControl;
+    getControl(controlName: "ts_iatacode"): Xrm.StringControl;
+    getControl(controlName: "ts_icaocode"): Xrm.StringControl;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;
     getControl(controlName: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;

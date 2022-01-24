@@ -26,6 +26,7 @@ declare namespace Form.account.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface Operations extends Xrm.SectionCollectionBase {
+        get(name: "Operations_section_2"): Xrm.PageSection;
         get(name: "tab_5_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -36,10 +37,9 @@ declare namespace Form.account.Main {
         get(name: "ACCOUNT_INFORMATION"): Xrm.PageSection;
         get(name: "ADDRESS"): Xrm.PageSection;
         get(name: "MapSection"): Xrm.PageSection;
-        get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
-        get(name: "SUMMARY_TAB_section_6"): Xrm.PageSection;
         get(name: "SUMMARY_TAB_section_8"): Xrm.PageSection;
-        get(name: "Summary_section_6"): Xrm.PageSection;
+        get(name: "SUMMARY_TAB_section_9"): Xrm.PageSection;
+        get(name: "SUMMARY_TAB_section_9"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -52,8 +52,16 @@ declare namespace Form.account.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface documents_sharepoint extends Xrm.SectionCollectionBase {
-        get(name: "documents_sharepoint_section"): Xrm.PageSection;
+      interface tab_8 extends Xrm.SectionCollectionBase {
+        get(name: "_section_477"): Xrm.PageSection;
+        get(name: "tab_8_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_contacts extends Xrm.SectionCollectionBase {
+        get(name: "SUMMARY_TAB_section_6"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -91,6 +99,8 @@ declare namespace Form.account.Main {
       get(name: "primarycontactid"): Xrm.LookupAttribute<"contact">;
       get(name: "telephone1"): Xrm.Attribute<string>;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+      get(name: "ts_iatacode"): Xrm.Attribute<string>;
+      get(name: "ts_icaocode"): Xrm.Attribute<string>;
       get(name: "ts_stakeholderstatus"): Xrm.OptionSetAttribute<ts_stakeholderstatus>;
       get(name: "ts_statusdescription"): Xrm.Attribute<string>;
       get(name: "ts_statusenddate"): Xrm.DateAttribute;
@@ -102,14 +112,13 @@ declare namespace Form.account.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "ActionCards"): Xrm.BaseControl;
       get(name: "ChildAccounts"): Xrm.SubGridControl<"account">;
       get(name: "Connections"): Xrm.SubGridControl<"connection">;
       get(name: "Contacts"): Xrm.SubGridControl<"contact">;
-      get(name: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
       get(name: "Operations"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
+      get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;
@@ -134,6 +143,8 @@ declare namespace Form.account.Main {
       get(name: "msdyn_serviceterritory"): Xrm.LookupControl<"territory">;
       get(name: "name"): Xrm.StringControl;
       get(name: "name1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "name2"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "name3"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ovs_legalname"): Xrm.StringControl;
       get(name: "ovs_naicscode"): Xrm.StringControl;
@@ -143,6 +154,8 @@ declare namespace Form.account.Main {
       get(name: "primarycontactid"): Xrm.LookupControl<"contact">;
       get(name: "telephone1"): Xrm.StringControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
+      get(name: "ts_iatacode"): Xrm.StringControl;
+      get(name: "ts_icaocode"): Xrm.StringControl;
       get(name: "ts_stakeholderstatus"): Xrm.OptionSetControl<ts_stakeholderstatus>;
       get(name: "ts_statusdescription"): Xrm.StringControl;
       get(name: "ts_statusenddate"): Xrm.DateControl;
@@ -160,7 +173,8 @@ declare namespace Form.account.Main {
       get(name: "Operations"): Xrm.PageTab<Tabs.Operations>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: "Work Orders"): Xrm.PageTab<Tabs.WorkOrders>;
-      get(name: "documents_sharepoint"): Xrm.PageTab<Tabs.documents_sharepoint>;
+      get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
+      get(name: "tab_contacts"): Xrm.PageTab<Tabs.tab_contacts>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -198,20 +212,21 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "primarycontactid"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "telephone1"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+    getAttribute(attributeName: "ts_iatacode"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_icaocode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_stakeholderstatus"): Xrm.OptionSetAttribute<ts_stakeholderstatus>;
     getAttribute(attributeName: "ts_statusdescription"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_statusenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_statusstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "ActionCards"): Xrm.BaseControl;
     getControl(controlName: "ChildAccounts"): Xrm.SubGridControl<"account">;
     getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "Contacts"): Xrm.SubGridControl<"contact">;
-    getControl(controlName: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
     getControl(controlName: "Operations"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
+    getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;
@@ -236,6 +251,8 @@ declare namespace Form.account.Main {
     getControl(controlName: "msdyn_serviceterritory"): Xrm.LookupControl<"territory">;
     getControl(controlName: "name"): Xrm.StringControl;
     getControl(controlName: "name1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "name2"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "name3"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ovs_legalname"): Xrm.StringControl;
     getControl(controlName: "ovs_naicscode"): Xrm.StringControl;
@@ -245,6 +262,8 @@ declare namespace Form.account.Main {
     getControl(controlName: "primarycontactid"): Xrm.LookupControl<"contact">;
     getControl(controlName: "telephone1"): Xrm.StringControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
+    getControl(controlName: "ts_iatacode"): Xrm.StringControl;
+    getControl(controlName: "ts_icaocode"): Xrm.StringControl;
     getControl(controlName: "ts_stakeholderstatus"): Xrm.OptionSetControl<ts_stakeholderstatus>;
     getControl(controlName: "ts_statusdescription"): Xrm.StringControl;
     getControl(controlName: "ts_statusenddate"): Xrm.DateControl;

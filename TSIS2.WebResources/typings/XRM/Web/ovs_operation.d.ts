@@ -8,6 +8,7 @@ interface ovs_operation_Base extends WebEntity {
   statecode?: ovs_operation_statecode | null;
   statuscode?: ovs_operation_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_canvasappnumber?: string | null;
   ts_description?: string | null;
   ts_operationalstatus?: ts_operationalstatus | null;
   ts_statusenddate?: Date | null;
@@ -58,6 +59,7 @@ interface ovs_operation_Select {
   statecode: WebAttribute<ovs_operation_Select, { statecode: ovs_operation_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ovs_operation_Select, { statuscode: ovs_operation_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ovs_operation_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_canvasappnumber: WebAttribute<ovs_operation_Select, { ts_canvasappnumber: string | null }, {  }>;
   ts_description: WebAttribute<ovs_operation_Select, { ts_description: string | null }, {  }>;
   ts_operationalstatus: WebAttribute<ovs_operation_Select, { ts_operationalstatus: ts_operationalstatus | null }, { ts_operationalstatus_formatted?: string }>;
   ts_site_guid: WebAttribute<ovs_operation_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
@@ -88,6 +90,7 @@ interface ovs_operation_Filter {
   statecode: ovs_operation_statecode;
   statuscode: ovs_operation_statuscode;
   timezoneruleversionnumber: number;
+  ts_canvasappnumber: string;
   ts_description: string;
   ts_operationalstatus: ts_operationalstatus;
   ts_site_guid: XQW.Guid;

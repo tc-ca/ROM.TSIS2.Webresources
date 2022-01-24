@@ -50,6 +50,7 @@ interface Incident_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   title?: string | null;
   traversedpath?: string | null;
+  ts_canvasappnumber?: string | null;
   ts_numberoffindings?: number | null;
   ts_numberoffindings_date?: Date | null;
   ts_numberoffindings_state?: number | null;
@@ -195,6 +196,7 @@ interface Incident_Select {
   title: WebAttribute<Incident_Select, { title: string | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<Incident_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Incident_Select, { traversedpath: string | null }, {  }>;
+  ts_canvasappnumber: WebAttribute<Incident_Select, { ts_canvasappnumber: string | null }, {  }>;
   ts_country_guid: WebAttribute<Incident_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_numberoffindings: WebAttribute<Incident_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<Incident_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
@@ -289,6 +291,7 @@ interface Incident_Filter {
   title: string;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_canvasappnumber: string;
   ts_country_guid: XQW.Guid;
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;

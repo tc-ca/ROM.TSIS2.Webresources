@@ -6,7 +6,20 @@ declare namespace Form.appointment.Main {
         get(name: "attachments"): Xrm.PageSection;
         get(name: "general information"): Xrm.PageSection;
         get(name: "scheduling information"): Xrm.PageSection;
-        get(name: "tab_2_section_2"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_call_summary extends Xrm.SectionCollectionBase {
+        get(name: "tab_ci_section_call_summary"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_notes extends Xrm.SectionCollectionBase {
+        get(name: "timeline_section"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -29,11 +42,15 @@ declare namespace Form.appointment.Main {
       get(name: "familystatuscode"): Xrm.OptionSetAttribute<number> | null;
       get(name: "firstname"): Xrm.Attribute<string> | null;
       get(name: "isalldayevent"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "isonlinemeeting"): Xrm.Attribute<any>;
       get(name: "jobtitle"): Xrm.Attribute<string> | null;
       get(name: "lastname"): Xrm.Attribute<string> | null;
       get(name: "location"): Xrm.Attribute<string>;
       get(name: "mobilephone"): Xrm.Attribute<string> | null;
+      get(name: "msdyn_ci_call_summary_control_field"): Xrm.Attribute<any>;
+      get(name: "msdyn_ci_url"): Xrm.Attribute<string>;
       get(name: "name"): Xrm.Attribute<string> | null;
+      get(name: "onlinemeetingjoinurl"): Xrm.Attribute<any>;
       get(name: "opportunityratingcode"): Xrm.OptionSetAttribute<number> | null;
       get(name: "optionalattendees"): Xrm.LookupAttribute<"account" | "contact" | "entitlement" | "equipment" | "knowledgearticle" | "lead" | "queue" | "systemuser" | "unresolvedaddress">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -129,7 +146,12 @@ declare namespace Form.appointment.Main {
       get(name: "header_process_websiteurl"): Xrm.StringControl | null;
       get(name: "header_statecode"): Xrm.OptionSetControl<appointment_statecode>;
       get(name: "isalldayevent"): Xrm.OptionSetControl<boolean>;
+      get(name: "isonlinemeeting"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "location"): Xrm.StringControl;
+      get(name: "msdyn_ci_call_summary_control_field"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "msdyn_ci_url"): Xrm.StringControl;
+      get(name: "notescontrol"): Xrm.BaseControl;
+      get(name: "onlinemeetingjoinurl"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "optionalattendees"): Xrm.LookupControl<"account" | "contact" | "entitlement" | "equipment" | "knowledgearticle" | "lead" | "queue" | "systemuser" | "unresolvedaddress">;
       get(name: "regardingobjectid"): Xrm.LookupControl<"account" | "bookableresourcebooking" | "bookableresourcebookingheader" | "bulkoperation" | "campaign" | "campaignactivity" | "contact" | "contract" | "entitlement" | "entitlementtemplate" | "ikl_a2d_securitytemplate" | "ikl_bulkmigrationjob" | "ikl_bulkmigrationjobstatus" | "ikl_inogiclicensedetails" | "incident" | "invoice" | "knowledgearticle" | "knowledgebaserecord" | "lead" | "msdyn_agreement" | "msdyn_agreementbookingdate" | "msdyn_agreementbookingincident" | "msdyn_agreementbookingproduct" | "msdyn_agreementbookingservice" | "msdyn_agreementbookingservicetask" | "msdyn_agreementbookingsetup" | "msdyn_agreementinvoicedate" | "msdyn_agreementinvoiceproduct" | "msdyn_agreementinvoicesetup" | "msdyn_bookingalertstatus" | "msdyn_bookingrule" | "msdyn_bookingtimestamp" | "msdyn_customerasset" | "msdyn_fieldservicesetting" | "msdyn_incidenttypecharacteristic" | "msdyn_incidenttypeproduct" | "msdyn_incidenttypeservice" | "msdyn_inventoryadjustment" | "msdyn_inventoryadjustmentproduct" | "msdyn_inventoryjournal" | "msdyn_inventorytransfer" | "msdyn_payment" | "msdyn_paymentdetail" | "msdyn_paymentmethod" | "msdyn_paymentterm" | "msdyn_playbookinstance" | "msdyn_postalbum" | "msdyn_postalcode" | "msdyn_productinventory" | "msdyn_purchaseorder" | "msdyn_purchaseorderbill" | "msdyn_purchaseorderproduct" | "msdyn_purchaseorderreceipt" | "msdyn_purchaseorderreceiptproduct" | "msdyn_purchaseordersubstatus" | "msdyn_quotebookingincident" | "msdyn_quotebookingproduct" | "msdyn_quotebookingservice" | "msdyn_quotebookingservicetask" | "msdyn_resourceterritory" | "msdyn_rma" | "msdyn_rmaproduct" | "msdyn_rmareceipt" | "msdyn_rmareceiptproduct" | "msdyn_rmasubstatus" | "msdyn_rtv" | "msdyn_rtvproduct" | "msdyn_rtvsubstatus" | "msdyn_shipvia" | "msdyn_systemuserschedulersetting" | "msdyn_timegroup" | "msdyn_timegroupdetail" | "msdyn_timeoffrequest" | "msdyn_warehouse" | "msdyn_workorder" | "msdyn_workordercharacteristic" | "msdyn_workorderincident" | "msdyn_workorderproduct" | "msdyn_workorderresourcerestriction" | "msdyn_workorderservice" | "msdyn_workorderservicetask" | "opportunity" | "ovs_operation" | "ppp_traveller" | "quote" | "salesorder" | "site" | "ts_request">;
       get(name: "requiredattendees"): Xrm.LookupControl<"account" | "contact" | "entitlement" | "equipment" | "knowledgearticle" | "lead" | "queue" | "systemuser" | "unresolvedaddress">;
@@ -144,6 +166,8 @@ declare namespace Form.appointment.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "appointment"): Xrm.PageTab<Tabs.appointment>;
+      get(name: "tab_call_summary"): Xrm.PageTab<Tabs.tab_call_summary>;
+      get(name: "tab_notes"): Xrm.PageTab<Tabs.tab_notes>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -166,11 +190,15 @@ declare namespace Form.appointment.Main {
     getAttribute(attributeName: "familystatuscode"): Xrm.OptionSetAttribute<number> | null;
     getAttribute(attributeName: "firstname"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "isalldayevent"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "isonlinemeeting"): Xrm.Attribute<any>;
     getAttribute(attributeName: "jobtitle"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "lastname"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "location"): Xrm.Attribute<string>;
     getAttribute(attributeName: "mobilephone"): Xrm.Attribute<string> | null;
+    getAttribute(attributeName: "msdyn_ci_call_summary_control_field"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "msdyn_ci_url"): Xrm.Attribute<string>;
     getAttribute(attributeName: "name"): Xrm.Attribute<string> | null;
+    getAttribute(attributeName: "onlinemeetingjoinurl"): Xrm.Attribute<any>;
     getAttribute(attributeName: "opportunityratingcode"): Xrm.OptionSetAttribute<number> | null;
     getAttribute(attributeName: "optionalattendees"): Xrm.LookupAttribute<"account" | "contact" | "entitlement" | "equipment" | "knowledgearticle" | "lead" | "queue" | "systemuser" | "unresolvedaddress">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -261,7 +289,12 @@ declare namespace Form.appointment.Main {
     getControl(controlName: "header_process_websiteurl"): Xrm.StringControl | null;
     getControl(controlName: "header_statecode"): Xrm.OptionSetControl<appointment_statecode>;
     getControl(controlName: "isalldayevent"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "isonlinemeeting"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "location"): Xrm.StringControl;
+    getControl(controlName: "msdyn_ci_call_summary_control_field"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "msdyn_ci_url"): Xrm.StringControl;
+    getControl(controlName: "notescontrol"): Xrm.BaseControl;
+    getControl(controlName: "onlinemeetingjoinurl"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "optionalattendees"): Xrm.LookupControl<"account" | "contact" | "entitlement" | "equipment" | "knowledgearticle" | "lead" | "queue" | "systemuser" | "unresolvedaddress">;
     getControl(controlName: "regardingobjectid"): Xrm.LookupControl<"account" | "bookableresourcebooking" | "bookableresourcebookingheader" | "bulkoperation" | "campaign" | "campaignactivity" | "contact" | "contract" | "entitlement" | "entitlementtemplate" | "ikl_a2d_securitytemplate" | "ikl_bulkmigrationjob" | "ikl_bulkmigrationjobstatus" | "ikl_inogiclicensedetails" | "incident" | "invoice" | "knowledgearticle" | "knowledgebaserecord" | "lead" | "msdyn_agreement" | "msdyn_agreementbookingdate" | "msdyn_agreementbookingincident" | "msdyn_agreementbookingproduct" | "msdyn_agreementbookingservice" | "msdyn_agreementbookingservicetask" | "msdyn_agreementbookingsetup" | "msdyn_agreementinvoicedate" | "msdyn_agreementinvoiceproduct" | "msdyn_agreementinvoicesetup" | "msdyn_bookingalertstatus" | "msdyn_bookingrule" | "msdyn_bookingtimestamp" | "msdyn_customerasset" | "msdyn_fieldservicesetting" | "msdyn_incidenttypecharacteristic" | "msdyn_incidenttypeproduct" | "msdyn_incidenttypeservice" | "msdyn_inventoryadjustment" | "msdyn_inventoryadjustmentproduct" | "msdyn_inventoryjournal" | "msdyn_inventorytransfer" | "msdyn_payment" | "msdyn_paymentdetail" | "msdyn_paymentmethod" | "msdyn_paymentterm" | "msdyn_playbookinstance" | "msdyn_postalbum" | "msdyn_postalcode" | "msdyn_productinventory" | "msdyn_purchaseorder" | "msdyn_purchaseorderbill" | "msdyn_purchaseorderproduct" | "msdyn_purchaseorderreceipt" | "msdyn_purchaseorderreceiptproduct" | "msdyn_purchaseordersubstatus" | "msdyn_quotebookingincident" | "msdyn_quotebookingproduct" | "msdyn_quotebookingservice" | "msdyn_quotebookingservicetask" | "msdyn_resourceterritory" | "msdyn_rma" | "msdyn_rmaproduct" | "msdyn_rmareceipt" | "msdyn_rmareceiptproduct" | "msdyn_rmasubstatus" | "msdyn_rtv" | "msdyn_rtvproduct" | "msdyn_rtvsubstatus" | "msdyn_shipvia" | "msdyn_systemuserschedulersetting" | "msdyn_timegroup" | "msdyn_timegroupdetail" | "msdyn_timeoffrequest" | "msdyn_warehouse" | "msdyn_workorder" | "msdyn_workordercharacteristic" | "msdyn_workorderincident" | "msdyn_workorderproduct" | "msdyn_workorderresourcerestriction" | "msdyn_workorderservice" | "msdyn_workorderservicetask" | "opportunity" | "ovs_operation" | "ppp_traveller" | "quote" | "salesorder" | "site" | "ts_request">;
     getControl(controlName: "requiredattendees"): Xrm.LookupControl<"account" | "contact" | "entitlement" | "equipment" | "knowledgearticle" | "lead" | "queue" | "systemuser" | "unresolvedaddress">;
