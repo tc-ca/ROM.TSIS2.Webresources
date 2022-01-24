@@ -1,5 +1,5 @@
 declare namespace Form.msdyn_workorder.Main {
-  namespace ActivitédesurveillanceGSR {
+  namespace ROMOversightActivity {
     namespace Tabs {
       interface DeviceInsightsTab extends Xrm.SectionCollectionBase {
         get(name: "DeviceInsightsSection"): Xrm.PageSection;
@@ -324,7 +324,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface ActivitédesurveillanceGSR extends Xrm.PageBase<ActivitédesurveillanceGSR.Attributes,ActivitédesurveillanceGSR.Tabs,ActivitédesurveillanceGSR.Controls> {
+  interface ROMOversightActivity extends Xrm.PageBase<ROMOversightActivity.Attributes,ROMOversightActivity.Tabs,ROMOversightActivity.Controls> {
     getAttribute(attributeName: "createdby"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "createdon"): Xrm.DateAttribute;
     getAttribute(attributeName: "modifiedby"): Xrm.LookupAttribute<"systemuser">;
