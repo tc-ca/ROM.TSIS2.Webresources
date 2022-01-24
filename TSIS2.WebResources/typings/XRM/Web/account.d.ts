@@ -91,6 +91,7 @@ interface Account_Base extends WebEntity {
   marketingonly?: boolean | null;
   merged?: boolean | null;
   modifiedon?: Date | null;
+  msdyn_gdproptout?: boolean | null;
   msdyn_taxexempt?: boolean | null;
   msdyn_taxexemptnumber?: string | null;
   msdyn_travelcharge?: number | null;
@@ -142,6 +143,8 @@ interface Account_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   transactioncurrencyid_guid?: string | null;
   traversedpath?: string | null;
+  ts_iatacode?: string | null;
+  ts_icaocode?: string | null;
   ts_stakeholderstatus?: ts_stakeholderstatus | null;
   ts_statusdescription?: string | null;
   ts_statusenddate?: Date | null;
@@ -304,6 +307,7 @@ interface Account_Select {
   modifiedon: WebAttribute<Account_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Account_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
   msdyn_billingaccount_guid: WebAttribute<Account_Select, { msdyn_billingaccount_guid: string | null }, { msdyn_billingaccount_formatted?: string }>;
+  msdyn_gdproptout: WebAttribute<Account_Select, { msdyn_gdproptout: boolean | null }, {  }>;
   msdyn_preferredresource_guid: WebAttribute<Account_Select, { msdyn_preferredresource_guid: string | null }, { msdyn_preferredresource_formatted?: string }>;
   msdyn_salestaxcode_guid: WebAttribute<Account_Select, { msdyn_salestaxcode_guid: string | null }, { msdyn_salestaxcode_formatted?: string }>;
   msdyn_serviceterritory_guid: WebAttribute<Account_Select, { msdyn_serviceterritory_guid: string | null }, { msdyn_serviceterritory_formatted?: string }>;
@@ -374,6 +378,8 @@ interface Account_Select {
   transactioncurrencyid_guid: WebAttribute<Account_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Account_Select, { traversedpath: string | null }, {  }>;
   ts_country_guid: WebAttribute<Account_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_iatacode: WebAttribute<Account_Select, { ts_iatacode: string | null }, {  }>;
+  ts_icaocode: WebAttribute<Account_Select, { ts_icaocode: string | null }, {  }>;
   ts_msdyn_workorder_guid: WebAttribute<Account_Select, { ts_msdyn_workorder_guid: string | null }, { ts_msdyn_workorder_formatted?: string }>;
   ts_stakeholderstatus: WebAttribute<Account_Select, { ts_stakeholderstatus: ts_stakeholderstatus | null }, { ts_stakeholderstatus_formatted?: string }>;
   ts_statusdescription: WebAttribute<Account_Select, { ts_statusdescription: string | null }, {  }>;
@@ -485,6 +491,7 @@ interface Account_Filter {
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
   msdyn_billingaccount_guid: XQW.Guid;
+  msdyn_gdproptout: boolean;
   msdyn_preferredresource_guid: XQW.Guid;
   msdyn_salestaxcode_guid: XQW.Guid;
   msdyn_serviceterritory_guid: XQW.Guid;
@@ -555,6 +562,8 @@ interface Account_Filter {
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
   ts_country_guid: XQW.Guid;
+  ts_iatacode: string;
+  ts_icaocode: string;
   ts_msdyn_workorder_guid: XQW.Guid;
   ts_stakeholderstatus: ts_stakeholderstatus;
   ts_statusdescription: string;

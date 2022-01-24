@@ -86,6 +86,7 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_11 extends Xrm.SectionCollectionBase {
+        get(name: "_section_369"): Xrm.PageSection;
         get(name: "tab_11_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -94,6 +95,14 @@ declare namespace Form.incident.Main {
       }
       interface tab_13 extends Xrm.SectionCollectionBase {
         get(name: "tab_13_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_14 extends Xrm.SectionCollectionBase {
+        get(name: "tab_14_section_1"): Xrm.PageSection;
+        get(name: "tab_14_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -165,6 +174,7 @@ declare namespace Form.incident.Main {
       get(name: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"ovs_finding">;
+      get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -220,6 +230,8 @@ declare namespace Form.incident.Main {
       get(name: "subjectid"): Xrm.LookupControl<"subject">;
       get(name: "ticketnumber"): Xrm.StringControl;
       get(name: "title"): Xrm.StringControl;
+      get(name: "title1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "title2"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
       get(name: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
@@ -241,6 +253,7 @@ declare namespace Form.incident.Main {
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
       get(name: "tab_11"): Xrm.PageTab<Tabs.tab_11>;
       get(name: "tab_13"): Xrm.PageTab<Tabs.tab_13>;
+      get(name: "tab_14"): Xrm.PageTab<Tabs.tab_14>;
       get(name: "tags_tab"): Xrm.PageTab<Tabs.tags_tab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -301,6 +314,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ovs_finding">;
+    getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -356,6 +370,8 @@ declare namespace Form.incident.Main {
     getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
     getControl(controlName: "ticketnumber"): Xrm.StringControl;
     getControl(controlName: "title"): Xrm.StringControl;
+    getControl(controlName: "title1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "title2"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
     getControl(controlName: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;

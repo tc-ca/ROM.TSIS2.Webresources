@@ -25,6 +25,33 @@ var ROM;
             }
         }
         FunctionalLocation.onLoad = onLoad;
+        function siteTypeOnChange(eContext) {
+            try {
+                var form = eContext.getFormContext();
+                var siteTypeAttribute = form.getAttribute("ts_sitetype");
+                var icaoCodeAttribute = form.getAttribute("ts_icaocode");
+                var iataCodeAttribute = form.getAttribute("ts_iatacode");
+                if (siteTypeAttribute != null && siteTypeAttribute != undefined) {
+                    var siteTypeAttributeValue = siteTypeAttribute.getValue();
+                    if (siteTypeAttributeValue != null && siteTypeAttributeValue != undefined) {
+                        if (siteTypeAttributeValue[0].id == "{99DA31E7-7D78-EB11-A812-0022486D697D}") { //aerodrome
+                            form.getControl("ts_icaocode").setVisible(true);
+                            form.getControl("ts_iatacode").setVisible(true);
+                        }
+                    }
+                    else {
+                        icaoCodeAttribute.setValue() == null;
+                        iataCodeAttribute.setValue() == null;
+                        form.getControl("ts_icaocode").setVisible(false);
+                        form.getControl("ts_iatacode").setVisible(false);
+                    }
+                }
+            }
+            catch (e) {
+                throw new Error(e.Message);
+            }
+        }
+        FunctionalLocation.siteTypeOnChange = siteTypeOnChange;
         function siteStatusOnChange(eContext) {
             var form = eContext.getFormContext();
             var siteStatus = form.getAttribute("ts_sitestatus");

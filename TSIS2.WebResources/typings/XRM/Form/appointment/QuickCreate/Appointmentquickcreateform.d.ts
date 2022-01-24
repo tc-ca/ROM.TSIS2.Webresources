@@ -27,6 +27,7 @@ declare namespace Form.appointment.QuickCreate {
       get(name: "familystatuscode"): Xrm.OptionSetAttribute<number> | null;
       get(name: "firstname"): Xrm.Attribute<string> | null;
       get(name: "isalldayevent"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "isonlinemeeting"): Xrm.Attribute<any>;
       get(name: "jobtitle"): Xrm.Attribute<string> | null;
       get(name: "lastname"): Xrm.Attribute<string> | null;
       get(name: "location"): Xrm.Attribute<string>;
@@ -122,6 +123,7 @@ declare namespace Form.appointment.QuickCreate {
       get(name: "header_process_title"): Xrm.StringControl | null;
       get(name: "header_process_websiteurl"): Xrm.StringControl | null;
       get(name: "isalldayevent"): Xrm.OptionSetControl<boolean>;
+      get(name: "isonlinemeeting"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "location"): Xrm.StringControl;
       get(name: "optionalattendees"): Xrm.LookupControl<"account" | "contact" | "entitlement" | "equipment" | "knowledgearticle" | "lead" | "queue" | "systemuser" | "unresolvedaddress">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -161,6 +163,7 @@ declare namespace Form.appointment.QuickCreate {
     getAttribute(attributeName: "familystatuscode"): Xrm.OptionSetAttribute<number> | null;
     getAttribute(attributeName: "firstname"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "isalldayevent"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "isonlinemeeting"): Xrm.Attribute<any>;
     getAttribute(attributeName: "jobtitle"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "lastname"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "location"): Xrm.Attribute<string>;
@@ -251,6 +254,7 @@ declare namespace Form.appointment.QuickCreate {
     getControl(controlName: "header_process_title"): Xrm.StringControl | null;
     getControl(controlName: "header_process_websiteurl"): Xrm.StringControl | null;
     getControl(controlName: "isalldayevent"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "isonlinemeeting"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "location"): Xrm.StringControl;
     getControl(controlName: "optionalattendees"): Xrm.LookupControl<"account" | "contact" | "entitlement" | "equipment" | "knowledgearticle" | "lead" | "queue" | "systemuser" | "unresolvedaddress">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
