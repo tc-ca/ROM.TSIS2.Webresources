@@ -115,10 +115,10 @@ declare namespace Form.account.Main {
       get(name: "ChildAccounts"): Xrm.SubGridControl<"account">;
       get(name: "Connections"): Xrm.SubGridControl<"connection">;
       get(name: "Contacts"): Xrm.SubGridControl<"contact">;
+      get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Operations"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
-      get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;
@@ -223,10 +223,10 @@ declare namespace Form.account.Main {
     getControl(controlName: "ChildAccounts"): Xrm.SubGridControl<"account">;
     getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "Contacts"): Xrm.SubGridControl<"contact">;
+    getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Operations"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
-    getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;

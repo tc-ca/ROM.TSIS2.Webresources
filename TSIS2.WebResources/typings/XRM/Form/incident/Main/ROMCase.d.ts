@@ -108,6 +108,13 @@ declare namespace Form.incident.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_ncat extends Xrm.SectionCollectionBase {
+        get(name: "tab_15_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tags_tab extends Xrm.SectionCollectionBase {
         get(name: "tab_14_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -169,12 +176,13 @@ declare namespace Form.incident.Main {
       get(name: "CaseResearch_LinkControl"): Xrm.BaseControl;
       get(name: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
       get(name: "FailedServiceTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
+      get(name: "Files"): Xrm.SubGridControl<"ts_file">;
+      get(name: "Findings_NCAT"): Xrm.BaseControl;
       get(name: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
       get(name: "RelatedSolutionGrid"): Xrm.SubGridControl<"connection">;
       get(name: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"ovs_finding">;
-      get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -254,6 +262,7 @@ declare namespace Form.incident.Main {
       get(name: "tab_11"): Xrm.PageTab<Tabs.tab_11>;
       get(name: "tab_13"): Xrm.PageTab<Tabs.tab_13>;
       get(name: "tab_14"): Xrm.PageTab<Tabs.tab_14>;
+      get(name: "tab_ncat"): Xrm.PageTab<Tabs.tab_ncat>;
       get(name: "tags_tab"): Xrm.PageTab<Tabs.tags_tab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -309,12 +318,13 @@ declare namespace Form.incident.Main {
     getControl(controlName: "CaseResearch_LinkControl"): Xrm.BaseControl;
     getControl(controlName: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
     getControl(controlName: "FailedServiceTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
+    getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
+    getControl(controlName: "Findings_NCAT"): Xrm.BaseControl;
     getControl(controlName: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
     getControl(controlName: "RelatedSolutionGrid"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ovs_finding">;
-    getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;

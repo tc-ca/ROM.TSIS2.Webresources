@@ -105,9 +105,9 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
+      get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
-      get(name: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "WebResource_Provisions"): Xrm.WebResourceControl;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
@@ -193,9 +193,9 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ts_servicetaskstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
+    getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
-    getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "WebResource_Provisions"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
