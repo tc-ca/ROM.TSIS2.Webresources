@@ -90,6 +90,11 @@
                     "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"
                 },
                 {
+                    "uniquename": "ts_/js/CaseFactorGuide.js",
+                    "file": "js\\CustomerAsset.js",
+                    "description": "ROM TSIS 2.0 Customer Asset Scripts"
+                },
+                {
                     "uniquename": "ts_/js/CustomerAsset.js",
                     "file": "js\\CustomerAsset.js",
                     "description": "ROM TSIS 2.0 Customer Asset Scripts"
@@ -201,6 +206,11 @@
                     "description": "ROM TSIS 2.0 Work Order Export Stylesheet"
                 },
                 /* HTML */
+                {
+                    "uniquename": "ts_/html/NCATFactorGuide.html",
+                    "file": "html\\NCATFactorGuide.html",
+                    "description": "ROM TSIS 2.0 NCAT Factor Guide"
+                },
                 {
                     "uniquename": "ovs_/html/SurveyCreator.html",
                     "file": "html\\SurveyCreator.html",
