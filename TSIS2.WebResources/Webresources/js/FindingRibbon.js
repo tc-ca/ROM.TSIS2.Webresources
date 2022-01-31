@@ -32,13 +32,13 @@ async function NCATFinalize(primaryControl) {
         return;
     }
 
-    let findingID = primaryControl.data.entity.getId();
+    let findingId = primaryControl.data.entity.getId();
     
     let fetchXml = [
         "<fetch top='50'>",
         "  <entity name='ovs_finding'>",
         "    <filter>",
-        "      <condition attribute='ovs_findingid' operator='eq' value='", findingID, "'/>",
+        "      <condition attribute='ovs_findingid' operator='eq' value='", findingId, "'/>",
         "    </filter>",
         "    <link-entity name='ts_assessmentrating' from='ts_assessmentratingid' to='ts_ncatactualorpotentialharm'>",
         "      <attribute name='ts_weight' />",
@@ -86,4 +86,49 @@ async function NCATFinalize(primaryControl) {
     primaryControl.getAttribute("ts_ncatenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
     primaryControl.getControl("ts_acceptncatrecommendation").setVisible(true);
     primaryControl.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
+}
+
+function openRecord(recordId) {
+    //Setting formId to "Default"
+    let formId = "d8af1d58-3786-4ab4-9a35-3a1b85946c12"; //Information Main form
+    //Getting the record
+    Xrm.WebApi.retrieveRecord("ovs_finding", recordId).then(
+        function (result) {
+            var pageInput = {
+                pageType: "entityrecord",
+                entityName: "ovs_finding",
+                entityId: recordId
+            };
+            var navigationOptions = {
+                target: 2,
+                height: {
+                    value: 100, unit: "%"
+                },
+                width: {
+                    value: 80, unit: "%"
+                },
+                position: 1
+            };
+
+            Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                function success() {
+                    // Run code on success
+                },
+                function error() {
+                    // Handle errors
+                }
+            );
+
+        },
+        function (error) {
+            //If anything goes wrong log the error
+            console.log(error);
+
+            //and open "by default" form
+            Xrm.Navigation.openForm({
+                entityName: "ovs_finding",
+                entityId: recordId,
+                formId: formId
+            });
+        });
 }
