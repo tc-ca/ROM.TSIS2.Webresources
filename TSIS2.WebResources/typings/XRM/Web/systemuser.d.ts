@@ -180,6 +180,10 @@ interface SystemUser_Relationships {
   lk_msdyn_workorderservicetask_createdonbehalfby?: msdyn_workorderservicetask_Result[] | null;
   lk_msdyn_workorderservicetask_modifiedby?: msdyn_workorderservicetask_Result[] | null;
   lk_msdyn_workorderservicetask_modifiedonbehalfby?: msdyn_workorderservicetask_Result[] | null;
+  lk_ovs_finding_createdby?: ovs_Finding_Result[] | null;
+  lk_ovs_finding_createdonbehalfby?: ovs_Finding_Result[] | null;
+  lk_ovs_finding_modifiedby?: ovs_Finding_Result[] | null;
+  lk_ovs_finding_modifiedonbehalfby?: ovs_Finding_Result[] | null;
   lk_ovs_operation_createdby?: ovs_operation_Result[] | null;
   lk_ovs_operation_createdonbehalfby?: ovs_operation_Result[] | null;
   lk_ovs_operation_modifiedby?: ovs_operation_Result[] | null;
@@ -238,6 +242,7 @@ interface SystemUser_Relationships {
   user_msdyn_servicetasktype?: msdyn_servicetasktype_Result[] | null;
   user_msdyn_workorder?: msdyn_workorder_Result[] | null;
   user_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result[] | null;
+  user_ovs_finding?: ovs_Finding_Result[] | null;
   user_ovs_operation?: ovs_operation_Result[] | null;
   user_ovs_questionnaire?: ovs_Questionnaire_Result[] | null;
   user_owner_postfollows?: PostFollow_Result[] | null;
@@ -591,6 +596,10 @@ interface SystemUser_Expand {
   lk_msdyn_workorderservicetask_createdonbehalfby: WebExpand<SystemUser_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { lk_msdyn_workorderservicetask_createdonbehalfby: msdyn_workorderservicetask_Result[] }>;
   lk_msdyn_workorderservicetask_modifiedby: WebExpand<SystemUser_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { lk_msdyn_workorderservicetask_modifiedby: msdyn_workorderservicetask_Result[] }>;
   lk_msdyn_workorderservicetask_modifiedonbehalfby: WebExpand<SystemUser_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { lk_msdyn_workorderservicetask_modifiedonbehalfby: msdyn_workorderservicetask_Result[] }>;
+  lk_ovs_finding_createdby: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { lk_ovs_finding_createdby: ovs_Finding_Result[] }>;
+  lk_ovs_finding_createdonbehalfby: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { lk_ovs_finding_createdonbehalfby: ovs_Finding_Result[] }>;
+  lk_ovs_finding_modifiedby: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { lk_ovs_finding_modifiedby: ovs_Finding_Result[] }>;
+  lk_ovs_finding_modifiedonbehalfby: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { lk_ovs_finding_modifiedonbehalfby: ovs_Finding_Result[] }>;
   lk_ovs_operation_createdby: WebExpand<SystemUser_Expand, ovs_operation_Select, ovs_operation_Filter, { lk_ovs_operation_createdby: ovs_operation_Result[] }>;
   lk_ovs_operation_createdonbehalfby: WebExpand<SystemUser_Expand, ovs_operation_Select, ovs_operation_Filter, { lk_ovs_operation_createdonbehalfby: ovs_operation_Result[] }>;
   lk_ovs_operation_modifiedby: WebExpand<SystemUser_Expand, ovs_operation_Select, ovs_operation_Filter, { lk_ovs_operation_modifiedby: ovs_operation_Result[] }>;
@@ -652,6 +661,7 @@ interface SystemUser_Expand {
   user_msdyn_servicetasktype: WebExpand<SystemUser_Expand, msdyn_servicetasktype_Select, msdyn_servicetasktype_Filter, { user_msdyn_servicetasktype: msdyn_servicetasktype_Result[] }>;
   user_msdyn_workorder: WebExpand<SystemUser_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { user_msdyn_workorder: msdyn_workorder_Result[] }>;
   user_msdyn_workorderservicetask: WebExpand<SystemUser_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { user_msdyn_workorderservicetask: msdyn_workorderservicetask_Result[] }>;
+  user_ovs_finding: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { user_ovs_finding: ovs_Finding_Result[] }>;
   user_ovs_operation: WebExpand<SystemUser_Expand, ovs_operation_Select, ovs_operation_Filter, { user_ovs_operation: ovs_operation_Result[] }>;
   user_ovs_questionnaire: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { user_ovs_questionnaire: ovs_Questionnaire_Result[] }>;
   user_owner_postfollows: WebExpand<SystemUser_Expand, PostFollow_Select, PostFollow_Filter, { user_owner_postfollows: PostFollow_Result[] }>;
@@ -787,6 +797,10 @@ interface SystemUser_RelatedMany {
   lk_msdyn_workorderservicetask_createdonbehalfby: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   lk_msdyn_workorderservicetask_modifiedby: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   lk_msdyn_workorderservicetask_modifiedonbehalfby: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
+  lk_ovs_finding_createdby: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  lk_ovs_finding_createdonbehalfby: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  lk_ovs_finding_modifiedby: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  lk_ovs_finding_modifiedonbehalfby: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   lk_ovs_operation_createdby: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   lk_ovs_operation_createdonbehalfby: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   lk_ovs_operation_modifiedby: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
@@ -845,6 +859,7 @@ interface SystemUser_RelatedMany {
   user_msdyn_servicetasktype: WebMappingRetrieve<msdyn_servicetasktype_Select,msdyn_servicetasktype_Expand,msdyn_servicetasktype_Filter,msdyn_servicetasktype_Fixed,msdyn_servicetasktype_Result,msdyn_servicetasktype_FormattedResult>;
   user_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   user_msdyn_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
+  user_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   user_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   user_ovs_questionnaire: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
   user_owner_postfollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;

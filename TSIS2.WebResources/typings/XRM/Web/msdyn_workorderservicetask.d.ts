@@ -37,6 +37,7 @@ interface msdyn_workorderservicetask_Relationships {
   msdyn_workorderservicetask_connections2?: Connection_Result[] | null;
   ovs_CaseId?: Incident_Result | null;
   ovs_Questionnaire?: ovs_Questionnaire_Result | null;
+  ovs_msdyn_workorderservicetask_ovs_finding?: ovs_Finding_Result[] | null;
 }
 interface msdyn_workorderservicetask extends msdyn_workorderservicetask_Base, msdyn_workorderservicetask_Relationships {
   msdyn_Inspection_bind$msdyn_inspections?: string | null;
@@ -183,6 +184,7 @@ interface msdyn_workorderservicetask_Expand {
   msdyn_workorderservicetask_connections2: WebExpand<msdyn_workorderservicetask_Expand, Connection_Select, Connection_Filter, { msdyn_workorderservicetask_connections2: Connection_Result[] }>;
   ovs_CaseId: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ovs_CaseId: Incident_Result }>;
   ovs_Questionnaire: WebExpand<msdyn_workorderservicetask_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { ovs_Questionnaire: ovs_Questionnaire_Result }>;
+  ovs_msdyn_workorderservicetask_ovs_finding: WebExpand<msdyn_workorderservicetask_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ovs_msdyn_workorderservicetask_ovs_finding: ovs_Finding_Result[] }>;
   ownerid: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
@@ -264,6 +266,7 @@ interface msdyn_workorderservicetask_RelatedMany {
   msdyn_workorderservicetask_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   msdyn_workorderservicetask_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_workorderservicetask_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  ovs_msdyn_workorderservicetask_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_workorderservicetasks: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
