@@ -18,7 +18,6 @@ declare namespace Form.account.Main {
         get(name: "ACCOUNT_INFORMATION"): Xrm.PageSection;
         get(name: "ADDRESS"): Xrm.PageSection;
         get(name: "MapSection"): Xrm.PageSection;
-        get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
         get(name: "SUMMARY_TAB_section_6"): Xrm.PageSection;
         get(name: "Summary_CadenceWidget"): Xrm.PageSection;
         get(name: "Summary_section_6"): Xrm.PageSection;
