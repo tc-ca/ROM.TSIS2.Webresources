@@ -72,15 +72,28 @@ async function NCATFinalize(primaryControl) {
     let totalWeight = findingWithWeight["ts_assessmentrating1.ts_weight"] + findingWithWeight["ts_assessmentrating2.ts_weight"] + findingWithWeight["ts_assessmentrating3.ts_weight"] + findingWithWeight["ts_assessmentrating4.ts_weight"] + findingWithWeight["ts_assessmentrating5.ts_weight"] + findingWithWeight["ts_assessmentrating6.ts_weight"] + findingWithWeight["ts_assessmentrating7.ts_weight"];
 
     let enforcementResponseChoiceNumber;
+    let inspectorRecommendationControl = primaryControl.getControl("ts_ncatinspectorrecommendation");
+    inspectorRecommendationControl.removeOption(717750000);
+    inspectorRecommendationControl.removeOption(717750001);
+    inspectorRecommendationControl.removeOption(717750002);
+    let verbalnWarningOption = { text: "Verbal Warning", value: 717750000 }
+    let writtenWarningOption = { text: "Written Warning", value: 717750001 }
+    let referralOption = { text: "Referral to CEE", value: 717750002 }
     if (totalWeight <= 19) {
         //Verbal Warning
         enforcementResponseChoiceNumber = 717750000;
+        inspectorRecommendationControl.addOption(writtenWarningOption);
+        inspectorRecommendationControl.addOption(referralOption);
     } else if (totalWeight > 19 && totalWeight <= 55) {
         //Written Warning
         enforcementResponseChoiceNumber = 717750001;
+        inspectorRecommendationControl.addOption(verbalnWarningOption);
+        inspectorRecommendationControl.addOption(referralOption);
     } else if (totalWeight > 55) {
         //Referral to CEE
         enforcementResponseChoiceNumber = 717750002;
+        inspectorRecommendationControl.addOption(verbalnWarningOption);
+        inspectorRecommendationControl.addOption(writtenWarningOption);
     }
 
     primaryControl.getAttribute("ts_ncatenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
