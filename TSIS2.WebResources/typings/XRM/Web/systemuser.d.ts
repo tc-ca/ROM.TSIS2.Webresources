@@ -263,6 +263,7 @@ interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
   stageid_processstage_bind$processstages?: string | null;
   territoryid_bind$territories?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
+  ts_Territory_bind$territories?: string | null;
 }
 interface SystemUser_Create extends SystemUser {
 }
@@ -390,6 +391,7 @@ interface SystemUser_Select {
   title: WebAttribute<SystemUser_Select, { title: string | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<SystemUser_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<SystemUser_Select, { traversedpath: string | null }, {  }>;
+  ts_territory_guid: WebAttribute<SystemUser_Select, { ts_territory_guid: string | null }, { ts_territory_formatted?: string }>;
   userlicensetype: WebAttribute<SystemUser_Select, { userlicensetype: number | null }, {  }>;
   userpuid: WebAttribute<SystemUser_Select, { userpuid: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<SystemUser_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -520,6 +522,7 @@ interface SystemUser_Filter {
   title: string;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_territory_guid: XQW.Guid;
   userlicensetype: number;
   userpuid: string;
   utcconversiontimezonecode: number;
@@ -706,6 +709,7 @@ interface SystemUser_FormattedResult {
   siteid_formatted?: string;
   territoryid_formatted?: string;
   transactioncurrencyid_formatted?: string;
+  ts_territory_formatted?: string;
 }
 interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
   "@odata.etag": string;
@@ -723,6 +727,7 @@ interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
   siteid_guid: string | null;
   territoryid_guid: string | null;
   transactioncurrencyid_guid: string | null;
+  ts_territory_guid: string | null;
 }
 interface SystemUser_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;

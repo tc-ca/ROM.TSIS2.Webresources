@@ -24,11 +24,15 @@ interface ovs_Finding_Base extends WebEntity {
   ts_ncatenforcementrecommendation?: ts_ncatrecommendations | null;
   ts_ncatfinalenforcementaction?: ts_ncatrecommendations | null;
   ts_ncatinspectorrecommendation?: ts_ncatrecommendations | null;
+  ts_ncatmanagerdecision?: ts_ncatmanagerdecision | null;
+  ts_ncatmanagerenforcementjustification?: string | null;
   ts_proposealternatencatenforcementaction?: boolean | null;
   ts_rateenforcementjustification?: string | null;
   ts_rateenforcementrecommendation?: ts_raterecommendations | null;
   ts_ratefinalenforcementaction?: ts_raterecommendations | null;
   ts_rateinspectorrecommendation?: ts_raterecommendations | null;
+  ts_ratemanagerdecision?: ts_ratemanagerdecision | null;
+  ts_ratemanagerenforcementjustification?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -112,6 +116,8 @@ interface ovs_Finding_Select {
   ts_ncatfinalenforcementaction: WebAttribute<ovs_Finding_Select, { ts_ncatfinalenforcementaction: ts_ncatrecommendations | null }, { ts_ncatfinalenforcementaction_formatted?: string }>;
   ts_ncatinspectorrecommendation: WebAttribute<ovs_Finding_Select, { ts_ncatinspectorrecommendation: ts_ncatrecommendations | null }, { ts_ncatinspectorrecommendation_formatted?: string }>;
   ts_ncatintentionality_guid: WebAttribute<ovs_Finding_Select, { ts_ncatintentionality_guid: string | null }, { ts_ncatintentionality_formatted?: string }>;
+  ts_ncatmanagerdecision: WebAttribute<ovs_Finding_Select, { ts_ncatmanagerdecision: ts_ncatmanagerdecision | null }, { ts_ncatmanagerdecision_formatted?: string }>;
+  ts_ncatmanagerenforcementjustification: WebAttribute<ovs_Finding_Select, { ts_ncatmanagerenforcementjustification: string | null }, {  }>;
   ts_ncatmitigationofnoncompliantbehaviors_guid: WebAttribute<ovs_Finding_Select, { ts_ncatmitigationofnoncompliantbehaviors_guid: string | null }, { ts_ncatmitigationofnoncompliantbehaviors_formatted?: string }>;
   ts_operationid_guid: WebAttribute<ovs_Finding_Select, { ts_operationid_guid: string | null }, { ts_operationid_formatted?: string }>;
   ts_ovs_operationtype_guid: WebAttribute<ovs_Finding_Select, { ts_ovs_operationtype_guid: string | null }, { ts_ovs_operationtype_formatted?: string }>;
@@ -127,6 +133,8 @@ interface ovs_Finding_Select {
   ts_ratefinalenforcementaction: WebAttribute<ovs_Finding_Select, { ts_ratefinalenforcementaction: ts_raterecommendations | null }, { ts_ratefinalenforcementaction_formatted?: string }>;
   ts_rateinspectorrecommendation: WebAttribute<ovs_Finding_Select, { ts_rateinspectorrecommendation: ts_raterecommendations | null }, { ts_rateinspectorrecommendation_formatted?: string }>;
   ts_rateintentionality_guid: WebAttribute<ovs_Finding_Select, { ts_rateintentionality_guid: string | null }, { ts_rateintentionality_formatted?: string }>;
+  ts_ratemanagerdecision: WebAttribute<ovs_Finding_Select, { ts_ratemanagerdecision: ts_ratemanagerdecision | null }, { ts_ratemanagerdecision_formatted?: string }>;
+  ts_ratemanagerenforcementjustification: WebAttribute<ovs_Finding_Select, { ts_ratemanagerenforcementjustification: string | null }, {  }>;
   ts_ratemitigationofnoncompliantbehaviors_guid: WebAttribute<ovs_Finding_Select, { ts_ratemitigationofnoncompliantbehaviors_guid: string | null }, { ts_ratemitigationofnoncompliantbehaviors_formatted?: string }>;
   ts_site_guid: WebAttribute<ovs_Finding_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_workorder_guid: WebAttribute<ovs_Finding_Select, { ts_workorder_guid: string | null }, { ts_workorder_formatted?: string }>;
@@ -177,6 +185,8 @@ interface ovs_Finding_Filter {
   ts_ncatfinalenforcementaction: ts_ncatrecommendations;
   ts_ncatinspectorrecommendation: ts_ncatrecommendations;
   ts_ncatintentionality_guid: XQW.Guid;
+  ts_ncatmanagerdecision: ts_ncatmanagerdecision;
+  ts_ncatmanagerenforcementjustification: string;
   ts_ncatmitigationofnoncompliantbehaviors_guid: XQW.Guid;
   ts_operationid_guid: XQW.Guid;
   ts_ovs_operationtype_guid: XQW.Guid;
@@ -192,6 +202,8 @@ interface ovs_Finding_Filter {
   ts_ratefinalenforcementaction: ts_raterecommendations;
   ts_rateinspectorrecommendation: ts_raterecommendations;
   ts_rateintentionality_guid: XQW.Guid;
+  ts_ratemanagerdecision: ts_ratemanagerdecision;
+  ts_ratemanagerenforcementjustification: string;
   ts_ratemitigationofnoncompliantbehaviors_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_workorder_guid: XQW.Guid;
@@ -242,6 +254,7 @@ interface ovs_Finding_FormattedResult {
   ts_ncatfinalenforcementaction_formatted?: string;
   ts_ncatinspectorrecommendation_formatted?: string;
   ts_ncatintentionality_formatted?: string;
+  ts_ncatmanagerdecision_formatted?: string;
   ts_ncatmitigationofnoncompliantbehaviors_formatted?: string;
   ts_operationid_formatted?: string;
   ts_ovs_operationtype_formatted?: string;
@@ -255,6 +268,7 @@ interface ovs_Finding_FormattedResult {
   ts_ratefinalenforcementaction_formatted?: string;
   ts_rateinspectorrecommendation_formatted?: string;
   ts_rateintentionality_formatted?: string;
+  ts_ratemanagerdecision_formatted?: string;
   ts_ratemitigationofnoncompliantbehaviors_formatted?: string;
   ts_site_formatted?: string;
   ts_workorder_formatted?: string;
