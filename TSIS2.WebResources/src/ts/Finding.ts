@@ -1,4 +1,16 @@
 ﻿namespace ROM.Finding {
+    let lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+    let verbalWarningLocalizedText = "Verbal Warning";
+    let writtenWarningLocalizedText = "Written Warning";
+    let referralToCEELocalizedText = "Referral to CEE";
+
+    if (lang == 1036) {
+        verbalWarningLocalizedText = "Avertissement verbal";
+        writtenWarningLocalizedText = "Avertissement écrit";
+        referralToCEELocalizedText = "Renvoi au CEAL";
+    }
+
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         //If Observation, keep everything hidden
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
@@ -28,16 +40,23 @@
             const transportCanadaId = "c6432c33-29a1-eb11-b1ac-000d3ae8bbe0";
             const avsecId = "6cb920a0-baa3-eb11-b1ac-000d3ae8b98c";
             const issoId = "4ff4b827-bead-eb11-8236-000d3ae8b866";
-
+            //Show NCAT Sections and fields when the user is in Transport Canada or ISSO business unit
             if (userBusinessUnitId == transportCanadaId || userBusinessUnitId == issoId) {
                 formContext.ui.tabs.get("summary").sections.get("NCAT_main_section").setVisible(true);
-                if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == 717750001) {
+                formContext.getControl("ts_ncatfinalenforcementaction").setVisible(true);
+                NCATEnforcementRecommendationOnChange(eContext);
+                //If they did not accept the ncat recommendation, show proposal sections and fields
+                if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == 717750001)  { 
                     formContext.ui.tabs.get("summary").sections.get("NCAT_proposed_section").setVisible(true);
                     AcceptNCATRecommendationOnChange(eContext);
                 }
             }
+            //Show RATE Sections and fields when the user is in Transport Canada or ISSO business unit
             if (userBusinessUnitId == transportCanadaId || userBusinessUnitId == avsecId) {
                 formContext.ui.tabs.get("summary").sections.get("RATE_main_section").setVisible(true);
+                formContext.getControl("ts_ratefinalenforcementaction").setVisible(true);
+                RATEEnforcementRecommendationOnChange(eContext);
+                //If they did not accept the rate recommendation, show proposal sections and fields
                 if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == 717750001) {
                     formContext.ui.tabs.get("summary").sections.get("RATE_proposed_section").setVisible(true);
                     AcceptRATERecommendationOnChange(eContext);
@@ -57,6 +76,7 @@
         let factor6Value = formContext.getAttribute("ts_ncatintentionality").getValue();
         let factor7Value = formContext.getAttribute("ts_ncatmitigationofnoncompliantbehaviors").getValue();
 
+        //If any of the ncat factors don't have a value, reset any fields that require an enforcement recommendation
         if (factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null) {
             formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(null);
 
@@ -83,6 +103,7 @@
         let factor6AssessmentRatingId = factor6Value[0].id;
         let factor7AssessmentRatingId = factor7Value[0].id;
 
+        //Retrieve the assessment ratings that were set to the ncat factors
         let factor1AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor1AssessmentRatingId, "?$select=ts_weight");
         let factor2AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor2AssessmentRatingId, "?$select=ts_weight");
         let factor3AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor3AssessmentRatingId, "?$select=ts_weight");
@@ -91,6 +112,7 @@
         let factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
         let factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
 
+        //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
         await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise]).then((factorPromises) => {
             let totalWeight = 0
             for (let i = 0; i < factorPromises.length; i++) {
@@ -128,6 +150,7 @@
         let factor6Value = formContext.getAttribute("ts_rateintentionality").getValue();
         let factor7Value = formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").getValue();
 
+        //If any of the rate factors don't have a value, reset any fields that require an enforcement recommendation
         if (factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null) {
             formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
 
@@ -154,6 +177,7 @@
         let factor6AssessmentRatingId = factor6Value[0].id;
         let factor7AssessmentRatingId = factor7Value[0].id;
 
+        //Retrieve the assessment ratings that were set to the ncat factors
         let factor1AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor1AssessmentRatingId, "?$select=ts_weight");
         let factor2AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor2AssessmentRatingId, "?$select=ts_weight");
         let factor3AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor3AssessmentRatingId, "?$select=ts_weight");
@@ -162,6 +186,7 @@
         let factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
         let factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
 
+        //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
         await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise]).then((factorPromises) => {
             let totalWeight = 0
             for (let i = 0; i < factorPromises.length; i++) {
@@ -190,59 +215,139 @@
 
     export function AcceptNCATRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
 
-        let enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+        //If they did not accept the NCAT recommendation
+        if (acceptNCATRecommendation == 717750001) {
+            //Show Inspector Recommendation
+            formContext.getControl("ts_ncatinspectorrecommendation").setVisible(true);
+            //Require Inspector Recommendation
+            formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("required");
+            //Show Enforcement Justification
+            formContext.getControl("ts_ncatenforcementjustification").setVisible(true);
+            //Require Enforcement Justification
+            formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("required");
 
-        let inspectorRecommendationControl = formContext.getControl("ts_ncatinspectorrecommendation");
-        inspectorRecommendationControl.removeOption(717750000);
-        inspectorRecommendationControl.removeOption(717750001);
-        inspectorRecommendationControl.removeOption(717750002);
-        let verbalnWarningOption = { text: "Verbal Warning", value: 717750000 }
-        let writtenWarningOption = { text: "Written Warning", value: 717750001 }
-        let referralOption = { text: "Referral to CEE", value: 717750002 }
+            let enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
 
-        if (enforcementRecommendation == 717750000) {
-            //Verbal Warning
-            inspectorRecommendationControl.addOption(writtenWarningOption);
-            inspectorRecommendationControl.addOption(referralOption);
-        } else if (enforcementRecommendation == 717750001) {
-            //Written Warning
-            inspectorRecommendationControl.addOption(verbalnWarningOption);
-            inspectorRecommendationControl.addOption(referralOption);
-        } else if (enforcementRecommendation == 717750002) {
-            //Referral to CEE
-            inspectorRecommendationControl.addOption(verbalnWarningOption);
-            inspectorRecommendationControl.addOption(writtenWarningOption);
+            let inspectorRecommendationControl = formContext.getControl("ts_ncatinspectorrecommendation");
+            inspectorRecommendationControl.removeOption(717750000);
+            inspectorRecommendationControl.removeOption(717750001);
+            inspectorRecommendationControl.removeOption(717750002);
+            let verbalnWarningOption = { text: verbalWarningLocalizedText, value: 717750000 }
+            let writtenWarningOption = { text: writtenWarningLocalizedText, value: 717750001 }
+            let referralOption = { text: referralToCEELocalizedText, value: 717750002 }
+
+            if (enforcementRecommendation == 717750000) {
+                //Verbal Warning
+                inspectorRecommendationControl.addOption(writtenWarningOption);
+                inspectorRecommendationControl.addOption(referralOption);
+            } else if (enforcementRecommendation == 717750001) {
+                //Written Warning
+                inspectorRecommendationControl.addOption(verbalnWarningOption);
+                inspectorRecommendationControl.addOption(referralOption);
+            } else if (enforcementRecommendation == 717750002) {
+                //Referral to CEE
+                inspectorRecommendationControl.addOption(verbalnWarningOption);
+                inspectorRecommendationControl.addOption(writtenWarningOption);
+            }
+        } else {
+            //Clear Inspector Recommendation
+            formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
+            //Hide Inspector Recommendation
+            formContext.getControl("ts_ncatinspectorrecommendation").setVisible(false);
+            //Not Require Inspector Recommendation
+            formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("none");
+
+            //Clear Enforcement Justification
+            formContext.getAttribute("ts_ncatenforcementjustification").setValue(null);
+            //Hide Enforcement Justification
+            formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
+            //Not Require Enforcement Justification
+            formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
         }
-
     }
 
     export function AcceptRATERecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
 
-        let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+        //If they did not accept the RATE recommendation
+        if (acceptRATERecommendation == 717750001) {
+            //Show Inspector Recommendation
+            formContext.getControl("ts_rateinspectorrecommendation").setVisible(true);
+            //Require Inspector Recommendation
+            formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("required");
+            //Show Enforcement Justification
+            formContext.getControl("ts_rateenforcementjustification").setVisible(true);
+            //Require Enforcement Justification
+            formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("required");
 
-        let inspectorRecommendationControl = formContext.getControl("ts_rateinspectorrecommendation");
-        inspectorRecommendationControl.removeOption(717750000);
-        inspectorRecommendationControl.removeOption(717750001);
-        inspectorRecommendationControl.removeOption(717750002);
-        let verbalnWarningOption = { text: "Verbal Warning", value: 717750000 }
-        let writtenWarningOption = { text: "Written Warning", value: 717750001 }
-        let referralOption = { text: "Referral to CEE", value: 717750002 }
+            let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
 
-        if (enforcementRecommendation == 717750000) {
-            //Verbal Warning
-            inspectorRecommendationControl.addOption(writtenWarningOption);
-            inspectorRecommendationControl.addOption(referralOption);
-        } else if (enforcementRecommendation == 717750001) {
-            //Written Warning
-            inspectorRecommendationControl.addOption(verbalnWarningOption);
-            inspectorRecommendationControl.addOption(referralOption);
-        } else if (enforcementRecommendation == 717750002) {
-            //Referral to CEE
-            inspectorRecommendationControl.addOption(verbalnWarningOption);
-            inspectorRecommendationControl.addOption(writtenWarningOption);
+            let inspectorRecommendationControl = formContext.getControl("ts_rateinspectorrecommendation");
+            inspectorRecommendationControl.removeOption(717750000);
+            inspectorRecommendationControl.removeOption(717750001);
+            inspectorRecommendationControl.removeOption(717750002);
+            let verbalnWarningOption = { text: verbalWarningLocalizedText, value: 717750000 }
+            let writtenWarningOption = { text: writtenWarningLocalizedText, value: 717750001 }
+            let referralOption = { text: referralToCEELocalizedText, value: 717750002 }
+
+            if (enforcementRecommendation == 717750000) {
+                //Verbal Warning
+                inspectorRecommendationControl.addOption(writtenWarningOption);
+                inspectorRecommendationControl.addOption(referralOption);
+            } else if (enforcementRecommendation == 717750001) {
+                //Written Warning
+                inspectorRecommendationControl.addOption(verbalnWarningOption);
+                inspectorRecommendationControl.addOption(referralOption);
+            } else if (enforcementRecommendation == 717750002) {
+                //Referral to CEE
+                inspectorRecommendationControl.addOption(verbalnWarningOption);
+                inspectorRecommendationControl.addOption(writtenWarningOption);
+            }
+        } else {
+            //Clear Inspector Recommendation
+            formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
+            //Hide Inspector Recommendation
+            formContext.getControl("ts_rateinspectorrecommendation").setVisible(false);
+            //Not Require Inspector Recommendation
+            formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("none");
+
+            //Clear Enforcement Justification
+            formContext.getAttribute("ts_rateenforcementjustification").setValue(null);
+            //Hide Enforcement Justification
+            formContext.getControl("ts_rateenforcementjustification").setVisible(false);
+            //Not Require Enforcement Justification
+            formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("none");
         }
+    }
 
+    export function NCATEnforcementRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+        if (NCATEnforcementRecommendation != null) {
+            //Show Accept NCAT Recommendation
+            formContext.getControl("ts_acceptncatrecommendation").setVisible(true);
+        } else {
+            //Hide Accept NCAT Recommendation
+            formContext.getControl("ts_acceptncatrecommendation").setVisible(false);
+            //Clear Accept NCAT Recommendation
+            formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
+        }
+    }
+
+    export function RATEEnforcementRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+        if (RATEEnforcementRecommendation != null) {
+            //Show Accept RATE Recommendation
+            formContext.getControl("ts_acceptraterecommendation").setVisible(true);
+        } else {
+            //Hide Accept RATE Recommendation
+            formContext.getControl("ts_acceptraterecommendation").setVisible(false);
+            //Clear Accept RATE Recommendation
+            formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
+        }
     }
 }
