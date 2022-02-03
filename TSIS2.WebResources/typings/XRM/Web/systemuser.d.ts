@@ -205,6 +205,10 @@ interface SystemUser_Relationships {
   lk_tc_tcfiscalyear_createdonbehalfby?: tc_TCFiscalYear_Result[] | null;
   lk_tc_tcfiscalyear_modifiedby?: tc_TCFiscalYear_Result[] | null;
   lk_tc_tcfiscalyear_modifiedonbehalfby?: tc_TCFiscalYear_Result[] | null;
+  lk_ts_assessmentscorethredshots_createdby?: ts_assessmentscorethredshots_Result[] | null;
+  lk_ts_assessmentscorethredshots_createdonbehalfby?: ts_assessmentscorethredshots_Result[] | null;
+  lk_ts_assessmentscorethredshots_modifiedby?: ts_assessmentscorethredshots_Result[] | null;
+  lk_ts_assessmentscorethredshots_modifiedonbehalfby?: ts_assessmentscorethredshots_Result[] | null;
   lk_ts_questionnaireversion_createdby?: ts_questionnaireversion_Result[] | null;
   lk_ts_questionnaireversion_createdonbehalfby?: ts_questionnaireversion_Result[] | null;
   lk_ts_questionnaireversion_modifiedby?: ts_questionnaireversion_Result[] | null;
@@ -244,6 +248,7 @@ interface SystemUser_Relationships {
   user_parent_user?: SystemUser_Result[] | null;
   user_tc_tcfiscalquarter?: tc_TCFiscalQuarter_Result[] | null;
   user_tc_tcfiscalyear?: tc_TCFiscalYear_Result[] | null;
+  user_ts_assessmentscorethredshots?: ts_assessmentscorethredshots_Result[] | null;
   user_ts_questionnaireversion?: ts_questionnaireversion_Result[] | null;
   user_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
 }
@@ -616,6 +621,10 @@ interface SystemUser_Expand {
   lk_tc_tcfiscalyear_createdonbehalfby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_createdonbehalfby: tc_TCFiscalYear_Result[] }>;
   lk_tc_tcfiscalyear_modifiedby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_modifiedby: tc_TCFiscalYear_Result[] }>;
   lk_tc_tcfiscalyear_modifiedonbehalfby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_modifiedonbehalfby: tc_TCFiscalYear_Result[] }>;
+  lk_ts_assessmentscorethredshots_createdby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_createdby: ts_assessmentscorethredshots_Result[] }>;
+  lk_ts_assessmentscorethredshots_createdonbehalfby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_createdonbehalfby: ts_assessmentscorethredshots_Result[] }>;
+  lk_ts_assessmentscorethredshots_modifiedby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_modifiedby: ts_assessmentscorethredshots_Result[] }>;
+  lk_ts_assessmentscorethredshots_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_modifiedonbehalfby: ts_assessmentscorethredshots_Result[] }>;
   lk_ts_questionnaireversion_createdby: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { lk_ts_questionnaireversion_createdby: ts_questionnaireversion_Result[] }>;
   lk_ts_questionnaireversion_createdonbehalfby: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { lk_ts_questionnaireversion_createdonbehalfby: ts_questionnaireversion_Result[] }>;
   lk_ts_questionnaireversion_modifiedby: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { lk_ts_questionnaireversion_modifiedby: ts_questionnaireversion_Result[] }>;
@@ -658,6 +667,7 @@ interface SystemUser_Expand {
   user_parent_user: WebExpand<SystemUser_Expand, SystemUser_Select, SystemUser_Filter, { user_parent_user: SystemUser_Result[] }>;
   user_tc_tcfiscalquarter: WebExpand<SystemUser_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { user_tc_tcfiscalquarter: tc_TCFiscalQuarter_Result[] }>;
   user_tc_tcfiscalyear: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { user_tc_tcfiscalyear: tc_TCFiscalYear_Result[] }>;
+  user_ts_assessmentscorethredshots: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { user_ts_assessmentscorethredshots: ts_assessmentscorethredshots_Result[] }>;
   user_ts_questionnaireversion: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { user_ts_questionnaireversion: ts_questionnaireversion_Result[] }>;
   user_ts_workordercreationwizard: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { user_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
 }
@@ -812,6 +822,10 @@ interface SystemUser_RelatedMany {
   lk_tc_tcfiscalyear_createdonbehalfby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   lk_tc_tcfiscalyear_modifiedby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   lk_tc_tcfiscalyear_modifiedonbehalfby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  lk_ts_assessmentscorethredshots_createdby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
+  lk_ts_assessmentscorethredshots_createdonbehalfby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
+  lk_ts_assessmentscorethredshots_modifiedby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
+  lk_ts_assessmentscorethredshots_modifiedonbehalfby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   lk_ts_questionnaireversion_createdby: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   lk_ts_questionnaireversion_createdonbehalfby: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   lk_ts_questionnaireversion_modifiedby: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
@@ -851,6 +865,7 @@ interface SystemUser_RelatedMany {
   user_parent_user: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   user_tc_tcfiscalquarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   user_tc_tcfiscalyear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  user_ts_assessmentscorethredshots: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   user_ts_questionnaireversion: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   user_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
 }

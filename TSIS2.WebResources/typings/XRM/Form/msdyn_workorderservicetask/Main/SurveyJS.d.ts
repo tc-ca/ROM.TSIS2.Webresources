@@ -8,13 +8,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_11 extends Xrm.SectionCollectionBase {
-        get(name: "tab_11_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
       interface tab_5 extends Xrm.SectionCollectionBase {
         get(name: "tab_6_section_2"): Xrm.PageSection;
         get(name: string): undefined;
@@ -105,9 +98,8 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
+      get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
-      get(name: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
-      get(name: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "WebResource_Provisions"): Xrm.WebResourceControl;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
@@ -151,7 +143,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
-      get(name: "tab_11"): Xrm.PageTab<Tabs.tab_11>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
@@ -193,9 +184,8 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ts_servicetaskstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
+    getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
-    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"sharepointdocument">;
-    getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "WebResource_Provisions"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
