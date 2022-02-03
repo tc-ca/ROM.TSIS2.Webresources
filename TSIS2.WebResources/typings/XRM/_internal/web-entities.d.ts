@@ -331,6 +331,29 @@ interface ovs_Questionnaire_Create extends ovs_Questionnaire {
 }
 interface ovs_Questionnaire_Update extends ovs_Questionnaire {
 }
+interface ts_assessmentscorethredshots_Base extends WebEntity {
+}
+interface ts_assessmentscorethredshots_Fixed extends WebEntity_Fixed {
+  ts_assessmentscorethredshotsid: string;
+}
+interface ts_assessmentscorethredshots extends ts_assessmentscorethredshots_Base, ts_assessmentscorethredshots_Relationships {
+}
+interface ts_assessmentscorethredshots_Relationships {
+}
+interface ts_assessmentscorethredshots_Result extends ts_assessmentscorethredshots_Base, ts_assessmentscorethredshots_Relationships {
+}
+interface ts_assessmentscorethredshots_FormattedResult {
+}
+interface ts_assessmentscorethredshots_Select {
+}
+interface ts_assessmentscorethredshots_Expand {
+}
+interface ts_assessmentscorethredshots_Filter {
+}
+interface ts_assessmentscorethredshots_Create extends ts_assessmentscorethredshots {
+}
+interface ts_assessmentscorethredshots_Update extends ts_assessmentscorethredshots {
+}
 interface ts_msdyn_customerasset_msdyn_customerasset_Base extends WebEntity {
 }
 interface ts_msdyn_customerasset_msdyn_customerasset_Fixed extends WebEntity_Fixed {

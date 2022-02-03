@@ -156,6 +156,7 @@
     <Content Include="Webresources\js\OperationRibbon.js" />
     <Content Include="Webresources\js\Questionnaire.js" />
     <Content Include="Webresources\js\QuestionnaireVersion.js" />
+    <Content Include="Webresources\js\ScoreThresholds.js" />
     <Content Include="Webresources\js\ServiceTaskType.js" />
     <Content Include="Webresources\js\showdown.min.js" />
     <Content Include="Webresources\js\survey-creator.min.js" />
@@ -222,6 +223,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QuestionnaireVersion.1036.resx</DependentUpon>
     </Compile>
+    <Compile Include="Webresources\resx\ScoreThresholds.1033.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScoreThresholds.1033.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Webresources\resx\ScoreThresholds.1036.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScoreThresholds.1036.resx</DependentUpon>
+    </Compile>
     <Compile Include="Webresources\resx\WorkOrder.1036.Designer.cs">
       <DependentUpon>WorkOrder.1036.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -269,6 +280,7 @@
     <TypeScriptCompile Include="src\ts\Operation.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
     <TypeScriptCompile Include="src\ts\QuestionnaireVersion.ts" />
+    <TypeScriptCompile Include="src\ts\ScoreThresholds.ts" />
     <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderCreationWizard.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
@@ -449,6 +461,8 @@
     <TypeScriptCompile Include="typings\XRM\Form\team\Main\TeamformBusiness.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\territory\Main\Information.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\territory\Quick\TerritoryHierarchyTileForm.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ts_assessmentscorethredshots\Main\Information.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Form\ts_assessmentscorethredshots\Quick\Information.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\ts_questionnaireversion\Main\Information.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\ts_questionnaireversion\Quick\Information.d.ts" />
     <TypeScriptCompile Include="typings\XRM\metadata.d.ts" />
@@ -510,6 +524,7 @@
     <TypeScriptCompile Include="typings\XRM\Web\tc_tcmonth.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Web\team.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Web\territory.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\Web\ts_assessmentscorethredshots.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Web\ts_questionnaireversion.d.ts" />
     <TypeScriptCompile Include="typings\XRM\xrm.d.ts" />
     <TypeScriptCompile Include="typings\XRM\_internal\Enum\account_accountcategorycode.d.ts" />
@@ -722,6 +737,7 @@
     <TypeScriptCompile Include="typings\XRM\_internal\Enum\tc_tcmonth_statuscode.d.ts" />
     <TypeScriptCompile Include="typings\XRM\_internal\Enum\team_membershiptype.d.ts" />
     <TypeScriptCompile Include="typings\XRM\_internal\Enum\team_type.d.ts" />
+    <TypeScriptCompile Include="typings\XRM\_internal\Enum\ts_ncatrecommendations.d.ts" />
     <TypeScriptCompile Include="typings\XRM\_internal\Enum\ts_questionnaireversion_statecode.d.ts" />
     <TypeScriptCompile Include="typings\XRM\_internal\Enum\ts_questionnaireversion_statuscode.d.ts" />
     <TypeScriptCompile Include="typings\XRM\_internal\Enum\_incidentresolution_instancetypecode.d.ts" />
@@ -759,6 +775,14 @@
     <EmbeddedResource Include="Webresources\resx\QuestionnaireVersion.1036.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>QuestionnaireVersion.1036.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\ScoreThresholds.1033.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ScoreThresholds.1033.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\ScoreThresholds.1036.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ScoreThresholds.1036.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\WorkOrder.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>

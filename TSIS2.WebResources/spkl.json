@@ -212,6 +212,11 @@
                 },
                 /* HTML */
                 {
+                    "uniquename": "ts_/html/NCATFactorGuide.html",
+                    "file": "html\\NCATFactorGuide.html",
+                    "description": "ROM TSIS 2.0 NCAT Factor Guide"
+                },
+                {
                     "uniquename": "ovs_/html/SurveyCreator.html",
                     "file": "html\\SurveyCreator.html",
                     "description": "ROM TSIS 2.0 SurveyJS Creator"
