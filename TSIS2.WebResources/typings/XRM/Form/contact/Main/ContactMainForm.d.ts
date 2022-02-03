@@ -106,8 +106,8 @@ declare namespace Form.contact.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "ActionCards"): Xrm.BaseControl;
+      get(name: "Connections_Operations"): Xrm.SubGridControl<"connection">;
       get(name: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
-      get(name: "Subgrid_1"): Xrm.SubGridControl<"connection">;
       get(name: "TalkingPoints"): Xrm.BaseControl;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
@@ -235,8 +235,8 @@ declare namespace Form.contact.Main {
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ActionCards"): Xrm.BaseControl;
+    getControl(controlName: "Connections_Operations"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
-    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "TalkingPoints"): Xrm.BaseControl;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;

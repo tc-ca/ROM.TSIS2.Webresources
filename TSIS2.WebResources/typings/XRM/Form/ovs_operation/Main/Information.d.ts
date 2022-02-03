@@ -61,9 +61,9 @@ declare namespace Form.ovs_operation.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Connections"): Xrm.SubGridControl<"connection">;
+      get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"connection">;
-      get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ovs_name"): Xrm.StringControl;
@@ -109,9 +109,9 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
+    getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"connection">;
-    getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ovs_name"): Xrm.StringControl;

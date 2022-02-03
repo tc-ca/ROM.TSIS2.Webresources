@@ -17,7 +17,6 @@ declare namespace Form.contact.Main {
         get(name: "CONTACT_INFORMATION"): Xrm.PageSection;
         get(name: "CUSTOMER_DETAILS_TAB"): Xrm.PageSection;
         get(name: "MapSection"): Xrm.PageSection;
-        get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
         get(name: "Summary_CadenceWidget"): Xrm.PageSection;
         get(name: "Summary_section_6"): Xrm.PageSection;
         get(name: "TalkingPoints_section"): Xrm.PageSection;
