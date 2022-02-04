@@ -262,6 +262,29 @@ interface msdyn_workorderservicetask_Create extends msdyn_workorderservicetask {
 }
 interface msdyn_workorderservicetask_Update extends msdyn_workorderservicetask {
 }
+interface ovs_Finding_Base extends WebEntity {
+}
+interface ovs_Finding_Fixed extends WebEntity_Fixed {
+  ovs_findingid: string;
+}
+interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
+}
+interface ovs_Finding_Relationships {
+}
+interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships {
+}
+interface ovs_Finding_FormattedResult {
+}
+interface ovs_Finding_Select {
+}
+interface ovs_Finding_Expand {
+}
+interface ovs_Finding_Filter {
+}
+interface ovs_Finding_Create extends ovs_Finding {
+}
+interface ovs_Finding_Update extends ovs_Finding {
+}
 interface ovs_operation_Base extends WebEntity {
 }
 interface ovs_operation_Fixed extends WebEntity_Fixed {

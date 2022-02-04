@@ -169,6 +169,16 @@
                     "file": "js\\WorkOrderServiceTaskRibbon.js",
                     "description": "ROM TSIS 2.0 Work Order Service Task Ribbon Scripts"
                 },
+                {
+                    "uniquename": "ovs_/js/Finding.js",
+                    "file": "js\\Finding.js",
+                    "description": "ROM TSIS 2.0 Finding Scripts"
+                },
+                {
+                    "uniquename": "ovs_/js/FindingRibbon.js",
+                    "file": "js\\FindingRibbon.js",
+                    "description": "ROM TSIS 2.0 Finding Ribbon Scripts"
+                },
                 /* Styles */
                 {
                     "uniquename": "ovs_/css/bootstrap.min.css",

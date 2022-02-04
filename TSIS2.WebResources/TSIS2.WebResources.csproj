@@ -144,6 +144,7 @@
     <Content Include="Webresources\js\CustomerAssetQuickCreate.js" />
     <Content Include="Webresources\js\CustomerAssetRibbon.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
+    <Content Include="Webresources\js\FindingRibbon.js" />
     <Content Include="Webresources\js\FunctionalLocation.js" />
     <Content Include="Webresources\js\Incident.js" />
     <Content Include="Webresources\js\IncidentQuickCreate.js" />
@@ -271,6 +272,7 @@
     <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
     <TypeScriptCompile Include="src\ts\CustomerAsset.ts" />
     <TypeScriptCompile Include="src\ts\CustomerAssetQuickCreate.ts" />
+    <TypeScriptCompile Include="src\ts\Finding.ts" />
     <TypeScriptCompile Include="src\ts\FunctionalLocation.ts" />
     <TypeScriptCompile Include="src\ts\Incident.ts" />
     <TypeScriptCompile Include="src\ts\IncidentQuickCreate.ts" />
