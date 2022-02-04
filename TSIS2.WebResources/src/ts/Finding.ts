@@ -1,15 +1,6 @@
 ﻿namespace ROM.Finding {
+
     let lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
-
-    let verbalWarningLocalizedText = "Verbal Warning";
-    let writtenWarningLocalizedText = "Written Warning";
-    let referralToCEELocalizedText = "Referral to CEE";
-
-    if (lang == 1036) {
-        verbalWarningLocalizedText = "Avertissement verbal";
-        writtenWarningLocalizedText = "Avertissement écrit";
-        referralToCEELocalizedText = "Renvoi au CEAL";
-    }
 
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         //If Observation, keep everything hidden
@@ -112,30 +103,29 @@
         let factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
         let factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
 
-        //Retrieve the written warning assessment score threshold
-        let writtenWarningThresholdPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", `?$select=ts_minimum,ts_maximum&$filter=ts_assessmenttool eq ${ts_assessmenttool.NCAT} and ts_ncatenforcementaction eq ${ts_raterecommendations.WrittenWarning}`);
+        //Retrieve the enforcement thresholds for NCAT
+        let thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", `?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq ${ts_assessmenttool.NCAT}`);
 
         //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
-        await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, writtenWarningThresholdPromise]).then((factorPromises) => {
+        await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise]).then((factorPromises) => {
 
             let totalWeight = 0
             for (let i = 0; i < 7; i++) { //The first 7 are the assessment ratings
                 totalWeight += factorPromises[i].ts_weight;
             }
 
-            if (factorPromises[7].entities[0] == null) return;
+            let enforcementResponseChoiceNumber = null;
 
-            let writtenWarningMinimum = factorPromises[7].entities[0].ts_minimum;
-            let writtenWarningMaximum = factorPromises[7].entities[0].ts_maximum;
+            //Loop through all the thresholds, if the total weight is between a min and max, set its enforcement action to the enforcement recommendation
+            for (let threshold of factorPromises[7].entities) {
 
-            let enforcementResponseChoiceNumber;
+                let min = threshold.ts_minimum;
+                let max = threshold.ts_maximum;
 
-            if (totalWeight <= writtenWarningMinimum) {
-                enforcementResponseChoiceNumber = ts_ncatrecommendations.VerbalWarning;
-            } else if (totalWeight <= writtenWarningMaximum) {
-                enforcementResponseChoiceNumber = ts_ncatrecommendations.WrittenWarning;
-            } else if ((totalWeight > writtenWarningMaximum)) {
-                enforcementResponseChoiceNumber = ts_ncatrecommendations.ReferraltoCEE;
+                if (totalWeight >= min && totalWeight <= max) {
+                    enforcementResponseChoiceNumber = threshold.ts_ncatenforcementaction;
+                    break;
+                }
             }
 
             formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
@@ -194,29 +184,28 @@
         let factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
         let factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
 
-        //Retrieve the written warning assessment score threshold
-        let writtenWarningThresholdPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", `?$select=ts_minimum,ts_maximum&$filter=ts_assessmenttool eq ${ts_assessmenttool.RATE} and ts_rateenforcementaction eq ${ts_raterecommendations.WrittenWarning}`);
+        //Retrieve the enforcement thresholds for NCAT
+        let thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", `?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq ${ts_assessmenttool.NCAT}`);
 
         //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
-        await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, writtenWarningThresholdPromise]).then((factorPromises) => {
+        await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise]).then((factorPromises) => {
             let totalWeight = 0
             for (let i = 0; i < 7; i++) { //The first 7 are the assessment ratings
                 totalWeight += factorPromises[i].ts_weight;
             }
 
-            if (factorPromises[7].entities[0] == null) return;
+            let enforcementResponseChoiceNumber = null;
 
-            let writtenWarningMinimum = factorPromises[7].entities[0].ts_minimum;
-            let writtenWarningMaximum = factorPromises[7].entities[0].ts_maximum;
+            //Loop through all the thresholds, if the total weight is between a min and max, set its enforcement action to the enforcement recommendation
+            for (let threshold of factorPromises[7].entities) {
 
-            let enforcementResponseChoiceNumber;
+                let min = threshold.ts_minimum;
+                let max = threshold.ts_maximum;
 
-            if (totalWeight <= writtenWarningMinimum) {
-                enforcementResponseChoiceNumber = ts_raterecommendations.VerbalWarning;
-            } else if (totalWeight <= writtenWarningMaximum) {
-                enforcementResponseChoiceNumber = ts_raterecommendations.WrittenWarning;
-            } else if ((totalWeight > writtenWarningMaximum)) {
-                enforcementResponseChoiceNumber = ts_raterecommendations.ReferraltoCEE;
+                if (totalWeight >= min && totalWeight <= max) {
+                    enforcementResponseChoiceNumber = threshold.ts_ncatenforcementaction;
+                    break;
+                }
             }
 
             formContext.getAttribute("ts_rateenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
@@ -241,30 +230,6 @@
             formContext.getControl("ts_ncatenforcementjustification").setVisible(true);
             //Require Enforcement Justification
             formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("required");
-
-            let enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
-
-            let inspectorRecommendationControl = formContext.getControl("ts_ncatinspectorrecommendation");
-
-            inspectorRecommendationControl.removeOption(ts_ncatrecommendations.VerbalWarning);
-            inspectorRecommendationControl.removeOption(ts_ncatrecommendations.WrittenWarning);
-            inspectorRecommendationControl.removeOption(ts_ncatrecommendations.ReferraltoCEE);
-
-            let verbalnWarningOption = { text: verbalWarningLocalizedText, value: ts_ncatrecommendations.VerbalWarning }
-            let writtenWarningOption = { text: writtenWarningLocalizedText, value: ts_ncatrecommendations.WrittenWarning }
-            let referralOption = { text: referralToCEELocalizedText, value: ts_ncatrecommendations.ReferraltoCEE }
-
-            if (enforcementRecommendation == ts_ncatrecommendations.VerbalWarning) {
-                inspectorRecommendationControl.addOption(writtenWarningOption);
-                inspectorRecommendationControl.addOption(referralOption);
-            } else if (enforcementRecommendation == ts_ncatrecommendations.WrittenWarning) {
-                inspectorRecommendationControl.addOption(verbalnWarningOption);
-                inspectorRecommendationControl.addOption(referralOption);
-            } else if (enforcementRecommendation == ts_ncatrecommendations.ReferraltoCEE) {
-                //Referral to CEE
-                inspectorRecommendationControl.addOption(verbalnWarningOption);
-                inspectorRecommendationControl.addOption(writtenWarningOption);
-            }
         } else {
             //Clear Inspector Recommendation
             formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
@@ -296,30 +261,6 @@
             formContext.getControl("ts_rateenforcementjustification").setVisible(true);
             //Require Enforcement Justification
             formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("required");
-
-            let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
-
-            let inspectorRecommendationControl = formContext.getControl("ts_rateinspectorrecommendation");
-            inspectorRecommendationControl.removeOption(ts_raterecommendations.VerbalWarning);
-            inspectorRecommendationControl.removeOption(ts_raterecommendations.WrittenWarning);
-            inspectorRecommendationControl.removeOption(ts_raterecommendations.ReferraltoCEE);
-            let verbalnWarningOption = { text: verbalWarningLocalizedText, value: ts_raterecommendations.VerbalWarning }
-            let writtenWarningOption = { text: writtenWarningLocalizedText, value: ts_raterecommendations.WrittenWarning }
-            let referralOption = { text: referralToCEELocalizedText, value: ts_raterecommendations.ReferraltoCEE }
-
-            if (enforcementRecommendation == ts_raterecommendations.VerbalWarning) {
-                //Verbal Warning
-                inspectorRecommendationControl.addOption(writtenWarningOption);
-                inspectorRecommendationControl.addOption(referralOption);
-            } else if (enforcementRecommendation == ts_raterecommendations.WrittenWarning) {
-                //Written Warning
-                inspectorRecommendationControl.addOption(verbalnWarningOption);
-                inspectorRecommendationControl.addOption(referralOption);
-            } else if (enforcementRecommendation == ts_raterecommendations.ReferraltoCEE) {
-                //Referral to CEE
-                inspectorRecommendationControl.addOption(verbalnWarningOption);
-                inspectorRecommendationControl.addOption(writtenWarningOption);
-            }
         } else {
             //Clear Inspector Recommendation
             formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
@@ -362,6 +303,39 @@
             formContext.getControl("ts_acceptraterecommendation").setVisible(false);
             //Clear Accept RATE Recommendation
             formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
+        }
+    }
+
+    export function NCATInspectorRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
+        let NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+
+        if (NCATInspectorRecommendation != null && NCATEnforcementRecommendation != null && NCATInspectorRecommendation == NCATEnforcementRecommendation) {
+            if (lang == 1036) {
+                formContext.getControl("ts_ncatinspectorrecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_ncatenforcementrecommendation").getLabel());
+            } else {
+                formContext.getControl("ts_ncatinspectorrecommendation").setNotification("cannot match " + formContext.getControl("ts_ncatenforcementrecommendation").getLabel());
+            }
+            
+        } else {
+            formContext.getControl("ts_ncatinspectorrecommendation").clearNotification();
+        }
+    }
+
+    export function RATEInspectorRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
+        let RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+
+        if (RATEInspectorRecommendation != null && RATEEnforcementRecommendation != null && RATEInspectorRecommendation == RATEEnforcementRecommendation) {
+            if (lang == 1036) {
+                formContext.getControl("ts_rateinspectorrecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_rateenforcementrecommendation").getLabel());
+            } else {
+                formContext.getControl("ts_rateinspectorrecommendation").setNotification("cannot match " + formContext.getControl("ts_rateenforcementrecommendation").getLabel());
+            }
+        } else {
+            formContext.getControl("ts_rateinspectorrecommendation").clearNotification();
         }
     }
 }

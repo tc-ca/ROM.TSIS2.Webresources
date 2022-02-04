@@ -40,14 +40,6 @@ var ROM;
     var Finding;
     (function (Finding) {
         var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
-        var verbalWarningLocalizedText = "Verbal Warning";
-        var writtenWarningLocalizedText = "Written Warning";
-        var referralToCEELocalizedText = "Referral to CEE";
-        if (lang == 1036) {
-            verbalWarningLocalizedText = "Avertissement verbal";
-            writtenWarningLocalizedText = "Avertissement écrit";
-            referralToCEELocalizedText = "Renvoi au CEAL";
-        }
         function onLoad(eContext) {
             //If Observation, keep everything hidden
             var formContext = eContext.getFormContext();
@@ -102,7 +94,7 @@ var ROM;
         //If all NCAT Fields are set, calculate and set the recommended enforcement
         function NCATFieldOnChange(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, factor1Value, factor2Value, factor3Value, factor4Value, factor5Value, factor6Value, factor7Value, factor1AssessmentRatingId, factor2AssessmentRatingId, factor3AssessmentRatingId, factor4AssessmentRatingId, factor5AssessmentRatingId, factor6AssessmentRatingId, factor7AssessmentRatingId, factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, writtenWarningThresholdPromise;
+                var formContext, factor1Value, factor2Value, factor3Value, factor4Value, factor5Value, factor6Value, factor7Value, factor1AssessmentRatingId, factor2AssessmentRatingId, factor3AssessmentRatingId, factor4AssessmentRatingId, factor5AssessmentRatingId, factor6AssessmentRatingId, factor7AssessmentRatingId, factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -141,26 +133,23 @@ var ROM;
                             factor5AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor5AssessmentRatingId, "?$select=ts_weight");
                             factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
                             factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
-                            writtenWarningThresholdPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum&$filter=ts_assessmenttool eq " + 717750000 /* NCAT */ + " and ts_ncatenforcementaction eq " + 717750001 /* WrittenWarning */);
+                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq " + 717750000 /* NCAT */);
                             //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
-                            return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, writtenWarningThresholdPromise]).then(function (factorPromises) {
+                            return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
                                     var totalWeight = 0;
                                     for (var i = 0; i < 7; i++) { //The first 7 are the assessment ratings
                                         totalWeight += factorPromises[i].ts_weight;
                                     }
-                                    if (factorPromises[7].entities[0] == null)
-                                        return;
-                                    var writtenWarningMinimum = factorPromises[7].entities[0].ts_minimum;
-                                    var writtenWarningMaximum = factorPromises[7].entities[0].ts_maximum;
-                                    var enforcementResponseChoiceNumber;
-                                    if (totalWeight <= writtenWarningMinimum) {
-                                        enforcementResponseChoiceNumber = 717750000 /* VerbalWarning */;
-                                    }
-                                    else if (totalWeight <= writtenWarningMaximum) {
-                                        enforcementResponseChoiceNumber = 717750001 /* WrittenWarning */;
-                                    }
-                                    else if ((totalWeight > writtenWarningMaximum)) {
-                                        enforcementResponseChoiceNumber = 717750002 /* ReferraltoCEE */;
+                                    var enforcementResponseChoiceNumber = null;
+                                    //Loop through all the thresholds, if the total weight is between a min and max, set its enforcement action to the enforcement recommendation
+                                    for (var _i = 0, _a = factorPromises[7].entities; _i < _a.length; _i++) {
+                                        var threshold = _a[_i];
+                                        var min = threshold.ts_minimum;
+                                        var max = threshold.ts_maximum;
+                                        if (totalWeight >= min && totalWeight <= max) {
+                                            enforcementResponseChoiceNumber = threshold.ts_ncatenforcementaction;
+                                            break;
+                                        }
                                     }
                                     formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
                                     formContext.getControl("ts_acceptncatrecommendation").setVisible(true);
@@ -178,7 +167,7 @@ var ROM;
         //If all RATE Fields are set, calculate and set the recommended enforcement
         function RATEFieldOnChange(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, factor1Value, factor2Value, factor3Value, factor4Value, factor5Value, factor6Value, factor7Value, factor1AssessmentRatingId, factor2AssessmentRatingId, factor3AssessmentRatingId, factor4AssessmentRatingId, factor5AssessmentRatingId, factor6AssessmentRatingId, factor7AssessmentRatingId, factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, writtenWarningThresholdPromise;
+                var formContext, factor1Value, factor2Value, factor3Value, factor4Value, factor5Value, factor6Value, factor7Value, factor1AssessmentRatingId, factor2AssessmentRatingId, factor3AssessmentRatingId, factor4AssessmentRatingId, factor5AssessmentRatingId, factor6AssessmentRatingId, factor7AssessmentRatingId, factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -217,26 +206,23 @@ var ROM;
                             factor5AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor5AssessmentRatingId, "?$select=ts_weight");
                             factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
                             factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
-                            writtenWarningThresholdPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum&$filter=ts_assessmenttool eq " + 717750001 /* RATE */ + " and ts_rateenforcementaction eq " + 717750001 /* WrittenWarning */);
+                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq " + 717750000 /* NCAT */);
                             //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
-                            return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, writtenWarningThresholdPromise]).then(function (factorPromises) {
+                            return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
                                     var totalWeight = 0;
                                     for (var i = 0; i < 7; i++) { //The first 7 are the assessment ratings
                                         totalWeight += factorPromises[i].ts_weight;
                                     }
-                                    if (factorPromises[7].entities[0] == null)
-                                        return;
-                                    var writtenWarningMinimum = factorPromises[7].entities[0].ts_minimum;
-                                    var writtenWarningMaximum = factorPromises[7].entities[0].ts_maximum;
-                                    var enforcementResponseChoiceNumber;
-                                    if (totalWeight <= writtenWarningMinimum) {
-                                        enforcementResponseChoiceNumber = 717750000 /* VerbalWarning */;
-                                    }
-                                    else if (totalWeight <= writtenWarningMaximum) {
-                                        enforcementResponseChoiceNumber = 717750001 /* WrittenWarning */;
-                                    }
-                                    else if ((totalWeight > writtenWarningMaximum)) {
-                                        enforcementResponseChoiceNumber = 717750002 /* ReferraltoCEE */;
+                                    var enforcementResponseChoiceNumber = null;
+                                    //Loop through all the thresholds, if the total weight is between a min and max, set its enforcement action to the enforcement recommendation
+                                    for (var _i = 0, _a = factorPromises[7].entities; _i < _a.length; _i++) {
+                                        var threshold = _a[_i];
+                                        var min = threshold.ts_minimum;
+                                        var max = threshold.ts_maximum;
+                                        if (totalWeight >= min && totalWeight <= max) {
+                                            enforcementResponseChoiceNumber = threshold.ts_ncatenforcementaction;
+                                            break;
+                                        }
                                     }
                                     formContext.getAttribute("ts_rateenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
                                     formContext.getControl("ts_acceptraterecommendation").setVisible(true);
@@ -264,27 +250,6 @@ var ROM;
                 formContext.getControl("ts_ncatenforcementjustification").setVisible(true);
                 //Require Enforcement Justification
                 formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("required");
-                var enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
-                var inspectorRecommendationControl = formContext.getControl("ts_ncatinspectorrecommendation");
-                inspectorRecommendationControl.removeOption(717750000 /* VerbalWarning */);
-                inspectorRecommendationControl.removeOption(717750001 /* WrittenWarning */);
-                inspectorRecommendationControl.removeOption(717750002 /* ReferraltoCEE */);
-                var verbalnWarningOption = { text: verbalWarningLocalizedText, value: 717750000 /* VerbalWarning */ };
-                var writtenWarningOption = { text: writtenWarningLocalizedText, value: 717750001 /* WrittenWarning */ };
-                var referralOption = { text: referralToCEELocalizedText, value: 717750002 /* ReferraltoCEE */ };
-                if (enforcementRecommendation == 717750000 /* VerbalWarning */) {
-                    inspectorRecommendationControl.addOption(writtenWarningOption);
-                    inspectorRecommendationControl.addOption(referralOption);
-                }
-                else if (enforcementRecommendation == 717750001 /* WrittenWarning */) {
-                    inspectorRecommendationControl.addOption(verbalnWarningOption);
-                    inspectorRecommendationControl.addOption(referralOption);
-                }
-                else if (enforcementRecommendation == 717750002 /* ReferraltoCEE */) {
-                    //Referral to CEE
-                    inspectorRecommendationControl.addOption(verbalnWarningOption);
-                    inspectorRecommendationControl.addOption(writtenWarningOption);
-                }
             }
             else {
                 //Clear Inspector Recommendation
@@ -315,29 +280,6 @@ var ROM;
                 formContext.getControl("ts_rateenforcementjustification").setVisible(true);
                 //Require Enforcement Justification
                 formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("required");
-                var enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
-                var inspectorRecommendationControl = formContext.getControl("ts_rateinspectorrecommendation");
-                inspectorRecommendationControl.removeOption(717750000 /* VerbalWarning */);
-                inspectorRecommendationControl.removeOption(717750001 /* WrittenWarning */);
-                inspectorRecommendationControl.removeOption(717750002 /* ReferraltoCEE */);
-                var verbalnWarningOption = { text: verbalWarningLocalizedText, value: 717750000 /* VerbalWarning */ };
-                var writtenWarningOption = { text: writtenWarningLocalizedText, value: 717750001 /* WrittenWarning */ };
-                var referralOption = { text: referralToCEELocalizedText, value: 717750002 /* ReferraltoCEE */ };
-                if (enforcementRecommendation == 717750000 /* VerbalWarning */) {
-                    //Verbal Warning
-                    inspectorRecommendationControl.addOption(writtenWarningOption);
-                    inspectorRecommendationControl.addOption(referralOption);
-                }
-                else if (enforcementRecommendation == 717750001 /* WrittenWarning */) {
-                    //Written Warning
-                    inspectorRecommendationControl.addOption(verbalnWarningOption);
-                    inspectorRecommendationControl.addOption(referralOption);
-                }
-                else if (enforcementRecommendation == 717750002 /* ReferraltoCEE */) {
-                    //Referral to CEE
-                    inspectorRecommendationControl.addOption(verbalnWarningOption);
-                    inspectorRecommendationControl.addOption(writtenWarningOption);
-                }
             }
             else {
                 //Clear Inspector Recommendation
@@ -385,5 +327,39 @@ var ROM;
             }
         }
         Finding.RATEEnforcementRecommendationOnChange = RATEEnforcementRecommendationOnChange;
+        function NCATInspectorRecommendationOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
+            var NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+            if (NCATInspectorRecommendation != null && NCATEnforcementRecommendation != null && NCATInspectorRecommendation == NCATEnforcementRecommendation) {
+                if (lang == 1036) {
+                    formContext.getControl("ts_ncatinspectorrecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_ncatenforcementrecommendation").getLabel());
+                }
+                else {
+                    formContext.getControl("ts_ncatinspectorrecommendation").setNotification("cannot match " + formContext.getControl("ts_ncatenforcementrecommendation").getLabel());
+                }
+            }
+            else {
+                formContext.getControl("ts_ncatinspectorrecommendation").clearNotification();
+            }
+        }
+        Finding.NCATInspectorRecommendationOnChange = NCATInspectorRecommendationOnChange;
+        function RATEInspectorRecommendationOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
+            var RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+            if (RATEInspectorRecommendation != null && RATEEnforcementRecommendation != null && RATEInspectorRecommendation == RATEEnforcementRecommendation) {
+                if (lang == 1036) {
+                    formContext.getControl("ts_rateinspectorrecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_rateenforcementrecommendation").getLabel());
+                }
+                else {
+                    formContext.getControl("ts_rateinspectorrecommendation").setNotification("cannot match " + formContext.getControl("ts_rateenforcementrecommendation").getLabel());
+                }
+            }
+            else {
+                formContext.getControl("ts_rateinspectorrecommendation").clearNotification();
+            }
+        }
+        Finding.RATEInspectorRecommendationOnChange = RATEInspectorRecommendationOnChange;
     })(Finding = ROM.Finding || (ROM.Finding = {}));
 })(ROM || (ROM = {}));
