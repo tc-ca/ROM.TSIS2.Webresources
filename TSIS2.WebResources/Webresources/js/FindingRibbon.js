@@ -1,5 +1,5 @@
 ﻿
-//Action for mscrm.OpenRecordItem overridden command. Opens Findings forms as a modal.
+//Action for mscrm.OpenRecordItem overridden command. Opens Finding forms as a modal.
 function openRecord(recordId) {
     let formId = "d8af1d58-3786-4ab4-9a35-3a1b85946c12"; //Information Main form
     //Retrieve selected finding record

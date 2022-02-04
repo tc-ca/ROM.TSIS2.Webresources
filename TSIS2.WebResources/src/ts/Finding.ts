@@ -7,7 +7,6 @@
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         let findingType = formContext.getAttribute("ts_findingtype").getValue();
 
-
         if (findingType != ts_findingtype.Noncompliance) return;
 
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
@@ -80,7 +79,6 @@
             formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
             formContext.getAttribute("ts_ncatenforcementjustification").setValue(null);
             formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
-            
             
             formContext.getControl("ts_acceptncatrecommendation").setVisible(false);
             return true;
