@@ -162,7 +162,6 @@
             formContext.getAttribute("ts_rateenforcementjustification").setValue(null);
             formContext.getControl("ts_rateenforcementjustification").setVisible(false);
 
-
             formContext.getControl("ts_acceptraterecommendation").setVisible(false);
             return true;
         }
@@ -230,6 +229,18 @@
             formContext.getControl("ts_ncatenforcementjustification").setVisible(true);
             //Require Enforcement Justification
             formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("required");
+
+            const adminRoleId = "ca432c33-29a1-eb11-b1ac-000d3ae8bbe0";
+            const managerRoleId = "85e36d25-29f5-eb11-94ef-000d3af36036";
+            let userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+            //If the user is a system admin or ROM - Manager, show the NCAT manager review section
+            let isAdminOrManager = false;
+            userRoles.forEach(role => {
+                if (role.id == adminRoleId || role.id == managerRoleId) {
+                    isAdminOrManager = true;
+                }
+            });
+            if (isAdminOrManager) formContext.ui.tabs.get("summary").sections.get("NCAT_manager_review").setVisible(true);
         } else {
             //Clear Inspector Recommendation
             formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
@@ -244,6 +255,8 @@
             formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
             //Not Require Enforcement Justification
             formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
+            //Hide NCAT Manager Review section
+            formContext.ui.tabs.get("summary").sections.get("NCAT_manager_review").setVisible(false);
         }
     }
 
@@ -261,6 +274,18 @@
             formContext.getControl("ts_rateenforcementjustification").setVisible(true);
             //Require Enforcement Justification
             formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("required");
+
+            const adminRoleId = "ca432c33-29a1-eb11-b1ac-000d3ae8bbe0";
+            const managerRoleId = "85e36d25-29f5-eb11-94ef-000d3af36036";
+            let userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+            //If the user is a system admin or ROM - Manager, show the RATE manager review section
+            let isAdminOrManager = false;
+            userRoles.forEach(role => {
+                if (role.id == adminRoleId || role.id == managerRoleId) {
+                    isAdminOrManager = true;
+                }
+            });
+            if (isAdminOrManager) formContext.ui.tabs.get("summary").sections.get("RATE_manager_review").setVisible(true);
         } else {
             //Clear Inspector Recommendation
             formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
@@ -275,6 +300,8 @@
             formContext.getControl("ts_rateenforcementjustification").setVisible(false);
             //Not Require Enforcement Justification
             formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("none");
+            //Hide RATE Manager Review section
+            formContext.ui.tabs.get("summary").sections.get("RATE_manager_review").setVisible(false);
         }
     }
 
