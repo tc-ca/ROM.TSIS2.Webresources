@@ -16,8 +16,8 @@
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         let findingType = formContext.getAttribute("ts_findingtype").getValue();
 
-        //If findingType is not Non-Compliance
-        if (findingType != 717750002) return;
+
+        if (findingType != ts_findingtype.Noncompliance) return;
 
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
@@ -46,7 +46,7 @@
                 formContext.getControl("ts_ncatfinalenforcementaction").setVisible(true);
                 NCATEnforcementRecommendationOnChange(eContext);
                 //If they did not accept the ncat recommendation, show proposal sections and fields
-                if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == 717750001)  { 
+                if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == ts_yesno.No) {
                     formContext.ui.tabs.get("summary").sections.get("NCAT_proposed_section").setVisible(true);
                     AcceptNCATRecommendationOnChange(eContext);
                 }
@@ -57,7 +57,7 @@
                 formContext.getControl("ts_ratefinalenforcementaction").setVisible(true);
                 RATEEnforcementRecommendationOnChange(eContext);
                 //If they did not accept the rate recommendation, show proposal sections and fields
-                if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == 717750001) {
+                if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == ts_yesno.No) {
                     formContext.ui.tabs.get("summary").sections.get("RATE_proposed_section").setVisible(true);
                     AcceptRATERecommendationOnChange(eContext);
                 }
@@ -112,22 +112,30 @@
         let factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
         let factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
 
+        //Retrieve the written warning assessment score threshold
+        let writtenWarningThresholdPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", `?$select=ts_minimum,ts_maximum&$filter=ts_assessmenttool eq ${ts_assessmenttool.NCAT} and ts_ncatenforcementaction eq ${ts_raterecommendations.WrittenWarning}`);
+
         //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
-        await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise]).then((factorPromises) => {
+        await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, writtenWarningThresholdPromise]).then((factorPromises) => {
+
             let totalWeight = 0
-            for (let i = 0; i < factorPromises.length; i++) {
+            for (let i = 0; i < 7; i++) { //The first 7 are the assessment ratings
                 totalWeight += factorPromises[i].ts_weight;
             }
 
+            if (factorPromises[7].entities[0] == null) return;
+
+            let writtenWarningMinimum = factorPromises[7].entities[0].ts_minimum;
+            let writtenWarningMaximum = factorPromises[7].entities[0].ts_maximum;
+
             let enforcementResponseChoiceNumber;
-            if (totalWeight <= 19) {
-                //Verbal Warning
-                enforcementResponseChoiceNumber = 717750000;
-                //Written Warning
-                enforcementResponseChoiceNumber = 717750001;
-            } else if (totalWeight > 55) {
-                //Referral to CEE
-                enforcementResponseChoiceNumber = 717750002;
+
+            if (totalWeight <= writtenWarningMinimum) {
+                enforcementResponseChoiceNumber = ts_ncatrecommendations.VerbalWarning;
+            } else if (totalWeight <= writtenWarningMaximum) {
+                enforcementResponseChoiceNumber = ts_ncatrecommendations.WrittenWarning;
+            } else if ((totalWeight > writtenWarningMaximum)) {
+                enforcementResponseChoiceNumber = ts_ncatrecommendations.ReferraltoCEE;
             }
 
             formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
@@ -186,23 +194,29 @@
         let factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
         let factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
 
+        //Retrieve the written warning assessment score threshold
+        let writtenWarningThresholdPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", `?$select=ts_minimum,ts_maximum&$filter=ts_assessmenttool eq ${ts_assessmenttool.RATE} and ts_rateenforcementaction eq ${ts_raterecommendations.WrittenWarning}`);
+
         //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
-        await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise]).then((factorPromises) => {
+        await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, writtenWarningThresholdPromise]).then((factorPromises) => {
             let totalWeight = 0
-            for (let i = 0; i < factorPromises.length; i++) {
+            for (let i = 0; i < 7; i++) { //The first 7 are the assessment ratings
                 totalWeight += factorPromises[i].ts_weight;
             }
 
+            if (factorPromises[7].entities[0] == null) return;
+
+            let writtenWarningMinimum = factorPromises[7].entities[0].ts_minimum;
+            let writtenWarningMaximum = factorPromises[7].entities[0].ts_maximum;
+
             let enforcementResponseChoiceNumber;
-            if (totalWeight <= 19) {
-                //Verbal Warning
-                enforcementResponseChoiceNumber = 717750000;
-            } else if (totalWeight > 19 && totalWeight <= 55) {
-                //Written Warning
-                enforcementResponseChoiceNumber = 717750001;
-            } else if (totalWeight > 55) {
-                //Referral to CEE
-                enforcementResponseChoiceNumber = 717750002;
+
+            if (totalWeight <= writtenWarningMinimum) {
+                enforcementResponseChoiceNumber = ts_raterecommendations.VerbalWarning;
+            } else if (totalWeight <= writtenWarningMaximum) {
+                enforcementResponseChoiceNumber = ts_raterecommendations.WrittenWarning;
+            } else if ((totalWeight > writtenWarningMaximum)) {
+                enforcementResponseChoiceNumber = ts_raterecommendations.ReferraltoCEE;
             }
 
             formContext.getAttribute("ts_rateenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
@@ -218,7 +232,7 @@
         let acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
 
         //If they did not accept the NCAT recommendation
-        if (acceptNCATRecommendation == 717750001) {
+        if (acceptNCATRecommendation == ts_yesno.No) {
             //Show Inspector Recommendation
             formContext.getControl("ts_ncatinspectorrecommendation").setVisible(true);
             //Require Inspector Recommendation
@@ -231,22 +245,22 @@
             let enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
 
             let inspectorRecommendationControl = formContext.getControl("ts_ncatinspectorrecommendation");
-            inspectorRecommendationControl.removeOption(717750000);
-            inspectorRecommendationControl.removeOption(717750001);
-            inspectorRecommendationControl.removeOption(717750002);
-            let verbalnWarningOption = { text: verbalWarningLocalizedText, value: 717750000 }
-            let writtenWarningOption = { text: writtenWarningLocalizedText, value: 717750001 }
-            let referralOption = { text: referralToCEELocalizedText, value: 717750002 }
 
-            if (enforcementRecommendation == 717750000) {
-                //Verbal Warning
+            inspectorRecommendationControl.removeOption(ts_ncatrecommendations.VerbalWarning);
+            inspectorRecommendationControl.removeOption(ts_ncatrecommendations.WrittenWarning);
+            inspectorRecommendationControl.removeOption(ts_ncatrecommendations.ReferraltoCEE);
+
+            let verbalnWarningOption = { text: verbalWarningLocalizedText, value: ts_ncatrecommendations.VerbalWarning }
+            let writtenWarningOption = { text: writtenWarningLocalizedText, value: ts_ncatrecommendations.WrittenWarning }
+            let referralOption = { text: referralToCEELocalizedText, value: ts_ncatrecommendations.ReferraltoCEE }
+
+            if (enforcementRecommendation == ts_ncatrecommendations.VerbalWarning) {
                 inspectorRecommendationControl.addOption(writtenWarningOption);
                 inspectorRecommendationControl.addOption(referralOption);
-            } else if (enforcementRecommendation == 717750001) {
-                //Written Warning
+            } else if (enforcementRecommendation == ts_ncatrecommendations.WrittenWarning) {
                 inspectorRecommendationControl.addOption(verbalnWarningOption);
                 inspectorRecommendationControl.addOption(referralOption);
-            } else if (enforcementRecommendation == 717750002) {
+            } else if (enforcementRecommendation == ts_ncatrecommendations.ReferraltoCEE) {
                 //Referral to CEE
                 inspectorRecommendationControl.addOption(verbalnWarningOption);
                 inspectorRecommendationControl.addOption(writtenWarningOption);
@@ -273,7 +287,7 @@
         let acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
 
         //If they did not accept the RATE recommendation
-        if (acceptRATERecommendation == 717750001) {
+        if (acceptRATERecommendation == ts_yesno.No) {
             //Show Inspector Recommendation
             formContext.getControl("ts_rateinspectorrecommendation").setVisible(true);
             //Require Inspector Recommendation
@@ -286,22 +300,22 @@
             let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
 
             let inspectorRecommendationControl = formContext.getControl("ts_rateinspectorrecommendation");
-            inspectorRecommendationControl.removeOption(717750000);
-            inspectorRecommendationControl.removeOption(717750001);
-            inspectorRecommendationControl.removeOption(717750002);
-            let verbalnWarningOption = { text: verbalWarningLocalizedText, value: 717750000 }
-            let writtenWarningOption = { text: writtenWarningLocalizedText, value: 717750001 }
-            let referralOption = { text: referralToCEELocalizedText, value: 717750002 }
+            inspectorRecommendationControl.removeOption(ts_raterecommendations.VerbalWarning);
+            inspectorRecommendationControl.removeOption(ts_raterecommendations.WrittenWarning);
+            inspectorRecommendationControl.removeOption(ts_raterecommendations.ReferraltoCEE);
+            let verbalnWarningOption = { text: verbalWarningLocalizedText, value: ts_raterecommendations.VerbalWarning }
+            let writtenWarningOption = { text: writtenWarningLocalizedText, value: ts_raterecommendations.WrittenWarning }
+            let referralOption = { text: referralToCEELocalizedText, value: ts_raterecommendations.ReferraltoCEE }
 
-            if (enforcementRecommendation == 717750000) {
+            if (enforcementRecommendation == ts_raterecommendations.VerbalWarning) {
                 //Verbal Warning
                 inspectorRecommendationControl.addOption(writtenWarningOption);
                 inspectorRecommendationControl.addOption(referralOption);
-            } else if (enforcementRecommendation == 717750001) {
+            } else if (enforcementRecommendation == ts_raterecommendations.WrittenWarning) {
                 //Written Warning
                 inspectorRecommendationControl.addOption(verbalnWarningOption);
                 inspectorRecommendationControl.addOption(referralOption);
-            } else if (enforcementRecommendation == 717750002) {
+            } else if (enforcementRecommendation == ts_raterecommendations.ReferraltoCEE) {
                 //Referral to CEE
                 inspectorRecommendationControl.addOption(verbalnWarningOption);
                 inspectorRecommendationControl.addOption(writtenWarningOption);
