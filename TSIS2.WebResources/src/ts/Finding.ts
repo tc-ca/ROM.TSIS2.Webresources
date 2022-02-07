@@ -25,13 +25,10 @@
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
         Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-            let userBusinessUnitId = result.entities[0].businessunitid;
+            let userBusinessUnitName = result.entities[0].name;
 
-            const transportCanadaId = "c6432c33-29a1-eb11-b1ac-000d3ae8bbe0";
-            const avsecId = "6cb920a0-baa3-eb11-b1ac-000d3ae8b98c";
-            const issoId = "4ff4b827-bead-eb11-8236-000d3ae8b866";
             //Show NCAT Sections and fields when the user is in Transport Canada or ISSO business unit
-            if (userBusinessUnitId == transportCanadaId || userBusinessUnitId == issoId) {
+            if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                 formContext.ui.tabs.get("summary").sections.get("NCAT_main_section").setVisible(true);
                 formContext.getControl("ts_ncatfinalenforcementaction").setVisible(true);
                 NCATEnforcementRecommendationOnChange(eContext);
@@ -41,8 +38,8 @@
                     AcceptNCATRecommendationOnChange(eContext);
                 }
             }
-            //Show RATE Sections and fields when the user is in Transport Canada or ISSO business unit
-            if (userBusinessUnitId == transportCanadaId || userBusinessUnitId == avsecId) {
+            //Show RATE Sections and fields when the user is in Transport Canada or Aviation Security business unit
+            if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Aviation")) {
                 formContext.ui.tabs.get("summary").sections.get("RATE_main_section").setVisible(true);
                 formContext.getControl("ts_ratefinalenforcementaction").setVisible(true);
                 RATEEnforcementRecommendationOnChange(eContext);
