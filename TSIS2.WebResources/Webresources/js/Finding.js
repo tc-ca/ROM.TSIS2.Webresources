@@ -265,6 +265,11 @@ var ROM;
                     formContext.ui.tabs.get("summary").sections.get("NCAT_manager_review").setVisible(true);
             }
             else {
+                if (acceptNCATRecommendation == 717750000 /* Yes */) {
+                    //Set NCAT Final Enforcement Action to the Enforcement Recommendation
+                    var enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+                    formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(enforcementRecommendation);
+                }
                 //Clear Inspector Recommendation
                 formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
                 //Hide Inspector Recommendation
@@ -279,9 +284,10 @@ var ROM;
                 formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
                 //Hide NCAT Manager Review section
                 formContext.ui.tabs.get("summary").sections.get("NCAT_manager_review").setVisible(false);
-                //Set NCAT Final Enforcement Action to the Enforcement Recommendation
-                var enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
-                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(enforcementRecommendation);
+                //Clear NCAT Manager Review section fields
+                formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
+                formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
+                formContext.getAttribute("ts_ncatmanagerenforcementjustification").setValue(null);
             }
         }
         Finding.AcceptNCATRecommendationOnChange = AcceptNCATRecommendationOnChange;
@@ -314,6 +320,11 @@ var ROM;
                     formContext.ui.tabs.get("summary").sections.get("RATE_manager_review").setVisible(true);
             }
             else {
+                if (acceptRATERecommendation == 717750000 /* Yes */) {
+                    //Set RATE Final Enforcement Action to the Enforcement Recommendation
+                    var enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+                    formContext.getAttribute("ts_ratefinalenforcementaction").setValue(enforcementRecommendation);
+                }
                 //Clear Inspector Recommendation
                 formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
                 //Hide Inspector Recommendation
@@ -328,9 +339,10 @@ var ROM;
                 formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("none");
                 //Hide RATE Manager Review section
                 formContext.ui.tabs.get("summary").sections.get("RATE_manager_review").setVisible(false);
-                //Set RATE Final Enforcement Action to the Enforcement Recommendation
-                var enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
-                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(enforcementRecommendation);
+                //Clear RATE Manager Review section fields
+                formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
+                formContext.getAttribute("ts_ratemanagerdecision").setValue(null);
+                formContext.getAttribute("ts_ratemanagerenforcementjustification").setValue(null);
             }
         }
         Finding.AcceptRATERecommendationOnChange = AcceptRATERecommendationOnChange;
@@ -368,6 +380,11 @@ var ROM;
             var formContext = eContext.getFormContext();
             var NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
             var NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+            //Reset NCAT Final Enforcement Action and any Manager fields
+            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+            formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
+            formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
+            formContext.getAttribute("ts_ncatmanagerenforcementjustification").setValue(null);
             if (NCATInspectorRecommendation != null && NCATEnforcementRecommendation != null && NCATInspectorRecommendation == NCATEnforcementRecommendation) {
                 if (lang == 1036) {
                     formContext.getControl("ts_ncatinspectorrecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_ncatenforcementrecommendation").getLabel());
@@ -385,6 +402,11 @@ var ROM;
             var formContext = eContext.getFormContext();
             var RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
             var RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+            //Reset RATE Final Enforcement Action and any Manager fields
+            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+            formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
+            formContext.getAttribute("ts_ratemanagerdecision").setValue(null);
+            formContext.getAttribute("ts_ratemanagerenforcementjustification").setValue(null);
             if (RATEInspectorRecommendation != null && RATEEnforcementRecommendation != null && RATEInspectorRecommendation == RATEEnforcementRecommendation) {
                 if (lang == 1036) {
                     formContext.getControl("ts_rateinspectorrecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_rateenforcementrecommendation").getLabel());
@@ -398,5 +420,114 @@ var ROM;
             }
         }
         Finding.RATEInspectorRecommendationOnChange = RATEInspectorRecommendationOnChange;
+        function NCATManagerDecisionOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var NCATManagerDecision = formContext.getAttribute("ts_ncatmanagerdecision").getValue();
+            if (NCATManagerDecision == 717750000 /* AcceptInspectorRecommendation */) {
+                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(formContext.getAttribute("ts_ncatinspectorrecommendation").getValue());
+                formContext.getControl("ts_ncatmanageralternativerecommendation").setVisible(false);
+                formContext.getControl("ts_ncatmanageralternativerecommendation").clearNotification();
+                formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
+            }
+            else if (NCATManagerDecision == 717750001 /* AcceptNCATRecommendation */) {
+                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(formContext.getAttribute("ts_ncatenforcementrecommendation").getValue());
+                formContext.getControl("ts_ncatmanageralternativerecommendation").setVisible(false);
+                formContext.getControl("ts_ncatmanageralternativerecommendation").clearNotification();
+                formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
+            }
+            else if (NCATManagerDecision == 717750002 /* ProvideAlternativeRecommendation */) {
+                formContext.getControl("ts_ncatmanageralternativerecommendation").setVisible(true);
+                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+            }
+            else {
+                formContext.getControl("ts_ncatmanageralternativerecommendation").setVisible(false);
+                formContext.getControl("ts_ncatmanageralternativerecommendation").clearNotification();
+                formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
+                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+            }
+        }
+        Finding.NCATManagerDecisionOnChange = NCATManagerDecisionOnChange;
+        function RATEManagerDecisionOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var RATEManagerDecision = formContext.getAttribute("ts_ratemanagerdecision").getValue();
+            if (RATEManagerDecision == 717750000 /* AcceptInspectorRecommendation */) {
+                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(formContext.getAttribute("ts_rateinspectorrecommendation").getValue());
+                formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(false);
+                formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
+            }
+            else if (RATEManagerDecision == 717750001 /* AcceptRATERecommendation */) {
+                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(formContext.getAttribute("ts_rateenforcementrecommendation").getValue());
+                formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(false);
+                formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
+            }
+            else if (RATEManagerDecision == 717750002 /* ProvideAlternativeRecommendation */) {
+                formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(true);
+                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+            }
+            else {
+                formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(false);
+                formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
+                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+            }
+        }
+        Finding.RATEManagerDecisionOnChange = RATEManagerDecisionOnChange;
+        function NCATManagerAlternativeRecommendaionOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
+            var NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+            var NCATManagerAlternativeRecommendation = formContext.getAttribute("ts_ncatmanageralternativerecommendation").getValue();
+            formContext.getControl("ts_ncatmanageralternativerecommendation").clearNotification();
+            if (NCATManagerAlternativeRecommendation != null && NCATManagerAlternativeRecommendation == NCATInspectorRecommendation) {
+                if (lang == 1036) {
+                    formContext.getControl("ts_ncatmanageralternativerecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_ncatinspectorrecommendation").getLabel());
+                }
+                else {
+                    formContext.getControl("ts_ncatmanageralternativerecommendation").setNotification("cannot match " + formContext.getControl("ts_ncatinspectorrecommendation").getLabel());
+                }
+                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+            }
+            else if (NCATManagerAlternativeRecommendation != null && NCATManagerAlternativeRecommendation == NCATEnforcementRecommendation) {
+                if (lang == 1036) {
+                    formContext.getControl("ts_ncatmanageralternativerecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_ncatenforcementrecommendation").getLabel());
+                }
+                else {
+                    formContext.getControl("ts_ncatmanageralternativerecommendation").setNotification("cannot match " + formContext.getControl("ts_ncatenforcementrecommendation").getLabel());
+                }
+                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+            }
+            else {
+                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(formContext.getAttribute("ts_ncatmanageralternativerecommendation").getValue());
+            }
+        }
+        Finding.NCATManagerAlternativeRecommendaionOnChange = NCATManagerAlternativeRecommendaionOnChange;
+        function RATEManagerAlternativeRecommendaionOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
+            var RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+            var RATEManagerAlternativeRecommendation = formContext.getAttribute("ts_ratemanageralternativerecommendation").getValue();
+            formContext.getControl("ts_ratemanageralternativerecommendation").clearNotification();
+            if (RATEManagerAlternativeRecommendation != null && RATEManagerAlternativeRecommendation == RATEInspectorRecommendation) {
+                if (lang == 1036) {
+                    formContext.getControl("ts_ratemanageralternativerecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_rateinspectorrecommendation").getLabel());
+                }
+                else {
+                    formContext.getControl("ts_ratemanageralternativerecommendation").setNotification("cannot match " + formContext.getControl("ts_rateinspectorrecommendation").getLabel());
+                }
+                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+            }
+            else if (RATEManagerAlternativeRecommendation != null && RATEManagerAlternativeRecommendation == RATEEnforcementRecommendation) {
+                if (lang == 1036) {
+                    formContext.getControl("ts_ratemanageralternativerecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_rateenforcementrecommendation").getLabel());
+                }
+                else {
+                    formContext.getControl("ts_ratemanageralternativerecommendation").setNotification("cannot match " + formContext.getControl("ts_rateenforcementrecommendation").getLabel());
+                }
+                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+            }
+            else {
+                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(formContext.getAttribute("ts_ratemanageralternativerecommendation").getValue());
+            }
+        }
+        Finding.RATEManagerAlternativeRecommendaionOnChange = RATEManagerAlternativeRecommendaionOnChange;
     })(Finding = ROM.Finding || (ROM.Finding = {}));
 })(ROM || (ROM = {}));
