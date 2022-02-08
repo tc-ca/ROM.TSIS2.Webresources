@@ -114,6 +114,7 @@ var ROM;
                                 formContext.getAttribute("ts_ncatenforcementjustification").setValue(null);
                                 formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
                                 formContext.getControl("ts_acceptncatrecommendation").setVisible(false);
+                                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
                                 return [2 /*return*/, true];
                             }
                             factor1AssessmentRatingId = factor1Value[0].id;
@@ -187,6 +188,7 @@ var ROM;
                                 formContext.getAttribute("ts_rateenforcementjustification").setValue(null);
                                 formContext.getControl("ts_rateenforcementjustification").setVisible(false);
                                 formContext.getControl("ts_acceptraterecommendation").setVisible(false);
+                                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
                                 return [2 /*return*/, true];
                             }
                             factor1AssessmentRatingId = factor1Value[0].id;
@@ -247,6 +249,8 @@ var ROM;
                 formContext.getControl("ts_ncatenforcementjustification").setVisible(true);
                 //Require Enforcement Justification
                 formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("required");
+                //Clear final enforcement action, in case it was set before
+                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
                 var adminRoleId_1 = "ca432c33-29a1-eb11-b1ac-000d3ae8bbe0";
                 var managerRoleId_1 = "85e36d25-29f5-eb11-94ef-000d3af36036";
                 var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
@@ -275,6 +279,9 @@ var ROM;
                 formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
                 //Hide NCAT Manager Review section
                 formContext.ui.tabs.get("summary").sections.get("NCAT_manager_review").setVisible(false);
+                //Set NCAT Final Enforcement Action to the Enforcement Recommendation
+                var enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(enforcementRecommendation);
             }
         }
         Finding.AcceptNCATRecommendationOnChange = AcceptNCATRecommendationOnChange;
@@ -291,6 +298,8 @@ var ROM;
                 formContext.getControl("ts_rateenforcementjustification").setVisible(true);
                 //Require Enforcement Justification
                 formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("required");
+                //Clear final enforcement action, in case it was set before
+                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
                 var adminRoleId_2 = "ca432c33-29a1-eb11-b1ac-000d3ae8bbe0";
                 var managerRoleId_2 = "85e36d25-29f5-eb11-94ef-000d3af36036";
                 var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
@@ -319,6 +328,9 @@ var ROM;
                 formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("none");
                 //Hide RATE Manager Review section
                 formContext.ui.tabs.get("summary").sections.get("RATE_manager_review").setVisible(false);
+                //Set RATE Final Enforcement Action to the Enforcement Recommendation
+                var enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(enforcementRecommendation);
             }
         }
         Finding.AcceptRATERecommendationOnChange = AcceptRATERecommendationOnChange;
