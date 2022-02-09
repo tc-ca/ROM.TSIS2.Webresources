@@ -231,8 +231,8 @@ var ROM;
             if (acceptNCATRecommendation == 717750001 /* No */) {
                 //Show NCAT Approving Manager
                 formContext.getControl("ts_ncatmanager").setVisible(true);
-                //Require NCAT Approving Manager
-                formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
+                //Require NCAT Approving Manager (Will make it required when there are managers to choose)
+                //formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
                 //Show Inspector Recommendation
                 formContext.getControl("ts_ncatinspectorrecommendation").setVisible(true);
                 //Require Inspector Recommendation
@@ -273,8 +273,8 @@ var ROM;
             if (acceptRATERecommendation == 717750001 /* No */) {
                 //Show RATE Approving Manager
                 formContext.getControl("ts_ratemanager").setVisible(true);
-                //Require NCAT Approving Manager
-                formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
+                //Require NCAT Approving Manager (Will make it required when there are managers to choose)
+                //formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
                 //Show Inspector Recommendation
                 formContext.getControl("ts_rateinspectorrecommendation").setVisible(true);
                 //Require Inspector Recommendation
