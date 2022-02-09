@@ -430,7 +430,7 @@ var ROM;
             }
         }
         Finding.RATEManagerDecisionOnChange = RATEManagerDecisionOnChange;
-        function NCATManagerAlternativeRecommendaionOnChange(eContext) {
+        function NCATManagerAlternativeRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
             var NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
@@ -458,8 +458,8 @@ var ROM;
                 formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(formContext.getAttribute("ts_ncatmanageralternativerecommendation").getValue());
             }
         }
-        Finding.NCATManagerAlternativeRecommendaionOnChange = NCATManagerAlternativeRecommendaionOnChange;
-        function RATEManagerAlternativeRecommendaionOnChange(eContext) {
+        Finding.NCATManagerAlternativeRecommendationOnChange = NCATManagerAlternativeRecommendationOnChange;
+        function RATEManagerAlternativeRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
             var RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
@@ -487,7 +487,7 @@ var ROM;
                 formContext.getAttribute("ts_ratefinalenforcementaction").setValue(formContext.getAttribute("ts_ratemanageralternativerecommendation").getValue());
             }
         }
-        Finding.RATEManagerAlternativeRecommendaionOnChange = RATEManagerAlternativeRecommendaionOnChange;
+        Finding.RATEManagerAlternativeRecommendationOnChange = RATEManagerAlternativeRecommendationOnChange;
         function NCATHideProposedSection(eContext) {
             var formContext = eContext.getFormContext();
             formContext.getAttribute("ts_ncatmanager").setValue(null);

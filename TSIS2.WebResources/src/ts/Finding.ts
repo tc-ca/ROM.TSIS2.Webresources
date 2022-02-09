@@ -400,7 +400,7 @@
         }
     }
 
-    export function NCATManagerAlternativeRecommendaionOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+    export function NCATManagerAlternativeRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         let NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
         let NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
@@ -427,7 +427,7 @@
         }
     }
 
-    export function RATEManagerAlternativeRecommendaionOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+    export function RATEManagerAlternativeRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         let RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
         let RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
