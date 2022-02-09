@@ -66,19 +66,8 @@
         //If any of the ncat factors don't have a value, reset any fields that require an enforcement recommendation
         if (factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null) {
             formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(null);
-
             formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
-
-            formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("none");
-            formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
-            formContext.getControl("ts_ncatinspectorrecommendation").setVisible(false);
-
-            formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
-            formContext.getAttribute("ts_ncatenforcementjustification").setValue(null);
-            formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
-            
-            formContext.getControl("ts_acceptncatrecommendation").setVisible(false);
-
+            NCATHideProposedSection(eContext);
             formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
             return true;
         }
@@ -148,19 +137,8 @@
         //If any of the rate factors don't have a value, reset any fields that require an enforcement recommendation
         if (factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null) {
             formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
-
             formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
-
-            formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("none");
-            formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
-            formContext.getControl("ts_rateinspectorrecommendation").setVisible(false);
-
-            formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("none");
-            formContext.getAttribute("ts_rateenforcementjustification").setValue(null);
-            formContext.getControl("ts_rateenforcementjustification").setVisible(false);
-
-            formContext.getControl("ts_acceptraterecommendation").setVisible(false);
-
+            RATEHideProposedSection(eContext);
             formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
             return true;
         }
@@ -220,6 +198,10 @@
 
         //If they did not accept the NCAT recommendation
         if (acceptNCATRecommendation == ts_yesno.No) {
+            //Show NCAT Approving Manager
+            formContext.getControl("ts_ncatmanager").setVisible(true);
+            //Require NCAT Approving Manager
+            formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
             //Show Inspector Recommendation
             formContext.getControl("ts_ncatinspectorrecommendation").setVisible(true);
             //Require Inspector Recommendation
@@ -248,25 +230,7 @@
                 let enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
                 formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(enforcementRecommendation);
             }
-            //Clear Inspector Recommendation
-            formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
-            //Hide Inspector Recommendation
-            formContext.getControl("ts_ncatinspectorrecommendation").setVisible(false);
-            //Not Require Inspector Recommendation
-            formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("none");
-
-            //Clear Enforcement Justification
-            formContext.getAttribute("ts_ncatenforcementjustification").setValue(null);
-            //Hide Enforcement Justification
-            formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
-            //Not Require Enforcement Justification
-            formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
-            //Hide NCAT Manager Review section
-            formContext.ui.tabs.get("summary").sections.get("NCAT_manager_review").setVisible(false);
-            //Clear NCAT Manager Review section fields
-            formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
-            formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
-            formContext.getAttribute("ts_ncatmanagerenforcementjustification").setValue(null);
+            NCATHideProposedSection(eContext);
         }
     }
 
@@ -276,6 +240,10 @@
 
         //If they did not accept the RATE recommendation
         if (acceptRATERecommendation == ts_yesno.No) {
+            //Show RATE Approving Manager
+            formContext.getControl("ts_ratemanager").setVisible(true);
+            //Require NCAT Approving Manager
+            formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
             //Show Inspector Recommendation
             formContext.getControl("ts_rateinspectorrecommendation").setVisible(true);
             //Require Inspector Recommendation
@@ -304,25 +272,7 @@
                 let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
                 formContext.getAttribute("ts_ratefinalenforcementaction").setValue(enforcementRecommendation);
             }
-            //Clear Inspector Recommendation
-            formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
-            //Hide Inspector Recommendation
-            formContext.getControl("ts_rateinspectorrecommendation").setVisible(false);
-            //Not Require Inspector Recommendation
-            formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("none");
-
-            //Clear Enforcement Justification
-            formContext.getAttribute("ts_rateenforcementjustification").setValue(null);
-            //Hide Enforcement Justification
-            formContext.getControl("ts_rateenforcementjustification").setVisible(false);
-            //Not Require Enforcement Justification
-            formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("none");
-            //Hide RATE Manager Review section
-            formContext.ui.tabs.get("summary").sections.get("RATE_manager_review").setVisible(false);
-            //Clear RATE Manager Review section fields
-            formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
-            formContext.getAttribute("ts_ratemanagerdecision").setValue(null);
-            formContext.getAttribute("ts_ratemanagerenforcementjustification").setValue(null);
+            RATEHideProposedSection(eContext);
         }
     }
 
@@ -361,9 +311,7 @@
 
         //Reset NCAT Final Enforcement Action and any Manager fields
         formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
-        formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
-        formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
-        formContext.getAttribute("ts_ncatmanagerenforcementjustification").setValue(null);
+        NCATHideManagerReviewSection(eContext);
 
         if (NCATInspectorRecommendation != null && NCATEnforcementRecommendation != null && NCATInspectorRecommendation == NCATEnforcementRecommendation) {
             if (lang == 1036) {
@@ -384,9 +332,7 @@
 
         //Reset RATE Final Enforcement Action and any Manager fields
         formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
-        formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
-        formContext.getAttribute("ts_ratemanagerdecision").setValue(null);
-        formContext.getAttribute("ts_ratemanagerenforcementjustification").setValue(null);
+        RATEHideManagerReviewSection(eContext);
 
         if (RATEInspectorRecommendation != null && RATEEnforcementRecommendation != null && RATEInspectorRecommendation == RATEEnforcementRecommendation) {
             if (lang == 1036) {
@@ -504,5 +450,71 @@
         } else {
             formContext.getAttribute("ts_ratefinalenforcementaction").setValue(formContext.getAttribute("ts_ratemanageralternativerecommendation").getValue());
         }
+    }
+
+    function NCATHideProposedSection(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+
+        formContext.getAttribute("ts_ncatmanager").setValue(null);
+        formContext.getAttribute("ts_ncatmanager").setRequiredLevel("none");
+        formContext.getControl("ts_ncatmanager").setVisible(false);
+
+        formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
+        formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("none");
+        formContext.getControl("ts_ncatinspectorrecommendation").setVisible(false);
+        formContext.getControl("ts_ncatinspectorrecommendation").clearNotification();
+
+        formContext.getAttribute("ts_ncatenforcementjustification").setValue(null);
+        formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
+        formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
+
+        NCATHideManagerReviewSection(eContext);
+    }
+
+    function NCATHideManagerReviewSection(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+
+        formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
+        formContext.getControl("ts_ncatmanagerdecision").setVisible(false);
+
+        formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
+        formContext.getControl("ts_ncatmanageralternativerecommendation").clearNotification();
+        formContext.getControl("ts_ncatmanageralternativerecommendation").setVisible(false);
+
+        formContext.getAttribute("ts_ncatmanagerenforcementjustification").setValue(null);
+        formContext.getControl("ts_ncatmanagerenforcementjustification").setVisible(false);
+    }
+
+    function RATEHideProposedSection(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+
+        formContext.getAttribute("ts_ratemanager").setValue(null);
+        formContext.getAttribute("ts_ratemanager").setRequiredLevel("none");
+        formContext.getControl("ts_ratemanager").setVisible(false);
+
+        formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
+        formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("none");
+        formContext.getControl("ts_rateinspectorrecommendation").setVisible(false);
+        formContext.getControl("ts_rateinspectorrecommendation").clearNotification();
+
+        formContext.getAttribute("ts_rateenforcementjustification").setValue(null);
+        formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("none");
+        formContext.getControl("ts_rateenforcementjustification").setVisible(false);
+
+        RATEHideManagerReviewSection(eContext);
+    }
+
+    function RATEHideManagerReviewSection(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+
+        formContext.getAttribute("ts_ratemanagerdecision").setValue(null);
+        formContext.getControl("ts_ratemanagerdecision").setVisible(false);
+
+        formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
+        formContext.getControl("ts_ratemanageralternativerecommendation").clearNotification();
+        formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(false);
+
+        formContext.getAttribute("ts_ratemanagerenforcementjustification").setValue(null);
+        formContext.getControl("ts_ratemanagerenforcementjustification").setVisible(false);
     }
 }

@@ -41,6 +41,8 @@ interface ovs_Finding_Base extends WebEntity {
 interface ovs_Finding_Relationships {
   ovs_CaseId?: Incident_Result | null;
   ovs_WorkOrderServiceTaskId?: msdyn_workorderservicetask_Result | null;
+  ts_NCATManager?: SystemUser_Result | null;
+  ts_RATEManager?: SystemUser_Result | null;
   ts_WorkOrder?: msdyn_workorder_Result | null;
 }
 interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
@@ -55,6 +57,7 @@ interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ts_NCATDetectionofNonCompliances_bind$ts_assessmentratings?: string | null;
   ts_NCATEconomicBenefit_bind$ts_assessmentratings?: string | null;
   ts_NCATIntentionality_bind$ts_assessmentratings?: string | null;
+  ts_NCATManager_bind$systemusers?: string | null;
   ts_NCATMitigationofNonCompliantBehaviors_bind$ts_assessmentratings?: string | null;
   ts_ProvisionCategory_bind$ts_provisioncategories?: string | null;
   ts_RATEActualorPotentialHarm_bind$ts_assessmentratings?: string | null;
@@ -63,6 +66,7 @@ interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ts_RATEDetectionofNonCompliances_bind$ts_assessmentratings?: string | null;
   ts_RATEEconomicBenefit_bind$ts_assessmentratings?: string | null;
   ts_RATEIntentionality_bind$ts_assessmentratings?: string | null;
+  ts_RATEManager_bind$systemusers?: string | null;
   ts_RATEMitigationofNonCompliantBehaviors_bind$ts_assessmentratings?: string | null;
   ts_Site_bind$sites?: string | null;
   ts_WorkOrder_bind$msdyn_workorders?: string | null;
@@ -118,6 +122,7 @@ interface ovs_Finding_Select {
   ts_ncatfinalenforcementaction: WebAttribute<ovs_Finding_Select, { ts_ncatfinalenforcementaction: ts_ncatrecommendations | null }, { ts_ncatfinalenforcementaction_formatted?: string }>;
   ts_ncatinspectorrecommendation: WebAttribute<ovs_Finding_Select, { ts_ncatinspectorrecommendation: ts_ncatrecommendations | null }, { ts_ncatinspectorrecommendation_formatted?: string }>;
   ts_ncatintentionality_guid: WebAttribute<ovs_Finding_Select, { ts_ncatintentionality_guid: string | null }, { ts_ncatintentionality_formatted?: string }>;
+  ts_ncatmanager_guid: WebAttribute<ovs_Finding_Select, { ts_ncatmanager_guid: string | null }, { ts_ncatmanager_formatted?: string }>;
   ts_ncatmanageralternativerecommendation: WebAttribute<ovs_Finding_Select, { ts_ncatmanageralternativerecommendation: ts_ncatrecommendations | null }, { ts_ncatmanageralternativerecommendation_formatted?: string }>;
   ts_ncatmanagerdecision: WebAttribute<ovs_Finding_Select, { ts_ncatmanagerdecision: ts_ncatmanagerdecision | null }, { ts_ncatmanagerdecision_formatted?: string }>;
   ts_ncatmanagerenforcementjustification: WebAttribute<ovs_Finding_Select, { ts_ncatmanagerenforcementjustification: string | null }, {  }>;
@@ -136,6 +141,7 @@ interface ovs_Finding_Select {
   ts_ratefinalenforcementaction: WebAttribute<ovs_Finding_Select, { ts_ratefinalenforcementaction: ts_raterecommendations | null }, { ts_ratefinalenforcementaction_formatted?: string }>;
   ts_rateinspectorrecommendation: WebAttribute<ovs_Finding_Select, { ts_rateinspectorrecommendation: ts_raterecommendations | null }, { ts_rateinspectorrecommendation_formatted?: string }>;
   ts_rateintentionality_guid: WebAttribute<ovs_Finding_Select, { ts_rateintentionality_guid: string | null }, { ts_rateintentionality_formatted?: string }>;
+  ts_ratemanager_guid: WebAttribute<ovs_Finding_Select, { ts_ratemanager_guid: string | null }, { ts_ratemanager_formatted?: string }>;
   ts_ratemanageralternativerecommendation: WebAttribute<ovs_Finding_Select, { ts_ratemanageralternativerecommendation: ts_raterecommendations | null }, { ts_ratemanageralternativerecommendation_formatted?: string }>;
   ts_ratemanagerdecision: WebAttribute<ovs_Finding_Select, { ts_ratemanagerdecision: ts_ratemanagerdecision | null }, { ts_ratemanagerdecision_formatted?: string }>;
   ts_ratemanagerenforcementjustification: WebAttribute<ovs_Finding_Select, { ts_ratemanagerenforcementjustification: string | null }, {  }>;
@@ -189,6 +195,7 @@ interface ovs_Finding_Filter {
   ts_ncatfinalenforcementaction: ts_ncatrecommendations;
   ts_ncatinspectorrecommendation: ts_ncatrecommendations;
   ts_ncatintentionality_guid: XQW.Guid;
+  ts_ncatmanager_guid: XQW.Guid;
   ts_ncatmanageralternativerecommendation: ts_ncatrecommendations;
   ts_ncatmanagerdecision: ts_ncatmanagerdecision;
   ts_ncatmanagerenforcementjustification: string;
@@ -207,6 +214,7 @@ interface ovs_Finding_Filter {
   ts_ratefinalenforcementaction: ts_raterecommendations;
   ts_rateinspectorrecommendation: ts_raterecommendations;
   ts_rateintentionality_guid: XQW.Guid;
+  ts_ratemanager_guid: XQW.Guid;
   ts_ratemanageralternativerecommendation: ts_raterecommendations;
   ts_ratemanagerdecision: ts_ratemanagerdecision;
   ts_ratemanagerenforcementjustification: string;
@@ -225,6 +233,8 @@ interface ovs_Finding_Expand {
   ovs_WorkOrderServiceTaskId: WebExpand<ovs_Finding_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ovs_WorkOrderServiceTaskId: msdyn_workorderservicetask_Result }>;
   ownerid: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_NCATManager: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { ts_NCATManager: SystemUser_Result }>;
+  ts_RATEManager: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { ts_RATEManager: SystemUser_Result }>;
   ts_WorkOrder: WebExpand<ovs_Finding_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder: msdyn_workorder_Result }>;
   ts_accountid: WebExpand<ovs_Finding_Expand, Account_Select, Account_Filter, { ts_accountid: Account_Result }>;
   ts_operationid: WebExpand<ovs_Finding_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operationid: ovs_operation_Result }>;
@@ -260,6 +270,7 @@ interface ovs_Finding_FormattedResult {
   ts_ncatfinalenforcementaction_formatted?: string;
   ts_ncatinspectorrecommendation_formatted?: string;
   ts_ncatintentionality_formatted?: string;
+  ts_ncatmanager_formatted?: string;
   ts_ncatmanageralternativerecommendation_formatted?: string;
   ts_ncatmanagerdecision_formatted?: string;
   ts_ncatmitigationofnoncompliantbehaviors_formatted?: string;
@@ -275,6 +286,7 @@ interface ovs_Finding_FormattedResult {
   ts_ratefinalenforcementaction_formatted?: string;
   ts_rateinspectorrecommendation_formatted?: string;
   ts_rateintentionality_formatted?: string;
+  ts_ratemanager_formatted?: string;
   ts_ratemanageralternativerecommendation_formatted?: string;
   ts_ratemanagerdecision_formatted?: string;
   ts_ratemitigationofnoncompliantbehaviors_formatted?: string;
@@ -301,6 +313,7 @@ interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships
   ts_ncatdetectionofnoncompliances_guid: string | null;
   ts_ncateconomicbenefit_guid: string | null;
   ts_ncatintentionality_guid: string | null;
+  ts_ncatmanager_guid: string | null;
   ts_ncatmitigationofnoncompliantbehaviors_guid: string | null;
   ts_operationid_guid: string | null;
   ts_ovs_operationtype_guid: string | null;
@@ -311,6 +324,7 @@ interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships
   ts_ratedetectionofnoncompliances_guid: string | null;
   ts_rateeconomicbenefit_guid: string | null;
   ts_rateintentionality_guid: string | null;
+  ts_ratemanager_guid: string | null;
   ts_ratemitigationofnoncompliantbehaviors_guid: string | null;
   ts_site_guid: string | null;
   ts_workorder_guid: string | null;
@@ -324,6 +338,8 @@ interface ovs_Finding_RelatedOne {
   ovs_WorkOrderServiceTaskId: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_NCATManager: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_RATEManager: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_accountid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_operationid: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
