@@ -25,13 +25,10 @@
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
         Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-            let userBusinessUnitId = result.entities[0].businessunitid;
+            let userBusinessUnitName = result.entities[0].name;
 
-            const transportCanadaId = "c6432c33-29a1-eb11-b1ac-000d3ae8bbe0";
-            const avsecId = "6cb920a0-baa3-eb11-b1ac-000d3ae8b98c";
-            const issoId = "4ff4b827-bead-eb11-8236-000d3ae8b866";
             //Show NCAT Sections and fields when the user is in Transport Canada or ISSO business unit
-            if (userBusinessUnitId == transportCanadaId || userBusinessUnitId == issoId) {
+            if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                 formContext.ui.tabs.get("summary").sections.get("NCAT_main_section").setVisible(true);
                 formContext.getControl("ts_ncatfinalenforcementaction").setVisible(true);
                 NCATEnforcementRecommendationOnChange(eContext);
@@ -41,8 +38,8 @@
                     AcceptNCATRecommendationOnChange(eContext);
                 }
             }
-            //Show RATE Sections and fields when the user is in Transport Canada or ISSO business unit
-            if (userBusinessUnitId == transportCanadaId || userBusinessUnitId == avsecId) {
+            //Show RATE Sections and fields when the user is in Transport Canada or Aviation Security business unit
+            if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Aviation")) {
                 formContext.ui.tabs.get("summary").sections.get("RATE_main_section").setVisible(true);
                 formContext.getControl("ts_ratefinalenforcementaction").setVisible(true);
                 RATEEnforcementRecommendationOnChange(eContext);
@@ -71,18 +68,9 @@
         //If any of the ncat factors don't have a value, reset any fields that require an enforcement recommendation
         if (factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null) {
             formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(null);
-
             formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
-
-            formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("none");
-            formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
-            formContext.getControl("ts_ncatinspectorrecommendation").setVisible(false);
-
-            formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
-            formContext.getAttribute("ts_ncatenforcementjustification").setValue(null);
-            formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
-            
-            formContext.getControl("ts_acceptncatrecommendation").setVisible(false);
+            NCATHideProposedSection(eContext);
+            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
             return true;
         }
 
@@ -151,18 +139,9 @@
         //If any of the rate factors don't have a value, reset any fields that require an enforcement recommendation
         if (factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null) {
             formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
-
             formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
-
-            formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("none");
-            formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
-            formContext.getControl("ts_rateinspectorrecommendation").setVisible(false);
-
-            formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("none");
-            formContext.getAttribute("ts_rateenforcementjustification").setValue(null);
-            formContext.getControl("ts_rateenforcementjustification").setVisible(false);
-
-            formContext.getControl("ts_acceptraterecommendation").setVisible(false);
+            RATEHideProposedSection(eContext);
+            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
             return true;
         }
 
@@ -221,6 +200,10 @@
 
         //If they did not accept the NCAT recommendation
         if (acceptNCATRecommendation == ts_yesno.No) {
+            //Show NCAT Approving Manager
+            formContext.getControl("ts_ncatmanager").setVisible(true);
+            //Require NCAT Approving Manager (Will make it required when there are managers to choose)
+            //formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
             //Show Inspector Recommendation
             formContext.getControl("ts_ncatinspectorrecommendation").setVisible(true);
             //Require Inspector Recommendation
@@ -229,6 +212,8 @@
             formContext.getControl("ts_ncatenforcementjustification").setVisible(true);
             //Require Enforcement Justification
             formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("required");
+            //Clear final enforcement action, in case it was set before
+            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
 
             const adminRoleId = "ca432c33-29a1-eb11-b1ac-000d3ae8bbe0";
             const managerRoleId = "85e36d25-29f5-eb11-94ef-000d3af36036";
@@ -242,21 +227,12 @@
             });
             if (isAdminOrManager) formContext.ui.tabs.get("summary").sections.get("NCAT_manager_review").setVisible(true);
         } else {
-            //Clear Inspector Recommendation
-            formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
-            //Hide Inspector Recommendation
-            formContext.getControl("ts_ncatinspectorrecommendation").setVisible(false);
-            //Not Require Inspector Recommendation
-            formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("none");
-
-            //Clear Enforcement Justification
-            formContext.getAttribute("ts_ncatenforcementjustification").setValue(null);
-            //Hide Enforcement Justification
-            formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
-            //Not Require Enforcement Justification
-            formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
-            //Hide NCAT Manager Review section
-            formContext.ui.tabs.get("summary").sections.get("NCAT_manager_review").setVisible(false);
+            if (acceptNCATRecommendation == ts_yesno.Yes) {
+                //Set NCAT Final Enforcement Action to the Enforcement Recommendation
+                let enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(enforcementRecommendation);
+            }
+            NCATHideProposedSection(eContext);
         }
     }
 
@@ -266,6 +242,10 @@
 
         //If they did not accept the RATE recommendation
         if (acceptRATERecommendation == ts_yesno.No) {
+            //Show RATE Approving Manager
+            formContext.getControl("ts_ratemanager").setVisible(true);
+            //Require NCAT Approving Manager (Will make it required when there are managers to choose)
+            //formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
             //Show Inspector Recommendation
             formContext.getControl("ts_rateinspectorrecommendation").setVisible(true);
             //Require Inspector Recommendation
@@ -274,6 +254,8 @@
             formContext.getControl("ts_rateenforcementjustification").setVisible(true);
             //Require Enforcement Justification
             formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("required");
+            //Clear final enforcement action, in case it was set before
+            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
 
             const adminRoleId = "ca432c33-29a1-eb11-b1ac-000d3ae8bbe0";
             const managerRoleId = "85e36d25-29f5-eb11-94ef-000d3af36036";
@@ -287,21 +269,12 @@
             });
             if (isAdminOrManager) formContext.ui.tabs.get("summary").sections.get("RATE_manager_review").setVisible(true);
         } else {
-            //Clear Inspector Recommendation
-            formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
-            //Hide Inspector Recommendation
-            formContext.getControl("ts_rateinspectorrecommendation").setVisible(false);
-            //Not Require Inspector Recommendation
-            formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("none");
-
-            //Clear Enforcement Justification
-            formContext.getAttribute("ts_rateenforcementjustification").setValue(null);
-            //Hide Enforcement Justification
-            formContext.getControl("ts_rateenforcementjustification").setVisible(false);
-            //Not Require Enforcement Justification
-            formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("none");
-            //Hide RATE Manager Review section
-            formContext.ui.tabs.get("summary").sections.get("RATE_manager_review").setVisible(false);
+            if (acceptRATERecommendation == ts_yesno.Yes) {
+                //Set RATE Final Enforcement Action to the Enforcement Recommendation
+                let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(enforcementRecommendation);
+            }
+            RATEHideProposedSection(eContext);
         }
     }
 
@@ -338,6 +311,10 @@
         let NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
         let NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
 
+        //Reset NCAT Final Enforcement Action and any Manager fields
+        formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+        NCATHideManagerReviewSection(eContext);
+
         if (NCATInspectorRecommendation != null && NCATEnforcementRecommendation != null && NCATInspectorRecommendation == NCATEnforcementRecommendation) {
             if (lang == 1036) {
                 formContext.getControl("ts_ncatinspectorrecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_ncatenforcementrecommendation").getLabel());
@@ -355,6 +332,10 @@
         let RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
         let RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
 
+        //Reset RATE Final Enforcement Action and any Manager fields
+        formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+        RATEHideManagerReviewSection(eContext);
+
         if (RATEInspectorRecommendation != null && RATEEnforcementRecommendation != null && RATEInspectorRecommendation == RATEEnforcementRecommendation) {
             if (lang == 1036) {
                 formContext.getControl("ts_rateinspectorrecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_rateenforcementrecommendation").getLabel());
@@ -364,6 +345,179 @@
         } else {
             formContext.getControl("ts_rateinspectorrecommendation").clearNotification();
         }
+    }
+
+    export function NCATManagerDecisionOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        const NCATManagerDecision = formContext.getAttribute("ts_ncatmanagerdecision").getValue();
+
+        if (NCATManagerDecision == ts_ncatmanagerdecision.AcceptInspectorRecommendation) {
+            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(formContext.getAttribute("ts_ncatinspectorrecommendation").getValue());
+            formContext.getControl("ts_ncatmanageralternativerecommendation").setVisible(false);
+            formContext.getControl("ts_ncatmanageralternativerecommendation").clearNotification();
+            formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
+
+        } else if (NCATManagerDecision == ts_ncatmanagerdecision.AcceptNCATRecommendation) {
+            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(formContext.getAttribute("ts_ncatenforcementrecommendation").getValue());
+            formContext.getControl("ts_ncatmanageralternativerecommendation").setVisible(false);
+            formContext.getControl("ts_ncatmanageralternativerecommendation").clearNotification();
+            formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
+
+        } else if (NCATManagerDecision == ts_ncatmanagerdecision.ProvideAlternativeRecommendation) {
+            formContext.getControl("ts_ncatmanageralternativerecommendation").setVisible(true);
+            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+
+        } else {
+            formContext.getControl("ts_ncatmanageralternativerecommendation").setVisible(false);
+            formContext.getControl("ts_ncatmanageralternativerecommendation").clearNotification();
+            formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
+            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+        }
+    }
+
+    export function RATEManagerDecisionOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        const RATEManagerDecision = formContext.getAttribute("ts_ratemanagerdecision").getValue();
+
+        if (RATEManagerDecision == ts_ratemanagerdecision.AcceptInspectorRecommendation) {
+            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(formContext.getAttribute("ts_rateinspectorrecommendation").getValue());
+            formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(false);
+            formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
+
+        } else if (RATEManagerDecision == ts_ratemanagerdecision.AcceptRATERecommendation) {
+            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(formContext.getAttribute("ts_rateenforcementrecommendation").getValue());
+            formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(false);
+            formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
+
+        } else if (RATEManagerDecision == ts_ratemanagerdecision.ProvideAlternativeRecommendation) {
+            formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(true);
+            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+
+        } else {
+            formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(false);
+            formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
+            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+        }
+    }
+
+    export function NCATManagerAlternativeRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
+        let NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+        let NCATManagerAlternativeRecommendation = formContext.getAttribute("ts_ncatmanageralternativerecommendation").getValue();
+
+        formContext.getControl("ts_ncatmanageralternativerecommendation").clearNotification();
+
+        if (NCATManagerAlternativeRecommendation != null && NCATManagerAlternativeRecommendation == NCATInspectorRecommendation) {
+            if (lang == 1036) {
+                formContext.getControl("ts_ncatmanageralternativerecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_ncatinspectorrecommendation").getLabel());
+            } else {
+                formContext.getControl("ts_ncatmanageralternativerecommendation").setNotification("cannot match " + formContext.getControl("ts_ncatinspectorrecommendation").getLabel());
+            }
+            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+        } else if (NCATManagerAlternativeRecommendation != null && NCATManagerAlternativeRecommendation == NCATEnforcementRecommendation) {
+            if (lang == 1036) {
+                formContext.getControl("ts_ncatmanageralternativerecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_ncatenforcementrecommendation").getLabel());
+            } else {
+                formContext.getControl("ts_ncatmanageralternativerecommendation").setNotification("cannot match " + formContext.getControl("ts_ncatenforcementrecommendation").getLabel());
+            }
+            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+        } else {
+            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(formContext.getAttribute("ts_ncatmanageralternativerecommendation").getValue());
+        }
+    }
+
+    export function RATEManagerAlternativeRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
+        let RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+        let RATEManagerAlternativeRecommendation = formContext.getAttribute("ts_ratemanageralternativerecommendation").getValue();
+
+        formContext.getControl("ts_ratemanageralternativerecommendation").clearNotification();
+
+        if (RATEManagerAlternativeRecommendation != null && RATEManagerAlternativeRecommendation == RATEInspectorRecommendation) {
+            if (lang == 1036) {
+                formContext.getControl("ts_ratemanageralternativerecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_rateinspectorrecommendation").getLabel());
+            } else {
+                formContext.getControl("ts_ratemanageralternativerecommendation").setNotification("cannot match " + formContext.getControl("ts_rateinspectorrecommendation").getLabel());
+            }
+            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+        } else if (RATEManagerAlternativeRecommendation != null && RATEManagerAlternativeRecommendation == RATEEnforcementRecommendation) {
+            if (lang == 1036) {
+                formContext.getControl("ts_ratemanageralternativerecommendation").setNotification("ne peut pas correspondre " + formContext.getControl("ts_rateenforcementrecommendation").getLabel());
+            } else {
+                formContext.getControl("ts_ratemanageralternativerecommendation").setNotification("cannot match " + formContext.getControl("ts_rateenforcementrecommendation").getLabel());
+            }
+            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+        } else {
+            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(formContext.getAttribute("ts_ratemanageralternativerecommendation").getValue());
+        }
+    }
+
+    function NCATHideProposedSection(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+
+        formContext.getAttribute("ts_ncatmanager").setValue(null);
+        formContext.getAttribute("ts_ncatmanager").setRequiredLevel("none");
+        formContext.getControl("ts_ncatmanager").setVisible(false);
+
+        formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
+        formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("none");
+        formContext.getControl("ts_ncatinspectorrecommendation").setVisible(false);
+        formContext.getControl("ts_ncatinspectorrecommendation").clearNotification();
+
+        formContext.getAttribute("ts_ncatenforcementjustification").setValue(null);
+        formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
+        formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
+
+        NCATHideManagerReviewSection(eContext);
+    }
+
+    function NCATHideManagerReviewSection(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+
+        formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
+        formContext.getControl("ts_ncatmanagerdecision").setVisible(false);
+
+        formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
+        formContext.getControl("ts_ncatmanageralternativerecommendation").clearNotification();
+        formContext.getControl("ts_ncatmanageralternativerecommendation").setVisible(false);
+
+        formContext.getAttribute("ts_ncatmanagerenforcementjustification").setValue(null);
+        formContext.getControl("ts_ncatmanagerenforcementjustification").setVisible(false);
+    }
+
+    function RATEHideProposedSection(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+
+        formContext.getAttribute("ts_ratemanager").setValue(null);
+        formContext.getAttribute("ts_ratemanager").setRequiredLevel("none");
+        formContext.getControl("ts_ratemanager").setVisible(false);
+
+        formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
+        formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("none");
+        formContext.getControl("ts_rateinspectorrecommendation").setVisible(false);
+        formContext.getControl("ts_rateinspectorrecommendation").clearNotification();
+
+        formContext.getAttribute("ts_rateenforcementjustification").setValue(null);
+        formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("none");
+        formContext.getControl("ts_rateenforcementjustification").setVisible(false);
+
+        RATEHideManagerReviewSection(eContext);
+    }
+
+    function RATEHideManagerReviewSection(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+
+        formContext.getAttribute("ts_ratemanagerdecision").setValue(null);
+        formContext.getControl("ts_ratemanagerdecision").setVisible(false);
+
+        formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
+        formContext.getControl("ts_ratemanageralternativerecommendation").clearNotification();
+        formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(false);
+
+        formContext.getAttribute("ts_ratemanagerenforcementjustification").setValue(null);
+        formContext.getControl("ts_ratemanagerenforcementjustification").setVisible(false);
     }
 
     function setApprovingManagersViews(form: Form.ovs_finding.Main.Information): void {
@@ -383,10 +537,10 @@
                         const viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
 
                         //Approving managers in the same region as the case with the AvSec Business Unit
-                        const fetchXmlApprovingManagersNCAT = '<fetch distinct="false" mapping="logical"><entity name="systemuser"><attribute name="fullname"/><attribute name="territoryid"/><filter><condition attribute="territoryid" operator="eq" value="' + regionId + '" /></filter><link-entity name="systemuserroles" from="systemuserid" to="systemuserid" link-type="inner" intersect="true"><attribute name="roleid"/><filter><condition attribute="roleid" operator="eq" value="' + romManagerRoleId + '"/></filter></link-entity><link-entity name="businessunit" from="businessunitid" to="businessunitid"><filter><condition attribute="name" operator="like" value="Aviation%"/></filter></link-entity></entity></fetch>';
+                        const fetchXmlApprovingManagersNCAT = '<fetch distinct="false" mapping="logical"><entity name="systemuser"><attribute name="fullname"/><attribute name="territoryid"/><filter><condition attribute="territoryid" operator="eq" value="' + regionId + '" /></filter><link-entity name="systemuserroles" from="systemuserid" to="systemuserid" link-type="inner" intersect="true"><attribute name="roleid"/><filter><condition attribute="roleid" operator="eq" value="' + romManagerRoleId + '"/></filter></link-entity><link-entity name="businessunit" from="businessunitid" to="businessunitid"><filter><condition attribute="name" operator="like" value="Intermodal%"/></filter></link-entity></entity></fetch>';
 
                         //Approving managers in the same region as the case with the ISSO Business Unit
-                        const fetchXmlApprovingManagersRATE = '<fetch distinct="false" mapping="logical"><entity name="systemuser"><attribute name="fullname"/><attribute name="territoryid"/><filter><condition attribute="territoryid" operator="eq" value="' + regionId + '" /></filter><link-entity name="systemuserroles" from="systemuserid" to="systemuserid" link-type="inner" intersect="true"><attribute name="roleid"/><filter><condition attribute="roleid" operator="eq" value="' + romManagerRoleId + '"/></filter></link-entity><link-entity name="businessunit" from="businessunitid" to="businessunitid"><filter><condition attribute="name" operator="like" value="Intermodal%"/></filter></link-entity></entity></fetch>';
+                        const fetchXmlApprovingManagersRATE = '<fetch distinct="false" mapping="logical"><entity name="systemuser"><attribute name="fullname"/><attribute name="territoryid"/><filter><condition attribute="territoryid" operator="eq" value="' + regionId + '" /></filter><link-entity name="systemuserroles" from="systemuserid" to="systemuserid" link-type="inner" intersect="true"><attribute name="roleid"/><filter><condition attribute="roleid" operator="eq" value="' + romManagerRoleId + '"/></filter></link-entity><link-entity name="businessunit" from="businessunitid" to="businessunitid"><filter><condition attribute="name" operator="like" value="Aviation%"/></filter></link-entity></entity></fetch>';
                         const layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
 
                         form.getControl("ts_ncatmanager").addCustomView(viewIdApprovingManagerNCAT, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersNCAT, layoutXmlApprovingManagers, true);
