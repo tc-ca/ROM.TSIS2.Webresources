@@ -53,6 +53,8 @@
                 }
             }
         });
+
+        setApprovingManagersViews(formContext);
     }
     //If all NCAT Fields are set, calculate and set the recommended enforcement
     export async function NCATFieldOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<boolean> {
@@ -362,5 +364,37 @@
         } else {
             formContext.getControl("ts_rateinspectorrecommendation").clearNotification();
         }
+    }
+
+    function setApprovingManagersViews(form: Form.ovs_finding.Main.Information): void {
+        const romManagerRoleId = "9a6f5e85-84ae-42a9-a9cc-148426ecf05a";
+
+        //Get related Case region ID
+        let regionId;
+        Xrm.WebApi.retrieveRecord("ovs_finding", form.data.entity.getId(), "?$select=_ovs_caseid_value").then(
+            function success(result) {
+                Xrm.WebApi.retrieveRecord("incident", result._ovs_caseid_value, "?$select=_ovs_region_value").then(
+                    function success(result2) {
+                        regionId = result2._ovs_region_value;
+
+                        const viewIdApprovingManagerNCAT = '{1c259fee-0541-4cac-8d20-7b30ee397ca7}';
+                        const viewIdApprovingManagerRATE = '{1c259fee-0541-4cac-8d20-7b30ee394a73}';
+                        const entityNameApprovingManagers = "systemuser";
+                        const viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
+                        const fetchXmlApprovingManagers = '<fetch distinct="false" mapping="logical"><entity name="systemuser"><attribute name="fullname"/><attribute name="territoryid"/><filter><condition attribute="territoryid" operator="eq" value="' + regionId + '" /></filter><link-entity name="systemuserroles" from="systemuserid" to="systemuserid" link-type="inner" intersect="true"><attribute name="roleid"/><filter><condition attribute="roleid" operator="eq" value="' + romManagerRoleId + '"/></filter></link-entity></entity></fetch>';
+                        const layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
+
+                        form.getControl("ts_ncatmanager").addCustomView(viewIdApprovingManagerNCAT, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagers, layoutXmlApprovingManagers, true);
+                        form.getControl("ts_ratemanager").addCustomView(viewIdApprovingManagerRATE, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagers, layoutXmlApprovingManagers, true);
+                    },
+                    function (error) {
+                    }
+                );
+            },
+            function (error) {
+            }
+        );
+
+        
     }
 }

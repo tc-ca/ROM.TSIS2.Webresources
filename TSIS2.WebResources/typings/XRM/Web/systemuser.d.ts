@@ -232,6 +232,8 @@ interface SystemUser_Relationships {
   systemuser_bookableresource_UserId?: BookableResource_Result[] | null;
   systemuser_connections1?: Connection_Result[] | null;
   systemuser_connections2?: Connection_Result[] | null;
+  ts_ovs_Finding_NCATManager_SystemUser?: ovs_Finding_Result[] | null;
+  ts_ovs_Finding_RATEManager_SystemUser?: ovs_Finding_Result[] | null;
   user_accounts?: Account_Result[] | null;
   user_appointment?: Appointment_Result[] | null;
   user_bookableresource?: BookableResource_Result[] | null;
@@ -659,6 +661,8 @@ interface SystemUser_Expand {
   systemuser_bookableresource_UserId: WebExpand<SystemUser_Expand, BookableResource_Select, BookableResource_Filter, { systemuser_bookableresource_UserId: BookableResource_Result[] }>;
   systemuser_connections1: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections1: Connection_Result[] }>;
   systemuser_connections2: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections2: Connection_Result[] }>;
+  ts_ovs_Finding_NCATManager_SystemUser: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_NCATManager_SystemUser: ovs_Finding_Result[] }>;
+  ts_ovs_Finding_RATEManager_SystemUser: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_RATEManager_SystemUser: ovs_Finding_Result[] }>;
   user_accounts: WebExpand<SystemUser_Expand, Account_Select, Account_Filter, { user_accounts: Account_Result[] }>;
   user_appointment: WebExpand<SystemUser_Expand, Appointment_Select, Appointment_Filter, { user_appointment: Appointment_Result[] }>;
   user_bookableresource: WebExpand<SystemUser_Expand, BookableResource_Select, BookableResource_Filter, { user_bookableresource: BookableResource_Result[] }>;
@@ -864,6 +868,8 @@ interface SystemUser_RelatedMany {
   systemuser_bookableresource_UserId: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   systemuser_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   systemuser_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  ts_ovs_Finding_NCATManager_SystemUser: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_ovs_Finding_RATEManager_SystemUser: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   user_accounts: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   user_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   user_bookableresource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;

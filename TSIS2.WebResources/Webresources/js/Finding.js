@@ -89,6 +89,7 @@ var ROM;
                     }
                 }
             });
+            setApprovingManagersViews(formContext);
         }
         Finding.onLoad = onLoad;
         //If all NCAT Fields are set, calculate and set the recommended enforcement
@@ -133,7 +134,7 @@ var ROM;
                             factor5AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor5AssessmentRatingId, "?$select=ts_weight");
                             factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
                             factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
-                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq " + 717750000 /* NCAT */);
+                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq " + ts_assessmenttool.NCAT);
                             //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
                             return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
                                     var totalWeight = 0;
@@ -206,7 +207,7 @@ var ROM;
                             factor5AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor5AssessmentRatingId, "?$select=ts_weight");
                             factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
                             factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
-                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq " + 717750000 /* NCAT */);
+                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq " + ts_assessmenttool.NCAT);
                             //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
                             return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
                                     var totalWeight = 0;
@@ -389,5 +390,25 @@ var ROM;
             }
         }
         Finding.RATEInspectorRecommendationOnChange = RATEInspectorRecommendationOnChange;
+        function setApprovingManagersViews(form) {
+            var romManagerRoleId = "9a6f5e85-84ae-42a9-a9cc-148426ecf05a";
+            //Get related Case region ID
+            var regionId;
+            Xrm.WebApi.retrieveRecord("ovs_finding", form.data.entity.getId(), "?$select=_ovs_caseid_value").then(function success(result) {
+                Xrm.WebApi.retrieveRecord("incident", result._ovs_caseid_value, "?$select=_ovs_region_value").then(function success(result2) {
+                    regionId = result2._ovs_region_value;
+                    var viewIdApprovingManagerNCAT = '{1c259fee-0541-4cac-8d20-7b30ee397ca7}';
+                    var viewIdApprovingManagerRATE = '{1c259fee-0541-4cac-8d20-7b30ee394a73}';
+                    var entityNameApprovingManagers = "systemuser";
+                    var viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
+                    var fetchXmlApprovingManagers = '<fetch distinct="false" mapping="logical"><entity name="systemuser"><attribute name="fullname"/><attribute name="territoryid"/><filter><condition attribute="territoryid" operator="eq" value="' + regionId + '" /></filter><link-entity name="systemuserroles" from="systemuserid" to="systemuserid" link-type="inner" intersect="true"><attribute name="roleid"/><filter><condition attribute="roleid" operator="eq" value="' + romManagerRoleId + '"/></filter></link-entity></entity></fetch>';
+                    var layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
+                    form.getControl("ts_ncatmanager").addCustomView(viewIdApprovingManagerNCAT, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagers, layoutXmlApprovingManagers, true);
+                    form.getControl("ts_ratemanager").addCustomView(viewIdApprovingManagerRATE, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagers, layoutXmlApprovingManagers, true);
+                }, function (error) {
+                });
+            }, function (error) {
+            });
+        }
     })(Finding = ROM.Finding || (ROM.Finding = {}));
 })(ROM || (ROM = {}));
