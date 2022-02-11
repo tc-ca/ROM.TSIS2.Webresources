@@ -6,19 +6,19 @@ var markCompleteConfirmationTextLocalized;
 var markCompleteConfirmationTitleLocalized;
 
 if (lang == 1036) {
-    markCompleteValidationTextLocalized = "Toutes les questions requises du sondage doivent être répondues avant que le sondage puissent être marqué comme Terminé.";
-    markCompleteValidationTitleLocalized = "Sondage Incomplet";
-    markCompleteConfirmationTextLocalized = "En cliquant sur OK, le statut du sondage passera à Terminé et les réponses seront enregistrées.";
-    markCompleteConfirmationTitleLocalized = "Confirmation - Sondage complété";
+    markCompleteValidationTextLocalized = "Toutes les questions requises du questionnaire doivent être répondues avant que le questionnaire puissent être marqué comme Terminé.";
+    markCompleteValidationTitleLocalized = "Questionnaire Incomplet";
+    markCompleteConfirmationTextLocalized = "En cliquant sur OK, le statut du questionnaire passera à Terminé et les réponses seront enregistrées.";
+    markCompleteConfirmationTitleLocalized = "Confirmation - Questionnaire complété";
     workOrderServiceTaskDetailsLocalized = "Détails de la tâche du service d'ordre de travail";
     workOrderServiceTaskLocalized = "Tâche de service de l'ordre de travail";
     workOrderDetailsLocalized = "Détails de l'ordre de travail";
     
 } else {
-    markCompleteValidationTextLocalized = "All required questions in the survey must be answered before the survey can be Marked Complete.";
-    markCompleteValidationTitleLocalized = "Survey Incomplete";
-    markCompleteConfirmationTextLocalized = "By clicking OK, the survey status will change to Complete and the survey answers will be saved.";
-    markCompleteConfirmationTitleLocalized = "Confirmation - Survey Complete";
+    markCompleteValidationTextLocalized = "All required questions in the questionnaire must be answered before the questionnaire can be Marked Complete.";
+    markCompleteValidationTitleLocalized = "Questionnaire Incomplete";
+    markCompleteConfirmationTextLocalized = "By clicking OK, the questionnaire status will change to Complete and the questionnaire answers will be saved.";
+    markCompleteConfirmationTitleLocalized = "Confirmation - Questionnaire Complete";
     workOrderServiceTaskDetailsLocalized = "Work Order Service Task Details";
     workOrderServiceTaskLocalized = "Work Order Service Task";
     workOrderDetailsLocalized = "Work Order Details";
