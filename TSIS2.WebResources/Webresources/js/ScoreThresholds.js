@@ -61,21 +61,28 @@ var ROM;
             var assessmentTool = Form.getAttribute("ts_assessmenttool").getValue();
             var ncatEnforcementAction = Form.getControl("ts_ncatenforcementaction");
             var rateEnforcementAction = Form.getControl("ts_rateenforcementaction");
+            var rateEnforcementHistory = Form.getControl("ts_rateenforcementhistory");
             var ncatEnforcementActionAttribute = Form.getAttribute("ts_ncatenforcementaction");
             var rateEnforcementActionAttribute = Form.getAttribute("ts_rateenforcementaction");
-            //For NCAT toll set visible only NCAT Enforcement Action
+            var rateEnforcementHistoryAttribute = Form.getAttribute("ts_rateenforcementhistory");
+            //For NCAT tool set visible only NCAT Enforcement Action
             if (assessmentTool == 717750000 /* NCAT */) {
                 ncatEnforcementAction.setVisible(true);
                 ncatEnforcementActionAttribute.setRequiredLevel("required");
                 rateEnforcementAction.setVisible(false);
                 rateEnforcementActionAttribute.setRequiredLevel("none");
+                rateEnforcementHistory.setVisible(false);
+                rateEnforcementHistoryAttribute.setRequiredLevel("none");
                 if (rateEnforcementActionAttribute.getValue() != null)
                     rateEnforcementActionAttribute.setValue(null);
             }
-            //For RATE toll set visible only RATE Enforcement Action
+            //For RATE tool set visible only RATE Enforcement Action
             else {
                 rateEnforcementAction.setVisible(true);
+                rateEnforcementAction.setVisible(true);
                 rateEnforcementActionAttribute.setRequiredLevel("required");
+                rateEnforcementHistory.setVisible(true);
+                rateEnforcementHistoryAttribute.setRequiredLevel("required");
                 ncatEnforcementAction.setVisible(false);
                 ncatEnforcementActionAttribute.setRequiredLevel("none");
                 if (ncatEnforcementActionAttribute.getValue() != null)

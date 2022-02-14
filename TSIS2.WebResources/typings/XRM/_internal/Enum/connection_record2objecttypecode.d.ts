@@ -122,4 +122,5 @@ declare const enum connection_record2objecttypecode {
   SequenceTarget = 10700,
   AssignmentRule = 10704,
   AssignmentMap = 10707,
+  Suggestion = 10752,
 }

@@ -60,21 +60,28 @@
         const assessmentTool = Form.getAttribute("ts_assessmenttool").getValue();
         const ncatEnforcementAction = Form.getControl("ts_ncatenforcementaction");
         const rateEnforcementAction = Form.getControl("ts_rateenforcementaction");
+        const rateEnforcementHistory = Form.getControl("ts_rateenforcementhistory");
         const ncatEnforcementActionAttribute = Form.getAttribute("ts_ncatenforcementaction");
         const rateEnforcementActionAttribute = Form.getAttribute("ts_rateenforcementaction");
-        //For NCAT toll set visible only NCAT Enforcement Action
+        const rateEnforcementHistoryAttribute = Form.getAttribute("ts_rateenforcementhistory");
+        //For NCAT tool set visible only NCAT Enforcement Action
         if (assessmentTool == ts_assessmenttool.NCAT) {
             ncatEnforcementAction.setVisible(true);
             ncatEnforcementActionAttribute.setRequiredLevel("required");
             rateEnforcementAction.setVisible(false);
             rateEnforcementActionAttribute.setRequiredLevel("none");
+            rateEnforcementHistory.setVisible(false);
+            rateEnforcementHistoryAttribute.setRequiredLevel("none")
             if (rateEnforcementActionAttribute.getValue() != null)
                 rateEnforcementActionAttribute.setValue(null);
         }
-        //For RATE toll set visible only RATE Enforcement Action
+        //For RATE tool set visible only RATE Enforcement Action
         else {
             rateEnforcementAction.setVisible(true);
+            rateEnforcementAction.setVisible(true);
             rateEnforcementActionAttribute.setRequiredLevel("required");
+            rateEnforcementHistory.setVisible(true);
+            rateEnforcementHistoryAttribute.setRequiredLevel("required");
             ncatEnforcementAction.setVisible(false);
             ncatEnforcementActionAttribute.setRequiredLevel("none");
             if (ncatEnforcementActionAttribute.getValue() != null)

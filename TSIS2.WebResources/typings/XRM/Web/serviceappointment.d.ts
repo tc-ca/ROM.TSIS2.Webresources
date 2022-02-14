@@ -140,6 +140,7 @@ interface ServiceAppointment extends ServiceAppointment_Base, ServiceAppointment
   regardingobjectid_msdyn_rtv_serviceappointment_bind$msdyn_rtvs?: string | null;
   regardingobjectid_msdyn_rtvproduct_serviceappointment_bind$msdyn_rtvproducts?: string | null;
   regardingobjectid_msdyn_rtvsubstatus_serviceappointment_bind$msdyn_rtvsubstatuses?: string | null;
+  regardingobjectid_msdyn_salessuggestion_serviceappointment_bind$msdyn_salessuggestions?: string | null;
   regardingobjectid_msdyn_shipvia_serviceappointment_bind$msdyn_shipvias?: string | null;
   regardingobjectid_msdyn_systemuserschedulersetting_serviceappointment_bind$msdyn_systemuserschedulersettinges?: string | null;
   regardingobjectid_msdyn_timegroup_serviceappointment_bind$msdyn_timegroups?: string | null;
