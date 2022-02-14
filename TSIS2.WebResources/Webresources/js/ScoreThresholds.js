@@ -35,8 +35,10 @@ var ROM;
                     Form.getControl("ts_maximum").clearNotification("errorMaximum");
                     Form.getControl("ts_minimum").setNotification(message, "errorMinimum");
                 }
-                else
+                else {
                     Form.getControl("ts_minimum").clearNotification("errorMinimum");
+                    Form.getControl("ts_maximum").clearNotification("errorMaximum");
+                }
             checkScoreIntersection(Form);
         }
         ScoreThresholds.minimumOnChange = minimumOnChange;
@@ -51,8 +53,10 @@ var ROM;
                     Form.getControl("ts_maximum").setNotification(message, "errorMaximum");
                     Form.getControl("ts_minimum").clearNotification("errorMinimum");
                 }
-                else
+                else {
+                    Form.getControl("ts_minimum").clearNotification("errorMinimum");
                     Form.getControl("ts_maximum").clearNotification("errorMaximum");
+                }
             checkScoreIntersection(Form);
         }
         ScoreThresholds.maximumOnChange = maximumOnChange;
@@ -73,8 +77,8 @@ var ROM;
                 rateEnforcementActionAttribute.setRequiredLevel("none");
                 rateEnforcementHistory.setVisible(false);
                 rateEnforcementHistoryAttribute.setRequiredLevel("none");
-                if (rateEnforcementActionAttribute.getValue() != null)
-                    rateEnforcementActionAttribute.setValue(null);
+                rateEnforcementHistoryAttribute.setValue(null);
+                rateEnforcementActionAttribute.setValue(null);
             }
             //For RATE tool set visible only RATE Enforcement Action
             else {
@@ -85,8 +89,7 @@ var ROM;
                 rateEnforcementHistoryAttribute.setRequiredLevel("required");
                 ncatEnforcementAction.setVisible(false);
                 ncatEnforcementActionAttribute.setRequiredLevel("none");
-                if (ncatEnforcementActionAttribute.getValue() != null)
-                    ncatEnforcementActionAttribute.setValue(null);
+                ncatEnforcementActionAttribute.setValue(null);
             }
         }
         ScoreThresholds.assessmentToolOnChange = assessmentToolOnChange;
@@ -94,10 +97,13 @@ var ROM;
             var minimum = Form.getAttribute("ts_minimum").getValue();
             var maximum = Form.getAttribute("ts_maximum").getValue();
             var assessmentTool = Form.getAttribute("ts_assessmenttool").getValue();
+            var enforcementHistory = Form.getAttribute("ts_rateenforcementhistory").getValue();
             var scoreThresholdId = Form.data.entity.getId().replace(/[{}]/g, "").toLowerCase();
             var messageOverlap = Xrm.Utility.getResourceString("ts_/resx/ScoreThresholds", "OverlapMessage");
             var messageScoreFrom = Xrm.Utility.getResourceString("ts_/resx/ScoreThresholds", "ScoreFromMessage");
             var messageTo = Xrm.Utility.getResourceString("ts_/resx/ScoreThresholds", "toMessage");
+            //Filter by enforcement history if the assessment tool is RATE
+            var enforcementHistoryFetchXMLFilter = (assessmentTool == 717750001 /* RATE */) ? "<condition attribute='ts_rateenforcementhistory' operator = 'eq' value = '" + enforcementHistory + "'/>" : "";
             var fetchXml = [
                 "<fetch>",
                 "<entity name='ts_assessmentscorethredshots'>",
@@ -108,12 +114,13 @@ var ROM;
                 "<order attribute='ts_minimum' descending = 'false'/>",
                 "<filter type='and'>",
                 "<condition attribute='ts_assessmenttool' operator = 'eq' value = '" + assessmentTool + "'/>",
+                enforcementHistoryFetchXMLFilter,
                 "</filter>",
                 "</entity>",
                 "</fetch>"
             ].join("");
             fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
-            //Retrieve all Score Thresholds for current Assessment Tool
+            //Retrieve all Score Thresholds for current Assessment Tool and Eforcement History
             //Check for each Score Thresholds if there is any overlap with another one
             //Display error message
             Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", fetchXml)
