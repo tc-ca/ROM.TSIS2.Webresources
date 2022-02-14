@@ -5,9 +5,10 @@
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         //If Observation, keep everything hidden
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
-        let findingType = formContext.getAttribute("ts_findingtype").getValue();
-
+        let findingType = formContext.getAttribute("ts_findingtype").getValue();              
         if (findingType != ts_findingtype.Noncompliance) return;
+       
+        formContext.getAttribute("ts_ncatfactorguide").setValue(false);
 
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
@@ -30,6 +31,7 @@
             //Show NCAT Sections and fields when the user is in Transport Canada or ISSO business unit
             if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                 formContext.ui.tabs.get("summary").sections.get("NCAT_main_section").setVisible(true);
+                formContext.ui.tabs.get("summary").sections.get("summary_ncatfactorguide").setVisible(true);
                 formContext.getControl("ts_ncatfinalenforcementaction").setVisible(true);
                 NCATEnforcementRecommendationOnChange(eContext);
                 //If they did not accept the ncat recommendation, show proposal sections and fields
@@ -123,7 +125,16 @@
 
         return true;
     }
-
+    //Show/hide NCAT Factor Guide
+    export function NCATFactorGuideOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let NCATFactorGuide = formContext.getAttribute("ts_ncatfactorguide").getValue();
+        let webResourceNCATFactorGuide = formContext.getControl("WebResource_NCATFactorGuide");
+        if (NCATFactorGuide)
+            webResourceNCATFactorGuide.setVisible(true);
+        else
+            webResourceNCATFactorGuide.setVisible(false);
+    }
     //If all RATE Fields are set, calculate and set the recommended enforcement
     export async function RATEFieldOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<boolean> {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();

@@ -22,6 +22,7 @@ interface ovs_Finding_Base extends WebEntity {
   ts_justificationof?: string | null;
   ts_ncatenforcementjustification?: string | null;
   ts_ncatenforcementrecommendation?: ts_ncatrecommendations | null;
+  ts_ncatfactorguide?: boolean | null;
   ts_ncatfinalenforcementaction?: ts_ncatrecommendations | null;
   ts_ncatinspectorrecommendation?: ts_ncatrecommendations | null;
   ts_ncatmanageralternativerecommendation?: ts_ncatrecommendations | null;
@@ -119,6 +120,7 @@ interface ovs_Finding_Select {
   ts_ncateconomicbenefit_guid: WebAttribute<ovs_Finding_Select, { ts_ncateconomicbenefit_guid: string | null }, { ts_ncateconomicbenefit_formatted?: string }>;
   ts_ncatenforcementjustification: WebAttribute<ovs_Finding_Select, { ts_ncatenforcementjustification: string | null }, {  }>;
   ts_ncatenforcementrecommendation: WebAttribute<ovs_Finding_Select, { ts_ncatenforcementrecommendation: ts_ncatrecommendations | null }, { ts_ncatenforcementrecommendation_formatted?: string }>;
+  ts_ncatfactorguide: WebAttribute<ovs_Finding_Select, { ts_ncatfactorguide: boolean | null }, {  }>;
   ts_ncatfinalenforcementaction: WebAttribute<ovs_Finding_Select, { ts_ncatfinalenforcementaction: ts_ncatrecommendations | null }, { ts_ncatfinalenforcementaction_formatted?: string }>;
   ts_ncatinspectorrecommendation: WebAttribute<ovs_Finding_Select, { ts_ncatinspectorrecommendation: ts_ncatrecommendations | null }, { ts_ncatinspectorrecommendation_formatted?: string }>;
   ts_ncatintentionality_guid: WebAttribute<ovs_Finding_Select, { ts_ncatintentionality_guid: string | null }, { ts_ncatintentionality_formatted?: string }>;
@@ -192,6 +194,7 @@ interface ovs_Finding_Filter {
   ts_ncateconomicbenefit_guid: XQW.Guid;
   ts_ncatenforcementjustification: string;
   ts_ncatenforcementrecommendation: ts_ncatrecommendations;
+  ts_ncatfactorguide: boolean;
   ts_ncatfinalenforcementaction: ts_ncatrecommendations;
   ts_ncatinspectorrecommendation: ts_ncatrecommendations;
   ts_ncatintentionality_guid: XQW.Guid;

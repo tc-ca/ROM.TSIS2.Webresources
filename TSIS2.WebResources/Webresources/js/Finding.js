@@ -46,6 +46,7 @@ var ROM;
             var findingType = formContext.getAttribute("ts_findingtype").getValue();
             if (findingType != 717750002 /* Noncompliance */)
                 return;
+            formContext.getAttribute("ts_ncatfactorguide").setValue(false);
             var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
             var currentUserBusinessUnitFetchXML = [
                 "<fetch top='50'>",
@@ -66,6 +67,7 @@ var ROM;
                 //Show NCAT Sections and fields when the user is in Transport Canada or ISSO business unit
                 if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                     formContext.ui.tabs.get("summary").sections.get("NCAT_main_section").setVisible(true);
+                    formContext.ui.tabs.get("summary").sections.get("summary_ncatfactorguide").setVisible(true);
                     formContext.getControl("ts_ncatfinalenforcementaction").setVisible(true);
                     NCATEnforcementRecommendationOnChange(eContext);
                     //If they did not accept the ncat recommendation, show proposal sections and fields
@@ -157,6 +159,17 @@ var ROM;
             });
         }
         Finding.NCATFieldOnChange = NCATFieldOnChange;
+        //Show/hide NCAT Factor Guide
+        function NCATFactorGuideOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var NCATFactorGuide = formContext.getAttribute("ts_ncatfactorguide").getValue();
+            var webResourceNCATFactorGuide = formContext.getControl("WebResource_NCATFactorGuide");
+            if (NCATFactorGuide)
+                webResourceNCATFactorGuide.setVisible(true);
+            else
+                webResourceNCATFactorGuide.setVisible(false);
+        }
+        Finding.NCATFactorGuideOnChange = NCATFactorGuideOnChange;
         //If all RATE Fields are set, calculate and set the recommended enforcement
         function RATEFieldOnChange(eContext) {
             return __awaiter(this, void 0, void 0, function () {
