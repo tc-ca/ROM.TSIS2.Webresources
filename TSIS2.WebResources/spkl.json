@@ -165,9 +165,14 @@
                     "description": "ROM TSIS 2.0 Work Order Service Task Form Scripts"
                 },
                 {
-                    "uniquename": "ovs_/js/WorkOrderServiceTaskRibbon.js",
-                    "file": "js\\WorkOrderServiceTaskRibbon.js",
-                    "description": "ROM TSIS 2.0 Work Order Service Task Ribbon Scripts"
+                  "uniquename": "ovs_/js/WorkOrderServiceTaskRibbon.js",
+                  "file": "js\\WorkOrderServiceTaskRibbon.js",
+                  "description": "ROM TSIS 2.0 Work Order Service Task Ribbon Scripts"
+                },
+                {
+                  "uniquename": "ovs_/js/ScoreThresholds.js",
+                  "file": "js\\ScoreThresholds.js",
+                  "description": "ROM TSIS 2.0 Assessment Score Threshold Scripts"
                 },
                 {
                     "uniquename": "ovs_/js/Finding.js",
