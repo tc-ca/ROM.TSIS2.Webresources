@@ -8,6 +8,7 @@ declare namespace Form.ovs_finding.Main {
         get(name: "RATE_main_section"): Xrm.PageSection;
         get(name: "RATE_manager_review"): Xrm.PageSection;
         get(name: "RATE_proposed_section"): Xrm.PageSection;
+        get(name: "summary_ncatfactorguide"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -49,6 +50,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncateconomicbenefit"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_ncatenforcementjustification"): Xrm.Attribute<string>;
       get(name: "ts_ncatenforcementrecommendation"): Xrm.OptionSetAttribute<ts_ncatrecommendations>;
+      get(name: "ts_ncatfactorguide"): Xrm.Attribute<any>;
       get(name: "ts_ncatfinalenforcementaction"): Xrm.OptionSetAttribute<ts_ncatrecommendations>;
       get(name: "ts_ncatinspectorrecommendation"): Xrm.OptionSetAttribute<ts_ncatrecommendations>;
       get(name: "ts_ncatintentionality"): Xrm.LookupAttribute<"ts_assessmentrating">;
@@ -82,6 +84,7 @@ declare namespace Form.ovs_finding.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
       get(name: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
+      get(name: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
       get(name: "createdon"): Xrm.DateControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ovs_caseid"): Xrm.LookupControl<"incident">;
@@ -101,6 +104,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncateconomicbenefit"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_ncatenforcementjustification"): Xrm.StringControl;
       get(name: "ts_ncatenforcementrecommendation"): Xrm.OptionSetControl<ts_ncatrecommendations>;
+      get(name: "ts_ncatfactorguide"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_ncatfinalenforcementaction"): Xrm.OptionSetControl<ts_ncatrecommendations>;
       get(name: "ts_ncatinspectorrecommendation"): Xrm.OptionSetControl<ts_ncatrecommendations>;
       get(name: "ts_ncatintentionality"): Xrm.LookupControl<"ts_assessmentrating">;
@@ -160,6 +164,7 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_ncateconomicbenefit"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_ncatenforcementjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_ncatenforcementrecommendation"): Xrm.OptionSetAttribute<ts_ncatrecommendations>;
+    getAttribute(attributeName: "ts_ncatfactorguide"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_ncatfinalenforcementaction"): Xrm.OptionSetAttribute<ts_ncatrecommendations>;
     getAttribute(attributeName: "ts_ncatinspectorrecommendation"): Xrm.OptionSetAttribute<ts_ncatrecommendations>;
     getAttribute(attributeName: "ts_ncatintentionality"): Xrm.LookupAttribute<"ts_assessmentrating">;
@@ -188,6 +193,7 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
     getControl(controlName: "createdon"): Xrm.DateControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ovs_caseid"): Xrm.LookupControl<"incident">;
@@ -207,6 +213,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_ncateconomicbenefit"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_ncatenforcementjustification"): Xrm.StringControl;
     getControl(controlName: "ts_ncatenforcementrecommendation"): Xrm.OptionSetControl<ts_ncatrecommendations>;
+    getControl(controlName: "ts_ncatfactorguide"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_ncatfinalenforcementaction"): Xrm.OptionSetControl<ts_ncatrecommendations>;
     getControl(controlName: "ts_ncatinspectorrecommendation"): Xrm.OptionSetControl<ts_ncatrecommendations>;
     getControl(controlName: "ts_ncatintentionality"): Xrm.LookupControl<"ts_assessmentrating">;
