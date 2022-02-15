@@ -88,6 +88,7 @@ var ROM;
                     }
                 }
             });
+            RATESpecificComplianceHistoryOnChange(eContext);
             setApprovingManagersViews(formContext);
         }
         Finding.onLoad = onLoad;
@@ -173,20 +174,22 @@ var ROM;
         //If all RATE Fields are set, calculate and set the recommended enforcement
         function RATEFieldOnChange(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, factor1Value, factor2Value, factor3Value, factor4Value, factor5Value, factor6Value, factor7Value, factor1AssessmentRatingId, factor2AssessmentRatingId, factor3AssessmentRatingId, factor4AssessmentRatingId, factor5AssessmentRatingId, factor6AssessmentRatingId, factor7AssessmentRatingId, factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise;
+                var formContext, rateSpecificComplianceHistory, factor1Value, factor2Value, factor3Value, factor4Value, factor5Value, factor6Value, factor7Value, factor8Value, factor1AssessmentRatingId, factor2AssessmentRatingId, factor3AssessmentRatingId, factor4AssessmentRatingId, factor5AssessmentRatingId, factor6AssessmentRatingId, factor7AssessmentRatingId, factor8AssessmentRatingId, factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, factor8AssessmentRatingPromise, enforcementHistory, thresholdsPromise;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             formContext = eContext.getFormContext();
-                            factor1Value = formContext.getAttribute("ts_rateactualorpotentialharm").getValue();
-                            factor2Value = formContext.getAttribute("ts_ratecompliancehistory").getValue();
-                            factor3Value = formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue();
-                            factor4Value = formContext.getAttribute("ts_ratedetectionofnoncompliances").getValue();
-                            factor5Value = formContext.getAttribute("ts_rateeconomicbenefit").getValue();
+                            rateSpecificComplianceHistory = formContext.getAttribute("ts_ratespecificcompliancehistory").getValue();
+                            factor1Value = formContext.getAttribute("ts_rategeneralcompliancehistory").getValue();
+                            factor2Value = formContext.getAttribute("ts_rateactualorpotentialharm").getValue();
+                            factor3Value = formContext.getAttribute("ts_rateresponsibility").getValue();
+                            factor4Value = formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").getValue();
+                            factor5Value = formContext.getAttribute("ts_ratepreventingrecurrence").getValue();
                             factor6Value = formContext.getAttribute("ts_rateintentionality").getValue();
-                            factor7Value = formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").getValue();
+                            factor7Value = formContext.getAttribute("ts_rateeconomicbenefit").getValue();
+                            factor8Value = formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue();
                             //If any of the rate factors don't have a value, reset any fields that require an enforcement recommendation
-                            if (factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null) {
+                            if (rateSpecificComplianceHistory == null || factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null || factor8Value == null) {
                                 formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
                                 formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
                                 RATEHideProposedSection(eContext);
@@ -200,6 +203,7 @@ var ROM;
                             factor5AssessmentRatingId = factor5Value[0].id;
                             factor6AssessmentRatingId = factor6Value[0].id;
                             factor7AssessmentRatingId = factor7Value[0].id;
+                            factor8AssessmentRatingId = factor8Value[0].id;
                             factor1AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor1AssessmentRatingId, "?$select=ts_weight");
                             factor2AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor2AssessmentRatingId, "?$select=ts_weight");
                             factor3AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor3AssessmentRatingId, "?$select=ts_weight");
@@ -207,21 +211,25 @@ var ROM;
                             factor5AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor5AssessmentRatingId, "?$select=ts_weight");
                             factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
                             factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
-                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq " + 717750000 /* NCAT */);
+                            factor8AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor8AssessmentRatingId, "?$select=ts_weight");
+                            enforcementHistory = formContext.getAttribute("ts_ratespecificenforcementhistory").getValue();
+                            if (enforcementHistory == null)
+                                enforcementHistory = 717750000 /* Nil */;
+                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_rateenforcementaction&$filter=ts_assessmenttool eq " + 717750001 /* RATE */ + " and ts_rateenforcementhistory eq " + enforcementHistory);
                             //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
-                            return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
+                            return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, factor8AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
                                     var totalWeight = 0;
-                                    for (var i = 0; i < 7; i++) { //The first 7 are the assessment ratings
+                                    for (var i = 0; i < 8; i++) { //The first 8 are the assessment ratings
                                         totalWeight += factorPromises[i].ts_weight;
                                     }
                                     var enforcementResponseChoiceNumber = null;
                                     //Loop through all the thresholds, if the total weight is between a min and max, set its enforcement action to the enforcement recommendation
-                                    for (var _i = 0, _a = factorPromises[7].entities; _i < _a.length; _i++) {
+                                    for (var _i = 0, _a = factorPromises[8].entities; _i < _a.length; _i++) {
                                         var threshold = _a[_i];
                                         var min = threshold.ts_minimum;
                                         var max = threshold.ts_maximum;
                                         if (totalWeight >= min && totalWeight <= max) {
-                                            enforcementResponseChoiceNumber = threshold.ts_ncatenforcementaction;
+                                            enforcementResponseChoiceNumber = threshold.ts_rateenforcementaction;
                                             break;
                                         }
                                     }
@@ -372,6 +380,18 @@ var ROM;
             }
         }
         Finding.NCATInspectorRecommendationOnChange = NCATInspectorRecommendationOnChange;
+        function RATESpecificComplianceHistoryOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var specificComplianceHistory = formContext.getAttribute("ts_ratespecificcompliancehistory").getValue();
+            if (specificComplianceHistory != null && specificComplianceHistory != 717750000 /* _0 */) {
+                formContext.getControl("ts_ratespecificenforcementhistory").setVisible(true);
+            }
+            else {
+                formContext.getAttribute("ts_ratespecificenforcementhistory").setValue(null);
+                formContext.getControl("ts_ratespecificenforcementhistory").setVisible(false);
+            }
+        }
+        Finding.RATESpecificComplianceHistoryOnChange = RATESpecificComplianceHistoryOnChange;
         function RATEInspectorRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();

@@ -6,6 +6,8 @@
         const rateEnforcementAction = Form.getControl("ts_rateenforcementaction");
         const ncatEnforcementActionAttribute = Form.getAttribute("ts_ncatenforcementaction");
         const rateEnforcementActionAttribute = Form.getAttribute("ts_rateenforcementaction");
+        const rateEnforcementHistory = Form.getControl("ts_rateenforcementhistory");
+        const rateEnforcementHistoryAttribute = Form.getAttribute("ts_rateenforcementhistory");
         //If NCAT Assessment Tool set required for NCAT Enforcement Action
         if (assessmentTool != null) {
             if (assessmentTool == ts_assessmenttool.NCAT) {
@@ -16,6 +18,8 @@
             else {
                 rateEnforcementAction.setVisible(true);
                 rateEnforcementActionAttribute.setRequiredLevel("required");
+                rateEnforcementHistory.setVisible(true);
+                rateEnforcementHistoryAttribute.setRequiredLevel("required");
             }
         }
     }
@@ -63,9 +67,9 @@
         const assessmentTool = Form.getAttribute("ts_assessmenttool").getValue();
         const ncatEnforcementAction = Form.getControl("ts_ncatenforcementaction");
         const rateEnforcementAction = Form.getControl("ts_rateenforcementaction");
-        const rateEnforcementHistory = Form.getControl("ts_rateenforcementhistory");
         const ncatEnforcementActionAttribute = Form.getAttribute("ts_ncatenforcementaction");
         const rateEnforcementActionAttribute = Form.getAttribute("ts_rateenforcementaction");
+        const rateEnforcementHistory = Form.getControl("ts_rateenforcementhistory");
         const rateEnforcementHistoryAttribute = Form.getAttribute("ts_rateenforcementhistory");
         //For NCAT tool set visible only NCAT Enforcement Action
         if (assessmentTool == ts_assessmenttool.NCAT) {

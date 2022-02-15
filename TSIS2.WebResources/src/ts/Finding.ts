@@ -52,7 +52,7 @@
                 }
             }
         });
-
+        RATESpecificComplianceHistoryOnChange(eContext);
         setApprovingManagersViews(formContext);
     }
     //If all NCAT Fields are set, calculate and set the recommended enforcement
@@ -139,16 +139,18 @@
     export async function RATEFieldOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<boolean> {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
-        let factor1Value = formContext.getAttribute("ts_rateactualorpotentialharm").getValue();
-        let factor2Value = formContext.getAttribute("ts_ratecompliancehistory").getValue();
-        let factor3Value = formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue();
-        let factor4Value = formContext.getAttribute("ts_ratedetectionofnoncompliances").getValue();
-        let factor5Value = formContext.getAttribute("ts_rateeconomicbenefit").getValue();
+        let rateSpecificComplianceHistory = formContext.getAttribute("ts_ratespecificcompliancehistory").getValue();
+        let factor1Value = formContext.getAttribute("ts_rategeneralcompliancehistory").getValue();
+        let factor2Value = formContext.getAttribute("ts_rateactualorpotentialharm").getValue();
+        let factor3Value = formContext.getAttribute("ts_rateresponsibility").getValue();
+        let factor4Value = formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").getValue();
+        let factor5Value = formContext.getAttribute("ts_ratepreventingrecurrence").getValue();
         let factor6Value = formContext.getAttribute("ts_rateintentionality").getValue();
-        let factor7Value = formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").getValue();
+        let factor7Value = formContext.getAttribute("ts_rateeconomicbenefit").getValue();
+        let factor8Value = formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue();
 
         //If any of the rate factors don't have a value, reset any fields that require an enforcement recommendation
-        if (factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null) {
+        if (rateSpecificComplianceHistory == null || factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null || factor8Value == null) {
             formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
             formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
             RATEHideProposedSection(eContext);
@@ -163,8 +165,9 @@
         let factor5AssessmentRatingId = factor5Value[0].id;
         let factor6AssessmentRatingId = factor6Value[0].id;
         let factor7AssessmentRatingId = factor7Value[0].id;
+        let factor8AssessmentRatingId = factor8Value[0].id;
 
-        //Retrieve the assessment ratings that were set to the ncat factors
+        //Retrieve the assessment ratings that were set to the rate factors
         let factor1AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor1AssessmentRatingId, "?$select=ts_weight");
         let factor2AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor2AssessmentRatingId, "?$select=ts_weight");
         let factor3AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor3AssessmentRatingId, "?$select=ts_weight");
@@ -172,27 +175,31 @@
         let factor5AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor5AssessmentRatingId, "?$select=ts_weight");
         let factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
         let factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
+        let factor8AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor8AssessmentRatingId, "?$select=ts_weight");
 
-        //Retrieve the enforcement thresholds for NCAT
-        let thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", `?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq ${ts_assessmenttool.NCAT}`);
+        let enforcementHistory = formContext.getAttribute("ts_ratespecificenforcementhistory").getValue();
+        if (enforcementHistory == null) enforcementHistory = ts_ratespecificenforcementhistory.Nil;
+
+        //Retrieve the enforcement thresholds for RATE
+        let thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", `?$select=ts_minimum,ts_maximum,ts_rateenforcementaction&$filter=ts_assessmenttool eq ${ts_assessmenttool.RATE} and ts_rateenforcementhistory eq ${enforcementHistory}`);
 
         //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
-        await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise]).then((factorPromises) => {
+        await Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, factor8AssessmentRatingPromise, thresholdsPromise]).then((factorPromises) => {
             let totalWeight = 0
-            for (let i = 0; i < 7; i++) { //The first 7 are the assessment ratings
+            for (let i = 0; i < 8; i++) { //The first 8 are the assessment ratings
                 totalWeight += factorPromises[i].ts_weight;
             }
 
             let enforcementResponseChoiceNumber = null;
 
             //Loop through all the thresholds, if the total weight is between a min and max, set its enforcement action to the enforcement recommendation
-            for (let threshold of factorPromises[7].entities) {
+            for (let threshold of factorPromises[8].entities) {
 
                 let min = threshold.ts_minimum;
                 let max = threshold.ts_maximum;
 
                 if (totalWeight >= min && totalWeight <= max) {
-                    enforcementResponseChoiceNumber = threshold.ts_ncatenforcementaction;
+                    enforcementResponseChoiceNumber = threshold.ts_rateenforcementaction;
                     break;
                 }
             }
@@ -335,6 +342,17 @@
             
         } else {
             formContext.getControl("ts_ncatinspectorrecommendation").clearNotification();
+        }
+    }
+
+    export function RATESpecificComplianceHistoryOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        const specificComplianceHistory = formContext.getAttribute("ts_ratespecificcompliancehistory").getValue()
+        if (specificComplianceHistory != null && specificComplianceHistory != ts_ratespecificcompliancehistory._0) {
+            formContext.getControl("ts_ratespecificenforcementhistory").setVisible(true);
+        } else {
+            formContext.getAttribute("ts_ratespecificenforcementhistory").setValue(null);
+            formContext.getControl("ts_ratespecificenforcementhistory").setVisible(false);
         }
     }
 
