@@ -60,6 +60,7 @@
     export async function NCATFieldOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<boolean> {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
+        //A factor has changed, so everything below needs to be reset
         formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(null);
         formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
         NCATHideProposedSection(eContext);
@@ -144,6 +145,7 @@
 
         const actualOrPotentialHarm = formContext.getAttribute("ts_rateactualorpotentialharm").getValue();
 
+        //A factor has changed, so everything below needs to be reset
         formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
         formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
         RATEHideProposedSection(eContext);
@@ -161,6 +163,7 @@
         return true
     }
 
+    //Calculate and set an Enforcement Recommendation with all RATE factors
     async function calculateRATEEnforcementRecommendationActualHarmFactorNotNone(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
@@ -235,6 +238,7 @@
         });
     }
 
+    //Calculate and set an Enforcement Recommendation without Responsibility and Mitigation
     async function calculateRATEEnforcementRecommendationActualHarmFactorNone(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
@@ -447,6 +451,7 @@
         }
     }
 
+    //Responsibilty and Mitigation RATE factors are locked and unlocked based on the repsonse of the Actual Harm factor
     export function RATEActualHarmFactorOnChange(eContext) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 

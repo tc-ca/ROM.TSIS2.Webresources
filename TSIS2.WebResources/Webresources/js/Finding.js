@@ -101,6 +101,7 @@ var ROM;
                     switch (_a.label) {
                         case 0:
                             formContext = eContext.getFormContext();
+                            //A factor has changed, so everything below needs to be reset
                             formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(null);
                             formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
                             NCATHideProposedSection(eContext);
@@ -179,6 +180,7 @@ var ROM;
                 return __generator(this, function (_a) {
                     formContext = eContext.getFormContext();
                     actualOrPotentialHarm = formContext.getAttribute("ts_rateactualorpotentialharm").getValue();
+                    //A factor has changed, so everything below needs to be reset
                     formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
                     formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
                     RATEHideProposedSection(eContext);
@@ -197,6 +199,7 @@ var ROM;
             });
         }
         Finding.RATEFieldOnChange = RATEFieldOnChange;
+        //Calculate and set an Enforcement Recommendation with all RATE factors
         function calculateRATEEnforcementRecommendationActualHarmFactorNotNone(eContext) {
             return __awaiter(this, void 0, void 0, function () {
                 var formContext, rateSpecificComplianceHistory, factor1Value, factor2Value, factor3Value, factor4Value, factor5Value, factor6Value, factor7Value, factor8Value, factor1AssessmentRatingId, factor2AssessmentRatingId, factor3AssessmentRatingId, factor4AssessmentRatingId, factor5AssessmentRatingId, factor6AssessmentRatingId, factor7AssessmentRatingId, factor8AssessmentRatingId, factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, factor8AssessmentRatingPromise, enforcementHistory, thresholdsPromise;
@@ -270,6 +273,7 @@ var ROM;
                 });
             });
         }
+        //Calculate and set an Enforcement Recommendation without Responsibility and Mitigation
         function calculateRATEEnforcementRecommendationActualHarmFactorNone(eContext) {
             return __awaiter(this, void 0, void 0, function () {
                 var formContext, rateSpecificComplianceHistory, factor1Value, factor2Value, factor5Value, factor6Value, factor7Value, factor8Value, factor1AssessmentRatingId, factor2AssessmentRatingId, factor5AssessmentRatingId, factor6AssessmentRatingId, factor7AssessmentRatingId, factor8AssessmentRatingId, factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, factor8AssessmentRatingPromise, enforcementHistory, thresholdsPromise;
@@ -483,6 +487,7 @@ var ROM;
             }
         }
         Finding.RATESpecificComplianceHistoryOnChange = RATESpecificComplianceHistoryOnChange;
+        //Responsibilty and Mitigation RATE factors are locked and unlocked based on the repsonse of the Actual Harm factor
         function RATEActualHarmFactorOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var actualOrPotentialHarm = formContext.getAttribute("ts_rateactualorpotentialharm").getValue();
