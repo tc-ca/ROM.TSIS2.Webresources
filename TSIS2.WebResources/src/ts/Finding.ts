@@ -60,6 +60,11 @@
     export async function NCATFieldOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<boolean> {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
+        formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(null);
+        formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
+        NCATHideProposedSection(eContext);
+        formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+
         const factor1Value = formContext.getAttribute("ts_ncatactualorpotentialharm").getValue();
         const factor2Value = formContext.getAttribute("ts_ncatcompliancehistory").getValue();
         const factor3Value = formContext.getAttribute("ts_ncatcooperationwithinspectionorinvestigat").getValue();
@@ -70,10 +75,7 @@
 
         //If any of the ncat factors don't have a value, reset any fields that require an enforcement recommendation
         if (factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null) {
-            formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(null);
-            formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
-            NCATHideProposedSection(eContext);
-            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+            
             return true;
         }
 

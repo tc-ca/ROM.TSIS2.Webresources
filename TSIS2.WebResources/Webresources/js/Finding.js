@@ -101,6 +101,10 @@ var ROM;
                     switch (_a.label) {
                         case 0:
                             formContext = eContext.getFormContext();
+                            formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(null);
+                            formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
+                            NCATHideProposedSection(eContext);
+                            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
                             factor1Value = formContext.getAttribute("ts_ncatactualorpotentialharm").getValue();
                             factor2Value = formContext.getAttribute("ts_ncatcompliancehistory").getValue();
                             factor3Value = formContext.getAttribute("ts_ncatcooperationwithinspectionorinvestigat").getValue();
@@ -110,10 +114,6 @@ var ROM;
                             factor7Value = formContext.getAttribute("ts_ncatmitigationofnoncompliantbehaviors").getValue();
                             //If any of the ncat factors don't have a value, reset any fields that require an enforcement recommendation
                             if (factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null) {
-                                formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(null);
-                                formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
-                                NCATHideProposedSection(eContext);
-                                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
                                 return [2 /*return*/, true];
                             }
                             factor1AssessmentRatingId = factor1Value[0].id;
