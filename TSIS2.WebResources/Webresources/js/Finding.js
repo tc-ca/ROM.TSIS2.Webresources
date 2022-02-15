@@ -108,6 +108,7 @@ var ROM;
                             //A factor has changed, so everything below needs to be reset
                             formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(null);
                             formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
+                            formContext.getControl("ts_acceptncatrecommendation").setDisabled(true);
                             NCATHideProposedSection(eContext);
                             formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
                             factor1Value = formContext.getAttribute("ts_ncatactualorpotentialharm").getValue();
@@ -154,7 +155,7 @@ var ROM;
                                         }
                                     }
                                     formContext.getAttribute("ts_ncatenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
-                                    formContext.getControl("ts_acceptncatrecommendation").setVisible(true);
+                                    formContext.getControl("ts_acceptncatrecommendation").setDisabled(false);
                                     formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
                                 })];
                         case 1:
@@ -187,6 +188,7 @@ var ROM;
                     //A factor has changed, so everything below needs to be reset
                     formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
                     formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
+                    formContext.getControl("ts_acceptraterecommendation").setDisabled(true);
                     RATEHideProposedSection(eContext);
                     formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
                     if (actualOrPotentialHarm != null) {
@@ -266,7 +268,7 @@ var ROM;
                                         }
                                     }
                                     formContext.getAttribute("ts_rateenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
-                                    formContext.getControl("ts_acceptraterecommendation").setVisible(true);
+                                    formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
                                     formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
                                 })];
                         case 1:
@@ -334,7 +336,7 @@ var ROM;
                                         }
                                     }
                                     formContext.getAttribute("ts_rateenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
-                                    formContext.getControl("ts_acceptraterecommendation").setVisible(true);
+                                    formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
                                     formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
                                 })];
                         case 1:
@@ -438,12 +440,12 @@ var ROM;
             var formContext = eContext.getFormContext();
             var NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
             if (NCATEnforcementRecommendation != null) {
-                //Show Accept NCAT Recommendation
-                formContext.getControl("ts_acceptncatrecommendation").setVisible(true);
+                //Enable Accept NCAT Recommendation
+                formContext.getControl("ts_acceptncatrecommendation").setDisabled(false);
             }
             else {
-                //Hide Accept NCAT Recommendation
-                formContext.getControl("ts_acceptncatrecommendation").setVisible(false);
+                //Disable Accept NCAT Recommendation
+                formContext.getControl("ts_acceptncatrecommendation").setDisabled(true);
                 //Clear Accept NCAT Recommendation
                 formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
             }
@@ -454,12 +456,12 @@ var ROM;
             var formContext = eContext.getFormContext();
             var RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
             if (RATEEnforcementRecommendation != null) {
-                //Show Accept RATE Recommendation
-                formContext.getControl("ts_acceptraterecommendation").setVisible(true);
+                //Enable Accept RATE Recommendation
+                formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
             }
             else {
-                //Hide Accept RATE Recommendation
-                formContext.getControl("ts_acceptraterecommendation").setVisible(false);
+                //Disable Accept RATE Recommendation
+                formContext.getControl("ts_acceptraterecommendation").setDisabled(true);
                 //Clear Accept RATE Recommendation
                 formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
             }
