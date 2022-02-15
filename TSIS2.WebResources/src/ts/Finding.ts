@@ -2,6 +2,8 @@
 
     let lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
 
+    //Toggle visibility of NCAT and RATE sections depending user business unit and rolls
+    //Sets field Controls parameters (required, hidden, disabled, etc) depending on current form state
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         //If Observation, keep everything hidden
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
@@ -309,6 +311,8 @@
         });
     }
 
+    //Sets the NCAT Final Enforcement Action to the recommended Enforcement if the user accepts
+    //Reveals fields for user to suggest an alternative enforcement action if they do not accept the recommendation
     export function AcceptNCATRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
@@ -351,6 +355,8 @@
         }
     }
 
+    //Sets the RATE Final Enforcement Action to the recommended Enforcement if the user accepts
+    //Reveals fields for user to suggest an alternative enforcement action if they do not accept the recommendation
     export function AcceptRATERecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
@@ -359,7 +365,7 @@
         if (acceptRATERecommendation == ts_yesno.No) {
             //Show RATE Approving Manager
             formContext.getControl("ts_ratemanager").setVisible(true);
-            //Require NCAT Approving Manager (Will make it required when there are managers to choose)
+            //Require RATE Approving Manager (Will make it required when there are managers to choose)
             //formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
             //Show Inspector Recommendation
             formContext.getControl("ts_rateinspectorrecommendation").setVisible(true);
@@ -393,6 +399,7 @@
         }
     }
 
+    //Make the Accept NCAT Recommendation field Visible if there is an Enforcement Recommendation 
     export function NCATEnforcementRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
@@ -407,6 +414,7 @@
         }
     }
 
+    //Make the Accept RATE Recommendation field Visible if there is an Enforcement Recommendation 
     export function RATEEnforcementRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
@@ -421,6 +429,8 @@
         }
     }
 
+    //Does not allow NCAT Inspector Recommendation to match the NCAT Enforcement Recommendation
+    //Resets the Manager Review Section fields
     export function NCATInspectorRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
@@ -453,7 +463,7 @@
         }
     }
 
-    //Responsibilty and Mitigation RATE factors are locked and unlocked based on the repsonse of the Actual Harm factor
+    //Responsibilty and Mitigation RATE factors are locked and unlocked based on the response of the Actual Harm factor
     export function RATEActualHarmFactorOnChange(eContext) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
@@ -478,6 +488,8 @@
         }
     }
 
+    //Does not allow RATE Inspector Recommendation to match the NCAT Enforcement Recommendation
+    //Resets the Manager Review Section fields
     export function RATEInspectorRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
@@ -498,6 +510,8 @@
         }
     }
 
+    //Sets the NCAT Final Enforcement Action depending on the Manager Decision
+    //Sets Manager Section Controls to Required or Disabled depending on Manager Decision
     export function NCATManagerDecisionOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const NCATManagerDecision = formContext.getAttribute("ts_ncatmanagerdecision").getValue();
@@ -539,6 +553,8 @@
         }
     }
 
+    //Sets the RATE Final Enforcement Action depending on the Manager Decision
+    //Sets Manager Section Controls to Required or Disabled depending on Manager Decision
     export function RATEManagerDecisionOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const RATEManagerDecision = formContext.getAttribute("ts_ratemanagerdecision").getValue();
@@ -576,6 +592,8 @@
         }
     }
 
+    //Does not allow NCAT Manager Recommendation to match either NCAT Recommendation or Inspector Recommendation
+    //Sets the NCAT Final Enforcement action to the Manager Recommendation
     export function NCATManagerAlternativeRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
@@ -603,6 +621,8 @@
         }
     }
 
+    //Does not allow RATE Manager Recommendation to match either RATE Recommendation or Inspector Recommendation
+    //Sets the RATE Final Enforcement action to the Manager Recommendation
     export function RATEManagerAlternativeRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
@@ -630,6 +650,7 @@
         }
     }
 
+    //Clears, Hides, and sets Required level to None for every field in the NCAT Proposed Section
     function NCATHideProposedSection(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
@@ -649,6 +670,7 @@
         NCATHideManagerReviewSection(eContext);
     }
 
+    //Clears, Hides, and sets Required level to None for every field in the NCAT Manager Review Section
     function NCATHideManagerReviewSection(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
@@ -665,6 +687,7 @@
         formContext.getControl("ts_ncatmanagerenforcementjustification").setVisible(false);
     }
 
+    //Clears, Hides, and sets Required level to None for every field in the RATE Proposed Section
     function RATEHideProposedSection(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
@@ -684,6 +707,7 @@
         RATEHideManagerReviewSection(eContext);
     }
 
+    //Clears, Hides, and sets Required level to None for every field in the RATE Manager Review Section
     function RATEHideManagerReviewSection(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
@@ -700,6 +724,7 @@
         formContext.getControl("ts_ratemanagerenforcementjustification").setVisible(false);
     }
 
+    //Sets the lookup views for the Approving Manager fields
     function setApprovingManagersViews(form: Form.ovs_finding.Main.Information): void {
         const romManagerRoleId = "9a6f5e85-84ae-42a9-a9cc-148426ecf05a";
 

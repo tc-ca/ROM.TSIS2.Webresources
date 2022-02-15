@@ -40,6 +40,8 @@ var ROM;
     var Finding;
     (function (Finding) {
         var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+        //Toggle visibility of NCAT and RATE sections depending user business unit and rolls
+        //Sets field Controls parameters (required, hidden, disabled, etc) depending on current form state
         function onLoad(eContext) {
             //If Observation, keep everything hidden
             var formContext = eContext.getFormContext();
@@ -343,6 +345,8 @@ var ROM;
                 });
             });
         }
+        //Sets the NCAT Final Enforcement Action to the recommended Enforcement if the user accepts
+        //Reveals fields for user to suggest an alternative enforcement action if they do not accept the recommendation
         function AcceptNCATRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
@@ -385,6 +389,8 @@ var ROM;
             }
         }
         Finding.AcceptNCATRecommendationOnChange = AcceptNCATRecommendationOnChange;
+        //Sets the RATE Final Enforcement Action to the recommended Enforcement if the user accepts
+        //Reveals fields for user to suggest an alternative enforcement action if they do not accept the recommendation
         function AcceptRATERecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
@@ -427,6 +433,7 @@ var ROM;
             }
         }
         Finding.AcceptRATERecommendationOnChange = AcceptRATERecommendationOnChange;
+        //Make the Accept NCAT Recommendation field Visible if there is an Enforcement Recommendation 
         function NCATEnforcementRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
@@ -442,6 +449,7 @@ var ROM;
             }
         }
         Finding.NCATEnforcementRecommendationOnChange = NCATEnforcementRecommendationOnChange;
+        //Make the Accept RATE Recommendation field Visible if there is an Enforcement Recommendation 
         function RATEEnforcementRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
@@ -457,6 +465,8 @@ var ROM;
             }
         }
         Finding.RATEEnforcementRecommendationOnChange = RATEEnforcementRecommendationOnChange;
+        //Does not allow NCAT Inspector Recommendation to match the NCAT Enforcement Recommendation
+        //Resets the Manager Review Section fields
         function NCATInspectorRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
@@ -489,7 +499,7 @@ var ROM;
             }
         }
         Finding.RATESpecificComplianceHistoryOnChange = RATESpecificComplianceHistoryOnChange;
-        //Responsibilty and Mitigation RATE factors are locked and unlocked based on the repsonse of the Actual Harm factor
+        //Responsibilty and Mitigation RATE factors are locked and unlocked based on the response of the Actual Harm factor
         function RATEActualHarmFactorOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var actualOrPotentialHarm = formContext.getAttribute("ts_rateactualorpotentialharm").getValue();
@@ -514,6 +524,8 @@ var ROM;
             }
         }
         Finding.RATEActualHarmFactorOnChange = RATEActualHarmFactorOnChange;
+        //Does not allow RATE Inspector Recommendation to match the NCAT Enforcement Recommendation
+        //Resets the Manager Review Section fields
         function RATEInspectorRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
@@ -534,6 +546,8 @@ var ROM;
             }
         }
         Finding.RATEInspectorRecommendationOnChange = RATEInspectorRecommendationOnChange;
+        //Sets the NCAT Final Enforcement Action depending on the Manager Decision
+        //Sets Manager Section Controls to Required or Disabled depending on Manager Decision
         function NCATManagerDecisionOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var NCATManagerDecision = formContext.getAttribute("ts_ncatmanagerdecision").getValue();
@@ -574,6 +588,8 @@ var ROM;
             }
         }
         Finding.NCATManagerDecisionOnChange = NCATManagerDecisionOnChange;
+        //Sets the RATE Final Enforcement Action depending on the Manager Decision
+        //Sets Manager Section Controls to Required or Disabled depending on Manager Decision
         function RATEManagerDecisionOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var RATEManagerDecision = formContext.getAttribute("ts_ratemanagerdecision").getValue();
@@ -611,6 +627,8 @@ var ROM;
             }
         }
         Finding.RATEManagerDecisionOnChange = RATEManagerDecisionOnChange;
+        //Does not allow NCAT Manager Recommendation to match either NCAT Recommendation or Inspector Recommendation
+        //Sets the NCAT Final Enforcement action to the Manager Recommendation
         function NCATManagerAlternativeRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var NCATInspectorRecommendation = formContext.getAttribute("ts_ncatinspectorrecommendation").getValue();
@@ -640,6 +658,8 @@ var ROM;
             }
         }
         Finding.NCATManagerAlternativeRecommendationOnChange = NCATManagerAlternativeRecommendationOnChange;
+        //Does not allow RATE Manager Recommendation to match either RATE Recommendation or Inspector Recommendation
+        //Sets the RATE Final Enforcement action to the Manager Recommendation
         function RATEManagerAlternativeRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var RATEInspectorRecommendation = formContext.getAttribute("ts_rateinspectorrecommendation").getValue();
@@ -669,6 +689,7 @@ var ROM;
             }
         }
         Finding.RATEManagerAlternativeRecommendationOnChange = RATEManagerAlternativeRecommendationOnChange;
+        //Clears, Hides, and sets Required level to None for every field in the NCAT Proposed Section
         function NCATHideProposedSection(eContext) {
             var formContext = eContext.getFormContext();
             formContext.getAttribute("ts_ncatmanager").setValue(null);
@@ -683,6 +704,7 @@ var ROM;
             formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
             NCATHideManagerReviewSection(eContext);
         }
+        //Clears, Hides, and sets Required level to None for every field in the NCAT Manager Review Section
         function NCATHideManagerReviewSection(eContext) {
             var formContext = eContext.getFormContext();
             formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
@@ -695,6 +717,7 @@ var ROM;
             formContext.getControl("ts_ncatmanagerenforcementjustification").setDisabled(true);
             formContext.getControl("ts_ncatmanagerenforcementjustification").setVisible(false);
         }
+        //Clears, Hides, and sets Required level to None for every field in the RATE Proposed Section
         function RATEHideProposedSection(eContext) {
             var formContext = eContext.getFormContext();
             formContext.getAttribute("ts_ratemanager").setValue(null);
@@ -709,6 +732,7 @@ var ROM;
             formContext.getControl("ts_rateenforcementjustification").setVisible(false);
             RATEHideManagerReviewSection(eContext);
         }
+        //Clears, Hides, and sets Required level to None for every field in the RATE Manager Review Section
         function RATEHideManagerReviewSection(eContext) {
             var formContext = eContext.getFormContext();
             formContext.getAttribute("ts_ratemanagerdecision").setValue(null);
@@ -721,6 +745,7 @@ var ROM;
             formContext.getControl("ts_ratemanagerenforcementjustification").setDisabled(true);
             formContext.getControl("ts_ratemanagerenforcementjustification").setVisible(false);
         }
+        //Sets the lookup views for the Approving Manager fields
         function setApprovingManagersViews(form) {
             var romManagerRoleId = "9a6f5e85-84ae-42a9-a9cc-148426ecf05a";
             //Get related Case region ID
