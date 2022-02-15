@@ -398,7 +398,7 @@ var ROM;
             if (acceptRATERecommendation == 717750001 /* No */) {
                 //Show RATE Approving Manager
                 formContext.getControl("ts_ratemanager").setVisible(true);
-                //Require NCAT Approving Manager (Will make it required when there are managers to choose)
+                //Require RATE Approving Manager (Will make it required when there are managers to choose)
                 //formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
                 //Show Inspector Recommendation
                 formContext.getControl("ts_rateinspectorrecommendation").setVisible(true);
