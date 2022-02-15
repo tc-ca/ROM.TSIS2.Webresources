@@ -183,8 +183,11 @@
         const factor7Value = formContext.getAttribute("ts_rateeconomicbenefit").getValue();
         const factor8Value = formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue();
 
+        const complianceHistory = formContext.getAttribute("ts_ratespecificcompliancehistory").getValue()
+        let enforcementHistory = formContext.getAttribute("ts_ratespecificenforcementhistory").getValue();
+
         //If any of the rate factors don't have a value, reset any fields that require an enforcement recommendation
-        if (rateSpecificComplianceHistory == null || factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null || factor8Value == null) {
+        if (rateSpecificComplianceHistory == null || factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null || factor8Value == null || ((complianceHistory != null && complianceHistory != ts_ratespecificcompliancehistory._0) && enforcementHistory == null)) {
             formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
             formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
             RATEHideProposedSection(eContext);
@@ -211,7 +214,6 @@
         const factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
         const factor8AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor8AssessmentRatingId, "?$select=ts_weight");
 
-        let enforcementHistory = formContext.getAttribute("ts_ratespecificenforcementhistory").getValue();
         if (enforcementHistory == null) enforcementHistory = ts_ratespecificenforcementhistory.Nil;
 
         //Retrieve the enforcement thresholds for RATE
@@ -256,8 +258,11 @@
         const factor7Value = formContext.getAttribute("ts_rateeconomicbenefit").getValue();
         const factor8Value = formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue();
 
+        const complianceHistory = formContext.getAttribute("ts_ratespecificcompliancehistory").getValue();
+        let enforcementHistory = formContext.getAttribute("ts_ratespecificenforcementhistory").getValue();
+
         //If any of the rate factors don't have a value, reset any fields that require an enforcement recommendation
-        if (rateSpecificComplianceHistory == null || factor1Value == null || factor2Value == null || factor5Value == null || factor6Value == null || factor7Value == null || factor8Value == null) {
+        if (rateSpecificComplianceHistory == null || factor1Value == null || factor2Value == null || factor5Value == null || factor6Value == null || factor7Value == null || factor8Value == null || ((complianceHistory != null && complianceHistory != ts_ratespecificcompliancehistory._0) && enforcementHistory == null)) {
             formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
             formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
             RATEHideProposedSection(eContext);
@@ -280,7 +285,6 @@
         const factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
         const factor8AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor8AssessmentRatingId, "?$select=ts_weight");
 
-        let enforcementHistory = formContext.getAttribute("ts_ratespecificenforcementhistory").getValue();
         if (enforcementHistory == null) enforcementHistory = ts_ratespecificenforcementhistory.Nil;
 
         //Retrieve the enforcement thresholds for RATE
