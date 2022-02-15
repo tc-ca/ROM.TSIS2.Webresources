@@ -6,6 +6,8 @@
         const rateEnforcementAction = Form.getControl("ts_rateenforcementaction");
         const ncatEnforcementActionAttribute = Form.getAttribute("ts_ncatenforcementaction");
         const rateEnforcementActionAttribute = Form.getAttribute("ts_rateenforcementaction");
+        const rateEnforcementHistory = Form.getControl("ts_rateenforcementhistory");
+        const rateEnforcementHistoryAttribute = Form.getAttribute("ts_rateenforcementhistory");
         //If NCAT Assessment Tool set required for NCAT Enforcement Action
         if (assessmentTool != null) {
             if (assessmentTool == ts_assessmenttool.NCAT) {
@@ -16,6 +18,8 @@
             else {
                 rateEnforcementAction.setVisible(true);
                 rateEnforcementActionAttribute.setRequiredLevel("required");
+                rateEnforcementHistory.setVisible(true);
+                rateEnforcementHistoryAttribute.setRequiredLevel("required");
             }
         }
     }
@@ -31,9 +35,10 @@
                 Form.getControl("ts_maximum").clearNotification("errorMaximum");
                 Form.getControl("ts_minimum").setNotification(message, "errorMinimum");
             }
-
-            else
+            else {
                 Form.getControl("ts_minimum").clearNotification("errorMinimum");
+                Form.getControl("ts_maximum").clearNotification("errorMaximum");
+            }
 
         checkScoreIntersection(Form);
     }
@@ -49,9 +54,11 @@
                 Form.getControl("ts_maximum").setNotification(message, "errorMaximum");
                 Form.getControl("ts_minimum").clearNotification("errorMinimum");
             }
-            else
+            else {
+                Form.getControl("ts_minimum").clearNotification("errorMinimum");
                 Form.getControl("ts_maximum").clearNotification("errorMaximum");
-
+            }
+                
         checkScoreIntersection(Form);
     }
 
@@ -62,23 +69,29 @@
         const rateEnforcementAction = Form.getControl("ts_rateenforcementaction");
         const ncatEnforcementActionAttribute = Form.getAttribute("ts_ncatenforcementaction");
         const rateEnforcementActionAttribute = Form.getAttribute("ts_rateenforcementaction");
-        //For NCAT toll set visible only NCAT Enforcement Action
+        const rateEnforcementHistory = Form.getControl("ts_rateenforcementhistory");
+        const rateEnforcementHistoryAttribute = Form.getAttribute("ts_rateenforcementhistory");
+        //For NCAT tool set visible only NCAT Enforcement Action
         if (assessmentTool == ts_assessmenttool.NCAT) {
             ncatEnforcementAction.setVisible(true);
             ncatEnforcementActionAttribute.setRequiredLevel("required");
             rateEnforcementAction.setVisible(false);
             rateEnforcementActionAttribute.setRequiredLevel("none");
-            if (rateEnforcementActionAttribute.getValue() != null)
-                rateEnforcementActionAttribute.setValue(null);
+            rateEnforcementHistory.setVisible(false);
+            rateEnforcementHistoryAttribute.setRequiredLevel("none")
+            rateEnforcementHistoryAttribute.setValue(null);
+            rateEnforcementActionAttribute.setValue(null);
         }
-        //For RATE toll set visible only RATE Enforcement Action
+        //For RATE tool set visible only RATE Enforcement Action
         else {
             rateEnforcementAction.setVisible(true);
+            rateEnforcementAction.setVisible(true);
             rateEnforcementActionAttribute.setRequiredLevel("required");
+            rateEnforcementHistory.setVisible(true);
+            rateEnforcementHistoryAttribute.setRequiredLevel("required");
             ncatEnforcementAction.setVisible(false);
             ncatEnforcementActionAttribute.setRequiredLevel("none");
-            if (ncatEnforcementActionAttribute.getValue() != null)
-                ncatEnforcementActionAttribute.setValue(null);
+            ncatEnforcementActionAttribute.setValue(null);
         }
 
     }
@@ -87,10 +100,13 @@
         const minimum = Form.getAttribute("ts_minimum").getValue();
         const maximum = Form.getAttribute("ts_maximum").getValue();
         const assessmentTool = Form.getAttribute("ts_assessmenttool").getValue();
+        const enforcementHistory = Form.getAttribute("ts_rateenforcementhistory").getValue();
         const scoreThresholdId = Form.data.entity.getId().replace(/[{}]/g, "").toLowerCase();
         const messageOverlap = Xrm.Utility.getResourceString("ts_/resx/ScoreThresholds", "OverlapMessage");
         const messageScoreFrom = Xrm.Utility.getResourceString("ts_/resx/ScoreThresholds", "ScoreFromMessage");
         const messageTo = Xrm.Utility.getResourceString("ts_/resx/ScoreThresholds", "toMessage");
+        //Filter by enforcement history if the assessment tool is RATE
+        const enforcementHistoryFetchXMLFilter = (assessmentTool == ts_assessmenttool.RATE) ? "<condition attribute='ts_rateenforcementhistory' operator = 'eq' value = '" + enforcementHistory + "'/>" : "";
         var fetchXml = [
             "<fetch>",
             "<entity name='ts_assessmentscorethredshots'>",
@@ -101,12 +117,13 @@
             "<order attribute='ts_minimum' descending = 'false'/>",
             "<filter type='and'>",
             "<condition attribute='ts_assessmenttool' operator = 'eq' value = '" + assessmentTool + "'/>",
+            enforcementHistoryFetchXMLFilter,
             "</filter>",
             "</entity>",
             "</fetch>"
         ].join("");
         fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
-        //Retrieve all Score Thresholds for current Assessment Tool
+        //Retrieve all Score Thresholds for current Assessment Tool and Eforcement History
         //Check for each Score Thresholds if there is any overlap with another one
         //Display error message
         Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", fetchXml)

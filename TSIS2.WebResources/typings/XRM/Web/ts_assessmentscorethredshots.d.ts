@@ -13,6 +13,7 @@ interface ts_assessmentscorethredshots_Base extends WebEntity {
   ts_name?: string | null;
   ts_ncatenforcementaction?: ts_ncatrecommendations | null;
   ts_rateenforcementaction?: ts_raterecommendations | null;
+  ts_rateenforcementhistory?: ts_ratespecificenforcementhistory | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -49,6 +50,7 @@ interface ts_assessmentscorethredshots_Select {
   ts_name: WebAttribute<ts_assessmentscorethredshots_Select, { ts_name: string | null }, {  }>;
   ts_ncatenforcementaction: WebAttribute<ts_assessmentscorethredshots_Select, { ts_ncatenforcementaction: ts_ncatrecommendations | null }, { ts_ncatenforcementaction_formatted?: string }>;
   ts_rateenforcementaction: WebAttribute<ts_assessmentscorethredshots_Select, { ts_rateenforcementaction: ts_raterecommendations | null }, { ts_rateenforcementaction_formatted?: string }>;
+  ts_rateenforcementhistory: WebAttribute<ts_assessmentscorethredshots_Select, { ts_rateenforcementhistory: ts_ratespecificenforcementhistory | null }, { ts_rateenforcementhistory_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_assessmentscorethredshots_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_assessmentscorethredshots_Select, { versionnumber: number | null }, {  }>;
 }
@@ -75,6 +77,7 @@ interface ts_assessmentscorethredshots_Filter {
   ts_name: string;
   ts_ncatenforcementaction: ts_ncatrecommendations;
   ts_rateenforcementaction: ts_raterecommendations;
+  ts_rateenforcementhistory: ts_ratespecificenforcementhistory;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -103,6 +106,7 @@ interface ts_assessmentscorethredshots_FormattedResult {
   ts_assessmenttool_formatted?: string;
   ts_ncatenforcementaction_formatted?: string;
   ts_rateenforcementaction_formatted?: string;
+  ts_rateenforcementhistory_formatted?: string;
 }
 interface ts_assessmentscorethredshots_Result extends ts_assessmentscorethredshots_Base, ts_assessmentscorethredshots_Relationships {
   "@odata.etag": string;

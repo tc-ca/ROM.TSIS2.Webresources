@@ -61,13 +61,12 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
       get(name: "ts_rateactualorpotentialharm"): Xrm.LookupAttribute<"ts_assessmentrating">;
-      get(name: "ts_ratecompliancehistory"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_ratecooperationwithinspectionorinvestigat"): Xrm.LookupAttribute<"ts_assessmentrating">;
-      get(name: "ts_ratedetectionofnoncompliances"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_rateeconomicbenefit"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_rateenforcementjustification"): Xrm.Attribute<string>;
       get(name: "ts_rateenforcementrecommendation"): Xrm.OptionSetAttribute<ts_raterecommendations>;
       get(name: "ts_ratefinalenforcementaction"): Xrm.OptionSetAttribute<ts_raterecommendations>;
+      get(name: "ts_rategeneralcompliancehistory"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_rateinspectorrecommendation"): Xrm.OptionSetAttribute<ts_raterecommendations>;
       get(name: "ts_rateintentionality"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_ratemanager"): Xrm.LookupAttribute<"systemuser">;
@@ -75,6 +74,10 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ratemanagerdecision"): Xrm.OptionSetAttribute<ts_ratemanagerdecision>;
       get(name: "ts_ratemanagerenforcementjustification"): Xrm.Attribute<string>;
       get(name: "ts_ratemitigationofnoncompliantbehaviors"): Xrm.LookupAttribute<"ts_assessmentrating">;
+      get(name: "ts_ratepreventingrecurrence"): Xrm.LookupAttribute<"ts_assessmentrating">;
+      get(name: "ts_rateresponsibility"): Xrm.LookupAttribute<"ts_assessmentrating">;
+      get(name: "ts_ratespecificcompliancehistory"): Xrm.OptionSetAttribute<ts_ratespecificcompliancehistory>;
+      get(name: "ts_ratespecificenforcementhistory"): Xrm.OptionSetAttribute<ts_ratespecificenforcementhistory>;
       get(name: "ts_workorder"): Xrm.Attribute<any>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -115,13 +118,12 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;
       get(name: "ts_rateactualorpotentialharm"): Xrm.LookupControl<"ts_assessmentrating">;
-      get(name: "ts_ratecompliancehistory"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_ratecooperationwithinspectionorinvestigat"): Xrm.LookupControl<"ts_assessmentrating">;
-      get(name: "ts_ratedetectionofnoncompliances"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_rateeconomicbenefit"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_rateenforcementjustification"): Xrm.StringControl;
       get(name: "ts_rateenforcementrecommendation"): Xrm.OptionSetControl<ts_raterecommendations>;
       get(name: "ts_ratefinalenforcementaction"): Xrm.OptionSetControl<ts_raterecommendations>;
+      get(name: "ts_rategeneralcompliancehistory"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_rateinspectorrecommendation"): Xrm.OptionSetControl<ts_raterecommendations>;
       get(name: "ts_rateintentionality"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_ratemanager"): Xrm.LookupControl<"systemuser">;
@@ -129,6 +131,10 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ratemanagerdecision"): Xrm.OptionSetControl<ts_ratemanagerdecision>;
       get(name: "ts_ratemanagerenforcementjustification"): Xrm.StringControl;
       get(name: "ts_ratemitigationofnoncompliantbehaviors"): Xrm.LookupControl<"ts_assessmentrating">;
+      get(name: "ts_ratepreventingrecurrence"): Xrm.LookupControl<"ts_assessmentrating">;
+      get(name: "ts_rateresponsibility"): Xrm.LookupControl<"ts_assessmentrating">;
+      get(name: "ts_ratespecificcompliancehistory"): Xrm.OptionSetControl<ts_ratespecificcompliancehistory>;
+      get(name: "ts_ratespecificenforcementhistory"): Xrm.OptionSetControl<ts_ratespecificenforcementhistory>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -175,13 +181,12 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
     getAttribute(attributeName: "ts_rateactualorpotentialharm"): Xrm.LookupAttribute<"ts_assessmentrating">;
-    getAttribute(attributeName: "ts_ratecompliancehistory"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_ratecooperationwithinspectionorinvestigat"): Xrm.LookupAttribute<"ts_assessmentrating">;
-    getAttribute(attributeName: "ts_ratedetectionofnoncompliances"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_rateeconomicbenefit"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_rateenforcementjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_rateenforcementrecommendation"): Xrm.OptionSetAttribute<ts_raterecommendations>;
     getAttribute(attributeName: "ts_ratefinalenforcementaction"): Xrm.OptionSetAttribute<ts_raterecommendations>;
+    getAttribute(attributeName: "ts_rategeneralcompliancehistory"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_rateinspectorrecommendation"): Xrm.OptionSetAttribute<ts_raterecommendations>;
     getAttribute(attributeName: "ts_rateintentionality"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_ratemanager"): Xrm.LookupAttribute<"systemuser">;
@@ -189,6 +194,10 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_ratemanagerdecision"): Xrm.OptionSetAttribute<ts_ratemanagerdecision>;
     getAttribute(attributeName: "ts_ratemanagerenforcementjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_ratemitigationofnoncompliantbehaviors"): Xrm.LookupAttribute<"ts_assessmentrating">;
+    getAttribute(attributeName: "ts_ratepreventingrecurrence"): Xrm.LookupAttribute<"ts_assessmentrating">;
+    getAttribute(attributeName: "ts_rateresponsibility"): Xrm.LookupAttribute<"ts_assessmentrating">;
+    getAttribute(attributeName: "ts_ratespecificcompliancehistory"): Xrm.OptionSetAttribute<ts_ratespecificcompliancehistory>;
+    getAttribute(attributeName: "ts_ratespecificenforcementhistory"): Xrm.OptionSetAttribute<ts_ratespecificenforcementhistory>;
     getAttribute(attributeName: "ts_workorder"): Xrm.Attribute<any>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
@@ -224,13 +233,12 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;
     getControl(controlName: "ts_rateactualorpotentialharm"): Xrm.LookupControl<"ts_assessmentrating">;
-    getControl(controlName: "ts_ratecompliancehistory"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_ratecooperationwithinspectionorinvestigat"): Xrm.LookupControl<"ts_assessmentrating">;
-    getControl(controlName: "ts_ratedetectionofnoncompliances"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_rateeconomicbenefit"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_rateenforcementjustification"): Xrm.StringControl;
     getControl(controlName: "ts_rateenforcementrecommendation"): Xrm.OptionSetControl<ts_raterecommendations>;
     getControl(controlName: "ts_ratefinalenforcementaction"): Xrm.OptionSetControl<ts_raterecommendations>;
+    getControl(controlName: "ts_rategeneralcompliancehistory"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_rateinspectorrecommendation"): Xrm.OptionSetControl<ts_raterecommendations>;
     getControl(controlName: "ts_rateintentionality"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_ratemanager"): Xrm.LookupControl<"systemuser">;
@@ -238,6 +246,10 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_ratemanagerdecision"): Xrm.OptionSetControl<ts_ratemanagerdecision>;
     getControl(controlName: "ts_ratemanagerenforcementjustification"): Xrm.StringControl;
     getControl(controlName: "ts_ratemitigationofnoncompliantbehaviors"): Xrm.LookupControl<"ts_assessmentrating">;
+    getControl(controlName: "ts_ratepreventingrecurrence"): Xrm.LookupControl<"ts_assessmentrating">;
+    getControl(controlName: "ts_rateresponsibility"): Xrm.LookupControl<"ts_assessmentrating">;
+    getControl(controlName: "ts_ratespecificcompliancehistory"): Xrm.OptionSetControl<ts_ratespecificcompliancehistory>;
+    getControl(controlName: "ts_ratespecificenforcementhistory"): Xrm.OptionSetControl<ts_ratespecificenforcementhistory>;
     getControl(controlName: string): undefined;
   }
 }

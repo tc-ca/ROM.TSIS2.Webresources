@@ -59,6 +59,7 @@ interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships 
   partyid_invoice_bind$invoices?: string | null;
   partyid_knowledgearticle_bind$knowledgearticles?: string | null;
   partyid_lead_bind$leads?: string | null;
+  partyid_msdyn_salessuggestion_bind$msdyn_salessuggestions?: string | null;
   partyid_opportunity_bind$opportunities?: string | null;
   partyid_queue_bind$queues?: string | null;
   partyid_quote_bind$quotes?: string | null;

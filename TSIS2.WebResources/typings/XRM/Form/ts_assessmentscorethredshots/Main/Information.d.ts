@@ -10,6 +10,7 @@ declare namespace Form.ts_assessmentscorethredshots.Main {
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_ncatenforcementaction"): Xrm.OptionSetAttribute<ts_ncatrecommendations>;
       get(name: "ts_rateenforcementaction"): Xrm.OptionSetAttribute<ts_raterecommendations>;
+      get(name: "ts_rateenforcementhistory"): Xrm.OptionSetAttribute<ts_ratespecificenforcementhistory>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -23,6 +24,7 @@ declare namespace Form.ts_assessmentscorethredshots.Main {
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_ncatenforcementaction"): Xrm.OptionSetControl<ts_ncatrecommendations>;
       get(name: "ts_rateenforcementaction"): Xrm.OptionSetControl<ts_raterecommendations>;
+      get(name: "ts_rateenforcementhistory"): Xrm.OptionSetControl<ts_ratespecificenforcementhistory>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -43,6 +45,7 @@ declare namespace Form.ts_assessmentscorethredshots.Main {
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_ncatenforcementaction"): Xrm.OptionSetAttribute<ts_ncatrecommendations>;
     getAttribute(attributeName: "ts_rateenforcementaction"): Xrm.OptionSetAttribute<ts_raterecommendations>;
+    getAttribute(attributeName: "ts_rateenforcementhistory"): Xrm.OptionSetAttribute<ts_ratespecificenforcementhistory>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_assessmenttool"): Xrm.OptionSetControl<ts_assessmenttool>;
@@ -51,6 +54,7 @@ declare namespace Form.ts_assessmentscorethredshots.Main {
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_ncatenforcementaction"): Xrm.OptionSetControl<ts_ncatrecommendations>;
     getControl(controlName: "ts_rateenforcementaction"): Xrm.OptionSetControl<ts_raterecommendations>;
+    getControl(controlName: "ts_rateenforcementhistory"): Xrm.OptionSetControl<ts_ratespecificenforcementhistory>;
     getControl(controlName: string): undefined;
   }
 }
