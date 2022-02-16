@@ -23,6 +23,20 @@ namespace ROM.FunctionalLocation {
                     }
                 );
             }
+
+            const siteTypeAttribute = form.getAttribute("ts_sitetype");
+            if(siteTypeAttribute != null){
+                const siteTypeAttributeValue = form.getAttribute("ts_sitetype").getValue();
+                if (siteTypeAttributeValue != null) {
+                    if(siteTypeAttributeValue[0].name == "Aerodrome"){
+                        form.getControl("ts_icaocode").setVisible(true);
+                        form.getControl("ts_iatacode").setVisible(true);
+                    }
+                }
+            }
+
+            //If site type is aerodrome, show ICAO and IATA fields
+           
         }
 
         if (form.getAttribute("ts_statusstartdate").getValue() == null) {
