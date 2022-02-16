@@ -339,14 +339,11 @@
             formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("required");
             //Clear final enforcement action, in case it was set before
             formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
-
-            const adminRoleId = "ca432c33-29a1-eb11-b1ac-000d3ae8bbe0";
-            const managerRoleId = "85e36d25-29f5-eb11-94ef-000d3af36036";
             const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
             //If the user is a system admin or ROM - Manager, show the NCAT manager review section
             let isAdminOrManager = false;
             userRoles.forEach(role => {
-                if (role.id == adminRoleId || role.id == managerRoleId) {
+                if (role.name == "System Administrator" || role.name == "ROM - Manager") {
                     isAdminOrManager = true;
                 }
             });
@@ -384,13 +381,11 @@
             //Clear final enforcement action, in case it was set before
             formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
 
-            const adminRoleId = "ca432c33-29a1-eb11-b1ac-000d3ae8bbe0";
-            const managerRoleId = "85e36d25-29f5-eb11-94ef-000d3af36036";
             const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
             //If the user is a system admin or ROM - Manager, show the RATE manager review section
             let isAdminOrManager = false;
             userRoles.forEach(role => {
-                if (role.id == adminRoleId || role.id == managerRoleId) {
+                if (role.name == "System Administrator" || role.name == "ROM - Manager") {
                     isAdminOrManager = true;
                 }
             });
