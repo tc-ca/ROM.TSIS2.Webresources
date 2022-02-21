@@ -45,6 +45,7 @@ var ROM;
                 }
             }, function (error) {
             });
+            setFindingSubgridView(eContext);
         }
         Incident.onLoad = onLoad;
         function regionOnChange(eContext) {
@@ -252,6 +253,54 @@ var ROM;
             var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="tc_country"><attribute name="tc_countryid" /><attribute name="tc_name" /><order attribute="tc_name" descending="false" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="msdyn_functionallocation" from="ts_country" to="tc_countryid" link-type="inner" alias="ae"><filter type="and"><condition attribute="ts_region" operator="eq" value="{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}" /></filter></link-entity></entity></fetch>';
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="tc_countryid"><cell name="tc_name" width="200" /></row></grid>';
             form.getControl("ts_country").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+        }
+        //Set the Findings Subgrid's view based on the user's business unit
+        function setFindingSubgridView(eContext) {
+            var formContext = eContext.getFormContext();
+            //retrieve user's business unit
+            var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+            var currentUserBusinessUnitFetchXML = [
+                "<fetch top='50'>",
+                "  <entity name='businessunit'>",
+                "    <attribute name='name' />",
+                "    <attribute name='businessunitid' />",
+                "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+                "      <filter>",
+                "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+                "      </filter>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+            Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+                var userBusinessUnitName = result.entities[0].name;
+                var gridContext = formContext.getControl("subgrid_findings");
+                if (userBusinessUnitName.startsWith("Transport")) {
+                    var activeFindingsTC = {
+                        entityType: "1039",
+                        id: "9711d0c3-7fcc-46da-a259-a722ba88af4d",
+                        name: "Active Findings TC"
+                    };
+                    gridContext.getViewSelector().setCurrentView(activeFindingsTC);
+                }
+                else if (userBusinessUnitName.startsWith("Aviation")) {
+                    var activeFindingsTC = {
+                        entityType: "1039",
+                        id: "0f6d195a-2793-ec11-b3fe-0022483e8601",
+                        name: "Active Findings AvSec"
+                    };
+                    gridContext.getViewSelector().setCurrentView(activeFindingsTC);
+                }
+                else if (userBusinessUnitName.startsWith("Intermodal")) {
+                    var activeFindingsTC = {
+                        entityType: "1039",
+                        id: "3bfcaa19-2793-ec11-b3fe-0022483e8339",
+                        name: "Active Findings ISSO"
+                    };
+                    gridContext.getViewSelector().setCurrentView(activeFindingsTC);
+                }
+            });
         }
     })(Incident = ROM.Incident || (ROM.Incident = {}));
 })(ROM || (ROM = {}));

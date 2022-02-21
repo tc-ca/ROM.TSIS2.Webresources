@@ -85,14 +85,6 @@ declare namespace Form.incident.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_11 extends Xrm.SectionCollectionBase {
-        get(name: "_section_369"): Xrm.PageSection;
-        get(name: "tab_11_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
       interface tab_13 extends Xrm.SectionCollectionBase {
         get(name: "tab_13_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -103,6 +95,14 @@ declare namespace Form.incident.Main {
       interface tab_14 extends Xrm.SectionCollectionBase {
         get(name: "tab_14_section_1"): Xrm.PageSection;
         get(name: "tab_14_section_2"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_findings extends Xrm.SectionCollectionBase {
+        get(name: "_section_369"): Xrm.PageSection;
+        get(name: "tab_11_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -174,7 +174,7 @@ declare namespace Form.incident.Main {
       get(name: "RelatedSolutionGrid"): Xrm.SubGridControl<"connection">;
       get(name: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
-      get(name: "Subgrid_2"): Xrm.SubGridControl<"ovs_finding">;
+      get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -227,6 +227,7 @@ declare namespace Form.incident.Main {
       get(name: "responseby"): Xrm.DateControl;
       get(name: "sentimentvalue"): Xrm.NumberControl;
       get(name: "socialprofileid"): Xrm.LookupControl<"socialprofile">;
+      get(name: "subgrid_findings"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "subjectid"): Xrm.LookupControl<"subject">;
       get(name: "ticketnumber"): Xrm.StringControl;
       get(name: "title"): Xrm.StringControl;
@@ -251,9 +252,9 @@ declare namespace Form.incident.Main {
       get(name: "SOCIALDETAILS_TAB"): Xrm.PageTab<Tabs.SOCIALDETAILS_TAB>;
       get(name: "general"): Xrm.PageTab<Tabs.general>;
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
-      get(name: "tab_11"): Xrm.PageTab<Tabs.tab_11>;
       get(name: "tab_13"): Xrm.PageTab<Tabs.tab_13>;
       get(name: "tab_14"): Xrm.PageTab<Tabs.tab_14>;
+      get(name: "tab_findings"): Xrm.PageTab<Tabs.tab_findings>;
       get(name: "tags_tab"): Xrm.PageTab<Tabs.tags_tab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -314,7 +315,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "RelatedSolutionGrid"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
-    getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ovs_finding">;
+    getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -367,6 +368,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "responseby"): Xrm.DateControl;
     getControl(controlName: "sentimentvalue"): Xrm.NumberControl;
     getControl(controlName: "socialprofileid"): Xrm.LookupControl<"socialprofile">;
+    getControl(controlName: "subgrid_findings"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
     getControl(controlName: "ticketnumber"): Xrm.StringControl;
     getControl(controlName: "title"): Xrm.StringControl;
