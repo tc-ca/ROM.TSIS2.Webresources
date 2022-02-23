@@ -101,6 +101,7 @@ var ROM;
                             setSiteFilteredView(form, regionAttributeValue[0].id, countryCondition, "", stakeholderAttributeValue[0].id, "", operationTypeAttributeValue[0].id);
                         }
                     }
+                    setActivityTypeDisabled(eContext);
                     break;
                 default:
                     // Enable all operation related fields
@@ -948,6 +949,103 @@ var ROM;
             if (form.getControl("workorderservicetasksgrid").getViewSelector().getCurrentView() != workOrderView) {
                 form.getControl("workorderservicetasksgrid").getViewSelector().setCurrentView(workOrderView);
             }
+        }
+        //Checks if the Activity Type should have been able to be changed
+        //Puts old value in and locks the control if it shouldn't have been able to be changed
+        //This is needed when a service task is changed to in-progress and the work order form remained open.
+        function activityTypeOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            if (formContext.ui.getFormType() == 1) {
+                return;
+            }
+            var workOrderId = formContext.data.entity.getId();
+            var activityTypeControl = formContext.getControl("msdyn_primaryincidenttype");
+            //Retrieve all related Service Tasks
+            var fetchXml = [
+                "<fetch top='50'>",
+                "  <entity name='msdyn_workorderservicetask'>",
+                "    <attribute name='statuscode' />",
+                "    <attribute name='statecode' />",
+                "    <filter>",
+                "      <condition attribute='msdyn_workorder' operator='eq' value='", workOrderId, "'/>",
+                "    </filter>",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchXml).then(function (result) {
+                if (result.entities.length == 0) {
+                    activityTypeControl.setDisabled(false);
+                }
+                else {
+                    var workOrderHasActiveWost = false;
+                    var workOrderHasNewWost = false;
+                    for (var _i = 0, _a = result.entities; _i < _a.length; _i++) {
+                        var wost = _a[_i];
+                        if (wost.statecode == 0) {
+                            workOrderHasActiveWost = true;
+                            if (wost.statuscode == 918640005 /* New */)
+                                workOrderHasNewWost = true;
+                        }
+                    }
+                    if (!(workOrderHasNewWost || !workOrderHasActiveWost)) {
+                        //The Activity type should not have been able to change. Set it to the old value and lock the field.
+                        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value&$expand=msdyn_primaryincidenttype($select=ovs_incidenttypenameenglish,ovs_incidenttypenamefrench)").then(function (result) {
+                            debugger;
+                            var incidentTypeName = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? result.msdyn_primaryincidenttype.ovs_incidenttypenamefrench : result.msdyn_primaryincidenttype.ovs_incidenttypenameenglish;
+                            formContext.getAttribute("msdyn_primaryincidenttype").setValue([{
+                                    id: result._msdyn_primaryincidenttype_value,
+                                    name: incidentTypeName,
+                                    entityType: "msdyn_incidenttype"
+                                }]);
+                            activityTypeControl.setDisabled(true);
+                        });
+                    }
+                }
+            });
+        }
+        WorkOrder.activityTypeOnChange = activityTypeOnChange;
+        //Enables the Activity Type control if there is a New WOST or no Active WOSTs yet
+        function setActivityTypeDisabled(eContext) {
+            var formContext = eContext.getFormContext();
+            var workOrderId = formContext.data.entity.getId();
+            var activityTypeControl = formContext.getControl("msdyn_primaryincidenttype");
+            //Retrieve all related Service Tasks
+            var fetchXml = [
+                "<fetch top='50'>",
+                "  <entity name='msdyn_workorderservicetask'>",
+                "    <attribute name='statuscode' />",
+                "    <attribute name='statecode' />",
+                "    <filter>",
+                "      <condition attribute='msdyn_workorder' operator='eq' value='", workOrderId, "'/>",
+                "    </filter>",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchXml).then(function (result) {
+                if (result.entities.length == 0) {
+                    activityTypeControl.setDisabled(false);
+                }
+                else {
+                    var workOrderHasActiveWost = false;
+                    var workOrderHasNewWost = false;
+                    for (var _i = 0, _a = result.entities; _i < _a.length; _i++) {
+                        var wost = _a[_i];
+                        if (wost.statecode == 0) {
+                            workOrderHasActiveWost = true;
+                            if (wost.statuscode == 918640005 /* New */)
+                                workOrderHasNewWost = true;
+                        }
+                    }
+                    if (workOrderHasNewWost || !workOrderHasActiveWost) {
+                        activityTypeControl.setDisabled(false);
+                    }
+                    else {
+                        activityTypeControl.setDisabled(true);
+                    }
+                }
+            });
         }
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));
