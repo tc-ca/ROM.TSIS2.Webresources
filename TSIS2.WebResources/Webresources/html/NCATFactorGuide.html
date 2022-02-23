@@ -2,7 +2,20 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+      if (parent.Xrm != undefined) {
+        if (parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1033) {
+          $(document).ready(function () {
+            $("[lang=fr]").hide();
+          });
+        } else {
+          $(document).ready(function () {
+            $("[lang=en]").hide();
+          });
+        }
+      }
+    </script>
     <style>
       body {
         font-family: "Segoe UI", Arial, sans-serif;
@@ -91,181 +104,63 @@
         vertical-align: top;
       }
     </style>
+
   </head>
 
   <body>
     <div class="factor">
       <button type="button" class="title">
-        Factor 1 - Actual or Potential Harm
+        <span lang="en">Factor 1 - Actual or Potential Harm</span>
+        <span lang="fr">Facteur 1 - Préjudice réel ou potentiel</span>
       </button>
       <div class="tips">
         <ul>
           <li>
-            Did the non-compliance(s) have an impact on rail security (physical
-            harm, disruption, inconvenience environmental)?
+            <span lang="en"
+              >Did the non-compliance(s) have an impact on rail security (physical harm, disruption, inconvenience
+              environmental)?</span
+            >
+            <span lang="fr"
+              >Les non conformités ont-elles nui à la sûreté ferroviaire (dommages matériels, perturbations,
+              inconvénients, dégâts environnementaux)?</span
+            >
           </li>
           <li>
-            Did the non-compliance(s) have a risk to the travelling public?
+            <span lang="en">Did the non-compliance(s) have a risk to the travelling public?</span>
+            <span lang="fr">Les non conformités ont-elles présenté un risque pour les voyageurs?</span>
           </li>
         </ul>
         <br />
         <table class="tg">
           <thead>
             <tr>
-              <th class="tg-t7cm">Criteria for Low</th>
-              <th class="tg-3wh0">Criteria for Medium</th>
-              <th class="tg-dwmg">Criteria for High</th>
+              <th class="tg-t7cm"><span lang="en">Criteria for Low</span><span lang="fr">Critère pour Faible</span></th>
+              <th class="tg-3wh0">
+                <span lang="en">Criteria for Medium</span><span lang="fr">Critère pour Moyen</span>
+              </th>
+              <th class="tg-dwmg"><span lang="en">Criteria for High</span><span lang="fr">Critère pour Élevé</span></th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="tg-0pky">
-                There was no actual harm and the potential for harm was slight.
+                <span lang="en">There was no actual harm and the potential for harm was slight.</span
+                ><span lang="fr">Il n’y a pas eu de préjudice, et le risque de préjudice était faible.</span>
               </td>
               <td class="tg-0pky">
-                There was actual harm (no harm to any person) or there was
-                realistic potential for actual harm to occur.
+                <span lang="en"
+                  >There was actual harm (no harm to any person) or there was realistic potential for actual harm to
+                  occur.</span
+                ><span lang="fr">Il y a eu un préjudice (mais personne n’a été blessé) ou un risque de préjudice.</span>
               </td>
               <td class="tg-0pky">
-                There was actual harm to persons or significant harm to property
-                or the environment or there was realistic potential for
-                significant harm to occur.
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <br />
-
-    <div class="factor">
-      <button type="button" class="title">Factor 2 - Intentionality</button>
-      <div class="tips">
-        <ul>
-          <li>
-            Was the non-compliance(s) intended? Was it an accident? Was it
-            inadvertent? Or was it somewhere in between? Was it foreseeable?
-          </li>
-          <li>
-            Would areasonable person have realized what might happen and they
-            were reckless(no thought given to risk or potential consequences)?
-          </li>
-
-          <li>Was/were the non-compliance(s) deliberate?</li>
-        </ul>
-        <br />
-        <table class="tg">
-          <thead>
-            <tr>
-              <th class="tg-t7cm">Criteria for Low</th>
-              <th class="tg-3wh0">Criteria for Medium</th>
-              <th class="tg-dwmg">Criteria for High</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="tg-0pky">
-                The regulated party was acting responsibly but the
-                non-compliance(s) still occurred.
-              </td>
-              <td class="tg-0pky">
-                It was foreseeable as something that could happen and the
-                regulated party took the risk anyway.
-              </td>
-              <td class="tg-0pky">
-                The actions of the regulated party were intentional(it was not
-                an accident). The regulated party committed the
-                non-compliance(s) even if they did not intend the consequence or
-                harm.
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <br />
-
-    <div class="factor">
-      <button type="button" class="title">Factor 3 - Compliance History</button>
-      <div class="tips">
-        <ul>
-          <li>
-            Does the regulated party, at the company or site level, have any
-            history of similar or identical non-compliance(s)?
-          </li>
-          <li>
-            Was/were the past non-compliance(s) at the company or site recent
-            (within the last 2 years)?
-          </li>
-          <li>
-            Does the regulated party have a history of non-compliance(s) in
-            general?
-          </li>
-        </ul>
-        <br />
-        <table class="tg">
-          <thead>
-            <tr>
-              <th class="tg-t7cm">Criteria for Low</th>
-              <th class="tg-3wh0">Criteria for Medium</th>
-              <th class="tg-dwmg">Criteria for High</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="tg-0pky">There is no history of non-compliance(s)?</td>
-              <td class="tg-0pky">
-                There is some history of non-compliance(s) but not similar.
-              </td>
-              <td class="tg-0pky">
-                There is either a history of similar non-compliance(s) or a
-                general pattern of non-compliance(s) which shows a disregard for
-                following the rules.
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <br />
-
-    <div class="factor">
-      <button type="button" class="title">Factor 4 - Economic Benefit</button>
-      <div class="tips">
-        <ul>
-          <li>
-            Did the non-compliance(s) benefit the regulated party by saving
-            money, time or other resources?
-          </li>
-          <li>
-            Was/were the non-compliance(s) done with a view to obtaining a
-            benefit or competitive advantage? Or to disadvantage a competitor?
-          </li>
-        </ul>
-        <br />
-        <table class="tg">
-          <thead>
-            <tr>
-              <th class="tg-t7cm">Criteria for Low</th>
-              <th class="tg-3wh0">Criteria for Medium</th>
-              <th class="tg-dwmg">Criteria for High</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="tg-0pky">
-                There was no direct or indirect economic benefit obtained.
-              </td>
-              <td class="tg-0pky">
-                There was some actual benefit or advantage obtained but
-                indirectly.
-              </td>
-              <td class="tg-0pky">
-                There was actual economic benefit obtained and the
-                non-compliance(s) enabled the realization of that benefit.
+                <span lang="en"
+                  >There was actual harm to persons or significant harm to property or the environment or there was
+                  realistic potential for significant harm to occur.</span
+                ><span lang="fr"
+                  >Il y a eu un préjudice pour des personnes, un préjudice important pour des biens ou pour
+                  l’environnement, ou un risque de préjudice important.</span
+                >
               </td>
             </tr>
           </tbody>
@@ -277,43 +172,70 @@
 
     <div class="factor">
       <button type="button" class="title">
-        Factor 5 - Mitigation of Non-Compliant Behavior(s)
+        <span lang="en">Factor 2 - Intentionality</span><span lang="fr">Facteur 2 - Intention</span>
       </button>
       <div class="tips">
         <ul>
           <li>
-            If there was harm, did the regulated party take responsibility and
-            mitigate the harm or did the regulated party try to avoid
-            responsibility?
+            <span lang="en"
+              >Was the non-compliance(s) intended? Was it an accident? Was it inadvertent? Or was it somewhere in
+              between?</span
+            ><span lang="fr"
+              >Les non-conformités étaient-elles intentionnelles? S’agissait-il d’un accident, d’une inadvertance ou
+              d’un peu des deux?</span
+            >
           </li>
           <li>
-            When there was no harm, did the regulated party take steps to
-            address the potential recurrence of the non-compliance(s)?
+            <span lang="en"
+              >Was it foreseeable? Would a reasonable person have realized what might happen and they were reckless (no
+              thought given to risk or potential consequences)?</span
+            ><span lang="fr"
+              >Était-ce prévisible? Une personne raisonnable se serait-elle rendu compte de ce qui aurait pu arriver,
+              mais sans réfléchir au risque ou aux conséquences potentielles?</span
+            >
+          </li>
+          <li>
+            <span lang="en">Was/were the non-compliance(s) deliberate?</span
+            ><span lang="fr">Les non-conformités étaient-elles délibérées?</span>
           </li>
         </ul>
         <br />
         <table class="tg">
           <thead>
             <tr>
-              <th class="tg-t7cm">Criteria for Low</th>
-              <th class="tg-3wh0">Criteria for Medium</th>
-              <th class="tg-dwmg">Criteria for High</th>
+              <th class="tg-t7cm"><span lang="en">Criteria for Low</span><span lang="fr">Critère pour Faible</span></th>
+              <th class="tg-3wh0">
+                <span lang="en">Criteria for Medium</span><span lang="fr">Critère pour Moyen</span>
+              </th>
+              <th class="tg-dwmg"><span lang="en">Criteria for High</span><span lang="fr">Critère pour Élevé</span></th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="tg-0pky">
-                The regulated party accepted responsibility and mitigated the
-                harm.
+                <span lang="en"
+                  >The regulated party was acting responsibly but the non-compliance(s) still occurred.</span
+                ><span lang="fr"
+                  >La partie réglementée a agi de manière responsable, mais les non conformités ont quand même eu
+                  lieu.</span
+                >
               </td>
               <td class="tg-0pky">
-                The regulated party accepted some responsibility and some
-                attempts at mitigation were undertaken.
+                <span lang="en"
+                  >It was foreseeable as something that could happen and the regulated party took the risk anyway.</span
+                ><span lang="fr"
+                  >La non-conformité était prévisible, mais la partie réglementée a quand même pris le risque.</span
+                >
               </td>
               <td class="tg-0pky">
-                The regulated party did not accept responsibility for the
-                non-compliance(s) and/or did not attempt to mitigate its
-                effects.
+                <span lang="en"
+                  >The actions of the regulated party were intentional (it was not an accident). The regulated party
+                  committed the non-compliance(s) even if they did not intend the consequence or harm.</span
+                ><span lang="fr"
+                  >Les actions de la partie réglementée étaient intentionnelles (il ne s’agissait pas d’un accident). La
+                  partie réglementée a commis les non-conformités, même si les conséquences ou le préjudice n’étaient
+                  pas intentionnels.</span
+                >
               </td>
             </tr>
           </tbody>
@@ -325,41 +247,63 @@
 
     <div class="factor">
       <button type="button" class="title">
-        Factor 6 - Cooperation with Inspection or Investigation
+        <span lang="en">Factor 3 - Compliance History</span
+        ><span lang="fr">Facteur 3 - Antécédents en matière de conformité</span>
       </button>
       <div class="tips">
         <ul>
           <li>
-            Was the regulated party cooperative during the inspection and
-            responsive to the requests of the TSI?
+            <span lang="en"
+              >Does the regulated party, at the company or site level, have any history of similar or identical
+              non-compliance(s)?</span
+            ><span lang="fr"
+              >La partie réglementée, au niveau de l’entreprise ou du site, a-t-elle des antécédents de non conformité
+              similaires ou identiques?</span
+            >
           </li>
           <li>
-            Where non-compliance(s) was found was the regulated party helpful in
-            determining how to prevent a recurrence?
+            <span lang="en"
+              >Was/were the past non-compliance(s) at the company or site recent (within the last 2 years)?</span
+            ><span lang="fr"
+              >Les non-conformités précédentes de l’entreprise ou du site datent-elles des deux dernières années?</span
+            >
+          </li>
+          <li>
+            <span lang="en">Does the regulated party have a history of non-compliance(s) in general?</span
+            ><span lang="fr"
+              >De manière générale, la partie réglementée a-t-elle des antécédents de non conformité?</span
+            >
           </li>
         </ul>
         <br />
         <table class="tg">
           <thead>
             <tr>
-              <th class="tg-t7cm">Criteria for Low</th>
-              <th class="tg-3wh0">Criteria for Medium</th>
-              <th class="tg-dwmg">Criteria for High</th>
+              <th class="tg-t7cm"><span lang="en">Criteria for Low</span><span lang="fr">Critère pour Faible</span></th>
+              <th class="tg-3wh0">
+                <span lang="en">Criteria for Medium</span><span lang="fr">Critère pour Moyen</span>
+              </th>
+              <th class="tg-dwmg"><span lang="en">Criteria for High</span><span lang="fr">Critère pour Élevé</span></th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="tg-0pky">
-                The regulated party assisted and facilitated throughout.
+                <span lang="en">There is no history of non-compliance(s).</span
+                ><span lang="fr">Il n’y a pas d’antécédents de non conformité.</span>
               </td>
               <td class="tg-0pky">
-                The regulated party assisted when asked but was not actively
-                engaged in facilitating the inspection.
+                <span lang="en">There is some history of non-compliance(s) but not similar.</span
+                ><span lang="fr">Il y a des antécédents de non-conformité, mais d’un autre genre.</span>
               </td>
               <td class="tg-0pky">
-                The regulated party assisted only when asked and actively or
-                passively obstructed or attempted to obstruct the work of the
-                Inspector.
+                <span lang="en"
+                  >There is either a history of similar non-compliance(s) or a general pattern of non-compliance(s)
+                  which shows a disregard for following the rules.</span
+                ><span lang="fr"
+                  >Il y a soit des antécédents de non conformité similaires, soit une tendance générale à la
+                  non-conformité qui révèle un mépris pour les règles.</span
+                >
               </td>
             </tr>
           </tbody>
@@ -371,37 +315,262 @@
 
     <div class="factor">
       <button type="button" class="title">
-        Factor 7 - Detection of Non-Compliance(s)
+        <span lang="en">Factor 4 - Economic Benefit</span><span lang="fr">Facteur 4 - Avantage économique</span>
       </button>
       <div class="tips">
         <ul>
-          <li>How did the non-compliance(s) come to light?</li>
-          <li>Was it the result of an incident?</li>
-          <li>Was it discovered during a routine inspection?</li>
+          <li>
+            <span lang="en"
+              >Did the non-compliance(s) benefit the regulated party by saving money, time or other resources?</span
+            ><span lang="fr"
+              >Les non-conformités ont-elles profité à la partie réglementée en lui faisant économiser de l’argent, du
+              temps ou des ressources?</span
+            >
+          </li>
+          <li>
+            <span lang="en"
+              >Was/were the non-compliance(s) done with a view to obtaining a benefit or competitive advantage? Or to
+              disadvantage a competitor?</span
+            ><span lang="fr"
+              >Les non-conformités ont-elles été commises dans le but d’obtenir un profit ou un avantage concurrentiel,
+              ou de désavantager un concurrent?</span
+            >
+          </li>
         </ul>
         <br />
         <table class="tg">
           <thead>
             <tr>
-              <th class="tg-t7cm">Criteria for Low</th>
-              <th class="tg-3wh0">Criteria for Medium</th>
-              <th class="tg-dwmg">Criteria for High</th>
+              <th class="tg-t7cm"><span lang="en">Criteria for Low</span><span lang="fr">Critère pour Faible</span></th>
+              <th class="tg-3wh0">
+                <span lang="en">Criteria for Medium</span><span lang="fr">Critère pour Moyen</span>
+              </th>
+              <th class="tg-dwmg"><span lang="en">Criteria for High</span><span lang="fr">Critère pour Élevé</span></th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="tg-0pky">
-                The non-compliance(s) was/were reported by the regulated party
-                (reporting could take place during a routine inspection).
+                <span lang="en">There was no direct or indirect economic benefit obtained.</span
+                ><span lang="fr">Aucun avantage économique direct ou indirect n’a été obtenu.</span>
               </td>
               <td class="tg-0pky">
-                The non-compliance(s) was/were discovered during a routine
-                inspection before any harm might have occurred.
+                <span lang="en">There was some actual benefit or advantage obtained but indirectly.</span
+                ><span lang="fr">Un avantage ou un profit a été obtenu, mais indirectement.</span>
               </td>
               <td class="tg-0pky">
-                The non-compliance(s) was/were only discovered as a result of an
-                incident and would have continued but for the discovery during a
-                reactive inspection.
+                <span lang="en"
+                  >There was actual economic benefit obtained and the non-compliance(s) enabled the realization of that
+                  benefit.</span
+                ><span lang="fr"
+                  >La non-conformité a permis à la partie réglementée d’obtenir un avantage économique.</span
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="factor">
+      <button type="button" class="title">
+        <span lang="en">Factor 5 - Mitigation of Non-Compliant Behavior(s)</span
+        ><span lang="fr">Facteur 5 - Atténuation des non-conformités</span>
+      </button>
+      <div class="tips">
+        <ul>
+          <li>
+            <span lang="en"
+              >If there was harm, did the regulated party take responsibility and mitigate the harm or did the regulated
+              party try to avoid responsibility?</span
+            ><span lang="fr"
+              >S’il y a eu préjudice, la partie réglementée en a-t-elle assumé la responsabilité et l’a t elle atténué
+              ou a-t-elle tenté de se soustraire à ses responsabilités?</span
+            >
+          </li>
+          <li>
+            <span lang="en"
+              >When there was no harm, did the regulated party take steps to address the potential recurrence of the
+              non-compliance(s)?</span
+            ><span lang="fr"
+              >S’il n’y a pas eu de préjudice, la partie réglementée a-t-elle pris des mesures pour éviter que les
+              non-conformités se reproduisent?</span
+            >
+          </li>
+        </ul>
+        <br />
+        <table class="tg">
+          <thead>
+            <tr>
+              <th class="tg-t7cm"><span lang="en">Criteria for Low</span><span lang="fr">Critère pour Faible</span></th>
+              <th class="tg-3wh0">
+                <span lang="en">Criteria for Medium</span><span lang="fr">Critère pour Moyen</span>
+              </th>
+              <th class="tg-dwmg"><span lang="en">Criteria for High</span><span lang="fr">Critère pour Élevé</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tg-0pky">
+                <span lang="en">The regulated party accepted responsibility and mitigated the harm.</span
+                ><span lang="fr">La partie réglementée en a accepté la responsabilité et a atténué le préjudice.</span>
+              </td>
+              <td class="tg-0pky">
+                <span lang="en"
+                  >The regulated party accepted some responsibility and some attempts at mitigation were
+                  undertaken.</span
+                ><span lang="fr"
+                  >La partie réglementée en a accepté la responsabilité dans une certaine mesure et a fait quelques
+                  tentatives d’atténuation.</span
+                >
+              </td>
+              <td class="tg-0pky">
+                <span lang="en"
+                  >The regulated party did not accept responsibility for the non-compliance(s) and/or did not attempt to
+                  mitigate its effects.</span
+                ><span lang="fr"
+                  >La partie réglementée n’a pas accepté la responsabilité des non-conformités et/ou n’a pas tenté d’en
+                  atténuer les effets.</span
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="factor">
+      <button type="button" class="title">
+        <span lang="en">Factor 6 - Cooperation with Inspection or Investigation</span
+        ><span lang="fr">Facteur 6 - Collaboration durant l’inspection ou l’enquête</span>
+      </button>
+      <div class="tips">
+        <ul>
+          <li>
+            <span lang="en"
+              >Was the regulated party cooperative during the inspection and responsive to the requests of the
+              TSI?</span
+            ><span lang="fr"
+              >La partie réglementée a-t-elle été coopérative pendant l’inspection et a-t-elle répondu favorablement aux
+              demandes de l’IST?</span
+            >
+          </li>
+          <li>
+            <span lang="en"
+              >Where non-compliance(s) was found was the regulated party helpful in determining how to prevent a
+              recurrence?</span
+            ><span lang="fr"
+              >Lorsque la non-conformité a été constatée, la partie réglementée a-t-elle aidé à trouver une façon
+              d’empêcher qu’elle se reproduise?</span
+            >
+          </li>
+        </ul>
+        <br />
+        <table class="tg">
+          <thead>
+            <tr>
+              <th class="tg-t7cm"><span lang="en">Criteria for Low</span><span lang="fr">Critère pour Faible</span></th>
+              <th class="tg-3wh0">
+                <span lang="en">Criteria for Medium</span><span lang="fr">Critère pour Moyen</span>
+              </th>
+              <th class="tg-dwmg"><span lang="en">Criteria for High</span><span lang="fr">Critère pour Élevé</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tg-0pky">
+                <span lang="en">The regulated party assisted and facilitated throughout.</span
+                ><span lang="fr"
+                  >La partie réglementée a offert son aide et a participé tout au long de l’inspection ou de
+                  l’enquête.</span
+                >
+              </td>
+              <td class="tg-0pky">
+                <span lang="en"
+                  >The regulated party assisted when asked but was not actively engaged in facilitating the
+                  inspection.</span
+                ><span lang="fr"
+                  >La partie réglementée a apporté son aide quand on le lui a demandé, mais elle n’a pas participé
+                  activement à la réalisation de l’inspection.</span
+                >
+              </td>
+              <td class="tg-0pky">
+                <span lang="en"
+                  >The regulated party assisted only when asked and actively or passively obstructed or attempted to
+                  obstruct the work of the Inspector.</span
+                ><span lang="fr"
+                  >La partie réglementée a seulement offert son aide lorsque cela lui a été demandé et a activement ou
+                  passivement entravé ou tenté d’entraver le travail de l’inspecteur.</span
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="factor">
+      <button type="button" class="title">
+        <span lang="en">Factor 7 - Detection of Non-Compliance(s)</span
+        ><span lang="fr">Facteur 7 - Détection des non-conformités</span>
+      </button>
+      <div class="tips">
+        <ul>
+          <li>
+            <span lang="en">How did the non-compliance(s) come to light?</span
+            ><span lang="fr">Comment a-t-on découvert les non conformités?</span>
+          </li>
+          <li><span lang="en">Was it the result of an incident?</span><span lang="fr">Lors d’un incident?</span></li>
+          <li>
+            <span lang="en">Was it discovered during a routine inspection?</span
+            ><span lang="fr">Lors d’une inspection courante?</span>
+          </li>
+        </ul>
+        <br />
+        <table class="tg">
+          <thead>
+            <tr>
+              <th class="tg-t7cm"><span lang="en">Criteria for Low</span><span lang="fr">Critère pour Faible</span></th>
+              <th class="tg-3wh0">
+                <span lang="en">Criteria for Medium</span><span lang="fr">Critère pour Moyen</span>
+              </th>
+              <th class="tg-dwmg"><span lang="en">Criteria for High</span><span lang="fr">Critère pour Élevé</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tg-0pky">
+                <span lang="en"
+                  >The non-compliance(s) was/were reported by the regulated party (reporting could take place during a
+                  routine inspection).</span
+                ><span lang="fr"
+                  >Les non-conformités ont été signalées par la partie réglementée (le signalement peut avoir lieu lors
+                  d’une inspection courante).</span
+                >
+              </td>
+              <td class="tg-0pky">
+                <span lang="en"
+                  >The non-compliance(s) was/were discovered during a routine inspection before any harm might have
+                  occurred.</span
+                ><span lang="fr"
+                  >Les non-conformités ont été découvertes lors d’une inspection courante avant qu’elles puissent
+                  produire le moindre préjudice.</span
+                >
+              </td>
+              <td class="tg-0pky">
+                <span lang="en"
+                  >The non-compliance(s) was/were only discovered as a result of an incident and would have continued
+                  but for the discovery during a reactive inspection.</span
+                ><span lang="fr"
+                  >Les non-conformités n’ont été découvertes qu’à la suite d’un incident et auraient continué si elles
+                  n’avaient pas été découvertes lors d’une inspection réactive.</span
+                >
               </td>
             </tr>
           </tbody>
