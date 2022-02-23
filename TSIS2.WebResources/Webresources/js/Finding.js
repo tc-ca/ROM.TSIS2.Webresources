@@ -370,13 +370,11 @@ var ROM;
                 formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("required");
                 //Clear final enforcement action, in case it was set before
                 formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
-                var adminRoleId_1 = "ca432c33-29a1-eb11-b1ac-000d3ae8bbe0";
-                var managerRoleId_1 = "85e36d25-29f5-eb11-94ef-000d3af36036";
                 var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
                 //If the user is a system admin or ROM - Manager, show the NCAT manager review section
                 var isAdminOrManager_1 = false;
                 userRoles.forEach(function (role) {
-                    if (role.id == adminRoleId_1 || role.id == managerRoleId_1) {
+                    if (role.name == "System Administrator" || role.name == "ROM - Manager") {
                         isAdminOrManager_1 = true;
                     }
                 });
@@ -414,13 +412,11 @@ var ROM;
                 formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("required");
                 //Clear final enforcement action, in case it was set before
                 formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
-                var adminRoleId_2 = "ca432c33-29a1-eb11-b1ac-000d3ae8bbe0";
-                var managerRoleId_2 = "85e36d25-29f5-eb11-94ef-000d3af36036";
                 var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
                 //If the user is a system admin or ROM - Manager, show the RATE manager review section
                 var isAdminOrManager_2 = false;
                 userRoles.forEach(function (role) {
-                    if (role.id == adminRoleId_2 || role.id == managerRoleId_2) {
+                    if (role.name == "System Administrator" || role.name == "ROM - Manager") {
                         isAdminOrManager_2 = true;
                     }
                 });
