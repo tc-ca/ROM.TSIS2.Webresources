@@ -1001,6 +1001,9 @@ var ROM;
                             activityTypeControl.setDisabled(true);
                         });
                     }
+                    else {
+                        formContext.data.save();
+                    }
                 }
             });
         }

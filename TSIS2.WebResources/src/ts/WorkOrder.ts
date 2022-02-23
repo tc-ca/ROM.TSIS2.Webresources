@@ -1047,7 +1047,7 @@ namespace ROM.WorkOrder {
     export function activityTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
         if (formContext.ui.getFormType() == 1) {
-            return
+            return;
         }
 
         const workOrderId = formContext.data.entity.getId();
@@ -1089,6 +1089,8 @@ namespace ROM.WorkOrder {
                         }]);
                         activityTypeControl.setDisabled(true);
                     });
+                } else {
+                    formContext.data.save();
                 }
             }
         });
