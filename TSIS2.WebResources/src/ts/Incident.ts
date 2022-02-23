@@ -50,6 +50,8 @@ namespace ROM.Incident {
             function (error) {
             }
         );
+
+        setFindingSubgridView(eContext);
     }
 
     export function regionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -293,4 +295,53 @@ namespace ROM.Incident {
         form.getControl("ts_country").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 
+    //Set the Findings Subgrid's view based on the user's business unit
+    function setFindingSubgridView(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.incident.Main.ROMCase>eContext.getFormContext();
+        //retrieve user's business unit
+        const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+        let currentUserBusinessUnitFetchXML = [
+            "<fetch top='50'>",
+            "  <entity name='businessunit'>",
+            "    <attribute name='name' />",
+            "    <attribute name='businessunitid' />",
+            "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+            "      <filter>",
+            "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+        currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+            const userBusinessUnitName = result.entities[0].name;
+            const gridContext = formContext.getControl("subgrid_findings");
+            if (userBusinessUnitName.startsWith("Transport")) {
+                
+                const activeFindingsTC = {
+                    entityType: "1039",
+                    id: "9711d0c3-7fcc-46da-a259-a722ba88af4d",
+                    name: "Active Findings TC"
+                }
+                gridContext.getViewSelector().setCurrentView(activeFindingsTC);
+            }
+            else if (userBusinessUnitName.startsWith("Aviation")) {
+                const activeFindingsTC = {
+                    entityType: "1039",
+                    id: "0f6d195a-2793-ec11-b3fe-0022483e8601",
+                    name: "Active Findings AvSec"
+                }
+                gridContext.getViewSelector().setCurrentView(activeFindingsTC);
+            }
+            else if (userBusinessUnitName.startsWith("Intermodal")) {
+                const activeFindingsTC = {
+                    entityType: "1039",
+                    id: "3bfcaa19-2793-ec11-b3fe-0022483e8339",
+                    name: "Active Findings ISSO"
+                }
+                gridContext.getViewSelector().setCurrentView(activeFindingsTC);
+            }
+        });
+    }
 }
