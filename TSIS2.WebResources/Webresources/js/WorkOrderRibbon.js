@@ -365,3 +365,100 @@ function exportWorkOrder(primaryControl) {
         }
     );
 }
+
+function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, selectedControl){
+    const formContext = primaryControl;
+
+    let userBusinessUnitName;
+    const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+    const currentWorkOrderRecordOwnerId = Xrm.Page.ui.formContext.getAttribute("ownerid").getValue()[0].id;
+    const currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g,'');
+
+    let currentUserBusinessUnitFetchXML = [
+        "<fetch top='1'>",
+        "  <entity name='businessunit'>",
+        "    <attribute name='name' />",
+        "    <attribute name='businessunitid' />",
+        "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+        "      <filter>",
+        "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+        "      </filter>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>",
+    ].join("");
+    currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+
+    Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+        userBusinessUnitId = result.entities[0].businessunitid;
+
+        const defaultViewId  = "00000000-0000-0000-00aa-000010001019";
+        const viewIds = ["00000000-0000-0000-00aa-000010001019"];
+        var lookupOptions =
+        {
+            defaultEntityType: "sytemuser",
+            entityTypes: ["systemuser"], 
+            allowMultiSelect: true,
+            defaultViewId: `${defaultViewId}`,
+            disableMru: true,
+            viewIds : viewIds,
+            filters: [
+                {
+                    filterXml: `<filter type="and">` + 
+                        `<condition attribute="businessunitid" operator="eq" value="${userBusinessUnitId}" />` +
+                        `<condition attribute="systemuserid" operator="neq" value="${currentWorkOrderRecordOwnerId}" />`+
+                        `</filter> `,
+                    entityLogicalName: "systemuser"
+                }
+            ]
+        };
+        
+        Xrm.Utility.lookupObjects(lookupOptions).then(
+            function(result){
+                for (var i = 0; i < result.length; i++) {
+                    var req = new XMLHttpRequest();
+
+                    req.open("POST", formContext.context.getClientUrl() + "/api/data/v9.0/" + "systemusers" + "(" + result[i].id.replace(/({|})/g,'') + ")" + "/Microsoft.Dynamics.CRM.AddUserToRecordTeam");
+                    req.setRequestHeader("Content-Type", "application/json");
+                    req.setRequestHeader("Accept", "application/json");
+                    req.setRequestHeader("OData-MaxVersion", "4.0");
+                    req.setRequestHeader("OData-Version", "4.0");
+
+                    let payload = 
+                    {
+                        "entity": {
+                            "@odata.type": "Microsoft.Dynamics.CRM.systemuser",
+                            "systemuserid": result[i].id.replace(/({|})/g,'')
+                        },
+                        "Record": {
+                            "@odata.type": "Microsoft.Dynamics.CRM.msdyn_workorder",
+                            "msdyn_workorderid": currentWorkOrderRecordId
+                        },
+                        "TeamTemplate": {
+                            "@odata.type": "Microsoft.Dynamics.CRM.teamtemplate",
+                            "teamtemplateid": "bddf1d45-706d-ec11-8f8e-0022483da5aa"
+                        }
+                    }
+
+                    req.onreadystatechange = function() {
+                        if (this.readyState === 4) {
+                            req.onreadystatechange = null;
+                            if (this.status === 200) {
+                                selectedControl.refresh();
+                            } else {
+                                showErrorMessageAlert(this.statusText);
+                            }
+                        }
+                    };
+                    req.send(JSON.stringify(payload));
+                }
+            },
+            function(error){
+                showErrorMessageAlert(error);
+            }
+        );
+
+    });
+
+    
+}
