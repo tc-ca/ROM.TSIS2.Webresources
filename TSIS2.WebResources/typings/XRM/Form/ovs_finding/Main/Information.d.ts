@@ -6,9 +6,8 @@ declare namespace Form.ovs_finding.Main {
         get(name: "NCAT_manager_review"): Xrm.PageSection;
         get(name: "NCAT_proposed_section"): Xrm.PageSection;
         get(name: "RATE_main_section"): Xrm.PageSection;
-        get(name: "RATE_manager_review"): Xrm.PageSection;
-        get(name: "RATE_proposed_section"): Xrm.PageSection;
         get(name: "summary_ncatfactorguide"): Xrm.PageSection;
+        get(name: "summary_section_13"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -16,6 +15,20 @@ declare namespace Form.ovs_finding.Main {
       }
       interface tab_Files extends Xrm.SectionCollectionBase {
         get(name: "tab_3_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_RATE extends Xrm.SectionCollectionBase {
+        get(name: "RATE_manager_review"): Xrm.PageSection;
+        get(name: "RATE_proposed_section"): Xrm.PageSection;
+        get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: "tab_4_section_2"): Xrm.PageSection;
+        get(name: "tab_RATE_section_3"): Xrm.PageSection;
+        get(name: "tab_RATE_section_4"): Xrm.PageSection;
+        get(name: "tab_RATE_section_5"): Xrm.PageSection;
+        get(name: "tab_RATE_section_8"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -88,6 +101,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
       get(name: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
       get(name: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
+      get(name: "WebResource_factorguidetest"): Xrm.WebResourceControl;
       get(name: "createdon"): Xrm.DateControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ovs_caseid"): Xrm.LookupControl<"incident">;
@@ -143,6 +157,7 @@ declare namespace Form.ovs_finding.Main {
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "summary"): Xrm.PageTab<Tabs.summary>;
       get(name: "tab_Files"): Xrm.PageTab<Tabs.tab_Files>;
+      get(name: "tab_RATE"): Xrm.PageTab<Tabs.tab_RATE>;
       get(name: "wo_details"): Xrm.PageTab<Tabs.wo_details>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -203,6 +218,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_factorguidetest"): Xrm.WebResourceControl;
     getControl(controlName: "createdon"): Xrm.DateControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ovs_caseid"): Xrm.LookupControl<"incident">;
