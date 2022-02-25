@@ -3,11 +3,15 @@ namespace ROM.Operation {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
     const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();       
 
-    if (form.getAttribute("ts_statusstartdate").getValue() == null) {
-        form.getAttribute("ts_description").setValue(null);
-        form.getControl("ts_statusenddate").setDisabled(true);
-        form.getControl("ts_description").setDisabled(true);
-    }
+        if (form.getAttribute("ts_statusstartdate").getValue() == null) {
+            form.getAttribute("ts_description").setValue(null);
+            form.getControl("ts_statusenddate").setDisabled(true);
+            form.getControl("ts_description").setDisabled(true);
+            form.getAttribute("ts_description").setRequiredLevel("none");
+        }
+        else {
+            form.getAttribute("ts_description").setRequiredLevel("required");
+        }
 }
 
     export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -44,6 +48,7 @@ namespace ROM.Operation {
                 form.getAttribute("ts_statusenddate").setValue(null);
                 form.getControl("ts_statusenddate").setDisabled(false);
                 form.getControl("ts_description").setDisabled(false);
+                form.getAttribute("ts_description").setRequiredLevel("required");
             }
             else {
                 form.getAttribute("ts_statusstartdate").setValue(null);
@@ -51,15 +56,23 @@ namespace ROM.Operation {
                 form.getAttribute("ts_description").setValue(null);
                 form.getControl("ts_statusenddate").setDisabled(true);
                 form.getControl("ts_description").setDisabled(true);
+                form.getAttribute("ts_description").setRequiredLevel("none");
             }
         }
     }
 
     export function statusStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
-        if (form.getAttribute("ts_statusstartdate").getValue() != null)
+        if (form.getAttribute("ts_statusstartdate").getValue() != null) {
             form.getControl("ts_statusenddate").setDisabled(false);
             form.getControl("ts_description").setDisabled(false);
-
+            form.getAttribute("ts_description").setRequiredLevel("required");
+        }
+        else {
+            form.getAttribute("ts_description").setRequiredLevel("none");
+            form.getAttribute("ts_description").setValue(null);
+            form.getControl("ts_statusenddate").setDisabled(true);
+            form.getControl("ts_description").setDisabled(true);
+        }
     }
 }
