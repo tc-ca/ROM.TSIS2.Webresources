@@ -13,6 +13,10 @@ var ROM;
                 form.getAttribute("ts_statusdescription").setValue(null);
                 form.getControl("ts_statusenddate").setDisabled(true);
                 form.getControl("ts_statusdescription").setDisabled(true);
+                form.getAttribute("ts_statusdescription").setRequiredLevel("none");
+            }
+            else {
+                form.getAttribute("ts_statusdescription").setRequiredLevel("required");
             }
         }
         Account.onLoad = onLoad;
@@ -119,6 +123,13 @@ var ROM;
             if (form.getAttribute("ts_statusstartdate").getValue() != null) {
                 form.getControl("ts_statusenddate").setDisabled(false);
                 form.getControl("ts_statusdescription").setDisabled(false);
+                form.getAttribute("ts_statusdescription").setRequiredLevel("required");
+            }
+            else {
+                form.getAttribute("ts_statusdescription").setRequiredLevel("none");
+                form.getAttribute("ts_statusdescription").setValue(null);
+                form.getControl("ts_statusenddate").setDisabled(true);
+                form.getControl("ts_statusdescription").setDisabled(true);
             }
         }
         Account.statusStartDateOnChange = statusStartDateOnChange;

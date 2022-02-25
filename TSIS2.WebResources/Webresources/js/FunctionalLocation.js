@@ -33,6 +33,10 @@ var ROM;
                 form.getAttribute("ts_description").setValue(null);
                 form.getControl("ts_statusenddate").setDisabled(true);
                 form.getControl("ts_description").setDisabled(true);
+                form.getAttribute("ts_description").setRequiredLevel("none");
+            }
+            else {
+                form.getAttribute("ts_description").setRequiredLevel("required");
             }
         }
         FunctionalLocation.onLoad = onLoad;
@@ -90,6 +94,13 @@ var ROM;
             if (form.getAttribute("ts_statusstartdate").getValue() != null) {
                 form.getControl("ts_statusenddate").setDisabled(false);
                 form.getControl("ts_description").setDisabled(false);
+                form.getAttribute("ts_description").setRequiredLevel("required");
+            }
+            else {
+                form.getAttribute("ts_description").setRequiredLevel("none");
+                form.getAttribute("ts_description").setValue(null);
+                form.getControl("ts_statusenddate").setDisabled(true);
+                form.getControl("ts_description").setDisabled(true);
             }
         }
         FunctionalLocation.statusStartDateOnChange = statusStartDateOnChange;
