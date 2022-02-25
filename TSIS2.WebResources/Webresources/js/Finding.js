@@ -81,19 +81,18 @@ var ROM;
                 }
                 //Show RATE Sections and fields when the user is in Transport Canada or Aviation Security business unit
                 if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Aviation")) {
-                    formContext.ui.tabs.get("summary").sections.get("RATE_main_section").setVisible(true);
+                    formContext.ui.tabs.get("tab_RATE").setVisible(true);
                     formContext.getControl("ts_ratefinalenforcementaction").setVisible(true);
                     RATEEnforcementRecommendationOnChange(eContext);
                     //If they did not accept the rate recommendation, show proposal sections and fields
                     if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == 717750001 /* No */) {
-                        formContext.ui.tabs.get("summary").sections.get("RATE_proposed_section").setVisible(true);
+                        formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
                         AcceptRATERecommendationOnChange(eContext);
                         RATEManagerDecisionOnChange(eContext);
                     }
                 }
             });
             RATESpecificComplianceHistoryOnChange(eContext);
-            RATEActualHarmFactorOnChange(eContext);
             setApprovingManagersViews(formContext);
         }
         Finding.onLoad = onLoad;
@@ -181,32 +180,23 @@ var ROM;
         //If all RATE Fields are set, calculate and set the recommended enforcement
         function RATEFieldOnChange(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, actualOrPotentialHarm, assessmentRatingName;
+                var formContext;
                 return __generator(this, function (_a) {
                     formContext = eContext.getFormContext();
-                    actualOrPotentialHarm = formContext.getAttribute("ts_rateactualorpotentialharm").getValue();
                     //A factor has changed, so everything below needs to be reset
                     formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
                     formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
                     formContext.getControl("ts_acceptraterecommendation").setDisabled(true);
                     RATEHideProposedSection(eContext);
                     formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
-                    if (actualOrPotentialHarm != null) {
-                        assessmentRatingName = actualOrPotentialHarm[0].name;
-                        if (assessmentRatingName == "None" || assessmentRatingName == "Rien") {
-                            calculateRATEEnforcementRecommendationActualHarmFactorNone(eContext);
-                        }
-                        else {
-                            calculateRATEEnforcementRecommendationActualHarmFactorNotNone(eContext);
-                        }
-                    }
+                    calculateRATEEnforcementRecommendation(eContext);
                     return [2 /*return*/, true];
                 });
             });
         }
         Finding.RATEFieldOnChange = RATEFieldOnChange;
         //Calculate and set an Enforcement Recommendation with all RATE factors
-        function calculateRATEEnforcementRecommendationActualHarmFactorNotNone(eContext) {
+        function calculateRATEEnforcementRecommendation(eContext) {
             return __awaiter(this, void 0, void 0, function () {
                 var formContext, rateSpecificComplianceHistory, factor1Value, factor2Value, factor3Value, factor4Value, factor5Value, factor6Value, factor7Value, factor8Value, complianceHistory, enforcementHistory, factor1AssessmentRatingId, factor2AssessmentRatingId, factor3AssessmentRatingId, factor4AssessmentRatingId, factor5AssessmentRatingId, factor6AssessmentRatingId, factor7AssessmentRatingId, factor8AssessmentRatingId, factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, factor8AssessmentRatingPromise, thresholdsPromise;
                 return __generator(this, function (_a) {
@@ -280,75 +270,6 @@ var ROM;
                 });
             });
         }
-        //Calculate and set an Enforcement Recommendation without Responsibility and Mitigation
-        function calculateRATEEnforcementRecommendationActualHarmFactorNone(eContext) {
-            return __awaiter(this, void 0, void 0, function () {
-                var formContext, rateSpecificComplianceHistory, factor1Value, factor2Value, factor5Value, factor6Value, factor7Value, factor8Value, complianceHistory, enforcementHistory, factor1AssessmentRatingId, factor2AssessmentRatingId, factor5AssessmentRatingId, factor6AssessmentRatingId, factor7AssessmentRatingId, factor8AssessmentRatingId, factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, factor8AssessmentRatingPromise, thresholdsPromise;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            formContext = eContext.getFormContext();
-                            rateSpecificComplianceHistory = formContext.getAttribute("ts_ratespecificcompliancehistory").getValue();
-                            factor1Value = formContext.getAttribute("ts_rategeneralcompliancehistory").getValue();
-                            factor2Value = formContext.getAttribute("ts_rateactualorpotentialharm").getValue();
-                            factor5Value = formContext.getAttribute("ts_ratepreventingrecurrence").getValue();
-                            factor6Value = formContext.getAttribute("ts_rateintentionality").getValue();
-                            factor7Value = formContext.getAttribute("ts_rateeconomicbenefit").getValue();
-                            factor8Value = formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue();
-                            complianceHistory = formContext.getAttribute("ts_ratespecificcompliancehistory").getValue();
-                            enforcementHistory = formContext.getAttribute("ts_ratespecificenforcementhistory").getValue();
-                            //If any of the rate factors don't have a value, reset any fields that require an enforcement recommendation
-                            if (rateSpecificComplianceHistory == null || factor1Value == null || factor2Value == null || factor5Value == null || factor6Value == null || factor7Value == null || factor8Value == null || ((complianceHistory != null && complianceHistory != 717750000 /* _0 */) && enforcementHistory == null)) {
-                                formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
-                                formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
-                                RATEHideProposedSection(eContext);
-                                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
-                                return [2 /*return*/, true];
-                            }
-                            factor1AssessmentRatingId = factor1Value[0].id;
-                            factor2AssessmentRatingId = factor2Value[0].id;
-                            factor5AssessmentRatingId = factor5Value[0].id;
-                            factor6AssessmentRatingId = factor6Value[0].id;
-                            factor7AssessmentRatingId = factor7Value[0].id;
-                            factor8AssessmentRatingId = factor8Value[0].id;
-                            factor1AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor1AssessmentRatingId, "?$select=ts_weight");
-                            factor2AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor2AssessmentRatingId, "?$select=ts_weight");
-                            factor5AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor5AssessmentRatingId, "?$select=ts_weight");
-                            factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
-                            factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
-                            factor8AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor8AssessmentRatingId, "?$select=ts_weight");
-                            if (enforcementHistory == null)
-                                enforcementHistory = 717750000 /* Nil */;
-                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_rateenforcementaction&$filter=ts_assessmenttool eq " + 717750001 /* RATE */ + " and ts_rateenforcementhistory eq " + enforcementHistory);
-                            //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
-                            return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, factor8AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
-                                    var totalWeight = 0;
-                                    for (var i = 0; i < 6; i++) { //The first 6 are the assessment ratings
-                                        totalWeight += factorPromises[i].ts_weight;
-                                    }
-                                    var enforcementResponseChoiceNumber = null;
-                                    //Loop through all the thresholds, if the total weight is between a min and max, set its enforcement action to the enforcement recommendation
-                                    for (var _i = 0, _a = factorPromises[6].entities; _i < _a.length; _i++) {
-                                        var threshold = _a[_i];
-                                        var min = threshold.ts_minimum;
-                                        var max = threshold.ts_maximum;
-                                        if (totalWeight >= min && totalWeight <= max) {
-                                            enforcementResponseChoiceNumber = threshold.ts_rateenforcementaction;
-                                            break;
-                                        }
-                                    }
-                                    formContext.getAttribute("ts_rateenforcementrecommendation").setValue(enforcementResponseChoiceNumber);
-                                    formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
-                                    formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
-                                })];
-                        case 1:
-                            //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
-                            _a.sent();
-                            return [2 /*return*/];
-                    }
-                });
-            });
-        }
         //Sets the NCAT Final Enforcement Action to the recommended Enforcement if the user accepts
         //Reveals fields for user to suggest an alternative enforcement action if they do not accept the recommendation
         function AcceptNCATRecommendationOnChange(eContext) {
@@ -358,6 +279,7 @@ var ROM;
             if (acceptNCATRecommendation == 717750001 /* No */) {
                 //Show NCAT Approving Manager
                 formContext.getControl("ts_ncatmanager").setVisible(true);
+                formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
                 //Require NCAT Approving Manager (Will make it required when there are managers to choose)
                 //formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
                 //Show Inspector Recommendation
@@ -400,6 +322,7 @@ var ROM;
             if (acceptRATERecommendation == 717750001 /* No */) {
                 //Show RATE Approving Manager
                 formContext.getControl("ts_ratemanager").setVisible(true);
+                formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
                 //Require RATE Approving Manager (Will make it required when there are managers to choose)
                 //formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
                 //Show Inspector Recommendation
@@ -421,7 +344,7 @@ var ROM;
                     }
                 });
                 if (isAdminOrManager_2)
-                    formContext.ui.tabs.get("summary").sections.get("RATE_manager_review").setVisible(true);
+                    formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
             }
             else {
                 if (acceptRATERecommendation == 717750000 /* Yes */) {
@@ -499,31 +422,6 @@ var ROM;
             }
         }
         Finding.RATESpecificComplianceHistoryOnChange = RATESpecificComplianceHistoryOnChange;
-        //Responsibilty and Mitigation RATE factors are locked and unlocked based on the response of the Actual Harm factor
-        function RATEActualHarmFactorOnChange(eContext) {
-            var formContext = eContext.getFormContext();
-            var actualOrPotentialHarm = formContext.getAttribute("ts_rateactualorpotentialharm").getValue();
-            if (actualOrPotentialHarm != null) {
-                var assessmentRatingName = actualOrPotentialHarm[0].name;
-                if (assessmentRatingName == "None" || assessmentRatingName == "Rien") {
-                    formContext.getControl("ts_rateresponsibility").setDisabled(true);
-                    formContext.getControl("ts_ratemitigationofnoncompliantbehaviors").setDisabled(true);
-                    formContext.getAttribute("ts_rateresponsibility").setValue(null);
-                    formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").setValue(null);
-                }
-                else {
-                    formContext.getControl("ts_rateresponsibility").setDisabled(false);
-                    formContext.getControl("ts_ratemitigationofnoncompliantbehaviors").setDisabled(false);
-                }
-            }
-            else {
-                formContext.getControl("ts_rateresponsibility").setDisabled(true);
-                formContext.getControl("ts_ratemitigationofnoncompliantbehaviors").setDisabled(true);
-                formContext.getAttribute("ts_rateresponsibility").setValue(null);
-                formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").setValue(null);
-            }
-        }
-        Finding.RATEActualHarmFactorOnChange = RATEActualHarmFactorOnChange;
         //Does not allow RATE Inspector Recommendation to match the NCAT Enforcement Recommendation
         //Resets the Manager Review Section fields
         function RATEInspectorRecommendationOnChange(eContext) {
@@ -707,6 +605,7 @@ var ROM;
         //Clears, Hides, and sets Required level to None for every field in the NCAT Manager Review Section
         function NCATHideManagerReviewSection(eContext) {
             var formContext = eContext.getFormContext();
+            formContext.getAttribute("ts_ncatmanagerdecision").setRequiredLevel("none");
             formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
             formContext.getControl("ts_ncatmanagerdecision").setVisible(false);
             formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
@@ -735,6 +634,7 @@ var ROM;
         //Clears, Hides, and sets Required level to None for every field in the RATE Manager Review Section
         function RATEHideManagerReviewSection(eContext) {
             var formContext = eContext.getFormContext();
+            formContext.getAttribute("ts_ratemanagerdecision").setRequiredLevel("none");
             formContext.getAttribute("ts_ratemanagerdecision").setValue(null);
             formContext.getControl("ts_ratemanagerdecision").setVisible(false);
             formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
