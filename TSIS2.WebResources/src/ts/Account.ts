@@ -118,6 +118,7 @@ namespace ROM.Account {
                 form.getAttribute("ts_statusenddate").setValue(null);
                 form.getControl("ts_statusenddate").setDisabled(false);
                 form.getControl("ts_statusdescription").setDisabled(false);
+                form.getAttribute("ts_statusdescription").setRequiredLevel("required");
             }
             else {
                 form.getAttribute("ts_statusstartdate").setValue(null);
@@ -125,6 +126,7 @@ namespace ROM.Account {
                 form.getAttribute("ts_statusdescription").setValue(null);
                 form.getControl("ts_statusenddate").setDisabled(true);
                 form.getControl("ts_statusdescription").setDisabled(true);
+                form.getAttribute("ts_statusdescription").setRequiredLevel("none");
             }
         }
     }
