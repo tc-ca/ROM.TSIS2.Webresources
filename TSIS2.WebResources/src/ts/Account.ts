@@ -8,17 +8,39 @@ namespace ROM.Account {
             addressControl.setVisible(false);
         }
 
+        if (form.getAttribute("ts_stakeholderstatus").getValue() == ts_stakeholderstatus.Operational) {
+            form.getAttribute("ts_statusstartdate").setValue(null);
+            form.getAttribute("ts_statusenddate").setValue(null);
+            form.getAttribute("ts_statusdescription").setValue(null);
+            form.getControl("ts_statusenddate").setDisabled(true);
+            form.getControl("ts_statusdescription").setDisabled(true);
+            form.getAttribute("ts_statusdescription").setRequiredLevel("none");
+        }
         if (form.getAttribute("ts_statusstartdate").getValue() == null) {
             form.getAttribute("ts_statusdescription").setValue(null);
             form.getControl("ts_statusenddate").setDisabled(true);
             form.getControl("ts_statusdescription").setDisabled(true);
             form.getAttribute("ts_statusdescription").setRequiredLevel("none");
         }
-        else {
-            form.getAttribute("ts_statusdescription").setRequiredLevel("required");
-        }
     }
 
+    export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
+        const statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
+        const statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
+        if (statusStartDateValue != null) {
+            if (Date.parse(statusStartDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+                form.getAttribute("ts_stakeholderstatus").setValue(ts_stakeholderstatus.NonOperational);
+               
+            }
+        }
+        if (statusEndDateValue != null) {
+            if (Date.parse(statusEndDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+                form.getAttribute("ts_stakeholderstatus").setValue(ts_stakeholderstatus.Operational);
+               
+            }
+        }
+    }
     export function regionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
 
@@ -106,44 +128,21 @@ namespace ROM.Account {
         }
     }
 
-    export function stakeholderStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
-        const stakeholderStatus = form.getAttribute("ts_stakeholderstatus");
-
-        if (stakeholderStatus != null && stakeholderStatus != undefined) {
-            const stakeholderStatusValue = stakeholderStatus.getValue();
-            //if status is Non-Operational 
-            if (stakeholderStatusValue == 717750001) {
-                form.getAttribute("ts_statusstartdate").setValue(new Date(Date.now()));
-                form.getAttribute("ts_statusenddate").setValue(null);
-                form.getControl("ts_statusenddate").setDisabled(false);
-                form.getControl("ts_statusdescription").setDisabled(false);
-                form.getAttribute("ts_statusdescription").setRequiredLevel("required");
-            }
-            else {
-                form.getAttribute("ts_statusstartdate").setValue(null);
-                form.getAttribute("ts_statusenddate").setValue(null);
-                form.getAttribute("ts_statusdescription").setValue(null);
-                form.getControl("ts_statusenddate").setDisabled(true);
-                form.getControl("ts_statusdescription").setDisabled(true);
-                form.getAttribute("ts_statusdescription").setRequiredLevel("none");
-            }
-        }
-    }
-
     export function statusStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
-        if (form.getAttribute("ts_statusstartdate").getValue() != null) {
+        const statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
+        if (statusStartDateValue != null) {
             form.getControl("ts_statusenddate").setDisabled(false);
             form.getControl("ts_statusdescription").setDisabled(false);
-            form.getAttribute("ts_statusdescription").setRequiredLevel("required");
+            form.getAttribute("ts_statusdescription").setRequiredLevel("required");           
         }
         else {
             form.getAttribute("ts_statusdescription").setRequiredLevel("none");
             form.getAttribute("ts_statusdescription").setValue(null);
+            form.getAttribute("ts_statusenddate").setValue(null);
             form.getControl("ts_statusenddate").setDisabled(true);
             form.getControl("ts_statusdescription").setDisabled(true);
         }
-            
+        
     }
 }
