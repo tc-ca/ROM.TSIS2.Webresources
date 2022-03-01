@@ -5,17 +5,38 @@ var ROM;
     (function (Operation) {
         function onLoad(eContext) {
             var form = eContext.getFormContext();
+            if (form.getAttribute("ts_operationalstatus").getValue() == 717750000 /* Operational */) {
+                form.getAttribute("ts_statusstartdate").setValue(null);
+                form.getAttribute("ts_statusenddate").setValue(null);
+                form.getAttribute("ts_description").setValue(null);
+                form.getControl("ts_statusenddate").setDisabled(true);
+                form.getControl("ts_description").setDisabled(true);
+                form.getAttribute("ts_description").setRequiredLevel("none");
+            }
             if (form.getAttribute("ts_statusstartdate").getValue() == null) {
                 form.getAttribute("ts_description").setValue(null);
                 form.getControl("ts_statusenddate").setDisabled(true);
                 form.getControl("ts_description").setDisabled(true);
                 form.getAttribute("ts_description").setRequiredLevel("none");
             }
-            else {
-                form.getAttribute("ts_description").setRequiredLevel("required");
-            }
         }
         Operation.onLoad = onLoad;
+        function onSave(eContext) {
+            var form = eContext.getFormContext();
+            var statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
+            var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
+            if (statusStartDateValue != null) {
+                if (Date.parse(statusStartDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+                    form.getAttribute("ts_operationalstatus").setValue(717750001 /* NonOperational */);
+                }
+            }
+            if (statusEndDateValue != null) {
+                if (Date.parse(statusEndDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+                    form.getAttribute("ts_operationalstatus").setValue(717750000 /* Operational */);
+                }
+            }
+        }
+        Operation.onSave = onSave;
         function siteOnChange(eContext) {
             var form = eContext.getFormContext();
             var siteAttribute = form.getAttribute("ts_site");
@@ -37,29 +58,6 @@ var ROM;
             }
         }
         Operation.siteOnChange = siteOnChange;
-        function operationStatusOnChange(eContext) {
-            var form = eContext.getFormContext();
-            var operationStatusAttribute = form.getAttribute("ts_operationalstatus");
-            if (operationStatusAttribute != null && operationStatusAttribute != null) {
-                var operationStatusAttributeValue = operationStatusAttribute.getValue();
-                if (operationStatusAttributeValue == 717750001) {
-                    form.getAttribute("ts_statusstartdate").setValue(new Date(Date.now()));
-                    form.getAttribute("ts_statusenddate").setValue(null);
-                    form.getControl("ts_statusenddate").setDisabled(false);
-                    form.getControl("ts_description").setDisabled(false);
-                    form.getAttribute("ts_description").setRequiredLevel("required");
-                }
-                else {
-                    form.getAttribute("ts_statusstartdate").setValue(null);
-                    form.getAttribute("ts_statusenddate").setValue(null);
-                    form.getAttribute("ts_description").setValue(null);
-                    form.getControl("ts_statusenddate").setDisabled(true);
-                    form.getControl("ts_description").setDisabled(true);
-                    form.getAttribute("ts_description").setRequiredLevel("none");
-                }
-            }
-        }
-        Operation.operationStatusOnChange = operationStatusOnChange;
         function statusStartDateOnChange(eContext) {
             var form = eContext.getFormContext();
             if (form.getAttribute("ts_statusstartdate").getValue() != null) {
@@ -70,6 +68,7 @@ var ROM;
             else {
                 form.getAttribute("ts_description").setRequiredLevel("none");
                 form.getAttribute("ts_description").setValue(null);
+                form.getAttribute("ts_statusenddate").setValue(null);
                 form.getControl("ts_statusenddate").setDisabled(true);
                 form.getControl("ts_description").setDisabled(true);
             }
