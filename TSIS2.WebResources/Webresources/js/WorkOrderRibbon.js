@@ -406,8 +406,13 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
                 {
                     filterXml: `<filter type="and">` + 
                         `<condition attribute="businessunitid" operator="eq" value="${userBusinessUnitId}" />` +
-                        `<condition attribute="systemuserid" operator="neq" value="${currentWorkOrderRecordOwnerId}" />`+
-                        `</filter> `,
+                        `<condition attribute="systemuserid" operator="neq" value="${currentWorkOrderRecordOwnerId}" />` +
+                        `</filter> ` +
+                        `<link-entity name="businessunit" from="businessunitid" to="businessunitid" link-type="outer">` +
+                        `<filter>` +
+                        `<condition attribute="parentbusinessunitid" operator="eq" value="${userBusinessUnitId}"/>` +
+                        `<filter>` +
+                        `</link-entity>`,
                     entityLogicalName: "systemuser"
                 }
             ]
