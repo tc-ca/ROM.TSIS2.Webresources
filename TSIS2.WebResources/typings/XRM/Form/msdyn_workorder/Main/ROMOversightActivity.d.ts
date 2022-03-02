@@ -185,13 +185,13 @@ declare namespace Form.msdyn_workorder.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "AdditionalInspectors"): Xrm.SubGridControl<"systemuser">;
       get(name: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
-      get(name: "WorkOrderAccessTeam"): Xrm.SubGridControl<"systemuser">;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
       get(name: "createdon"): Xrm.DateControl;
       get(name: "footer_msdyn_substatus"): Xrm.LookupControl<"msdyn_workordersubstatus">;
@@ -400,13 +400,13 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_workorderenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_workorderstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "AdditionalInspectors"): Xrm.SubGridControl<"systemuser">;
     getControl(controlName: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
-    getControl(controlName: "WorkOrderAccessTeam"): Xrm.SubGridControl<"systemuser">;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "createdon"): Xrm.DateControl;
     getControl(controlName: "footer_msdyn_substatus"): Xrm.LookupControl<"msdyn_workordersubstatus">;
