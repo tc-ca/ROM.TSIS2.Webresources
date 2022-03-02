@@ -451,7 +451,7 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
                             if (this.status === 200) {
                                 selectedControl.refresh();
                             } else {
-                                showErrorMessageAlert(this.statusText);
+                                showErrorMessageAlert(req.status);
                             }
                         }
                     };
