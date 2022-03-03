@@ -19,8 +19,8 @@ declare namespace Form.ovs_operation.Main {
         get(name: "_section_156"): Xrm.PageSection;
         get(name: "_section_186"): Xrm.PageSection;
         get(name: "null_section_3"): Xrm.PageSection;
+        get(name: "section_8"): Xrm.PageSection;
         get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}_section_5"): Xrm.PageSection;
-        get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}_section_6"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;

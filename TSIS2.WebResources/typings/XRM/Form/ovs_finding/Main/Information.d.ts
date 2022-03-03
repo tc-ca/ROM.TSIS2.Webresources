@@ -2,12 +2,8 @@ declare namespace Form.ovs_finding.Main {
   namespace Information {
     namespace Tabs {
       interface summary extends Xrm.SectionCollectionBase {
-        get(name: "NCAT_main_section"): Xrm.PageSection;
-        get(name: "NCAT_manager_review"): Xrm.PageSection;
-        get(name: "NCAT_proposed_section"): Xrm.PageSection;
-        get(name: "RATE_main_section"): Xrm.PageSection;
-        get(name: "summary_ncatfactorguide"): Xrm.PageSection;
         get(name: "summary_section_13"): Xrm.PageSection;
+        get(name: "summary_section_3"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -15,6 +11,17 @@ declare namespace Form.ovs_finding.Main {
       }
       interface tab_Files extends Xrm.SectionCollectionBase {
         get(name: "tab_3_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_NCAT extends Xrm.SectionCollectionBase {
+        get(name: "NCAT_main_section"): Xrm.PageSection;
+        get(name: "NCAT_manager_review"): Xrm.PageSection;
+        get(name: "NCAT_proposed_section"): Xrm.PageSection;
+        get(name: "summary_ncatfactorguide"): Xrm.PageSection;
+        get(name: "tab_NCAT_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -157,6 +164,7 @@ declare namespace Form.ovs_finding.Main {
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "summary"): Xrm.PageTab<Tabs.summary>;
       get(name: "tab_Files"): Xrm.PageTab<Tabs.tab_Files>;
+      get(name: "tab_NCAT"): Xrm.PageTab<Tabs.tab_NCAT>;
       get(name: "tab_RATE"): Xrm.PageTab<Tabs.tab_RATE>;
       get(name: "wo_details"): Xrm.PageTab<Tabs.wo_details>;
       get(name: string): undefined;
