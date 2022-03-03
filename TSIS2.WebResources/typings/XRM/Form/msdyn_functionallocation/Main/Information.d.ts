@@ -35,7 +35,7 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(name: "_section_72"): Xrm.PageSection;
         get(name: "tab_3_section_1"): Xrm.PageSection;
         get(name: "tab_3_section_2"): Xrm.PageSection;
-        get(name: "tab_3_section_6"): Xrm.PageSection;
+        get(name: "tab_3_section_7"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;

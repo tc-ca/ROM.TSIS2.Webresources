@@ -31,6 +31,7 @@ interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships 
   activityid_appointment_bind$appointments?: string | null;
   activityid_campaignactivity_bind$campaignactivities?: string | null;
   activityid_campaignresponse_bind$campaignresponses?: string | null;
+  activityid_chat_activityparty_bind$chats?: string | null;
   activityid_email_bind$emails?: string | null;
   activityid_fax_bind$faxes?: string | null;
   activityid_incidentresolution_bind$incidentresolutions?: string | null;

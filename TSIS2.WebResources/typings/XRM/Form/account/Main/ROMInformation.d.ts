@@ -37,9 +37,9 @@ declare namespace Form.account.Main {
         get(name: "ACCOUNT_INFORMATION"): Xrm.PageSection;
         get(name: "ADDRESS"): Xrm.PageSection;
         get(name: "MapSection"): Xrm.PageSection;
-        get(name: "SUMMARY_TAB_section_8"): Xrm.PageSection;
         get(name: "SUMMARY_TAB_section_9"): Xrm.PageSection;
         get(name: "SUMMARY_TAB_section_9"): Xrm.PageSection;
+        get(name: "SUMMARY_TAB_section_timeframe"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;

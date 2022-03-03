@@ -68,13 +68,12 @@ var ROM;
                 var userBusinessUnitName = result.entities[0].name;
                 //Show NCAT Sections and fields when the user is in Transport Canada or ISSO business unit
                 if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
-                    formContext.ui.tabs.get("summary").sections.get("NCAT_main_section").setVisible(true);
-                    formContext.ui.tabs.get("summary").sections.get("summary_ncatfactorguide").setVisible(true);
+                    formContext.ui.tabs.get("tab_NCAT").setVisible(true);
                     formContext.getControl("ts_ncatfinalenforcementaction").setVisible(true);
                     NCATEnforcementRecommendationOnChange(eContext);
                     //If they did not accept the ncat recommendation, show proposal sections and fields
                     if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == 717750001 /* No */) {
-                        formContext.ui.tabs.get("summary").sections.get("NCAT_proposed_section").setVisible(true);
+                        formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
                         AcceptNCATRecommendationOnChange(eContext);
                         NCATManagerDecisionOnChange(eContext);
                     }
@@ -215,7 +214,7 @@ var ROM;
                             complianceHistory = formContext.getAttribute("ts_ratespecificcompliancehistory").getValue();
                             enforcementHistory = formContext.getAttribute("ts_ratespecificenforcementhistory").getValue();
                             //If any of the rate factors don't have a value, reset any fields that require an enforcement recommendation
-                            if (rateSpecificComplianceHistory == null || factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null || factor8Value == null || ((complianceHistory != null && complianceHistory != 717750000 /* _0 */) && enforcementHistory == null)) {
+                            if (rateSpecificComplianceHistory == null || factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null || factor8Value == null || ((complianceHistory != null && complianceHistory != 717750000 /* _0documentedpreviousidenticalorsimilarnoncompliances */) && enforcementHistory == null)) {
                                 formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
                                 formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
                                 RATEHideProposedSection(eContext);
@@ -301,7 +300,7 @@ var ROM;
                     }
                 });
                 if (isAdminOrManager_1)
-                    formContext.ui.tabs.get("summary").sections.get("NCAT_manager_review").setVisible(true);
+                    formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
             }
             else {
                 if (acceptNCATRecommendation == 717750000 /* Yes */) {
@@ -413,7 +412,7 @@ var ROM;
         function RATESpecificComplianceHistoryOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var specificComplianceHistory = formContext.getAttribute("ts_ratespecificcompliancehistory").getValue();
-            if (specificComplianceHistory != null && specificComplianceHistory != 717750000 /* _0 */) {
+            if (specificComplianceHistory != null && specificComplianceHistory != 717750000 /* _0documentedpreviousidenticalorsimilarnoncompliances */) {
                 formContext.getControl("ts_ratespecificenforcementhistory").setVisible(true);
             }
             else {

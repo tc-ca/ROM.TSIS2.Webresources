@@ -18,4 +18,5 @@ declare const enum activitypointer_activitytypecode {
   CustomerVoicesurveyinvite = 10245,
   CustomerVoicesurveyresponse = 10247,
   BookingAlert = 10256,
+  ActivityrecordfortheTeamschat = 10769,
 }

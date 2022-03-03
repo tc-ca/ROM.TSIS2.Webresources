@@ -1,6 +1,6 @@
 declare const enum ts_ratespecificcompliancehistory {
-  _0 = 717750000,
-  _1 = 717750001,
-  _2 = 717750002,
-  _3ormore = 717750003,
+  _0documentedpreviousidenticalorsimilarnoncompliances = 717750000,
+  _1documentedpreviousidenticalorsimilarnoncompliances = 717750001,
+  _2documentedpreviousidenticalorsimilarnoncompliances = 717750002,
+  _3ormoredocumentedpreviousidenticalorsimilarnoncompliances = 717750003,
 }
