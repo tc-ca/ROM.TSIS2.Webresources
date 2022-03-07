@@ -57,6 +57,12 @@
         });
         RATESpecificComplianceHistoryOnChange(eContext);
         setApprovingManagersViews(formContext);
+
+        //TODO: Check status of the finding, lock if necessary (163730)
+        // if(formContext.getAttribute("statuscode").getValue()){
+
+        // }
+
     }
     //If all NCAT Fields are set, calculate and set the recommended enforcement
     export async function NCATFieldOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<boolean> {
@@ -241,40 +247,68 @@
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
 
-        //If they did not accept the NCAT recommendation
-        if (acceptNCATRecommendation == ts_yesno.No) {
-            //Show NCAT Approving Manager
-            formContext.getControl("ts_ncatmanager").setVisible(true);
-            formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
-            //Require NCAT Approving Manager (Will make it required when there are managers to choose)
-            //formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
-            //Show Inspector Recommendation
-            formContext.getControl("ts_ncatinspectorrecommendation").setVisible(true);
-            //Require Inspector Recommendation
-            formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("required");
-            //Show Enforcement Justification
-            formContext.getControl("ts_ncatenforcementjustification").setVisible(true);
-            //Require Enforcement Justification
-            formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("required");
-            //Clear final enforcement action, in case it was set before
-            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
-            const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-            //If the user is a system admin or ROM - Manager, show the NCAT manager review section
-            let isAdminOrManager = false;
-            userRoles.forEach(role => {
-                if (role.name == "System Administrator" || role.name == "ROM - Manager") {
-                    isAdminOrManager = true;
-                }
-            });
-            if (isAdminOrManager) formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
-        } else {
-            if (acceptNCATRecommendation == ts_yesno.Yes) {
-                //Set NCAT Final Enforcement Action to the Enforcement Recommendation
-                const enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
-                formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(enforcementRecommendation);
-            }
-            NCATHideProposedSection(eContext);
+        //If the NCAT factors are all filled
+        if(formContext.getAttribute("ts_ncatactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_ncatintentionality").getValue() != null && formContext.getAttribute("ts_ncatcompliancehistory").getValue() != null && formContext.getAttribute("ts_ncateconomicbenefit").getValue() != null && formContext.getAttribute("ts_ncatmitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ncatcooperationwithinspectionorinvestigat").getValue() != null && formContext.getAttribute("ts_ncatdetectionofnoncompliances").getValue() != null && acceptNCATRecommendation != null)){
+           
+            var confirmStrings = { text:"By clicking the proceed button below, you will be redirected to the next page and will NOT be able to modify the information on this page.", title:"Confirmation match found." };
+            Xrm.Navigation.openConfirmDialog(confirmStrings).then(
+            function (success) {    
+                if (success.confirmed){
+                    formContext.getControl("ts_ncatactualorpotentialharm").setDisabled(true);
+                    formContext.getControl("ts_ncatintentionality").setDisabled(true);
+                    formContext.getControl("ts_ncatcompliancehistory").setDisabled(true);
+                    formContext.getControl("ts_ncateconomicbenefit").setDisabled(true);
+                    formContext.getControl("ts_ncatmitigationofnoncompliantbehaviors").setDisabled(true);
+                    formContext.getControl("ts_ncatcooperationwithinspectionorinvestigat").setDisabled(true);
+                    formContext.getControl("ts_ncatdetectionofnoncompliances").setDisabled(true);
+                    formContext.data.entity.save();
+                    
+                    //TODO: Change status
+                    //The locking of the fields should be related to the status
+                    //The inspector can not move the status backwards, only forwards.
+
+                     //If they did not accept the NCAT recommendation
+                    if (acceptNCATRecommendation == ts_yesno.No) {
+                        //Show NCAT Approving Manager
+                        formContext.getControl("ts_ncatmanager").setVisible(true);
+                        formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
+                        //Require NCAT Approving Manager (Will make it required when there are managers to choose)
+                        //formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
+                        //Show Inspector Recommendation
+                        formContext.getControl("ts_ncatinspectorrecommendation").setVisible(true);
+                        //Require Inspector Recommendation
+                        formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("required");
+                        //Show Enforcement Justification
+                        formContext.getControl("ts_ncatenforcementjustification").setVisible(true);
+                        //Require Enforcement Justification
+                        formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("required");
+                        //Clear final enforcement action, in case it was set before
+                        formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(null);
+                        const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+                        //If the user is a system admin or ROM - Manager, show the NCAT manager review section
+                        let isAdminOrManager = false;
+                        userRoles.forEach(role => {
+                            if (role.name == "System Administrator" || role.name == "ROM - Manager") {
+                                isAdminOrManager = true;
+                            }
+                        });
+                        if (isAdminOrManager) formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
+                    } else {
+                        if (acceptNCATRecommendation == ts_yesno.Yes) {
+                            //Set NCAT Final Enforcement Action to the Enforcement Recommendation
+                            const enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+                            formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(enforcementRecommendation);
+                        }
+                        NCATHideProposedSection(eContext);
         }
+                }
+                else{
+                    formContext.getAttribute("ts_acceptncatrecommendation").setValue();
+                }
+            });          
+        }
+
+       
     }
 
     //Sets the RATE Final Enforcement Action to the recommended Enforcement if the user accepts
@@ -283,40 +317,66 @@
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
 
-        //If they did not accept the RATE recommendation
-        if (acceptRATERecommendation == ts_yesno.No) {
-            //Show RATE Approving Manager
-            formContext.getControl("ts_ratemanager").setVisible(true);
-            formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
-            //Require RATE Approving Manager (Will make it required when there are managers to choose)
-            //formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
-            //Show Inspector Recommendation
-            formContext.getControl("ts_rateinspectorrecommendation").setVisible(true);
-            //Require Inspector Recommendation
-            formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("required");
-            //Show Enforcement Justification
-            formContext.getControl("ts_rateenforcementjustification").setVisible(true);
-            //Require Enforcement Justification
-            formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("required");
-            //Clear final enforcement action, in case it was set before
-            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+        //If the NCAT factors are all filled
+        if(formContext.getAttribute("ts_rateactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_rateintentionality").getValue() != null && formContext.getAttribute("ts_rateeconomicbenefit").getValue() != null && formContext.getAttribute("ts_rateresponsibility").getValue() != null && formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ratepreventingrecurrence").getValue() != null && formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue() != null && acceptRATERecommendation != null){
+           
+            var confirmStrings = { text:"By clicking the proceed button below, you will be redirected to the next page and will NOT be able to modify the information on this page.", title:"Confirmation match found." };
+            Xrm.Navigation.openConfirmDialog(confirmStrings).then(
+            function (success) {    
+                if (success.confirmed){
+                    formContext.getControl("ts_rateactualorpotentialharm").setDisabled(true);
+                    formContext.getControl("ts_rateintentionality").setDisabled(true);
+                    formContext.getControl("ts_rateeconomicbenefit").setDisabled(true);
+                    formContext.getControl("ts_rateresponsibility").setDisabled(true);
+                    formContext.getControl("ts_ratemitigationofnoncompliantbehaviors").setDisabled(true);
+                    formContext.getControl("ts_ratepreventingrecurrence").setDisabled(true);
+                    formContext.getControl("ts_ratecooperationwithinspectionorinvestigat").setDisabled(true);
+                    formContext.data.entity.save();
+                
+                    //TODO: Change status
+                    //The locking of the fields should be related to the status
+                    //The inspector can not move the status backwards, only forwards.
 
-            const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-            //If the user is a system admin or ROM - Manager, show the RATE manager review section
-            let isAdminOrManager = false;
-            userRoles.forEach(role => {
-                if (role.name == "System Administrator" || role.name == "ROM - Manager") {
-                    isAdminOrManager = true;
+                    //If they did not accept the RATE recommendation
+                    if (acceptRATERecommendation == ts_yesno.No) {
+                        //Show RATE Approving Manager
+                        formContext.getControl("ts_ratemanager").setVisible(true);
+                        formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
+                        //Require RATE Approving Manager (Will make it required when there are managers to choose)
+                        //formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
+                        //Show Inspector Recommendation
+                        formContext.getControl("ts_rateinspectorrecommendation").setVisible(true);
+                        //Require Inspector Recommendation
+                        formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("required");
+                        //Show Enforcement Justification
+                        formContext.getControl("ts_rateenforcementjustification").setVisible(true);
+                        //Require Enforcement Justification
+                        formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("required");
+                        //Clear final enforcement action, in case it was set before
+                        formContext.getAttribute("ts_ratefinalenforcementaction").setValue(null);
+
+                        const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+                        //If the user is a system admin or ROM - Manager, show the RATE manager review section
+                        let isAdminOrManager = false;
+                        userRoles.forEach(role => {
+                            if (role.name == "System Administrator" || role.name == "ROM - Manager") {
+                                isAdminOrManager = true;
+                            }
+                        });
+                        if (isAdminOrManager) formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
+                    } else {
+                        if (acceptRATERecommendation == ts_yesno.Yes) {
+                            //Set RATE Final Enforcement Action to the Enforcement Recommendation
+                            let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+                            formContext.getAttribute("ts_ratefinalenforcementaction").setValue(enforcementRecommendation);
+                        }
+                        RATEHideProposedSection(eContext);
+                    }
                 }
-            });
-            if (isAdminOrManager) formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
-        } else {
-            if (acceptRATERecommendation == ts_yesno.Yes) {
-                //Set RATE Final Enforcement Action to the Enforcement Recommendation
-                let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
-                formContext.getAttribute("ts_ratefinalenforcementaction").setValue(enforcementRecommendation);
-            }
-            RATEHideProposedSection(eContext);
+                else{
+                    formContext.getAttribute("ts_acceptraterecommendation").setValue();
+                }
+            });          
         }
     }
 
