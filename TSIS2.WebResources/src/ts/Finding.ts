@@ -58,10 +58,9 @@
         RATESpecificComplianceHistoryOnChange(eContext);
         setApprovingManagersViews(formContext);
 
-        //TODO: Check status of the finding, lock if necessary (163730)
-        // if(formContext.getAttribute("statuscode").getValue()){
-        // }
-
+        if(formContext.getAttribute("statuscode").getValue() == 717750002){
+            disableFormFields(formContext);
+        }
     }
     //If all NCAT Fields are set, calculate and set the recommended enforcement
     export async function NCATFieldOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<boolean> {
@@ -260,9 +259,6 @@
                     formContext.getControl("ts_ncatmitigationofnoncompliantbehaviors").setDisabled(true);
                     formContext.getControl("ts_ncatcooperationwithinspectionorinvestigat").setDisabled(true);
                     formContext.getControl("ts_ncatdetectionofnoncompliances").setDisabled(true);
-                        //TODO: Change status
-                        //The locking of the fields should be related to the status
-                        //The inspector can not move the status backwards, only forwards.
                     formContext.data.save().then(function() {
                         setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                     });                    
@@ -296,9 +292,6 @@
                     formContext.getControl("ts_ratemitigationofnoncompliantbehaviors").setDisabled(true);
                     formContext.getControl("ts_ratepreventingrecurrence").setDisabled(true);
                     formContext.getControl("ts_ratecooperationwithinspectionorinvestigat").setDisabled(true);
-                     //TODO: Change status
-                        //The locking of the fields should be related to the status
-                        //The inspector can not move the status backwards, only forwards.
                     formContext.data.save().then(function() {
                         setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                     });
@@ -684,6 +677,7 @@
                 formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(enforcementRecommendation);
             }
             NCATHideProposedSection(eContext);
+            disableFormFields(formContext);
         }
     }
 
@@ -725,6 +719,19 @@
                 formContext.getAttribute("ts_ratefinalenforcementaction").setValue(enforcementRecommendation);
             }
             RATEHideProposedSection(eContext);
+            disableFormFields(formContext);
         }
+    }
+
+    function disableFormFields(form: Form.ovs_finding.Main.Information): void {
+       form.ui.controls.forEach(function (control, index) {
+            let controlType = control.getControlType();
+            let controlName = control.getName();
+            if (controlType != "iframe" && controlType != "webresource" && controlType != "subgrid"){
+                if(controlName != "ts_notetostakeholder"){
+                    control.setDisabled!(true);
+                }
+            }
+        });
     }
 }

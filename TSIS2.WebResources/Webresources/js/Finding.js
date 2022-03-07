@@ -93,9 +93,9 @@ var ROM;
             });
             RATESpecificComplianceHistoryOnChange(eContext);
             setApprovingManagersViews(formContext);
-            //TODO: Check status of the finding, lock if necessary (163730)
-            // if(formContext.getAttribute("statuscode").getValue()){
-            // }
+            if (formContext.getAttribute("statuscode").getValue() == 717750002) {
+                disableFormFields(formContext);
+            }
         }
         Finding.onLoad = onLoad;
         //If all NCAT Fields are set, calculate and set the recommended enforcement
@@ -289,9 +289,6 @@ var ROM;
                         formContext.getControl("ts_ncatmitigationofnoncompliantbehaviors").setDisabled(true);
                         formContext.getControl("ts_ncatcooperationwithinspectionorinvestigat").setDisabled(true);
                         formContext.getControl("ts_ncatdetectionofnoncompliances").setDisabled(true);
-                        //TODO: Change status
-                        //The locking of the fields should be related to the status
-                        //The inspector can not move the status backwards, only forwards.
                         formContext.data.save().then(function () {
                             setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                         });
@@ -320,9 +317,6 @@ var ROM;
                         formContext.getControl("ts_ratemitigationofnoncompliantbehaviors").setDisabled(true);
                         formContext.getControl("ts_ratepreventingrecurrence").setDisabled(true);
                         formContext.getControl("ts_ratecooperationwithinspectionorinvestigat").setDisabled(true);
-                        //TODO: Change status
-                        //The locking of the fields should be related to the status
-                        //The inspector can not move the status backwards, only forwards.
                         formContext.data.save().then(function () {
                             setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                         });
@@ -684,6 +678,7 @@ var ROM;
                     formContext.getAttribute("ts_ncatfinalenforcementaction").setValue(enforcementRecommendation);
                 }
                 NCATHideProposedSection(eContext);
+                disableFormFields(formContext);
             }
         }
         function setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext) {
@@ -724,7 +719,19 @@ var ROM;
                     formContext.getAttribute("ts_ratefinalenforcementaction").setValue(enforcementRecommendation);
                 }
                 RATEHideProposedSection(eContext);
+                disableFormFields(formContext);
             }
+        }
+        function disableFormFields(form) {
+            form.ui.controls.forEach(function (control, index) {
+                var controlType = control.getControlType();
+                var controlName = control.getName();
+                if (controlType != "iframe" && controlType != "webresource" && controlType != "subgrid") {
+                    if (controlName != "ts_notetostakeholder") {
+                        control.setDisabled(true);
+                    }
+                }
+            });
         }
     })(Finding = ROM.Finding || (ROM.Finding = {}));
 })(ROM || (ROM = {}));
