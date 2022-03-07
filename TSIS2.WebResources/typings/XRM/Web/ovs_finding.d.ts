@@ -19,6 +19,7 @@ interface ovs_Finding_Base extends WebEntity {
   ts_findingprovisiontexten?: string | null;
   ts_findingprovisiontextfr?: string | null;
   ts_findingtype?: ts_findingtype | null;
+  ts_issueaddressedonsite?: ts_yesno | null;
   ts_justificationof?: string | null;
   ts_ncatenforcementjustification?: string | null;
   ts_ncatenforcementrecommendation?: ts_ncatrecommendations | null;
@@ -28,6 +29,7 @@ interface ovs_Finding_Base extends WebEntity {
   ts_ncatmanageralternativerecommendation?: ts_ncatrecommendations | null;
   ts_ncatmanagerdecision?: ts_ncatmanagerdecision | null;
   ts_ncatmanagerenforcementjustification?: string | null;
+  ts_notetostakeholder?: string | null;
   ts_proposealternatencatenforcementaction?: boolean | null;
   ts_rateenforcementjustification?: string | null;
   ts_rateenforcementrecommendation?: ts_raterecommendations | null;
@@ -55,6 +57,7 @@ interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ownerid_bind$teams?: string | null;
   ts_File_bind$ts_files?: string | null;
   ts_NCATActualorPotentialHarm_bind$ts_assessmentratings?: string | null;
+  ts_NCATApprovingTeam_bind$teams?: string | null;
   ts_NCATComplianceHistory_bind$ts_assessmentratings?: string | null;
   ts_NCATCooperationwithInspectionorInvestigat_bind$ts_assessmentratings?: string | null;
   ts_NCATDetectionofNonCompliances_bind$ts_assessmentratings?: string | null;
@@ -64,6 +67,7 @@ interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ts_NCATMitigationofNonCompliantBehaviors_bind$ts_assessmentratings?: string | null;
   ts_ProvisionCategory_bind$ts_provisioncategories?: string | null;
   ts_RATEActualorPotentialHarm_bind$ts_assessmentratings?: string | null;
+  ts_RATEApprovingTeam_bind$teams?: string | null;
   ts_RATEComplianceHistory_bind$ts_assessmentratings?: string | null;
   ts_RATECooperationwithInspectionorInvestigat_bind$ts_assessmentratings?: string | null;
   ts_RATEDetectionofNonCompliances_bind$ts_assessmentratings?: string | null;
@@ -117,8 +121,10 @@ interface ovs_Finding_Select {
   ts_findingprovisiontexten: WebAttribute<ovs_Finding_Select, { ts_findingprovisiontexten: string | null }, {  }>;
   ts_findingprovisiontextfr: WebAttribute<ovs_Finding_Select, { ts_findingprovisiontextfr: string | null }, {  }>;
   ts_findingtype: WebAttribute<ovs_Finding_Select, { ts_findingtype: ts_findingtype | null }, { ts_findingtype_formatted?: string }>;
+  ts_issueaddressedonsite: WebAttribute<ovs_Finding_Select, { ts_issueaddressedonsite: ts_yesno | null }, { ts_issueaddressedonsite_formatted?: string }>;
   ts_justificationof: WebAttribute<ovs_Finding_Select, { ts_justificationof: string | null }, {  }>;
   ts_ncatactualorpotentialharm_guid: WebAttribute<ovs_Finding_Select, { ts_ncatactualorpotentialharm_guid: string | null }, { ts_ncatactualorpotentialharm_formatted?: string }>;
+  ts_ncatapprovingteam_guid: WebAttribute<ovs_Finding_Select, { ts_ncatapprovingteam_guid: string | null }, { ts_ncatapprovingteam_formatted?: string }>;
   ts_ncatcompliancehistory_guid: WebAttribute<ovs_Finding_Select, { ts_ncatcompliancehistory_guid: string | null }, { ts_ncatcompliancehistory_formatted?: string }>;
   ts_ncatcooperationwithinspectionorinvestigat_guid: WebAttribute<ovs_Finding_Select, { ts_ncatcooperationwithinspectionorinvestigat_guid: string | null }, { ts_ncatcooperationwithinspectionorinvestigat_formatted?: string }>;
   ts_ncatdetectionofnoncompliances_guid: WebAttribute<ovs_Finding_Select, { ts_ncatdetectionofnoncompliances_guid: string | null }, { ts_ncatdetectionofnoncompliances_formatted?: string }>;
@@ -134,11 +140,13 @@ interface ovs_Finding_Select {
   ts_ncatmanagerdecision: WebAttribute<ovs_Finding_Select, { ts_ncatmanagerdecision: ts_ncatmanagerdecision | null }, { ts_ncatmanagerdecision_formatted?: string }>;
   ts_ncatmanagerenforcementjustification: WebAttribute<ovs_Finding_Select, { ts_ncatmanagerenforcementjustification: string | null }, {  }>;
   ts_ncatmitigationofnoncompliantbehaviors_guid: WebAttribute<ovs_Finding_Select, { ts_ncatmitigationofnoncompliantbehaviors_guid: string | null }, { ts_ncatmitigationofnoncompliantbehaviors_formatted?: string }>;
+  ts_notetostakeholder: WebAttribute<ovs_Finding_Select, { ts_notetostakeholder: string | null }, {  }>;
   ts_operationid_guid: WebAttribute<ovs_Finding_Select, { ts_operationid_guid: string | null }, { ts_operationid_formatted?: string }>;
   ts_ovs_operationtype_guid: WebAttribute<ovs_Finding_Select, { ts_ovs_operationtype_guid: string | null }, { ts_ovs_operationtype_formatted?: string }>;
   ts_proposealternatencatenforcementaction: WebAttribute<ovs_Finding_Select, { ts_proposealternatencatenforcementaction: boolean | null }, {  }>;
   ts_provisioncategory_guid: WebAttribute<ovs_Finding_Select, { ts_provisioncategory_guid: string | null }, { ts_provisioncategory_formatted?: string }>;
   ts_rateactualorpotentialharm_guid: WebAttribute<ovs_Finding_Select, { ts_rateactualorpotentialharm_guid: string | null }, { ts_rateactualorpotentialharm_formatted?: string }>;
+  ts_rateapprovingteam_guid: WebAttribute<ovs_Finding_Select, { ts_rateapprovingteam_guid: string | null }, { ts_rateapprovingteam_formatted?: string }>;
   ts_ratecompliancehistory_guid: WebAttribute<ovs_Finding_Select, { ts_ratecompliancehistory_guid: string | null }, { ts_ratecompliancehistory_formatted?: string }>;
   ts_ratecooperationwithinspectionorinvestigat_guid: WebAttribute<ovs_Finding_Select, { ts_ratecooperationwithinspectionorinvestigat_guid: string | null }, { ts_ratecooperationwithinspectionorinvestigat_formatted?: string }>;
   ts_ratedetectionofnoncompliances_guid: WebAttribute<ovs_Finding_Select, { ts_ratedetectionofnoncompliances_guid: string | null }, { ts_ratedetectionofnoncompliances_formatted?: string }>;
@@ -196,8 +204,10 @@ interface ovs_Finding_Filter {
   ts_findingprovisiontexten: string;
   ts_findingprovisiontextfr: string;
   ts_findingtype: ts_findingtype;
+  ts_issueaddressedonsite: ts_yesno;
   ts_justificationof: string;
   ts_ncatactualorpotentialharm_guid: XQW.Guid;
+  ts_ncatapprovingteam_guid: XQW.Guid;
   ts_ncatcompliancehistory_guid: XQW.Guid;
   ts_ncatcooperationwithinspectionorinvestigat_guid: XQW.Guid;
   ts_ncatdetectionofnoncompliances_guid: XQW.Guid;
@@ -213,11 +223,13 @@ interface ovs_Finding_Filter {
   ts_ncatmanagerdecision: ts_ncatmanagerdecision;
   ts_ncatmanagerenforcementjustification: string;
   ts_ncatmitigationofnoncompliantbehaviors_guid: XQW.Guid;
+  ts_notetostakeholder: string;
   ts_operationid_guid: XQW.Guid;
   ts_ovs_operationtype_guid: XQW.Guid;
   ts_proposealternatencatenforcementaction: boolean;
   ts_provisioncategory_guid: XQW.Guid;
   ts_rateactualorpotentialharm_guid: XQW.Guid;
+  ts_rateapprovingteam_guid: XQW.Guid;
   ts_ratecompliancehistory_guid: XQW.Guid;
   ts_ratecooperationwithinspectionorinvestigat_guid: XQW.Guid;
   ts_ratedetectionofnoncompliances_guid: XQW.Guid;
@@ -279,7 +291,9 @@ interface ovs_Finding_FormattedResult {
   ts_enforcementaction_formatted?: string;
   ts_file_formatted?: string;
   ts_findingtype_formatted?: string;
+  ts_issueaddressedonsite_formatted?: string;
   ts_ncatactualorpotentialharm_formatted?: string;
+  ts_ncatapprovingteam_formatted?: string;
   ts_ncatcompliancehistory_formatted?: string;
   ts_ncatcooperationwithinspectionorinvestigat_formatted?: string;
   ts_ncatdetectionofnoncompliances_formatted?: string;
@@ -296,6 +310,7 @@ interface ovs_Finding_FormattedResult {
   ts_ovs_operationtype_formatted?: string;
   ts_provisioncategory_formatted?: string;
   ts_rateactualorpotentialharm_formatted?: string;
+  ts_rateapprovingteam_formatted?: string;
   ts_ratecompliancehistory_formatted?: string;
   ts_ratecooperationwithinspectionorinvestigat_formatted?: string;
   ts_ratedetectionofnoncompliances_formatted?: string;
@@ -331,6 +346,7 @@ interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships
   ts_accountid_guid: string | null;
   ts_file_guid: string | null;
   ts_ncatactualorpotentialharm_guid: string | null;
+  ts_ncatapprovingteam_guid: string | null;
   ts_ncatcompliancehistory_guid: string | null;
   ts_ncatcooperationwithinspectionorinvestigat_guid: string | null;
   ts_ncatdetectionofnoncompliances_guid: string | null;
@@ -342,6 +358,7 @@ interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships
   ts_ovs_operationtype_guid: string | null;
   ts_provisioncategory_guid: string | null;
   ts_rateactualorpotentialharm_guid: string | null;
+  ts_rateapprovingteam_guid: string | null;
   ts_ratecompliancehistory_guid: string | null;
   ts_ratecooperationwithinspectionorinvestigat_guid: string | null;
   ts_ratedetectionofnoncompliances_guid: string | null;
