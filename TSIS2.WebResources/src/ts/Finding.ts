@@ -264,6 +264,7 @@
                         NCATHideManagerReviewSection(eContext);
                     }
 
+                    formContext.getAttribute("statuscode").setValue(717750000); //If the user saves without marking as complete, the status is in progress
                     formContext.data.save().then(function() {
                         setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                     });                    
@@ -302,8 +303,10 @@
                         RATEHideManagerReviewSection(eContext);
                     }
 
+                    formContext.getAttribute("statuscode").setValue(717750000); //If the user saves without marking as complete, the status is in progress
                     formContext.data.save().then(function() {
                         setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
+                        
                     });
                 }
                 else{

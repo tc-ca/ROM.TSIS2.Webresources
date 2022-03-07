@@ -292,6 +292,7 @@ var ROM;
                         if (acceptNCATRecommendation == 717750000 /* Yes */) {
                             NCATHideManagerReviewSection(eContext);
                         }
+                        formContext.getAttribute("statuscode").setValue(717750000); //If the user saves without marking as complete, the status is in progress
                         formContext.data.save().then(function () {
                             setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                         });
@@ -323,6 +324,7 @@ var ROM;
                         if (acceptRATERecommendation == 717750000 /* Yes */) {
                             RATEHideManagerReviewSection(eContext);
                         }
+                        formContext.getAttribute("statuscode").setValue(717750000); //If the user saves without marking as complete, the status is in progress
                         formContext.data.save().then(function () {
                             setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                         });
