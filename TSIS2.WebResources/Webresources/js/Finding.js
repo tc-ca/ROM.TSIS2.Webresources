@@ -289,6 +289,9 @@ var ROM;
                         formContext.getControl("ts_ncatmitigationofnoncompliantbehaviors").setDisabled(true);
                         formContext.getControl("ts_ncatcooperationwithinspectionorinvestigat").setDisabled(true);
                         formContext.getControl("ts_ncatdetectionofnoncompliances").setDisabled(true);
+                        if (acceptNCATRecommendation == 717750000 /* Yes */) {
+                            NCATHideManagerReviewSection(eContext);
+                        }
                         formContext.data.save().then(function () {
                             setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                         });
@@ -317,6 +320,9 @@ var ROM;
                         formContext.getControl("ts_ratemitigationofnoncompliantbehaviors").setDisabled(true);
                         formContext.getControl("ts_ratepreventingrecurrence").setDisabled(true);
                         formContext.getControl("ts_ratecooperationwithinspectionorinvestigat").setDisabled(true);
+                        if (acceptRATERecommendation == 717750000 /* Yes */) {
+                            RATEHideManagerReviewSection(eContext);
+                        }
                         formContext.data.save().then(function () {
                             setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                         });
