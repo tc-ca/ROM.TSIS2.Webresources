@@ -38,7 +38,7 @@
                 //If they did not accept the ncat recommendation, show proposal sections and fields
                 if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == ts_yesno.No) {
                     formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
-                    AcceptNCATRecommendationOnChangeAdditionalActions(eContext);
+                    setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                     NCATManagerDecisionOnChange(eContext);
                 }
             }
@@ -50,7 +50,7 @@
                 //If they did not accept the rate recommendation, show proposal sections and fields
                 if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == ts_yesno.No) {
                     formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
-                    AcceptRATERecommendationOnChangeAdditionalActions(eContext);
+                    setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                     RATEManagerDecisionOnChange(eContext);
                 }
             }
@@ -264,7 +264,7 @@
                         //The locking of the fields should be related to the status
                         //The inspector can not move the status backwards, only forwards.
                     formContext.data.save().then(function() {
-                        AcceptNCATRecommendationOnChangeAdditionalActions(eContext);
+                        setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                     });                    
                 }
                 else{
@@ -300,7 +300,7 @@
                         //The locking of the fields should be related to the status
                         //The inspector can not move the status backwards, only forwards.
                     formContext.data.save().then(function() {
-                        AcceptRATERecommendationOnChangeAdditionalActions(eContext);
+                        setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                     });
                 }
                 else{
@@ -647,7 +647,7 @@
         );
     }
 
-    function AcceptNCATRecommendationOnChangeAdditionalActions(eContext: Xrm.ExecutionContext<any, any>): void {
+    function setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext: Xrm.ExecutionContext<any, any>): void {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
 
@@ -687,7 +687,7 @@
         }
     }
 
-    function AcceptRATERecommendationOnChangeAdditionalActions(eContext: Xrm.ExecutionContext<any, any>): void {
+    function setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext: Xrm.ExecutionContext<any, any>): void {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
 
