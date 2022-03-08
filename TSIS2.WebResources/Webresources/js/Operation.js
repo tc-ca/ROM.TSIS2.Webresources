@@ -5,19 +5,10 @@ var ROM;
     (function (Operation) {
         function onLoad(eContext) {
             var form = eContext.getFormContext();
-            if (form.getAttribute("ts_operationalstatus").getValue() == 717750000 /* Operational */) {
-                form.getAttribute("ts_statusstartdate").setValue(null);
-                form.getAttribute("ts_statusenddate").setValue(null);
-                form.getAttribute("ts_description").setValue(null);
-                form.getControl("ts_statusenddate").setDisabled(true);
-                form.getControl("ts_description").setDisabled(true);
-                form.getAttribute("ts_description").setRequiredLevel("none");
-            }
-            if (form.getAttribute("ts_statusstartdate").getValue() == null) {
-                form.getAttribute("ts_description").setValue(null);
-                form.getControl("ts_statusenddate").setDisabled(true);
-                form.getControl("ts_description").setDisabled(true);
-                form.getAttribute("ts_description").setRequiredLevel("none");
+            if (form.getAttribute("ts_statusstartdate").getValue() != null) {
+                form.getControl("ts_statusenddate").setDisabled(false);
+                form.getControl("ts_description").setDisabled(false);
+                form.getAttribute("ts_description").setRequiredLevel("required");
             }
         }
         Operation.onLoad = onLoad;
@@ -26,12 +17,12 @@ var ROM;
             var statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
             var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
             if (statusStartDateValue != null) {
-                if (Date.parse(statusStartDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+                if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                     form.getAttribute("ts_operationalstatus").setValue(717750001 /* NonOperational */);
                 }
             }
             if (statusEndDateValue != null) {
-                if (Date.parse(statusEndDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+                if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                     form.getAttribute("ts_operationalstatus").setValue(717750000 /* Operational */);
                 }
             }
