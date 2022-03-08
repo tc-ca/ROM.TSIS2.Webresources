@@ -15,6 +15,7 @@ interface ovs_Finding_Base extends WebEntity {
   ts_acceptncatrecommendation?: ts_yesno | null;
   ts_acceptraterecommendation?: ts_yesno | null;
   ts_enforcementaction?: ts_ovs_finding_ts_enforcementaction | null;
+  ts_finalenforcementaction?: ts_finalenforcementaction | null;
   ts_findingmappingkey?: string | null;
   ts_findingprovisiontexten?: string | null;
   ts_findingprovisiontextfr?: string | null;
@@ -117,6 +118,7 @@ interface ovs_Finding_Select {
   ts_accountid_guid: WebAttribute<ovs_Finding_Select, { ts_accountid_guid: string | null }, { ts_accountid_formatted?: string }>;
   ts_enforcementaction: WebAttribute<ovs_Finding_Select, { ts_enforcementaction: ts_ovs_finding_ts_enforcementaction | null }, { ts_enforcementaction_formatted?: string }>;
   ts_file_guid: WebAttribute<ovs_Finding_Select, { ts_file_guid: string | null }, { ts_file_formatted?: string }>;
+  ts_finalenforcementaction: WebAttribute<ovs_Finding_Select, { ts_finalenforcementaction: ts_finalenforcementaction | null }, { ts_finalenforcementaction_formatted?: string }>;
   ts_findingmappingkey: WebAttribute<ovs_Finding_Select, { ts_findingmappingkey: string | null }, {  }>;
   ts_findingprovisiontexten: WebAttribute<ovs_Finding_Select, { ts_findingprovisiontexten: string | null }, {  }>;
   ts_findingprovisiontextfr: WebAttribute<ovs_Finding_Select, { ts_findingprovisiontextfr: string | null }, {  }>;
@@ -200,6 +202,7 @@ interface ovs_Finding_Filter {
   ts_accountid_guid: XQW.Guid;
   ts_enforcementaction: ts_ovs_finding_ts_enforcementaction;
   ts_file_guid: XQW.Guid;
+  ts_finalenforcementaction: ts_finalenforcementaction;
   ts_findingmappingkey: string;
   ts_findingprovisiontexten: string;
   ts_findingprovisiontextfr: string;
@@ -290,6 +293,7 @@ interface ovs_Finding_FormattedResult {
   ts_accountid_formatted?: string;
   ts_enforcementaction_formatted?: string;
   ts_file_formatted?: string;
+  ts_finalenforcementaction_formatted?: string;
   ts_findingtype_formatted?: string;
   ts_issueaddressedonsite_formatted?: string;
   ts_ncatactualorpotentialharm_formatted?: string;
