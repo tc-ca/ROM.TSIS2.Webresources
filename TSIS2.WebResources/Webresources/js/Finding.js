@@ -96,6 +96,23 @@ var ROM;
             }
         }
         Finding.onLoad = onLoad;
+        function onSave(eContext) {
+            var formContext = eContext.getFormContext();
+            var statusCodeAttribute = formContext.getAttribute("statuscode");
+            var statusCodeValue = statusCodeAttribute.getValue();
+            if (statusCodeValue == 717750002 /* Complete */)
+                return;
+            var acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
+            var acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
+            var rejectedRecommendation = (acceptNCATRecommendation == 717750001 /* No */ || acceptRATERecommendation == 717750001 /* No */);
+            if (rejectedRecommendation) {
+                statusCodeAttribute.setValue(717750001 /* Pending */);
+            }
+            else {
+                statusCodeAttribute.setValue(717750000 /* InProgress */);
+            }
+        }
+        Finding.onSave = onSave;
         //If all NCAT Fields are set, calculate and set the recommended enforcement
         function NCATFieldOnChange(eContext) {
             return __awaiter(this, void 0, void 0, function () {

@@ -61,6 +61,25 @@
         }
     }
 
+    export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        const statusCodeAttribute = formContext.getAttribute("statuscode");
+        const statusCodeValue = statusCodeAttribute.getValue();
+
+        if (statusCodeValue == ovs_finding_statuscode.Complete) return;
+
+        const acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
+        const acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
+        const rejectedRecommendation = (acceptNCATRecommendation == ts_yesno.No || acceptRATERecommendation == ts_yesno.No)
+
+        if (rejectedRecommendation) {
+            statusCodeAttribute.setValue(ovs_finding_statuscode.Pending)
+        } else {
+            statusCodeAttribute.setValue(ovs_finding_statuscode.InProgress)
+        }
+
+    }
+
     //If all NCAT Fields are set, calculate and set the recommended enforcement
     export async function NCATFieldOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<boolean> {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
