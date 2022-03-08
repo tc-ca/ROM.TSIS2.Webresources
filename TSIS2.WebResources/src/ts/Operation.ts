@@ -3,20 +3,11 @@ namespace ROM.Operation {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
 
-        if (form.getAttribute("ts_operationalstatus").getValue() == ts_operationalstatus.Operational) {
-            form.getAttribute("ts_statusstartdate").setValue(null);
-            form.getAttribute("ts_statusenddate").setValue(null);
-            form.getAttribute("ts_description").setValue(null);
-            form.getControl("ts_statusenddate").setDisabled(true);
-            form.getControl("ts_description").setDisabled(true);
-            form.getAttribute("ts_description").setRequiredLevel("none");
+        if (form.getAttribute("ts_statusstartdate").getValue() != null) {
+            form.getControl("ts_statusenddate").setDisabled(false);
+            form.getControl("ts_description").setDisabled(false);
+            form.getAttribute("ts_description").setRequiredLevel("required");
         }
-        if (form.getAttribute("ts_statusstartdate").getValue() == null) {
-            form.getAttribute("ts_description").setValue(null);
-            form.getControl("ts_statusenddate").setDisabled(true);
-            form.getControl("ts_description").setDisabled(true);
-            form.getAttribute("ts_description").setRequiredLevel("none");
-        }       
     }
 
 
@@ -25,15 +16,13 @@ namespace ROM.Operation {
         const statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
         const statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
         if (statusStartDateValue != null) {
-            if (Date.parse(statusStartDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+            if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                 form.getAttribute("ts_operationalstatus").setValue(ts_operationalstatus.NonOperational);
-
             }
         }
         if (statusEndDateValue != null) {
-            if (Date.parse(statusEndDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+            if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                 form.getAttribute("ts_operationalstatus").setValue(ts_operationalstatus.Operational);
-
             }
         }
     }

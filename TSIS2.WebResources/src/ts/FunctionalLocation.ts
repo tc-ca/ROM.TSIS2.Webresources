@@ -39,19 +39,10 @@ namespace ROM.FunctionalLocation {
            
         }
 
-        if (form.getAttribute("ts_sitestatus").getValue() == ts_sitestatus.Operational) {
-            form.getAttribute("ts_statusstartdate").setValue(null);
-            form.getAttribute("ts_statusenddate").setValue(null);
-            form.getAttribute("ts_description").setValue(null);
-            form.getControl("ts_statusenddate").setDisabled(true);
-            form.getControl("ts_description").setDisabled(true);
-            form.getAttribute("ts_description").setRequiredLevel("none");
-        }
-        if (form.getAttribute("ts_statusstartdate").getValue() == null) {
-            form.getAttribute("ts_description").setValue(null);
-            form.getControl("ts_statusenddate").setDisabled(true);
-            form.getControl("ts_description").setDisabled(true);
-            form.getAttribute("ts_description").setRequiredLevel("none");
+        if (form.getAttribute("ts_statusstartdate").getValue() != null) {
+            form.getControl("ts_statusenddate").setDisabled(false);
+            form.getControl("ts_description").setDisabled(false);
+            form.getAttribute("ts_description").setRequiredLevel("required");
         }
     }
 
@@ -60,15 +51,13 @@ namespace ROM.FunctionalLocation {
         const statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
         const statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
         if (statusStartDateValue != null) {
-            if (Date.parse(statusStartDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+            if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                 form.getAttribute("ts_sitestatus").setValue(ts_sitestatus.NonOperational);
-
             }
         }
         if (statusEndDateValue != null) {
-            if (Date.parse(statusEndDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+            if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                 form.getAttribute("ts_sitestatus").setValue(ts_sitestatus.Operational);
-
             }
         }
     }
