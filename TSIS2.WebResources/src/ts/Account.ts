@@ -7,20 +7,11 @@ namespace ROM.Account {
         if (addressControl != null && addressControl != undefined) {
             addressControl.setVisible(false);
         }
-
-        if (form.getAttribute("ts_stakeholderstatus").getValue() == ts_stakeholderstatus.Operational) {
-            form.getAttribute("ts_statusstartdate").setValue(null);
-            form.getAttribute("ts_statusenddate").setValue(null);
-            form.getAttribute("ts_statusdescription").setValue(null);
-            form.getControl("ts_statusenddate").setDisabled(true);
-            form.getControl("ts_statusdescription").setDisabled(true);
-            form.getAttribute("ts_statusdescription").setRequiredLevel("none");
-        }
-        if (form.getAttribute("ts_statusstartdate").getValue() == null) {
-            form.getAttribute("ts_statusdescription").setValue(null);
-            form.getControl("ts_statusenddate").setDisabled(true);
-            form.getControl("ts_statusdescription").setDisabled(true);
-            form.getAttribute("ts_statusdescription").setRequiredLevel("none");
+         
+        if (form.getAttribute("ts_statusstartdate").getValue() != null) {
+            form.getControl("ts_statusenddate").setDisabled(false);
+            form.getControl("ts_statusdescription").setDisabled(false);
+            form.getAttribute("ts_statusdescription").setRequiredLevel("required");
         }
     }
 
@@ -28,16 +19,14 @@ namespace ROM.Account {
         const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
         const statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
         const statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
-        if (statusStartDateValue != null) {
-            if (Date.parse(statusStartDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+        if (statusStartDateValue != null) {           
+            if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                 form.getAttribute("ts_stakeholderstatus").setValue(ts_stakeholderstatus.NonOperational);
-               
             }
         }
         if (statusEndDateValue != null) {
-            if (Date.parse(statusEndDateValue.toString()) == new Date(Date.now()).setHours(0, 0, 0, 0)) {
+            if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                 form.getAttribute("ts_stakeholderstatus").setValue(ts_stakeholderstatus.Operational);
-               
             }
         }
     }
