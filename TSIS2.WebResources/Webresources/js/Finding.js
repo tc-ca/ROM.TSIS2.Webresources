@@ -106,7 +106,10 @@ var ROM;
             var acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
             var acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
             var rejectedRecommendation = (acceptNCATRecommendation == 717750001 /* No */ || acceptRATERecommendation == 717750001 /* No */);
-            if (rejectedRecommendation) {
+            var NCATManager = formContext.getAttribute("ts_ncatmanager").getValue();
+            var RATEManager = formContext.getAttribute("ts_ratemanager").getValue();
+            var hasManagerFieldPopulated = (NCATManager != null || RATEManager != null);
+            if (rejectedRecommendation && hasManagerFieldPopulated) {
                 statusCodeAttribute.setValue(717750001 /* Pending */);
             }
             else {

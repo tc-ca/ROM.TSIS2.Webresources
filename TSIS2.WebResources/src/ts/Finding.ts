@@ -71,8 +71,11 @@
         const acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
         const acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
         const rejectedRecommendation = (acceptNCATRecommendation == ts_yesno.No || acceptRATERecommendation == ts_yesno.No)
+        const NCATManager = formContext.getAttribute("ts_ncatmanager").getValue();
+        const RATEManager = formContext.getAttribute("ts_ratemanager").getValue();
+        const hasManagerFieldPopulated = (NCATManager != null || RATEManager != null);
 
-        if (rejectedRecommendation) {
+        if (rejectedRecommendation && hasManagerFieldPopulated) {
             statusCodeAttribute.setValue(ovs_finding_statuscode.Pending)
         } else {
             statusCodeAttribute.setValue(ovs_finding_statuscode.InProgress)
