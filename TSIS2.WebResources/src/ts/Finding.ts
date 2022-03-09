@@ -283,6 +283,8 @@
                     formContext.data.save().then(function() {
                         setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                     });                    
+                } else {
+                    formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
                 }
             });          
         }
@@ -307,20 +309,22 @@
             var confirmStrings = { text:"Placeholder Text. Fields will lock", title:"Placeholder Title." };
             Xrm.Navigation.openConfirmDialog(confirmStrings).then(
             function (success) {    
-                if (success.confirmed){
-                    if (acceptRATERecommendation == ts_yesno.Yes) {
-                        //Set RATE Final Enforcement Action to the Enforcement Recommendation
-                        let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
-                        formContext.getAttribute("ts_finalenforcementaction").setValue(RATEEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
-                        RATEHideProposedSection(eContext);
-                        RATEHideManagerReviewSection(eContext);
+                    if (success.confirmed) {
+                        if (acceptRATERecommendation == ts_yesno.Yes) {
+                            //Set RATE Final Enforcement Action to the Enforcement Recommendation
+                            let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+                            formContext.getAttribute("ts_finalenforcementaction").setValue(RATEEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
+                            RATEHideProposedSection(eContext);
+                            RATEHideManagerReviewSection(eContext);
+                        } else {
+                            formContext.getAttribute("ts_finalenforcementaction").setValue(null);
+                        }
+                        formContext.data.save().then(function () {
+                            setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
+                        });
                     } else {
-                        formContext.getAttribute("ts_finalenforcementaction").setValue(null);
+                        formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
                     }
-                    formContext.data.save().then(function() {
-                        setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
-                    });
-                }
             });          
         }
     }

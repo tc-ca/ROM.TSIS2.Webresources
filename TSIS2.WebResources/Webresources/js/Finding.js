@@ -313,6 +313,9 @@ var ROM;
                             setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                         });
                     }
+                    else {
+                        formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
+                    }
                 });
             }
         }
@@ -344,6 +347,9 @@ var ROM;
                         formContext.data.save().then(function () {
                             setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
                         });
+                    }
+                    else {
+                        formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
                     }
                 });
             }
