@@ -90,6 +90,7 @@ var ROM;
                 }
             });
             RATESpecificComplianceHistoryOnChange(eContext);
+            setApprovingTeamsViews(formContext);
             setApprovingManagersViews(formContext);
             if (formContext.getAttribute("statuscode").getValue() == 717750002 /* Complete */) {
                 disableFormFields(formContext);
@@ -644,28 +645,33 @@ var ROM;
             formContext.getControl("ts_ratemanagerenforcementjustification").setDisabled(true);
             formContext.getControl("ts_ratemanagerenforcementjustification").setVisible(false);
         }
+        //Sets the lookup views for the Approving Teams fields
+        function setApprovingTeamsViews(form) {
+            var viewIdApprovingTeamNCAT = '{3c259fee-0541-4cac-8d20-7b30ee397ca7}';
+            var viewIdApprovingTeamRATE = '{3c259fee-0541-4cac-8d20-7b30ee394a73}';
+            var entityNameApprovingTeams = "team";
+            var viewDisplayNameApprovingTeams = "FilteredApprovingManagers";
+            //Approving managers in the same region as the case with the AvSec Business Unit
+            var fetchXmlApprovingManagersNCAT = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" returntotalrecordcount=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"team\"><attribute name=\"name\"/><attribute name=\"businessunitid\"/><attribute name=\"teamid\"/><attribute name=\"teamtype\"/><filter type=\"and\"><condition attribute=\"teamtype\" operator=\"eq\" value=\"0\"/><condition attribute=\"ts_territory\" operator=\"not-null\"/></filter><order attribute=\"name\" descending=\"false\"/><link-entity name=\"businessunit\" from=\"businessunitid\" to=\"businessunitid\"><filter><condition attribute=\"name\" operator=\"like\" value=\"Intermodal%\"/></filter></link-entity></entity></fetch>";
+            //Approving managers in the same region as the case with the ISSO Business Unit
+            var fetchXmlApprovingManagersRATE = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" returntotalrecordcount=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"team\"><attribute name=\"name\"/><attribute name=\"businessunitid\"/><attribute name=\"teamid\"/><attribute name=\"teamtype\"/><filter type=\"and\"><condition attribute=\"teamtype\" operator=\"eq\" value=\"0\"/><condition attribute=\"ts_territory\" operator=\"not-null\"/></filter><order attribute=\"name\" descending=\"false\"/><link-entity name=\"businessunit\" from=\"businessunitid\" to=\"businessunitid\"><filter><condition attribute=\"name\" operator=\"like\" value=\"Aviation%\"/></filter></link-entity></entity></fetch>";
+            var layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
+            form.getControl("ts_ncatmanager").addCustomView(viewIdApprovingTeamNCAT, entityNameApprovingTeams, viewDisplayNameApprovingTeams, fetchXmlApprovingManagersNCAT, layoutXmlApprovingManagers, true);
+            form.getControl("ts_ratemanager").addCustomView(viewIdApprovingTeamRATE, entityNameApprovingTeams, viewDisplayNameApprovingTeams, fetchXmlApprovingManagersRATE, layoutXmlApprovingManagers, true);
+        }
         //Sets the lookup views for the Approving Manager fields
         function setApprovingManagersViews(form) {
-            //Get related Case region ID
-            var regionId;
-            Xrm.WebApi.retrieveRecord("ovs_finding", form.data.entity.getId(), "?$select=_ovs_caseid_value").then(function success(result) {
-                Xrm.WebApi.retrieveRecord("incident", result._ovs_caseid_value, "?$select=_ovs_region_value").then(function success(result2) {
-                    regionId = result2._ovs_region_value;
-                    var viewIdApprovingManagerNCAT = '{1c259fee-0541-4cac-8d20-7b30ee397ca7}';
-                    var viewIdApprovingManagerRATE = '{1c259fee-0541-4cac-8d20-7b30ee394a73}';
-                    var entityNameApprovingManagers = "systemuser";
-                    var viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
-                    //Approving managers in the same region as the case with the AvSec Business Unit
-                    var fetchXmlApprovingManagersNCAT = "<fetch distinct=\"true\" > <entity name=\"systemuser\" > <attribute name=\"fullname\" /> <link-entity name=\"systemuserroles\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\" > <link-entity name=\"role\" from=\"roleid\" to=\"roleid\" intersect=\"true\" > <attribute name=\"name\" /> <filter type=\"and\" > <condition attribute=\"name\" operator=\"eq\" value=\"ROM - Manager\" /> </filter> </link-entity> </link-entity> <link-entity name=\"businessunit\" from=\"businessunitid\" to=\"businessunitid\" > <filter> <condition attribute=\"name\" operator=\"like\" value=\"Intermodal%\" /> </filter> </link-entity> <link-entity name=\"territory\" from=\"territoryid\" to=\"territoryid\" > <filter> <condition attribute=\"territoryid\" operator=\"eq\" value=\"" + regionId + "\" /> </filter> </link-entity> </entity> </fetch>";
-                    //Approving managers in the same region as the case with the ISSO Business Unit
-                    var fetchXmlApprovingManagersRATE = "<fetch distinct=\"true\" > <entity name=\"systemuser\" > <attribute name=\"fullname\" /> <link-entity name=\"systemuserroles\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\" > <link-entity name=\"role\" from=\"roleid\" to=\"roleid\" intersect=\"true\" > <attribute name=\"name\" /> <filter type=\"and\" > <condition attribute=\"name\" operator=\"eq\" value=\"ROM - Manager\" /> </filter> </link-entity> </link-entity> <link-entity name=\"businessunit\" from=\"businessunitid\" to=\"businessunitid\" > <filter> <condition attribute=\"name\" operator=\"like\" value=\"Aviation%\" /> </filter> </link-entity> <link-entity name=\"territory\" from=\"territoryid\" to=\"territoryid\" > <filter> <condition attribute=\"territoryid\" operator=\"eq\" value=\"" + regionId + "\" /> </filter> </link-entity> </entity> </fetch>";
-                    var layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
-                    form.getControl("ts_ncatmanager").addCustomView(viewIdApprovingManagerNCAT, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersNCAT, layoutXmlApprovingManagers, true);
-                    form.getControl("ts_ratemanager").addCustomView(viewIdApprovingManagerRATE, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersRATE, layoutXmlApprovingManagers, true);
-                }, function (error) {
-                });
-            }, function (error) {
-            });
+            var viewIdApprovingManagerNCAT = '{1c259fee-0541-4cac-8d20-7b30ee397ca7}';
+            var viewIdApprovingManagerRATE = '{1c259fee-0541-4cac-8d20-7b30ee394a73}';
+            var entityNameApprovingManagers = "systemuser";
+            var viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
+            //Approving managers in the same region as the case with the AvSec Business Unit
+            var fetchXmlApprovingManagersNCAT = "<fetch distinct=\"true\" > <entity name=\"systemuser\" > <attribute name=\"fullname\" /> <link-entity name=\"systemuserroles\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\" > <link-entity name=\"role\" from=\"roleid\" to=\"roleid\" intersect=\"true\" > <attribute name=\"name\" /> <filter type=\"and\" > <condition attribute=\"name\" operator=\"eq\" value=\"ROM - Manager\" /> </filter> </link-entity> </link-entity> <link-entity name=\"businessunit\" from=\"businessunitid\" to=\"businessunitid\" > <filter> <condition attribute=\"name\" operator=\"like\" value=\"Intermodal%\" /> </filter> </link-entity> <link-entity name=\"territory\" from=\"territoryid\" to=\"territoryid\" > <filter> <condition attribute=\"territoryid\" operator=\"eq\" value=\"" + getCaseRegion(form) + "\" /> </filter> </link-entity> </entity> </fetch>";
+            //Approving managers in the same region as the case with the ISSO Business Unit
+            var fetchXmlApprovingManagersRATE = "<fetch distinct=\"true\" > <entity name=\"systemuser\" > <attribute name=\"fullname\" /> <link-entity name=\"systemuserroles\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\" > <link-entity name=\"role\" from=\"roleid\" to=\"roleid\" intersect=\"true\" > <attribute name=\"name\" /> <filter type=\"and\" > <condition attribute=\"name\" operator=\"eq\" value=\"ROM - Manager\" /> </filter> </link-entity> </link-entity> <link-entity name=\"businessunit\" from=\"businessunitid\" to=\"businessunitid\" > <filter> <condition attribute=\"name\" operator=\"like\" value=\"Aviation%\" /> </filter> </link-entity> <link-entity name=\"territory\" from=\"territoryid\" to=\"territoryid\" > <filter> <condition attribute=\"territoryid\" operator=\"eq\" value=\"" + getCaseRegion(form) + "\" /> </filter> </link-entity> </entity> </fetch>";
+            var layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
+            form.getControl("ts_ncatmanager").addCustomView(viewIdApprovingManagerNCAT, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersNCAT, layoutXmlApprovingManagers, true);
+            form.getControl("ts_ratemanager").addCustomView(viewIdApprovingManagerRATE, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersRATE, layoutXmlApprovingManagers, true);
         }
         function setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext) {
             var formContext = eContext.getFormContext();
@@ -780,6 +786,7 @@ var ROM;
                 RATEHideProposedSection(eContext);
             }
         }
+        //Disable all form fields except for "note to stakeholder"
         function disableFormFields(form) {
             form.ui.controls.forEach(function (control, index) {
                 var controlType = control.getControlType();
@@ -790,6 +797,20 @@ var ROM;
                     }
                 }
             });
+        }
+        //Get related Case region ID
+        function getCaseRegion(form) {
+            var caseAttribute = form.getAttribute("ovs_caseid");
+            var caseAttributeValue = form.getAttribute("ovs_caseid").getValue();
+            var caseId;
+            if (caseAttribute != null) {
+                if (caseAttributeValue != null) {
+                    Xrm.WebApi.retrieveRecord("incident", caseAttributeValue[0].id.replace(/({|})/g, ''), "?$select=_ovs_region_value").then(function success(result) {
+                        return result._ovs_region_value;
+                    }, function (error) {
+                    });
+                }
+            }
         }
         //Takes an NCAT Enforcement Action Choice Value and returns the corresponding Final Enforcement Action Choice Value
         function NCATEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(NCATValue) {
