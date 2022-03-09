@@ -65,7 +65,7 @@
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const statusCodeAttribute = formContext.getAttribute("statuscode");
         const statusCodeValue = statusCodeAttribute.getValue();
-
+        onLoad(eContext);
         if (statusCodeValue == ovs_finding_statuscode.Complete) return;
 
         const acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
@@ -77,7 +77,6 @@
         } else {
             statusCodeAttribute.setValue(ovs_finding_statuscode.InProgress)
         }
-        onLoad(eContext);
     }
 
     //If all NCAT Fields are set, calculate and set the recommended enforcement
@@ -260,6 +259,11 @@
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
 
+        if (acceptNCATRecommendation == null) {
+            NCATHideProposedSection(eContext);
+            formContext.getAttribute("ts_finalenforcementaction").setValue(null);
+        }
+
         //If the NCAT factors are all filled
         if(formContext.getAttribute("ts_ncatactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_ncatintentionality").getValue() != null && formContext.getAttribute("ts_ncatcompliancehistory").getValue() != null && formContext.getAttribute("ts_ncateconomicbenefit").getValue() != null && formContext.getAttribute("ts_ncatmitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ncatcooperationwithinspectionorinvestigat").getValue() != null && formContext.getAttribute("ts_ncatdetectionofnoncompliances").getValue() != null && acceptNCATRecommendation != null){
            
@@ -267,8 +271,14 @@
             Xrm.Navigation.openConfirmDialog(confirmStrings).then(
             function (success) {    
                 if (success.confirmed){
-                    if(acceptNCATRecommendation == ts_yesno.Yes){
+                    if (acceptNCATRecommendation == ts_yesno.Yes) {
+                        //Set NCAT Final Enforcement Action to the Enforcement Recommendation
+                        const enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+                        formContext.getAttribute("ts_finalenforcementaction").setValue(NCATEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
+                        NCATHideProposedSection(eContext);
                         NCATHideManagerReviewSection(eContext);
+                    } else {
+                        formContext.getAttribute("ts_finalenforcementaction").setValue(null);
                     }
                     formContext.data.save().then(function() {
                         setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
@@ -286,6 +296,11 @@
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
 
+        if (acceptRATERecommendation == null) {
+            RATEHideProposedSection(eContext);
+            formContext.getAttribute("ts_finalenforcementaction").setValue(null);
+        }
+
         //If the NCAT factors are all filled
         if(formContext.getAttribute("ts_rateactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_rateintentionality").getValue() != null && formContext.getAttribute("ts_rateeconomicbenefit").getValue() != null && formContext.getAttribute("ts_rateresponsibility").getValue() != null && formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ratepreventingrecurrence").getValue() != null && formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue() != null && acceptRATERecommendation != null){
            
@@ -293,8 +308,14 @@
             Xrm.Navigation.openConfirmDialog(confirmStrings).then(
             function (success) {    
                 if (success.confirmed){
-                    if(acceptRATERecommendation == ts_yesno.Yes){
+                    if (acceptRATERecommendation == ts_yesno.Yes) {
+                        //Set RATE Final Enforcement Action to the Enforcement Recommendation
+                        let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+                        formContext.getAttribute("ts_finalenforcementaction").setValue(RATEEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
+                        RATEHideProposedSection(eContext);
                         RATEHideManagerReviewSection(eContext);
+                    } else {
+                        formContext.getAttribute("ts_finalenforcementaction").setValue(null);
                     }
                     formContext.data.save().then(function() {
                         setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
@@ -308,7 +329,8 @@
     export function NCATEnforcementRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
-        if (NCATEnforcementRecommendation != null) {
+        const status = formContext.getAttribute("statuscode").getValue();
+        if (NCATEnforcementRecommendation != null && status != ovs_finding_statuscode.Complete) {
             //Enable Accept NCAT Recommendation
             formContext.getControl("ts_acceptncatrecommendation").setDisabled(false);
         } else {
@@ -323,7 +345,8 @@
     export function RATEEnforcementRecommendationOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
-        if (RATEEnforcementRecommendation != null) {
+        const status = formContext.getAttribute("statuscode").getValue();
+        if (RATEEnforcementRecommendation != null && status != ovs_finding_statuscode.Complete) {
             //Enable Accept RATE Recommendation
             formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
         } else {
@@ -526,6 +549,10 @@
     function NCATHideProposedSection(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
+        formContext.getAttribute("ts_ncatapprovingteam").setValue(null);
+        formContext.getAttribute("ts_ncatapprovingteam").setRequiredLevel("none");
+        formContext.getControl("ts_ncatapprovingteam").setVisible(false);
+
         formContext.getAttribute("ts_ncatmanager").setValue(null);
         formContext.getAttribute("ts_ncatmanager").setRequiredLevel("none");
         formContext.getControl("ts_ncatmanager").setVisible(false);
@@ -545,6 +572,10 @@
     //Clears, Hides, and sets Required level to None for every field in the NCAT Manager Review Section
     function NCATHideManagerReviewSection(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+
+        formContext.getAttribute("ts_rateapprovingteam").setValue(null);
+        formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
+        formContext.getControl("ts_rateapprovingteam").setVisible(false);
 
         formContext.getAttribute("ts_ncatmanagerdecision").setRequiredLevel("none");
         formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
@@ -649,6 +680,9 @@
 
         //If they did not accept the NCAT recommendation
         if (acceptNCATRecommendation == ts_yesno.No) {
+            //Show NCAT Approving Team
+            formContext.getControl("ts_ncatapprovingteam").setVisible(true);
+            formContext.getAttribute("ts_ncatapprovingteam").setRequiredLevel("required");
             //Show NCAT Approving Manager
             formContext.getControl("ts_ncatmanager").setVisible(true);
             formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
@@ -670,22 +704,20 @@
             if (NCATEnforcementJustificationValue != null) {
                 formContext.getControl("ts_ncatenforcementjustification").setDisabled(true);
             }
-
-            const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-            //If the user is a system admin or ROM - Manager, show the NCAT manager review section
-            let isAdminOrManager = false;
-            userRoles.forEach(role => {
-                if (role.name == "System Administrator" || role.name == "ROM - Manager") {
-                    isAdminOrManager = true;
-                }
-            });
-            if (isAdminOrManager) formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
-        } else {
-            if (acceptNCATRecommendation == ts_yesno.Yes) {
-                //Set NCAT Final Enforcement Action to the Enforcement Recommendation
-                const enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
-                formContext.getAttribute("ts_finalenforcementaction").setValue(NCATEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
+            //If the proposed section has been filled out, show the manager review section
+            if (formContext.getAttribute("ts_ncatapprovingteam").getValue() != null) {
+                const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+                //If the user is a system admin or ROM - Manager, show the NCAT manager review section
+                let isAdminOrManager = false;
+                userRoles.forEach(role => {
+                    if (role.name == "System Administrator" || role.name == "ROM - Manager") {
+                        isAdminOrManager = true;
+                    }
+                });
+                if (isAdminOrManager) formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
             }
+        } else {
+            
             NCATHideProposedSection(eContext);
         }
     }
@@ -709,6 +741,9 @@
 
         //If they did not accept the RATE recommendation
         if (acceptRATERecommendation == ts_yesno.No) {
+            //Show RATE Approving Team
+            formContext.getControl("ts_rateapprovingteam").setVisible(true);
+            formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("required");
             //Show RATE Approving Manager
             formContext.getControl("ts_ratemanager").setVisible(true);
             formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
@@ -731,21 +766,19 @@
                 formContext.getControl("ts_rateenforcementjustification").setDisabled(true);
             }
 
-            const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-            //If the user is a system admin or ROM - Manager, show the RATE manager review section
-            let isAdminOrManager = false;
-            userRoles.forEach(role => {
-                if (role.name == "System Administrator" || role.name == "ROM - Manager") {
-                    isAdminOrManager = true;
-                }
-            });
-            if (isAdminOrManager) formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
-        } else {
-            if (acceptRATERecommendation == ts_yesno.Yes) {
-                //Set RATE Final Enforcement Action to the Enforcement Recommendation
-                let enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
-                formContext.getAttribute("ts_finalenforcementaction").setValue(RATEEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
+            //If the proposed section has been filled out, show the manager review section
+            if (formContext.getAttribute("ts_rateapprovingteam").getValue() != null) {
+                const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+                //If the user is a system admin or ROM - Manager, show the RATE manager review section
+                let isAdminOrManager = false;
+                userRoles.forEach(role => {
+                    if (role.name == "System Administrator" || role.name == "ROM - Manager") {
+                        isAdminOrManager = true;
+                    }
+                });
+                if (isAdminOrManager) formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
             }
+        } else {
             RATEHideProposedSection(eContext);
         }
     }

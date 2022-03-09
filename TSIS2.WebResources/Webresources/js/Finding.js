@@ -100,6 +100,7 @@ var ROM;
             var formContext = eContext.getFormContext();
             var statusCodeAttribute = formContext.getAttribute("statuscode");
             var statusCodeValue = statusCodeAttribute.getValue();
+            onLoad(eContext);
             if (statusCodeValue == 717750002 /* Complete */)
                 return;
             var acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
@@ -111,7 +112,6 @@ var ROM;
             else {
                 statusCodeAttribute.setValue(717750000 /* InProgress */);
             }
-            onLoad(eContext);
         }
         Finding.onSave = onSave;
         //If all NCAT Fields are set, calculate and set the recommended enforcement
@@ -290,13 +290,24 @@ var ROM;
         function AcceptNCATRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
+            if (acceptNCATRecommendation == null) {
+                NCATHideProposedSection(eContext);
+                formContext.getAttribute("ts_finalenforcementaction").setValue(null);
+            }
             //If the NCAT factors are all filled
             if (formContext.getAttribute("ts_ncatactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_ncatintentionality").getValue() != null && formContext.getAttribute("ts_ncatcompliancehistory").getValue() != null && formContext.getAttribute("ts_ncateconomicbenefit").getValue() != null && formContext.getAttribute("ts_ncatmitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ncatcooperationwithinspectionorinvestigat").getValue() != null && formContext.getAttribute("ts_ncatdetectionofnoncompliances").getValue() != null && acceptNCATRecommendation != null) {
                 var confirmStrings = { text: "Placeholder Text. Fields will lock.", title: "Placeholder Title" };
                 Xrm.Navigation.openConfirmDialog(confirmStrings).then(function (success) {
                     if (success.confirmed) {
                         if (acceptNCATRecommendation == 717750000 /* Yes */) {
+                            //Set NCAT Final Enforcement Action to the Enforcement Recommendation
+                            var enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+                            formContext.getAttribute("ts_finalenforcementaction").setValue(NCATEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
+                            NCATHideProposedSection(eContext);
                             NCATHideManagerReviewSection(eContext);
+                        }
+                        else {
+                            formContext.getAttribute("ts_finalenforcementaction").setValue(null);
                         }
                         formContext.data.save().then(function () {
                             setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
@@ -311,13 +322,24 @@ var ROM;
         function AcceptRATERecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
+            if (acceptRATERecommendation == null) {
+                RATEHideProposedSection(eContext);
+                formContext.getAttribute("ts_finalenforcementaction").setValue(null);
+            }
             //If the NCAT factors are all filled
             if (formContext.getAttribute("ts_rateactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_rateintentionality").getValue() != null && formContext.getAttribute("ts_rateeconomicbenefit").getValue() != null && formContext.getAttribute("ts_rateresponsibility").getValue() != null && formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ratepreventingrecurrence").getValue() != null && formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue() != null && acceptRATERecommendation != null) {
                 var confirmStrings = { text: "Placeholder Text. Fields will lock", title: "Placeholder Title." };
                 Xrm.Navigation.openConfirmDialog(confirmStrings).then(function (success) {
                     if (success.confirmed) {
                         if (acceptRATERecommendation == 717750000 /* Yes */) {
+                            //Set RATE Final Enforcement Action to the Enforcement Recommendation
+                            var enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+                            formContext.getAttribute("ts_finalenforcementaction").setValue(RATEEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
+                            RATEHideProposedSection(eContext);
                             RATEHideManagerReviewSection(eContext);
+                        }
+                        else {
+                            formContext.getAttribute("ts_finalenforcementaction").setValue(null);
                         }
                         formContext.data.save().then(function () {
                             setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
@@ -331,7 +353,8 @@ var ROM;
         function NCATEnforcementRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var NCATEnforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
-            if (NCATEnforcementRecommendation != null) {
+            var status = formContext.getAttribute("statuscode").getValue();
+            if (NCATEnforcementRecommendation != null && status != 717750002 /* Complete */) {
                 //Enable Accept NCAT Recommendation
                 formContext.getControl("ts_acceptncatrecommendation").setDisabled(false);
             }
@@ -347,7 +370,8 @@ var ROM;
         function RATEEnforcementRecommendationOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
-            if (RATEEnforcementRecommendation != null) {
+            var status = formContext.getAttribute("statuscode").getValue();
+            if (RATEEnforcementRecommendation != null && status != 717750002 /* Complete */) {
                 //Enable Accept RATE Recommendation
                 formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
             }
@@ -553,6 +577,9 @@ var ROM;
         //Clears, Hides, and sets Required level to None for every field in the NCAT Proposed Section
         function NCATHideProposedSection(eContext) {
             var formContext = eContext.getFormContext();
+            formContext.getAttribute("ts_ncatapprovingteam").setValue(null);
+            formContext.getAttribute("ts_ncatapprovingteam").setRequiredLevel("none");
+            formContext.getControl("ts_ncatapprovingteam").setVisible(false);
             formContext.getAttribute("ts_ncatmanager").setValue(null);
             formContext.getAttribute("ts_ncatmanager").setRequiredLevel("none");
             formContext.getControl("ts_ncatmanager").setVisible(false);
@@ -568,6 +595,9 @@ var ROM;
         //Clears, Hides, and sets Required level to None for every field in the NCAT Manager Review Section
         function NCATHideManagerReviewSection(eContext) {
             var formContext = eContext.getFormContext();
+            formContext.getAttribute("ts_rateapprovingteam").setValue(null);
+            formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
+            formContext.getControl("ts_rateapprovingteam").setVisible(false);
             formContext.getAttribute("ts_ncatmanagerdecision").setRequiredLevel("none");
             formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
             formContext.getControl("ts_ncatmanagerdecision").setVisible(false);
@@ -645,6 +675,9 @@ var ROM;
             }
             //If they did not accept the NCAT recommendation
             if (acceptNCATRecommendation == 717750001 /* No */) {
+                //Show NCAT Approving Team
+                formContext.getControl("ts_ncatapprovingteam").setVisible(true);
+                formContext.getAttribute("ts_ncatapprovingteam").setRequiredLevel("required");
                 //Show NCAT Approving Manager
                 formContext.getControl("ts_ncatmanager").setVisible(true);
                 formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
@@ -665,23 +698,21 @@ var ROM;
                 if (NCATEnforcementJustificationValue != null) {
                     formContext.getControl("ts_ncatenforcementjustification").setDisabled(true);
                 }
-                var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-                //If the user is a system admin or ROM - Manager, show the NCAT manager review section
-                var isAdminOrManager_1 = false;
-                userRoles.forEach(function (role) {
-                    if (role.name == "System Administrator" || role.name == "ROM - Manager") {
-                        isAdminOrManager_1 = true;
-                    }
-                });
-                if (isAdminOrManager_1)
-                    formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
+                //If the proposed section has been filled out, show the manager review section
+                if (formContext.getAttribute("ts_ncatapprovingteam").getValue() != null) {
+                    var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+                    //If the user is a system admin or ROM - Manager, show the NCAT manager review section
+                    var isAdminOrManager_1 = false;
+                    userRoles.forEach(function (role) {
+                        if (role.name == "System Administrator" || role.name == "ROM - Manager") {
+                            isAdminOrManager_1 = true;
+                        }
+                    });
+                    if (isAdminOrManager_1)
+                        formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
+                }
             }
             else {
-                if (acceptNCATRecommendation == 717750000 /* Yes */) {
-                    //Set NCAT Final Enforcement Action to the Enforcement Recommendation
-                    var enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
-                    formContext.getAttribute("ts_finalenforcementaction").setValue(NCATEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
-                }
                 NCATHideProposedSection(eContext);
             }
         }
@@ -702,6 +733,9 @@ var ROM;
             }
             //If they did not accept the RATE recommendation
             if (acceptRATERecommendation == 717750001 /* No */) {
+                //Show RATE Approving Team
+                formContext.getControl("ts_rateapprovingteam").setVisible(true);
+                formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("required");
                 //Show RATE Approving Manager
                 formContext.getControl("ts_ratemanager").setVisible(true);
                 formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
@@ -722,23 +756,21 @@ var ROM;
                 if (RATEEnforcementJustificationValue != null) {
                     formContext.getControl("ts_rateenforcementjustification").setDisabled(true);
                 }
-                var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-                //If the user is a system admin or ROM - Manager, show the RATE manager review section
-                var isAdminOrManager_2 = false;
-                userRoles.forEach(function (role) {
-                    if (role.name == "System Administrator" || role.name == "ROM - Manager") {
-                        isAdminOrManager_2 = true;
-                    }
-                });
-                if (isAdminOrManager_2)
-                    formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
+                //If the proposed section has been filled out, show the manager review section
+                if (formContext.getAttribute("ts_rateapprovingteam").getValue() != null) {
+                    var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+                    //If the user is a system admin or ROM - Manager, show the RATE manager review section
+                    var isAdminOrManager_2 = false;
+                    userRoles.forEach(function (role) {
+                        if (role.name == "System Administrator" || role.name == "ROM - Manager") {
+                            isAdminOrManager_2 = true;
+                        }
+                    });
+                    if (isAdminOrManager_2)
+                        formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
+                }
             }
             else {
-                if (acceptRATERecommendation == 717750000 /* Yes */) {
-                    //Set RATE Final Enforcement Action to the Enforcement Recommendation
-                    var enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
-                    formContext.getAttribute("ts_finalenforcementaction").setValue(RATEEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
-                }
                 RATEHideProposedSection(eContext);
             }
         }
