@@ -84,7 +84,7 @@ var ROM;
                     //If they did not accept the rate recommendation, show proposal sections and fields
                     if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == 717750001 /* No */) {
                         formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
-                        setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
+                        setPostRATERecommendationSelectionFieldsVisibility(eContext);
                         RATEManagerDecisionOnChange(eContext);
                     }
                 }
@@ -346,7 +346,7 @@ var ROM;
                             formContext.getAttribute("ts_finalenforcementaction").setValue(null);
                         }
                         formContext.data.save().then(function () {
-                            setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
+                            setPostRATERecommendationSelectionFieldsVisibility(eContext);
                         });
                     }
                     else {
@@ -728,7 +728,7 @@ var ROM;
                 NCATHideProposedSection(eContext);
             }
         }
-        function setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext) {
+        function setPostRATERecommendationSelectionFieldsVisibility(eContext) {
             var formContext = eContext.getFormContext();
             var acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
             if (acceptRATERecommendation == 717750001 /* No */ || acceptRATERecommendation == 717750000 /* Yes */) {

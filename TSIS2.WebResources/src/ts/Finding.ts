@@ -48,7 +48,7 @@
                 //If they did not accept the rate recommendation, show proposal sections and fields
                 if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == ts_yesno.No) {
                     formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
-                    setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
+                    setPostRATERecommendationSelectionFieldsVisibility(eContext);
                     RATEManagerDecisionOnChange(eContext);
                 }
             }
@@ -321,7 +321,7 @@
                             formContext.getAttribute("ts_finalenforcementaction").setValue(null);
                         }
                         formContext.data.save().then(function () {
-                            setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
+                            setPostRATERecommendationSelectionFieldsVisibility(eContext);
                         });
                     } else {
                         formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
@@ -730,7 +730,7 @@
         }
     }
 
-    function setPostRATERecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext: Xrm.ExecutionContext<any, any>): void {
+    function setPostRATERecommendationSelectionFieldsVisibility(eContext: Xrm.ExecutionContext<any, any>): void {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
 
