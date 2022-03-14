@@ -699,6 +699,9 @@ var ROM;
         //Clears, Hides, and sets Required level to None for every field in the RATE Proposed Section
         function RATEHideProposedSection(eContext) {
             var formContext = eContext.getFormContext();
+            formContext.getAttribute("ts_rateapprovingteam").setValue(null);
+            formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
+            formContext.getControl("ts_rateapprovingteam").setVisible(false);
             formContext.getAttribute("ts_ratemanager").setValue(null);
             formContext.getAttribute("ts_ratemanager").setRequiredLevel("none");
             formContext.getControl("ts_ratemanager").setVisible(false);
