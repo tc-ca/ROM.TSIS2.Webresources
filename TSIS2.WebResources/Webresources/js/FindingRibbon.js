@@ -6,11 +6,11 @@ var markCompleteConfirmationTextLocalized;
 var markCompleteConfirmationTitleLocalized;
 
 if (lang == 1036) {
-    markCompleteValidationTextLocalized = "Toutes les champs obligatoires de la constatation doivent être complétés avant que la constatation puissent être marqué comme terminé.";
+    markCompleteValidationTextLocalized = "Tous les champs indiqués par un '+' bleu doivent être complétés avant que la constatation puissent être marqué comme terminé.";
     markCompleteValidationTitleLocalized = "Formulaire Incomplet";
 
 } else {
-    markCompleteValidationTextLocalized = "All required fields in the Finding must be answered before the Finding can be Marked Complete.";
+    markCompleteValidationTextLocalized = "All fields denoted by blue '+' must be completed in order to Mark Complete.";
     markCompleteValidationTitleLocalized = "Form Incomplete";
 }
 //Action for mscrm.OpenRecordItem overridden command. Opens Finding forms as a modal.
@@ -60,7 +60,7 @@ function openRecord(recordId) {
 
 function markComplete(primaryControl) {
     var finalEnforcementAction = primaryControl.getAttribute("ts_finalenforcementaction").getValue();
-    var issueaddressedonsite = primaryControl.getAttribute("ts_issueaddressedonsite").getValue();    
+    var issueaddressedonsite = primaryControl.getAttribute("ts_issueaddressedonsite").getValue();
     if (finalEnforcementAction != null && issueaddressedonsite != null) {
         primaryControl.getAttribute("statuscode").setValue(717750002); //Complete
         primaryControl.data.save().then(
@@ -75,5 +75,6 @@ function markComplete(primaryControl) {
         };
         var alertOptions = { height: 200, width: 450 };
         Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+
     }
 }
