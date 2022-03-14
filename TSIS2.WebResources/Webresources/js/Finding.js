@@ -615,10 +615,10 @@ var ROM;
             if (NCATApprovingTeam != null) {
                 var viewIdApprovingManagerNCAT = '{1c259fee-0541-4cac-8d20-7b30ee397ca7}';
                 var entityNameApprovingManagers = "systemuser";
-                var viewDisplayNameApprovingManagers = "FilteredApprovingTeams";
+                var viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
                 //Approving managers in the same region as the case with the AvSec Business Unit
                 var fetchXmlApprovingManagersNCAT = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"" + NCATApprovingTeam[0].id + "\"/></filter></link-entity></entity></fetch>";
-                var layoutXmlApprovingTeams = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
+                var layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
                 formContext.getControl("ts_ncatmanager").addCustomView(viewIdApprovingManagerNCAT, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersNCAT, layoutXmlApprovingTeams, true);
                 if (formContext.getAttribute("ts_ncatmanager").getValue != null) {
                     formContext.getControl("ts_ncatmanager").setDisabled(false);
@@ -640,10 +640,10 @@ var ROM;
             if (RATEApprovingTeam != null) {
                 var viewIdApprovingManagerRATE = '{1c259fee-0541-4cac-8d20-7b30ee394a73}';
                 var entityNameApprovingManagers = "systemuser";
-                var viewDisplayNameApprovingManagers = "FilteredApprovingTeams";
+                var viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
                 //Approving managers in the same region as the case with the ISSO Business Unit
                 var fetchXmlApprovingManagersRATE = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"" + RATEApprovingTeam[0].id + "\"/></filter></link-entity></entity></fetch>";
-                var layoutXmlApprovingTeams = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
+                var layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
                 formContext.getControl("ts_ratemanager").addCustomView(viewIdApprovingManagerRATE, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersRATE, layoutXmlApprovingTeams, true);
                 formContext.getControl("ts_ratemanager").setDisabled(false);
             }
