@@ -15,7 +15,12 @@
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         //If Observation, keep everything hidden
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
-        let findingType = formContext.getAttribute("ts_findingtype").getValue();              
+        let findingType = formContext.getAttribute("ts_findingtype").getValue();                             
+
+        if (formContext.getAttribute("statuscode").getValue() == ovs_finding_statuscode.Complete) {
+            disableFormFields(formContext);
+        }
+
         if (findingType != ts_findingtype.Noncompliance) return;
        
         formContext.getAttribute("ts_ncatfactorguide").setValue(false);
@@ -40,8 +45,7 @@
 
             //Show NCAT Sections and fields when the user is in Transport Canada or ISSO business unit
             if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
-                formContext.ui.tabs.get("tab_NCAT").setVisible(true);
-                NCATEnforcementRecommendationOnChange(eContext);
+                formContext.ui.tabs.get("tab_NCAT").setVisible(true);             
                 //If they did not accept the ncat recommendation, show proposal sections and fields
                 if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == ts_yesno.No) {
                     formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
@@ -51,8 +55,7 @@
             }
             //Show RATE Sections and fields when the user is in Transport Canada or Aviation Security business unit
             if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Aviation")) {
-                formContext.ui.tabs.get("tab_RATE").setVisible(true);
-                RATEEnforcementRecommendationOnChange(eContext);
+                formContext.ui.tabs.get("tab_RATE").setVisible(true);            
                 //If they did not accept the rate recommendation, show proposal sections and fields
                 if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == ts_yesno.No) {
                     formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
@@ -64,9 +67,7 @@
         RATESpecificComplianceHistoryOnChange(eContext);
         setApprovingTeamsViews(formContext); 
 
-        if (formContext.getAttribute("statuscode").getValue() == ovs_finding_statuscode.Complete) {
-            disableFormFields(formContext);
-        }
+       
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -615,6 +616,13 @@
         }
     }
 
+    export function issueAddressedOnSiteOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let findingType = formContext.getAttribute("ts_findingtype").getValue();
+        let finalEnforcementAction = formContext.getAttribute("ts_finalenforcementaction");
+        if (findingType == ts_findingtype.Observation)
+            finalEnforcementAction.setValue(ts_finalenforcementaction.NotApplicable);
+    }
 
     //Clears, Hides, and sets Required level to None for every field in the NCAT Proposed Section
     function NCATHideProposedSection(eContext: Xrm.ExecutionContext<any, any>) {
