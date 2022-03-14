@@ -40,6 +40,12 @@ var ROM;
     var Finding;
     (function (Finding) {
         var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+        var factorLockMessageTitleLocalizedText = "Warning";
+        var factorLockMessageBodyLocalizedText = 'All the factors of the tool will be locked when you select "OK".';
+        if (lang == 1036) {
+            factorLockMessageTitleLocalizedText = "Avertissement";
+            factorLockMessageBodyLocalizedText = "Tous les facteurs de l'outil vont \u00EAtre verrouill\u00E9 lorsque vous s\u00E9lectionner \"OK\".";
+        }
         //Toggle visibility of NCAT and RATE sections depending user business unit and rolls
         //Sets field Controls parameters (required, hidden, disabled, etc) depending on current form state
         function onLoad(eContext) {
@@ -299,7 +305,7 @@ var ROM;
             }
             //If the NCAT factors are all filled
             if (formContext.getAttribute("ts_ncatactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_ncatintentionality").getValue() != null && formContext.getAttribute("ts_ncatcompliancehistory").getValue() != null && formContext.getAttribute("ts_ncateconomicbenefit").getValue() != null && formContext.getAttribute("ts_ncatmitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ncatcooperationwithinspectionorinvestigat").getValue() != null && formContext.getAttribute("ts_ncatdetectionofnoncompliances").getValue() != null && acceptNCATRecommendation != null) {
-                var confirmStrings = { text: "Placeholder Text. Fields will lock.", title: "Placeholder Title" };
+                var confirmStrings = { text: factorLockMessageBodyLocalizedText, title: factorLockMessageTitleLocalizedText };
                 Xrm.Navigation.openConfirmDialog(confirmStrings).then(function (success) {
                     if (success.confirmed) {
                         if (acceptNCATRecommendation == 717750000 /* Yes */) {
@@ -334,7 +340,7 @@ var ROM;
             }
             //If the NCAT factors are all filled
             if (formContext.getAttribute("ts_rateactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_rateintentionality").getValue() != null && formContext.getAttribute("ts_rateeconomicbenefit").getValue() != null && formContext.getAttribute("ts_rateresponsibility").getValue() != null && formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ratepreventingrecurrence").getValue() != null && formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue() != null && acceptRATERecommendation != null) {
-                var confirmStrings = { text: "Placeholder Text. Fields will lock", title: "Placeholder Title." };
+                var confirmStrings = { text: factorLockMessageBodyLocalizedText, title: factorLockMessageTitleLocalizedText };
                 Xrm.Navigation.openConfirmDialog(confirmStrings).then(function (success) {
                     if (success.confirmed) {
                         if (acceptRATERecommendation == 717750000 /* Yes */) {
