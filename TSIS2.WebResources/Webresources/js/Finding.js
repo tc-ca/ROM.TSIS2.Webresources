@@ -78,6 +78,17 @@ var ROM;
                 //Show NCAT Sections and fields when the user is in Transport Canada or ISSO business unit
                 if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                     formContext.ui.tabs.get("tab_NCAT").setVisible(true);
+                    //If there's a recommended enforcement action and the finding is not complete yet, then the accept ncat recommendation field should be unlocked
+                    var enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+                    var recordStatus = formContext.getAttribute("statuscode").getValue();
+                    if (enforcementRecommendation != null && recordStatus != 717750002 /* Complete */) {
+                        formContext.getControl("ts_acceptncatrecommendation").setDisabled(false);
+                    }
+                    //If they have accepted or rejected the NCAT recommendation previously, then the NCAT factors should be locked.
+                    var acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
+                    if (acceptNCATRecommendation != null) {
+                        lockNCATFactors(eContext);
+                    }
                     //If they did not accept the ncat recommendation, show proposal sections and fields
                     if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == 717750001 /* No */) {
                         formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
@@ -88,6 +99,17 @@ var ROM;
                 //Show RATE Sections and fields when the user is in Transport Canada or Aviation Security business unit
                 if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Aviation")) {
                     formContext.ui.tabs.get("tab_RATE").setVisible(true);
+                    //If there's a recommended enforcement action and the finding is not complete yet, then the accept rate recommendation field should be unlocked
+                    var enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+                    var recordStatus = formContext.getAttribute("statuscode").getValue();
+                    if (enforcementRecommendation != null && recordStatus != 717750002 /* Complete */) {
+                        formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
+                    }
+                    //If they have accepted or rejected the RATE recommendation previously, then the RATE factors should be locked.
+                    var acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
+                    if (acceptRATERecommendation != null) {
+                        lockRATEFactors(eContext);
+                    }
                     //If they did not accept the rate recommendation, show proposal sections and fields
                     if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == 717750001 /* No */) {
                         formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
@@ -721,13 +743,7 @@ var ROM;
             var formContext = eContext.getFormContext();
             var acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
             if (acceptNCATRecommendation == 717750001 /* No */ || acceptNCATRecommendation == 717750000 /* Yes */) {
-                formContext.getControl("ts_ncatactualorpotentialharm").setDisabled(true);
-                formContext.getControl("ts_ncatintentionality").setDisabled(true);
-                formContext.getControl("ts_ncatcompliancehistory").setDisabled(true);
-                formContext.getControl("ts_ncateconomicbenefit").setDisabled(true);
-                formContext.getControl("ts_ncatmitigationofnoncompliantbehaviors").setDisabled(true);
-                formContext.getControl("ts_ncatcooperationwithinspectionorinvestigat").setDisabled(true);
-                formContext.getControl("ts_ncatdetectionofnoncompliances").setDisabled(true);
+                lockNCATFactors(eContext);
             }
             //If they did not accept the NCAT recommendation
             if (acceptNCATRecommendation == 717750001 /* No */) {
@@ -772,20 +788,21 @@ var ROM;
                 NCATHideProposedSection(eContext);
             }
         }
+        function lockNCATFactors(eContext) {
+            var formContext = eContext.getFormContext();
+            formContext.getControl("ts_ncatactualorpotentialharm").setDisabled(true);
+            formContext.getControl("ts_ncatintentionality").setDisabled(true);
+            formContext.getControl("ts_ncatcompliancehistory").setDisabled(true);
+            formContext.getControl("ts_ncateconomicbenefit").setDisabled(true);
+            formContext.getControl("ts_ncatmitigationofnoncompliantbehaviors").setDisabled(true);
+            formContext.getControl("ts_ncatcooperationwithinspectionorinvestigat").setDisabled(true);
+            formContext.getControl("ts_ncatdetectionofnoncompliances").setDisabled(true);
+        }
         function setPostRATERecommendationSelectionFieldsVisibility(eContext) {
             var formContext = eContext.getFormContext();
             var acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
             if (acceptRATERecommendation == 717750001 /* No */ || acceptRATERecommendation == 717750000 /* Yes */) {
-                formContext.getControl("ts_rateactualorpotentialharm").setDisabled(true);
-                formContext.getControl("ts_rateintentionality").setDisabled(true);
-                formContext.getControl("ts_rateeconomicbenefit").setDisabled(true);
-                formContext.getControl("ts_rateresponsibility").setDisabled(true);
-                formContext.getControl("ts_ratemitigationofnoncompliantbehaviors").setDisabled(true);
-                formContext.getControl("ts_ratepreventingrecurrence").setDisabled(true);
-                formContext.getControl("ts_ratecooperationwithinspectionorinvestigat").setDisabled(true);
-                formContext.getControl("ts_ratespecificcompliancehistory").setDisabled(true);
-                formContext.getControl("ts_rategeneralcompliancehistory").setDisabled(true);
-                formContext.getControl("ts_ratespecificenforcementhistory").setDisabled(true);
+                lockRATEFactors(eContext);
             }
             //If they did not accept the RATE recommendation
             if (acceptRATERecommendation == 717750001 /* No */) {
@@ -829,6 +846,19 @@ var ROM;
             else {
                 RATEHideProposedSection(eContext);
             }
+        }
+        function lockRATEFactors(eContext) {
+            var formContext = eContext.getFormContext();
+            formContext.getControl("ts_rateactualorpotentialharm").setDisabled(true);
+            formContext.getControl("ts_rateintentionality").setDisabled(true);
+            formContext.getControl("ts_rateeconomicbenefit").setDisabled(true);
+            formContext.getControl("ts_rateresponsibility").setDisabled(true);
+            formContext.getControl("ts_ratemitigationofnoncompliantbehaviors").setDisabled(true);
+            formContext.getControl("ts_ratepreventingrecurrence").setDisabled(true);
+            formContext.getControl("ts_ratecooperationwithinspectionorinvestigat").setDisabled(true);
+            formContext.getControl("ts_ratespecificcompliancehistory").setDisabled(true);
+            formContext.getControl("ts_rategeneralcompliancehistory").setDisabled(true);
+            formContext.getControl("ts_ratespecificenforcementhistory").setDisabled(true);
         }
         //Disable all form fields except for "note to stakeholder"
         function disableFormFields(form) {
