@@ -46,6 +46,9 @@ var ROM;
             //If Observation, keep everything hidden
             var formContext = eContext.getFormContext();
             var findingType = formContext.getAttribute("ts_findingtype").getValue();
+            if (formContext.getAttribute("statuscode").getValue() == 717750002 /* Complete */) {
+                disableFormFields(formContext);
+            }
             if (findingType != 717750002 /* Noncompliance */)
                 return;
             formContext.getAttribute("ts_ncatfactorguide").setValue(false);
@@ -69,7 +72,6 @@ var ROM;
                 //Show NCAT Sections and fields when the user is in Transport Canada or ISSO business unit
                 if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                     formContext.ui.tabs.get("tab_NCAT").setVisible(true);
-                    NCATEnforcementRecommendationOnChange(eContext);
                     //If they did not accept the ncat recommendation, show proposal sections and fields
                     if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == 717750001 /* No */) {
                         formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
@@ -80,7 +82,6 @@ var ROM;
                 //Show RATE Sections and fields when the user is in Transport Canada or Aviation Security business unit
                 if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Aviation")) {
                     formContext.ui.tabs.get("tab_RATE").setVisible(true);
-                    RATEEnforcementRecommendationOnChange(eContext);
                     //If they did not accept the rate recommendation, show proposal sections and fields
                     if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == 717750001 /* No */) {
                         formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
@@ -91,9 +92,6 @@ var ROM;
             });
             RATESpecificComplianceHistoryOnChange(eContext);
             setApprovingTeamsViews(formContext);
-            if (formContext.getAttribute("statuscode").getValue() == 717750002 /* Complete */) {
-                disableFormFields(formContext);
-            }
         }
         Finding.onLoad = onLoad;
         function onSave(eContext) {
@@ -627,6 +625,14 @@ var ROM;
             }
         }
         Finding.approvingRATETeamsOnChange = approvingRATETeamsOnChange;
+        function issueAddressedOnSiteOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var findingType = formContext.getAttribute("ts_findingtype").getValue();
+            var finalEnforcementAction = formContext.getAttribute("ts_finalenforcementaction");
+            if (findingType == 717750001 /* Observation */)
+                finalEnforcementAction.setValue(717750009 /* NotApplicable */);
+        }
+        Finding.issueAddressedOnSiteOnChange = issueAddressedOnSiteOnChange;
         //Clears, Hides, and sets Required level to None for every field in the NCAT Proposed Section
         function NCATHideProposedSection(eContext) {
             var formContext = eContext.getFormContext();
