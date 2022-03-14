@@ -8,4 +8,5 @@ declare const enum ts_finalenforcementaction {
   SuspensionofCAD = 717750006,
   CancellationofCAD = 717750007,
   ReferraltoREU = 717750008,
+  NotApplicable = 717750009,
 }
