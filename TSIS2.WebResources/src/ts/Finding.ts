@@ -702,6 +702,10 @@
     function RATEHideProposedSection(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
+        formContext.getAttribute("ts_rateapprovingteam").setValue(null);
+        formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
+        formContext.getControl("ts_rateapprovingteam").setVisible(false);
+
         formContext.getAttribute("ts_ratemanager").setValue(null);
         formContext.getAttribute("ts_ratemanager").setRequiredLevel("none");
         formContext.getControl("ts_ratemanager").setVisible(false);
