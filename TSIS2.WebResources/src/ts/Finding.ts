@@ -766,6 +766,7 @@
 
         if (acceptNCATRecommendation == ts_yesno.No || acceptNCATRecommendation == ts_yesno.Yes) {
             lockNCATFactors(eContext);
+            formContext.getControl("ts_acceptncatrecommendation").setDisabled(true);
         }
 
         //If they did not accept the NCAT recommendation
@@ -833,6 +834,7 @@
 
         if (acceptRATERecommendation == ts_yesno.No || acceptRATERecommendation == ts_yesno.Yes) {
             lockRATEFactors(eContext);
+            formContext.getControl("ts_acceptraterecommendation").setDisabled(true);
         }
 
         //If they did not accept the RATE recommendation
