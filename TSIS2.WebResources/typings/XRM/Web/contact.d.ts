@@ -197,6 +197,7 @@ interface Contact_Relationships {
 }
 interface Contact extends Contact_Base, Contact_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
+  msdyn_segmentid_bind$msdyn_segments?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   parentcustomerid_account_bind$accounts?: string | null;
@@ -366,6 +367,7 @@ interface Contact_Select {
   modifiedonbehalfby_guid: WebAttribute<Contact_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
   msdyn_gdproptout: WebAttribute<Contact_Select, { msdyn_gdproptout: boolean | null }, {  }>;
   msdyn_orgchangestatus: WebAttribute<Contact_Select, { msdyn_orgchangestatus: contact_msdyn_orgchangestatus | null }, { msdyn_orgchangestatus_formatted?: string }>;
+  msdyn_segmentid_guid: WebAttribute<Contact_Select, { msdyn_segmentid_guid: string | null }, { msdyn_segmentid_formatted?: string }>;
   nickname: WebAttribute<Contact_Select, { nickname: string | null }, {  }>;
   numberofchildren: WebAttribute<Contact_Select, { numberofchildren: number | null }, {  }>;
   onholdtime: WebAttribute<Contact_Select, { onholdtime: number | null }, {  }>;
@@ -563,6 +565,7 @@ interface Contact_Filter {
   modifiedonbehalfby_guid: XQW.Guid;
   msdyn_gdproptout: boolean;
   msdyn_orgchangestatus: contact_msdyn_orgchangestatus;
+  msdyn_segmentid_guid: XQW.Guid;
   nickname: string;
   numberofchildren: number;
   onholdtime: number;
@@ -680,6 +683,7 @@ interface Contact_FormattedResult {
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
   msdyn_orgchangestatus_formatted?: string;
+  msdyn_segmentid_formatted?: string;
   originatingleadid_formatted?: string;
   overriddencreatedon_formatted?: string;
   ownerid_formatted?: string;
@@ -714,6 +718,7 @@ interface Contact_Result extends Contact_Base, Contact_Relationships {
   modifiedby_guid: string | null;
   modifiedbyexternalparty_guid: string | null;
   modifiedonbehalfby_guid: string | null;
+  msdyn_segmentid_guid: string | null;
   originatingleadid_guid: string | null;
   ownerid_guid: string | null;
   owningbusinessunit_guid: string | null;
