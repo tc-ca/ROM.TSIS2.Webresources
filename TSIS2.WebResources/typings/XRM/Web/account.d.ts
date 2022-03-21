@@ -184,6 +184,7 @@ interface Account extends Account_Base, Account_Relationships {
   msdyn_PreferredResource_bind$bookableresources?: string | null;
   msdyn_billingaccount_account_bind$accounts?: string | null;
   msdyn_salestaxcode_bind$msdyn_taxcodes?: string | null;
+  msdyn_segmentid_bind$msdyn_segments?: string | null;
   msdyn_serviceterritory_bind$territories?: string | null;
   msdyn_workhourtemplate_bind$msdyn_workhourtemplates?: string | null;
   ovs_SiteType_bind$ovs_sitetypes?: string | null;
@@ -311,6 +312,7 @@ interface Account_Select {
   msdyn_gdproptout: WebAttribute<Account_Select, { msdyn_gdproptout: boolean | null }, {  }>;
   msdyn_preferredresource_guid: WebAttribute<Account_Select, { msdyn_preferredresource_guid: string | null }, { msdyn_preferredresource_formatted?: string }>;
   msdyn_salestaxcode_guid: WebAttribute<Account_Select, { msdyn_salestaxcode_guid: string | null }, { msdyn_salestaxcode_formatted?: string }>;
+  msdyn_segmentid_guid: WebAttribute<Account_Select, { msdyn_segmentid_guid: string | null }, { msdyn_segmentid_formatted?: string }>;
   msdyn_serviceterritory_guid: WebAttribute<Account_Select, { msdyn_serviceterritory_guid: string | null }, { msdyn_serviceterritory_formatted?: string }>;
   msdyn_taxexempt: WebAttribute<Account_Select, { msdyn_taxexempt: boolean | null }, {  }>;
   msdyn_taxexemptnumber: WebAttribute<Account_Select, { msdyn_taxexemptnumber: string | null }, {  }>;
@@ -495,6 +497,7 @@ interface Account_Filter {
   msdyn_gdproptout: boolean;
   msdyn_preferredresource_guid: XQW.Guid;
   msdyn_salestaxcode_guid: XQW.Guid;
+  msdyn_segmentid_guid: XQW.Guid;
   msdyn_serviceterritory_guid: XQW.Guid;
   msdyn_taxexempt: boolean;
   msdyn_taxexemptnumber: string;
@@ -650,6 +653,7 @@ interface Account_FormattedResult {
   msdyn_billingaccount_formatted?: string;
   msdyn_preferredresource_formatted?: string;
   msdyn_salestaxcode_formatted?: string;
+  msdyn_segmentid_formatted?: string;
   msdyn_serviceterritory_formatted?: string;
   msdyn_travelcharge_base_formatted?: string;
   msdyn_travelcharge_formatted?: string;
@@ -705,6 +709,7 @@ interface Account_Result extends Account_Base, Account_Relationships {
   msdyn_billingaccount_guid: string | null;
   msdyn_preferredresource_guid: string | null;
   msdyn_salestaxcode_guid: string | null;
+  msdyn_segmentid_guid: string | null;
   msdyn_serviceterritory_guid: string | null;
   msdyn_workhourtemplate_guid: string | null;
   originatingleadid_guid: string | null;
