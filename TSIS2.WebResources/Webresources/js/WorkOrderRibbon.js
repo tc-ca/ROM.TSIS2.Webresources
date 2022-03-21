@@ -390,8 +390,8 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
 
     Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
         let businessUnitCondition;
-        userBusinessUnitId = result.entities[0].businessunitid;
-        userBusinessUnitName = result.entities[0].name;
+        let userBusinessUnitId = result.entities[0].businessunitid;
+        let userBusinessUnitName = result.entities[0].name;
 
         //Uses the generated alias in "Enabled Users With Business Unit Name"
         if(userBusinessUnitName.startsWith("Aviation")){ 
