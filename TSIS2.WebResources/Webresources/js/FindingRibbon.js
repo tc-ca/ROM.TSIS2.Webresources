@@ -78,3 +78,223 @@ function markComplete(primaryControl) {
 
     }
 }
+
+function unlockNCAT(primaryControl) {
+    //Set status to New
+    primaryControl.getAttribute("statuscode").setValue(1);
+
+    //NCAT
+    primaryControl.getControl("ts_ncatactualorpotentialharm").setDisabled(false);
+    primaryControl.getControl("ts_ncatintentionality").setDisabled(false);
+    primaryControl.getControl("ts_ncatcompliancehistory").setDisabled(false);
+    primaryControl.getControl("ts_ncateconomicbenefit").setDisabled(false);
+    primaryControl.getControl("ts_ncatmitigationofnoncompliantbehaviors").setDisabled(false);
+    primaryControl.getControl("ts_ncatcooperationwithinspectionorinvestigat").setDisabled(false);
+    primaryControl.getControl("ts_ncatdetectionofnoncompliances").setDisabled(false);
+    primaryControl.getControl("ts_acceptncatrecommendation").setDisabled(false);
+    primaryControl.getControl("ts_acceptncatrecommendation").setDisabled(false);
+    primaryControl.getControl("ts_issueaddressedonsite").setDisabled(false);
+    primaryControl.getControl("ts_notetostakeholder").setDisabled(false);
+
+    primaryControl.getAttribute("ts_acceptncatrecommendation").setValue(null);
+    
+    NCATHideProposedSection(primaryControl);
+}
+
+function unlockRATE(primaryControl) {
+    //Set status to New
+    primaryControl.getAttribute("statuscode").setValue(1);
+
+    //RATE
+    primaryControl.getControl("ts_ratespecificcompliancehistory").setDisabled(false);
+    primaryControl.getControl("ts_rategeneralcompliancehistory").setDisabled(false);
+    primaryControl.getControl("ts_ratespecificenforcementhistory").setDisabled(false);
+    primaryControl.getControl("ts_rateactualorpotentialharm").setDisabled(false);
+    primaryControl.getControl("ts_rateintentionality").setDisabled(false);
+    primaryControl.getControl("ts_rateeconomicbenefit").setDisabled(false);
+    primaryControl.getControl("ts_rateresponsibility").setDisabled(false);
+    primaryControl.getControl("ts_ratemitigationofnoncompliantbehaviors").setDisabled(false);
+    primaryControl.getControl("ts_ratepreventingrecurrence").setDisabled(false);
+    primaryControl.getControl("ts_ratecooperationwithinspectionorinvestigat").setDisabled(false);
+    primaryControl.getControl("ts_acceptraterecommendation").setDisabled(false);
+    primaryControl.getControl("ts_issueaddressedonsite").setDisabled(false);
+    primaryControl.getControl("ts_notetostakeholder").setDisabled(false);
+
+    primaryControl.getAttribute("ts_acceptraterecommendation").setValue(null);
+
+    RATEHideProposedSection(primaryControl);
+}
+
+function isSystemAdministrator() {
+    var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
+    var enable = false;
+    roles.forEach(function (item) {
+        if (item.name == "System Administrator") enable = true;
+    });
+    return enable;
+}
+
+function acceptNCATRecommendationIsNotNull(primaryControl) {
+    return (primaryControl.getAttribute("ts_acceptncatrecommendation").getValue() != null)
+}
+
+function acceptRATERecommendationIsNotNull(primaryControl) {
+    return (primaryControl.getAttribute("ts_acceptraterecommendation").getValue() != null)
+}
+
+//Clears, Hides, and sets Required level to None for every field in the NCAT Proposed Section
+function NCATHideProposedSection(primaryControl) {
+    let formContext = primaryControl;
+
+    formContext.getAttribute("ts_ncatapprovingteam").setValue(null);
+    formContext.getAttribute("ts_ncatapprovingteam").setRequiredLevel("none");
+    formContext.getControl("ts_ncatapprovingteam").setVisible(false);
+
+    formContext.getAttribute("ts_ncatmanager").setValue(null);
+    formContext.getAttribute("ts_ncatmanager").setRequiredLevel("none");
+    formContext.getControl("ts_ncatmanager").setVisible(false);
+
+    formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
+    formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("none");
+    formContext.getControl("ts_ncatinspectorrecommendation").setVisible(false);
+    formContext.getControl("ts_ncatinspectorrecommendation").clearNotification();
+
+    formContext.getAttribute("ts_ncatenforcementjustification").setValue(null);
+    formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("none");
+    formContext.getControl("ts_ncatenforcementjustification").setVisible(false);
+
+    NCATHideManagerReviewSection(primaryControl);
+}
+
+//Clears, Hides, and sets Required level to None for every field in the NCAT Manager Review Section
+function NCATHideManagerReviewSection(primaryControl) {
+    let formContext = primaryControl;
+
+    formContext.getAttribute("ts_rateapprovingteam").setValue(null);
+    formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
+    formContext.getControl("ts_rateapprovingteam").setVisible(false);
+
+    formContext.getAttribute("ts_ncatmanagerdecision").setRequiredLevel("none");
+    formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
+    formContext.getControl("ts_ncatmanagerdecision").setVisible(false);
+
+    formContext.getAttribute("ts_ncatmanageralternativerecommendation").setValue(null);
+    formContext.getControl("ts_ncatmanageralternativerecommendation").clearNotification();
+    formContext.getControl("ts_ncatmanageralternativerecommendation").setVisible(false);
+
+    formContext.getAttribute("ts_ncatmanagerenforcementjustification").setValue(null);
+    formContext.getAttribute("ts_ncatmanagerenforcementjustification").setRequiredLevel("none");
+    formContext.getControl("ts_ncatmanagerenforcementjustification").setDisabled(true);
+    formContext.getControl("ts_ncatmanagerenforcementjustification").setVisible(false);
+}
+
+//Clears, Hides, and sets Required level to None for every field in the RATE Proposed Section
+function RATEHideProposedSection(primaryControl) {
+    let formContext = primaryControl;
+
+    formContext.getAttribute("ts_rateapprovingteam").setValue(null);
+    formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
+    formContext.getControl("ts_rateapprovingteam").setVisible(false);
+
+    formContext.getAttribute("ts_ratemanager").setValue(null);
+    formContext.getAttribute("ts_ratemanager").setRequiredLevel("none");
+    formContext.getControl("ts_ratemanager").setVisible(false);
+
+    formContext.getAttribute("ts_rateinspectorrecommendation").setValue(null);
+    formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("none");
+    formContext.getControl("ts_rateinspectorrecommendation").setVisible(false);
+    formContext.getControl("ts_rateinspectorrecommendation").clearNotification();
+
+    formContext.getAttribute("ts_rateenforcementjustification").setValue(null);
+    formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("none");
+    formContext.getControl("ts_rateenforcementjustification").setVisible(false);
+
+    RATEHideManagerReviewSection(primaryControl);
+}
+
+//Clears, Hides, and sets Required level to None for every field in the RATE Manager Review Section
+function RATEHideManagerReviewSection(primaryControl) {
+    let formContext = primaryControl;
+
+    formContext.getAttribute("ts_ratemanagerdecision").setRequiredLevel("none");
+    formContext.getAttribute("ts_ratemanagerdecision").setValue(null);
+    formContext.getControl("ts_ratemanagerdecision").setVisible(false);
+
+    formContext.getAttribute("ts_ratemanageralternativerecommendation").setValue(null);
+    formContext.getControl("ts_ratemanageralternativerecommendation").clearNotification();
+    formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(false);
+
+    formContext.getAttribute("ts_ratemanagerenforcementjustification").setValue(null);
+    formContext.getAttribute("ts_ratemanagerenforcementjustification").setRequiredLevel("none");
+    formContext.getControl("ts_ratemanagerenforcementjustification").setDisabled(true);
+    formContext.getControl("ts_ratemanagerenforcementjustification").setVisible(false);
+}
+
+function isAvSecBusinessUnit() {
+    let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+    let currentUserBusinessUnitFetchXML = [
+        "<fetch top='50'>",
+        "  <entity name='businessunit'>",
+        "    <attribute name='name' />",
+        "    <attribute name='businessunitid' />",
+        "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+        "      <filter>",
+        "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+        "      </filter>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>",
+    ].join("");
+    currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+    Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+        let userBusinessUnitName = result.entities[0].name;
+        return userBusinessUnitName.startsWith("Aviation");
+    });
+}
+
+function isISSOBusinessUnit() {
+    let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+    let currentUserBusinessUnitFetchXML = [
+        "<fetch top='50'>",
+        "  <entity name='businessunit'>",
+        "    <attribute name='name' />",
+        "    <attribute name='businessunitid' />",
+        "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+        "      <filter>",
+        "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+        "      </filter>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>",
+    ].join("");
+    currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+    Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+        let userBusinessUnitName = result.entities[0].name;
+        return userBusinessUnitName.startsWith("Intermodal");
+    });
+}
+
+function isTCBusinessUnit() {
+    let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+    let currentUserBusinessUnitFetchXML = [
+        "<fetch top='50'>",
+        "  <entity name='businessunit'>",
+        "    <attribute name='name' />",
+        "    <attribute name='businessunitid' />",
+        "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+        "      <filter>",
+        "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+        "      </filter>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>",
+    ].join("");
+    currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+    Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+        let userBusinessUnitName = result.entities[0].name;
+        return userBusinessUnitName.startsWith("Transport");
+    });
+}
+
+
+
