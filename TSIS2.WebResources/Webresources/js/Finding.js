@@ -748,6 +748,7 @@ var ROM;
             var acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
             if (acceptNCATRecommendation == 717750001 /* No */ || acceptNCATRecommendation == 717750000 /* Yes */) {
                 lockNCATFactors(eContext);
+                formContext.getControl("ts_acceptncatrecommendation").setDisabled(true);
             }
             //If they did not accept the NCAT recommendation
             if (acceptNCATRecommendation == 717750001 /* No */) {
@@ -811,6 +812,7 @@ var ROM;
             var acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
             if (acceptRATERecommendation == 717750001 /* No */ || acceptRATERecommendation == 717750000 /* Yes */) {
                 lockRATEFactors(eContext);
+                formContext.getControl("ts_acceptraterecommendation").setDisabled(true);
             }
             //If they did not accept the RATE recommendation
             if (acceptRATERecommendation == 717750001 /* No */) {
