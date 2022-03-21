@@ -114,6 +114,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "createdon"): Xrm.DateControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_statuscode"): Xrm.OptionSetControl<ovs_finding_statuscode>;
+      get(name: "header_ts_rateenforcementrecommendation"): Xrm.OptionSetControl<ts_raterecommendations>;
       get(name: "ovs_caseid"): Xrm.LookupControl<"incident">;
       get(name: "ovs_finding"): Xrm.StringControl;
       get(name: "ovs_findingcomments"): Xrm.StringControl;
@@ -240,6 +241,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "createdon"): Xrm.DateControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_statuscode"): Xrm.OptionSetControl<ovs_finding_statuscode>;
+    getControl(controlName: "header_ts_rateenforcementrecommendation"): Xrm.OptionSetControl<ts_raterecommendations>;
     getControl(controlName: "ovs_caseid"): Xrm.LookupControl<"incident">;
     getControl(controlName: "ovs_finding"): Xrm.StringControl;
     getControl(controlName: "ovs_findingcomments"): Xrm.StringControl;

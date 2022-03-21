@@ -46,7 +46,7 @@
             //Show NCAT Sections and fields when the user is in Transport Canada or ISSO business unit
             if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                 formContext.ui.tabs.get("tab_NCAT").setVisible(true);
-
+               
                 //If there's a recommended enforcement action and the finding is not complete yet, then the accept ncat recommendation field should be unlocked
                 const enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
                 const recordStatus = formContext.getAttribute("statuscode").getValue();
@@ -70,6 +70,7 @@
             //Show RATE Sections and fields when the user is in Transport Canada or Aviation Security business unit
             if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Aviation")) {
                 formContext.ui.tabs.get("tab_RATE").setVisible(true);
+                formContext.getControl("header_ts_rateenforcementrecommendation").setVisible(true);               
 
                 //If there's a recommended enforcement action and the finding is not complete yet, then the accept rate recommendation field should be unlocked
                 const enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
