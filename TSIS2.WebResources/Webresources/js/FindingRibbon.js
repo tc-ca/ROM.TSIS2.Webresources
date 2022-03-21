@@ -97,6 +97,7 @@ function unlockNCAT(primaryControl) {
     primaryControl.getControl("ts_notetostakeholder").setDisabled(false);
 
     primaryControl.getAttribute("ts_acceptncatrecommendation").setValue(null);
+    primaryControl.getAttribute("ts_finalenforcementaction").setValue(null);
     
     NCATHideProposedSection(primaryControl);
 }
@@ -121,6 +122,7 @@ function unlockRATE(primaryControl) {
     primaryControl.getControl("ts_notetostakeholder").setDisabled(false);
 
     primaryControl.getAttribute("ts_acceptraterecommendation").setValue(null);
+    primaryControl.getAttribute("ts_finalenforcementaction").setValue(null);
 
     RATEHideProposedSection(primaryControl);
 }
