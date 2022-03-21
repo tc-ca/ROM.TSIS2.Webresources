@@ -369,7 +369,6 @@ function exportWorkOrder(primaryControl) {
 function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, selectedControl){
     const formContext = primaryControl;
 
-    let userBusinessUnitName;
     const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
     const currentWorkOrderRecordOwnerId = Xrm.Page.ui.formContext.getAttribute("ownerid").getValue()[0].id;
     const currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g,'');
@@ -390,10 +389,20 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
     currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
 
     Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-        userBusinessUnitId = result.entities[0].businessunitid;
+        let businessUnitCondition;
+        let userBusinessUnitId = result.entities[0].businessunitid;
+        let userBusinessUnitName = result.entities[0].name;
 
-        const defaultViewId  = "00000000-0000-0000-00aa-000010001019";
-        const viewIds = ["00000000-0000-0000-00aa-000010001019"];
+        //Uses the generated alias in "Enabled Users With Business Unit Name"
+        if(userBusinessUnitName.startsWith("Aviation")){ 
+            businessUnitCondition = '<condition entityname="a_9156d7f5d3bd47ad9f84ac9b81fa0d54" attribute="name" operator="like" value="Aviation%"/>'
+        }
+        else{
+            businessUnitCondition = '<condition entityname="a_9156d7f5d3bd47ad9f84ac9b81fa0d54" attribute="name" operator="like" value="Intermodal%"/>'
+        }
+
+        const defaultViewId  = "d651eb0f-3ea9-ec11-983e-0022483e6bb0";
+        const viewIds = ["d651eb0f-3ea9-ec11-983e-0022483e6bb0"];
         var lookupOptions =
         {
             defaultEntityType: "sytemuser",
@@ -405,7 +414,7 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
             filters: [
                 {
                     filterXml: `<filter type="and">` + 
-                        `<condition attribute="businessunitid" operator="eq" value="${userBusinessUnitId}" />` +
+                        `${businessUnitCondition}` +
                         `<condition attribute="systemuserid" operator="neq" value="${currentWorkOrderRecordOwnerId}" />` +
                         `</filter>`,
                     entityLogicalName: "systemuser"
@@ -457,8 +466,5 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
                 showErrorMessageAlert(error);
             }
         );
-
     });
-
-    
 }
