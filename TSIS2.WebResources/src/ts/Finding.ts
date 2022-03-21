@@ -15,7 +15,7 @@
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         //If Observation, keep everything hidden
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
-        let findingType = formContext.getAttribute("ts_findingtype").getValue();                             
+        let findingType = formContext.getAttribute("ts_findingtype").getValue();
 
         if (formContext.getAttribute("statuscode").getValue() == ovs_finding_statuscode.Complete) {
             disableFormFields(formContext);
@@ -741,8 +741,8 @@
         formContext.getControl("ts_ratemanagerenforcementjustification").setVisible(false);
     }
 
-       //Sets the lookup views for the Approving Teams fields
-       function setApprovingTeamsViews(form: Form.ovs_finding.Main.Information): void {
+    //Sets the lookup views for the Approving Teams fields
+    function setApprovingTeamsViews(form: Form.ovs_finding.Main.Information): void {
         const viewIdApprovingTeamNCAT = '{3c259fee-0541-4cac-8d20-7b30ee397ca7}';
         const viewIdApprovingTeamRATE = '{3c259fee-0541-4cac-8d20-7b30ee394a73}';
         const entityNameApprovingTeams = "team";
@@ -772,16 +772,20 @@
         if (acceptNCATRecommendation == ts_yesno.No) {
             //Show NCAT Approving Team
             formContext.getControl("ts_ncatapprovingteam").setVisible(true);
+            formContext.getControl("ts_ncatapprovingteam").setDisabled(false);
             formContext.getAttribute("ts_ncatapprovingteam").setRequiredLevel("required");
             //Show NCAT Approving Manager
             formContext.getControl("ts_ncatmanager").setVisible(true);
+            formContext.getControl("ts_ncatmanager").setDisabled(false);
             formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
             //Show Inspector Recommendation
             formContext.getControl("ts_ncatinspectorrecommendation").setVisible(true);
+            formContext.getControl("ts_ncatinspectorrecommendation").setDisabled(false);
             //Require Inspector Recommendation
             formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("required");
             //Show Enforcement Justification
             formContext.getControl("ts_ncatenforcementjustification").setVisible(true);
+            formContext.getControl("ts_ncatenforcementjustification").setDisabled(false);
             //Require Enforcement Justification
             formContext.getAttribute("ts_ncatenforcementjustification").setRequiredLevel("required");
 
@@ -835,16 +839,20 @@
         if (acceptRATERecommendation == ts_yesno.No) {
             //Show RATE Approving Team
             formContext.getControl("ts_rateapprovingteam").setVisible(true);
+            formContext.getControl("ts_rateapprovingteam").setDisabled(false);
             formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("required");
             //Show RATE Approving Manager
             formContext.getControl("ts_ratemanager").setVisible(true);
+            formContext.getControl("ts_ratemanager").setDisabled(false);
             formContext.getAttribute("ts_ratemanager").setRequiredLevel("required");
             //Show Inspector Recommendation
             formContext.getControl("ts_rateinspectorrecommendation").setVisible(true);
+            formContext.getControl("ts_rateinspectorrecommendation").setDisabled(false);
             //Require Inspector Recommendation
             formContext.getAttribute("ts_rateinspectorrecommendation").setRequiredLevel("required");
             //Show Enforcement Justification
             formContext.getControl("ts_rateenforcementjustification").setVisible(true);
+            formContext.getControl("ts_rateenforcementjustification").setDisabled(false);
             //Require Enforcement Justification
             formContext.getAttribute("ts_rateenforcementjustification").setRequiredLevel("required");
 
