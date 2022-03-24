@@ -30,10 +30,10 @@ declare namespace Form.ovs_finding.Main {
         get(name: "RATE_proposed_section"): Xrm.PageSection;
         get(name: "tab_4_section_1"): Xrm.PageSection;
         get(name: "tab_4_section_2"): Xrm.PageSection;
+        get(name: "tab_RATE_section_10"): Xrm.PageSection;
         get(name: "tab_RATE_section_3"): Xrm.PageSection;
         get(name: "tab_RATE_section_4"): Xrm.PageSection;
         get(name: "tab_RATE_section_5"): Xrm.PageSection;
-        get(name: "tab_RATE_section_8"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -100,6 +100,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_rateresponsibility"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_ratespecificcompliancehistory"): Xrm.OptionSetAttribute<ts_ratespecificcompliancehistory>;
       get(name: "ts_ratespecificenforcementhistory"): Xrm.OptionSetAttribute<ts_ratespecificenforcementhistory>;
+      get(name: "ts_sensitivitylevel"): Xrm.OptionSetAttribute<ts_sensitivitylevel>;
       get(name: "ts_workorder"): Xrm.Attribute<any>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -110,7 +111,6 @@ declare namespace Form.ovs_finding.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
       get(name: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
       get(name: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
-      get(name: "WebResource_factorguidetest"): Xrm.WebResourceControl;
       get(name: "createdon"): Xrm.DateControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_statuscode"): Xrm.OptionSetControl<ovs_finding_statuscode>;
@@ -163,6 +163,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_rateresponsibility"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_ratespecificcompliancehistory"): Xrm.OptionSetControl<ts_ratespecificcompliancehistory>;
       get(name: "ts_ratespecificenforcementhistory"): Xrm.OptionSetControl<ts_ratespecificenforcementhistory>;
+      get(name: "ts_sensitivitylevel"): Xrm.OptionSetControl<ts_sensitivitylevel>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -232,12 +233,12 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_rateresponsibility"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_ratespecificcompliancehistory"): Xrm.OptionSetAttribute<ts_ratespecificcompliancehistory>;
     getAttribute(attributeName: "ts_ratespecificenforcementhistory"): Xrm.OptionSetAttribute<ts_ratespecificenforcementhistory>;
+    getAttribute(attributeName: "ts_sensitivitylevel"): Xrm.OptionSetAttribute<ts_sensitivitylevel>;
     getAttribute(attributeName: "ts_workorder"): Xrm.Attribute<any>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
-    getControl(controlName: "WebResource_factorguidetest"): Xrm.WebResourceControl;
     getControl(controlName: "createdon"): Xrm.DateControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_statuscode"): Xrm.OptionSetControl<ovs_finding_statuscode>;
@@ -290,6 +291,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_rateresponsibility"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_ratespecificcompliancehistory"): Xrm.OptionSetControl<ts_ratespecificcompliancehistory>;
     getControl(controlName: "ts_ratespecificenforcementhistory"): Xrm.OptionSetControl<ts_ratespecificenforcementhistory>;
+    getControl(controlName: "ts_sensitivitylevel"): Xrm.OptionSetControl<ts_sensitivitylevel>;
     getControl(controlName: string): undefined;
   }
 }
