@@ -2,6 +2,29 @@ namespace ROM.Operation {
 
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+       
+        let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+        let currentUserBusinessUnitFetchXML = [
+            "<fetch top='50'>",
+            "  <entity name='businessunit'>",
+            "    <attribute name='name' />",
+            "    <attribute name='businessunitid' />",
+            "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+            "      <filter>",
+            "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+        currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+            let userBusinessUnitName = result.entities[0].name;
+            //Show Properties Tab when the user is in Transport Canada or ISSO business unit
+            if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
+                form.ui.tabs.get("tab_properties").setVisible(true);
+            }            
+        });
 
         if (form.getAttribute("ts_statusstartdate").getValue() != null) {
             form.getControl("ts_statusenddate").setDisabled(false);

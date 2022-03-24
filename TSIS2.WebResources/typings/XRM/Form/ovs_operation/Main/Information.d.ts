@@ -21,6 +21,7 @@ declare namespace Form.ovs_operation.Main {
         get(name: "null_section_3"): Xrm.PageSection;
         get(name: "section_8"): Xrm.PageSection;
         get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}_section_5"): Xrm.PageSection;
+        get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}_section_7"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -36,6 +37,14 @@ declare namespace Form.ovs_operation.Main {
       interface tab_5 extends Xrm.SectionCollectionBase {
         get(name: "tab_5_section_1"): Xrm.PageSection;
         get(name: "tab_5_section_2"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_properties extends Xrm.SectionCollectionBase {
+        get(name: "tab_properties_section_4"): Xrm.PageSection;
+        get(name: "tab_properties_section_4"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -61,6 +70,7 @@ declare namespace Form.ovs_operation.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Connections"): Xrm.SubGridControl<"connection">;
+      get(name: "Contact"): Xrm.SubGridControl<"ts_operationcontact">;
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"connection">;
@@ -89,6 +99,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}"): Xrm.PageTab<Tabs.bb4b118ea1c94e04ae4d8c6a177ee56c>;
       get(name: "rel_operations_tab"): Xrm.PageTab<Tabs.rel_operations_tab>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
+      get(name: "tab_properties"): Xrm.PageTab<Tabs.tab_properties>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -109,6 +120,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
+    getControl(controlName: "Contact"): Xrm.SubGridControl<"ts_operationcontact">;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"connection">;

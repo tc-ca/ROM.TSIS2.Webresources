@@ -19,6 +19,7 @@ declare namespace Form.contact.Main {
         get(name: "CUSTOMER_DETAILS_TAB"): Xrm.PageSection;
         get(name: "MapSection"): Xrm.PageSection;
         get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
+        get(name: "SUMMARY_TAB_section_8"): Xrm.PageSection;
         get(name: "Summary_section_6"): Xrm.PageSection;
         get(name: "TalkingPoints_section"): Xrm.PageSection;
         get(name: string): undefined;
@@ -108,6 +109,7 @@ declare namespace Form.contact.Main {
       get(name: "ActionCards"): Xrm.BaseControl;
       get(name: "Connections_Operations"): Xrm.SubGridControl<"connection">;
       get(name: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
+      get(name: "Operations"): Xrm.SubGridControl<"ts_operationcontact">;
       get(name: "TalkingPoints"): Xrm.BaseControl;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
@@ -237,6 +239,7 @@ declare namespace Form.contact.Main {
     getControl(controlName: "ActionCards"): Xrm.BaseControl;
     getControl(controlName: "Connections_Operations"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
+    getControl(controlName: "Operations"): Xrm.SubGridControl<"ts_operationcontact">;
     getControl(controlName: "TalkingPoints"): Xrm.BaseControl;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;

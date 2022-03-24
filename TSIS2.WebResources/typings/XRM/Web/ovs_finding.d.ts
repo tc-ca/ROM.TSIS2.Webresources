@@ -41,6 +41,7 @@ interface ovs_Finding_Base extends WebEntity {
   ts_ratemanagerenforcementjustification?: string | null;
   ts_ratespecificcompliancehistory?: ts_ratespecificcompliancehistory | null;
   ts_ratespecificenforcementhistory?: ts_ratespecificenforcementhistory | null;
+  ts_sensitivitylevel?: ts_sensitivitylevel | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -168,6 +169,7 @@ interface ovs_Finding_Select {
   ts_rateresponsibility_guid: WebAttribute<ovs_Finding_Select, { ts_rateresponsibility_guid: string | null }, { ts_rateresponsibility_formatted?: string }>;
   ts_ratespecificcompliancehistory: WebAttribute<ovs_Finding_Select, { ts_ratespecificcompliancehistory: ts_ratespecificcompliancehistory | null }, { ts_ratespecificcompliancehistory_formatted?: string }>;
   ts_ratespecificenforcementhistory: WebAttribute<ovs_Finding_Select, { ts_ratespecificenforcementhistory: ts_ratespecificenforcementhistory | null }, { ts_ratespecificenforcementhistory_formatted?: string }>;
+  ts_sensitivitylevel: WebAttribute<ovs_Finding_Select, { ts_sensitivitylevel: ts_sensitivitylevel | null }, { ts_sensitivitylevel_formatted?: string }>;
   ts_site_guid: WebAttribute<ovs_Finding_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_workorder_guid: WebAttribute<ovs_Finding_Select, { ts_workorder_guid: string | null }, { ts_workorder_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ovs_Finding_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -252,6 +254,7 @@ interface ovs_Finding_Filter {
   ts_rateresponsibility_guid: XQW.Guid;
   ts_ratespecificcompliancehistory: ts_ratespecificcompliancehistory;
   ts_ratespecificenforcementhistory: ts_ratespecificenforcementhistory;
+  ts_sensitivitylevel: ts_sensitivitylevel;
   ts_site_guid: XQW.Guid;
   ts_workorder_guid: XQW.Guid;
   utcconversiontimezonecode: number;
@@ -332,6 +335,7 @@ interface ovs_Finding_FormattedResult {
   ts_rateresponsibility_formatted?: string;
   ts_ratespecificcompliancehistory_formatted?: string;
   ts_ratespecificenforcementhistory_formatted?: string;
+  ts_sensitivitylevel_formatted?: string;
   ts_site_formatted?: string;
   ts_workorder_formatted?: string;
 }
