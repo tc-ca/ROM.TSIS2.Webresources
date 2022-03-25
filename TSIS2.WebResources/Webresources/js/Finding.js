@@ -52,9 +52,6 @@ var ROM;
             //If Observation, keep everything hidden
             var formContext = eContext.getFormContext();
             var findingType = formContext.getAttribute("ts_findingtype").getValue();
-            if (formContext.getAttribute("statuscode").getValue() == 717750002 /* Complete */) {
-                disableFormFields(formContext);
-            }
             if (findingType != 717750002 /* Noncompliance */)
                 return;
             formContext.getAttribute("ts_ncatfactorguide").setValue(false);
@@ -92,7 +89,7 @@ var ROM;
                     //If they did not accept the ncat recommendation, show proposal sections and fields
                     if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == 717750001 /* No */) {
                         formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
-                        setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
+                        setPostNCATRecommendationSelectionFieldsVisibility(eContext);
                         NCATManagerDecisionOnChange(eContext);
                     }
                 }
@@ -118,9 +115,12 @@ var ROM;
                         RATEManagerDecisionOnChange(eContext);
                     }
                 }
+                RATESpecificComplianceHistoryOnChange(eContext);
+                setApprovingTeamsViews(formContext);
+                if (formContext.getAttribute("statuscode").getValue() == 717750002 /* Complete */) {
+                    disableFormFields(formContext);
+                }
             });
-            RATESpecificComplianceHistoryOnChange(eContext);
-            setApprovingTeamsViews(formContext);
         }
         Finding.onLoad = onLoad;
         function onSave(eContext) {
@@ -340,7 +340,7 @@ var ROM;
                             formContext.getAttribute("ts_finalenforcementaction").setValue(null);
                         }
                         formContext.data.save().then(function () {
-                            setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
+                            setPostNCATRecommendationSelectionFieldsVisibility(eContext);
                         });
                     }
                     else {
@@ -743,7 +743,7 @@ var ROM;
             form.getControl("ts_ncatapprovingteam").addCustomView(viewIdApprovingTeamNCAT, entityNameApprovingTeams, viewDisplayNameApprovingTeams, fetchXmlApprovingTeamsNCAT, layoutXmlApprovingTeams, true);
             form.getControl("ts_rateapprovingteam").addCustomView(viewIdApprovingTeamRATE, entityNameApprovingTeams, viewDisplayNameApprovingTeams, fetchXmlApprovingTeamsRATE, layoutXmlApprovingTeams, true);
         }
-        function setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext) {
+        function setPostNCATRecommendationSelectionFieldsVisibility(eContext) {
             var formContext = eContext.getFormContext();
             var acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
             if (acceptNCATRecommendation == 717750001 /* No */ || acceptNCATRecommendation == 717750000 /* Yes */) {
