@@ -63,6 +63,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_statusenddate"): Xrm.DateAttribute;
       get(name: "ts_statusstartdate"): Xrm.DateAttribute;
       get(name: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_visualsecurityinspection"): Xrm.OptionSetAttribute<ts_visualsecurityinspection>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -88,6 +89,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_statusenddate"): Xrm.DateControl;
       get(name: "ts_statusstartdate"): Xrm.DateControl;
       get(name: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_visualsecurityinspection"): Xrm.OptionSetControl<ts_visualsecurityinspection>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -118,6 +120,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_statusenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_statusstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_visualsecurityinspection"): Xrm.OptionSetAttribute<ts_visualsecurityinspection>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "Contact"): Xrm.SubGridControl<"ts_operationcontact">;
@@ -138,6 +141,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_statusenddate"): Xrm.DateControl;
     getControl(controlName: "ts_statusstartdate"): Xrm.DateControl;
     getControl(controlName: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_visualsecurityinspection"): Xrm.OptionSetControl<ts_visualsecurityinspection>;
     getControl(controlName: string): undefined;
   }
 }

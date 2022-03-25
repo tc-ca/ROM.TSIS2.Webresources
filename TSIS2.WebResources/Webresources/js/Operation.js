@@ -25,6 +25,17 @@ var ROM;
                 //Show Properties Tab when the user is in Transport Canada or ISSO business unit
                 if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                     form.ui.tabs.get("tab_properties").setVisible(true);
+                    //Show Visual Security Inspection question only for Railway Carrier and Railway Loader
+                    var operationType = form.getAttribute("ovs_operationtypeid").getValue();
+                    if (operationType != null) {
+                        if (operationType[0].id == "{D883B39A-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}") {
+                            form.getControl("ts_visualsecurityinspection").setVisible(true);
+                            //Set default value for existing operations
+                            if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
+                                form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* Unconfirmed */);
+                            }
+                        }
+                    }
                 }
             });
             if (form.getAttribute("ts_statusstartdate").getValue() != null) {

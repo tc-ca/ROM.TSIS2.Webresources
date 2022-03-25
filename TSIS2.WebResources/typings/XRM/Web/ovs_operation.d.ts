@@ -13,6 +13,7 @@ interface ovs_operation_Base extends WebEntity {
   ts_operationalstatus?: ts_operationalstatus | null;
   ts_statusenddate?: Date | null;
   ts_statusstartdate?: Date | null;
+  ts_visualsecurityinspection?: ts_visualsecurityinspection | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -68,6 +69,7 @@ interface ovs_operation_Select {
   ts_statusenddate: WebAttribute<ovs_operation_Select, { ts_statusenddate: Date | null }, { ts_statusenddate_formatted?: string }>;
   ts_statusstartdate: WebAttribute<ovs_operation_Select, { ts_statusstartdate: Date | null }, { ts_statusstartdate_formatted?: string }>;
   ts_subsite_guid: WebAttribute<ovs_operation_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
+  ts_visualsecurityinspection: WebAttribute<ovs_operation_Select, { ts_visualsecurityinspection: ts_visualsecurityinspection | null }, { ts_visualsecurityinspection_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ovs_operation_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ovs_operation_Select, { versionnumber: number | null }, {  }>;
 }
@@ -99,6 +101,7 @@ interface ovs_operation_Filter {
   ts_statusenddate: Date;
   ts_statusstartdate: Date;
   ts_subsite_guid: XQW.Guid;
+  ts_visualsecurityinspection: ts_visualsecurityinspection;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -144,6 +147,7 @@ interface ovs_operation_FormattedResult {
   ts_statusenddate_formatted?: string;
   ts_statusstartdate_formatted?: string;
   ts_subsite_formatted?: string;
+  ts_visualsecurityinspection_formatted?: string;
 }
 interface ovs_operation_Result extends ovs_operation_Base, ovs_operation_Relationships {
   "@odata.etag": string;
