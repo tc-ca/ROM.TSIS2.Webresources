@@ -17,10 +17,6 @@
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         let findingType = formContext.getAttribute("ts_findingtype").getValue();
 
-        if (formContext.getAttribute("statuscode").getValue() == ovs_finding_statuscode.Complete) {
-            disableFormFields(formContext);
-        }
-
         if (findingType != ts_findingtype.Noncompliance) return;
        
         formContext.getAttribute("ts_ncatfactorguide").setValue(false);
@@ -63,7 +59,7 @@
                 //If they did not accept the ncat recommendation, show proposal sections and fields
                 if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == ts_yesno.No) {
                     formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
-                    setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
+                    setPostNCATRecommendationSelectionFieldsVisibility(eContext);
                     NCATManagerDecisionOnChange(eContext);
                 }
             }
@@ -92,11 +88,15 @@
                     RATEManagerDecisionOnChange(eContext);
                 }
             }
-        });
-        RATESpecificComplianceHistoryOnChange(eContext);
-        setApprovingTeamsViews(formContext); 
 
-       
+            RATESpecificComplianceHistoryOnChange(eContext);
+            setApprovingTeamsViews(formContext); 
+
+            if (formContext.getAttribute("statuscode").getValue() == ovs_finding_statuscode.Complete) {
+                disableFormFields(formContext);
+            }
+        });
+        
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -322,7 +322,7 @@
                         formContext.getAttribute("ts_finalenforcementaction").setValue(null);
                     }
                     formContext.data.save().then(function() {
-                        setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext);
+                        setPostNCATRecommendationSelectionFieldsVisibility(eContext);
                     });                    
                 } else {
                     formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
@@ -760,7 +760,7 @@
         form.getControl("ts_rateapprovingteam").addCustomView(viewIdApprovingTeamRATE, entityNameApprovingTeams, viewDisplayNameApprovingTeams, fetchXmlApprovingTeamsRATE, layoutXmlApprovingTeams, true);
     }
 
-    function setPostNCATRecommendationSelectionFieldsVisibilityAndSetFinalEnforcementAction(eContext: Xrm.ExecutionContext<any, any>): void {
+    function setPostNCATRecommendationSelectionFieldsVisibility(eContext: Xrm.ExecutionContext<any, any>): void {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
 
@@ -901,7 +901,7 @@
 
     //Disable all form fields except for "note to stakeholder"
     function disableFormFields(form: Form.ovs_finding.Main.Information): void {
-    form.ui.controls.forEach(function (control, index) {
+        form.ui.controls.forEach(function (control, index) {
             let controlType = control.getControlType();
             let controlName = control.getName();
             if (controlType != "iframe" && controlType != "webresource" && controlType != "subgrid"){
