@@ -33,6 +33,10 @@ namespace ROM.Operation {
                             form.getAttribute("ts_visualsecurityinspection").setValue(ts_visualsecurityinspection.Unconfirmed);
                         }                            
                     }
+                    //if Operation Type is Small Passenger Company, Passenger Company, or Host Company
+                    if (operationType[0].id == "{199E31AE-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{3B261029-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{B27E5003-C751-EB11-A812-000D3AF3AC0D}") {
+                        form.getControl("ts_issecurityinspectionsite").setVisible(true);
+                    }
                 }
             }
         });        
