@@ -28,6 +28,7 @@ interface msdyn_workorder_Base extends WebEntity {
   msdyn_longitude?: number | null;
   msdyn_mapcontrol?: string | null;
   msdyn_name?: string | null;
+  msdyn_phoneNumber?: string | null;
   msdyn_postalcode?: string | null;
   msdyn_primaryincidentdescription?: string | null;
   msdyn_primaryincidentestimatedduration?: number | null;
@@ -193,6 +194,7 @@ interface msdyn_workorder_Select {
   msdyn_name: WebAttribute<msdyn_workorder_Select, { msdyn_name: string | null }, {  }>;
   msdyn_opportunityid_guid: WebAttribute<msdyn_workorder_Select, { msdyn_opportunityid_guid: string | null }, { msdyn_opportunityid_formatted?: string }>;
   msdyn_parentworkorder_guid: WebAttribute<msdyn_workorder_Select, { msdyn_parentworkorder_guid: string | null }, { msdyn_parentworkorder_formatted?: string }>;
+  msdyn_phoneNumber: WebAttribute<msdyn_workorder_Select, { msdyn_phoneNumber: string | null }, {  }>;
   msdyn_postalcode: WebAttribute<msdyn_workorder_Select, { msdyn_postalcode: string | null }, {  }>;
   msdyn_preferredresource_guid: WebAttribute<msdyn_workorder_Select, { msdyn_preferredresource_guid: string | null }, { msdyn_preferredresource_formatted?: string }>;
   msdyn_pricelist_guid: WebAttribute<msdyn_workorder_Select, { msdyn_pricelist_guid: string | null }, { msdyn_pricelist_formatted?: string }>;
@@ -317,6 +319,7 @@ interface msdyn_workorder_Filter {
   msdyn_name: string;
   msdyn_opportunityid_guid: XQW.Guid;
   msdyn_parentworkorder_guid: XQW.Guid;
+  msdyn_phoneNumber: string;
   msdyn_postalcode: string;
   msdyn_preferredresource_guid: XQW.Guid;
   msdyn_pricelist_guid: XQW.Guid;

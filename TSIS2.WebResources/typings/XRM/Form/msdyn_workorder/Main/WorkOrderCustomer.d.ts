@@ -30,6 +30,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_longitude"): Xrm.NumberAttribute;
       get(name: "msdyn_mapcontrol"): Xrm.Attribute<any>;
       get(name: "msdyn_name"): Xrm.Attribute<string>;
+      get(name: "msdyn_phoneNumber"): Xrm.Attribute<string>;
       get(name: "msdyn_postalcode"): Xrm.Attribute<string>;
       get(name: "msdyn_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "msdyn_priority"): Xrm.LookupAttribute<"msdyn_priority"> | null;
@@ -78,6 +79,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_longitude"): Xrm.NumberControl;
       get(name: "msdyn_mapcontrol"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_name"): Xrm.StringControl;
+      get(name: "msdyn_phoneNumber"): Xrm.StringControl;
       get(name: "msdyn_postalcode"): Xrm.StringControl;
       get(name: "msdyn_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "msdyn_serviceaccount"): Xrm.LookupControl<"account">;
@@ -109,6 +111,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_longitude"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_mapcontrol"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_phoneNumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_postalcode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "msdyn_priority"): Xrm.LookupAttribute<"msdyn_priority"> | null;
@@ -152,6 +155,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_longitude"): Xrm.NumberControl;
     getControl(controlName: "msdyn_mapcontrol"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_name"): Xrm.StringControl;
+    getControl(controlName: "msdyn_phoneNumber"): Xrm.StringControl;
     getControl(controlName: "msdyn_postalcode"): Xrm.StringControl;
     getControl(controlName: "msdyn_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "msdyn_serviceaccount"): Xrm.LookupControl<"account">;
