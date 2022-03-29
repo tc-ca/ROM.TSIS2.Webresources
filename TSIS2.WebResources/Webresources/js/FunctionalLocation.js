@@ -17,7 +17,6 @@ var ROM;
                     }, function (error) {
                     });
                 }
-                //If site type is aerodrome, show ICAO and IATA fields
                 var siteTypeAttribute = form.getAttribute("ts_sitetype");
                 if (siteTypeAttribute != null) {
                     var siteTypeAttributeValue = form.getAttribute("ts_sitetype").getValue();
@@ -28,17 +27,7 @@ var ROM;
                         }
                     }
                 }
-                //If owner is ISSO, replace operations view
-                if (ownerAttributeValue != null) {
-                    if (ownerAttributeValue[0].name == "Intermodal Surface Security Oversight (ISSO)") {
-                        var operationView = {
-                            entityType: "savedquery",
-                            id: "{4361bdce-d4ae-ec11-983e-002248ade910}",
-                            name: "Active Operations ISSO"
-                        };
-                        form.getControl("Operations").getViewSelector().setCurrentView(operationView);
-                    }
-                }
+                //If site type is aerodrome, show ICAO and IATA fields
             }
             if (form.getAttribute("ts_statusstartdate").getValue() != null) {
                 form.getControl("ts_statusenddate").setDisabled(false);

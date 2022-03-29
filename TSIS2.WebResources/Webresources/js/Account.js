@@ -14,21 +14,6 @@ var ROM;
                 form.getControl("ts_statusdescription").setDisabled(false);
                 form.getAttribute("ts_statusdescription").setRequiredLevel("required");
             }
-            //If owner is ISSO, replace operations view
-            var ownerAttribute = form.getAttribute("ownerid");
-            if (ownerAttribute != null && ownerAttribute != undefined) {
-                var ownerAttributeValue = ownerAttribute.getValue();
-                if (ownerAttributeValue != null) {
-                    if (ownerAttributeValue[0].name == "Intermodal Surface Security Oversight (ISSO)") {
-                        var operationView = {
-                            entityType: "savedquery",
-                            id: "{4361bdce-d4ae-ec11-983e-002248ade910}",
-                            name: "Active Operations ISSO"
-                        };
-                        form.getControl("Operations").getViewSelector().setCurrentView(operationView);
-                    }
-                }
-            }
         }
         Account.onLoad = onLoad;
         function onSave(eContext) {

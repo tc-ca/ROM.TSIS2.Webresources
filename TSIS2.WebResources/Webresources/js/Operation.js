@@ -126,7 +126,7 @@ var ROM;
             }
         }
         Operation.ppeRequiredOnChange = ppeRequiredOnChange;
-        function spesializedPPERequiredOnChange(eContext) {
+        function specializedPPERequiredOnChange(eContext) {
             var form = eContext.getFormContext();
             var specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
             if (specializedPPERequired) {
@@ -137,6 +137,6 @@ var ROM;
                 form.getAttribute("ts_typesofspecializedppe").setValue(null);
             }
         }
-        Operation.spesializedPPERequiredOnChange = spesializedPPERequiredOnChange;
+        Operation.specializedPPERequiredOnChange = specializedPPERequiredOnChange;
     })(Operation = ROM.Operation || (ROM.Operation = {}));
 })(ROM || (ROM = {}));

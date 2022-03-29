@@ -127,7 +127,7 @@ namespace ROM.Operation {
         }
     }
 
-    export function spesializedPPERequiredOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export function specializedPPERequiredOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
         const specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
         if (specializedPPERequired){
