@@ -28,6 +28,7 @@ namespace ROM.Operation {
                 if (operationType != null) {
                     if (operationType[0].id == "{D883B39A-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}") {
                         form.getControl("ts_visualsecurityinspection").setVisible(true);
+                        form.getControl("ts_typeofdangerousgoods").setVisible(true);
                         //Set default value for existing operations
                         if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
                             form.getAttribute("ts_visualsecurityinspection").setValue(ts_visualsecurityinspection.Unconfirmed);
