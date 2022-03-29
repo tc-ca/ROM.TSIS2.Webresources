@@ -24,6 +24,7 @@ namespace ROM.FunctionalLocation {
                 );
             }
 
+            //If site type is aerodrome, show ICAO and IATA fields
             const siteTypeAttribute = form.getAttribute("ts_sitetype");
             if(siteTypeAttribute != null){
                 const siteTypeAttributeValue = form.getAttribute("ts_sitetype").getValue();
@@ -35,8 +36,20 @@ namespace ROM.FunctionalLocation {
                 }
             }
 
-            //If site type is aerodrome, show ICAO and IATA fields
            
+            //If owner is ISSO, replace operations view
+            if(ownerAttributeValue != null){
+                if(ownerAttributeValue[0].name == "Intermodal Surface Security Oversight (ISSO)"){
+                    let operationView = 
+                        {
+                            entityType: "savedquery",
+                            id: "{4361bdce-d4ae-ec11-983e-002248ade910}",
+                            name: "Active Operations ISSO"
+                        }
+                    form.getControl("Operations").getViewSelector().setCurrentView(operationView);
+                }
+            }
+        
         }
 
         if (form.getAttribute("ts_statusstartdate").getValue() != null) {

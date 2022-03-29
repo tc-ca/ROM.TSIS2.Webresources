@@ -23,11 +23,22 @@ namespace ROM.Operation {
             //Show Properties Tab when the user is in Transport Canada or ISSO business unit
             if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                 form.ui.tabs.get("tab_properties").setVisible(true);
+                //Show PPE questions
+                var ppeRequired = form.getAttribute("ts_pperequired").getValue();
+                var specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
+                if (ppeRequired) {
+                    form.getControl("ts_ppecategories").setVisible(true);
+                    form.getControl("ts_specializedpperequired").setVisible(true);
+                }
+                if (specializedPPERequired) {
+                    form.getControl("ts_typesofspecializedppe").setVisible(true);
+                }
                 //Show Visual Security Inspection question only for Railway Carrier and Railway Loader
                 var operationType = form.getAttribute("ovs_operationtypeid").getValue();
                 if (operationType != null) {
                     if (operationType[0].id == "{D883B39A-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}") {
                         form.getControl("ts_visualsecurityinspection").setVisible(true);
+                        form.getControl("ts_typeofdangerousgoods").setVisible(true);
                         //Set default value for existing operations
                         if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
                             form.getAttribute("ts_visualsecurityinspection").setValue(ts_visualsecurityinspection.Unconfirmed);
@@ -106,4 +117,34 @@ namespace ROM.Operation {
             form.getControl("ts_description").setDisabled(true);
         }
     }
+
+    export function ppeRequiredOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+        const ppeRequired = form.getAttribute("ts_pperequired").getValue();
+        if (ppeRequired) {
+            form.getControl("ts_ppecategories").setVisible(true);
+            form.getControl("ts_specializedpperequired").setVisible(true);
+        }
+        else {
+            form.getControl("ts_ppecategories").setVisible(false);
+            form.getControl("ts_specializedpperequired").setVisible(false);
+            form.getControl("ts_typesofspecializedppe").setVisible(false);
+            form.getAttribute("ts_ppecategories").setValue(null);
+            form.getAttribute("ts_specializedpperequired").setValue(null);
+            form.getAttribute("ts_typesofspecializedppe").setValue(null);
+        }
+    }
+
+    export function specializedPPERequiredOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+        const specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
+        if (specializedPPERequired){
+            form.getControl("ts_typesofspecializedppe").setVisible(true);
+        }
+        else {
+            form.getControl("ts_typesofspecializedppe").setVisible(false);
+            form.getAttribute("ts_typesofspecializedppe").setValue(null);
+        }
+    }
+
 }
