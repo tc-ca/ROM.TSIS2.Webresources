@@ -25,6 +25,16 @@ var ROM;
                 //Show Properties Tab when the user is in Transport Canada or ISSO business unit
                 if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                     form.ui.tabs.get("tab_properties").setVisible(true);
+                    //Show PPE questions
+                    var ppeRequired = form.getAttribute("ts_pperequired").getValue();
+                    var specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
+                    if (ppeRequired) {
+                        form.getControl("ts_ppecategories").setVisible(true);
+                        form.getControl("ts_specializedpperequired").setVisible(true);
+                    }
+                    if (specializedPPERequired) {
+                        form.getControl("ts_typesofspecializedppe").setVisible(true);
+                    }
                     //Show Visual Security Inspection question only for Railway Carrier and Railway Loader
                     var operationType = form.getAttribute("ovs_operationtypeid").getValue();
                     if (operationType != null) {
@@ -99,5 +109,34 @@ var ROM;
             }
         }
         Operation.statusStartDateOnChange = statusStartDateOnChange;
+        function ppeRequiredOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var ppeRequired = form.getAttribute("ts_pperequired").getValue();
+            if (ppeRequired) {
+                form.getControl("ts_ppecategories").setVisible(true);
+                form.getControl("ts_specializedpperequired").setVisible(true);
+            }
+            else {
+                form.getControl("ts_ppecategories").setVisible(false);
+                form.getControl("ts_specializedpperequired").setVisible(false);
+                form.getControl("ts_typesofspecializedppe").setVisible(false);
+                form.getAttribute("ts_ppecategories").setValue(null);
+                form.getAttribute("ts_specializedpperequired").setValue(null);
+                form.getAttribute("ts_typesofspecializedppe").setValue(null);
+            }
+        }
+        Operation.ppeRequiredOnChange = ppeRequiredOnChange;
+        function spesializedPPERequiredOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
+            if (specializedPPERequired) {
+                form.getControl("ts_typesofspecializedppe").setVisible(true);
+            }
+            else {
+                form.getControl("ts_typesofspecializedppe").setVisible(false);
+                form.getAttribute("ts_typesofspecializedppe").setValue(null);
+            }
+        }
+        Operation.spesializedPPERequiredOnChange = spesializedPPERequiredOnChange;
     })(Operation = ROM.Operation || (ROM.Operation = {}));
 })(ROM || (ROM = {}));
