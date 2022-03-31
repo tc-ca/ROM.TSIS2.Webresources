@@ -13,6 +13,7 @@ interface ovs_operation_Base extends WebEntity {
   ts_issecurityinspectionsite?: ts_issecurityinspectionsite | null;
   ts_operationalstatus?: ts_operationalstatus | null;
   ts_ppecategories?: ts_ppecategories | null;
+  ts_ppeguide?: boolean | null;
   ts_pperequired?: boolean | null;
   ts_specializedpperequired?: boolean | null;
   ts_statusenddate?: Date | null;
@@ -72,6 +73,7 @@ interface ovs_operation_Select {
   ts_issecurityinspectionsite: WebAttribute<ovs_operation_Select, { ts_issecurityinspectionsite: ts_issecurityinspectionsite | null }, { ts_issecurityinspectionsite_formatted?: string }>;
   ts_operationalstatus: WebAttribute<ovs_operation_Select, { ts_operationalstatus: ts_operationalstatus | null }, { ts_operationalstatus_formatted?: string }>;
   ts_ppecategories: WebAttribute<ovs_operation_Select, { ts_ppecategories: ts_ppecategories | null }, { ts_ppecategories_formatted?: string }>;
+  ts_ppeguide: WebAttribute<ovs_operation_Select, { ts_ppeguide: boolean | null }, {  }>;
   ts_pperequired: WebAttribute<ovs_operation_Select, { ts_pperequired: boolean | null }, {  }>;
   ts_site_guid: WebAttribute<ovs_operation_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_specializedpperequired: WebAttribute<ovs_operation_Select, { ts_specializedpperequired: boolean | null }, {  }>;
@@ -110,6 +112,7 @@ interface ovs_operation_Filter {
   ts_issecurityinspectionsite: ts_issecurityinspectionsite;
   ts_operationalstatus: ts_operationalstatus;
   ts_ppecategories: ts_ppecategories;
+  ts_ppeguide: boolean;
   ts_pperequired: boolean;
   ts_site_guid: XQW.Guid;
   ts_specializedpperequired: boolean;

@@ -48,8 +48,9 @@ declare namespace Form.ovs_operation.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_properties extends Xrm.SectionCollectionBase {
-        get(name: "Security_Inspections_Site_Section"): Xrm.PageSection;
+        get(name: "is_security_inspection_site_section"): Xrm.PageSection;
         get(name: "tab_dangerous_goods"): Xrm.PageSection;
+        get(name: "tab_properties_ppeguide"): Xrm.PageSection;
         get(name: "tab_properties_section_4"): Xrm.PageSection;
         get(name: "tab_properties_section_4"): Xrm.PageSection;
         get(name: string): undefined;
@@ -67,6 +68,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
       get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
+      get(name: "ts_ppeguide"): Xrm.Attribute<any>;
       get(name: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
@@ -87,6 +89,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
+      get(name: "WebResource_PPEGuide"): Xrm.WebResourceControl;
       get(name: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ovs_name"): Xrm.StringControl;
@@ -98,6 +101,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
       get(name: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
+      get(name: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_pperequired"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;
@@ -136,6 +140,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
     getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
     getAttribute(attributeName: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
+    getAttribute(attributeName: "ts_ppeguide"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
@@ -151,6 +156,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
+    getControl(controlName: "WebResource_PPEGuide"): Xrm.WebResourceControl;
     getControl(controlName: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ovs_name"): Xrm.StringControl;
@@ -162,6 +168,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
     getControl(controlName: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
+    getControl(controlName: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_pperequired"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;
