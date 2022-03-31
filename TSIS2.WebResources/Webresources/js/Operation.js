@@ -22,6 +22,7 @@ var ROM;
             currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
             Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
                 var userBusinessUnitName = result.entities[0].name;
+                form.getAttribute("ts_ppeguide").setValue(false);
                 //Show Properties Tab when the user is in Transport Canada or ISSO business unit
                 if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                     form.ui.tabs.get("tab_properties").setVisible(true);
@@ -146,5 +147,15 @@ var ROM;
             }
         }
         Operation.specializedPPERequiredOnChange = specializedPPERequiredOnChange;
+        function ppeGuideOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var NCATFactorGuide = form.getAttribute("ts_ppeguide").getValue();
+            var webResourcePPEGuide = form.getControl("WebResource_PPEGuide");
+            if (NCATFactorGuide)
+                webResourcePPEGuide.setVisible(true);
+            else
+                webResourcePPEGuide.setVisible(false);
+        }
+        Operation.ppeGuideOnChange = ppeGuideOnChange;
     })(Operation = ROM.Operation || (ROM.Operation = {}));
 })(ROM || (ROM = {}));
