@@ -131,6 +131,7 @@
     <Content Include="Webresources\css\WorkOrderExport.css" />
     <Content Include="Webresources\html\FindingProvisionText.html" />
     <Content Include="Webresources\html\NCATFactorGuide.html" />
+    <Content Include="Webresources\html\PPEGuide.html" />
     <Content Include="Webresources\html\ProvisionRender.html" />
     <Content Include="Webresources\html\SurveyCreator.html" />
     <Content Include="Webresources\html\SurveyRender.html" />
