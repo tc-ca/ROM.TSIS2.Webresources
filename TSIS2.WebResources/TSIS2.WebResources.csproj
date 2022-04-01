@@ -133,6 +133,14 @@
     <Content Include="Webresources\html\NCATFactorGuide.html" />
     <Content Include="Webresources\html\PPEGuide.html" />
     <Content Include="Webresources\html\ProvisionRender.html" />
+    <Content Include="Webresources\html\RATEFactor1Guide.html" />
+    <Content Include="Webresources\html\RATEFactor1GuidePopUp.html" />
+    <Content Include="Webresources\html\RATEFactor2Guide.html" />
+    <Content Include="Webresources\html\RATEFactor2GuidePopUp.html" />
+    <Content Include="Webresources\html\RATEFactor3Guide.html" />
+    <Content Include="Webresources\html\RATEFactor3GuidePopUp.html" />
+    <Content Include="Webresources\html\RATEFactor4Guide.html" />
+    <Content Include="Webresources\html\RATEFactor4GuidePopUp.html" />
     <Content Include="Webresources\html\SurveyCreator.html" />
     <Content Include="Webresources\html\SurveyRender.html" />
     <Content Include="Webresources\html\SurveyRenderPrint.html" />
