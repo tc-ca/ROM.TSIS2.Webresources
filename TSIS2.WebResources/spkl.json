@@ -105,6 +105,11 @@
               "description": "ROM TSIS 2.0 Customer Asset Ribbon Scripts"
             },
             {
+              "uniquename": "ts_/js/Common.js",
+              "file": "js\\Common.js",
+              "description": "ROM TSIS 2.0 Common Scripts"
+            },
+            {
               "uniquename": "ts_/js/OperationRibbon.js",
               "file": "js\\OperationRibbon.js",
               "description": "ROM TSIS 2.0 Operation Ribbon Scripts"
