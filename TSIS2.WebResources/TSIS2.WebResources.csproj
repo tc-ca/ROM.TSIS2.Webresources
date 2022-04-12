@@ -150,6 +150,7 @@
     <Content Include="Webresources\js\BookableResourceBooking.js" />
     <Content Include="Webresources\js\buildprovisiontext.js" />
     <Content Include="Webresources\js\ckeditor.js" />
+    <Content Include="Webresources\js\Common.js" />
     <Content Include="Webresources\js\CustomerAsset.js" />
     <Content Include="Webresources\js\CustomerAssetQuickCreate.js" />
     <Content Include="Webresources\js\CustomerAssetRibbon.js" />
