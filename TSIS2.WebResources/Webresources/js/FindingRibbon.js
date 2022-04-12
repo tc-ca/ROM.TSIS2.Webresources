@@ -298,5 +298,57 @@ function isTCBusinessUnit() {
     });
 }
 
+function FindingsReport(findingGUIDs, primaryControl) {
+    //Create new findings report record
+    Xrm.WebApi.createRecord(ts_findingsreport, data).then(
+
+        function (entityType, findingGUIDs) {
+            let relatedFindings = [];
+            for (let findingGUID of SelectedItems) {
+                relatedFindings.push({
+                    entityType: "ovs_finding",
+                    id: findingGUID
+                });
+            }
+            const manyToManyAssociateRequest = {
+                getMetadata: () => ({
+                    boundParameter: null,
+                    parameterTypes: {},
+                    operationType: 2,
+                    operationName: "Associate"
+                }),
+
+
+                relationship: "ts_FindingsReport_ovs_Finding_ovs_Finding",
+
+
+                target: {
+                    entityType: "ts_FindingsReport",
+                    id: findingsReportId
+                },
+
+                relatedEntities: relatedFindings
+
+            }
+
+
+            Xrm.WebApi.online.execute(manyToManyAssociateRequest).then(
+                (success) => {
+                    console.log("Success", success);
+                },
+                (error) => {
+                    console.log("Error", error);
+                }
+            )
+        },
+        function (error) {
+            console.log(error.message);
+        });
+
+    //Relate the selected findings to the findings report
+
+    //Open the findings report record
+}
+
 
 

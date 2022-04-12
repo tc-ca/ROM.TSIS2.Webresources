@@ -184,6 +184,11 @@
               "file": "js\\FindingRibbon.js",
               "description": "ROM TSIS 2.0 Finding Ribbon Scripts"
             },
+            {
+              "uniquename": "ovs_/js/FindingsReportRibbon.js",
+              "file": "js\\FindingsReportRibbon.js",
+              "description": "ROM TSIS 2.0 Findings Report Ribbon Scripts"
+            },
             /* Styles */
             {
               "uniquename": "ovs_/css/bootstrap.min.css",
