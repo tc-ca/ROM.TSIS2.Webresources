@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        if (parent.Xrm != undefined) {
+            if (parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1033) {
+                $(document).ready(function () {
+                    $("[lang=fr]").hide();
+                });
+            } else {
+                $(document).ready(function () {
+                    $("[lang=en]").hide();
+                });
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 14px;
+            font-style: normal;
+        }
+
+        .title {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+            .active,
+            .title:hover {
+                background-color: #555;
+            }
+
+        .tips {
+            display: none;
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="category">
+        <button type="button" class="title">
+            <span lang="en">Basic PPE </span>
+            <span lang="fr">Basic PPE  (FR)</span>
+        </button>
+        <div class="tips">
+            <ul>
+                <li>
+                    <span lang="en">
+                        Type II hard hat
+                    </span>
+                    <span lang="fr">
+                        Type II hard hat (FR)
+                    </span>
+                </li>
+                <li>
+                    <span lang="en">Safety eyewear – CSA approved Class 1A safety glasses with side shields and UV protection or Class 2B goggles with UV protection, as needed for the task.</span>
+                    <span lang="fr">Safety eyewear – CSA approved Class 1A safety glasses with side shields and UV protection or Class 2B goggles with UV protection, as needed for the task. (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Ear protection. Hearing Protection Devices should comply with the Canadian Standards Association (CSA) Z94.2-02 Hearing Protection Devices – Performance, Selection, Care and Use. </span>
+                    <span lang="fr">Ear protection. Hearing Protection Devices should comply with the Canadian Standards Association (CSA) Z94.2-02 Hearing Protection Devices – Performance, Selection, Care and Use.  (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">High visibility flame resistant reflective safety vest compliant with the Canadian Standards Association (CSA). Minimum Class 2, Level 2 flame resistant (unless Class 3 is specified by the host site). Tear-away capability recommended (and may be required by some sites) </span>
+                    <span lang="fr">High visibility flame resistant reflective safety vest compliant with the Canadian Standards Association (CSA). Minimum Class 2, Level 2 flame resistant (unless Class 3 is specified by the host site). Tear-away capability recommended (and may be required by some sites) (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Work gloves, as appropriate for the inspection</span>
+                    <span lang="fr">Work gloves, as appropriate for the inspection (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">CSA-compliant steel-toed safety boots</span>
+                    <span lang="fr">CSA-compliant steel-toed safety boots (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Insect Repellent</span>
+                    <span lang="fr">Insect Repellent (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Sunscreen</span>
+                    <span lang="fr">Sunscreen (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Garbage Bags </span>
+                    <span lang="fr">Garbage Bags (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Disposable latex or nitrile gloves  </span>
+                    <span lang="fr">Disposable latex or nitrile gloves (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Hand sanitizer with minimum 60% alcohol content. </span>
+                    <span lang="fr">Hand sanitizer with minimum 60% alcohol content. (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Disinfectant (virucidal) wipes</span>
+                    <span lang="fr">Disinfectant (virucidal) wipes (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">First Aid Kit</span>
+                    <span lang="fr">First Aid Kit (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Communication devices (e.g. cell phone, satellite phone and portable cell phone power bank. Regions may provide for AC, DC, solar and/or hand crank cell phone chargers, portable cell phone power bank, and portable cell phone signal booster for RMS.</span>
+                    <span lang="fr">Communication devices (e.g. cell phone, satellite phone and portable cell phone power bank. Regions may provide for AC, DC, solar and/or hand crank cell phone chargers, portable cell phone power bank, and portable cell phone signal booster for RMS. (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">GPS and/or recent maps and compass</span>
+                    <span lang="fr">GPS and/or recent maps and compass (FR)</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br />
+    <div class="category">
+        <button type="button" class="title">
+            <span lang="en">Weather Related PPE - Extreme Hot / Cold</span>
+            <span lang="fr">Weather Related PPE - Extreme Hot / Cold (FR)</span>
+        </button>
+        <div class="tips">
+            <ul>
+                <li>
+                    <span lang="en">Wind and water repellant outer layer, designed to allow transfer of moisture to the air. For some sites this may need to be flame-resistant (FR) meeting NFPA 2112 or 1977.</span>
+                    <span lang="fr">Wind and water repellant outer layer, designed to allow transfer of moisture to the air. For some sites this may need to be flame-resistant (FR) meeting NFPA 2112 or 1977.(FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Insulating middle layers (polyester-fleece or wool). Select wool or other non-meltable if worn under FR garment.</span>
+                    <span lang="fr">Insulating middle layers (polyester-fleece or wool). Select wool or other non-meltable if worn under FR garment.(FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Light-weight moisture-wicking inner-layer (e.g. polyester, polypropylene or wool) in direct contact with the skin. Select wool, if worn under FR. Cotton is acceptable under FR, but not recommended for cold weather.</span>
+                    <span lang="fr">Light-weight moisture-wicking inner-layer (e.g. polyester, polypropylene or wool) in direct contact with the skin. Select wool, if worn under FR. Cotton is acceptable under FR, but not recommended for cold weather.(FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Rainwear (depending on forecast) FR when needed.</span>
+                    <span lang="fr">Rainwear (depending on forecast) FR when needed. (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Wind/water-repellant thermal gloves or mittens (FR if needed) with non-meltable inner liner option, e.g. wool or silk.</span>
+                    <span lang="fr">Wind/water-repellant thermal gloves or mittens (FR if needed) with non-meltable inner liner option, e.g. wool or silk. (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Thermal insulated and water-proof safety boots – CSA approved Grade 1 (green triangle label), with metal-free safety toe and plate, ankle coverage, defined heal, slip resistant outsole, preferably with winter cleats. Winter-rated to the temperature of use. </span>
+                    <span lang="fr">Thermal insulated and water-proof safety boots – CSA approved Grade 1 (green triangle label), with metal-free safety toe and plate, ankle coverage, defined heal, slip resistant outsole, preferably with winter cleats. Winter-rated to the temperature of use. (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Insulated snow pants adequate for weather conditions or cold weather FR coveralls when required</span>
+                    <span lang="fr">Insulated snow pants adequate for weather conditions or cold weather FR coveralls when required (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Proper winter hat and neck warmer or standard balaclava where FR and hardhat are not required.</span>
+                    <span lang="fr">Proper winter hat and neck warmer or standard balaclava where FR and hardhat are not required. (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Change of clothes and extra waterproof layer</span>
+                    <span lang="fr">Change of clothes and extra waterproof layer (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Emergency blanket / thermal sleeping bag</span>
+                    <span lang="fr">Emergency blanket / thermal sleeping bag (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Heat packs to warm hands and feet</span>
+                    <span lang="fr">Heat packs to warm hands and feet (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Loose fitting, light clothing with maximal skin coverage.</span>
+                    <span lang="fr">Loose fitting, light clothing with maximal skin coverage. (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">UV protective eyewear (minimum 90% UV protection) - (e.g. for driving or where safety eyewear is not required).</span>
+                    <span lang="fr">UV protective eyewear (minimum 90% UV protection) - (e.g. for driving or where safety eyewear is not required). (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">Sufficient cool water to keep hydrated and to soak towel or sock to wear around neck for cooling</span>
+                    <span lang="fr">Sufficient cool water to keep hydrated and to soak towel or sock to wear around neck for cooling (FR)</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br />
+    <div class="category">
+        <button type="button" class="title">
+            <span lang="en">Fire Retardant PPE</span>
+            <span lang="fr">Fire Retardant PPE (FR)</span>
+        </button>
+        <div class="tips">
+            <ul>
+                <li>
+                    <span lang="en">
+                        FR Overalls (Summer)
+                    </span><span lang="fr">
+                        FR Overalls (Summer) (FR)
+                    </span>
+                </li>
+                <li>
+                    <span lang="en">FR Overalls (Winter)</span>
+                    <span lang="fr">FR Overalls (Winter) (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">FR Under wear (top & bottom)</span>
+                    <span lang="fr">FR Under wear (top & bottom) (FR)</span>
+                </li>
+                <li>
+                    <span lang="en">FR gloves</span>
+                    <span lang="fr">FR gloves (FR)</span>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <script language="javascript">
+        var title = document.getElementsByClassName("title");
+        var i;
+
+        for (i = 0; i < title.length; i++) {
+            title[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var tips = this.nextElementSibling;
+                if (tips.style.display === "block") {
+                    tips.style.display = "none";
+                } else {
+                    tips.style.display = "block";
+                }
+            });
+        }
+    </script>
+</body>
+</html>

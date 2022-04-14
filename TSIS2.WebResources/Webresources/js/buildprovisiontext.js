@@ -22,21 +22,21 @@ async function gatherAncestorProvisionText(provision, lang) {
     } else {
         provisionText = provision.qm_legislationetxt || "";
     }
-    let provisionType = provision[`_qm_tylegislationtypeid_value@OData.Community.Display.V1.FormattedValue`];
+    let provisionType = provision["_qm_tylegislationtypeid_value"];
 
     //Base case. Body provisions don't have any text to display.
-    if (provisionType == "Body") {
+    if (provisionType == "b1015ef4-d729-eb11-a813-000d3af3a7a7") {
         return "";
     }
     //Base case. Headings are bold, and show the provision text.
-    if (provisionType == "Heading") {
+    if (provisionType == "1829d66a-962b-eb11-a813-000d3af3fc19") {
         return `<strong>${provisionText}</strong></br>`;
     }
 
     let parent = await getParentProvision(provision);
 
     //Marginal notes display the legislation text. No name or label.
-    if (provisionType == "Marginal Note") {
+    if (provisionType == "8726bb2a-497c-eb11-a812-000d3af31ad8") {
         return await gatherAncestorProvisionText(parent, lang) + `<strong>${provisionText}</strong></br>`;
     }
     
@@ -63,10 +63,10 @@ async function gatherDescendentProvisionText(provision, lang) {
             childText = children[i].qm_legislationetxt || "";
         }
 
-        let provisionType = children[i][`_qm_tylegislationtypeid_value@OData.Community.Display.V1.FormattedValue`];
+        let provisionType = children[i][`"_qm_tylegislationtypeid_value`];
 
         //Special case for marginal notes. Show the legislation text with no label.
-        if (provisionType == "Marginal Note") {
+        if (provisionType == "8726bb2a-497c-eb11-a812-000d3af31ad8") {
             provisionText += `<li><strong>${childText}</strong></li>` + await gatherDescendentProvisionText(children[i], lang);
         } else {
             provisionText += `<li><strong>${children[i].qm_legislationlbl}</strong> ${childText}</li>` + await gatherDescendentProvisionText(children[i], lang);

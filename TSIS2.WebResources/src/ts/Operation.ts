@@ -20,6 +20,7 @@ namespace ROM.Operation {
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
         Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
             let userBusinessUnitName = result.entities[0].name;
+            form.getAttribute("ts_ppeguide").setValue(false);
             //Show Properties Tab when the user is in Transport Canada or ISSO business unit
             if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
                 form.ui.tabs.get("tab_properties").setVisible(true);
@@ -146,5 +147,14 @@ namespace ROM.Operation {
             form.getAttribute("ts_typesofspecializedppe").setValue(null);
         }
     }
-
+    
+    export function ppeGuideOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+        let NCATFactorGuide = form.getAttribute("ts_ppeguide").getValue();
+        let webResourcePPEGuide = form.getControl("WebResource_PPEGuide");
+        if (NCATFactorGuide)
+            webResourcePPEGuide.setVisible(true);
+        else
+            webResourcePPEGuide.setVisible(false);
+    }
 }

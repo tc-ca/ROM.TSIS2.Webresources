@@ -789,6 +789,14 @@ var ROM;
                             isAdminOrManager_1 = true;
                         }
                     });
+                    var currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId;
+                    var ncatManagerValue = formContext.getAttribute("ts_ncatmanager").getValue();
+                    if (ncatManagerValue != null) {
+                        var approvingManagerId = ncatManagerValue[0].id;
+                        if (currentUserId == approvingManagerId) {
+                            isAdminOrManager_1 = true;
+                        }
+                    }
                     if (isAdminOrManager_1)
                         formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
                 }
@@ -853,6 +861,14 @@ var ROM;
                             isAdminOrManager_2 = true;
                         }
                     });
+                    var currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId;
+                    var rateManagerValue = formContext.getAttribute("ts_ratemanager").getValue();
+                    if (rateManagerValue != null) {
+                        var approvingManagerId = rateManagerValue[0].id;
+                        if (currentUserId == approvingManagerId) {
+                            isAdminOrManager_2 = true;
+                        }
+                    }
                     if (isAdminOrManager_2)
                         formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
                 }
