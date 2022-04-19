@@ -299,12 +299,18 @@ function isTCBusinessUnit() {
 }
 
 function FindingsReport(findingGUIDs, primaryControl) {
+    let caseId = primaryControl.data.entity.getId().slice(1, -1);
     //Create new findings report record
-    Xrm.WebApi.createRecord(ts_findingsreport, data).then(
+    var data =
+    {
+        "ts_name": "Findings Report Test",
+        "ts_Case@odata.bind": `/incidents(${caseId})`,
+    }
+    Xrm.WebApi.createRecord("ts_findingsreport", data).then(
 
-        function (entityType, findingGUIDs) {
+        function (newFindingsReport) {
             let relatedFindings = [];
-            for (let findingGUID of SelectedItems) {
+            for (let findingGUID of findingGUIDs) {
                 relatedFindings.push({
                     entityType: "ovs_finding",
                     id: findingGUID
@@ -323,18 +329,42 @@ function FindingsReport(findingGUIDs, primaryControl) {
 
 
                 target: {
-                    entityType: "ts_FindingsReport",
-                    id: findingsReportId
+                    entityType: "ts_findingsreport",
+                    id: newFindingsReport.id
                 },
 
                 relatedEntities: relatedFindings
-
             }
 
 
             Xrm.WebApi.online.execute(manyToManyAssociateRequest).then(
                 (success) => {
                     console.log("Success", success);
+
+                    var pageInput = {
+                        pageType: "entityrecord",
+                        entityName: "ts_findingsreport",
+                        entityId: newFindingsReport.id
+                    };
+                    var navigationOptions = {
+                        target: 2,
+                        height: {
+                            value: 100, unit: "%"
+                        },
+                        width: {
+                            value: 80, unit: "%"
+                        },
+                        position: 1
+                    };
+                    //Open finding record
+                    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                        function success() {
+                            // Run code on success
+                        },
+                        function error() {
+                            // Handle errors
+                        }
+                    );
                 },
                 (error) => {
                     console.log("Error", error);
