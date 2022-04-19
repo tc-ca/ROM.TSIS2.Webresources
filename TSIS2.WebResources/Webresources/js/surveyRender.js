@@ -130,7 +130,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             comment.onkeyup = changingHandler;
         }
     });
-
+    
     survey.onValidateQuestion.add(function (sender, options) {
         if (options.question.getType() == "finding") {
             //Add error if any findingTypes are Undecided
@@ -258,6 +258,18 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             appendDetailToQuestion(survey, options);
         });
 
+    survey
+        .onUpdateQuestionCssClasses
+        .add(function (survey, options) {
+            var classes = options.cssClasses
+
+            if (options.question.isRequired) {
+                classes.title += " sq-title-required";
+            }
+            if (options.question.getType() == "finding") {
+                classes.title += " sq-title-finding";
+            }
+        });
 
     $('#surveyElement').Survey({
         model: survey
