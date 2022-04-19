@@ -173,6 +173,7 @@ var widget = {
             //Create a dropdown to select the Finding Type of the operation
             var findingTypeDropdown = document.createElement("select");
             findingTypeDropdown.style.webkitAppearance = "auto";
+            findingTypeDropdown.className = "findingDropdown";
 
             var undecidedOption = document.createElement("option");
             undecidedOption.value = 717750000;

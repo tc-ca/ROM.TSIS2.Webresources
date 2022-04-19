@@ -618,3 +618,34 @@ td.td.sv_matrix_cell .sv_qbln {
   td.sv_matrix_cell .sv_qbln .sv-boolean,
   td.td.sv_matrix_cell .sv_qbln .sv-boolean {
     text-align: initial; }
+
+
+.sv_qstn .sq-root {
+    background-color: white !important;
+    color: black !important
+}
+
+.sv_p_root {
+    background-color: white !important;
+    color: black !important
+}
+
+.sv_row {
+    background-color: white !important;
+}
+
+.sq-title-required {
+    color: blue;
+}
+
+.inspectorComments {
+    border: 1px solid red !important;
+}
+
+.sq-title-finding {
+    color: red !important;
+}
+
+.findingDropdown {
+    color: black !important;
+}
