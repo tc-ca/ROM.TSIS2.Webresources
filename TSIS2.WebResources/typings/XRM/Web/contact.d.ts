@@ -194,6 +194,7 @@ interface Contact_Relationships {
   parentcustomerid_account?: Account_Result | null;
   parentcustomerid_contact?: Contact_Result | null;
   qm_contact_workorder?: msdyn_workorder_Result[] | null;
+  ts_contact_ts_operationcontact_contact?: ts_operationcontact_Result[] | null;
 }
 interface Contact extends Contact_Base, Contact_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
@@ -638,6 +639,7 @@ interface Contact_Expand {
   parentcustomerid_contact: WebExpand<Contact_Expand, Contact_Select, Contact_Filter, { parentcustomerid_contact: Contact_Result }>;
   preferredsystemuserid: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { preferredsystemuserid: SystemUser_Result }>;
   qm_contact_workorder: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { qm_contact_workorder: msdyn_workorder_Result[] }>;
+  ts_contact_ts_operationcontact_contact: WebExpand<Contact_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_contact_ts_operationcontact_contact: ts_operationcontact_Result[] }>;
 }
 interface Contact_FormattedResult {
   accountid_formatted?: string;
@@ -763,6 +765,7 @@ interface Contact_RelatedMany {
   incident_customer_contacts: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_contact_msdyn_workorder_ReportedByContact: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   qm_contact_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_contact_ts_operationcontact_contact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   contacts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
