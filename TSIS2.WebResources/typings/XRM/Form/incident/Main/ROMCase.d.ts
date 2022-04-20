@@ -86,6 +86,7 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_13 extends Xrm.SectionCollectionBase {
+        get(name: "_section_349"): Xrm.PageSection;
         get(name: "tab_13_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -175,6 +176,7 @@ declare namespace Form.incident.Main {
       get(name: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
+      get(name: "Subgrid_4"): Xrm.SubGridControl<"ts_operationcontact">;
       get(name: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -316,6 +318,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
+    getControl(controlName: "Subgrid_4"): Xrm.SubGridControl<"ts_operationcontact">;
     getControl(controlName: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;

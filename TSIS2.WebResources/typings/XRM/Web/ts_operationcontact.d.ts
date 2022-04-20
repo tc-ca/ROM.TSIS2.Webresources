@@ -13,13 +13,18 @@ interface ts_operationcontact_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_operationcontact_Relationships {
+  ts_Incident?: Incident_Result | null;
+  ts_Incident_ts_operationcontact_ts_operation?: Incident_Result[] | null;
+  ts_msdyn_workorder_ts_operationcontact?: msdyn_workorder_Result[] | null;
 }
 interface ts_operationcontact extends ts_operationcontact_Base, ts_operationcontact_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  ts_Incident_bind$incidents?: string | null;
   ts_connectionrole_bind$ts_roles?: string | null;
   ts_contact_bind$contacts?: string | null;
   ts_operation_bind$ovs_operations?: string | null;
+  ts_workorder_bind$msdyn_workorders?: string | null;
 }
 interface ts_operationcontact_Create extends ts_operationcontact {
 }
@@ -43,10 +48,12 @@ interface ts_operationcontact_Select {
   timezoneruleversionnumber: WebAttribute<ts_operationcontact_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_connectionrole_guid: WebAttribute<ts_operationcontact_Select, { ts_connectionrole_guid: string | null }, { ts_connectionrole_formatted?: string }>;
   ts_contact_guid: WebAttribute<ts_operationcontact_Select, { ts_contact_guid: string | null }, { ts_contact_formatted?: string }>;
+  ts_incident_guid: WebAttribute<ts_operationcontact_Select, { ts_incident_guid: string | null }, { ts_incident_formatted?: string }>;
   ts_name: WebAttribute<ts_operationcontact_Select, { ts_name: string | null }, {  }>;
   ts_operation_guid: WebAttribute<ts_operationcontact_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
   ts_operationcontactid: WebAttribute<ts_operationcontact_Select, { ts_operationcontactid: string | null }, {  }>;
   ts_role: WebAttribute<ts_operationcontact_Select, { ts_role: ts_role_Enum | null }, { ts_role_formatted?: string }>;
+  ts_workorder_guid: WebAttribute<ts_operationcontact_Select, { ts_workorder_guid: string | null }, { ts_workorder_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_operationcontact_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_operationcontact_Select, { versionnumber: number | null }, {  }>;
 }
@@ -68,10 +75,12 @@ interface ts_operationcontact_Filter {
   timezoneruleversionnumber: number;
   ts_connectionrole_guid: XQW.Guid;
   ts_contact_guid: XQW.Guid;
+  ts_incident_guid: XQW.Guid;
   ts_name: string;
   ts_operation_guid: XQW.Guid;
   ts_operationcontactid: XQW.Guid;
   ts_role: ts_role_Enum;
+  ts_workorder_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -82,9 +91,13 @@ interface ts_operationcontact_Expand {
   modifiedonbehalfby: WebExpand<ts_operationcontact_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ownerid: WebExpand<ts_operationcontact_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<ts_operationcontact_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_Incident: WebExpand<ts_operationcontact_Expand, Incident_Select, Incident_Filter, { ts_Incident: Incident_Result }>;
+  ts_Incident_ts_operationcontact_ts_operation: WebExpand<ts_operationcontact_Expand, Incident_Select, Incident_Filter, { ts_Incident_ts_operationcontact_ts_operation: Incident_Result[] }>;
   ts_connectionrole: WebExpand<ts_operationcontact_Expand, ts_role_Select, ts_role_Filter, { ts_connectionrole: ts_role_Result }>;
   ts_contact: WebExpand<ts_operationcontact_Expand, Contact_Select, Contact_Filter, { ts_contact: Contact_Result }>;
+  ts_msdyn_workorder_ts_operationcontact: WebExpand<ts_operationcontact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_ts_operationcontact: msdyn_workorder_Result[] }>;
   ts_operation: WebExpand<ts_operationcontact_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operation: ovs_operation_Result }>;
+  ts_workorder: WebExpand<ts_operationcontact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_workorder: msdyn_workorder_Result }>;
 }
 interface ts_operationcontact_FormattedResult {
   createdby_formatted?: string;
@@ -102,8 +115,10 @@ interface ts_operationcontact_FormattedResult {
   statuscode_formatted?: string;
   ts_connectionrole_formatted?: string;
   ts_contact_formatted?: string;
+  ts_incident_formatted?: string;
   ts_operation_formatted?: string;
   ts_role_formatted?: string;
+  ts_workorder_formatted?: string;
 }
 interface ts_operationcontact_Result extends ts_operationcontact_Base, ts_operationcontact_Relationships {
   "@odata.etag": string;
@@ -117,7 +132,9 @@ interface ts_operationcontact_Result extends ts_operationcontact_Base, ts_operat
   owninguser_guid: string | null;
   ts_connectionrole_guid: string | null;
   ts_contact_guid: string | null;
+  ts_incident_guid: string | null;
   ts_operation_guid: string | null;
+  ts_workorder_guid: string | null;
 }
 interface ts_operationcontact_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -126,11 +143,15 @@ interface ts_operationcontact_RelatedOne {
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_Incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_connectionrole: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
   ts_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface ts_operationcontact_RelatedMany {
+  ts_Incident_ts_operationcontact_ts_operation: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  ts_msdyn_workorder_ts_operationcontact: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_operationcontacts: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;

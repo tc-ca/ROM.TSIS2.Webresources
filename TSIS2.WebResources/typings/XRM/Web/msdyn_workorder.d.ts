@@ -91,11 +91,14 @@ interface msdyn_workorder_Relationships {
   ovs_RevisedQuarterId?: tc_TCFiscalQuarter_Result | null;
   ovs_SecondaryInspector?: BookableResource_Result | null;
   qm_ReportContactId?: Contact_Result | null;
+  ts_Contact_msdyn_workorder_msdyn_workorder?: Contact_Result[] | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_WorkOrderCreationWizardId?: ts_workordercreationwizard_Result | null;
   ts_msdyn_customerasset_msdyn_workorder_msdyn?: msdyn_customerasset_Result[] | null;
   ts_msdyn_workorder_msdyn_workorder_Account?: Account_Result[] | null;
   ts_msdyn_workorder_ovs_operation_ovs_operati?: ovs_operation_Result[] | null;
+  ts_msdyn_workorder_ts_operationcontact?: ts_operationcontact_Result[] | null;
+  ts_operationcontact_workorder_msdyn_worko?: ts_operationcontact_Result[] | null;
   ts_ovs_Finding_WorkOrder_msdyn_workorder?: ovs_Finding_Result[] | null;
 }
 interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relationships {
@@ -436,11 +439,14 @@ interface msdyn_workorder_Expand {
   ownerid: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   qm_ReportContactId: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { qm_ReportContactId: Contact_Result }>;
+  ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: Contact_Result[] }>;
   ts_Site: WebExpand<msdyn_workorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_WorkOrderCreationWizardId: WebExpand<msdyn_workorder_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_WorkOrderCreationWizardId: ts_workordercreationwizard_Result }>;
   ts_msdyn_customerasset_msdyn_workorder_msdyn: WebExpand<msdyn_workorder_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ts_msdyn_customerasset_msdyn_workorder_msdyn: msdyn_customerasset_Result[] }>;
   ts_msdyn_workorder_msdyn_workorder_Account: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ts_msdyn_workorder_msdyn_workorder_Account: Account_Result[] }>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<msdyn_workorder_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: ovs_operation_Result[] }>;
+  ts_msdyn_workorder_ts_operationcontact: WebExpand<msdyn_workorder_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_msdyn_workorder_ts_operationcontact: ts_operationcontact_Result[] }>;
+  ts_operationcontact_workorder_msdyn_worko: WebExpand<msdyn_workorder_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operationcontact_workorder_msdyn_worko: ts_operationcontact_Result[] }>;
   ts_ovs_Finding_WorkOrder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_WorkOrder_msdyn_workorder: ovs_Finding_Result[] }>;
 }
 interface msdyn_workorder_FormattedResult {
@@ -619,9 +625,12 @@ interface msdyn_workorder_RelatedMany {
   msdyn_workorder_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   msdyn_workorder_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_workorder_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  ts_Contact_msdyn_workorder_msdyn_workorder: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_msdyn_customerasset_msdyn_workorder_msdyn: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   ts_msdyn_workorder_msdyn_workorder_Account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_msdyn_workorder_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
+  ts_operationcontact_workorder_msdyn_worko: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_ovs_Finding_WorkOrder_msdyn_workorder: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

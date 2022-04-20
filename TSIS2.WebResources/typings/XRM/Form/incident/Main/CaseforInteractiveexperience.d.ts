@@ -6,6 +6,7 @@ declare namespace Form.incident.Main {
         get(name: "KnowledgeArticles"): Xrm.PageSection;
         get(name: "MergedCases"): Xrm.PageSection;
         get(name: "Solutions"): Xrm.PageSection;
+        get(name: "SwarmSection"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -97,6 +98,7 @@ declare namespace Form.incident.Main {
       get(name: "Devices"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
       get(name: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
+      get(name: "SwarmSubgrid"): Xrm.SubGridControl<"msdyn_swarm">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "case_kbsearchcontrol"): Xrm.BaseControl;
       get(name: "case_qfc"): Xrm.Control<Xrm.Attribute<any>>;
@@ -210,6 +212,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "Devices"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
     getControl(controlName: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
+    getControl(controlName: "SwarmSubgrid"): Xrm.SubGridControl<"msdyn_swarm">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "case_kbsearchcontrol"): Xrm.BaseControl;
     getControl(controlName: "case_qfc"): Xrm.Control<Xrm.Attribute<any>>;

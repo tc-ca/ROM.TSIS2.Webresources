@@ -115,6 +115,11 @@
               "description": "ROM TSIS 2.0 Operation Ribbon Scripts"
             },
             {
+                "uniquename": "ts_/js/EnforcementAction.js",
+                "file": "js\\EnforcementAction.js",
+                "description": "ROM TSIS 2.0 Enforcement Action Scripts"
+              },
+            {
               "uniquename": "ts_/js/FunctionalLocation.js",
               "file": "js\\FunctionalLocation.js",
               "description": "ROM TSIS 2.0 Functional Location Scripts"

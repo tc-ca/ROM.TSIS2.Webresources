@@ -354,6 +354,52 @@ interface ts_assessmentscorethredshots_Create extends ts_assessmentscorethredsho
 }
 interface ts_assessmentscorethredshots_Update extends ts_assessmentscorethredshots {
 }
+interface ts_EnforcementAction_Base extends WebEntity {
+}
+interface ts_EnforcementAction_Fixed extends WebEntity_Fixed {
+  ts_enforcementactionid: string;
+}
+interface ts_EnforcementAction extends ts_EnforcementAction_Base, ts_EnforcementAction_Relationships {
+}
+interface ts_EnforcementAction_Relationships {
+}
+interface ts_EnforcementAction_Result extends ts_EnforcementAction_Base, ts_EnforcementAction_Relationships {
+}
+interface ts_EnforcementAction_FormattedResult {
+}
+interface ts_EnforcementAction_Select {
+}
+interface ts_EnforcementAction_Expand {
+}
+interface ts_EnforcementAction_Filter {
+}
+interface ts_EnforcementAction_Create extends ts_EnforcementAction {
+}
+interface ts_EnforcementAction_Update extends ts_EnforcementAction {
+}
+interface ts_Incident_ts_operationcontact_Base extends WebEntity {
+}
+interface ts_Incident_ts_operationcontact_Fixed extends WebEntity_Fixed {
+  ts_incident_ts_operationcontactid: string;
+}
+interface ts_Incident_ts_operationcontact extends ts_Incident_ts_operationcontact_Base, ts_Incident_ts_operationcontact_Relationships {
+}
+interface ts_Incident_ts_operationcontact_Relationships {
+}
+interface ts_Incident_ts_operationcontact_Result extends ts_Incident_ts_operationcontact_Base, ts_Incident_ts_operationcontact_Relationships {
+}
+interface ts_Incident_ts_operationcontact_FormattedResult {
+}
+interface ts_Incident_ts_operationcontact_Select {
+}
+interface ts_Incident_ts_operationcontact_Expand {
+}
+interface ts_Incident_ts_operationcontact_Filter {
+}
+interface ts_Incident_ts_operationcontact_Create extends ts_Incident_ts_operationcontact {
+}
+interface ts_Incident_ts_operationcontact_Update extends ts_Incident_ts_operationcontact {
+}
 interface ts_msdyn_customerasset_msdyn_customerasset_Base extends WebEntity {
 }
 interface ts_msdyn_customerasset_msdyn_customerasset_Fixed extends WebEntity_Fixed {
@@ -422,6 +468,29 @@ interface ts_msdyn_workorder_ovs_operation_Filter {
 interface ts_msdyn_workorder_ovs_operation_Create extends ts_msdyn_workorder_ovs_operation {
 }
 interface ts_msdyn_workorder_ovs_operation_Update extends ts_msdyn_workorder_ovs_operation {
+}
+interface ts_msdyn_workorder_ts_operationcontact_Base extends WebEntity {
+}
+interface ts_msdyn_workorder_ts_operationcontact_Fixed extends WebEntity_Fixed {
+  ts_msdyn_workorder_ts_operationcontactid: string;
+}
+interface ts_msdyn_workorder_ts_operationcontact extends ts_msdyn_workorder_ts_operationcontact_Base, ts_msdyn_workorder_ts_operationcontact_Relationships {
+}
+interface ts_msdyn_workorder_ts_operationcontact_Relationships {
+}
+interface ts_msdyn_workorder_ts_operationcontact_Result extends ts_msdyn_workorder_ts_operationcontact_Base, ts_msdyn_workorder_ts_operationcontact_Relationships {
+}
+interface ts_msdyn_workorder_ts_operationcontact_FormattedResult {
+}
+interface ts_msdyn_workorder_ts_operationcontact_Select {
+}
+interface ts_msdyn_workorder_ts_operationcontact_Expand {
+}
+interface ts_msdyn_workorder_ts_operationcontact_Filter {
+}
+interface ts_msdyn_workorder_ts_operationcontact_Create extends ts_msdyn_workorder_ts_operationcontact {
+}
+interface ts_msdyn_workorder_ts_operationcontact_Update extends ts_msdyn_workorder_ts_operationcontact {
 }
 interface ts_operationcontact_Base extends WebEntity {
 }
