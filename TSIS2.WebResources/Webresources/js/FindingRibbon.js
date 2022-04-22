@@ -352,9 +352,7 @@ function FindingsReport(findingGUIDs, primaryControl) {
                     operationName: "Associate"
                 }),
 
-
                 relationship: "ts_FindingsReport_ovs_Finding_ovs_Finding",
-
 
                 target: {
                     entityType: "ts_findingsreport",
@@ -363,7 +361,6 @@ function FindingsReport(findingGUIDs, primaryControl) {
 
                 relatedEntities: relatedFindings
             }
-
 
             Xrm.WebApi.online.execute(manyToManyAssociateRequest).then(
                 (success) => {
