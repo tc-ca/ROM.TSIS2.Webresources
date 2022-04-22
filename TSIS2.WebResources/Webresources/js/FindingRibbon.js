@@ -299,12 +299,40 @@ function isTCBusinessUnit() {
 }
 
 function FindingsReport(findingGUIDs, primaryControl) {
-    let caseId = primaryControl.data.entity.getId().slice(1, -1);
+    //Confirm all selected findings have a final enforcement action
+    const gridContext = primaryControl.getControl("subgrid_findings");
+    const findingRows = gridContext.getGrid().getSelectedRows();
+
+    let allFindingsHaveFinalEnforcementAction = true;
+    let aFindingIsProtectedB = false;
+    findingRows.forEach(function (findingRow) {
+        const findingFinalEnforcementAction = findingRow.getAttribute("ts_finalenforcementaction").getValue();
+        const findingSensitivityLevel = findingRow.getAttribute("ts_sensitivitylevel").getValue();
+        if (findingFinalEnforcementAction == null) {
+            allFindingsHaveFinalEnforcementAction = false;
+        }
+        if (findingSensitivityLevel == 717750001) {  //Protected B
+            aFindingIsProtectedB = true;
+        }
+    });
+
+    //If a finding does not have a final enforcement action, open an alert dialog
+    if (!allFindingsHaveFinalEnforcementAction) {
+        var alertStrings = { confirmButtonLabel: "OK", text: "One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action to create a Findings Report.", title: "Missing Final Enforcement Action" };
+        var alertOptions = { height: 200, width: 300 };
+        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+        return;
+    }
+
+    const caseId = primaryControl.data.entity.getId().slice(1, -1);
+    //If a finding is Protected B, set the findings report sensitivity level to Protected B. Else Unclassified.
+    const sensitivityLevel = (aFindingIsProtectedB) ? 717750001 : 717750000
     //Create new findings report record
     var data =
     {
         "ts_name": "Findings Report Test",
         "ts_Case@odata.bind": `/incidents(${caseId})`,
+        "ts_sensitivitylevel": sensitivityLevel
     }
     Xrm.WebApi.createRecord("ts_findingsreport", data).then(
 
@@ -374,10 +402,6 @@ function FindingsReport(findingGUIDs, primaryControl) {
         function (error) {
             console.log(error.message);
         });
-
-    //Relate the selected findings to the findings report
-
-    //Open the findings report record
 }
 
 
