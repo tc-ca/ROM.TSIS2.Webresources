@@ -298,5 +298,108 @@ function isTCBusinessUnit() {
     });
 }
 
+function FindingsReport(findingGUIDs, primaryControl) {
+    //Confirm all selected findings have a final enforcement action
+    const gridContext = primaryControl.getControl("subgrid_findings");
+    const findingRows = gridContext.getGrid().getSelectedRows();
+
+    let allFindingsHaveFinalEnforcementAction = true;
+    let aFindingIsProtectedB = false;
+    findingRows.forEach(function (findingRow) {
+        const findingFinalEnforcementAction = findingRow.getAttribute("ts_finalenforcementaction").getValue();
+        const findingSensitivityLevel = findingRow.getAttribute("ts_sensitivitylevel").getValue();
+        if (findingFinalEnforcementAction == null) {
+            allFindingsHaveFinalEnforcementAction = false;
+        }
+        if (findingSensitivityLevel == 717750001) {  //Protected B
+            aFindingIsProtectedB = true;
+        }
+    });
+
+    //If a finding does not have a final enforcement action, open an alert dialog
+    if (!allFindingsHaveFinalEnforcementAction) {
+        var alertStrings = { confirmButtonLabel: "OK", text: "One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action to create a Findings Report.", title: "Missing Final Enforcement Action" };
+        var alertOptions = { height: 200, width: 300 };
+        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+        return;
+    }
+
+    const caseId = primaryControl.data.entity.getId().slice(1, -1);
+    //If a finding is Protected B, set the findings report sensitivity level to Protected B. Else Unclassified.
+    const sensitivityLevel = (aFindingIsProtectedB) ? 717750001 : 717750000
+    //Create new findings report record
+    var data =
+    {
+        "ts_name": "Findings Report Test",
+        "ts_Case@odata.bind": `/incidents(${caseId})`,
+        "ts_sensitivitylevel": sensitivityLevel
+    }
+    Xrm.WebApi.createRecord("ts_findingsreport", data).then(
+
+        function (newFindingsReport) {
+            let relatedFindings = [];
+            for (let findingGUID of findingGUIDs) {
+                relatedFindings.push({
+                    entityType: "ovs_finding",
+                    id: findingGUID
+                });
+            }
+            const manyToManyAssociateRequest = {
+                getMetadata: () => ({
+                    boundParameter: null,
+                    parameterTypes: {},
+                    operationType: 2,
+                    operationName: "Associate"
+                }),
+
+                relationship: "ts_FindingsReport_ovs_Finding_ovs_Finding",
+
+                target: {
+                    entityType: "ts_findingsreport",
+                    id: newFindingsReport.id
+                },
+
+                relatedEntities: relatedFindings
+            }
+
+            Xrm.WebApi.online.execute(manyToManyAssociateRequest).then(
+                (success) => {
+                    console.log("Success", success);
+
+                    var pageInput = {
+                        pageType: "entityrecord",
+                        entityName: "ts_findingsreport",
+                        entityId: newFindingsReport.id
+                    };
+                    var navigationOptions = {
+                        target: 2,
+                        height: {
+                            value: 100, unit: "%"
+                        },
+                        width: {
+                            value: 80, unit: "%"
+                        },
+                        position: 1
+                    };
+                    //Open finding record
+                    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                        function success() {
+                            // Run code on success
+                        },
+                        function error() {
+                            // Handle errors
+                        }
+                    );
+                },
+                (error) => {
+                    console.log("Error", error);
+                }
+            )
+        },
+        function (error) {
+            console.log(error.message);
+        });
+}
+
 
 
