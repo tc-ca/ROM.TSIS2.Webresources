@@ -63,10 +63,10 @@ async function gatherDescendentProvisionText(provision, lang) {
             childText = children[i].qm_legislationetxt || "";
         }
 
-        let provisionType = children[i][`"_qm_tylegislationtypeid_value`];
+        let provisionType = children[i][`_qm_tylegislationtypeid_value`];
 
         //Special case for marginal notes. Show the legislation text with no label.
-        if (provisionType == "8726bb2a-497c-eb11-a812-000d3af31ad8") {
+        if (provisionType == "8726bb2a-497c-eb11-a812-000d3af31ad8" || children[i].qm_legislationlbl==null) {
             provisionText += `<li><strong>${childText}</strong></li>` + await gatherDescendentProvisionText(children[i], lang);
         } else {
             provisionText += `<li><strong>${children[i].qm_legislationlbl}</strong> ${childText}</li>` + await gatherDescendentProvisionText(children[i], lang);
