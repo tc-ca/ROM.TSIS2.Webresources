@@ -306,6 +306,16 @@
               "file": "html\\RATEFactor4GuidePopUp.html",
               "description": "Popup for RATE Factor 4"
             },
+            {
+              "uniquename": "ts_/html/EmailAttachFile.html",
+              "file": "html\\EmailAttachFile.html",
+              "description": "Attach Document Centre File to Email button"
+            },
+            {
+              "uniquename": "ts_/html/EmailAttachFilePopUp.html",
+              "file": "html\\EmailAttachFilePopUp.html",
+              "description": "Popup for Email Attach File"
+            },
             /* SurveyJS dependencies */
             {
               "uniquename": "ovs_/js/ace.min.js",
