@@ -34,6 +34,12 @@
                     title: "Attach Document Centre File"
                 };
                 parent.Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                    function (returnValue) {
+                        if (returnValue) {
+                            // Once the pop-up is closed, refresh the attachment sub grid
+                            parent.Xrm.Page.getControl("attachmentsGrid").refresh();
+                        }
+                    }
                 );
             }
             else {
