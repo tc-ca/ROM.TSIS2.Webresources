@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        loadHTML = function () {
+
+            // Check if there is an email ID
+            const queryString = window.location.search;
+
+            console.log('The queryString is ' + queryString);
+
+            const urlParams = new URLSearchParams(queryString);
+
+            if (urlParams.has('id')) {
+
+                // Load the popup - with the Email ID as the 'data' parameter
+                var pageInput = {
+                    pageType: "webresource",
+                    webresourceName: "ts_/html/EmailAttachFilePopUp.html",
+                    data: urlParams.get('id')
+                };
+                var navigationOptions = {
+                    target: 2,
+                    width: 900,
+                    height: 550,
+                    position: 1,
+                    title: "Attach Document Centre File"
+                };
+                parent.Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                );
+            }
+            else {
+
+                // Show the notification
+                parent.Xrm.Utility.alertDialog("Please save the Email first before attaching a file");
+            }
+        }
+    </script>
+    <button type="button" class="btn btn-default btn-lg" onclick="loadHTML()">
+        <span class="glyphicon glyphicon-paperclip"></span>
+    </button>
+</body>
+</html>

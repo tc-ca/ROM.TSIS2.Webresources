@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+
+    <!-- Package used for the table - Tabulator -->
+    <!-- http://tabulator.info/ -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body onload="loadTable()">
+    <div class="container-fluid">
+        <strong style="margin-top:10px;margin-left:5px">
+            Number of files selected:
+            <label id="RowCounterLabel">0</label>
+        </strong>
+        <button id="selectAll" class="btn btn-default" style="margin-left: 20px; margin-top:10px">Select All</button>
+        <button id="deselectAll" class="btn btn-default" style="margin-left: 10px; margin-top:10px">Deselect All</button>
+        <div class="row" style="margin-top: 10px; margin-left: 10px; margin-right: 10px">
+            <div id="example-table" />
+        </div>
+        <div class="row" style="margin-left: 5px;margin-top: 10px">
+            <button id="uploadFiles" class="btn btn-default" onclick="UploadAttachments()">Attach File(s)</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        let allFiles = [];
+        let selectedEncodedFiles = [];
+        let table = null;
+
+        function loadTable() {
+
+            const USER_LANG_FR = 1036;
+            let userLocalLanguage = "";
+
+            // find out if the users language setting is set to French
+            {
+                var currentLanguage = parent.Xrm.Page.context.getUserLcid();
+
+                if (currentLanguage == USER_LANG_FR) {
+                    userLocalLanguage = "fr-fr";
+                }
+            }
+
+            // initially disable the Attach Files button
+            document.getElementById("uploadFiles").disabled = true;
+
+            // retrieve all the files that are in the file entity
+            {
+                parent.Xrm.WebApi.retrieveMultipleRecords("ts_file", "?$select=ts_fileid,ts_file").then(
+
+                    function success(result) {
+
+                        // retrieve all the files that are in the document centre
+                        for (var i = 0; i < result.entities.length; i++) {
+
+                            // create the file object
+                            var myFile = {
+                                id: result.entities[i].ts_fileid,
+                                fileName: result.entities[i].ts_file,
+                                encodedFileData: ""
+                            };
+
+                            allFiles[i] = myFile;
+                        }
+
+                        //define the table data
+                        table = new Tabulator("#example-table", {
+                            data: allFiles,
+                            layout: "fitColumns",
+                            pagination: "local",
+                            paginationSize: 10,
+                            locale: userLocalLanguage,
+                            langs: {
+                                "fr-fr": { //French language definition
+                                    "columns": {
+                                        "id": "ID",
+                                        "fileName": "File Name [FR]",
+                                        "attachFile": "Attach [FR]",
+                                    },
+                                    "pagination": {
+                                        "first": "Premier",
+                                        "last": "Dernier",
+                                        "prev": "Précédent",
+                                        "next": "Suivant",
+                                    },
+                                },
+                            },
+                            initialSort: [
+                                { column: "fileName", dir: "asc" },
+                            ],
+                            columns: [
+                                { title: "ID", field: "id", sorter: "string", width: 200, editor: true, visible: false },
+                                { title: "File Name", field: "fileName", sorter: "string", headerFilter: "input" },
+                                { title: "Attach File", field: "attachFile", formatter: "rowSelection", hozAlign: "center", vertAlign: "center", width: 90, headerSort: false },
+                            ],
+                        });
+
+                        //keep track of how many files have been selected
+                        table.on("rowSelectionChanged", function (data, rows) {
+                            document.getElementById('RowCounterLabel').innerHTML = data.length;
+
+                            if (data.length > 0) {
+                                document.getElementById("uploadFiles").disabled = false;
+                            } else {
+                                document.getElementById("uploadFiles").disabled = true;
+                            }
+                        });
+
+                        //select all records
+                        document.getElementById("selectAll").addEventListener("click", function () {
+                            table.selectRow();
+                        });
+
+                        //deselect all records
+                        document.getElementById("deselectAll").addEventListener("click", function () {
+                            table.deselectRow();
+                        });
+                    },
+                    function (error) {
+                        // handle error conditions
+                        alert("Error retrieving files: " + error.message)
+                    }
+                );
+            }
+        }
+
+        function UploadAttachments() {
+
+            //Swal.showLoading();
+
+            // show the alert
+            //table.alert("Attaching Files");
+
+            // get the ID of the selected email
+            var queryString = window.location.search;
+            var urlParams = new URLSearchParams(queryString);
+            var emailID = urlParams.get('data')
+
+            // go through each selected file and upload it as an attachment to the email
+            {
+                var selectedFiles = table.getSelectedData();
+
+                // call the API and get the encoding for each file
+                for (var i = 0; i < selectedFiles.length; i++) {
+
+                    var fileID = selectedFiles[i].id;
+                    var getRequest = new XMLHttpRequest();
+
+                    getRequest.open("GET", parent.Xrm.Page.context.getClientUrl() + "/api/data/v9.0/ts_files(" + fileID + ")/ts_attachment/", false);
+                    getRequest.setRequestHeader("OData-MaxVersion", "4.0");
+                    getRequest.setRequestHeader("OData-Version", "4.0");
+
+                    getRequest.onreadystatechange = function () {
+
+                        if (this.readyState === 4) {
+                            getRequest.onreadystatechange = null;
+
+                            if (this.status === 200) {
+                                var result = JSON.parse(this.response);
+                                selectedFiles[i].encodedFileData = result.value;
+                            } 
+                        }
+                    };
+
+                    getRequest.send();
+                }
+
+                // upload each file to the Attachment (activitymimeattachments) entity
+                for (var i = 0; i < selectedFiles.length; i++) {
+
+                    var activityType = "email"
+                    var attachment = {};
+
+                    attachment["objectid_activitypointer@odata.bind"] = "/activitypointers(" + emailID + ")";
+                    attachment.body = selectedFiles[i].encodedFileData
+                    attachment.filename = selectedFiles[i].fileName;
+                    attachment.objecttypecode = activityType;
+
+                    var postRequest = new XMLHttpRequest();
+                    postRequest.open("POST", parent.Xrm.Page.context.getClientUrl() + "/api/data/v9.0/activitymimeattachments", false);
+                    postRequest.setRequestHeader("OData-MaxVersion", "4.0");
+                    postRequest.setRequestHeader("OData-Version", "4.0");
+                    postRequest.setRequestHeader("Accept", "application/json");
+                    postRequest.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+
+                    postRequest.onreadystatechange = function () {
+                        if (this.readyState === 4) {
+                            postRequest.onreadystatechange = null;
+                            if (this.status === 204) {
+                            //    var uri = this.getResponseHeader("OData-EntityId");
+                            //    var regExp = /\(([^)]+)\)/;
+                            //    var matches = regExp.exec(uri);
+                            //    var newEntityId = matches[1];
+                            } else {
+                                parent.Xrm.Utility.alertDialog(this.statusText);
+                            }
+                        }
+                    };
+                    postRequest.send(JSON.stringify(attachment));
+                }
+            }
+
+            // close the alert
+            //table.clearAlert();
+            //Swal.close();
+            window.close();
+        }
+
+    </script>
+</body>
+</html>
