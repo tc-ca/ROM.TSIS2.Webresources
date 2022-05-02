@@ -8,6 +8,7 @@ declare namespace Form.incident.Main {
         get(name: "KnowledgeArticles"): Xrm.PageSection;
         get(name: "MergedCases"): Xrm.PageSection;
         get(name: "RelatedCases"): Xrm.PageSection;
+        get(name: "SwarmSection"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -55,6 +56,7 @@ declare namespace Form.incident.Main {
       get(name: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
       get(name: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
       get(name: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
+      get(name: "SwarmSubgrid"): Xrm.SubGridControl<"msdyn_swarm">;
       get(name: "casetypecode"): Xrm.OptionSetControl<incident_casetypecode>;
       get(name: "customerid"): Xrm.LookupControl<"account" | "contact">;
       get(name: "description"): Xrm.StringControl;
@@ -135,6 +137,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
     getControl(controlName: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
     getControl(controlName: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
+    getControl(controlName: "SwarmSubgrid"): Xrm.SubGridControl<"msdyn_swarm">;
     getControl(controlName: "casetypecode"): Xrm.OptionSetControl<incident_casetypecode>;
     getControl(controlName: "customerid"): Xrm.LookupControl<"account" | "contact">;
     getControl(controlName: "description"): Xrm.StringControl;

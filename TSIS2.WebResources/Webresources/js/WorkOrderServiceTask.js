@@ -42,6 +42,8 @@ var ROM;
         // EVENTS
         var mode = '';
         var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+        var unsavedNotificationid = "";
+        var unsavedNotificationTimeout;
         var enterStartDateToProceedText = "Enter a start date to proceed";
         var enterTaskTypeToProccedText = "Enter a task type to proceed";
         var confirmTitle = "Message";
@@ -270,8 +272,22 @@ var ROM;
             }
             // Get the web resource inner content window
             CompleteQuestionnaire(wrCtrl);
+            clearTimeout(unsavedNotificationTimeout);
+            Xrm['App'].clearGlobalNotification(unsavedNotificationid);
+            unsavedNotificationTimeout = setTimeout(showUnsavedNotification, 10000);
         }
         WorkOrderServiceTask.onSave = onSave;
+        function showUnsavedNotification() {
+            // define notification object
+            var notification = {
+                type: 1,
+                level: 1,
+                message: "It has been X time since you last saved."
+            };
+            Xrm['App'].addGlobalNotification(notification).then(function success(notificationId) {
+                unsavedNotificationid = notificationId;
+            });
+        }
         function setTaskTypeFilteredView(form) {
             var workOrderValue = form.getAttribute("msdyn_workorder").getValue();
             var workOrderId = workOrderValue ? workOrderValue[0].id : "";

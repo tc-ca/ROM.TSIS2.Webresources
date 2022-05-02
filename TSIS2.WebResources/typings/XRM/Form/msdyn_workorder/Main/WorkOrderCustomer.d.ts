@@ -19,8 +19,9 @@ declare namespace Form.msdyn_workorder.Main {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "msdyn_address1"): Xrm.Attribute<string>;
+      get(name: "msdyn_address1"): Xrm.Attribute<any>;
       get(name: "msdyn_address2"): Xrm.Attribute<string>;
+      get(name: "msdyn_address3"): Xrm.Attribute<string>;
       get(name: "msdyn_billingaccount"): Xrm.LookupAttribute<"account">;
       get(name: "msdyn_city"): Xrm.Attribute<string>;
       get(name: "msdyn_country"): Xrm.Attribute<string>;
@@ -68,8 +69,9 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "header_process_msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype"> | null;
       get(name: "header_process_msdyn_workordertype_1"): Xrm.LookupControl<"msdyn_workordertype"> | null;
       get(name: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
-      get(name: "msdyn_address1"): Xrm.StringControl;
+      get(name: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_address2"): Xrm.StringControl;
+      get(name: "msdyn_address3"): Xrm.StringControl;
       get(name: "msdyn_billingaccount"): Xrm.LookupControl<"account">;
       get(name: "msdyn_city"): Xrm.StringControl;
       get(name: "msdyn_country"): Xrm.StringControl;
@@ -100,8 +102,9 @@ declare namespace Form.msdyn_workorder.Main {
     }
   }
   interface WorkOrderCustomer extends Xrm.PageBase<WorkOrderCustomer.Attributes,WorkOrderCustomer.Tabs,WorkOrderCustomer.Controls> {
-    getAttribute(attributeName: "msdyn_address1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_address1"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_address2"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_address3"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_billingaccount"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "msdyn_city"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_country"): Xrm.Attribute<string>;
@@ -144,8 +147,9 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "header_process_msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype"> | null;
     getControl(controlName: "header_process_msdyn_workordertype_1"): Xrm.LookupControl<"msdyn_workordertype"> | null;
     getControl(controlName: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
-    getControl(controlName: "msdyn_address1"): Xrm.StringControl;
+    getControl(controlName: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_address2"): Xrm.StringControl;
+    getControl(controlName: "msdyn_address3"): Xrm.StringControl;
     getControl(controlName: "msdyn_billingaccount"): Xrm.LookupControl<"account">;
     getControl(controlName: "msdyn_city"): Xrm.StringControl;
     getControl(controlName: "msdyn_country"): Xrm.StringControl;
