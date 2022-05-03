@@ -12,7 +12,6 @@
     <!-- Package used for the table - Tabulator -->
     <!-- http://tabulator.info/ -->
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body onload="loadTable()">
     <div class="container-fluid">
@@ -135,10 +134,10 @@
 
         function UploadAttachments() {
 
-            //Swal.showLoading();
-
             // show the alert
             //table.alert("Attaching Files");
+
+            var uploadSuccessful = false;
 
             // get the ID of the selected email
             var queryString = window.location.search;
@@ -167,7 +166,12 @@
                             if (this.status === 200) {
                                 var result = JSON.parse(this.response);
                                 selectedFiles[i].encodedFileData = result.value;
-                            } 
+                            }
+                            else {
+                                // display an error message to the console
+                                console.log("Error getting the encoding for tsfiles " + fileID + " Reason: " + this.statusText);
+                                uploadSuccessful = false;
+                            }
                         }
                     };
 
@@ -196,12 +200,11 @@
                         if (this.readyState === 4) {
                             postRequest.onreadystatechange = null;
                             if (this.status === 204) {
-                            //    var uri = this.getResponseHeader("OData-EntityId");
-                            //    var regExp = /\(([^)]+)\)/;
-                            //    var matches = regExp.exec(uri);
-                            //    var newEntityId = matches[1];
+
                             } else {
-                                parent.Xrm.Utility.alertDialog(this.statusText);
+                                // display an error message to the console
+                                console.log("Error uploading the attachment FileName: " + selectedFiles[i].fileName + " Reason: " + this.statusText);
+                                uploadSuccessful = false;
                             }
                         }
                     };
