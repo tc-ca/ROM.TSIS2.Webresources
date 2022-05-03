@@ -2,8 +2,6 @@ namespace ROM.WorkOrderServiceTask {
     // EVENTS
     var mode = '';
     const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
-    let unsavedNotificationid = "";
-    let unsavedNotificationTimeout;
     var enterStartDateToProceedText = "Enter a start date to proceed";
     var enterTaskTypeToProccedText = "Enter a task type to proceed";
     var confirmTitle = "Message";
@@ -254,26 +252,6 @@ namespace ROM.WorkOrderServiceTask {
         }
         // Get the web resource inner content window
         CompleteQuestionnaire(wrCtrl);
-
-        clearTimeout(unsavedNotificationTimeout);
-        Xrm['App'].clearGlobalNotification(unsavedNotificationid);
-        unsavedNotificationTimeout = setTimeout(showUnsavedNotification, 10000);
-    }
-
-    function showUnsavedNotification() {
-        // define notification object
-        var notification =
-        {
-            type: 1,
-            level: 1, //waring
-            message: "It has been X time since you last saved."
-        }
-
-        Xrm['App'].addGlobalNotification(notification).then(
-            function success(notificationId) {
-                unsavedNotificationid = notificationId;
-            }
-        );
     }
 
     function setTaskTypeFilteredView(form: Form.msdyn_workorderservicetask.Main.SurveyJS,): void {

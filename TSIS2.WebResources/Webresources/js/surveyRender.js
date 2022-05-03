@@ -4,16 +4,21 @@ var charactersRemainingLocalizedText;
 var detailTextAddLocalizedText;
 var detailTextMinusLocalizedText;
 var provideDetailsLocalizedText;
+var unsavedNotificationMessage;
+
+let timeSinceLastNotification;
 
 if (lang == 1036) {
     charactersRemainingLocalizedText = "caractères restants";
     provideDetailsLocalizedText = "Veuillez fournir des détails de l'inspection.";
     undecidedFindingTypeErrorLocalizedText = "Veuillez selectionner un Type de constatation.";
+    unsavedNotificationMessage = "Vous avez des changements non-enregistrés dans le questionnaire.";
 }
 else {
     charactersRemainingLocalizedText = "characters remaining";
     provideDetailsLocalizedText = "Please provide inspection details.";
     undecidedFindingTypeErrorLocalizedText = "Please decide on a Finding Type.";
+    unsavedNotificationMessage = "You have unsaved changes to the Questionnaire.";
 }
 
 'use strict';
@@ -47,7 +52,7 @@ function InitialFormContext(formContext) {
     window.parentFormContext = formContext;
 }
 
-function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, mode) {
+function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, mode, eContext) {
 
     if (surveyDefinition == null) {
         return;
@@ -72,6 +77,8 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         // Set the state to running, keep the data and go to the first page
         survey.clear(false, true);
         survey.render();
+
+        timeSinceLastNotification = null;
     });
 
     survey.onAfterRenderSurvey.add(function (survey, options) {
@@ -83,6 +90,29 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         //Adding a space to the questionnaireresponse to make the form dirty. The space gets trimmed off in survey.onComplete.
         var data = JSON.stringify(survey.data, null, 3) + " ";
         if (window.parentFormContext != null) window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data);
+    });
+
+    //Programmatic changes to fields don't trigger field onChange events, so force it to trigger here.
+    survey.onValueChanged.add(function (survey, options) {
+
+        if (timeSinceLastNotification == null) timeSinceLastNotification = Date.now();
+
+        if (Date.now() - timeSinceLastNotification < 600000) return;
+
+        // define notification object
+        var notification =
+        {
+            type: 1,
+            level: 3, //warning
+            message: unsavedNotificationMessage;
+        }
+
+        parent.Xrm.App.addGlobalNotification(notification).then(
+            function success(notificationId) {
+                unsavedNotificationId = notificationId
+            }
+        );
+        timeSinceLastNotification = Date.now();
     });
 
     survey.onValueChanged.add(function (survey, options) {
