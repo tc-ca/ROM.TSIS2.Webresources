@@ -132,12 +132,16 @@
             }
         }
 
-        function UploadAttachments() {
+        async function UploadAttachments() {
 
             // show the alert
-            //table.alert("Attaching Files");
+            table.alert("Attaching Files");
 
-            var uploadSuccessful = false;
+            // disable the button
+            document.getElementById("uploadFiles").disabled = true;
+
+            // have a delay so the message actually shows
+            await delay(1);
 
             // get the ID of the selected email
             var queryString = window.location.search;
@@ -166,11 +170,12 @@
                             if (this.status === 200) {
                                 var result = JSON.parse(this.response);
                                 selectedFiles[i].encodedFileData = result.value;
+
+                                console.log("Success getting the encoding for tsfileid " + fileID + " Message: " + this.statusText);
                             }
                             else {
                                 // display an error message to the console
-                                console.log("Error getting the encoding for tsfiles " + fileID + " Reason: " + this.statusText);
-                                uploadSuccessful = false;
+                                console.log("Error getting the encoding for tsfileid " + fileID + " Reason: " + this.statusText);
                             }
                         }
                     };
@@ -200,11 +205,10 @@
                         if (this.readyState === 4) {
                             postRequest.onreadystatechange = null;
                             if (this.status === 204) {
-
+                                console.log("Success uploading the attachment FileName: " + selectedFiles[i].fileName + " Message: " + this.statusText);
                             } else {
                                 // display an error message to the console
                                 console.log("Error uploading the attachment FileName: " + selectedFiles[i].fileName + " Reason: " + this.statusText);
-                                uploadSuccessful = false;
                             }
                         }
                     };
@@ -213,9 +217,15 @@
             }
 
             // close the alert
-            //table.clearAlert();
-            //Swal.close();
+            table.clearAlert();
+
             window.close();
+        }
+
+        function delay(n) {
+            return new Promise(function (resolve) {
+                setTimeout(resolve, n * 1000);
+            });
         }
 
     </script>
