@@ -104,7 +104,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         {
             type: 1,
             level: 3, //warning
-            message: unsavedNotificationMessage;
+            message: unsavedNotificationMessage
         }
 
         parent.Xrm.App.addGlobalNotification(notification).then(
