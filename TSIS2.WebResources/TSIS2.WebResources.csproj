@@ -157,6 +157,7 @@
     <Content Include="Webresources\js\CustomerAssetQuickCreate.js" />
     <Content Include="Webresources\js\CustomerAssetRibbon.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
+    <Content Include="Webresources\js\Finding.js" />
     <Content Include="Webresources\js\FindingRibbon.js" />
     <Content Include="Webresources\js\FindingsReportRibbon.js" />
     <Content Include="Webresources\js\FunctionalLocation.js" />
@@ -167,6 +168,7 @@
     <Content Include="Webresources\js\knockout-min.js" />
     <Content Include="Webresources\js\LegislationRibbon.js" />
     <Content Include="Webresources\js\Operation.js" />
+    <Content Include="Webresources\js\OperationContact.js" />
     <Content Include="Webresources\js\OperationRibbon.js" />
     <Content Include="Webresources\js\Questionnaire.js" />
     <Content Include="Webresources\js\QuestionnaireVersion.js" />
