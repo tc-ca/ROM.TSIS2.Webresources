@@ -294,6 +294,7 @@
     <TypeScriptCompile Include="src\ts\IncidentQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
     <TypeScriptCompile Include="src\ts\Operation.ts" />
+    <TypeScriptCompile Include="src\ts\OperationContact.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
     <TypeScriptCompile Include="src\ts\QuestionnaireVersion.ts" />
     <TypeScriptCompile Include="src\ts\ScoreThresholds.ts" />
