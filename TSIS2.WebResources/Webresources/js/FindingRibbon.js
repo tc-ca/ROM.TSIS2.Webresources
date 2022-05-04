@@ -326,11 +326,14 @@ function FindingsReport(findingGUIDs, primaryControl) {
 
     const caseId = primaryControl.data.entity.getId().slice(1, -1);
     //If a finding is Protected B, set the findings report sensitivity level to Protected B. Else Unclassified.
-    const sensitivityLevel = (aFindingIsProtectedB) ? 717750001 : 717750000
+    const sensitivityLevel = (aFindingIsProtectedB) ? 717750001 : 717750000;
+
+    let CaseNumber = primaryControl.getAttribute("ticketnumber").getValue();
+
     //Create new findings report record
     var data =
     {
-        "ts_name": "Findings Report Test",
+        "ts_name": CaseNumber + " Findings Report",
         "ts_Case@odata.bind": `/incidents(${caseId})`,
         "ts_sensitivitylevel": sensitivityLevel
     }

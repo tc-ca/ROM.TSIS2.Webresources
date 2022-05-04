@@ -91,6 +91,9 @@ declare namespace Form.ovs_operation.Main {
       get(name: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
       get(name: "WebResource_PPEGuide"): Xrm.WebResourceControl;
       get(name: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
+      get(name: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+      get(name: "header_ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "header_ts_stakeholder"): Xrm.LookupControl<"account">;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ovs_name"): Xrm.StringControl;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
@@ -158,6 +161,9 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
     getControl(controlName: "WebResource_PPEGuide"): Xrm.WebResourceControl;
     getControl(controlName: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
+    getControl(controlName: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+    getControl(controlName: "header_ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "header_ts_stakeholder"): Xrm.LookupControl<"account">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ovs_name"): Xrm.StringControl;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
