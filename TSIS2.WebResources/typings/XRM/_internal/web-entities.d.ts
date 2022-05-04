@@ -423,29 +423,6 @@ interface ts_msdyn_workorder_ovs_operation_Create extends ts_msdyn_workorder_ovs
 }
 interface ts_msdyn_workorder_ovs_operation_Update extends ts_msdyn_workorder_ovs_operation {
 }
-interface ts_operationcontact_Base extends WebEntity {
-}
-interface ts_operationcontact_Fixed extends WebEntity_Fixed {
-  ts_operationcontactid: string;
-}
-interface ts_operationcontact extends ts_operationcontact_Base, ts_operationcontact_Relationships {
-}
-interface ts_operationcontact_Relationships {
-}
-interface ts_operationcontact_Result extends ts_operationcontact_Base, ts_operationcontact_Relationships {
-}
-interface ts_operationcontact_FormattedResult {
-}
-interface ts_operationcontact_Select {
-}
-interface ts_operationcontact_Expand {
-}
-interface ts_operationcontact_Filter {
-}
-interface ts_operationcontact_Create extends ts_operationcontact {
-}
-interface ts_operationcontact_Update extends ts_operationcontact {
-}
 interface ts_ovs_operation_ovs_operation_Base extends WebEntity {
 }
 interface ts_ovs_operation_ovs_operation_Fixed extends WebEntity_Fixed {
@@ -652,29 +629,6 @@ interface ActivityParty_Filter {
 interface ActivityParty_Create extends ActivityParty {
 }
 interface ActivityParty_Update extends ActivityParty {
-}
-interface ts_role_Base extends WebEntity {
-}
-interface ts_role_Fixed extends WebEntity_Fixed {
-  ts_roleid: string;
-}
-interface ts_role extends ts_role_Base, ts_role_Relationships {
-}
-interface ts_role_Relationships {
-}
-interface ts_role_Result extends ts_role_Base, ts_role_Relationships {
-}
-interface ts_role_FormattedResult {
-}
-interface ts_role_Select {
-}
-interface ts_role_Expand {
-}
-interface ts_role_Filter {
-}
-interface ts_role_Create extends ts_role {
-}
-interface ts_role_Update extends ts_role {
 }
 interface IncidentResolution_Base extends WebEntity {
 }

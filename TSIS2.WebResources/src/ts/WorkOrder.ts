@@ -11,6 +11,7 @@ namespace ROM.WorkOrder {
         const regionAttributeValue = regionAttribute.getValue();
         //Keep track of the current system status, to be used when cancelling a status change.
         currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
+        form.getControl("msdyn_worklocation").removeOption(690970001);  //Remove Facility Work Location Option
         updateCaseView(eContext);
 
         //Set required fields

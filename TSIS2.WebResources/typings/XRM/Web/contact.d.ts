@@ -191,10 +191,12 @@ interface Contact_Relationships {
   contact_master_contact?: Contact_Result[] | null;
   incident_customer_contacts?: Incident_Result[] | null;
   msdyn_contact_msdyn_workorder_ReportedByContact?: msdyn_workorder_Result[] | null;
+  ovs_Finding_VerbalWarningGivenTo_Contact?: ovs_Finding_Result[] | null;
   parentcustomerid_account?: Account_Result | null;
   parentcustomerid_contact?: Contact_Result | null;
   qm_contact_workorder?: msdyn_workorder_Result[] | null;
-  ts_contact_ts_operationcontact_contact?: ts_operationcontact_Result[] | null;
+  ts_Contact_Incident_Incident?: Incident_Result[] | null;
+  ts_Contact_msdyn_workorder_msdyn_workorder?: msdyn_workorder_Result[] | null;
 }
 interface Contact extends Contact_Base, Contact_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
@@ -633,13 +635,15 @@ interface Contact_Expand {
   modifiedby: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_contact_msdyn_workorder_ReportedByContact: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_contact_msdyn_workorder_ReportedByContact: msdyn_workorder_Result[] }>;
+  ovs_Finding_VerbalWarningGivenTo_Contact: WebExpand<Contact_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ovs_Finding_VerbalWarningGivenTo_Contact: ovs_Finding_Result[] }>;
   ownerid: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   parentcustomerid_account: WebExpand<Contact_Expand, Account_Select, Account_Filter, { parentcustomerid_account: Account_Result }>;
   parentcustomerid_contact: WebExpand<Contact_Expand, Contact_Select, Contact_Filter, { parentcustomerid_contact: Contact_Result }>;
   preferredsystemuserid: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { preferredsystemuserid: SystemUser_Result }>;
   qm_contact_workorder: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { qm_contact_workorder: msdyn_workorder_Result[] }>;
-  ts_contact_ts_operationcontact_contact: WebExpand<Contact_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_contact_ts_operationcontact_contact: ts_operationcontact_Result[] }>;
+  ts_Contact_Incident_Incident: WebExpand<Contact_Expand, Incident_Select, Incident_Filter, { ts_Contact_Incident_Incident: Incident_Result[] }>;
+  ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: msdyn_workorder_Result[] }>;
 }
 interface Contact_FormattedResult {
   accountid_formatted?: string;
@@ -764,8 +768,10 @@ interface Contact_RelatedMany {
   contact_master_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   incident_customer_contacts: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_contact_msdyn_workorder_ReportedByContact: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ovs_Finding_VerbalWarningGivenTo_Contact: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   qm_contact_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
-  ts_contact_ts_operationcontact_contact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
+  ts_Contact_Incident_Incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  ts_Contact_msdyn_workorder_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   contacts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
