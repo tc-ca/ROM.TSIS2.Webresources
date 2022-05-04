@@ -11,6 +11,25 @@
     <script type="text/javascript">
         loadHTML = function () {
 
+
+            // find out if the users language setting is set to French
+            const USER_LANG_FR = 1036;
+            var alertMessage = "";
+            var popupTitle = "";
+
+            var currentLanguage = parent.Xrm.Page.context.getUserLcid();
+
+            if (currentLanguage == USER_LANG_FR) {
+
+                alertMessage = "Veuillez d'abord enregistrer l'e-mail avant de joindre un fichier";
+                popupTitle = "Joindre le fichier du centre de documentation";
+
+            } else {
+
+                alertMessage = "Please save the Email first before attaching a file";
+                popupTitle = "Attach Document Centre File";
+            }
+
             // Check if there is an email ID
             const queryString = window.location.search;
 
@@ -31,7 +50,7 @@
                     width: 900,
                     height: 550,
                     position: 1,
-                    title: "Attach Document Centre File"
+                    title: popupTitle
                 };
                 parent.Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
                     function (returnValue) {
@@ -45,7 +64,7 @@
             else {
 
                 // Show the notification
-                parent.Xrm.Utility.alertDialog("Please save the Email first before attaching a file");
+                parent.Xrm.Utility.alertDialog(alertMessage);
             }
         }
     </script>
