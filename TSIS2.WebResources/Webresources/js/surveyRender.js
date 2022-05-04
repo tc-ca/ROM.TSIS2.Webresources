@@ -78,6 +78,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         survey.clear(false, true);
         survey.render();
 
+        //When the survey is saved, reset the notification timer.
         timeSinceLastNotification = null;
     });
 
@@ -92,7 +93,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         if (window.parentFormContext != null) window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data);
     });
 
-    //Programmatic changes to fields don't trigger field onChange events, so force it to trigger here.
+    //Show an unsaved changes notification after 10 minutes when a value is changed.
     survey.onValueChanged.add(function (survey, options) {
 
         if (timeSinceLastNotification == null) timeSinceLastNotification = Date.now();
@@ -107,11 +108,8 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             message: unsavedNotificationMessage
         }
 
-        parent.Xrm.App.addGlobalNotification(notification).then(
-            function success(notificationId) {
-                unsavedNotificationId = notificationId
-            }
-        );
+        parent.Xrm.App.addGlobalNotification(notification);
+
         timeSinceLastNotification = Date.now();
     });
 
