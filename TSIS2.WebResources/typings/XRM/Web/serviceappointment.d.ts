@@ -161,6 +161,7 @@ interface ServiceAppointment extends ServiceAppointment_Base, ServiceAppointment
   regardingobjectid_quote_serviceappointment_bind$quotes?: string | null;
   regardingobjectid_salesorder_serviceappointment_bind$salesorders?: string | null;
   regardingobjectid_site_serviceappointment_bind$sites?: string | null;
+  regardingobjectid_ts_enforcementaction_serviceappointment_bind$ts_enforcementactions?: string | null;
   regardingobjectid_ts_request_serviceappointment_bind$ts_requests?: string | null;
   serviceid_serviceappointment_bind$services?: string | null;
   siteid_bind$sites?: string | null;

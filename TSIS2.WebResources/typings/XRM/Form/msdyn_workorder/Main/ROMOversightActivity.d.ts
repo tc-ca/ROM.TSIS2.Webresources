@@ -40,6 +40,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "WorkOrderAccessTeams"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_2"): Xrm.PageSection;
         get(name: "tab_7_section_1"): Xrm.PageSection;
+        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -62,7 +63,6 @@ declare namespace Form.msdyn_workorder.Main {
       interface tab_10 extends Xrm.SectionCollectionBase {
         get(name: "tab_10_section_1"): Xrm.PageSection;
         get(name: "tab_10_section_2"): Xrm.PageSection;
-        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -190,6 +190,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
+      get(name: "Subgrid_operation_contacts"): Xrm.SubGridControl<"ts_operationcontact">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
@@ -405,6 +406,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
+    getControl(controlName: "Subgrid_operation_contacts"): Xrm.SubGridControl<"ts_operationcontact">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;

@@ -2,6 +2,7 @@ declare namespace Form.ovs_finding.Main {
   namespace Information {
     namespace Tabs {
       interface summary extends Xrm.SectionCollectionBase {
+        get(name: "summary_section_3"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -30,7 +31,7 @@ declare namespace Form.ovs_finding.Main {
         get(name: "RATE_proposed_section"): Xrm.PageSection;
         get(name: "tab_4_section_1"): Xrm.PageSection;
         get(name: "tab_4_section_2"): Xrm.PageSection;
-        get(name: "tab_RATE_section_10"): Xrm.PageSection;
+        get(name: "tab_RATE_column_5_section_1"): Xrm.PageSection;
         get(name: "tab_RATE_section_3"): Xrm.PageSection;
         get(name: "tab_RATE_section_4"): Xrm.PageSection;
         get(name: "tab_RATE_section_5"): Xrm.PageSection;
@@ -81,6 +82,8 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncatmanagerenforcementjustification"): Xrm.Attribute<string>;
       get(name: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_notetostakeholder"): Xrm.Attribute<string>;
+      get(name: "ts_operationid"): Xrm.LookupAttribute<"ovs_operation">;
+      get(name: "ts_ovs_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
       get(name: "ts_rateactualorpotentialharm"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_rateapprovingteam"): Xrm.LookupAttribute<"team">;
@@ -101,6 +104,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ratespecificcompliancehistory"): Xrm.OptionSetAttribute<ts_ratespecificcompliancehistory>;
       get(name: "ts_ratespecificenforcementhistory"): Xrm.OptionSetAttribute<ts_ratespecificenforcementhistory>;
       get(name: "ts_sensitivitylevel"): Xrm.OptionSetAttribute<ts_sensitivitylevel>;
+      get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_workorder"): Xrm.Attribute<any>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -111,6 +115,10 @@ declare namespace Form.ovs_finding.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
       get(name: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
       get(name: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactor1Guide"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactor2Guide"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactor3Guide"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactor4Guide"): Xrm.WebResourceControl;
       get(name: "createdon"): Xrm.DateControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_statuscode"): Xrm.OptionSetControl<ovs_finding_statuscode>;
@@ -122,6 +130,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_acceptncatrecommendation"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_acceptraterecommendation"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_accountid"): Xrm.LookupControl<"account">;
+      get(name: "ts_accountid1"): Xrm.LookupControl<"account">;
       get(name: "ts_finalenforcementaction"): Xrm.OptionSetControl<ts_finalenforcementaction>;
       get(name: "ts_findingprovisiontexten"): Xrm.StringControl;
       get(name: "ts_findingprovisiontextfr"): Xrm.StringControl;
@@ -144,6 +153,8 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncatmanagerenforcementjustification"): Xrm.StringControl;
       get(name: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_notetostakeholder"): Xrm.StringControl;
+      get(name: "ts_operationid"): Xrm.LookupControl<"ovs_operation">;
+      get(name: "ts_ovs_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;
       get(name: "ts_rateactualorpotentialharm"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_rateapprovingteam"): Xrm.LookupControl<"team">;
@@ -164,6 +175,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ratespecificcompliancehistory"): Xrm.OptionSetControl<ts_ratespecificcompliancehistory>;
       get(name: "ts_ratespecificenforcementhistory"): Xrm.OptionSetControl<ts_ratespecificenforcementhistory>;
       get(name: "ts_sensitivitylevel"): Xrm.OptionSetControl<ts_sensitivitylevel>;
+      get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -214,6 +226,8 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_ncatmanagerenforcementjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_notetostakeholder"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_operationid"): Xrm.LookupAttribute<"ovs_operation">;
+    getAttribute(attributeName: "ts_ovs_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
     getAttribute(attributeName: "ts_rateactualorpotentialharm"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_rateapprovingteam"): Xrm.LookupAttribute<"team">;
@@ -234,11 +248,16 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_ratespecificcompliancehistory"): Xrm.OptionSetAttribute<ts_ratespecificcompliancehistory>;
     getAttribute(attributeName: "ts_ratespecificenforcementhistory"): Xrm.OptionSetAttribute<ts_ratespecificenforcementhistory>;
     getAttribute(attributeName: "ts_sensitivitylevel"): Xrm.OptionSetAttribute<ts_sensitivitylevel>;
+    getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_workorder"): Xrm.Attribute<any>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactor1Guide"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactor2Guide"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactor3Guide"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactor4Guide"): Xrm.WebResourceControl;
     getControl(controlName: "createdon"): Xrm.DateControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_statuscode"): Xrm.OptionSetControl<ovs_finding_statuscode>;
@@ -250,6 +269,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_acceptncatrecommendation"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_acceptraterecommendation"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_accountid"): Xrm.LookupControl<"account">;
+    getControl(controlName: "ts_accountid1"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_finalenforcementaction"): Xrm.OptionSetControl<ts_finalenforcementaction>;
     getControl(controlName: "ts_findingprovisiontexten"): Xrm.StringControl;
     getControl(controlName: "ts_findingprovisiontextfr"): Xrm.StringControl;
@@ -272,6 +292,8 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_ncatmanagerenforcementjustification"): Xrm.StringControl;
     getControl(controlName: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_notetostakeholder"): Xrm.StringControl;
+    getControl(controlName: "ts_operationid"): Xrm.LookupControl<"ovs_operation">;
+    getControl(controlName: "ts_ovs_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;
     getControl(controlName: "ts_rateactualorpotentialharm"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_rateapprovingteam"): Xrm.LookupControl<"team">;
@@ -292,6 +314,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_ratespecificcompliancehistory"): Xrm.OptionSetControl<ts_ratespecificcompliancehistory>;
     getControl(controlName: "ts_ratespecificenforcementhistory"): Xrm.OptionSetControl<ts_ratespecificenforcementhistory>;
     getControl(controlName: "ts_sensitivitylevel"): Xrm.OptionSetControl<ts_sensitivitylevel>;
+    getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: string): undefined;
   }
 }

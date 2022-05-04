@@ -170,6 +170,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_task_bind$tasks?: string | null;
   record1id_team_bind$teams?: string | null;
   record1id_territory_bind$territories?: string | null;
+  record1id_ts_serviceofenforcementaction_bind$ts_serviceofenforcementactions?: string | null;
   record1roleid_bind$connectionroles?: string | null;
   record2id_account_bind$accounts?: string | null;
   record2id_activitypointer_bind$activitypointers?: string | null;
@@ -294,6 +295,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_task_bind$tasks?: string | null;
   record2id_team_bind$teams?: string | null;
   record2id_territory_bind$territories?: string | null;
+  record2id_ts_serviceofenforcementaction_bind$ts_serviceofenforcementactions?: string | null;
   record2roleid_bind$connectionroles?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
 }
