@@ -21,6 +21,7 @@ interface ovs_operation_Base extends WebEntity {
   ts_typeofdangerousgoods?: ts_typeofdangerousgoods | null;
   ts_typesofspecializedppe?: ts_typesofspecializedppe | null;
   ts_visualsecurityinspection?: ts_visualsecurityinspection | null;
+  ts_visualsecurityinspectiondetails?: ts_visualsecurityinspectiondetails | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -32,6 +33,7 @@ interface ovs_operation_Relationships {
   ovs_operation_connections2?: Connection_Result[] | null;
   ovs_ovs_operation_msdyn_workorder?: msdyn_workorder_Result[] | null;
   ts_msdyn_workorder_ovs_operation_ovs_operati?: msdyn_workorder_Result[] | null;
+  ts_operation_ts_operationcontact_operation?: ts_operationcontact_Result[] | null;
   ts_ovs_Finding_operationid_ovs_operation?: ovs_Finding_Result[] | null;
   ts_ovs_operation_ovs_operation_ovs_operation?: ovs_operation_Result[] | null;
 }
@@ -84,6 +86,7 @@ interface ovs_operation_Select {
   ts_typeofdangerousgoods: WebAttribute<ovs_operation_Select, { ts_typeofdangerousgoods: ts_typeofdangerousgoods | null }, { ts_typeofdangerousgoods_formatted?: string }>;
   ts_typesofspecializedppe: WebAttribute<ovs_operation_Select, { ts_typesofspecializedppe: ts_typesofspecializedppe | null }, { ts_typesofspecializedppe_formatted?: string }>;
   ts_visualsecurityinspection: WebAttribute<ovs_operation_Select, { ts_visualsecurityinspection: ts_visualsecurityinspection | null }, { ts_visualsecurityinspection_formatted?: string }>;
+  ts_visualsecurityinspectiondetails: WebAttribute<ovs_operation_Select, { ts_visualsecurityinspectiondetails: ts_visualsecurityinspectiondetails | null }, { ts_visualsecurityinspectiondetails_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ovs_operation_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ovs_operation_Select, { versionnumber: number | null }, {  }>;
 }
@@ -123,6 +126,7 @@ interface ovs_operation_Filter {
   ts_typeofdangerousgoods: ts_typeofdangerousgoods;
   ts_typesofspecializedppe: ts_typesofspecializedppe;
   ts_visualsecurityinspection: ts_visualsecurityinspection;
+  ts_visualsecurityinspectiondetails: ts_visualsecurityinspectiondetails;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -140,6 +144,7 @@ interface ovs_operation_Expand {
   ownerid: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: msdyn_workorder_Result[] }>;
+  ts_operation_ts_operationcontact_operation: WebExpand<ovs_operation_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operation_ts_operationcontact_operation: ts_operationcontact_Result[] }>;
   ts_ovs_Finding_operationid_ovs_operation: WebExpand<ovs_operation_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_operationid_ovs_operation: ovs_Finding_Result[] }>;
   ts_ovs_operation_ovs_operation_ovs_operation: WebExpand<ovs_operation_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_ovs_operation_ovs_operation: ovs_operation_Result[] }>;
   ts_site: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_site: msdyn_FunctionalLocation_Result }>;
@@ -173,6 +178,7 @@ interface ovs_operation_FormattedResult {
   ts_typeofdangerousgoods_formatted?: string;
   ts_typesofspecializedppe_formatted?: string;
   ts_visualsecurityinspection_formatted?: string;
+  ts_visualsecurityinspectiondetails_formatted?: string;
 }
 interface ovs_operation_Result extends ovs_operation_Base, ovs_operation_Relationships {
   "@odata.etag": string;
@@ -209,6 +215,7 @@ interface ovs_operation_RelatedMany {
   ovs_operation_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ovs_ovs_operation_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_operation_ts_operationcontact_operation: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_ovs_Finding_operationid_ovs_operation: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_ovs_operation_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
 }

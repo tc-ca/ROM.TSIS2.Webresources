@@ -197,6 +197,7 @@ interface Contact_Relationships {
   qm_contact_workorder?: msdyn_workorder_Result[] | null;
   ts_Contact_Incident_Incident?: Incident_Result[] | null;
   ts_Contact_msdyn_workorder_msdyn_workorder?: msdyn_workorder_Result[] | null;
+  ts_contact_ts_operationcontact_contact?: ts_operationcontact_Result[] | null;
 }
 interface Contact extends Contact_Base, Contact_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
@@ -644,6 +645,7 @@ interface Contact_Expand {
   qm_contact_workorder: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { qm_contact_workorder: msdyn_workorder_Result[] }>;
   ts_Contact_Incident_Incident: WebExpand<Contact_Expand, Incident_Select, Incident_Filter, { ts_Contact_Incident_Incident: Incident_Result[] }>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: msdyn_workorder_Result[] }>;
+  ts_contact_ts_operationcontact_contact: WebExpand<Contact_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_contact_ts_operationcontact_contact: ts_operationcontact_Result[] }>;
 }
 interface Contact_FormattedResult {
   accountid_formatted?: string;
@@ -772,6 +774,7 @@ interface Contact_RelatedMany {
   qm_contact_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_Contact_Incident_Incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_contact_ts_operationcontact_contact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   contacts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;

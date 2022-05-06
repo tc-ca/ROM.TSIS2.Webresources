@@ -31,6 +31,7 @@ interface PostFollow_Create extends PostFollow {
   regardingobjectid_lead_bind$leads?: string | null;
   regardingobjectid_letter_bind$letters?: string | null;
   regardingobjectid_msdyn_functionallocation_bind$msdyn_functionallocations?: string | null;
+  regardingobjectid_msdyn_swarm_bind$msdyn_swarms?: string | null;
   regardingobjectid_opportunity_bind$opportunities?: string | null;
   regardingobjectid_ovs_operation_bind$ovs_operations?: string | null;
   regardingobjectid_phonecall_bind$phonecalls?: string | null;

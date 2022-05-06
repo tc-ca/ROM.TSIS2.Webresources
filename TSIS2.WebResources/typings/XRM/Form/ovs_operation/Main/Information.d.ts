@@ -52,7 +52,7 @@ declare namespace Form.ovs_operation.Main {
         get(name: "tab_dangerous_goods"): Xrm.PageSection;
         get(name: "tab_properties_ppeguide"): Xrm.PageSection;
         get(name: "tab_properties_section_4"): Xrm.PageSection;
-        get(name: "tab_properties_section_4"): Xrm.PageSection;
+        get(name: "tab_properties_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -79,6 +79,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_typeofdangerousgoods"): Xrm.OptionSetAttribute<ts_typeofdangerousgoods>;
       get(name: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetAttribute<ts_typesofspecializedppe>;
       get(name: "ts_visualsecurityinspection"): Xrm.OptionSetAttribute<ts_visualsecurityinspection>;
+      get(name: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetAttribute<ts_visualsecurityinspectiondetails>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -115,6 +116,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_typeofdangerousgoods"): Xrm.OptionSetControl<ts_typeofdangerousgoods>;
       get(name: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetControl<ts_typesofspecializedppe>;
       get(name: "ts_visualsecurityinspection"): Xrm.OptionSetControl<ts_visualsecurityinspection>;
+      get(name: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetControl<ts_visualsecurityinspectiondetails>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -154,6 +156,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_typeofdangerousgoods"): Xrm.OptionSetAttribute<ts_typeofdangerousgoods>;
     getAttribute(attributeName: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetAttribute<ts_typesofspecializedppe>;
     getAttribute(attributeName: "ts_visualsecurityinspection"): Xrm.OptionSetAttribute<ts_visualsecurityinspection>;
+    getAttribute(attributeName: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetAttribute<ts_visualsecurityinspectiondetails>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
@@ -185,6 +188,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_typeofdangerousgoods"): Xrm.OptionSetControl<ts_typeofdangerousgoods>;
     getControl(controlName: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetControl<ts_typesofspecializedppe>;
     getControl(controlName: "ts_visualsecurityinspection"): Xrm.OptionSetControl<ts_visualsecurityinspection>;
+    getControl(controlName: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetControl<ts_visualsecurityinspectiondetails>;
     getControl(controlName: string): undefined;
   }
 }
