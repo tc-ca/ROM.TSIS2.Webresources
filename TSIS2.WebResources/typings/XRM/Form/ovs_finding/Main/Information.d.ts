@@ -82,6 +82,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncatmanagerdecision"): Xrm.OptionSetAttribute<ts_ncatmanagerdecision>;
       get(name: "ts_ncatmanagerenforcementjustification"): Xrm.Attribute<string>;
       get(name: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupAttribute<"ts_assessmentrating">;
+      get(name: "ts_noncompliancetimeframe"): Xrm.OptionSetAttribute<ts_noncompliancetimeframe>;
       get(name: "ts_notetostakeholder"): Xrm.Attribute<string>;
       get(name: "ts_operationid"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ts_ovs_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
@@ -153,6 +154,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncatmanagerdecision"): Xrm.OptionSetControl<ts_ncatmanagerdecision>;
       get(name: "ts_ncatmanagerenforcementjustification"): Xrm.StringControl;
       get(name: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupControl<"ts_assessmentrating">;
+      get(name: "ts_noncompliancetimeframe"): Xrm.OptionSetControl<ts_noncompliancetimeframe>;
       get(name: "ts_notetostakeholder"): Xrm.StringControl;
       get(name: "ts_operationid"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ts_ovs_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
@@ -226,6 +228,7 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_ncatmanagerdecision"): Xrm.OptionSetAttribute<ts_ncatmanagerdecision>;
     getAttribute(attributeName: "ts_ncatmanagerenforcementjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupAttribute<"ts_assessmentrating">;
+    getAttribute(attributeName: "ts_noncompliancetimeframe"): Xrm.OptionSetAttribute<ts_noncompliancetimeframe>;
     getAttribute(attributeName: "ts_notetostakeholder"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_operationid"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ts_ovs_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
@@ -292,6 +295,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_ncatmanagerdecision"): Xrm.OptionSetControl<ts_ncatmanagerdecision>;
     getControl(controlName: "ts_ncatmanagerenforcementjustification"): Xrm.StringControl;
     getControl(controlName: "ts_ncatmitigationofnoncompliantbehaviors"): Xrm.LookupControl<"ts_assessmentrating">;
+    getControl(controlName: "ts_noncompliancetimeframe"): Xrm.OptionSetControl<ts_noncompliancetimeframe>;
     getControl(controlName: "ts_notetostakeholder"): Xrm.StringControl;
     getControl(controlName: "ts_operationid"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ts_ovs_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
