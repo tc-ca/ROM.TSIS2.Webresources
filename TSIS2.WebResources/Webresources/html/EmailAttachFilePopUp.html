@@ -12,12 +12,13 @@
     <!-- Package used for the table - Tabulator -->
     <!-- http://tabulator.info/ -->
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body onload="loadTable()">
     <div class="container-fluid">
         <strong style="margin-top:10px;margin-left:5px">
-            Number of files selected:
+            <label id="numberOfFilesSelected">Number of files selected:</label>
+        </strong>
+        <strong style="margin-top:10px;margin-left:5px">
             <label id="RowCounterLabel">0</label>
         </strong>
         <button id="selectAll" class="btn btn-default" style="margin-left: 20px; margin-top:10px">Select All</button>
@@ -36,19 +37,48 @@
         let selectedEncodedFiles = [];
         let table = null;
 
-        function loadTable() {
+        let tableAlertMessage = "Attaching Files";
+        let filesSelectedHeading = "Number of files selected:";
+        let selectAllButtonText = "Select All";
+        let deselectAllButtonText = "Deselect All";
+        let fileNameColumnHeader = "File Name";
+        let fileNameColumnHeaderWidth = 750;
+        let attachFileColumnHeader = "Attach File";
+        let attachFileButtonText = "Attach File(s)";
+        const USER_LANG_FR = 1036;
+        let userLocalLanguage = "";
+        let unableToGetFilesError = "Unable to get files";
 
-            const USER_LANG_FR = 1036;
-            let userLocalLanguage = "";
+        function setLanguage() {
 
             // find out if the users language setting is set to French
-            {
-                var currentLanguage = parent.Xrm.Page.context.getUserLcid();
+            var currentLanguage = parent.Xrm.Page.context.getUserLcid();
 
-                if (currentLanguage == USER_LANG_FR) {
-                    userLocalLanguage = "fr-fr";
-                }
+            if (currentLanguage == USER_LANG_FR) {
+                tableAlertMessage = "Joindre des fichiers";
+                filesSelectedHeading = "Nombre de fichiers sélectionnés:";
+                selectAllButtonText = "Sélectionner tout";
+                deselectAllButtonText = "Déselectionner tout";
+                fileNameColumnHeader = "Nom du fichier";
+                fileNameColumnHeaderWidth = 710;
+                attachFileColumnHeader = "Joindre un fichier";
+                attachFileButtonText = "Joindre des fichier(s)";
+                userLocalLanguage = "fr-fr";
+                unableToGetFilesError = "Impossible d'obtenir les fichiers";
             }
+
+            // set the button text
+            document.getElementById('selectAll').innerHTML = selectAllButtonText;
+            document.getElementById('deselectAll').innerHTML = deselectAllButtonText;
+            document.getElementById('uploadFiles').innerHTML = attachFileButtonText;
+
+            // set the number of files selected header
+            document.getElementById('numberOfFilesSelected').innerHTML = filesSelectedHeading;
+        }
+
+        function loadTable() {
+
+            setLanguage();
 
             // initially disable the Attach Files button
             document.getElementById("uploadFiles").disabled = true;
@@ -83,8 +113,8 @@
                                 "fr-fr": { //French language definition
                                     "columns": {
                                         "id": "ID",
-                                        "fileName": "File Name [FR]",
-                                        "attachFile": "Attach [FR]",
+                                        "fileName": fileNameColumnHeader,
+                                        "attachFile": attachFileColumnHeader,
                                     },
                                     "pagination": {
                                         "first": "Premier",
@@ -99,8 +129,8 @@
                             ],
                             columns: [
                                 { title: "ID", field: "id", sorter: "string", width: 200, editor: true, visible: false },
-                                { title: "File Name", field: "fileName", sorter: "string", headerFilter: "input" },
-                                { title: "Attach File", field: "attachFile", formatter: "rowSelection", hozAlign: "center", vertAlign: "center", width: 90, headerSort: false },
+                                { title: fileNameColumnHeader, field: "fileName", sorter: "string", width: fileNameColumnHeaderWidth, headerFilter: "input" },
+                                { title: attachFileColumnHeader, field: "attachFile", formatter: "rowSelection", hozAlign: "center", vertAlign: "center", headerSort: false },
                             ],
                         });
 
@@ -127,18 +157,24 @@
                     },
                     function (error) {
                         // handle error conditions
-                        alert("Error retrieving files: " + error.message)
+                        alert(unableToGetFilesError);
+                        console.log("Error retrieving files: " + error.message);
+                        window.close();
                     }
                 );
             }
         }
 
-        function UploadAttachments() {
-
-            //Swal.showLoading();
+        async function UploadAttachments() {
 
             // show the alert
-            //table.alert("Attaching Files");
+            table.alert(tableAlertMessage);
+
+            // disable the button
+            document.getElementById("uploadFiles").disabled = true;
+
+            // have a delay so the message actually shows
+            await delay(1);
 
             // get the ID of the selected email
             var queryString = window.location.search;
@@ -167,7 +203,13 @@
                             if (this.status === 200) {
                                 var result = JSON.parse(this.response);
                                 selectedFiles[i].encodedFileData = result.value;
-                            } 
+
+                                console.log("Success getting the encoding for tsfileid " + fileID + " Message: " + this.statusText);
+                            }
+                            else {
+                                // display an error message to the console
+                                console.log("Error getting the encoding for tsfileid " + fileID + " Reason: " + this.statusText);
+                            }
                         }
                     };
 
@@ -196,12 +238,10 @@
                         if (this.readyState === 4) {
                             postRequest.onreadystatechange = null;
                             if (this.status === 204) {
-                            //    var uri = this.getResponseHeader("OData-EntityId");
-                            //    var regExp = /\(([^)]+)\)/;
-                            //    var matches = regExp.exec(uri);
-                            //    var newEntityId = matches[1];
+                                console.log("Success uploading the attachment FileName: " + selectedFiles[i].fileName + " Message: " + this.statusText);
                             } else {
-                                parent.Xrm.Utility.alertDialog(this.statusText);
+                                // display an error message to the console
+                                console.log("Error uploading the attachment FileName: " + selectedFiles[i].fileName + " Reason: " + this.statusText);
                             }
                         }
                     };
@@ -210,9 +250,15 @@
             }
 
             // close the alert
-            //table.clearAlert();
-            //Swal.close();
+            table.clearAlert();
+
             window.close();
+        }
+
+        function delay(n) {
+            return new Promise(function (resolve) {
+                setTimeout(resolve, n * 1000);
+            });
         }
 
     </script>

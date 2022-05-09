@@ -184,6 +184,7 @@ interface Account extends Account_Base, Account_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
   msdyn_PreferredResource_bind$bookableresources?: string | null;
   msdyn_billingaccount_account_bind$accounts?: string | null;
+  msdyn_salesaccelerationinsightid_bind$msdyn_salesaccelerationinsights?: string | null;
   msdyn_salestaxcode_bind$msdyn_taxcodes?: string | null;
   msdyn_segmentid_bind$msdyn_segments?: string | null;
   msdyn_serviceterritory_bind$territories?: string | null;
@@ -312,6 +313,7 @@ interface Account_Select {
   msdyn_billingaccount_guid: WebAttribute<Account_Select, { msdyn_billingaccount_guid: string | null }, { msdyn_billingaccount_formatted?: string }>;
   msdyn_gdproptout: WebAttribute<Account_Select, { msdyn_gdproptout: boolean | null }, {  }>;
   msdyn_preferredresource_guid: WebAttribute<Account_Select, { msdyn_preferredresource_guid: string | null }, { msdyn_preferredresource_formatted?: string }>;
+  msdyn_salesaccelerationinsightid_guid: WebAttribute<Account_Select, { msdyn_salesaccelerationinsightid_guid: string | null }, { msdyn_salesaccelerationinsightid_formatted?: string }>;
   msdyn_salestaxcode_guid: WebAttribute<Account_Select, { msdyn_salestaxcode_guid: string | null }, { msdyn_salestaxcode_formatted?: string }>;
   msdyn_segmentid_guid: WebAttribute<Account_Select, { msdyn_segmentid_guid: string | null }, { msdyn_segmentid_formatted?: string }>;
   msdyn_serviceterritory_guid: WebAttribute<Account_Select, { msdyn_serviceterritory_guid: string | null }, { msdyn_serviceterritory_formatted?: string }>;
@@ -497,6 +499,7 @@ interface Account_Filter {
   msdyn_billingaccount_guid: XQW.Guid;
   msdyn_gdproptout: boolean;
   msdyn_preferredresource_guid: XQW.Guid;
+  msdyn_salesaccelerationinsightid_guid: XQW.Guid;
   msdyn_salestaxcode_guid: XQW.Guid;
   msdyn_segmentid_guid: XQW.Guid;
   msdyn_serviceterritory_guid: XQW.Guid;
@@ -654,6 +657,7 @@ interface Account_FormattedResult {
   modifiedonbehalfby_formatted?: string;
   msdyn_billingaccount_formatted?: string;
   msdyn_preferredresource_formatted?: string;
+  msdyn_salesaccelerationinsightid_formatted?: string;
   msdyn_salestaxcode_formatted?: string;
   msdyn_segmentid_formatted?: string;
   msdyn_serviceterritory_formatted?: string;
@@ -710,6 +714,7 @@ interface Account_Result extends Account_Base, Account_Relationships {
   modifiedonbehalfby_guid: string | null;
   msdyn_billingaccount_guid: string | null;
   msdyn_preferredresource_guid: string | null;
+  msdyn_salesaccelerationinsightid_guid: string | null;
   msdyn_salestaxcode_guid: string | null;
   msdyn_segmentid_guid: string | null;
   msdyn_serviceterritory_guid: string | null;

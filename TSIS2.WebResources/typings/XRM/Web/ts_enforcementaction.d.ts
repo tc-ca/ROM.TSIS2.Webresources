@@ -22,14 +22,18 @@ interface ts_EnforcementAction_Base extends WebEntity {
 }
 interface ts_EnforcementAction_Relationships {
   ts_AuthorizedRepresentative?: Contact_Result | null;
+  ts_Case?: Incident_Result | null;
   ts_Company?: Account_Result | null;
   ts_EnforcementAction_ts_EnforcementAction?: ovs_Finding_Result[] | null;
   ts_VerbalWarningGivenTo?: Contact_Result | null;
+  ts_enforcementaction_Appointments?: Appointment_Result[] | null;
+  ts_enforcementaction_ServiceAppointments?: ServiceAppointment_Result[] | null;
 }
 interface ts_EnforcementAction extends ts_EnforcementAction_Base, ts_EnforcementAction_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   ts_AuthorizedRepresentative_bind$contacts?: string | null;
+  ts_Case_bind$incidents?: string | null;
   ts_Company_bind$accounts?: string | null;
   ts_VerbalWarningGivenTo_bind$contacts?: string | null;
 }
@@ -54,6 +58,7 @@ interface ts_EnforcementAction_Select {
   statuscode: WebAttribute<ts_EnforcementAction_Select, { statuscode: ts_enforcementaction_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_EnforcementAction_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_authorizedrepresentative_guid: WebAttribute<ts_EnforcementAction_Select, { ts_authorizedrepresentative_guid: string | null }, { ts_authorizedrepresentative_formatted?: string }>;
+  ts_case_guid: WebAttribute<ts_EnforcementAction_Select, { ts_case_guid: string | null }, { ts_case_formatted?: string }>;
   ts_comments: WebAttribute<ts_EnforcementAction_Select, { ts_comments: string | null }, {  }>;
   ts_company_guid: WebAttribute<ts_EnforcementAction_Select, { ts_company_guid: string | null }, { ts_company_formatted?: string }>;
   ts_copyofreceipt: WebAttribute<ts_EnforcementAction_Select, { ts_copyofreceipt: string | null }, {  }>;
@@ -87,6 +92,7 @@ interface ts_EnforcementAction_Filter {
   statuscode: ts_enforcementaction_statuscode;
   timezoneruleversionnumber: number;
   ts_authorizedrepresentative_guid: XQW.Guid;
+  ts_case_guid: XQW.Guid;
   ts_comments: string;
   ts_company_guid: XQW.Guid;
   ts_copyofreceipt: string;
@@ -111,9 +117,12 @@ interface ts_EnforcementAction_Expand {
   ownerid: WebExpand<ts_EnforcementAction_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<ts_EnforcementAction_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_AuthorizedRepresentative: WebExpand<ts_EnforcementAction_Expand, Contact_Select, Contact_Filter, { ts_AuthorizedRepresentative: Contact_Result }>;
+  ts_Case: WebExpand<ts_EnforcementAction_Expand, Incident_Select, Incident_Filter, { ts_Case: Incident_Result }>;
   ts_Company: WebExpand<ts_EnforcementAction_Expand, Account_Select, Account_Filter, { ts_Company: Account_Result }>;
   ts_EnforcementAction_ts_EnforcementAction: WebExpand<ts_EnforcementAction_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_EnforcementAction_ts_EnforcementAction: ovs_Finding_Result[] }>;
   ts_VerbalWarningGivenTo: WebExpand<ts_EnforcementAction_Expand, Contact_Select, Contact_Filter, { ts_VerbalWarningGivenTo: Contact_Result }>;
+  ts_enforcementaction_Appointments: WebExpand<ts_EnforcementAction_Expand, Appointment_Select, Appointment_Filter, { ts_enforcementaction_Appointments: Appointment_Result[] }>;
+  ts_enforcementaction_ServiceAppointments: WebExpand<ts_EnforcementAction_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ts_enforcementaction_ServiceAppointments: ServiceAppointment_Result[] }>;
 }
 interface ts_EnforcementAction_FormattedResult {
   createdby_formatted?: string;
@@ -130,6 +139,7 @@ interface ts_EnforcementAction_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_authorizedrepresentative_formatted?: string;
+  ts_case_formatted?: string;
   ts_company_formatted?: string;
   ts_methodofservice_formatted?: string;
   ts_timeanddateofservice_formatted?: string;
@@ -149,6 +159,7 @@ interface ts_EnforcementAction_Result extends ts_EnforcementAction_Base, ts_Enfo
   owningteam_guid: string | null;
   owninguser_guid: string | null;
   ts_authorizedrepresentative_guid: string | null;
+  ts_case_guid: string | null;
   ts_company_guid: string | null;
   ts_verbalwarninggivento_guid: string | null;
 }
@@ -160,11 +171,14 @@ interface ts_EnforcementAction_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_AuthorizedRepresentative: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  ts_Case: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_Company: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_VerbalWarningGivenTo: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
 }
 interface ts_EnforcementAction_RelatedMany {
   ts_EnforcementAction_ts_EnforcementAction: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_enforcementaction_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  ts_enforcementaction_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_enforcementactions: WebMappingRetrieve<ts_EnforcementAction_Select,ts_EnforcementAction_Expand,ts_EnforcementAction_Filter,ts_EnforcementAction_Fixed,ts_EnforcementAction_Result,ts_EnforcementAction_FormattedResult>;

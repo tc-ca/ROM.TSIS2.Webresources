@@ -30,6 +30,7 @@ interface ovs_Finding_Base extends WebEntity {
   ts_ncatmanageralternativerecommendation?: ts_ncatrecommendations | null;
   ts_ncatmanagerdecision?: ts_ncatmanagerdecision | null;
   ts_ncatmanagerenforcementjustification?: string | null;
+  ts_noncompliancetimeframe?: ts_noncompliancetimeframe | null;
   ts_notetostakeholder?: string | null;
   ts_proposealternatencatenforcementaction?: boolean | null;
   ts_rateenforcementjustification?: string | null;
@@ -83,10 +84,10 @@ interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ts_RATEMitigationofNonCompliantBehaviors_bind$ts_assessmentratings?: string | null;
   ts_RATEPreventingRecurrence_bind$ts_assessmentratings?: string | null;
   ts_RATEResponsibility_bind$ts_assessmentratings?: string | null;
-  ts_Site_bind$sites?: string | null;
   ts_VerbalWarningGivenTo_bind$contacts?: string | null;
   ts_WorkOrder_bind$msdyn_workorders?: string | null;
   ts_accountid_bind$accounts?: string | null;
+  ts_functionallocation_bind$msdyn_functionallocations?: string | null;
   ts_operationid_bind$ovs_operations?: string | null;
   ts_ovs_operationtype_bind$ovs_operationtypes?: string | null;
 }
@@ -129,6 +130,7 @@ interface ovs_Finding_Select {
   ts_findingprovisiontexten: WebAttribute<ovs_Finding_Select, { ts_findingprovisiontexten: string | null }, {  }>;
   ts_findingprovisiontextfr: WebAttribute<ovs_Finding_Select, { ts_findingprovisiontextfr: string | null }, {  }>;
   ts_findingtype: WebAttribute<ovs_Finding_Select, { ts_findingtype: ts_findingtype | null }, { ts_findingtype_formatted?: string }>;
+  ts_functionallocation_guid: WebAttribute<ovs_Finding_Select, { ts_functionallocation_guid: string | null }, { ts_functionallocation_formatted?: string }>;
   ts_issueaddressedonsite: WebAttribute<ovs_Finding_Select, { ts_issueaddressedonsite: ts_yesno | null }, { ts_issueaddressedonsite_formatted?: string }>;
   ts_justificationof: WebAttribute<ovs_Finding_Select, { ts_justificationof: string | null }, {  }>;
   ts_ncatactualorpotentialharm_guid: WebAttribute<ovs_Finding_Select, { ts_ncatactualorpotentialharm_guid: string | null }, { ts_ncatactualorpotentialharm_formatted?: string }>;
@@ -148,6 +150,7 @@ interface ovs_Finding_Select {
   ts_ncatmanagerdecision: WebAttribute<ovs_Finding_Select, { ts_ncatmanagerdecision: ts_ncatmanagerdecision | null }, { ts_ncatmanagerdecision_formatted?: string }>;
   ts_ncatmanagerenforcementjustification: WebAttribute<ovs_Finding_Select, { ts_ncatmanagerenforcementjustification: string | null }, {  }>;
   ts_ncatmitigationofnoncompliantbehaviors_guid: WebAttribute<ovs_Finding_Select, { ts_ncatmitigationofnoncompliantbehaviors_guid: string | null }, { ts_ncatmitigationofnoncompliantbehaviors_formatted?: string }>;
+  ts_noncompliancetimeframe: WebAttribute<ovs_Finding_Select, { ts_noncompliancetimeframe: ts_noncompliancetimeframe | null }, { ts_noncompliancetimeframe_formatted?: string }>;
   ts_notetostakeholder: WebAttribute<ovs_Finding_Select, { ts_notetostakeholder: string | null }, {  }>;
   ts_operationid_guid: WebAttribute<ovs_Finding_Select, { ts_operationid_guid: string | null }, { ts_operationid_formatted?: string }>;
   ts_ovs_operationtype_guid: WebAttribute<ovs_Finding_Select, { ts_ovs_operationtype_guid: string | null }, { ts_ovs_operationtype_formatted?: string }>;
@@ -175,7 +178,6 @@ interface ovs_Finding_Select {
   ts_ratespecificcompliancehistory: WebAttribute<ovs_Finding_Select, { ts_ratespecificcompliancehistory: ts_ratespecificcompliancehistory | null }, { ts_ratespecificcompliancehistory_formatted?: string }>;
   ts_ratespecificenforcementhistory: WebAttribute<ovs_Finding_Select, { ts_ratespecificenforcementhistory: ts_ratespecificenforcementhistory | null }, { ts_ratespecificenforcementhistory_formatted?: string }>;
   ts_sensitivitylevel: WebAttribute<ovs_Finding_Select, { ts_sensitivitylevel: ts_sensitivitylevel | null }, { ts_sensitivitylevel_formatted?: string }>;
-  ts_site_guid: WebAttribute<ovs_Finding_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_verbalwarninggivento_guid: WebAttribute<ovs_Finding_Select, { ts_verbalwarninggivento_guid: string | null }, { ts_verbalwarninggivento_formatted?: string }>;
   ts_workorder_guid: WebAttribute<ovs_Finding_Select, { ts_workorder_guid: string | null }, { ts_workorder_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ovs_Finding_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -216,6 +218,7 @@ interface ovs_Finding_Filter {
   ts_findingprovisiontexten: string;
   ts_findingprovisiontextfr: string;
   ts_findingtype: ts_findingtype;
+  ts_functionallocation_guid: XQW.Guid;
   ts_issueaddressedonsite: ts_yesno;
   ts_justificationof: string;
   ts_ncatactualorpotentialharm_guid: XQW.Guid;
@@ -235,6 +238,7 @@ interface ovs_Finding_Filter {
   ts_ncatmanagerdecision: ts_ncatmanagerdecision;
   ts_ncatmanagerenforcementjustification: string;
   ts_ncatmitigationofnoncompliantbehaviors_guid: XQW.Guid;
+  ts_noncompliancetimeframe: ts_noncompliancetimeframe;
   ts_notetostakeholder: string;
   ts_operationid_guid: XQW.Guid;
   ts_ovs_operationtype_guid: XQW.Guid;
@@ -262,7 +266,6 @@ interface ovs_Finding_Filter {
   ts_ratespecificcompliancehistory: ts_ratespecificcompliancehistory;
   ts_ratespecificenforcementhistory: ts_ratespecificenforcementhistory;
   ts_sensitivitylevel: ts_sensitivitylevel;
-  ts_site_guid: XQW.Guid;
   ts_verbalwarninggivento_guid: XQW.Guid;
   ts_workorder_guid: XQW.Guid;
   utcconversiontimezonecode: number;
@@ -283,6 +286,7 @@ interface ovs_Finding_Expand {
   ts_VerbalWarningGivenTo: WebExpand<ovs_Finding_Expand, Contact_Select, Contact_Filter, { ts_VerbalWarningGivenTo: Contact_Result }>;
   ts_WorkOrder: WebExpand<ovs_Finding_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder: msdyn_workorder_Result }>;
   ts_accountid: WebExpand<ovs_Finding_Expand, Account_Select, Account_Filter, { ts_accountid: Account_Result }>;
+  ts_functionallocation: WebExpand<ovs_Finding_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_functionallocation: msdyn_FunctionalLocation_Result }>;
   ts_operationid: WebExpand<ovs_Finding_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operationid: ovs_operation_Result }>;
 }
 interface ovs_Finding_FormattedResult {
@@ -309,6 +313,7 @@ interface ovs_Finding_FormattedResult {
   ts_file_formatted?: string;
   ts_finalenforcementaction_formatted?: string;
   ts_findingtype_formatted?: string;
+  ts_functionallocation_formatted?: string;
   ts_issueaddressedonsite_formatted?: string;
   ts_ncatactualorpotentialharm_formatted?: string;
   ts_ncatapprovingteam_formatted?: string;
@@ -324,6 +329,7 @@ interface ovs_Finding_FormattedResult {
   ts_ncatmanageralternativerecommendation_formatted?: string;
   ts_ncatmanagerdecision_formatted?: string;
   ts_ncatmitigationofnoncompliantbehaviors_formatted?: string;
+  ts_noncompliancetimeframe_formatted?: string;
   ts_operationid_formatted?: string;
   ts_ovs_operationtype_formatted?: string;
   ts_provisioncategory_formatted?: string;
@@ -347,7 +353,6 @@ interface ovs_Finding_FormattedResult {
   ts_ratespecificcompliancehistory_formatted?: string;
   ts_ratespecificenforcementhistory_formatted?: string;
   ts_sensitivitylevel_formatted?: string;
-  ts_site_formatted?: string;
   ts_verbalwarninggivento_formatted?: string;
   ts_workorder_formatted?: string;
 }
@@ -366,6 +371,7 @@ interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships
   ts_accountid_guid: string | null;
   ts_enforcementactionentity_guid: string | null;
   ts_file_guid: string | null;
+  ts_functionallocation_guid: string | null;
   ts_ncatactualorpotentialharm_guid: string | null;
   ts_ncatapprovingteam_guid: string | null;
   ts_ncatcompliancehistory_guid: string | null;
@@ -390,7 +396,6 @@ interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships
   ts_ratemitigationofnoncompliantbehaviors_guid: string | null;
   ts_ratepreventingrecurrence_guid: string | null;
   ts_rateresponsibility_guid: string | null;
-  ts_site_guid: string | null;
   ts_verbalwarninggivento_guid: string | null;
   ts_workorder_guid: string | null;
 }
@@ -409,6 +414,7 @@ interface ovs_Finding_RelatedOne {
   ts_VerbalWarningGivenTo: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_accountid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_operationid: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
 }
 interface ovs_Finding_RelatedMany {

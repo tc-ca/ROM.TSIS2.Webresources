@@ -7,6 +7,7 @@ interface ts_operationcontact_Base extends WebEntity {
   statuscode?: ts_operationcontact_statuscode | null;
   timezoneruleversionnumber?: number | null;
   ts_name?: string | null;
+  ts_operationalstatus?: ts_operationalstatus | null;
   ts_operationcontactid?: string | null;
   ts_role?: ts_role_Enum | null;
   utcconversiontimezonecode?: number | null;
@@ -51,6 +52,7 @@ interface ts_operationcontact_Select {
   ts_incident_guid: WebAttribute<ts_operationcontact_Select, { ts_incident_guid: string | null }, { ts_incident_formatted?: string }>;
   ts_name: WebAttribute<ts_operationcontact_Select, { ts_name: string | null }, {  }>;
   ts_operation_guid: WebAttribute<ts_operationcontact_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
+  ts_operationalstatus: WebAttribute<ts_operationcontact_Select, { ts_operationalstatus: ts_operationalstatus | null }, { ts_operationalstatus_formatted?: string }>;
   ts_operationcontactid: WebAttribute<ts_operationcontact_Select, { ts_operationcontactid: string | null }, {  }>;
   ts_role: WebAttribute<ts_operationcontact_Select, { ts_role: ts_role_Enum | null }, { ts_role_formatted?: string }>;
   ts_workorder_guid: WebAttribute<ts_operationcontact_Select, { ts_workorder_guid: string | null }, { ts_workorder_formatted?: string }>;
@@ -78,6 +80,7 @@ interface ts_operationcontact_Filter {
   ts_incident_guid: XQW.Guid;
   ts_name: string;
   ts_operation_guid: XQW.Guid;
+  ts_operationalstatus: ts_operationalstatus;
   ts_operationcontactid: XQW.Guid;
   ts_role: ts_role_Enum;
   ts_workorder_guid: XQW.Guid;
@@ -117,6 +120,7 @@ interface ts_operationcontact_FormattedResult {
   ts_contact_formatted?: string;
   ts_incident_formatted?: string;
   ts_operation_formatted?: string;
+  ts_operationalstatus_formatted?: string;
   ts_role_formatted?: string;
   ts_workorder_formatted?: string;
 }

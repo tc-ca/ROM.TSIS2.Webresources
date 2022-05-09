@@ -52,7 +52,7 @@ declare namespace Form.ovs_operation.Main {
         get(name: "tab_dangerous_goods"): Xrm.PageSection;
         get(name: "tab_properties_ppeguide"): Xrm.PageSection;
         get(name: "tab_properties_section_4"): Xrm.PageSection;
-        get(name: "tab_properties_section_4"): Xrm.PageSection;
+        get(name: "tab_properties_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -70,6 +70,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
       get(name: "ts_ppeguide"): Xrm.Attribute<any>;
       get(name: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "ts_securityinspectiondetails"): Xrm.OptionSetAttribute<ts_securityinspectiondetails>;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
@@ -79,6 +80,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_typeofdangerousgoods"): Xrm.OptionSetAttribute<ts_typeofdangerousgoods>;
       get(name: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetAttribute<ts_typesofspecializedppe>;
       get(name: "ts_visualsecurityinspection"): Xrm.OptionSetAttribute<ts_visualsecurityinspection>;
+      get(name: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetAttribute<ts_visualsecurityinspectiondetails>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -106,6 +108,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
       get(name: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_pperequired"): Xrm.OptionSetControl<boolean>;
+      get(name: "ts_securityinspectiondetails"): Xrm.OptionSetControl<ts_securityinspectiondetails>;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
@@ -115,6 +118,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_typeofdangerousgoods"): Xrm.OptionSetControl<ts_typeofdangerousgoods>;
       get(name: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetControl<ts_typesofspecializedppe>;
       get(name: "ts_visualsecurityinspection"): Xrm.OptionSetControl<ts_visualsecurityinspection>;
+      get(name: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetControl<ts_visualsecurityinspectiondetails>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -145,6 +149,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
     getAttribute(attributeName: "ts_ppeguide"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "ts_securityinspectiondetails"): Xrm.OptionSetAttribute<ts_securityinspectiondetails>;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
@@ -154,6 +159,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_typeofdangerousgoods"): Xrm.OptionSetAttribute<ts_typeofdangerousgoods>;
     getAttribute(attributeName: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetAttribute<ts_typesofspecializedppe>;
     getAttribute(attributeName: "ts_visualsecurityinspection"): Xrm.OptionSetAttribute<ts_visualsecurityinspection>;
+    getAttribute(attributeName: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetAttribute<ts_visualsecurityinspectiondetails>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
@@ -176,6 +182,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
     getControl(controlName: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_pperequired"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "ts_securityinspectiondetails"): Xrm.OptionSetControl<ts_securityinspectiondetails>;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
@@ -185,6 +192,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_typeofdangerousgoods"): Xrm.OptionSetControl<ts_typeofdangerousgoods>;
     getControl(controlName: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetControl<ts_typesofspecializedppe>;
     getControl(controlName: "ts_visualsecurityinspection"): Xrm.OptionSetControl<ts_visualsecurityinspection>;
+    getControl(controlName: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetControl<ts_visualsecurityinspectiondetails>;
     getControl(controlName: string): undefined;
   }
 }

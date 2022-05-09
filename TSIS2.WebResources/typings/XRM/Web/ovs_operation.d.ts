@@ -15,12 +15,14 @@ interface ovs_operation_Base extends WebEntity {
   ts_ppecategories?: ts_ppecategories | null;
   ts_ppeguide?: boolean | null;
   ts_pperequired?: boolean | null;
+  ts_securityinspectiondetails?: ts_securityinspectiondetails | null;
   ts_specializedpperequired?: boolean | null;
   ts_statusenddate?: Date | null;
   ts_statusstartdate?: Date | null;
   ts_typeofdangerousgoods?: ts_typeofdangerousgoods | null;
   ts_typesofspecializedppe?: ts_typesofspecializedppe | null;
   ts_visualsecurityinspection?: ts_visualsecurityinspection | null;
+  ts_visualsecurityinspectiondetails?: ts_visualsecurityinspectiondetails | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -76,6 +78,7 @@ interface ovs_operation_Select {
   ts_ppecategories: WebAttribute<ovs_operation_Select, { ts_ppecategories: ts_ppecategories | null }, { ts_ppecategories_formatted?: string }>;
   ts_ppeguide: WebAttribute<ovs_operation_Select, { ts_ppeguide: boolean | null }, {  }>;
   ts_pperequired: WebAttribute<ovs_operation_Select, { ts_pperequired: boolean | null }, {  }>;
+  ts_securityinspectiondetails: WebAttribute<ovs_operation_Select, { ts_securityinspectiondetails: ts_securityinspectiondetails | null }, { ts_securityinspectiondetails_formatted?: string }>;
   ts_site_guid: WebAttribute<ovs_operation_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_specializedpperequired: WebAttribute<ovs_operation_Select, { ts_specializedpperequired: boolean | null }, {  }>;
   ts_stakeholder_guid: WebAttribute<ovs_operation_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
@@ -85,6 +88,7 @@ interface ovs_operation_Select {
   ts_typeofdangerousgoods: WebAttribute<ovs_operation_Select, { ts_typeofdangerousgoods: ts_typeofdangerousgoods | null }, { ts_typeofdangerousgoods_formatted?: string }>;
   ts_typesofspecializedppe: WebAttribute<ovs_operation_Select, { ts_typesofspecializedppe: ts_typesofspecializedppe | null }, { ts_typesofspecializedppe_formatted?: string }>;
   ts_visualsecurityinspection: WebAttribute<ovs_operation_Select, { ts_visualsecurityinspection: ts_visualsecurityinspection | null }, { ts_visualsecurityinspection_formatted?: string }>;
+  ts_visualsecurityinspectiondetails: WebAttribute<ovs_operation_Select, { ts_visualsecurityinspectiondetails: ts_visualsecurityinspectiondetails | null }, { ts_visualsecurityinspectiondetails_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ovs_operation_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ovs_operation_Select, { versionnumber: number | null }, {  }>;
 }
@@ -115,6 +119,7 @@ interface ovs_operation_Filter {
   ts_ppecategories: ts_ppecategories;
   ts_ppeguide: boolean;
   ts_pperequired: boolean;
+  ts_securityinspectiondetails: ts_securityinspectiondetails;
   ts_site_guid: XQW.Guid;
   ts_specializedpperequired: boolean;
   ts_stakeholder_guid: XQW.Guid;
@@ -124,6 +129,7 @@ interface ovs_operation_Filter {
   ts_typeofdangerousgoods: ts_typeofdangerousgoods;
   ts_typesofspecializedppe: ts_typesofspecializedppe;
   ts_visualsecurityinspection: ts_visualsecurityinspection;
+  ts_visualsecurityinspectiondetails: ts_visualsecurityinspectiondetails;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -167,6 +173,7 @@ interface ovs_operation_FormattedResult {
   ts_issecurityinspectionsite_formatted?: string;
   ts_operationalstatus_formatted?: string;
   ts_ppecategories_formatted?: string;
+  ts_securityinspectiondetails_formatted?: string;
   ts_site_formatted?: string;
   ts_stakeholder_formatted?: string;
   ts_statusenddate_formatted?: string;
@@ -175,6 +182,7 @@ interface ovs_operation_FormattedResult {
   ts_typeofdangerousgoods_formatted?: string;
   ts_typesofspecializedppe_formatted?: string;
   ts_visualsecurityinspection_formatted?: string;
+  ts_visualsecurityinspectiondetails_formatted?: string;
 }
 interface ovs_operation_Result extends ovs_operation_Base, ovs_operation_Relationships {
   "@odata.etag": string;

@@ -15,6 +15,7 @@ declare namespace Form.ts_role.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "createdon"): Xrm.DateControl;
+      get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_rolenameenglish"): Xrm.StringControl;
@@ -39,6 +40,7 @@ declare namespace Form.ts_role.Main {
     getAttribute(attributeName: "ts_rolenamefrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "createdon"): Xrm.DateControl;
+    getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_rolenameenglish"): Xrm.StringControl;
