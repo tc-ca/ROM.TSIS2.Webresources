@@ -30,6 +30,7 @@ interface ovs_Finding_Base extends WebEntity {
   ts_ncatmanageralternativerecommendation?: ts_ncatrecommendations | null;
   ts_ncatmanagerdecision?: ts_ncatmanagerdecision | null;
   ts_ncatmanagerenforcementjustification?: string | null;
+  ts_noncompliancetimeframe?: ts_noncompliancetimeframe | null;
   ts_notetostakeholder?: string | null;
   ts_proposealternatencatenforcementaction?: boolean | null;
   ts_rateenforcementjustification?: string | null;
@@ -148,6 +149,7 @@ interface ovs_Finding_Select {
   ts_ncatmanagerdecision: WebAttribute<ovs_Finding_Select, { ts_ncatmanagerdecision: ts_ncatmanagerdecision | null }, { ts_ncatmanagerdecision_formatted?: string }>;
   ts_ncatmanagerenforcementjustification: WebAttribute<ovs_Finding_Select, { ts_ncatmanagerenforcementjustification: string | null }, {  }>;
   ts_ncatmitigationofnoncompliantbehaviors_guid: WebAttribute<ovs_Finding_Select, { ts_ncatmitigationofnoncompliantbehaviors_guid: string | null }, { ts_ncatmitigationofnoncompliantbehaviors_formatted?: string }>;
+  ts_noncompliancetimeframe: WebAttribute<ovs_Finding_Select, { ts_noncompliancetimeframe: ts_noncompliancetimeframe | null }, { ts_noncompliancetimeframe_formatted?: string }>;
   ts_notetostakeholder: WebAttribute<ovs_Finding_Select, { ts_notetostakeholder: string | null }, {  }>;
   ts_operationid_guid: WebAttribute<ovs_Finding_Select, { ts_operationid_guid: string | null }, { ts_operationid_formatted?: string }>;
   ts_ovs_operationtype_guid: WebAttribute<ovs_Finding_Select, { ts_ovs_operationtype_guid: string | null }, { ts_ovs_operationtype_formatted?: string }>;
@@ -235,6 +237,7 @@ interface ovs_Finding_Filter {
   ts_ncatmanagerdecision: ts_ncatmanagerdecision;
   ts_ncatmanagerenforcementjustification: string;
   ts_ncatmitigationofnoncompliantbehaviors_guid: XQW.Guid;
+  ts_noncompliancetimeframe: ts_noncompliancetimeframe;
   ts_notetostakeholder: string;
   ts_operationid_guid: XQW.Guid;
   ts_ovs_operationtype_guid: XQW.Guid;
@@ -324,6 +327,7 @@ interface ovs_Finding_FormattedResult {
   ts_ncatmanageralternativerecommendation_formatted?: string;
   ts_ncatmanagerdecision_formatted?: string;
   ts_ncatmitigationofnoncompliantbehaviors_formatted?: string;
+  ts_noncompliancetimeframe_formatted?: string;
   ts_operationid_formatted?: string;
   ts_ovs_operationtype_formatted?: string;
   ts_provisioncategory_formatted?: string;

@@ -96,7 +96,7 @@
                 disableFormFields(formContext);
             }
         });
-        
+        showHideNonComplianceTimeframe(formContext);
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -649,8 +649,31 @@
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         let findingType = formContext.getAttribute("ts_findingtype").getValue();
         let finalEnforcementAction = formContext.getAttribute("ts_finalenforcementaction");
-        if (findingType == ts_findingtype.Observation)
+        if (findingType == ts_findingtype.Observation) {
             finalEnforcementAction.setValue(ts_finalenforcementaction.NotApplicable);
+        } else {
+            showHideNonComplianceTimeframe(formContext);
+        }
+            
+    }
+
+    function showHideNonComplianceTimeframe(formContext) {
+        let addressedOnSiteAttribute = formContext.getAttribute("ts_issueaddressedonsite");
+        let nonComplianceTimeframeAttribute = formContext.getAttribute("ts_noncompliancetimeframe");
+        let nonComplianceTimeframeControl = formContext.getControl("ts_noncompliancetimeframe");
+        let findingType = formContext.getAttribute("ts_findingtype").getValue();
+        if (findingType == ts_findingtype.Noncompliance) {
+            if (addressedOnSiteAttribute != null && nonComplianceTimeframeAttribute != null) {
+                const addressedOnSiteValue = addressedOnSiteAttribute.getValue();
+                if (addressedOnSiteValue == ts_yesno.No) {
+                    //Show timeframe field
+                    nonComplianceTimeframeControl.setVisible(true);
+                } else {
+                    //Hide timeframe field
+                    nonComplianceTimeframeControl.setVisible(false);
+                }
+            }
+        }
     }
 
     //Clears, Hides, and sets Required level to None for every field in the NCAT Proposed Section
@@ -922,8 +945,8 @@
         form.ui.controls.forEach(function (control, index) {
             let controlType = control.getControlType();
             let controlName = control.getName();
-            if (controlType != "iframe" && controlType != "webresource" && controlType != "subgrid"){
-                if(controlName != "ts_notetostakeholder"){
+            if (controlType != "iframe" && controlType != "webresource" && controlType != "subgrid") {
+                if (controlName != "ts_notetostakeholder") {
                     control.setDisabled!(true);
                 }
             }
