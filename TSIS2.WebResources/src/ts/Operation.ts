@@ -43,7 +43,12 @@ namespace ROM.Operation {
                         //Set default value for existing operations
                         if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
                             form.getAttribute("ts_visualsecurityinspection").setValue(ts_visualsecurityinspection.Unconfirmed);
-                        }                            
+                        }
+                        else {
+                            if (form.getAttribute("ts_visualsecurityinspection").getValue() == ts_visualsecurityinspection.Yes) {
+                                form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
+                            }
+                        }
                     }
                     //if Operation Type is Small Passenger Company, Passenger Company, or Host Company
                     if (operationType[0].id == "{199E31AE-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{3B261029-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{B27E5003-C751-EB11-A812-000D3AF3AC0D}") {
@@ -51,6 +56,11 @@ namespace ROM.Operation {
                         //Set default value for existing operations
                         if (form.getAttribute("ts_issecurityinspectionsite").getValue() == null) {
                             form.getAttribute("ts_issecurityinspectionsite").setValue(ts_issecurityinspectionsite.Unconfirmed);
+                        }
+                        else {
+                            if (form.getAttribute("ts_issecurityinspectionsite").getValue() == ts_issecurityinspectionsite.Yes) {
+                                form.getControl("ts_securityinspectiondetails").setVisible(true);
+                            }
                         }
                     }
                 }
@@ -156,5 +166,31 @@ namespace ROM.Operation {
             webResourcePPEGuide.setVisible(true);
         else
             webResourcePPEGuide.setVisible(false);
+    }
+
+    export function VSIConductedOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+        let VSIConducted = form.getAttribute("ts_visualsecurityinspection").getValue();
+        let VSIDetails = form.getControl("ts_visualsecurityinspectiondetails");
+        if (VSIConducted == ts_visualsecurityinspection.Yes) {
+            VSIDetails.setVisible(true);
+        }
+        else {
+            VSIDetails.setVisible(false);
+            form.getAttribute("ts_visualsecurityinspectiondetails").setValue(null);
+        }
+    }
+
+    export function SIConductedOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+        let SIConducted = form.getAttribute("ts_issecurityinspectionsite").getValue();
+        let SIDetails = form.getControl("ts_securityinspectiondetails");
+        if (SIConducted == ts_issecurityinspectionsite.Yes) {
+            SIDetails.setVisible(true);
+        }
+        else {
+            SIDetails.setVisible(false);
+            form.getAttribute("ts_securityinspectiondetails").setValue(null);
+        }
     }
 }

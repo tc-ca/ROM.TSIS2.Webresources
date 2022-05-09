@@ -46,6 +46,11 @@ var ROM;
                             if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
                                 form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* Unconfirmed */);
                             }
+                            else {
+                                if (form.getAttribute("ts_visualsecurityinspection").getValue() == 717750001 /* Yes */) {
+                                    form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
+                                }
+                            }
                         }
                         //if Operation Type is Small Passenger Company, Passenger Company, or Host Company
                         if (operationType[0].id == "{199E31AE-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{3B261029-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{B27E5003-C751-EB11-A812-000D3AF3AC0D}") {
@@ -53,6 +58,11 @@ var ROM;
                             //Set default value for existing operations
                             if (form.getAttribute("ts_issecurityinspectionsite").getValue() == null) {
                                 form.getAttribute("ts_issecurityinspectionsite").setValue(717750000 /* Unconfirmed */);
+                            }
+                            else {
+                                if (form.getAttribute("ts_issecurityinspectionsite").getValue() == 717750001 /* Yes */) {
+                                    form.getControl("ts_securityinspectiondetails").setVisible(true);
+                                }
                             }
                         }
                     }
@@ -157,5 +167,31 @@ var ROM;
                 webResourcePPEGuide.setVisible(false);
         }
         Operation.ppeGuideOnChange = ppeGuideOnChange;
+        function VSIConductedOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var VSIConducted = form.getAttribute("ts_visualsecurityinspection").getValue();
+            var VSIDetails = form.getControl("ts_visualsecurityinspectiondetails");
+            if (VSIConducted == 717750001 /* Yes */) {
+                VSIDetails.setVisible(true);
+            }
+            else {
+                VSIDetails.setVisible(false);
+                form.getAttribute("ts_visualsecurityinspectiondetails").setValue(null);
+            }
+        }
+        Operation.VSIConductedOnChange = VSIConductedOnChange;
+        function SIConductedOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var SIConducted = form.getAttribute("ts_issecurityinspectionsite").getValue();
+            var SIDetails = form.getControl("ts_securityinspectiondetails");
+            if (SIConducted == 717750001 /* Yes */) {
+                SIDetails.setVisible(true);
+            }
+            else {
+                SIDetails.setVisible(false);
+                form.getAttribute("ts_securityinspectiondetails").setValue(null);
+            }
+        }
+        Operation.SIConductedOnChange = SIConductedOnChange;
     })(Operation = ROM.Operation || (ROM.Operation = {}));
 })(ROM || (ROM = {}));
