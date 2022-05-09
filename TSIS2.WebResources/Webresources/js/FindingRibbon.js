@@ -530,6 +530,7 @@ function createEnforcementAction(findingGUIDs, primaryControl){
                     Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
                         function success() {
                             // Run code on success
+                            primaryControl.getControl("Enforcement_Actions").refresh();
                         },
                         function error() {
                             // Handle errors
