@@ -61,7 +61,11 @@ function openRecord(recordId) {
 function markComplete(primaryControl) {
     var finalEnforcementAction = primaryControl.getAttribute("ts_finalenforcementaction").getValue();
     var issueaddressedonsite = primaryControl.getAttribute("ts_issueaddressedonsite").getValue();
-    if (finalEnforcementAction != null && issueaddressedonsite != null) {
+    var nonComplianceTimeframe = primaryControl.getAttribute("ts_noncompliancetimeframe").getValue();
+
+    let nonComplianceTimeframeCheck = (!(issueaddressedonsite == 717750001 && nonComplianceTimeframe == null));
+
+    if (finalEnforcementAction != null && issueaddressedonsite != null && nonComplianceTimeframeCheck) {
         primaryControl.getAttribute("statuscode").setValue(717750002); //Complete
         primaryControl.data.save().then(
             function success(result) {

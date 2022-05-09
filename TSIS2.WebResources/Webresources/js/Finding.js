@@ -121,6 +121,7 @@ var ROM;
                     disableFormFields(formContext);
                 }
             });
+            showHideNonComplianceTimeframe(formContext);
         }
         Finding.onLoad = onLoad;
         function onSave(eContext) {
@@ -658,10 +659,33 @@ var ROM;
             var formContext = eContext.getFormContext();
             var findingType = formContext.getAttribute("ts_findingtype").getValue();
             var finalEnforcementAction = formContext.getAttribute("ts_finalenforcementaction");
-            if (findingType == 717750001 /* Observation */)
+            if (findingType == 717750001 /* Observation */) {
                 finalEnforcementAction.setValue(717750009 /* NotApplicable */);
+            }
+            else {
+                showHideNonComplianceTimeframe(formContext);
+            }
         }
         Finding.issueAddressedOnSiteOnChange = issueAddressedOnSiteOnChange;
+        function showHideNonComplianceTimeframe(formContext) {
+            var addressedOnSiteAttribute = formContext.getAttribute("ts_issueaddressedonsite");
+            var nonComplianceTimeframeAttribute = formContext.getAttribute("ts_noncompliancetimeframe");
+            var nonComplianceTimeframeControl = formContext.getControl("ts_noncompliancetimeframe");
+            var findingType = formContext.getAttribute("ts_findingtype").getValue();
+            if (findingType == 717750002 /* Noncompliance */) {
+                if (addressedOnSiteAttribute != null && nonComplianceTimeframeAttribute != null) {
+                    var addressedOnSiteValue = addressedOnSiteAttribute.getValue();
+                    if (addressedOnSiteValue == 717750001 /* No */) {
+                        //Show timeframe field
+                        nonComplianceTimeframeControl.setVisible(true);
+                    }
+                    else {
+                        //Hide timeframe field
+                        nonComplianceTimeframeControl.setVisible(false);
+                    }
+                }
+            }
+        }
         //Clears, Hides, and sets Required level to None for every field in the NCAT Proposed Section
         function NCATHideProposedSection(eContext) {
             var formContext = eContext.getFormContext();
