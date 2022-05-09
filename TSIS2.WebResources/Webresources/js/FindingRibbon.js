@@ -98,6 +98,7 @@ function unlockNCAT(primaryControl) {
     primaryControl.getControl("ts_acceptncatrecommendation").setDisabled(false);
     primaryControl.getControl("ts_acceptncatrecommendation").setDisabled(false);
     primaryControl.getControl("ts_issueaddressedonsite").setDisabled(false);
+    primaryControl.getControl("ts_noncompliancetimeframe").setDisabled(false);
     primaryControl.getControl("ts_notetostakeholder").setDisabled(false);
 
     primaryControl.getAttribute("ts_acceptncatrecommendation").setValue(null);
@@ -123,6 +124,7 @@ function unlockRATE(primaryControl) {
     primaryControl.getControl("ts_ratecooperationwithinspectionorinvestigat").setDisabled(false);
     primaryControl.getControl("ts_acceptraterecommendation").setDisabled(false);
     primaryControl.getControl("ts_issueaddressedonsite").setDisabled(false);
+    primaryControl.getControl("ts_noncompliancetimeframe").setDisabled(false);
     primaryControl.getControl("ts_notetostakeholder").setDisabled(false);
 
     primaryControl.getAttribute("ts_acceptraterecommendation").setValue(null);
