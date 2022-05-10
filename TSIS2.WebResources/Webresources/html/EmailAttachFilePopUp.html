@@ -48,6 +48,8 @@
         const USER_LANG_FR = 1036;
         let userLocalLanguage = "";
         let unableToGetFilesError = "Unable to get files";
+        const protectedBSensitivityLevel = 717750001;
+        let unableToAttachProdBFile = "Unable to attach a Protected B file";
 
         function setLanguage() {
 
@@ -65,6 +67,7 @@
                 attachFileButtonText = "Joindre des fichier(s)";
                 userLocalLanguage = "fr-fr";
                 unableToGetFilesError = "Impossible d'obtenir les fichiers";
+                unableToAttachProdBFile = "Impossible de joindre un fichier protégé B";
             }
 
             // set the button text
@@ -85,7 +88,7 @@
 
             // retrieve all the files that are in the file entity
             {
-                parent.Xrm.WebApi.retrieveMultipleRecords("ts_file", "?$select=ts_fileid,ts_file").then(
+                parent.Xrm.WebApi.retrieveMultipleRecords("ts_file", "?$select=ts_fileid,ts_file,ts_sensitivitylevel").then(
 
                     function success(result) {
 
@@ -96,6 +99,7 @@
                             var myFile = {
                                 id: result.entities[i].ts_fileid,
                                 fileName: result.entities[i].ts_file,
+                                sensitivityLevel: result.entities[i].ts_sensitivitylevel,
                                 encodedFileData: ""
                             };
 
@@ -135,14 +139,54 @@
                         });
 
                         //keep track of how many files have been selected
-                        table.on("rowSelectionChanged", function (data, rows) {
+                        table.on("rowSelectionChanged", async function (data, rows) {
+
                             document.getElementById('RowCounterLabel').innerHTML = data.length;
 
-                            if (data.length > 0) {
-                                document.getElementById("uploadFiles").disabled = false;
-                            } else {
-                                document.getElementById("uploadFiles").disabled = true;
+                            var rowIsSelected = data.length > 0 ? true : false;
+
+                            var protectedBFileFound = false;
+
+                            // Check if any of the selected items is a Protected B document
+                            {
+                                if (rowIsSelected) {
+
+                                    for (var i = 0; i < data.length; i++) {
+
+                                        if (data[i].sensitivityLevel == protectedBSensitivityLevel) {
+
+                                            var selectedRowGuid = data[i].id;
+                                            var selectedRowIndex = table.getRowPosition(selectedRowGuid);
+
+                                            // deselect the selected file
+                                            table.deselectRow(selectedRowGuid);
+
+                                            protectedBFileFound = true;
+                                        }
+                                    }
+
+                                    if (protectedBFileFound) {
+
+                                        // show the message to the user for a brief moment
+                                        // we do it this way incase the user uses the Select All button
+                                        table.alert(unableToAttachProdBFile);
+
+                                        await delay(2);
+
+                                        table.clearAlert();
+                                    }
+                                }
                             }
+
+                            // Enable or disable the upload button
+                            {
+                                if (rowIsSelected) {
+                                    document.getElementById("uploadFiles").disabled = false;
+                                } else {
+                                    document.getElementById("uploadFiles").disabled = true;
+                                }
+                            }
+
                         });
 
                         //select all records
