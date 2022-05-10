@@ -30,6 +30,7 @@ interface Connection_Relationships {
   record1id_ovs_operation?: ovs_operation_Result | null;
   record1id_serviceappointment?: ServiceAppointment_Result | null;
   record1id_systemuser?: SystemUser_Result | null;
+  record1id_ts_serviceofenforcementaction?: ts_serviceofenforcementaction_Result | null;
   record2id_account?: Account_Result | null;
   record2id_appointment?: Appointment_Result | null;
   record2id_contact?: Contact_Result | null;
@@ -41,6 +42,7 @@ interface Connection_Relationships {
   record2id_ovs_operation?: ovs_operation_Result | null;
   record2id_serviceappointment?: ServiceAppointment_Result | null;
   record2id_systemuser?: SystemUser_Result | null;
+  record2id_ts_serviceofenforcementaction?: ts_serviceofenforcementaction_Result | null;
 }
 interface Connection extends Connection_Base, Connection_Relationships {
   channelaccessprofileruleid_bind$channelaccessprofilerules?: string | null;
@@ -387,6 +389,7 @@ interface Connection_Expand {
   record1id_ovs_operation: WebExpand<Connection_Expand, ovs_operation_Select, ovs_operation_Filter, { record1id_ovs_operation: ovs_operation_Result }>;
   record1id_serviceappointment: WebExpand<Connection_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { record1id_serviceappointment: ServiceAppointment_Result }>;
   record1id_systemuser: WebExpand<Connection_Expand, SystemUser_Select, SystemUser_Filter, { record1id_systemuser: SystemUser_Result }>;
+  record1id_ts_serviceofenforcementaction: WebExpand<Connection_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { record1id_ts_serviceofenforcementaction: ts_serviceofenforcementaction_Result }>;
   record2id_account: WebExpand<Connection_Expand, Account_Select, Account_Filter, { record2id_account: Account_Result }>;
   record2id_appointment: WebExpand<Connection_Expand, Appointment_Select, Appointment_Filter, { record2id_appointment: Appointment_Result }>;
   record2id_contact: WebExpand<Connection_Expand, Contact_Select, Contact_Filter, { record2id_contact: Contact_Result }>;
@@ -398,6 +401,7 @@ interface Connection_Expand {
   record2id_ovs_operation: WebExpand<Connection_Expand, ovs_operation_Select, ovs_operation_Filter, { record2id_ovs_operation: ovs_operation_Result }>;
   record2id_serviceappointment: WebExpand<Connection_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { record2id_serviceappointment: ServiceAppointment_Result }>;
   record2id_systemuser: WebExpand<Connection_Expand, SystemUser_Select, SystemUser_Filter, { record2id_systemuser: SystemUser_Result }>;
+  record2id_ts_serviceofenforcementaction: WebExpand<Connection_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { record2id_ts_serviceofenforcementaction: ts_serviceofenforcementaction_Result }>;
   relatedconnectionid: WebExpand<Connection_Expand, Connection_Select, Connection_Filter, { relatedconnectionid: Connection_Result }>;
 }
 interface Connection_FormattedResult {
@@ -459,6 +463,7 @@ interface Connection_RelatedOne {
   record1id_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   record1id_serviceappointment: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   record1id_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  record1id_ts_serviceofenforcementaction: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
   record2id_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   record2id_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   record2id_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
@@ -470,6 +475,7 @@ interface Connection_RelatedOne {
   record2id_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   record2id_serviceappointment: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   record2id_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  record2id_ts_serviceofenforcementaction: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
   relatedconnectionid: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
 }
 interface Connection_RelatedMany {
