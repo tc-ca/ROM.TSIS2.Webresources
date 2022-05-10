@@ -246,6 +246,11 @@ interface SystemUser_Relationships {
   systemuser_connections2?: Connection_Result[] | null;
   ts_ovs_Finding_NCATManager_SystemUser?: ovs_Finding_Result[] | null;
   ts_ovs_Finding_RATEManager_SystemUser?: ovs_Finding_Result[] | null;
+  ts_serviceofenforcementaction_systemuser_createdby?: ts_serviceofenforcementaction_Result[] | null;
+  ts_serviceofenforcementaction_systemuser_createdonbehalfby?: ts_serviceofenforcementaction_Result[] | null;
+  ts_serviceofenforcementaction_systemuser_modifiedby?: ts_serviceofenforcementaction_Result[] | null;
+  ts_serviceofenforcementaction_systemuser_modifiedonbehalfby?: ts_serviceofenforcementaction_Result[] | null;
+  ts_serviceofenforcementaction_systemuser_owninguser?: ts_serviceofenforcementaction_Result[] | null;
   user_accounts?: Account_Result[] | null;
   user_appointment?: Appointment_Result[] | null;
   user_bookableresource?: BookableResource_Result[] | null;
@@ -690,6 +695,11 @@ interface SystemUser_Expand {
   systemuser_connections2: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections2: Connection_Result[] }>;
   ts_ovs_Finding_NCATManager_SystemUser: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_NCATManager_SystemUser: ovs_Finding_Result[] }>;
   ts_ovs_Finding_RATEManager_SystemUser: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_RATEManager_SystemUser: ovs_Finding_Result[] }>;
+  ts_serviceofenforcementaction_systemuser_createdby: WebExpand<SystemUser_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { ts_serviceofenforcementaction_systemuser_createdby: ts_serviceofenforcementaction_Result[] }>;
+  ts_serviceofenforcementaction_systemuser_createdonbehalfby: WebExpand<SystemUser_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { ts_serviceofenforcementaction_systemuser_createdonbehalfby: ts_serviceofenforcementaction_Result[] }>;
+  ts_serviceofenforcementaction_systemuser_modifiedby: WebExpand<SystemUser_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { ts_serviceofenforcementaction_systemuser_modifiedby: ts_serviceofenforcementaction_Result[] }>;
+  ts_serviceofenforcementaction_systemuser_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { ts_serviceofenforcementaction_systemuser_modifiedonbehalfby: ts_serviceofenforcementaction_Result[] }>;
+  ts_serviceofenforcementaction_systemuser_owninguser: WebExpand<SystemUser_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { ts_serviceofenforcementaction_systemuser_owninguser: ts_serviceofenforcementaction_Result[] }>;
   user_accounts: WebExpand<SystemUser_Expand, Account_Select, Account_Filter, { user_accounts: Account_Result[] }>;
   user_appointment: WebExpand<SystemUser_Expand, Appointment_Select, Appointment_Filter, { user_appointment: Appointment_Result[] }>;
   user_bookableresource: WebExpand<SystemUser_Expand, BookableResource_Select, BookableResource_Filter, { user_bookableresource: BookableResource_Result[] }>;
@@ -912,6 +922,11 @@ interface SystemUser_RelatedMany {
   systemuser_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ts_ovs_Finding_NCATManager_SystemUser: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_Finding_RATEManager_SystemUser: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_serviceofenforcementaction_systemuser_createdby: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
+  ts_serviceofenforcementaction_systemuser_createdonbehalfby: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
+  ts_serviceofenforcementaction_systemuser_modifiedby: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
+  ts_serviceofenforcementaction_systemuser_modifiedonbehalfby: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
+  ts_serviceofenforcementaction_systemuser_owninguser: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
   user_accounts: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   user_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   user_bookableresource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;

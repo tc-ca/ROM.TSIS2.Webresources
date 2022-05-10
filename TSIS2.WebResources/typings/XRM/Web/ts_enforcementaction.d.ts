@@ -9,6 +9,7 @@ interface ts_EnforcementAction_Base extends WebEntity {
   ts_comments?: string | null;
   ts_copyofreceipt?: string | null;
   ts_enforcementactionid?: string | null;
+  ts_enforcementactionnumber?: string | null;
   ts_individualposition?: string | null;
   ts_methodofservice?: ts_methodofservice | null;
   ts_name?: string | null;
@@ -28,6 +29,7 @@ interface ts_EnforcementAction_Relationships {
   ts_VerbalWarningGivenTo?: Contact_Result | null;
   ts_enforcementaction_Appointments?: Appointment_Result[] | null;
   ts_enforcementaction_ServiceAppointments?: ServiceAppointment_Result[] | null;
+  ts_enforcementaction_ts_serviceofenforcementactions?: ts_serviceofenforcementaction_Result[] | null;
 }
 interface ts_EnforcementAction extends ts_EnforcementAction_Base, ts_EnforcementAction_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -63,6 +65,7 @@ interface ts_EnforcementAction_Select {
   ts_company_guid: WebAttribute<ts_EnforcementAction_Select, { ts_company_guid: string | null }, { ts_company_formatted?: string }>;
   ts_copyofreceipt: WebAttribute<ts_EnforcementAction_Select, { ts_copyofreceipt: string | null }, {  }>;
   ts_enforcementactionid: WebAttribute<ts_EnforcementAction_Select, { ts_enforcementactionid: string | null }, {  }>;
+  ts_enforcementactionnumber: WebAttribute<ts_EnforcementAction_Select, { ts_enforcementactionnumber: string | null }, {  }>;
   ts_individualposition: WebAttribute<ts_EnforcementAction_Select, { ts_individualposition: string | null }, {  }>;
   ts_methodofservice: WebAttribute<ts_EnforcementAction_Select, { ts_methodofservice: ts_methodofservice | null }, { ts_methodofservice_formatted?: string }>;
   ts_name: WebAttribute<ts_EnforcementAction_Select, { ts_name: string | null }, {  }>;
@@ -97,6 +100,7 @@ interface ts_EnforcementAction_Filter {
   ts_company_guid: XQW.Guid;
   ts_copyofreceipt: string;
   ts_enforcementactionid: XQW.Guid;
+  ts_enforcementactionnumber: string;
   ts_individualposition: string;
   ts_methodofservice: ts_methodofservice;
   ts_name: string;
@@ -123,6 +127,7 @@ interface ts_EnforcementAction_Expand {
   ts_VerbalWarningGivenTo: WebExpand<ts_EnforcementAction_Expand, Contact_Select, Contact_Filter, { ts_VerbalWarningGivenTo: Contact_Result }>;
   ts_enforcementaction_Appointments: WebExpand<ts_EnforcementAction_Expand, Appointment_Select, Appointment_Filter, { ts_enforcementaction_Appointments: Appointment_Result[] }>;
   ts_enforcementaction_ServiceAppointments: WebExpand<ts_EnforcementAction_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ts_enforcementaction_ServiceAppointments: ServiceAppointment_Result[] }>;
+  ts_enforcementaction_ts_serviceofenforcementactions: WebExpand<ts_EnforcementAction_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { ts_enforcementaction_ts_serviceofenforcementactions: ts_serviceofenforcementaction_Result[] }>;
 }
 interface ts_EnforcementAction_FormattedResult {
   createdby_formatted?: string;
@@ -179,6 +184,7 @@ interface ts_EnforcementAction_RelatedMany {
   ts_EnforcementAction_ts_EnforcementAction: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_enforcementaction_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   ts_enforcementaction_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
+  ts_enforcementaction_ts_serviceofenforcementactions: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_enforcementactions: WebMappingRetrieve<ts_EnforcementAction_Select,ts_EnforcementAction_Expand,ts_EnforcementAction_Filter,ts_EnforcementAction_Fixed,ts_EnforcementAction_Result,ts_EnforcementAction_FormattedResult>;

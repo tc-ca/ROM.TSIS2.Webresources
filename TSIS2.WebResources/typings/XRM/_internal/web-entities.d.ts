@@ -32,6 +32,29 @@ interface Account_Create extends Account {
 }
 interface Account_Update extends Account {
 }
+interface ActivityParty_Base extends WebEntity {
+}
+interface ActivityParty_Fixed extends WebEntity_Fixed {
+  activitypartyid: string;
+}
+interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships {
+}
+interface ActivityParty_Relationships {
+}
+interface ActivityParty_Result extends ActivityParty_Base, ActivityParty_Relationships {
+}
+interface ActivityParty_FormattedResult {
+}
+interface ActivityParty_Select {
+}
+interface ActivityParty_Expand {
+}
+interface ActivityParty_Filter {
+}
+interface ActivityParty_Create extends ActivityParty {
+}
+interface ActivityParty_Update extends ActivityParty {
+}
 interface BookableResourceBooking_Base extends WebEntity {
 }
 interface BookableResourceBooking_Fixed extends WebEntity_Fixed {
@@ -561,6 +584,29 @@ interface ts_questionnaireversion_Create extends ts_questionnaireversion {
 }
 interface ts_questionnaireversion_Update extends ts_questionnaireversion {
 }
+interface ts_serviceofenforcementaction_Base extends WebEntity {
+}
+interface ts_serviceofenforcementaction_Fixed extends WebEntity_Fixed {
+  activityid: string;
+}
+interface ts_serviceofenforcementaction extends ts_serviceofenforcementaction_Base, ts_serviceofenforcementaction_Relationships {
+}
+interface ts_serviceofenforcementaction_Relationships {
+}
+interface ts_serviceofenforcementaction_Result extends ts_serviceofenforcementaction_Base, ts_serviceofenforcementaction_Relationships {
+}
+interface ts_serviceofenforcementaction_FormattedResult {
+}
+interface ts_serviceofenforcementaction_Select {
+}
+interface ts_serviceofenforcementaction_Expand {
+}
+interface ts_serviceofenforcementaction_Filter {
+}
+interface ts_serviceofenforcementaction_Create extends ts_serviceofenforcementaction {
+}
+interface ts_serviceofenforcementaction_Update extends ts_serviceofenforcementaction {
+}
 interface ts_workordercreationwizard_Base extends WebEntity {
 }
 interface ts_workordercreationwizard_Fixed extends WebEntity_Fixed {
@@ -698,29 +744,6 @@ interface ServiceAppointment_Filter {
 interface ServiceAppointment_Create extends ServiceAppointment {
 }
 interface ServiceAppointment_Update extends ServiceAppointment {
-}
-interface ActivityParty_Base extends WebEntity {
-}
-interface ActivityParty_Fixed extends WebEntity_Fixed {
-  activitypartyid: string;
-}
-interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships {
-}
-interface ActivityParty_Relationships {
-}
-interface ActivityParty_Result extends ActivityParty_Base, ActivityParty_Relationships {
-}
-interface ActivityParty_FormattedResult {
-}
-interface ActivityParty_Select {
-}
-interface ActivityParty_Expand {
-}
-interface ActivityParty_Filter {
-}
-interface ActivityParty_Create extends ActivityParty {
-}
-interface ActivityParty_Update extends ActivityParty {
 }
 interface ts_role_Base extends WebEntity {
 }
