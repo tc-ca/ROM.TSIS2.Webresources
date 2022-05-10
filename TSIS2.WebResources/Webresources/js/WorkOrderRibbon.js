@@ -398,7 +398,7 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
         if(userBusinessUnitName.startsWith("Aviation")){ 
             businessUnitCondition = '<condition entityname="a_9156d7f5d3bd47ad9f84ac9b81fa0d54" attribute="name" operator="like" value="Aviation%"/>'
         }
-        else{
+        else if(userBusinessUnitName.startsWith("Intermodal")){
             businessUnitCondition = '<condition entityname="a_9156d7f5d3bd47ad9f84ac9b81fa0d54" attribute="name" operator="like" value="Intermodal%"/>'
         }
 
