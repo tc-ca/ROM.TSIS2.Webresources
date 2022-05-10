@@ -372,6 +372,7 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
     const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
     const currentWorkOrderRecordOwnerId = Xrm.Page.ui.formContext.getAttribute("ownerid").getValue()[0].id;
     const currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g,'');
+    const teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa";
 
     let currentUserBusinessUnitFetchXML = [
         "<fetch top='1'>",
@@ -393,78 +394,100 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
         let userBusinessUnitId = result.entities[0].businessunitid;
         let userBusinessUnitName = result.entities[0].name;
 
-        //Uses the generated alias in "Enabled Users With Business Unit Name"
+        //Uses the generated alias in "Enabled Users With Business Unit Name" so we can use BU in the filters the lookup conntrol
         if(userBusinessUnitName.startsWith("Aviation")){ 
             businessUnitCondition = '<condition entityname="a_9156d7f5d3bd47ad9f84ac9b81fa0d54" attribute="name" operator="like" value="Aviation%"/>'
         }
-        else{
+        else if(userBusinessUnitName.startsWith("Intermodal")){
             businessUnitCondition = '<condition entityname="a_9156d7f5d3bd47ad9f84ac9b81fa0d54" attribute="name" operator="like" value="Intermodal%"/>'
         }
 
-        const defaultViewId  = "d651eb0f-3ea9-ec11-983e-0022483e6bb0";
-        const viewIds = ["d651eb0f-3ea9-ec11-983e-0022483e6bb0"];
-        var lookupOptions =
-        {
-            defaultEntityType: "sytemuser",
-            entityTypes: ["systemuser"], 
-            allowMultiSelect: true,
-            defaultViewId: `${defaultViewId}`,
-            disableMru: true,
-            viewIds : viewIds,
-            filters: [
+        //Get users that are already in the work order access team to filter them out from the lookup control
+        let alreadyExistingUsersInAccessTeamCondition;
+        const alreadyExistingUsersInAccessTeamFetchXML = `<fetch><entity name="systemuser"><attribute name="systemuserid"/><link-entity name="teammembership" from="systemuserid" to="systemuserid" link-type="inner" intersect="true"><link-entity name="team" from="teamid" to="teamid" link-type="inner"><link-entity name="teamtemplate" from="teamtemplateid" to="teamtemplateid" link-type="inner"><attribute name="teamtemplateid"/><filter><condition attribute="teamtemplateid" operator="eq" value="${teamTemplateId}"/></filter></link-entity><link-entity name="principalobjectaccess" from="principalid" to="teamid" link-type="inner"><link-entity name="msdyn_workorder" from="msdyn_workorderid" to="objectid" link-type="inner"><attribute name="msdyn_workorderid"/><filter><condition attribute="msdyn_workorderid" operator="eq" value="${currentWorkOrderRecordId}"/></filter></link-entity></link-entity></link-entity></link-entity></entity></fetch>`;
+
+        Xrm.WebApi.retrieveMultipleRecords("systemuser", "?fetchXml=" + encodeURIComponent(alreadyExistingUsersInAccessTeamFetchXML)).then(
+            function success(result) {
+                for (var i = 0; i < result.entities.length; i++) {
+                    alreadyExistingUsersInAccessTeamCondition += `<condition attribute="systemuserid" operator="neq" value="${result.entities[i].systemuserid}" />`;
+                }   
+                
+                //
+                const defaultViewId  = "d651eb0f-3ea9-ec11-983e-0022483e6bb0";
+                const viewIds = ["d651eb0f-3ea9-ec11-983e-0022483e6bb0"];
+                var lookupOptions =
                 {
-                    filterXml: `<filter type="and">` + 
-                        `${businessUnitCondition}` +
-                        `<condition attribute="systemuserid" operator="neq" value="${currentWorkOrderRecordOwnerId}" />` +
-                        `</filter>`,
-                    entityLogicalName: "systemuser"
-                }
-            ]
-        };
-        
-        Xrm.Utility.lookupObjects(lookupOptions).then(
-            function(result){
-                for (var i = 0; i < result.length; i++) {
-                    var req = new XMLHttpRequest();
-
-                    req.open("POST", formContext.context.getClientUrl() + "/api/data/v9.0/" + "systemusers" + "(" + result[i].id.replace(/({|})/g,'') + ")" + "/Microsoft.Dynamics.CRM.AddUserToRecordTeam");
-                    req.setRequestHeader("Content-Type", "application/json");
-                    req.setRequestHeader("Accept", "application/json");
-                    req.setRequestHeader("OData-MaxVersion", "4.0");
-                    req.setRequestHeader("OData-Version", "4.0");
-
-                    let payload = 
-                    {
-                        "entity": {
-                            "@odata.type": "Microsoft.Dynamics.CRM.systemuser",
-                            "systemuserid": result[i].id.replace(/({|})/g,'')
-                        },
-                        "Record": {
-                            "@odata.type": "Microsoft.Dynamics.CRM.msdyn_workorder",
-                            "msdyn_workorderid": currentWorkOrderRecordId
-                        },
-                        "TeamTemplate": {
-                            "@odata.type": "Microsoft.Dynamics.CRM.teamtemplate",
-                            "teamtemplateid": "bddf1d45-706d-ec11-8f8e-0022483da5aa"
+                    defaultEntityType: "sytemuser",
+                    entityTypes: ["systemuser"], 
+                    allowMultiSelect: true,
+                    defaultViewId: `${defaultViewId}`,
+                    disableMru: true,
+                    viewIds : viewIds,
+                    filters: [
+                        {
+                            filterXml: `<filter type="and">` + 
+                                `${businessUnitCondition}` +
+                                `${alreadyExistingUsersInAccessTeamCondition}` +
+                                `<condition attribute="systemuserid" operator="neq" value="${currentWorkOrderRecordOwnerId}" />` +
+                                `</filter>`,
+                            entityLogicalName: "systemuser"
                         }
-                    }
+                    ]
+                };
+                
+                Xrm.Utility.lookupObjects(lookupOptions).then(
+                    function(result){
+                        for (var i = 0; i < result.length; i++) {
+                            var req = new XMLHttpRequest();
 
-                    req.onreadystatechange = function() {
-                        if (this.readyState === 4) {
-                            req.onreadystatechange = null;
-                            if (this.status === 200) {
-                                selectedControl.refresh();
-                            } else {
-                                showErrorMessageAlert(req.status);
+                            req.open("POST", formContext.context.getClientUrl() + "/api/data/v9.0/" + "systemusers" + "(" + result[i].id.replace(/({|})/g,'') + ")" + "/Microsoft.Dynamics.CRM.AddUserToRecordTeam");
+                            req.setRequestHeader("Content-Type", "application/json");
+                            req.setRequestHeader("Accept", "application/json");
+                            req.setRequestHeader("OData-MaxVersion", "4.0");
+                            req.setRequestHeader("OData-Version", "4.0");
+
+                            let payload = 
+                            {
+                                "entity": {
+                                    "@odata.type": "Microsoft.Dynamics.CRM.systemuser",
+                                    "systemuserid": result[i].id.replace(/({|})/g,'')
+                                },
+                                "Record": {
+                                    "@odata.type": "Microsoft.Dynamics.CRM.msdyn_workorder",
+                                    "msdyn_workorderid": currentWorkOrderRecordId
+                                },
+                                "TeamTemplate": {
+                                    "@odata.type": "Microsoft.Dynamics.CRM.teamtemplate",
+                                    "teamtemplateid": "bddf1d45-706d-ec11-8f8e-0022483da5aa"
+                                }
                             }
+
+                            req.onreadystatechange = function() {
+                                if (this.readyState === 4) {
+                                    req.onreadystatechange = null;
+                                    if (this.status === 200) {
+                                        selectedControl.refresh();
+                                    } else {
+                                        var alertStrings = { text: req.status + " " + req.responseText };
+                                        var alertOptions = { height: 120, width: 260 };
+                                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                                    }
+                                }
+                            };
+                            req.send(JSON.stringify(payload));
                         }
-                    };
-                    req.send(JSON.stringify(payload));
-                }
+                    },
+                    function(error){
+                        showErrorMessageAlert(error);
+                    }
+                );
             },
-            function(error){
-                showErrorMessageAlert(error);
+            function (error) {
+                console.log(error.message);
             }
         );
+
+
+        
     });
 }
