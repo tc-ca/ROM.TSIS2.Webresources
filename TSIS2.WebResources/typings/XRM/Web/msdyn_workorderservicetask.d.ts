@@ -35,6 +35,7 @@ interface msdyn_workorderservicetask_Relationships {
   msdyn_workorderservicetask_ServiceAppointments?: ServiceAppointment_Result[] | null;
   msdyn_workorderservicetask_connections1?: Connection_Result[] | null;
   msdyn_workorderservicetask_connections2?: Connection_Result[] | null;
+  msdyn_workorderservicetask_ts_serviceofenforcementactions?: ts_serviceofenforcementaction_Result[] | null;
   ovs_CaseId?: Incident_Result | null;
   ovs_Questionnaire?: ovs_Questionnaire_Result | null;
   ovs_msdyn_workorderservicetask_ovs_finding?: ovs_Finding_Result[] | null;
@@ -182,6 +183,7 @@ interface msdyn_workorderservicetask_Expand {
   msdyn_workorderservicetask_ServiceAppointments: WebExpand<msdyn_workorderservicetask_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_workorderservicetask_ServiceAppointments: ServiceAppointment_Result[] }>;
   msdyn_workorderservicetask_connections1: WebExpand<msdyn_workorderservicetask_Expand, Connection_Select, Connection_Filter, { msdyn_workorderservicetask_connections1: Connection_Result[] }>;
   msdyn_workorderservicetask_connections2: WebExpand<msdyn_workorderservicetask_Expand, Connection_Select, Connection_Filter, { msdyn_workorderservicetask_connections2: Connection_Result[] }>;
+  msdyn_workorderservicetask_ts_serviceofenforcementactions: WebExpand<msdyn_workorderservicetask_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { msdyn_workorderservicetask_ts_serviceofenforcementactions: ts_serviceofenforcementaction_Result[] }>;
   ovs_CaseId: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ovs_CaseId: Incident_Result }>;
   ovs_Questionnaire: WebExpand<msdyn_workorderservicetask_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { ovs_Questionnaire: ovs_Questionnaire_Result }>;
   ovs_msdyn_workorderservicetask_ovs_finding: WebExpand<msdyn_workorderservicetask_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ovs_msdyn_workorderservicetask_ovs_finding: ovs_Finding_Result[] }>;
@@ -266,6 +268,7 @@ interface msdyn_workorderservicetask_RelatedMany {
   msdyn_workorderservicetask_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   msdyn_workorderservicetask_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_workorderservicetask_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  msdyn_workorderservicetask_ts_serviceofenforcementactions: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
   ovs_msdyn_workorderservicetask_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

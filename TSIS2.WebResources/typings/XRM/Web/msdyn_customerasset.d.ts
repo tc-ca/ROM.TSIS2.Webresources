@@ -32,6 +32,7 @@ interface msdyn_customerasset_Relationships {
   msdyn_customerasset_ServiceAppointments?: ServiceAppointment_Result[] | null;
   msdyn_customerasset_connections1?: Connection_Result[] | null;
   msdyn_customerasset_connections2?: Connection_Result[] | null;
+  msdyn_customerasset_ts_serviceofenforcementactions?: ts_serviceofenforcementaction_Result[] | null;
   msdyn_incident_msdyn_customerasset?: Incident_Result[] | null;
   msdyn_masterasset_msdyn_customerasset?: msdyn_customerasset_Result | null;
   msdyn_msdyn_customerasset_msdyn_customerasset_MasterAsset?: msdyn_customerasset_Result[] | null;
@@ -158,6 +159,7 @@ interface msdyn_customerasset_Expand {
   msdyn_customerasset_ServiceAppointments: WebExpand<msdyn_customerasset_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_customerasset_ServiceAppointments: ServiceAppointment_Result[] }>;
   msdyn_customerasset_connections1: WebExpand<msdyn_customerasset_Expand, Connection_Select, Connection_Filter, { msdyn_customerasset_connections1: Connection_Result[] }>;
   msdyn_customerasset_connections2: WebExpand<msdyn_customerasset_Expand, Connection_Select, Connection_Filter, { msdyn_customerasset_connections2: Connection_Result[] }>;
+  msdyn_customerasset_ts_serviceofenforcementactions: WebExpand<msdyn_customerasset_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { msdyn_customerasset_ts_serviceofenforcementactions: ts_serviceofenforcementaction_Result[] }>;
   msdyn_incident_msdyn_customerasset: WebExpand<msdyn_customerasset_Expand, Incident_Select, Incident_Filter, { msdyn_incident_msdyn_customerasset: Incident_Result[] }>;
   msdyn_masterasset_msdyn_customerasset: WebExpand<msdyn_customerasset_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { msdyn_masterasset_msdyn_customerasset: msdyn_customerasset_Result }>;
   msdyn_msdyn_customerasset_msdyn_customerasset_MasterAsset: WebExpand<msdyn_customerasset_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { msdyn_msdyn_customerasset_msdyn_customerasset_MasterAsset: msdyn_customerasset_Result[] }>;
@@ -237,6 +239,7 @@ interface msdyn_customerasset_RelatedMany {
   msdyn_customerasset_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   msdyn_customerasset_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_customerasset_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  msdyn_customerasset_ts_serviceofenforcementactions: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
   msdyn_incident_msdyn_customerasset: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_msdyn_customerasset_msdyn_customerasset_MasterAsset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_msdyn_customerasset_msdyn_customerasset_ParentAsset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;

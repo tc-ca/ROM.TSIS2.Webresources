@@ -32,6 +32,7 @@ interface ovs_operation_Relationships {
   ovs_operation_ServiceAppointments?: ServiceAppointment_Result[] | null;
   ovs_operation_connections1?: Connection_Result[] | null;
   ovs_operation_connections2?: Connection_Result[] | null;
+  ovs_operation_ts_serviceofenforcementactions?: ts_serviceofenforcementaction_Result[] | null;
   ovs_ovs_operation_msdyn_workorder?: msdyn_workorder_Result[] | null;
   ts_msdyn_workorder_ovs_operation_ovs_operati?: msdyn_workorder_Result[] | null;
   ts_operation_ts_operationcontact_operation?: ts_operationcontact_Result[] | null;
@@ -143,6 +144,7 @@ interface ovs_operation_Expand {
   ovs_operation_ServiceAppointments: WebExpand<ovs_operation_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ovs_operation_ServiceAppointments: ServiceAppointment_Result[] }>;
   ovs_operation_connections1: WebExpand<ovs_operation_Expand, Connection_Select, Connection_Filter, { ovs_operation_connections1: Connection_Result[] }>;
   ovs_operation_connections2: WebExpand<ovs_operation_Expand, Connection_Select, Connection_Filter, { ovs_operation_connections2: Connection_Result[] }>;
+  ovs_operation_ts_serviceofenforcementactions: WebExpand<ovs_operation_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { ovs_operation_ts_serviceofenforcementactions: ts_serviceofenforcementaction_Result[] }>;
   ovs_ovs_operation_msdyn_workorder: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_ovs_operation_msdyn_workorder: msdyn_workorder_Result[] }>;
   ownerid: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
@@ -217,6 +219,7 @@ interface ovs_operation_RelatedMany {
   ovs_operation_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   ovs_operation_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ovs_operation_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  ovs_operation_ts_serviceofenforcementactions: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
   ovs_ovs_operation_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_operation_ts_operationcontact_operation: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
