@@ -289,6 +289,12 @@ namespace ROM.WorkOrderServiceTask {
             win.isComplete = (Form.getAttribute("msdyn_percentcomplete").getValue() == 100.00);
             win.operationList = operationData.operations;
             win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
+
+            const statusReason = Form.getAttribute("statuscode").getValue();
+            if (statusReason == 918640002 && operationData.isInspectionType) {
+                mode = "display";
+                setAllFieldsDisabled(eContext);
+            }
             win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode)
         });
     }
@@ -301,12 +307,14 @@ namespace ROM.WorkOrderServiceTask {
         //Array to be populated with opertations associated with parent work order before initializing the survey
         let operations: Object[] = [];
         let activityTypeOperationTypeIds: Object[] = [];
+        let isInspectionType: Boolean = false;
 
         var parentWorkOrderOperationFetchXml = [
             "<fetch top='50'>",
             "  <entity name='msdyn_workorder'>",
             "    <attribute name='ovs_operationid' />",
             "    <attribute name='msdyn_serviceaccount' />",
+            "    <attribute name='msdyn_workordertype' />",
             "    <filter>",
             "      <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
             "    </filter>",
@@ -401,7 +409,14 @@ namespace ROM.WorkOrderServiceTask {
                     isRegulated: workOrderOperation["ovs_operationtype2.ts_regulated"]
                 });
             }
-
+            
+            if (workOrderOperation["_msdyn_workordertype_value"] != null)
+            {
+                if (workOrderOperation["_msdyn_workordertype_value"].toUpperCase() == "B1EE680A-7CF7-EA11-A815-000D3AF3A7A7")
+                {
+                    isInspectionType = true;
+                }
+            }
             //Add the operationid, name, operationTypeId, and regulated boolean of the work order's N:N operations to the operations array
             operationRetrievalPromises[1].entities.forEach(function (operation) {
                 let stakeholderName = operation["account2.name"];
@@ -427,7 +442,8 @@ namespace ROM.WorkOrderServiceTask {
         //Return object containing retrieved operation data
         return {
             operations: operations,
-            activityTypeOperationTypeIds: activityTypeOperationTypeIds
+            activityTypeOperationTypeIds: activityTypeOperationTypeIds,
+            isInspectionType: isInspectionType
         };
     }
 }
@@ -436,5 +452,15 @@ function CompleteQuestionnaire(wrCtrl) {
     // Get the web resource inner content window
     wrCtrl.getContentWindow().then(function (win) {
         const userInput = win.DoComplete();
+    });
+}
+
+function setAllFieldsDisabled(eContext) {
+    const formContext = eContext.getFormContext();
+
+    formContext.ui.controls.forEach(function (control, i) {
+        if (control && control.getDisabled && !control.getDisabled()) {
+            control.setDisabled!(true);
+        }
     });
 }

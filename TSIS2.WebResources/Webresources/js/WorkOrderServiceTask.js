@@ -300,7 +300,7 @@ var ROM;
             wrCtrl.setVisible(true);
             wrCtrl.getContentWindow().then(function (win) {
                 return __awaiter(this, void 0, void 0, function () {
-                    var surveyLocale, operationData;
+                    var surveyLocale, operationData, statusReason;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
@@ -312,6 +312,11 @@ var ROM;
                                 win.isComplete = (Form.getAttribute("msdyn_percentcomplete").getValue() == 100.00);
                                 win.operationList = operationData.operations;
                                 win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
+                                statusReason = Form.getAttribute("statuscode").getValue();
+                                if (statusReason == 918640002 && operationData.isInspectionType) {
+                                    mode = "display";
+                                    setAllFieldsDisabled(eContext);
+                                }
                                 win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
                                 return [2 /*return*/];
                         }
@@ -322,7 +327,7 @@ var ROM;
         //Retrieves parent Work Order's Operations and parent Work Order's ActivityType's OperationTypes
         function retrieveWorkOrderOperationData(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var workOrderAttribute, workOrderId, operations, activityTypeOperationTypeIds, parentWorkOrderOperationFetchXml, operationPromise1, parentWorkOrderRelatedOperationFetchXml, operationPromise2, activityTypeOperationTypesFetchXML, activityTypeOperationTypesPromise;
+                var workOrderAttribute, workOrderId, operations, activityTypeOperationTypeIds, isInspectionType, parentWorkOrderOperationFetchXml, operationPromise1, parentWorkOrderRelatedOperationFetchXml, operationPromise2, activityTypeOperationTypesFetchXML, activityTypeOperationTypesPromise;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -330,11 +335,13 @@ var ROM;
                             workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
                             operations = [];
                             activityTypeOperationTypeIds = [];
+                            isInspectionType = false;
                             parentWorkOrderOperationFetchXml = [
                                 "<fetch top='50'>",
                                 "  <entity name='msdyn_workorder'>",
                                 "    <attribute name='ovs_operationid' />",
                                 "    <attribute name='msdyn_serviceaccount' />",
+                                "    <attribute name='msdyn_workordertype' />",
                                 "    <filter>",
                                 "      <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
                                 "    </filter>",
@@ -422,6 +429,11 @@ var ROM;
                                             isRegulated: workOrderOperation["ovs_operationtype2.ts_regulated"]
                                         });
                                     }
+                                    if (workOrderOperation["_msdyn_workordertype_value"] != null) {
+                                        if (workOrderOperation["_msdyn_workordertype_value"].toUpperCase() == "B1EE680A-7CF7-EA11-A815-000D3AF3A7A7") {
+                                            isInspectionType = true;
+                                        }
+                                    }
                                     //Add the operationid, name, operationTypeId, and regulated boolean of the work order's N:N operations to the operations array
                                     operationRetrievalPromises[1].entities.forEach(function (operation) {
                                         var stakeholderName = operation["account2.name"];
@@ -446,7 +458,8 @@ var ROM;
                             //Return object containing retrieved operation data
                             return [2 /*return*/, {
                                     operations: operations,
-                                    activityTypeOperationTypeIds: activityTypeOperationTypeIds
+                                    activityTypeOperationTypeIds: activityTypeOperationTypeIds,
+                                    isInspectionType: isInspectionType
                                 }];
                     }
                 });
@@ -458,5 +471,13 @@ function CompleteQuestionnaire(wrCtrl) {
     // Get the web resource inner content window
     wrCtrl.getContentWindow().then(function (win) {
         var userInput = win.DoComplete();
+    });
+}
+function setAllFieldsDisabled(eContext) {
+    var formContext = eContext.getFormContext();
+    formContext.ui.controls.forEach(function (control, i) {
+        if (control && control.getDisabled && !control.getDisabled()) {
+            control.setDisabled(true);
+        }
     });
 }
