@@ -70,6 +70,7 @@ interface Incident_Relationships {
   incident_existingcase?: Incident_Result[] | null;
   incident_master_incident?: Incident_Result[] | null;
   incident_parent_incident?: Incident_Result[] | null;
+  incident_ts_serviceofenforcementactions?: ts_serviceofenforcementaction_Result[] | null;
   msdyn_FunctionalLocation?: msdyn_FunctionalLocation_Result | null;
   msdyn_incident_msdyn_customerasset?: msdyn_customerasset_Result[] | null;
   msdyn_incident_msdyn_workorder_ServiceRequest?: msdyn_workorder_Result[] | null;
@@ -79,6 +80,7 @@ interface Incident_Relationships {
   ts_Incident_Incident_ts_operationcontact?: ts_operationcontact_Result[] | null;
   ts_Incident_ts_operationcontact_ts_operation?: ts_operationcontact_Result[] | null;
   ts_incident_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
+  ts_ts_enforcementaction_ts_Case_incident?: ts_EnforcementAction_Result[] | null;
 }
 interface Incident extends Incident_Base, Incident_Relationships {
   contractdetailid_bind$contractdetails?: string | null;
@@ -320,6 +322,7 @@ interface Incident_Expand {
   incident_existingcase: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { incident_existingcase: Incident_Result[] }>;
   incident_master_incident: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { incident_master_incident: Incident_Result[] }>;
   incident_parent_incident: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { incident_parent_incident: Incident_Result[] }>;
+  incident_ts_serviceofenforcementactions: WebExpand<Incident_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { incident_ts_serviceofenforcementactions: ts_serviceofenforcementaction_Result[] }>;
   masterid: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { masterid: Incident_Result }>;
   modifiedby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
@@ -337,6 +340,7 @@ interface Incident_Expand {
   ts_Incident_Incident_ts_operationcontact: WebExpand<Incident_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_Incident_Incident_ts_operationcontact: ts_operationcontact_Result[] }>;
   ts_Incident_ts_operationcontact_ts_operation: WebExpand<Incident_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_Incident_ts_operationcontact_ts_operation: ts_operationcontact_Result[] }>;
   ts_incident_ts_workordercreationwizard: WebExpand<Incident_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_incident_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
+  ts_ts_enforcementaction_ts_Case_incident: WebExpand<Incident_Expand, ts_EnforcementAction_Select, ts_EnforcementAction_Filter, { ts_ts_enforcementaction_ts_Case_incident: ts_EnforcementAction_Result[] }>;
 }
 interface Incident_FormattedResult {
   accountid_formatted?: string;
@@ -464,6 +468,7 @@ interface Incident_RelatedMany {
   incident_existingcase: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   incident_master_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   incident_parent_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  incident_ts_serviceofenforcementactions: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
   msdyn_incident_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_incident_msdyn_workorder_ServiceRequest: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_incident_msdyn_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
@@ -472,6 +477,7 @@ interface Incident_RelatedMany {
   ts_Incident_Incident_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_Incident_ts_operationcontact_ts_operation: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_incident_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
+  ts_ts_enforcementaction_ts_Case_incident: WebMappingRetrieve<ts_EnforcementAction_Select,ts_EnforcementAction_Expand,ts_EnforcementAction_Filter,ts_EnforcementAction_Fixed,ts_EnforcementAction_Result,ts_EnforcementAction_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   incidents: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
