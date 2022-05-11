@@ -169,6 +169,7 @@ declare namespace Form.incident.Main {
       get(name: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
       get(name: "CaseResearch_LinkControl"): Xrm.BaseControl;
       get(name: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
+      get(name: "Enforcement_Actions"): Xrm.SubGridControl<"ts_enforcementaction">;
       get(name: "FailedServiceTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
@@ -311,6 +312,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
     getControl(controlName: "CaseResearch_LinkControl"): Xrm.BaseControl;
     getControl(controlName: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
+    getControl(controlName: "Enforcement_Actions"): Xrm.SubGridControl<"ts_enforcementaction">;
     getControl(controlName: "FailedServiceTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;

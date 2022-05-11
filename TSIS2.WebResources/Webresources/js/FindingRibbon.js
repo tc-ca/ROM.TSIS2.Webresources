@@ -305,28 +305,15 @@ function isTCBusinessUnit() {
 }
 
 function FindingsReport(findingGUIDs, primaryControl) {
-    //Confirm all selected findings have a final enforcement action
     const gridContext = primaryControl.getControl("subgrid_findings");
     const findingRows = gridContext.getGrid().getSelectedRows();
 
-    let allFindingsHaveFinalEnforcementAction = true;
-    let aFindingIsProtectedB = false;
-    findingRows.forEach(function (findingRow) {
-        const findingFinalEnforcementAction = findingRow.getAttribute("ts_finalenforcementaction").getValue();
-        const findingSensitivityLevel = findingRow.getAttribute("ts_sensitivitylevel").getValue();
-        if (findingFinalEnforcementAction == null) {
-            allFindingsHaveFinalEnforcementAction = false;
-        }
-        if (findingSensitivityLevel == 717750001) {  //Protected B
-            aFindingIsProtectedB = true;
-        }
-    });
+    //Confirm all selected findings have a final enforcement action
+    let { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB } = checkIfAllFindingsHaveEnforcementAction(findingRows);
 
     //If a finding does not have a final enforcement action, open an alert dialog
     if (!allFindingsHaveFinalEnforcementAction) {
-        var alertStrings = { confirmButtonLabel: "OK", text: "One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action to create a Findings Report.", title: "Missing Final Enforcement Action" };
-        var alertOptions = { height: 200, width: 300 };
-        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+        showAlertDialog("One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action to create a Findings Report.", "Missing Final Enforcement Action");
         return;
     }
 
@@ -410,5 +397,154 @@ function FindingsReport(findingGUIDs, primaryControl) {
         });
 }
 
+function checkIfAllFindingsHaveEnforcementAction(findingRows) {
+    let allFindingsHaveFinalEnforcementAction = true;
+    let aFindingIsProtectedB = false;
+    findingRows.forEach(function (findingRow) {
+        const findingFinalEnforcementAction = findingRow.getAttribute("ts_finalenforcementaction").getValue();
+        const findingSensitivityLevel = findingRow.getAttribute("ts_sensitivitylevel").getValue();
+        if (findingFinalEnforcementAction == null) {
+            allFindingsHaveFinalEnforcementAction = false;
+        }
+        if (findingSensitivityLevel == 717750001) { //Protected B
+            aFindingIsProtectedB = true;
+        }
+    });
+    return { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB };
+}
 
+function getHighestEnforcementActionFromFindings(findingRows){
+    let highestFinalEnforcementAction = findingRows.get(0).getAttribute("ts_finalenforcementaction").getValue();
+    findingRows.forEach(function (findingRow) {
+        const findingFinalEnforcementAction = findingRow.getAttribute("ts_finalenforcementaction").getValue();
+        if(findingFinalEnforcementAction > highestFinalEnforcementAction){
+            highestFinalEnforcementAction = findingFinalEnforcementAction;
+        }
+    });
+    return highestFinalEnforcementAction;
+}
+
+function getTypeOfEnforcementActionValueInEntity(highestEnforcementAction){
+    switch (highestEnforcementAction) {
+        case 717750001 /* VerbalWarning */:
+            return 717750000 /* VerbalWarning */;
+        case 717750002 /* WrittenWarning */:
+            return 717750001 /* WrittenWarning */;
+        case 717750003 /* AMPLevel120ofMaximum */:
+        case 717750004 /* AMPLevel250ofMaximum */:
+        case 717750005 /* AMPLevel3100ofMaximum */:
+            return 717750005 /* ReferraltoREU */;
+        case 717750006 /* SuspensionofCAD */:
+            return 717750003 /* ReferraltoREU */;
+        case 717750007 /* CancellationofCAD */:
+                return 717750004 /* ReferraltoREU */;
+        case 717750008 /* ReferraltoREU */:
+            return 717750002 /* ReferraltoREU */;
+        case 000000000 /* TBD: what enforcement action in finding make the Enforcement Action type to penal process */:
+            return 717750006 /* Penal Process */;
+        default:
+            return 717750006;
+    }
+}
+
+function showAlertDialog(text, title){
+    var alertStrings = { confirmButtonLabel: "OK", text: text, title: title };
+    var alertOptions = { height: 200, width: 300 };
+    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+}
+
+function createEnforcementAction(findingGUIDs, primaryControl){
+    const gridContext = primaryControl.getControl("subgrid_findings");
+    const findingRows = gridContext.getGrid().getSelectedRows();
+
+    //Confirm all selected findings have a final enforcement action
+    let { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB } = checkIfAllFindingsHaveEnforcementAction(findingRows);
+
+    //If a finding does not have a final enforcement action, open an alert dialog
+    if (!allFindingsHaveFinalEnforcementAction) {
+        showAlertDialog("One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action to create a Findings Report.", "Missing Final Enforcement Action");
+        return;
+    }
+
+    const caseId = primaryControl.data.entity.getId().slice(1, -1);
+
+    //Retrieve highest enforcement action of findings
+    let highestEnforcementAction = getHighestEnforcementActionFromFindings(findingRows);
+
+
+    var data =
+    {
+        "ts_name": "",
+        "ts_Case@odata.bind": `/incidents(${caseId})`,
+        "ts_type": getTypeOfEnforcementActionValueInEntity(highestEnforcementAction)
+    }
+
+    Xrm.WebApi.createRecord("ts_enforcementaction", data).then(
+
+        function (newEnforcementAction) {
+            let relatedFindings = [];
+            for (let findingGUID of findingGUIDs) {
+                relatedFindings.push({
+                    entityType: "ovs_finding",
+                    id: findingGUID
+                });
+            }
+            const oneToManyAssociateRequest = {
+                getMetadata: () => ({
+                    boundParameter: null,
+                    parameterTypes: {},
+                    operationType: 2,
+                    operationName: "Associate"
+                }),
+
+                relationship: "ts_EnforcementAction_ts_EnforcementAction",
+
+                target: {
+                    entityType: "ts_enforcementaction",
+                    id: newEnforcementAction.id
+                },
+
+                relatedEntities: relatedFindings
+            }
+
+            Xrm.WebApi.online.execute(oneToManyAssociateRequest).then(
+                (success) => {
+                    console.log("Success", success);
+
+                    var pageInput = {
+                        pageType: "entityrecord",
+                        entityName: "ts_enforcementaction",
+                        entityId: newEnforcementAction.id
+                    };
+                    var navigationOptions = {
+                        target: 2,
+                        height: {
+                            value: 100, unit: "%"
+                        },
+                        width: {
+                            value: 80, unit: "%"
+                        },
+                        position: 1
+                    };
+                    //Open finding record
+                    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                        function success() {
+                            // Run code on success
+                            primaryControl.getControl("Enforcement_Actions").refresh();
+                        },
+                        function error() {
+                            // Handle errors
+                        }
+                    );
+                },
+                (error) => {
+                    console.log("Error", error);
+                }
+            )
+        },
+        function (error) {
+            console.log(error.message);
+        });
+    
+}
 
