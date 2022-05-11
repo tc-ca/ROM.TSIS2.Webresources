@@ -205,6 +205,9 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         var detailBox = document.createElement("textarea");
         var characterCount = document.createElement("span");
 
+        if (survey.mode == "display") {
+            detailBox.readOnly = true;
+        }
         /* Append HTML elements to each other forming the following structure
 
         <div id="detailContainer">
@@ -281,6 +284,13 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     survey
         .onAfterRenderQuestion
         .add(function (survey, options) {
+            if (options.question.getType() == "finding") {
+                if (survey.mode == "display") {
+                    var comment = options.htmlElement.getElementsByTagName('textarea')[0];
+                    comment.readOnly = true;
+                }
+            }
+
             //Load JSON definition, find current question, check hasDetail
             if (options.question.hasDetail != true) return;
             appendDetailToQuestion(survey, options);
