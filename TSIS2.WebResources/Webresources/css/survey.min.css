@@ -639,11 +639,17 @@ td.td.sv_matrix_cell .sv_qbln {
 }
 
 .inspectorComments {
-    border: 1px solid red !important;
+    outline: none !important;
+    border-color: red;
+    box-shadow: 0 0 15px red;
 }
 
 .sq-title-finding {
-    color: red !important;
+    color: #FFFF00 !important;
+    background-color:red;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    padding: 1px 1px 1px 10px;
 }
 
 .findingDropdown {
