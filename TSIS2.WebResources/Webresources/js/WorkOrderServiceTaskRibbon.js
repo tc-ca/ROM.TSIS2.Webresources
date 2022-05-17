@@ -612,7 +612,7 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences){
                         });
                     }
 
-                    //Send custom parameters to fill the "to" lookup field in the email form (contact_id0, contactname_0 and contactfilter_0)
+                    //Send custom parameters to fill the "to" and "regardingobjetid" lookup fields in the email form 
                     var pageInput = {
                         pageType: "entityrecord",
                         entityName: "email",
@@ -625,7 +625,9 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences){
                             cc: "",
                             bcc: "",
                             subject: "Subject test",
-                            description: "testblabla"
+                            description: "testblabla",
+                            regardingobjectid_0: SelectedControlSelectedItemReferences[0].Id,
+                            regardingobjectname_0: SelectedControlSelectedItemReferences[0].Name,
                         }
                     };
                     var navigationOptions = {
