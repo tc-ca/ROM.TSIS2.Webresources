@@ -639,7 +639,7 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences){
                         position: 1
                     };
                     //Open finding record
-                    Xrm.Navigation.navigateTo(pageInput).then(
+                    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
                         function success() {
                             // Run code on success
                         },

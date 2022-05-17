@@ -50,6 +50,7 @@ interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships 
   activityid_serviceappointment_bind$serviceappointments?: string | null;
   activityid_socialactivity_bind$socialactivities?: string | null;
   activityid_task_bind$tasks?: string | null;
+  activityid_ts_interview_activityparty_bind$ts_interviews?: string | null;
   activityid_ts_serviceofenforcementaction_activityparty_bind$ts_serviceofenforcementactions?: string | null;
   partyid_account_bind$accounts?: string | null;
   partyid_bulkoperation_bind$bulkoperations?: string | null;

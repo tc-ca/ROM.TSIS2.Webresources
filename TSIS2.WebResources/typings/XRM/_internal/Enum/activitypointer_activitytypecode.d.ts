@@ -20,4 +20,5 @@ declare const enum activitypointer_activitytypecode {
   BookingAlert = 10256,
   ActivityrecordfortheTeamschat = 10769,
   ServiceOfEnforcementAction = 10837,
+  Interview = 10853,
 }
