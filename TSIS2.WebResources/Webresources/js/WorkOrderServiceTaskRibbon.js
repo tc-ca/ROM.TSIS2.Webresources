@@ -594,15 +594,17 @@ async function generateCustomSurveyDefinition(provisions) {
 }
 
 function SendReport(primaryControl, SelectedControlSelectedItemReferences){
-
+    //If WOTask has a result of "Pass"
     Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", SelectedControlSelectedItemReferences[0].Id, "?$select=msdyn_inspectiontaskresult").then(
         function success(result) {
            if(result.msdyn_inspectiontaskresult == 192350000){
             var operationId = primaryControl.getAttribute("ovs_operationid").getValue()[0].id; 
             let fetchXml = '<fetch version="1.0" mapping="logical"><entity name="contact"><attribute name="contactid" /><attribute name="fullname"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><link-entity name="ts_operationcontact" from="ts_contact" to="contactid"><link-entity name="ovs_operation" from="ovs_operationid" to="ts_operation"><filter><condition attribute="ovs_operationid" operator="eq" value="' + operationId +'"/></filter></link-entity></link-entity></entity></fetch>';
 
+            //Retrieve contact that are associated with the operations in the WO
             Xrm.WebApi.retrieveMultipleRecords("contact", "?fetchXml=" + encodeURIComponent(fetchXml)).then(
                 function success(result) {
+                    //Create filter that will subsequently be used to filter the "to" field in the email form if there are moe than 1 contact
                     let contactFilter = "";
                     if(result.entities.length > 1){
                         result.entities.forEach(function (contact) {
@@ -610,14 +612,16 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences){
                         });
                     }
 
+                    //Send custom parameters to fill the "to" lookup field in the email form (contact_id0, contactname_0 and contactfilter_0)
                     var pageInput = {
                         pageType: "entityrecord",
                         entityName: "email",
                         data: {
                             from: "",
-                            contactid_0: result.entities[0].contactid, 
+                            contactid_0: result.entities[0].contactid,
                             contactname_0: result.entities[0].fullname,
                             contactfilter_0 : contactFilter,
+                            operationid_0 : operationId, 
                             cc: "",
                             bcc: "",
                             subject: "Subject test",
