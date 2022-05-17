@@ -47,7 +47,7 @@
                 var workOrderId = regarding[0].id;
                 var caseId;
                 let conditionWorkOrderCase = "";
-                let conditionProgramTeam = "";              
+                let conditionProgramTeam = "";
 
                 //Filter Contacts by Program team 
                 let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
@@ -66,7 +66,7 @@
                 ].join("");
                 currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
                 await Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-
+                    //Set condition depending on Business Unit
                     let userBusinessUnitName = result.entities[0].name;
                     if (userBusinessUnitName.startsWith("Aviation")) {
                         conditionProgramTeam = "<condition attribute='name' operator = 'like' value='%Aviation%'/>";
@@ -93,15 +93,13 @@
                     "</fetch>"
                 ].join("");
                 caseFetchXML = "?fetchXml=" + encodeURIComponent(caseFetchXML);
-                // let contactsCase;
-                let CaseId = await Xrm.WebApi.retrieveMultipleRecords("incident", caseFetchXML);
 
-                if (CaseId.entities[0] != null) {
-                    caseId = CaseId.entities[0].incidentid;
+                let caseRelated = await Xrm.WebApi.retrieveMultipleRecords("incident", caseFetchXML);
+
+                if (caseRelated.entities[0] != null) {
+                    caseId = caseRelated.entities[0].incidentid;
                 }
-              
-
-
+                //Retrieve Contacts from Case
                 let caseContactsFetchXML = [
                     "<fetch top='50'>",
                     "  <entity name='contact'>",
@@ -122,13 +120,14 @@
                 ].join("");
 
                 caseContactsFetchXML = "?fetchXml=" + encodeURIComponent(caseContactsFetchXML);
-                let promiseCaseContacts = await Xrm.WebApi.retrieveMultipleRecords("contact", caseContactsFetchXML);
-                if (promiseCaseContacts.entities[0] != null) {
-                    promiseCaseContacts.entities.forEach(contact => {
-                            conditionWorkOrderCase += "<condition attribute='contactid' operator='eq' value='" + contact.contactid + "'/>";
-                        });
-                    }            
-
+                let caseContacts = await Xrm.WebApi.retrieveMultipleRecords("contact", caseContactsFetchXML);
+                //Set condition string
+                if (caseContacts.entities[0] != null) {
+                    caseContacts.entities.forEach(contact => {
+                        conditionWorkOrderCase += "<condition attribute='contactid' operator='eq' value='" + contact.contactid + "'/>";
+                    });
+                }
+                //Retrieve Contacts from work Order
                 var workOrderContactsFetchXML = [
                     "<fetch top='50'>",
                     "  <entity name='contact'>",
@@ -149,32 +148,30 @@
                 ].join("");
                 workOrderContactsFetchXML = "?fetchXml=" + encodeURIComponent(workOrderContactsFetchXML);
 
-                let promiseWorkOrderContacts = await Xrm.WebApi.retrieveMultipleRecords("contact", workOrderContactsFetchXML);
-                if (promiseWorkOrderContacts.entities[0] != null) {
-                    promiseWorkOrderContacts.entities.forEach(contact => {
-                            conditionWorkOrderCase += "<condition attribute='contactid' operator='eq' value='" + contact.contactid + "'/>";
-                        });
-                    }
-         
+                let workOrderContacts = await Xrm.WebApi.retrieveMultipleRecords("contact", workOrderContactsFetchXML);
+                //Set condition string
+                if (workOrderContacts.entities[0] != null) {
+                    workOrderContacts.entities.forEach(contact => {
+                        conditionWorkOrderCase += "<condition attribute='contactid' operator='eq' value='" + contact.contactid + "'/>";
+                    });
+                }
 
-                
-                    var operationalContactsfetchXML;
-                    //Set custom view for To, CC, BCC fields
-                    if (conditionWorkOrderCase != "") {
-                        operationalContactsfetchXML = "<fetch distinct='false'><entity name='contact'><attribute name='fullname'/><attribute name='contactid'/><order attribute='fullname' descending='false'/><filter type='and'><filter type='or'>" + conditionWorkOrderCase + "</filter></filter></entity></fetch>";
+                var operationalContactsfetchXML;
+                //Set custom view for To, CC, BCC fields
+                if (conditionWorkOrderCase != "") {
+                    operationalContactsfetchXML = "<fetch distinct='false'><entity name='contact'><attribute name='fullname'/><attribute name='contactid'/><order attribute='fullname' descending='false'/><filter type='and'><filter type='or'>" + conditionWorkOrderCase + "</filter></filter></entity></fetch>";
 
-                    }
-                    else {
-                        operationalContactsfetchXML = "<fetch></fetch>";
+                }
+                else {
+                    operationalContactsfetchXML = "<fetch></fetch>";
 
-                    }
-
-                    const viewOperationalContactId = '{ed2e1b6b-2cb1-ec11-983e-002248adef00}';
-                    const layoutXmlContact = '<grid name="resultset" object="2" jump="lastname" select="1" icon="1" preview="1"><row name="result" id="contactid"><cell name="fullname" width="300"/></row></grid >';
-                    const viewDisplayName = "Contact";
-                    formContext.getControl("to").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
-                    formContext.getControl("cc").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
-                    formContext.getControl("bcc").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
+                }
+                const viewOperationalContactId = '{ed2e1b6b-2cb1-ec11-983e-002248adef00}';
+                const layoutXmlContact = '<grid name="resultset" object="2" jump="lastname" select="1" icon="1" preview="1"><row name="result" id="contactid"><cell name="fullname" width="300"/></row></grid >';
+                const viewDisplayName = "Contact";
+                formContext.getControl("to").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
+                formContext.getControl("cc").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
+                formContext.getControl("bcc").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
             }
         }
     }

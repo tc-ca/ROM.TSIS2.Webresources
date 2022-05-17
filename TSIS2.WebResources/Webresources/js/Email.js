@@ -80,7 +80,7 @@ var ROM;
         Email.onLoad = onLoad;
         function filterContacts(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, regarding, workOrderId, caseId, conditionWorkOrderCase_1, conditionProgramTeam_1, userId, currentUserBusinessUnitFetchXML, caseFetchXML, CaseId, caseContactsFetchXML, promiseCaseContacts, workOrderContactsFetchXML, promiseWorkOrderContacts, operationalContactsfetchXML, viewOperationalContactId, layoutXmlContact, viewDisplayName;
+                var formContext, regarding, workOrderId, caseId, conditionWorkOrderCase_1, conditionProgramTeam_1, userId, currentUserBusinessUnitFetchXML, caseFetchXML, caseRelated, caseContactsFetchXML, caseContacts, workOrderContactsFetchXML, workOrderContacts, operationalContactsfetchXML, viewOperationalContactId, layoutXmlContact, viewDisplayName;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -107,6 +107,7 @@ var ROM;
                             ].join("");
                             currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+                                    //Set condition depending on Business Unit
                                     var userBusinessUnitName = result.entities[0].name;
                                     if (userBusinessUnitName.startsWith("Aviation")) {
                                         conditionProgramTeam_1 = "<condition attribute='name' operator = 'like' value='%Aviation%'/>";
@@ -136,9 +137,9 @@ var ROM;
                             caseFetchXML = "?fetchXml=" + encodeURIComponent(caseFetchXML);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("incident", caseFetchXML)];
                         case 2:
-                            CaseId = _a.sent();
-                            if (CaseId.entities[0] != null) {
-                                caseId = CaseId.entities[0].incidentid;
+                            caseRelated = _a.sent();
+                            if (caseRelated.entities[0] != null) {
+                                caseId = caseRelated.entities[0].incidentid;
                             }
                             caseContactsFetchXML = [
                                 "<fetch top='50'>",
@@ -161,9 +162,10 @@ var ROM;
                             caseContactsFetchXML = "?fetchXml=" + encodeURIComponent(caseContactsFetchXML);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("contact", caseContactsFetchXML)];
                         case 3:
-                            promiseCaseContacts = _a.sent();
-                            if (promiseCaseContacts.entities[0] != null) {
-                                promiseCaseContacts.entities.forEach(function (contact) {
+                            caseContacts = _a.sent();
+                            //Set condition string
+                            if (caseContacts.entities[0] != null) {
+                                caseContacts.entities.forEach(function (contact) {
                                     conditionWorkOrderCase_1 += "<condition attribute='contactid' operator='eq' value='" + contact.contactid + "'/>";
                                 });
                             }
@@ -188,9 +190,10 @@ var ROM;
                             workOrderContactsFetchXML = "?fetchXml=" + encodeURIComponent(workOrderContactsFetchXML);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("contact", workOrderContactsFetchXML)];
                         case 4:
-                            promiseWorkOrderContacts = _a.sent();
-                            if (promiseWorkOrderContacts.entities[0] != null) {
-                                promiseWorkOrderContacts.entities.forEach(function (contact) {
+                            workOrderContacts = _a.sent();
+                            //Set condition string
+                            if (workOrderContacts.entities[0] != null) {
+                                workOrderContacts.entities.forEach(function (contact) {
                                     conditionWorkOrderCase_1 += "<condition attribute='contactid' operator='eq' value='" + contact.contactid + "'/>";
                                 });
                             }
