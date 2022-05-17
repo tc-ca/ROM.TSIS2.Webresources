@@ -80,14 +80,14 @@ var ROM;
         Email.onLoad = onLoad;
         function filterContacts(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, regarding, workOrderId, caseId, conditionWorkOrderCase_1, conditionProgramTeam_1, userId, currentUserBusinessUnitFetchXML, caseCon, caseFetchXML, CaseId, caseContactsFetchXML, promiseCaseContacts, workOrderContactsFetchXML, promiseWorkOrderContacts, operationalContactsfetchXML, viewOperationalContactId, layoutXmlContact, viewDisplayName;
+                var formContext, regarding, workOrderId, caseId, conditionWorkOrderCase_1, conditionProgramTeam_1, userId, currentUserBusinessUnitFetchXML, caseFetchXML, CaseId, caseContactsFetchXML, promiseCaseContacts, workOrderContactsFetchXML, promiseWorkOrderContacts, operationalContactsfetchXML, viewOperationalContactId, layoutXmlContact, viewDisplayName;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             formContext = eContext.getFormContext();
                             regarding = formContext.getAttribute("regardingobjectid").getValue();
-                            if (!(regarding !== null)) return [3 /*break*/, 4];
-                            if (!(regarding[0].entityType === "msdyn_workorder")) return [3 /*break*/, 4];
+                            if (!(regarding !== null)) return [3 /*break*/, 5];
+                            if (!(regarding[0].entityType === "msdyn_workorder")) return [3 /*break*/, 5];
                             workOrderId = regarding[0].id;
                             conditionWorkOrderCase_1 = "";
                             conditionProgramTeam_1 = "";
@@ -106,18 +106,20 @@ var ROM;
                                 "</fetch>",
                             ].join("");
                             currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-                            Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-                                var userBusinessUnitName = result.entities[0].name;
-                                if (userBusinessUnitName.startsWith("Aviation")) {
-                                    conditionProgramTeam_1 = "<condition attribute='owningbusinessunitname' operator='like' value='Aviation%'/>";
-                                }
-                                if (userBusinessUnitName.startsWith("Intermodal")) {
-                                    conditionProgramTeam_1 = "<condition attribute='owningbusinessunitname' operator='like' value='Intermodal%'/>";
-                                }
-                                if (userBusinessUnitName.startsWith("Transport")) {
-                                    conditionProgramTeam_1 = "<condition attribute='owningbusinessunitname' operator='like' value='Aviation%'/><condition attribute='owningbusinessunitname' operator='like' value='Aviation%'/>";
-                                }
-                            });
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+                                    var userBusinessUnitName = result.entities[0].name;
+                                    if (userBusinessUnitName.startsWith("Aviation")) {
+                                        conditionProgramTeam_1 = "<condition attribute='name' operator = 'like' value='%Aviation%'/>";
+                                    }
+                                    if (userBusinessUnitName.startsWith("Intermodal")) {
+                                        conditionProgramTeam_1 = "<condition attribute='name' operator='like' value='%Intermodal%'/>";
+                                    }
+                                    if (userBusinessUnitName.startsWith("Transport")) {
+                                        conditionProgramTeam_1 = "<condition attribute='name' operator = 'like' value='%Aviation%'/><condition attribute='name' operator='like' value='%Intermodal%'/><condition attribute='name' operator='like' value='%Transport%'/>";
+                                    }
+                                })];
+                        case 1:
+                            _a.sent();
                             caseFetchXML = [
                                 "<fetch distinct='true'>",
                                 "<entity name='incident'>",
@@ -133,34 +135,32 @@ var ROM;
                             ].join("");
                             caseFetchXML = "?fetchXml=" + encodeURIComponent(caseFetchXML);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("incident", caseFetchXML)];
-                        case 1:
+                        case 2:
                             CaseId = _a.sent();
                             if (CaseId.entities[0] != null) {
                                 caseId = CaseId.entities[0].incidentid;
                             }
                             caseContactsFetchXML = [
-                                "<fetch distinct='true'>",
-                                "<entity name ='contact'>",
-                                "<attribute name='fullname'/>",
-                                "<attribute name='contactid'/>",
-                                "<link-entity name='ts_operationcontact' from='ts_contact' to='contactid' link-type='inner' alias='fj'>",
-                                "<filter type='or'>",
+                                "<fetch top='50'>",
+                                "  <entity name='contact'>",
+                                "    <link-entity name='ts_operationcontact' from='ts_contact' to='contactid'>",
+                                "      <link-entity name='ts_incident_ts_operationcontact' from='ts_operationcontactid' to='ts_operationcontactid' intersect='true'>",
+                                "        <filter>",
+                                "          <condition attribute='incidentid' operator='eq' value='", caseId, "'/>",
+                                "        </filter>",
+                                "      </link-entity>",
+                                "    </link-entity>",
+                                "    <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit'>",
+                                "      <filter type='or'>",
                                 conditionProgramTeam_1,
-                                "</filter>",
-                                "<link-entity name='ts_incident_ts_operationcontact' from='ts_operationcontactid' to='ts_operationcontactid' visible='false' intersect='true'>",
-                                "<link-entity name='incident' from='incidentid' to='incidentid' alias='fs'>",
-                                "<filter type='and'>",
-                                "<condition attribute='incidentid' operator='eq' value='", caseId, "'/>",
-                                "</filter>",
-                                "</link-entity>",
-                                "</link-entity>",
-                                "</link-entity>",
-                                "</entity>",
-                                "</fetch>"
+                                "      </filter>",
+                                "    </link-entity>",
+                                "  </entity>",
+                                "</fetch>",
                             ].join("");
                             caseContactsFetchXML = "?fetchXml=" + encodeURIComponent(caseContactsFetchXML);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("contact", caseContactsFetchXML)];
-                        case 2:
+                        case 3:
                             promiseCaseContacts = _a.sent();
                             if (promiseCaseContacts.entities[0] != null) {
                                 promiseCaseContacts.entities.forEach(function (contact) {
@@ -168,28 +168,26 @@ var ROM;
                                 });
                             }
                             workOrderContactsFetchXML = [
-                                "<fetch distinct='true'>",
-                                "<entity name ='contact'>",
-                                "<attribute name='fullname'/>",
-                                "<attribute name='contactid'/>",
-                                "<link-entity name='ts_operationcontact' from='ts_contact' to='contactid' link-type='inner' alias='fj'>",
-                                "<filter type='or'>",
+                                "<fetch top='50'>",
+                                "  <entity name='contact'>",
+                                "    <link-entity name='ts_operationcontact' from='ts_contact' to='contactid'>",
+                                "      <link-entity name='ts_msdyn_workorder_ts_operationcontact' from='ts_operationcontactid' to='ts_operationcontactid' intersect='true'>",
+                                "        <filter>",
+                                "          <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+                                "        </filter>",
+                                "      </link-entity>",
+                                "    </link-entity>",
+                                "    <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit'>",
+                                "      <filter type='or'>",
                                 conditionProgramTeam_1,
-                                "</filter>",
-                                "<link-entity name='ts_msdyn_workorder_ts_operationcontact' from='ts_operationcontactid' to='ts_operationcontactid' visible='false' intersect='true'>",
-                                "<link-entity name='msdyn_workorder' from='msdyn_workorderid' to='msdyn_workorderid' alias='fk'>",
-                                "<filter type='and'>",
-                                "<condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
-                                "</filter>",
-                                "</link-entity>",
-                                "</link-entity>",
-                                "</link-entity>",
-                                "</entity>",
-                                "</fetch>"
+                                "      </filter>",
+                                "    </link-entity>",
+                                "  </entity>",
+                                "</fetch>",
                             ].join("");
                             workOrderContactsFetchXML = "?fetchXml=" + encodeURIComponent(workOrderContactsFetchXML);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("contact", workOrderContactsFetchXML)];
-                        case 3:
+                        case 4:
                             promiseWorkOrderContacts = _a.sent();
                             if (promiseWorkOrderContacts.entities[0] != null) {
                                 promiseWorkOrderContacts.entities.forEach(function (contact) {
@@ -209,8 +207,8 @@ var ROM;
                             formContext.getControl("to").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
                             formContext.getControl("cc").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
                             formContext.getControl("bcc").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
-                            _a.label = 4;
-                        case 4: return [2 /*return*/];
+                            _a.label = 5;
+                        case 5: return [2 /*return*/];
                     }
                 });
             });

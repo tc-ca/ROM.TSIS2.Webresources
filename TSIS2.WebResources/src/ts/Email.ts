@@ -65,20 +65,19 @@
                     "</fetch>",
                 ].join("");
                 currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-                Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+                await Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
 
                     let userBusinessUnitName = result.entities[0].name;
                     if (userBusinessUnitName.startsWith("Aviation")) {
-                        conditionProgramTeam = "<condition attribute='owningbusinessunitname' operator='like' value='Aviation%'/>";
+                        conditionProgramTeam = "<condition attribute='name' operator = 'like' value='%Aviation%'/>";
                     }
                     if (userBusinessUnitName.startsWith("Intermodal")) {
-                        conditionProgramTeam = "<condition attribute='owningbusinessunitname' operator='like' value='Intermodal%'/>";
+                        conditionProgramTeam = "<condition attribute='name' operator='like' value='%Intermodal%'/>";
                     }
                     if (userBusinessUnitName.startsWith("Transport")) {
-                        conditionProgramTeam = "<condition attribute='owningbusinessunitname' operator='like' value='Aviation%'/><condition attribute='owningbusinessunitname' operator='like' value='Aviation%'/>";
+                        conditionProgramTeam = "<condition attribute='name' operator = 'like' value='%Aviation%'/><condition attribute='name' operator='like' value='%Intermodal%'/><condition attribute='name' operator='like' value='%Transport%'/>";
                     }
                 });
-                var caseCon;
                 //Retrieve Case related to Work Order
                 let caseFetchXML = [
                     "<fetch distinct='true'>",
@@ -99,29 +98,27 @@
 
                 if (CaseId.entities[0] != null) {
                     caseId = CaseId.entities[0].incidentid;
-                    }
+                }
               
 
-                //Retrieve Contacts related to Case
+
                 let caseContactsFetchXML = [
-                    "<fetch distinct='true'>",
-                    "<entity name ='contact'>",
-                    "<attribute name='fullname'/>",
-                    "<attribute name='contactid'/>",
-                    "<link-entity name='ts_operationcontact' from='ts_contact' to='contactid' link-type='inner' alias='fj'>",
-                    "<filter type='or'>",
+                    "<fetch top='50'>",
+                    "  <entity name='contact'>",
+                    "    <link-entity name='ts_operationcontact' from='ts_contact' to='contactid'>",
+                    "      <link-entity name='ts_incident_ts_operationcontact' from='ts_operationcontactid' to='ts_operationcontactid' intersect='true'>",
+                    "        <filter>",
+                    "          <condition attribute='incidentid' operator='eq' value='", caseId, "'/>",
+                    "        </filter>",
+                    "      </link-entity>",
+                    "    </link-entity>",
+                    "    <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit'>",
+                    "      <filter type='or'>",
                     conditionProgramTeam,
-                    "</filter>",
-                    "<link-entity name='ts_incident_ts_operationcontact' from='ts_operationcontactid' to='ts_operationcontactid' visible='false' intersect='true'>",
-                    "<link-entity name='incident' from='incidentid' to='incidentid' alias='fs'>",
-                    "<filter type='and'>",
-                    "<condition attribute='incidentid' operator='eq' value='", caseId, "'/>",
-                    "</filter>",
-                    "</link-entity>",
-                    "</link-entity>",
-                    "</link-entity>",
-                    "</entity>",
-                    "</fetch>"
+                    "      </filter>",
+                    "    </link-entity>",
+                    "  </entity>",
+                    "</fetch>",
                 ].join("");
 
                 caseContactsFetchXML = "?fetchXml=" + encodeURIComponent(caseContactsFetchXML);
@@ -132,26 +129,23 @@
                         });
                     }            
 
-                //Retrieve Contacts related to Work Order
-                let workOrderContactsFetchXML = [
-                    "<fetch distinct='true'>",
-                    "<entity name ='contact'>",
-                    "<attribute name='fullname'/>",
-                    "<attribute name='contactid'/>",
-                    "<link-entity name='ts_operationcontact' from='ts_contact' to='contactid' link-type='inner' alias='fj'>",
-                    "<filter type='or'>",
+                var workOrderContactsFetchXML = [
+                    "<fetch top='50'>",
+                    "  <entity name='contact'>",
+                    "    <link-entity name='ts_operationcontact' from='ts_contact' to='contactid'>",
+                    "      <link-entity name='ts_msdyn_workorder_ts_operationcontact' from='ts_operationcontactid' to='ts_operationcontactid' intersect='true'>",
+                    "        <filter>",
+                    "          <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+                    "        </filter>",
+                    "      </link-entity>",
+                    "    </link-entity>",
+                    "    <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit'>",
+                    "      <filter type='or'>",
                     conditionProgramTeam,
-                    "</filter>",
-                    "<link-entity name='ts_msdyn_workorder_ts_operationcontact' from='ts_operationcontactid' to='ts_operationcontactid' visible='false' intersect='true'>",
-                    "<link-entity name='msdyn_workorder' from='msdyn_workorderid' to='msdyn_workorderid' alias='fk'>",
-                    "<filter type='and'>",
-                    "<condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
-                    "</filter>",
-                    "</link-entity>",
-                    "</link-entity>",
-                    "</link-entity>",
-                    "</entity>",
-                    "</fetch>"
+                    "      </filter>",
+                    "    </link-entity>",
+                    "  </entity>",
+                    "</fetch>",
                 ].join("");
                 workOrderContactsFetchXML = "?fetchXml=" + encodeURIComponent(workOrderContactsFetchXML);
 
