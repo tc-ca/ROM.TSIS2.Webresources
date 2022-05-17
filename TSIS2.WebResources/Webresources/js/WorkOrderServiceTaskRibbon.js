@@ -13,6 +13,8 @@ if (lang == 1036) {
     workOrderServiceTaskDetailsLocalized = "Détails de la tâche du service d'ordre de travail";
     workOrderServiceTaskLocalized = "Tâche de service de l'ordre de travail";
     workOrderDetailsLocalized = "Détails de l'ordre de travail";
+    workOrderServiceTaskResultNotPassedTitle = "Tâche de service - Sélection invalide"
+    workOrderServiceTaskResultNotPassedText = "La tâche de service selectionné doit avoir « Passé » comme résultat";
     
 } else {
     markCompleteValidationTextLocalized = "All required questions in the questionnaire must be answered before the questionnaire can be Marked Complete.";
@@ -22,6 +24,8 @@ if (lang == 1036) {
     workOrderServiceTaskDetailsLocalized = "Work Order Service Task Details";
     workOrderServiceTaskLocalized = "Work Order Service Task";
     workOrderDetailsLocalized = "Work Order Details";
+    workOrderServiceTaskResultNotPassedTitle = "Work Order Service Task - Invalid selection"
+    workOrderServiceTaskResultNotPassedText = "The selected work order service task must have a result of \"Pass\" ";
 }
 
 //Used to hide buttons for ROM - Inspectors unless they're an admin as well
@@ -587,4 +591,74 @@ async function generateCustomSurveyDefinition(provisions) {
     };
     survey.pages[0].elements = questionArray;
     return survey;
+}
+
+function SendReport(primaryControl, SelectedControlSelectedItemReferences){
+
+    Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", SelectedControlSelectedItemReferences[0].Id, "?$select=msdyn_inspectiontaskresult").then(
+        function success(result) {
+           if(result.msdyn_inspectiontaskresult == 192350000){
+            var operationId = primaryControl.getAttribute("ovs_operationid").getValue()[0].id; 
+            let fetchXml = '<fetch version="1.0" mapping="logical"><entity name="contact"><attribute name="contactid" /><attribute name="fullname"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><link-entity name="ts_operationcontact" from="ts_contact" to="contactid"><link-entity name="ovs_operation" from="ovs_operationid" to="ts_operation"><filter><condition attribute="ovs_operationid" operator="eq" value="' + operationId +'"/></filter></link-entity></link-entity></entity></fetch>';
+
+            Xrm.WebApi.retrieveMultipleRecords("contact", "?fetchXml=" + encodeURIComponent(fetchXml)).then(
+                function success(result) {
+                    let contactFilter = "";
+                    if(result.entities.length > 1){
+                        result.entities.forEach(function (contact) {
+                            contactFilter += '<condition attribute="contactid" operator="eq" value="' + contact.contactid + '"/>';
+                        });
+                    }
+
+                    var pageInput = {
+                        pageType: "entityrecord",
+                        entityName: "email",
+                        data: {
+                            from: "",
+                            contactid_0: result.entities[0].contactid, 
+                            contactname_0: result.entities[0].fullname,
+                            contactfilter_0 : contactFilter,
+                            cc: "",
+                            bcc: "",
+                            subject: "Subject test",
+                            description: "testblabla"
+                        }
+                    };
+                    var navigationOptions = {
+                        target: 2,
+                        height: {
+                            value: 100, unit: "%"
+                        },
+                        width: {
+                            value: 80, unit: "%"
+                        },
+                        position: 1
+                    };
+                    //Open finding record
+                    Xrm.Navigation.navigateTo(pageInput).then(
+                        function success() {
+                            // Run code on success
+                        },
+                        function error() {
+                            // Handle errors
+                        }
+                    );
+                },
+                function (error) {
+                }
+            );
+           }
+           else{
+                var alertStrings = {
+                    text: workOrderServiceTaskResultNotPassedText,
+                    title: workOrderServiceTaskResultNotPassedTitle
+                };
+                var alertOptions = { height: 200, width: 450 };
+                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+           }
+        },
+        function (error) {
+        }
+    );
+    return false;
 }
