@@ -28,6 +28,7 @@ interface ovs_operation_Base extends WebEntity {
 }
 interface ovs_operation_Relationships {
   ovs_operation_Appointments?: Appointment_Result[] | null;
+  ovs_operation_Emails?: Email_Result[] | null;
   ovs_operation_PostFollows?: PostFollow_Result[] | null;
   ovs_operation_ServiceAppointments?: ServiceAppointment_Result[] | null;
   ovs_operation_connections1?: Connection_Result[] | null;
@@ -140,6 +141,7 @@ interface ovs_operation_Expand {
   modifiedby: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ovs_operation_Appointments: WebExpand<ovs_operation_Expand, Appointment_Select, Appointment_Filter, { ovs_operation_Appointments: Appointment_Result[] }>;
+  ovs_operation_Emails: WebExpand<ovs_operation_Expand, Email_Select, Email_Filter, { ovs_operation_Emails: Email_Result[] }>;
   ovs_operation_PostFollows: WebExpand<ovs_operation_Expand, PostFollow_Select, PostFollow_Filter, { ovs_operation_PostFollows: PostFollow_Result[] }>;
   ovs_operation_ServiceAppointments: WebExpand<ovs_operation_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ovs_operation_ServiceAppointments: ServiceAppointment_Result[] }>;
   ovs_operation_connections1: WebExpand<ovs_operation_Expand, Connection_Select, Connection_Filter, { ovs_operation_connections1: Connection_Result[] }>;
@@ -215,6 +217,7 @@ interface ovs_operation_RelatedOne {
 }
 interface ovs_operation_RelatedMany {
   ovs_operation_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  ovs_operation_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   ovs_operation_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   ovs_operation_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   ovs_operation_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;

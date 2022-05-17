@@ -155,6 +155,9 @@ interface Account_Base extends WebEntity {
 }
 interface Account_Relationships {
   Account_Appointments?: Appointment_Result[] | null;
+  Account_Email_EmailSender?: Email_Result[] | null;
+  Account_Email_SendersAccount?: Email_Result[] | null;
+  Account_Emails?: Email_Result[] | null;
   Account_ServiceAppointments?: ServiceAppointment_Result[] | null;
   CreatedAccount_BulkOperationLogs2?: BulkOperationLog_Result[] | null;
   SourceAccount_BulkOperationLogs?: BulkOperationLog_Result[] | null;
@@ -585,6 +588,9 @@ interface Account_Filter {
 }
 interface Account_Expand {
   Account_Appointments: WebExpand<Account_Expand, Appointment_Select, Appointment_Filter, { Account_Appointments: Appointment_Result[] }>;
+  Account_Email_EmailSender: WebExpand<Account_Expand, Email_Select, Email_Filter, { Account_Email_EmailSender: Email_Result[] }>;
+  Account_Email_SendersAccount: WebExpand<Account_Expand, Email_Select, Email_Filter, { Account_Email_SendersAccount: Email_Result[] }>;
+  Account_Emails: WebExpand<Account_Expand, Email_Select, Email_Filter, { Account_Emails: Email_Result[] }>;
   Account_ServiceAppointments: WebExpand<Account_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { Account_ServiceAppointments: ServiceAppointment_Result[] }>;
   CreatedAccount_BulkOperationLogs2: WebExpand<Account_Expand, BulkOperationLog_Select, BulkOperationLog_Filter, { CreatedAccount_BulkOperationLogs2: BulkOperationLog_Result[] }>;
   SourceAccount_BulkOperationLogs: WebExpand<Account_Expand, BulkOperationLog_Select, BulkOperationLog_Filter, { SourceAccount_BulkOperationLogs: BulkOperationLog_Result[] }>;
@@ -758,6 +764,9 @@ interface Account_RelatedOne {
 }
 interface Account_RelatedMany {
   Account_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  Account_Email_EmailSender: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
+  Account_Email_SendersAccount: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
+  Account_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   Account_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   CreatedAccount_BulkOperationLogs2: WebMappingRetrieve<BulkOperationLog_Select,BulkOperationLog_Expand,BulkOperationLog_Filter,BulkOperationLog_Fixed,BulkOperationLog_Result,BulkOperationLog_FormattedResult>;
   SourceAccount_BulkOperationLogs: WebMappingRetrieve<BulkOperationLog_Select,BulkOperationLog_Expand,BulkOperationLog_Filter,BulkOperationLog_Fixed,BulkOperationLog_Result,BulkOperationLog_FormattedResult>;

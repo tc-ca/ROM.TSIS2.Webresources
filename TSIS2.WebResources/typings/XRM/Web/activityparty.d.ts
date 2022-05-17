@@ -19,6 +19,7 @@ interface ActivityParty_Base extends WebEntity {
 }
 interface ActivityParty_Relationships {
   activityid_appointment?: Appointment_Result | null;
+  activityid_email?: Email_Result | null;
   activityid_incidentresolution?: IncidentResolution_Result | null;
   activityid_serviceappointment?: ServiceAppointment_Result | null;
   activityid_ts_serviceofenforcementaction_activityparty?: ts_serviceofenforcementaction_Result | null;
@@ -122,6 +123,7 @@ interface ActivityParty_Filter {
 }
 interface ActivityParty_Expand {
   activityid_appointment: WebExpand<ActivityParty_Expand, Appointment_Select, Appointment_Filter, { activityid_appointment: Appointment_Result }>;
+  activityid_email: WebExpand<ActivityParty_Expand, Email_Select, Email_Filter, { activityid_email: Email_Result }>;
   activityid_incidentresolution: WebExpand<ActivityParty_Expand, IncidentResolution_Select, IncidentResolution_Filter, { activityid_incidentresolution: IncidentResolution_Result }>;
   activityid_serviceappointment: WebExpand<ActivityParty_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { activityid_serviceappointment: ServiceAppointment_Result }>;
   activityid_ts_serviceofenforcementaction_activityparty: WebExpand<ActivityParty_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { activityid_ts_serviceofenforcementaction_activityparty: ts_serviceofenforcementaction_Result }>;
@@ -149,6 +151,7 @@ interface ActivityParty_Result extends ActivityParty_Base, ActivityParty_Relatio
 }
 interface ActivityParty_RelatedOne {
   activityid_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  activityid_email: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   activityid_incidentresolution: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   activityid_serviceappointment: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   activityid_ts_serviceofenforcementaction_activityparty: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;

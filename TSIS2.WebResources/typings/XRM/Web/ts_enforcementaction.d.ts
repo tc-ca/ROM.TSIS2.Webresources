@@ -28,6 +28,7 @@ interface ts_EnforcementAction_Relationships {
   ts_EnforcementAction_ts_EnforcementAction?: ovs_Finding_Result[] | null;
   ts_VerbalWarningGivenTo?: Contact_Result | null;
   ts_enforcementaction_Appointments?: Appointment_Result[] | null;
+  ts_enforcementaction_Emails?: Email_Result[] | null;
   ts_enforcementaction_ServiceAppointments?: ServiceAppointment_Result[] | null;
   ts_enforcementaction_ts_serviceofenforcementactions?: ts_serviceofenforcementaction_Result[] | null;
 }
@@ -126,6 +127,7 @@ interface ts_EnforcementAction_Expand {
   ts_EnforcementAction_ts_EnforcementAction: WebExpand<ts_EnforcementAction_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_EnforcementAction_ts_EnforcementAction: ovs_Finding_Result[] }>;
   ts_VerbalWarningGivenTo: WebExpand<ts_EnforcementAction_Expand, Contact_Select, Contact_Filter, { ts_VerbalWarningGivenTo: Contact_Result }>;
   ts_enforcementaction_Appointments: WebExpand<ts_EnforcementAction_Expand, Appointment_Select, Appointment_Filter, { ts_enforcementaction_Appointments: Appointment_Result[] }>;
+  ts_enforcementaction_Emails: WebExpand<ts_EnforcementAction_Expand, Email_Select, Email_Filter, { ts_enforcementaction_Emails: Email_Result[] }>;
   ts_enforcementaction_ServiceAppointments: WebExpand<ts_EnforcementAction_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ts_enforcementaction_ServiceAppointments: ServiceAppointment_Result[] }>;
   ts_enforcementaction_ts_serviceofenforcementactions: WebExpand<ts_EnforcementAction_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { ts_enforcementaction_ts_serviceofenforcementactions: ts_serviceofenforcementaction_Result[] }>;
 }
@@ -183,6 +185,7 @@ interface ts_EnforcementAction_RelatedOne {
 interface ts_EnforcementAction_RelatedMany {
   ts_EnforcementAction_ts_EnforcementAction: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_enforcementaction_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  ts_enforcementaction_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   ts_enforcementaction_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   ts_enforcementaction_ts_serviceofenforcementactions: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
 }

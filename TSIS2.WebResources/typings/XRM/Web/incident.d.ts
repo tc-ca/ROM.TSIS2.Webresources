@@ -59,6 +59,7 @@ interface Incident_Base extends WebEntity {
 }
 interface Incident_Relationships {
   Incident_Appointments?: Appointment_Result[] | null;
+  Incident_Emails?: Email_Result[] | null;
   Incident_IncidentResolutions?: IncidentResolution_Result[] | null;
   Incident_ServiceAppointments?: ServiceAppointment_Result[] | null;
   customerid_account?: Account_Result | null;
@@ -308,6 +309,7 @@ interface Incident_Filter {
 }
 interface Incident_Expand {
   Incident_Appointments: WebExpand<Incident_Expand, Appointment_Select, Appointment_Filter, { Incident_Appointments: Appointment_Result[] }>;
+  Incident_Emails: WebExpand<Incident_Expand, Email_Select, Email_Filter, { Incident_Emails: Email_Result[] }>;
   Incident_IncidentResolutions: WebExpand<Incident_Expand, IncidentResolution_Select, IncidentResolution_Filter, { Incident_IncidentResolutions: IncidentResolution_Result[] }>;
   Incident_ServiceAppointments: WebExpand<Incident_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { Incident_ServiceAppointments: ServiceAppointment_Result[] }>;
   createdby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
@@ -459,6 +461,7 @@ interface Incident_RelatedOne {
 }
 interface Incident_RelatedMany {
   Incident_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  Incident_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   Incident_IncidentResolutions: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   Incident_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   incident_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;

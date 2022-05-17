@@ -34,13 +34,6 @@ declare namespace Form.contact.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_5 extends Xrm.SectionCollectionBase {
-        get(name: "tab_5_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
       interface tab_6_Operation_Contacts extends Xrm.SectionCollectionBase {
         get(name: "tab_6_Operation Contacts"): Xrm.PageSection;
         get(name: string): undefined;
@@ -114,7 +107,6 @@ declare namespace Form.contact.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "ActionCards"): Xrm.BaseControl;
-      get(name: "Connections_Operations"): Xrm.SubGridControl<"connection">;
       get(name: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
       get(name: "Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
       get(name: "TalkingPoints"): Xrm.BaseControl;
@@ -185,7 +177,6 @@ declare namespace Form.contact.Main {
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: "documents_sharepoint"): Xrm.PageTab<Tabs.documents_sharepoint>;
-      get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6_Operation_Contacts"): Xrm.PageTab<Tabs.tab_6_Operation_Contacts>;
       get(name: "urstab"): Xrm.PageTab<Tabs.urstab>;
       get(name: string): undefined;
@@ -245,7 +236,6 @@ declare namespace Form.contact.Main {
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ActionCards"): Xrm.BaseControl;
-    getControl(controlName: "Connections_Operations"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
     getControl(controlName: "Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
     getControl(controlName: "TalkingPoints"): Xrm.BaseControl;

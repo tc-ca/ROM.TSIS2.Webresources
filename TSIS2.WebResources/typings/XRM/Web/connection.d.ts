@@ -22,6 +22,7 @@ interface Connection_Relationships {
   record1id_account?: Account_Result | null;
   record1id_appointment?: Appointment_Result | null;
   record1id_contact?: Contact_Result | null;
+  record1id_email?: Email_Result | null;
   record1id_incident?: Incident_Result | null;
   record1id_msdyn_customerasset?: msdyn_customerasset_Result | null;
   record1id_msdyn_functionallocation?: msdyn_FunctionalLocation_Result | null;
@@ -34,6 +35,7 @@ interface Connection_Relationships {
   record2id_account?: Account_Result | null;
   record2id_appointment?: Appointment_Result | null;
   record2id_contact?: Contact_Result | null;
+  record2id_email?: Email_Result | null;
   record2id_incident?: Incident_Result | null;
   record2id_msdyn_customerasset?: msdyn_customerasset_Result | null;
   record2id_msdyn_functionallocation?: msdyn_FunctionalLocation_Result | null;
@@ -381,6 +383,7 @@ interface Connection_Expand {
   record1id_account: WebExpand<Connection_Expand, Account_Select, Account_Filter, { record1id_account: Account_Result }>;
   record1id_appointment: WebExpand<Connection_Expand, Appointment_Select, Appointment_Filter, { record1id_appointment: Appointment_Result }>;
   record1id_contact: WebExpand<Connection_Expand, Contact_Select, Contact_Filter, { record1id_contact: Contact_Result }>;
+  record1id_email: WebExpand<Connection_Expand, Email_Select, Email_Filter, { record1id_email: Email_Result }>;
   record1id_incident: WebExpand<Connection_Expand, Incident_Select, Incident_Filter, { record1id_incident: Incident_Result }>;
   record1id_msdyn_customerasset: WebExpand<Connection_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { record1id_msdyn_customerasset: msdyn_customerasset_Result }>;
   record1id_msdyn_functionallocation: WebExpand<Connection_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { record1id_msdyn_functionallocation: msdyn_FunctionalLocation_Result }>;
@@ -393,6 +396,7 @@ interface Connection_Expand {
   record2id_account: WebExpand<Connection_Expand, Account_Select, Account_Filter, { record2id_account: Account_Result }>;
   record2id_appointment: WebExpand<Connection_Expand, Appointment_Select, Appointment_Filter, { record2id_appointment: Appointment_Result }>;
   record2id_contact: WebExpand<Connection_Expand, Contact_Select, Contact_Filter, { record2id_contact: Contact_Result }>;
+  record2id_email: WebExpand<Connection_Expand, Email_Select, Email_Filter, { record2id_email: Email_Result }>;
   record2id_incident: WebExpand<Connection_Expand, Incident_Select, Incident_Filter, { record2id_incident: Incident_Result }>;
   record2id_msdyn_customerasset: WebExpand<Connection_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { record2id_msdyn_customerasset: msdyn_customerasset_Result }>;
   record2id_msdyn_functionallocation: WebExpand<Connection_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { record2id_msdyn_functionallocation: msdyn_FunctionalLocation_Result }>;
@@ -455,6 +459,7 @@ interface Connection_RelatedOne {
   record1id_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   record1id_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   record1id_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  record1id_email: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   record1id_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   record1id_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   record1id_msdyn_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
@@ -467,6 +472,7 @@ interface Connection_RelatedOne {
   record2id_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   record2id_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   record2id_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  record2id_email: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   record2id_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   record2id_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   record2id_msdyn_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
