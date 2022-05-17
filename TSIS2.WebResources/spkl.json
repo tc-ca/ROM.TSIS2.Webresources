@@ -190,6 +190,11 @@
               "description": "ROM TSIS 2.0 Assessment Score Threshold Scripts"
             },
             {
+              "uniquename": "ts_/js/Email.js",
+              "file": "js\\Email.js",
+              "description": "ROM TSIS 2.0 Email Scripts"
+            },
+            {
               "uniquename": "ovs_/js/Finding.js",
               "file": "js\\Finding.js",
               "description": "ROM TSIS 2.0 Finding Scripts"
