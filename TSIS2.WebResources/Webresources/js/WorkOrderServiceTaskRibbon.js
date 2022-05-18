@@ -624,8 +624,8 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences){
                             operationid_0 : operationId, 
                             cc: "",
                             bcc: "",
-                            subject: "Subject test",
-                            description: "testblabla",
+                            subject: "Positive report",
+                            description: "",
                             regardingobjectid_0: SelectedControlSelectedItemReferences[0].Id,
                             regardingobjectname_0: SelectedControlSelectedItemReferences[0].Name,
                         }

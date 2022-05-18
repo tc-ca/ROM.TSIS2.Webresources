@@ -4,9 +4,9 @@
 
         //Filter contacts to only show the ones that are linked to the operations (from WorkOrderServiceTaskRibbon)
         //@ts-ignore
-        if(formContext.data.attributes.get("contactid_0") != null && formContext.data.attributes.get("contactname_0") != null){
+        if(formContext.data.attributes.get("contactid_0").getValue() != null && formContext.data.attributes.get("contactname_0").getValue() != null){
            //@ts-ignore
-            if(formContext.data.attributes.get("contactfilter_0") != null && formContext.data.attributes.get("contactfilter_0")?.getValue() != null && formContext.data.attributes.get("operationid_0") != null && formContext.data.attributes.get("operationid_0")?.getValue()){
+            if(formContext.data.attributes.get("contactfilter_0").getValue() != null && formContext.data.attributes.get("operationid_0").getValue() != null){
 
                 const viewIdActivity = '{E1F2D73A-0EDC-4B6C-913E-454864A1CEE6}';
                 const entityNameActivity = "contact";
