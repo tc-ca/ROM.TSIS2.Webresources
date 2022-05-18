@@ -439,43 +439,45 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
                     function(result){
                         for (var i = 0; i < result.length; i++) {
                             var req = new XMLHttpRequest();
+                            req.open("POST", formContext.context.getClientUrl() + "/api/data/v9.0/" + "systemusers" + "(" + result[i].id.replace(/({|})/g,'') + ")" + "/Microsoft.Dynamics.CRM.AddUserToRecordTeam", (i != 0));
 
-                            req.open("POST", formContext.context.getClientUrl() + "/api/data/v9.0/" + "systemusers" + "(" + result[i].id.replace(/({|})/g,'') + ")" + "/Microsoft.Dynamics.CRM.AddUserToRecordTeam");
-                            req.setRequestHeader("Content-Type", "application/json");
-                            req.setRequestHeader("Accept", "application/json");
-                            req.setRequestHeader("OData-MaxVersion", "4.0");
-                            req.setRequestHeader("OData-Version", "4.0");
-
-                            let payload = 
-                            {
-                                "entity": {
-                                    "@odata.type": "Microsoft.Dynamics.CRM.systemuser",
-                                    "systemuserid": result[i].id.replace(/({|})/g,'')
-                                },
-                                "Record": {
-                                    "@odata.type": "Microsoft.Dynamics.CRM.msdyn_workorder",
-                                    "msdyn_workorderid": currentWorkOrderRecordId
-                                },
-                                "TeamTemplate": {
-                                    "@odata.type": "Microsoft.Dynamics.CRM.teamtemplate",
-                                    "teamtemplateid": "bddf1d45-706d-ec11-8f8e-0022483da5aa"
-                                }
-                            }
-
-                            req.onreadystatechange = function() {
-                                if (this.readyState === 4) {
-                                    req.onreadystatechange = null;
-                                    if (this.status === 200) {
-                                        selectedControl.refresh();
-                                    } else {
-                                        var alertStrings = { text: req.status + " " + req.responseText };
-                                        var alertOptions = { height: 120, width: 260 };
-                                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                                req.setRequestHeader("Content-Type", "application/json");
+                                req.setRequestHeader("Accept", "application/json");
+                                req.setRequestHeader("OData-MaxVersion", "4.0");
+                                req.setRequestHeader("OData-Version", "4.0");
+    
+                                let payload = 
+                                {
+                                    "entity": {
+                                        "@odata.type": "Microsoft.Dynamics.CRM.systemuser",
+                                        "systemuserid": result[i].id.replace(/({|})/g,'')
+                                    },
+                                    "Record": {
+                                        "@odata.type": "Microsoft.Dynamics.CRM.msdyn_workorder",
+                                        "msdyn_workorderid": currentWorkOrderRecordId
+                                    },
+                                    "TeamTemplate": {
+                                        "@odata.type": "Microsoft.Dynamics.CRM.teamtemplate",
+                                        "teamtemplateid": "bddf1d45-706d-ec11-8f8e-0022483da5aa"
                                     }
                                 }
-                            };
-                            req.send(JSON.stringify(payload));
+    
+                                req.onreadystatechange = function() {
+                                    if (this.readyState === 4) {
+                                        req.onreadystatechange = null;
+                                        if (this.status === 200) {    
+                                        } else {
+                                            var alertStrings = { text: req.status + " " + req.responseText };
+                                            var alertOptions = { height: 120, width: 260 };
+                                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                                        }
+                                    }
+                                };
+                                req.send(JSON.stringify(payload));
+                            
+                            
                         }
+                        selectedControl.refresh();
                     },
                     function(error){
                         showErrorMessageAlert(error);
