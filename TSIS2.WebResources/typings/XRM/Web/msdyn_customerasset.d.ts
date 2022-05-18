@@ -29,6 +29,7 @@ interface msdyn_customerasset_Relationships {
   msdyn_CustomerAssetCategory?: msdyn_customerassetcategory_Result | null;
   msdyn_FunctionalLocation?: msdyn_FunctionalLocation_Result | null;
   msdyn_customerasset_Appointments?: Appointment_Result[] | null;
+  msdyn_customerasset_Emails?: Email_Result[] | null;
   msdyn_customerasset_ServiceAppointments?: ServiceAppointment_Result[] | null;
   msdyn_customerasset_connections1?: Connection_Result[] | null;
   msdyn_customerasset_connections2?: Connection_Result[] | null;
@@ -156,6 +157,7 @@ interface msdyn_customerasset_Expand {
   msdyn_FunctionalLocation: WebExpand<msdyn_customerasset_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_FunctionalLocation: msdyn_FunctionalLocation_Result }>;
   msdyn_account: WebExpand<msdyn_customerasset_Expand, Account_Select, Account_Filter, { msdyn_account: Account_Result }>;
   msdyn_customerasset_Appointments: WebExpand<msdyn_customerasset_Expand, Appointment_Select, Appointment_Filter, { msdyn_customerasset_Appointments: Appointment_Result[] }>;
+  msdyn_customerasset_Emails: WebExpand<msdyn_customerasset_Expand, Email_Select, Email_Filter, { msdyn_customerasset_Emails: Email_Result[] }>;
   msdyn_customerasset_ServiceAppointments: WebExpand<msdyn_customerasset_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_customerasset_ServiceAppointments: ServiceAppointment_Result[] }>;
   msdyn_customerasset_connections1: WebExpand<msdyn_customerasset_Expand, Connection_Select, Connection_Filter, { msdyn_customerasset_connections1: Connection_Result[] }>;
   msdyn_customerasset_connections2: WebExpand<msdyn_customerasset_Expand, Connection_Select, Connection_Filter, { msdyn_customerasset_connections2: Connection_Result[] }>;
@@ -236,6 +238,7 @@ interface msdyn_customerasset_RelatedOne {
 }
 interface msdyn_customerasset_RelatedMany {
   msdyn_customerasset_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  msdyn_customerasset_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   msdyn_customerasset_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   msdyn_customerasset_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_customerasset_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;

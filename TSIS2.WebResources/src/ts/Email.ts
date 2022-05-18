@@ -1,6 +1,46 @@
 ﻿namespace ROM.Email {
-    export function onLoad(eContext: Xrm.ExecutionContext<any, any>) {
-        var formContext = <Form.email.Main.Email>eContext.getFormContext();
+    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.email.Main.Email>eContext.getFormContext();
+
+        //Filter contacts to only show the ones that are linked to the operations (from WorkOrderServiceTaskRibbon)
+        //@ts-ignore
+        if(formContext.data.attributes.get("contactid_0") != null && formContext.data.attributes.get("contactname_0") != null){
+           //@ts-ignore
+            if(formContext.data.attributes.get("contactfilter_0") != null && formContext.data.attributes.get("contactfilter_0")?.getValue() != null && formContext.data.attributes.get("operationid_0") != null && formContext.data.attributes.get("operationid_0")?.getValue()){
+
+                const viewIdActivity = '{E1F2D73A-0EDC-4B6C-913E-454864A1CEE6}';
+                const entityNameActivity = "contact";
+                const viewDisplayNameActivity = "Filtered Contacts";
+                //@ts-ignore
+                const fetchXmlActivity = '<fetch distinct="true" returntotalrecordcount="true" page="1"><entity name="contact"><attribute name="fullname"/><attribute name="contactid"/><filter type="or">' + formContext.data.attributes.get("contactfilter_0")?.getValue() + '</filter><link-entity name="ts_operationcontact" from="ts_contact" to="contactid"><link-entity name="ovs_operation" from="ovs_operationid" to="ts_operation"><attribute name="ovs_operationid"/><filter><condition attribute="ovs_operationid" operator="eq" value="' + formContext.data.attributes.get("operationid_0")?.getValue() + '"/></filter></link-entity><link-entity name="ts_role" from="ts_roleid" to="ts_connectionrole" alias="role"><attribute name="ts_name"/></link-entity></link-entity></entity></fetch>';
+    
+                const layoutXmlActivity = '<grid name="resultset" object="2" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="contactid"><cell name="fullname" width="200" /><cell name="role.ts_name" width="200" /></row></grid>';
+    
+                formContext.getControl("to").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                formContext.getControl("to").setEntityTypes(['contact']);
+            }
+            else{ //Retrieve custom parameters sent from WorkOrderServiceTaskRibbon to fill the "to" lookup field"
+                let contact = new Array();
+                contact[0] = new Object();
+                //@ts-ignore
+                contact[0].id = formContext.data.attributes.get("contactid_0").getValue();
+                //@ts-ignore
+                contact[0].name = formContext.data.attributes.get("contactname_0").getValue();
+                contact[0].entityType = "contact";
+                formContext.getAttribute("to").setValue(contact);
+            }
+
+            //Retrieve custom parameters sent from WorkOrderServiceTaskRibbon to fill the "regardingobjectid" lookup field"
+            let regarding = new Array();
+            regarding[0] = new Object();
+            //@ts-ignore
+            regarding[0].id = formContext.data.attributes.get("regardingobjectid_0").getValue();
+            //@ts-ignore
+            regarding[0].name = formContext.data.attributes.get("regardingobjectname_0").getValue();
+            regarding[0].entityType = "msdyn_workorderservicetask";
+            formContext.getAttribute("regardingobjectid").setValue(regarding);
+        }
+
         var regarding = formContext.getAttribute("regardingobjectid").getValue();
         if (regarding !== null) {
             // Check Regarding entity equals to Work Order

@@ -1,13 +1,6 @@
 declare namespace Form.ovs_operation.Main {
   namespace Information {
     namespace Tabs {
-      interface Connections extends Xrm.SectionCollectionBase {
-        get(name: "tab_3_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
       interface WorkOrders extends Xrm.SectionCollectionBase {
         get(name: "tab_4_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -87,7 +80,6 @@ declare namespace Form.ovs_operation.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "Connections"): Xrm.SubGridControl<"connection">;
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
@@ -125,7 +117,6 @@ declare namespace Form.ovs_operation.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
-      get(name: "Connections"): Xrm.PageTab<Tabs.Connections>;
       get(name: "WorkOrders"): Xrm.PageTab<Tabs.WorkOrders>;
       get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}"): Xrm.PageTab<Tabs.bb4b118ea1c94e04ae4d8c6a177ee56c>;
       get(name: "rel_operations_tab"): Xrm.PageTab<Tabs.rel_operations_tab>;
@@ -161,7 +152,6 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_visualsecurityinspection"): Xrm.OptionSetAttribute<ts_visualsecurityinspection>;
     getAttribute(attributeName: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetAttribute<ts_visualsecurityinspectiondetails>;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;

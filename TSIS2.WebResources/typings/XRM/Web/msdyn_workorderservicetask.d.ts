@@ -32,6 +32,7 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
 }
 interface msdyn_workorderservicetask_Relationships {
   msdyn_workorderservicetask_Appointments?: Appointment_Result[] | null;
+  msdyn_workorderservicetask_Emails?: Email_Result[] | null;
   msdyn_workorderservicetask_ServiceAppointments?: ServiceAppointment_Result[] | null;
   msdyn_workorderservicetask_connections1?: Connection_Result[] | null;
   msdyn_workorderservicetask_connections2?: Connection_Result[] | null;
@@ -180,6 +181,7 @@ interface msdyn_workorderservicetask_Expand {
   msdyn_tasktype: WebExpand<msdyn_workorderservicetask_Expand, msdyn_servicetasktype_Select, msdyn_servicetasktype_Filter, { msdyn_tasktype: msdyn_servicetasktype_Result }>;
   msdyn_workorder: WebExpand<msdyn_workorderservicetask_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_workorder: msdyn_workorder_Result }>;
   msdyn_workorderservicetask_Appointments: WebExpand<msdyn_workorderservicetask_Expand, Appointment_Select, Appointment_Filter, { msdyn_workorderservicetask_Appointments: Appointment_Result[] }>;
+  msdyn_workorderservicetask_Emails: WebExpand<msdyn_workorderservicetask_Expand, Email_Select, Email_Filter, { msdyn_workorderservicetask_Emails: Email_Result[] }>;
   msdyn_workorderservicetask_ServiceAppointments: WebExpand<msdyn_workorderservicetask_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_workorderservicetask_ServiceAppointments: ServiceAppointment_Result[] }>;
   msdyn_workorderservicetask_connections1: WebExpand<msdyn_workorderservicetask_Expand, Connection_Select, Connection_Filter, { msdyn_workorderservicetask_connections1: Connection_Result[] }>;
   msdyn_workorderservicetask_connections2: WebExpand<msdyn_workorderservicetask_Expand, Connection_Select, Connection_Filter, { msdyn_workorderservicetask_connections2: Connection_Result[] }>;
@@ -265,6 +267,7 @@ interface msdyn_workorderservicetask_RelatedOne {
 }
 interface msdyn_workorderservicetask_RelatedMany {
   msdyn_workorderservicetask_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  msdyn_workorderservicetask_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   msdyn_workorderservicetask_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   msdyn_workorderservicetask_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_workorderservicetask_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;

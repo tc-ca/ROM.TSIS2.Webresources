@@ -54,6 +54,7 @@ interface BookableResourceBooking_Relationships {
   BookingStatus?: BookingStatus_Result | null;
   Resource?: BookableResource_Result | null;
   bookableresourcebooking_Appointments?: Appointment_Result[] | null;
+  bookableresourcebooking_Emails?: Email_Result[] | null;
   bookableresourcebooking_IncidentResolutions?: IncidentResolution_Result[] | null;
   bookableresourcebooking_ServiceAppointments?: ServiceAppointment_Result[] | null;
   bookableresourcebooking_ts_serviceofenforcementactions?: ts_serviceofenforcementaction_Result[] | null;
@@ -250,6 +251,7 @@ interface BookableResourceBooking_Expand {
   BookingStatus: WebExpand<BookableResourceBooking_Expand, BookingStatus_Select, BookingStatus_Filter, { BookingStatus: BookingStatus_Result }>;
   Resource: WebExpand<BookableResourceBooking_Expand, BookableResource_Select, BookableResource_Filter, { Resource: BookableResource_Result }>;
   bookableresourcebooking_Appointments: WebExpand<BookableResourceBooking_Expand, Appointment_Select, Appointment_Filter, { bookableresourcebooking_Appointments: Appointment_Result[] }>;
+  bookableresourcebooking_Emails: WebExpand<BookableResourceBooking_Expand, Email_Select, Email_Filter, { bookableresourcebooking_Emails: Email_Result[] }>;
   bookableresourcebooking_IncidentResolutions: WebExpand<BookableResourceBooking_Expand, IncidentResolution_Select, IncidentResolution_Filter, { bookableresourcebooking_IncidentResolutions: IncidentResolution_Result[] }>;
   bookableresourcebooking_ServiceAppointments: WebExpand<BookableResourceBooking_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { bookableresourcebooking_ServiceAppointments: ServiceAppointment_Result[] }>;
   bookableresourcebooking_ts_serviceofenforcementactions: WebExpand<BookableResourceBooking_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { bookableresourcebooking_ts_serviceofenforcementactions: ts_serviceofenforcementaction_Result[] }>;
@@ -362,6 +364,7 @@ interface BookableResourceBooking_RelatedOne {
 }
 interface BookableResourceBooking_RelatedMany {
   bookableresourcebooking_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  bookableresourcebooking_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   bookableresourcebooking_IncidentResolutions: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   bookableresourcebooking_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   bookableresourcebooking_ts_serviceofenforcementactions: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;

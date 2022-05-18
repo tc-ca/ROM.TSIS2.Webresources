@@ -115,8 +115,10 @@ interface SystemUser_Base extends WebEntity {
   yammeruserid?: string | null;
 }
 interface SystemUser_Relationships {
+  SystemUser_Email_EmailSender?: Email_Result[] | null;
   contact_owning_user?: Contact_Result[] | null;
   createdby_connection?: Connection_Result[] | null;
+  email_acceptingentity_systemuser?: Email_Result[] | null;
   lk_PostFollow_createdby?: PostFollow_Result[] | null;
   lk_accountbase_createdby?: Account_Result[] | null;
   lk_accountbase_createdonbehalfby?: Account_Result[] | null;
@@ -144,6 +146,10 @@ interface SystemUser_Relationships {
   lk_contact_modifiedonbehalfby?: Contact_Result[] | null;
   lk_contactbase_createdby?: Contact_Result[] | null;
   lk_contactbase_modifiedby?: Contact_Result[] | null;
+  lk_email_createdby?: Email_Result[] | null;
+  lk_email_createdonbehalfby?: Email_Result[] | null;
+  lk_email_modifiedby?: Email_Result[] | null;
+  lk_email_modifiedonbehalfby?: Email_Result[] | null;
   lk_incidentbase_createdby?: Incident_Result[] | null;
   lk_incidentbase_createdonbehalfby?: Incident_Result[] | null;
   lk_incidentbase_modifiedby?: Incident_Result[] | null;
@@ -257,6 +263,7 @@ interface SystemUser_Relationships {
   user_bookableresourcebooking?: BookableResourceBooking_Result[] | null;
   user_bookingstatus?: BookingStatus_Result[] | null;
   user_bulkoperationlog?: BulkOperationLog_Result[] | null;
+  user_email?: Email_Result[] | null;
   user_incidentresolution?: IncidentResolution_Result[] | null;
   user_msdyn_customerasset?: msdyn_customerasset_Result[] | null;
   user_msdyn_customerassetcategory?: msdyn_customerassetcategory_Result[] | null;
@@ -559,10 +566,12 @@ interface SystemUser_Filter {
   yammeruserid: string;
 }
 interface SystemUser_Expand {
+  SystemUser_Email_EmailSender: WebExpand<SystemUser_Expand, Email_Select, Email_Filter, { SystemUser_Email_EmailSender: Email_Result[] }>;
   contact_owning_user: WebExpand<SystemUser_Expand, Contact_Select, Contact_Filter, { contact_owning_user: Contact_Result[] }>;
   createdby: WebExpand<SystemUser_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
   createdby_connection: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { createdby_connection: Connection_Result[] }>;
   createdonbehalfby: WebExpand<SystemUser_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
+  email_acceptingentity_systemuser: WebExpand<SystemUser_Expand, Email_Select, Email_Filter, { email_acceptingentity_systemuser: Email_Result[] }>;
   lk_PostFollow_createdby: WebExpand<SystemUser_Expand, PostFollow_Select, PostFollow_Filter, { lk_PostFollow_createdby: PostFollow_Result[] }>;
   lk_accountbase_createdby: WebExpand<SystemUser_Expand, Account_Select, Account_Filter, { lk_accountbase_createdby: Account_Result[] }>;
   lk_accountbase_createdonbehalfby: WebExpand<SystemUser_Expand, Account_Select, Account_Filter, { lk_accountbase_createdonbehalfby: Account_Result[] }>;
@@ -590,6 +599,10 @@ interface SystemUser_Expand {
   lk_contact_modifiedonbehalfby: WebExpand<SystemUser_Expand, Contact_Select, Contact_Filter, { lk_contact_modifiedonbehalfby: Contact_Result[] }>;
   lk_contactbase_createdby: WebExpand<SystemUser_Expand, Contact_Select, Contact_Filter, { lk_contactbase_createdby: Contact_Result[] }>;
   lk_contactbase_modifiedby: WebExpand<SystemUser_Expand, Contact_Select, Contact_Filter, { lk_contactbase_modifiedby: Contact_Result[] }>;
+  lk_email_createdby: WebExpand<SystemUser_Expand, Email_Select, Email_Filter, { lk_email_createdby: Email_Result[] }>;
+  lk_email_createdonbehalfby: WebExpand<SystemUser_Expand, Email_Select, Email_Filter, { lk_email_createdonbehalfby: Email_Result[] }>;
+  lk_email_modifiedby: WebExpand<SystemUser_Expand, Email_Select, Email_Filter, { lk_email_modifiedby: Email_Result[] }>;
+  lk_email_modifiedonbehalfby: WebExpand<SystemUser_Expand, Email_Select, Email_Filter, { lk_email_modifiedonbehalfby: Email_Result[] }>;
   lk_incidentbase_createdby: WebExpand<SystemUser_Expand, Incident_Select, Incident_Filter, { lk_incidentbase_createdby: Incident_Result[] }>;
   lk_incidentbase_createdonbehalfby: WebExpand<SystemUser_Expand, Incident_Select, Incident_Filter, { lk_incidentbase_createdonbehalfby: Incident_Result[] }>;
   lk_incidentbase_modifiedby: WebExpand<SystemUser_Expand, Incident_Select, Incident_Filter, { lk_incidentbase_modifiedby: Incident_Result[] }>;
@@ -706,6 +719,7 @@ interface SystemUser_Expand {
   user_bookableresourcebooking: WebExpand<SystemUser_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { user_bookableresourcebooking: BookableResourceBooking_Result[] }>;
   user_bookingstatus: WebExpand<SystemUser_Expand, BookingStatus_Select, BookingStatus_Filter, { user_bookingstatus: BookingStatus_Result[] }>;
   user_bulkoperationlog: WebExpand<SystemUser_Expand, BulkOperationLog_Select, BulkOperationLog_Filter, { user_bulkoperationlog: BulkOperationLog_Result[] }>;
+  user_email: WebExpand<SystemUser_Expand, Email_Select, Email_Filter, { user_email: Email_Result[] }>;
   user_incidentresolution: WebExpand<SystemUser_Expand, IncidentResolution_Select, IncidentResolution_Filter, { user_incidentresolution: IncidentResolution_Result[] }>;
   user_msdyn_customerasset: WebExpand<SystemUser_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { user_msdyn_customerasset: msdyn_customerasset_Result[] }>;
   user_msdyn_customerassetcategory: WebExpand<SystemUser_Expand, msdyn_customerassetcategory_Select, msdyn_customerassetcategory_Filter, { user_msdyn_customerassetcategory: msdyn_customerassetcategory_Result[] }>;
@@ -791,8 +805,10 @@ interface SystemUser_RelatedOne {
   parentsystemuserid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface SystemUser_RelatedMany {
+  SystemUser_Email_EmailSender: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   contact_owning_user: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   createdby_connection: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  email_acceptingentity_systemuser: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   lk_PostFollow_createdby: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   lk_accountbase_createdby: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   lk_accountbase_createdonbehalfby: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
@@ -820,6 +836,10 @@ interface SystemUser_RelatedMany {
   lk_contact_modifiedonbehalfby: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   lk_contactbase_createdby: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   lk_contactbase_modifiedby: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  lk_email_createdby: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
+  lk_email_createdonbehalfby: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
+  lk_email_modifiedby: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
+  lk_email_modifiedonbehalfby: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   lk_incidentbase_createdby: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   lk_incidentbase_createdonbehalfby: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   lk_incidentbase_modifiedby: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
@@ -933,6 +953,7 @@ interface SystemUser_RelatedMany {
   user_bookableresourcebooking: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
   user_bookingstatus: WebMappingRetrieve<BookingStatus_Select,BookingStatus_Expand,BookingStatus_Filter,BookingStatus_Fixed,BookingStatus_Result,BookingStatus_FormattedResult>;
   user_bulkoperationlog: WebMappingRetrieve<BulkOperationLog_Select,BulkOperationLog_Expand,BulkOperationLog_Filter,BulkOperationLog_Fixed,BulkOperationLog_Result,BulkOperationLog_FormattedResult>;
+  user_email: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   user_incidentresolution: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   user_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   user_msdyn_customerassetcategory: WebMappingRetrieve<msdyn_customerassetcategory_Select,msdyn_customerassetcategory_Expand,msdyn_customerassetcategory_Filter,msdyn_customerassetcategory_Fixed,msdyn_customerassetcategory_Result,msdyn_customerassetcategory_FormattedResult>;

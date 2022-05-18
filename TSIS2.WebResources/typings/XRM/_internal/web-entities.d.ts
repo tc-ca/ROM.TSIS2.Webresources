@@ -78,6 +78,29 @@ interface BookableResourceBooking_Create extends BookableResourceBooking {
 }
 interface BookableResourceBooking_Update extends BookableResourceBooking {
 }
+interface Email_Base extends WebEntity {
+}
+interface Email_Fixed extends WebEntity_Fixed {
+  activityid: string;
+}
+interface Email extends Email_Base, Email_Relationships {
+}
+interface Email_Relationships {
+}
+interface Email_Result extends Email_Base, Email_Relationships {
+}
+interface Email_FormattedResult {
+}
+interface Email_Select {
+}
+interface Email_Expand {
+}
+interface Email_Filter {
+}
+interface Email_Create extends Email {
+}
+interface Email_Update extends Email {
+}
 interface Incident_Base extends WebEntity {
 }
 interface Incident_Fixed extends WebEntity_Fixed {

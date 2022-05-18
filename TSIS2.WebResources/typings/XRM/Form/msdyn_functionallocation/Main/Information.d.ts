@@ -8,13 +8,6 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface Connections extends Xrm.SectionCollectionBase {
-        get(name: "tab_5_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
       interface Operations extends Xrm.SectionCollectionBase {
         get(name: "Operations_section_4"): Xrm.PageSection;
         get(name: "tab_4_section_2"): Xrm.PageSection;
@@ -82,7 +75,6 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "Connections"): Xrm.SubGridControl<"connection">;
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Operations"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
@@ -123,7 +115,6 @@ declare namespace Form.msdyn_functionallocation.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "AssetsAndLocationsTab"): Xrm.PageTab<Tabs.AssetsAndLocationsTab>;
-      get(name: "Connections"): Xrm.PageTab<Tabs.Connections>;
       get(name: "Operations"): Xrm.PageTab<Tabs.Operations>;
       get(name: "properties_tab"): Xrm.PageTab<Tabs.properties_tab>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
@@ -161,7 +152,6 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "ts_statusenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_statusstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "Connections"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Operations"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;

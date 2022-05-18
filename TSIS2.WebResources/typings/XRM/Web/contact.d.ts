@@ -176,6 +176,8 @@ interface Contact_Base extends WebEntity {
 }
 interface Contact_Relationships {
   Contact_Appointments?: Appointment_Result[] | null;
+  Contact_Email_EmailSender?: Email_Result[] | null;
+  Contact_Emails?: Email_Result[] | null;
   Contact_ServiceAppointments?: ServiceAppointment_Result[] | null;
   CreatedContact_BulkOperationLogs?: BulkOperationLog_Result[] | null;
   SourceContact_BulkOperationLogs?: BulkOperationLog_Result[] | null;
@@ -621,6 +623,8 @@ interface Contact_Filter {
 }
 interface Contact_Expand {
   Contact_Appointments: WebExpand<Contact_Expand, Appointment_Select, Appointment_Filter, { Contact_Appointments: Appointment_Result[] }>;
+  Contact_Email_EmailSender: WebExpand<Contact_Expand, Email_Select, Email_Filter, { Contact_Email_EmailSender: Email_Result[] }>;
+  Contact_Emails: WebExpand<Contact_Expand, Email_Select, Email_Filter, { Contact_Emails: Email_Result[] }>;
   Contact_ServiceAppointments: WebExpand<Contact_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { Contact_ServiceAppointments: ServiceAppointment_Result[] }>;
   CreatedContact_BulkOperationLogs: WebExpand<Contact_Expand, BulkOperationLog_Select, BulkOperationLog_Filter, { CreatedContact_BulkOperationLogs: BulkOperationLog_Result[] }>;
   SourceContact_BulkOperationLogs: WebExpand<Contact_Expand, BulkOperationLog_Select, BulkOperationLog_Filter, { SourceContact_BulkOperationLogs: BulkOperationLog_Result[] }>;
@@ -765,6 +769,8 @@ interface Contact_RelatedOne {
 }
 interface Contact_RelatedMany {
   Contact_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
+  Contact_Email_EmailSender: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
+  Contact_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   Contact_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   CreatedContact_BulkOperationLogs: WebMappingRetrieve<BulkOperationLog_Select,BulkOperationLog_Expand,BulkOperationLog_Filter,BulkOperationLog_Fixed,BulkOperationLog_Result,BulkOperationLog_FormattedResult>;
   SourceContact_BulkOperationLogs: WebMappingRetrieve<BulkOperationLog_Select,BulkOperationLog_Expand,BulkOperationLog_Filter,BulkOperationLog_Fixed,BulkOperationLog_Result,BulkOperationLog_FormattedResult>;
