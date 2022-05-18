@@ -115,6 +115,8 @@ var ROM;
                         RATEManagerDecisionOnChange(eContext);
                     }
                 }
+                approvingNCATTeamsOnChange(eContext);
+                approvingRATETeamsOnChange(eContext);
                 RATESpecificComplianceHistoryOnChange(eContext);
                 setApprovingTeamsViews(formContext);
                 if (formContext.getAttribute("statuscode").getValue() == 717750002 /* Complete */) {

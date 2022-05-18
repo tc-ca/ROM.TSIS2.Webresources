@@ -89,6 +89,8 @@
                 }
             }
 
+            approvingNCATTeamsOnChange(eContext);
+            approvingRATETeamsOnChange(eContext);
             RATESpecificComplianceHistoryOnChange(eContext);
             setApprovingTeamsViews(formContext); 
 
