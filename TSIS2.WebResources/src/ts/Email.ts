@@ -32,7 +32,7 @@
             }
         }
 
-        //Fill regardingto field
+        //Fill regarding field
         //@ts-ignore
         if(formContext.data.attributes.get("regardingobjectid_0").getValue() != null && formContext.data.attributes.get("regardingobjectname_0").getValue() != null){
             //Retrieve custom parameters sent from WorkOrderServiceTaskRibbon to fill the "regardingobjectid" lookup field"
