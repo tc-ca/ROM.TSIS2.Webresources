@@ -56,7 +56,8 @@ var ROM;
                     formContext.getControl("to").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
                     formContext.getControl("to").setEntityTypes(['contact']);
                 }
-                else { //Retrieve custom parameters sent from WorkOrderServiceTaskRibbon to fill the "to" lookup field"
+                //@ts-ignore
+                else if (formContext.data.attributes.get("contactid_0").getValue() != null) { //Retrieve custom parameters sent from WorkOrderServiceTaskRibbon to fill the "to" lookup field"
                     var contact = new Array();
                     contact[0] = new Object();
                     //@ts-ignore
@@ -66,6 +67,10 @@ var ROM;
                     contact[0].entityType = "contact";
                     formContext.getAttribute("to").setValue(contact);
                 }
+            }
+            //Fill regarding to field
+            //@ts-ignore
+            if (formContext.data.attributes.get("regardingobjectid_0").getValue() != null && formContext.data.attributes.get("regardingobjectname_0").getValue() != null) {
                 //Retrieve custom parameters sent from WorkOrderServiceTaskRibbon to fill the "regardingobjectid" lookup field"
                 var regarding_1 = new Array();
                 regarding_1[0] = new Object();

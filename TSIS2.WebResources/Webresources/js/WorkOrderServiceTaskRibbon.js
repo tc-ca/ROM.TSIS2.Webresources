@@ -604,7 +604,7 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences){
             //Retrieve contact that are associated with the operations in the WO
             Xrm.WebApi.retrieveMultipleRecords("contact", "?fetchXml=" + encodeURIComponent(fetchXml)).then(
                 function success(result) {
-                    //Create filter that will subsequently be used to filter the "to" field in the email form if there are moe than 1 contact
+                    //Create filter that will subsequently be used to filter the "to" field in the email form if there are multiple contacts
                     let contactFilter = "";
                     if(result.entities.length > 1){
                         result.entities.forEach(function (contact) {
@@ -612,14 +612,12 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences){
                         });
                     }
 
-                    //Send custom parameters to fill the "to" and "regardingobjetid" lookup fields in the email form 
+                    //Send custom parameters to fill the "to" and "regardingobjetid" (partylist/lookup) fields in the email form 
                     var pageInput = {
                         pageType: "entityrecord",
                         entityName: "email",
                         data: {
                             from: "",
-                            contactid_0: result.entities[0].contactid,
-                            contactname_0: result.entities[0].fullname,
                             contactfilter_0 : contactFilter,
                             operationid_0 : operationId, 
                             cc: "",
@@ -630,8 +628,15 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences){
                             regardingobjectname_0: SelectedControlSelectedItemReferences[0].Name,
                         }
                     };
+
+                    //Set contact parameters only if they exist
+                    if(result.entities.length > 0){
+                        pageInput.data.contactid_0 = result.entities[0].contactid;
+                        pageInput.data.contactname_0 = result.entities[0].fullname;
+                    }
+
                     var navigationOptions = {
-                        target: 2,
+                        target: 1,
                         height: {
                             value: 100, unit: "%"
                         },
@@ -640,7 +645,8 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences){
                         },
                         position: 1
                     };
-                    //Open finding record
+
+                    //Open new email form
                     Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
                         function success() {
                             // Run code on success
