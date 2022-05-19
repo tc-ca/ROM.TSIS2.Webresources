@@ -948,7 +948,7 @@
             let controlType = control.getControlType();
             let controlName = control.getName();
             if (controlType != "iframe" && controlType != "webresource" && controlType != "subgrid") {
-                if (controlName != "ts_notetostakeholder") {
+                if (controlName != "ts_notetostakeholder" && controlName != "ts_sensitivitylevel") {
                     control.setDisabled!(true);
                 }
             }

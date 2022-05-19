@@ -922,7 +922,7 @@ var ROM;
                 var controlType = control.getControlType();
                 var controlName = control.getName();
                 if (controlType != "iframe" && controlType != "webresource" && controlType != "subgrid") {
-                    if (controlName != "ts_notetostakeholder") {
+                    if (controlName != "ts_notetostakeholder" && controlName != "ts_sensitivitylevel") {
                         control.setDisabled(true);
                     }
                 }
