@@ -136,14 +136,14 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 
 
     // Add a character count and limit to Comment questions.
-    // If the maxLength is the default value of -1, set maxLength to 1000.
+    // If the maxLength is the default value of -1, set maxLength to 2000.
     // No character count if maxLength was set to 0
     survey.onAfterRenderQuestion.add(function (survey, options) {
         if (options.question.getType() !== "comment") return;
         var comment = options.htmlElement.getElementsByTagName('textarea')[0];
         var maxLength = options.question.maxLength;
         if (maxLength == -1) {
-            maxLength = 1000;
+            maxLength = 2000;
         }
         if (maxLength !== 0) {
             comment.setAttribute("maxLength", maxLength);
@@ -240,7 +240,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         detailBox.className = "form-control";
         detailBox.rows = 3;
         detailBox.cols = 50;
-        detailBox.maxLength = 1000;
+        detailBox.maxLength = 2000;
         detailBox.style.resize = "vertical";
         characterCount.style.textAlign = "left";
         detailText.innerHTML = detailLabel;
@@ -257,7 +257,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         //Update character count onKeyUp in detailBox
         var detailBoxOnKeyUpHandler = function () {
             var currLength = detailBox.value.length;
-            characterCount.innerText = (1000 - currLength) + " " + charactersRemainingLocalizedText;
+            characterCount.innerText = (detailBox.maxLength - currLength) + " " + charactersRemainingLocalizedText;
         }
         detailBoxOnKeyUpHandler();
         detailBox.onkeyup = detailBoxOnKeyUpHandler;

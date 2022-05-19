@@ -142,7 +142,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         detailBox.rows = 5;
         detailBox.cols = 50;
         detailBox.readOnly = true;
-        detailBox.maxLength = 1000;
+        detailBox.maxLength = 2000;
         detailBox.style.resize = "vertical";
         detailText.innerHTML = detailLabel;
         content.style.display = "block";
