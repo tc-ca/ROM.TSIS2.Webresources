@@ -295,7 +295,7 @@ var widget = {
         operationsContainer.appendChild(operationsTable);
 
         function updateCharacterCount() {
-            characterCount.innerText = (1000 - comments.value.length) + " " + charactersRemainingLocalizedText;
+            characterCount.innerText = (2000 - comments.value.length) + " " + charactersRemainingLocalizedText;
         }
         updateCharacterCount();
         comments.onkeyup = updateCharacterCount;
