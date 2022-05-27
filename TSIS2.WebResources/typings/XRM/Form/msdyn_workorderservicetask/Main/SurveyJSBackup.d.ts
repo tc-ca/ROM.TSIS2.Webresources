@@ -1,5 +1,5 @@
 declare namespace Form.msdyn_workorderservicetask.Main {
-  namespace SurveyJS {
+  namespace SurveyJSBackup {
     namespace Tabs {
       interface tab_10 extends Xrm.SectionCollectionBase {
         get(name: "tab_10_section_1"): Xrm.PageSection;
@@ -52,19 +52,13 @@ declare namespace Form.msdyn_workorderservicetask.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_questionnaire extends Xrm.SectionCollectionBase {
+      interface tab_summary extends Xrm.SectionCollectionBase {
         get(name: "InspectionFormSection"): Xrm.PageSection;
         get(name: "QuestionnaireFormSection"): Xrm.PageSection;
         get(name: "section_custom_questionnaire"): Xrm.PageSection;
         get(name: "{1932b377-2e7e-4880-9b0e-477cc529b5fe}_section_2"): Xrm.PageSection;
         get(name: "{1932b377-2e7e-4880-9b0e-477cc529b5fe}_section_3"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_summary extends Xrm.SectionCollectionBase {
-        get(name: "tab_newsummary_section_1"): Xrm.PageSection;
+        get(name: "{594a0ad8-a9a3-4509-9e40-52f6789d7512}"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -155,7 +149,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
       get(name: "tab_9"): Xrm.PageTab<Tabs.tab_9>;
       get(name: "tab_files"): Xrm.PageTab<Tabs.tab_files>;
-      get(name: "tab_questionnaire"): Xrm.PageTab<Tabs.tab_questionnaire>;
       get(name: "tab_summary"): Xrm.PageTab<Tabs.tab_summary>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -163,7 +156,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface SurveyJS extends Xrm.PageBase<SurveyJS.Attributes,SurveyJS.Tabs,SurveyJS.Controls> {
+  interface SurveyJSBackup extends Xrm.PageBase<SurveyJSBackup.Attributes,SurveyJSBackup.Tabs,SurveyJSBackup.Controls> {
     getAttribute(attributeName: "msdyn_agreementbookingservicetask"): Xrm.LookupAttribute<"msdyn_agreementbookingservicetask">;
     getAttribute(attributeName: "msdyn_booking"): Xrm.LookupAttribute<"bookableresourcebooking">;
     getAttribute(attributeName: "msdyn_customerasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
