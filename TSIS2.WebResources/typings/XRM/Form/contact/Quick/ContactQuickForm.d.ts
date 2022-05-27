@@ -10,6 +10,7 @@ declare namespace Form.contact.Quick {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
+      get(name: "accountrolecode"): Xrm.OptionSetAttribute<contact_accountrolecode>;
       get(name: "birthdate"): Xrm.DateAttribute | null;
       get(name: "emailaddress1"): Xrm.Attribute<string>;
       get(name: "familystatuscode"): Xrm.OptionSetAttribute<contact_familystatuscode> | null;
@@ -30,6 +31,7 @@ declare namespace Form.contact.Quick {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "accountrolecode"): Xrm.OptionSetControl<contact_accountrolecode>;
       get(name: "emailaddress1"): Xrm.StringControl;
       get(name: "firstname"): Xrm.StringControl;
       get(name: "header_process_birthdate"): Xrm.DateControl | null;
@@ -62,6 +64,7 @@ declare namespace Form.contact.Quick {
     }
   }
   interface ContactQuickForm extends Xrm.PageBase<ContactQuickForm.Attributes,ContactQuickForm.Tabs,ContactQuickForm.Controls> {
+    getAttribute(attributeName: "accountrolecode"): Xrm.OptionSetAttribute<contact_accountrolecode>;
     getAttribute(attributeName: "birthdate"): Xrm.DateAttribute | null;
     getAttribute(attributeName: "emailaddress1"): Xrm.Attribute<string>;
     getAttribute(attributeName: "familystatuscode"): Xrm.OptionSetAttribute<contact_familystatuscode> | null;
@@ -77,6 +80,7 @@ declare namespace Form.contact.Quick {
     getAttribute(attributeName: "telephone1"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "accountrolecode"): Xrm.OptionSetControl<contact_accountrolecode>;
     getControl(controlName: "emailaddress1"): Xrm.StringControl;
     getControl(controlName: "firstname"): Xrm.StringControl;
     getControl(controlName: "header_process_birthdate"): Xrm.DateControl | null;

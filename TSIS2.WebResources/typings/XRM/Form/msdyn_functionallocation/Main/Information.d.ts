@@ -16,6 +16,13 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface WorkOrders extends Xrm.SectionCollectionBase {
+        get(name: "tab_7_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface properties_tab extends Xrm.SectionCollectionBase {
         get(name: "tab_4_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -79,6 +86,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "Operations"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
+      get(name: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_address2"): Xrm.StringControl;
@@ -116,6 +124,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "AssetsAndLocationsTab"): Xrm.PageTab<Tabs.AssetsAndLocationsTab>;
       get(name: "Operations"): Xrm.PageTab<Tabs.Operations>;
+      get(name: "Work Orders"): Xrm.PageTab<Tabs.WorkOrders>;
       get(name: "properties_tab"): Xrm.PageTab<Tabs.properties_tab>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
@@ -156,6 +165,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "Operations"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
+    getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_address2"): Xrm.StringControl;
