@@ -3,6 +3,7 @@ var ROM;
 (function (ROM) {
     var Operation;
     (function (Operation) {
+        var owningBusinessUnit;
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
@@ -91,6 +92,52 @@ var ROM;
             }
         }
         Operation.onSave = onSave;
+        function stakeholderOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var stakeholder = form.getAttribute("ts_stakeholder");
+            var stakeholderValue = stakeholder.getValue();
+            if (stakeholderValue != null) {
+                Xrm.WebApi.retrieveRecord('account', stakeholderValue[0].id, "?$select=_owningbusinessunit_value").then(function success(result) {
+                    owningBusinessUnit = result._owningbusinessunit_value;
+                    // Filter Operation Type field with owning business unit
+                    form.getControl('ovs_operationtypeid').setDisabled(false);
+                    var viewId = '{3BC6D613-1CBD-48DC-86C3-37830D34EF7D}';
+                    var entityName = "ovs_operationtype";
+                    var viewDisplayName = "Filtered Operation Types";
+                    var activityTypeFetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="ownerid"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/></filter><order attribute="ovs_name" descending="false"/></entity></fetch>';
+                    var layoutXml = '<grid name="resultset" object="10010" jump="ovs_name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
+                    form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                }, function (error) { });
+            }
+            form.getControl('ovs_operationtypeid').setDisabled(true);
+            form.getAttribute("ovs_operationtypeid").setValue();
+            form.getControl('ts_site').setDisabled(true);
+            form.getAttribute("ts_site").setValue();
+            form.getControl('ts_subsite').setDisabled(true);
+            form.getAttribute("ts_subsite").setValue();
+        }
+        Operation.stakeholderOnChange = stakeholderOnChange;
+        function operationTypeOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
+            if (operationTypeAttribute != null) {
+                var operationTypeAttributeValue = operationTypeAttribute.getValue();
+                // Filter Functional Location field with owning business unit
+                if (operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
+                    form.getControl('ts_site').setDisabled(false);
+                    var viewId = '{26A950A2-BD89-4B6D-AB80-5074DF8AD580}';
+                    var entityName = "msdyn_functionallocation";
+                    var viewDisplayName = "Filtered Sites";
+                    var activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/></filter></entity></fetch>';
+                    var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                    form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                }
+                else {
+                    form.getControl('ts_site').setDisabled(true);
+                }
+            }
+        }
+        Operation.operationTypeOnChange = operationTypeOnChange;
         function siteOnChange(eContext) {
             var form = eContext.getFormContext();
             var siteAttribute = form.getAttribute("ts_site");
@@ -99,10 +146,10 @@ var ROM;
                 // Enable subsite field with appropriate filtered view if site selected
                 if (siteAttributeValue != null && siteAttributeValue != undefined) {
                     form.getControl('ts_subsite').setDisabled(false);
-                    var viewId = '{6A59549F-F162-5128-4711-79BC929540C3}';
+                    var viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
                     var entityName = "msdyn_functionallocation";
                     var viewDisplayName = "Filtered Sites";
-                    var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+                    var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
                     var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
                     form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
                 }
