@@ -1,5 +1,10 @@
 namespace ROM.Operation {
+    let userBusinessUnitName;
+    //Stakeholder owning business unit used to filter other fields
     let owningBusinessUnit;
+    //Condition to filter fields based on current user BU
+    let businessUnitCondition;
+
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
 
@@ -19,7 +24,9 @@ namespace ROM.Operation {
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
         Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-            let userBusinessUnitName = result.entities[0].name;
+            userBusinessUnitName = result.entities[0].name;
+            businessUnitCondition = '<condition attribute="businessunitid" operator="eq" value="' + result.entities[0].businessunitid + '" />';
+            
             form.getAttribute("ts_ppeguide").setValue(false);
             //Show Properties Tab when the user is in Transport Canada or ISSO business unit
             if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
@@ -72,6 +79,11 @@ namespace ROM.Operation {
             form.getControl("ts_description").setDisabled(false);
             form.getAttribute("ts_description").setRequiredLevel("required");
         }
+
+        //If user is not an admin, filter stakeholder on his BU
+        if(!userBusinessUnitName.startsWith("Transport")){
+            setStakeholderFilteredView(form);
+        }
     }
 
 
@@ -91,6 +103,16 @@ namespace ROM.Operation {
         }
     }
 
+    function setStakeholderFilteredView(form: Form.ovs_operation.Main.Information): void {
+        form.getControl('ovs_operationtypeid').setDisabled(false);
+        const viewId = '{3BC6D613-1CBD-48DC-86C3-37830D34EF7D}';
+        const entityName = "ovs_operationtype";
+        const viewDisplayName = "Filtered Operation Types";
+        const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="ownerid"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") +'</filter><order attribute="ovs_name" descending="false"/></entity></fetch>';
+        const layoutXml = '<grid name="resultset" object="10010" jump="ovs_name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
+        form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+    }
+
     export function stakeholderOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
         const stakeholder = form.getAttribute("ts_stakeholder");
@@ -102,13 +124,7 @@ namespace ROM.Operation {
                 function success(result) {
                     owningBusinessUnit = result._owningbusinessunit_value;
                     // Filter Operation Type field with owning business unit
-                    form.getControl('ovs_operationtypeid').setDisabled(false);
-                    const viewId = '{3BC6D613-1CBD-48DC-86C3-37830D34EF7D}';
-                    const entityName = "ovs_operationtype";
-                    const viewDisplayName = "Filtered Operation Types";
-                    const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="ownerid"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/></filter><order attribute="ovs_name" descending="false"/></entity></fetch>';
-                    const layoutXml = '<grid name="resultset" object="10010" jump="ovs_name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
-                    form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                    setStakeholderFilteredView(form);
                 },
                 function (error) {}
             );
@@ -134,7 +150,7 @@ namespace ROM.Operation {
             const viewId = '{26A950A2-BD89-4B6D-AB80-5074DF8AD580}';
             const entityName = "msdyn_functionallocation";
             const viewDisplayName = "Filtered Sites";
-            const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/></filter></entity></fetch>';
+            const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") +'</filter></entity></fetch>';
             const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
         }
@@ -158,7 +174,7 @@ namespace ROM.Operation {
                 const viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
                 const entityName = "msdyn_functionallocation";
                 const viewDisplayName = "Filtered Sites";
-                const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+                const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") +'</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
                 const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
             }
