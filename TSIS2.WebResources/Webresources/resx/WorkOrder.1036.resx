@@ -153,4 +153,10 @@
   <data name="CloseWorkOrderConfirmationTitle" xml:space="preserve">
     <value>Confirmation - Fermer l'ordre de travail</value>
   </data>
+  <data name="CloseWOWithUnCompletedSTText" xml:space="preserve">
+    <value>La tâche de service obligatoire doit être complété avant que l'ordre de travail puisse être fermé.</value>
+  </data>
+  <data name="CloseWOWithUnCompletedSTTitle" xml:space="preserve">
+    <value>Tâche de service incomplet</value>
+  </data>
 </root>
