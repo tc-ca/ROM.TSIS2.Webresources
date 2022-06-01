@@ -1,4 +1,6 @@
 ﻿"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Common_1 = require("../../Webresources/js/Common");
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 var ROM;
 (function (ROM) {
@@ -104,7 +106,7 @@ var ROM;
                     }
                     setActivityTypeDisabled(eContext);
                     if (currentSystemStatus == 690970004) {
-                        if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
+                        if (Common_1.userHasRole("System Administrator2|ROM - Business Admin|ROM - Manager")) {
                             form.getControl("header_msdyn_systemstatus").setDisabled(true);
                         }
                     }
@@ -1056,18 +1058,5 @@ var ROM;
                 }
             });
         }
-        function userHasRole(rolesName) {
-            var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-            var hasRole = false;
-            var roles = rolesName.split("|");
-            roles.forEach(function (roleItem) {
-                userRoles.forEach(function (userRoleItem) {
-                    if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase())
-                        hasRole = true;
-                });
-            });
-            return hasRole;
-        }
-        WorkOrder.userHasRole = userHasRole;
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));

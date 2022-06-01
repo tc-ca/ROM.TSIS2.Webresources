@@ -3,8 +3,6 @@
     const findingsReportId = primaryControl.data.entity.getId().slice(1, -1); //Remove curly braces.
     const sensitivityLabelValue = primaryControl.getAttribute("ts_sensitivitylevel").getValue();
     const language = primaryControl.getAttribute("ts_language").getValue();
-    let sensitivityLabelEn = "";
-    let sensitivityLabelFr = "";
 
     if (sensitivityLabelValue == 717750000) {
         sensitivityLabelEn = "UNCLASSIFIED";
@@ -13,13 +11,14 @@
         sensitivityLabelEn = "PROTECTED B";
         sensitivityLabelFr = "PROTÉGÉ B";
     }
+    let sensitivityLevel = (language == 717750000) ? sensitivityLabelEn : sensitivityLabelFr;
 
+    let userLanguage = Xrm.Utility.getGlobalContext().userSettings.languageId;
 
     var params = {
         "FindingsReportId": findingsReportId,
-        "SensitivityLevelEn": sensitivityLabelEn,
-        "SensitivityLevelFr": sensitivityLabelFr,
-        "language": language
+        "SensitivityLevel": sensitivityLevel,
+        "UserLanguage": userLanguage
     }
 
     var url = await GetEnvironmentVariableValue("ts_FindingsReportFlowURL");
