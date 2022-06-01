@@ -4,6 +4,7 @@ var ROM;
     var Operation;
     (function (Operation) {
         var userBusinessUnitName;
+        var formOpenedInCreateModeWithSiteFilled = false;
         //Stakeholder owning business unit used to filter other fields
         var owningBusinessUnit;
         //Condition to filter fields based on current user BU
@@ -27,7 +28,7 @@ var ROM;
             currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
             Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
                 userBusinessUnitName = result.entities[0].name;
-                businessUnitCondition = '<condition attribute="businessunitid" operator="eq" value="' + result.entities[0].businessunitid + '" />';
+                businessUnitCondition = '<condition attribute="owningbusinessunit" operator="eq" value="' + result.entities[0].businessunitid + '" />';
                 form.getAttribute("ts_ppeguide").setValue(false);
                 //Show Properties Tab when the user is in Transport Canada or ISSO business unit
                 if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
@@ -72,16 +73,37 @@ var ROM;
                             }
                         }
                     }
+                    if (form.ui.getFormType() == 1) { //Create
+                        //If the form is opened with the stakeholder/site value already filled (from account/site subgrids)
+                        if (form.getAttribute('ts_stakeholder').getValue() != null) {
+                            getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
+                        }
+                        else if (form.getAttribute('ts_site').getValue() != null) {
+                            formOpenedInCreateModeWithSiteFilled = true;
+                            form.getControl('ovs_operationtypeid').setDisabled(false);
+                            getSiteOwningBusinessUnitAndSetOperationTypeAndStakeholderView(form);
+                        }
+                    }
+                    else if (form.ui.getFormType() == 2) { //Update
+                        form.getControl('ovs_operationtypeid').setDisabled(false);
+                        form.getControl('ts_site').setDisabled(false);
+                        setOperationTypeFilteredView(form);
+                        setSiteFilteredView(form);
+                        setSubSiteFilteredView(form);
+                        if (form.getAttribute('ts_subsite').getValue() != null) {
+                            form.getControl('ts_subsite').setDisabled(false);
+                        }
+                    }
+                    //If user is not an admin, filter stakeholder on his BU
+                    if (!userBusinessUnitName.startsWith("Transport")) {
+                        setOperationTypeFilteredView(form);
+                    }
                 }
             });
             if (form.getAttribute("ts_statusstartdate").getValue() != null) {
                 form.getControl("ts_statusenddate").setDisabled(false);
                 form.getControl("ts_description").setDisabled(false);
                 form.getAttribute("ts_description").setRequiredLevel("required");
-            }
-            //If user is not an admin, filter stakeholder on his BU
-            if (!userBusinessUnitName.startsWith("Transport")) {
-                setStakeholderFilteredView(form);
             }
         }
         Operation.onLoad = onLoad;
@@ -102,47 +124,89 @@ var ROM;
         }
         Operation.onSave = onSave;
         function setStakeholderFilteredView(form) {
+            form.getControl('ts_stakeholder').setDisabled(false);
+            var viewId = '{3BC6D613-1CBD-48DC-86C3-33830D34EF7D}';
+            var entityName = "account";
+            var viewDisplayName = "Filtered Stakeholders";
+            var activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="account"><attribute name="statecode"/><attribute name="name"/><attribute name="accountnumber"/><attribute name="primarycontactid"/><attribute name="address1_city"/><attribute name="telephone1"/><attribute name="emailaddress1"/><attribute name="accountid"/><attribute name="fax"/><attribute name="address1_name"/><attribute name="address1_fax"/><order attribute="name" descending="false"/><attribute name="ovs_legalname"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_stakeholderstatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter></entity></fetch>';
+            var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
+            form.getControl("ts_stakeholder").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+        }
+        function setOperationTypeFilteredView(form) {
             form.getControl('ovs_operationtypeid').setDisabled(false);
-            var viewId = '{3BC6D613-1CBD-48DC-86C3-37830D34EF7D}';
+            var viewId = '{1BC6D613-1CBD-48DC-86C3-77830D34EF7D}';
             var entityName = "ovs_operationtype";
             var viewDisplayName = "Filtered Operation Types";
             var activityTypeFetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="ownerid"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter><order attribute="ovs_name" descending="false"/></entity></fetch>';
             var layoutXml = '<grid name="resultset" object="10010" jump="ovs_name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
             form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
         }
-        function stakeholderOnChange(eContext) {
-            var form = eContext.getFormContext();
+        function getStakeholderOwningBusinessUnitAndSetOperationTypeView(form) {
             var stakeholder = form.getAttribute("ts_stakeholder");
             var stakeholderValue = stakeholder.getValue();
             if (stakeholderValue != null) {
                 Xrm.WebApi.retrieveRecord('account', stakeholderValue[0].id, "?$select=_owningbusinessunit_value").then(function success(result) {
                     owningBusinessUnit = result._owningbusinessunit_value;
+                    if (!formOpenedInCreateModeWithSiteFilled) {
+                        // Filter Operation Type field with owning business unit
+                        setOperationTypeFilteredView(form);
+                    }
+                }, function (error) { });
+            }
+        }
+        function stakeholderOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var stakeholder = form.getAttribute("ts_stakeholder");
+            var stakeholderValue = stakeholder.getValue();
+            if (stakeholderValue == null) {
+                if (!formOpenedInCreateModeWithSiteFilled) {
+                    owningBusinessUnit = null;
+                    setStakeholderFilteredView(form);
+                    form.getControl('ovs_operationtypeid').setDisabled(true);
+                    form.getAttribute("ovs_operationtypeid").setValue();
+                    form.getControl('ts_site').setDisabled(true);
+                    form.getAttribute("ts_site").setValue();
+                    form.getControl('ts_subsite').setDisabled(true);
+                    form.getAttribute("ts_subsite").setValue();
+                }
+            }
+            else {
+                getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
+            }
+        }
+        Operation.stakeholderOnChange = stakeholderOnChange;
+        function setSiteFilteredView(form) {
+            var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
+            var operationTypeAttributeValue = operationTypeAttribute.getValue();
+            // Filter Functional Location field with owning business unit
+            if (operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
+                form.getControl('ts_site').setDisabled(false);
+                var viewId = '{26A950A2-BD89-4B6D-AB80-5074DF8AD580}';
+                var entityName = "msdyn_functionallocation";
+                var viewDisplayName = "Filtered Sites";
+                var activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter></entity></fetch>';
+                var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+            }
+        }
+        function getSiteOwningBusinessUnitAndSetOperationTypeAndStakeholderView(form) {
+            var functionalLocation = form.getAttribute("ts_site");
+            var functionalLocationValue = functionalLocation.getValue();
+            if (functionalLocationValue != null) {
+                Xrm.WebApi.retrieveRecord('msdyn_functionallocation', functionalLocationValue[0].id, "?$select=_owningbusinessunit_value").then(function success(result) {
+                    owningBusinessUnit = result._owningbusinessunit_value;
                     // Filter Operation Type field with owning business unit
+                    setOperationTypeFilteredView(form);
                     setStakeholderFilteredView(form);
                 }, function (error) { });
             }
-            form.getControl('ovs_operationtypeid').setDisabled(true);
-            form.getAttribute("ovs_operationtypeid").setValue();
-            form.getControl('ts_site').setDisabled(true);
-            form.getAttribute("ts_site").setValue();
-            form.getControl('ts_subsite').setDisabled(true);
-            form.getAttribute("ts_subsite").setValue();
         }
-        Operation.stakeholderOnChange = stakeholderOnChange;
         function operationTypeOnChange(eContext) {
             var form = eContext.getFormContext();
             var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
-            if (operationTypeAttribute != null) {
-                var operationTypeAttributeValue = operationTypeAttribute.getValue();
-                // Filter Functional Location field with owning business unit
-                if (operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
-                    form.getControl('ts_site').setDisabled(false);
-                    var viewId = '{26A950A2-BD89-4B6D-AB80-5074DF8AD580}';
-                    var entityName = "msdyn_functionallocation";
-                    var viewDisplayName = "Filtered Sites";
-                    var activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter></entity></fetch>';
-                    var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-                    form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+            if (!formOpenedInCreateModeWithSiteFilled) {
+                if (operationTypeAttribute != null) {
+                    setSiteFilteredView(form);
                 }
                 else {
                     form.getControl('ts_site').setDisabled(true);
@@ -152,25 +216,23 @@ var ROM;
         Operation.operationTypeOnChange = operationTypeOnChange;
         function siteOnChange(eContext) {
             var form = eContext.getFormContext();
-            var siteAttribute = form.getAttribute("ts_site");
-            if (siteAttribute != null) {
-                var siteAttributeValue = siteAttribute.getValue();
-                // Enable subsite field with appropriate filtered view if site selected
-                if (siteAttributeValue != null && siteAttributeValue != undefined) {
-                    form.getControl('ts_subsite').setDisabled(false);
-                    var viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
-                    var entityName = "msdyn_functionallocation";
-                    var viewDisplayName = "Filtered Sites";
-                    var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
-                    var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-                    form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
-                }
-                else {
-                    form.getControl('ts_subsite').setDisabled(true);
-                }
-            }
+            setSubSiteFilteredView(form);
         }
         Operation.siteOnChange = siteOnChange;
+        function setSubSiteFilteredView(form) {
+            var siteAttribute = form.getAttribute("ts_site");
+            var siteAttributeValue = siteAttribute.getValue();
+            // Enable subsite field with appropriate filtered view if site selected
+            if (siteAttributeValue != null && siteAttributeValue != undefined) {
+                form.getControl('ts_subsite').setDisabled(false);
+                var viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
+                var entityName = "msdyn_functionallocation";
+                var viewDisplayName = "Filtered Sites";
+                var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+                var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+            }
+        }
         function statusStartDateOnChange(eContext) {
             var form = eContext.getFormContext();
             if (form.getAttribute("ts_statusstartdate").getValue() != null) {
