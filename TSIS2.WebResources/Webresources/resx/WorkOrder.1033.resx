@@ -153,4 +153,10 @@
   <data name="CloseWorkOrderConfirmationTitle" xml:space="preserve">
     <value>Confirmation - Close Work Order</value>
   </data>
+  <data name="CloseWOWithUnCompletedSTText" xml:space="preserve">
+    <value>Mandatory Service Task must be completed before closing the Work Order.</value>
+  </data>
+  <data name="CloseWOWithUnCompletedSTTitle" xml:space="preserve">
+    <value>Incomplete Service Task</value>
+  </data>
 </root>

@@ -19,7 +19,7 @@ namespace TSIS2.WebResources.Webresources.resx {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class WorkOrder_1033 {
@@ -75,6 +75,24 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static string CloseWorkOrderConfirmationTitle {
             get {
                 return ResourceManager.GetString("CloseWorkOrderConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mandatory Service Task must be completed before closing the Work Order..
+        /// </summary>
+        internal static string CloseWOWithUnCompletedSTText {
+            get {
+                return ResourceManager.GetString("CloseWOWithUnCompletedSTText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incomplete Service Task.
+        /// </summary>
+        internal static string CloseWOWithUnCompletedSTTitle {
+            get {
+                return ResourceManager.GetString("CloseWOWithUnCompletedSTTitle", resourceCulture);
             }
         }
         
