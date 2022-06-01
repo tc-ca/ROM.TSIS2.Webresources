@@ -112,6 +112,12 @@ namespace ROM.WorkOrder {
                     }
                 }
                 setActivityTypeDisabled(eContext);
+                
+                if (currentSystemStatus == 690970004) {
+                    if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
+                        form.getControl("header_msdyn_systemstatus").setDisabled(true);
+                    }
+                }
             break;
             default:
                 // Enable all operation related fields
@@ -1134,5 +1140,17 @@ namespace ROM.WorkOrder {
                 }
             }
         });
+    }
+
+    export function userHasRole(rolesName) {
+        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+        var hasRole = false;
+        var roles = rolesName.split("|");
+        roles.forEach(function (roleItem) {
+            userRoles.forEach(function (userRoleItem) {
+                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
+            });
+        });
+        return hasRole;
     }
 }

@@ -100,27 +100,32 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
 
 function ActivateWorkOrder(primaryControl){
     const formContext = primaryControl;
+    $.ajaxSetup({ cache: true });
+    $.getScript("../WebResources/ts_/js/Common.js", function () {
+        $.ajaxSetup({ cache: false });
+        var confirmStrings = { confirmButtonLabel: "Activate", cancelButtonLabel: "Cancel", text: "Are you sure you want to activate the selected 1 Work Order?\nThis will set the Work Order to the Active state.", title: "Confirm Work Order Activation" }
+        var confirmOptions;
+        Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
+            function (success) {
+                if (success.confirmed) {
+                    formContext.getAttribute("statecode").setValue(0);
+                    formContext.getAttribute("statuscode").setValue(1);
 
-    var confirmStrings = { confirmButtonLabel: "Activate",  cancelButtonLabel: "Cancel" , text: "Are you sure you want to activate the selected 1 Work Order?\nThis will set the Work Order to the Active state.", title: "Confirm Work Order Activation" }
-    var confirmOptions;
-    Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
-        function (success) {
-            if (success.confirmed){
+                    if (userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
+                        formContext.getAttribute("msdyn_systemstatus").setValue(690970003); //Open - Completed
+                    }
 
-                formContext.getAttribute("statecode").setValue(0);
-                formContext.getAttribute("statuscode").setValue(1);
-                formContext.getAttribute("msdyn_systemstatus").setValue(690970003); //Open - Completed
+                    openWorkOrderServiceTasks(formContext);
+                    setWorkOrderServiceTasksView(formContext);
 
-                openWorkOrderServiceTasks(formContext);
-                setWorkOrderServiceTasksView(formContext);
-
-                formContext.data.save();
+                    formContext.data.save();
+                }
+            },
+            function (error) {
+                showErrorMessageAlert(error);
             }
-        },
-        function (error){
-            showErrorMessageAlert(error);
-        }
-    );
+        );
+    });
 }
 
 function openWorkOrderServiceTasks(formContext){
