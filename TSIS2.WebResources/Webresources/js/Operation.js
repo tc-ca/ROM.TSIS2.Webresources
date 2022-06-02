@@ -98,7 +98,7 @@ var ROM;
                                         }
                                     }
                                 }
-                                //if Operation Type is Small Passenger Company, Passenger Company, or Host Company
+                                //If Operation Type is Small Passenger Company, Passenger Company, or Host Company
                                 if (operationType[0].id == "{199E31AE-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{3B261029-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{B27E5003-C751-EB11-A812-000D3AF3AC0D}") {
                                     form.getControl("ts_issecurityinspectionsite").setVisible(true);
                                     //Set default value for existing operations
@@ -113,7 +113,7 @@ var ROM;
                                 }
                             }
                             if (form.ui.getFormType() == 1) { //Create
-                                //If the form is opened with the stakeholder/site value already filled (from account/site subgrids)
+                                //If the form is opened with the stakeholder or site value already filled (from account/site subgrids)
                                 if (form.getAttribute('ts_stakeholder').getValue() != null) {
                                     getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
                                 }
@@ -141,10 +141,6 @@ var ROM;
                                     form.getControl('ts_subsite').setDisabled(false);
                                 }
                             }
-                            // //If user is not an admin, filter stakeholder on his BU
-                            // if(!userBusinessUnitName.startsWith("Transport")){
-                            //     setOperationTypeFilteredView(form);
-                            // }
                         }
                     });
                     if (form.getAttribute("ts_statusstartdate").getValue() != null) {
@@ -198,7 +194,6 @@ var ROM;
                 Xrm.WebApi.retrieveRecord('account', stakeholderValue[0].id, "?$select=_owningbusinessunit_value").then(function success(result) {
                     owningBusinessUnit = result._owningbusinessunit_value;
                     if (!formOpenedInCreateModeWithSiteFilled) {
-                        // Filter Operation Type field with owning business unit
                         setOperationTypeFilteredView(form);
                     }
                 }, function (error) { });
@@ -210,7 +205,6 @@ var ROM;
             var stakeholderValue = stakeholder.getValue();
             if (form.ui.getFormType() != 2) {
                 if (!formOpenedInCreateModeWithSiteFilled) {
-                    // owningBusinessUnit = null;
                     form.getControl('ovs_operationtypeid').setDisabled(true);
                     form.getAttribute("ovs_operationtypeid").setValue();
                     form.getControl('ts_site').setDisabled(true);
@@ -242,7 +236,6 @@ var ROM;
             if (functionalLocationValue != null) {
                 Xrm.WebApi.retrieveRecord('msdyn_functionallocation', functionalLocationValue[0].id, "?$select=_owningbusinessunit_value").then(function success(result) {
                     owningBusinessUnit = result._owningbusinessunit_value;
-                    // Filter Operation Type field with owning business unit
                     setOperationTypeFilteredView(form);
                     setStakeholderFilteredView(form);
                 }, function (error) { });
