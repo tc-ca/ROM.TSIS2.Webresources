@@ -6,7 +6,7 @@ namespace ROM.Operation {
     //Condition to filter fields based on current user BU
     let businessUnitCondition;
 
-    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function onLoad(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
 
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
@@ -58,7 +58,7 @@ namespace ROM.Operation {
                             }
                         }
                     }
-                    //if Operation Type is Small Passenger Company, Passenger Company, or Host Company
+                    //If Operation Type is Small Passenger Company, Passenger Company, or Host Company
                     if (operationType[0].id == "{199E31AE-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{3B261029-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{B27E5003-C751-EB11-A812-000D3AF3AC0D}") {
                         form.getControl("ts_issecurityinspectionsite").setVisible(true);
                         //Set default value for existing operations
@@ -74,7 +74,7 @@ namespace ROM.Operation {
                     }
 
                 if(form.ui.getFormType() == 1){ //Create
-                    //If the form is opened with the stakeholder/site value already filled (from account/site subgrids)
+                    //If the form is opened with the stakeholder or site value already filled (from account/site subgrids)
                     if(form.getAttribute('ts_stakeholder').getValue() != null){
                         getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
                     }
@@ -85,21 +85,26 @@ namespace ROM.Operation {
                     }
                 }
                 else if(form.ui.getFormType() == 2){ //Update
-                    form.getControl('ovs_operationtypeid').setDisabled(false);
-                    form.getControl('ts_site').setDisabled(false);
+                    //We filter the form on the business unit of the owner of the record
+                    let ownerAttribute = form.getAttribute("ownerid").getValue();
+                    if(ownerAttribute != null){
+                        Xrm.WebApi.retrieveRecord(ownerAttribute[0].entityType, ownerAttribute[0].id, "?$select=_businessunitid_value").then(
+                            function success(result) {
+                                owningBusinessUnit = result._businessunitid_value;
+                                form.getControl('ovs_operationtypeid').setDisabled(false);
+                                form.getControl('ts_site').setDisabled(false);
 
-                    setOperationTypeFilteredView(form);
-                    setSiteFilteredView(form);
-                    setSubSiteFilteredView(form);
+                                setStakeholderFilteredView(form)
+                                setOperationTypeFilteredView(form);
+                                setSiteFilteredView(form);
+                                setSubSiteFilteredView(form);
+                            }
+                        );
+                    }
 
                     if(form.getAttribute('ts_subsite').getValue() != null){
                       form.getControl('ts_subsite').setDisabled(false);
                     }
-                }
-
-                //If user is not an admin, filter stakeholder on his BU
-                if(!userBusinessUnitName.startsWith("Transport")){
-                    setOperationTypeFilteredView(form);
                 }
             }
         });
@@ -157,7 +162,6 @@ namespace ROM.Operation {
                 function success(result) {
                     owningBusinessUnit = result._owningbusinessunit_value;
                     if(!formOpenedInCreateModeWithSiteFilled){
-                        // Filter Operation Type field with owning business unit
                         setOperationTypeFilteredView(form);
                     }
                 },
@@ -171,20 +175,16 @@ namespace ROM.Operation {
         const stakeholder = form.getAttribute("ts_stakeholder");
         const stakeholderValue = stakeholder.getValue();
 
-        if(stakeholderValue == null){
+        if(form.ui.getFormType() != 2){  
             if(!formOpenedInCreateModeWithSiteFilled){
-                owningBusinessUnit = null;
-                setStakeholderFilteredView(form);
                 form.getControl('ovs_operationtypeid').setDisabled(true);
                 form.getAttribute("ovs_operationtypeid").setValue();
                 form.getControl('ts_site').setDisabled(true);
                 form.getAttribute("ts_site").setValue();
                 form.getControl('ts_subsite').setDisabled(true);
                 form.getAttribute("ts_subsite").setValue();
+                getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
             }
-        }
-        else{
-            getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
         }
     }
 
@@ -212,7 +212,6 @@ namespace ROM.Operation {
             Xrm.WebApi.retrieveRecord('msdyn_functionallocation', functionalLocationValue[0].id, "?$select=_owningbusinessunit_value").then(
                 function success(result) {
                     owningBusinessUnit = result._owningbusinessunit_value;
-                    // Filter Operation Type field with owning business unit
                     setOperationTypeFilteredView(form);
                     setStakeholderFilteredView(form);
                 },
@@ -225,7 +224,7 @@ namespace ROM.Operation {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
         const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
 
-        if(!formOpenedInCreateModeWithSiteFilled){
+        if(!formOpenedInCreateModeWithSiteFilled && form.ui.getFormType() != 2){
             if (operationTypeAttribute != null) {
                 setSiteFilteredView(form);
             }
