@@ -47,9 +47,16 @@ var ROM;
         var businessUnitCondition;
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, userId, currentUserBusinessUnitFetchXML;
+                var form, userRoles, userId, currentUserBusinessUnitFetchXML;
                 return __generator(this, function (_a) {
                     form = eContext.getFormContext();
+                    userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+                    //If the user is a system admin or ROM - Planner, enable risk score field
+                    userRoles.forEach(function (role) {
+                        if (role.name == "System Administrator" || role.name == "ROM - Planner") {
+                            form.getControl("ts_riskscore").setDisabled(false);
+                        }
+                    });
                     userId = Xrm.Utility.getGlobalContext().userSettings.userId;
                     currentUserBusinessUnitFetchXML = [
                         "<fetch top='50'>",

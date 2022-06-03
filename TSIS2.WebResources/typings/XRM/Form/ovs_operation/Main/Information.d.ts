@@ -9,10 +9,9 @@ declare namespace Form.ovs_operation.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface bb4b118ea1c94e04ae4d8c6a177ee56c extends Xrm.SectionCollectionBase {
+        get(name: "Risk"): Xrm.PageSection;
         get(name: "_section_156"): Xrm.PageSection;
-        get(name: "_section_186"): Xrm.PageSection;
         get(name: "section_8"): Xrm.PageSection;
-        get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -63,6 +62,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
       get(name: "ts_ppeguide"): Xrm.Attribute<any>;
       get(name: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_securityinspectiondetails"): Xrm.OptionSetAttribute<ts_securityinspectiondetails>;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
@@ -100,6 +100,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
       get(name: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_pperequired"): Xrm.OptionSetControl<boolean>;
+      get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_securityinspectiondetails"): Xrm.OptionSetControl<ts_securityinspectiondetails>;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;
@@ -140,6 +141,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
     getAttribute(attributeName: "ts_ppeguide"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_securityinspectiondetails"): Xrm.OptionSetAttribute<ts_securityinspectiondetails>;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
@@ -172,6 +174,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
     getControl(controlName: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_pperequired"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_securityinspectiondetails"): Xrm.OptionSetControl<ts_securityinspectiondetails>;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;

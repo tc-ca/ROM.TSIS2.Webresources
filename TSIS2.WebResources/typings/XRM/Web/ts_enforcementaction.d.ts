@@ -9,7 +9,6 @@ interface ts_EnforcementAction_Base extends WebEntity {
   ts_comments?: string | null;
   ts_copyofreceipt?: string | null;
   ts_enforcementactionid?: string | null;
-  ts_enforcementactionnumber?: string | null;
   ts_individualposition?: string | null;
   ts_methodofservice?: ts_methodofservice | null;
   ts_name?: string | null;
@@ -66,7 +65,6 @@ interface ts_EnforcementAction_Select {
   ts_company_guid: WebAttribute<ts_EnforcementAction_Select, { ts_company_guid: string | null }, { ts_company_formatted?: string }>;
   ts_copyofreceipt: WebAttribute<ts_EnforcementAction_Select, { ts_copyofreceipt: string | null }, {  }>;
   ts_enforcementactionid: WebAttribute<ts_EnforcementAction_Select, { ts_enforcementactionid: string | null }, {  }>;
-  ts_enforcementactionnumber: WebAttribute<ts_EnforcementAction_Select, { ts_enforcementactionnumber: string | null }, {  }>;
   ts_individualposition: WebAttribute<ts_EnforcementAction_Select, { ts_individualposition: string | null }, {  }>;
   ts_methodofservice: WebAttribute<ts_EnforcementAction_Select, { ts_methodofservice: ts_methodofservice | null }, { ts_methodofservice_formatted?: string }>;
   ts_name: WebAttribute<ts_EnforcementAction_Select, { ts_name: string | null }, {  }>;
@@ -101,7 +99,6 @@ interface ts_EnforcementAction_Filter {
   ts_company_guid: XQW.Guid;
   ts_copyofreceipt: string;
   ts_enforcementactionid: XQW.Guid;
-  ts_enforcementactionnumber: string;
   ts_individualposition: string;
   ts_methodofservice: ts_methodofservice;
   ts_name: string;

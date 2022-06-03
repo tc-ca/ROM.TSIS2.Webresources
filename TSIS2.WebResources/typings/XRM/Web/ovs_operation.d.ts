@@ -15,6 +15,7 @@ interface ovs_operation_Base extends WebEntity {
   ts_ppecategories?: ts_ppecategories | null;
   ts_ppeguide?: boolean | null;
   ts_pperequired?: boolean | null;
+  ts_riskscore?: number | null;
   ts_securityinspectiondetails?: ts_securityinspectiondetails | null;
   ts_specializedpperequired?: boolean | null;
   ts_statusenddate?: Date | null;
@@ -80,6 +81,7 @@ interface ovs_operation_Select {
   ts_ppecategories: WebAttribute<ovs_operation_Select, { ts_ppecategories: ts_ppecategories | null }, { ts_ppecategories_formatted?: string }>;
   ts_ppeguide: WebAttribute<ovs_operation_Select, { ts_ppeguide: boolean | null }, {  }>;
   ts_pperequired: WebAttribute<ovs_operation_Select, { ts_pperequired: boolean | null }, {  }>;
+  ts_riskscore: WebAttribute<ovs_operation_Select, { ts_riskscore: number | null }, {  }>;
   ts_securityinspectiondetails: WebAttribute<ovs_operation_Select, { ts_securityinspectiondetails: ts_securityinspectiondetails | null }, { ts_securityinspectiondetails_formatted?: string }>;
   ts_site_guid: WebAttribute<ovs_operation_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_specializedpperequired: WebAttribute<ovs_operation_Select, { ts_specializedpperequired: boolean | null }, {  }>;
@@ -121,6 +123,7 @@ interface ovs_operation_Filter {
   ts_ppecategories: ts_ppecategories;
   ts_ppeguide: boolean;
   ts_pperequired: boolean;
+  ts_riskscore: number;
   ts_securityinspectiondetails: ts_securityinspectiondetails;
   ts_site_guid: XQW.Guid;
   ts_specializedpperequired: boolean;
