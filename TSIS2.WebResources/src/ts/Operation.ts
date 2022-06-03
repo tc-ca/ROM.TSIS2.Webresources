@@ -9,6 +9,14 @@ namespace ROM.Operation {
     export async function onLoad(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
 
+        const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+        //If the user is a system admin or ROM - Planner, enable risk score field
+        userRoles.forEach(role => {
+            if (role.name == "System Administrator" || role.name == "ROM - Planner") {
+                form.getControl("ts_riskscore").setDisabled(false);
+            }
+        });
+
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
             "<fetch top='50'>",
