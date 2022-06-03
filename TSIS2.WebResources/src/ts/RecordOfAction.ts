@@ -13,7 +13,7 @@ namespace ROM.RecordOfAction {
 
     
     function filterAuthorizedRepresentative(formContext: Form.ts_serviceofenforcementaction.Main.Information){
-        const viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F770git}';
+        const viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F770}';
         const entityName = "contact";
         const viewDisplayName = "Filtered Contacts";
 

@@ -14,7 +14,7 @@ var ROM;
         }
         RecordOfAction.onSave = onSave;
         function filterAuthorizedRepresentative(formContext) {
-            var viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F770git}';
+            var viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F770}';
             var entityName = "contact";
             var viewDisplayName = "Filtered Contacts";
             var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" no-lock="false"><entity name="contact"><attribute name="contactid"/><attribute name="fullname"/><link-entity name="ts_operationcontact" from="ts_contact" to="contactid"><link-entity name="ovs_operation" from="ovs_operationid" to="ts_operation"><link-entity name="msdyn_workorder" from="ovs_operationid" to="ovs_operationid"><link-entity name="incident" from="incidentid" to="msdyn_servicerequest"><link-entity name="ts_enforcementaction" from="ts_case" to="incidentid"><link-entity name="ts_serviceofenforcementaction" from="regardingobjectid" to="ts_enforcementactionid"><filter><condition attribute="activityid" operator="eq" value="' + formContext.data.entity.getId() + '" uitype="ts_serviceofenforcementaction"/></filter></link-entity></link-entity></link-entity></link-entity></link-entity><link-entity name="ts_role" from="ts_roleid" to="ts_connectionrole" alias="role"><attribute name="ts_name"/></link-entity></link-entity></entity></fetch>';
