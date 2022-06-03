@@ -1,8 +1,8 @@
 declare const enum msdyn_wosystemstatus {
-  OpenUnscheduled = 690970000,
-  OpenScheduled = 690970001,
-  OpenInProgress = 690970002,
-  OpenCompleted = 690970003,
-  ClosedPosted = 690970004,
-  ClosedCanceled = 690970005,
+  Unscheduled = 690970000,
+  Scheduled = 690970001,
+  InProgress = 690970002,
+  Completed = 690970003,
+  Closed = 690970004,
+  Canceled = 690970005,
 }
