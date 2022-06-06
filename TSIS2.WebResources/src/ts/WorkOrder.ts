@@ -23,7 +23,13 @@ namespace ROM.WorkOrder {
         if (form.getAttribute("msdyn_servicerequest").getValue() != null) {
             form.getAttribute("msdyn_servicerequest").setRequiredLevel("required");
         }
-        
+
+        if (currentSystemStatus == 690970004) {
+            form.getControl("ts_completedquarter").setVisible(true);
+        }
+        else {
+            form.getControl("ts_completedquarter").setVisible(false);
+        }
         //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
         if (state == 1) {
             setWorkOrderServiceTasksView(form, false);
@@ -722,6 +728,9 @@ namespace ROM.WorkOrder {
                                 //Set Status Reason to Closed
                                 form.getAttribute("statuscode").setValue(918640000);
                                 currentSystemStatus = newSystemStatus;
+                                const currentQuarter = Math.floor(new Date().getMonth() / 3 + 1);
+                                form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
+                                form.getControl("ts_completedquarter").setVisible(true);
                             } else {
                                 //Undo the system status change
                                 form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
@@ -735,6 +744,8 @@ namespace ROM.WorkOrder {
             //Keep record Active
             form.getAttribute("statecode").setValue(0);
             form.getAttribute("statuscode").setValue(1);
+            form.getAttribute("ts_completedquarter").setValue(null);
+            form.getControl("ts_completedquarter").setVisible(false);
             currentSystemStatus = newSystemStatus;
         }
     }
