@@ -8,6 +8,7 @@ var ROM;
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             var regionAttribute = form.getAttribute("ovs_region");
+            var ownerControl = form.getControl("header_ownerid");
             //Set required fields
             form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
             switch (form.ui.getFormType()) {
@@ -32,6 +33,13 @@ var ROM;
                     form.getControl("ts_tradenameid").setDisabled(false);
                     form.getControl("msdyn_functionallocation").setDisabled(false);
                     break;
+            }
+            if (form.ui.getFormType() == 1 || form.ui.getFormType() == 2) {
+                if (ownerControl != null) {
+                    ownerControl.setEntityTypes(["systemuser"]);
+                    var defaultViewId = "29bd662e-52e7-ec11-bb3c-0022483d86ce";
+                    ownerControl.setDefaultView(defaultViewId);
+                }
             }
             // Lock some fields if there are associated WOs
             var fetchXML = "<fetch> <entity name=\"incident\" > <attribute name=\"incidentid\" /> <filter> <condition attribute=\"incidentid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\" /> </filter> <link-entity name=\"msdyn_workorder\" from=\"msdyn_servicerequest\" to=\"incidentid\" /> </entity> </fetch>";
