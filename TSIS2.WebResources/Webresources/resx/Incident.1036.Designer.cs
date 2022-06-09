@@ -19,7 +19,7 @@ namespace TSIS2.WebResources.Webresources.resx {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Incident_1036 {
@@ -57,6 +57,15 @@ namespace TSIS2.WebResources.Webresources.resx {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to L&apos;OÉNC doit être complété pour chaque constatation avant de pouvoir résoudre le cas..
+        /// </summary>
+        internal static string ClosingCaseErrorMsg {
+            get {
+                return ResourceManager.GetString("ClosingCaseErrorMsg", resourceCulture);
             }
         }
         
