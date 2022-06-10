@@ -4,14 +4,20 @@ var markCompleteValidationTextLocalized;
 var markCompleteValidationTitleLocalized;
 var markCompleteConfirmationTextLocalized;
 var markCompleteConfirmationTitleLocalized;
+var missingFinalEnforcementActionTitleLocalized;
+var missingFinalEnforcementActionTextLocalized;
 
 if (lang == 1036) {
     markCompleteValidationTextLocalized = "Tous les champs indiqués par un '+' bleu doivent être complétés avant que la constatation puissent être marqué comme terminé.";
     markCompleteValidationTitleLocalized = "Formulaire Incomplet";
+    missingFinalEnforcementActionTitleLocalized = "Mesure d'application finale manquante";
+    missingFinalEnforcementActionTextLocalized = "Un ou plusieurs enregistrements de constatations sélectionnés n'ont pas de mesure d'application finale. Toutes les constatations sélectionnées doivent avoir une mesure d'application finale pour créer un rapport de constatations."
 
 } else {
     markCompleteValidationTextLocalized = "All fields denoted by blue '+' must be completed in order to Mark Complete.";
     markCompleteValidationTitleLocalized = "Form Incomplete";
+    missingFinalEnforcementActionTitleLocalized = "Missing Final Enforcement Action"
+    missingFinalEnforcementActionTextLocalized = "One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action to create a Findings Report.";
 }
 //Action for mscrm.OpenRecordItem overridden command. Opens Finding forms as a modal.
 function openRecord(recordId) {
@@ -313,7 +319,7 @@ function FindingsReport(findingGUIDs, primaryControl) {
 
     //If a finding does not have a final enforcement action, open an alert dialog
     if (!allFindingsHaveFinalEnforcementAction) {
-        showAlertDialog("One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action to create a Findings Report.", "Missing Final Enforcement Action");
+        showAlertDialog(missingFinalEnforcementActionTextLocalized, missingFinalEnforcementActionTitleLocalized);
         return;
     }
 
@@ -462,7 +468,7 @@ function createEnforcementAction(findingGUIDs, primaryControl){
 
     //If a finding does not have a final enforcement action, open an alert dialog
     if (!allFindingsHaveFinalEnforcementAction) {
-        showAlertDialog("One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action to create a Findings Report.", "Missing Final Enforcement Action");
+        showAlertDialog(missingFinalEnforcementActionTextLocalized, missingFinalEnforcementActionTitleLocalized);
         return;
     }
 
