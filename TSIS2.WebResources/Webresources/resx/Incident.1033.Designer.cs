@@ -61,7 +61,7 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The NCAT must be completed for all findings before resolving the case..
+        ///   Looks up a localized string similar to The assessment tool must be completed for all findings before resolving the case..
         /// </summary>
         internal static string ClosingCaseErrorMsg {
             get {

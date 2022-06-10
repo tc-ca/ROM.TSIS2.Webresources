@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ClosingCaseErrorMsg" xml:space="preserve">
-    <value>L'OÉNC doit être complété pour chaque constatation avant de pouvoir résoudre le cas.</value>
+    <value>l’outil d’évaluation doit être complété pour chaque constatation avant de pouvoir résoudre le cas.</value>
   </data>
   <data name="FilteredCountries" xml:space="preserve">
     <value>Filtered Countries (FR)</value>

@@ -61,7 +61,7 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to L&apos;OÉNC doit être complété pour chaque constatation avant de pouvoir résoudre le cas..
+        ///   Looks up a localized string similar to l’outil d’évaluation doit être complété pour chaque constatation avant de pouvoir résoudre le cas..
         /// </summary>
         internal static string ClosingCaseErrorMsg {
             get {
