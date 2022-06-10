@@ -1,0 +1,15 @@
+{
+    "NamingConvention" : {
+        "WebResourceFolder" : [ "/TSIS2.WebResources/Webresources/js" ],
+        "Prefix" : [ "ts_js/", "ovs_js/"]
+    },
+    "OrgInfo" : {
+        "CrmUrl" : "https://romts-gsrst-dev-tcd365.crm3.dynamics.com",
+        "ApiVersion" : "9.2.22051.00135"
+    },
+    "UploadOptions" : {
+        "AddExistingToSolution" : true,
+        "TryToResolveFilePath" : false
+    },
+    "Solutions" : [ "ROMTS-GSRST", "Carrier.Hamza.TS" ]
+}
