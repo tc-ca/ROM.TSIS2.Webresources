@@ -728,7 +728,11 @@ namespace ROM.WorkOrder {
                                 //Set Status Reason to Closed
                                 form.getAttribute("statuscode").setValue(918640000);
                                 currentSystemStatus = newSystemStatus;
-                                const currentQuarter = Math.floor(new Date().getMonth() / 3 + 1);
+                                //At Transport Canada, Fiscal Years run from Apr 1st to Mar 31, Q1 = Apr-Jun, Q2 = Jul-Sept, Q3 = Oct-Dec, Q4 = Jan-Mar
+                                var currentQuarter = Math.floor(new Date().getMonth() / 3);
+                                if (currentQuarter == 0) {
+                                    currentQuarter = 4;
+                                }
                                 form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
                                 form.getControl("ts_completedquarter").setVisible(true);
                             } else {
