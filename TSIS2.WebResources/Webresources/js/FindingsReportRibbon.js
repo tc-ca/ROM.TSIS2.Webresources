@@ -15,6 +15,9 @@
 
     let userLanguage = Xrm.Utility.getGlobalContext().userSettings.languageId;
 
+    let flowRunningDialogTitle = (userLanguage == 1036) ? "Report is being generated (FR)" : "Report is being generated";
+    let flowRunningDialogText = (userLanguage == 1036) ? "The Report PDF is being generated and will be attached to the Case momentarily. (FR)" : "The Report PDF is being generated and will be attached to the Case momentarily.";
+
     var params = {
         "FindingsReportId": findingsReportId,
         "SensitivityLevel": sensitivityLevel,
@@ -26,7 +29,7 @@
     req.open("POST", url, true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.send(JSON.stringify(params));
-    var alertStrings = { confirmButtonLabel: "OK", text: "The Report PDF is being generated and will be attached to the Case momentarily.", title: "Report is being generated" };
+    var alertStrings = { confirmButtonLabel: "OK", text: flowRunningDialogText, title: flowRunningDialogTitle };
     var alertOptions = { height: 120, width: 260 };
     Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(
         function (success) {
