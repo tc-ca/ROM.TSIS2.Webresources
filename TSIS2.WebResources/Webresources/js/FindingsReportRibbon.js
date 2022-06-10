@@ -15,8 +15,8 @@
 
     let userLanguage = Xrm.Utility.getGlobalContext().userSettings.languageId;
 
-    let flowRunningDialogTitle = (userLanguage == 1036) ? "Report is being generated (FR)" : "Report is being generated";
-    let flowRunningDialogText = (userLanguage == 1036) ? "The Report PDF is being generated and will be attached to the Case momentarily. (FR)" : "The Report PDF is being generated and will be attached to the Case momentarily.";
+    let flowRunningDialogTitle = (userLanguage == 1036) ? "Le rapport est en cours de génération" : "Report is being generated";
+    let flowRunningDialogText = (userLanguage == 1036) ? "Le rapport PDF est en cours de génération et sera momentanément joint au dossier." : "The Report PDF is being generated and will be attached to the Case momentarily.";
 
     var params = {
         "FindingsReportId": findingsReportId,
