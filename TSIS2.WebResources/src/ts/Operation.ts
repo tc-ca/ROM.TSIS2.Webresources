@@ -12,7 +12,7 @@ namespace ROM.Operation {
         const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
         //If the user is a system admin or ROM - Planner, enable risk score field
         userRoles.forEach(role => {
-            if (role.name == "System Administrator" || role.name == "ROM - Planner") {
+            if (role.name == "System Administrator") {
                 form.getControl("ts_riskscore").setDisabled(false);
             }
         });
