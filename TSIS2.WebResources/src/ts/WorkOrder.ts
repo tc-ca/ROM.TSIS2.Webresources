@@ -9,6 +9,9 @@ namespace ROM.WorkOrder {
 
         const regionAttribute = form.getAttribute("ts_region");
         const regionAttributeValue = regionAttribute.getValue();
+
+        const ownerControl = form.getControl("ownerid");
+
         //Keep track of the current system status, to be used when cancelling a status change.
         currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
         form.getControl("msdyn_worklocation").removeOption(690970001);  //Remove Facility Work Location Option
@@ -30,6 +33,16 @@ namespace ROM.WorkOrder {
         else {
             form.getControl("ts_completedquarter").setVisible(false);
         }
+
+        //Limit ownership of a Work Order to users associated with the same program
+        if (form.ui.getFormType() == 1 || form.ui.getFormType() == 2) {
+            if (ownerControl != null) {
+                ownerControl.setEntityTypes(["systemuser"]);
+                var defaultViewId = "29bd662e-52e7-ec11-bb3c-0022483d86ce";
+                ownerControl.setDefaultView(defaultViewId);
+            }
+        }
+
         //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
         if (state == 1) {
             setWorkOrderServiceTasksView(form, false);
