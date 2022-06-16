@@ -104,5 +104,14 @@ namespace TSIS2.WebResources.Webresources.resx {
                 return ResourceManager.GetString("FilteredStakeholders", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Un cas peut seulement être réassigné à un membre de votre mode inspectorat..
+        /// </summary>
+        internal static string ReassignCaseErrorMsg {
+            get {
+                return ResourceManager.GetString("ReassignCaseErrorMsg", resourceCulture);
+            }
+        }
     }
 }

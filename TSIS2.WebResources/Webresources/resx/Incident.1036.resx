@@ -132,4 +132,7 @@
   <data name="FilteredStakeholders" xml:space="preserve">
     <value>Filtered Stakeholders (FR)</value>
   </data>
+  <data name="ReassignCaseErrorMsg" xml:space="preserve">
+    <value>Un cas peut seulement être réassigné à un membre de votre mode inspectorat.</value>
+  </data>
 </root>
