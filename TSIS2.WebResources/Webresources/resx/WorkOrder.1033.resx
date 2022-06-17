@@ -159,4 +159,7 @@
   <data name="CloseWOWithUnCompletedSTTitle" xml:space="preserve">
     <value>Incomplete Service Task</value>
   </data>
+  <data name="ReassignWorkOrderErrorMsg" xml:space="preserve">
+    <value>A Work Order can only be reassigned to members in your inspectorate.</value>
+  </data>
 </root>
