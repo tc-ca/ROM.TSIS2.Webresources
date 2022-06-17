@@ -50,21 +50,23 @@ namespace ROM.Operation {
                 if (specializedPPERequired) {
                     form.getControl("ts_typesofspecializedppe").setVisible(true);
                 }
-                //Show Visual Security Inspection question only for Railway Carrier and Railway Loader
+                //Show Visual Security Inspection question only for Railway Carrier and Railway Loader depending on Type Of Dangerous Goods
                 var operationType = form.getAttribute("ovs_operationtypeid").getValue();
                 if (operationType != null) {
                     if (operationType[0].id == "{D883B39A-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}") {
-                        form.getControl("ts_visualsecurityinspection").setVisible(true);
                         form.getControl("ts_typeofdangerousgoods").setVisible(true);
-                        //Set default value for existing operations
-                        if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
-                            form.getAttribute("ts_visualsecurityinspection").setValue(ts_visualsecurityinspection.Unconfirmed);
-                        }
-                        else {
-                            if (form.getAttribute("ts_visualsecurityinspection").getValue() == ts_visualsecurityinspection.Yes) {
-                                form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
+                        if (form.getAttribute("ts_typeofdangerousgoods").getValue() == ts_typeofdangerousgoods.NonSchedule1DangerousGoods || form.getAttribute("ts_typeofdangerousgoods").getValue() == ts_typeofdangerousgoods.Schedule1DangerousGoods) {
+                            form.getControl("ts_visualsecurityinspection").setVisible(true);
+                            //Set default value for existing operations
+                            if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
+                                form.getAttribute("ts_visualsecurityinspection").setValue(ts_visualsecurityinspection.Unconfirmed);
                             }
-                        }
+                            else {
+                                if (form.getAttribute("ts_visualsecurityinspection").getValue() == ts_visualsecurityinspection.Yes) {
+                                    form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
+                                }
+                            }
+                        }                        
                     }
                     //If Operation Type is Small Passenger Company, Passenger Company, or Host Company
                     if (operationType[0].id == "{199E31AE-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{3B261029-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{B27E5003-C751-EB11-A812-000D3AF3AC0D}") {
@@ -341,6 +343,20 @@ namespace ROM.Operation {
         else {
             SIDetails.setVisible(false);
             form.getAttribute("ts_securityinspectiondetails").setValue(null);
+        }
+    }
+
+    export function typeOfDangerousGoodsOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+        let typeOfDangerousGoods = form.getAttribute("ts_typeofdangerousgoods").getValue();        
+        if (typeOfDangerousGoods == ts_typeofdangerousgoods.NonSchedule1DangerousGoods || typeOfDangerousGoods == ts_typeofdangerousgoods.Schedule1DangerousGoods) {
+            form.getControl("ts_visualsecurityinspection").setVisible(true);
+        }
+        else {
+            form.getControl("ts_visualsecurityinspection").setVisible(false);
+            form.getAttribute("ts_visualsecurityinspection").setValue(null);
+            form.getControl("ts_visualsecurityinspectiondetails").setVisible(false);
+            form.getAttribute("ts_visualsecurityinspectiondetails").setValue(null);
         }
     }
 }
