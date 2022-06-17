@@ -89,19 +89,21 @@ var ROM;
                             if (specializedPPERequired) {
                                 form.getControl("ts_typesofspecializedppe").setVisible(true);
                             }
-                            //Show Visual Security Inspection question only for Railway Carrier and Railway Loader
+                            //Show Visual Security Inspection question only for Railway Carrier and Railway Loader depending on Type Of Dangerous Goods
                             var operationType = form.getAttribute("ovs_operationtypeid").getValue();
                             if (operationType != null) {
                                 if (operationType[0].id == "{D883B39A-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}") {
-                                    form.getControl("ts_visualsecurityinspection").setVisible(true);
                                     form.getControl("ts_typeofdangerousgoods").setVisible(true);
-                                    //Set default value for existing operations
-                                    if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
-                                        form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* Unconfirmed */);
-                                    }
-                                    else {
-                                        if (form.getAttribute("ts_visualsecurityinspection").getValue() == 717750001 /* Yes */) {
-                                            form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
+                                    if (form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750002 /* NonSchedule1DangerousGoods */ || form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750001 /* Schedule1DangerousGoods */) {
+                                        form.getControl("ts_visualsecurityinspection").setVisible(true);
+                                        //Set default value for existing operations
+                                        if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
+                                            form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* Unconfirmed */);
+                                        }
+                                        else {
+                                            if (form.getAttribute("ts_visualsecurityinspection").getValue() == 717750001 /* Yes */) {
+                                                form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
+                                            }
                                         }
                                     }
                                 }
@@ -361,5 +363,19 @@ var ROM;
             }
         }
         Operation.SIConductedOnChange = SIConductedOnChange;
+        function typeOfDangerousGoodsOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var typeOfDangerousGoods = form.getAttribute("ts_typeofdangerousgoods").getValue();
+            if (typeOfDangerousGoods == 717750002 /* NonSchedule1DangerousGoods */ || typeOfDangerousGoods == 717750001 /* Schedule1DangerousGoods */) {
+                form.getControl("ts_visualsecurityinspection").setVisible(true);
+            }
+            else {
+                form.getControl("ts_visualsecurityinspection").setVisible(false);
+                form.getAttribute("ts_visualsecurityinspection").setValue(null);
+                form.getControl("ts_visualsecurityinspectiondetails").setVisible(false);
+                form.getAttribute("ts_visualsecurityinspectiondetails").setValue(null);
+            }
+        }
+        Operation.typeOfDangerousGoodsOnChange = typeOfDangerousGoodsOnChange;
     })(Operation = ROM.Operation || (ROM.Operation = {}));
 })(ROM || (ROM = {}));
