@@ -41,7 +41,6 @@ declare namespace Form.ovs_operation.Main {
       }
       interface tab_properties extends Xrm.SectionCollectionBase {
         get(name: "is_security_inspection_site_section"): Xrm.PageSection;
-        get(name: "tab_dangerous_goods"): Xrm.PageSection;
         get(name: "tab_properties_ppeguide"): Xrm.PageSection;
         get(name: "tab_properties_section_4"): Xrm.PageSection;
         get(name: "tab_properties_section_5"): Xrm.PageSection;
@@ -56,6 +55,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<ovs_operation_statecode>;
+      get(name: "ts_comments"): Xrm.Attribute<string>;
       get(name: "ts_description"): Xrm.Attribute<string>;
       get(name: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
       get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
@@ -93,6 +93,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
+      get(name: "ts_comments"): Xrm.StringControl;
       get(name: "ts_description"): Xrm.StringControl;
       get(name: "ts_issecurityinspectionsite"): Xrm.OptionSetControl<ts_issecurityinspectionsite>;
       get(name: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
@@ -135,6 +136,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ovs_operation_statecode>;
+    getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_description"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
     getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
@@ -167,6 +169,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
+    getControl(controlName: "ts_comments"): Xrm.StringControl;
     getControl(controlName: "ts_description"): Xrm.StringControl;
     getControl(controlName: "ts_issecurityinspectionsite"): Xrm.OptionSetControl<ts_issecurityinspectionsite>;
     getControl(controlName: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;

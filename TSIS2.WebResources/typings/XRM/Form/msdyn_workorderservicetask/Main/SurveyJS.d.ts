@@ -95,6 +95,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
       get(name: "ts_legislationsourcefilter"): Xrm.LookupAttribute<"qm_tylegislationsource">;
       get(name: "ts_legislationtypefilter"): Xrm.LookupAttribute<"qm_tylegislationtype">;
+      get(name: "ts_mandatory"): Xrm.Attribute<any>;
       get(name: "ts_servicetaskenddate"): Xrm.DateAttribute;
       get(name: "ts_servicetaskstartdate"): Xrm.DateAttribute;
       get(name: string): undefined;
@@ -140,6 +141,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
       get(name: "ts_legislationsourcefilter"): Xrm.LookupControl<"qm_tylegislationsource">;
       get(name: "ts_legislationtypefilter"): Xrm.LookupControl<"qm_tylegislationtype">;
+      get(name: "ts_mandatory"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_servicetaskenddate"): Xrm.DateControl;
       get(name: "ts_servicetaskstartdate"): Xrm.DateControl;
       get(name: string): undefined;
@@ -187,6 +189,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
     getAttribute(attributeName: "ts_legislationsourcefilter"): Xrm.LookupAttribute<"qm_tylegislationsource">;
     getAttribute(attributeName: "ts_legislationtypefilter"): Xrm.LookupAttribute<"qm_tylegislationtype">;
+    getAttribute(attributeName: "ts_mandatory"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_servicetaskenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_servicetaskstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
@@ -227,6 +230,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
     getControl(controlName: "ts_legislationsourcefilter"): Xrm.LookupControl<"qm_tylegislationsource">;
     getControl(controlName: "ts_legislationtypefilter"): Xrm.LookupControl<"qm_tylegislationtype">;
+    getControl(controlName: "ts_mandatory"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_servicetaskenddate"): Xrm.DateControl;
     getControl(controlName: "ts_servicetaskstartdate"): Xrm.DateControl;
     getControl(controlName: string): undefined;
