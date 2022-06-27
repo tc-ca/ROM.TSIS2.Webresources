@@ -310,7 +310,7 @@ namespace ROM.Incident {
 
     }
 
-    function workOrder1OnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export function workOrder1OnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
         const workOrder1Value = form.getAttribute("ts_workorder1").getValue();
         if (workOrder1Value != null) {
@@ -358,32 +358,35 @@ namespace ROM.Incident {
     }
 
     function setWOST1FilteredView(form: Form.incident.Main.ROMCase): void {
-        const WorkOrderId = form.getAttribute("ts_workorder1")[0].id
-        const viewIdWOST = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
+        const WorkOrderValue = form.getAttribute("ts_workorder1").getValue()
+        const workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null
+        const viewIdWOST = '{1c259fee-0541-4cac-8d20-7b30ee398050}';
         const entityNameWOST = "msdyn_workorderservicetask";
         const viewDisplayNameWOST = "RelatedWorkOrderServiceTasks";
-        const fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + WorkOrderId +'" /> </filter> </entity> </fetch>';
-        const layoutXmlWOST = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorder"><cell name="msdyn_name" width="200" /></row></grid>';
+        const fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + workOrderId +'" /> </filter> </entity> </fetch>';
+        const layoutXmlWOST = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorderservicetask"><cell name="msdyn_name" width="200" /></row></grid>';
         form.getControl("ts_workorderservicetask1").addCustomView(viewIdWOST, entityNameWOST, viewDisplayNameWOST, fetchXmlWOST, layoutXmlWOST, true);
     }
 
     function setWOST2FilteredView(form: Form.incident.Main.ROMCase): void {
-        const WorkOrderId = form.getAttribute("ts_workorder2")[0].id
+        const WorkOrderValue = form.getAttribute("ts_workorder1").getValue()
+        const workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null
         const viewIdWOST = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
         const entityNameWOST = "msdyn_workorderservicetask";
         const viewDisplayNameWOST = "RelatedWorkOrderServiceTasks";
-        const fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + WorkOrderId + '" /> </filter> </entity> </fetch>';
-        const layoutXmlWOST = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorder"><cell name="msdyn_name" width="200" /></row></grid>';
+        const fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + workOrderId + '" /> </filter> </entity> </fetch>';
+        const layoutXmlWOST = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorderservicetask"><cell name="msdyn_name" width="200" /></row></grid>';
         form.getControl("ts_workorderservicetask2").addCustomView(viewIdWOST, entityNameWOST, viewDisplayNameWOST, fetchXmlWOST, layoutXmlWOST, true);
     }
 
     function setAdditionalInspectors1FilteredView(form: Form.incident.Main.ROMCase): void {
-        const AdditionalInspectorsId = form.getAttribute("ts_workorder1")[0].id
-        const viewIdAdditionalInspectors = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
+        const WorkOrderValue = form.getAttribute("ts_workorder1").getValue()
+        const workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null
+        const viewIdAdditionalInspectors = '{1c259fee-0541-4cac-8d20-7b30ee398857}';
         const entityNameAdditionalInspectors = "systemuser";
         const viewDisplayNameAdditionalInspectors = "RelatedAdditionalInspectors";
-        const fetchXmlAdditionalInspectors = '<fetch top="50" > <entity name="systemuser" > <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + AdditionalInspectorsId +'" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
-        const layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="FullName" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="FullName" width="200" /></row></grid>';
+        const fetchXmlAdditionalInspectors = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="systemuser" > <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + workOrderId +'" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
+        const layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="fullname" width="200" /></row></grid>';
         form.getControl("ts_additionalinspectors1").addCustomView(viewIdAdditionalInspectors, entityNameAdditionalInspectors, viewDisplayNameAdditionalInspectors, fetchXmlAdditionalInspectors, layoutXmlAdditionalInspectors, true);
     }
 }

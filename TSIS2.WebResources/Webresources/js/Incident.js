@@ -287,6 +287,7 @@ var ROM;
                 form.getControl("ts_additionalinspectors1").setDisabled(true);
             }
         }
+        Incident.workOrder1OnChange = workOrder1OnChange;
         function workOrder2OnChange(eContext) {
             var form = eContext.getFormContext();
         }
@@ -309,30 +310,33 @@ var ROM;
             form.getControl("ts_workorder2").addCustomView(viewIdWorkOrder, entityNameWorkOrder, viewDisplayNameWorkOrder, fetchXmlWorkOrder, layoutXmlWorkOrder, true);
         }
         function setWOST1FilteredView(form) {
-            var WorkOrderId = form.getAttribute("ts_workorder1")[0].id;
-            var viewIdWOST = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
+            var WorkOrderValue = form.getAttribute("ts_workorder1").getValue();
+            var workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null;
+            var viewIdWOST = '{1c259fee-0541-4cac-8d20-7b30ee398050}';
             var entityNameWOST = "msdyn_workorderservicetask";
             var viewDisplayNameWOST = "RelatedWorkOrderServiceTasks";
-            var fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + WorkOrderId + '" /> </filter> </entity> </fetch>';
-            var layoutXmlWOST = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorder"><cell name="msdyn_name" width="200" /></row></grid>';
+            var fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + workOrderId + '" /> </filter> </entity> </fetch>';
+            var layoutXmlWOST = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorderservicetask"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_workorderservicetask1").addCustomView(viewIdWOST, entityNameWOST, viewDisplayNameWOST, fetchXmlWOST, layoutXmlWOST, true);
         }
         function setWOST2FilteredView(form) {
-            var WorkOrderId = form.getAttribute("ts_workorder2")[0].id;
+            var WorkOrderValue = form.getAttribute("ts_workorder1").getValue();
+            var workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null;
             var viewIdWOST = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
             var entityNameWOST = "msdyn_workorderservicetask";
             var viewDisplayNameWOST = "RelatedWorkOrderServiceTasks";
-            var fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + WorkOrderId + '" /> </filter> </entity> </fetch>';
-            var layoutXmlWOST = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorder"><cell name="msdyn_name" width="200" /></row></grid>';
+            var fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + workOrderId + '" /> </filter> </entity> </fetch>';
+            var layoutXmlWOST = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorderservicetask"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_workorderservicetask2").addCustomView(viewIdWOST, entityNameWOST, viewDisplayNameWOST, fetchXmlWOST, layoutXmlWOST, true);
         }
         function setAdditionalInspectors1FilteredView(form) {
-            var AdditionalInspectorsId = form.getAttribute("ts_workorder1")[0].id;
-            var viewIdAdditionalInspectors = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
+            var WorkOrderValue = form.getAttribute("ts_workorder1").getValue();
+            var workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null;
+            var viewIdAdditionalInspectors = '{1c259fee-0541-4cac-8d20-7b30ee398857}';
             var entityNameAdditionalInspectors = "systemuser";
             var viewDisplayNameAdditionalInspectors = "RelatedAdditionalInspectors";
-            var fetchXmlAdditionalInspectors = '<fetch top="50" > <entity name="systemuser" > <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + AdditionalInspectorsId + '" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
-            var layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="FullName" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="FullName" width="200" /></row></grid>';
+            var fetchXmlAdditionalInspectors = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="systemuser" > <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + workOrderId + '" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
+            var layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="fullname" width="200" /></row></grid>';
             form.getControl("ts_additionalinspectors1").addCustomView(viewIdAdditionalInspectors, entityNameAdditionalInspectors, viewDisplayNameAdditionalInspectors, fetchXmlAdditionalInspectors, layoutXmlAdditionalInspectors, true);
         }
     })(Incident = ROM.Incident || (ROM.Incident = {}));
