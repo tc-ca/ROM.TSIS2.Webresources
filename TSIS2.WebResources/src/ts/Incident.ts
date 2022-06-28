@@ -307,16 +307,18 @@ namespace ROM.Incident {
         const workOrder1Attribute = form.getAttribute("ts_workorder1");
         const workOrder2Attribute = form.getAttribute("ts_workorder2");
 
+        //Unlock dependent fields if Work Order 1 already has a value
         if (workOrder1Attribute.getValue() != null) {
             form.getControl("ts_workorderservicetask1").setDisabled(false);
             form.getControl("ts_additionalinspectors1").setDisabled(false);
         }
-
+        //Unlock dependent fields if Work Order 2 already has a value
         if (workOrder2Attribute.getValue() != null) {
             form.getControl("ts_workorderservicetask2").setDisabled(false);
             form.getControl("ts_additionalinspectors2").setDisabled(false);
         }
 
+        //Set custom views for all fields
         setWorkOrder1FilteredView(form);
         setWorkOrder2FilteredView(form);
         setWOST1FilteredView(form);
@@ -329,14 +331,14 @@ namespace ROM.Incident {
         const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
         const workOrder1Value = form.getAttribute("ts_workorder1").getValue();
         if (workOrder1Value != null) {
-
+            //Update View of dependent fields
             setWOST1FilteredView(form);
             setAdditionalInspectors1FilteredView(form);
 
             const WorkOrderValue = form.getAttribute("ts_workorder1").getValue()
+            //If Work Order has a value, try to find its Mandatory Service task and set the WOST1 field to it
             if (WorkOrderValue != null) {
                 const workOrderId = WorkOrderValue[0].id;
-
                 let fetchXml = [
                     "<fetch top='1'>",
                     "  <entity name='msdyn_workorderservicetask'>",
@@ -361,7 +363,7 @@ namespace ROM.Incident {
                         workOrderServiceTask1OnChange(eContext);
                     }
                 });
-
+                //Set the Inspection Type field to the Inspection Type of the Work Order
                 Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value").then(function (result) {
                     const lookup = new Array();
                     lookup[0] = new Object();
@@ -370,8 +372,7 @@ namespace ROM.Incident {
                     lookup[0].entityType = 'msdyn_incidenttype';
                     form.getAttribute('ts_inspectiontype1').setValue(lookup);
                 });
-            } 
-            
+            }
 
             form.getControl("ts_workorderservicetask1").setDisabled(false);
             form.getControl("ts_additionalinspectors1").setDisabled(false);
@@ -392,13 +393,14 @@ namespace ROM.Incident {
         const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
         const workOrder2Value = form.getAttribute("ts_workorder2").getValue();
         if (workOrder2Value != null) {
+            //Update View of dependent fields
             setWOST2FilteredView(form);
             setAdditionalInspectors2FilteredView(form);
 
             const WorkOrderValue = form.getAttribute("ts_workorder2").getValue()
+            //If Work Order has a value, try to find its Mandatory Service task and set the WOST1 field to it
             if (WorkOrderValue != null) {
                 const workOrderId = WorkOrderValue[0].id;
-
                 let fetchXml = [
                     "<fetch top='1'>",
                     "  <entity name='msdyn_workorderservicetask'>",
@@ -423,7 +425,7 @@ namespace ROM.Incident {
                         workOrderServiceTask2OnChange(eContext);
                     }
                 });
-
+                //Set the Inspection Type field to the Inspection Type of the Work Order
                 Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value").then(function (result) {
                     const lookup = new Array();
                     lookup[0] = new Object();
@@ -448,7 +450,7 @@ namespace ROM.Incident {
         }
         setWorkOrder1FilteredView(form);
     }
-
+    //When the Service Task is changed, set or clear Date of Inspection 1
     export function workOrderServiceTask1OnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
         const WOST1Value = form.getAttribute("ts_workorderservicetask1").getValue();
@@ -463,7 +465,7 @@ namespace ROM.Incident {
             form.getAttribute('ts_dateofinspection1').setValue(null);
         }
     }
-
+    //When the Service Task is changed, set or clear Date of Inspection 2
     export function workOrderServiceTask2OnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
         const WOST2Value = form.getAttribute("ts_workorderservicetask2").getValue();

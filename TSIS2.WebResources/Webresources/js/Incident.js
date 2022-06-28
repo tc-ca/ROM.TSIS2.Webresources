@@ -266,14 +266,17 @@ var ROM;
             var form = eContext.getFormContext();
             var workOrder1Attribute = form.getAttribute("ts_workorder1");
             var workOrder2Attribute = form.getAttribute("ts_workorder2");
+            //Unlock dependent fields if Work Order 1 already has a value
             if (workOrder1Attribute.getValue() != null) {
                 form.getControl("ts_workorderservicetask1").setDisabled(false);
                 form.getControl("ts_additionalinspectors1").setDisabled(false);
             }
+            //Unlock dependent fields if Work Order 2 already has a value
             if (workOrder2Attribute.getValue() != null) {
                 form.getControl("ts_workorderservicetask2").setDisabled(false);
                 form.getControl("ts_additionalinspectors2").setDisabled(false);
             }
+            //Set custom views for all fields
             setWorkOrder1FilteredView(form);
             setWorkOrder2FilteredView(form);
             setWOST1FilteredView(form);
@@ -285,9 +288,11 @@ var ROM;
             var form = eContext.getFormContext();
             var workOrder1Value = form.getAttribute("ts_workorder1").getValue();
             if (workOrder1Value != null) {
+                //Update View of dependent fields
                 setWOST1FilteredView(form);
                 setAdditionalInspectors1FilteredView(form);
                 var WorkOrderValue = form.getAttribute("ts_workorder1").getValue();
+                //If Work Order has a value, try to find its Mandatory Service task and set the WOST1 field to it
                 if (WorkOrderValue != null) {
                     var workOrderId = WorkOrderValue[0].id;
                     var fetchXml = [
@@ -314,6 +319,7 @@ var ROM;
                             workOrderServiceTask1OnChange(eContext);
                         }
                     });
+                    //Set the Inspection Type field to the Inspection Type of the Work Order
                     Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value").then(function (result) {
                         var lookup = new Array();
                         lookup[0] = new Object();
@@ -342,9 +348,11 @@ var ROM;
             var form = eContext.getFormContext();
             var workOrder2Value = form.getAttribute("ts_workorder2").getValue();
             if (workOrder2Value != null) {
+                //Update View of dependent fields
                 setWOST2FilteredView(form);
                 setAdditionalInspectors2FilteredView(form);
                 var WorkOrderValue = form.getAttribute("ts_workorder2").getValue();
+                //If Work Order has a value, try to find its Mandatory Service task and set the WOST1 field to it
                 if (WorkOrderValue != null) {
                     var workOrderId = WorkOrderValue[0].id;
                     var fetchXml = [
@@ -371,6 +379,7 @@ var ROM;
                             workOrderServiceTask2OnChange(eContext);
                         }
                     });
+                    //Set the Inspection Type field to the Inspection Type of the Work Order
                     Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value").then(function (result) {
                         var lookup = new Array();
                         lookup[0] = new Object();
@@ -395,6 +404,7 @@ var ROM;
             setWorkOrder1FilteredView(form);
         }
         Incident.workOrder2OnChange = workOrder2OnChange;
+        //When the Service Task is changed, set or clear Date of Inspection 1
         function workOrderServiceTask1OnChange(eContext) {
             var form = eContext.getFormContext();
             var WOST1Value = form.getAttribute("ts_workorderservicetask1").getValue();
@@ -411,6 +421,7 @@ var ROM;
             }
         }
         Incident.workOrderServiceTask1OnChange = workOrderServiceTask1OnChange;
+        //When the Service Task is changed, set or clear Date of Inspection 2
         function workOrderServiceTask2OnChange(eContext) {
             var form = eContext.getFormContext();
             var WOST2Value = form.getAttribute("ts_workorderservicetask2").getValue();
