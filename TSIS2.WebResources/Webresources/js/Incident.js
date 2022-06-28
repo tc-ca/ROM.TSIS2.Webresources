@@ -301,7 +301,61 @@ var ROM;
         Incident.workOrder1OnChange = workOrder1OnChange;
         function workOrder2OnChange(eContext) {
             var form = eContext.getFormContext();
+            var workOrder2Value = form.getAttribute("ts_workorder2").getValue();
+            if (workOrder2Value != null) {
+                setWOST2FilteredView(form);
+                setAdditionalInspectors2FilteredView(form);
+                var WorkOrderValue = form.getAttribute("ts_workorder2").getValue();
+                if (WorkOrderValue != null) {
+                    var workOrderId = WorkOrderValue[0].id;
+                    Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value").then(function (result) {
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = result["_msdyn_primaryincidenttype_value"];
+                        lookup[0].name = result["_msdyn_primaryincidenttype_value@OData.Community.Display.V1.FormattedValue"];
+                        lookup[0].entityType = 'msdyn_incidenttype';
+                        form.getAttribute('ts_inspectiontype2').setValue(lookup);
+                    });
+                }
+                form.getControl("ts_workorderservicetask2").setDisabled(false);
+                form.getControl("ts_additionalinspectors2").setDisabled(false);
+            }
+            else {
+                //Clear and lock dependent fields
+                form.getAttribute("ts_workorderservicetask2").setValue(null);
+                form.getAttribute("ts_additionalinspectors2").setValue(null);
+                form.getAttribute("ts_inspectiontype2").setValue(null);
+                form.getControl("ts_workorderservicetask2").setDisabled(true);
+                form.getControl("ts_additionalinspectors2").setDisabled(true);
+            }
         }
+        Incident.workOrder2OnChange = workOrder2OnChange;
+        function workOrderServiceTask1OnChange(eContext) {
+            var form = eContext.getFormContext();
+            var WOST1Value = form.getAttribute("ts_workorderservicetask1").getValue();
+            if (WOST1Value != null) {
+                var WOSTId = WOST1Value[0].id;
+                Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", WOSTId, "?$select=ts_servicetaskstartdate").then(function (result) {
+                    if (result.ts_servicetaskstartdate != null) {
+                        form.getAttribute('ts_dateofinspection1').setValue(new Date(result.ts_servicetaskstartdate));
+                    }
+                });
+            }
+        }
+        Incident.workOrderServiceTask1OnChange = workOrderServiceTask1OnChange;
+        function workOrderServiceTask2OnChange(eContext) {
+            var form = eContext.getFormContext();
+            var WOST2Value = form.getAttribute("ts_workorderservicetask2").getValue();
+            if (WOST2Value != null) {
+                var WOSTId = WOST2Value[0].id;
+                Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", WOSTId, "?$select=ts_servicetaskstartdate").then(function (result) {
+                    if (result.ts_servicetaskstartdate != null) {
+                        form.getAttribute('ts_dateofinspection2').setValue(new Date(result.ts_servicetaskstartdate));
+                    }
+                });
+            }
+        }
+        Incident.workOrderServiceTask2OnChange = workOrderServiceTask2OnChange;
         function setWorkOrder1FilteredView(form) {
             var caseId = form.data.entity.getId();
             var viewIdWorkOrder = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
@@ -331,7 +385,7 @@ var ROM;
             form.getControl("ts_workorderservicetask1").addCustomView(viewIdWOST, entityNameWOST, viewDisplayNameWOST, fetchXmlWOST, layoutXmlWOST, true);
         }
         function setWOST2FilteredView(form) {
-            var WorkOrderValue = form.getAttribute("ts_workorder1").getValue();
+            var WorkOrderValue = form.getAttribute("ts_workorder2").getValue();
             var workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null;
             var viewIdWOST = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
             var entityNameWOST = "msdyn_workorderservicetask";
@@ -349,6 +403,16 @@ var ROM;
             var fetchXmlAdditionalInspectors = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="systemuser" > <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + workOrderId + '" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
             var layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="fullname" width="200" /></row></grid>';
             form.getControl("ts_additionalinspectors1").addCustomView(viewIdAdditionalInspectors, entityNameAdditionalInspectors, viewDisplayNameAdditionalInspectors, fetchXmlAdditionalInspectors, layoutXmlAdditionalInspectors, true);
+        }
+        function setAdditionalInspectors2FilteredView(form) {
+            var WorkOrderValue = form.getAttribute("ts_workorder2").getValue();
+            var workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null;
+            var viewIdAdditionalInspectors = '{1c259fee-0541-4cac-8d20-7b30ee398263}';
+            var entityNameAdditionalInspectors = "systemuser";
+            var viewDisplayNameAdditionalInspectors = "RelatedAdditionalInspectors";
+            var fetchXmlAdditionalInspectors = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="systemuser" > <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + workOrderId + '" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
+            var layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="fullname" width="200" /></row></grid>';
+            form.getControl("ts_additionalinspectors2").addCustomView(viewIdAdditionalInspectors, entityNameAdditionalInspectors, viewDisplayNameAdditionalInspectors, fetchXmlAdditionalInspectors, layoutXmlAdditionalInspectors, true);
         }
     })(Incident = ROM.Incident || (ROM.Incident = {}));
 })(ROM || (ROM = {}));

@@ -344,9 +344,64 @@ namespace ROM.Incident {
         }
     }
 
-    function workOrder2OnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export function workOrder2OnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
+        const workOrder2Value = form.getAttribute("ts_workorder2").getValue();
+        if (workOrder2Value != null) {
+            setWOST2FilteredView(form);
+            setAdditionalInspectors2FilteredView(form);
 
+            const WorkOrderValue = form.getAttribute("ts_workorder2").getValue()
+            if (WorkOrderValue != null) {
+                const workOrderId = WorkOrderValue[0].id;
+                Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value").then(function (result) {
+                    const lookup = new Array();
+                    lookup[0] = new Object();
+                    lookup[0].id = result["_msdyn_primaryincidenttype_value"];
+                    lookup[0].name = result["_msdyn_primaryincidenttype_value@OData.Community.Display.V1.FormattedValue"];
+                    lookup[0].entityType = 'msdyn_incidenttype';
+                    form.getAttribute('ts_inspectiontype2').setValue(lookup);
+                });
+            }
+
+            form.getControl("ts_workorderservicetask2").setDisabled(false);
+            form.getControl("ts_additionalinspectors2").setDisabled(false);
+
+        } else {
+            //Clear and lock dependent fields
+            form.getAttribute("ts_workorderservicetask2").setValue(null);
+            form.getAttribute("ts_additionalinspectors2").setValue(null);
+            form.getAttribute("ts_inspectiontype2").setValue(null);
+            form.getControl("ts_workorderservicetask2").setDisabled(true);
+            form.getControl("ts_additionalinspectors2").setDisabled(true);
+        }
+
+    }
+
+    export function workOrderServiceTask1OnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
+        const WOST1Value = form.getAttribute("ts_workorderservicetask1").getValue();
+        if (WOST1Value != null) {
+            const WOSTId = WOST1Value[0].id;
+            Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", WOSTId, "?$select=ts_servicetaskstartdate").then(function (result) {
+                if (result.ts_servicetaskstartdate != null) {
+                    form.getAttribute('ts_dateofinspection1').setValue(new Date(result.ts_servicetaskstartdate));
+                }
+            });
+        }
+    }
+
+    export function workOrderServiceTask2OnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
+        const WOST2Value = form.getAttribute("ts_workorderservicetask2").getValue();
+        if (WOST2Value != null) {
+            const WOSTId = WOST2Value[0].id;
+            Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", WOSTId, "?$select=ts_servicetaskstartdate").then(function (result) {
+                if (result.ts_servicetaskstartdate != null) {
+                    form.getAttribute('ts_dateofinspection2').setValue(new Date(result.ts_servicetaskstartdate));
+                }
+            });
+        }
     }
 
     function setWorkOrder1FilteredView(form: Form.incident.Main.ROMCase): void {
@@ -381,7 +436,7 @@ namespace ROM.Incident {
     }
 
     function setWOST2FilteredView(form: Form.incident.Main.ROMCase): void {
-        const WorkOrderValue = form.getAttribute("ts_workorder1").getValue()
+        const WorkOrderValue = form.getAttribute("ts_workorder2").getValue()
         const workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null
         const viewIdWOST = '{1c259fee-0541-4cac-8d20-7b30ee398065}';
         const entityNameWOST = "msdyn_workorderservicetask";
@@ -400,5 +455,16 @@ namespace ROM.Incident {
         const fetchXmlAdditionalInspectors = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="systemuser" > <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + workOrderId +'" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
         const layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="fullname" width="200" /></row></grid>';
         form.getControl("ts_additionalinspectors1").addCustomView(viewIdAdditionalInspectors, entityNameAdditionalInspectors, viewDisplayNameAdditionalInspectors, fetchXmlAdditionalInspectors, layoutXmlAdditionalInspectors, true);
+    }
+
+    function setAdditionalInspectors2FilteredView(form: Form.incident.Main.ROMCase): void {
+        const WorkOrderValue = form.getAttribute("ts_workorder2").getValue()
+        const workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null
+        const viewIdAdditionalInspectors = '{1c259fee-0541-4cac-8d20-7b30ee398263}';
+        const entityNameAdditionalInspectors = "systemuser";
+        const viewDisplayNameAdditionalInspectors = "RelatedAdditionalInspectors";
+        const fetchXmlAdditionalInspectors = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="systemuser" > <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + workOrderId + '" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
+        const layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="fullname" width="200" /></row></grid>';
+        form.getControl("ts_additionalinspectors2").addCustomView(viewIdAdditionalInspectors, entityNameAdditionalInspectors, viewDisplayNameAdditionalInspectors, fetchXmlAdditionalInspectors, layoutXmlAdditionalInspectors, true);
     }
 }
