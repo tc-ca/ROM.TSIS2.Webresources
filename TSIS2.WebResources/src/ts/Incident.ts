@@ -339,6 +339,7 @@ namespace ROM.Incident {
             form.getAttribute("ts_workorderservicetask1").setValue(null);
             form.getAttribute("ts_additionalinspectors1").setValue(null);
             form.getAttribute("ts_inspectiontype1").setValue(null);
+            form.getAttribute("ts_dateofinspection1").setValue(null);
             form.getControl("ts_workorderservicetask1").setDisabled(true);
             form.getControl("ts_additionalinspectors1").setDisabled(true);
         }
@@ -372,6 +373,7 @@ namespace ROM.Incident {
             form.getAttribute("ts_workorderservicetask2").setValue(null);
             form.getAttribute("ts_additionalinspectors2").setValue(null);
             form.getAttribute("ts_inspectiontype2").setValue(null);
+            form.getAttribute("ts_dateofinspection2").setValue(null);
             form.getControl("ts_workorderservicetask2").setDisabled(true);
             form.getControl("ts_additionalinspectors2").setDisabled(true);
         }
@@ -388,6 +390,8 @@ namespace ROM.Incident {
                     form.getAttribute('ts_dateofinspection1').setValue(new Date(result.ts_servicetaskstartdate));
                 }
             });
+        } else {
+            form.getAttribute('ts_dateofinspection1').setValue(null);
         }
     }
 
@@ -401,6 +405,8 @@ namespace ROM.Incident {
                     form.getAttribute('ts_dateofinspection2').setValue(new Date(result.ts_servicetaskstartdate));
                 }
             });
+        } else {
+            form.getAttribute('ts_dateofinspection2').setValue(null);
         }
     }
 
