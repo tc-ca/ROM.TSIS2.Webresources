@@ -317,7 +317,19 @@ namespace ROM.Incident {
             setWOST1FilteredView(form);
             setAdditionalInspectors1FilteredView(form);
 
-            //Set Inspection Type 1
+            const WorkOrderValue = form.getAttribute("ts_workorder1").getValue()
+            if (WorkOrderValue != null) {
+                const workOrderId = WorkOrderValue[0].id;
+                Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value").then(function (result) {
+                    const lookup = new Array();
+                    lookup[0] = new Object();
+                    lookup[0].id = result["_msdyn_primaryincidenttype_value"];
+                    lookup[0].name = result["_msdyn_primaryincidenttype_value@OData.Community.Display.V1.FormattedValue"];
+                    lookup[0].entityType = 'msdyn_incidenttype';
+                    form.getAttribute('ts_inspectiontype1').setValue(lookup);
+                });
+            } 
+            
 
             form.getControl("ts_workorderservicetask1").setDisabled(false);
             form.getControl("ts_additionalinspectors1").setDisabled(false);
