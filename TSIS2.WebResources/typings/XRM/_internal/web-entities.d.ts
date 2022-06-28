@@ -400,29 +400,6 @@ interface ts_assessmentscorethredshots_Create extends ts_assessmentscorethredsho
 }
 interface ts_assessmentscorethredshots_Update extends ts_assessmentscorethredshots {
 }
-interface ts_EnforcementAction_Base extends WebEntity {
-}
-interface ts_EnforcementAction_Fixed extends WebEntity_Fixed {
-  ts_enforcementactionid: string;
-}
-interface ts_EnforcementAction extends ts_EnforcementAction_Base, ts_EnforcementAction_Relationships {
-}
-interface ts_EnforcementAction_Relationships {
-}
-interface ts_EnforcementAction_Result extends ts_EnforcementAction_Base, ts_EnforcementAction_Relationships {
-}
-interface ts_EnforcementAction_FormattedResult {
-}
-interface ts_EnforcementAction_Select {
-}
-interface ts_EnforcementAction_Expand {
-}
-interface ts_EnforcementAction_Filter {
-}
-interface ts_EnforcementAction_Create extends ts_EnforcementAction {
-}
-interface ts_EnforcementAction_Update extends ts_EnforcementAction {
-}
 interface ts_Incident_ts_operationcontact_Base extends WebEntity {
 }
 interface ts_Incident_ts_operationcontact_Fixed extends WebEntity_Fixed {

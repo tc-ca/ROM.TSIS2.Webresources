@@ -65,6 +65,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_stateorprovince"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "ts_businessunit"): Xrm.Attribute<string>;
+      get(name: "ts_class"): Xrm.OptionSetAttribute<ts_msdyn_functionallocation_ts_class>;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_description"): Xrm.Attribute<string>;
       get(name: "ts_functionallocationnameenglish"): Xrm.Attribute<string>;
@@ -105,6 +106,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_stateorprovince"): Xrm.StringControl;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ts_businessunit"): Xrm.StringControl;
+      get(name: "ts_class"): Xrm.OptionSetControl<ts_msdyn_functionallocation_ts_class>;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_description"): Xrm.StringControl;
       get(name: "ts_functionallocationnameenglish"): Xrm.StringControl;
@@ -149,6 +151,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "msdyn_stateorprovince"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "ts_businessunit"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_class"): Xrm.OptionSetAttribute<ts_msdyn_functionallocation_ts_class>;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_description"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_functionallocationnameenglish"): Xrm.Attribute<string>;
@@ -184,6 +187,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "msdyn_stateorprovince"): Xrm.StringControl;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ts_businessunit"): Xrm.StringControl;
+    getControl(controlName: "ts_class"): Xrm.OptionSetControl<ts_msdyn_functionallocation_ts_class>;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_description"): Xrm.StringControl;
     getControl(controlName: "ts_functionallocationnameenglish"): Xrm.StringControl;

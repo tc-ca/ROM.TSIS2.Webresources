@@ -88,6 +88,7 @@ declare namespace Form.incident.Main {
       interface tab_13 extends Xrm.SectionCollectionBase {
         get(name: "_section_349"): Xrm.PageSection;
         get(name: "tab_13_section_1"): Xrm.PageSection;
+        get(name: "tab_13_section_4"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -156,9 +157,19 @@ declare namespace Form.incident.Main {
       get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
       get(name: "ticketnumber"): Xrm.Attribute<string>;
       get(name: "title"): Xrm.Attribute<string>;
+      get(name: "ts_additionalinspectors1"): Xrm.LookupAttribute<"systemuser">;
+      get(name: "ts_additionalinspectors2"): Xrm.LookupAttribute<"systemuser">;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+      get(name: "ts_dateofinspection1"): Xrm.DateAttribute;
+      get(name: "ts_dateofinspection2"): Xrm.DateAttribute;
+      get(name: "ts_inspectiontype1"): Xrm.LookupAttribute<"msdyn_incidenttype">;
+      get(name: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
       get(name: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
+      get(name: "ts_workorder1"): Xrm.LookupAttribute<"msdyn_workorder">;
+      get(name: "ts_workorder2"): Xrm.LookupAttribute<"msdyn_workorder">;
+      get(name: "ts_workorderservicetask1"): Xrm.LookupAttribute<"msdyn_workorderservicetask">;
+      get(name: "ts_workorderservicetask2"): Xrm.LookupAttribute<"msdyn_workorderservicetask">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -236,9 +247,19 @@ declare namespace Form.incident.Main {
       get(name: "title"): Xrm.StringControl;
       get(name: "title1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "title2"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_additionalinspectors1"): Xrm.LookupControl<"systemuser">;
+      get(name: "ts_additionalinspectors2"): Xrm.LookupControl<"systemuser">;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
+      get(name: "ts_dateofinspection1"): Xrm.DateControl;
+      get(name: "ts_dateofinspection2"): Xrm.DateControl;
+      get(name: "ts_inspectiontype1"): Xrm.LookupControl<"msdyn_incidenttype">;
+      get(name: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
       get(name: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
+      get(name: "ts_workorder1"): Xrm.LookupControl<"msdyn_workorder">;
+      get(name: "ts_workorder2"): Xrm.LookupControl<"msdyn_workorder">;
+      get(name: "ts_workorderservicetask1"): Xrm.LookupControl<"msdyn_workorderservicetask">;
+      get(name: "ts_workorderservicetask2"): Xrm.LookupControl<"msdyn_workorderservicetask">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -304,9 +325,19 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
     getAttribute(attributeName: "ticketnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_additionalinspectors1"): Xrm.LookupAttribute<"systemuser">;
+    getAttribute(attributeName: "ts_additionalinspectors2"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
+    getAttribute(attributeName: "ts_dateofinspection1"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_dateofinspection2"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_inspectiontype1"): Xrm.LookupAttribute<"msdyn_incidenttype">;
+    getAttribute(attributeName: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
+    getAttribute(attributeName: "ts_workorder1"): Xrm.LookupAttribute<"msdyn_workorder">;
+    getAttribute(attributeName: "ts_workorder2"): Xrm.LookupAttribute<"msdyn_workorder">;
+    getAttribute(attributeName: "ts_workorderservicetask1"): Xrm.LookupAttribute<"msdyn_workorderservicetask">;
+    getAttribute(attributeName: "ts_workorderservicetask2"): Xrm.LookupAttribute<"msdyn_workorderservicetask">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Associated_Articles"): Xrm.SubGridControl<"knowledgebaserecord">;
     getControl(controlName: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
@@ -379,9 +410,19 @@ declare namespace Form.incident.Main {
     getControl(controlName: "title"): Xrm.StringControl;
     getControl(controlName: "title1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "title2"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_additionalinspectors1"): Xrm.LookupControl<"systemuser">;
+    getControl(controlName: "ts_additionalinspectors2"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
+    getControl(controlName: "ts_dateofinspection1"): Xrm.DateControl;
+    getControl(controlName: "ts_dateofinspection2"): Xrm.DateControl;
+    getControl(controlName: "ts_inspectiontype1"): Xrm.LookupControl<"msdyn_incidenttype">;
+    getControl(controlName: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
     getControl(controlName: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
+    getControl(controlName: "ts_workorder1"): Xrm.LookupControl<"msdyn_workorder">;
+    getControl(controlName: "ts_workorder2"): Xrm.LookupControl<"msdyn_workorder">;
+    getControl(controlName: "ts_workorderservicetask1"): Xrm.LookupControl<"msdyn_workorderservicetask">;
+    getControl(controlName: "ts_workorderservicetask2"): Xrm.LookupControl<"msdyn_workorderservicetask">;
     getControl(controlName: string): undefined;
   }
 }

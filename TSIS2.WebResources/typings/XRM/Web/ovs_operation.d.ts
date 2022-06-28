@@ -9,6 +9,7 @@ interface ovs_operation_Base extends WebEntity {
   statuscode?: ovs_operation_statuscode | null;
   timezoneruleversionnumber?: number | null;
   ts_canvasappnumber?: string | null;
+  ts_comments?: string | null;
   ts_description?: string | null;
   ts_issecurityinspectionsite?: ts_issecurityinspectionsite | null;
   ts_operationalstatus?: ts_operationalstatus | null;
@@ -75,6 +76,7 @@ interface ovs_operation_Select {
   statuscode: WebAttribute<ovs_operation_Select, { statuscode: ovs_operation_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ovs_operation_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_canvasappnumber: WebAttribute<ovs_operation_Select, { ts_canvasappnumber: string | null }, {  }>;
+  ts_comments: WebAttribute<ovs_operation_Select, { ts_comments: string | null }, {  }>;
   ts_description: WebAttribute<ovs_operation_Select, { ts_description: string | null }, {  }>;
   ts_issecurityinspectionsite: WebAttribute<ovs_operation_Select, { ts_issecurityinspectionsite: ts_issecurityinspectionsite | null }, { ts_issecurityinspectionsite_formatted?: string }>;
   ts_operationalstatus: WebAttribute<ovs_operation_Select, { ts_operationalstatus: ts_operationalstatus | null }, { ts_operationalstatus_formatted?: string }>;
@@ -117,6 +119,7 @@ interface ovs_operation_Filter {
   statuscode: ovs_operation_statuscode;
   timezoneruleversionnumber: number;
   ts_canvasappnumber: string;
+  ts_comments: string;
   ts_description: string;
   ts_issecurityinspectionsite: ts_issecurityinspectionsite;
   ts_operationalstatus: ts_operationalstatus;

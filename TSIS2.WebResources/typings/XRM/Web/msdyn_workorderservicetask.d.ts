@@ -24,6 +24,7 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
   statecode?: msdyn_workorderservicetask_statecode | null;
   statuscode?: msdyn_workorderservicetask_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_mandatory?: boolean | null;
   ts_servicetaskenddate?: Date | null;
   ts_servicetaskstartdate?: Date | null;
   ts_workorderstartdate?: Date | null;
@@ -40,6 +41,8 @@ interface msdyn_workorderservicetask_Relationships {
   ovs_CaseId?: Incident_Result | null;
   ovs_Questionnaire?: ovs_Questionnaire_Result | null;
   ovs_msdyn_workorderservicetask_ovs_finding?: ovs_Finding_Result[] | null;
+  ts_incident_WorkOrderServiceTask1_msdyn_work?: Incident_Result[] | null;
+  ts_incident_WorkOrderServiceTask2_msdyn_work?: Incident_Result[] | null;
 }
 interface msdyn_workorderservicetask extends msdyn_workorderservicetask_Base, msdyn_workorderservicetask_Relationships {
   msdyn_Inspection_bind$msdyn_inspections?: string | null;
@@ -110,6 +113,7 @@ interface msdyn_workorderservicetask_Select {
   timezoneruleversionnumber: WebAttribute<msdyn_workorderservicetask_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_legislationsourcefilter_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_legislationsourcefilter_guid: string | null }, { ts_legislationsourcefilter_formatted?: string }>;
   ts_legislationtypefilter_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_legislationtypefilter_guid: string | null }, { ts_legislationtypefilter_formatted?: string }>;
+  ts_mandatory: WebAttribute<msdyn_workorderservicetask_Select, { ts_mandatory: boolean | null }, {  }>;
   ts_operationtypefilter_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_operationtypefilter_guid: string | null }, { ts_operationtypefilter_formatted?: string }>;
   ts_servicetaskenddate: WebAttribute<msdyn_workorderservicetask_Select, { ts_servicetaskenddate: Date | null }, { ts_servicetaskenddate_formatted?: string }>;
   ts_servicetaskstartdate: WebAttribute<msdyn_workorderservicetask_Select, { ts_servicetaskstartdate: Date | null }, { ts_servicetaskstartdate_formatted?: string }>;
@@ -164,6 +168,7 @@ interface msdyn_workorderservicetask_Filter {
   timezoneruleversionnumber: number;
   ts_legislationsourcefilter_guid: XQW.Guid;
   ts_legislationtypefilter_guid: XQW.Guid;
+  ts_mandatory: boolean;
   ts_operationtypefilter_guid: XQW.Guid;
   ts_servicetaskenddate: Date;
   ts_servicetaskstartdate: Date;
@@ -191,6 +196,8 @@ interface msdyn_workorderservicetask_Expand {
   ovs_msdyn_workorderservicetask_ovs_finding: WebExpand<msdyn_workorderservicetask_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ovs_msdyn_workorderservicetask_ovs_finding: ovs_Finding_Result[] }>;
   ownerid: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_incident_WorkOrderServiceTask1_msdyn_work: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrderServiceTask1_msdyn_work: Incident_Result[] }>;
+  ts_incident_WorkOrderServiceTask2_msdyn_work: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrderServiceTask2_msdyn_work: Incident_Result[] }>;
 }
 interface msdyn_workorderservicetask_FormattedResult {
   createdby_formatted?: string;
@@ -273,6 +280,8 @@ interface msdyn_workorderservicetask_RelatedMany {
   msdyn_workorderservicetask_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_workorderservicetask_ts_serviceofenforcementactions: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
   ovs_msdyn_workorderservicetask_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_incident_WorkOrderServiceTask1_msdyn_work: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  ts_incident_WorkOrderServiceTask2_msdyn_work: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_workorderservicetasks: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;

@@ -53,6 +53,7 @@ var ROM;
                 }
             }, function (error) {
             });
+            emailTemplateFieldsOnLoad(eContext);
         }
         Incident.onLoad = onLoad;
         function regionOnChange(eContext) {
@@ -260,6 +261,252 @@ var ROM;
             var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"><entity name="tc_country"><attribute name="tc_countryid" /><attribute name="tc_name" /><order attribute="tc_name" descending="false" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="msdyn_functionallocation" from="ts_country" to="tc_countryid" link-type="inner" alias="ae"><filter type="and"><condition attribute="ts_region" operator="eq" value="{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}" /></filter></link-entity></entity></fetch>';
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="tc_countryid"><cell name="tc_name" width="200" /></row></grid>';
             form.getControl("ts_country").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+        }
+        function emailTemplateFieldsOnLoad(eContext) {
+            var form = eContext.getFormContext();
+            var workOrder1Attribute = form.getAttribute("ts_workorder1");
+            var workOrder2Attribute = form.getAttribute("ts_workorder2");
+            //Unlock dependent fields if Work Order 1 already has a value
+            if (workOrder1Attribute.getValue() != null) {
+                form.getControl("ts_workorderservicetask1").setDisabled(false);
+                form.getControl("ts_additionalinspectors1").setDisabled(false);
+            }
+            //Unlock dependent fields if Work Order 2 already has a value
+            if (workOrder2Attribute.getValue() != null) {
+                form.getControl("ts_workorderservicetask2").setDisabled(false);
+                form.getControl("ts_additionalinspectors2").setDisabled(false);
+            }
+            //Set custom views for all fields
+            setWorkOrder1FilteredView(form);
+            setWorkOrder2FilteredView(form);
+            setWOST1FilteredView(form);
+            setWOST2FilteredView(form);
+            setAdditionalInspectors1FilteredView(form);
+            setAdditionalInspectors2FilteredView(form);
+        }
+        function workOrder1OnChange(eContext) {
+            var form = eContext.getFormContext();
+            var workOrder1Value = form.getAttribute("ts_workorder1").getValue();
+            if (workOrder1Value != null) {
+                //Update View of dependent fields
+                setWOST1FilteredView(form);
+                setAdditionalInspectors1FilteredView(form);
+                var WorkOrderValue = form.getAttribute("ts_workorder1").getValue();
+                //If Work Order has a value, try to find its Mandatory Service task and set the WOST1 field to it
+                if (WorkOrderValue != null) {
+                    var workOrderId = WorkOrderValue[0].id;
+                    var fetchXml = [
+                        "<fetch top='1'>",
+                        "  <entity name='msdyn_workorderservicetask'>",
+                        "  <attribute name='msdyn_name' />",
+                        "  <attribute name = 'msdyn_workorderservicetaskid' />",
+                        "    <filter type='and'>",
+                        "      <condition attribute='msdyn_workorder' operator='eq' value='", workOrderId, "'/>",
+                        "      <condition attribute='ts_mandatory' operator='eq' value='1'/>",
+                        "    </filter>",
+                        "  </entity>",
+                        "</fetch>",
+                    ].join("");
+                    fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+                    Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchXml).then(function (result) {
+                        if (result.entities[0] != null) {
+                            var lookup = new Array();
+                            lookup[0] = new Object();
+                            lookup[0].id = result.entities[0]["msdyn_workorderservicetaskid"];
+                            lookup[0].name = result.entities[0]["msdyn_name"];
+                            lookup[0].entityType = 'msdyn_workorderservicetask';
+                            form.getAttribute('ts_workorderservicetask1').setValue(lookup);
+                            workOrderServiceTask1OnChange(eContext);
+                        }
+                    });
+                    //Set the Inspection Type field to the Inspection Type of the Work Order
+                    Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value").then(function (result) {
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = result["_msdyn_primaryincidenttype_value"];
+                        lookup[0].name = result["_msdyn_primaryincidenttype_value@OData.Community.Display.V1.FormattedValue"];
+                        lookup[0].entityType = 'msdyn_incidenttype';
+                        form.getAttribute('ts_inspectiontype1').setValue(lookup);
+                    });
+                }
+                form.getControl("ts_workorderservicetask1").setDisabled(false);
+                form.getControl("ts_additionalinspectors1").setDisabled(false);
+            }
+            else {
+                //Clear and lock dependent fields
+                form.getAttribute("ts_workorderservicetask1").setValue(null);
+                form.getAttribute("ts_additionalinspectors1").setValue(null);
+                form.getAttribute("ts_inspectiontype1").setValue(null);
+                form.getAttribute("ts_dateofinspection1").setValue(null);
+                form.getControl("ts_workorderservicetask1").setDisabled(true);
+                form.getControl("ts_additionalinspectors1").setDisabled(true);
+            }
+            setWorkOrder2FilteredView(form);
+        }
+        Incident.workOrder1OnChange = workOrder1OnChange;
+        function workOrder2OnChange(eContext) {
+            var form = eContext.getFormContext();
+            var workOrder2Value = form.getAttribute("ts_workorder2").getValue();
+            if (workOrder2Value != null) {
+                //Update View of dependent fields
+                setWOST2FilteredView(form);
+                setAdditionalInspectors2FilteredView(form);
+                var WorkOrderValue = form.getAttribute("ts_workorder2").getValue();
+                //If Work Order has a value, try to find its Mandatory Service task and set the WOST1 field to it
+                if (WorkOrderValue != null) {
+                    var workOrderId = WorkOrderValue[0].id;
+                    var fetchXml = [
+                        "<fetch top='1'>",
+                        "  <entity name='msdyn_workorderservicetask'>",
+                        "  <attribute name='msdyn_name' />",
+                        "  <attribute name = 'msdyn_workorderservicetaskid' />",
+                        "    <filter type='and'>",
+                        "      <condition attribute='msdyn_workorder' operator='eq' value='", workOrderId, "'/>",
+                        "      <condition attribute='ts_mandatory' operator='eq' value='1'/>",
+                        "    </filter>",
+                        "  </entity>",
+                        "</fetch>",
+                    ].join("");
+                    fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+                    Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchXml).then(function (result) {
+                        if (result.entities[0] != null) {
+                            var lookup = new Array();
+                            lookup[0] = new Object();
+                            lookup[0].id = result.entities[0]["msdyn_workorderservicetaskid"];
+                            lookup[0].name = result.entities[0]["msdyn_name"];
+                            lookup[0].entityType = 'msdyn_workorderservicetask';
+                            form.getAttribute('ts_workorderservicetask2').setValue(lookup);
+                            workOrderServiceTask2OnChange(eContext);
+                        }
+                    });
+                    //Set the Inspection Type field to the Inspection Type of the Work Order
+                    Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value").then(function (result) {
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = result["_msdyn_primaryincidenttype_value"];
+                        lookup[0].name = result["_msdyn_primaryincidenttype_value@OData.Community.Display.V1.FormattedValue"];
+                        lookup[0].entityType = 'msdyn_incidenttype';
+                        form.getAttribute('ts_inspectiontype2').setValue(lookup);
+                    });
+                }
+                form.getControl("ts_workorderservicetask2").setDisabled(false);
+                form.getControl("ts_additionalinspectors2").setDisabled(false);
+            }
+            else {
+                //Clear and lock dependent fields
+                form.getAttribute("ts_workorderservicetask2").setValue(null);
+                form.getAttribute("ts_additionalinspectors2").setValue(null);
+                form.getAttribute("ts_inspectiontype2").setValue(null);
+                form.getAttribute("ts_dateofinspection2").setValue(null);
+                form.getControl("ts_workorderservicetask2").setDisabled(true);
+                form.getControl("ts_additionalinspectors2").setDisabled(true);
+            }
+            setWorkOrder1FilteredView(form);
+        }
+        Incident.workOrder2OnChange = workOrder2OnChange;
+        //When the Service Task is changed, set or clear Date of Inspection 1
+        function workOrderServiceTask1OnChange(eContext) {
+            var form = eContext.getFormContext();
+            var WOST1Value = form.getAttribute("ts_workorderservicetask1").getValue();
+            if (WOST1Value != null) {
+                var WOSTId = WOST1Value[0].id;
+                Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", WOSTId, "?$select=ts_servicetaskstartdate").then(function (result) {
+                    if (result.ts_servicetaskstartdate != null) {
+                        form.getAttribute('ts_dateofinspection1').setValue(new Date(result.ts_servicetaskstartdate));
+                    }
+                });
+            }
+            else {
+                form.getAttribute('ts_dateofinspection1').setValue(null);
+            }
+        }
+        Incident.workOrderServiceTask1OnChange = workOrderServiceTask1OnChange;
+        //When the Service Task is changed, set or clear Date of Inspection 2
+        function workOrderServiceTask2OnChange(eContext) {
+            var form = eContext.getFormContext();
+            var WOST2Value = form.getAttribute("ts_workorderservicetask2").getValue();
+            if (WOST2Value != null) {
+                var WOSTId = WOST2Value[0].id;
+                Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", WOSTId, "?$select=ts_servicetaskstartdate").then(function (result) {
+                    if (result.ts_servicetaskstartdate != null) {
+                        form.getAttribute('ts_dateofinspection2').setValue(new Date(result.ts_servicetaskstartdate));
+                    }
+                });
+            }
+            else {
+                form.getAttribute('ts_dateofinspection2').setValue(null);
+            }
+        }
+        Incident.workOrderServiceTask2OnChange = workOrderServiceTask2OnChange;
+        function setWorkOrder1FilteredView(form) {
+            var caseId = form.data.entity.getId();
+            var viewIdWorkOrder = '{1c259fee-0541-4cac-8d20-7b30ee391111}';
+            var entityNameWorkOrder = "msdyn_workorder";
+            var viewDisplayNameWorkOrder = "RelatedWorkOrders1";
+            var WorkOrder2Value = form.getAttribute("ts_workorder2").getValue();
+            var fetchXmlWorkOrder = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorder"><attribute name="msdyn_name" /> <attribute name="msdyn_workorderid" /> <attribute name="msdyn_primaryincidenttype" /> <order attribute="msdyn_name" descending="false" /> <filter type="and"> <condition attribute="msdyn_servicerequest" operator="eq" value="' + caseId + '"/></filter> </entity> </fetch>';
+            //Do not allow Work Order 2 to be selected again for Work Order 1
+            if (WorkOrder2Value != null) {
+                var workOrder2Id = WorkOrder2Value[0].id;
+                fetchXmlWorkOrder = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorder"><attribute name="msdyn_name" /> <attribute name="msdyn_workorderid" /> <attribute name="msdyn_primaryincidenttype" /> <order attribute="msdyn_name" descending="false" /> <filter type="and"> <condition attribute="msdyn_servicerequest" operator="eq" value="' + caseId + '"/><condition attribute="msdyn_workorderid" operator="ne" value="' + workOrder2Id + '" /> </filter> </entity> </fetch>';
+            }
+            var layoutXmlWorkOrder = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorder"><cell name="msdyn_name" width="100" /><cell name="msdyn_primaryincidenttype" width="200" /></row></grid>';
+            form.getControl("ts_workorder1").addCustomView(viewIdWorkOrder, entityNameWorkOrder, viewDisplayNameWorkOrder, fetchXmlWorkOrder, layoutXmlWorkOrder, true);
+        }
+        function setWorkOrder2FilteredView(form) {
+            var caseId = form.data.entity.getId();
+            var viewIdWorkOrder = '{1c259fee-0541-4cac-8d20-7b30ee391112}';
+            var entityNameWorkOrder = "msdyn_workorder";
+            var viewDisplayNameWorkOrder = "RelatedWorkOrders2";
+            var WorkOrder1Value = form.getAttribute("ts_workorder1").getValue();
+            var fetchXmlWorkOrder = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorder"><attribute name="msdyn_name" /> <attribute name="msdyn_workorderid" /> <attribute name="msdyn_primaryincidenttype" /> <order attribute="msdyn_name" descending="false" /> <filter type="and"> <condition attribute="msdyn_servicerequest" operator="eq" value="' + caseId + '"/></filter> </entity> </fetch>';
+            //Do not allow Work Order 1 to be selected again for Work Order 2
+            if (WorkOrder1Value != null) {
+                var workOrder1Id = WorkOrder1Value[0].id;
+                fetchXmlWorkOrder = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorder"><attribute name="msdyn_name" /> <attribute name="msdyn_workorderid" /> <attribute name="msdyn_primaryincidenttype" /> <order attribute="msdyn_name" descending="false" /> <filter type="and"> <condition attribute="msdyn_servicerequest" operator="eq" value="' + caseId + '"/><condition attribute="msdyn_workorderid" operator="ne" value="' + workOrder1Id + '" /> </filter> </entity> </fetch>';
+            }
+            var layoutXmlWorkOrder = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorder"><cell name="msdyn_name" width="200" /><cell name="msdyn_primaryincidenttype" width="200" /></row></grid>';
+            form.getControl("ts_workorder2").addCustomView(viewIdWorkOrder, entityNameWorkOrder, viewDisplayNameWorkOrder, fetchXmlWorkOrder, layoutXmlWorkOrder, true);
+        }
+        function setWOST1FilteredView(form) {
+            var WorkOrderValue = form.getAttribute("ts_workorder1").getValue();
+            var workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null;
+            var viewIdWOST = '{1c259fee-0541-4cac-8d20-7b30ee391113}';
+            var entityNameWOST = "msdyn_workorderservicetask";
+            var viewDisplayNameWOST = "RelatedWorkOrderServiceTasks1";
+            var fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"><attribute name="msdyn_name" /> <attribute name="msdyn_tasktype" /> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + workOrderId + '" /> </filter> </entity> </fetch>';
+            var layoutXmlWOST = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorderservicetask"><cell name="msdyn_name" width="200" /><cell name="msdyn_tasktype" width="200" /></row></grid>';
+            form.getControl("ts_workorderservicetask1").addCustomView(viewIdWOST, entityNameWOST, viewDisplayNameWOST, fetchXmlWOST, layoutXmlWOST, true);
+        }
+        function setWOST2FilteredView(form) {
+            var WorkOrderValue = form.getAttribute("ts_workorder2").getValue();
+            var workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null;
+            var viewIdWOST = '{1c259fee-0541-4cac-8d20-7b30ee391114}';
+            var entityNameWOST = "msdyn_workorderservicetask";
+            var viewDisplayNameWOST = "RelatedWorkOrderServiceTasks2";
+            var fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"><attribute name="msdyn_name" /> <attribute name="msdyn_tasktype" /> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + workOrderId + '" /> </filter> </entity> </fetch>';
+            var layoutXmlWOST = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorderservicetask"><cell name="msdyn_name" width="200" /><cell name="msdyn_tasktype" width="200" /></row></grid>';
+            form.getControl("ts_workorderservicetask2").addCustomView(viewIdWOST, entityNameWOST, viewDisplayNameWOST, fetchXmlWOST, layoutXmlWOST, true);
+        }
+        function setAdditionalInspectors1FilteredView(form) {
+            var WorkOrderValue = form.getAttribute("ts_workorder1").getValue();
+            var workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null;
+            var viewIdAdditionalInspectors = '{1c259fee-0541-4cac-8d20-7b30ee391115}';
+            var entityNameAdditionalInspectors = "systemuser";
+            var viewDisplayNameAdditionalInspectors = "RelatedAdditionalInspectors1";
+            var fetchXmlAdditionalInspectors = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="systemuser" ><attribute name="fullname" /> <attribute name="title" /> <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + workOrderId + '" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
+            var layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="fullname" width="200" /><cell name="title" width="200" /></row></grid>';
+            form.getControl("ts_additionalinspectors1").addCustomView(viewIdAdditionalInspectors, entityNameAdditionalInspectors, viewDisplayNameAdditionalInspectors, fetchXmlAdditionalInspectors, layoutXmlAdditionalInspectors, true);
+        }
+        function setAdditionalInspectors2FilteredView(form) {
+            var WorkOrderValue = form.getAttribute("ts_workorder2").getValue();
+            var workOrderId = (WorkOrderValue != null) ? WorkOrderValue[0].id : null;
+            var viewIdAdditionalInspectors = '{1c259fee-0541-4cac-8d20-7b30ee391116}';
+            var entityNameAdditionalInspectors = "systemuser";
+            var viewDisplayNameAdditionalInspectors = "RelatedAdditionalInspectors2";
+            var fetchXmlAdditionalInspectors = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="systemuser" ><attribute name="fullname" /> <attribute name="title" /> <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + workOrderId + '" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
+            var layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="fullname" width="200" /><cell name="title" width="200" /></row></grid>';
+            form.getControl("ts_additionalinspectors2").addCustomView(viewIdAdditionalInspectors, entityNameAdditionalInspectors, viewDisplayNameAdditionalInspectors, fetchXmlAdditionalInspectors, layoutXmlAdditionalInspectors, true);
         }
     })(Incident = ROM.Incident || (ROM.Incident = {}));
 })(ROM || (ROM = {}));

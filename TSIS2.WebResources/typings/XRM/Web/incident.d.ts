@@ -51,6 +51,8 @@ interface Incident_Base extends WebEntity {
   title?: string | null;
   traversedpath?: string | null;
   ts_canvasappnumber?: string | null;
+  ts_dateofinspection1?: Date | null;
+  ts_dateofinspection2?: Date | null;
   ts_numberoffindings?: number | null;
   ts_numberoffindings_date?: Date | null;
   ts_numberoffindings_state?: number | null;
@@ -77,11 +79,16 @@ interface Incident_Relationships {
   msdyn_incident_msdyn_workorder_ServiceRequest?: msdyn_workorder_Result[] | null;
   ovs_incident_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result[] | null;
   ovs_incident_ovs_finding?: ovs_Finding_Result[] | null;
+  ts_AdditionalInspectors1?: SystemUser_Result | null;
+  ts_AdditionalInspectors2?: SystemUser_Result | null;
   ts_Contact_Incident_Incident?: Contact_Result[] | null;
   ts_Incident_Incident_ts_operationcontact?: ts_operationcontact_Result[] | null;
   ts_Incident_ts_operationcontact_ts_operation?: ts_operationcontact_Result[] | null;
+  ts_WorkOrder1?: msdyn_workorder_Result | null;
+  ts_WorkOrder2?: msdyn_workorder_Result | null;
+  ts_WorkOrderServiceTask1?: msdyn_workorderservicetask_Result | null;
+  ts_WorkOrderServiceTask2?: msdyn_workorderservicetask_Result | null;
   ts_incident_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
-  ts_ts_enforcementaction_ts_Case_incident?: ts_EnforcementAction_Result[] | null;
 }
 interface Incident extends Incident_Base, Incident_Relationships {
   contractdetailid_bind$contractdetails?: string | null;
@@ -108,8 +115,16 @@ interface Incident extends Incident_Base, Incident_Relationships {
   stageid_processstage_bind$processstages?: string | null;
   subjectid_bind$subjects?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
+  ts_AdditionalInspectors1_bind$systemusers?: string | null;
+  ts_AdditionalInspectors2_bind$systemusers?: string | null;
   ts_Country_bind$tc_countries?: string | null;
+  ts_InspectionType1_bind$msdyn_incidenttypes?: string | null;
+  ts_InspectionType2_bind$msdyn_incidenttypes?: string | null;
   ts_TradeNameId_bind$ts_tradenames?: string | null;
+  ts_WorkOrder1_bind$msdyn_workorders?: string | null;
+  ts_WorkOrder2_bind$msdyn_workorders?: string | null;
+  ts_WorkOrderServiceTask1_bind$msdyn_workorderservicetasks?: string | null;
+  ts_WorkOrderServiceTask2_bind$msdyn_workorderservicetasks?: string | null;
 }
 interface Incident_Create extends Incident {
   incidentid_childincidentcount_bind$childincidentcounts?: string | null;
@@ -203,12 +218,22 @@ interface Incident_Select {
   title: WebAttribute<Incident_Select, { title: string | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<Incident_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Incident_Select, { traversedpath: string | null }, {  }>;
+  ts_additionalinspectors1_guid: WebAttribute<Incident_Select, { ts_additionalinspectors1_guid: string | null }, { ts_additionalinspectors1_formatted?: string }>;
+  ts_additionalinspectors2_guid: WebAttribute<Incident_Select, { ts_additionalinspectors2_guid: string | null }, { ts_additionalinspectors2_formatted?: string }>;
   ts_canvasappnumber: WebAttribute<Incident_Select, { ts_canvasappnumber: string | null }, {  }>;
   ts_country_guid: WebAttribute<Incident_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_dateofinspection1: WebAttribute<Incident_Select, { ts_dateofinspection1: Date | null }, { ts_dateofinspection1_formatted?: string }>;
+  ts_dateofinspection2: WebAttribute<Incident_Select, { ts_dateofinspection2: Date | null }, { ts_dateofinspection2_formatted?: string }>;
+  ts_inspectiontype1_guid: WebAttribute<Incident_Select, { ts_inspectiontype1_guid: string | null }, { ts_inspectiontype1_formatted?: string }>;
+  ts_inspectiontype2_guid: WebAttribute<Incident_Select, { ts_inspectiontype2_guid: string | null }, { ts_inspectiontype2_formatted?: string }>;
   ts_numberoffindings: WebAttribute<Incident_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<Incident_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<Incident_Select, { ts_numberoffindings_state: number | null }, {  }>;
   ts_tradenameid_guid: WebAttribute<Incident_Select, { ts_tradenameid_guid: string | null }, { ts_tradenameid_formatted?: string }>;
+  ts_workorder1_guid: WebAttribute<Incident_Select, { ts_workorder1_guid: string | null }, { ts_workorder1_formatted?: string }>;
+  ts_workorder2_guid: WebAttribute<Incident_Select, { ts_workorder2_guid: string | null }, { ts_workorder2_formatted?: string }>;
+  ts_workorderservicetask1_guid: WebAttribute<Incident_Select, { ts_workorderservicetask1_guid: string | null }, { ts_workorderservicetask1_formatted?: string }>;
+  ts_workorderservicetask2_guid: WebAttribute<Incident_Select, { ts_workorderservicetask2_guid: string | null }, { ts_workorderservicetask2_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<Incident_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<Incident_Select, { versionnumber: number | null }, {  }>;
 }
@@ -298,12 +323,22 @@ interface Incident_Filter {
   title: string;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_additionalinspectors1_guid: XQW.Guid;
+  ts_additionalinspectors2_guid: XQW.Guid;
   ts_canvasappnumber: string;
   ts_country_guid: XQW.Guid;
+  ts_dateofinspection1: Date;
+  ts_dateofinspection2: Date;
+  ts_inspectiontype1_guid: XQW.Guid;
+  ts_inspectiontype2_guid: XQW.Guid;
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;
   ts_tradenameid_guid: XQW.Guid;
+  ts_workorder1_guid: XQW.Guid;
+  ts_workorder2_guid: XQW.Guid;
+  ts_workorderservicetask1_guid: XQW.Guid;
+  ts_workorderservicetask2_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -338,11 +373,16 @@ interface Incident_Expand {
   parentcaseid: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { parentcaseid: Incident_Result }>;
   primarycontactid: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
   responsiblecontactid: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { responsiblecontactid: Contact_Result }>;
+  ts_AdditionalInspectors1: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { ts_AdditionalInspectors1: SystemUser_Result }>;
+  ts_AdditionalInspectors2: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { ts_AdditionalInspectors2: SystemUser_Result }>;
   ts_Contact_Incident_Incident: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { ts_Contact_Incident_Incident: Contact_Result[] }>;
   ts_Incident_Incident_ts_operationcontact: WebExpand<Incident_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_Incident_Incident_ts_operationcontact: ts_operationcontact_Result[] }>;
   ts_Incident_ts_operationcontact_ts_operation: WebExpand<Incident_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_Incident_ts_operationcontact_ts_operation: ts_operationcontact_Result[] }>;
+  ts_WorkOrder1: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder1: msdyn_workorder_Result }>;
+  ts_WorkOrder2: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder2: msdyn_workorder_Result }>;
+  ts_WorkOrderServiceTask1: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_WorkOrderServiceTask1: msdyn_workorderservicetask_Result }>;
+  ts_WorkOrderServiceTask2: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_WorkOrderServiceTask2: msdyn_workorderservicetask_Result }>;
   ts_incident_ts_workordercreationwizard: WebExpand<Incident_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_incident_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
-  ts_ts_enforcementaction_ts_Case_incident: WebExpand<Incident_Expand, ts_EnforcementAction_Select, ts_EnforcementAction_Filter, { ts_ts_enforcementaction_ts_Case_incident: ts_EnforcementAction_Result[] }>;
 }
 interface Incident_FormattedResult {
   accountid_formatted?: string;
@@ -400,9 +440,19 @@ interface Incident_FormattedResult {
   statuscode_formatted?: string;
   subjectid_formatted?: string;
   transactioncurrencyid_formatted?: string;
+  ts_additionalinspectors1_formatted?: string;
+  ts_additionalinspectors2_formatted?: string;
   ts_country_formatted?: string;
+  ts_dateofinspection1_formatted?: string;
+  ts_dateofinspection2_formatted?: string;
+  ts_inspectiontype1_formatted?: string;
+  ts_inspectiontype2_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
   ts_tradenameid_formatted?: string;
+  ts_workorder1_formatted?: string;
+  ts_workorder2_formatted?: string;
+  ts_workorderservicetask1_formatted?: string;
+  ts_workorderservicetask2_formatted?: string;
 }
 interface Incident_Result extends Incident_Base, Incident_Relationships {
   "@odata.etag": string;
@@ -440,8 +490,16 @@ interface Incident_Result extends Incident_Base, Incident_Relationships {
   socialprofileid_guid: string | null;
   subjectid_guid: string | null;
   transactioncurrencyid_guid: string | null;
+  ts_additionalinspectors1_guid: string | null;
+  ts_additionalinspectors2_guid: string | null;
   ts_country_guid: string | null;
+  ts_inspectiontype1_guid: string | null;
+  ts_inspectiontype2_guid: string | null;
   ts_tradenameid_guid: string | null;
+  ts_workorder1_guid: string | null;
+  ts_workorder2_guid: string | null;
+  ts_workorderservicetask1_guid: string | null;
+  ts_workorderservicetask2_guid: string | null;
 }
 interface Incident_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -458,6 +516,12 @@ interface Incident_RelatedOne {
   parentcaseid: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   primarycontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   responsiblecontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  ts_AdditionalInspectors1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_AdditionalInspectors2: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_WorkOrder1: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_WorkOrder2: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_WorkOrderServiceTask1: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
+  ts_WorkOrderServiceTask2: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
 }
 interface Incident_RelatedMany {
   Incident_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
@@ -480,7 +544,6 @@ interface Incident_RelatedMany {
   ts_Incident_Incident_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_Incident_ts_operationcontact_ts_operation: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_incident_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
-  ts_ts_enforcementaction_ts_Case_incident: WebMappingRetrieve<ts_EnforcementAction_Select,ts_EnforcementAction_Expand,ts_EnforcementAction_Filter,ts_EnforcementAction_Fixed,ts_EnforcementAction_Result,ts_EnforcementAction_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   incidents: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;

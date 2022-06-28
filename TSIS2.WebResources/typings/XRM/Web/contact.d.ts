@@ -200,8 +200,6 @@ interface Contact_Relationships {
   qm_contact_workorder?: msdyn_workorder_Result[] | null;
   ts_Contact_Incident_Incident?: Incident_Result[] | null;
   ts_Contact_msdyn_workorder_msdyn_workorder?: msdyn_workorder_Result[] | null;
-  ts_EnforcementAction_AuthorizedRepresenta?: ts_EnforcementAction_Result[] | null;
-  ts_EnforcementAction_VerbalWarningGivenTo?: ts_EnforcementAction_Result[] | null;
   ts_contact_ts_operationcontact_contact?: ts_operationcontact_Result[] | null;
   ts_serviceofenforcementaction_AuthorizedR?: ts_serviceofenforcementaction_Result[] | null;
   ts_serviceofenforcementaction_VerbalWarni?: ts_serviceofenforcementaction_Result[] | null;
@@ -655,8 +653,6 @@ interface Contact_Expand {
   qm_contact_workorder: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { qm_contact_workorder: msdyn_workorder_Result[] }>;
   ts_Contact_Incident_Incident: WebExpand<Contact_Expand, Incident_Select, Incident_Filter, { ts_Contact_Incident_Incident: Incident_Result[] }>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: msdyn_workorder_Result[] }>;
-  ts_EnforcementAction_AuthorizedRepresenta: WebExpand<Contact_Expand, ts_EnforcementAction_Select, ts_EnforcementAction_Filter, { ts_EnforcementAction_AuthorizedRepresenta: ts_EnforcementAction_Result[] }>;
-  ts_EnforcementAction_VerbalWarningGivenTo: WebExpand<Contact_Expand, ts_EnforcementAction_Select, ts_EnforcementAction_Filter, { ts_EnforcementAction_VerbalWarningGivenTo: ts_EnforcementAction_Result[] }>;
   ts_contact_ts_operationcontact_contact: WebExpand<Contact_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_contact_ts_operationcontact_contact: ts_operationcontact_Result[] }>;
   ts_serviceofenforcementaction_AuthorizedR: WebExpand<Contact_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { ts_serviceofenforcementaction_AuthorizedR: ts_serviceofenforcementaction_Result[] }>;
   ts_serviceofenforcementaction_VerbalWarni: WebExpand<Contact_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { ts_serviceofenforcementaction_VerbalWarni: ts_serviceofenforcementaction_Result[] }>;
@@ -791,8 +787,6 @@ interface Contact_RelatedMany {
   qm_contact_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_Contact_Incident_Incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
-  ts_EnforcementAction_AuthorizedRepresenta: WebMappingRetrieve<ts_EnforcementAction_Select,ts_EnforcementAction_Expand,ts_EnforcementAction_Filter,ts_EnforcementAction_Fixed,ts_EnforcementAction_Result,ts_EnforcementAction_FormattedResult>;
-  ts_EnforcementAction_VerbalWarningGivenTo: WebMappingRetrieve<ts_EnforcementAction_Select,ts_EnforcementAction_Expand,ts_EnforcementAction_Filter,ts_EnforcementAction_Fixed,ts_EnforcementAction_Result,ts_EnforcementAction_FormattedResult>;
   ts_contact_ts_operationcontact_contact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_serviceofenforcementaction_AuthorizedR: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
   ts_serviceofenforcementaction_VerbalWarni: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
