@@ -123,6 +123,5 @@ declare const enum connection_record2objecttypecode {
   AssignmentRule = 10704,
   AssignmentMap = 10707,
   Suggestion = 10752,
-  RecordofService = 10837,
   Interview = 10853,
 }
