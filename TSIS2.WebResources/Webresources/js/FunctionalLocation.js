@@ -18,6 +18,7 @@ var ROM;
                     });
                 }
                 //If site type is aerodrome, show ICAO and IATA fields
+                //If Region is not International, show Class field
                 var siteTypeAttribute = form.getAttribute("ts_sitetype");
                 if (siteTypeAttribute != null) {
                     var siteTypeAttributeValue = form.getAttribute("ts_sitetype").getValue();
@@ -25,6 +26,11 @@ var ROM;
                         if (siteTypeAttributeValue[0].name == "Aerodrome") {
                             form.getControl("ts_icaocode").setVisible(true);
                             form.getControl("ts_iatacode").setVisible(true);
+                            var regionAttributeValue = form.getAttribute("ts_region").getValue();
+                            if (regionAttributeValue != null)
+                                if (regionAttributeValue[0].name != "International") {
+                                    form.getControl("ts_class").setVisible(true);
+                                }
                         }
                     }
                 }
@@ -69,19 +75,43 @@ var ROM;
                 var siteTypeAttribute = form.getAttribute("ts_sitetype");
                 var icaoCodeAttribute = form.getAttribute("ts_icaocode");
                 var iataCodeAttribute = form.getAttribute("ts_iatacode");
+                var classAttribute = form.getAttribute("ts_class");
                 if (siteTypeAttribute != null && siteTypeAttribute != undefined) {
                     var siteTypeAttributeValue = siteTypeAttribute.getValue();
                     if (siteTypeAttributeValue != null && siteTypeAttributeValue != undefined) {
                         if (siteTypeAttributeValue[0].id == "{99DA31E7-7D78-EB11-A812-0022486D697D}") { //aerodrome
                             form.getControl("ts_icaocode").setVisible(true);
                             form.getControl("ts_iatacode").setVisible(true);
+                            var regionAttributeValue = form.getAttribute("ts_region").getValue();
+                            if (regionAttributeValue != null) {
+                                if (regionAttributeValue[0].name != "International") {
+                                    form.getControl("ts_class").setVisible(true);
+                                }
+                                else {
+                                    classAttribute.setValue() == null;
+                                    form.getControl("ts_class").setVisible(false);
+                                }
+                            }
+                            else {
+                                form.getControl("ts_class").setVisible(true);
+                            }
+                        }
+                        else {
+                            icaoCodeAttribute.setValue() == null;
+                            iataCodeAttribute.setValue() == null;
+                            classAttribute.setValue() == null;
+                            form.getControl("ts_icaocode").setVisible(false);
+                            form.getControl("ts_iatacode").setVisible(false);
+                            form.getControl("ts_class").setVisible(false);
                         }
                     }
                     else {
                         icaoCodeAttribute.setValue() == null;
                         iataCodeAttribute.setValue() == null;
+                        classAttribute.setValue() == null;
                         form.getControl("ts_icaocode").setVisible(false);
                         form.getControl("ts_iatacode").setVisible(false);
+                        form.getControl("ts_class").setVisible(false);
                     }
                 }
             }
@@ -106,5 +136,31 @@ var ROM;
             }
         }
         FunctionalLocation.statusStartDateOnChange = statusStartDateOnChange;
+        function regionOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var regionAttributeValue = form.getAttribute("ts_region").getValue();
+            var classAttribute = form.getAttribute("ts_class");
+            var siteTypeAttributeValue = form.getAttribute("ts_sitetype").getValue();
+            if (siteTypeAttributeValue != null) {
+                if (siteTypeAttributeValue[0].id == "{99DA31E7-7D78-EB11-A812-0022486D697D}")
+                    if (regionAttributeValue != null) {
+                        if (regionAttributeValue[0].name != "International") { //aerodrome and not International
+                            form.getControl("ts_class").setVisible(true);
+                        }
+                        else {
+                            classAttribute.setValue(null);
+                            form.getControl("ts_class").setVisible(false);
+                        }
+                    }
+                    else {
+                        form.getControl("ts_class").setVisible(true);
+                    }
+            }
+            else {
+                classAttribute.setValue(null);
+                form.getControl("ts_class").setVisible(false);
+            }
+        }
+        FunctionalLocation.regionOnChange = regionOnChange;
     })(FunctionalLocation = ROM.FunctionalLocation || (ROM.FunctionalLocation = {}));
 })(ROM || (ROM = {}));
