@@ -49,6 +49,7 @@ interface ovs_Finding_Base extends WebEntity {
 interface ovs_Finding_Relationships {
   ovs_CaseId?: Incident_Result | null;
   ovs_WorkOrderServiceTaskId?: msdyn_workorderservicetask_Result | null;
+  ts_EnforcementActionEntity?: ts_EnforcementAction_Result | null;
   ts_NCATManager?: SystemUser_Result | null;
   ts_RATEManager?: SystemUser_Result | null;
   ts_VerbalWarningGivenTo?: Contact_Result | null;
@@ -279,6 +280,7 @@ interface ovs_Finding_Expand {
   ovs_WorkOrderServiceTaskId: WebExpand<ovs_Finding_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ovs_WorkOrderServiceTaskId: msdyn_workorderservicetask_Result }>;
   ownerid: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_EnforcementActionEntity: WebExpand<ovs_Finding_Expand, ts_EnforcementAction_Select, ts_EnforcementAction_Filter, { ts_EnforcementActionEntity: ts_EnforcementAction_Result }>;
   ts_NCATManager: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { ts_NCATManager: SystemUser_Result }>;
   ts_RATEManager: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { ts_RATEManager: SystemUser_Result }>;
   ts_VerbalWarningGivenTo: WebExpand<ovs_Finding_Expand, Contact_Select, Contact_Filter, { ts_VerbalWarningGivenTo: Contact_Result }>;
@@ -406,6 +408,7 @@ interface ovs_Finding_RelatedOne {
   ovs_WorkOrderServiceTaskId: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_EnforcementActionEntity: WebMappingRetrieve<ts_EnforcementAction_Select,ts_EnforcementAction_Expand,ts_EnforcementAction_Filter,ts_EnforcementAction_Fixed,ts_EnforcementAction_Result,ts_EnforcementAction_FormattedResult>;
   ts_NCATManager: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_RATEManager: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_VerbalWarningGivenTo: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;

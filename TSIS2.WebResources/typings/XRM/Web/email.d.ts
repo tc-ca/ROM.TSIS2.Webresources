@@ -97,6 +97,7 @@ interface Email_Relationships {
   regardingobjectid_msdyn_workorder_email?: msdyn_workorder_Result | null;
   regardingobjectid_msdyn_workorderservicetask_email?: msdyn_workorderservicetask_Result | null;
   regardingobjectid_ovs_operation_email?: ovs_operation_Result | null;
+  regardingobjectid_ts_enforcementaction_email?: ts_EnforcementAction_Result | null;
 }
 interface Email extends Email_Base, Email_Relationships {
   ownerid_email_bind$systemusers?: string | null;
@@ -434,6 +435,7 @@ interface Email_Expand {
   regardingobjectid_msdyn_workorder_email: WebExpand<Email_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder_email: msdyn_workorder_Result }>;
   regardingobjectid_msdyn_workorderservicetask_email: WebExpand<Email_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { regardingobjectid_msdyn_workorderservicetask_email: msdyn_workorderservicetask_Result }>;
   regardingobjectid_ovs_operation_email: WebExpand<Email_Expand, ovs_operation_Select, ovs_operation_Filter, { regardingobjectid_ovs_operation_email: ovs_operation_Result }>;
+  regardingobjectid_ts_enforcementaction_email: WebExpand<Email_Expand, ts_EnforcementAction_Select, ts_EnforcementAction_Filter, { regardingobjectid_ts_enforcementaction_email: ts_EnforcementAction_Result }>;
   sendersaccount: WebExpand<Email_Expand, Account_Select, Account_Filter, { sendersaccount: Account_Result }>;
 }
 interface Email_FormattedResult {
@@ -534,6 +536,7 @@ interface Email_RelatedOne {
   regardingobjectid_msdyn_workorder_email: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   regardingobjectid_msdyn_workorderservicetask_email: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   regardingobjectid_ovs_operation_email: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  regardingobjectid_ts_enforcementaction_email: WebMappingRetrieve<ts_EnforcementAction_Select,ts_EnforcementAction_Expand,ts_EnforcementAction_Filter,ts_EnforcementAction_Fixed,ts_EnforcementAction_Result,ts_EnforcementAction_FormattedResult>;
   sendersaccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface Email_RelatedMany {
