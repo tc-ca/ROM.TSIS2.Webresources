@@ -29,7 +29,7 @@ var ROM;
         function verbalWarningAdditionalDetailsVisibility(formContext) {
             var methodOfServiceValue = formContext.getAttribute("ts_methodofservice").getValue();
             //Show additional fields if method of service includes "Verbal"
-            if (methodOfServiceValue != null && methodOfServiceValue.indexOf(717750004 /* Verbal */) !== -1) {
+            if (methodOfServiceValue != null && methodOfServiceValue.indexOf(ts_methodofservice.Verbal) !== -1) {
                 formContext.ui.tabs.get("general").sections.get("additional_details").setVisible(true);
                 formContext.getControl("ts_verbalwarninggivento").setVisible(true);
                 formContext.getControl("ts_individualposition").setVisible(true);
@@ -69,7 +69,7 @@ var ROM;
         RecordOfAction.verbalWarningWhereOtherOnChange = verbalWarningWhereOtherOnChange;
         function verbalWarningWhereOtherVisiblity(formContext) {
             var verbalWarningWhereValue = formContext.getAttribute("ts_verbalwarningwhere").getValue();
-            if (verbalWarningWhereValue != 717750002 /* Other */) {
+            if (verbalWarningWhereValue != ts_verbalwarninglocation.Other) {
                 formContext.getAttribute("ts_verbalwarningwhereother").setValue();
                 formContext.getControl("ts_verbalwarningwhereother").setVisible(false);
                 formContext.getAttribute("ts_verbalwarningwhereother").setRequiredLevel("none");
