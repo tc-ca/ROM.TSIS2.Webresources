@@ -182,6 +182,32 @@ namespace ROM.WorkOrder {
             }
         );
 
+        //Check if the Work Order is past the Planned Fiscal Quarter 
+        let plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
+
+        if (plannedFiscalQuarter != null) {
+
+            //fetch the end date of the Planned Fiscal Quarter
+            Xrm.WebApi.retrieveRecord("tc_tcfiscalquarter", plannedFiscalQuarter[0].id.replace(/({|})/g, ''), "?$select=tc_quarterend").then(
+                function success(result) {
+
+                    let currentDateTime = new Date();
+
+                    let quarterendDate = new Date(result.tc_quarterend);
+
+                    //if we are past the end date of the quarter, make the Can't Complete Inspection visible, otherwise hide it
+                    if (quarterendDate < currentDateTime) {
+                        form.getControl("ts_cantcompleteinspection").setVisible(true);
+                    }
+                    else {
+                        form.getControl("ts_cantcompleteinspection").setVisible(false);
+                    }
+                },
+                function (error) {
+                    showErrorMessageAlert("Error fetching the end date of the Planned Fiscal Quarter: " + error);
+                }
+            );
+        }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -1196,5 +1222,13 @@ namespace ROM.WorkOrder {
             });
         });
         return hasRole;
+    }
+
+    export function cantCompleteInspectionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        //const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+
+        //    let Id = form.data.entity.getId();
+
+        // Code for modal pop-up
     }
 }
