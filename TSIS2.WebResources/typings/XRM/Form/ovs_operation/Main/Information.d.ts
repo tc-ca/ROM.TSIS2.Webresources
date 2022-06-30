@@ -59,6 +59,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_description"): Xrm.Attribute<string>;
       get(name: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
       get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
+      get(name: "ts_planningstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
       get(name: "ts_ppeguide"): Xrm.Attribute<any>;
       get(name: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
@@ -98,6 +99,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_issecurityinspectionsite"): Xrm.OptionSetControl<ts_issecurityinspectionsite>;
       get(name: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
       get(name: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_planningstatus"): Xrm.OptionSetControl<ts_planningstatus>;
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
       get(name: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_pperequired"): Xrm.OptionSetControl<boolean>;
@@ -140,6 +142,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_description"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
     getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
+    getAttribute(attributeName: "ts_planningstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
     getAttribute(attributeName: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
     getAttribute(attributeName: "ts_ppeguide"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
@@ -174,6 +177,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_issecurityinspectionsite"): Xrm.OptionSetControl<ts_issecurityinspectionsite>;
     getControl(controlName: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
     getControl(controlName: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_planningstatus"): Xrm.OptionSetControl<ts_planningstatus>;
     getControl(controlName: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
     getControl(controlName: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_pperequired"): Xrm.OptionSetControl<boolean>;

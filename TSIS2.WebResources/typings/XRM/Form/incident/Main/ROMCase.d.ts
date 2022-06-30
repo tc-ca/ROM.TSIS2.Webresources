@@ -72,6 +72,7 @@ declare namespace Form.incident.Main {
         get(name: "Applicable SLA(STANDARD)"): Xrm.PageSection;
         get(name: "Details"): Xrm.PageSection;
         get(name: "general_section_7"): Xrm.PageSection;
+        get(name: "tab_13_section_4"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -88,7 +89,6 @@ declare namespace Form.incident.Main {
       interface tab_13 extends Xrm.SectionCollectionBase {
         get(name: "_section_349"): Xrm.PageSection;
         get(name: "tab_13_section_1"): Xrm.PageSection;
-        get(name: "tab_13_section_4"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;

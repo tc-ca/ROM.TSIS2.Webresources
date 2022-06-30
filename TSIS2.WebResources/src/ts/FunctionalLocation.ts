@@ -25,31 +25,36 @@ namespace ROM.FunctionalLocation {
             }
 
             //If site type is aerodrome, show ICAO and IATA fields
+            //If Region is not International, show Class field
             const siteTypeAttribute = form.getAttribute("ts_sitetype");
-            if(siteTypeAttribute != null){
+            if (siteTypeAttribute != null) {
                 const siteTypeAttributeValue = form.getAttribute("ts_sitetype").getValue();
                 if (siteTypeAttributeValue != null) {
-                    if(siteTypeAttributeValue[0].name == "Aerodrome"){
+                    if (siteTypeAttributeValue[0].name == "Aerodrome") {
                         form.getControl("ts_icaocode").setVisible(true);
                         form.getControl("ts_iatacode").setVisible(true);
+                        const regionAttributeValue = form.getAttribute("ts_region").getValue();
+                        if (regionAttributeValue != null)
+                            if (regionAttributeValue[0].name != "International") {
+                                form.getControl("ts_class").setVisible(true);
+                            }
                     }
                 }
             }
 
-           
             //If owner is ISSO, replace operations view
-            if(ownerAttributeValue != null){
-                if(ownerAttributeValue[0].name == "Intermodal Surface Security Oversight (ISSO)"){
-                    let operationView = 
-                        {
-                            entityType: "savedquery",
-                            id: "{4361bdce-d4ae-ec11-983e-002248ade910}",
-                            name: "Active Operations ISSO"
-                        }
+            if (ownerAttributeValue != null) {
+                if (ownerAttributeValue[0].name == "Intermodal Surface Security Oversight (ISSO)") {
+                    let operationView =
+                    {
+                        entityType: "savedquery",
+                        id: "{4361bdce-d4ae-ec11-983e-002248ade910}",
+                        name: "Active Operations ISSO"
+                    }
                     form.getControl("Operations").getViewSelector().setCurrentView(operationView);
                 }
             }
-        
+
         }
 
         if (form.getAttribute("ts_statusstartdate").getValue() != null) {
@@ -80,19 +85,44 @@ namespace ROM.FunctionalLocation {
             const siteTypeAttribute = form.getAttribute("ts_sitetype");
             const icaoCodeAttribute = form.getAttribute("ts_icaocode");
             const iataCodeAttribute = form.getAttribute("ts_iatacode");
+            const classAttribute = form.getAttribute("ts_class");
             if (siteTypeAttribute != null && siteTypeAttribute != undefined) {
                 const siteTypeAttributeValue = siteTypeAttribute.getValue();
                 if (siteTypeAttributeValue != null && siteTypeAttributeValue != undefined) {
-                    if(siteTypeAttributeValue[0].id == "{99DA31E7-7D78-EB11-A812-0022486D697D}" ){ //aerodrome
+                    if (siteTypeAttributeValue[0].id == "{99DA31E7-7D78-EB11-A812-0022486D697D}") { //aerodrome
                         form.getControl("ts_icaocode").setVisible(true)
                         form.getControl("ts_iatacode").setVisible(true)
+                        const regionAttributeValue = form.getAttribute("ts_region").getValue();
+                        if (regionAttributeValue != null) {
+                            if (regionAttributeValue[0].name != "International") {
+                                form.getControl("ts_class").setVisible(true);
+                            }
+                            else {
+                                classAttribute.setValue() == null;
+                                form.getControl("ts_class").setVisible(false);
+                            }
+                        }
+                        else {
+                            form.getControl("ts_class").setVisible(true);
+                        }
+
+                    }
+                    else {
+                        icaoCodeAttribute.setValue() == null;
+                        iataCodeAttribute.setValue() == null;
+                        classAttribute.setValue() == null;
+                        form.getControl("ts_icaocode").setVisible(false)
+                        form.getControl("ts_iatacode").setVisible(false)
+                        form.getControl("ts_class").setVisible(false)
                     }
                 }
-                else{
+                else {
                     icaoCodeAttribute.setValue() == null;
                     iataCodeAttribute.setValue() == null;
+                    classAttribute.setValue() == null;
                     form.getControl("ts_icaocode").setVisible(false)
                     form.getControl("ts_iatacode").setVisible(false)
+                    form.getControl("ts_class").setVisible(false)
                 }
             }
         } catch (e) {
@@ -113,6 +143,31 @@ namespace ROM.FunctionalLocation {
             form.getAttribute("ts_statusenddate").setValue(null);
             form.getControl("ts_statusenddate").setDisabled(true);
             form.getControl("ts_description").setDisabled(true);
+        }
+    }
+
+    export function regionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
+        const regionAttributeValue = form.getAttribute("ts_region").getValue();
+        const classAttribute = form.getAttribute("ts_class");
+        const siteTypeAttributeValue = form.getAttribute("ts_sitetype").getValue();
+        if (siteTypeAttributeValue != null) {
+            if (siteTypeAttributeValue[0].id == "{99DA31E7-7D78-EB11-A812-0022486D697D}")
+                if (regionAttributeValue != null) {
+                    if (regionAttributeValue[0].name != "International") { //aerodrome and not International
+                        form.getControl("ts_class").setVisible(true);
+
+                    } else {
+                        classAttribute.setValue(null);
+                        form.getControl("ts_class").setVisible(false);
+                    }
+                } else {
+                    form.getControl("ts_class").setVisible(true);
+                }
+        }
+        else {
+            classAttribute.setValue(null);
+            form.getControl("ts_class").setVisible(false);
         }
     }
 }

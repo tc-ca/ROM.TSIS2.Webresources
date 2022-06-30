@@ -62,8 +62,10 @@ interface msdyn_workorder_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   transactioncurrencyid_guid?: string | null;
   traversedpath?: string | null;
+  ts_cantcompleteinspection?: boolean | null;
   ts_canvasappnumber?: string | null;
   ts_completedquarter?: ts_msdyn_workorder_ts_completedquarter | null;
+  ts_incompleteworkorderreasonforother?: string | null;
   ts_numberoffindings?: number | null;
   ts_numberoffindings_date?: Date | null;
   ts_numberoffindings_state?: number | null;
@@ -84,7 +86,6 @@ interface msdyn_workorder_Relationships {
   msdyn_workorder_ServiceAppointments?: ServiceAppointment_Result[] | null;
   msdyn_workorder_connections1?: Connection_Result[] | null;
   msdyn_workorder_connections2?: Connection_Result[] | null;
-  msdyn_workorder_ts_serviceofenforcementactions?: ts_serviceofenforcementaction_Result[] | null;
   ovs_AssetCategory?: msdyn_customerassetcategory_Result | null;
   ovs_CurrentFiscalQuarter?: tc_TCFiscalQuarter_Result | null;
   ovs_FiscalQuarter?: tc_TCFiscalQuarter_Result | null;
@@ -151,6 +152,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   stageid_bind$processstages?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_Country_bind$tc_countries?: string | null;
+  ts_IncompleteWorkOrderReason_bind$ts_incompleteworkorderreasons?: string | null;
   ts_Region_bind$territories?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_WorkOrderCreationWizardId_bind$ts_workordercreationwizards?: string | null;
@@ -271,9 +273,12 @@ interface msdyn_workorder_Select {
   timezoneruleversionnumber: WebAttribute<msdyn_workorder_Select, { timezoneruleversionnumber: number | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<msdyn_workorder_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<msdyn_workorder_Select, { traversedpath: string | null }, {  }>;
+  ts_cantcompleteinspection: WebAttribute<msdyn_workorder_Select, { ts_cantcompleteinspection: boolean | null }, {  }>;
   ts_canvasappnumber: WebAttribute<msdyn_workorder_Select, { ts_canvasappnumber: string | null }, {  }>;
   ts_completedquarter: WebAttribute<msdyn_workorder_Select, { ts_completedquarter: ts_msdyn_workorder_ts_completedquarter | null }, { ts_completedquarter_formatted?: string }>;
   ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_incompleteworkorderreason_guid: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreason_guid: string | null }, { ts_incompleteworkorderreason_formatted?: string }>;
+  ts_incompleteworkorderreasonforother: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreasonforother: string | null }, {  }>;
   ts_numberoffindings: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_state: number | null }, {  }>;
@@ -397,9 +402,12 @@ interface msdyn_workorder_Filter {
   timezoneruleversionnumber: number;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_cantcompleteinspection: boolean;
   ts_canvasappnumber: string;
   ts_completedquarter: ts_msdyn_workorder_ts_completedquarter;
   ts_country_guid: XQW.Guid;
+  ts_incompleteworkorderreason_guid: XQW.Guid;
+  ts_incompleteworkorderreasonforother: string;
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;
@@ -435,7 +443,6 @@ interface msdyn_workorder_Expand {
   msdyn_workorder_ServiceAppointments: WebExpand<msdyn_workorder_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_workorder_ServiceAppointments: ServiceAppointment_Result[] }>;
   msdyn_workorder_connections1: WebExpand<msdyn_workorder_Expand, Connection_Select, Connection_Filter, { msdyn_workorder_connections1: Connection_Result[] }>;
   msdyn_workorder_connections2: WebExpand<msdyn_workorder_Expand, Connection_Select, Connection_Filter, { msdyn_workorder_connections2: Connection_Result[] }>;
-  msdyn_workorder_ts_serviceofenforcementactions: WebExpand<msdyn_workorder_Expand, ts_serviceofenforcementaction_Select, ts_serviceofenforcementaction_Filter, { msdyn_workorder_ts_serviceofenforcementactions: ts_serviceofenforcementaction_Result[] }>;
   ovs_AssetCategory: WebExpand<msdyn_workorder_Expand, msdyn_customerassetcategory_Select, msdyn_customerassetcategory_Filter, { ovs_AssetCategory: msdyn_customerassetcategory_Result }>;
   ovs_CurrentFiscalQuarter: WebExpand<msdyn_workorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_CurrentFiscalQuarter: tc_TCFiscalQuarter_Result }>;
   ovs_FiscalQuarter: WebExpand<msdyn_workorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_FiscalQuarter: tc_TCFiscalQuarter_Result }>;
@@ -535,6 +542,7 @@ interface msdyn_workorder_FormattedResult {
   transactioncurrencyid_formatted?: string;
   ts_completedquarter_formatted?: string;
   ts_country_formatted?: string;
+  ts_incompleteworkorderreason_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
   ts_region_formatted?: string;
   ts_site_formatted?: string;
@@ -594,6 +602,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   qm_reportcontactid_guid: string | null;
   transactioncurrencyid_guid: string | null;
   ts_country_guid: string | null;
+  ts_incompleteworkorderreason_guid: string | null;
   ts_region_guid: string | null;
   ts_site_guid: string | null;
   ts_tradenameid_guid: string | null;
@@ -638,7 +647,6 @@ interface msdyn_workorder_RelatedMany {
   msdyn_workorder_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   msdyn_workorder_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_workorder_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
-  msdyn_workorder_ts_serviceofenforcementactions: WebMappingRetrieve<ts_serviceofenforcementaction_Select,ts_serviceofenforcementaction_Expand,ts_serviceofenforcementaction_Filter,ts_serviceofenforcementaction_Fixed,ts_serviceofenforcementaction_Result,ts_serviceofenforcementaction_FormattedResult>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_incident_WorkOrder1_msdyn_workorder: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_WorkOrder2_msdyn_workorder: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
