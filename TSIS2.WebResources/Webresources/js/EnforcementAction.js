@@ -27,7 +27,7 @@ var ROM;
         }
         EnforcementAction.methodOfServiceOnChange = methodOfServiceOnChange;
         function verbalWarningAdditionalDetailsVisibility(formContext) {
-            var methodOfServiceValue = formContext.getAttribute("ts_methodofservice").getValue();
+            var methodOfServiceValue = formContext.getAttribute("ts_methodservice").getValue();
             //Show additional fields if method of service includes "Verbal"
             if (methodOfServiceValue != null && methodOfServiceValue.indexOf(717750004 /* Verbal */) !== -1) {
                 formContext.ui.tabs.get("general").sections.get("additional_details").setVisible(true);
