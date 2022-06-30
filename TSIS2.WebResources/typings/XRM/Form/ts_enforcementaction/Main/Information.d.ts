@@ -25,7 +25,7 @@ declare namespace Form.ts_enforcementaction.Main {
       get(name: "ts_copyofreceipt"): Xrm.Attribute<string>;
       get(name: "ts_individualcompany"): Xrm.LookupAttribute<"account">;
       get(name: "ts_individualposition"): Xrm.Attribute<string>;
-      get(name: "ts_methodofservice"): Xrm.MultiSelectOptionSetAttribute<ts_methodofservice>;
+      get(name: "ts_methodservice"): Xrm.MultiSelectOptionSetAttribute<ts_methodofservice>;
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_timeanddateofservice"): Xrm.DateAttribute;
       get(name: "ts_type"): Xrm.OptionSetAttribute<ts_type>;
@@ -48,7 +48,7 @@ declare namespace Form.ts_enforcementaction.Main {
       get(name: "ts_copyofreceipt"): Xrm.StringControl;
       get(name: "ts_individualcompany"): Xrm.LookupControl<"account">;
       get(name: "ts_individualposition"): Xrm.StringControl;
-      get(name: "ts_methodofservice"): Xrm.MultiSelectOptionSetControl<ts_methodofservice>;
+      get(name: "ts_methodservice"): Xrm.MultiSelectOptionSetControl<ts_methodofservice>;
       get(name: "ts_timeanddateofservice"): Xrm.DateControl;
       get(name: "ts_type"): Xrm.OptionSetControl<ts_type>;
       get(name: "ts_verbalwarningdate"): Xrm.DateControl;
@@ -77,7 +77,7 @@ declare namespace Form.ts_enforcementaction.Main {
     getAttribute(attributeName: "ts_copyofreceipt"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_individualcompany"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_individualposition"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ts_methodofservice"): Xrm.MultiSelectOptionSetAttribute<ts_methodofservice>;
+    getAttribute(attributeName: "ts_methodservice"): Xrm.MultiSelectOptionSetAttribute<ts_methodofservice>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_timeanddateofservice"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_type"): Xrm.OptionSetAttribute<ts_type>;
@@ -95,7 +95,7 @@ declare namespace Form.ts_enforcementaction.Main {
     getControl(controlName: "ts_copyofreceipt"): Xrm.StringControl;
     getControl(controlName: "ts_individualcompany"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_individualposition"): Xrm.StringControl;
-    getControl(controlName: "ts_methodofservice"): Xrm.MultiSelectOptionSetControl<ts_methodofservice>;
+    getControl(controlName: "ts_methodservice"): Xrm.MultiSelectOptionSetControl<ts_methodofservice>;
     getControl(controlName: "ts_timeanddateofservice"): Xrm.DateControl;
     getControl(controlName: "ts_type"): Xrm.OptionSetControl<ts_type>;
     getControl(controlName: "ts_verbalwarningdate"): Xrm.DateControl;

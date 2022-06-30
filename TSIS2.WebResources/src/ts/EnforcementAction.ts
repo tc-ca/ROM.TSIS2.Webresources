@@ -31,7 +31,7 @@ namespace ROM.EnforcementAction {
     }
 
     export function verbalWarningAdditionalDetailsVisibility(formContext: Form.ts_enforcementaction.Main.Information){
-        const methodOfServiceValue = formContext.getAttribute("ts_methodofservice").getValue();
+        const methodOfServiceValue = formContext.getAttribute("ts_methodservice").getValue();
 
         //Show additional fields if method of service includes "Verbal"
         if(methodOfServiceValue != null && methodOfServiceValue.indexOf(ts_methodofservice.Verbal) !== -1){
