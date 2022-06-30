@@ -191,7 +191,7 @@ namespace ROM.WorkOrder {
             Xrm.WebApi.retrieveRecord("tc_tcfiscalquarter", plannedFiscalQuarter[0].id.replace(/({|})/g, ''), "?$select=tc_quarterend").then(
                 function success(result) {
 
-                    let currentDateTime = new Date();
+                    let currentDateTime = new Date('2025-04-16T06:55:31.820Z');
 
                     let quarterendDate = new Date(result.tc_quarterend);
 
@@ -1222,5 +1222,13 @@ namespace ROM.WorkOrder {
             });
         });
         return hasRole;
+    }
+
+    export function cantCompleteInspectionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        //const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+
+        //    let Id = form.data.entity.getId();
+
+        // Code for modal pop-up
     }
 }
