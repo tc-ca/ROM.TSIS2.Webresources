@@ -182,32 +182,8 @@ namespace ROM.WorkOrder {
             }
         );
 
-        //Check if the Work Order is past the Planned Fiscal Quarter 
-        let plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
-
-        if (plannedFiscalQuarter != null) {
-
-            //fetch the end date of the Planned Fiscal Quarter
-            Xrm.WebApi.retrieveRecord("tc_tcfiscalquarter", plannedFiscalQuarter[0].id.replace(/({|})/g, ''), "?$select=tc_quarterend").then(
-                function success(result) {
-
-                    let currentDateTime = new Date();
-
-                    let quarterendDate = new Date(result.tc_quarterend);
-
-                    //if we are past the end date of the quarter, make the Can't Complete Inspection visible, otherwise hide it
-                    if (quarterendDate < currentDateTime) {
-                        form.getControl("ts_cantcompleteinspection").setVisible(true);
-                    }
-                    else {
-                        form.getControl("ts_cantcompleteinspection").setVisible(false);
-                    }
-                },
-                function (error) {
-                    showErrorMessageAlert("Error fetching the end date of the Planned Fiscal Quarter: " + error);
-                }
-            );
-        }
+        //Check if the Work Order is past the Planned Fiscal Quarter
+        setCantCompleteinspectionVisibility(form);
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -229,6 +205,9 @@ namespace ROM.WorkOrder {
             //Set inactive views
             setWorkOrderServiceTasksView(form, false);
         }
+
+        //Check if the Work Order is past the Planned Fiscal Quarter
+        setCantCompleteinspectionVisibility(form);
     }
 
     export function workOrderTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -1118,6 +1097,40 @@ namespace ROM.WorkOrder {
         }
     }
 
+    function setCantCompleteinspectionVisibility(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
+        let plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
+
+        if (plannedFiscalQuarter != null) {
+
+            //fetch the end date of the Planned Fiscal Quarter
+            Xrm.WebApi.retrieveRecord("tc_tcfiscalquarter", plannedFiscalQuarter[0].id.replace(/({|})/g, ''), "?$select=tc_quarterend").then(
+                function success(result) {
+
+                    let currentDateTime = new Date();
+
+                    let quarterendDate = new Date(result.tc_quarterend);
+
+                    //if we are past the end date of the quarter, make the Can't Complete Inspection visible, otherwise hide it
+                    if (quarterendDate < currentDateTime) {
+                        form.getControl("ts_cantcompleteinspection").setVisible(true);
+                    }
+                    else {
+                        form.getControl("ts_cantcompleteinspection").setVisible(false);
+                    }
+                },
+                function (error) {
+                    showErrorMessageAlert("Error fetching the end date of the Planned Fiscal Quarter: " + error);
+                }
+            );
+        }
+        else {
+            //Hide the Can't Complete Inspection if there is no Planned Fiscal Quarter set
+            form.getControl("ts_cantcompleteinspection").setVisible(false);
+        }
+
+
+    }
+
     //Checks if the Activity Type should have been able to be changed
     //Puts old value in and locks the control if it shouldn't have been able to be changed
     //This is needed when a service task is changed to in-progress and the work order form remained open.
@@ -1225,9 +1238,8 @@ namespace ROM.WorkOrder {
     }
 
     export function cantCompleteInspectionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        //const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
-
-        //    let Id = form.data.entity.getId();
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+        let Id = form.data.entity.getId();
 
         // Code for modal pop-up
     }
