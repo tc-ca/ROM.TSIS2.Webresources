@@ -191,7 +191,7 @@ namespace ROM.WorkOrder {
             Xrm.WebApi.retrieveRecord("tc_tcfiscalquarter", plannedFiscalQuarter[0].id.replace(/({|})/g, ''), "?$select=tc_quarterend").then(
                 function success(result) {
 
-                    let currentDateTime = new Date('2025-04-16T06:55:31.820Z');
+                    let currentDateTime = new Date();
 
                     let quarterendDate = new Date(result.tc_quarterend);
 
