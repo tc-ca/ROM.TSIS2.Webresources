@@ -10,7 +10,7 @@ interface ts_EnforcementAction_Base extends WebEntity {
   ts_copyofreceipt?: string | null;
   ts_enforcementactionid?: string | null;
   ts_individualposition?: string | null;
-  ts_methodofservice?: ts_methodofservice | null;
+  ts_methodservice?: ts_methodofservice | null;
   ts_name?: string | null;
   ts_timeanddateofservice?: Date | null;
   ts_type?: ts_type | null;
@@ -68,7 +68,7 @@ interface ts_EnforcementAction_Select {
   ts_enforcementactionid: WebAttribute<ts_EnforcementAction_Select, { ts_enforcementactionid: string | null }, {  }>;
   ts_individualcompany_guid: WebAttribute<ts_EnforcementAction_Select, { ts_individualcompany_guid: string | null }, { ts_individualcompany_formatted?: string }>;
   ts_individualposition: WebAttribute<ts_EnforcementAction_Select, { ts_individualposition: string | null }, {  }>;
-  ts_methodofservice: WebAttribute<ts_EnforcementAction_Select, { ts_methodofservice: ts_methodofservice | null }, { ts_methodofservice_formatted?: string }>;
+  ts_methodservice: WebAttribute<ts_EnforcementAction_Select, { ts_methodservice: ts_methodofservice | null }, { ts_methodservice_formatted?: string }>;
   ts_name: WebAttribute<ts_EnforcementAction_Select, { ts_name: string | null }, {  }>;
   ts_timeanddateofservice: WebAttribute<ts_EnforcementAction_Select, { ts_timeanddateofservice: Date | null }, { ts_timeanddateofservice_formatted?: string }>;
   ts_type: WebAttribute<ts_EnforcementAction_Select, { ts_type: ts_type | null }, { ts_type_formatted?: string }>;
@@ -103,7 +103,7 @@ interface ts_EnforcementAction_Filter {
   ts_enforcementactionid: XQW.Guid;
   ts_individualcompany_guid: XQW.Guid;
   ts_individualposition: string;
-  ts_methodofservice: ts_methodofservice;
+  ts_methodservice: ts_methodofservice;
   ts_name: string;
   ts_timeanddateofservice: Date;
   ts_type: ts_type;
@@ -149,7 +149,7 @@ interface ts_EnforcementAction_FormattedResult {
   ts_case_formatted?: string;
   ts_company_formatted?: string;
   ts_individualcompany_formatted?: string;
-  ts_methodofservice_formatted?: string;
+  ts_methodservice_formatted?: string;
   ts_timeanddateofservice_formatted?: string;
   ts_type_formatted?: string;
   ts_verbalwarningdate_formatted?: string;
