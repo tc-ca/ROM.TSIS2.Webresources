@@ -14,6 +14,7 @@ var ROM;
             var regionAttribute = form.getAttribute("ts_region");
             var regionAttributeValue = regionAttribute.getValue();
             var ownerControl = form.getControl("ownerid");
+            var headerOwnerControl = form.getControl("header_ownerid");
             //Keep track of the current system status, to be used when cancelling a status change.
             currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             form.getControl("msdyn_worklocation").removeOption(690970001); //Remove Facility Work Location Option
@@ -36,8 +37,10 @@ var ROM;
             if (form.ui.getFormType() == 1 || form.ui.getFormType() == 2) {
                 if (ownerControl != null) {
                     ownerControl.setEntityTypes(["systemuser"]);
+                    headerOwnerControl.setEntityTypes(["systemuser"]);
                     var defaultViewId = "29bd662e-52e7-ec11-bb3c-0022483d86ce";
                     ownerControl.setDefaultView(defaultViewId);
+                    headerOwnerControl.setDefaultView(defaultViewId);
                 }
             }
             //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
