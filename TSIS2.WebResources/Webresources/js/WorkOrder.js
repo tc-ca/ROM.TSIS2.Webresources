@@ -1025,9 +1025,28 @@ var ROM;
             }
         }
         function setCantCompleteInspectionControlsVisibility(form, visibility) {
-            form.getControl("ts_cantcompleteinspection").setVisible(visibility);
-            form.getControl("ts_incompleteworkorderreason").setVisible(visibility);
-            form.getControl("ts_incompleteworkorderreasonforother").setVisible(visibility);
+            var cantCompleteInspectionSelection = form.getAttribute("ts_cantcompleteinspection").getValue();
+            if (visibility == true) {
+                form.getControl("ts_cantcompleteinspection").setVisible(visibility);
+                if (cantCompleteInspectionSelection == true) {
+                    form.getControl("ts_incompleteworkorderreason").setVisible(visibility);
+                    form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
+                }
+                else {
+                    form.getControl("ts_incompleteworkorderreason").setVisible(false);
+                    form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
+                    form.getAttribute("ts_cantcompleteinspection").setValue(false);
+                    form.getAttribute("ts_incompleteworkorderreason").setValue(null);
+                    form.getAttribute("ts_incompleteworkorderreasonforother").setValue(null);
+                }
+            }
+            else {
+                form.getControl("ts_cantcompleteinspection").setVisible(visibility);
+                form.getControl("ts_incompleteworkorderreason").setVisible(visibility);
+                form.getControl("ts_incompleteworkorderreasonforother").setVisible(visibility);
+                form.getAttribute("ts_incompleteworkorderreason").setValue(null);
+                form.getAttribute("ts_incompleteworkorderreasonforother").setValue(null);
+            }
         }
         //Checks if the Activity Type should have been able to be changed
         //Puts old value in and locks the control if it shouldn't have been able to be changed
@@ -1147,17 +1166,38 @@ var ROM;
             var cantCompleteInspection = form.getAttribute("ts_cantcompleteinspection").getValue();
             if (cantCompleteInspection == true) {
                 setCantCompleteInspectionControlsVisibility(form, true);
+                form.getAttribute("ts_incompleteworkorderreason").setRequiredLevel("required");
                 form.getControl("ts_incompleteworkorderreason").setFocus();
             }
             else {
                 setCantCompleteInspectionControlsVisibility(form, false);
                 form.getControl("ts_cantcompleteinspection").setVisible(true);
+                form.getAttribute("ts_incompleteworkorderreason").setRequiredLevel("none");
             }
         }
         WorkOrder.cantCompleteInspectionOnChange = cantCompleteInspectionOnChange;
         function incompleteWorkOrderReasonOnChange(eContext) {
             var form = eContext.getFormContext();
+            var selectedIncompleteWorkOrderReason = form.getAttribute("ts_incompleteworkorderreason").getValue();
+            var selectedOther = "{8B3B6A28-C5FB-EC11-82E6-002248AE441F}";
+            //If 'Other' is selected as a reason, make ts_incompleteworkorderreasonforother visible
+            if (selectedIncompleteWorkOrderReason != null && selectedIncompleteWorkOrderReason[0].id.toUpperCase() == selectedOther) {
+                form.getControl("ts_incompleteworkorderreasonforother").setVisible(true);
+                form.getControl("ts_incompleteworkorderreasonforother").setFocus();
+                form.getAttribute("ts_incompleteworkorderreasonforother").setRequiredLevel("required");
+            }
+            else {
+                form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
+                form.getAttribute("ts_incompleteworkorderreasonforother").setValue(null);
+                form.getAttribute("ts_incompleteworkorderreasonforother").setRequiredLevel("none");
+            }
         }
         WorkOrder.incompleteWorkOrderReasonOnChange = incompleteWorkOrderReasonOnChange;
+        function fiscalQuarterOnChange(eContext) {
+            var form = eContext.getFormContext();
+            //Check if the Work Order is past the Planned Fiscal Quarter
+            setCantCompleteinspectionVisibility(form);
+        }
+        WorkOrder.fiscalQuarterOnChange = fiscalQuarterOnChange;
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));
