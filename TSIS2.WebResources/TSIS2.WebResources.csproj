@@ -289,6 +289,7 @@
     <TypeScriptCompile Include="src\ts\CustomerAsset.ts" />
     <TypeScriptCompile Include="src\ts\CustomerAssetQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\Email.ts" />
+    <TypeScriptCompile Include="src\ts\EnforcementAction.ts" />
     <TypeScriptCompile Include="src\ts\Finding.ts" />
     <TypeScriptCompile Include="src\ts\FunctionalLocation.ts" />
     <TypeScriptCompile Include="src\ts\Incident.ts" />
