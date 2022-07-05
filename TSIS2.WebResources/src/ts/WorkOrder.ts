@@ -92,7 +92,7 @@ namespace ROM.WorkOrder {
                 /* Localize the labels shown in the region and country lookups when coming from a case.
                  * Workaround for localization plugin running after mapped case fields have already been retrieved.
                  * Split("::") the field name, using left side if in english and right if in french.
-                 */ 
+                 */
                 let regionValue = form.getAttribute("ts_region").getValue();
                 if (regionValue != null) {
                     regionValue[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId === 1036) ? regionValue[0]?.name?.split("::")[1] : regionValue[0]?.name?.split("::")[0];
@@ -103,7 +103,7 @@ namespace ROM.WorkOrder {
                     countryValue[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId === 1036) ? countryValue[0]?.name?.split("::")[1] : countryValue[0]?.name?.split("::")[0];
                     form.getAttribute("ts_country").setValue(countryValue);
                 }
-                
+
 
                 //If the new work order is coming from a case, and region is international, show the country lookup
                 if (isFromCase && regionValue && regionValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
@@ -131,13 +131,13 @@ namespace ROM.WorkOrder {
                     }
                 }
                 setActivityTypeDisabled(eContext);
-                
+
                 if (currentSystemStatus == 690970004) {
                     if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
                         form.getControl("header_msdyn_systemstatus").setDisabled(true);
                     }
                 }
-            break;
+                break;
             default:
                 // Enable all operation related fields
                 form.getControl("ts_region").setDisabled(false);
@@ -148,7 +148,7 @@ namespace ROM.WorkOrder {
                 form.getControl("msdyn_primaryincidenttype").setDisabled(false);
 
                 if (regionAttribute != null && regionAttribute != undefined) {
-                    
+
                     if (regionAttributeValue != null && regionAttributeValue != undefined) {
                         if (regionAttributeValue[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
                             form.getControl("ts_country").setVisible(true);
@@ -274,10 +274,10 @@ namespace ROM.WorkOrder {
                             } else {
                                 setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "");
                             }
-                            
-                                
+
+
                         }
-                            
+
                     }
                 }
             }
@@ -544,7 +544,7 @@ namespace ROM.WorkOrder {
         }
     }
 
-        export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
             const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
@@ -561,7 +561,7 @@ namespace ROM.WorkOrder {
                 const siteAttributeValue = siteAttribute.getValue();
 
 
-                
+
                 if (siteAttributeValue != null && siteAttributeValue != undefined &&
                     stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
                     operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
@@ -610,7 +610,7 @@ namespace ROM.WorkOrder {
                                 const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
                                 const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
                                 const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-                                form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true); 
+                                form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
                             }
                             else{
                                 form.getAttribute("msdyn_functionallocation").setValue(null);
@@ -858,11 +858,11 @@ namespace ROM.WorkOrder {
 
     export function revisedQuarterOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
-        
+
         const revisedQuarterAttribute = form.getAttribute("ovs_revisedquarterid");
         const currentFiscalQuarterAttribute = form.getAttribute("ovs_currentfiscalquarter");
         const plannedFiscalQuarterAttribute = form.getAttribute("ovs_fiscalquarter");
-    
+
         const revisedQuarterAttributeValue = revisedQuarterAttribute.getValue();
         const currentFiscalQuarterAttributeValue = currentFiscalQuarterAttribute.getValue();
         const plannedFiscalQuarterAttributeValue = plannedFiscalQuarterAttribute.getValue();
@@ -882,28 +882,28 @@ namespace ROM.WorkOrder {
 
     export function dateWindowEndOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
-        const dateWindowEndValue = form.data.entity.attributes.get("msdyn_datewindowend").getValue()       
+        const dateWindowEndValue = form.data.entity.attributes.get("msdyn_datewindowend").getValue()
         const fiscalQuarterAttribute = form.data.entity.attributes.get("ovs_fiscalquarter");
-    
+
         var fetchXml = `<fetch distinct="false" mapping="logical" output-format="xml-platform" version="1.0"> <entity name="tc_tcfiscalquarter"> <attribute name="tc_name"/> <attribute name="tc_tcfiscalquarterid"/> <attribute name="tc_tcfiscalyearid"/> <filter type="and"> <condition operator="this-fiscal-year" attribute = "tc_quarterstart"/> </filter> </entity> </fetch>`;
         fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
         Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", fetchXml).then(
             function success(result) {
                 if (result.entities.length > 0) {
                     if (dateWindowEndValue != null) {
-                          var m = Math.floor(dateWindowEndValue.getMonth() / 3);
-                          const lookup = new Array();
-                          lookup[0] = new Object();
-                          lookup[0].id = result.entities[m].tc_tcfiscalquarterid;
-                          lookup[0].name = result.entities[m].tc_name;
-                          lookup[0].entityType = 'tc_tcfiscalquarter';
-                          fiscalQuarterAttribute.setValue(lookup);                       
+                        var m = Math.floor(dateWindowEndValue.getMonth() / 3);
+                        const lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = result.entities[m].tc_tcfiscalquarterid;
+                        lookup[0].name = result.entities[m].tc_name;
+                        lookup[0].entityType = 'tc_tcfiscalquarter';
+                        fiscalQuarterAttribute.setValue(lookup);
                     }
                 }
             },
-            function (error) {           
+            function (error) {
             }
-        );          
+        );
 
     }
     // FUNCTIONS
@@ -947,7 +947,7 @@ namespace ROM.WorkOrder {
         currentUserId = currentUserId.replace(/[{}]/g, "");
 
         if(!regionAttributeValue?.[0].name){
-             // Get the user's territory
+            // Get the user's territory
             Xrm.WebApi.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(
                 function success(result) {
                     if (result != null && result["_territoryid_value"] != null) {
@@ -1112,25 +1112,31 @@ namespace ROM.WorkOrder {
 
                     //if we are past the end date of the quarter, make the Can't Complete Inspection visible, otherwise hide it
                     if (quarterendDate < currentDateTime) {
-                        form.getControl("ts_cantcompleteinspection").setVisible(true);
+                        setCantCompleteInspectionControlsVisibility(form, true);
                     }
                     else {
-                        form.getControl("ts_cantcompleteinspection").setVisible(false);
+                        //Hide the Can't Complete Inspection if there is no Planned Fiscal Quarter set
+                        setCantCompleteInspectionControlsVisibility(form, false);
                     }
                 },
                 function (error) {
+                    setCantCompleteInspectionControlsVisibility(form, false);
                     showErrorMessageAlert("Error fetching the end date of the Planned Fiscal Quarter: " + error);
                 }
             );
         }
         else {
             //Hide the Can't Complete Inspection if there is no Planned Fiscal Quarter set
-            form.getControl("ts_cantcompleteinspection").setVisible(false);
+            setCantCompleteInspectionControlsVisibility(form, false);
         }
-
-
     }
 
+    function setCantCompleteInspectionControlsVisibility(form: Form.msdyn_workorder.Main.ROMOversightActivity, visibility:boolean): void {
+        form.getControl("ts_cantcompleteinspection").setVisible(visibility);
+        form.getControl("ts_incompleteworkorderreason").setVisible(visibility);
+        form.getControl("ts_incompleteworkorderreasonforother").setVisible(visibility);
+    }
+    
     //Checks if the Activity Type should have been able to be changed
     //Puts old value in and locks the control if it shouldn't have been able to be changed
     //This is needed when a service task is changed to in-progress and the work order form remained open.
@@ -1239,8 +1245,19 @@ namespace ROM.WorkOrder {
 
     export function cantCompleteInspectionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
-        let Id = form.data.entity.getId();
 
-        // Code for modal pop-up
+        let cantCompleteInspection = form.getAttribute("ts_cantcompleteinspection").getValue();
+
+        if (cantCompleteInspection == true) {
+            setCantCompleteInspectionControlsVisibility(form, true);
+            form.getControl("ts_incompleteworkorderreason").setFocus();
+        } else {
+            setCantCompleteInspectionControlsVisibility(form, false);
+            form.getControl("ts_cantcompleteinspection").setVisible(true);
+        }
+    }
+
+    export function incompleteWorkOrderReasonOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
     }
 }
