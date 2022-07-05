@@ -10,6 +10,9 @@ interface ovs_operation_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   ts_canvasappnumber?: string | null;
   ts_comments?: string | null;
+  ts_dateoflastcomprehensiveinspection?: Date | null;
+  ts_dateoflastriskbasedinspection?: Date | null;
+  ts_dateoflastsecurityplanreview?: Date | null;
   ts_description?: string | null;
   ts_issecurityinspectionsite?: ts_issecurityinspectionsite | null;
   ts_operationalstatus?: ts_operationalstatus | null;
@@ -18,6 +21,7 @@ interface ovs_operation_Base extends WebEntity {
   ts_ppeguide?: boolean | null;
   ts_pperequired?: boolean | null;
   ts_riskscore?: number | null;
+  ts_riskthreshold?: string | null;
   ts_securityinspectiondetails?: ts_securityinspectiondetails | null;
   ts_specializedpperequired?: boolean | null;
   ts_statusenddate?: Date | null;
@@ -77,6 +81,9 @@ interface ovs_operation_Select {
   timezoneruleversionnumber: WebAttribute<ovs_operation_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_canvasappnumber: WebAttribute<ovs_operation_Select, { ts_canvasappnumber: string | null }, {  }>;
   ts_comments: WebAttribute<ovs_operation_Select, { ts_comments: string | null }, {  }>;
+  ts_dateoflastcomprehensiveinspection: WebAttribute<ovs_operation_Select, { ts_dateoflastcomprehensiveinspection: Date | null }, { ts_dateoflastcomprehensiveinspection_formatted?: string }>;
+  ts_dateoflastriskbasedinspection: WebAttribute<ovs_operation_Select, { ts_dateoflastriskbasedinspection: Date | null }, { ts_dateoflastriskbasedinspection_formatted?: string }>;
+  ts_dateoflastsecurityplanreview: WebAttribute<ovs_operation_Select, { ts_dateoflastsecurityplanreview: Date | null }, { ts_dateoflastsecurityplanreview_formatted?: string }>;
   ts_description: WebAttribute<ovs_operation_Select, { ts_description: string | null }, {  }>;
   ts_issecurityinspectionsite: WebAttribute<ovs_operation_Select, { ts_issecurityinspectionsite: ts_issecurityinspectionsite | null }, { ts_issecurityinspectionsite_formatted?: string }>;
   ts_operationalstatus: WebAttribute<ovs_operation_Select, { ts_operationalstatus: ts_operationalstatus | null }, { ts_operationalstatus_formatted?: string }>;
@@ -85,6 +92,7 @@ interface ovs_operation_Select {
   ts_ppeguide: WebAttribute<ovs_operation_Select, { ts_ppeguide: boolean | null }, {  }>;
   ts_pperequired: WebAttribute<ovs_operation_Select, { ts_pperequired: boolean | null }, {  }>;
   ts_riskscore: WebAttribute<ovs_operation_Select, { ts_riskscore: number | null }, {  }>;
+  ts_riskthreshold: WebAttribute<ovs_operation_Select, { ts_riskthreshold: string | null }, {  }>;
   ts_securityinspectiondetails: WebAttribute<ovs_operation_Select, { ts_securityinspectiondetails: ts_securityinspectiondetails | null }, { ts_securityinspectiondetails_formatted?: string }>;
   ts_site_guid: WebAttribute<ovs_operation_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_specializedpperequired: WebAttribute<ovs_operation_Select, { ts_specializedpperequired: boolean | null }, {  }>;
@@ -121,6 +129,9 @@ interface ovs_operation_Filter {
   timezoneruleversionnumber: number;
   ts_canvasappnumber: string;
   ts_comments: string;
+  ts_dateoflastcomprehensiveinspection: Date;
+  ts_dateoflastriskbasedinspection: Date;
+  ts_dateoflastsecurityplanreview: Date;
   ts_description: string;
   ts_issecurityinspectionsite: ts_issecurityinspectionsite;
   ts_operationalstatus: ts_operationalstatus;
@@ -129,6 +140,7 @@ interface ovs_operation_Filter {
   ts_ppeguide: boolean;
   ts_pperequired: boolean;
   ts_riskscore: number;
+  ts_riskthreshold: string;
   ts_securityinspectiondetails: ts_securityinspectiondetails;
   ts_site_guid: XQW.Guid;
   ts_specializedpperequired: boolean;
@@ -181,6 +193,9 @@ interface ovs_operation_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  ts_dateoflastcomprehensiveinspection_formatted?: string;
+  ts_dateoflastriskbasedinspection_formatted?: string;
+  ts_dateoflastsecurityplanreview_formatted?: string;
   ts_issecurityinspectionsite_formatted?: string;
   ts_operationalstatus_formatted?: string;
   ts_planningstatus_formatted?: string;

@@ -56,6 +56,9 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<ovs_operation_statecode>;
       get(name: "ts_comments"): Xrm.Attribute<string>;
+      get(name: "ts_dateoflastcomprehensiveinspection"): Xrm.DateAttribute;
+      get(name: "ts_dateoflastriskbasedinspection"): Xrm.DateAttribute;
+      get(name: "ts_dateoflastsecurityplanreview"): Xrm.DateAttribute;
       get(name: "ts_description"): Xrm.Attribute<string>;
       get(name: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
       get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
@@ -64,6 +67,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_ppeguide"): Xrm.Attribute<any>;
       get(name: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
+      get(name: "ts_riskthreshold"): Xrm.Attribute<string>;
       get(name: "ts_securityinspectiondetails"): Xrm.OptionSetAttribute<ts_securityinspectiondetails>;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
@@ -95,6 +99,9 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
       get(name: "ts_comments"): Xrm.StringControl;
+      get(name: "ts_dateoflastcomprehensiveinspection"): Xrm.DateControl;
+      get(name: "ts_dateoflastriskbasedinspection"): Xrm.DateControl;
+      get(name: "ts_dateoflastsecurityplanreview"): Xrm.DateControl;
       get(name: "ts_description"): Xrm.StringControl;
       get(name: "ts_issecurityinspectionsite"): Xrm.OptionSetControl<ts_issecurityinspectionsite>;
       get(name: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
@@ -104,6 +111,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_pperequired"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_riskscore"): Xrm.NumberControl;
+      get(name: "ts_riskthreshold"): Xrm.StringControl;
       get(name: "ts_securityinspectiondetails"): Xrm.OptionSetControl<ts_securityinspectiondetails>;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;
@@ -139,6 +147,9 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ovs_operation_statecode>;
     getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_dateoflastcomprehensiveinspection"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_dateoflastriskbasedinspection"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_dateoflastsecurityplanreview"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_description"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
     getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
@@ -147,6 +158,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_ppeguide"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_riskthreshold"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_securityinspectiondetails"): Xrm.OptionSetAttribute<ts_securityinspectiondetails>;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
@@ -173,6 +185,9 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
     getControl(controlName: "ts_comments"): Xrm.StringControl;
+    getControl(controlName: "ts_dateoflastcomprehensiveinspection"): Xrm.DateControl;
+    getControl(controlName: "ts_dateoflastriskbasedinspection"): Xrm.DateControl;
+    getControl(controlName: "ts_dateoflastsecurityplanreview"): Xrm.DateControl;
     getControl(controlName: "ts_description"): Xrm.StringControl;
     getControl(controlName: "ts_issecurityinspectionsite"): Xrm.OptionSetControl<ts_issecurityinspectionsite>;
     getControl(controlName: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
@@ -182,6 +197,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_pperequired"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
+    getControl(controlName: "ts_riskthreshold"): Xrm.StringControl;
     getControl(controlName: "ts_securityinspectiondetails"): Xrm.OptionSetControl<ts_securityinspectiondetails>;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;
