@@ -1154,6 +1154,7 @@ namespace ROM.WorkOrder {
             form.getControl("ts_cantcompleteinspection").setVisible(visibility);
             form.getControl("ts_incompleteworkorderreason").setVisible(visibility);
             form.getControl("ts_incompleteworkorderreasonforother").setVisible(visibility);
+            form.getAttribute("ts_cantcompleteinspection").setValue(false);
             form.getAttribute("ts_incompleteworkorderreason").setValue(null);
             form.getAttribute("ts_incompleteworkorderreasonforother").setValue(null);
         }
