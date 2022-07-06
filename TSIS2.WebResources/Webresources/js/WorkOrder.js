@@ -161,6 +161,7 @@ var ROM;
             });
             //Check if the Work Order is past the Planned Fiscal Quarter
             setCantCompleteinspectionVisibility(form);
+            setIncompleteWorkOrderReasonFilteredView(form);
         }
         WorkOrder.onLoad = onLoad;
         function onSave(eContext) {
@@ -948,6 +949,29 @@ var ROM;
             var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter>' + countryCondition + '</filter><filter><condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '"/></filter><filter><condition attribute="ts_sitestatus" operator="ne" value="717750001" /></filter><order attribute="msdyn_name" descending="false"/><link-entity name="ovs_operation" from="ts_site" to="msdyn_functionallocationid"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value=" ' + operationTypeAttributeId + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderTypeAttributeId + '"/><condition attribute="ts_operationalstatus" operator="eq" value="717750000"/></filter></link-entity></entity></fetch>';
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+        }
+        function setIncompleteWorkOrderReasonFilteredView(form) {
+            //Find out if the Work Order Type belongs to ISSO or AvSec
+            var selectedOperationTypeId = form.getAttribute("ovs_operationtypeid").getValue();
+            var ownerId;
+            if (selectedOperationTypeId != null && selectedOperationTypeId != undefined) {
+                Xrm.WebApi.retrieveRecord("ovs_operationtype", selectedOperationTypeId[0].id.replace(/({|})/g, ''), undefined).then(function success(result) {
+                    ownerId = result._ownerid_value;
+                    //Now filter the lookup
+                    if (ownerId != null) {
+                        form.getControl("ts_incompleteworkorderreason").setDisabled(false);
+                        var viewId = '{736A4E08-E24F-4961-ADB4-BBAAB4119EE0}';
+                        //Keep the option to select 'Other' available no matter who the Work Order Type belongs to
+                        var otherId = '8B3B6A28-C5FB-EC11-82E6-002248AE441F';
+                        var entityName = "ts_incompleteworkorderreason";
+                        var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredIncompleteWorkOrderReasons");
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ts_incompleteworkorderreason"><attribute name="ts_incompleteworkorderreasonid" /><attribute name="ts_name" /><filter type="or"><condition attribute="ownerid" operator="eq" value="' + ownerId + '" /><condition attribute="ts_incompleteworkorderreasonid" operator="eq" value="' + otherId + '" /></filter><order attribute="ts_name" /></entity></fetch>';
+                        var layoutXml = '<grid name="resultset" object="10010" jump="ts_name" select="1" icon="1" preview="1"><row name="result" id="ts_incompleteworkorderreasonid"><cell name="ts_name" width="200" /></row></grid>';
+                        form.getControl("ts_incompleteworkorderreason").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    }
+                }, function (error) {
+                });
+            }
         }
         function getCountryFetchXmlCondition(form) {
             var regionAttribute = form.getAttribute("ts_region");
