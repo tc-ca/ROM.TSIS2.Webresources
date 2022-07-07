@@ -11,6 +11,7 @@ namespace ROM.WorkOrder {
         const regionAttributeValue = regionAttribute.getValue();
 
         const ownerControl = form.getControl("ownerid");
+        const headerOwnerControl = form.getControl("header_ownerid");
 
         //Keep track of the current system status, to be used when cancelling a status change.
         currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
@@ -38,8 +39,10 @@ namespace ROM.WorkOrder {
         if (form.ui.getFormType() == 1 || form.ui.getFormType() == 2) {
             if (ownerControl != null) {
                 ownerControl.setEntityTypes(["systemuser"]);
+                headerOwnerControl.setEntityTypes(["systemuser"]);
                 var defaultViewId = "29bd662e-52e7-ec11-bb3c-0022483d86ce";
                 ownerControl.setDefaultView(defaultViewId);
+                headerOwnerControl.setDefaultView(defaultViewId);
             }
         }
 
