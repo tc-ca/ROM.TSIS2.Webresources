@@ -162,4 +162,7 @@
   <data name="ReassignWorkOrderErrorMsg" xml:space="preserve">
     <value>A Work Order can only be reassigned to members in your inspectorate.</value>
   </data>
+  <data name="FilteredIncompleteWorkOrderReasons" xml:space="preserve">
+    <value>Filtered Incomplete Work Order Reasons</value>
+  </data>
 </root>

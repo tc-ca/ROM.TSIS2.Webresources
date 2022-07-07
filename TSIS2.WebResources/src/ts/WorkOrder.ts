@@ -187,6 +187,7 @@ namespace ROM.WorkOrder {
 
         //Check if the Work Order is past the Planned Fiscal Quarter
         setCantCompleteinspectionVisibility(form);
+        setIncompleteWorkOrderReasonFilteredView(form);
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -1038,6 +1039,38 @@ namespace ROM.WorkOrder {
         form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 
+    function setIncompleteWorkOrderReasonFilteredView(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
+        //Find out if the Work Order Type belongs to ISSO or AvSec
+        let selectedOperationTypeId = form.getAttribute("ovs_operationtypeid").getValue();
+
+        let ownerId;
+
+        if (selectedOperationTypeId != null && selectedOperationTypeId != undefined) {
+            Xrm.WebApi.retrieveRecord("ovs_operationtype", selectedOperationTypeId[0].id.replace(/({|})/g, ''), undefined).then(
+                function success(result) {
+                    ownerId = result._ownerid_value;
+
+                    //Now filter the lookup
+                    if (ownerId != null) {
+                        form.getControl("ts_incompleteworkorderreason").setDisabled(false);
+
+                        const viewId = '{736A4E08-E24F-4961-ADB4-BBAAB4119EE0}';
+
+                        //Keep the option to select 'Other' available no matter who the Work Order Type belongs to
+                        const otherId = '8B3B6A28-C5FB-EC11-82E6-002248AE441F';
+                        const entityName = "ts_incompleteworkorderreason";
+                        const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredIncompleteWorkOrderReasons");
+                        const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ts_incompleteworkorderreason"><attribute name="ts_incompleteworkorderreasonid" /><attribute name="ts_name" /><filter type="or"><condition attribute="ownerid" operator="eq" value="' + ownerId + '" /><condition attribute="ts_incompleteworkorderreasonid" operator="eq" value="' + otherId +'" /></filter><order attribute="ts_name" /></entity></fetch>';
+                        const layoutXml = '<grid name="resultset" object="10010" jump="ts_name" select="1" icon="1" preview="1"><row name="result" id="ts_incompleteworkorderreasonid"><cell name="ts_name" width="200" /></row></grid>';
+                        form.getControl("ts_incompleteworkorderreason").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    }
+                },
+                function (error) {
+                }
+            );
+        }
+    }
+
     function getCountryFetchXmlCondition(form: Form.msdyn_workorder.Main.ROMOversightActivity){
         const regionAttribute = form.getAttribute("ts_region");
         const regionAttributeValue = regionAttribute.getValue();
@@ -1135,9 +1168,32 @@ namespace ROM.WorkOrder {
     }
 
     function setCantCompleteInspectionControlsVisibility(form: Form.msdyn_workorder.Main.ROMOversightActivity, visibility:boolean): void {
-        form.getControl("ts_cantcompleteinspection").setVisible(visibility);
-        form.getControl("ts_incompleteworkorderreason").setVisible(visibility);
-        form.getControl("ts_incompleteworkorderreasonforother").setVisible(visibility);
+        let cantCompleteInspectionSelection = form.getAttribute("ts_cantcompleteinspection").getValue();
+
+        if (visibility == true) {
+            form.getControl("ts_cantcompleteinspection").setVisible(visibility);
+
+            if (cantCompleteInspectionSelection == true) {
+                form.getControl("ts_incompleteworkorderreason").setVisible(visibility);
+                form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
+
+            }
+            else {
+                form.getControl("ts_incompleteworkorderreason").setVisible(false);
+                form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
+                form.getAttribute("ts_cantcompleteinspection").setValue(false);
+                form.getAttribute("ts_incompleteworkorderreason").setValue(null);
+                form.getAttribute("ts_incompleteworkorderreasonforother").setValue(null);
+            }
+        }
+        else {
+            form.getControl("ts_cantcompleteinspection").setVisible(visibility);
+            form.getControl("ts_incompleteworkorderreason").setVisible(visibility);
+            form.getControl("ts_incompleteworkorderreasonforother").setVisible(visibility);
+            form.getAttribute("ts_cantcompleteinspection").setValue(false);
+            form.getAttribute("ts_incompleteworkorderreason").setValue(null);
+            form.getAttribute("ts_incompleteworkorderreasonforother").setValue(null);
+        }
     }
     
     //Checks if the Activity Type should have been able to be changed
@@ -1253,14 +1309,38 @@ namespace ROM.WorkOrder {
 
         if (cantCompleteInspection == true) {
             setCantCompleteInspectionControlsVisibility(form, true);
+            form.getAttribute("ts_incompleteworkorderreason").setRequiredLevel("required");
             form.getControl("ts_incompleteworkorderreason").setFocus();
         } else {
             setCantCompleteInspectionControlsVisibility(form, false);
             form.getControl("ts_cantcompleteinspection").setVisible(true);
+            form.getAttribute("ts_incompleteworkorderreason").setRequiredLevel("none");
         }
     }
 
     export function incompleteWorkOrderReasonOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+
+        let selectedIncompleteWorkOrderReason = form.getAttribute("ts_incompleteworkorderreason").getValue();
+
+        const selectedOther = "{8B3B6A28-C5FB-EC11-82E6-002248AE441F}";
+
+        //If 'Other' is selected as a reason, make ts_incompleteworkorderreasonforother visible
+        if (selectedIncompleteWorkOrderReason != null && selectedIncompleteWorkOrderReason[0].id.toUpperCase() == selectedOther) {
+            form.getControl("ts_incompleteworkorderreasonforother").setVisible(true);
+            form.getControl("ts_incompleteworkorderreasonforother").setFocus();
+            form.getAttribute("ts_incompleteworkorderreasonforother").setRequiredLevel("required");
+        } else {
+            form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
+            form.getAttribute("ts_incompleteworkorderreasonforother").setValue(null);
+            form.getAttribute("ts_incompleteworkorderreasonforother").setRequiredLevel("none");
+        }
+    }
+
+    export function fiscalQuarterOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+
+        //Check if the Work Order is past the Planned Fiscal Quarter
+        setCantCompleteinspectionVisibility(form);
     }
 }
