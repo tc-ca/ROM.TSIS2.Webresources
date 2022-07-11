@@ -4,6 +4,7 @@ var ROM;
     var IncompleteInspectionJustification;
     (function (IncompleteInspectionJustification) {
         function onLoad(eContext) {
+            //start here
         }
         IncompleteInspectionJustification.onLoad = onLoad;
         function onSave(eContext) {
