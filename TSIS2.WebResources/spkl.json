@@ -72,6 +72,16 @@
               "file": "resx\\WorkOrder.1036.resx",
               "description": "ROM TSIS 2.0 WorkOrder.js French Resource Strings"
             },
+            {
+              "uniquename": "ovs_/resx/IncompleteInspectionJustification.1033.resx",
+              "file": "resx\\IncompleteInspectionJustification.1033.resx",
+              "description": "ROM TSIS 2.0 IncompleteInspectionJustification.js English Resource Strings"
+            },
+            {
+              "uniquename": "ovs_/resx/IncompleteInspectionJustification.1036.resx",
+              "file": "resx\\IncompleteInspectionJustification.1036.resx",
+              "description": "ROM TSIS 2.0 IncompleteInspectionJustification.js French Resource Strings"
+            },
             /* Libraries */
             {
               "uniquename": "ovs_/lib/dg.xrmquery.web.min.js",
@@ -115,10 +125,10 @@
               "description": "ROM TSIS 2.0 Operation Ribbon Scripts"
             },
             {
-                "uniquename": "ts_/js/EnforcementAction.js",
-                "file": "js\\EnforcementAction.js",
-                "description": "ROM TSIS 2.0 Enforcement Action Scripts"
-              },
+              "uniquename": "ts_/js/EnforcementAction.js",
+              "file": "js\\EnforcementAction.js",
+              "description": "ROM TSIS 2.0 Enforcement Action Scripts"
+            },
             {
               "uniquename": "ts_/js/FunctionalLocation.js",
               "file": "js\\FunctionalLocation.js",
@@ -140,9 +150,9 @@
               "description": "ROM TSIS 2.0 Operation Form Scripts"
             },
             {
-                "uniquename": "ts_/js/OperationContact.js",
-                "file": "js\\OperationContact.js",
-                "description": "ROM TSIS 2.0 Operation Contact Form Scripts"
+              "uniquename": "ts_/js/OperationContact.js",
+              "file": "js\\OperationContact.js",
+              "description": "ROM TSIS 2.0 Operation Contact Form Scripts"
             },
             {
               "uniquename": "ovs_/js/Questionnaire.js",
@@ -207,6 +217,11 @@
             {
               "uniquename": "ovs_/js/FindingsReportRibbon.js",
               "file": "js\\FindingsReportRibbon.js",
+              "description": "ROM TSIS 2.0 Findings Report Ribbon Scripts"
+            },
+            {
+              "uniquename": "ovs_/js/IncompleteInspectionJustification.js",
+              "file": "js\\IncompleteInspectionJustification.js",
               "description": "ROM TSIS 2.0 Findings Report Ribbon Scripts"
             },
             /* Styles */
