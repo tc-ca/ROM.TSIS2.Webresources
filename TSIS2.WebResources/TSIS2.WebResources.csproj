@@ -164,6 +164,7 @@
     <Content Include="Webresources\js\Incident.js" />
     <Content Include="Webresources\js\IncidentQuickCreate.js" />
     <Content Include="Webresources\js\IncidentTypeServiceTask.js" />
+    <Content Include="Webresources\js\IncompleteInspectionJustification.js" />
     <Content Include="Webresources\js\jquery.js" />
     <Content Include="Webresources\js\knockout-min.js" />
     <Content Include="Webresources\js\LegislationRibbon.js" />
@@ -228,6 +229,16 @@
       <DependentUpon>BookableResourceBooking.1036.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Webresources\resx\IncompleteInspectionJustification.1033.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IncompleteInspectionJustification.1033.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Webresources\resx\IncompleteInspectionJustification.1036.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IncompleteInspectionJustification.1036.resx</DependentUpon>
     </Compile>
     <Compile Include="Webresources\resx\QuestionnaireVersion.1033.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -295,6 +306,7 @@
     <TypeScriptCompile Include="src\ts\Incident.ts" />
     <TypeScriptCompile Include="src\ts\IncidentQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
+    <TypeScriptCompile Include="src\ts\IncompleteInspectionJustification.ts" />
     <TypeScriptCompile Include="src\ts\Operation.ts" />
     <TypeScriptCompile Include="src\ts\OperationContact.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
@@ -785,6 +797,14 @@
     <EmbeddedResource Include="Webresources\resx\BookableResourceBooking.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BookableResourceBooking.1036.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\IncompleteInspectionJustification.1033.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>IncompleteInspectionJustification.1033.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\IncompleteInspectionJustification.1036.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>IncompleteInspectionJustification.1036.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\QuestionnaireVersion.1033.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
