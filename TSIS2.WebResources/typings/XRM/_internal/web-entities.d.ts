@@ -446,6 +446,29 @@ interface ts_Incident_ts_operationcontact_Create extends ts_Incident_ts_operatio
 }
 interface ts_Incident_ts_operationcontact_Update extends ts_Incident_ts_operationcontact {
 }
+interface ts_IncompleteWorkOrderReason_Base extends WebEntity {
+}
+interface ts_IncompleteWorkOrderReason_Fixed extends WebEntity_Fixed {
+  ts_incompleteworkorderreasonid: string;
+}
+interface ts_IncompleteWorkOrderReason extends ts_IncompleteWorkOrderReason_Base, ts_IncompleteWorkOrderReason_Relationships {
+}
+interface ts_IncompleteWorkOrderReason_Relationships {
+}
+interface ts_IncompleteWorkOrderReason_Result extends ts_IncompleteWorkOrderReason_Base, ts_IncompleteWorkOrderReason_Relationships {
+}
+interface ts_IncompleteWorkOrderReason_FormattedResult {
+}
+interface ts_IncompleteWorkOrderReason_Select {
+}
+interface ts_IncompleteWorkOrderReason_Expand {
+}
+interface ts_IncompleteWorkOrderReason_Filter {
+}
+interface ts_IncompleteWorkOrderReason_Create extends ts_IncompleteWorkOrderReason {
+}
+interface ts_IncompleteWorkOrderReason_Update extends ts_IncompleteWorkOrderReason {
+}
 interface ts_msdyn_customerasset_msdyn_customerasset_Base extends WebEntity {
 }
 interface ts_msdyn_customerasset_msdyn_customerasset_Fixed extends WebEntity_Fixed {
