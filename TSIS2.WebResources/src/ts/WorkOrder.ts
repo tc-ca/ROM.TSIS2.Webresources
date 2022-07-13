@@ -1174,9 +1174,18 @@ namespace ROM.WorkOrder {
             form.getControl("ts_cantcompleteinspection").setVisible(visibility);
 
             if (cantCompleteInspectionSelection == true) {
-                form.getControl("ts_incompleteworkorderreason").setVisible(visibility);
-                form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
+                var reason = form.getAttribute("ts_incompleteworkorderreason").getValue();
 
+                if (reason != null) {
+                    form.getControl("ts_incompleteworkorderreason").setVisible(visibility);
+
+                    //Determine if 'Other' is selected - if it is show the reason for other
+                    if (reason[0].id == "{8B3B6A28-C5FB-EC11-82E6-002248AE441F}") {
+                        form.getControl("ts_incompleteworkorderreasonforother").setVisible(true);
+                    } else {
+                        form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
+                    }
+                } 
             }
             else {
                 form.getControl("ts_incompleteworkorderreason").setVisible(false);
