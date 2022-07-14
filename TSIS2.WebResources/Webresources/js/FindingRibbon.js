@@ -477,12 +477,11 @@ function createEnforcementAction(findingGUIDs, primaryControl){
     //Retrieve highest enforcement action of findings
     let highestEnforcementAction = getHighestEnforcementActionFromFindings(findingRows);
 
-
     var data =
     {
-        "ts_name": "",
-        "ts_Case@odata.bind": `/incidents(${caseId})`,
-        "ts_type": getTypeOfEnforcementActionValueInEntity(highestEnforcementAction)
+        "ts_Incident_ts_enforcementaction@odata.bind": `/incidents(${caseId})`,
+        "ts_typeofenforcementaction": getTypeOfEnforcementActionValueInEntity(highestEnforcementAction),
+        "regardingobjectid_incident_ts_enforcementaction@odata.bind": `/incidents(${caseId})`   
     }
 
     Xrm.WebApi.createRecord("ts_enforcementaction", data).then(
@@ -503,7 +502,7 @@ function createEnforcementAction(findingGUIDs, primaryControl){
                     operationName: "Associate"
                 }),
 
-                relationship: "ts_EnforcementAction_ts_EnforcementAction",
+                relationship: "ts_enforcementaction_ts_enforcementaction",
 
                 target: {
                     entityType: "ts_enforcementaction",
@@ -536,7 +535,7 @@ function createEnforcementAction(findingGUIDs, primaryControl){
                     Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
                         function success() {
                             // Run code on success
-                            primaryControl.getControl("Enforcement_Actions").refresh();
+                            primaryControl.getControl("EnforcementActionTimeline").refresh();
                         },
                         function error() {
                             // Handle errors
