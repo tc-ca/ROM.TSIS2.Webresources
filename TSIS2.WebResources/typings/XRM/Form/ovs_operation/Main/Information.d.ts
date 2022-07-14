@@ -60,6 +60,8 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_dateoflastriskbasedinspection"): Xrm.DateAttribute;
       get(name: "ts_dateoflastsecurityplanreview"): Xrm.DateAttribute;
       get(name: "ts_description"): Xrm.Attribute<string>;
+      get(name: "ts_frequency"): Xrm.NumberAttribute;
+      get(name: "ts_interval"): Xrm.NumberAttribute;
       get(name: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
       get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
       get(name: "ts_planningstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
@@ -103,6 +105,8 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_dateoflastriskbasedinspection"): Xrm.DateControl;
       get(name: "ts_dateoflastsecurityplanreview"): Xrm.DateControl;
       get(name: "ts_description"): Xrm.StringControl;
+      get(name: "ts_frequency"): Xrm.NumberControl;
+      get(name: "ts_interval"): Xrm.NumberControl;
       get(name: "ts_issecurityinspectionsite"): Xrm.OptionSetControl<ts_issecurityinspectionsite>;
       get(name: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
       get(name: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;
@@ -151,6 +155,8 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_dateoflastriskbasedinspection"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_dateoflastsecurityplanreview"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_description"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_frequency"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_interval"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
     getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
     getAttribute(attributeName: "ts_planningstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
@@ -189,6 +195,8 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_dateoflastriskbasedinspection"): Xrm.DateControl;
     getControl(controlName: "ts_dateoflastsecurityplanreview"): Xrm.DateControl;
     getControl(controlName: "ts_description"): Xrm.StringControl;
+    getControl(controlName: "ts_frequency"): Xrm.NumberControl;
+    getControl(controlName: "ts_interval"): Xrm.NumberControl;
     getControl(controlName: "ts_issecurityinspectionsite"): Xrm.OptionSetControl<ts_issecurityinspectionsite>;
     getControl(controlName: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
     getControl(controlName: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;

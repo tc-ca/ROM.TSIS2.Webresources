@@ -63,7 +63,6 @@ interface ServiceAppointment_Relationships {
   regardingobjectid_msdyn_workorder_serviceappointment?: msdyn_workorder_Result | null;
   regardingobjectid_msdyn_workorderservicetask_serviceappointment?: msdyn_workorderservicetask_Result | null;
   regardingobjectid_ovs_operation_serviceappointment?: ovs_operation_Result | null;
-  regardingobjectid_ts_enforcementaction_serviceappointment?: ts_EnforcementAction_Result | null;
   serviceappointment_activity_parties?: ActivityParty_Result[] | null;
   serviceappointment_connections1?: Connection_Result[] | null;
   serviceappointment_connections2?: Connection_Result[] | null;
@@ -162,7 +161,6 @@ interface ServiceAppointment extends ServiceAppointment_Base, ServiceAppointment
   regardingobjectid_quote_serviceappointment_bind$quotes?: string | null;
   regardingobjectid_salesorder_serviceappointment_bind$salesorders?: string | null;
   regardingobjectid_site_serviceappointment_bind$sites?: string | null;
-  regardingobjectid_ts_enforcementaction_serviceappointment_bind$ts_enforcementactions?: string | null;
   regardingobjectid_ts_request_serviceappointment_bind$ts_requests?: string | null;
   serviceid_serviceappointment_bind$services?: string | null;
   siteid_bind$sites?: string | null;
@@ -339,7 +337,6 @@ interface ServiceAppointment_Expand {
   regardingobjectid_msdyn_workorder_serviceappointment: WebExpand<ServiceAppointment_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder_serviceappointment: msdyn_workorder_Result }>;
   regardingobjectid_msdyn_workorderservicetask_serviceappointment: WebExpand<ServiceAppointment_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { regardingobjectid_msdyn_workorderservicetask_serviceappointment: msdyn_workorderservicetask_Result }>;
   regardingobjectid_ovs_operation_serviceappointment: WebExpand<ServiceAppointment_Expand, ovs_operation_Select, ovs_operation_Filter, { regardingobjectid_ovs_operation_serviceappointment: ovs_operation_Result }>;
-  regardingobjectid_ts_enforcementaction_serviceappointment: WebExpand<ServiceAppointment_Expand, ts_EnforcementAction_Select, ts_EnforcementAction_Filter, { regardingobjectid_ts_enforcementaction_serviceappointment: ts_EnforcementAction_Result }>;
   serviceappointment_activity_parties: WebExpand<ServiceAppointment_Expand, ActivityParty_Select, ActivityParty_Filter, { serviceappointment_activity_parties: ActivityParty_Result[] }>;
   serviceappointment_connections1: WebExpand<ServiceAppointment_Expand, Connection_Select, Connection_Filter, { serviceappointment_connections1: Connection_Result[] }>;
   serviceappointment_connections2: WebExpand<ServiceAppointment_Expand, Connection_Select, Connection_Filter, { serviceappointment_connections2: Connection_Result[] }>;
@@ -434,7 +431,6 @@ interface ServiceAppointment_RelatedOne {
   regardingobjectid_msdyn_workorder_serviceappointment: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   regardingobjectid_msdyn_workorderservicetask_serviceappointment: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   regardingobjectid_ovs_operation_serviceappointment: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
-  regardingobjectid_ts_enforcementaction_serviceappointment: WebMappingRetrieve<ts_EnforcementAction_Select,ts_EnforcementAction_Expand,ts_EnforcementAction_Filter,ts_EnforcementAction_Fixed,ts_EnforcementAction_Result,ts_EnforcementAction_FormattedResult>;
 }
 interface ServiceAppointment_RelatedMany {
   msdyn_serviceappointment_bookableresourcebooking_serviceappointment: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
