@@ -1067,6 +1067,9 @@ var ROM;
                             form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
                         }
                     }
+                    else {
+                        form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
+                    }
                 }
                 else {
                     form.getControl("ts_incompleteworkorderreason").setVisible(false);

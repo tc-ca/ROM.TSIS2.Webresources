@@ -1185,6 +1185,8 @@ namespace ROM.WorkOrder {
                     } else {
                         form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
                     }
+                } else {
+                    form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
                 } 
             }
             else {
