@@ -180,7 +180,6 @@ declare namespace Form.incident.Main {
       get(name: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
       get(name: "CaseResearch_LinkControl"): Xrm.BaseControl;
       get(name: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
-      get(name: "Enforcement_Actions"): Xrm.SubGridControl<"ts_enforcementaction">;
       get(name: "FailedServiceTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
@@ -188,7 +187,7 @@ declare namespace Form.incident.Main {
       get(name: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
-      get(name: "Subgrid_4"): Xrm.SubGridControl<"ts_operationcontact">;
+      get(name: "Subgrid_4"): Xrm.SubGridControl<"contact">;
       get(name: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -232,6 +231,7 @@ declare namespace Form.incident.Main {
       get(name: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
       get(name: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
+      get(name: "notescontrol1"): Xrm.BaseControl;
       get(name: "ovs_region"): Xrm.LookupControl<"territory">;
       get(name: "parentcaseid"): Xrm.LookupControl<"incident">;
       get(name: "primarycontactid"): Xrm.LookupControl<"contact">;
@@ -343,7 +343,6 @@ declare namespace Form.incident.Main {
     getControl(controlName: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
     getControl(controlName: "CaseResearch_LinkControl"): Xrm.BaseControl;
     getControl(controlName: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
-    getControl(controlName: "Enforcement_Actions"): Xrm.SubGridControl<"ts_enforcementaction">;
     getControl(controlName: "FailedServiceTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
@@ -351,7 +350,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
-    getControl(controlName: "Subgrid_4"): Xrm.SubGridControl<"ts_operationcontact">;
+    getControl(controlName: "Subgrid_4"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -395,6 +394,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
     getControl(controlName: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
+    getControl(controlName: "notescontrol1"): Xrm.BaseControl;
     getControl(controlName: "ovs_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "parentcaseid"): Xrm.LookupControl<"incident">;
     getControl(controlName: "primarycontactid"): Xrm.LookupControl<"contact">;

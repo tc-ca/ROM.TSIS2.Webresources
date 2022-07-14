@@ -169,6 +169,7 @@ interface Account_Relationships {
   account_connections2?: Connection_Result[] | null;
   account_master_account?: Account_Result[] | null;
   account_parent_account?: Account_Result[] | null;
+  account_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   contact_customer_accounts?: Contact_Result[] | null;
   incident_customer_accounts?: Incident_Result[] | null;
   msdyn_PreferredResource?: BookableResource_Result | null;
@@ -178,11 +179,10 @@ interface Account_Relationships {
   msdyn_account_msdyn_workorder_ServiceAccount?: msdyn_workorder_Result[] | null;
   msdyn_billingaccount_account?: Account_Result | null;
   msdyn_msdyn_functionallocation_account?: msdyn_FunctionalLocation_Result[] | null;
-  ts_EnforcementAction_Company_Account?: ts_EnforcementAction_Result[] | null;
   ts_account_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
   ts_ovs_Finding_accountid_Account?: ovs_Finding_Result[] | null;
   ts_ovs_operation_stakeholder_account?: ovs_operation_Result[] | null;
-  ts_ts_enforcementaction_IndividualCompany_ac?: ts_EnforcementAction_Result[] | null;
+  ts_ts_enforcementaction_Individualcompany_ac?: ts_enforcementaction_Result[] | null;
 }
 interface Account extends Account_Base, Account_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
@@ -601,6 +601,7 @@ interface Account_Expand {
   account_connections2: WebExpand<Account_Expand, Connection_Select, Connection_Filter, { account_connections2: Connection_Result[] }>;
   account_master_account: WebExpand<Account_Expand, Account_Select, Account_Filter, { account_master_account: Account_Result[] }>;
   account_parent_account: WebExpand<Account_Expand, Account_Select, Account_Filter, { account_parent_account: Account_Result[] }>;
+  account_ts_enforcementactions: WebExpand<Account_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { account_ts_enforcementactions: ts_enforcementaction_Result[] }>;
   contact_customer_accounts: WebExpand<Account_Expand, Contact_Select, Contact_Filter, { contact_customer_accounts: Contact_Result[] }>;
   createdby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
   createdonbehalfby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
@@ -620,12 +621,11 @@ interface Account_Expand {
   parentaccountid: WebExpand<Account_Expand, Account_Select, Account_Filter, { parentaccountid: Account_Result }>;
   preferredsystemuserid: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { preferredsystemuserid: SystemUser_Result }>;
   primarycontactid: WebExpand<Account_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
-  ts_EnforcementAction_Company_Account: WebExpand<Account_Expand, ts_EnforcementAction_Select, ts_EnforcementAction_Filter, { ts_EnforcementAction_Company_Account: ts_EnforcementAction_Result[] }>;
   ts_account_ts_workordercreationwizard: WebExpand<Account_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_account_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
   ts_msdyn_workorder: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder: msdyn_workorder_Result }>;
   ts_ovs_Finding_accountid_Account: WebExpand<Account_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_accountid_Account: ovs_Finding_Result[] }>;
   ts_ovs_operation_stakeholder_account: WebExpand<Account_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_stakeholder_account: ovs_operation_Result[] }>;
-  ts_ts_enforcementaction_IndividualCompany_ac: WebExpand<Account_Expand, ts_EnforcementAction_Select, ts_EnforcementAction_Filter, { ts_ts_enforcementaction_IndividualCompany_ac: ts_EnforcementAction_Result[] }>;
+  ts_ts_enforcementaction_Individualcompany_ac: WebExpand<Account_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Individualcompany_ac: ts_enforcementaction_Result[] }>;
 }
 interface Account_FormattedResult {
   accountcategorycode_formatted?: string;
@@ -776,6 +776,7 @@ interface Account_RelatedMany {
   account_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   account_master_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   account_parent_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  account_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   contact_customer_accounts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   incident_customer_accounts: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_account_account_BillingAccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
@@ -783,11 +784,10 @@ interface Account_RelatedMany {
   msdyn_account_msdyn_workorder_BillingAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_msdyn_functionallocation_account: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
-  ts_EnforcementAction_Company_Account: WebMappingRetrieve<ts_EnforcementAction_Select,ts_EnforcementAction_Expand,ts_EnforcementAction_Filter,ts_EnforcementAction_Fixed,ts_EnforcementAction_Result,ts_EnforcementAction_FormattedResult>;
   ts_account_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_ovs_Finding_accountid_Account: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_stakeholder_account: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
-  ts_ts_enforcementaction_IndividualCompany_ac: WebMappingRetrieve<ts_EnforcementAction_Select,ts_EnforcementAction_Expand,ts_EnforcementAction_Filter,ts_EnforcementAction_Fixed,ts_EnforcementAction_Result,ts_EnforcementAction_FormattedResult>;
+  ts_ts_enforcementaction_Individualcompany_ac: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   accounts: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
