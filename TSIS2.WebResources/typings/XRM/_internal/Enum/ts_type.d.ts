@@ -6,4 +6,5 @@ declare const enum ts_type {
   CancellationofaCAD = 717750004,
   AMP = 717750005,
   PenalProcesss = 717750006,
+  SCCIMS = 717750007,
 }

@@ -194,7 +194,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
-      get(name: "Subgrid_operation_contacts"): Xrm.SubGridControl<"ts_operationcontact">;
+      get(name: "Subgrid_operation_contacts"): Xrm.SubGridControl<"contact">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
@@ -418,7 +418,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
-    getControl(controlName: "Subgrid_operation_contacts"): Xrm.SubGridControl<"ts_operationcontact">;
+    getControl(controlName: "Subgrid_operation_contacts"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;

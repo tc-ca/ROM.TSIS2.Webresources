@@ -1,4 +1,6 @@
 declare const enum ts_enforcementaction_statuscode {
-  Active = 1,
-  Inactive = 2,
+  Open = 1,
+  Completed = 2,
+  Canceled = 3,
+  Scheduled = 4,
 }
