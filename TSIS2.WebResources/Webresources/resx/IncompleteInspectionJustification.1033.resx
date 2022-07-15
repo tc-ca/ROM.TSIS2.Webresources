@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FilteredIncompleteInspectionJustification" xml:space="preserve">
-    <value>Filtered Incomplete Inspection Justification</value>
+  <data name="WarningMessageText" xml:space="preserve">
+    <value>Owner must be Aviation Security or Intermodal Surface Security Oversight (ISSO)</value>
   </data>
 </root>
