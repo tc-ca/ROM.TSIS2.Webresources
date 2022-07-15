@@ -61,11 +61,11 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filtered Incomplete Inspection Justification.
+        ///   Looks up a localized string similar to Owner must be Aviation Security or Intermodal Surface Security Oversight (ISSO).
         /// </summary>
-        internal static string FilteredIncompleteInspectionJustification {
+        internal static string WarningMessageText {
             get {
-                return ResourceManager.GetString("FilteredIncompleteInspectionJustification", resourceCulture);
+                return ResourceManager.GetString("WarningMessageText", resourceCulture);
             }
         }
     }
