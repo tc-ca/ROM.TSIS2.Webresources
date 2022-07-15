@@ -80,6 +80,18 @@
                     formContext.getAttribute("from").setValue(lookup);
                 });
             }
+            if (regarding[0].entityType === "incident") {
+                var workOrderId = regarding[0].id;
+                //Remove default value from To if it's a new record
+                if (formContext.ui.getFormType() == 1) {
+                    formContext.getAttribute("to").setValue(null);
+                }
+                //Restrict To, CC, BCC fields with Contact and User Entity
+                formContext.getControl("to").setEntityTypes(['contact', 'systemuser']);
+                formContext.getControl("cc").setEntityTypes(['contact', 'systemuser']);
+                formContext.getControl("bcc").setEntityTypes(['contact', 'systemuser']);
+                
+            }
         }
         filterContacts(eContext);
     }
@@ -218,6 +230,31 @@
                 formContext.getControl("to").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
                 formContext.getControl("cc").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
                 formContext.getControl("bcc").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
+            }
+            if (regarding[0].entityType === "incident") {
+                var currentCaseId = regarding[0].id;
+             
+                //Retrieve Contacts from Case
+                let caseContactsFetchXML = [
+                    "<fetch>",
+                    "  <entity name='contact'>",
+                    "    <link-entity name='ts_contact_incident' from='contactid' to='contactid' intersect='true'>",
+                    "      <link-entity name='incident' from='incidentid' to='incidentid'>",
+                    "        <filter>",
+                    "          <condition attribute='incidentid' operator='eq' value='", currentCaseId, "'/>",
+                    "        </filter>",
+                    "      </link-entity>",
+                    "    </link-entity>",
+                    "</fetch>",
+                ].join("");
+
+                 //Set custom view for To, CC, BCC fields
+                const viewContactId = '{ed2e1b6b-2cb1-ec11-983e-002248adef01}';
+                const layoutXmlContact = '<grid name="resultset" object="2" jump="lastname" select="1" icon="1" preview="1"><row name="result" id="contactid"><cell name="fullname" width="300"/></row></grid >';
+                const viewDisplayName = "Contact";
+                formContext.getControl("to").addCustomView(viewContactId, "contact", viewDisplayName, caseContactsFetchXML, layoutXmlContact, true);
+                formContext.getControl("cc").addCustomView(viewContactId, "contact", viewDisplayName, caseContactsFetchXML, layoutXmlContact, true);
+                formContext.getControl("bcc").addCustomView(viewContactId, "contact", viewDisplayName, caseContactsFetchXML, layoutXmlContact, true);
             }
         }
     }
