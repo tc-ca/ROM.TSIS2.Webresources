@@ -8,7 +8,6 @@ interface ts_IncompleteWorkOrderReason_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   ts_incompleteworkorderreasonid?: string | null;
   ts_name?: string | null;
-  ts_owner?: ts_owningteam | null;
   ts_reasonenglish?: string | null;
   ts_reasonfrench?: string | null;
   utcconversiontimezonecode?: number | null;
@@ -43,7 +42,6 @@ interface ts_IncompleteWorkOrderReason_Select {
   timezoneruleversionnumber: WebAttribute<ts_IncompleteWorkOrderReason_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_incompleteworkorderreasonid: WebAttribute<ts_IncompleteWorkOrderReason_Select, { ts_incompleteworkorderreasonid: string | null }, {  }>;
   ts_name: WebAttribute<ts_IncompleteWorkOrderReason_Select, { ts_name: string | null }, {  }>;
-  ts_owner: WebAttribute<ts_IncompleteWorkOrderReason_Select, { ts_owner: ts_owningteam | null }, { ts_owner_formatted?: string }>;
   ts_reasonenglish: WebAttribute<ts_IncompleteWorkOrderReason_Select, { ts_reasonenglish: string | null }, {  }>;
   ts_reasonfrench: WebAttribute<ts_IncompleteWorkOrderReason_Select, { ts_reasonfrench: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_IncompleteWorkOrderReason_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -67,7 +65,6 @@ interface ts_IncompleteWorkOrderReason_Filter {
   timezoneruleversionnumber: number;
   ts_incompleteworkorderreasonid: XQW.Guid;
   ts_name: string;
-  ts_owner: ts_owningteam;
   ts_reasonenglish: string;
   ts_reasonfrench: string;
   utcconversiontimezonecode: number;
@@ -96,7 +93,6 @@ interface ts_IncompleteWorkOrderReason_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
-  ts_owner_formatted?: string;
 }
 interface ts_IncompleteWorkOrderReason_Result extends ts_IncompleteWorkOrderReason_Base, ts_IncompleteWorkOrderReason_Relationships {
   "@odata.etag": string;
