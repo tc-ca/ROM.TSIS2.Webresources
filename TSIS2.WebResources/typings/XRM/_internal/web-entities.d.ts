@@ -630,6 +630,29 @@ interface ts_questionnaireversion_Create extends ts_questionnaireversion {
 }
 interface ts_questionnaireversion_Update extends ts_questionnaireversion {
 }
+interface ts_RiskCategory_Base extends WebEntity {
+}
+interface ts_RiskCategory_Fixed extends WebEntity_Fixed {
+  ts_riskcategoryid: string;
+}
+interface ts_RiskCategory extends ts_RiskCategory_Base, ts_RiskCategory_Relationships {
+}
+interface ts_RiskCategory_Relationships {
+}
+interface ts_RiskCategory_Result extends ts_RiskCategory_Base, ts_RiskCategory_Relationships {
+}
+interface ts_RiskCategory_FormattedResult {
+}
+interface ts_RiskCategory_Select {
+}
+interface ts_RiskCategory_Expand {
+}
+interface ts_RiskCategory_Filter {
+}
+interface ts_RiskCategory_Create extends ts_RiskCategory {
+}
+interface ts_RiskCategory_Update extends ts_RiskCategory {
+}
 interface ts_workordercreationwizard_Base extends WebEntity {
 }
 interface ts_workordercreationwizard_Fixed extends WebEntity_Fixed {
