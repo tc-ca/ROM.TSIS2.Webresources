@@ -36,68 +36,92 @@
             "</fetch>",
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-            let userBusinessUnitName = result.entities[0].name;
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
+            const userBusinessUnitName = businessunit.entities[0].name;
+            const operationTypeAttributeValue = formContext.getAttribute("ts_ovs_operationtype").getValue();
 
-            //Show NCAT Sections and fields when the user is in Transport Canada or ISSO business unit
-            if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Intermodal")) {
-                formContext.ui.tabs.get("tab_NCAT").setVisible(true);
-               
-                //If there's a recommended enforcement action and the finding is not complete yet, then the accept ncat recommendation field should be unlocked
-                const enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
-                const recordStatus = formContext.getAttribute("statuscode").getValue();
-                if (enforcementRecommendation != null && recordStatus != ovs_finding_statuscode.Complete) {
-                    formContext.getControl("ts_acceptncatrecommendation").setDisabled(false);
-                }
-
-                //If they have accepted or rejected the NCAT recommendation previously, then the NCAT factors should be locked.
-                const acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
-                if (acceptNCATRecommendation != null) {
-                    lockNCATFactors(eContext);
-                }
-
-                //If they did not accept the ncat recommendation, show proposal sections and fields
-                if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == ts_yesno.No) {
-                    formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
-                    setPostNCATRecommendationSelectionFieldsVisibility(eContext);
-                    NCATManagerDecisionOnChange(eContext);
-                }
-            }
-            //Show RATE Sections and fields when the user is in Transport Canada or Aviation Security business unit
-            if (userBusinessUnitName.startsWith("Transport") || userBusinessUnitName.startsWith("Aviation")) {
-                formContext.ui.tabs.get("tab_RATE").setVisible(true);
-                formContext.getControl("header_ts_rateenforcementrecommendation").setVisible(true);               
-
-                //If there's a recommended enforcement action and the finding is not complete yet, then the accept rate recommendation field should be unlocked
-                const enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
-                const recordStatus = formContext.getAttribute("statuscode").getValue();
-                if (enforcementRecommendation != null && recordStatus != ovs_finding_statuscode.Complete) {
-                    formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
-                }
-
-                //If they have accepted or rejected the RATE recommendation previously, then the RATE factors should be locked.
-                const acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
-                if (acceptRATERecommendation != null) {
-                    lockRATEFactors(eContext);
-                }
-
-                //If they did not accept the rate recommendation, show proposal sections and fields
-                if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == ts_yesno.No) {
-                    formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
-                    setPostRATERecommendationSelectionFieldsVisibility(eContext);
-                    RATEManagerDecisionOnChange(eContext);
-                }
-            }
-
-            approvingNCATTeamsOnChange(eContext);
-            approvingRATETeamsOnChange(eContext);
-            RATESpecificComplianceHistoryOnChange(eContext);
-            setApprovingTeamsViews(formContext); 
-
-            if (formContext.getAttribute("statuscode").getValue() == ovs_finding_statuscode.Complete) {
-                disableFormFields(formContext);
+            if(operationTypeAttributeValue != null){
+                let operationTypeOwningBusinessUnitFetchXML = [
+                    "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
+                    "  <entity name='businessunit'>",
+                    "    <attribute name='name'/>",
+                    "    <attribute name='businessunitid'/>",
+                    "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
+                    "      <filter>",
+                    "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeAttributeValue[0].id, "'/>",
+                    "      </filter>",
+                    "    </link-entity>",
+                    "  </entity>",
+                    "</fetch>"
+                ].join("");
+                operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(operationTypeOwningBusinessUnitFetchXML);
+        
+                Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function (result) {
+                    let operationTypeOwningBusinessUnit = result.entities[0].name;
+        
+                    //Show NCAT Sections and fields when the operation type owning business unit is ISSO or if the user business unit is Transport Canada
+                    if (userBusinessUnitName.startsWith("Transport") || operationTypeOwningBusinessUnit.startsWith("Intermodal")) {
+                        formContext.ui.tabs.get("tab_NCAT").setVisible(true);
+                    
+                        //If there's a recommended enforcement action and the finding is not complete yet, then the accept ncat recommendation field should be unlocked
+                        const enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+                        const recordStatus = formContext.getAttribute("statuscode").getValue();
+                        if (enforcementRecommendation != null && recordStatus != ovs_finding_statuscode.Complete) {
+                            formContext.getControl("ts_acceptncatrecommendation").setDisabled(false);
+                        }
+        
+                        //If they have accepted or rejected the NCAT recommendation previously, then the NCAT factors should be locked.
+                        const acceptNCATRecommendation = formContext.getAttribute("ts_acceptncatrecommendation").getValue();
+                        if (acceptNCATRecommendation != null) {
+                            lockNCATFactors(eContext);
+                        }
+        
+                        //If they did not accept the ncat recommendation, show proposal sections and fields
+                        if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == ts_yesno.No) {
+                            formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
+                            setPostNCATRecommendationSelectionFieldsVisibility(eContext);
+                            NCATManagerDecisionOnChange(eContext);
+                        }
+                    }
+                    //Show RATE Sections and fields when the operation type owning business unit is Aviation Security or if the user business unit is Transport Canada
+                    if (userBusinessUnitName.startsWith("Transport") || operationTypeOwningBusinessUnit.startsWith("Aviation")) {
+                        formContext.ui.tabs.get("tab_RATE").setVisible(true);
+                        formContext.getControl("header_ts_rateenforcementrecommendation").setVisible(true);               
+        
+                        //If there's a recommended enforcement action and the finding is not complete yet, then the accept rate recommendation field should be unlocked
+                        const enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+                        const recordStatus = formContext.getAttribute("statuscode").getValue();
+                        if (enforcementRecommendation != null && recordStatus != ovs_finding_statuscode.Complete) {
+                            formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
+                        }
+        
+                        //If they have accepted or rejected the RATE recommendation previously, then the RATE factors should be locked.
+                        const acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
+                        if (acceptRATERecommendation != null) {
+                            lockRATEFactors(eContext);
+                        }
+        
+                        //If they did not accept the rate recommendation, show proposal sections and fields
+                        if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == ts_yesno.No) {
+                            formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
+                            setPostRATERecommendationSelectionFieldsVisibility(eContext);
+                            RATEManagerDecisionOnChange(eContext);
+                        }
+                    }
+        
+                    approvingNCATTeamsOnChange(eContext);
+                    approvingRATETeamsOnChange(eContext);
+                    RATESpecificComplianceHistoryOnChange(eContext);
+                    setApprovingTeamsViews(formContext); 
+        
+                    if (formContext.getAttribute("statuscode").getValue() == ovs_finding_statuscode.Complete) {
+                        disableFormFields(formContext);
+                    }
+                });
             }
         });
+
+        
         showHideNonComplianceTimeframe(formContext);
     }
 
