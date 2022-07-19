@@ -114,19 +114,30 @@ var ROM;
                         formContext.getAttribute("from").setValue(lookup);
                     });
                 }
+                if (regarding[0].entityType === "incident") {
+                    var workOrderId = regarding[0].id;
+                    //Remove default value from To if it's a new record
+                    if (formContext.ui.getFormType() == 1) {
+                        formContext.getAttribute("to").setValue(null);
+                    }
+                    //Restrict To, CC, BCC fields with Contact and User Entity
+                    formContext.getControl("to").setEntityTypes(['contact', 'systemuser']);
+                    formContext.getControl("cc").setEntityTypes(['contact', 'systemuser']);
+                    formContext.getControl("bcc").setEntityTypes(['contact', 'systemuser']);
+                }
             }
             filterContacts(eContext);
         }
         Email.onLoad = onLoad;
         function filterContacts(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, regarding, workOrderId, caseId, conditionWorkOrderCase_1, conditionProgramTeam_1, userId, currentUserBusinessUnitFetchXML, caseFetchXML, caseRelated, caseContactsFetchXML, caseContacts, workOrderContactsFetchXML, workOrderContacts, operationalContactsfetchXML, viewOperationalContactId, layoutXmlContact, viewDisplayName;
+                var formContext, regarding, workOrderId, caseId, conditionWorkOrderCase_1, conditionProgramTeam_1, userId, currentUserBusinessUnitFetchXML, caseFetchXML, caseRelated, caseContactsFetchXML, caseContacts, workOrderContactsFetchXML, workOrderContacts, operationalContactsfetchXML, viewOperationalContactId, layoutXmlContact, viewDisplayName, currentCaseId, caseContactsFetchXML, viewContactId, layoutXmlContact, viewDisplayName;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             formContext = eContext.getFormContext();
                             regarding = formContext.getAttribute("regardingobjectid").getValue();
-                            if (!(regarding !== null)) return [3 /*break*/, 5];
+                            if (!(regarding !== null)) return [3 /*break*/, 6];
                             if (!(regarding[0].entityType === "msdyn_workorder")) return [3 /*break*/, 5];
                             workOrderId = regarding[0].id;
                             conditionWorkOrderCase_1 = "";
@@ -251,7 +262,30 @@ var ROM;
                             formContext.getControl("cc").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
                             formContext.getControl("bcc").addCustomView(viewOperationalContactId, "contact", viewDisplayName, operationalContactsfetchXML, layoutXmlContact, true);
                             _a.label = 5;
-                        case 5: return [2 /*return*/];
+                        case 5:
+                            if (regarding[0].entityType === "incident") {
+                                currentCaseId = regarding[0].id;
+                                caseContactsFetchXML = [
+                                    "<fetch>",
+                                    "  <entity name='contact'>",
+                                    "    <link-entity name='ts_contact_incident' from='contactid' to='contactid' intersect='true'>",
+                                    "      <link-entity name='incident' from='incidentid' to='incidentid'>",
+                                    "        <filter>",
+                                    "          <condition attribute='incidentid' operator='eq' value='", currentCaseId, "'/>",
+                                    "        </filter>",
+                                    "      </link-entity>",
+                                    "    </link-entity>",
+                                    "</fetch>",
+                                ].join("");
+                                viewContactId = '{ed2e1b6b-2cb1-ec11-983e-002248adef01}';
+                                layoutXmlContact = '<grid name="resultset" object="2" jump="lastname" select="1" icon="1" preview="1"><row name="result" id="contactid"><cell name="fullname" width="300"/></row></grid >';
+                                viewDisplayName = "Contact";
+                                formContext.getControl("to").addCustomView(viewContactId, "contact", viewDisplayName, caseContactsFetchXML, layoutXmlContact, true);
+                                formContext.getControl("cc").addCustomView(viewContactId, "contact", viewDisplayName, caseContactsFetchXML, layoutXmlContact, true);
+                                formContext.getControl("bcc").addCustomView(viewContactId, "contact", viewDisplayName, caseContactsFetchXML, layoutXmlContact, true);
+                            }
+                            _a.label = 6;
+                        case 6: return [2 /*return*/];
                     }
                 });
             });
