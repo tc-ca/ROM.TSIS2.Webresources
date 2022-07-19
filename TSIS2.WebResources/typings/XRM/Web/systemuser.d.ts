@@ -231,6 +231,10 @@ interface SystemUser_Relationships {
   lk_ts_questionnaireversion_createdonbehalfby?: ts_questionnaireversion_Result[] | null;
   lk_ts_questionnaireversion_modifiedby?: ts_questionnaireversion_Result[] | null;
   lk_ts_questionnaireversion_modifiedonbehalfby?: ts_questionnaireversion_Result[] | null;
+  lk_ts_riskcategory_createdby?: ts_RiskCategory_Result[] | null;
+  lk_ts_riskcategory_createdonbehalfby?: ts_RiskCategory_Result[] | null;
+  lk_ts_riskcategory_modifiedby?: ts_RiskCategory_Result[] | null;
+  lk_ts_riskcategory_modifiedonbehalfby?: ts_RiskCategory_Result[] | null;
   lk_ts_role_createdby?: ts_role_Result[] | null;
   lk_ts_role_createdonbehalfby?: ts_role_Result[] | null;
   lk_ts_role_modifiedby?: ts_role_Result[] | null;
@@ -285,6 +289,7 @@ interface SystemUser_Relationships {
   user_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
   user_ts_operationcontact?: ts_operationcontact_Result[] | null;
   user_ts_questionnaireversion?: ts_questionnaireversion_Result[] | null;
+  user_ts_riskcategory?: ts_RiskCategory_Result[] | null;
   user_ts_role?: ts_role_Result[] | null;
   user_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
 }
@@ -686,6 +691,10 @@ interface SystemUser_Expand {
   lk_ts_questionnaireversion_createdonbehalfby: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { lk_ts_questionnaireversion_createdonbehalfby: ts_questionnaireversion_Result[] }>;
   lk_ts_questionnaireversion_modifiedby: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { lk_ts_questionnaireversion_modifiedby: ts_questionnaireversion_Result[] }>;
   lk_ts_questionnaireversion_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { lk_ts_questionnaireversion_modifiedonbehalfby: ts_questionnaireversion_Result[] }>;
+  lk_ts_riskcategory_createdby: WebExpand<SystemUser_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { lk_ts_riskcategory_createdby: ts_RiskCategory_Result[] }>;
+  lk_ts_riskcategory_createdonbehalfby: WebExpand<SystemUser_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { lk_ts_riskcategory_createdonbehalfby: ts_RiskCategory_Result[] }>;
+  lk_ts_riskcategory_modifiedby: WebExpand<SystemUser_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { lk_ts_riskcategory_modifiedby: ts_RiskCategory_Result[] }>;
+  lk_ts_riskcategory_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { lk_ts_riskcategory_modifiedonbehalfby: ts_RiskCategory_Result[] }>;
   lk_ts_role_createdby: WebExpand<SystemUser_Expand, ts_role_Select, ts_role_Filter, { lk_ts_role_createdby: ts_role_Result[] }>;
   lk_ts_role_createdonbehalfby: WebExpand<SystemUser_Expand, ts_role_Select, ts_role_Filter, { lk_ts_role_createdonbehalfby: ts_role_Result[] }>;
   lk_ts_role_modifiedby: WebExpand<SystemUser_Expand, ts_role_Select, ts_role_Filter, { lk_ts_role_modifiedby: ts_role_Result[] }>;
@@ -743,6 +752,7 @@ interface SystemUser_Expand {
   user_ts_incompleteworkorderreason: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { user_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
   user_ts_operationcontact: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { user_ts_operationcontact: ts_operationcontact_Result[] }>;
   user_ts_questionnaireversion: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { user_ts_questionnaireversion: ts_questionnaireversion_Result[] }>;
+  user_ts_riskcategory: WebExpand<SystemUser_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { user_ts_riskcategory: ts_RiskCategory_Result[] }>;
   user_ts_role: WebExpand<SystemUser_Expand, ts_role_Select, ts_role_Filter, { user_ts_role: ts_role_Result[] }>;
   user_ts_workordercreationwizard: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { user_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
 }
@@ -925,6 +935,10 @@ interface SystemUser_RelatedMany {
   lk_ts_questionnaireversion_createdonbehalfby: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   lk_ts_questionnaireversion_modifiedby: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   lk_ts_questionnaireversion_modifiedonbehalfby: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
+  lk_ts_riskcategory_createdby: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
+  lk_ts_riskcategory_createdonbehalfby: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
+  lk_ts_riskcategory_modifiedby: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
+  lk_ts_riskcategory_modifiedonbehalfby: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
   lk_ts_role_createdby: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
   lk_ts_role_createdonbehalfby: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
   lk_ts_role_modifiedby: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
@@ -979,6 +993,7 @@ interface SystemUser_RelatedMany {
   user_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   user_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   user_ts_questionnaireversion: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
+  user_ts_riskcategory: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
   user_ts_role: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
   user_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
 }

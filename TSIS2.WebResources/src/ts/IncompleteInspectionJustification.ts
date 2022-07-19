@@ -2,7 +2,7 @@
 
     // EVENTS
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+        const form = <Form.ts_incompleteworkorderreason.Main.Information>eContext.getFormContext();
 
         const warningMessage = Xrm.Utility.getResourceString("ovs_/resx/IncompleteInspectionJustification", "WarningMessageText");
 
