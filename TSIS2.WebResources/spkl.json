@@ -224,6 +224,11 @@
               "file": "js\\IncompleteInspectionJustification.js",
               "description": "ROM TSIS 2.0 Incomplete Inspection Justification Form Scripts"
             },
+            {
+              "uniquename": "ts_/js/RiskThreshold.js",
+              "file": "js\\RiskThreshold.js",
+              "description": "ROM TSIS 2.0 Risk Threshold Form Scripts"
+            },
             /* Styles */
             {
               "uniquename": "ovs_/css/bootstrap.min.css",
@@ -251,7 +256,7 @@
               "description": "ROM TSIS 2.0 SurveyJS Dependency"
             },
             {
-              "uniquename": "ts_/css/WorkOrderExport.css",
+              "uniquename": "ovs_/css/WorkOrderExport.css",
               "file": "css\\WorkOrderExport.css",
               "description": "ROM TSIS 2.0 Work Order Export Stylesheet"
             },
