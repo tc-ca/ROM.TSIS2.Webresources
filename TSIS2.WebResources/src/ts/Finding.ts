@@ -84,7 +84,7 @@
                         }
                     }
                     //Show RATE Sections and fields when the operation type owning business unit is Aviation Security or if the user business unit is Transport Canada
-                    if (userBusinessUnitName.startsWith("Transport") || operationTypeOwningBusinessUnit.startsWith("Aviation")) {
+                    else if (userBusinessUnitName.startsWith("Transport") || operationTypeOwningBusinessUnit.startsWith("Aviation")) {
                         formContext.ui.tabs.get("tab_RATE").setVisible(true);
                         formContext.getControl("header_ts_rateenforcementrecommendation").setVisible(true);               
         
