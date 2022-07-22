@@ -187,6 +187,7 @@
     <Content Include="Webresources\js\WorkOrder.js" />
     <Content Include="Webresources\js\WorkOrderCreationWizard.js" />
     <Content Include="Webresources\js\WorkOrderQuickCreate.js" />
+    <Content Include="Webresources\js\TripRibbon.js" />
     <Content Include="Webresources\js\WorkOrderRibbon.js" />
     <Content Include="Webresources\js\WorkOrderServiceTask.js" />
     <Content Include="Webresources\js\WorkOrderServiceTaskRibbon.js" />

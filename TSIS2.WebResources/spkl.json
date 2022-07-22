@@ -416,6 +416,11 @@
               "uniquename": "ts_/js/surveyRenderPrint.js",
               "file": "js\\surveyRenderPrint.js",
               "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+              "uniquename": "ts_/js/TripRibbon.js",
+              "file": "js\\TripRibbon.js",
+              "description": "ROM TSIS 2.0 Trip Ribbon Scripts"
             }
           ]
         }
