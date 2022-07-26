@@ -229,6 +229,11 @@
               "file": "js\\RiskThreshold.js",
               "description": "ROM TSIS 2.0 Risk Threshold Form Scripts"
             },
+            {
+              "uniquename": "ts_/js/InspectionHours.js",
+              "file": "js\\InspectionHours.js",
+              "description": "ROM TSIS 2.0 Inspection Hours Form Scripts"
+            },
             /* Styles */
             {
               "uniquename": "ovs_/css/bootstrap.min.css",
