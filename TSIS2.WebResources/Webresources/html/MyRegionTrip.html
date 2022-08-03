@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script type="text/javascript">
+        if (typeof Xrm === "undefined") {
+            var Xrm = parent.Xrm;
+        }
+        var currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId;
+        currentUserId = currentUserId.replace(/[{}]/g, "");
+        // Get the user's territory
+        
+        Xrm.WebApi.online.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(
+            function success(result) {
+                var tripViewId = "";
+                var territoryID = result["_territoryid_value"];
+
+                switch (territoryID) {
+                    case "fab76e9e-1707-eb11-a813-000d3af3a0d7":   //Atlantic Region
+                        tripViewId = "c388091d-5013-ed11-b83f-002248ae429c";
+                        break;
+
+                    case "3bf0fa88-150f-eb11-a813-000d3af3a7a7":   //International
+                        tripViewId = "ca07fdbe-5013-ed11-b83f-002248ae429c";
+                        break;
+
+                    case "04b86e9e-1707-eb11-a813-000d3af3a0d7":   //National Capital
+                        tripViewId = "071e60a0-5013-ed11-b83f-002248ae429c";
+                        break;
+
+                    case "feb76e9e-1707-eb11-a813-000d3af3a0d7":   //Pacific Region
+                        tripViewId = "dcdea853-5013-ed11-b83f-002248ae429c";
+                        break;
+
+                    case "02b86e9e-1707-eb11-a813-000d3af3a0d7":   //Prairie and Northern Region
+                        tripViewId = "418d3f79-5013-ed11-b83f-002248ae429c";
+                        break;
+
+                    case "fcb76e9e-1707-eb11-a813-000d3af3a0d7":   //Quebec Region
+                        tripViewId = "6e386435-5013-ed11-b83f-002248ae429c";
+                        break;
+
+                    case "50b21a84-db04-eb11-a813-000d3af3ac0d":  //Ontario Region
+                        tripViewId = "a4d543a0-4f13-ed11-b83f-002248ae429c";
+                        break;
+
+                    default:
+                        tripViewId = "4f9321ab-6700-4329-9cb5-8d748bae4292";
+                }
+                var pageInput = {
+                    pageType: "entitylist",
+                    entityName: "ts_trip",
+                    viewId: tripViewId
+                };
+                Xrm.Navigation.navigateTo(pageInput).then(
+                    function success() {
+                    },
+                    function error() {
+                    }
+                );
+            },
+            function error() {
+            }
+        );
+    </script>
+</head>
+<body>
+
+</body>
+</html>
