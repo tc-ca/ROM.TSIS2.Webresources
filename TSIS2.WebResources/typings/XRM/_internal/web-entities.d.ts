@@ -400,29 +400,6 @@ interface ts_assessmentscorethredshots_Create extends ts_assessmentscorethredsho
 }
 interface ts_assessmentscorethredshots_Update extends ts_assessmentscorethredshots {
 }
-interface ts_enforcementaction_Base extends WebEntity {
-}
-interface ts_enforcementaction_Fixed extends WebEntity_Fixed {
-  activityid: string;
-}
-interface ts_enforcementaction extends ts_enforcementaction_Base, ts_enforcementaction_Relationships {
-}
-interface ts_enforcementaction_Relationships {
-}
-interface ts_enforcementaction_Result extends ts_enforcementaction_Base, ts_enforcementaction_Relationships {
-}
-interface ts_enforcementaction_FormattedResult {
-}
-interface ts_enforcementaction_Select {
-}
-interface ts_enforcementaction_Expand {
-}
-interface ts_enforcementaction_Filter {
-}
-interface ts_enforcementaction_Create extends ts_enforcementaction {
-}
-interface ts_enforcementaction_Update extends ts_enforcementaction {
-}
 interface ts_Incident_ts_operationcontact_Base extends WebEntity {
 }
 interface ts_Incident_ts_operationcontact_Fixed extends WebEntity_Fixed {
@@ -468,6 +445,29 @@ interface ts_IncompleteWorkOrderReason_Filter {
 interface ts_IncompleteWorkOrderReason_Create extends ts_IncompleteWorkOrderReason {
 }
 interface ts_IncompleteWorkOrderReason_Update extends ts_IncompleteWorkOrderReason {
+}
+interface ts_InspectionHours_Base extends WebEntity {
+}
+interface ts_InspectionHours_Fixed extends WebEntity_Fixed {
+  ts_inspectionhoursid: string;
+}
+interface ts_InspectionHours extends ts_InspectionHours_Base, ts_InspectionHours_Relationships {
+}
+interface ts_InspectionHours_Relationships {
+}
+interface ts_InspectionHours_Result extends ts_InspectionHours_Base, ts_InspectionHours_Relationships {
+}
+interface ts_InspectionHours_FormattedResult {
+}
+interface ts_InspectionHours_Select {
+}
+interface ts_InspectionHours_Expand {
+}
+interface ts_InspectionHours_Filter {
+}
+interface ts_InspectionHours_Create extends ts_InspectionHours {
+}
+interface ts_InspectionHours_Update extends ts_InspectionHours {
 }
 interface ts_msdyn_customerasset_msdyn_customerasset_Base extends WebEntity {
 }
@@ -629,29 +629,6 @@ interface ts_questionnaireversion_Filter {
 interface ts_questionnaireversion_Create extends ts_questionnaireversion {
 }
 interface ts_questionnaireversion_Update extends ts_questionnaireversion {
-}
-interface ts_RiskCategory_Base extends WebEntity {
-}
-interface ts_RiskCategory_Fixed extends WebEntity_Fixed {
-  ts_riskcategoryid: string;
-}
-interface ts_RiskCategory extends ts_RiskCategory_Base, ts_RiskCategory_Relationships {
-}
-interface ts_RiskCategory_Relationships {
-}
-interface ts_RiskCategory_Result extends ts_RiskCategory_Base, ts_RiskCategory_Relationships {
-}
-interface ts_RiskCategory_FormattedResult {
-}
-interface ts_RiskCategory_Select {
-}
-interface ts_RiskCategory_Expand {
-}
-interface ts_RiskCategory_Filter {
-}
-interface ts_RiskCategory_Create extends ts_RiskCategory {
-}
-interface ts_RiskCategory_Update extends ts_RiskCategory {
 }
 interface ts_workordercreationwizard_Base extends WebEntity {
 }
