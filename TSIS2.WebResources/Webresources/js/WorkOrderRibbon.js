@@ -498,3 +498,22 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
         
     });
 }
+
+function planningWorkOrder(data) {
+    Xrm.Navigation.navigateTo({
+        pageType: "bulkedit",
+        entityName: "msdyn_workorder",
+        entityIds: data,
+        formId: "12e4f1be-8e7e-464a-af5f-40a27b5ba91c"
+    }, {
+        target: 2,
+        width: {
+            value: 65,
+            unit: "%"
+        },
+        height: {
+            value: 65,
+            unit: "%"
+        }
+    });
+}

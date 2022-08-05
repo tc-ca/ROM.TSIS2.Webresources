@@ -19,7 +19,7 @@ namespace TSIS2.WebResources.Webresources.resx {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class WorkOrder_1036 {
@@ -192,6 +192,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static string FilteredStakeholders {
             get {
                 return ResourceManager.GetString("FilteredStakeholders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Le trimestre fiscal a déjà été attribué à l&apos;ordre de travail sélectionné comme partie d&apos;un voyage. Le trimestre fiscal n&apos;a pas été modifié car il ne peut pas être différent des autres ordres de travail de ce voyage..
+        /// </summary>
+        internal static string InvalidFiscalQuarterErrorMsg {
+            get {
+                return ResourceManager.GetString("InvalidFiscalQuarterErrorMsg", resourceCulture);
             }
         }
         

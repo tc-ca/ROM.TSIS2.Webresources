@@ -165,4 +165,7 @@
   <data name="FilteredIncompleteWorkOrderReasons" xml:space="preserve">
     <value>Filtered Incomplete Work Order Reasons (FR)</value>
   </data>
+  <data name="InvalidFiscalQuarterErrorMsg" xml:space="preserve">
+    <value>Le trimestre fiscal a déjà été attribué à l'ordre de travail sélectionné comme partie d'un voyage. Le trimestre fiscal n'a pas été modifié car il ne peut pas être différent des autres ordres de travail de ce voyage.</value>
+  </data>
 </root>
