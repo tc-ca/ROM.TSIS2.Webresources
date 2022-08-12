@@ -150,6 +150,11 @@
               "description": "ROM TSIS 2.0 Operation Form Scripts"
             },
             {
+              "uniquename": "ts_/js/OperationActivityQuickCreate.js",
+              "file": "js\\OperationActivityQuickCreate.js",
+              "description": "ROM TSIS 2.0 Operation Activity Form Scripts"
+            },
+            {
               "uniquename": "ts_/js/OperationContact.js",
               "file": "js\\OperationContact.js",
               "description": "ROM TSIS 2.0 Operation Contact Form Scripts"
