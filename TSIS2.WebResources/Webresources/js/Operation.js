@@ -55,6 +55,9 @@ var ROM;
                     userRoles.forEach(function (role) {
                         if (role.name == "System Administrator") {
                             form.getControl("ts_riskscore").setDisabled(false);
+                            form.getControl("ts_dateoflastsecurityplanreview").setDisabled(false);
+                            form.getControl("ts_dateoflastcomprehensiveinspection").setDisabled(false);
+                            form.getControl("ts_dateoflastriskbasedinspection").setDisabled(false);
                         }
                     });
                     userId = Xrm.Utility.getGlobalContext().userSettings.userId;
