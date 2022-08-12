@@ -400,6 +400,29 @@ interface ts_assessmentscorethredshots_Create extends ts_assessmentscorethredsho
 }
 interface ts_assessmentscorethredshots_Update extends ts_assessmentscorethredshots {
 }
+interface ts_enforcementaction_Base extends WebEntity {
+}
+interface ts_enforcementaction_Fixed extends WebEntity_Fixed {
+  activityid: string;
+}
+interface ts_enforcementaction extends ts_enforcementaction_Base, ts_enforcementaction_Relationships {
+}
+interface ts_enforcementaction_Relationships {
+}
+interface ts_enforcementaction_Result extends ts_enforcementaction_Base, ts_enforcementaction_Relationships {
+}
+interface ts_enforcementaction_FormattedResult {
+}
+interface ts_enforcementaction_Select {
+}
+interface ts_enforcementaction_Expand {
+}
+interface ts_enforcementaction_Filter {
+}
+interface ts_enforcementaction_Create extends ts_enforcementaction {
+}
+interface ts_enforcementaction_Update extends ts_enforcementaction {
+}
 interface ts_Incident_ts_operationcontact_Base extends WebEntity {
 }
 interface ts_Incident_ts_operationcontact_Fixed extends WebEntity_Fixed {
@@ -630,6 +653,29 @@ interface ts_questionnaireversion_Create extends ts_questionnaireversion {
 }
 interface ts_questionnaireversion_Update extends ts_questionnaireversion {
 }
+interface ts_RiskCategory_Base extends WebEntity {
+}
+interface ts_RiskCategory_Fixed extends WebEntity_Fixed {
+  ts_riskcategoryid: string;
+}
+interface ts_RiskCategory extends ts_RiskCategory_Base, ts_RiskCategory_Relationships {
+}
+interface ts_RiskCategory_Relationships {
+}
+interface ts_RiskCategory_Result extends ts_RiskCategory_Base, ts_RiskCategory_Relationships {
+}
+interface ts_RiskCategory_FormattedResult {
+}
+interface ts_RiskCategory_Select {
+}
+interface ts_RiskCategory_Expand {
+}
+interface ts_RiskCategory_Filter {
+}
+interface ts_RiskCategory_Create extends ts_RiskCategory {
+}
+interface ts_RiskCategory_Update extends ts_RiskCategory {
+}
 interface ts_workordercreationwizard_Base extends WebEntity {
 }
 interface ts_workordercreationwizard_Fixed extends WebEntity_Fixed {
@@ -768,6 +814,29 @@ interface ServiceAppointment_Create extends ServiceAppointment {
 }
 interface ServiceAppointment_Update extends ServiceAppointment {
 }
+interface tc_TCFiscalQuarter_Base extends WebEntity {
+}
+interface tc_TCFiscalQuarter_Fixed extends WebEntity_Fixed {
+  tc_tcfiscalquarterid: string;
+}
+interface tc_TCFiscalQuarter extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
+}
+interface tc_TCFiscalQuarter_Relationships {
+}
+interface tc_TCFiscalQuarter_Result extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
+}
+interface tc_TCFiscalQuarter_FormattedResult {
+}
+interface tc_TCFiscalQuarter_Select {
+}
+interface tc_TCFiscalQuarter_Expand {
+}
+interface tc_TCFiscalQuarter_Filter {
+}
+interface tc_TCFiscalQuarter_Create extends tc_TCFiscalQuarter {
+}
+interface tc_TCFiscalQuarter_Update extends tc_TCFiscalQuarter {
+}
 interface ts_role_Base extends WebEntity {
 }
 interface ts_role_Fixed extends WebEntity_Fixed {
@@ -882,29 +951,6 @@ interface BookableResource_Filter {
 interface BookableResource_Create extends BookableResource {
 }
 interface BookableResource_Update extends BookableResource {
-}
-interface tc_TCFiscalQuarter_Base extends WebEntity {
-}
-interface tc_TCFiscalQuarter_Fixed extends WebEntity_Fixed {
-  tc_tcfiscalquarterid: string;
-}
-interface tc_TCFiscalQuarter extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
-}
-interface tc_TCFiscalQuarter_Relationships {
-}
-interface tc_TCFiscalQuarter_Result extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
-}
-interface tc_TCFiscalQuarter_FormattedResult {
-}
-interface tc_TCFiscalQuarter_Select {
-}
-interface tc_TCFiscalQuarter_Expand {
-}
-interface tc_TCFiscalQuarter_Filter {
-}
-interface tc_TCFiscalQuarter_Create extends tc_TCFiscalQuarter {
-}
-interface tc_TCFiscalQuarter_Update extends tc_TCFiscalQuarter {
 }
 interface SystemUser_Base extends WebEntity {
 }

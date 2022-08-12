@@ -18,6 +18,7 @@ declare namespace Form.ts_inspectionhours.Main {
       get(name: "ts_plannedq2"): Xrm.NumberAttribute;
       get(name: "ts_plannedq3"): Xrm.NumberAttribute;
       get(name: "ts_plannedq4"): Xrm.NumberAttribute;
+      get(name: "ts_totalhours"): Xrm.NumberAttribute;
       get(name: "ts_totalhoursq1"): Xrm.NumberAttribute;
       get(name: "ts_totalhoursq2"): Xrm.NumberAttribute;
       get(name: "ts_totalhoursq3"): Xrm.NumberAttribute;
@@ -44,6 +45,7 @@ declare namespace Form.ts_inspectionhours.Main {
       get(name: "ts_plannedq2"): Xrm.NumberControl;
       get(name: "ts_plannedq3"): Xrm.NumberControl;
       get(name: "ts_plannedq4"): Xrm.NumberControl;
+      get(name: "ts_totalhours"): Xrm.NumberControl;
       get(name: "ts_totalhoursq1"): Xrm.NumberControl;
       get(name: "ts_totalhoursq2"): Xrm.NumberControl;
       get(name: "ts_totalhoursq3"): Xrm.NumberControl;
@@ -78,6 +80,7 @@ declare namespace Form.ts_inspectionhours.Main {
     getAttribute(attributeName: "ts_plannedq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedq3"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedq4"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_totalhours"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_totalhoursq1"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_totalhoursq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_totalhoursq3"): Xrm.NumberAttribute;
@@ -99,6 +102,7 @@ declare namespace Form.ts_inspectionhours.Main {
     getControl(controlName: "ts_plannedq2"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedq3"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedq4"): Xrm.NumberControl;
+    getControl(controlName: "ts_totalhours"): Xrm.NumberControl;
     getControl(controlName: "ts_totalhoursq1"): Xrm.NumberControl;
     getControl(controlName: "ts_totalhoursq2"): Xrm.NumberControl;
     getControl(controlName: "ts_totalhoursq3"): Xrm.NumberControl;

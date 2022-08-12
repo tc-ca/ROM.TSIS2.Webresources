@@ -191,6 +191,7 @@ interface Contact_Relationships {
   contact_connections2?: Connection_Result[] | null;
   contact_customer_contacts?: Contact_Result[] | null;
   contact_master_contact?: Contact_Result[] | null;
+  contact_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   incident_customer_contacts?: Incident_Result[] | null;
   msdyn_contact_msdyn_workorder_ReportedByContact?: msdyn_workorder_Result[] | null;
   ovs_Finding_VerbalWarningGivenTo_Contact?: ovs_Finding_Result[] | null;
@@ -200,6 +201,8 @@ interface Contact_Relationships {
   ts_Contact_Incident_Incident?: Incident_Result[] | null;
   ts_Contact_msdyn_workorder_msdyn_workorder?: msdyn_workorder_Result[] | null;
   ts_contact_ts_operationcontact_contact?: ts_operationcontact_Result[] | null;
+  ts_ts_enforcementaction_Verbalwarninggivento?: ts_enforcementaction_Result[] | null;
+  ts_ts_enforcementaction_Writtenwarningsentto?: ts_enforcementaction_Result[] | null;
 }
 interface Contact extends Contact_Base, Contact_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
@@ -633,6 +636,7 @@ interface Contact_Expand {
   contact_connections2: WebExpand<Contact_Expand, Connection_Select, Connection_Filter, { contact_connections2: Connection_Result[] }>;
   contact_customer_contacts: WebExpand<Contact_Expand, Contact_Select, Contact_Filter, { contact_customer_contacts: Contact_Result[] }>;
   contact_master_contact: WebExpand<Contact_Expand, Contact_Select, Contact_Filter, { contact_master_contact: Contact_Result[] }>;
+  contact_ts_enforcementactions: WebExpand<Contact_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { contact_ts_enforcementactions: ts_enforcementaction_Result[] }>;
   createdby: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
   createdonbehalfby: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
   incident_customer_contacts: WebExpand<Contact_Expand, Incident_Select, Incident_Filter, { incident_customer_contacts: Incident_Result[] }>;
@@ -650,6 +654,8 @@ interface Contact_Expand {
   ts_Contact_Incident_Incident: WebExpand<Contact_Expand, Incident_Select, Incident_Filter, { ts_Contact_Incident_Incident: Incident_Result[] }>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: msdyn_workorder_Result[] }>;
   ts_contact_ts_operationcontact_contact: WebExpand<Contact_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_contact_ts_operationcontact_contact: ts_operationcontact_Result[] }>;
+  ts_ts_enforcementaction_Verbalwarninggivento: WebExpand<Contact_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Verbalwarninggivento: ts_enforcementaction_Result[] }>;
+  ts_ts_enforcementaction_Writtenwarningsentto: WebExpand<Contact_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Writtenwarningsentto: ts_enforcementaction_Result[] }>;
 }
 interface Contact_FormattedResult {
   accountid_formatted?: string;
@@ -774,6 +780,7 @@ interface Contact_RelatedMany {
   contact_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   contact_customer_contacts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   contact_master_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  contact_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   incident_customer_contacts: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_contact_msdyn_workorder_ReportedByContact: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_Finding_VerbalWarningGivenTo_Contact: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
@@ -781,6 +788,8 @@ interface Contact_RelatedMany {
   ts_Contact_Incident_Incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_contact_ts_operationcontact_contact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
+  ts_ts_enforcementaction_Verbalwarninggivento: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
+  ts_ts_enforcementaction_Writtenwarningsentto: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   contacts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;

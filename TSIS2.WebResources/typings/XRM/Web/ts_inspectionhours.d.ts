@@ -12,6 +12,7 @@ interface ts_InspectionHours_Base extends WebEntity {
   ts_plannedq2?: number | null;
   ts_plannedq3?: number | null;
   ts_plannedq4?: number | null;
+  ts_totalhours?: number | null;
   ts_totalhoursq1?: number | null;
   ts_totalhoursq2?: number | null;
   ts_totalhoursq3?: number | null;
@@ -65,6 +66,7 @@ interface ts_InspectionHours_Select {
   ts_plannedq2: WebAttribute<ts_InspectionHours_Select, { ts_plannedq2: number | null }, {  }>;
   ts_plannedq3: WebAttribute<ts_InspectionHours_Select, { ts_plannedq3: number | null }, {  }>;
   ts_plannedq4: WebAttribute<ts_InspectionHours_Select, { ts_plannedq4: number | null }, {  }>;
+  ts_totalhours: WebAttribute<ts_InspectionHours_Select, { ts_totalhours: number | null }, {  }>;
   ts_totalhoursq1: WebAttribute<ts_InspectionHours_Select, { ts_totalhoursq1: number | null }, {  }>;
   ts_totalhoursq2: WebAttribute<ts_InspectionHours_Select, { ts_totalhoursq2: number | null }, {  }>;
   ts_totalhoursq3: WebAttribute<ts_InspectionHours_Select, { ts_totalhoursq3: number | null }, {  }>;
@@ -104,6 +106,7 @@ interface ts_InspectionHours_Filter {
   ts_plannedq2: number;
   ts_plannedq3: number;
   ts_plannedq4: number;
+  ts_totalhours: number;
   ts_totalhoursq1: number;
   ts_totalhoursq2: number;
   ts_totalhoursq3: number;

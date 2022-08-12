@@ -8,6 +8,20 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface Cases extends Xrm.SectionCollectionBase {
+        get(name: "Cases"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface Findings extends Xrm.SectionCollectionBase {
+        get(name: "Findings"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface Operations extends Xrm.SectionCollectionBase {
         get(name: "Operations_section_4"): Xrm.PageSection;
         get(name: "tab_4_section_2"): Xrm.PageSection;
@@ -73,6 +87,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_iatacode"): Xrm.Attribute<string>;
       get(name: "ts_icaocode"): Xrm.Attribute<string>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
+      get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
       get(name: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
       get(name: "ts_statusenddate"): Xrm.DateAttribute;
@@ -83,7 +98,9 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Cases"): Xrm.SubGridControl<"incident">;
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
+      get(name: "Findings"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "Operations"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
@@ -114,6 +131,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_iatacode"): Xrm.StringControl;
       get(name: "ts_icaocode"): Xrm.StringControl;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
+      get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;
       get(name: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
       get(name: "ts_statusenddate"): Xrm.DateControl;
@@ -125,6 +143,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "AssetsAndLocationsTab"): Xrm.PageTab<Tabs.AssetsAndLocationsTab>;
+      get(name: "Cases"): Xrm.PageTab<Tabs.Cases>;
+      get(name: "Findings"): Xrm.PageTab<Tabs.Findings>;
       get(name: "Operations"): Xrm.PageTab<Tabs.Operations>;
       get(name: "Work Orders"): Xrm.PageTab<Tabs.WorkOrders>;
       get(name: "properties_tab"): Xrm.PageTab<Tabs.properties_tab>;
@@ -159,12 +179,15 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "ts_iatacode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_icaocode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
+    getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
     getAttribute(attributeName: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
     getAttribute(attributeName: "ts_statusenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_statusstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Cases"): Xrm.SubGridControl<"incident">;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
+    getControl(controlName: "Findings"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "Operations"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "PropertyLogsSubGrid"): Xrm.SubGridControl<"msdyn_propertylog">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
@@ -195,6 +218,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "ts_iatacode"): Xrm.StringControl;
     getControl(controlName: "ts_icaocode"): Xrm.StringControl;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
+    getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;
     getControl(controlName: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
     getControl(controlName: "ts_statusenddate"): Xrm.DateControl;

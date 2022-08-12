@@ -39,6 +39,13 @@ declare namespace Form.ovs_operation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_8 extends Xrm.SectionCollectionBase {
+        get(name: "tab_8_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_properties extends Xrm.SectionCollectionBase {
         get(name: "is_security_inspection_site_section"): Xrm.PageSection;
         get(name: "tab_properties_ppeguide"): Xrm.PageSection;
@@ -62,6 +69,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_description"): Xrm.Attribute<string>;
       get(name: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
       get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
+      get(name: "ts_operationfrequency"): Xrm.LookupAttribute<"ts_operationfrequency">;
       get(name: "ts_planningstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
       get(name: "ts_ppeguide"): Xrm.Attribute<any>;
@@ -88,6 +96,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
+      get(name: "Subgrid_new_2"): Xrm.SubGridControl<"ts_operationactivity">;
       get(name: "WebResource_PPEGuide"): Xrm.WebResourceControl;
       get(name: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
@@ -106,6 +115,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_issecurityinspectionsite"): Xrm.OptionSetControl<ts_issecurityinspectionsite>;
       get(name: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
       get(name: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_operationfrequency"): Xrm.LookupControl<"ts_operationfrequency">;
       get(name: "ts_planningstatus"): Xrm.OptionSetControl<ts_planningstatus>;
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
       get(name: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
@@ -134,6 +144,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "rel_operations_tab"): Xrm.PageTab<Tabs.rel_operations_tab>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
+      get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
       get(name: "tab_properties"): Xrm.PageTab<Tabs.tab_properties>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -153,6 +164,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_description"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_issecurityinspectionsite"): Xrm.OptionSetAttribute<ts_issecurityinspectionsite>;
     getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
+    getAttribute(attributeName: "ts_operationfrequency"): Xrm.LookupAttribute<"ts_operationfrequency">;
     getAttribute(attributeName: "ts_planningstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
     getAttribute(attributeName: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
     getAttribute(attributeName: "ts_ppeguide"): Xrm.Attribute<any>;
@@ -174,6 +186,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
+    getControl(controlName: "Subgrid_new_2"): Xrm.SubGridControl<"ts_operationactivity">;
     getControl(controlName: "WebResource_PPEGuide"): Xrm.WebResourceControl;
     getControl(controlName: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
@@ -192,6 +205,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_issecurityinspectionsite"): Xrm.OptionSetControl<ts_issecurityinspectionsite>;
     getControl(controlName: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
     getControl(controlName: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_operationfrequency"): Xrm.LookupControl<"ts_operationfrequency">;
     getControl(controlName: "ts_planningstatus"): Xrm.OptionSetControl<ts_planningstatus>;
     getControl(controlName: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
     getControl(controlName: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
