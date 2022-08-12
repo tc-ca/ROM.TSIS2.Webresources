@@ -47,15 +47,6 @@ declare namespace Form.systemuser.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface usrstab extends Xrm.SectionCollectionBase {
-        get(name: "tab_5_section_2"): Xrm.PageSection;
-        get(name: "tab_5_section_3"): Xrm.PageSection;
-        get(name: "urstab_section_general"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "accessmode"): Xrm.OptionSetAttribute<systemuser_accessmode>;
@@ -124,10 +115,8 @@ declare namespace Form.systemuser.Main {
       get(name: "address1_composite_compositionLinkControl_address1_stateorprovince"): Xrm.StringControl | null;
       get(name: "address1_fax"): Xrm.StringControl;
       get(name: "address1_latitude"): Xrm.NumberControl;
-      get(name: "address1_latitude1"): Xrm.NumberControl;
       get(name: "address1_line1"): Xrm.StringControl;
       get(name: "address1_longitude"): Xrm.NumberControl;
-      get(name: "address1_longitude1"): Xrm.NumberControl;
       get(name: "address1_telephone1"): Xrm.StringControl;
       get(name: "address1_telephone2"): Xrm.StringControl;
       get(name: "address1_telephone3"): Xrm.StringControl;
@@ -175,7 +164,6 @@ declare namespace Form.systemuser.Main {
       get(name: "MobileOfflineProfile_TAB"): Xrm.PageTab<Tabs.MobileOfflineProfile_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
-      get(name: "usrstab"): Xrm.PageTab<Tabs.usrstab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -244,10 +232,8 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "address1_composite_compositionLinkControl_address1_stateorprovince"): Xrm.StringControl | null;
     getControl(controlName: "address1_fax"): Xrm.StringControl;
     getControl(controlName: "address1_latitude"): Xrm.NumberControl;
-    getControl(controlName: "address1_latitude1"): Xrm.NumberControl;
     getControl(controlName: "address1_line1"): Xrm.StringControl;
     getControl(controlName: "address1_longitude"): Xrm.NumberControl;
-    getControl(controlName: "address1_longitude1"): Xrm.NumberControl;
     getControl(controlName: "address1_telephone1"): Xrm.StringControl;
     getControl(controlName: "address1_telephone2"): Xrm.StringControl;
     getControl(controlName: "address1_telephone3"): Xrm.StringControl;

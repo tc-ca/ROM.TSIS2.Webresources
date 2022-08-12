@@ -3,6 +3,7 @@ interface Incident_Base extends WebEntity {
   actualserviceunits?: number | null;
   billedserviceunits?: number | null;
   blockedprofile?: boolean | null;
+  caseage?: string | null;
   caseorigincode?: incident_caseorigincode | null;
   casetypecode?: incident_casetypecode | null;
   checkemail?: boolean | null;
@@ -10,6 +11,7 @@ interface Incident_Base extends WebEntity {
   createdon?: Date | null;
   customercontacted?: boolean | null;
   customersatisfactioncode?: incident_customersatisfactioncode | null;
+  deactivatedon?: Date | null;
   decremententitlementterm?: boolean | null;
   description?: string | null;
   emailaddress?: string | null;
@@ -26,10 +28,12 @@ interface Incident_Base extends WebEntity {
   influencescore?: number | null;
   isdecrementing?: boolean | null;
   isescalated?: boolean | null;
+  lastinteraction?: string | null;
   lastonholdtime?: Date | null;
   merged?: boolean | null;
   messagetypecode?: socialactivity_postmessagetype | null;
   modifiedon?: Date | null;
+  nextsla?: string | null;
   numberofchildincidents?: number | null;
   onholdtime?: number | null;
   overriddencreatedon?: Date | null;
@@ -139,6 +143,7 @@ interface Incident_Select {
   actualserviceunits: WebAttribute<Incident_Select, { actualserviceunits: number | null }, {  }>;
   billedserviceunits: WebAttribute<Incident_Select, { billedserviceunits: number | null }, {  }>;
   blockedprofile: WebAttribute<Incident_Select, { blockedprofile: boolean | null }, {  }>;
+  caseage: WebAttribute<Incident_Select, { caseage: string | null }, {  }>;
   caseorigincode: WebAttribute<Incident_Select, { caseorigincode: incident_caseorigincode | null }, { caseorigincode_formatted?: string }>;
   casetypecode: WebAttribute<Incident_Select, { casetypecode: incident_casetypecode | null }, { casetypecode_formatted?: string }>;
   checkemail: WebAttribute<Incident_Select, { checkemail: boolean | null }, {  }>;
@@ -153,6 +158,7 @@ interface Incident_Select {
   customercontacted: WebAttribute<Incident_Select, { customercontacted: boolean | null }, {  }>;
   customerid_guid: WebAttribute<Incident_Select, { customerid_guid: string | null }, { customerid_formatted?: string }>;
   customersatisfactioncode: WebAttribute<Incident_Select, { customersatisfactioncode: incident_customersatisfactioncode | null }, { customersatisfactioncode_formatted?: string }>;
+  deactivatedon: WebAttribute<Incident_Select, { deactivatedon: Date | null }, { deactivatedon_formatted?: string }>;
   decremententitlementterm: WebAttribute<Incident_Select, { decremententitlementterm: boolean | null }, {  }>;
   description: WebAttribute<Incident_Select, { description: string | null }, {  }>;
   emailaddress: WebAttribute<Incident_Select, { emailaddress: string | null }, {  }>;
@@ -173,6 +179,7 @@ interface Incident_Select {
   isdecrementing: WebAttribute<Incident_Select, { isdecrementing: boolean | null }, {  }>;
   isescalated: WebAttribute<Incident_Select, { isescalated: boolean | null }, {  }>;
   kbarticleid_guid: WebAttribute<Incident_Select, { kbarticleid_guid: string | null }, { kbarticleid_formatted?: string }>;
+  lastinteraction: WebAttribute<Incident_Select, { lastinteraction: string | null }, {  }>;
   lastonholdtime: WebAttribute<Incident_Select, { lastonholdtime: Date | null }, { lastonholdtime_formatted?: string }>;
   masterid_guid: WebAttribute<Incident_Select, { masterid_guid: string | null }, { masterid_formatted?: string }>;
   merged: WebAttribute<Incident_Select, { merged: boolean | null }, {  }>;
@@ -184,6 +191,7 @@ interface Incident_Select {
   msdyn_functionallocation_guid: WebAttribute<Incident_Select, { msdyn_functionallocation_guid: string | null }, { msdyn_functionallocation_formatted?: string }>;
   msdyn_incidenttype_guid: WebAttribute<Incident_Select, { msdyn_incidenttype_guid: string | null }, { msdyn_incidenttype_formatted?: string }>;
   msdyn_iotalert_guid: WebAttribute<Incident_Select, { msdyn_iotalert_guid: string | null }, { msdyn_iotalert_formatted?: string }>;
+  nextsla: WebAttribute<Incident_Select, { nextsla: string | null }, {  }>;
   numberofchildincidents: WebAttribute<Incident_Select, { numberofchildincidents: number | null }, {  }>;
   onholdtime: WebAttribute<Incident_Select, { onholdtime: number | null }, {  }>;
   overriddencreatedon: WebAttribute<Incident_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
@@ -244,6 +252,7 @@ interface Incident_Filter {
   actualserviceunits: number;
   billedserviceunits: number;
   blockedprofile: boolean;
+  caseage: string;
   caseorigincode: incident_caseorigincode;
   casetypecode: incident_casetypecode;
   checkemail: boolean;
@@ -258,6 +267,7 @@ interface Incident_Filter {
   customercontacted: boolean;
   customerid_guid: XQW.Guid;
   customersatisfactioncode: incident_customersatisfactioncode;
+  deactivatedon: Date;
   decremententitlementterm: boolean;
   description: string;
   emailaddress: string;
@@ -278,6 +288,7 @@ interface Incident_Filter {
   isdecrementing: boolean;
   isescalated: boolean;
   kbarticleid_guid: XQW.Guid;
+  lastinteraction: string;
   lastonholdtime: Date;
   masterid_guid: XQW.Guid;
   merged: boolean;
@@ -289,6 +300,7 @@ interface Incident_Filter {
   msdyn_functionallocation_guid: XQW.Guid;
   msdyn_incidenttype_guid: XQW.Guid;
   msdyn_iotalert_guid: XQW.Guid;
+  nextsla: string;
   numberofchildincidents: number;
   onholdtime: number;
   overriddencreatedon: Date;
@@ -400,6 +412,7 @@ interface Incident_FormattedResult {
   createdonbehalfby_formatted?: string;
   customerid_formatted?: string;
   customersatisfactioncode_formatted?: string;
+  deactivatedon_formatted?: string;
   entitlementid_formatted?: string;
   escalatedon_formatted?: string;
   existingcase_formatted?: string;

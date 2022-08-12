@@ -73,6 +73,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_iatacode"): Xrm.Attribute<string>;
       get(name: "ts_icaocode"): Xrm.Attribute<string>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
+      get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
       get(name: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
       get(name: "ts_statusenddate"): Xrm.DateAttribute;
@@ -114,6 +115,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_iatacode"): Xrm.StringControl;
       get(name: "ts_icaocode"): Xrm.StringControl;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
+      get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;
       get(name: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
       get(name: "ts_statusenddate"): Xrm.DateControl;
@@ -159,6 +161,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "ts_iatacode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_icaocode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
+    getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
     getAttribute(attributeName: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
     getAttribute(attributeName: "ts_statusenddate"): Xrm.DateAttribute;
@@ -195,6 +198,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "ts_iatacode"): Xrm.StringControl;
     getControl(controlName: "ts_icaocode"): Xrm.StringControl;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
+    getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;
     getControl(controlName: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
     getControl(controlName: "ts_statusenddate"): Xrm.DateControl;
