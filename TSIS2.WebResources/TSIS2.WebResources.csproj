@@ -132,6 +132,7 @@
     <Content Include="Webresources\html\EmailAttachFile.html" />
     <Content Include="Webresources\html\EmailAttachFilePopUp.html" />
     <Content Include="Webresources\html\FindingProvisionText.html" />
+    <Content Include="Webresources\html\MyRegionTrip.html" />
     <Content Include="Webresources\html\NCATFactorGuide.html" />
     <Content Include="Webresources\html\PPEGuide.html" />
     <Content Include="Webresources\html\ProvisionRender.html" />
@@ -309,6 +310,7 @@
     <TypeScriptCompile Include="src\ts\IncidentQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\IncidentTypeServiceTask.ts" />
     <TypeScriptCompile Include="src\ts\IncompleteInspectionJustification.ts" />
+    <TypeScriptCompile Include="src\ts\InspectionHours.ts" />
     <TypeScriptCompile Include="src\ts\Operation.ts" />
     <TypeScriptCompile Include="src\ts\OperationContact.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />

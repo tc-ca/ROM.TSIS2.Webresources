@@ -165,4 +165,7 @@
   <data name="FilteredIncompleteWorkOrderReasons" xml:space="preserve">
     <value>Filtered Incomplete Work Order Reasons</value>
   </data>
+  <data name="InvalidFiscalQuarterErrorMsg" xml:space="preserve">
+    <value>Fiscal quarter has already been assigned to the work order selected as part of a trip. Fiscal quarter was not changed as it cannot be different from other work orders in this trip.</value>
+  </data>
 </root>
