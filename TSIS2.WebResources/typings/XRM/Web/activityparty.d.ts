@@ -22,6 +22,7 @@ interface ActivityParty_Relationships {
   activityid_email?: Email_Result | null;
   activityid_incidentresolution?: IncidentResolution_Result | null;
   activityid_serviceappointment?: ServiceAppointment_Result | null;
+  activityid_ts_enforcementaction_activityparty?: ts_enforcementaction_Result | null;
   partyid_account?: Account_Result | null;
   partyid_contact?: Contact_Result | null;
   partyid_incident?: Incident_Result | null;
@@ -126,6 +127,7 @@ interface ActivityParty_Expand {
   activityid_email: WebExpand<ActivityParty_Expand, Email_Select, Email_Filter, { activityid_email: Email_Result }>;
   activityid_incidentresolution: WebExpand<ActivityParty_Expand, IncidentResolution_Select, IncidentResolution_Filter, { activityid_incidentresolution: IncidentResolution_Result }>;
   activityid_serviceappointment: WebExpand<ActivityParty_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { activityid_serviceappointment: ServiceAppointment_Result }>;
+  activityid_ts_enforcementaction_activityparty: WebExpand<ActivityParty_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { activityid_ts_enforcementaction_activityparty: ts_enforcementaction_Result }>;
   partyid_account: WebExpand<ActivityParty_Expand, Account_Select, Account_Filter, { partyid_account: Account_Result }>;
   partyid_contact: WebExpand<ActivityParty_Expand, Contact_Select, Contact_Filter, { partyid_contact: Contact_Result }>;
   partyid_incident: WebExpand<ActivityParty_Expand, Incident_Select, Incident_Filter, { partyid_incident: Incident_Result }>;
@@ -153,6 +155,7 @@ interface ActivityParty_RelatedOne {
   activityid_email: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   activityid_incidentresolution: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   activityid_serviceappointment: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
+  activityid_ts_enforcementaction_activityparty: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   partyid_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   partyid_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   partyid_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
