@@ -5,6 +5,15 @@ var ROM;
     (function (EnforcementAction) {
         function onLoad(eContext) {
             var formContext = eContext.getFormContext();
+            //Enable type of enforcement action field if user is Admin
+            if (formContext.ui.getFormType() == 2 || formContext.ui.getFormType() == 3) {
+                var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+                userRoles.forEach(function (role) {
+                    if (role.name == "System Administrator") {
+                        formContext.getControl("ts_typeofenforcementaction").setDisabled(false);
+                    }
+                });
+            }
             additionalDetailsVisibility(formContext);
             filterRepresentative(formContext);
             filterCompany(formContext);
