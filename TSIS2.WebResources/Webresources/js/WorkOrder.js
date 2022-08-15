@@ -1,5 +1,4 @@
 ﻿"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 var ROM;
 (function (ROM) {
@@ -448,18 +447,6 @@ var ROM;
                         form.getControl("msdyn_serviceaccount").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                         // Custom view for Trade Names
                         setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
-                        // Custom view for Activity Type
-                        //setActivityTypeFilteredView(form);
-                    }
-                }
-                else if (operationTypeAttribute != null && operationTypeAttribute != undefined && isFromCase) {
-                    var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
-                    var operationTypeAttributeValue = operationTypeAttribute.getValue();
-                    if (workOrderTypeAttributeValue != null && operationTypeAttributeValue != null) {
-                        form.getControl("msdyn_primaryincidenttype").setDisabled(false);
-                        // Custom view for Activity Type
-                        //setActivityTypeFilteredView
-                        functionalLocationOnChange(eContext);
                     }
                 }
             }
@@ -526,7 +513,7 @@ var ROM;
                     if (siteAttributeValue_1 != null && siteAttributeValue_1 != undefined &&
                         stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
                         operationTypeAttributeValue_1 != null && operationTypeAttributeValue_1 != undefined &&
-                        workOrderTypeAttributeValue_1 != null && workOrderTypeAttributeValue_1 != undefined) {
+                        workOrderTypeAttribute != null && workOrderTypeAttributeValue_1 != null) {
                         // Populate operation asset
                         var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue_1[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue_1[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
                         var encodedFetchXml = encodeURIComponent(fetchXml);
@@ -928,7 +915,7 @@ var ROM;
             operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
             Xrm.WebApi.retrieveMultipleRecords('businessunit', operationTypeOwningBusinessUnitFetchXML).then(function success(result) {
                 if (result.entities.length == 1) {
-                    var operationActivityFilter = "</link-entity><link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
+                    var operationActivityFilter = "<link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
                     var fetchXmlActivity = "";
                     var viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
                     var entityNameActivity = "msdyn_incidenttype";

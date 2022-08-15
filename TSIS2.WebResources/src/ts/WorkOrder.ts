@@ -1,5 +1,3 @@
-import { normalizeUnits } from "moment";
-
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 namespace ROM.WorkOrder {
     let isFromCase = false; //Boolean status to track if the work order is being created from a case
@@ -461,7 +459,6 @@ namespace ROM.WorkOrder {
 
                     var countryCondition = getCountryFetchXmlCondition(form);
                     //form.getControl("msdyn_serviceaccount").setDisabled(false);
-                    form.getControl("msdyn_primaryincidenttype").setDisabled(false);
 
                     // Setup a custom view
                     // This value is never saved and only needs to be unique among the other available views for the lookup.
@@ -475,22 +472,8 @@ namespace ROM.WorkOrder {
 
                     // Custom view for Trade Names
                     setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
-
-                    // Custom view for Activity Type
-                    //setActivityTypeFilteredView(form);
-                    
                 }
-            } else if (operationTypeAttribute != null && operationTypeAttribute != undefined && isFromCase) {
-                const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
-                const operationTypeAttributeValue = operationTypeAttribute.getValue();
-
-                if (workOrderTypeAttributeValue != null && operationTypeAttributeValue != null) {
-                    form.getControl("msdyn_primaryincidenttype").setDisabled(false);
-                    // Custom view for Activity Type
-                    //setActivityTypeFilteredView
-                    functionalLocationOnChange(eContext);
-                }
-            }
+            } 
         } catch (e) {
             throw new Error(e.Message);
         }
@@ -558,14 +541,13 @@ namespace ROM.WorkOrder {
                 const stakeholderAttributeValue = stakeholderAttribute.getValue();
                 const siteAttributeValue = siteAttribute.getValue();
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
-                
 
 
 
                 if (siteAttributeValue != null && siteAttributeValue != undefined &&
                     stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
                     operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
-                    workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined) {
+                    workOrderTypeAttribute != null && workOrderTypeAttributeValue != null) {
 
                     // Populate operation asset
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
@@ -1012,7 +994,7 @@ namespace ROM.WorkOrder {
         Xrm.WebApi.retrieveMultipleRecords('businessunit', operationTypeOwningBusinessUnitFetchXML).then(
             function success(result) {
                 if(result.entities.length == 1){
-                    let operationActivityFilter = "</link-entity><link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
+                    let operationActivityFilter = "<link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
 
                     let fetchXmlActivity = "";
                     const viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
@@ -1034,6 +1016,7 @@ namespace ROM.WorkOrder {
 
                     }
                     form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                    form.getControl("msdyn_primaryincidenttype").setDisabled(false);
                 }
             },
          ); 
