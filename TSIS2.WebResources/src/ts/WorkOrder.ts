@@ -1165,7 +1165,13 @@ namespace ROM.WorkOrder {
     }
 
     function setCantCompleteinspectionVisibility(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
+        const systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
         let plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
+        let validWorkOrderStatus = false;
+
+        if (systemStatus != null && (systemStatus == msdyn_wosystemstatus.Unscheduled || systemStatus == msdyn_wosystemstatus.Scheduled || systemStatus == msdyn_wosystemstatus.InProgress)) {
+            validWorkOrderStatus = true;
+        }
 
         if (plannedFiscalQuarter != null) {
 
@@ -1177,8 +1183,8 @@ namespace ROM.WorkOrder {
 
                     let quarterendDate = new Date(result.tc_quarterend);
 
-                    //if we are past the end date of the quarter, make the Can't Complete Inspection visible, otherwise hide it
-                    if (quarterendDate < currentDateTime) {
+                    //if we are past the end date of the quarter and have a valid work order status, make the Can't Complete Inspection visible, otherwise hide it
+                    if (quarterendDate < currentDateTime && validWorkOrderStatus) {
                         setCantCompleteInspectionControlsVisibility(form, true);
                     }
                     else {
