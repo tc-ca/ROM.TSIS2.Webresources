@@ -1027,14 +1027,19 @@ var ROM;
             }
         }
         function setCantCompleteinspectionVisibility(form) {
+            var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
+            var validWorkOrderStatus = false;
+            if (systemStatus != null && (systemStatus == 690970000 /* Unscheduled */ || systemStatus == 690970001 /* Scheduled */ || systemStatus == 690970002 /* InProgress */)) {
+                validWorkOrderStatus = true;
+            }
             if (plannedFiscalQuarter != null) {
                 //fetch the end date of the Planned Fiscal Quarter
                 Xrm.WebApi.retrieveRecord("tc_tcfiscalquarter", plannedFiscalQuarter[0].id.replace(/({|})/g, ''), "?$select=tc_quarterend").then(function success(result) {
                     var currentDateTime = new Date();
                     var quarterendDate = new Date(result.tc_quarterend);
-                    //if we are past the end date of the quarter, make the Can't Complete Inspection visible, otherwise hide it
-                    if (quarterendDate < currentDateTime) {
+                    //if we are past the end date of the quarter and have a valid work order status, make the Can't Complete Inspection visible, otherwise hide it
+                    if (quarterendDate < currentDateTime && validWorkOrderStatus) {
                         setCantCompleteInspectionControlsVisibility(form, true);
                     }
                     else {
