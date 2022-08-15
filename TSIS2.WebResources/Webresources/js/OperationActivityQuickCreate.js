@@ -24,7 +24,7 @@ var ROM;
                     if (activityTypeAttributeValue != null && activityTypeAttributeValue != undefined) {
                         var activityTypeCondition_1 = "";
                         var activityTypeAssociatedOperationTypes = [
-                            "<fetch>",
+                            "<fetch distinct='true'>",
                             "  <entity name='msdyn_incidenttype'>",
                             "    <filter>",
                             "      <condition attribute='msdyn_incidenttypeid' operator='eq' value='", activityTypeAttributeValue[0].id, "'/>",
@@ -37,7 +37,6 @@ var ROM;
                         ].join("");
                         activityTypeAssociatedOperationTypes = "?fetchXml=" + encodeURIComponent(activityTypeAssociatedOperationTypes);
                         Xrm.WebApi.retrieveMultipleRecords('msdyn_incidenttype', activityTypeAssociatedOperationTypes).then(function success(result) {
-                            debugger;
                             for (var i = 0; i < result.entities.length; i++) {
                                 activityTypeCondition_1 += "<condition attribute='ovs_operationtypeid' operator='eq' value='" + result.entities[0]["ts_ovs_operationtypes_msdyn_incidenttypes1.ovs_operationtypeid"] + "'/>";
                             }
