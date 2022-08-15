@@ -406,5 +406,21 @@ var ROM;
             }
         }
         Operation.typeOfDangerousGoodsOnChange = typeOfDangerousGoodsOnChange;
+        function setFieldsDisabled(eContext) {
+            var formContext = eContext.getFormContext();
+            var gridContext = formContext.getControl("operation_activity_grid");
+            if (formContext) {
+                var arrFields_1 = ["ts_operation", "ts_activity"];
+                var objEntity = formContext.data.entity;
+                objEntity.attributes.forEach(function (attribute, i) {
+                    if (arrFields_1.indexOf(attribute.getName()) > -1) {
+                        var attributeToDisable = attribute.controls.get(0);
+                        attributeToDisable.setDisabled(true);
+                    }
+                });
+            }
+            ;
+        }
+        Operation.setFieldsDisabled = setFieldsDisabled;
     })(Operation = ROM.Operation || (ROM.Operation = {}));
 })(ROM || (ROM = {}));
