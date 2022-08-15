@@ -1,3 +1,5 @@
+import { normalizeUnits } from "moment";
+
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 namespace ROM.WorkOrder {
     let isFromCase = false; //Boolean status to track if the work order is being created from a case
@@ -475,12 +477,8 @@ namespace ROM.WorkOrder {
                     setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
 
                     // Custom view for Activity Type
-                    const viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
-                    const entityNameActivity = "msdyn_incidenttype";
-                    const viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
-                    const fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeValue[0].id + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
-                    const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
-                    form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                    //setActivityTypeFilteredView(form);
+                    
                 }
             } else if (operationTypeAttribute != null && operationTypeAttribute != undefined && isFromCase) {
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
@@ -489,12 +487,7 @@ namespace ROM.WorkOrder {
                 if (workOrderTypeAttributeValue != null && operationTypeAttributeValue != null) {
                     form.getControl("msdyn_primaryincidenttype").setDisabled(false);
                     // Custom view for Activity Type
-                    const viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
-                    const entityNameActivity = "msdyn_incidenttype";
-                    const viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
-                    const fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeValue[0].id + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
-                    const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
-                    form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                    //setActivityTypeFilteredView
                     functionalLocationOnChange(eContext);
                 }
             }
@@ -555,6 +548,7 @@ namespace ROM.WorkOrder {
             const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
             const stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
             const siteAttribute = form.getAttribute("ts_site");
+            const workOrderTypeAttribute = form.getAttribute("msdyn_workordertype");
             if (siteAttribute != null && siteAttribute != undefined) {
                 // Clear out operation and subsite value if not already empty
                 if (form.getAttribute("ovs_operationid").getValue() != null) form.getAttribute("ovs_operationid").setValue(null);
@@ -563,12 +557,15 @@ namespace ROM.WorkOrder {
                 const operationTypeAttributeValue = operationTypeAttribute.getValue();
                 const stakeholderAttributeValue = stakeholderAttribute.getValue();
                 const siteAttributeValue = siteAttribute.getValue();
+                const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
+                
 
 
 
                 if (siteAttributeValue != null && siteAttributeValue != undefined &&
                     stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
-                    operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
+                    operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
+                    workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined) {
 
                     // Populate operation asset
                     const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
@@ -583,8 +580,6 @@ namespace ROM.WorkOrder {
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
 
-                                var caca = Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "eng" : "fr";
-
                                 if (targetOperation.ts_operationalstatus == 717750001) {
                                     form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
                                     form.getAttribute('ts_site').setValue(null);
@@ -593,6 +588,8 @@ namespace ROM.WorkOrder {
                                     form.ui.clearFormNotification("non-operational-operation");
                                     form.getAttribute('ovs_operationid').setValue(lookup);
                                 }
+
+                                setActivityTypeFilteredView(form, lookup[0].id, workOrderTypeAttributeValue[0].id, operationTypeAttributeValue[0].id);
                             } else {
                                 // do not set a default if multiple records are found, error.
                             }
@@ -989,6 +986,57 @@ namespace ROM.WorkOrder {
                 }
             );
         }
+    }
+
+    function setActivityTypeFilteredView(form: Form.msdyn_workorder.Main.ROMOversightActivity, operationAttributeId: string,  workOrderTypeAttributeId: string, operationTypeAttributeId: string): void {
+
+        //Check whether this is a AvSec WO by using the operation
+        let operationTypeOwningBusinessUnitFetchXML = [
+            "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
+            "  <entity name='businessunit'>",
+            "    <attribute name='name'/>",
+            "    <attribute name='businessunitid'/>",
+            "    <filter>",
+            "      <condition attribute='name' operator='like' value='Avia%'/>",
+            "    </filter>",
+            "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
+            "      <filter>",
+            "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeAttributeId, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>"
+            ].join("");
+        operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+
+        Xrm.WebApi.retrieveMultipleRecords('businessunit', operationTypeOwningBusinessUnitFetchXML).then(
+            function success(result) {
+                if(result.entities.length == 1){
+                    let operationActivityFilter = "</link-entity><link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
+
+                    let fetchXmlActivity = "";
+                    const viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
+                    const entityNameActivity = "msdyn_incidenttype";
+                    const viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
+                    const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
+
+                    form.getControl("msdyn_primaryincidenttype").setDisabled(false); 
+
+                    if(!isFromCase){   
+                        fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity>' + operationActivityFilter + '</entity></fetch>';
+                    }
+                    else{
+                        const viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
+                        const entityNameActivity = "msdyn_incidenttype";
+                        const viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
+                        fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity></entity></fetch>';
+                        const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
+
+                    }
+                    form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                }
+            },
+         ); 
     }
 
     function setCountryFilteredView(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {

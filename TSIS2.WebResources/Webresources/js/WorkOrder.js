@@ -1,4 +1,5 @@
 ﻿"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 var ROM;
 (function (ROM) {
@@ -149,7 +150,7 @@ var ROM;
                     break;
             }
             // Lock some fields if there exist a Case that has this WO associated to it
-            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>";
+            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>");
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
@@ -448,12 +449,7 @@ var ROM;
                         // Custom view for Trade Names
                         setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
                         // Custom view for Activity Type
-                        var viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
-                        var entityNameActivity = "msdyn_incidenttype";
-                        var viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
-                        var fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeValue[0].id + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
-                        var layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
-                        form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                        //setActivityTypeFilteredView(form);
                     }
                 }
                 else if (operationTypeAttribute != null && operationTypeAttribute != undefined && isFromCase) {
@@ -462,12 +458,7 @@ var ROM;
                     if (workOrderTypeAttributeValue != null && operationTypeAttributeValue != null) {
                         form.getControl("msdyn_primaryincidenttype").setDisabled(false);
                         // Custom view for Activity Type
-                        var viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
-                        var entityNameActivity = "msdyn_incidenttype";
-                        var viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
-                        var fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeValue[0].id + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '" /></filter></link-entity></link-entity></entity></fetch>';
-                        var layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
-                        form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                        //setActivityTypeFilteredView
                         functionalLocationOnChange(eContext);
                     }
                 }
@@ -522,19 +513,22 @@ var ROM;
                 var operationTypeAttribute = form_1.getAttribute("ovs_operationtypeid");
                 var stakeholderAttribute = form_1.getAttribute("msdyn_serviceaccount");
                 var siteAttribute = form_1.getAttribute("ts_site");
+                var workOrderTypeAttribute = form_1.getAttribute("msdyn_workordertype");
                 if (siteAttribute != null && siteAttribute != undefined) {
                     // Clear out operation and subsite value if not already empty
                     if (form_1.getAttribute("ovs_operationid").getValue() != null)
                         form_1.getAttribute("ovs_operationid").setValue(null);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
-                    var operationTypeAttributeValue = operationTypeAttribute.getValue();
+                    var operationTypeAttributeValue_1 = operationTypeAttribute.getValue();
                     var stakeholderAttributeValue = stakeholderAttribute.getValue();
                     var siteAttributeValue_1 = siteAttribute.getValue();
+                    var workOrderTypeAttributeValue_1 = workOrderTypeAttribute.getValue();
                     if (siteAttributeValue_1 != null && siteAttributeValue_1 != undefined &&
                         stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
-                        operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
+                        operationTypeAttributeValue_1 != null && operationTypeAttributeValue_1 != undefined &&
+                        workOrderTypeAttributeValue_1 != null && workOrderTypeAttributeValue_1 != undefined) {
                         // Populate operation asset
-                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue_1[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue_1[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue_1[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
                         var encodedFetchXml = encodeURIComponent(fetchXml);
                         Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXml).then(function success(result) {
                             if (result.entities.length == 1) {
@@ -544,7 +538,6 @@ var ROM;
                                 lookup[0].id = targetOperation.ovs_operationid;
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
-                                var caca = Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "eng" : "fr";
                                 if (targetOperation.ts_operationalstatus == 717750001) {
                                     form_1.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
                                     form_1.getAttribute('ts_site').setValue(null);
@@ -553,6 +546,7 @@ var ROM;
                                     form_1.ui.clearFormNotification("non-operational-operation");
                                     form_1.getAttribute('ovs_operationid').setValue(lookup);
                                 }
+                                setActivityTypeFilteredView(form_1, lookup[0].id, workOrderTypeAttributeValue_1[0].id, operationTypeAttributeValue_1[0].id);
                             }
                             else {
                                 // do not set a default if multiple records are found, error.
@@ -913,6 +907,48 @@ var ROM;
                 });
             }
         }
+        function setActivityTypeFilteredView(form, operationAttributeId, workOrderTypeAttributeId, operationTypeAttributeId) {
+            //Check whether this is a AvSec WO by using the operation
+            var operationTypeOwningBusinessUnitFetchXML = [
+                "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
+                "  <entity name='businessunit'>",
+                "    <attribute name='name'/>",
+                "    <attribute name='businessunitid'/>",
+                "    <filter>",
+                "      <condition attribute='name' operator='like' value='Avia%'/>",
+                "    </filter>",
+                "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
+                "      <filter>",
+                "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeAttributeId, "'/>",
+                "      </filter>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>"
+            ].join("");
+            operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+            Xrm.WebApi.retrieveMultipleRecords('businessunit', operationTypeOwningBusinessUnitFetchXML).then(function success(result) {
+                if (result.entities.length == 1) {
+                    var operationActivityFilter = "</link-entity><link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
+                    var fetchXmlActivity = "";
+                    var viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
+                    var entityNameActivity = "msdyn_incidenttype";
+                    var viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
+                    var layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
+                    form.getControl("msdyn_primaryincidenttype").setDisabled(false);
+                    if (!isFromCase) {
+                        fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity>' + operationActivityFilter + '</entity></fetch>';
+                    }
+                    else {
+                        var viewIdActivity_1 = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
+                        var entityNameActivity_1 = "msdyn_incidenttype";
+                        var viewDisplayNameActivity_1 = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
+                        fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity></entity></fetch>';
+                        var layoutXmlActivity_1 = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
+                    }
+                    form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                }
+            });
+        }
         function setCountryFilteredView(form) {
             form.getControl("ts_country").setVisible(true);
             form.getAttribute("ts_country").setRequiredLevel("required");
@@ -992,7 +1028,7 @@ var ROM;
             return "";
         }
         function closeWorkOrderServiceTasks(formContext, workOrderServiceTaskData) {
-            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ".concat(formContext.data.entity.getId())).then(function success(result) {
                 for (var i = 0; i < result.entities.length; i++) {
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(function success(result) {
                         //work order service task closed successfully
