@@ -170,6 +170,10 @@ interface SystemUser_Relationships {
   lk_msdyn_functionallocation_createdonbehalfby?: msdyn_FunctionalLocation_Result[] | null;
   lk_msdyn_functionallocation_modifiedby?: msdyn_FunctionalLocation_Result[] | null;
   lk_msdyn_functionallocation_modifiedonbehalfby?: msdyn_FunctionalLocation_Result[] | null;
+  lk_msdyn_incidenttype_createdby?: msdyn_incidenttype_Result[] | null;
+  lk_msdyn_incidenttype_createdonbehalfby?: msdyn_incidenttype_Result[] | null;
+  lk_msdyn_incidenttype_modifiedby?: msdyn_incidenttype_Result[] | null;
+  lk_msdyn_incidenttype_modifiedonbehalfby?: msdyn_incidenttype_Result[] | null;
   lk_msdyn_incidenttypeservicetask_createdby?: msdyn_incidenttypeservicetask_Result[] | null;
   lk_msdyn_incidenttypeservicetask_createdonbehalfby?: msdyn_incidenttypeservicetask_Result[] | null;
   lk_msdyn_incidenttypeservicetask_modifiedby?: msdyn_incidenttypeservicetask_Result[] | null;
@@ -223,6 +227,10 @@ interface SystemUser_Relationships {
   lk_ts_incompleteworkorderreason_createdonbehalfby?: ts_IncompleteWorkOrderReason_Result[] | null;
   lk_ts_incompleteworkorderreason_modifiedby?: ts_IncompleteWorkOrderReason_Result[] | null;
   lk_ts_incompleteworkorderreason_modifiedonbehalfby?: ts_IncompleteWorkOrderReason_Result[] | null;
+  lk_ts_inspectionhours_createdby?: ts_InspectionHours_Result[] | null;
+  lk_ts_inspectionhours_createdonbehalfby?: ts_InspectionHours_Result[] | null;
+  lk_ts_inspectionhours_modifiedby?: ts_InspectionHours_Result[] | null;
+  lk_ts_inspectionhours_modifiedonbehalfby?: ts_InspectionHours_Result[] | null;
   lk_ts_operationactivity_createdby?: ts_OperationActivity_Result[] | null;
   lk_ts_operationactivity_createdonbehalfby?: ts_OperationActivity_Result[] | null;
   lk_ts_operationactivity_modifiedby?: ts_OperationActivity_Result[] | null;
@@ -258,6 +266,7 @@ interface SystemUser_Relationships {
   systemuser_bookableresource_UserId?: BookableResource_Result[] | null;
   systemuser_connections1?: Connection_Result[] | null;
   systemuser_connections2?: Connection_Result[] | null;
+  ts_InspectionHours?: ts_InspectionHours_Result | null;
   ts_enforcementaction_systemuser_createdby?: ts_enforcementaction_Result[] | null;
   ts_enforcementaction_systemuser_createdonbehalfby?: ts_enforcementaction_Result[] | null;
   ts_enforcementaction_systemuser_modifiedby?: ts_enforcementaction_Result[] | null;
@@ -267,6 +276,7 @@ interface SystemUser_Relationships {
   ts_incident_AdditionalInspectors2_systemuser?: Incident_Result[] | null;
   ts_ovs_Finding_NCATManager_SystemUser?: ovs_Finding_Result[] | null;
   ts_ovs_Finding_RATEManager_SystemUser?: ovs_Finding_Result[] | null;
+  ts_ts_inspectionhours_Inspector_systemuser?: ts_InspectionHours_Result[] | null;
   user_accounts?: Account_Result[] | null;
   user_appointment?: Appointment_Result[] | null;
   user_bookableresource?: BookableResource_Result[] | null;
@@ -278,6 +288,7 @@ interface SystemUser_Relationships {
   user_msdyn_customerasset?: msdyn_customerasset_Result[] | null;
   user_msdyn_customerassetcategory?: msdyn_customerassetcategory_Result[] | null;
   user_msdyn_functionallocation?: msdyn_FunctionalLocation_Result[] | null;
+  user_msdyn_incidenttype?: msdyn_incidenttype_Result[] | null;
   user_msdyn_incidenttypeservicetask?: msdyn_incidenttypeservicetask_Result[] | null;
   user_msdyn_servicetasktype?: msdyn_servicetasktype_Result[] | null;
   user_msdyn_workorder?: msdyn_workorder_Result[] | null;
@@ -291,6 +302,7 @@ interface SystemUser_Relationships {
   user_tc_tcfiscalyear?: tc_TCFiscalYear_Result[] | null;
   user_ts_assessmentscorethredshots?: ts_assessmentscorethredshots_Result[] | null;
   user_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
+  user_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
   user_ts_operationactivity?: ts_OperationActivity_Result[] | null;
   user_ts_operationcontact?: ts_operationcontact_Result[] | null;
   user_ts_questionnaireversion?: ts_questionnaireversion_Result[] | null;
@@ -638,6 +650,10 @@ interface SystemUser_Expand {
   lk_msdyn_functionallocation_createdonbehalfby: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { lk_msdyn_functionallocation_createdonbehalfby: msdyn_FunctionalLocation_Result[] }>;
   lk_msdyn_functionallocation_modifiedby: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { lk_msdyn_functionallocation_modifiedby: msdyn_FunctionalLocation_Result[] }>;
   lk_msdyn_functionallocation_modifiedonbehalfby: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { lk_msdyn_functionallocation_modifiedonbehalfby: msdyn_FunctionalLocation_Result[] }>;
+  lk_msdyn_incidenttype_createdby: WebExpand<SystemUser_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { lk_msdyn_incidenttype_createdby: msdyn_incidenttype_Result[] }>;
+  lk_msdyn_incidenttype_createdonbehalfby: WebExpand<SystemUser_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { lk_msdyn_incidenttype_createdonbehalfby: msdyn_incidenttype_Result[] }>;
+  lk_msdyn_incidenttype_modifiedby: WebExpand<SystemUser_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { lk_msdyn_incidenttype_modifiedby: msdyn_incidenttype_Result[] }>;
+  lk_msdyn_incidenttype_modifiedonbehalfby: WebExpand<SystemUser_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { lk_msdyn_incidenttype_modifiedonbehalfby: msdyn_incidenttype_Result[] }>;
   lk_msdyn_incidenttypeservicetask_createdby: WebExpand<SystemUser_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { lk_msdyn_incidenttypeservicetask_createdby: msdyn_incidenttypeservicetask_Result[] }>;
   lk_msdyn_incidenttypeservicetask_createdonbehalfby: WebExpand<SystemUser_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { lk_msdyn_incidenttypeservicetask_createdonbehalfby: msdyn_incidenttypeservicetask_Result[] }>;
   lk_msdyn_incidenttypeservicetask_modifiedby: WebExpand<SystemUser_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { lk_msdyn_incidenttypeservicetask_modifiedby: msdyn_incidenttypeservicetask_Result[] }>;
@@ -691,6 +707,10 @@ interface SystemUser_Expand {
   lk_ts_incompleteworkorderreason_createdonbehalfby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_createdonbehalfby: ts_IncompleteWorkOrderReason_Result[] }>;
   lk_ts_incompleteworkorderreason_modifiedby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_modifiedby: ts_IncompleteWorkOrderReason_Result[] }>;
   lk_ts_incompleteworkorderreason_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_modifiedonbehalfby: ts_IncompleteWorkOrderReason_Result[] }>;
+  lk_ts_inspectionhours_createdby: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { lk_ts_inspectionhours_createdby: ts_InspectionHours_Result[] }>;
+  lk_ts_inspectionhours_createdonbehalfby: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { lk_ts_inspectionhours_createdonbehalfby: ts_InspectionHours_Result[] }>;
+  lk_ts_inspectionhours_modifiedby: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { lk_ts_inspectionhours_modifiedby: ts_InspectionHours_Result[] }>;
+  lk_ts_inspectionhours_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { lk_ts_inspectionhours_modifiedonbehalfby: ts_InspectionHours_Result[] }>;
   lk_ts_operationactivity_createdby: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { lk_ts_operationactivity_createdby: ts_OperationActivity_Result[] }>;
   lk_ts_operationactivity_createdonbehalfby: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { lk_ts_operationactivity_createdonbehalfby: ts_OperationActivity_Result[] }>;
   lk_ts_operationactivity_modifiedby: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { lk_ts_operationactivity_modifiedby: ts_OperationActivity_Result[] }>;
@@ -729,6 +749,7 @@ interface SystemUser_Expand {
   systemuser_bookableresource_UserId: WebExpand<SystemUser_Expand, BookableResource_Select, BookableResource_Filter, { systemuser_bookableresource_UserId: BookableResource_Result[] }>;
   systemuser_connections1: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections1: Connection_Result[] }>;
   systemuser_connections2: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections2: Connection_Result[] }>;
+  ts_InspectionHours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { ts_InspectionHours: ts_InspectionHours_Result }>;
   ts_enforcementaction_systemuser_createdby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdby: ts_enforcementaction_Result[] }>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdonbehalfby: ts_enforcementaction_Result[] }>;
   ts_enforcementaction_systemuser_modifiedby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_modifiedby: ts_enforcementaction_Result[] }>;
@@ -738,6 +759,7 @@ interface SystemUser_Expand {
   ts_incident_AdditionalInspectors2_systemuser: WebExpand<SystemUser_Expand, Incident_Select, Incident_Filter, { ts_incident_AdditionalInspectors2_systemuser: Incident_Result[] }>;
   ts_ovs_Finding_NCATManager_SystemUser: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_NCATManager_SystemUser: ovs_Finding_Result[] }>;
   ts_ovs_Finding_RATEManager_SystemUser: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_RATEManager_SystemUser: ovs_Finding_Result[] }>;
+  ts_ts_inspectionhours_Inspector_systemuser: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { ts_ts_inspectionhours_Inspector_systemuser: ts_InspectionHours_Result[] }>;
   user_accounts: WebExpand<SystemUser_Expand, Account_Select, Account_Filter, { user_accounts: Account_Result[] }>;
   user_appointment: WebExpand<SystemUser_Expand, Appointment_Select, Appointment_Filter, { user_appointment: Appointment_Result[] }>;
   user_bookableresource: WebExpand<SystemUser_Expand, BookableResource_Select, BookableResource_Filter, { user_bookableresource: BookableResource_Result[] }>;
@@ -749,6 +771,7 @@ interface SystemUser_Expand {
   user_msdyn_customerasset: WebExpand<SystemUser_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { user_msdyn_customerasset: msdyn_customerasset_Result[] }>;
   user_msdyn_customerassetcategory: WebExpand<SystemUser_Expand, msdyn_customerassetcategory_Select, msdyn_customerassetcategory_Filter, { user_msdyn_customerassetcategory: msdyn_customerassetcategory_Result[] }>;
   user_msdyn_functionallocation: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { user_msdyn_functionallocation: msdyn_FunctionalLocation_Result[] }>;
+  user_msdyn_incidenttype: WebExpand<SystemUser_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { user_msdyn_incidenttype: msdyn_incidenttype_Result[] }>;
   user_msdyn_incidenttypeservicetask: WebExpand<SystemUser_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { user_msdyn_incidenttypeservicetask: msdyn_incidenttypeservicetask_Result[] }>;
   user_msdyn_servicetasktype: WebExpand<SystemUser_Expand, msdyn_servicetasktype_Select, msdyn_servicetasktype_Filter, { user_msdyn_servicetasktype: msdyn_servicetasktype_Result[] }>;
   user_msdyn_workorder: WebExpand<SystemUser_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { user_msdyn_workorder: msdyn_workorder_Result[] }>;
@@ -762,6 +785,7 @@ interface SystemUser_Expand {
   user_tc_tcfiscalyear: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { user_tc_tcfiscalyear: tc_TCFiscalYear_Result[] }>;
   user_ts_assessmentscorethredshots: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { user_ts_assessmentscorethredshots: ts_assessmentscorethredshots_Result[] }>;
   user_ts_incompleteworkorderreason: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { user_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
+  user_ts_inspectionhours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { user_ts_inspectionhours: ts_InspectionHours_Result[] }>;
   user_ts_operationactivity: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { user_ts_operationactivity: ts_OperationActivity_Result[] }>;
   user_ts_operationcontact: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { user_ts_operationcontact: ts_operationcontact_Result[] }>;
   user_ts_questionnaireversion: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { user_ts_questionnaireversion: ts_questionnaireversion_Result[] }>;
@@ -832,6 +856,7 @@ interface SystemUser_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   parentsystemuserid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_InspectionHours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
 }
 interface SystemUser_RelatedMany {
   SystemUser_Email_EmailSender: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
@@ -889,6 +914,10 @@ interface SystemUser_RelatedMany {
   lk_msdyn_functionallocation_createdonbehalfby: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   lk_msdyn_functionallocation_modifiedby: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   lk_msdyn_functionallocation_modifiedonbehalfby: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  lk_msdyn_incidenttype_createdby: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
+  lk_msdyn_incidenttype_createdonbehalfby: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
+  lk_msdyn_incidenttype_modifiedby: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
+  lk_msdyn_incidenttype_modifiedonbehalfby: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   lk_msdyn_incidenttypeservicetask_createdby: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
   lk_msdyn_incidenttypeservicetask_createdonbehalfby: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
   lk_msdyn_incidenttypeservicetask_modifiedby: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
@@ -942,6 +971,10 @@ interface SystemUser_RelatedMany {
   lk_ts_incompleteworkorderreason_createdonbehalfby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   lk_ts_incompleteworkorderreason_modifiedby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   lk_ts_incompleteworkorderreason_modifiedonbehalfby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
+  lk_ts_inspectionhours_createdby: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
+  lk_ts_inspectionhours_createdonbehalfby: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
+  lk_ts_inspectionhours_modifiedby: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
+  lk_ts_inspectionhours_modifiedonbehalfby: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   lk_ts_operationactivity_createdby: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   lk_ts_operationactivity_createdonbehalfby: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   lk_ts_operationactivity_modifiedby: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
@@ -986,6 +1019,7 @@ interface SystemUser_RelatedMany {
   ts_incident_AdditionalInspectors2_systemuser: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_ovs_Finding_NCATManager_SystemUser: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_Finding_RATEManager_SystemUser: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_ts_inspectionhours_Inspector_systemuser: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   user_accounts: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   user_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   user_bookableresource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
@@ -997,6 +1031,7 @@ interface SystemUser_RelatedMany {
   user_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   user_msdyn_customerassetcategory: WebMappingRetrieve<msdyn_customerassetcategory_Select,msdyn_customerassetcategory_Expand,msdyn_customerassetcategory_Filter,msdyn_customerassetcategory_Fixed,msdyn_customerassetcategory_Result,msdyn_customerassetcategory_FormattedResult>;
   user_msdyn_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  user_msdyn_incidenttype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   user_msdyn_incidenttypeservicetask: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
   user_msdyn_servicetasktype: WebMappingRetrieve<msdyn_servicetasktype_Select,msdyn_servicetasktype_Expand,msdyn_servicetasktype_Filter,msdyn_servicetasktype_Fixed,msdyn_servicetasktype_Result,msdyn_servicetasktype_FormattedResult>;
   user_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
@@ -1010,6 +1045,7 @@ interface SystemUser_RelatedMany {
   user_tc_tcfiscalyear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   user_ts_assessmentscorethredshots: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   user_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
+  user_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   user_ts_operationactivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   user_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   user_ts_questionnaireversion: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;

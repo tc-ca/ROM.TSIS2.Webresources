@@ -8,10 +8,12 @@ interface ts_OperationActivity_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   ts_name?: string | null;
   ts_operationactivityid?: string | null;
+  ts_operationalstatus?: ts_operationalstatus | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
 interface ts_OperationActivity_Relationships {
+  ts_Activity?: msdyn_incidenttype_Result | null;
   ts_Operation?: ovs_operation_Result | null;
 }
 interface ts_OperationActivity extends ts_OperationActivity_Base, ts_OperationActivity_Relationships {
@@ -44,6 +46,7 @@ interface ts_OperationActivity_Select {
   ts_name: WebAttribute<ts_OperationActivity_Select, { ts_name: string | null }, {  }>;
   ts_operation_guid: WebAttribute<ts_OperationActivity_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
   ts_operationactivityid: WebAttribute<ts_OperationActivity_Select, { ts_operationactivityid: string | null }, {  }>;
+  ts_operationalstatus: WebAttribute<ts_OperationActivity_Select, { ts_operationalstatus: ts_operationalstatus | null }, { ts_operationalstatus_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_OperationActivity_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_OperationActivity_Select, { versionnumber: number | null }, {  }>;
 }
@@ -67,6 +70,7 @@ interface ts_OperationActivity_Filter {
   ts_name: string;
   ts_operation_guid: XQW.Guid;
   ts_operationactivityid: XQW.Guid;
+  ts_operationalstatus: ts_operationalstatus;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -77,6 +81,7 @@ interface ts_OperationActivity_Expand {
   modifiedonbehalfby: WebExpand<ts_OperationActivity_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ownerid: WebExpand<ts_OperationActivity_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<ts_OperationActivity_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_Activity: WebExpand<ts_OperationActivity_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_Activity: msdyn_incidenttype_Result }>;
   ts_Operation: WebExpand<ts_OperationActivity_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_Operation: ovs_operation_Result }>;
 }
 interface ts_OperationActivity_FormattedResult {
@@ -95,6 +100,7 @@ interface ts_OperationActivity_FormattedResult {
   statuscode_formatted?: string;
   ts_activity_formatted?: string;
   ts_operation_formatted?: string;
+  ts_operationalstatus_formatted?: string;
 }
 interface ts_OperationActivity_Result extends ts_OperationActivity_Base, ts_OperationActivity_Relationships {
   "@odata.etag": string;
@@ -116,6 +122,7 @@ interface ts_OperationActivity_RelatedOne {
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_Activity: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_Operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
 }
 interface ts_OperationActivity_RelatedMany {

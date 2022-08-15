@@ -88,6 +88,8 @@ interface Incident_Relationships {
   ts_Contact_Incident_Incident?: Contact_Result[] | null;
   ts_Incident_Incident_ts_operationcontact?: ts_operationcontact_Result[] | null;
   ts_Incident_ts_operationcontact_ts_operation?: ts_operationcontact_Result[] | null;
+  ts_InspectionType1?: msdyn_incidenttype_Result | null;
+  ts_InspectionType2?: msdyn_incidenttype_Result | null;
   ts_WorkOrder1?: msdyn_workorder_Result | null;
   ts_WorkOrder2?: msdyn_workorder_Result | null;
   ts_WorkOrderServiceTask1?: msdyn_workorderservicetask_Result | null;
@@ -379,6 +381,7 @@ interface Incident_Expand {
   msdyn_FunctionalLocation: WebExpand<Incident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_FunctionalLocation: msdyn_FunctionalLocation_Result }>;
   msdyn_incident_msdyn_customerasset: WebExpand<Incident_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { msdyn_incident_msdyn_customerasset: msdyn_customerasset_Result[] }>;
   msdyn_incident_msdyn_workorder_ServiceRequest: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_incident_msdyn_workorder_ServiceRequest: msdyn_workorder_Result[] }>;
+  msdyn_incidenttype: WebExpand<Incident_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { msdyn_incidenttype: msdyn_incidenttype_Result }>;
   ovs_incident_msdyn_workorderservicetask: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ovs_incident_msdyn_workorderservicetask: msdyn_workorderservicetask_Result[] }>;
   ovs_incident_ovs_finding: WebExpand<Incident_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ovs_incident_ovs_finding: ovs_Finding_Result[] }>;
   ownerid: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
@@ -391,6 +394,8 @@ interface Incident_Expand {
   ts_Contact_Incident_Incident: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { ts_Contact_Incident_Incident: Contact_Result[] }>;
   ts_Incident_Incident_ts_operationcontact: WebExpand<Incident_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_Incident_Incident_ts_operationcontact: ts_operationcontact_Result[] }>;
   ts_Incident_ts_operationcontact_ts_operation: WebExpand<Incident_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_Incident_ts_operationcontact_ts_operation: ts_operationcontact_Result[] }>;
+  ts_InspectionType1: WebExpand<Incident_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_InspectionType1: msdyn_incidenttype_Result }>;
+  ts_InspectionType2: WebExpand<Incident_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_InspectionType2: msdyn_incidenttype_Result }>;
   ts_WorkOrder1: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder1: msdyn_workorder_Result }>;
   ts_WorkOrder2: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder2: msdyn_workorder_Result }>;
   ts_WorkOrderServiceTask1: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_WorkOrderServiceTask1: msdyn_workorderservicetask_Result }>;
@@ -526,6 +531,7 @@ interface Incident_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_FunctionalLocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  msdyn_incidenttype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   parentcaseid: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
@@ -533,6 +539,8 @@ interface Incident_RelatedOne {
   responsiblecontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_AdditionalInspectors1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_AdditionalInspectors2: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_InspectionType1: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
+  ts_InspectionType2: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_WorkOrder1: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_WorkOrder2: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_WorkOrderServiceTask1: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;

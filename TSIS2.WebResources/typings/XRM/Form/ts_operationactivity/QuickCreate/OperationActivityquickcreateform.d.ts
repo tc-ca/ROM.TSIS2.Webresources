@@ -14,6 +14,7 @@ declare namespace Form.ts_operationactivity.QuickCreate {
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ts_activity"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
+      get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -22,6 +23,7 @@ declare namespace Form.ts_operationactivity.QuickCreate {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "ts_activity"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
+      get(name: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -38,9 +40,11 @@ declare namespace Form.ts_operationactivity.QuickCreate {
   interface OperationActivityquickcreateform extends Xrm.PageBase<OperationActivityquickcreateform.Attributes,OperationActivityquickcreateform.Tabs,OperationActivityquickcreateform.Controls> {
     getAttribute(attributeName: "ts_activity"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
+    getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ts_activity"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
+    getControl(controlName: "ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
     getControl(controlName: string): undefined;
   }
 }

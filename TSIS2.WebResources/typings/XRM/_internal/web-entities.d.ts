@@ -193,6 +193,29 @@ interface msdyn_incident_msdyn_customerasset_Create extends msdyn_incident_msdyn
 }
 interface msdyn_incident_msdyn_customerasset_Update extends msdyn_incident_msdyn_customerasset {
 }
+interface msdyn_incidenttype_Base extends WebEntity {
+}
+interface msdyn_incidenttype_Fixed extends WebEntity_Fixed {
+  msdyn_incidenttypeid: string;
+}
+interface msdyn_incidenttype extends msdyn_incidenttype_Base, msdyn_incidenttype_Relationships {
+}
+interface msdyn_incidenttype_Relationships {
+}
+interface msdyn_incidenttype_Result extends msdyn_incidenttype_Base, msdyn_incidenttype_Relationships {
+}
+interface msdyn_incidenttype_FormattedResult {
+}
+interface msdyn_incidenttype_Select {
+}
+interface msdyn_incidenttype_Expand {
+}
+interface msdyn_incidenttype_Filter {
+}
+interface msdyn_incidenttype_Create extends msdyn_incidenttype {
+}
+interface msdyn_incidenttype_Update extends msdyn_incidenttype {
+}
 interface msdyn_incidenttypeservicetask_Base extends WebEntity {
 }
 interface msdyn_incidenttypeservicetask_Fixed extends WebEntity_Fixed {
@@ -468,6 +491,29 @@ interface ts_IncompleteWorkOrderReason_Filter {
 interface ts_IncompleteWorkOrderReason_Create extends ts_IncompleteWorkOrderReason {
 }
 interface ts_IncompleteWorkOrderReason_Update extends ts_IncompleteWorkOrderReason {
+}
+interface ts_InspectionHours_Base extends WebEntity {
+}
+interface ts_InspectionHours_Fixed extends WebEntity_Fixed {
+  ts_inspectionhoursid: string;
+}
+interface ts_InspectionHours extends ts_InspectionHours_Base, ts_InspectionHours_Relationships {
+}
+interface ts_InspectionHours_Relationships {
+}
+interface ts_InspectionHours_Result extends ts_InspectionHours_Base, ts_InspectionHours_Relationships {
+}
+interface ts_InspectionHours_FormattedResult {
+}
+interface ts_InspectionHours_Select {
+}
+interface ts_InspectionHours_Expand {
+}
+interface ts_InspectionHours_Filter {
+}
+interface ts_InspectionHours_Create extends ts_InspectionHours {
+}
+interface ts_InspectionHours_Update extends ts_InspectionHours {
 }
 interface ts_msdyn_customerasset_msdyn_customerasset_Base extends WebEntity {
 }
