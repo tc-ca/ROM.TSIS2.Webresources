@@ -1,6 +1,16 @@
 namespace ROM.EnforcementAction {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         let formContext = <Form.ts_enforcementaction.Main.Information>eContext.getFormContext();
+
+        //Enable type of enforcement action field if user is Admin
+        if(formContext.ui.getFormType() == 2 || formContext.ui.getFormType() == 3){
+            const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+            userRoles.forEach(role => {
+                if (role.name == "System Administrator") {
+                    formContext.getControl("ts_typeofenforcementaction").setDisabled(false);
+                }
+            });
+        }
         
         additionalDetailsVisibility(formContext);
 
