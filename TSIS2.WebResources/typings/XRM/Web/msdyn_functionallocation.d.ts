@@ -26,6 +26,7 @@ interface msdyn_FunctionalLocation_Base extends WebEntity {
   ts_functionallocationnamefrench?: string | null;
   ts_iatacode?: string | null;
   ts_icaocode?: string | null;
+  ts_riskscore?: number | null;
   ts_sitestatus?: ts_sitestatus | null;
   ts_statusenddate?: Date | null;
   ts_statusstartdate?: Date | null;
@@ -100,6 +101,7 @@ interface msdyn_FunctionalLocation_Select {
   ts_iatacode: WebAttribute<msdyn_FunctionalLocation_Select, { ts_iatacode: string | null }, {  }>;
   ts_icaocode: WebAttribute<msdyn_FunctionalLocation_Select, { ts_icaocode: string | null }, {  }>;
   ts_region_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
+  ts_riskscore: WebAttribute<msdyn_FunctionalLocation_Select, { ts_riskscore: number | null }, {  }>;
   ts_sitestatus: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitestatus: ts_sitestatus | null }, { ts_sitestatus_formatted?: string }>;
   ts_sitetype_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitetype_guid: string | null }, { ts_sitetype_formatted?: string }>;
   ts_statusenddate: WebAttribute<msdyn_FunctionalLocation_Select, { ts_statusenddate: Date | null }, { ts_statusenddate_formatted?: string }>;
@@ -146,6 +148,7 @@ interface msdyn_FunctionalLocation_Filter {
   ts_iatacode: string;
   ts_icaocode: string;
   ts_region_guid: XQW.Guid;
+  ts_riskscore: number;
   ts_sitestatus: ts_sitestatus;
   ts_sitetype_guid: XQW.Guid;
   ts_statusenddate: Date;

@@ -3,6 +3,7 @@ interface Incident_Base extends WebEntity {
   actualserviceunits?: number | null;
   billedserviceunits?: number | null;
   blockedprofile?: boolean | null;
+  caseage?: string | null;
   caseorigincode?: incident_caseorigincode | null;
   casetypecode?: incident_casetypecode | null;
   checkemail?: boolean | null;
@@ -10,6 +11,7 @@ interface Incident_Base extends WebEntity {
   createdon?: Date | null;
   customercontacted?: boolean | null;
   customersatisfactioncode?: incident_customersatisfactioncode | null;
+  deactivatedon?: Date | null;
   decremententitlementterm?: boolean | null;
   description?: string | null;
   emailaddress?: string | null;
@@ -26,10 +28,12 @@ interface Incident_Base extends WebEntity {
   influencescore?: number | null;
   isdecrementing?: boolean | null;
   isescalated?: boolean | null;
+  lastinteraction?: string | null;
   lastonholdtime?: Date | null;
   merged?: boolean | null;
   messagetypecode?: socialactivity_postmessagetype | null;
   modifiedon?: Date | null;
+  nextsla?: string | null;
   numberofchildincidents?: number | null;
   onholdtime?: number | null;
   overriddencreatedon?: Date | null;
@@ -73,6 +77,7 @@ interface Incident_Relationships {
   incident_existingcase?: Incident_Result[] | null;
   incident_master_incident?: Incident_Result[] | null;
   incident_parent_incident?: Incident_Result[] | null;
+  incident_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   msdyn_FunctionalLocation?: msdyn_FunctionalLocation_Result | null;
   msdyn_incident_msdyn_customerasset?: msdyn_customerasset_Result[] | null;
   msdyn_incident_msdyn_workorder_ServiceRequest?: msdyn_workorder_Result[] | null;
@@ -87,6 +92,7 @@ interface Incident_Relationships {
   ts_WorkOrder2?: msdyn_workorder_Result | null;
   ts_WorkOrderServiceTask1?: msdyn_workorderservicetask_Result | null;
   ts_WorkOrderServiceTask2?: msdyn_workorderservicetask_Result | null;
+  ts_enforcementaction_Incident_Incident?: ts_enforcementaction_Result[] | null;
   ts_incident_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
 }
 interface Incident extends Incident_Base, Incident_Relationships {
@@ -137,6 +143,7 @@ interface Incident_Select {
   actualserviceunits: WebAttribute<Incident_Select, { actualserviceunits: number | null }, {  }>;
   billedserviceunits: WebAttribute<Incident_Select, { billedserviceunits: number | null }, {  }>;
   blockedprofile: WebAttribute<Incident_Select, { blockedprofile: boolean | null }, {  }>;
+  caseage: WebAttribute<Incident_Select, { caseage: string | null }, {  }>;
   caseorigincode: WebAttribute<Incident_Select, { caseorigincode: incident_caseorigincode | null }, { caseorigincode_formatted?: string }>;
   casetypecode: WebAttribute<Incident_Select, { casetypecode: incident_casetypecode | null }, { casetypecode_formatted?: string }>;
   checkemail: WebAttribute<Incident_Select, { checkemail: boolean | null }, {  }>;
@@ -151,6 +158,7 @@ interface Incident_Select {
   customercontacted: WebAttribute<Incident_Select, { customercontacted: boolean | null }, {  }>;
   customerid_guid: WebAttribute<Incident_Select, { customerid_guid: string | null }, { customerid_formatted?: string }>;
   customersatisfactioncode: WebAttribute<Incident_Select, { customersatisfactioncode: incident_customersatisfactioncode | null }, { customersatisfactioncode_formatted?: string }>;
+  deactivatedon: WebAttribute<Incident_Select, { deactivatedon: Date | null }, { deactivatedon_formatted?: string }>;
   decremententitlementterm: WebAttribute<Incident_Select, { decremententitlementterm: boolean | null }, {  }>;
   description: WebAttribute<Incident_Select, { description: string | null }, {  }>;
   emailaddress: WebAttribute<Incident_Select, { emailaddress: string | null }, {  }>;
@@ -171,6 +179,7 @@ interface Incident_Select {
   isdecrementing: WebAttribute<Incident_Select, { isdecrementing: boolean | null }, {  }>;
   isescalated: WebAttribute<Incident_Select, { isescalated: boolean | null }, {  }>;
   kbarticleid_guid: WebAttribute<Incident_Select, { kbarticleid_guid: string | null }, { kbarticleid_formatted?: string }>;
+  lastinteraction: WebAttribute<Incident_Select, { lastinteraction: string | null }, {  }>;
   lastonholdtime: WebAttribute<Incident_Select, { lastonholdtime: Date | null }, { lastonholdtime_formatted?: string }>;
   masterid_guid: WebAttribute<Incident_Select, { masterid_guid: string | null }, { masterid_formatted?: string }>;
   merged: WebAttribute<Incident_Select, { merged: boolean | null }, {  }>;
@@ -182,6 +191,7 @@ interface Incident_Select {
   msdyn_functionallocation_guid: WebAttribute<Incident_Select, { msdyn_functionallocation_guid: string | null }, { msdyn_functionallocation_formatted?: string }>;
   msdyn_incidenttype_guid: WebAttribute<Incident_Select, { msdyn_incidenttype_guid: string | null }, { msdyn_incidenttype_formatted?: string }>;
   msdyn_iotalert_guid: WebAttribute<Incident_Select, { msdyn_iotalert_guid: string | null }, { msdyn_iotalert_formatted?: string }>;
+  nextsla: WebAttribute<Incident_Select, { nextsla: string | null }, {  }>;
   numberofchildincidents: WebAttribute<Incident_Select, { numberofchildincidents: number | null }, {  }>;
   onholdtime: WebAttribute<Incident_Select, { onholdtime: number | null }, {  }>;
   overriddencreatedon: WebAttribute<Incident_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
@@ -242,6 +252,7 @@ interface Incident_Filter {
   actualserviceunits: number;
   billedserviceunits: number;
   blockedprofile: boolean;
+  caseage: string;
   caseorigincode: incident_caseorigincode;
   casetypecode: incident_casetypecode;
   checkemail: boolean;
@@ -256,6 +267,7 @@ interface Incident_Filter {
   customercontacted: boolean;
   customerid_guid: XQW.Guid;
   customersatisfactioncode: incident_customersatisfactioncode;
+  deactivatedon: Date;
   decremententitlementterm: boolean;
   description: string;
   emailaddress: string;
@@ -276,6 +288,7 @@ interface Incident_Filter {
   isdecrementing: boolean;
   isescalated: boolean;
   kbarticleid_guid: XQW.Guid;
+  lastinteraction: string;
   lastonholdtime: Date;
   masterid_guid: XQW.Guid;
   merged: boolean;
@@ -287,6 +300,7 @@ interface Incident_Filter {
   msdyn_functionallocation_guid: XQW.Guid;
   msdyn_incidenttype_guid: XQW.Guid;
   msdyn_iotalert_guid: XQW.Guid;
+  nextsla: string;
   numberofchildincidents: number;
   onholdtime: number;
   overriddencreatedon: Date;
@@ -358,6 +372,7 @@ interface Incident_Expand {
   incident_existingcase: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { incident_existingcase: Incident_Result[] }>;
   incident_master_incident: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { incident_master_incident: Incident_Result[] }>;
   incident_parent_incident: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { incident_parent_incident: Incident_Result[] }>;
+  incident_ts_enforcementactions: WebExpand<Incident_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { incident_ts_enforcementactions: ts_enforcementaction_Result[] }>;
   masterid: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { masterid: Incident_Result }>;
   modifiedby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
@@ -380,6 +395,7 @@ interface Incident_Expand {
   ts_WorkOrder2: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder2: msdyn_workorder_Result }>;
   ts_WorkOrderServiceTask1: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_WorkOrderServiceTask1: msdyn_workorderservicetask_Result }>;
   ts_WorkOrderServiceTask2: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_WorkOrderServiceTask2: msdyn_workorderservicetask_Result }>;
+  ts_enforcementaction_Incident_Incident: WebExpand<Incident_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_Incident_Incident: ts_enforcementaction_Result[] }>;
   ts_incident_ts_workordercreationwizard: WebExpand<Incident_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_incident_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
 }
 interface Incident_FormattedResult {
@@ -396,6 +412,7 @@ interface Incident_FormattedResult {
   createdonbehalfby_formatted?: string;
   customerid_formatted?: string;
   customersatisfactioncode_formatted?: string;
+  deactivatedon_formatted?: string;
   entitlementid_formatted?: string;
   escalatedon_formatted?: string;
   existingcase_formatted?: string;
@@ -533,6 +550,7 @@ interface Incident_RelatedMany {
   incident_existingcase: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   incident_master_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   incident_parent_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  incident_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   msdyn_incident_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_incident_msdyn_workorder_ServiceRequest: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_incident_msdyn_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
@@ -540,6 +558,7 @@ interface Incident_RelatedMany {
   ts_Contact_Incident_Incident: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_Incident_Incident_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_Incident_ts_operationcontact_ts_operation: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
+  ts_enforcementaction_Incident_Incident: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_incident_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

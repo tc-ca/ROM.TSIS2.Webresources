@@ -18,6 +18,7 @@ interface ts_RiskCategory_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_RiskCategory_Relationships {
+  ts_riskcategory_ovs_operation_risk?: ovs_operation_Result[] | null;
 }
 interface ts_RiskCategory extends ts_RiskCategory_Base, ts_RiskCategory_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -94,6 +95,7 @@ interface ts_RiskCategory_Expand {
   modifiedonbehalfby: WebExpand<ts_RiskCategory_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ownerid: WebExpand<ts_RiskCategory_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<ts_RiskCategory_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_riskcategory_ovs_operation_risk: WebExpand<ts_RiskCategory_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_riskcategory_ovs_operation_risk: ovs_operation_Result[] }>;
 }
 interface ts_RiskCategory_FormattedResult {
   createdby_formatted?: string;
@@ -134,6 +136,7 @@ interface ts_RiskCategory_RelatedOne {
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface ts_RiskCategory_RelatedMany {
+  ts_riskcategory_ovs_operation_risk: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_riskcategories: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;

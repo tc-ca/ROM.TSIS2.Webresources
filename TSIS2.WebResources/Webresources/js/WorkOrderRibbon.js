@@ -517,3 +517,22 @@ function planningWorkOrder(data) {
         }
     });
 }
+
+function justifyWorkOrder(data) {
+    Xrm.Navigation.navigateTo({
+        pageType: "bulkedit",
+        entityName: "msdyn_workorder",
+        entityIds: data,
+        formId: "85a91458-af19-ed11-b83f-002248ae441f"
+    }, {
+        target: 2,
+        width: {
+            value: 65,
+            unit: "%"
+        },
+        height: {
+            value: 65,
+            unit: "%"
+        }
+    });
+}
