@@ -98,6 +98,7 @@ namespace ROM.Operation {
                     }
                 }
                 else if(form.ui.getFormType() == 2){ //Update
+                    showOperationActivityTabIfAvSec(form);
                     //We filter the form on the business unit of the owner of the record
                     let ownerAttribute = form.getAttribute("ownerid").getValue();
                     if(ownerAttribute != null){
@@ -119,6 +120,9 @@ namespace ROM.Operation {
                       form.getControl('ts_subsite').setDisabled(false);
                     }
                 }
+                else if(form.ui.getFormType() == 3 || form.ui.getFormType() == 4){
+                    showOperationActivityTabIfAvSec(form);
+                }
             }
         });
 
@@ -127,6 +131,31 @@ namespace ROM.Operation {
             form.getControl("ts_description").setDisabled(false);
             form.getAttribute("ts_description").setRequiredLevel("required");
         }
+    }
+
+    export function showOperationActivityTabIfAvSec(form: Form.ovs_operation.Main.Information): void {
+        Xrm.WebApi.retrieveRecord('ovs_operation', form.data.entity.getId(), "?$select=_owningbusinessunit_value").then(
+            function success(operation) {
+                let businessUnitfetchXml = [
+                    "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' returntotalrecordcount='true' no-lock='false'>",
+                    "  <entity name='businessunit'>",
+                    "    <attribute name='name'/>",
+                    "    <attribute name='businessunitid'/>",
+                    "    <filter>",
+                    "      <condition attribute='businessunitid' operator='eq' value='", operation._owningbusinessunit_value, "'/>",
+                    "    </filter>",
+                    "  </entity>",
+                    "</fetch>"
+                ].join("");
+                businessUnitfetchXml = "?fetchXml=" + businessUnitfetchXml;
+            
+                Xrm.WebApi.retrieveMultipleRecords("businessunit", businessUnitfetchXml).then(function (result) {
+                    if(result.entities[0].name.startsWith("Aviation")){
+                        form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                    }  
+                });                     
+            }
+        );
     }
 
 
