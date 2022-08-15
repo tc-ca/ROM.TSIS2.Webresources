@@ -47,7 +47,9 @@ interface ovs_operation_Relationships {
   ts_msdyn_workorder_ovs_operation_ovs_operati?: msdyn_workorder_Result[] | null;
   ts_operation_ts_operationcontact_operation?: ts_operationcontact_Result[] | null;
   ts_ovs_Finding_operationid_ovs_operation?: ovs_Finding_Result[] | null;
+  ts_ovs_operation_ovs_operation_msdyn_inciden?: msdyn_incidenttype_Result[] | null;
   ts_ovs_operation_ovs_operation_ovs_operation?: ovs_operation_Result[] | null;
+  ts_ts_operationactivity_Operation_ovs_operat?: ts_OperationActivity_Result[] | null;
 }
 interface ovs_operation extends ovs_operation_Base, ovs_operation_Relationships {
   ovs_LOBId_bind$ovs_lobs?: string | null;
@@ -186,11 +188,13 @@ interface ovs_operation_Expand {
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: msdyn_workorder_Result[] }>;
   ts_operation_ts_operationcontact_operation: WebExpand<ovs_operation_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operation_ts_operationcontact_operation: ts_operationcontact_Result[] }>;
   ts_ovs_Finding_operationid_ovs_operation: WebExpand<ovs_operation_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_operationid_ovs_operation: ovs_Finding_Result[] }>;
+  ts_ovs_operation_ovs_operation_msdyn_inciden: WebExpand<ovs_operation_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_ovs_operation_ovs_operation_msdyn_inciden: msdyn_incidenttype_Result[] }>;
   ts_ovs_operation_ovs_operation_ovs_operation: WebExpand<ovs_operation_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_ovs_operation_ovs_operation: ovs_operation_Result[] }>;
   ts_risk: WebExpand<ovs_operation_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { ts_risk: ts_RiskCategory_Result }>;
   ts_site: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_site: msdyn_FunctionalLocation_Result }>;
   ts_stakeholder: WebExpand<ovs_operation_Expand, Account_Select, Account_Filter, { ts_stakeholder: Account_Result }>;
   ts_subsite: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_subsite: msdyn_FunctionalLocation_Result }>;
+  ts_ts_operationactivity_Operation_ovs_operat: WebExpand<ovs_operation_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Operation_ovs_operat: ts_OperationActivity_Result[] }>;
 }
 interface ovs_operation_FormattedResult {
   createdby_formatted?: string;
@@ -270,7 +274,9 @@ interface ovs_operation_RelatedMany {
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_operation_ts_operationcontact_operation: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_ovs_Finding_operationid_ovs_operation: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_ovs_operation_ovs_operation_msdyn_inciden: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_ovs_operation_ovs_operation_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_ts_operationactivity_Operation_ovs_operat: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ovs_operations: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;

@@ -193,6 +193,29 @@ interface msdyn_incident_msdyn_customerasset_Create extends msdyn_incident_msdyn
 }
 interface msdyn_incident_msdyn_customerasset_Update extends msdyn_incident_msdyn_customerasset {
 }
+interface msdyn_incidenttype_Base extends WebEntity {
+}
+interface msdyn_incidenttype_Fixed extends WebEntity_Fixed {
+  msdyn_incidenttypeid: string;
+}
+interface msdyn_incidenttype extends msdyn_incidenttype_Base, msdyn_incidenttype_Relationships {
+}
+interface msdyn_incidenttype_Relationships {
+}
+interface msdyn_incidenttype_Result extends msdyn_incidenttype_Base, msdyn_incidenttype_Relationships {
+}
+interface msdyn_incidenttype_FormattedResult {
+}
+interface msdyn_incidenttype_Select {
+}
+interface msdyn_incidenttype_Expand {
+}
+interface msdyn_incidenttype_Filter {
+}
+interface msdyn_incidenttype_Create extends msdyn_incidenttype {
+}
+interface msdyn_incidenttype_Update extends msdyn_incidenttype {
+}
 interface msdyn_incidenttypeservicetask_Base extends WebEntity {
 }
 interface msdyn_incidenttypeservicetask_Fixed extends WebEntity_Fixed {
@@ -583,6 +606,29 @@ interface ts_msdyn_workorder_ts_operationcontact_Filter {
 interface ts_msdyn_workorder_ts_operationcontact_Create extends ts_msdyn_workorder_ts_operationcontact {
 }
 interface ts_msdyn_workorder_ts_operationcontact_Update extends ts_msdyn_workorder_ts_operationcontact {
+}
+interface ts_OperationActivity_Base extends WebEntity {
+}
+interface ts_OperationActivity_Fixed extends WebEntity_Fixed {
+  ts_operationactivityid: string;
+}
+interface ts_OperationActivity extends ts_OperationActivity_Base, ts_OperationActivity_Relationships {
+}
+interface ts_OperationActivity_Relationships {
+}
+interface ts_OperationActivity_Result extends ts_OperationActivity_Base, ts_OperationActivity_Relationships {
+}
+interface ts_OperationActivity_FormattedResult {
+}
+interface ts_OperationActivity_Select {
+}
+interface ts_OperationActivity_Expand {
+}
+interface ts_OperationActivity_Filter {
+}
+interface ts_OperationActivity_Create extends ts_OperationActivity {
+}
+interface ts_OperationActivity_Update extends ts_OperationActivity {
 }
 interface ts_operationcontact_Base extends WebEntity {
 }

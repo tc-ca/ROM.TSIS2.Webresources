@@ -437,6 +437,7 @@ interface msdyn_workorder_Expand {
   msdyn_msdyn_workorder_msdyn_workorderservicetask_WorkOrder: WebExpand<msdyn_workorder_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { msdyn_msdyn_workorder_msdyn_workorderservicetask_WorkOrder: msdyn_workorderservicetask_Result[] }>;
   msdyn_parentworkorder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_parentworkorder_msdyn_workorder: msdyn_workorder_Result }>;
   msdyn_preferredresource: WebExpand<msdyn_workorder_Expand, BookableResource_Select, BookableResource_Filter, { msdyn_preferredresource: BookableResource_Result }>;
+  msdyn_primaryincidenttype: WebExpand<msdyn_workorder_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { msdyn_primaryincidenttype: msdyn_incidenttype_Result }>;
   msdyn_reportedbycontact: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { msdyn_reportedbycontact: Contact_Result }>;
   msdyn_serviceaccount: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { msdyn_serviceaccount: Account_Result }>;
   msdyn_servicerequest: WebExpand<msdyn_workorder_Expand, Incident_Select, Incident_Filter, { msdyn_servicerequest: Incident_Result }>;
@@ -624,6 +625,7 @@ interface msdyn_workorder_RelatedOne {
   msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_parentworkorder_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_preferredresource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
+  msdyn_primaryincidenttype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   msdyn_reportedbycontact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   msdyn_serviceaccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_servicerequest: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;

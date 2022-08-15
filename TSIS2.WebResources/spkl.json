@@ -140,6 +140,11 @@
               "description": "ROM TSIS 2.0 Incident Form Scripts"
             },
             {
+              "uniquename": "ovs_/js/IncidentType.js",
+              "file": "js\\IncidentType.js",
+              "description": "ROM TSIS 2.0 Incident Type Form Scripts"
+            },
+            {
               "uniquename": "ovs_/js/IncidentTypeServiceTask.js",
               "file": "js\\IncidentTypeServiceTask.js",
               "description": "ROM TSIS 2.0 Incident Type Service Task Form Scripts"
@@ -148,6 +153,11 @@
               "uniquename": "ts_/js/Operation.js",
               "file": "js\\Operation.js",
               "description": "ROM TSIS 2.0 Operation Form Scripts"
+            },
+            {
+              "uniquename": "ts_/js/OperationActivityQuickCreate.js",
+              "file": "js\\OperationActivityQuickCreate.js",
+              "description": "ROM TSIS 2.0 Operation Activity Form Scripts"
             },
             {
               "uniquename": "ts_/js/OperationContact.js",
