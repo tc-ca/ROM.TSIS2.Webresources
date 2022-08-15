@@ -28,4 +28,21 @@ namespace ROM.IncidentType {
             );
         }
     }
+
+    export function setFieldsDisabled(eContext: Xrm.ExecutionContext<any, any>) {
+        const formContext = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+        const gridContext = formContext.getControl("operation_activity_grid");
+        if (formContext) {
+            let arrFields = ["ts_operation", "ts_activity"];
+            let objEntity = formContext.data.entity;
+            objEntity.attributes.forEach(
+                function (attribute, i) { 
+                    if (arrFields.indexOf(attribute.getName()) > -1) {
+                        let attributeToDisable = attribute.controls.get(0);
+                        attributeToDisable.setDisabled(true);
+                    }
+                }
+            );
+        };
+    }
 }

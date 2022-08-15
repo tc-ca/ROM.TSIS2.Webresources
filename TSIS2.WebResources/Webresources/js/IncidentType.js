@@ -29,5 +29,21 @@ var ROM;
             }
         }
         IncidentType.onLoad = onLoad;
+        function setFieldsDisabled(eContext) {
+            var formContext = eContext.getFormContext();
+            var gridContext = formContext.getControl("operation_activity_grid");
+            if (formContext) {
+                var arrFields_1 = ["ts_operation", "ts_activity"];
+                var objEntity = formContext.data.entity;
+                objEntity.attributes.forEach(function (attribute, i) {
+                    if (arrFields_1.indexOf(attribute.getName()) > -1) {
+                        var attributeToDisable = attribute.controls.get(0);
+                        attributeToDisable.setDisabled(true);
+                    }
+                });
+            }
+            ;
+        }
+        IncidentType.setFieldsDisabled = setFieldsDisabled;
     })(IncidentType = ROM.IncidentType || (ROM.IncidentType = {}));
 })(ROM || (ROM = {}));
