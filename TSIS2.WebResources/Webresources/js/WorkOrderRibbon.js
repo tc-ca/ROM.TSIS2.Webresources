@@ -536,3 +536,27 @@ function justifyWorkOrder(data) {
         }
     });
 }
+
+function workOrdersAddToTrip(data) {
+    var parameters = {};
+    if (data != null && data.length > 0) {
+        parameters["ts_name"] = "Add " + data.length + " work order(s) to trip";
+        parameters["ts_inspections"] = data.toString();
+    }
+
+    Xrm.Navigation.navigateTo({
+        pageType: "entityrecord",
+        entityName: "ts_tripinspectionbatchadd",
+        data: parameters
+    }, {
+        target: 2,
+        width: {
+            value: 65,
+            unit: "%"
+        },
+        height: {
+            value: 65,
+            unit: "%"
+        }
+    });
+}
