@@ -49,7 +49,7 @@ namespace ROM.FunctionalLocation {
                     {
                         entityType: "savedquery",
                         id: "{4361bdce-d4ae-ec11-983e-002248ade910}",
-                        name: "Active Operations ISSO"
+                        name: "Active Operations ISSO (Site)"
                     }
                     form.getControl("Operations").getViewSelector().setCurrentView(operationView);
                 }
