@@ -21,7 +21,7 @@ namespace ROM.IncidentType {
 
                     Xrm.WebApi.retrieveMultipleRecords("businessunit", businessUnitfetchXml).then(function (result) {
                         if(result.entities[0].name.startsWith("Aviation")){
-                            form.ui.tabs.get("activity_operation_tab").setVisible(true);
+                            form.ui.tabs.get("operation_activity_tab").setVisible(true);
                         }  
                     });                     
                 }
