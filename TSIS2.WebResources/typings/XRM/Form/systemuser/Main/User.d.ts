@@ -55,7 +55,7 @@ declare namespace Form.systemuser.Main {
       get(name: "address1_country"): Xrm.Attribute<string> | null;
       get(name: "address1_fax"): Xrm.Attribute<string>;
       get(name: "address1_latitude"): Xrm.NumberAttribute;
-      get(name: "address1_line1"): Xrm.Attribute<string>;
+      get(name: "address1_line1"): Xrm.Attribute<any>;
       get(name: "address1_line2"): Xrm.Attribute<string> | null;
       get(name: "address1_line3"): Xrm.Attribute<string> | null;
       get(name: "address1_longitude"): Xrm.NumberAttribute;
@@ -67,7 +67,7 @@ declare namespace Form.systemuser.Main {
       get(name: "address2_city"): Xrm.Attribute<string> | null;
       get(name: "address2_composite"): Xrm.Attribute<string> | null;
       get(name: "address2_country"): Xrm.Attribute<string> | null;
-      get(name: "address2_line1"): Xrm.Attribute<string>;
+      get(name: "address2_line1"): Xrm.Attribute<any>;
       get(name: "address2_line2"): Xrm.Attribute<string> | null;
       get(name: "address2_line3"): Xrm.Attribute<string> | null;
       get(name: "address2_postalcode"): Xrm.Attribute<string> | null;
@@ -115,7 +115,7 @@ declare namespace Form.systemuser.Main {
       get(name: "address1_composite_compositionLinkControl_address1_stateorprovince"): Xrm.StringControl | null;
       get(name: "address1_fax"): Xrm.StringControl;
       get(name: "address1_latitude"): Xrm.NumberControl;
-      get(name: "address1_line1"): Xrm.StringControl;
+      get(name: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "address1_longitude"): Xrm.NumberControl;
       get(name: "address1_telephone1"): Xrm.StringControl;
       get(name: "address1_telephone2"): Xrm.StringControl;
@@ -128,7 +128,7 @@ declare namespace Form.systemuser.Main {
       get(name: "address2_composite_compositionLinkControl_address2_line3"): Xrm.StringControl | null;
       get(name: "address2_composite_compositionLinkControl_address2_postalcode"): Xrm.StringControl | null;
       get(name: "address2_composite_compositionLinkControl_address2_stateorprovince"): Xrm.StringControl | null;
-      get(name: "address2_line1"): Xrm.StringControl;
+      get(name: "address2_line1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "businessunitid"): Xrm.LookupControl<"businessunit">;
       get(name: "caltype"): Xrm.OptionSetControl<systemuser_caltype>;
       get(name: "defaultmailbox"): Xrm.LookupControl<"mailbox">;
@@ -177,7 +177,7 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: "address1_country"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_fax"): Xrm.Attribute<string>;
     getAttribute(attributeName: "address1_latitude"): Xrm.NumberAttribute;
-    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<any>;
     getAttribute(attributeName: "address1_line2"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_line3"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address1_longitude"): Xrm.NumberAttribute;
@@ -189,7 +189,7 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: "address2_city"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address2_composite"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address2_country"): Xrm.Attribute<string> | null;
-    getAttribute(attributeName: "address2_line1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "address2_line1"): Xrm.Attribute<any>;
     getAttribute(attributeName: "address2_line2"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address2_line3"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address2_postalcode"): Xrm.Attribute<string> | null;
@@ -232,7 +232,7 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "address1_composite_compositionLinkControl_address1_stateorprovince"): Xrm.StringControl | null;
     getControl(controlName: "address1_fax"): Xrm.StringControl;
     getControl(controlName: "address1_latitude"): Xrm.NumberControl;
-    getControl(controlName: "address1_line1"): Xrm.StringControl;
+    getControl(controlName: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "address1_longitude"): Xrm.NumberControl;
     getControl(controlName: "address1_telephone1"): Xrm.StringControl;
     getControl(controlName: "address1_telephone2"): Xrm.StringControl;
@@ -245,7 +245,7 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "address2_composite_compositionLinkControl_address2_line3"): Xrm.StringControl | null;
     getControl(controlName: "address2_composite_compositionLinkControl_address2_postalcode"): Xrm.StringControl | null;
     getControl(controlName: "address2_composite_compositionLinkControl_address2_stateorprovince"): Xrm.StringControl | null;
-    getControl(controlName: "address2_line1"): Xrm.StringControl;
+    getControl(controlName: "address2_line1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "businessunitid"): Xrm.LookupControl<"businessunit">;
     getControl(controlName: "caltype"): Xrm.OptionSetControl<systemuser_caltype>;
     getControl(controlName: "defaultmailbox"): Xrm.LookupControl<"mailbox">;

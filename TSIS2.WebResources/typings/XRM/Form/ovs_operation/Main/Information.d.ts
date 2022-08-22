@@ -24,13 +24,6 @@ declare namespace Form.ovs_operation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface rel_operations_tab extends Xrm.SectionCollectionBase {
-        get(name: "tab_2_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
       interface tab_5 extends Xrm.SectionCollectionBase {
         get(name: "tab_5_section_1"): Xrm.PageSection;
         get(name: "tab_5_section_2"): Xrm.PageSection;
@@ -80,6 +73,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
+      get(name: "ts_stationtype"): Xrm.OptionSetAttribute<ts_stationtype>;
       get(name: "ts_statusenddate"): Xrm.DateAttribute;
       get(name: "ts_statusstartdate"): Xrm.DateAttribute;
       get(name: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -94,9 +88,7 @@ declare namespace Form.ovs_operation.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
-      get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
-      get(name: "Subgrid_new_2"): Xrm.SubGridControl<"ts_operationactivity">;
       get(name: "WebResource_PPEGuide"): Xrm.WebResourceControl;
       get(name: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
@@ -127,6 +119,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
+      get(name: "ts_stationtype"): Xrm.OptionSetControl<ts_stationtype>;
       get(name: "ts_statusenddate"): Xrm.DateControl;
       get(name: "ts_statusstartdate"): Xrm.DateControl;
       get(name: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
@@ -143,7 +136,6 @@ declare namespace Form.ovs_operation.Main {
       get(name: "WorkOrders"): Xrm.PageTab<Tabs.WorkOrders>;
       get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}"): Xrm.PageTab<Tabs.bb4b118ea1c94e04ae4d8c6a177ee56c>;
       get(name: "operation_activity_tab"): Xrm.PageTab<Tabs.operation_activity_tab>;
-      get(name: "rel_operations_tab"): Xrm.PageTab<Tabs.rel_operations_tab>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: "tab_properties"): Xrm.PageTab<Tabs.tab_properties>;
@@ -176,6 +168,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "ts_stationtype"): Xrm.OptionSetAttribute<ts_stationtype>;
     getAttribute(attributeName: "ts_statusenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_statusstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -185,9 +178,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetAttribute<ts_visualsecurityinspectiondetails>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
-    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
-    getControl(controlName: "Subgrid_new_2"): Xrm.SubGridControl<"ts_operationactivity">;
     getControl(controlName: "WebResource_PPEGuide"): Xrm.WebResourceControl;
     getControl(controlName: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
@@ -218,6 +209,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
+    getControl(controlName: "ts_stationtype"): Xrm.OptionSetControl<ts_stationtype>;
     getControl(controlName: "ts_statusenddate"): Xrm.DateControl;
     getControl(controlName: "ts_statusstartdate"): Xrm.DateControl;
     getControl(controlName: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
