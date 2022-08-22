@@ -676,6 +676,29 @@ interface ts_ovs_operation_ovs_operation_Create extends ts_ovs_operation_ovs_ope
 }
 interface ts_ovs_operation_ovs_operation_Update extends ts_ovs_operation_ovs_operation {
 }
+interface ts_planningsettings_Base extends WebEntity {
+}
+interface ts_planningsettings_Fixed extends WebEntity_Fixed {
+  ts_planningsettingsid: string;
+}
+interface ts_planningsettings extends ts_planningsettings_Base, ts_planningsettings_Relationships {
+}
+interface ts_planningsettings_Relationships {
+}
+interface ts_planningsettings_Result extends ts_planningsettings_Base, ts_planningsettings_Relationships {
+}
+interface ts_planningsettings_FormattedResult {
+}
+interface ts_planningsettings_Select {
+}
+interface ts_planningsettings_Expand {
+}
+interface ts_planningsettings_Filter {
+}
+interface ts_planningsettings_Create extends ts_planningsettings {
+}
+interface ts_planningsettings_Update extends ts_planningsettings {
+}
 interface ts_questionnaireversion_Base extends WebEntity {
 }
 interface ts_questionnaireversion_Fixed extends WebEntity_Fixed {

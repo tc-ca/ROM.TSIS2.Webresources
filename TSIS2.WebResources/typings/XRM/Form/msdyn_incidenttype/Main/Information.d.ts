@@ -8,13 +8,6 @@ declare namespace Form.msdyn_incidenttype.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface activity_operation_tab extends Xrm.SectionCollectionBase {
-        get(name: "tab_9_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
       interface c6408e8549e74216bf96986a20c64ecb extends Xrm.SectionCollectionBase {
         get(name: "{2405DB6B-E18C-49E5-A76B-505837745C84}"): Xrm.PageSection;
         get(name: "{aa02fbb3-348e-4f8c-bc8e-1fe3f9bd7d90}"): Xrm.PageSection;
@@ -27,6 +20,13 @@ declare namespace Form.msdyn_incidenttype.Main {
         get(name: "KnowledgeArticleSection"): Xrm.PageSection;
         get(name: "f1tab_details_section_4"): Xrm.PageSection;
         get(name: "tab_3_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface operation_activity_tab extends Xrm.SectionCollectionBase {
+        get(name: "tab_9_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -84,7 +84,6 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "Incident_Type_Resolutions"): Xrm.SubGridControl<"msdyn_incidenttyperesolution">;
       get(name: "KnowledgeArticle_IncidentType"): Xrm.SubGridControl<"knowledgearticle">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operationtype">;
-      get(name: "Subgrid_new_2"): Xrm.SubGridControl<"ts_operationactivity">;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_incidenttype_statecode>;
       get(name: "incidentproductssubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeproduct">;
       get(name: "incidentservicessubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeservice">;
@@ -96,6 +95,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "msdyn_name"): Xrm.StringControl;
       get(name: "msdyn_suggestedduration"): Xrm.NumberControl;
       get(name: "notescontrol"): Xrm.BaseControl;
+      get(name: "operation_activity_grid"): Xrm.BaseControl;
       get(name: "ovs_incidenttypenameenglish"): Xrm.StringControl;
       get(name: "ovs_incidenttypenamefrench"): Xrm.StringControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -108,9 +108,9 @@ declare namespace Form.msdyn_incidenttype.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "Incident Type Resolutions"): Xrm.PageTab<Tabs.IncidentTypeResolutions>;
-      get(name: "activity_operation_tab"): Xrm.PageTab<Tabs.activity_operation_tab>;
       get(name: "{c6408e85-49e7-4216-bf96-986a20c64ecb}"): Xrm.PageTab<Tabs.c6408e8549e74216bf96986a20c64ecb>;
       get(name: "f1tab_details"): Xrm.PageTab<Tabs.f1tab_details>;
+      get(name: "operation_activity_tab"): Xrm.PageTab<Tabs.operation_activity_tab>;
       get(name: "tab_4"): Xrm.PageTab<Tabs.tab_4>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
@@ -139,7 +139,6 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "Incident_Type_Resolutions"): Xrm.SubGridControl<"msdyn_incidenttyperesolution">;
     getControl(controlName: "KnowledgeArticle_IncidentType"): Xrm.SubGridControl<"knowledgearticle">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operationtype">;
-    getControl(controlName: "Subgrid_new_2"): Xrm.SubGridControl<"ts_operationactivity">;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_incidenttype_statecode>;
     getControl(controlName: "incidentproductssubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeproduct">;
     getControl(controlName: "incidentservicessubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeservice">;
@@ -151,6 +150,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "msdyn_name"): Xrm.StringControl;
     getControl(controlName: "msdyn_suggestedduration"): Xrm.NumberControl;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
+    getControl(controlName: "operation_activity_grid"): Xrm.BaseControl;
     getControl(controlName: "ovs_incidenttypenameenglish"): Xrm.StringControl;
     getControl(controlName: "ovs_incidenttypenamefrench"): Xrm.StringControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;

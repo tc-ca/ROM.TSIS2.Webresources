@@ -26,6 +26,7 @@ interface ovs_operation_Base extends WebEntity {
   ts_riskthreshold?: string | null;
   ts_securityinspectiondetails?: ts_securityinspectiondetails | null;
   ts_specializedpperequired?: boolean | null;
+  ts_stationtype?: ts_stationtype | null;
   ts_statusenddate?: Date | null;
   ts_statusstartdate?: Date | null;
   ts_typeofdangerousgoods?: ts_typeofdangerousgoods | null;
@@ -108,6 +109,7 @@ interface ovs_operation_Select {
   ts_site_guid: WebAttribute<ovs_operation_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_specializedpperequired: WebAttribute<ovs_operation_Select, { ts_specializedpperequired: boolean | null }, {  }>;
   ts_stakeholder_guid: WebAttribute<ovs_operation_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
+  ts_stationtype: WebAttribute<ovs_operation_Select, { ts_stationtype: ts_stationtype | null }, { ts_stationtype_formatted?: string }>;
   ts_statusenddate: WebAttribute<ovs_operation_Select, { ts_statusenddate: Date | null }, { ts_statusenddate_formatted?: string }>;
   ts_statusstartdate: WebAttribute<ovs_operation_Select, { ts_statusstartdate: Date | null }, { ts_statusstartdate_formatted?: string }>;
   ts_subsite_guid: WebAttribute<ovs_operation_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
@@ -160,6 +162,7 @@ interface ovs_operation_Filter {
   ts_site_guid: XQW.Guid;
   ts_specializedpperequired: boolean;
   ts_stakeholder_guid: XQW.Guid;
+  ts_stationtype: ts_stationtype;
   ts_statusenddate: Date;
   ts_statusstartdate: Date;
   ts_subsite_guid: XQW.Guid;
@@ -224,6 +227,7 @@ interface ovs_operation_FormattedResult {
   ts_securityinspectiondetails_formatted?: string;
   ts_site_formatted?: string;
   ts_stakeholder_formatted?: string;
+  ts_stationtype_formatted?: string;
   ts_statusenddate_formatted?: string;
   ts_statusstartdate_formatted?: string;
   ts_subsite_formatted?: string;
