@@ -62,6 +62,7 @@ namespace ROM.FunctionalLocation {
             form.getControl("ts_description").setDisabled(false);
             form.getAttribute("ts_description").setRequiredLevel("required");
         }
+        riskScoreVisibility(form);
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -169,5 +170,20 @@ namespace ROM.FunctionalLocation {
             classAttribute.setValue(null);
             form.getControl("ts_class").setVisible(false);
         }
+    }
+
+    //Shows the Risk Score field only when the Class is 2 or 3
+    function riskScoreVisibility(form: Form.msdyn_functionallocation.Main.Information) {
+        const siteClass = form.getAttribute("ts_class").getValue();
+        if (siteClass == ts_msdyn_functionallocation_ts_class._2 || siteClass == ts_msdyn_functionallocation_ts_class._3) {
+            form.getControl("ts_riskscore").setVisible(true);
+        } else {
+            form.getControl("ts_riskscore").setVisible(false);
+        }
+    }
+
+    export function classOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
+        riskScoreVisibility(form);
     }
 }
