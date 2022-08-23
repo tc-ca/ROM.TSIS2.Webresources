@@ -173,5 +173,10 @@ var ROM;
                 form.getControl("ts_riskscore").setVisible(false);
             }
         }
+        function classOnChange(eContext) {
+            var form = eContext.getFormContext();
+            riskScoreVisibility(form);
+        }
+        FunctionalLocation.classOnChange = classOnChange;
     })(FunctionalLocation = ROM.FunctionalLocation || (ROM.FunctionalLocation = {}));
 })(ROM || (ROM = {}));

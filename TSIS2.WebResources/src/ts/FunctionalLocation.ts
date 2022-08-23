@@ -181,4 +181,9 @@ namespace ROM.FunctionalLocation {
             form.getControl("ts_riskscore").setVisible(false);
         }
     }
+
+    export function classOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
+        riskScoreVisibility(form);
+    }
 }
