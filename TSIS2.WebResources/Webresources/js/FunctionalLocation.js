@@ -51,6 +51,7 @@ var ROM;
                 form.getControl("ts_description").setDisabled(false);
                 form.getAttribute("ts_description").setRequiredLevel("required");
             }
+            riskScoreVisibility(form);
         }
         FunctionalLocation.onLoad = onLoad;
         function onSave(eContext) {
@@ -162,5 +163,15 @@ var ROM;
             }
         }
         FunctionalLocation.regionOnChange = regionOnChange;
+        //Shows the Risk Score field only when the Class is 2 or 3
+        function riskScoreVisibility(form) {
+            var siteClass = form.getAttribute("ts_class").getValue();
+            if (siteClass == 717750002 /* _2 */ || siteClass == 717750003 /* _3 */) {
+                form.getControl("ts_riskscore").setVisible(true);
+            }
+            else {
+                form.getControl("ts_riskscore").setVisible(false);
+            }
+        }
     })(FunctionalLocation = ROM.FunctionalLocation || (ROM.FunctionalLocation = {}));
 })(ROM || (ROM = {}));
