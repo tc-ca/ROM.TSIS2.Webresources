@@ -1,8 +1,8 @@
 ﻿"use strict";
 var ROM;
 (function (ROM) {
-    var OperationActivity;
-    (function (OperationActivity) {
+    var OperationActivityQuickCreate;
+    (function (OperationActivityQuickCreate) {
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             var operationAttribute = form.getAttribute("ts_operation");
@@ -51,6 +51,6 @@ var ROM;
                 }
             }
         }
-        OperationActivity.onLoad = onLoad;
-    })(OperationActivity = ROM.OperationActivity || (ROM.OperationActivity = {}));
+        OperationActivityQuickCreate.onLoad = onLoad;
+    })(OperationActivityQuickCreate = ROM.OperationActivityQuickCreate || (ROM.OperationActivityQuickCreate = {}));
 })(ROM || (ROM = {}));

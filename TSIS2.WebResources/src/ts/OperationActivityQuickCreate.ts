@@ -1,4 +1,4 @@
-namespace ROM.OperationActivity {
+namespace ROM.OperationActivityQuickCreate {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_operationactivity.QuickCreate.OperationActivityquickcreateform>eContext.getFormContext();
 
