@@ -184,6 +184,7 @@ interface Account_Relationships {
   ts_ovs_Finding_accountid_Account?: ovs_Finding_Result[] | null;
   ts_ovs_operation_stakeholder_account?: ovs_operation_Result[] | null;
   ts_ts_enforcementaction_Individualcompany_ac?: ts_enforcementaction_Result[] | null;
+  ts_ts_operationactivity_Stakeholder_account?: ts_OperationActivity_Result[] | null;
 }
 interface Account extends Account_Base, Account_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
@@ -628,6 +629,7 @@ interface Account_Expand {
   ts_ovs_Finding_accountid_Account: WebExpand<Account_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_accountid_Account: ovs_Finding_Result[] }>;
   ts_ovs_operation_stakeholder_account: WebExpand<Account_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_stakeholder_account: ovs_operation_Result[] }>;
   ts_ts_enforcementaction_Individualcompany_ac: WebExpand<Account_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Individualcompany_ac: ts_enforcementaction_Result[] }>;
+  ts_ts_operationactivity_Stakeholder_account: WebExpand<Account_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Stakeholder_account: ts_OperationActivity_Result[] }>;
 }
 interface Account_FormattedResult {
   accountcategorycode_formatted?: string;
@@ -791,6 +793,7 @@ interface Account_RelatedMany {
   ts_ovs_Finding_accountid_Account: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_stakeholder_account: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_ts_enforcementaction_Individualcompany_ac: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
+  ts_ts_operationactivity_Stakeholder_account: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   accounts: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
