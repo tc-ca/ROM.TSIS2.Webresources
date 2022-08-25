@@ -423,6 +423,29 @@ interface ts_assessmentscorethredshots_Create extends ts_assessmentscorethredsho
 }
 interface ts_assessmentscorethredshots_Update extends ts_assessmentscorethredshots {
 }
+interface ts_canceledinspectionjustification_Base extends WebEntity {
+}
+interface ts_canceledinspectionjustification_Fixed extends WebEntity_Fixed {
+  ts_canceledinspectionjustificationid: string;
+}
+interface ts_canceledinspectionjustification extends ts_canceledinspectionjustification_Base, ts_canceledinspectionjustification_Relationships {
+}
+interface ts_canceledinspectionjustification_Relationships {
+}
+interface ts_canceledinspectionjustification_Result extends ts_canceledinspectionjustification_Base, ts_canceledinspectionjustification_Relationships {
+}
+interface ts_canceledinspectionjustification_FormattedResult {
+}
+interface ts_canceledinspectionjustification_Select {
+}
+interface ts_canceledinspectionjustification_Expand {
+}
+interface ts_canceledinspectionjustification_Filter {
+}
+interface ts_canceledinspectionjustification_Create extends ts_canceledinspectionjustification {
+}
+interface ts_canceledinspectionjustification_Update extends ts_canceledinspectionjustification {
+}
 interface ts_enforcementaction_Base extends WebEntity {
 }
 interface ts_enforcementaction_Fixed extends WebEntity_Fixed {

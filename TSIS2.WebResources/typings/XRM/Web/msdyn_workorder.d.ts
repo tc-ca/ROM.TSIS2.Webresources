@@ -62,6 +62,8 @@ interface msdyn_workorder_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   transactioncurrencyid_guid?: string | null;
   traversedpath?: string | null;
+  ts_actualcost?: number | null;
+  ts_actualcost_base?: number | null;
   ts_cantcompleteinspection?: boolean | null;
   ts_canvasappnumber?: string | null;
   ts_completedquarter?: ts_msdyn_workorder_ts_completedquarter | null;
@@ -70,6 +72,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_numberoffindings?: number | null;
   ts_numberoffindings_date?: Date | null;
   ts_numberoffindings_state?: number | null;
+  ts_othercanceledjustification?: string | null;
   ts_plannedcost?: number | null;
   ts_plannedcost_base?: number | null;
   ts_workorderenddate?: Date | null;
@@ -161,6 +164,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ts_Region_bind$territories?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_WorkOrderCreationWizardId_bind$ts_workordercreationwizards?: string | null;
+  ts_canceledinspectionjustification_bind$ts_canceledinspectionjustifications?: string | null;
   ts_tradenameId_bind$ts_tradenames?: string | null;
 }
 interface msdyn_workorder_Create extends msdyn_workorder {
@@ -278,6 +282,9 @@ interface msdyn_workorder_Select {
   timezoneruleversionnumber: WebAttribute<msdyn_workorder_Select, { timezoneruleversionnumber: number | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<msdyn_workorder_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<msdyn_workorder_Select, { traversedpath: string | null }, {  }>;
+  ts_actualcost: WebAttribute<msdyn_workorder_Select, { ts_actualcost: number | null; transactioncurrencyid_guid: string | null }, { ts_actualcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_actualcost_base: WebAttribute<msdyn_workorder_Select, { ts_actualcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_actualcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_canceledinspectionjustification_guid: WebAttribute<msdyn_workorder_Select, { ts_canceledinspectionjustification_guid: string | null }, { ts_canceledinspectionjustification_formatted?: string }>;
   ts_cantcompleteinspection: WebAttribute<msdyn_workorder_Select, { ts_cantcompleteinspection: boolean | null }, {  }>;
   ts_canvasappnumber: WebAttribute<msdyn_workorder_Select, { ts_canvasappnumber: string | null }, {  }>;
   ts_completedquarter: WebAttribute<msdyn_workorder_Select, { ts_completedquarter: ts_msdyn_workorder_ts_completedquarter | null }, { ts_completedquarter_formatted?: string }>;
@@ -288,6 +295,7 @@ interface msdyn_workorder_Select {
   ts_numberoffindings: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_state: number | null }, {  }>;
+  ts_othercanceledjustification: WebAttribute<msdyn_workorder_Select, { ts_othercanceledjustification: string | null }, {  }>;
   ts_plannedcost: WebAttribute<msdyn_workorder_Select, { ts_plannedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_plannedcost_base: WebAttribute<msdyn_workorder_Select, { ts_plannedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
@@ -410,6 +418,9 @@ interface msdyn_workorder_Filter {
   timezoneruleversionnumber: number;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_actualcost: number;
+  ts_actualcost_base: number;
+  ts_canceledinspectionjustification_guid: XQW.Guid;
   ts_cantcompleteinspection: boolean;
   ts_canvasappnumber: string;
   ts_completedquarter: ts_msdyn_workorder_ts_completedquarter;
@@ -420,6 +431,7 @@ interface msdyn_workorder_Filter {
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;
+  ts_othercanceledjustification: string;
   ts_plannedcost: number;
   ts_plannedcost_base: number;
   ts_region_guid: XQW.Guid;
@@ -472,6 +484,7 @@ interface msdyn_workorder_Expand {
   ts_IncompleteWorkOrderReason: WebExpand<msdyn_workorder_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { ts_IncompleteWorkOrderReason: ts_IncompleteWorkOrderReason_Result }>;
   ts_Site: WebExpand<msdyn_workorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_WorkOrderCreationWizardId: WebExpand<msdyn_workorder_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_WorkOrderCreationWizardId: ts_workordercreationwizard_Result }>;
+  ts_canceledinspectionjustification: WebExpand<msdyn_workorder_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result }>;
   ts_incident_WorkOrder1_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrder1_msdyn_workorder: Incident_Result[] }>;
   ts_incident_WorkOrder2_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrder2_msdyn_workorder: Incident_Result[] }>;
   ts_msdyn_customerasset_msdyn_workorder_msdyn: WebExpand<msdyn_workorder_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ts_msdyn_customerasset_msdyn_workorder_msdyn: msdyn_customerasset_Result[] }>;
@@ -554,6 +567,9 @@ interface msdyn_workorder_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   transactioncurrencyid_formatted?: string;
+  ts_actualcost_base_formatted?: string;
+  ts_actualcost_formatted?: string;
+  ts_canceledinspectionjustification_formatted?: string;
   ts_completedquarter_formatted?: string;
   ts_country_formatted?: string;
   ts_incompleteworkorderreason_formatted?: string;
@@ -617,6 +633,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   owninguser_guid: string | null;
   qm_reportcontactid_guid: string | null;
   transactioncurrencyid_guid: string | null;
+  ts_canceledinspectionjustification_guid: string | null;
   ts_country_guid: string | null;
   ts_incompleteworkorderreason_guid: string | null;
   ts_region_guid: string | null;
@@ -655,6 +672,7 @@ interface msdyn_workorder_RelatedOne {
   ts_IncompleteWorkOrderReason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_WorkOrderCreationWizardId: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
+  ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
 }
 interface msdyn_workorder_RelatedMany {
   msdyn_msdyn_workorder_bookableresourcebooking_WorkOrder: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
