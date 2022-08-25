@@ -214,6 +214,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Webresources\resx\CanceledInspectionJustification.1033.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CanceledInspectionJustification.1033.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Webresources\resx\CanceledInspectionJustification.1036.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CanceledInspectionJustification.1036.resx</DependentUpon>
+    </Compile>
     <Compile Include="Webresources\resx\Incident.1036.Designer.cs">
       <DependentUpon>Incident.1036.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -301,6 +311,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\Account.ts" />
     <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
+    <TypeScriptCompile Include="src\ts\CanceledInspectionJustification.ts" />
     <TypeScriptCompile Include="src\ts\CustomerAsset.ts" />
     <TypeScriptCompile Include="src\ts\CustomerAssetQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\Email.ts" />
@@ -789,6 +800,14 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Webresources\resx\CanceledInspectionJustification.1033.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CanceledInspectionJustification.1033.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\CanceledInspectionJustification.1036.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CanceledInspectionJustification.1036.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\Incident.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Incident.1036.Designer.cs</LastGenOutput>

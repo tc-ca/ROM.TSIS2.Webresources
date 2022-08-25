@@ -18,6 +18,7 @@ declare namespace Form.ts_operationactivity.Main {
       get(name: "ts_nextplannedwo"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
+      get(name: "ts_plannedstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
       get(name: "ts_recurrencefrequency"): Xrm.LookupAttribute<"ts_recurrencefrequencies">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
@@ -28,6 +29,7 @@ declare namespace Form.ts_operationactivity.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "header_ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
+      get(name: "header_ts_plannedstatus"): Xrm.OptionSetControl<ts_planningstatus>;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "related_wos"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "ts_activity"): Xrm.LookupControl<"msdyn_incidenttype">;
@@ -61,11 +63,13 @@ declare namespace Form.ts_operationactivity.Main {
     getAttribute(attributeName: "ts_nextplannedwo"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
+    getAttribute(attributeName: "ts_plannedstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
     getAttribute(attributeName: "ts_recurrencefrequency"): Xrm.LookupAttribute<"ts_recurrencefrequencies">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
+    getControl(controlName: "header_ts_plannedstatus"): Xrm.OptionSetControl<ts_planningstatus>;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "related_wos"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "ts_activity"): Xrm.LookupControl<"msdyn_incidenttype">;
