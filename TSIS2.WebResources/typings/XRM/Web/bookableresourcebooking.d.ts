@@ -57,7 +57,6 @@ interface BookableResourceBooking_Relationships {
   bookableresourcebooking_Emails?: Email_Result[] | null;
   bookableresourcebooking_IncidentResolutions?: IncidentResolution_Result[] | null;
   bookableresourcebooking_ServiceAppointments?: ServiceAppointment_Result[] | null;
-  bookableresourcebooking_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   createdbyname?: SystemUser_Result | null;
   createdonbehalfbyname?: SystemUser_Result | null;
   modifiedbyname?: SystemUser_Result | null;
@@ -254,7 +253,6 @@ interface BookableResourceBooking_Expand {
   bookableresourcebooking_Emails: WebExpand<BookableResourceBooking_Expand, Email_Select, Email_Filter, { bookableresourcebooking_Emails: Email_Result[] }>;
   bookableresourcebooking_IncidentResolutions: WebExpand<BookableResourceBooking_Expand, IncidentResolution_Select, IncidentResolution_Filter, { bookableresourcebooking_IncidentResolutions: IncidentResolution_Result[] }>;
   bookableresourcebooking_ServiceAppointments: WebExpand<BookableResourceBooking_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { bookableresourcebooking_ServiceAppointments: ServiceAppointment_Result[] }>;
-  bookableresourcebooking_ts_enforcementactions: WebExpand<BookableResourceBooking_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { bookableresourcebooking_ts_enforcementactions: ts_enforcementaction_Result[] }>;
   createdbyname: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { createdbyname: SystemUser_Result }>;
   createdonbehalfbyname: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfbyname: SystemUser_Result }>;
   modifiedbyname: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { modifiedbyname: SystemUser_Result }>;
@@ -367,7 +365,6 @@ interface BookableResourceBooking_RelatedMany {
   bookableresourcebooking_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   bookableresourcebooking_IncidentResolutions: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   bookableresourcebooking_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
-  bookableresourcebooking_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   msdyn_bookableresourcebooking_msdyn_workorderservicetask_Booking: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
