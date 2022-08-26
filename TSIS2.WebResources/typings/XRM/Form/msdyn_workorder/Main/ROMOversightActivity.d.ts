@@ -173,6 +173,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
       get(name: "ts_actualcost"): Xrm.NumberAttribute;
+      get(name: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
       get(name: "ts_completedquarter"): Xrm.OptionSetAttribute<ts_msdyn_workorder_ts_completedquarter>;
       get(name: "ts_costexplanation"): Xrm.Attribute<string>;
@@ -180,6 +181,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_incompleteworkorderreason"): Xrm.LookupAttribute<"ts_incompleteworkorderreason">;
       get(name: "ts_incompleteworkorderreasonforother"): Xrm.Attribute<string>;
       get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
+      get(name: "ts_othercanceledjustification"): Xrm.Attribute<string>;
       get(name: "ts_plannedcost"): Xrm.NumberAttribute;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -298,6 +300,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: "ts_actualcost"): Xrm.NumberControl;
+      get(name: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_completedquarter"): Xrm.OptionSetControl<ts_msdyn_workorder_ts_completedquarter>;
       get(name: "ts_costexplanation"): Xrm.StringControl;
@@ -305,6 +308,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;
       get(name: "ts_incompleteworkorderreasonforother"): Xrm.StringControl;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
+      get(name: "ts_othercanceledjustification"): Xrm.StringControl;
       get(name: "ts_plannedcost"): Xrm.NumberControl;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
@@ -408,6 +412,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: "ts_actualcost"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
     getAttribute(attributeName: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_completedquarter"): Xrm.OptionSetAttribute<ts_msdyn_workorder_ts_completedquarter>;
     getAttribute(attributeName: "ts_costexplanation"): Xrm.Attribute<string>;
@@ -415,6 +420,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_incompleteworkorderreason"): Xrm.LookupAttribute<"ts_incompleteworkorderreason">;
     getAttribute(attributeName: "ts_incompleteworkorderreasonforother"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_othercanceledjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_plannedcost"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -528,6 +534,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: "ts_actualcost"): Xrm.NumberControl;
+    getControl(controlName: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
     getControl(controlName: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_completedquarter"): Xrm.OptionSetControl<ts_msdyn_workorder_ts_completedquarter>;
     getControl(controlName: "ts_costexplanation"): Xrm.StringControl;
@@ -535,6 +542,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;
     getControl(controlName: "ts_incompleteworkorderreasonforother"): Xrm.StringControl;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
+    getControl(controlName: "ts_othercanceledjustification"): Xrm.StringControl;
     getControl(controlName: "ts_plannedcost"): Xrm.NumberControl;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
