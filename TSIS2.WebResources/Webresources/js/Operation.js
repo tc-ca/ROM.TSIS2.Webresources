@@ -159,7 +159,8 @@ var ROM;
                                 else if (form.ui.getFormType() == 3 || form.ui.getFormType() == 4) {
                                     showOperationActivityTabIfAvSec(form);
                                 }
-                            } else {
+                            }
+                            else {
                                 form.ui.tabs.get("tab_properties_avsec").setVisible(true);
                             }
                         }
