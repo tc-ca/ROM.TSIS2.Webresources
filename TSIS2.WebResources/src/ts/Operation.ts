@@ -6,7 +6,7 @@ namespace ROM.Operation {
     //Condition to filter fields based on current user BU
     let businessUnitCondition;
 
-    let issoOperationTypeGuids = ["b27e5003-c751-eb11-a812-000d3af3ac0d", "c97a1a12-d8eb-eb11-bacb-000d3af4fbec", "21ca416a-431a-ec11-b6e7-000d3a09d067", "3b261029-c751-eb11-a812-000d3af3ac0d", "d883b39a-c751-eb11-a812-000d3af3ac0d", "da56fea1-c751-eb11-a812-000d3af3ac0d","199e31ae-c751-eb11-a812-000d3af3ac0d"]
+    let issoOperationTypeGuids = ["{B27E5003-C751-EB11-A812-000D3AF3AC0D}", "{C97A1A12-D8EB-EB11-BACB-000D3AF4FBEC}", "{21CA416A-431A-EC11-B6E7-000D3A09D067}", "{3B261029-C751-EB11-A812-000D3AF3AC0D}", "{D883B39A-C751-EB11-A812-000D3AF3AC0D}", "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}", "{199E31AE-C751-EB11-A812-000D3AF3AC0D}"]
 
     export async function onLoad(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
@@ -127,9 +127,9 @@ namespace ROM.Operation {
                     else if (form.ui.getFormType() == 3 || form.ui.getFormType() == 4) {
                         showOperationActivityTabIfAvSec(form);
                     }
+                } else {
+                    form.ui.tabs.get("tab_properties_avsec").setVisible(true);
                 }
-            } else {
-                form.ui.tabs.get("tab_properties_avsec").setVisible(true);
             }
         });
 
