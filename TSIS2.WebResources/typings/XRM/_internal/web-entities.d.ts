@@ -193,6 +193,29 @@ interface msdyn_incident_msdyn_customerasset_Create extends msdyn_incident_msdyn
 }
 interface msdyn_incident_msdyn_customerasset_Update extends msdyn_incident_msdyn_customerasset {
 }
+interface msdyn_incidenttype_Base extends WebEntity {
+}
+interface msdyn_incidenttype_Fixed extends WebEntity_Fixed {
+  msdyn_incidenttypeid: string;
+}
+interface msdyn_incidenttype extends msdyn_incidenttype_Base, msdyn_incidenttype_Relationships {
+}
+interface msdyn_incidenttype_Relationships {
+}
+interface msdyn_incidenttype_Result extends msdyn_incidenttype_Base, msdyn_incidenttype_Relationships {
+}
+interface msdyn_incidenttype_FormattedResult {
+}
+interface msdyn_incidenttype_Select {
+}
+interface msdyn_incidenttype_Expand {
+}
+interface msdyn_incidenttype_Filter {
+}
+interface msdyn_incidenttype_Create extends msdyn_incidenttype {
+}
+interface msdyn_incidenttype_Update extends msdyn_incidenttype {
+}
 interface msdyn_incidenttypeservicetask_Base extends WebEntity {
 }
 interface msdyn_incidenttypeservicetask_Fixed extends WebEntity_Fixed {
@@ -400,6 +423,52 @@ interface ts_assessmentscorethredshots_Create extends ts_assessmentscorethredsho
 }
 interface ts_assessmentscorethredshots_Update extends ts_assessmentscorethredshots {
 }
+interface ts_canceledinspectionjustification_Base extends WebEntity {
+}
+interface ts_canceledinspectionjustification_Fixed extends WebEntity_Fixed {
+  ts_canceledinspectionjustificationid: string;
+}
+interface ts_canceledinspectionjustification extends ts_canceledinspectionjustification_Base, ts_canceledinspectionjustification_Relationships {
+}
+interface ts_canceledinspectionjustification_Relationships {
+}
+interface ts_canceledinspectionjustification_Result extends ts_canceledinspectionjustification_Base, ts_canceledinspectionjustification_Relationships {
+}
+interface ts_canceledinspectionjustification_FormattedResult {
+}
+interface ts_canceledinspectionjustification_Select {
+}
+interface ts_canceledinspectionjustification_Expand {
+}
+interface ts_canceledinspectionjustification_Filter {
+}
+interface ts_canceledinspectionjustification_Create extends ts_canceledinspectionjustification {
+}
+interface ts_canceledinspectionjustification_Update extends ts_canceledinspectionjustification {
+}
+interface ts_enforcementaction_Base extends WebEntity {
+}
+interface ts_enforcementaction_Fixed extends WebEntity_Fixed {
+  activityid: string;
+}
+interface ts_enforcementaction extends ts_enforcementaction_Base, ts_enforcementaction_Relationships {
+}
+interface ts_enforcementaction_Relationships {
+}
+interface ts_enforcementaction_Result extends ts_enforcementaction_Base, ts_enforcementaction_Relationships {
+}
+interface ts_enforcementaction_FormattedResult {
+}
+interface ts_enforcementaction_Select {
+}
+interface ts_enforcementaction_Expand {
+}
+interface ts_enforcementaction_Filter {
+}
+interface ts_enforcementaction_Create extends ts_enforcementaction {
+}
+interface ts_enforcementaction_Update extends ts_enforcementaction {
+}
 interface ts_Incident_ts_operationcontact_Base extends WebEntity {
 }
 interface ts_Incident_ts_operationcontact_Fixed extends WebEntity_Fixed {
@@ -561,6 +630,29 @@ interface ts_msdyn_workorder_ts_operationcontact_Create extends ts_msdyn_workord
 }
 interface ts_msdyn_workorder_ts_operationcontact_Update extends ts_msdyn_workorder_ts_operationcontact {
 }
+interface ts_OperationActivity_Base extends WebEntity {
+}
+interface ts_OperationActivity_Fixed extends WebEntity_Fixed {
+  ts_operationactivityid: string;
+}
+interface ts_OperationActivity extends ts_OperationActivity_Base, ts_OperationActivity_Relationships {
+}
+interface ts_OperationActivity_Relationships {
+}
+interface ts_OperationActivity_Result extends ts_OperationActivity_Base, ts_OperationActivity_Relationships {
+}
+interface ts_OperationActivity_FormattedResult {
+}
+interface ts_OperationActivity_Select {
+}
+interface ts_OperationActivity_Expand {
+}
+interface ts_OperationActivity_Filter {
+}
+interface ts_OperationActivity_Create extends ts_OperationActivity {
+}
+interface ts_OperationActivity_Update extends ts_OperationActivity {
+}
 interface ts_operationcontact_Base extends WebEntity {
 }
 interface ts_operationcontact_Fixed extends WebEntity_Fixed {
@@ -607,6 +699,29 @@ interface ts_ovs_operation_ovs_operation_Create extends ts_ovs_operation_ovs_ope
 }
 interface ts_ovs_operation_ovs_operation_Update extends ts_ovs_operation_ovs_operation {
 }
+interface ts_planningsettings_Base extends WebEntity {
+}
+interface ts_planningsettings_Fixed extends WebEntity_Fixed {
+  ts_planningsettingsid: string;
+}
+interface ts_planningsettings extends ts_planningsettings_Base, ts_planningsettings_Relationships {
+}
+interface ts_planningsettings_Relationships {
+}
+interface ts_planningsettings_Result extends ts_planningsettings_Base, ts_planningsettings_Relationships {
+}
+interface ts_planningsettings_FormattedResult {
+}
+interface ts_planningsettings_Select {
+}
+interface ts_planningsettings_Expand {
+}
+interface ts_planningsettings_Filter {
+}
+interface ts_planningsettings_Create extends ts_planningsettings {
+}
+interface ts_planningsettings_Update extends ts_planningsettings {
+}
 interface ts_questionnaireversion_Base extends WebEntity {
 }
 interface ts_questionnaireversion_Fixed extends WebEntity_Fixed {
@@ -629,6 +744,29 @@ interface ts_questionnaireversion_Filter {
 interface ts_questionnaireversion_Create extends ts_questionnaireversion {
 }
 interface ts_questionnaireversion_Update extends ts_questionnaireversion {
+}
+interface ts_RiskCategory_Base extends WebEntity {
+}
+interface ts_RiskCategory_Fixed extends WebEntity_Fixed {
+  ts_riskcategoryid: string;
+}
+interface ts_RiskCategory extends ts_RiskCategory_Base, ts_RiskCategory_Relationships {
+}
+interface ts_RiskCategory_Relationships {
+}
+interface ts_RiskCategory_Result extends ts_RiskCategory_Base, ts_RiskCategory_Relationships {
+}
+interface ts_RiskCategory_FormattedResult {
+}
+interface ts_RiskCategory_Select {
+}
+interface ts_RiskCategory_Expand {
+}
+interface ts_RiskCategory_Filter {
+}
+interface ts_RiskCategory_Create extends ts_RiskCategory {
+}
+interface ts_RiskCategory_Update extends ts_RiskCategory {
 }
 interface ts_workordercreationwizard_Base extends WebEntity {
 }
