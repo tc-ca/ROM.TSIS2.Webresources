@@ -49,6 +49,7 @@ interface msdyn_FunctionalLocation_Relationships {
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca?: msdyn_workorder_Result[] | null;
   ts_ovs_operation_site_msdyn_functionallocati?: ovs_operation_Result[] | null;
   ts_ovs_operation_subsite_msdyn_functionalloc?: ovs_operation_Result[] | null;
+  ts_ts_operationactivity_Site_msdyn_functiona?: ts_OperationActivity_Result[] | null;
 }
 interface msdyn_FunctionalLocation extends msdyn_FunctionalLocation_Base, msdyn_FunctionalLocation_Relationships {
   msdyn_ParentFunctionalLocation_bind$msdyn_functionallocations?: string | null;
@@ -178,6 +179,7 @@ interface msdyn_FunctionalLocation_Expand {
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_Site_msdyn_FunctionalLoca: msdyn_workorder_Result[] }>;
   ts_ovs_operation_site_msdyn_functionallocati: WebExpand<msdyn_FunctionalLocation_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_site_msdyn_functionallocati: ovs_operation_Result[] }>;
   ts_ovs_operation_subsite_msdyn_functionalloc: WebExpand<msdyn_FunctionalLocation_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_subsite_msdyn_functionalloc: ovs_operation_Result[] }>;
+  ts_ts_operationactivity_Site_msdyn_functiona: WebExpand<msdyn_FunctionalLocation_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Site_msdyn_functiona: ts_OperationActivity_Result[] }>;
 }
 interface msdyn_FunctionalLocation_FormattedResult {
   createdby_formatted?: string;
@@ -241,6 +243,7 @@ interface msdyn_FunctionalLocation_RelatedMany {
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ovs_operation_site_msdyn_functionallocati: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_ovs_operation_subsite_msdyn_functionalloc: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_ts_operationactivity_Site_msdyn_functiona: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_functionallocations: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;

@@ -284,6 +284,7 @@ interface ovs_Finding_Expand {
   ts_VerbalWarningGivenTo: WebExpand<ovs_Finding_Expand, Contact_Select, Contact_Filter, { ts_VerbalWarningGivenTo: Contact_Result }>;
   ts_WorkOrder: WebExpand<ovs_Finding_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder: msdyn_workorder_Result }>;
   ts_accountid: WebExpand<ovs_Finding_Expand, Account_Select, Account_Filter, { ts_accountid: Account_Result }>;
+  ts_enforcementactioncreated: WebExpand<ovs_Finding_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementactioncreated: ts_enforcementaction_Result }>;
   ts_functionallocation: WebExpand<ovs_Finding_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_functionallocation: msdyn_FunctionalLocation_Result }>;
   ts_operationid: WebExpand<ovs_Finding_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operationid: ovs_operation_Result }>;
 }
@@ -411,6 +412,7 @@ interface ovs_Finding_RelatedOne {
   ts_VerbalWarningGivenTo: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_accountid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_enforcementactioncreated: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_operationid: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
 }
