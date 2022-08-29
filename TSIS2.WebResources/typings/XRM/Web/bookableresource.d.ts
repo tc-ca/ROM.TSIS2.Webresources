@@ -210,7 +210,8 @@ interface BookableResource_Expand {
   msdyn_bookableresource_msdyn_workorder_SupportContact: WebExpand<BookableResource_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_bookableresource_msdyn_workorder_SupportContact: msdyn_workorder_Result[] }>;
   ovs_msdyn_workorder_PrimaryInspector_Bookable: WebExpand<BookableResource_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_msdyn_workorder_PrimaryInspector_Bookable: msdyn_workorder_Result[] }>;
   ovs_msdyn_workorder_SecondaryInspector_Bookab: WebExpand<BookableResource_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_msdyn_workorder_SecondaryInspector_Bookab: msdyn_workorder_Result[] }>;
-  ownerid: WebExpand<BookableResource_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  ownerid: WebExpand<BookableResource_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningteam: WebExpand<BookableResource_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<BookableResource_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
 interface BookableResource_FormattedResult {
@@ -274,7 +275,8 @@ interface BookableResource_RelatedOne {
   createdonbehalfbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfbyname: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface BookableResource_RelatedMany {

@@ -87,6 +87,7 @@ interface BulkOperationLog_Expand {
   CampaignActivity_Logs_Contacts: WebExpand<BulkOperationLog_Expand, Contact_Select, Contact_Filter, { CampaignActivity_Logs_Contacts: Contact_Result[] }>;
   createdobjectid_account: WebExpand<BulkOperationLog_Expand, Account_Select, Account_Filter, { createdobjectid_account: Account_Result }>;
   createdobjectid_contact: WebExpand<BulkOperationLog_Expand, Contact_Select, Contact_Filter, { createdobjectid_contact: Contact_Result }>;
+  owningteam: WebExpand<BulkOperationLog_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<BulkOperationLog_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   regardingobjectid_account: WebExpand<BulkOperationLog_Expand, Account_Select, Account_Filter, { regardingobjectid_account: Account_Result }>;
   regardingobjectid_contact: WebExpand<BulkOperationLog_Expand, Contact_Select, Contact_Filter, { regardingobjectid_contact: Contact_Result }>;
@@ -116,6 +117,7 @@ interface BulkOperationLog_Result extends BulkOperationLog_Base, BulkOperationLo
 interface BulkOperationLog_RelatedOne {
   createdobjectid_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   createdobjectid_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   regardingobjectid_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   regardingobjectid_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;

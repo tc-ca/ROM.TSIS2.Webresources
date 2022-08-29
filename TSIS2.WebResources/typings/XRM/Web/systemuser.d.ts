@@ -219,6 +219,11 @@ interface SystemUser_Relationships {
   lk_tc_tcfiscalyear_createdonbehalfby?: tc_TCFiscalYear_Result[] | null;
   lk_tc_tcfiscalyear_modifiedby?: tc_TCFiscalYear_Result[] | null;
   lk_tc_tcfiscalyear_modifiedonbehalfby?: tc_TCFiscalYear_Result[] | null;
+  lk_team_createdonbehalfby?: Team_Result[] | null;
+  lk_team_modifiedonbehalfby?: Team_Result[] | null;
+  lk_teambase_administratorid?: Team_Result[] | null;
+  lk_teambase_createdby?: Team_Result[] | null;
+  lk_teambase_modifiedby?: Team_Result[] | null;
   lk_ts_assessmentscorethredshots_createdby?: ts_assessmentscorethredshots_Result[] | null;
   lk_ts_assessmentscorethredshots_createdonbehalfby?: ts_assessmentscorethredshots_Result[] | null;
   lk_ts_assessmentscorethredshots_modifiedby?: ts_assessmentscorethredshots_Result[] | null;
@@ -274,6 +279,7 @@ interface SystemUser_Relationships {
   systemuser_bookableresource_UserId?: BookableResource_Result[] | null;
   systemuser_connections1?: Connection_Result[] | null;
   systemuser_connections2?: Connection_Result[] | null;
+  teammembership_association?: Team_Result[] | null;
   ts_InspectionHours?: ts_InspectionHours_Result | null;
   ts_enforcementaction_systemuser_createdby?: ts_enforcementaction_Result[] | null;
   ts_enforcementaction_systemuser_createdonbehalfby?: ts_enforcementaction_Result[] | null;
@@ -710,6 +716,11 @@ interface SystemUser_Expand {
   lk_tc_tcfiscalyear_createdonbehalfby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_createdonbehalfby: tc_TCFiscalYear_Result[] }>;
   lk_tc_tcfiscalyear_modifiedby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_modifiedby: tc_TCFiscalYear_Result[] }>;
   lk_tc_tcfiscalyear_modifiedonbehalfby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_modifiedonbehalfby: tc_TCFiscalYear_Result[] }>;
+  lk_team_createdonbehalfby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_team_createdonbehalfby: Team_Result[] }>;
+  lk_team_modifiedonbehalfby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_team_modifiedonbehalfby: Team_Result[] }>;
+  lk_teambase_administratorid: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_administratorid: Team_Result[] }>;
+  lk_teambase_createdby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_createdby: Team_Result[] }>;
+  lk_teambase_modifiedby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_modifiedby: Team_Result[] }>;
   lk_ts_assessmentscorethredshots_createdby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_createdby: ts_assessmentscorethredshots_Result[] }>;
   lk_ts_assessmentscorethredshots_createdonbehalfby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_createdonbehalfby: ts_assessmentscorethredshots_Result[] }>;
   lk_ts_assessmentscorethredshots_modifiedby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_modifiedby: ts_assessmentscorethredshots_Result[] }>;
@@ -768,6 +779,7 @@ interface SystemUser_Expand {
   systemuser_bookableresource_UserId: WebExpand<SystemUser_Expand, BookableResource_Select, BookableResource_Filter, { systemuser_bookableresource_UserId: BookableResource_Result[] }>;
   systemuser_connections1: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections1: Connection_Result[] }>;
   systemuser_connections2: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections2: Connection_Result[] }>;
+  teammembership_association: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { teammembership_association: Team_Result[] }>;
   ts_InspectionHours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { ts_InspectionHours: ts_InspectionHours_Result }>;
   ts_enforcementaction_systemuser_createdby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdby: ts_enforcementaction_Result[] }>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdonbehalfby: ts_enforcementaction_Result[] }>;
@@ -985,6 +997,11 @@ interface SystemUser_RelatedMany {
   lk_tc_tcfiscalyear_createdonbehalfby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   lk_tc_tcfiscalyear_modifiedby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   lk_tc_tcfiscalyear_modifiedonbehalfby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  lk_team_createdonbehalfby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  lk_team_modifiedonbehalfby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  lk_teambase_administratorid: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  lk_teambase_createdby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  lk_teambase_modifiedby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   lk_ts_assessmentscorethredshots_createdby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   lk_ts_assessmentscorethredshots_createdonbehalfby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   lk_ts_assessmentscorethredshots_modifiedby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
@@ -1040,6 +1057,7 @@ interface SystemUser_RelatedMany {
   systemuser_bookableresource_UserId: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   systemuser_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   systemuser_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  teammembership_association: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_enforcementaction_systemuser_createdby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_modifiedby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
