@@ -168,4 +168,13 @@
   <data name="InvalidFiscalQuarterErrorMsg" xml:space="preserve">
     <value>Fiscal quarter has already been assigned to the work order selected as part of a trip. Fiscal quarter was not changed as it cannot be different from other work orders in this trip.</value>
   </data>
+  <data name="CancelWorkOrderConfirmationText" xml:space="preserve">
+    <value>Changing the status to Cancel will set the Work Order to Read-Only next time the record is saved, preventing all items within the Work Order from being altered after it is saved. Do you wish to proceed?</value>
+  </data>
+  <data name="CancelWorkOrderConfirmationTitle" xml:space="preserve">
+    <value>Confirmation - Cancel Work Order</value>
+  </data>
+  <data name="CantCancelText" xml:space="preserve">
+    <value>A Complete Work Order can't be canceled.</value>
+  </data>
 </root>

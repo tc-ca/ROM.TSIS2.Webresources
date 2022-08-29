@@ -165,6 +165,11 @@ var ROM;
             //Check if the Work Order is past the Planned Fiscal Quarter
             setCantCompleteinspectionVisibility(form);
             setIncompleteWorkOrderReasonFilteredView(form);
+            //Set visiblity for canceled inspection justification field
+            if (currentSystemStatus != 690970005) {
+                form.getControl("ts_canceledinspectionjustification").setVisible(false);
+                form.getControl("ts_othercanceledjustification").setVisible(false);
+            }
         }
         WorkOrder.onLoad = onLoad;
         function onSave(eContext) {
@@ -653,10 +658,20 @@ var ROM;
         function systemStatusOnChange(eContext) {
             var form = eContext.getFormContext();
             var newSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
+            //If user try to cancel Complete WO
+            if (currentSystemStatus == 690970003 && newSystemStatus == 690970005) {
+                var alertStrings = {
+                    text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CantCancelText"),
+                };
+                var alertOptions = { height: 160, width: 340 };
+                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
+            }
+            else 
             //If system status is set to closed
-            if (newSystemStatus == 690970004 || newSystemStatus == 690970005) {
+            if (newSystemStatus == 690970004) {
                 Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
-                    if (result.entities.length > 0 && newSystemStatus == 690970004) {
+                    if (result.entities.length > 0) {
                         var alertStrings = {
                             text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithUnCompletedSTText"),
                             title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithUnCompletedSTTitle")
@@ -697,12 +712,38 @@ var ROM;
                 });
             }
             else {
-                //Keep record Active
-                form.getAttribute("statecode").setValue(0);
-                form.getAttribute("statuscode").setValue(1);
-                form.getAttribute("ts_completedquarter").setValue(null);
-                form.getControl("ts_completedquarter").setVisible(false);
-                currentSystemStatus = newSystemStatus;
+                if (newSystemStatus == 690970005 && currentSystemStatus != 690970003 && userHasRole("System Administrator|ROM - Business Admin|ROM - Planner")) {
+                    var confirmStrings = {
+                        text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CancelWorkOrderConfirmationText"),
+                        title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CancelWorkOrderConfirmationTitle")
+                    };
+                    var confirmOptions = { height: 200, width: 450 };
+                    Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(function (success) {
+                        if (success.confirmed) {
+                            //Set state to Inactive
+                            form.getAttribute("statecode").setValue(1);
+                            //Set Status Reason to Closed
+                            form.getAttribute("statuscode").setValue(918640000);
+                            currentSystemStatus = newSystemStatus;
+                            //Set visible canceled inspection justification field
+                            form.getControl("ts_canceledinspectionjustification").setVisible(true);
+                            form.getAttribute("ts_canceledinspectionjustification").setRequiredLevel("required");
+                        }
+                        else {
+                            //Undo the system status change
+                            form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
+                        }
+                    });
+                }
+                else {
+                    //Keep record Active
+                    form.getAttribute("statecode").setValue(0);
+                    form.getAttribute("statuscode").setValue(1);
+                    form.getControl("ts_canceledinspectionjustification").setVisible(false);
+                    form.getControl("ts_canceledinspectionjustification").setVisible(false);
+                    form.getAttribute("ts_canceledinspectionjustification").setRequiredLevel("none");
+                    currentSystemStatus = newSystemStatus;
+                }
             }
         }
         WorkOrder.systemStatusOnChange = systemStatusOnChange;
@@ -1267,5 +1308,21 @@ var ROM;
             setCantCompleteinspectionVisibility(form);
         }
         WorkOrder.fiscalQuarterOnChange = fiscalQuarterOnChange;
+        function canceledWorkOrderReasonOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var selectedCanceledWorkOrderReason = form.getAttribute("ts_canceledinspectionjustification").getValue();
+            var selectedOther = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
+            //If 'Other' is selected as a reason, make ts_othercanceledjustification visible
+            if (selectedCanceledWorkOrderReason != null && selectedCanceledWorkOrderReason[0].id.toUpperCase() == selectedOther) {
+                form.getControl("ts_othercanceledjustification").setVisible(true);
+                form.getAttribute("ts_othercanceledjustification").setRequiredLevel("required");
+            }
+            else {
+                form.getControl("ts_othercanceledjustification").setVisible(false);
+                form.getAttribute("ts_othercanceledjustification").setValue(null);
+                form.getAttribute("ts_othercanceledjustification").setRequiredLevel("none");
+            }
+        }
+        WorkOrder.canceledWorkOrderReasonOnChange = canceledWorkOrderReasonOnChange;
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));

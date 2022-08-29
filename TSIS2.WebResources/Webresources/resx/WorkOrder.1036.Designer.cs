@@ -61,6 +61,33 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changer le statut a &quot;Annulé&quot; va mettre l&apos;ordre de travail en mode lecture-seul une fois que l&apos;enregistrement sera enregistré. Ceci empêchera les modifications aux items de l&apos;ordre de travail. Souhaitez-vous procéder?.
+        /// </summary>
+        internal static string CancelWorkOrderConfirmationText {
+            get {
+                return ResourceManager.GetString("CancelWorkOrderConfirmationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation - Annuler l&apos;ordre de travail.
+        /// </summary>
+        internal static string CancelWorkOrderConfirmationTitle {
+            get {
+                return ResourceManager.GetString("CancelWorkOrderConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A Complete Work Order can&apos;t be canceled. (FR).
+        /// </summary>
+        internal static string CantCancelText {
+            get {
+                return ResourceManager.GetString("CantCancelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Changer le statut a &quot;Fermé&quot; va mettre l&apos;ordre de travail en mode lecture-seul une fois que l&apos;enregistrement sera enregistré. Ceci empêchera les modifications aux items de l&apos;ordre de travail. Souhaitez-vous procéder?.
         /// </summary>
         internal static string CloseWorkOrderConfirmationText {

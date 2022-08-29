@@ -119,18 +119,18 @@ namespace ROM.WorkOrder {
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                 const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
                 const operationTypeAttributeValue = operationTypeAttribute.getValue();
-                const countryAttribute= form.getAttribute("ts_country");
+                const countryAttribute = form.getAttribute("ts_country");
                 const countryAttributeValue = countryAttribute.getValue();
-                const stakeholderAttribute= form.getAttribute("msdyn_serviceaccount");
+                const stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
                 const stakeholderAttributeValue = stakeholderAttribute.getValue();
 
                 var countryCondition = getCountryFetchXmlCondition(form);
 
-                if(regionAttribute != null && workOrderTypeAttribute != null && operationTypeAttribute != null && stakeholderAttribute){
-                    if(regionAttributeValue != null && workOrderTypeAttributeValue != null && operationTypeAttributeValue != null && stakeholderAttributeValue != null){
-                        setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id , "", "",);
+                if (regionAttribute != null && workOrderTypeAttribute != null && operationTypeAttribute != null && stakeholderAttribute) {
+                    if (regionAttributeValue != null && workOrderTypeAttributeValue != null && operationTypeAttributeValue != null && stakeholderAttributeValue != null) {
+                        setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id, "", "",);
                         setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
-                        setSiteFilteredView(form, regionAttributeValue[0].id, countryCondition, "" , stakeholderAttributeValue[0].id, "", operationTypeAttributeValue[0].id);
+                        setSiteFilteredView(form, regionAttributeValue[0].id, countryCondition, "", stakeholderAttributeValue[0].id, "", operationTypeAttributeValue[0].id);
                     }
                 }
                 setActivityTypeDisabled(eContext);
@@ -172,7 +172,7 @@ namespace ROM.WorkOrder {
 
         Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(
             function success(result) {
-                if(result.entities.length > 0){
+                if (result.entities.length > 0) {
                     form.getControl("ts_region").setDisabled(true);
                     form.getControl("ts_country").setDisabled(true);
                     form.getControl("ts_tradenameid").setDisabled(true);
@@ -188,6 +188,12 @@ namespace ROM.WorkOrder {
         //Check if the Work Order is past the Planned Fiscal Quarter
         setCantCompleteinspectionVisibility(form);
         setIncompleteWorkOrderReasonFilteredView(form);
+
+        //Set visiblity for canceled inspection justification field
+        if (currentSystemStatus != 690970005) {
+            form.getControl("ts_canceledinspectionjustification").setVisible(false);
+            form.getControl("ts_othercanceledjustification").setVisible(false);
+        }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -473,7 +479,7 @@ namespace ROM.WorkOrder {
                     // Custom view for Trade Names
                     setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
                 }
-            } 
+            }
         } catch (e) {
             throw new Error(e.Message);
         }
@@ -515,7 +521,7 @@ namespace ROM.WorkOrder {
 
                     var countryCondition = getCountryFetchXmlCondition(form);
 
-                    setSiteFilteredView(form, regionAttributeValue[0].id, countryCondition, "" , stakeholderAttributeValue[0].id, "", operationTypeAttributeValue[0].id);
+                    setSiteFilteredView(form, regionAttributeValue[0].id, countryCondition, "", stakeholderAttributeValue[0].id, "", operationTypeAttributeValue[0].id);
                 }
 
             }
@@ -581,7 +587,7 @@ namespace ROM.WorkOrder {
                         }
                     );
                     //Check if any subsites exists and only show the field if it's the case
-                    const fetchXmlToCheckForSubSites = '<fetch no-lock="false" returntotalrecordcount="true" page="1" count="25"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_parentfunctionallocation" alias="bb"><filter type="and"><condition attribute="msdyn_functionallocationid" operator="eq" uitype="msdyn_functionallocation" value="' + siteAttributeValue[0].id +  '"/></filter></link-entity></entity></fetch>';
+                    const fetchXmlToCheckForSubSites = '<fetch no-lock="false" returntotalrecordcount="true" page="1" count="25"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_parentfunctionallocation" alias="bb"><filter type="and"><condition attribute="msdyn_functionallocationid" operator="eq" uitype="msdyn_functionallocation" value="' + siteAttributeValue[0].id + '"/></filter></link-entity></entity></fetch>';
                     encodedFetchXml = encodeURIComponent(fetchXmlToCheckForSubSites);
                     Xrm.WebApi.retrieveMultipleRecords("msdyn_functionallocation", "?fetchXml=" + encodedFetchXml).then(
                         function success(result) {
@@ -595,7 +601,7 @@ namespace ROM.WorkOrder {
                                 const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
                                 form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
                             }
-                            else{
+                            else {
                                 form.getAttribute("msdyn_functionallocation").setValue(null);
                                 form.getControl('msdyn_functionallocation').setVisible(false);
                             }
@@ -605,7 +611,7 @@ namespace ROM.WorkOrder {
                         }
                     );
                 }
-                else{
+                else {
                     form.getAttribute("msdyn_functionallocation").setValue(null);
                     form.getControl('msdyn_functionallocation').setVisible(false);
                 }
@@ -701,26 +707,72 @@ namespace ROM.WorkOrder {
     export function systemStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
         var newSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
+        //If user try to cancel Complete WO
+        if (currentSystemStatus == 690970003 && newSystemStatus == 690970005) {
+            var alertStrings = {
+                text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CantCancelText"),
+            };
+            var alertOptions = { height: 160, width: 340 };
+            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+            form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
+        }
+        else
+            //If system status is set to closed
+            if (newSystemStatus == 690970004) {
+                Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
+                    if (result.entities.length > 0) {
+                        var alertStrings = {
+                            text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithUnCompletedSTText"),
+                            title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithUnCompletedSTTitle")
+                        };
+                        var alertOptions = { height: 160, width: 340 };
+                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
 
-        //If system status is set to closed
-        if (newSystemStatus == 690970004 || newSystemStatus == 690970005) {
-            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
-                if (result.entities.length > 0 && newSystemStatus == 690970004) {
-                    var alertStrings = {
-                        text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithUnCompletedSTText"),
-                        title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithUnCompletedSTTitle")
-                    };
-                    var alertOptions = { height: 160, width: 340 };
-                    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                        form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
+                    }
+                    else {
+                        var confirmStrings = {
+                            text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationText"),
+                            title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationTitle")
 
-                    form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
-                }
-                else {
+                        };
+                        var confirmOptions = { height: 200, width: 450 };
+
+                        Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
+                            function (success) {
+                                if (success.confirmed) {
+                                    //Set state to Inactive
+                                    form.getAttribute("statecode").setValue(1);
+                                    //Set Status Reason to Closed
+                                    form.getAttribute("statuscode").setValue(918640000);
+                                    currentSystemStatus = newSystemStatus;
+                                    //At Transport Canada, Fiscal Years run from Apr 1st to Mar 31, Q1 = Apr-Jun, Q2 = Jul-Sept, Q3 = Oct-Dec, Q4 = Jan-Mar
+                                    var currentQuarter = Math.floor(new Date().getMonth() / 3);
+                                    if (currentQuarter == 0) {
+                                        currentQuarter = 4;
+                                    }
+                                    form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
+                                    form.getControl("ts_completedquarter").setVisible(true);
+                                } else {
+                                    //Undo the system status change
+                                    form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
+                                }
+                            });
+                    }
+
+                }, function (error) {
+                    showErrorMessageAlert(error);
+                });
+            }
+            else {
+                if (newSystemStatus == 690970005 && currentSystemStatus != 690970003 && userHasRole("System Administrator|ROM - Business Admin|ROM - Planner")) {
                     var confirmStrings = {
-                        text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationText"),
-                        title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationTitle")
+                        text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CancelWorkOrderConfirmationText"),
+                        title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CancelWorkOrderConfirmationTitle")
+
                     };
                     var confirmOptions = { height: 200, width: 450 };
+
                     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
                         function (success) {
                             if (success.confirmed) {
@@ -729,30 +781,27 @@ namespace ROM.WorkOrder {
                                 //Set Status Reason to Closed
                                 form.getAttribute("statuscode").setValue(918640000);
                                 currentSystemStatus = newSystemStatus;
-                                //At Transport Canada, Fiscal Years run from Apr 1st to Mar 31, Q1 = Apr-Jun, Q2 = Jul-Sept, Q3 = Oct-Dec, Q4 = Jan-Mar
-                                var currentQuarter = Math.floor(new Date().getMonth() / 3);
-                                if (currentQuarter == 0) {
-                                    currentQuarter = 4;
-                                }
-                                form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
-                                form.getControl("ts_completedquarter").setVisible(true);
+                                //Set visible canceled inspection justification field
+                                form.getControl("ts_canceledinspectionjustification").setVisible(true);
+                                form.getAttribute("ts_canceledinspectionjustification").setRequiredLevel("required");
                             } else {
                                 //Undo the system status change
                                 form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
                             }
                         });
+
                 }
-            }, function (error) {
-                showErrorMessageAlert(error);
-            });
-        } else {
-            //Keep record Active
-            form.getAttribute("statecode").setValue(0);
-            form.getAttribute("statuscode").setValue(1);
-            form.getAttribute("ts_completedquarter").setValue(null);
-            form.getControl("ts_completedquarter").setVisible(false);
-            currentSystemStatus = newSystemStatus;
-        }
+                else {
+                    //Keep record Active
+                    form.getAttribute("statecode").setValue(0);
+                    form.getAttribute("statuscode").setValue(1);
+                    form.getControl("ts_canceledinspectionjustification").setVisible(false);
+                    form.getControl("ts_canceledinspectionjustification").setVisible(false);
+                    form.getAttribute("ts_canceledinspectionjustification").setRequiredLevel("none");
+                    currentSystemStatus = newSystemStatus;
+
+                }
+            }
     }
 
     export function caseOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -760,7 +809,7 @@ namespace ROM.WorkOrder {
 
         const caseAttribute = form.getAttribute("msdyn_servicerequest");
 
-        if(caseAttribute.getValue() == null){
+        if (caseAttribute.getValue() == null) {
             form.getControl("ts_region").setDisabled(false);
             form.getControl("ts_country").setDisabled(false);
             form.getControl("ts_tradenameid").setDisabled(false);
@@ -850,14 +899,14 @@ namespace ROM.WorkOrder {
         const currentFiscalQuarterAttributeValue = currentFiscalQuarterAttribute.getValue();
         const plannedFiscalQuarterAttributeValue = plannedFiscalQuarterAttribute.getValue();
 
-        if(revisedQuarterAttributeValue != null){
+        if (revisedQuarterAttributeValue != null) {
             currentFiscalQuarterAttribute.setValue(revisedQuarterAttributeValue);
         }
-        else{
-            if(plannedFiscalQuarterAttribute != null){
+        else {
+            if (plannedFiscalQuarterAttribute != null) {
                 currentFiscalQuarterAttribute.setValue(plannedFiscalQuarterAttributeValue);
             }
-            else{
+            else {
                 currentFiscalQuarterAttribute.setValue(null);
             }
         }
@@ -929,7 +978,7 @@ namespace ROM.WorkOrder {
         var currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId;
         currentUserId = currentUserId.replace(/[{}]/g, "");
 
-        if(!regionAttributeValue?.[0].name){
+        if (!regionAttributeValue?.[0].name) {
             // Get the user's territory
             Xrm.WebApi.retrieveRecord("systemuser", currentUserId, "?$select=_territoryid_value").then(
                 function success(result) {
@@ -970,7 +1019,7 @@ namespace ROM.WorkOrder {
         }
     }
 
-    function setActivityTypeFilteredView(form: Form.msdyn_workorder.Main.ROMOversightActivity, operationAttributeId: string,  workOrderTypeAttributeId: string, operationTypeAttributeId: string): void {
+    function setActivityTypeFilteredView(form: Form.msdyn_workorder.Main.ROMOversightActivity, operationAttributeId: string, workOrderTypeAttributeId: string, operationTypeAttributeId: string): void {
 
         //Check whether this is a AvSec WO by using the operation
         let operationTypeOwningBusinessUnitFetchXML = [
@@ -988,13 +1037,13 @@ namespace ROM.WorkOrder {
             "    </link-entity>",
             "  </entity>",
             "</fetch>"
-            ].join("");
+        ].join("");
         operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
 
         Xrm.WebApi.retrieveMultipleRecords('businessunit', operationTypeOwningBusinessUnitFetchXML).then(
             function success(result) {
                 let operationActivityFilter = "";
-                if(result.entities.length == 1){ //Add the operation activity filter if it's an AvSec workorder
+                if (result.entities.length == 1) { //Add the operation activity filter if it's an AvSec workorder
                     operationActivityFilter += "<link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
                 }
 
@@ -1004,10 +1053,10 @@ namespace ROM.WorkOrder {
                 const viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
                 const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
 
-                if(!isFromCase){   
+                if (!isFromCase) {
                     fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity>' + operationActivityFilter + '</entity></fetch>';
                 }
-                else{
+                else {
                     const viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
                     const entityNameActivity = "msdyn_incidenttype";
                     const viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
@@ -1018,7 +1067,7 @@ namespace ROM.WorkOrder {
                 form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(false);
             }
-        ,); 
+        ,);
     }
 
     function setCountryFilteredView(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
@@ -1090,7 +1139,7 @@ namespace ROM.WorkOrder {
                         const otherId = '8B3B6A28-C5FB-EC11-82E6-002248AE441F';
                         const entityName = "ts_incompleteworkorderreason";
                         const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredIncompleteWorkOrderReasons");
-                        const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ts_incompleteworkorderreason"><attribute name="ts_incompleteworkorderreasonid" /><attribute name="ts_name" /><filter type="or"><condition attribute="ownerid" operator="eq" value="' + ownerId + '" /><condition attribute="ts_incompleteworkorderreasonid" operator="eq" value="' + otherId +'" /></filter><order attribute="ts_name" /></entity></fetch>';
+                        const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ts_incompleteworkorderreason"><attribute name="ts_incompleteworkorderreasonid" /><attribute name="ts_name" /><filter type="or"><condition attribute="ownerid" operator="eq" value="' + ownerId + '" /><condition attribute="ts_incompleteworkorderreasonid" operator="eq" value="' + otherId + '" /></filter><order attribute="ts_name" /></entity></fetch>';
                         const layoutXml = '<grid name="resultset" object="10010" jump="ts_name" select="1" icon="1" preview="1"><row name="result" id="ts_incompleteworkorderreasonid"><cell name="ts_name" width="200" /></row></grid>';
                         form.getControl("ts_incompleteworkorderreason").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                     }
@@ -1101,7 +1150,7 @@ namespace ROM.WorkOrder {
         }
     }
 
-    function getCountryFetchXmlCondition(form: Form.msdyn_workorder.Main.ROMOversightActivity){
+    function getCountryFetchXmlCondition(form: Form.msdyn_workorder.Main.ROMOversightActivity) {
         const regionAttribute = form.getAttribute("ts_region");
         const regionAttributeValue = regionAttribute.getValue();
         const countryAttribute = form.getAttribute("ts_country")
@@ -1203,7 +1252,7 @@ namespace ROM.WorkOrder {
         }
     }
 
-    function setCantCompleteInspectionControlsVisibility(form: Form.msdyn_workorder.Main.ROMOversightActivity, visibility:boolean): void {
+    function setCantCompleteInspectionControlsVisibility(form: Form.msdyn_workorder.Main.ROMOversightActivity, visibility: boolean): void {
         let cantCompleteInspectionSelection = form.getAttribute("ts_cantcompleteinspection").getValue();
 
         if (visibility == true) {
@@ -1223,7 +1272,7 @@ namespace ROM.WorkOrder {
                     }
                 } else {
                     form.getControl("ts_incompleteworkorderreasonforother").setVisible(false);
-                } 
+                }
             }
             else {
                 form.getControl("ts_incompleteworkorderreason").setVisible(false);
@@ -1242,7 +1291,7 @@ namespace ROM.WorkOrder {
             form.getAttribute("ts_incompleteworkorderreasonforother").setValue(null);
         }
     }
-    
+
     //Checks if the Activity Type should have been able to be changed
     //Puts old value in and locks the control if it shouldn't have been able to be changed
     //This is needed when a service task is changed to in-progress and the work order form remained open.
@@ -1389,5 +1438,23 @@ namespace ROM.WorkOrder {
 
         //Check if the Work Order is past the Planned Fiscal Quarter
         setCantCompleteinspectionVisibility(form);
+    }
+
+    export function canceledWorkOrderReasonOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+
+        let selectedCanceledWorkOrderReason = form.getAttribute("ts_canceledinspectionjustification").getValue();
+
+        const selectedOther = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
+
+        //If 'Other' is selected as a reason, make ts_othercanceledjustification visible
+        if (selectedCanceledWorkOrderReason != null && selectedCanceledWorkOrderReason[0].id.toUpperCase() == selectedOther) {
+            form.getControl("ts_othercanceledjustification").setVisible(true);
+            form.getAttribute("ts_othercanceledjustification").setRequiredLevel("required");
+        } else {
+            form.getControl("ts_othercanceledjustification").setVisible(false);
+            form.getAttribute("ts_othercanceledjustification").setValue(null);
+            form.getAttribute("ts_othercanceledjustification").setRequiredLevel("none");
+        }
     }
 }
