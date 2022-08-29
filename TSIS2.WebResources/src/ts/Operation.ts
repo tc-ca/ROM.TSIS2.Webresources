@@ -89,46 +89,43 @@ namespace ROM.Operation {
                             }
                         }
                     }
-
-                    if (form.ui.getFormType() == 1) { //Create
-                        //If the form is opened with the stakeholder or site value already filled (from account/site subgrids)
-                        if (form.getAttribute('ts_stakeholder').getValue() != null) {
-                            getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
-                        }
-                        else if (form.getAttribute('ts_site').getValue() != null) {
-                            formOpenedInCreateModeWithSiteFilled = true;
-                            form.getControl('ovs_operationtypeid').setDisabled(false);
-                            getSiteOwningBusinessUnitAndSetOperationTypeAndStakeholderView(form);
-                        }
-                    }
-                    else if (form.ui.getFormType() == 2) { //Update
-                        showOperationActivityTabIfAvSec(form);
-                        //We filter the form on the business unit of the owner of the record
-                        let ownerAttribute = form.getAttribute("ownerid").getValue();
-                        if (ownerAttribute != null) {
-                            Xrm.WebApi.retrieveRecord(ownerAttribute[0].entityType, ownerAttribute[0].id, "?$select=_businessunitid_value").then(
-                                function success(result) {
-                                    owningBusinessUnit = result._businessunitid_value;
-                                    form.getControl('ovs_operationtypeid').setDisabled(false);
-                                    form.getControl('ts_site').setDisabled(false);
-
-                                    setStakeholderFilteredView(form)
-                                    setOperationTypeFilteredView(form);
-                                    setSiteFilteredView(form);
-                                    setSubSiteFilteredView(form);
-                                }
-                            );
-                        }
-
-                        if (form.getAttribute('ts_subsite').getValue() != null) {
-                            form.getControl('ts_subsite').setDisabled(false);
-                        }
-                    }
-                    else if (form.ui.getFormType() == 3 || form.ui.getFormType() == 4) {
-                        showOperationActivityTabIfAvSec(form);
-                    }
                 } else {
                     form.ui.tabs.get("tab_properties_avsec").setVisible(true);
+                    form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                }
+                
+                if (form.ui.getFormType() == 1) { //Create
+                    //If the form is opened with the stakeholder or site value already filled (from account/site subgrids)
+                    if (form.getAttribute('ts_stakeholder').getValue() != null) {
+                        getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
+                    }
+                    else if (form.getAttribute('ts_site').getValue() != null) {
+                        formOpenedInCreateModeWithSiteFilled = true;
+                        form.getControl('ovs_operationtypeid').setDisabled(false);
+                        getSiteOwningBusinessUnitAndSetOperationTypeAndStakeholderView(form);
+                    }
+                }
+                else if (form.ui.getFormType() == 2) { //Update
+                    //We filter the form on the business unit of the owner of the record
+                    let ownerAttribute = form.getAttribute("ownerid").getValue();
+                    if (ownerAttribute != null) {
+                        Xrm.WebApi.retrieveRecord(ownerAttribute[0].entityType, ownerAttribute[0].id, "?$select=_businessunitid_value").then(
+                            function success(result) {
+                                owningBusinessUnit = result._businessunitid_value;
+                                form.getControl('ovs_operationtypeid').setDisabled(false);
+                                form.getControl('ts_site').setDisabled(false);
+
+                                setStakeholderFilteredView(form)
+                                setOperationTypeFilteredView(form);
+                                setSiteFilteredView(form);
+                                setSubSiteFilteredView(form);
+                            }
+                        );
+                    }
+
+                    if (form.getAttribute('ts_subsite').getValue() != null) {
+                        form.getControl('ts_subsite').setDisabled(false);
+                    }
                 }
             }
         });
@@ -139,32 +136,6 @@ namespace ROM.Operation {
             form.getAttribute("ts_description").setRequiredLevel("required");
         }
     }
-
-    export function showOperationActivityTabIfAvSec(form: Form.ovs_operation.Main.Information): void {
-        Xrm.WebApi.retrieveRecord('ovs_operation', form.data.entity.getId(), "?$select=_owningbusinessunit_value").then(
-            function success(operation) {
-                let businessUnitfetchXml = [
-                    "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' returntotalrecordcount='true' no-lock='false'>",
-                    "  <entity name='businessunit'>",
-                    "    <attribute name='name'/>",
-                    "    <attribute name='businessunitid'/>",
-                    "    <filter>",
-                    "      <condition attribute='businessunitid' operator='eq' value='", operation._owningbusinessunit_value, "'/>",
-                    "    </filter>",
-                    "  </entity>",
-                    "</fetch>"
-                ].join("");
-                businessUnitfetchXml = "?fetchXml=" + businessUnitfetchXml;
-            
-                Xrm.WebApi.retrieveMultipleRecords("businessunit", businessUnitfetchXml).then(function (result) {
-                    if(result.entities[0].name.startsWith("Aviation")){
-                        form.ui.tabs.get("operation_activity_tab").setVisible(true);
-                    }  
-                });                     
-            }
-        );
-    }
-
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
