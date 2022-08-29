@@ -537,6 +537,25 @@ function justifyWorkOrder(data) {
     });
 }
 
+function justifyWorkOrderCancellation(data) {
+    Xrm.Navigation.navigateTo({
+        pageType: "bulkedit",
+        entityName: "msdyn_workorder",
+        entityIds: data,
+        formId: "a2e8c429-b027-ed11-9db1-002248ada8c4"
+    }, {
+        target: 2,
+        width: {
+            value: 65,
+            unit: "%"
+        },
+        height: {
+            value: 65,
+            unit: "%"
+        }
+    });
+}
+
 function workOrdersAddToTrip(data) {
     var parameters = {};
     if (data != null && data.length > 0) {
