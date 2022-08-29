@@ -645,7 +645,8 @@ interface Contact_Expand {
   modifiedonbehalfby: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_contact_msdyn_workorder_ReportedByContact: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_contact_msdyn_workorder_ReportedByContact: msdyn_workorder_Result[] }>;
   ovs_Finding_VerbalWarningGivenTo_Contact: WebExpand<Contact_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ovs_Finding_VerbalWarningGivenTo_Contact: ovs_Finding_Result[] }>;
-  ownerid: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  ownerid: WebExpand<Contact_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningteam: WebExpand<Contact_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<Contact_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   parentcustomerid_account: WebExpand<Contact_Expand, Account_Select, Account_Filter, { parentcustomerid_account: Account_Result }>;
   parentcustomerid_contact: WebExpand<Contact_Expand, Contact_Select, Contact_Filter, { parentcustomerid_contact: Contact_Result }>;
@@ -757,7 +758,8 @@ interface Contact_RelatedOne {
   masterid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   parentcustomerid_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   parentcustomerid_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;

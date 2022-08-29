@@ -384,7 +384,8 @@ interface Incident_Expand {
   msdyn_incidenttype: WebExpand<Incident_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { msdyn_incidenttype: msdyn_incidenttype_Result }>;
   ovs_incident_msdyn_workorderservicetask: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ovs_incident_msdyn_workorderservicetask: msdyn_workorderservicetask_Result[] }>;
   ovs_incident_ovs_finding: WebExpand<Incident_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ovs_incident_ovs_finding: ovs_Finding_Result[] }>;
-  ownerid: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  ownerid: WebExpand<Incident_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningteam: WebExpand<Incident_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   parentcaseid: WebExpand<Incident_Expand, Incident_Select, Incident_Filter, { parentcaseid: Incident_Result }>;
   primarycontactid: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
@@ -532,7 +533,8 @@ interface Incident_RelatedOne {
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_FunctionalLocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   msdyn_incidenttype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   parentcaseid: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   primarycontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
