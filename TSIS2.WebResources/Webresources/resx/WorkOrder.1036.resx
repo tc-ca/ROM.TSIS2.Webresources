@@ -168,4 +168,13 @@
   <data name="InvalidFiscalQuarterErrorMsg" xml:space="preserve">
     <value>Le trimestre fiscal a déjà été attribué à l'ordre de travail sélectionné comme partie d'un voyage. Le trimestre fiscal n'a pas été modifié car il ne peut pas être différent des autres ordres de travail de ce voyage.</value>
   </data>
+  <data name="CancelWorkOrderConfirmationText" xml:space="preserve">
+    <value>Changer le statut a "Annulé" va mettre l'ordre de travail en mode lecture-seul une fois que l'enregistrement sera enregistré. Ceci empêchera les modifications aux items de l'ordre de travail. Souhaitez-vous procéder?</value>
+  </data>
+  <data name="CancelWorkOrderConfirmationTitle" xml:space="preserve">
+    <value>Confirmation - Annuler l'ordre de travail</value>
+  </data>
+  <data name="CantCancelText" xml:space="preserve">
+    <value>A Complete Work Order can't be canceled. (FR)</value>
+  </data>
 </root>

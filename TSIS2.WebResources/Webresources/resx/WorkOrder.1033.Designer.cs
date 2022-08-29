@@ -61,6 +61,33 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changing the status to Cancel will set the Work Order to Read-Only next time the record is saved, preventing all items within the Work Order from being altered after it is saved. Do you wish to proceed?.
+        /// </summary>
+        internal static string CancelWorkOrderConfirmationText {
+            get {
+                return ResourceManager.GetString("CancelWorkOrderConfirmationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation - Cancel Work Order.
+        /// </summary>
+        internal static string CancelWorkOrderConfirmationTitle {
+            get {
+                return ResourceManager.GetString("CancelWorkOrderConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A Complete Work Order can&apos;t be canceled..
+        /// </summary>
+        internal static string CantCancelText {
+            get {
+                return ResourceManager.GetString("CantCancelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Changing the status to Closed will set the Work Order to Read-Only next time the record is saved, preventing all items within the Work Order from being altered after it is saved. Do you wish to proceed?.
         /// </summary>
         internal static string CloseWorkOrderConfirmationText {
