@@ -1213,6 +1213,12 @@ var ROM;
                     }
                 }
             });
+            var operation = formContext.getAttribute("ovs_operationid").getValue();
+            var operationType = formContext.getAttribute("ovs_operationtypeid").getValue();
+            var workOrderType = formContext.getAttribute("msdyn_workordertype").getValue();
+            if (operation != null && operationType != null && workOrderType != null) {
+                setActivityTypeFilteredView(formContext, operation[0].id, workOrderType[0].id, operationType[0].id);
+            }
         }
         WorkOrder.activityTypeOnChange = activityTypeOnChange;
         //Enables the Activity Type control if there is a New WOST or no Active WOSTs yet

@@ -1345,6 +1345,13 @@ namespace ROM.WorkOrder {
                 }
             }
         });
+
+        const operation = formContext.getAttribute("ovs_operationid").getValue();
+        const operationType = formContext.getAttribute("ovs_operationtypeid").getValue();
+        const workOrderType = formContext.getAttribute("msdyn_workordertype").getValue();
+        if (operation != null && operationType != null && workOrderType != null) {
+            setActivityTypeFilteredView(formContext, operation[0].id, workOrderType[0].id, operationType[0].id);
+        }
     }
 
     //Enables the Activity Type control if there is a New WOST or no Active WOSTs yet
