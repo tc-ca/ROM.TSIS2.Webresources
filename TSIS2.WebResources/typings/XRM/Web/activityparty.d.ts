@@ -15,6 +15,7 @@ interface ActivityParty_Base extends WebEntity {
   participationtypemask?: activityparty_participationtypemask | null;
   scheduledend?: Date | null;
   scheduledstart?: Date | null;
+  unresolvedpartyname?: string | null;
   versionnumber?: number | null;
 }
 interface ActivityParty_Relationships {
@@ -39,6 +40,8 @@ interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships 
   activityid_incidentresolution_bind$incidentresolutions?: string | null;
   activityid_letter_bind$letters?: string | null;
   activityid_msdyn_bookingalert_activityparty_bind$msdyn_bookingalerts?: string | null;
+  activityid_msdyn_ocliveworkitem_activityparty_bind$msdyn_ocliveworkitems?: string | null;
+  activityid_msdyn_ocsession_activityparty_bind$msdyn_ocsessions?: string | null;
   activityid_msfp_alert_activityparty_bind$msfp_alerts?: string | null;
   activityid_msfp_surveyinvite_activityparty_bind$msfp_surveyinvites?: string | null;
   activityid_msfp_surveyresponse_activityparty_bind$msfp_surveyresponses?: string | null;
@@ -97,6 +100,7 @@ interface ActivityParty_Select {
   resourcespecid_guid: WebAttribute<ActivityParty_Select, { resourcespecid_guid: string | null }, { resourcespecid_formatted?: string }>;
   scheduledend: WebAttribute<ActivityParty_Select, { scheduledend: Date | null }, { scheduledend_formatted?: string }>;
   scheduledstart: WebAttribute<ActivityParty_Select, { scheduledstart: Date | null }, { scheduledstart_formatted?: string }>;
+  unresolvedpartyname: WebAttribute<ActivityParty_Select, { unresolvedpartyname: string | null }, {  }>;
   versionnumber: WebAttribute<ActivityParty_Select, { versionnumber: number | null }, {  }>;
 }
 interface ActivityParty_Filter {
@@ -120,6 +124,7 @@ interface ActivityParty_Filter {
   resourcespecid_guid: XQW.Guid;
   scheduledend: Date;
   scheduledstart: Date;
+  unresolvedpartyname: string;
   versionnumber: number;
 }
 interface ActivityParty_Expand {

@@ -11,6 +11,8 @@ interface Appointment_Base extends WebEntity {
   createdon?: Date | null;
   description?: string | null;
   exchangerate?: number | null;
+  formattedscheduledend?: Date | null;
+  formattedscheduledstart?: Date | null;
   globalobjectid?: string | null;
   importsequencenumber?: number | null;
   instancetypecode?: appointment_instancetypecode | null;
@@ -62,9 +64,7 @@ interface Appointment_Relationships {
   modifiedby_appointment?: SystemUser_Result | null;
   modifiedonbehalfby_appointment?: SystemUser_Result | null;
   msdyn_appointment_bookableresourcebooking?: BookableResourceBooking_Result[] | null;
-  ownerid_appointment?: Team_Result | null;
-  ownerid_appointment1?: SystemUser_Result | null;
-  owningteam_appointment?: Team_Result | null;
+  ownerid_appointment?: SystemUser_Result | null;
   owninguser_appointment?: SystemUser_Result | null;
   regardingobjectid_account_appointment?: Account_Result | null;
   regardingobjectid_bookableresourcebooking_appointment?: BookableResourceBooking_Result | null;
@@ -192,6 +192,8 @@ interface Appointment_Select {
   createdonbehalfby_guid: WebAttribute<Appointment_Select, { createdonbehalfby_guid: string | null }, { createdonbehalfby_formatted?: string }>;
   description: WebAttribute<Appointment_Select, { description: string | null }, {  }>;
   exchangerate: WebAttribute<Appointment_Select, { exchangerate: number | null }, {  }>;
+  formattedscheduledend: WebAttribute<Appointment_Select, { formattedscheduledend: Date | null }, { formattedscheduledend_formatted?: string }>;
+  formattedscheduledstart: WebAttribute<Appointment_Select, { formattedscheduledstart: Date | null }, { formattedscheduledstart_formatted?: string }>;
   globalobjectid: WebAttribute<Appointment_Select, { globalobjectid: string | null }, {  }>;
   importsequencenumber: WebAttribute<Appointment_Select, { importsequencenumber: number | null }, {  }>;
   instancetypecode: WebAttribute<Appointment_Select, { instancetypecode: appointment_instancetypecode | null }, { instancetypecode_formatted?: string }>;
@@ -262,6 +264,8 @@ interface Appointment_Filter {
   createdonbehalfby_guid: XQW.Guid;
   description: string;
   exchangerate: any;
+  formattedscheduledend: Date;
+  formattedscheduledstart: Date;
   globalobjectid: string;
   importsequencenumber: number;
   instancetypecode: appointment_instancetypecode;
@@ -327,8 +331,7 @@ interface Appointment_Expand {
   modifiedby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby_appointment: SystemUser_Result }>;
   modifiedonbehalfby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_appointment: SystemUser_Result }>;
   msdyn_appointment_bookableresourcebooking: WebExpand<Appointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_appointment_bookableresourcebooking: BookableResourceBooking_Result[] }>;
-  ownerid_appointment: WebExpand<Appointment_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid_appointment: SystemUser_Result } & { ownerid_appointment: Team_Result }>;
-  owningteam_appointment: WebExpand<Appointment_Expand, Team_Select, Team_Filter, { owningteam_appointment: Team_Result }>;
+  ownerid_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { ownerid_appointment: SystemUser_Result }>;
   owninguser_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_appointment: SystemUser_Result }>;
   regardingobjectid_account_appointment: WebExpand<Appointment_Expand, Account_Select, Account_Filter, { regardingobjectid_account_appointment: Account_Result }>;
   regardingobjectid_bookableresourcebooking_appointment: WebExpand<Appointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { regardingobjectid_bookableresourcebooking_appointment: BookableResourceBooking_Result }>;
@@ -346,6 +349,8 @@ interface Appointment_FormattedResult {
   createdby_formatted?: string;
   createdon_formatted?: string;
   createdonbehalfby_formatted?: string;
+  formattedscheduledend_formatted?: string;
+  formattedscheduledstart_formatted?: string;
   instancetypecode_formatted?: string;
   lastonholdtime_formatted?: string;
   modifiedby_formatted?: string;
@@ -397,9 +402,7 @@ interface Appointment_RelatedOne {
   createdonbehalfby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid_appointment: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  ownerid_appointment1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  owningteam_appointment: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  ownerid_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   regardingobjectid_account_appointment: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   regardingobjectid_bookableresourcebooking_appointment: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
