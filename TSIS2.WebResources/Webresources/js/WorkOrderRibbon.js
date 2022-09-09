@@ -579,3 +579,16 @@ function workOrdersAddToTrip(data) {
         }
     });
 }
+
+function commitSelectedWorkOrders(selectedWorkOrdersGuids, selectedControl) {
+    for (let workOrderGuid of selectedWorkOrdersGuids) {
+        Xrm.WebApi.updateRecord("msdyn_workorder", workOrderGuid, { "ts_state": 717750001 });
+    }
+    var alertStrings = { confirmButtonLabel: "OK", text: "The selected Work Order(s) have been set to a Committed State", title: "Work Orders Committed" };
+    var alertOptions = { height: 200, width: 200 };
+    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(
+        function success(result) {
+            selectedControl.refresh();
+        }
+    );
+}
