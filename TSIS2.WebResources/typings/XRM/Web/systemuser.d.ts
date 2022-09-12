@@ -84,7 +84,13 @@ interface SystemUser_Base extends WebEntity {
   mobilealertemail?: string | null;
   mobilephone?: string | null;
   modifiedon?: Date | null;
+  msdyn_botdescription?: string | null;
+  msdyn_botendpoint?: string | null;
+  msdyn_botsecretkeys?: string | null;
+  msdyn_capacity?: number | null;
   msdyn_gdproptout?: boolean | null;
+  msdyn_gridwrappercontrolfield?: string | null;
+  msdyn_usertype?: msdyn_systemuser_msdyn_usertype | null;
   nickname?: string | null;
   organizationid?: string | null;
   outgoingemaildeliverymethod?: systemuser_outgoingemaildeliverymethod | null;
@@ -219,11 +225,6 @@ interface SystemUser_Relationships {
   lk_tc_tcfiscalyear_createdonbehalfby?: tc_TCFiscalYear_Result[] | null;
   lk_tc_tcfiscalyear_modifiedby?: tc_TCFiscalYear_Result[] | null;
   lk_tc_tcfiscalyear_modifiedonbehalfby?: tc_TCFiscalYear_Result[] | null;
-  lk_team_createdonbehalfby?: Team_Result[] | null;
-  lk_team_modifiedonbehalfby?: Team_Result[] | null;
-  lk_teambase_administratorid?: Team_Result[] | null;
-  lk_teambase_createdby?: Team_Result[] | null;
-  lk_teambase_modifiedby?: Team_Result[] | null;
   lk_ts_assessmentscorethredshots_createdby?: ts_assessmentscorethredshots_Result[] | null;
   lk_ts_assessmentscorethredshots_createdonbehalfby?: ts_assessmentscorethredshots_Result[] | null;
   lk_ts_assessmentscorethredshots_modifiedby?: ts_assessmentscorethredshots_Result[] | null;
@@ -279,7 +280,6 @@ interface SystemUser_Relationships {
   systemuser_bookableresource_UserId?: BookableResource_Result[] | null;
   systemuser_connections1?: Connection_Result[] | null;
   systemuser_connections2?: Connection_Result[] | null;
-  teammembership_association?: Team_Result[] | null;
   ts_InspectionHours?: ts_InspectionHours_Result | null;
   ts_enforcementaction_systemuser_createdby?: ts_enforcementaction_Result[] | null;
   ts_enforcementaction_systemuser_createdonbehalfby?: ts_enforcementaction_Result[] | null;
@@ -331,6 +331,7 @@ interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
   businessunitid_bind$businessunits?: string | null;
   calendarid_bind$calendars?: string | null;
   mobileofflineprofileid_bind$mobileofflineprofiles?: string | null;
+  msdyn_DefaultPresenceIdUser_bind$msdyn_presences?: string | null;
   parentsystemuserid_bind$systemusers?: string | null;
   positionid_bind$positions?: string | null;
   queueid_bind$queues?: string | null;
@@ -439,7 +440,14 @@ interface SystemUser_Select {
   modifiedby_guid: WebAttribute<SystemUser_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
   modifiedon: WebAttribute<SystemUser_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<SystemUser_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msdyn_botdescription: WebAttribute<SystemUser_Select, { msdyn_botdescription: string | null }, {  }>;
+  msdyn_botendpoint: WebAttribute<SystemUser_Select, { msdyn_botendpoint: string | null }, {  }>;
+  msdyn_botsecretkeys: WebAttribute<SystemUser_Select, { msdyn_botsecretkeys: string | null }, {  }>;
+  msdyn_capacity: WebAttribute<SystemUser_Select, { msdyn_capacity: number | null }, {  }>;
+  msdyn_defaultpresenceiduser_guid: WebAttribute<SystemUser_Select, { msdyn_defaultpresenceiduser_guid: string | null }, { msdyn_defaultpresenceiduser_formatted?: string }>;
   msdyn_gdproptout: WebAttribute<SystemUser_Select, { msdyn_gdproptout: boolean | null }, {  }>;
+  msdyn_gridwrappercontrolfield: WebAttribute<SystemUser_Select, { msdyn_gridwrappercontrolfield: string | null }, {  }>;
+  msdyn_usertype: WebAttribute<SystemUser_Select, { msdyn_usertype: msdyn_systemuser_msdyn_usertype | null }, { msdyn_usertype_formatted?: string }>;
   nickname: WebAttribute<SystemUser_Select, { nickname: string | null }, {  }>;
   organizationid: WebAttribute<SystemUser_Select, { organizationid: string | null }, {  }>;
   outgoingemaildeliverymethod: WebAttribute<SystemUser_Select, { outgoingemaildeliverymethod: systemuser_outgoingemaildeliverymethod | null }, { outgoingemaildeliverymethod_formatted?: string }>;
@@ -571,7 +579,14 @@ interface SystemUser_Filter {
   modifiedby_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msdyn_botdescription: string;
+  msdyn_botendpoint: string;
+  msdyn_botsecretkeys: string;
+  msdyn_capacity: number;
+  msdyn_defaultpresenceiduser_guid: XQW.Guid;
   msdyn_gdproptout: boolean;
+  msdyn_gridwrappercontrolfield: string;
+  msdyn_usertype: msdyn_systemuser_msdyn_usertype;
   nickname: string;
   organizationid: XQW.Guid;
   outgoingemaildeliverymethod: systemuser_outgoingemaildeliverymethod;
@@ -716,11 +731,6 @@ interface SystemUser_Expand {
   lk_tc_tcfiscalyear_createdonbehalfby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_createdonbehalfby: tc_TCFiscalYear_Result[] }>;
   lk_tc_tcfiscalyear_modifiedby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_modifiedby: tc_TCFiscalYear_Result[] }>;
   lk_tc_tcfiscalyear_modifiedonbehalfby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_modifiedonbehalfby: tc_TCFiscalYear_Result[] }>;
-  lk_team_createdonbehalfby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_team_createdonbehalfby: Team_Result[] }>;
-  lk_team_modifiedonbehalfby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_team_modifiedonbehalfby: Team_Result[] }>;
-  lk_teambase_administratorid: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_administratorid: Team_Result[] }>;
-  lk_teambase_createdby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_createdby: Team_Result[] }>;
-  lk_teambase_modifiedby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_modifiedby: Team_Result[] }>;
   lk_ts_assessmentscorethredshots_createdby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_createdby: ts_assessmentscorethredshots_Result[] }>;
   lk_ts_assessmentscorethredshots_createdonbehalfby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_createdonbehalfby: ts_assessmentscorethredshots_Result[] }>;
   lk_ts_assessmentscorethredshots_modifiedby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_modifiedby: ts_assessmentscorethredshots_Result[] }>;
@@ -779,7 +789,6 @@ interface SystemUser_Expand {
   systemuser_bookableresource_UserId: WebExpand<SystemUser_Expand, BookableResource_Select, BookableResource_Filter, { systemuser_bookableresource_UserId: BookableResource_Result[] }>;
   systemuser_connections1: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections1: Connection_Result[] }>;
   systemuser_connections2: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections2: Connection_Result[] }>;
-  teammembership_association: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { teammembership_association: Team_Result[] }>;
   ts_InspectionHours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { ts_InspectionHours: ts_InspectionHours_Result }>;
   ts_enforcementaction_systemuser_createdby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdby: ts_enforcementaction_Result[] }>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdonbehalfby: ts_enforcementaction_Result[] }>;
@@ -851,6 +860,8 @@ interface SystemUser_FormattedResult {
   modifiedby_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msdyn_defaultpresenceiduser_formatted?: string;
+  msdyn_usertype_formatted?: string;
   outgoingemaildeliverymethod_formatted?: string;
   overriddencreatedon_formatted?: string;
   parentsystemuserid_formatted?: string;
@@ -875,6 +886,7 @@ interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
   mobileofflineprofileid_guid: string | null;
   modifiedby_guid: string | null;
   modifiedonbehalfby_guid: string | null;
+  msdyn_defaultpresenceiduser_guid: string | null;
   parentsystemuserid_guid: string | null;
   positionid_guid: string | null;
   queueid_guid: string | null;
@@ -997,11 +1009,6 @@ interface SystemUser_RelatedMany {
   lk_tc_tcfiscalyear_createdonbehalfby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   lk_tc_tcfiscalyear_modifiedby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   lk_tc_tcfiscalyear_modifiedonbehalfby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
-  lk_team_createdonbehalfby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  lk_team_modifiedonbehalfby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  lk_teambase_administratorid: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  lk_teambase_createdby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  lk_teambase_modifiedby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   lk_ts_assessmentscorethredshots_createdby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   lk_ts_assessmentscorethredshots_createdonbehalfby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   lk_ts_assessmentscorethredshots_modifiedby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
@@ -1057,7 +1064,6 @@ interface SystemUser_RelatedMany {
   systemuser_bookableresource_UserId: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   systemuser_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   systemuser_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
-  teammembership_association: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_enforcementaction_systemuser_createdby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_modifiedby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;

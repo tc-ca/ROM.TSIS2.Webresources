@@ -15,12 +15,13 @@ namespace ROM.WorkOrderServiceTask {
         noQuestionnaireText = "Il n'y a pas de questionnaire disponible pour cette date.";
     }
 
-    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function onLoad(eContext: Xrm.ExecutionContext<any, any>) {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
         //If there's a related Work Order, filter the Task Type Lookup to match the Work Order's Activity Type Filter
         if (Form.getAttribute("msdyn_workorder").getValue() != null) {
             setTaskTypeFilteredView(Form);
         }
+
         var taskType = Form.getAttribute("msdyn_tasktype").getValue();
         //Lock Task Type field if it has a value.
         if (taskType != null) {
@@ -47,8 +48,10 @@ namespace ROM.WorkOrderServiceTask {
         const workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
 
         workOrderEndDateCtl.setDisabled(true);
-
-        if (statusReason == 918640005) {
+        if (await workOrderIsDraft(eContext)) {
+            mode = 'display';
+            setAllFieldsDisabled(eContext);
+        } else if (statusReason == 918640005) {
             workOrderStartDateCtl.setDisabled(false);
 
             // Also, add a message that work order service task start date should be filled in to proceed.
@@ -268,6 +271,14 @@ namespace ROM.WorkOrderServiceTask {
             });
     }
 
+    async function workOrderIsDraft(eContext: Xrm.ExecutionContext<any, any>) {
+        const form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
+        const workOrderValue = form.getAttribute("msdyn_workorder").getValue();
+        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
+        const workOrder = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ts_state");
+        return workOrder.ts_state == ts_planningstate.Draft;
+    }
+
     // Get surveyJS locale
     export function getSurveyLocal(): string {
         const languageCode = Xrm.Utility.getGlobalContext().userSettings.languageId;
@@ -291,7 +302,7 @@ namespace ROM.WorkOrderServiceTask {
             win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
 
             const statusReason = Form.getAttribute("statuscode").getValue();
-            if (statusReason == 918640002 && operationData.isInspectionType) {
+            if ((statusReason == 918640002 && operationData.isInspectionType)) {
                 mode = "display";
                 setAllFieldsDisabled(eContext);
             }

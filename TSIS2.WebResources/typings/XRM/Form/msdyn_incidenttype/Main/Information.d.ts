@@ -60,6 +60,13 @@ declare namespace Form.msdyn_incidenttype.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_properties extends Xrm.SectionCollectionBase {
+        get(name: "tab_10_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "msdyn_copyincidentitemstoagreement"): Xrm.OptionSetAttribute<boolean>;
@@ -73,7 +80,19 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ovs_incidenttypenamefrench"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_incidenttype_statecode>;
+      get(name: "ts_aircargo"): Xrm.Attribute<any>;
+      get(name: "ts_aviationsecuritytraining"): Xrm.Attribute<any>;
+      get(name: "ts_cateringandstores"): Xrm.Attribute<any>;
+      get(name: "ts_domesticflights"): Xrm.Attribute<any>;
+      get(name: "ts_internationalflights"): Xrm.Attribute<any>;
+      get(name: "ts_internationalprogramsbranchipb"): Xrm.Attribute<any>;
+      get(name: "ts_mail"): Xrm.Attribute<any>;
+      get(name: "ts_onestopsecurityoss"): Xrm.Attribute<any>;
+      get(name: "ts_opi"): Xrm.Attribute<any>;
+      get(name: "ts_remainovernightron"): Xrm.Attribute<any>;
       get(name: "ts_riskscore"): Xrm.LookupAttribute<"ts_recurrencefrequencies">;
+      get(name: "ts_transborderflights"): Xrm.Attribute<any>;
+      get(name: "ts_unattendedaircraft"): Xrm.Attribute<any>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -100,7 +119,19 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ovs_incidenttypenamefrench"): Xrm.StringControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "servicetasksgrid"): Xrm.SubGridControl<"msdyn_incidenttypeservicetask">;
+      get(name: "ts_aircargo"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_aviationsecuritytraining"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_cateringandstores"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_domesticflights"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_internationalflights"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_internationalprogramsbranchipb"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_mail"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_onestopsecurityoss"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_opi"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_remainovernightron"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_riskscore"): Xrm.LookupControl<"ts_recurrencefrequencies">;
+      get(name: "ts_transborderflights"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_unattendedaircraft"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -115,6 +146,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
+      get(name: "tab_properties"): Xrm.PageTab<Tabs.tab_properties>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -133,7 +165,19 @@ declare namespace Form.msdyn_incidenttype.Main {
     getAttribute(attributeName: "ovs_incidenttypenamefrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_incidenttype_statecode>;
+    getAttribute(attributeName: "ts_aircargo"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_aviationsecuritytraining"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_cateringandstores"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_domesticflights"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_internationalflights"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_internationalprogramsbranchipb"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_mail"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_onestopsecurityoss"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_opi"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_remainovernightron"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_riskscore"): Xrm.LookupAttribute<"ts_recurrencefrequencies">;
+    getAttribute(attributeName: "ts_transborderflights"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_unattendedaircraft"): Xrm.Attribute<any>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Characteristics"): Xrm.SubGridControl<"msdyn_incidenttypecharacteristic">;
     getControl(controlName: "Incident_Type_Resolutions"): Xrm.SubGridControl<"msdyn_incidenttyperesolution">;
@@ -155,7 +199,19 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "ovs_incidenttypenamefrench"): Xrm.StringControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "servicetasksgrid"): Xrm.SubGridControl<"msdyn_incidenttypeservicetask">;
+    getControl(controlName: "ts_aircargo"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_aviationsecuritytraining"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_cateringandstores"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_domesticflights"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_internationalflights"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_internationalprogramsbranchipb"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_mail"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_onestopsecurityoss"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_opi"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_remainovernightron"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_riskscore"): Xrm.LookupControl<"ts_recurrencefrequencies">;
+    getControl(controlName: "ts_transborderflights"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_unattendedaircraft"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: string): undefined;
   }
 }
