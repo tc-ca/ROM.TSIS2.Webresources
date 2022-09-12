@@ -36,14 +36,14 @@ function commitRelatedWorkOrdersOfSelectedTrips(selectedTripsGuids, selectedCont
                     const workOrderGuid = result.entities[i]._ts_inspection_value;
                     Xrm.WebApi.updateRecord("msdyn_workorder", workOrderGuid, { "ts_state": 717750001 });
                 }
-                var alertStrings = { confirmButtonLabel: "OK", text: "The Work Orders related to the selected Trip(s) have been set to a Committed State", title: "Work Orders Committed" };
-                var alertOptions = { height: 200, width: 200 };
-                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(
-                    function success(result) {
-                        selectedControl.refresh();
-                    }
-                );
             }
         );
     }
+    var alertStrings = { confirmButtonLabel: "OK", text: "The Work Orders related to the selected Trip(s) have been set to a Committed State", title: "Work Orders Committed" };
+    var alertOptions = { height: 200, width: 200 };
+    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(
+        function success(result) {
+            selectedControl.refresh();
+        }
+    );
 }
