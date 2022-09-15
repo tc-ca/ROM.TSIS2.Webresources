@@ -344,7 +344,7 @@ var ROM;
                                 win.operationList = operationData.operations;
                                 win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
                                 statusReason = Form.getAttribute("statuscode").getValue();
-                                if ((statusReason == 918640002 && operationData.isInspectionType)) {
+                                if (statusReason == 918640002 && operationData.isInspectionType) {
                                     mode = "display";
                                     setAllFieldsDisabled(eContext);
                                 }
