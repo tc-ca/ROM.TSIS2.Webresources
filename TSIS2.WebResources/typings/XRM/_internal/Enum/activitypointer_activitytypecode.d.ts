@@ -21,4 +21,6 @@ declare const enum activitypointer_activitytypecode {
   ActivityrecordfortheTeamschat = 10769,
   Interview = 10853,
   EnforcementAction = 10882,
+  Conversation = 10944,
+  Session = 10961,
 }

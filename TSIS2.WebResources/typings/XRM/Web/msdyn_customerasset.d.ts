@@ -170,8 +170,7 @@ interface msdyn_customerasset_Expand {
   msdyn_msdyn_customerasset_msdyn_workorderservicetask_CustomerAsset: WebExpand<msdyn_customerasset_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { msdyn_msdyn_customerasset_msdyn_workorderservicetask_CustomerAsset: msdyn_workorderservicetask_Result[] }>;
   msdyn_parentasset_msdyn_customerasset: WebExpand<msdyn_customerasset_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { msdyn_parentasset_msdyn_customerasset: msdyn_customerasset_Result }>;
   msdyn_workorder_ovs_asset_msdyn_customera: WebExpand<msdyn_customerasset_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_workorder_ovs_asset_msdyn_customera: msdyn_workorder_Result[] }>;
-  ownerid: WebExpand<msdyn_customerasset_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
-  owningteam: WebExpand<msdyn_customerasset_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
+  ownerid: WebExpand<msdyn_customerasset_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<msdyn_customerasset_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_msdyn_customerasset_msdyn_customerasset: WebExpand<msdyn_customerasset_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ts_msdyn_customerasset_msdyn_customerasset: msdyn_customerasset_Result[] }>;
   ts_msdyn_customerasset_msdyn_workorder_msdyn: WebExpand<msdyn_customerasset_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_customerasset_msdyn_workorder_msdyn: msdyn_workorder_Result[] }>;
@@ -234,8 +233,7 @@ interface msdyn_customerasset_RelatedOne {
   msdyn_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_masterasset_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_parentasset_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface msdyn_customerasset_RelatedMany {

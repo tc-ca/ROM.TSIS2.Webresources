@@ -125,4 +125,7 @@ declare const enum connection_record2objecttypecode {
   Suggestion = 10752,
   Interview = 10853,
   EnforcementAction = 10882,
+  OngoingconversationDeprecated = 10934,
+  Conversation = 10944,
+  Session = 10961,
 }

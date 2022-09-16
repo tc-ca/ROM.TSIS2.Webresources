@@ -40,7 +40,7 @@ declare namespace Form.ovs_operation.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_properties_avsec extends Xrm.SectionCollectionBase {
-        get(name: "tab_9_section_1"): Xrm.PageSection;
+        get(name: "tab_avsec_properties_air_carrier_passenger"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;

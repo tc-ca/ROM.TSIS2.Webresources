@@ -16,6 +16,18 @@ interface msdyn_incidenttype_Base extends WebEntity {
   statecode?: msdyn_incidenttype_statecode | null;
   statuscode?: msdyn_incidenttype_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_aircargo?: boolean | null;
+  ts_aviationsecuritytraining?: boolean | null;
+  ts_cateringandstores?: boolean | null;
+  ts_domesticflights?: boolean | null;
+  ts_internationalflights?: boolean | null;
+  ts_internationalprogramsbranchipb?: boolean | null;
+  ts_mail?: boolean | null;
+  ts_onestopsecurityoss?: boolean | null;
+  ts_opi?: boolean | null;
+  ts_remainovernightron?: boolean | null;
+  ts_transborderflights?: boolean | null;
+  ts_unattendedaircraft?: boolean | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -65,8 +77,20 @@ interface msdyn_incidenttype_Select {
   statecode: WebAttribute<msdyn_incidenttype_Select, { statecode: msdyn_incidenttype_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<msdyn_incidenttype_Select, { statuscode: msdyn_incidenttype_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<msdyn_incidenttype_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_aircargo: WebAttribute<msdyn_incidenttype_Select, { ts_aircargo: boolean | null }, {  }>;
+  ts_aviationsecuritytraining: WebAttribute<msdyn_incidenttype_Select, { ts_aviationsecuritytraining: boolean | null }, {  }>;
+  ts_cateringandstores: WebAttribute<msdyn_incidenttype_Select, { ts_cateringandstores: boolean | null }, {  }>;
+  ts_domesticflights: WebAttribute<msdyn_incidenttype_Select, { ts_domesticflights: boolean | null }, {  }>;
+  ts_internationalflights: WebAttribute<msdyn_incidenttype_Select, { ts_internationalflights: boolean | null }, {  }>;
+  ts_internationalprogramsbranchipb: WebAttribute<msdyn_incidenttype_Select, { ts_internationalprogramsbranchipb: boolean | null }, {  }>;
+  ts_mail: WebAttribute<msdyn_incidenttype_Select, { ts_mail: boolean | null }, {  }>;
+  ts_onestopsecurityoss: WebAttribute<msdyn_incidenttype_Select, { ts_onestopsecurityoss: boolean | null }, {  }>;
+  ts_opi: WebAttribute<msdyn_incidenttype_Select, { ts_opi: boolean | null }, {  }>;
   ts_ovs_operation_guid: WebAttribute<msdyn_incidenttype_Select, { ts_ovs_operation_guid: string | null }, { ts_ovs_operation_formatted?: string }>;
+  ts_remainovernightron: WebAttribute<msdyn_incidenttype_Select, { ts_remainovernightron: boolean | null }, {  }>;
   ts_riskscore_guid: WebAttribute<msdyn_incidenttype_Select, { ts_riskscore_guid: string | null }, { ts_riskscore_formatted?: string }>;
+  ts_transborderflights: WebAttribute<msdyn_incidenttype_Select, { ts_transborderflights: boolean | null }, {  }>;
+  ts_unattendedaircraft: WebAttribute<msdyn_incidenttype_Select, { ts_unattendedaircraft: boolean | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<msdyn_incidenttype_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_incidenttype_Select, { versionnumber: number | null }, {  }>;
 }
@@ -97,8 +121,20 @@ interface msdyn_incidenttype_Filter {
   statecode: msdyn_incidenttype_statecode;
   statuscode: msdyn_incidenttype_statuscode;
   timezoneruleversionnumber: number;
+  ts_aircargo: boolean;
+  ts_aviationsecuritytraining: boolean;
+  ts_cateringandstores: boolean;
+  ts_domesticflights: boolean;
+  ts_internationalflights: boolean;
+  ts_internationalprogramsbranchipb: boolean;
+  ts_mail: boolean;
+  ts_onestopsecurityoss: boolean;
+  ts_opi: boolean;
   ts_ovs_operation_guid: XQW.Guid;
+  ts_remainovernightron: boolean;
   ts_riskscore_guid: XQW.Guid;
+  ts_transborderflights: boolean;
+  ts_unattendedaircraft: boolean;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -110,8 +146,7 @@ interface msdyn_incidenttype_Expand {
   msdyn_msdyn_incidenttype_incident_IncidentType: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { msdyn_msdyn_incidenttype_incident_IncidentType: Incident_Result[] }>;
   msdyn_msdyn_incidenttype_msdyn_incidenttypeservicetask_IncidentType: WebExpand<msdyn_incidenttype_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { msdyn_msdyn_incidenttype_msdyn_incidenttypeservicetask_IncidentType: msdyn_incidenttypeservicetask_Result[] }>;
   msdyn_msdyn_incidenttype_msdyn_workorder_PrimaryIncidentType: WebExpand<msdyn_incidenttype_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_msdyn_incidenttype_msdyn_workorder_PrimaryIncidentType: msdyn_workorder_Result[] }>;
-  ownerid: WebExpand<msdyn_incidenttype_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
-  owningteam: WebExpand<msdyn_incidenttype_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
+  ownerid: WebExpand<msdyn_incidenttype_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
   owninguser: WebExpand<msdyn_incidenttype_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_incident_InspectionType1_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { ts_incident_InspectionType1_msdyn_incidentty: Incident_Result[] }>;
   ts_incident_InspectionType2_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { ts_incident_InspectionType2_msdyn_incidentty: Incident_Result[] }>;
@@ -156,8 +191,7 @@ interface msdyn_incidenttype_RelatedOne {
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
 }

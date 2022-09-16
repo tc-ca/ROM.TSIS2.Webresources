@@ -10,4 +10,5 @@ declare const enum activityparty_participationtypemask {
   Owner = 9,
   Resource = 10,
   Customer = 11,
+  ChatParticipant = 12,
 }
