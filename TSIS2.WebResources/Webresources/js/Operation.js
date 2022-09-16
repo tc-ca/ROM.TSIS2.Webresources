@@ -132,7 +132,7 @@ var ROM;
                                 avsecPropertiesTab.setVisible(true);
                                 form.ui.tabs.get("operation_activity_tab").setVisible(true);
                                 //Show Air Carrier (Passenger) Section if Operation Type is Air Carrier Passenger
-                                if (operationType[0].id == "8b614ef0-c651-eb11-a812-000d3af3ac0d") { //Air Carrier (Passenger)
+                                if (operationType[0].id == "{8B614EF0-C651-EB11-A812-000D3AF3AC0D}") { //Air Carrier (Passenger)
                                     avsecPropertiesTab.sections.get("tab_avsec_properties_air_carrier_passenger").setVisible(true);
                                 }
                             }
