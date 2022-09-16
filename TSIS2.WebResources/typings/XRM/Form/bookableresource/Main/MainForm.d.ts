@@ -11,6 +11,13 @@ declare namespace Form.bookableresource.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface Omnichannel extends Xrm.SectionCollectionBase {
+        get(name: "tab_2_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface e37f45244a6642dc974c078756aef3fb extends Xrm.SectionCollectionBase {
         get(name: "msdyn_userinformation"): Xrm.PageSection;
         get(name: "tab_4_section_1"): Xrm.PageSection;
@@ -71,6 +78,7 @@ declare namespace Form.bookableresource.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "BookableResourceCharacteristics"): Xrm.SubGridControl<"bookableresourcecharacteristic">;
+      get(name: "BookableResourceCharacteristics1"): Xrm.SubGridControl<"bookableresourcecharacteristic">;
       get(name: "CATEGORYASSOCIATIONS"): Xrm.SubGridControl<"bookableresourcecategoryassn">;
       get(name: "ResourceCategory"): Xrm.SubGridControl<"bookableresourcecategoryassn">;
       get(name: "ResourceCharacteristics"): Xrm.SubGridControl<"bookableresourcecharacteristic">;
@@ -108,6 +116,7 @@ declare namespace Form.bookableresource.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "FieldService"): Xrm.PageTab<Tabs.FieldService>;
+      get(name: "Omnichannel"): Xrm.PageTab<Tabs.Omnichannel>;
       get(name: "{e37f4524-4a66-42dc-974c-078756aef3fb}"): Xrm.PageTab<Tabs.e37f45244a6642dc974c078756aef3fb>;
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
       get(name: "workhours"): Xrm.PageTab<Tabs.workhours>;
@@ -145,6 +154,7 @@ declare namespace Form.bookableresource.Main {
     getAttribute(attributeName: "userid"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "BookableResourceCharacteristics"): Xrm.SubGridControl<"bookableresourcecharacteristic">;
+    getControl(controlName: "BookableResourceCharacteristics1"): Xrm.SubGridControl<"bookableresourcecharacteristic">;
     getControl(controlName: "CATEGORYASSOCIATIONS"): Xrm.SubGridControl<"bookableresourcecategoryassn">;
     getControl(controlName: "ResourceCategory"): Xrm.SubGridControl<"bookableresourcecategoryassn">;
     getControl(controlName: "ResourceCharacteristics"): Xrm.SubGridControl<"bookableresourcecharacteristic">;

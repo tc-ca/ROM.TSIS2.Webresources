@@ -108,6 +108,7 @@ declare namespace Form.account.Main {
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_iatacode"): Xrm.Attribute<string>;
       get(name: "ts_icaocode"): Xrm.Attribute<string>;
+      get(name: "ts_securityplantype"): Xrm.OptionSetAttribute<ts_securityplantype>;
       get(name: "ts_stakeholderstatus"): Xrm.OptionSetAttribute<ts_stakeholderstatus>;
       get(name: "ts_statusdescription"): Xrm.Attribute<string>;
       get(name: "ts_statusenddate"): Xrm.DateAttribute;
@@ -164,6 +165,7 @@ declare namespace Form.account.Main {
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_iatacode"): Xrm.StringControl;
       get(name: "ts_icaocode"): Xrm.StringControl;
+      get(name: "ts_securityplantype"): Xrm.OptionSetControl<ts_securityplantype>;
       get(name: "ts_stakeholderstatus"): Xrm.OptionSetControl<ts_stakeholderstatus>;
       get(name: "ts_statusdescription"): Xrm.StringControl;
       get(name: "ts_statusenddate"): Xrm.DateControl;
@@ -223,6 +225,7 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_iatacode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_icaocode"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_securityplantype"): Xrm.OptionSetAttribute<ts_securityplantype>;
     getAttribute(attributeName: "ts_stakeholderstatus"): Xrm.OptionSetAttribute<ts_stakeholderstatus>;
     getAttribute(attributeName: "ts_statusdescription"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_statusenddate"): Xrm.DateAttribute;
@@ -274,6 +277,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_iatacode"): Xrm.StringControl;
     getControl(controlName: "ts_icaocode"): Xrm.StringControl;
+    getControl(controlName: "ts_securityplantype"): Xrm.OptionSetControl<ts_securityplantype>;
     getControl(controlName: "ts_stakeholderstatus"): Xrm.OptionSetControl<ts_stakeholderstatus>;
     getControl(controlName: "ts_statusdescription"): Xrm.StringControl;
     getControl(controlName: "ts_statusenddate"): Xrm.DateControl;

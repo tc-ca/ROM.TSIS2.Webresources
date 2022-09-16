@@ -47,6 +47,16 @@ declare namespace Form.systemuser.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_6 extends Xrm.SectionCollectionBase {
+        get(name: "SECTION_Skills"): Xrm.PageSection;
+        get(name: "tab_6_section_2"): Xrm.PageSection;
+        get(name: "tab_6_section_4"): Xrm.PageSection;
+        get(name: "tab_6_section_5"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "accessmode"): Xrm.OptionSetAttribute<systemuser_accessmode>;
@@ -84,6 +94,9 @@ declare namespace Form.systemuser.Main {
       get(name: "mobilealertemail"): Xrm.Attribute<string>;
       get(name: "mobileofflineprofileid"): Xrm.LookupAttribute<"mobileofflineprofile">;
       get(name: "mobilephone"): Xrm.Attribute<string>;
+      get(name: "msdyn_capacity"): Xrm.NumberAttribute;
+      get(name: "msdyn_defaultpresenceiduser"): Xrm.LookupAttribute<"msdyn_presence">;
+      get(name: "nickname"): Xrm.Attribute<string>;
       get(name: "parentsystemuserid"): Xrm.LookupAttribute<"systemuser">;
       get(name: "personalemailaddress"): Xrm.Attribute<string>;
       get(name: "positionid"): Xrm.LookupAttribute<"position">;
@@ -100,7 +113,10 @@ declare namespace Form.systemuser.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "BookableResources"): Xrm.SubGridControl<"bookableresource">;
+      get(name: "CapacityProfilesSubgrid"): Xrm.SubGridControl<"msdyn_capacityprofile">;
       get(name: "DirectReports"): Xrm.SubGridControl<"systemuser">;
+      get(name: "LiveEngagementQueues"): Xrm.SubGridControl<"queue">;
       get(name: "PrivateQueuesSubGrid"): Xrm.SubGridControl<"queue">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "TeamsSubGrid"): Xrm.SubGridControl<"team">;
@@ -131,6 +147,7 @@ declare namespace Form.systemuser.Main {
       get(name: "address2_line1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "businessunitid"): Xrm.LookupControl<"businessunit">;
       get(name: "caltype"): Xrm.OptionSetControl<systemuser_caltype>;
+      get(name: "default_presence_user"): Xrm.LookupControl<"msdyn_presence">;
       get(name: "defaultmailbox"): Xrm.LookupControl<"mailbox">;
       get(name: "domainname"): Xrm.StringControl;
       get(name: "footer_isdisabled"): Xrm.OptionSetControl<boolean>;
@@ -142,6 +159,8 @@ declare namespace Form.systemuser.Main {
       get(name: "mobilealertemail"): Xrm.StringControl;
       get(name: "mobileofflineprofileid"): Xrm.LookupControl<"mobileofflineprofile">;
       get(name: "mobilephone"): Xrm.StringControl;
+      get(name: "msdyn_capacity"): Xrm.NumberControl;
+      get(name: "nickname"): Xrm.StringControl;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "parentsystemuserid"): Xrm.LookupControl<"systemuser">;
       get(name: "personalemailaddress"): Xrm.StringControl;
@@ -163,6 +182,7 @@ declare namespace Form.systemuser.Main {
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
       get(name: "MobileOfflineProfile_TAB"): Xrm.PageTab<Tabs.MobileOfflineProfile_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
+      get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -206,6 +226,9 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: "mobilealertemail"): Xrm.Attribute<string>;
     getAttribute(attributeName: "mobileofflineprofileid"): Xrm.LookupAttribute<"mobileofflineprofile">;
     getAttribute(attributeName: "mobilephone"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_capacity"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_defaultpresenceiduser"): Xrm.LookupAttribute<"msdyn_presence">;
+    getAttribute(attributeName: "nickname"): Xrm.Attribute<string>;
     getAttribute(attributeName: "parentsystemuserid"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "personalemailaddress"): Xrm.Attribute<string>;
     getAttribute(attributeName: "positionid"): Xrm.LookupAttribute<"position">;
@@ -217,7 +240,10 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
     getAttribute(attributeName: "windowsliveid"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "BookableResources"): Xrm.SubGridControl<"bookableresource">;
+    getControl(controlName: "CapacityProfilesSubgrid"): Xrm.SubGridControl<"msdyn_capacityprofile">;
     getControl(controlName: "DirectReports"): Xrm.SubGridControl<"systemuser">;
+    getControl(controlName: "LiveEngagementQueues"): Xrm.SubGridControl<"queue">;
     getControl(controlName: "PrivateQueuesSubGrid"): Xrm.SubGridControl<"queue">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "TeamsSubGrid"): Xrm.SubGridControl<"team">;
@@ -248,6 +274,7 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "address2_line1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "businessunitid"): Xrm.LookupControl<"businessunit">;
     getControl(controlName: "caltype"): Xrm.OptionSetControl<systemuser_caltype>;
+    getControl(controlName: "default_presence_user"): Xrm.LookupControl<"msdyn_presence">;
     getControl(controlName: "defaultmailbox"): Xrm.LookupControl<"mailbox">;
     getControl(controlName: "domainname"): Xrm.StringControl;
     getControl(controlName: "footer_isdisabled"): Xrm.OptionSetControl<boolean>;
@@ -259,6 +286,8 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "mobilealertemail"): Xrm.StringControl;
     getControl(controlName: "mobileofflineprofileid"): Xrm.LookupControl<"mobileofflineprofile">;
     getControl(controlName: "mobilephone"): Xrm.StringControl;
+    getControl(controlName: "msdyn_capacity"): Xrm.NumberControl;
+    getControl(controlName: "nickname"): Xrm.StringControl;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "parentsystemuserid"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "personalemailaddress"): Xrm.StringControl;
