@@ -5,7 +5,7 @@ var tripCommitMessageTitle = "Work Orders Committed";
 
 if (lang == 1036) {
     tripCommitMessageText = "Les ordres de travail relié au(x) voyage(s) sélectionné(s) ont été changé à l’état validé";
-    tripOrderCommitMessageTitle = "Ordres de travail validés";
+    tripCommitMessageTitle = "Ordres de travail validés";
 }
 
 function planningTrip(data) {
