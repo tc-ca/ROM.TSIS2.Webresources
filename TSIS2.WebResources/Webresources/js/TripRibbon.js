@@ -1,3 +1,13 @@
+var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+var tripCommitMessageText = "The Work Orders related to the selected Trip(s) have been set to a Committed State";
+var tripCommitMessageTitle = "Work Orders Committed";
+
+if (lang == 1036) {
+    tripCommitMessageText = "Les ordres de travail relié au(x) voyage(s) sélectionné(s) ont été changé à l’état validé";
+    tripOrderCommitMessageTitle = "Ordres de travail validés";
+}
+
 function planningTrip(data) {
     Xrm.Navigation.navigateTo({
         pageType: "bulkedit",
@@ -39,7 +49,7 @@ function commitRelatedWorkOrdersOfSelectedTrips(selectedTripsGuids, selectedCont
             }
         );
     }
-    var alertStrings = { confirmButtonLabel: "OK", text: "The Work Orders related to the selected Trip(s) have been set to a Committed State", title: "Work Orders Committed" };
+    var alertStrings = { confirmButtonLabel: "OK", text: tripCommitMessageText, title: tripCommitMessageTitle };
     var alertOptions = { height: 200, width: 200 };
     Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(
         function success(result) {

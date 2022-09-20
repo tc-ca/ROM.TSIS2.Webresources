@@ -14,6 +14,8 @@ var findingTypeLocalized = "Finding Type";
 var stakeholderLocalized = "Stakeholder";
 var operationLocalized = "Operation";
 var inspectorCommentLocalized = "Inspector Comment";
+var workOrderCommitMessageText = "The selected Work Order(s) have been set to a Committed State";
+var workOrderCommitMessageTitle = "Work Orders Committed";
 
 if (lang == 1036) {
     workOrderLocalized = "Ordre de travail";
@@ -30,6 +32,8 @@ if (lang == 1036) {
     stakeholderLocalized = "Intervenant";
     operationLocalized = "Opération";
     inspectorCommentLocalized = "Commentaires de l'inspecteur";
+    workOrderCommitMessageText = "Les ordres de travail ont été changé à l’état validé";
+    workOrderCommitMessageTitle = "Ordres de travail validés";
 }
 
 function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, selectedControl) {
@@ -584,7 +588,7 @@ function commitSelectedWorkOrders(selectedWorkOrdersGuids, selectedControl) {
     for (let workOrderGuid of selectedWorkOrdersGuids) {
         Xrm.WebApi.updateRecord("msdyn_workorder", workOrderGuid, { "ts_state": 717750001 });
     }
-    var alertStrings = { confirmButtonLabel: "OK", text: "The selected Work Order(s) have been set to a Committed State", title: "Work Orders Committed" };
+    var alertStrings = { confirmButtonLabel: "OK", text: workOrderCommitMessageText, title: workOrderCommitMessageTitle };
     var alertOptions = { height: 200, width: 200 };
     Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(
         function success(result) {
