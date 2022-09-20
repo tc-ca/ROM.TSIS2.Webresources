@@ -55,46 +55,60 @@ var ROM;
             noQuestionnaireText = "Il n'y a pas de questionnaire disponible pour cette date.";
         }
         function onLoad(eContext) {
-            var Form = eContext.getFormContext();
-            //If there's a related Work Order, filter the Task Type Lookup to match the Work Order's Activity Type Filter
-            if (Form.getAttribute("msdyn_workorder").getValue() != null) {
-                setTaskTypeFilteredView(Form);
-            }
-            var taskType = Form.getAttribute("msdyn_tasktype").getValue();
-            //Lock Task Type field if it has a value.
-            if (taskType != null) {
-                Form.getControl("msdyn_tasktype").setDisabled(true);
-                //Retrieve Task Type record
-                Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskType[0].id).then(function success(result) {
-                    //If it's for a custom questionnaire, show the custom questionnaire section
-                    if (result.ts_hascustomquestionnaire) {
-                        Form.ui.tabs.get("tab_questionnaire").sections.get("section_custom_questionnaire").setVisible(true);
+            return __awaiter(this, void 0, void 0, function () {
+                var Form, taskType, statusReason, workOrderStartDateCtl, workOrderEndDateCtl, workOrderTaskTypeCtl;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            Form = eContext.getFormContext();
+                            //If there's a related Work Order, filter the Task Type Lookup to match the Work Order's Activity Type Filter
+                            if (Form.getAttribute("msdyn_workorder").getValue() != null) {
+                                setTaskTypeFilteredView(Form);
+                            }
+                            taskType = Form.getAttribute("msdyn_tasktype").getValue();
+                            //Lock Task Type field if it has a value.
+                            if (taskType != null) {
+                                Form.getControl("msdyn_tasktype").setDisabled(true);
+                                //Retrieve Task Type record
+                                Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskType[0].id).then(function success(result) {
+                                    //If it's for a custom questionnaire, show the custom questionnaire section
+                                    if (result.ts_hascustomquestionnaire) {
+                                        Form.ui.tabs.get("tab_questionnaire").sections.get("section_custom_questionnaire").setVisible(true);
+                                    }
+                                });
+                            }
+                            if (Form.getAttribute('statecode').getValue() == 1) {
+                                mode = "display";
+                            }
+                            statusReason = Form.getAttribute("statuscode").getValue();
+                            workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
+                            workOrderEndDateCtl = Form.getControl("ts_servicetaskenddate");
+                            workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
+                            workOrderEndDateCtl.setDisabled(true);
+                            return [4 /*yield*/, workOrderIsDraft(eContext)];
+                        case 1:
+                            if (_a.sent()) {
+                                mode = 'display';
+                                setAllFieldsDisabled(eContext);
+                            }
+                            else if (statusReason == 918640005) {
+                                workOrderStartDateCtl.setDisabled(false);
+                                // Also, add a message that work order service task start date should be filled in to proceed.
+                                workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
+                                // Also, add a message that task type start date should be filled in to proceed.
+                                if (taskType == null) {
+                                    workOrderTaskTypeCtl.setNotification(enterTaskTypeToProccedText, "ts_tasktype_entertoproceed");
+                                }
+                                Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
+                            }
+                            else {
+                                workOrderStartDateCtl.setDisabled(true);
+                                ToggleQuestionnaire(eContext);
+                            }
+                            return [2 /*return*/];
                     }
                 });
-            }
-            if (Form.getAttribute('statecode').getValue() == 1) {
-                mode = "display";
-            }
-            //If Status Reason is New user is able to change Work Order Start Date
-            var statusReason = Form.getAttribute("statuscode").getValue();
-            var workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
-            var workOrderEndDateCtl = Form.getControl("ts_servicetaskenddate");
-            var workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
-            workOrderEndDateCtl.setDisabled(true);
-            if (statusReason == 918640005) {
-                workOrderStartDateCtl.setDisabled(false);
-                // Also, add a message that work order service task start date should be filled in to proceed.
-                workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
-                // Also, add a message that task type start date should be filled in to proceed.
-                if (taskType == null) {
-                    workOrderTaskTypeCtl.setNotification(enterTaskTypeToProccedText, "ts_tasktype_entertoproceed");
-                }
-                Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
-            }
-            else {
-                workOrderStartDateCtl.setDisabled(true);
-                ToggleQuestionnaire(eContext);
-            }
+            });
         }
         WorkOrderServiceTask.onLoad = onLoad;
         function serviceTaskStartDateOnChange(eContext) {
@@ -282,6 +296,23 @@ var ROM;
                 var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\"> <entity name=\"msdyn_servicetasktype\"> <attribute name=\"msdyn_name\" /> <attribute name=\"createdon\" /> <attribute name=\"msdyn_estimatedduration\" /> <attribute name=\"msdyn_description\" /> <attribute name=\"msdyn_servicetasktypeid\" /> <order attribute=\"msdyn_name\" descending=\"false\" /> <link-entity name=\"msdyn_incidenttypeservicetask\" from=\"msdyn_tasktype\" to=\"msdyn_servicetasktypeid\" link-type=\"inner\" alias=\"ae\"> <link-entity name=\"msdyn_incidenttype\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttype\" link-type=\"inner\" alias=\"af\"> <filter type=\"and\"> <condition attribute=\"msdyn_defaultworkordertype\" operator=\"eq\" value=\"" + result._msdyn_workordertype_value + "\" /> </filter> <link-entity name=\"ts_ovs_operationtypes_msdyn_incidenttypes\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttypeid\" visible=\"false\" intersect=\"true\"> <link-entity name=\"ovs_operationtype\" from=\"ovs_operationtypeid\" to=\"ovs_operationtypeid\" alias=\"ag\"> <filter type=\"and\"> <condition attribute=\"ovs_operationtypeid\" operator=\"eq\" value=\"" + result._ovs_operationtypeid_value + "\" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>";
                 var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_servicetasktype"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("msdyn_tasktype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+            });
+        }
+        function workOrderIsDraft(eContext) {
+            return __awaiter(this, void 0, void 0, function () {
+                var form, workOrderValue, workOrderId, workOrder;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            form = eContext.getFormContext();
+                            workOrderValue = form.getAttribute("msdyn_workorder").getValue();
+                            workOrderId = workOrderValue ? workOrderValue[0].id : "";
+                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ts_state")];
+                        case 1:
+                            workOrder = _a.sent();
+                            return [2 /*return*/, workOrder.ts_state == 717750000 /* Draft */];
+                    }
+                });
             });
         }
         // Get surveyJS locale
