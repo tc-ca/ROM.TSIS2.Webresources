@@ -145,6 +145,7 @@ interface Account_Base extends WebEntity {
   traversedpath?: string | null;
   ts_iatacode?: string | null;
   ts_icaocode?: string | null;
+  ts_securityplantype?: ts_securityplantype | null;
   ts_stakeholderstatus?: ts_stakeholderstatus | null;
   ts_statusdescription?: string | null;
   ts_statusenddate?: Date | null;
@@ -393,6 +394,7 @@ interface Account_Select {
   ts_iatacode: WebAttribute<Account_Select, { ts_iatacode: string | null }, {  }>;
   ts_icaocode: WebAttribute<Account_Select, { ts_icaocode: string | null }, {  }>;
   ts_msdyn_workorder_guid: WebAttribute<Account_Select, { ts_msdyn_workorder_guid: string | null }, { ts_msdyn_workorder_formatted?: string }>;
+  ts_securityplantype: WebAttribute<Account_Select, { ts_securityplantype: ts_securityplantype | null }, { ts_securityplantype_formatted?: string }>;
   ts_stakeholderstatus: WebAttribute<Account_Select, { ts_stakeholderstatus: ts_stakeholderstatus | null }, { ts_stakeholderstatus_formatted?: string }>;
   ts_statusdescription: WebAttribute<Account_Select, { ts_statusdescription: string | null }, {  }>;
   ts_statusenddate: WebAttribute<Account_Select, { ts_statusenddate: Date | null }, { ts_statusenddate_formatted?: string }>;
@@ -579,6 +581,7 @@ interface Account_Filter {
   ts_iatacode: string;
   ts_icaocode: string;
   ts_msdyn_workorder_guid: XQW.Guid;
+  ts_securityplantype: ts_securityplantype;
   ts_stakeholderstatus: ts_stakeholderstatus;
   ts_statusdescription: string;
   ts_statusenddate: Date;
@@ -710,6 +713,7 @@ interface Account_FormattedResult {
   transactioncurrencyid_formatted?: string;
   ts_country_formatted?: string;
   ts_msdyn_workorder_formatted?: string;
+  ts_securityplantype_formatted?: string;
   ts_stakeholderstatus_formatted?: string;
   ts_statusenddate_formatted?: string;
   ts_statusstartdate_formatted?: string;

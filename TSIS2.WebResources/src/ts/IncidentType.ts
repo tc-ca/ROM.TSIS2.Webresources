@@ -2,6 +2,72 @@ namespace ROM.IncidentType {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_incidenttype.Main.Information>eContext.getFormContext();
 
+        //If creating a record
+        if(form.ui.getFormType() == 1){
+            form.getAttribute('ownerid').setValue();
+            let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+
+            let currentUserBusinessUnitFetchXML = [
+                "<fetch>",
+                "  <entity name='businessunit'>",
+                "    <attribute name='name' />",
+                "    <attribute name='businessunitid' />",
+                "    <filter type='or'>",
+                "      <condition attribute='name' operator='like' value='Aviation%' />",
+                "      <condition attribute='name' operator='like' value='Intermodal%' />",
+                "    </filter>",
+                "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+                "      <filter>",
+                "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+                "      </filter>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+
+            Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(
+                function (businessunit) {
+                    if(businessunit.entities.length > 0){
+                        let team;
+                        if(businessunit.entities[0].name.startsWith('Aviation')){
+                            team = {
+                                "name": "Aviation Security",
+                                "entityType": "team"
+                            };
+                        }
+                        else if(businessunit.entities[0].name.startsWith('Intermodal')){
+                            team = {
+                                "name": "Intermodal Surface Security Oversight (ISSO)",
+                                "entityType": "team"
+                              };
+                        }
+    
+                        var teamfetchXml = [
+                            "<fetch>",
+                            "  <entity name='team'>",
+                            "    <attribute name='name'/>",
+                            "    <attribute name='teamid'/>",
+                            "    <filter>",
+                            "      <condition attribute='name' operator='eq' value='", team.name, "'/>",
+                            "    </filter>",
+                            "  </entity>",
+                            "</fetch>"
+                        ].join("");
+            
+                        teamfetchXml = "?fetchXml=" + encodeURIComponent(teamfetchXml);
+            
+                        Xrm.WebApi.retrieveMultipleRecords('team', teamfetchXml).then(
+                            function success(result) {
+                                team.id = result.entities[0].teamid;
+                                form.getAttribute('ownerid').setValue([team]);
+                            }
+                        );
+                    }   
+                }
+            );
+        }
+
         //If viewing a record
         if(form.ui.getFormType() == 2 || form.ui.getFormType() == 3 || form.ui.getFormType() == 4){
             Xrm.WebApi.retrieveRecord('msdyn_incidenttype', form.data.entity.getId(), "?$select=_owningbusinessunit_value").then(

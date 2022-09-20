@@ -11,6 +11,8 @@ declare namespace Form.tc_tcfiscalquarter.Main {
       get(name: "tc_quarterend"): Xrm.DateAttribute;
       get(name: "tc_quarterstart"): Xrm.DateAttribute;
       get(name: "tc_tcfiscalyearid"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
+      get(name: "ts_englishname"): Xrm.Attribute<string>;
+      get(name: "ts_frenchname"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -25,6 +27,8 @@ declare namespace Form.tc_tcfiscalquarter.Main {
       get(name: "tc_quarterend"): Xrm.DateControl;
       get(name: "tc_quarterstart"): Xrm.DateControl;
       get(name: "tc_tcfiscalyearid"): Xrm.LookupControl<"tc_tcfiscalyear">;
+      get(name: "ts_englishname"): Xrm.StringControl;
+      get(name: "ts_frenchname"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -46,6 +50,8 @@ declare namespace Form.tc_tcfiscalquarter.Main {
     getAttribute(attributeName: "tc_quarterend"): Xrm.DateAttribute;
     getAttribute(attributeName: "tc_quarterstart"): Xrm.DateAttribute;
     getAttribute(attributeName: "tc_tcfiscalyearid"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
+    getAttribute(attributeName: "ts_englishname"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_frenchname"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "tc_fiscalquarterlbl"): Xrm.StringControl;
@@ -55,6 +61,8 @@ declare namespace Form.tc_tcfiscalquarter.Main {
     getControl(controlName: "tc_quarterend"): Xrm.DateControl;
     getControl(controlName: "tc_quarterstart"): Xrm.DateControl;
     getControl(controlName: "tc_tcfiscalyearid"): Xrm.LookupControl<"tc_tcfiscalyear">;
+    getControl(controlName: "ts_englishname"): Xrm.StringControl;
+    getControl(controlName: "ts_frenchname"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
 }

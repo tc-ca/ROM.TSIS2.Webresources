@@ -13,6 +13,8 @@ interface tc_TCFiscalQuarter_Base extends WebEntity {
   tc_quarterstart?: Date | null;
   tc_tcfiscalquarterid?: string | null;
   timezoneruleversionnumber?: number | null;
+  ts_englishname?: string | null;
+  ts_frenchname?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -60,6 +62,8 @@ interface tc_TCFiscalQuarter_Select {
   tc_tcfiscalquarterid: WebAttribute<tc_TCFiscalQuarter_Select, { tc_tcfiscalquarterid: string | null }, {  }>;
   tc_tcfiscalyearid_guid: WebAttribute<tc_TCFiscalQuarter_Select, { tc_tcfiscalyearid_guid: string | null }, { tc_tcfiscalyearid_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<tc_TCFiscalQuarter_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_englishname: WebAttribute<tc_TCFiscalQuarter_Select, { ts_englishname: string | null }, {  }>;
+  ts_frenchname: WebAttribute<tc_TCFiscalQuarter_Select, { ts_frenchname: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<tc_TCFiscalQuarter_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<tc_TCFiscalQuarter_Select, { versionnumber: number | null }, {  }>;
 }
@@ -87,6 +91,8 @@ interface tc_TCFiscalQuarter_Filter {
   tc_tcfiscalquarterid: XQW.Guid;
   tc_tcfiscalyearid_guid: XQW.Guid;
   timezoneruleversionnumber: number;
+  ts_englishname: string;
+  ts_frenchname: string;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }

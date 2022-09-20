@@ -1,5 +1,5 @@
 declare const enum ts_planningsettings_ts_task {
-  BatchCreateWorkOrders = 717750000,
+  BatchCreateWorkOrderPlaceHolder = 717750000,
   PAXSPSRAReview = 717750001,
   PAXComprehensiveInspectionLargePAX = 717750002,
   PAXComprehensiveInspectionSmallPAX = 717750003,
@@ -7,4 +7,5 @@ declare const enum ts_planningsettings_ts_task {
   TDGSecurityPlanReview = 717750005,
   TDGComprehensiveInspection = 717750006,
   PAXSiteInspection = 717750007,
+  AvSecPlanning = 717750008,
 }

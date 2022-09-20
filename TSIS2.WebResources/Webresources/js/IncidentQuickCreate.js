@@ -11,6 +11,53 @@ var ROM;
                 //Create
                 case 1:
                     setRegion(eContext);
+                    form.getAttribute('ownerid').setValue();
+                    var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+                    var currentUserBusinessUnitFetchXML = [
+                        "<fetch>",
+                        "  <entity name='businessunit'>",
+                        "    <attribute name='name' />",
+                        "    <attribute name='businessunitid' />",
+                        "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+                        "      <filter>",
+                        "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+                        "      </filter>",
+                        "    </link-entity>",
+                        "  </entity>",
+                        "</fetch>",
+                    ].join("");
+                    currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+                    Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
+                        var team;
+                        if (businessunit.entities[0].name.startsWith('Aviation')) {
+                            team = {
+                                "name": "Aviation Security",
+                                "entityType": "team"
+                            };
+                        }
+                        else if (businessunit.entities[0].name.startsWith('Intermodal')) {
+                            team = {
+                                "name": "Intermodal Surface Security Oversight (ISSO)",
+                                "entityType": "team"
+                            };
+                        }
+                        var teamfetchXml = [
+                            "<fetch>",
+                            "  <entity name='team'>",
+                            "    <attribute name='name'/>",
+                            "    <attribute name='teamid'/>",
+                            "    <filter>",
+                            "      <condition attribute='name' operator='eq' value='", team.name, "'/>",
+                            "    </filter>",
+                            "  </entity>",
+                            "</fetch>"
+                        ].join("");
+                        teamfetchXml = "?fetchXml=" + encodeURIComponent(teamfetchXml);
+                        Xrm.WebApi.retrieveMultipleRecords('team', teamfetchXml).then(function success(result) {
+                            team.id = result.entities[0].teamid;
+                            form.getAttribute('ownerid').setValue([team]);
+                        });
+                    });
                     break;
             }
         }
