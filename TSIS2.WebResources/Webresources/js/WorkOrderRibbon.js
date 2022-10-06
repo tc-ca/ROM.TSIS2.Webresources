@@ -596,3 +596,12 @@ function commitSelectedWorkOrders(selectedWorkOrdersGuids, selectedControl) {
         }
     );
 }
+
+function isSystemAdministrator() {
+    var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
+    var enable = false;
+    roles.forEach(function (item) {
+        if (item.name == "System Administrator") enable = true;
+    });
+    return enable;
+}
