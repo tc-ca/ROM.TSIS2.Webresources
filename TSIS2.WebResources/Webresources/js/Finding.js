@@ -987,5 +987,27 @@ var ROM;
                     return 0;
             }
         }
+        function SubGridFilterExecution(eContext) {
+            var formContext = eContext.getFormContext();
+            var gridControl = formContext.getControl("relatedfinding_grid");
+            var accountobjectid = formContext.getAttribute("ts_accountid").getValue();
+            var findingId = formContext.data.entity.getId();
+            var accountId = '';
+            if (accountobjectid != null && accountobjectid != undefined) {
+                accountId = accountobjectid[0].id;
+            }
+            if (gridControl === null) {
+                setTimeout(ROM.Finding.SubGridFilterExecution, 1000);
+                return;
+            }
+            else {
+                if (accountId !== null && accountId !== '') {
+                    var fetchXml = "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' no-lock='false'>\n\t            <entity name='ovs_finding'>\n\t\t            <attribute name='ovs_findingprovisionreference'/>\n\t\t            <attribute name='ovs_finding'/>\n\t\t            <attribute name='ts_findingtype'/>\n\t\t            <attribute name='ts_accountid'/>\n\t\t            <attribute name='statecode'/>\n\t\t            <attribute name='ts_ovs_operationtype'/>\n\t\t            <attribute name='ovs_caseid'/>\n\t\t            <attribute name='ts_workorder'/>\n\t\t            <attribute name='createdon'/>\n\t\t            <order attribute='createdon' descending='true'/>\n\t\t            <attribute name='ovs_findingid'/>\n\t\t            <attribute name='ts_functionallocation'/>\n\t\t            <filter type='and'>\n\t\t\t            <condition attribute='statecode' operator='eq' value='0'/>\n\t\t\t            <condition attribute='ts_accountid' operator='eq' value='" + accountId + "' uitype='account'/>\n                        <condition attribute='ovs_findingid' operator='ne' value='" + findingId + "' uitype='ovs_finding'/>\n\t\t            </filter>\n\t            </entity>\n            </fetch>";
+                    gridControl.setFilterXml(fetchXml);
+                    gridControl.refresh();
+                }
+            }
+        }
+        Finding.SubGridFilterExecution = SubGridFilterExecution;
     })(Finding = ROM.Finding || (ROM.Finding = {}));
 })(ROM || (ROM = {}));
