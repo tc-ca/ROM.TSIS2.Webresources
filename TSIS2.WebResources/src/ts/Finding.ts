@@ -1020,4 +1020,50 @@
                 return 0;
         }
     }
+
+    export function SubGridFilterExecution(eContext: Xrm.ExecutionContext<any, any>): void {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+
+        let gridControl = formContext.getControl("relatedfinding_grid");
+        var accountobjectid = formContext.getAttribute("ts_accountid").getValue();
+        let findingId = formContext.data.entity.getId();
+
+        var accountId = '';
+        if (accountobjectid != null && accountobjectid != undefined) {
+            accountId = accountobjectid[0].id;
+        }
+
+        if (gridControl === null) {
+            setTimeout(ROM.Finding.SubGridFilterExecution, 1000);
+            return;
+        }
+        else {
+            if (accountId !== null && accountId !== '') {
+                var fetchXml = `<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' no-lock='false'>
+	            <entity name='ovs_finding'>
+		            <attribute name='ovs_findingprovisionreference'/>
+		            <attribute name='ovs_finding'/>
+		            <attribute name='ts_findingtype'/>
+		            <attribute name='ts_accountid'/>
+		            <attribute name='statecode'/>
+		            <attribute name='ts_ovs_operationtype'/>
+		            <attribute name='ovs_caseid'/>
+		            <attribute name='ts_workorder'/>
+		            <attribute name='createdon'/>
+		            <order attribute='createdon' descending='true'/>
+		            <attribute name='ovs_findingid'/>
+		            <attribute name='ts_functionallocation'/>
+		            <filter type='and'>
+			            <condition attribute='statecode' operator='eq' value='0'/>
+			            <condition attribute='ts_accountid' operator='eq' value='` + accountId + `' uitype='account'/>
+                        <condition attribute='ovs_findingid' operator='ne' value='` + findingId + `' uitype='ovs_finding'/>
+		            </filter>
+	            </entity>
+            </fetch>`;
+
+            gridControl.setFilterXml(fetchXml);
+            gridControl.refresh();
+            }
+        }
+    }
 }

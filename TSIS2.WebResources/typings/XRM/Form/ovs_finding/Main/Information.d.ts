@@ -8,6 +8,13 @@ declare namespace Form.ovs_finding.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_6 extends Xrm.SectionCollectionBase {
+        get(name: "tab_6_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_Files extends Xrm.SectionCollectionBase {
         get(name: "tab_3_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -128,6 +135,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ovs_finding"): Xrm.StringControl;
       get(name: "ovs_findingcomments"): Xrm.StringControl;
       get(name: "ovs_findingprovisionreference"): Xrm.StringControl;
+      get(name: "relatedfinding_grid"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "ts_acceptncatrecommendation"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_acceptraterecommendation"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_accountid"): Xrm.LookupControl<"account">;
@@ -185,6 +193,7 @@ declare namespace Form.ovs_finding.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "summary"): Xrm.PageTab<Tabs.summary>;
+      get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_Files"): Xrm.PageTab<Tabs.tab_Files>;
       get(name: "tab_NCAT"): Xrm.PageTab<Tabs.tab_NCAT>;
       get(name: "tab_RATE"): Xrm.PageTab<Tabs.tab_RATE>;
@@ -269,6 +278,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ovs_finding"): Xrm.StringControl;
     getControl(controlName: "ovs_findingcomments"): Xrm.StringControl;
     getControl(controlName: "ovs_findingprovisionreference"): Xrm.StringControl;
+    getControl(controlName: "relatedfinding_grid"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "ts_acceptncatrecommendation"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_acceptraterecommendation"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_accountid"): Xrm.LookupControl<"account">;
