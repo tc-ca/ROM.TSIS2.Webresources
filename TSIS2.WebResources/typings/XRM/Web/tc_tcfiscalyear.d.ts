@@ -21,6 +21,8 @@ interface tc_TCFiscalYear_Relationships {
   ovs_msdyn_workorder_FiscalYear_tc_TCFiscalYea?: msdyn_workorder_Result[] | null;
   ovs_tc_tcfiscalyear_bookableresourcebooking?: BookableResourceBooking_Result[] | null;
   tc_TCFiscalQuarter_TCFiscalYear?: tc_TCFiscalQuarter_Result[] | null;
+  ts_ts_planningdata_FiscalYear_tc_tcfiscalyea?: ts_PlanningData_Result[] | null;
+  ts_ts_teamplanningdata_FiscalYear_tc_tcfisca?: ts_TeamPlanningData_Result[] | null;
 }
 interface tc_TCFiscalYear extends tc_TCFiscalYear_Base, tc_TCFiscalYear_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -91,9 +93,12 @@ interface tc_TCFiscalYear_Expand {
   modifiedonbehalfby: WebExpand<tc_TCFiscalYear_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ovs_msdyn_workorder_FiscalYear_tc_TCFiscalYea: WebExpand<tc_TCFiscalYear_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_msdyn_workorder_FiscalYear_tc_TCFiscalYea: msdyn_workorder_Result[] }>;
   ovs_tc_tcfiscalyear_bookableresourcebooking: WebExpand<tc_TCFiscalYear_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { ovs_tc_tcfiscalyear_bookableresourcebooking: BookableResourceBooking_Result[] }>;
-  ownerid: WebExpand<tc_TCFiscalYear_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  ownerid: WebExpand<tc_TCFiscalYear_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningteam: WebExpand<tc_TCFiscalYear_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<tc_TCFiscalYear_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   tc_TCFiscalQuarter_TCFiscalYear: WebExpand<tc_TCFiscalYear_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { tc_TCFiscalQuarter_TCFiscalYear: tc_TCFiscalQuarter_Result[] }>;
+  ts_ts_planningdata_FiscalYear_tc_tcfiscalyea: WebExpand<tc_TCFiscalYear_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_FiscalYear_tc_tcfiscalyea: ts_PlanningData_Result[] }>;
+  ts_ts_teamplanningdata_FiscalYear_tc_tcfisca: WebExpand<tc_TCFiscalYear_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { ts_ts_teamplanningdata_FiscalYear_tc_tcfisca: ts_TeamPlanningData_Result[] }>;
 }
 interface tc_TCFiscalYear_FormattedResult {
   createdby_formatted?: string;
@@ -129,13 +134,16 @@ interface tc_TCFiscalYear_RelatedOne {
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface tc_TCFiscalYear_RelatedMany {
   ovs_msdyn_workorder_FiscalYear_tc_TCFiscalYea: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_tc_tcfiscalyear_bookableresourcebooking: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
   tc_TCFiscalQuarter_TCFiscalYear: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
+  ts_ts_planningdata_FiscalYear_tc_tcfiscalyea: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
+  ts_ts_teamplanningdata_FiscalYear_tc_tcfisca: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   tc_tcfiscalyears: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;

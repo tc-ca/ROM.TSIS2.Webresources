@@ -38,6 +38,7 @@ interface msdyn_incidenttype_Relationships {
   ts_incident_InspectionType1_msdyn_incidentty?: Incident_Result[] | null;
   ts_incident_InspectionType2_msdyn_incidentty?: Incident_Result[] | null;
   ts_ts_operationactivity_Activity_msdyn_incid?: ts_OperationActivity_Result[] | null;
+  ts_ts_planningdata_ActivityType_msdyn_incide?: ts_PlanningData_Result[] | null;
 }
 interface msdyn_incidenttype extends msdyn_incidenttype_Base, msdyn_incidenttype_Relationships {
   msdyn_defaultworkordertype_bind$msdyn_workordertypes?: string | null;
@@ -146,12 +147,14 @@ interface msdyn_incidenttype_Expand {
   msdyn_msdyn_incidenttype_incident_IncidentType: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { msdyn_msdyn_incidenttype_incident_IncidentType: Incident_Result[] }>;
   msdyn_msdyn_incidenttype_msdyn_incidenttypeservicetask_IncidentType: WebExpand<msdyn_incidenttype_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { msdyn_msdyn_incidenttype_msdyn_incidenttypeservicetask_IncidentType: msdyn_incidenttypeservicetask_Result[] }>;
   msdyn_msdyn_incidenttype_msdyn_workorder_PrimaryIncidentType: WebExpand<msdyn_incidenttype_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_msdyn_incidenttype_msdyn_workorder_PrimaryIncidentType: msdyn_workorder_Result[] }>;
-  ownerid: WebExpand<msdyn_incidenttype_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  ownerid: WebExpand<msdyn_incidenttype_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningteam: WebExpand<msdyn_incidenttype_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_incidenttype_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_incident_InspectionType1_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { ts_incident_InspectionType1_msdyn_incidentty: Incident_Result[] }>;
   ts_incident_InspectionType2_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { ts_incident_InspectionType2_msdyn_incidentty: Incident_Result[] }>;
   ts_ovs_operation: WebExpand<msdyn_incidenttype_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation: ovs_operation_Result }>;
   ts_ts_operationactivity_Activity_msdyn_incid: WebExpand<msdyn_incidenttype_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Activity_msdyn_incid: ts_OperationActivity_Result[] }>;
+  ts_ts_planningdata_ActivityType_msdyn_incide: WebExpand<msdyn_incidenttype_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_ActivityType_msdyn_incide: ts_PlanningData_Result[] }>;
 }
 interface msdyn_incidenttype_FormattedResult {
   createdby_formatted?: string;
@@ -191,7 +194,8 @@ interface msdyn_incidenttype_RelatedOne {
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
 }
@@ -202,6 +206,7 @@ interface msdyn_incidenttype_RelatedMany {
   ts_incident_InspectionType1_msdyn_incidentty: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_InspectionType2_msdyn_incidentty: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_ts_operationactivity_Activity_msdyn_incid: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
+  ts_ts_planningdata_ActivityType_msdyn_incide: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_incidenttypes: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;

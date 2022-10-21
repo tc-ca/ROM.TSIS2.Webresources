@@ -324,6 +324,7 @@
     <TypeScriptCompile Include="src\ts\IncompleteInspectionJustification.ts" />
     <TypeScriptCompile Include="src\ts\InspectionHours.ts" />
     <TypeScriptCompile Include="src\ts\Operation.ts" />
+    <TypeScriptCompile Include="src\ts\PlanningData.ts" />
     <TypeScriptCompile Include="src\ts\PlanningSettings.ts" />
     <TypeScriptCompile Include="src\ts\OperationContact.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
@@ -331,6 +332,7 @@
     <TypeScriptCompile Include="src\ts\RiskThreshold.ts" />
     <TypeScriptCompile Include="src\ts\ScoreThresholds.ts" />
     <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
+    <TypeScriptCompile Include="src\ts\TeamPlanningData.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderCreationWizard.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderQuickCreate.ts" />

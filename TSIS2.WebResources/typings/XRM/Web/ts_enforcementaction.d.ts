@@ -54,7 +54,9 @@ interface ts_enforcementaction_Relationships {
   createdonbehalfby_ts_enforcementaction?: SystemUser_Result | null;
   modifiedby_ts_enforcementaction?: SystemUser_Result | null;
   modifiedonbehalfby_ts_enforcementaction?: SystemUser_Result | null;
-  ownerid_ts_enforcementaction?: SystemUser_Result | null;
+  ownerid_ts_enforcementaction?: Team_Result | null;
+  ownerid_ts_enforcementaction1?: SystemUser_Result | null;
+  owningteam_ts_enforcementaction?: Team_Result | null;
   owninguser_ts_enforcementaction?: SystemUser_Result | null;
   regardingobjectid_account_ts_enforcementaction?: Account_Result | null;
   regardingobjectid_bookableresourcebooking_ts_enforcementaction?: BookableResourceBooking_Result | null;
@@ -343,7 +345,8 @@ interface ts_enforcementaction_Expand {
   createdonbehalfby_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby_ts_enforcementaction: SystemUser_Result }>;
   modifiedby_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby_ts_enforcementaction: SystemUser_Result }>;
   modifiedonbehalfby_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_ts_enforcementaction: SystemUser_Result }>;
-  ownerid_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, SystemUser_Select, SystemUser_Filter, { ownerid_ts_enforcementaction: SystemUser_Result }>;
+  ownerid_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid_ts_enforcementaction: SystemUser_Result } & { ownerid_ts_enforcementaction: Team_Result }>;
+  owningteam_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, Team_Select, Team_Filter, { owningteam_ts_enforcementaction: Team_Result }>;
   owninguser_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_ts_enforcementaction: SystemUser_Result }>;
   regardingobjectid_account_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, Account_Select, Account_Filter, { regardingobjectid_account_ts_enforcementaction: Account_Result }>;
   regardingobjectid_bookableresourcebooking_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { regardingobjectid_bookableresourcebooking_ts_enforcementaction: BookableResourceBooking_Result }>;
@@ -450,7 +453,9 @@ interface ts_enforcementaction_RelatedOne {
   createdonbehalfby_ts_enforcementaction: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby_ts_enforcementaction: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby_ts_enforcementaction: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid_ts_enforcementaction: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid_ts_enforcementaction: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  ownerid_ts_enforcementaction1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owningteam_ts_enforcementaction: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser_ts_enforcementaction: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   regardingobjectid_account_ts_enforcementaction: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   regardingobjectid_bookableresourcebooking_ts_enforcementaction: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;

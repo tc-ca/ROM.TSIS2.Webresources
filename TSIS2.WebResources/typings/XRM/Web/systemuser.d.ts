@@ -226,6 +226,11 @@ interface SystemUser_Relationships {
   lk_tc_tcfiscalyear_createdonbehalfby?: tc_TCFiscalYear_Result[] | null;
   lk_tc_tcfiscalyear_modifiedby?: tc_TCFiscalYear_Result[] | null;
   lk_tc_tcfiscalyear_modifiedonbehalfby?: tc_TCFiscalYear_Result[] | null;
+  lk_team_createdonbehalfby?: Team_Result[] | null;
+  lk_team_modifiedonbehalfby?: Team_Result[] | null;
+  lk_teambase_administratorid?: Team_Result[] | null;
+  lk_teambase_createdby?: Team_Result[] | null;
+  lk_teambase_modifiedby?: Team_Result[] | null;
   lk_ts_assessmentscorethredshots_createdby?: ts_assessmentscorethredshots_Result[] | null;
   lk_ts_assessmentscorethredshots_createdonbehalfby?: ts_assessmentscorethredshots_Result[] | null;
   lk_ts_assessmentscorethredshots_modifiedby?: ts_assessmentscorethredshots_Result[] | null;
@@ -250,6 +255,10 @@ interface SystemUser_Relationships {
   lk_ts_operationcontact_createdonbehalfby?: ts_operationcontact_Result[] | null;
   lk_ts_operationcontact_modifiedby?: ts_operationcontact_Result[] | null;
   lk_ts_operationcontact_modifiedonbehalfby?: ts_operationcontact_Result[] | null;
+  lk_ts_planningdata_createdby?: ts_PlanningData_Result[] | null;
+  lk_ts_planningdata_createdonbehalfby?: ts_PlanningData_Result[] | null;
+  lk_ts_planningdata_modifiedby?: ts_PlanningData_Result[] | null;
+  lk_ts_planningdata_modifiedonbehalfby?: ts_PlanningData_Result[] | null;
   lk_ts_planningsettings_createdby?: ts_planningsettings_Result[] | null;
   lk_ts_planningsettings_createdonbehalfby?: ts_planningsettings_Result[] | null;
   lk_ts_planningsettings_modifiedby?: ts_planningsettings_Result[] | null;
@@ -266,6 +275,10 @@ interface SystemUser_Relationships {
   lk_ts_role_createdonbehalfby?: ts_role_Result[] | null;
   lk_ts_role_modifiedby?: ts_role_Result[] | null;
   lk_ts_role_modifiedonbehalfby?: ts_role_Result[] | null;
+  lk_ts_teamplanningdata_createdby?: ts_TeamPlanningData_Result[] | null;
+  lk_ts_teamplanningdata_createdonbehalfby?: ts_TeamPlanningData_Result[] | null;
+  lk_ts_teamplanningdata_modifiedby?: ts_TeamPlanningData_Result[] | null;
+  lk_ts_teamplanningdata_modifiedonbehalfby?: ts_TeamPlanningData_Result[] | null;
   lk_ts_workordercreationwizard_createdby?: ts_workordercreationwizard_Result[] | null;
   lk_ts_workordercreationwizard_createdonbehalfby?: ts_workordercreationwizard_Result[] | null;
   lk_ts_workordercreationwizard_modifiedby?: ts_workordercreationwizard_Result[] | null;
@@ -281,6 +294,7 @@ interface SystemUser_Relationships {
   systemuser_bookableresource_UserId?: BookableResource_Result[] | null;
   systemuser_connections1?: Connection_Result[] | null;
   systemuser_connections2?: Connection_Result[] | null;
+  teammembership_association?: Team_Result[] | null;
   ts_InspectionHours?: ts_InspectionHours_Result | null;
   ts_enforcementaction_systemuser_createdby?: ts_enforcementaction_Result[] | null;
   ts_enforcementaction_systemuser_createdonbehalfby?: ts_enforcementaction_Result[] | null;
@@ -322,10 +336,12 @@ interface SystemUser_Relationships {
   user_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
   user_ts_operationactivity?: ts_OperationActivity_Result[] | null;
   user_ts_operationcontact?: ts_operationcontact_Result[] | null;
+  user_ts_planningdata?: ts_PlanningData_Result[] | null;
   user_ts_planningsettings?: ts_planningsettings_Result[] | null;
   user_ts_questionnaireversion?: ts_questionnaireversion_Result[] | null;
   user_ts_riskcategory?: ts_RiskCategory_Result[] | null;
   user_ts_role?: ts_role_Result[] | null;
+  user_ts_teamplanningdata?: ts_TeamPlanningData_Result[] | null;
   user_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
 }
 interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
@@ -734,6 +750,11 @@ interface SystemUser_Expand {
   lk_tc_tcfiscalyear_createdonbehalfby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_createdonbehalfby: tc_TCFiscalYear_Result[] }>;
   lk_tc_tcfiscalyear_modifiedby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_modifiedby: tc_TCFiscalYear_Result[] }>;
   lk_tc_tcfiscalyear_modifiedonbehalfby: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { lk_tc_tcfiscalyear_modifiedonbehalfby: tc_TCFiscalYear_Result[] }>;
+  lk_team_createdonbehalfby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_team_createdonbehalfby: Team_Result[] }>;
+  lk_team_modifiedonbehalfby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_team_modifiedonbehalfby: Team_Result[] }>;
+  lk_teambase_administratorid: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_administratorid: Team_Result[] }>;
+  lk_teambase_createdby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_createdby: Team_Result[] }>;
+  lk_teambase_modifiedby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_modifiedby: Team_Result[] }>;
   lk_ts_assessmentscorethredshots_createdby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_createdby: ts_assessmentscorethredshots_Result[] }>;
   lk_ts_assessmentscorethredshots_createdonbehalfby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_createdonbehalfby: ts_assessmentscorethredshots_Result[] }>;
   lk_ts_assessmentscorethredshots_modifiedby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_modifiedby: ts_assessmentscorethredshots_Result[] }>;
@@ -758,6 +779,10 @@ interface SystemUser_Expand {
   lk_ts_operationcontact_createdonbehalfby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_createdonbehalfby: ts_operationcontact_Result[] }>;
   lk_ts_operationcontact_modifiedby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_modifiedby: ts_operationcontact_Result[] }>;
   lk_ts_operationcontact_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_modifiedonbehalfby: ts_operationcontact_Result[] }>;
+  lk_ts_planningdata_createdby: WebExpand<SystemUser_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { lk_ts_planningdata_createdby: ts_PlanningData_Result[] }>;
+  lk_ts_planningdata_createdonbehalfby: WebExpand<SystemUser_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { lk_ts_planningdata_createdonbehalfby: ts_PlanningData_Result[] }>;
+  lk_ts_planningdata_modifiedby: WebExpand<SystemUser_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { lk_ts_planningdata_modifiedby: ts_PlanningData_Result[] }>;
+  lk_ts_planningdata_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { lk_ts_planningdata_modifiedonbehalfby: ts_PlanningData_Result[] }>;
   lk_ts_planningsettings_createdby: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { lk_ts_planningsettings_createdby: ts_planningsettings_Result[] }>;
   lk_ts_planningsettings_createdonbehalfby: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { lk_ts_planningsettings_createdonbehalfby: ts_planningsettings_Result[] }>;
   lk_ts_planningsettings_modifiedby: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { lk_ts_planningsettings_modifiedby: ts_planningsettings_Result[] }>;
@@ -774,6 +799,10 @@ interface SystemUser_Expand {
   lk_ts_role_createdonbehalfby: WebExpand<SystemUser_Expand, ts_role_Select, ts_role_Filter, { lk_ts_role_createdonbehalfby: ts_role_Result[] }>;
   lk_ts_role_modifiedby: WebExpand<SystemUser_Expand, ts_role_Select, ts_role_Filter, { lk_ts_role_modifiedby: ts_role_Result[] }>;
   lk_ts_role_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_role_Select, ts_role_Filter, { lk_ts_role_modifiedonbehalfby: ts_role_Result[] }>;
+  lk_ts_teamplanningdata_createdby: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { lk_ts_teamplanningdata_createdby: ts_TeamPlanningData_Result[] }>;
+  lk_ts_teamplanningdata_createdonbehalfby: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { lk_ts_teamplanningdata_createdonbehalfby: ts_TeamPlanningData_Result[] }>;
+  lk_ts_teamplanningdata_modifiedby: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { lk_ts_teamplanningdata_modifiedby: ts_TeamPlanningData_Result[] }>;
+  lk_ts_teamplanningdata_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { lk_ts_teamplanningdata_modifiedonbehalfby: ts_TeamPlanningData_Result[] }>;
   lk_ts_workordercreationwizard_createdby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_createdby: ts_workordercreationwizard_Result[] }>;
   lk_ts_workordercreationwizard_createdonbehalfby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_createdonbehalfby: ts_workordercreationwizard_Result[] }>;
   lk_ts_workordercreationwizard_modifiedby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_modifiedby: ts_workordercreationwizard_Result[] }>;
@@ -792,6 +821,7 @@ interface SystemUser_Expand {
   systemuser_bookableresource_UserId: WebExpand<SystemUser_Expand, BookableResource_Select, BookableResource_Filter, { systemuser_bookableresource_UserId: BookableResource_Result[] }>;
   systemuser_connections1: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections1: Connection_Result[] }>;
   systemuser_connections2: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections2: Connection_Result[] }>;
+  teammembership_association: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { teammembership_association: Team_Result[] }>;
   ts_InspectionHours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { ts_InspectionHours: ts_InspectionHours_Result }>;
   ts_enforcementaction_systemuser_createdby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdby: ts_enforcementaction_Result[] }>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdonbehalfby: ts_enforcementaction_Result[] }>;
@@ -833,10 +863,12 @@ interface SystemUser_Expand {
   user_ts_inspectionhours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { user_ts_inspectionhours: ts_InspectionHours_Result[] }>;
   user_ts_operationactivity: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { user_ts_operationactivity: ts_OperationActivity_Result[] }>;
   user_ts_operationcontact: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { user_ts_operationcontact: ts_operationcontact_Result[] }>;
+  user_ts_planningdata: WebExpand<SystemUser_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { user_ts_planningdata: ts_PlanningData_Result[] }>;
   user_ts_planningsettings: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { user_ts_planningsettings: ts_planningsettings_Result[] }>;
   user_ts_questionnaireversion: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { user_ts_questionnaireversion: ts_questionnaireversion_Result[] }>;
   user_ts_riskcategory: WebExpand<SystemUser_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { user_ts_riskcategory: ts_RiskCategory_Result[] }>;
   user_ts_role: WebExpand<SystemUser_Expand, ts_role_Select, ts_role_Filter, { user_ts_role: ts_role_Result[] }>;
+  user_ts_teamplanningdata: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { user_ts_teamplanningdata: ts_TeamPlanningData_Result[] }>;
   user_ts_workordercreationwizard: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { user_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
 }
 interface SystemUser_FormattedResult {
@@ -1012,6 +1044,11 @@ interface SystemUser_RelatedMany {
   lk_tc_tcfiscalyear_createdonbehalfby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   lk_tc_tcfiscalyear_modifiedby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   lk_tc_tcfiscalyear_modifiedonbehalfby: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  lk_team_createdonbehalfby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  lk_team_modifiedonbehalfby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  lk_teambase_administratorid: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  lk_teambase_createdby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  lk_teambase_modifiedby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   lk_ts_assessmentscorethredshots_createdby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   lk_ts_assessmentscorethredshots_createdonbehalfby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   lk_ts_assessmentscorethredshots_modifiedby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
@@ -1036,6 +1073,10 @@ interface SystemUser_RelatedMany {
   lk_ts_operationcontact_createdonbehalfby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   lk_ts_operationcontact_modifiedby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   lk_ts_operationcontact_modifiedonbehalfby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
+  lk_ts_planningdata_createdby: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
+  lk_ts_planningdata_createdonbehalfby: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
+  lk_ts_planningdata_modifiedby: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
+  lk_ts_planningdata_modifiedonbehalfby: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   lk_ts_planningsettings_createdby: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
   lk_ts_planningsettings_createdonbehalfby: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
   lk_ts_planningsettings_modifiedby: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
@@ -1052,6 +1093,10 @@ interface SystemUser_RelatedMany {
   lk_ts_role_createdonbehalfby: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
   lk_ts_role_modifiedby: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
   lk_ts_role_modifiedonbehalfby: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
+  lk_ts_teamplanningdata_createdby: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
+  lk_ts_teamplanningdata_createdonbehalfby: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
+  lk_ts_teamplanningdata_modifiedby: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
+  lk_ts_teamplanningdata_modifiedonbehalfby: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   lk_ts_workordercreationwizard_createdby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   lk_ts_workordercreationwizard_createdonbehalfby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   lk_ts_workordercreationwizard_modifiedby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
@@ -1067,6 +1112,7 @@ interface SystemUser_RelatedMany {
   systemuser_bookableresource_UserId: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   systemuser_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   systemuser_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  teammembership_association: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_enforcementaction_systemuser_createdby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_modifiedby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
@@ -1107,10 +1153,12 @@ interface SystemUser_RelatedMany {
   user_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   user_ts_operationactivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   user_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
+  user_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   user_ts_planningsettings: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
   user_ts_questionnaireversion: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   user_ts_riskcategory: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
   user_ts_role: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
+  user_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   user_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

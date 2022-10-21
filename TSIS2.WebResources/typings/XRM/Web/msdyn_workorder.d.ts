@@ -93,6 +93,7 @@ interface msdyn_workorder_Relationships {
   msdyn_workorder_Appointments?: Appointment_Result[] | null;
   msdyn_workorder_Emails?: Email_Result[] | null;
   msdyn_workorder_ServiceAppointments?: ServiceAppointment_Result[] | null;
+  msdyn_workorder_Teams?: Team_Result[] | null;
   msdyn_workorder_connections1?: Connection_Result[] | null;
   msdyn_workorder_connections2?: Connection_Result[] | null;
   msdyn_workorder_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
@@ -483,6 +484,7 @@ interface msdyn_workorder_Expand {
   msdyn_workorder_Appointments: WebExpand<msdyn_workorder_Expand, Appointment_Select, Appointment_Filter, { msdyn_workorder_Appointments: Appointment_Result[] }>;
   msdyn_workorder_Emails: WebExpand<msdyn_workorder_Expand, Email_Select, Email_Filter, { msdyn_workorder_Emails: Email_Result[] }>;
   msdyn_workorder_ServiceAppointments: WebExpand<msdyn_workorder_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_workorder_ServiceAppointments: ServiceAppointment_Result[] }>;
+  msdyn_workorder_Teams: WebExpand<msdyn_workorder_Expand, Team_Select, Team_Filter, { msdyn_workorder_Teams: Team_Result[] }>;
   msdyn_workorder_connections1: WebExpand<msdyn_workorder_Expand, Connection_Select, Connection_Filter, { msdyn_workorder_connections1: Connection_Result[] }>;
   msdyn_workorder_connections2: WebExpand<msdyn_workorder_Expand, Connection_Select, Connection_Filter, { msdyn_workorder_connections2: Connection_Result[] }>;
   msdyn_workorder_ts_enforcementactions: WebExpand<msdyn_workorder_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { msdyn_workorder_ts_enforcementactions: ts_enforcementaction_Result[] }>;
@@ -495,7 +497,8 @@ interface msdyn_workorder_Expand {
   ovs_RevisedQuarterId: WebExpand<msdyn_workorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_RevisedQuarterId: tc_TCFiscalQuarter_Result }>;
   ovs_SecondaryInspector: WebExpand<msdyn_workorder_Expand, BookableResource_Select, BookableResource_Filter, { ovs_SecondaryInspector: BookableResource_Result }>;
   ovs_asset: WebExpand<msdyn_workorder_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ovs_asset: msdyn_customerasset_Result }>;
-  ownerid: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  ownerid: WebExpand<msdyn_workorder_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningteam: WebExpand<msdyn_workorder_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   qm_ReportContactId: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { qm_ReportContactId: Contact_Result }>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: Contact_Result[] }>;
@@ -692,7 +695,8 @@ interface msdyn_workorder_RelatedOne {
   ovs_RevisedQuarterId: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ovs_SecondaryInspector: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   ovs_asset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   qm_ReportContactId: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_IncompleteWorkOrderReason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
@@ -708,6 +712,7 @@ interface msdyn_workorder_RelatedMany {
   msdyn_workorder_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   msdyn_workorder_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   msdyn_workorder_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
+  msdyn_workorder_Teams: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   msdyn_workorder_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_workorder_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_workorder_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;

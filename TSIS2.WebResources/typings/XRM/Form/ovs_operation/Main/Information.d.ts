@@ -18,6 +18,7 @@ declare namespace Form.ovs_operation.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface operation_activity_tab extends Xrm.SectionCollectionBase {
+        get(name: "operation_activity_tab_section_3"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -78,6 +79,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
       get(name: "ts_operationfrequency"): Xrm.LookupAttribute<"ts_operationfrequency">;
       get(name: "ts_opi"): Xrm.Attribute<any>;
+      get(name: "ts_opiteam"): Xrm.LookupAttribute<"team">;
       get(name: "ts_oss"): Xrm.Attribute<any>;
       get(name: "ts_planningstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
@@ -136,6 +138,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_operationfrequency"): Xrm.LookupControl<"ts_operationfrequency">;
       get(name: "ts_opi"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_opiteam"): Xrm.LookupControl<"team">;
       get(name: "ts_oss"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_planningstatus"): Xrm.OptionSetControl<ts_planningstatus>;
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
@@ -198,6 +201,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
     getAttribute(attributeName: "ts_operationfrequency"): Xrm.LookupAttribute<"ts_operationfrequency">;
     getAttribute(attributeName: "ts_opi"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_opiteam"): Xrm.LookupAttribute<"team">;
     getAttribute(attributeName: "ts_oss"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_planningstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
     getAttribute(attributeName: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
@@ -251,6 +255,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_operationalstatus1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_operationfrequency"): Xrm.LookupControl<"ts_operationfrequency">;
     getControl(controlName: "ts_opi"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_opiteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_oss"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_planningstatus"): Xrm.OptionSetControl<ts_planningstatus>;
     getControl(controlName: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
