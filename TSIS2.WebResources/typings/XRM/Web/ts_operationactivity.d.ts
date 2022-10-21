@@ -6,6 +6,8 @@ interface ts_OperationActivity_Base extends WebEntity {
   statecode?: ts_operationactivity_statecode | null;
   statuscode?: ts_operationactivity_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_englishname?: string | null;
+  ts_frenchname?: string | null;
   ts_name?: string | null;
   ts_operationactivityid?: string | null;
   ts_operationalstatus?: ts_operationalstatus | null;
@@ -57,6 +59,8 @@ interface ts_OperationActivity_Select {
   timezoneruleversionnumber: WebAttribute<ts_OperationActivity_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_activity_guid: WebAttribute<ts_OperationActivity_Select, { ts_activity_guid: string | null }, { ts_activity_formatted?: string }>;
   ts_duedate_guid: WebAttribute<ts_OperationActivity_Select, { ts_duedate_guid: string | null }, { ts_duedate_formatted?: string }>;
+  ts_englishname: WebAttribute<ts_OperationActivity_Select, { ts_englishname: string | null }, {  }>;
+  ts_frenchname: WebAttribute<ts_OperationActivity_Select, { ts_frenchname: string | null }, {  }>;
   ts_lastcompletedwo_guid: WebAttribute<ts_OperationActivity_Select, { ts_lastcompletedwo_guid: string | null }, { ts_lastcompletedwo_formatted?: string }>;
   ts_name: WebAttribute<ts_OperationActivity_Select, { ts_name: string | null }, {  }>;
   ts_nextplannedwo_guid: WebAttribute<ts_OperationActivity_Select, { ts_nextplannedwo_guid: string | null }, { ts_nextplannedwo_formatted?: string }>;
@@ -89,6 +93,8 @@ interface ts_OperationActivity_Filter {
   timezoneruleversionnumber: number;
   ts_activity_guid: XQW.Guid;
   ts_duedate_guid: XQW.Guid;
+  ts_englishname: string;
+  ts_frenchname: string;
   ts_lastcompletedwo_guid: XQW.Guid;
   ts_name: string;
   ts_nextplannedwo_guid: XQW.Guid;

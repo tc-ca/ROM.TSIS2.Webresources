@@ -172,6 +172,7 @@ interface Email extends Email_Base, Email_Relationships {
   regardingobjectid_msdyn_rtvsubstatus_email_bind$msdyn_rtvsubstatuses?: string | null;
   regardingobjectid_msdyn_salessuggestion_email_bind$msdyn_salessuggestions?: string | null;
   regardingobjectid_msdyn_shipvia_email_bind$msdyn_shipvias?: string | null;
+  regardingobjectid_msdyn_swarm_email_bind$msdyn_swarms?: string | null;
   regardingobjectid_msdyn_systemuserschedulersetting_email_bind$msdyn_systemuserschedulersettinges?: string | null;
   regardingobjectid_msdyn_timegroup_email_bind$msdyn_timegroups?: string | null;
   regardingobjectid_msdyn_timegroupdetail_email_bind$msdyn_timegroupdetails?: string | null;

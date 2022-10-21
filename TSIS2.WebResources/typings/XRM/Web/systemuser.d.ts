@@ -90,6 +90,7 @@ interface SystemUser_Base extends WebEntity {
   msdyn_capacity?: number | null;
   msdyn_gdproptout?: boolean | null;
   msdyn_gridwrappercontrolfield?: string | null;
+  msdyn_isexpertenabledforswarm?: boolean | null;
   msdyn_usertype?: msdyn_systemuser_msdyn_usertype | null;
   nickname?: string | null;
   organizationid?: string | null;
@@ -447,6 +448,7 @@ interface SystemUser_Select {
   msdyn_defaultpresenceiduser_guid: WebAttribute<SystemUser_Select, { msdyn_defaultpresenceiduser_guid: string | null }, { msdyn_defaultpresenceiduser_formatted?: string }>;
   msdyn_gdproptout: WebAttribute<SystemUser_Select, { msdyn_gdproptout: boolean | null }, {  }>;
   msdyn_gridwrappercontrolfield: WebAttribute<SystemUser_Select, { msdyn_gridwrappercontrolfield: string | null }, {  }>;
+  msdyn_isexpertenabledforswarm: WebAttribute<SystemUser_Select, { msdyn_isexpertenabledforswarm: boolean | null }, {  }>;
   msdyn_usertype: WebAttribute<SystemUser_Select, { msdyn_usertype: msdyn_systemuser_msdyn_usertype | null }, { msdyn_usertype_formatted?: string }>;
   nickname: WebAttribute<SystemUser_Select, { nickname: string | null }, {  }>;
   organizationid: WebAttribute<SystemUser_Select, { organizationid: string | null }, {  }>;
@@ -586,6 +588,7 @@ interface SystemUser_Filter {
   msdyn_defaultpresenceiduser_guid: XQW.Guid;
   msdyn_gdproptout: boolean;
   msdyn_gridwrappercontrolfield: string;
+  msdyn_isexpertenabledforswarm: boolean;
   msdyn_usertype: msdyn_systemuser_msdyn_usertype;
   nickname: string;
   organizationid: XQW.Guid;

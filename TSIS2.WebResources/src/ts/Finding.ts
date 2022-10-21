@@ -1062,7 +1062,7 @@
             </fetch>`;
 
             gridControl.setFilterXml(fetchXml);
-            gridControl.refresh();
+                gridControl.refresh();
             }
         }
     }

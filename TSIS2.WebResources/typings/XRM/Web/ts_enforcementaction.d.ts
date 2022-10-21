@@ -146,6 +146,7 @@ interface ts_enforcementaction extends ts_enforcementaction_Base, ts_enforcement
   regardingobjectid_msdyn_rtvsubstatus_ts_enforcementaction_bind$msdyn_rtvsubstatuses?: string | null;
   regardingobjectid_msdyn_salessuggestion_ts_enforcementaction_bind$msdyn_salessuggestions?: string | null;
   regardingobjectid_msdyn_shipvia_ts_enforcementaction_bind$msdyn_shipvias?: string | null;
+  regardingobjectid_msdyn_swarm_ts_enforcementaction_bind$msdyn_swarms?: string | null;
   regardingobjectid_msdyn_systemuserschedulersetting_ts_enforcementaction_bind$msdyn_systemuserschedulersettinges?: string | null;
   regardingobjectid_msdyn_timegroup_ts_enforcementaction_bind$msdyn_timegroups?: string | null;
   regardingobjectid_msdyn_timegroupdetail_ts_enforcementaction_bind$msdyn_timegroupdetails?: string | null;

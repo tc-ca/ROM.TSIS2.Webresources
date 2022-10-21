@@ -791,6 +791,29 @@ interface ts_workordercreationwizard_Create extends ts_workordercreationwizard {
 }
 interface ts_workordercreationwizard_Update extends ts_workordercreationwizard {
 }
+interface tc_TCFiscalQuarter_Base extends WebEntity {
+}
+interface tc_TCFiscalQuarter_Fixed extends WebEntity_Fixed {
+  tc_tcfiscalquarterid: string;
+}
+interface tc_TCFiscalQuarter extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
+}
+interface tc_TCFiscalQuarter_Relationships {
+}
+interface tc_TCFiscalQuarter_Result extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
+}
+interface tc_TCFiscalQuarter_FormattedResult {
+}
+interface tc_TCFiscalQuarter_Select {
+}
+interface tc_TCFiscalQuarter_Expand {
+}
+interface tc_TCFiscalQuarter_Filter {
+}
+interface tc_TCFiscalQuarter_Create extends tc_TCFiscalQuarter {
+}
+interface tc_TCFiscalQuarter_Update extends tc_TCFiscalQuarter {
+}
 interface PostFollow_Base extends WebEntity {
 }
 interface PostFollow_Fixed extends WebEntity_Fixed {
@@ -905,29 +928,6 @@ interface ServiceAppointment_Filter {
 interface ServiceAppointment_Create extends ServiceAppointment {
 }
 interface ServiceAppointment_Update extends ServiceAppointment {
-}
-interface tc_TCFiscalQuarter_Base extends WebEntity {
-}
-interface tc_TCFiscalQuarter_Fixed extends WebEntity_Fixed {
-  tc_tcfiscalquarterid: string;
-}
-interface tc_TCFiscalQuarter extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
-}
-interface tc_TCFiscalQuarter_Relationships {
-}
-interface tc_TCFiscalQuarter_Result extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
-}
-interface tc_TCFiscalQuarter_FormattedResult {
-}
-interface tc_TCFiscalQuarter_Select {
-}
-interface tc_TCFiscalQuarter_Expand {
-}
-interface tc_TCFiscalQuarter_Filter {
-}
-interface tc_TCFiscalQuarter_Create extends tc_TCFiscalQuarter {
-}
-interface tc_TCFiscalQuarter_Update extends tc_TCFiscalQuarter {
 }
 interface ts_role_Base extends WebEntity {
 }

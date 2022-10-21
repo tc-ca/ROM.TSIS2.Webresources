@@ -209,6 +209,7 @@ interface Account extends Account_Base, Account_Relationships {
   territoryid_bind$territories?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_Country_bind$tc_countries?: string | null;
+  ts_PrincipalOperationType_bind$ovs_operationtypes?: string | null;
   ts_msdyn_workorder_bind$msdyn_workorders?: string | null;
 }
 interface Account_Create extends Account {
@@ -394,6 +395,7 @@ interface Account_Select {
   ts_iatacode: WebAttribute<Account_Select, { ts_iatacode: string | null }, {  }>;
   ts_icaocode: WebAttribute<Account_Select, { ts_icaocode: string | null }, {  }>;
   ts_msdyn_workorder_guid: WebAttribute<Account_Select, { ts_msdyn_workorder_guid: string | null }, { ts_msdyn_workorder_formatted?: string }>;
+  ts_principaloperationtype_guid: WebAttribute<Account_Select, { ts_principaloperationtype_guid: string | null }, { ts_principaloperationtype_formatted?: string }>;
   ts_securityplantype: WebAttribute<Account_Select, { ts_securityplantype: ts_securityplantype | null }, { ts_securityplantype_formatted?: string }>;
   ts_stakeholderstatus: WebAttribute<Account_Select, { ts_stakeholderstatus: ts_stakeholderstatus | null }, { ts_stakeholderstatus_formatted?: string }>;
   ts_statusdescription: WebAttribute<Account_Select, { ts_statusdescription: string | null }, {  }>;
@@ -581,6 +583,7 @@ interface Account_Filter {
   ts_iatacode: string;
   ts_icaocode: string;
   ts_msdyn_workorder_guid: XQW.Guid;
+  ts_principaloperationtype_guid: XQW.Guid;
   ts_securityplantype: ts_securityplantype;
   ts_stakeholderstatus: ts_stakeholderstatus;
   ts_statusdescription: string;
@@ -713,6 +716,7 @@ interface Account_FormattedResult {
   transactioncurrencyid_formatted?: string;
   ts_country_formatted?: string;
   ts_msdyn_workorder_formatted?: string;
+  ts_principaloperationtype_formatted?: string;
   ts_securityplantype_formatted?: string;
   ts_stakeholderstatus_formatted?: string;
   ts_statusenddate_formatted?: string;
@@ -752,6 +756,7 @@ interface Account_Result extends Account_Base, Account_Relationships {
   transactioncurrencyid_guid: string | null;
   ts_country_guid: string | null;
   ts_msdyn_workorder_guid: string | null;
+  ts_principaloperationtype_guid: string | null;
 }
 interface Account_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;

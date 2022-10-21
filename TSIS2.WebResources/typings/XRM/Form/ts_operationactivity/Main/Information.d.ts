@@ -28,6 +28,7 @@ declare namespace Form.ts_operationactivity.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Subgrid_new_1"): Xrm.BaseControl;
       get(name: "header_ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
       get(name: "header_ts_plannedstatus"): Xrm.OptionSetControl<ts_planningstatus>;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -68,6 +69,7 @@ declare namespace Form.ts_operationactivity.Main {
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Subgrid_new_1"): Xrm.BaseControl;
     getControl(controlName: "header_ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
     getControl(controlName: "header_ts_plannedstatus"): Xrm.OptionSetControl<ts_planningstatus>;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;

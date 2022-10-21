@@ -80,7 +80,7 @@ declare namespace Form.msdyn_customerasset.Main {
       get(name: "msdyn_account"): Xrm.LookupControl<"account">;
       get(name: "msdyn_customerassetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
       get(name: "msdyn_deviceid"): Xrm.StringControl;
-      get(name: "msdyn_deviceid1"): Xrm.StringControl;
+      get(name: "msdyn_deviceid1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_deviceid2"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "msdyn_latitude"): Xrm.NumberControl;
@@ -135,7 +135,7 @@ declare namespace Form.msdyn_customerasset.Main {
     getControl(controlName: "msdyn_account"): Xrm.LookupControl<"account">;
     getControl(controlName: "msdyn_customerassetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
     getControl(controlName: "msdyn_deviceid"): Xrm.StringControl;
-    getControl(controlName: "msdyn_deviceid1"): Xrm.StringControl;
+    getControl(controlName: "msdyn_deviceid1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_deviceid2"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "msdyn_latitude"): Xrm.NumberControl;
