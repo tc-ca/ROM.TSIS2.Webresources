@@ -1024,7 +1024,7 @@
     export function SubGridFilterExecution(eContext: Xrm.ExecutionContext<any, any>): void {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
-        let gridControl = formContext.getControl("relatedfinding_grid");
+        let gridControl: any = formContext.getControl("relatedfinding_grid");
         var accountobjectid = formContext.getAttribute("ts_accountid").getValue();
         let findingId = formContext.data.entity.getId();
 
@@ -1060,7 +1060,7 @@
 		            </filter>
 	            </entity>
             </fetch>`;
-
+            
             gridControl.setFilterXml(fetchXml);
                 gridControl.refresh();
             }
