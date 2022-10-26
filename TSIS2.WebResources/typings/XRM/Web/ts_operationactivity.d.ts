@@ -6,6 +6,8 @@ interface ts_OperationActivity_Base extends WebEntity {
   statecode?: ts_operationactivity_statecode | null;
   statuscode?: ts_operationactivity_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_englishname?: string | null;
+  ts_frenchname?: string | null;
   ts_name?: string | null;
   ts_operationactivityid?: string | null;
   ts_operationalstatus?: ts_operationalstatus | null;
@@ -21,6 +23,7 @@ interface ts_OperationActivity_Relationships {
   ts_Operation?: ovs_operation_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Stakeholder?: Account_Result | null;
+  ts_ts_planningdata_OperationActivity_ts_oper?: ts_PlanningData_Result[] | null;
 }
 interface ts_OperationActivity extends ts_OperationActivity_Base, ts_OperationActivity_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -57,6 +60,8 @@ interface ts_OperationActivity_Select {
   timezoneruleversionnumber: WebAttribute<ts_OperationActivity_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_activity_guid: WebAttribute<ts_OperationActivity_Select, { ts_activity_guid: string | null }, { ts_activity_formatted?: string }>;
   ts_duedate_guid: WebAttribute<ts_OperationActivity_Select, { ts_duedate_guid: string | null }, { ts_duedate_formatted?: string }>;
+  ts_englishname: WebAttribute<ts_OperationActivity_Select, { ts_englishname: string | null }, {  }>;
+  ts_frenchname: WebAttribute<ts_OperationActivity_Select, { ts_frenchname: string | null }, {  }>;
   ts_lastcompletedwo_guid: WebAttribute<ts_OperationActivity_Select, { ts_lastcompletedwo_guid: string | null }, { ts_lastcompletedwo_formatted?: string }>;
   ts_name: WebAttribute<ts_OperationActivity_Select, { ts_name: string | null }, {  }>;
   ts_nextplannedwo_guid: WebAttribute<ts_OperationActivity_Select, { ts_nextplannedwo_guid: string | null }, { ts_nextplannedwo_formatted?: string }>;
@@ -89,6 +94,8 @@ interface ts_OperationActivity_Filter {
   timezoneruleversionnumber: number;
   ts_activity_guid: XQW.Guid;
   ts_duedate_guid: XQW.Guid;
+  ts_englishname: string;
+  ts_frenchname: string;
   ts_lastcompletedwo_guid: XQW.Guid;
   ts_name: string;
   ts_nextplannedwo_guid: XQW.Guid;
@@ -108,7 +115,8 @@ interface ts_OperationActivity_Expand {
   createdonbehalfby: WebExpand<ts_OperationActivity_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
   modifiedby: WebExpand<ts_OperationActivity_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ts_OperationActivity_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
-  ownerid: WebExpand<ts_OperationActivity_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  ownerid: WebExpand<ts_OperationActivity_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningteam: WebExpand<ts_OperationActivity_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_OperationActivity_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_Activity: WebExpand<ts_OperationActivity_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_Activity: msdyn_incidenttype_Result }>;
   ts_DueDate: WebExpand<ts_OperationActivity_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ts_DueDate: tc_TCFiscalQuarter_Result }>;
@@ -117,6 +125,7 @@ interface ts_OperationActivity_Expand {
   ts_Operation: WebExpand<ts_OperationActivity_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_Operation: ovs_operation_Result }>;
   ts_Site: WebExpand<ts_OperationActivity_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Stakeholder: WebExpand<ts_OperationActivity_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
+  ts_ts_planningdata_OperationActivity_ts_oper: WebExpand<ts_OperationActivity_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_OperationActivity_ts_oper: ts_PlanningData_Result[] }>;
 }
 interface ts_OperationActivity_FormattedResult {
   createdby_formatted?: string;
@@ -169,7 +178,8 @@ interface ts_OperationActivity_RelatedOne {
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_Activity: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_DueDate: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
@@ -180,6 +190,7 @@ interface ts_OperationActivity_RelatedOne {
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface ts_OperationActivity_RelatedMany {
+  ts_ts_planningdata_OperationActivity_ts_oper: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_operationactivities: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;

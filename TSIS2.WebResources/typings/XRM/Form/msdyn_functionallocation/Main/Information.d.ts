@@ -75,7 +75,6 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_address1"): Xrm.Attribute<any>;
       get(name: "msdyn_address2"): Xrm.Attribute<string>;
       get(name: "msdyn_address3"): Xrm.Attribute<string>;
-      get(name: "msdyn_addressname"): Xrm.Attribute<string>;
       get(name: "msdyn_city"): Xrm.Attribute<string>;
       get(name: "msdyn_country"): Xrm.Attribute<string>;
       get(name: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -117,7 +116,6 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_address2"): Xrm.StringControl;
       get(name: "msdyn_address3"): Xrm.StringControl;
-      get(name: "msdyn_addressname"): Xrm.StringControl;
       get(name: "msdyn_city"): Xrm.StringControl;
       get(name: "msdyn_country"): Xrm.StringControl;
       get(name: "msdyn_latitude"): Xrm.NumberControl;
@@ -169,7 +167,6 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "msdyn_address1"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_address2"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_address3"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "msdyn_addressname"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_city"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_country"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -206,7 +203,6 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_address2"): Xrm.StringControl;
     getControl(controlName: "msdyn_address3"): Xrm.StringControl;
-    getControl(controlName: "msdyn_addressname"): Xrm.StringControl;
     getControl(controlName: "msdyn_city"): Xrm.StringControl;
     getControl(controlName: "msdyn_country"): Xrm.StringControl;
     getControl(controlName: "msdyn_latitude"): Xrm.NumberControl;

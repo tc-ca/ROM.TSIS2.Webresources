@@ -12,7 +12,7 @@ declare namespace Form.account.QuickCreate {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "address1_line1"): Xrm.Attribute<string>;
+      get(name: "address1_line1"): Xrm.Attribute<any>;
       get(name: "msdyn_billingaccount"): Xrm.LookupAttribute<"account">;
       get(name: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
       get(name: "name"): Xrm.Attribute<string>;
@@ -24,7 +24,7 @@ declare namespace Form.account.QuickCreate {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "address1_line1"): Xrm.StringControl;
+      get(name: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_billingaccount"): Xrm.LookupControl<"account">;
       get(name: "msdyn_serviceterritory"): Xrm.LookupControl<"territory">;
       get(name: "name"): Xrm.StringControl;
@@ -44,14 +44,14 @@ declare namespace Form.account.QuickCreate {
     }
   }
   interface AccountQuickCreateFieldService extends Xrm.PageBase<AccountQuickCreateFieldService.Attributes,AccountQuickCreateFieldService.Tabs,AccountQuickCreateFieldService.Controls> {
-    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_billingaccount"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "primarycontactid"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "telephone1"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "address1_line1"): Xrm.StringControl;
+    getControl(controlName: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_billingaccount"): Xrm.LookupControl<"account">;
     getControl(controlName: "msdyn_serviceterritory"): Xrm.LookupControl<"territory">;
     getControl(controlName: "name"): Xrm.StringControl;

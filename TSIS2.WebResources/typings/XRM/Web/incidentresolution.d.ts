@@ -53,7 +53,9 @@ interface IncidentResolution_Relationships {
   incidentresolution_activity_parties?: ActivityParty_Result[] | null;
   modifiedby_incidentresolution?: SystemUser_Result | null;
   modifiedonbehalfby_incidentresolution?: SystemUser_Result | null;
-  ownerid_incidentresolution?: SystemUser_Result | null;
+  ownerid_incidentresolution?: Team_Result | null;
+  ownerid_incidentresolution1?: SystemUser_Result | null;
+  owningteam_incidentresolution?: Team_Result | null;
   owninguser_incidentresolution?: SystemUser_Result | null;
   regardingobjectid_account_incidentresolution?: Account_Result | null;
   regardingobjectid_bookableresourcebooking_incidentresolution?: BookableResourceBooking_Result | null;
@@ -242,7 +244,8 @@ interface IncidentResolution_Expand {
   incidentresolution_activity_parties: WebExpand<IncidentResolution_Expand, ActivityParty_Select, ActivityParty_Filter, { incidentresolution_activity_parties: ActivityParty_Result[] }>;
   modifiedby_incidentresolution: WebExpand<IncidentResolution_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby_incidentresolution: SystemUser_Result }>;
   modifiedonbehalfby_incidentresolution: WebExpand<IncidentResolution_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_incidentresolution: SystemUser_Result }>;
-  ownerid_incidentresolution: WebExpand<IncidentResolution_Expand, SystemUser_Select, SystemUser_Filter, { ownerid_incidentresolution: SystemUser_Result }>;
+  ownerid_incidentresolution: WebExpand<IncidentResolution_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid_incidentresolution: SystemUser_Result } & { ownerid_incidentresolution: Team_Result }>;
+  owningteam_incidentresolution: WebExpand<IncidentResolution_Expand, Team_Select, Team_Filter, { owningteam_incidentresolution: Team_Result }>;
   owninguser_incidentresolution: WebExpand<IncidentResolution_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_incidentresolution: SystemUser_Result }>;
   regardingobjectid_account_incidentresolution: WebExpand<IncidentResolution_Expand, Account_Select, Account_Filter, { regardingobjectid_account_incidentresolution: Account_Result }>;
   regardingobjectid_bookableresourcebooking_incidentresolution: WebExpand<IncidentResolution_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { regardingobjectid_bookableresourcebooking_incidentresolution: BookableResourceBooking_Result }>;
@@ -331,7 +334,9 @@ interface IncidentResolution_RelatedOne {
   incidentid: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   modifiedby_incidentresolution: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby_incidentresolution: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid_incidentresolution: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid_incidentresolution: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  ownerid_incidentresolution1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owningteam_incidentresolution: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser_incidentresolution: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   regardingobjectid_account_incidentresolution: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   regardingobjectid_bookableresourcebooking_incidentresolution: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;

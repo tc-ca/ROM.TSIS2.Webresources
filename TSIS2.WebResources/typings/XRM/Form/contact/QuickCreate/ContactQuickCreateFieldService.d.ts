@@ -12,7 +12,7 @@ declare namespace Form.contact.QuickCreate {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "address1_line1"): Xrm.Attribute<string>;
+      get(name: "address1_line1"): Xrm.Attribute<any>;
       get(name: "birthdate"): Xrm.DateAttribute | null;
       get(name: "description"): Xrm.Attribute<string>;
       get(name: "emailaddress1"): Xrm.Attribute<string>;
@@ -35,7 +35,7 @@ declare namespace Form.contact.QuickCreate {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "address1_line1"): Xrm.StringControl;
+      get(name: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "description"): Xrm.StringControl;
       get(name: "emailaddress1"): Xrm.StringControl;
       get(name: "firstname"): Xrm.StringControl;
@@ -71,7 +71,7 @@ declare namespace Form.contact.QuickCreate {
     }
   }
   interface ContactQuickCreateFieldService extends Xrm.PageBase<ContactQuickCreateFieldService.Attributes,ContactQuickCreateFieldService.Tabs,ContactQuickCreateFieldService.Controls> {
-    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "address1_line1"): Xrm.Attribute<any>;
     getAttribute(attributeName: "birthdate"): Xrm.DateAttribute | null;
     getAttribute(attributeName: "description"): Xrm.Attribute<string>;
     getAttribute(attributeName: "emailaddress1"): Xrm.Attribute<string>;
@@ -89,7 +89,7 @@ declare namespace Form.contact.QuickCreate {
     getAttribute(attributeName: "telephone1"): Xrm.Attribute<string>;
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "address1_line1"): Xrm.StringControl;
+    getControl(controlName: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "description"): Xrm.StringControl;
     getControl(controlName: "emailaddress1"): Xrm.StringControl;
     getControl(controlName: "firstname"): Xrm.StringControl;

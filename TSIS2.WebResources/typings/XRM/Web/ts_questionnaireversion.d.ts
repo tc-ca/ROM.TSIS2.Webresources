@@ -12,6 +12,11 @@ interface ts_questionnaireversion_Base extends WebEntity {
   ts_effectivestartdate?: Date | null;
   ts_name?: string | null;
   ts_questionnairedefinition?: string | null;
+  ts_questionnairedefinitionhistory1?: string | null;
+  ts_questionnairedefinitionhistory2?: string | null;
+  ts_questionnairedefinitionhistory3?: string | null;
+  ts_questionnairedefinitionhistory4?: string | null;
+  ts_questionnairedefinitionhistory5?: string | null;
   ts_questionnaireversionid?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
@@ -50,6 +55,11 @@ interface ts_questionnaireversion_Select {
   ts_name: WebAttribute<ts_questionnaireversion_Select, { ts_name: string | null }, {  }>;
   ts_ovs_questionnaire_guid: WebAttribute<ts_questionnaireversion_Select, { ts_ovs_questionnaire_guid: string | null }, { ts_ovs_questionnaire_formatted?: string }>;
   ts_questionnairedefinition: WebAttribute<ts_questionnaireversion_Select, { ts_questionnairedefinition: string | null }, {  }>;
+  ts_questionnairedefinitionhistory1: WebAttribute<ts_questionnaireversion_Select, { ts_questionnairedefinitionhistory1: string | null }, {  }>;
+  ts_questionnairedefinitionhistory2: WebAttribute<ts_questionnaireversion_Select, { ts_questionnairedefinitionhistory2: string | null }, {  }>;
+  ts_questionnairedefinitionhistory3: WebAttribute<ts_questionnaireversion_Select, { ts_questionnairedefinitionhistory3: string | null }, {  }>;
+  ts_questionnairedefinitionhistory4: WebAttribute<ts_questionnaireversion_Select, { ts_questionnairedefinitionhistory4: string | null }, {  }>;
+  ts_questionnairedefinitionhistory5: WebAttribute<ts_questionnaireversion_Select, { ts_questionnairedefinitionhistory5: string | null }, {  }>;
   ts_questionnaireversionid: WebAttribute<ts_questionnaireversion_Select, { ts_questionnaireversionid: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_questionnaireversion_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_questionnaireversion_Select, { versionnumber: number | null }, {  }>;
@@ -77,6 +87,11 @@ interface ts_questionnaireversion_Filter {
   ts_name: string;
   ts_ovs_questionnaire_guid: XQW.Guid;
   ts_questionnairedefinition: string;
+  ts_questionnairedefinitionhistory1: string;
+  ts_questionnairedefinitionhistory2: string;
+  ts_questionnairedefinitionhistory3: string;
+  ts_questionnairedefinitionhistory4: string;
+  ts_questionnairedefinitionhistory5: string;
   ts_questionnaireversionid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
@@ -86,7 +101,8 @@ interface ts_questionnaireversion_Expand {
   createdonbehalfby: WebExpand<ts_questionnaireversion_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
   modifiedby: WebExpand<ts_questionnaireversion_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ts_questionnaireversion_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
-  ownerid: WebExpand<ts_questionnaireversion_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  ownerid: WebExpand<ts_questionnaireversion_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningteam: WebExpand<ts_questionnaireversion_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_questionnaireversion_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_ovs_questionnaire: WebExpand<ts_questionnaireversion_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { ts_ovs_questionnaire: ovs_Questionnaire_Result }>;
 }
@@ -125,7 +141,8 @@ interface ts_questionnaireversion_RelatedOne {
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_ovs_questionnaire: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
 }

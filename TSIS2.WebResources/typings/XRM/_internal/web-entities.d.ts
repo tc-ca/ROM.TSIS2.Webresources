@@ -699,6 +699,29 @@ interface ts_ovs_operation_ovs_operation_Create extends ts_ovs_operation_ovs_ope
 }
 interface ts_ovs_operation_ovs_operation_Update extends ts_ovs_operation_ovs_operation {
 }
+interface ts_PlanningData_Base extends WebEntity {
+}
+interface ts_PlanningData_Fixed extends WebEntity_Fixed {
+  ts_planningdataid: string;
+}
+interface ts_PlanningData extends ts_PlanningData_Base, ts_PlanningData_Relationships {
+}
+interface ts_PlanningData_Relationships {
+}
+interface ts_PlanningData_Result extends ts_PlanningData_Base, ts_PlanningData_Relationships {
+}
+interface ts_PlanningData_FormattedResult {
+}
+interface ts_PlanningData_Select {
+}
+interface ts_PlanningData_Expand {
+}
+interface ts_PlanningData_Filter {
+}
+interface ts_PlanningData_Create extends ts_PlanningData {
+}
+interface ts_PlanningData_Update extends ts_PlanningData {
+}
 interface ts_planningsettings_Base extends WebEntity {
 }
 interface ts_planningsettings_Fixed extends WebEntity_Fixed {
@@ -768,6 +791,29 @@ interface ts_RiskCategory_Create extends ts_RiskCategory {
 }
 interface ts_RiskCategory_Update extends ts_RiskCategory {
 }
+interface ts_TeamPlanningData_Base extends WebEntity {
+}
+interface ts_TeamPlanningData_Fixed extends WebEntity_Fixed {
+  ts_teamplanningdataid: string;
+}
+interface ts_TeamPlanningData extends ts_TeamPlanningData_Base, ts_TeamPlanningData_Relationships {
+}
+interface ts_TeamPlanningData_Relationships {
+}
+interface ts_TeamPlanningData_Result extends ts_TeamPlanningData_Base, ts_TeamPlanningData_Relationships {
+}
+interface ts_TeamPlanningData_FormattedResult {
+}
+interface ts_TeamPlanningData_Select {
+}
+interface ts_TeamPlanningData_Expand {
+}
+interface ts_TeamPlanningData_Filter {
+}
+interface ts_TeamPlanningData_Create extends ts_TeamPlanningData {
+}
+interface ts_TeamPlanningData_Update extends ts_TeamPlanningData {
+}
 interface ts_workordercreationwizard_Base extends WebEntity {
 }
 interface ts_workordercreationwizard_Fixed extends WebEntity_Fixed {
@@ -790,6 +836,29 @@ interface ts_workordercreationwizard_Filter {
 interface ts_workordercreationwizard_Create extends ts_workordercreationwizard {
 }
 interface ts_workordercreationwizard_Update extends ts_workordercreationwizard {
+}
+interface tc_TCFiscalQuarter_Base extends WebEntity {
+}
+interface tc_TCFiscalQuarter_Fixed extends WebEntity_Fixed {
+  tc_tcfiscalquarterid: string;
+}
+interface tc_TCFiscalQuarter extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
+}
+interface tc_TCFiscalQuarter_Relationships {
+}
+interface tc_TCFiscalQuarter_Result extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
+}
+interface tc_TCFiscalQuarter_FormattedResult {
+}
+interface tc_TCFiscalQuarter_Select {
+}
+interface tc_TCFiscalQuarter_Expand {
+}
+interface tc_TCFiscalQuarter_Filter {
+}
+interface tc_TCFiscalQuarter_Create extends tc_TCFiscalQuarter {
+}
+interface tc_TCFiscalQuarter_Update extends tc_TCFiscalQuarter {
 }
 interface PostFollow_Base extends WebEntity {
 }
@@ -906,29 +975,6 @@ interface ServiceAppointment_Create extends ServiceAppointment {
 }
 interface ServiceAppointment_Update extends ServiceAppointment {
 }
-interface tc_TCFiscalQuarter_Base extends WebEntity {
-}
-interface tc_TCFiscalQuarter_Fixed extends WebEntity_Fixed {
-  tc_tcfiscalquarterid: string;
-}
-interface tc_TCFiscalQuarter extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
-}
-interface tc_TCFiscalQuarter_Relationships {
-}
-interface tc_TCFiscalQuarter_Result extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
-}
-interface tc_TCFiscalQuarter_FormattedResult {
-}
-interface tc_TCFiscalQuarter_Select {
-}
-interface tc_TCFiscalQuarter_Expand {
-}
-interface tc_TCFiscalQuarter_Filter {
-}
-interface tc_TCFiscalQuarter_Create extends tc_TCFiscalQuarter {
-}
-interface tc_TCFiscalQuarter_Update extends tc_TCFiscalQuarter {
-}
 interface ts_role_Base extends WebEntity {
 }
 interface ts_role_Fixed extends WebEntity_Fixed {
@@ -951,6 +997,29 @@ interface ts_role_Filter {
 interface ts_role_Create extends ts_role {
 }
 interface ts_role_Update extends ts_role {
+}
+interface Team_Base extends WebEntity {
+}
+interface Team_Fixed extends WebEntity_Fixed {
+  teamid: string;
+}
+interface Team extends Team_Base, Team_Relationships {
+}
+interface Team_Relationships {
+}
+interface Team_Result extends Team_Base, Team_Relationships {
+}
+interface Team_FormattedResult {
+}
+interface Team_Select {
+}
+interface Team_Expand {
+}
+interface Team_Filter {
+}
+interface Team_Create extends Team {
+}
+interface Team_Update extends Team {
 }
 interface IncidentResolution_Base extends WebEntity {
 }

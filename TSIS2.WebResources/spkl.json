@@ -249,6 +249,16 @@
               "file": "js\\InspectionHours.js",
               "description": "ROM TSIS 2.0 Inspection Hours Form Scripts"
             },
+            {
+              "uniquename": "ts_/js/TeamPlanningData.js",
+              "file": "js\\TeamPlanningData.js",
+              "description": "ROM TSIS 2.0 Team Planning Data Form Scripts"
+            },
+            {
+              "uniquename": "ts_/js/PlanningData.js",
+              "file": "js\\PlanningData.js",
+              "description": "ROM TSIS 2.0 Planning Data Form Scripts"
+            },
             /* Styles */
             {
               "uniquename": "ovs_/css/bootstrap.min.css",

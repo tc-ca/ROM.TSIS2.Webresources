@@ -57,6 +57,7 @@ interface ovs_operation_Relationships {
   ovs_operation_connections2?: Connection_Result[] | null;
   ovs_operation_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   ovs_ovs_operation_msdyn_workorder?: msdyn_workorder_Result[] | null;
+  ts_OPITeam?: Team_Result | null;
   ts_msdyn_workorder_ovs_operation_ovs_operati?: msdyn_workorder_Result[] | null;
   ts_operation_ts_operationcontact_operation?: ts_operationcontact_Result[] | null;
   ts_ovs_Finding_operationid_ovs_operation?: ovs_Finding_Result[] | null;
@@ -69,6 +70,7 @@ interface ovs_operation extends ovs_operation_Base, ovs_operation_Relationships 
   ovs_OperationTypeId_bind$ovs_operationtypes?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  ts_OPITeam_bind$teams?: string | null;
   ts_operationfrequency_bind$ts_operationfrequencies?: string | null;
   ts_risk_bind$ts_riskcategories?: string | null;
   ts_site_bind$msdyn_functionallocations?: string | null;
@@ -118,6 +120,7 @@ interface ovs_operation_Select {
   ts_operationalstatus: WebAttribute<ovs_operation_Select, { ts_operationalstatus: ts_operationalstatus | null }, { ts_operationalstatus_formatted?: string }>;
   ts_operationfrequency_guid: WebAttribute<ovs_operation_Select, { ts_operationfrequency_guid: string | null }, { ts_operationfrequency_formatted?: string }>;
   ts_opi: WebAttribute<ovs_operation_Select, { ts_opi: boolean | null }, {  }>;
+  ts_opiteam_guid: WebAttribute<ovs_operation_Select, { ts_opiteam_guid: string | null }, { ts_opiteam_formatted?: string }>;
   ts_oss: WebAttribute<ovs_operation_Select, { ts_oss: boolean | null }, {  }>;
   ts_planningstatus: WebAttribute<ovs_operation_Select, { ts_planningstatus: ts_planningstatus | null }, { ts_planningstatus_formatted?: string }>;
   ts_ppecategories: WebAttribute<ovs_operation_Select, { ts_ppecategories: ts_ppecategories | null }, { ts_ppecategories_formatted?: string }>;
@@ -183,6 +186,7 @@ interface ovs_operation_Filter {
   ts_operationalstatus: ts_operationalstatus;
   ts_operationfrequency_guid: XQW.Guid;
   ts_opi: boolean;
+  ts_opiteam_guid: XQW.Guid;
   ts_oss: boolean;
   ts_planningstatus: ts_planningstatus;
   ts_ppecategories: ts_ppecategories;
@@ -222,8 +226,10 @@ interface ovs_operation_Expand {
   ovs_operation_connections2: WebExpand<ovs_operation_Expand, Connection_Select, Connection_Filter, { ovs_operation_connections2: Connection_Result[] }>;
   ovs_operation_ts_enforcementactions: WebExpand<ovs_operation_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ovs_operation_ts_enforcementactions: ts_enforcementaction_Result[] }>;
   ovs_ovs_operation_msdyn_workorder: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_ovs_operation_msdyn_workorder: msdyn_workorder_Result[] }>;
-  ownerid: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { ownerid: SystemUser_Result }>;
+  ownerid: WebExpand<ovs_operation_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningteam: WebExpand<ovs_operation_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_OPITeam: WebExpand<ovs_operation_Expand, Team_Select, Team_Filter, { ts_OPITeam: Team_Result }>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: msdyn_workorder_Result[] }>;
   ts_operation_ts_operationcontact_operation: WebExpand<ovs_operation_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operation_ts_operationcontact_operation: ts_operationcontact_Result[] }>;
   ts_ovs_Finding_operationid_ovs_operation: WebExpand<ovs_operation_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_operationid_ovs_operation: ovs_Finding_Result[] }>;
@@ -257,6 +263,7 @@ interface ovs_operation_FormattedResult {
   ts_issecurityinspectionsite_formatted?: string;
   ts_operationalstatus_formatted?: string;
   ts_operationfrequency_formatted?: string;
+  ts_opiteam_formatted?: string;
   ts_planningstatus_formatted?: string;
   ts_ppecategories_formatted?: string;
   ts_risk_formatted?: string;
@@ -285,6 +292,7 @@ interface ovs_operation_Result extends ovs_operation_Base, ovs_operation_Relatio
   owningteam_guid: string | null;
   owninguser_guid: string | null;
   ts_operationfrequency_guid: string | null;
+  ts_opiteam_guid: string | null;
   ts_risk_guid: string | null;
   ts_site_guid: string | null;
   ts_stakeholder_guid: string | null;
@@ -295,8 +303,10 @@ interface ovs_operation_RelatedOne {
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_OPITeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_risk: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
   ts_site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

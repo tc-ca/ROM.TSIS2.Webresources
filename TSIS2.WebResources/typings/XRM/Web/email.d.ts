@@ -87,7 +87,9 @@ interface Email_Relationships {
   emailsender_systemuser?: SystemUser_Result | null;
   modifiedby_email?: SystemUser_Result | null;
   modifiedonbehalfby_email?: SystemUser_Result | null;
-  ownerid_email?: SystemUser_Result | null;
+  ownerid_email?: Team_Result | null;
+  ownerid_email1?: SystemUser_Result | null;
+  owningteam_email?: Team_Result | null;
   owninguser_email?: SystemUser_Result | null;
   regardingobjectid_account_email?: Account_Result | null;
   regardingobjectid_bookableresourcebooking_email?: BookableResourceBooking_Result | null;
@@ -172,6 +174,7 @@ interface Email extends Email_Base, Email_Relationships {
   regardingobjectid_msdyn_rtvsubstatus_email_bind$msdyn_rtvsubstatuses?: string | null;
   regardingobjectid_msdyn_salessuggestion_email_bind$msdyn_salessuggestions?: string | null;
   regardingobjectid_msdyn_shipvia_email_bind$msdyn_shipvias?: string | null;
+  regardingobjectid_msdyn_swarm_email_bind$msdyn_swarms?: string | null;
   regardingobjectid_msdyn_systemuserschedulersetting_email_bind$msdyn_systemuserschedulersettinges?: string | null;
   regardingobjectid_msdyn_timegroup_email_bind$msdyn_timegroups?: string | null;
   regardingobjectid_msdyn_timegroupdetail_email_bind$msdyn_timegroupdetails?: string | null;
@@ -422,7 +425,8 @@ interface Email_Expand {
   emailsender_systemuser: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { emailsender_systemuser: SystemUser_Result }>;
   modifiedby_email: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby_email: SystemUser_Result }>;
   modifiedonbehalfby_email: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_email: SystemUser_Result }>;
-  ownerid_email: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { ownerid_email: SystemUser_Result }>;
+  ownerid_email: WebExpand<Email_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid_email: SystemUser_Result } & { ownerid_email: Team_Result }>;
+  owningteam_email: WebExpand<Email_Expand, Team_Select, Team_Filter, { owningteam_email: Team_Result }>;
   owninguser_email: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_email: SystemUser_Result }>;
   parentactivityid: WebExpand<Email_Expand, Email_Select, Email_Filter, { parentactivityid: Email_Result }>;
   regardingobjectid_account_email: WebExpand<Email_Expand, Account_Select, Account_Filter, { regardingobjectid_account_email: Account_Result }>;
@@ -522,7 +526,9 @@ interface Email_RelatedOne {
   emailsender_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby_email: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby_email: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ownerid_email: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid_email: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  ownerid_email1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owningteam_email: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser_email: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   parentactivityid: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   regardingobjectid_account_email: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
