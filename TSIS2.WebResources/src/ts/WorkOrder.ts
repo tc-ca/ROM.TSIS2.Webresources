@@ -2,6 +2,7 @@
 namespace ROM.WorkOrder {
     let isFromCase = false; //Boolean status to track if the work order is being created from a case
     var currentSystemStatus;
+    var currentStatus;
     // EVENTS
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
@@ -15,6 +16,7 @@ namespace ROM.WorkOrder {
 
         //Keep track of the current system status, to be used when cancelling a status change.
         currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
+        currentStatus = form.getAttribute("ts_state").getValue();
         form.getControl("msdyn_worklocation").removeOption(690970001);  //Remove Facility Work Location Option
         updateCaseView(eContext);
 
@@ -28,11 +30,19 @@ namespace ROM.WorkOrder {
             form.getAttribute("msdyn_servicerequest").setRequiredLevel("required");
         }
 
-        if (currentSystemStatus == 690970004) {
+        if (currentSystemStatus == 690970004) { 
             form.getControl("ts_completedquarter").setVisible(true);
         }
         else {
             form.getControl("ts_completedquarter").setVisible(false);
+        }
+
+        if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003) { //Closed ; Completed
+            form.getControl("ovs_revisedquarterid").setDisabled(true);
+        }
+
+        if (currentStatus == 717750001) { //Committed
+            form.getControl("ovs_fiscalquarter").setDisabled(true);
         }
 
         //Limit ownership of a Work Order to users associated with the same program
