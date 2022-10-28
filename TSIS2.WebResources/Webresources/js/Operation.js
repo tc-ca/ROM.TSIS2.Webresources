@@ -128,13 +128,14 @@ var ROM;
                                 }
                             }
                             else {
-                                var avsecPropertiesTab = form.ui.tabs.get("tab_properties_avsec");
-                                avsecPropertiesTab.setVisible(true);
-                                form.ui.tabs.get("operation_activity_tab").setVisible(true);
-                                //Show Air Carrier (Passenger) Section if Operation Type is Air Carrier Passenger
-                                if (operationType[0].id == "{8B614EF0-C651-EB11-A812-000D3AF3AC0D}") { //Air Carrier (Passenger)
-                                    avsecPropertiesTab.sections.get("tab_avsec_properties_air_carrier_passenger").setVisible(true);
-                                }
+                                //We need to keep this tab hidden for now. We may need it later though.
+                                //const avsecPropertiesTab = form.ui.tabs.get("tab_properties_avsec")
+                                //avsecPropertiesTab.setVisible(true);
+                                //form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                                ////Show Air Carrier (Passenger) Section if Operation Type is Air Carrier Passenger
+                                //if (operationType[0].id == "{8B614EF0-C651-EB11-A812-000D3AF3AC0D}") { //Air Carrier (Passenger)
+                                //    avsecPropertiesTab.sections.get("tab_avsec_properties_air_carrier_passenger").setVisible(true);
+                                //}
                             }
                             if (form.ui.getFormType() == 1) { //Create
                                 //If the form is opened with the stakeholder or site value already filled (from account/site subgrids)
