@@ -11,6 +11,7 @@ interface ts_PlanningData_Base extends WebEntity {
   ts_completedq3?: number | null;
   ts_completedq4?: number | null;
   ts_creationnotes?: string | null;
+  ts_details?: string | null;
   ts_dueq1?: number | null;
   ts_dueq2?: number | null;
   ts_dueq3?: number | null;
@@ -20,15 +21,18 @@ interface ts_PlanningData_Base extends WebEntity {
   ts_generationlog?: string | null;
   ts_name?: string | null;
   ts_nullnumber?: number | null;
+  ts_originalteamestimatedduration?: number | null;
   ts_plannedq1?: number | null;
   ts_plannedq2?: number | null;
   ts_plannedq3?: number | null;
   ts_plannedq4?: number | null;
   ts_plannedwo?: number | null;
+  ts_plannedwouncalculated?: number | null;
   ts_planningdataid?: string | null;
   ts_target?: number | null;
   ts_teamestimatedduration?: number | null;
   ts_variance?: number | null;
+  ts_varianceuncalculated?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -79,6 +83,7 @@ interface ts_PlanningData_Select {
   ts_completedq3: WebAttribute<ts_PlanningData_Select, { ts_completedq3: number | null }, {  }>;
   ts_completedq4: WebAttribute<ts_PlanningData_Select, { ts_completedq4: number | null }, {  }>;
   ts_creationnotes: WebAttribute<ts_PlanningData_Select, { ts_creationnotes: string | null }, {  }>;
+  ts_details: WebAttribute<ts_PlanningData_Select, { ts_details: string | null }, {  }>;
   ts_dueq1: WebAttribute<ts_PlanningData_Select, { ts_dueq1: number | null }, {  }>;
   ts_dueq2: WebAttribute<ts_PlanningData_Select, { ts_dueq2: number | null }, {  }>;
   ts_dueq3: WebAttribute<ts_PlanningData_Select, { ts_dueq3: number | null }, {  }>;
@@ -91,11 +96,13 @@ interface ts_PlanningData_Select {
   ts_nullnumber: WebAttribute<ts_PlanningData_Select, { ts_nullnumber: number | null }, {  }>;
   ts_operationactivity_guid: WebAttribute<ts_PlanningData_Select, { ts_operationactivity_guid: string | null }, { ts_operationactivity_formatted?: string }>;
   ts_operationtype_guid: WebAttribute<ts_PlanningData_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
+  ts_originalteamestimatedduration: WebAttribute<ts_PlanningData_Select, { ts_originalteamestimatedduration: number | null }, {  }>;
   ts_plannedq1: WebAttribute<ts_PlanningData_Select, { ts_plannedq1: number | null }, {  }>;
   ts_plannedq2: WebAttribute<ts_PlanningData_Select, { ts_plannedq2: number | null }, {  }>;
   ts_plannedq3: WebAttribute<ts_PlanningData_Select, { ts_plannedq3: number | null }, {  }>;
   ts_plannedq4: WebAttribute<ts_PlanningData_Select, { ts_plannedq4: number | null }, {  }>;
   ts_plannedwo: WebAttribute<ts_PlanningData_Select, { ts_plannedwo: number | null }, {  }>;
+  ts_plannedwouncalculated: WebAttribute<ts_PlanningData_Select, { ts_plannedwouncalculated: number | null }, {  }>;
   ts_planningdataid: WebAttribute<ts_PlanningData_Select, { ts_planningdataid: string | null }, {  }>;
   ts_site_guid: WebAttribute<ts_PlanningData_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_PlanningData_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
@@ -104,6 +111,7 @@ interface ts_PlanningData_Select {
   ts_teamestimatedduration: WebAttribute<ts_PlanningData_Select, { ts_teamestimatedduration: number | null }, {  }>;
   ts_teamplanningdata_guid: WebAttribute<ts_PlanningData_Select, { ts_teamplanningdata_guid: string | null }, { ts_teamplanningdata_formatted?: string }>;
   ts_variance: WebAttribute<ts_PlanningData_Select, { ts_variance: number | null }, {  }>;
+  ts_varianceuncalculated: WebAttribute<ts_PlanningData_Select, { ts_varianceuncalculated: number | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_PlanningData_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_PlanningData_Select, { versionnumber: number | null }, {  }>;
 }
@@ -129,6 +137,7 @@ interface ts_PlanningData_Filter {
   ts_completedq3: number;
   ts_completedq4: number;
   ts_creationnotes: string;
+  ts_details: string;
   ts_dueq1: number;
   ts_dueq2: number;
   ts_dueq3: number;
@@ -141,11 +150,13 @@ interface ts_PlanningData_Filter {
   ts_nullnumber: number;
   ts_operationactivity_guid: XQW.Guid;
   ts_operationtype_guid: XQW.Guid;
+  ts_originalteamestimatedduration: any;
   ts_plannedq1: number;
   ts_plannedq2: number;
   ts_plannedq3: number;
   ts_plannedq4: number;
   ts_plannedwo: number;
+  ts_plannedwouncalculated: number;
   ts_planningdataid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
@@ -154,6 +165,7 @@ interface ts_PlanningData_Filter {
   ts_teamestimatedduration: any;
   ts_teamplanningdata_guid: XQW.Guid;
   ts_variance: number;
+  ts_varianceuncalculated: number;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }

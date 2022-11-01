@@ -118,8 +118,8 @@ declare namespace Form.systemuser.Main {
       get(name: "DirectReports"): Xrm.SubGridControl<"systemuser">;
       get(name: "LiveEngagementQueues"): Xrm.SubGridControl<"queue">;
       get(name: "PrivateQueuesSubGrid"): Xrm.SubGridControl<"queue">;
-      get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "TeamsSubGrid"): Xrm.SubGridControl<"team">;
+      get(name: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "accessmode"): Xrm.OptionSetControl<systemuser_accessmode>;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
@@ -245,8 +245,8 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "DirectReports"): Xrm.SubGridControl<"systemuser">;
     getControl(controlName: "LiveEngagementQueues"): Xrm.SubGridControl<"queue">;
     getControl(controlName: "PrivateQueuesSubGrid"): Xrm.SubGridControl<"queue">;
-    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "TeamsSubGrid"): Xrm.SubGridControl<"team">;
+    getControl(controlName: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "accessmode"): Xrm.OptionSetControl<systemuser_accessmode>;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
