@@ -12,6 +12,7 @@ var ROM;
                 formContext.getControl("ts_teamplanningdata").setDisabled(true);
                 formContext.getControl("ts_target").setDisabled(true);
             }
+            recalculateVarianceAndPlannedWO(eContext);
         }
         PlanningData.onLoad = onLoad;
         function gridOnSelect(eContext) {
