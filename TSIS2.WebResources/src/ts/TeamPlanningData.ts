@@ -24,7 +24,6 @@
             teamId = teamValue[0].id;
             teamName = teamValue[0].name;
         }
-
         let planningDataFiscalYearValue = formContext.getAttribute("ts_fiscalyear").getValue()
         let planningDataFiscalYearName;
         let planningDataFiscalYearId;
