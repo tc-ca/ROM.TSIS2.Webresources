@@ -186,4 +186,37 @@ namespace ROM.FunctionalLocation {
         const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
         riskScoreVisibility(form);
     }
+
+    export function SubGridFilterExecution(eContext: Xrm.ExecutionContext<any, any>): void {
+        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+
+        let gridControl: any = formContext.getControl("Operations");
+        let siteId = formContext.data.entity.getId();
+
+        if (gridControl === null) {
+            setTimeout(ROM.Finding.SubGridFilterExecution, 1000);
+            return;
+        }
+        else {
+            if (siteId !== null && siteId !== '') {
+                var fetchXml = `<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' no-lock='false'>
+                        <entity name='ovs_operation'>
+                        <attribute name='ovs_operationtypeid'/>
+                        <attribute name='ts_stakeholder'/>
+                        <attribute name='ovs_name'/>
+                        <attribute name='ts_operationalstatus'/>
+                        <attribute name='ownerid'/>
+                        <attribute name='ts_subsite'/>
+                        <filter type='or'>
+                          <condition attribute='ts_site' operator='eq' value='${siteId}'/>
+                          <condition attribute='ts_subsite' operator='eq' value='${siteId}'/>
+                        </filter>
+                      </entity>
+                    </fetch>`;
+
+                gridControl.setFilterXml(fetchXml);
+                gridControl.refresh();
+            }
+        }
+    }
 }
