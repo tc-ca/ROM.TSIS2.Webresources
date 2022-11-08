@@ -31,7 +31,10 @@
             planningDataFiscalYearName = planningDataFiscalYearValue[0].name;
             planningDataFiscalYearId = planningDataFiscalYearValue[0].id.slice(1, -1);
         }
-        if (teamId == null || planningDataFiscalYearName == null) return;
+        if (teamId == null || planningDataFiscalYearName == null) {
+            Xrm.Utility.closeProgressIndicator();
+            return;
+        } 
 
         let teamPlanningDataPlannedQ1 = 0;
         let teamPlanningDataPlannedQ2 = 0;
@@ -303,6 +306,6 @@
         formContext.getAttribute("ts_residualinspectorhoursq3").setValue(ts_teamPlanningDataResidualinspectorhoursQ3)
         formContext.getAttribute("ts_residualinspectorhoursq4").setValue(ts_teamPlanningDataResidualinspectorhoursQ4)
         formContext.data.entity.save();
-        Xrm.Utility.closeProgressIndicator()
+        Xrm.Utility.closeProgressIndicator();
     }
 }
