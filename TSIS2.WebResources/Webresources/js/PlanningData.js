@@ -15,6 +15,9 @@ var ROM;
             recalculateVarianceAndPlannedWO(eContext);
         }
         PlanningData.onLoad = onLoad;
+        function onSave(eContext) {
+        }
+        PlanningData.onSave = onSave;
         function gridOnSelect(eContext) {
             recalculateVarianceAndPlannedWO(eContext);
         }

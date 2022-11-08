@@ -27,6 +27,8 @@ declare namespace Form.msdyn_workorder.QuickCreate {
       get(name: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
       get(name: "msdyn_substatus"): Xrm.LookupAttribute<"msdyn_workordersubstatus">;
       get(name: "msdyn_systemstatus"): Xrm.OptionSetAttribute<msdyn_wosystemstatus>;
+      get(name: "msdyn_taxable"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "msdyn_taxcode"): Xrm.LookupAttribute<"msdyn_taxcode">;
       get(name: "msdyn_workordersummary"): Xrm.Attribute<string>;
       get(name: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
       get(name: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
@@ -77,6 +79,8 @@ declare namespace Form.msdyn_workorder.QuickCreate {
       get(name: "msdyn_serviceterritory"): Xrm.LookupControl<"territory">;
       get(name: "msdyn_substatus"): Xrm.LookupControl<"msdyn_workordersubstatus">;
       get(name: "msdyn_systemstatus"): Xrm.OptionSetControl<msdyn_wosystemstatus>;
+      get(name: "msdyn_taxable"): Xrm.OptionSetControl<boolean>;
+      get(name: "msdyn_taxcode"): Xrm.LookupControl<"msdyn_taxcode">;
       get(name: "msdyn_workordersummary"): Xrm.StringControl;
       get(name: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
       get(name: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
@@ -114,6 +118,8 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     getAttribute(attributeName: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "msdyn_substatus"): Xrm.LookupAttribute<"msdyn_workordersubstatus">;
     getAttribute(attributeName: "msdyn_systemstatus"): Xrm.OptionSetAttribute<msdyn_wosystemstatus>;
+    getAttribute(attributeName: "msdyn_taxable"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "msdyn_taxcode"): Xrm.LookupAttribute<"msdyn_taxcode">;
     getAttribute(attributeName: "msdyn_workordersummary"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
     getAttribute(attributeName: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
@@ -159,6 +165,8 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     getControl(controlName: "msdyn_serviceterritory"): Xrm.LookupControl<"territory">;
     getControl(controlName: "msdyn_substatus"): Xrm.LookupControl<"msdyn_workordersubstatus">;
     getControl(controlName: "msdyn_systemstatus"): Xrm.OptionSetControl<msdyn_wosystemstatus>;
+    getControl(controlName: "msdyn_taxable"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "msdyn_taxcode"): Xrm.LookupControl<"msdyn_taxcode">;
     getControl(controlName: "msdyn_workordersummary"): Xrm.StringControl;
     getControl(controlName: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
     getControl(controlName: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
