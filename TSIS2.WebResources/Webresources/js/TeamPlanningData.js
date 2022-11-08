@@ -74,8 +74,10 @@ var ROM;
                                 planningDataFiscalYearName = planningDataFiscalYearValue[0].name;
                                 planningDataFiscalYearId = planningDataFiscalYearValue[0].id.slice(1, -1);
                             }
-                            if (teamId == null || planningDataFiscalYearName == null)
+                            if (teamId == null || planningDataFiscalYearName == null) {
+                                Xrm.Utility.closeProgressIndicator();
                                 return [2 /*return*/];
+                            }
                             teamPlanningDataPlannedQ1 = 0;
                             teamPlanningDataPlannedQ2 = 0;
                             teamPlanningDataPlannedQ3 = 0;

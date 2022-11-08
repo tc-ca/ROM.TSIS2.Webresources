@@ -1,5 +1,6 @@
 ﻿
 function recalculateTeamPlanningDataValues(formContext) {
+    Xrm.Utility.showProgressIndicator();
     let teamPlanningDataId = formContext.data.entity.getId();
 
     let teamPlanningDataPlannedQ1 = 0;
@@ -43,34 +44,36 @@ function recalculateTeamPlanningDataValues(formContext) {
             teamPlanningDataTeamEstimatedDurationQ2 += planningData.ts_plannedq2 * planningData.ts_teamestimatedduration;
             teamPlanningDataTeamEstimatedDurationQ3 += planningData.ts_plannedq3 * planningData.ts_teamestimatedduration;
             teamPlanningDataTeamEstimatedDurationQ4 += planningData.ts_plannedq4 * planningData.ts_teamestimatedduration;
+        }
 
-            let baselineHoursFetchXml = [
-                "<fetch top='1'>",
-                "  <entity name='ts_baselinehours'>",
-                "    <attribute name='ts_plannedq1'/>",
-                "    <attribute name='ts_plannedq4'/>",
-                "    <attribute name='ts_plannedq3'/>",
-                "    <attribute name='ts_plannedq2'/>",
-                "    <filter>",
-                "      <condition attribute='ts_team' operator='eq' value='", teamId, "'/>",
-                "    </filter>",
-                "  </entity>",
-                "</fetch>"
-            ].join("");
-            baselineHoursFetchXml = "?fetchXml=" + encodeURIComponent(baselineHoursFetchXml);
-            let baselineHours = await Xrm.WebApi.retrieveMultipleRecords("ts_baselinehours", baselineHoursFetchXml).then(async function success(result) { return result.entities[0] });
+        let baselineHoursFetchXml = [
+            "<fetch top='1'>",
+            "  <entity name='ts_baselinehours'>",
+            "    <attribute name='ts_plannedq1'/>",
+            "    <attribute name='ts_plannedq4'/>",
+            "    <attribute name='ts_plannedq3'/>",
+            "    <attribute name='ts_plannedq2'/>",
+            "    <filter>",
+            "      <condition attribute='ts_team' operator='eq' value='", formContext.getAttribute("ts_team").getValue()[0].id, "'/>",
+            "    </filter>",
+            "  </entity>",
+            "</fetch>"
+        ].join("");
+        baselineHoursFetchXml = "?fetchXml=" + encodeURIComponent(baselineHoursFetchXml);
+        let baselineHours = await Xrm.WebApi.retrieveMultipleRecords("ts_baselinehours", baselineHoursFetchXml).then(async function success(result) {
+            return result.entities[0]
+        });
 
-            if (baselineHours != null) {
-                teamPlanningDataAvailableInspectorHoursQ1 = baselineHours.ts_plannedq1;
-                teamPlanningDataAvailableInspectorHoursQ2 = baselineHours.ts_plannedq2;
-                teamPlanningDataAvailableInspectorHoursQ3 = baselineHours.ts_plannedq3;
-                teamPlanningDataAvailableInspectorHoursQ4 = baselineHours.ts_plannedq4;
+        if (baselineHours != null) {
+            teamPlanningDataAvailableInspectorHoursQ1 = baselineHours.ts_plannedq1;
+            teamPlanningDataAvailableInspectorHoursQ2 = baselineHours.ts_plannedq2;
+            teamPlanningDataAvailableInspectorHoursQ3 = baselineHours.ts_plannedq3;
+            teamPlanningDataAvailableInspectorHoursQ4 = baselineHours.ts_plannedq4;
 
-                ts_teamPlanningDataResidualinspectorhoursQ1 = teamPlanningDataAvailableInspectorHoursQ1 - teamPlanningDataTeamEstimatedDurationQ1;
-                ts_teamPlanningDataResidualinspectorhoursQ2 = teamPlanningDataAvailableInspectorHoursQ2 - teamPlanningDataTeamEstimatedDurationQ2;
-                ts_teamPlanningDataResidualinspectorhoursQ3 = teamPlanningDataAvailableInspectorHoursQ3 - teamPlanningDataTeamEstimatedDurationQ3;
-                ts_teamPlanningDataResidualinspectorhoursQ4 = teamPlanningDataAvailableInspectorHoursQ4 - teamPlanningDataTeamEstimatedDurationQ4;
-            }
+            ts_teamPlanningDataResidualinspectorhoursQ1 = teamPlanningDataAvailableInspectorHoursQ1 - teamPlanningDataTeamEstimatedDurationQ1;
+            ts_teamPlanningDataResidualinspectorhoursQ2 = teamPlanningDataAvailableInspectorHoursQ2 - teamPlanningDataTeamEstimatedDurationQ2;
+            ts_teamPlanningDataResidualinspectorhoursQ3 = teamPlanningDataAvailableInspectorHoursQ3 - teamPlanningDataTeamEstimatedDurationQ3;
+            ts_teamPlanningDataResidualinspectorhoursQ4 = teamPlanningDataAvailableInspectorHoursQ4 - teamPlanningDataTeamEstimatedDurationQ4;
         }
 
         formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
@@ -90,5 +93,6 @@ function recalculateTeamPlanningDataValues(formContext) {
         formContext.getAttribute("ts_residualinspectorhoursq3").setValue(ts_teamPlanningDataResidualinspectorhoursQ3)
         formContext.getAttribute("ts_residualinspectorhoursq4").setValue(ts_teamPlanningDataResidualinspectorhoursQ4)
         formContext.data.entity.save();
+        Xrm.Utility.closeProgressIndicator();
     });
 }
