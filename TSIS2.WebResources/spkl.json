@@ -259,6 +259,11 @@
               "file": "js\\PlanningData.js",
               "description": "ROM TSIS 2.0 Planning Data Form Scripts"
             },
+            {
+              "uniquename": "ts_/js/TeamPlanningDataRibbon.js",
+              "file": "js\\TeamPlanningDataRibbon.js",
+              "description": "ROM TSIS 2.0 Team Planning Data Ribbon Scripts"
+            },
             /* Styles */
             {
               "uniquename": "ovs_/css/bootstrap.min.css",
