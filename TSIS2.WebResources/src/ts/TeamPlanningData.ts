@@ -1,4 +1,5 @@
 ﻿namespace ROM.TeamPlanningData {
+    const INSPECTORROLEID = "ed37675e-f72c-eb11-a813-000d3af3a7a7";
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_teamplanningdata.Main.Information>eContext.getFormContext();
         if (formContext.ui.getFormType() == 2) { //Update type. The form has already been saved for the first time
@@ -34,7 +35,8 @@
         if (teamId == null || planningDataFiscalYearName == null) {
             Xrm.Utility.closeProgressIndicator();
             return;
-        } 
+        }
+        generateTeamPlanningInspectorHours(teamPlanningDataId, teamId, teamName, planningDataFiscalYearName);
 
         let teamPlanningDataPlannedQ1 = 0;
         let teamPlanningDataPlannedQ2 = 0;
@@ -307,5 +309,47 @@
         formContext.getAttribute("ts_residualinspectorhoursq4").setValue(ts_teamPlanningDataResidualinspectorhoursQ4)
         formContext.data.entity.save();
         Xrm.Utility.closeProgressIndicator();
+    }
+
+    function generateTeamPlanningInspectorHours(teamPlanningDataId, teamId, teamName, fiscalYearName) {
+        //Retrieve all users of Team with Inspector Role
+        var fetchXml = [
+            "<fetch>",
+            "  <entity name='systemuser'>",
+            "    <attribute name='fullname'/>",
+            "    <link-entity name='teammembership' from='systemuserid' to='systemuserid' intersect='true'>",
+            "      <filter>",
+            "        <condition attribute='teamid' operator='eq' value='", teamId, "' uitype='teammembership'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "    <link-entity name='systemuserroles' from='systemuserid' to='systemuserid' intersect='true'>",
+            "      <filter>",
+            "        <condition attribute='roleid' operator='eq' value='", INSPECTORROLEID, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>"
+        ].join("");
+        Xrm.WebApi.retrieveMultipleRecords("systemuser", fetchXml).then(async function success(result) {
+            //Create record for each
+            for (let user of result.entities) {
+                let data = {
+                    "ts_name": user.fullname + " | " + teamName + " | " + fiscalYearName,
+                    "ts_TeamPlanningData@odata.bind": "/ts_teamplanningdatas(" + teamPlanningDataId + ")",
+                    "ts_varianceQ1": 0,
+                    "ts_varianceQ2": 0,
+                    "ts_varianceQ3": 0,
+                    "ts_varianceQ4": 0,
+                }
+                Xrm.WebApi.createRecord("ts_teamplanningdatainspectorhours", data).then(
+                    function success(result) {
+
+                    },
+                    function (error) {
+                        console.log(error.message);
+                    }
+                );
+            }
+        });
     }
 }

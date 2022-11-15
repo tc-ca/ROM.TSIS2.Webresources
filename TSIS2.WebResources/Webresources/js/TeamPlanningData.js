@@ -39,6 +39,7 @@ var ROM;
 (function (ROM) {
     var TeamPlanningData;
     (function (TeamPlanningData) {
+        var INSPECTORROLEID = "ed37675e-f72c-eb11-a813-000d3af3a7a7";
         function onLoad(eContext) {
             var formContext = eContext.getFormContext();
             if (formContext.ui.getFormType() == 2) { //Update type. The form has already been saved for the first time
@@ -78,6 +79,7 @@ var ROM;
                                 Xrm.Utility.closeProgressIndicator();
                                 return [2 /*return*/];
                             }
+                            generateTeamPlanningInspectorHours(teamPlanningDataId, teamId, teamName, planningDataFiscalYearName);
                             teamPlanningDataPlannedQ1 = 0;
                             teamPlanningDataPlannedQ2 = 0;
                             teamPlanningDataPlannedQ3 = 0;
@@ -358,6 +360,50 @@ var ROM;
                             Xrm.Utility.closeProgressIndicator();
                             return [2 /*return*/];
                     }
+                });
+            });
+        }
+        function generateTeamPlanningInspectorHours(teamPlanningDataId, teamId, teamName, fiscalYearName) {
+            //Retrieve all users of Team with Inspector Role
+            var fetchXml = [
+                "<fetch>",
+                "  <entity name='systemuser'>",
+                "    <attribute name='fullname'/>",
+                "    <link-entity name='teammembership' from='systemuserid' to='systemuserid' intersect='true'>",
+                "      <filter>",
+                "        <condition attribute='teamid' operator='eq' value='", teamId, "' uitype='teammembership'/>",
+                "      </filter>",
+                "    </link-entity>",
+                "    <link-entity name='systemuserroles' from='systemuserid' to='systemuserid' intersect='true'>",
+                "      <filter>",
+                "        <condition attribute='roleid' operator='eq' value='", INSPECTORROLEID, "'/>",
+                "      </filter>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>"
+            ].join("");
+            Xrm.WebApi.retrieveMultipleRecords("systemuser", fetchXml).then(function success(result) {
+                return __awaiter(this, void 0, void 0, function () {
+                    var _i, _a, user, data;
+                    return __generator(this, function (_b) {
+                        //Create record for each
+                        for (_i = 0, _a = result.entities; _i < _a.length; _i++) {
+                            user = _a[_i];
+                            data = {
+                                "ts_name": user.fullname + " | " + teamName + " | " + fiscalYearName,
+                                "ts_TeamPlanningData@odata.bind": "/ts_teamplanningdatas(" + teamPlanningDataId + ")",
+                                "ts_varianceQ1": 0,
+                                "ts_varianceQ2": 0,
+                                "ts_varianceQ3": 0,
+                                "ts_varianceQ4": 0,
+                            };
+                            Xrm.WebApi.createRecord("ts_teamplanningdatainspectorhours", data).then(function success(result) {
+                            }, function (error) {
+                                console.log(error.message);
+                            });
+                        }
+                        return [2 /*return*/];
+                    });
                 });
             });
         }
