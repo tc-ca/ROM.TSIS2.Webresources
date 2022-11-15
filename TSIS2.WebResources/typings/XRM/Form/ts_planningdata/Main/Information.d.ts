@@ -24,7 +24,6 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_plannedq2"): Xrm.NumberAttribute;
       get(name: "ts_plannedq3"): Xrm.NumberAttribute;
       get(name: "ts_plannedq4"): Xrm.NumberAttribute;
-      get(name: "ts_plannedwo"): Xrm.NumberAttribute;
       get(name: "ts_plannedwouncalculated"): Xrm.NumberAttribute;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
@@ -60,8 +59,8 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_plannedq2"): Xrm.NumberControl;
       get(name: "ts_plannedq3"): Xrm.NumberControl;
       get(name: "ts_plannedq4"): Xrm.NumberControl;
-      get(name: "ts_plannedwo"): Xrm.NumberControl;
       get(name: "ts_plannedwouncalculated"): Xrm.NumberControl;
+      get(name: "ts_plannedwouncalculated1"): Xrm.NumberControl;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
       get(name: "ts_target"): Xrm.NumberControl;
@@ -103,7 +102,6 @@ declare namespace Form.ts_planningdata.Main {
     getAttribute(attributeName: "ts_plannedq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedq3"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedq4"): Xrm.NumberAttribute;
-    getAttribute(attributeName: "ts_plannedwo"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedwouncalculated"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
@@ -134,8 +132,8 @@ declare namespace Form.ts_planningdata.Main {
     getControl(controlName: "ts_plannedq2"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedq3"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedq4"): Xrm.NumberControl;
-    getControl(controlName: "ts_plannedwo"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedwouncalculated"): Xrm.NumberControl;
+    getControl(controlName: "ts_plannedwouncalculated1"): Xrm.NumberControl;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_target"): Xrm.NumberControl;

@@ -1,6 +1,22 @@
 declare namespace Form.ts_teamplanningdata.Main {
   namespace Information {
     namespace Tabs {
+      interface tab_hours extends Xrm.SectionCollectionBase {
+        get(name: "tab_hours_section_3"): Xrm.PageSection;
+        get(name: "tab_hours_section_3"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_planning_data extends Xrm.SectionCollectionBase {
+        get(name: "null_section_3"): Xrm.PageSection;
+        get(name: "null_section_5"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -23,6 +39,10 @@ declare namespace Form.ts_teamplanningdata.Main {
       get(name: "ts_teamestimateddurationq2"): Xrm.NumberAttribute;
       get(name: "ts_teamestimateddurationq3"): Xrm.NumberAttribute;
       get(name: "ts_teamestimateddurationq4"): Xrm.NumberAttribute;
+      get(name: "ts_totalhoursq1"): Xrm.NumberAttribute;
+      get(name: "ts_totalhoursq2"): Xrm.NumberAttribute;
+      get(name: "ts_totalhoursq3"): Xrm.NumberAttribute;
+      get(name: "ts_totalhoursq4"): Xrm.NumberAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -30,6 +50,7 @@ declare namespace Form.ts_teamplanningdata.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_new_1"): Xrm.BaseControl;
+      get(name: "Subgrid_new_2"): Xrm.SubGridControl<"ts_teamplanninginspectorhours">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_ts_name"): Xrm.StringControl;
       get(name: "header_ts_residualinspectorhoursq1"): Xrm.NumberControl;
@@ -50,12 +71,18 @@ declare namespace Form.ts_teamplanningdata.Main {
       get(name: "ts_teamestimateddurationq2"): Xrm.NumberControl;
       get(name: "ts_teamestimateddurationq3"): Xrm.NumberControl;
       get(name: "ts_teamestimateddurationq4"): Xrm.NumberControl;
+      get(name: "ts_totalhoursq1"): Xrm.NumberControl;
+      get(name: "ts_totalhoursq2"): Xrm.NumberControl;
+      get(name: "ts_totalhoursq3"): Xrm.NumberControl;
+      get(name: "ts_totalhoursq4"): Xrm.NumberControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "tab_hours"): Xrm.PageTab<Tabs.tab_hours>;
+      get(name: "tab_planning_data"): Xrm.PageTab<Tabs.tab_planning_data>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -83,8 +110,13 @@ declare namespace Form.ts_teamplanningdata.Main {
     getAttribute(attributeName: "ts_teamestimateddurationq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_teamestimateddurationq3"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_teamestimateddurationq4"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_totalhoursq1"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_totalhoursq2"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_totalhoursq3"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_totalhoursq4"): Xrm.NumberAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_1"): Xrm.BaseControl;
+    getControl(controlName: "Subgrid_new_2"): Xrm.SubGridControl<"ts_teamplanninginspectorhours">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_ts_name"): Xrm.StringControl;
     getControl(controlName: "header_ts_residualinspectorhoursq1"): Xrm.NumberControl;
@@ -105,6 +137,10 @@ declare namespace Form.ts_teamplanningdata.Main {
     getControl(controlName: "ts_teamestimateddurationq2"): Xrm.NumberControl;
     getControl(controlName: "ts_teamestimateddurationq3"): Xrm.NumberControl;
     getControl(controlName: "ts_teamestimateddurationq4"): Xrm.NumberControl;
+    getControl(controlName: "ts_totalhoursq1"): Xrm.NumberControl;
+    getControl(controlName: "ts_totalhoursq2"): Xrm.NumberControl;
+    getControl(controlName: "ts_totalhoursq3"): Xrm.NumberControl;
+    getControl(controlName: "ts_totalhoursq4"): Xrm.NumberControl;
     getControl(controlName: string): undefined;
   }
 }

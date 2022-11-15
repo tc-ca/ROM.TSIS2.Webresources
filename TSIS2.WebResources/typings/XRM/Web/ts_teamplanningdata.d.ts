@@ -30,6 +30,10 @@ interface ts_TeamPlanningData_Base extends WebEntity {
   ts_teamestimateddurationq3?: number | null;
   ts_teamestimateddurationq4?: number | null;
   ts_teamplanningdataid?: string | null;
+  ts_totalhoursq1?: number | null;
+  ts_totalhoursq2?: number | null;
+  ts_totalhoursq3?: number | null;
+  ts_totalhoursq4?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -90,6 +94,10 @@ interface ts_TeamPlanningData_Select {
   ts_teamestimateddurationq3: WebAttribute<ts_TeamPlanningData_Select, { ts_teamestimateddurationq3: number | null }, {  }>;
   ts_teamestimateddurationq4: WebAttribute<ts_TeamPlanningData_Select, { ts_teamestimateddurationq4: number | null }, {  }>;
   ts_teamplanningdataid: WebAttribute<ts_TeamPlanningData_Select, { ts_teamplanningdataid: string | null }, {  }>;
+  ts_totalhoursq1: WebAttribute<ts_TeamPlanningData_Select, { ts_totalhoursq1: number | null }, {  }>;
+  ts_totalhoursq2: WebAttribute<ts_TeamPlanningData_Select, { ts_totalhoursq2: number | null }, {  }>;
+  ts_totalhoursq3: WebAttribute<ts_TeamPlanningData_Select, { ts_totalhoursq3: number | null }, {  }>;
+  ts_totalhoursq4: WebAttribute<ts_TeamPlanningData_Select, { ts_totalhoursq4: number | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_TeamPlanningData_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_TeamPlanningData_Select, { versionnumber: number | null }, {  }>;
 }
@@ -135,6 +143,10 @@ interface ts_TeamPlanningData_Filter {
   ts_teamestimateddurationq3: any;
   ts_teamestimateddurationq4: any;
   ts_teamplanningdataid: XQW.Guid;
+  ts_totalhoursq1: number;
+  ts_totalhoursq2: number;
+  ts_totalhoursq3: number;
+  ts_totalhoursq4: number;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }

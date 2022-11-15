@@ -194,6 +194,7 @@ interface Email extends Email_Base, Email_Relationships {
   regardingobjectid_salesorder_email_bind$salesorders?: string | null;
   regardingobjectid_site_email_bind$sites?: string | null;
   regardingobjectid_ts_request_email_bind$ts_requests?: string | null;
+  regardingobjectid_ts_securityincident_email_bind$ts_securityincidents?: string | null;
   serviceid_email_bind$services?: string | null;
   sla_email_sla_bind$slas?: string | null;
   stageid_processstage_bind$processstages?: string | null;

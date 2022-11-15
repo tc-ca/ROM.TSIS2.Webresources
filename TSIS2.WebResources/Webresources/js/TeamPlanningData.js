@@ -57,7 +57,7 @@ var ROM;
         TeamPlanningData.onSave = onSave;
         function generatePlanningData(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, teamPlanningDataId, teamValue, teamId, teamName, planningDataFiscalYearValue, planningDataFiscalYearName, planningDataFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataAvailableInspectorHoursQ1, teamPlanningDataAvailableInspectorHoursQ2, teamPlanningDataAvailableInspectorHoursQ3, teamPlanningDataAvailableInspectorHoursQ4, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, ts_teamPlanningDataResidualinspectorhoursQ1, ts_teamPlanningDataResidualinspectorhoursQ2, ts_teamPlanningDataResidualinspectorhoursQ3, ts_teamPlanningDataResidualinspectorhoursQ4, fetchXml, baselineHoursFetchXml, baselineHours;
+                var formContext, teamPlanningDataId, teamPlanningDataTotalHoursQ1, teamPlanningDataTotalHoursQ2, teamPlanningDataTotalHoursQ3, teamPlanningDataTotalHoursQ4, teamValue, teamId, teamName, planningDataFiscalYearValue, planningDataFiscalYearName, planningDataFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataAvailableInspectorHoursQ1, teamPlanningDataAvailableInspectorHoursQ2, teamPlanningDataAvailableInspectorHoursQ3, teamPlanningDataAvailableInspectorHoursQ4, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, ts_teamPlanningDataResidualinspectorhoursQ1, ts_teamPlanningDataResidualinspectorhoursQ2, ts_teamPlanningDataResidualinspectorhoursQ3, ts_teamPlanningDataResidualinspectorhoursQ4, userfetchXml, fetchXml;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -65,6 +65,10 @@ var ROM;
                             formContext = eContext.getFormContext();
                             formContext.data.entity.removeOnPostSave(generatePlanningData);
                             teamPlanningDataId = formContext.data.entity.getId().slice(1, -1);
+                            teamPlanningDataTotalHoursQ1 = formContext.getAttribute("ts_totalhoursq1").getValue();
+                            teamPlanningDataTotalHoursQ2 = formContext.getAttribute("ts_totalhoursq2").getValue();
+                            teamPlanningDataTotalHoursQ3 = formContext.getAttribute("ts_totalhoursq3").getValue();
+                            teamPlanningDataTotalHoursQ4 = formContext.getAttribute("ts_totalhoursq4").getValue();
                             teamValue = formContext.getAttribute("ts_team").getValue();
                             if (teamValue != null) {
                                 teamId = teamValue[0].id;
@@ -79,7 +83,6 @@ var ROM;
                                 Xrm.Utility.closeProgressIndicator();
                                 return [2 /*return*/];
                             }
-                            generateTeamPlanningInspectorHours(teamPlanningDataId, teamId, teamName, planningDataFiscalYearName);
                             teamPlanningDataPlannedQ1 = 0;
                             teamPlanningDataPlannedQ2 = 0;
                             teamPlanningDataPlannedQ3 = 0;
@@ -96,6 +99,46 @@ var ROM;
                             ts_teamPlanningDataResidualinspectorhoursQ2 = 0;
                             ts_teamPlanningDataResidualinspectorhoursQ3 = 0;
                             ts_teamPlanningDataResidualinspectorhoursQ4 = 0;
+                            userfetchXml = [
+                                "<fetch>",
+                                "  <entity name='systemuser'>",
+                                "    <attribute name='fullname'/>",
+                                "    <attribute name='systemuserid'/>",
+                                "    <link-entity name='teammembership' from='systemuserid' to='systemuserid' intersect='true'>",
+                                "      <filter>",
+                                "        <condition attribute='teamid' operator='eq' value='", teamId, "' uitype='teammembership'/>",
+                                "      </filter>",
+                                "    </link-entity>",
+                                "    <link-entity name='systemuserroles' from='systemuserid' to='systemuserid' intersect='true'>",
+                                "      <filter>",
+                                "        <condition attribute='roleid' operator='eq' value='", INSPECTORROLEID, "'/>",
+                                "      </filter>",
+                                "    </link-entity>",
+                                "  </entity>",
+                                "</fetch>"
+                            ].join("");
+                            userfetchXml = "?fetchXml=" + encodeURIComponent(userfetchXml);
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("systemuser", userfetchXml).then(function success(result) {
+                                    for (var _i = 0, _a = result.entities; _i < _a.length; _i++) {
+                                        var user = _a[_i];
+                                        teamPlanningDataAvailableInspectorHoursQ1 += teamPlanningDataTotalHoursQ1;
+                                        teamPlanningDataAvailableInspectorHoursQ2 += teamPlanningDataTotalHoursQ2;
+                                        teamPlanningDataAvailableInspectorHoursQ3 += teamPlanningDataTotalHoursQ3;
+                                        teamPlanningDataAvailableInspectorHoursQ4 += teamPlanningDataTotalHoursQ4;
+                                        var data = {
+                                            "ts_name": user.fullname + " | " + teamName + " | " + planningDataFiscalYearName,
+                                            "ts_Inspector@odata.bind": "/systemusers(" + user.systemuserid + ")",
+                                            "ts_TeamPlanningData@odata.bind": "/ts_teamplanningdatas(" + teamPlanningDataId + ")",
+                                            "ts_varianceq1": 0,
+                                            "ts_varianceq2": 0,
+                                            "ts_varianceq3": 0,
+                                            "ts_varianceq4": 0,
+                                        };
+                                        Xrm.WebApi.createRecord("ts_teamplanninginspectorhours", data);
+                                    }
+                                })];
+                        case 1:
+                            _a.sent();
                             fetchXml = [
                                 "<fetch>",
                                 "  <entity name='ts_operationactivity'>",
@@ -306,39 +349,12 @@ var ROM;
                                         });
                                     });
                                 })];
-                        case 1:
-                            _a.sent();
-                            baselineHoursFetchXml = [
-                                "<fetch top='1'>",
-                                "  <entity name='ts_baselinehours'>",
-                                "    <attribute name='ts_plannedq1'/>",
-                                "    <attribute name='ts_plannedq4'/>",
-                                "    <attribute name='ts_plannedq3'/>",
-                                "    <attribute name='ts_plannedq2'/>",
-                                "    <filter>",
-                                "      <condition attribute='ts_team' operator='eq' value='", teamId, "'/>",
-                                "    </filter>",
-                                "  </entity>",
-                                "</fetch>"
-                            ].join("");
-                            baselineHoursFetchXml = "?fetchXml=" + encodeURIComponent(baselineHoursFetchXml);
-                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_baselinehours", baselineHoursFetchXml).then(function success(result) {
-                                    return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
-                                        return [2 /*return*/, result.entities[0]];
-                                    }); });
-                                })];
                         case 2:
-                            baselineHours = _a.sent();
-                            if (baselineHours != null) {
-                                teamPlanningDataAvailableInspectorHoursQ1 = baselineHours.ts_plannedq1;
-                                teamPlanningDataAvailableInspectorHoursQ2 = baselineHours.ts_plannedq2;
-                                teamPlanningDataAvailableInspectorHoursQ3 = baselineHours.ts_plannedq3;
-                                teamPlanningDataAvailableInspectorHoursQ4 = baselineHours.ts_plannedq4;
-                                ts_teamPlanningDataResidualinspectorhoursQ1 = teamPlanningDataAvailableInspectorHoursQ1 - teamPlanningDataTeamEstimatedDurationQ1;
-                                ts_teamPlanningDataResidualinspectorhoursQ2 = teamPlanningDataAvailableInspectorHoursQ2 - teamPlanningDataTeamEstimatedDurationQ2;
-                                ts_teamPlanningDataResidualinspectorhoursQ3 = teamPlanningDataAvailableInspectorHoursQ3 - teamPlanningDataTeamEstimatedDurationQ3;
-                                ts_teamPlanningDataResidualinspectorhoursQ4 = teamPlanningDataAvailableInspectorHoursQ4 - teamPlanningDataTeamEstimatedDurationQ4;
-                            }
+                            _a.sent();
+                            ts_teamPlanningDataResidualinspectorhoursQ1 = teamPlanningDataAvailableInspectorHoursQ1 - teamPlanningDataTeamEstimatedDurationQ1;
+                            ts_teamPlanningDataResidualinspectorhoursQ2 = teamPlanningDataAvailableInspectorHoursQ2 - teamPlanningDataTeamEstimatedDurationQ2;
+                            ts_teamPlanningDataResidualinspectorhoursQ3 = teamPlanningDataAvailableInspectorHoursQ3 - teamPlanningDataTeamEstimatedDurationQ3;
+                            ts_teamPlanningDataResidualinspectorhoursQ4 = teamPlanningDataAvailableInspectorHoursQ4 - teamPlanningDataTeamEstimatedDurationQ4;
                             formContext.getAttribute("ts_name").setValue(teamName + " | " + planningDataFiscalYearName);
                             formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
                             formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
@@ -360,50 +376,6 @@ var ROM;
                             Xrm.Utility.closeProgressIndicator();
                             return [2 /*return*/];
                     }
-                });
-            });
-        }
-        function generateTeamPlanningInspectorHours(teamPlanningDataId, teamId, teamName, fiscalYearName) {
-            //Retrieve all users of Team with Inspector Role
-            var fetchXml = [
-                "<fetch>",
-                "  <entity name='systemuser'>",
-                "    <attribute name='fullname'/>",
-                "    <link-entity name='teammembership' from='systemuserid' to='systemuserid' intersect='true'>",
-                "      <filter>",
-                "        <condition attribute='teamid' operator='eq' value='", teamId, "' uitype='teammembership'/>",
-                "      </filter>",
-                "    </link-entity>",
-                "    <link-entity name='systemuserroles' from='systemuserid' to='systemuserid' intersect='true'>",
-                "      <filter>",
-                "        <condition attribute='roleid' operator='eq' value='", INSPECTORROLEID, "'/>",
-                "      </filter>",
-                "    </link-entity>",
-                "  </entity>",
-                "</fetch>"
-            ].join("");
-            Xrm.WebApi.retrieveMultipleRecords("systemuser", fetchXml).then(function success(result) {
-                return __awaiter(this, void 0, void 0, function () {
-                    var _i, _a, user, data;
-                    return __generator(this, function (_b) {
-                        //Create record for each
-                        for (_i = 0, _a = result.entities; _i < _a.length; _i++) {
-                            user = _a[_i];
-                            data = {
-                                "ts_name": user.fullname + " | " + teamName + " | " + fiscalYearName,
-                                "ts_TeamPlanningData@odata.bind": "/ts_teamplanningdatas(" + teamPlanningDataId + ")",
-                                "ts_varianceQ1": 0,
-                                "ts_varianceQ2": 0,
-                                "ts_varianceQ3": 0,
-                                "ts_varianceQ4": 0,
-                            };
-                            Xrm.WebApi.createRecord("ts_teamplanningdatainspectorhours", data).then(function success(result) {
-                            }, function (error) {
-                                console.log(error.message);
-                            });
-                        }
-                        return [2 /*return*/];
-                    });
                 });
             });
         }

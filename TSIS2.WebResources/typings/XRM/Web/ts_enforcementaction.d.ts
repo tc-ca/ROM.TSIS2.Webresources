@@ -169,6 +169,7 @@ interface ts_enforcementaction extends ts_enforcementaction_Base, ts_enforcement
   regardingobjectid_salesorder_ts_enforcementaction_bind$salesorders?: string | null;
   regardingobjectid_site_ts_enforcementaction_bind$sites?: string | null;
   regardingobjectid_ts_request_ts_enforcementaction_bind$ts_requests?: string | null;
+  regardingobjectid_ts_securityincident_ts_enforcementaction_bind$ts_securityincidents?: string | null;
   serviceid_ts_enforcementaction_bind$services?: string | null;
   sla_activitypointer_sla_ts_enforcementaction_bind$slas?: string | null;
   transactioncurrencyid_ts_enforcementaction_bind$transactioncurrencies?: string | null;
