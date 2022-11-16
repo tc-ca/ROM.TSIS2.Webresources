@@ -170,6 +170,7 @@ interface Appointment extends Appointment_Base, Appointment_Relationships {
   regardingobjectid_salesorder_appointment_bind$salesorders?: string | null;
   regardingobjectid_site_appointment_bind$sites?: string | null;
   regardingobjectid_ts_request_appointment_bind$ts_requests?: string | null;
+  regardingobjectid_ts_securityincident_appointment_bind$ts_securityincidents?: string | null;
   serviceid_appointment_bind$services?: string | null;
   sla_appointment_sla_bind$slas?: string | null;
   stageid_processstage_bind$processstages?: string | null;

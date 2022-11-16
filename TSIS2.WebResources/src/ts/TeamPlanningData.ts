@@ -1,4 +1,5 @@
 ﻿namespace ROM.TeamPlanningData {
+    const INSPECTORROLEID = "ed37675e-f72c-eb11-a813-000d3af3a7a7";
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_teamplanningdata.Main.Information>eContext.getFormContext();
         if (formContext.ui.getFormType() == 2) { //Update type. The form has already been saved for the first time
@@ -16,7 +17,11 @@
         Xrm.Utility.showProgressIndicator("Please wait while the Planning records are being created.");
         const formContext: any = eContext.getFormContext();
         formContext.data.entity.removeOnPostSave(generatePlanningData);
-        let teamPlanningDataId = formContext.data.entity.getId().slice(1, -1);
+        const teamPlanningDataId = formContext.data.entity.getId().slice(1, -1);
+        const teamPlanningDataTotalHoursQ1 = formContext.getAttribute("ts_totalhoursq1").getValue();
+        const teamPlanningDataTotalHoursQ2 = formContext.getAttribute("ts_totalhoursq2").getValue();
+        const teamPlanningDataTotalHoursQ3 = formContext.getAttribute("ts_totalhoursq3").getValue();
+        const teamPlanningDataTotalHoursQ4 = formContext.getAttribute("ts_totalhoursq4").getValue();
         let teamValue = formContext.getAttribute("ts_team").getValue();
         let teamId;
         let teamName;
@@ -24,14 +29,17 @@
             teamId = teamValue[0].id;
             teamName = teamValue[0].name;
         }
-        let planningDataFiscalYearValue = formContext.getAttribute("ts_fiscalyear").getValue()
+        const planningDataFiscalYearValue = formContext.getAttribute("ts_fiscalyear").getValue()
         let planningDataFiscalYearName;
         let planningDataFiscalYearId;
         if (planningDataFiscalYearValue != null) {
             planningDataFiscalYearName = planningDataFiscalYearValue[0].name;
             planningDataFiscalYearId = planningDataFiscalYearValue[0].id.slice(1, -1);
         }
-        if (teamId == null || planningDataFiscalYearName == null) return;
+        if (teamId == null || planningDataFiscalYearName == null) {
+            Xrm.Utility.closeProgressIndicator();
+            return;
+        }
 
         let teamPlanningDataPlannedQ1 = 0;
         let teamPlanningDataPlannedQ2 = 0;
@@ -52,6 +60,45 @@
         let ts_teamPlanningDataResidualinspectorhoursQ2 = 0;
         let ts_teamPlanningDataResidualinspectorhoursQ3 = 0;
         let ts_teamPlanningDataResidualinspectorhoursQ4 = 0;
+
+        //Retrieve all users of Team with Inspector Role
+        var userfetchXml = [
+            "<fetch>",
+            "  <entity name='systemuser'>",
+            "    <attribute name='fullname'/>",
+            "    <attribute name='systemuserid'/>",
+            "    <link-entity name='teammembership' from='systemuserid' to='systemuserid' intersect='true'>",
+            "      <filter>",
+            "        <condition attribute='teamid' operator='eq' value='", teamId, "' uitype='teammembership'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "    <link-entity name='systemuserroles' from='systemuserid' to='systemuserid' intersect='true'>",
+            "      <filter>",
+            "        <condition attribute='roleid' operator='eq' value='", INSPECTORROLEID, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>"
+        ].join("");
+        userfetchXml = "?fetchXml=" + encodeURIComponent(userfetchXml);
+        await Xrm.WebApi.retrieveMultipleRecords("systemuser", userfetchXml).then(function success(result) {
+            for (let user of result.entities) {
+                teamPlanningDataAvailableInspectorHoursQ1 += teamPlanningDataTotalHoursQ1;
+                teamPlanningDataAvailableInspectorHoursQ2 += teamPlanningDataTotalHoursQ2;
+                teamPlanningDataAvailableInspectorHoursQ3 += teamPlanningDataTotalHoursQ3;
+                teamPlanningDataAvailableInspectorHoursQ4 += teamPlanningDataTotalHoursQ4;
+                let data = {
+                    "ts_name": user.fullname + " | " + teamName + " | " + planningDataFiscalYearName,
+                    "ts_Inspector@odata.bind": "/systemusers(" + user.systemuserid + ")",
+                    "ts_TeamPlanningData@odata.bind": "/ts_teamplanningdatas(" + teamPlanningDataId + ")",
+                    "ts_varianceq1": 0,
+                    "ts_varianceq2": 0,
+                    "ts_varianceq3": 0,
+                    "ts_varianceq4": 0,
+                }
+                Xrm.WebApi.createRecord("ts_teamplanninginspectorhours", data);
+            }
+        });
 
         //Retrieve all Operations where OPI Team equals Team Planning Data Team
         var fetchXml = [
@@ -183,42 +230,41 @@
                     generationLog += "The Incident Type does not have an Estimated Duration. \n";
                     isMissingData = true;
                 }
+                let interval = 0;
 
-                if (operationActivity.ts_operationalstatus == 717750001) {
-                    let interval = 0;
+                if (operationActivity["msdyn_functionallocation4.ts_class"] == 717750001) {
+                    interval = operationActivity['ts_recurrencefrequencies3.ts_class1interval'];
+                }
+                else //Class 2 or 3
+                {
 
-                    if (operationActivity["msdyn_functionallocation4.ts_class"] == 717750001) {
-                        interval = operationActivity['ts_recurrencefrequencies3.ts_class1interval'];
+                    if (operationActivity["msdyn_functionallocation4.ts_riskscore"] == null) {
+                        generationLog += "Missing Risk Score on Site\n";
+                        isMissingData = true;
                     }
-                    else //Class 2 or 3
-                    {
-
-                        if (operationActivity["msdyn_functionallocation4.ts_riskscore"] == null) {
-                            generationLog += "Missing Risk Score on Site\n";
-                            isMissingData = true;
-                        }
-                        if (operationActivity["msdyn_functionallocation4.ts_riskscore"] > 5) {
-                            interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3highriskinterval'];
-                        }
-                        else {
-                            interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3lowriskinterval'];
-                        }
+                    if (operationActivity["msdyn_functionallocation4.ts_riskscore"] > 5) {
+                        interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3highriskinterval'];
                     }
+                    else {
+                        interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3lowriskinterval'];
+                    }
+                }
 
-                    if (interval > 0) {
-                        for (let i = 0; i < 4; i += interval) {
-                            planningDataQuarters[i]++;
-                            planningDataTarget++;
-                        }
-                        teamPlanningDataPlannedQ1 += planningDataQuarters[0];
-                        teamPlanningDataPlannedQ2 += planningDataQuarters[1];
-                        teamPlanningDataPlannedQ3 += planningDataQuarters[2];
-                        teamPlanningDataPlannedQ4 += planningDataQuarters[3];
-
+                if (interval > 0) {
+                    for (let i = 0; i < 4; i += interval) {
+                        planningDataQuarters[i]++;
+                        planningDataTarget++;
+                    }
+                    if (operationActivity.ts_operationalstatus == 717750000) { //Operational
                         teamPlanningDataTeamEstimatedDurationQ1 += planningDataQuarters[0] * planningDataEstimatedDuration;
                         teamPlanningDataTeamEstimatedDurationQ2 += planningDataQuarters[1] * planningDataEstimatedDuration;
                         teamPlanningDataTeamEstimatedDurationQ3 += planningDataQuarters[2] * planningDataEstimatedDuration;
                         teamPlanningDataTeamEstimatedDurationQ4 += planningDataQuarters[3] * planningDataEstimatedDuration;
+
+                        teamPlanningDataPlannedQ1 += planningDataQuarters[0];
+                        teamPlanningDataPlannedQ2 += planningDataQuarters[1];
+                        teamPlanningDataPlannedQ3 += planningDataQuarters[2];
+                        teamPlanningDataPlannedQ4 += planningDataQuarters[3];
                     }
                 }
                 if (planningDataStakeholderId == null) debugger;
@@ -257,33 +303,11 @@
                 );
             }
         });
-        let baselineHoursFetchXml = [
-            "<fetch top='1'>",
-            "  <entity name='ts_baselinehours'>",
-            "    <attribute name='ts_plannedq1'/>",
-            "    <attribute name='ts_plannedq4'/>",
-            "    <attribute name='ts_plannedq3'/>",
-            "    <attribute name='ts_plannedq2'/>",
-            "    <filter>",
-            "      <condition attribute='ts_team' operator='eq' value='", teamId, "'/>",
-            "    </filter>",
-            "  </entity>",
-            "</fetch>"
-        ].join("");
-        baselineHoursFetchXml = "?fetchXml=" + encodeURIComponent(baselineHoursFetchXml);
-        let baselineHours = await Xrm.WebApi.retrieveMultipleRecords("ts_baselinehours", baselineHoursFetchXml).then(async function success(result) { return result.entities[0] });
 
-        if (baselineHours != null) {
-            teamPlanningDataAvailableInspectorHoursQ1 = baselineHours.ts_plannedq1;
-            teamPlanningDataAvailableInspectorHoursQ2 = baselineHours.ts_plannedq2;
-            teamPlanningDataAvailableInspectorHoursQ3 = baselineHours.ts_plannedq3;
-            teamPlanningDataAvailableInspectorHoursQ4 = baselineHours.ts_plannedq4;
-
-            ts_teamPlanningDataResidualinspectorhoursQ1 = teamPlanningDataAvailableInspectorHoursQ1 - teamPlanningDataTeamEstimatedDurationQ1;
-            ts_teamPlanningDataResidualinspectorhoursQ2 = teamPlanningDataAvailableInspectorHoursQ2 - teamPlanningDataTeamEstimatedDurationQ2;
-            ts_teamPlanningDataResidualinspectorhoursQ3 = teamPlanningDataAvailableInspectorHoursQ3 - teamPlanningDataTeamEstimatedDurationQ3;
-            ts_teamPlanningDataResidualinspectorhoursQ4 = teamPlanningDataAvailableInspectorHoursQ4 - teamPlanningDataTeamEstimatedDurationQ4;
-        }
+        ts_teamPlanningDataResidualinspectorhoursQ1 = teamPlanningDataAvailableInspectorHoursQ1 - teamPlanningDataTeamEstimatedDurationQ1;
+        ts_teamPlanningDataResidualinspectorhoursQ2 = teamPlanningDataAvailableInspectorHoursQ2 - teamPlanningDataTeamEstimatedDurationQ2;
+        ts_teamPlanningDataResidualinspectorhoursQ3 = teamPlanningDataAvailableInspectorHoursQ3 - teamPlanningDataTeamEstimatedDurationQ3;
+        ts_teamPlanningDataResidualinspectorhoursQ4 = teamPlanningDataAvailableInspectorHoursQ4 - teamPlanningDataTeamEstimatedDurationQ4;
 
         formContext.getAttribute("ts_name").setValue(teamName + " | " + planningDataFiscalYearName);
         formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
@@ -303,6 +327,6 @@
         formContext.getAttribute("ts_residualinspectorhoursq3").setValue(ts_teamPlanningDataResidualinspectorhoursQ3)
         formContext.getAttribute("ts_residualinspectorhoursq4").setValue(ts_teamPlanningDataResidualinspectorhoursQ4)
         formContext.data.entity.save();
-        Xrm.Utility.closeProgressIndicator()
+        Xrm.Utility.closeProgressIndicator();
     }
 }

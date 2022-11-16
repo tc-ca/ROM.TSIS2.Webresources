@@ -7,6 +7,7 @@
             formContext.getControl("ts_operationactivity").setDisabled(true);
             formContext.getControl("ts_teamplanningdata").setDisabled(true);
             formContext.getControl("ts_target").setDisabled(true);
+            formContext.getControl("ts_plannedwouncalculated").setDisabled(true);
         }
         recalculateVarianceAndPlannedWO(eContext);
     }
@@ -15,7 +16,7 @@
     }
 
     export function gridOnSelect(eContext: Xrm.ExecutionContext<any, any>): void {
-        recalculateVarianceAndPlannedWO(eContext);
+        //recalculateVarianceAndPlannedWO(eContext);
     }
 
     export function plannedOnChange(eContext: Xrm.ExecutionContext<any, any>): void {

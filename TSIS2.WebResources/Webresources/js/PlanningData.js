@@ -11,6 +11,7 @@ var ROM;
                 formContext.getControl("ts_operationactivity").setDisabled(true);
                 formContext.getControl("ts_teamplanningdata").setDisabled(true);
                 formContext.getControl("ts_target").setDisabled(true);
+                formContext.getControl("ts_plannedwouncalculated").setDisabled(true);
             }
             recalculateVarianceAndPlannedWO(eContext);
         }
@@ -19,7 +20,7 @@ var ROM;
         }
         PlanningData.onSave = onSave;
         function gridOnSelect(eContext) {
-            recalculateVarianceAndPlannedWO(eContext);
+            //recalculateVarianceAndPlannedWO(eContext);
         }
         PlanningData.gridOnSelect = gridOnSelect;
         function plannedOnChange(eContext) {
