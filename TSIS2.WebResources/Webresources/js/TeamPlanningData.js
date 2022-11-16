@@ -275,37 +275,37 @@ var ROM;
                                                         generationLog += "The Incident Type does not have an Estimated Duration. \n";
                                                         isMissingData = true;
                                                     }
-                                                    if (operationActivity.ts_operationalstatus == 717750001) {
-                                                        interval = 0;
-                                                        if (operationActivity["msdyn_functionallocation4.ts_class"] == 717750001) {
-                                                            interval = operationActivity['ts_recurrencefrequencies3.ts_class1interval'];
+                                                    interval = 0;
+                                                    if (operationActivity["msdyn_functionallocation4.ts_class"] == 717750001) {
+                                                        interval = operationActivity['ts_recurrencefrequencies3.ts_class1interval'];
+                                                    }
+                                                    else //Class 2 or 3
+                                                     {
+                                                        if (operationActivity["msdyn_functionallocation4.ts_riskscore"] == null) {
+                                                            generationLog += "Missing Risk Score on Site\n";
+                                                            isMissingData = true;
                                                         }
-                                                        else //Class 2 or 3
-                                                         {
-                                                            if (operationActivity["msdyn_functionallocation4.ts_riskscore"] == null) {
-                                                                generationLog += "Missing Risk Score on Site\n";
-                                                                isMissingData = true;
-                                                            }
-                                                            if (operationActivity["msdyn_functionallocation4.ts_riskscore"] > 5) {
-                                                                interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3highriskinterval'];
-                                                            }
-                                                            else {
-                                                                interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3lowriskinterval'];
-                                                            }
+                                                        if (operationActivity["msdyn_functionallocation4.ts_riskscore"] > 5) {
+                                                            interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3highriskinterval'];
                                                         }
-                                                        if (interval > 0) {
-                                                            for (i = 0; i < 4; i += interval) {
-                                                                planningDataQuarters[i]++;
-                                                                planningDataTarget++;
-                                                            }
-                                                            teamPlanningDataPlannedQ1 += planningDataQuarters[0];
-                                                            teamPlanningDataPlannedQ2 += planningDataQuarters[1];
-                                                            teamPlanningDataPlannedQ3 += planningDataQuarters[2];
-                                                            teamPlanningDataPlannedQ4 += planningDataQuarters[3];
+                                                        else {
+                                                            interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3lowriskinterval'];
+                                                        }
+                                                    }
+                                                    if (interval > 0) {
+                                                        for (i = 0; i < 4; i += interval) {
+                                                            planningDataQuarters[i]++;
+                                                            planningDataTarget++;
+                                                        }
+                                                        if (operationActivity.ts_operationalstatus == 717750000) { //Operational
                                                             teamPlanningDataTeamEstimatedDurationQ1 += planningDataQuarters[0] * planningDataEstimatedDuration;
                                                             teamPlanningDataTeamEstimatedDurationQ2 += planningDataQuarters[1] * planningDataEstimatedDuration;
                                                             teamPlanningDataTeamEstimatedDurationQ3 += planningDataQuarters[2] * planningDataEstimatedDuration;
                                                             teamPlanningDataTeamEstimatedDurationQ4 += planningDataQuarters[3] * planningDataEstimatedDuration;
+                                                            teamPlanningDataPlannedQ1 += planningDataQuarters[0];
+                                                            teamPlanningDataPlannedQ2 += planningDataQuarters[1];
+                                                            teamPlanningDataPlannedQ3 += planningDataQuarters[2];
+                                                            teamPlanningDataPlannedQ4 += planningDataQuarters[3];
                                                         }
                                                     }
                                                     if (planningDataStakeholderId == null)
