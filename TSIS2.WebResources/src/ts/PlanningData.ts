@@ -20,6 +20,7 @@
     }
 
     export function plannedOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        setNullQuarterValueToZero(eContext)
         recalculateVarianceAndPlannedWO(eContext);
     }
 
@@ -52,6 +53,15 @@
             }
             else {
                 formContext.getAttribute("ts_details").setRequiredLevel("none");
+            }
+        }
+    }
+
+    function setNullQuarterValueToZero(eContext: Xrm.ExecutionContext<any, any>): void {
+        let nameAttr = eContext.getEventSource();
+        if(nameAttr.getName() == "ts_plannedq1" || nameAttr.getName() == "ts_plannedq2" || nameAttr.getName() == "ts_plannedq3" || nameAttr.getName() == "ts_plannedq4"){
+            if(nameAttr.getValue() == null){
+                nameAttr.setValue(0);
             }
         }
     }
