@@ -186,6 +186,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_plannedcost"): Xrm.NumberAttribute;
       get(name: "ts_reason"): Xrm.LookupAttribute<"ts_planningreason">;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
+      get(name: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_state"): Xrm.OptionSetAttribute<ts_planningstate>;
       get(name: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
@@ -316,6 +317,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_plannedcost"): Xrm.NumberControl;
       get(name: "ts_reason"): Xrm.LookupControl<"ts_planningreason">;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
+      get(name: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_state"): Xrm.OptionSetControl<ts_planningstate>;
       get(name: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
@@ -432,6 +434,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_plannedcost"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_reason"): Xrm.LookupAttribute<"ts_planningreason">;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
+    getAttribute(attributeName: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_state"): Xrm.OptionSetAttribute<ts_planningstate>;
     getAttribute(attributeName: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
@@ -557,6 +560,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_plannedcost"): Xrm.NumberControl;
     getControl(controlName: "ts_reason"): Xrm.LookupControl<"ts_planningreason">;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
+    getControl(controlName: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_state"): Xrm.OptionSetControl<ts_planningstate>;
     getControl(controlName: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;

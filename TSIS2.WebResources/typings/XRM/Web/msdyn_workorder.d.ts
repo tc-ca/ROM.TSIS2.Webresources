@@ -68,6 +68,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_canvasappnumber?: string | null;
   ts_completedquarter?: ts_msdyn_workorder_ts_completedquarter | null;
   ts_costexplanation?: string | null;
+  ts_incident?: ts_yesno | null;
   ts_incompleteworkorderreasonforother?: string | null;
   ts_numberoffindings?: number | null;
   ts_numberoffindings_date?: Date | null;
@@ -166,6 +167,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ts_Country_bind$tc_countries?: string | null;
   ts_IncompleteWorkOrderReason_bind$ts_incompleteworkorderreasons?: string | null;
   ts_Region_bind$territories?: string | null;
+  ts_SecurityIncident_bind$ts_securityincidents?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_WorkOrderCreationWizardId_bind$ts_workordercreationwizards?: string | null;
   ts_canceledinspectionjustification_bind$ts_canceledinspectionjustifications?: string | null;
@@ -297,6 +299,7 @@ interface msdyn_workorder_Select {
   ts_completedquarter: WebAttribute<msdyn_workorder_Select, { ts_completedquarter: ts_msdyn_workorder_ts_completedquarter | null }, { ts_completedquarter_formatted?: string }>;
   ts_costexplanation: WebAttribute<msdyn_workorder_Select, { ts_costexplanation: string | null }, {  }>;
   ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_incident: WebAttribute<msdyn_workorder_Select, { ts_incident: ts_yesno | null }, { ts_incident_formatted?: string }>;
   ts_incompleteworkorderreason_guid: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreason_guid: string | null }, { ts_incompleteworkorderreason_formatted?: string }>;
   ts_incompleteworkorderreasonforother: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreasonforother: string | null }, {  }>;
   ts_numberoffindings: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings: number | null }, {  }>;
@@ -310,6 +313,7 @@ interface msdyn_workorder_Select {
   ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_riskscore: WebAttribute<msdyn_workorder_Select, { ts_riskscore: number | null }, {  }>;
   ts_riskthreshold_guid: WebAttribute<msdyn_workorder_Select, { ts_riskthreshold_guid: string | null }, { ts_riskthreshold_formatted?: string }>;
+  ts_securityincident_guid: WebAttribute<msdyn_workorder_Select, { ts_securityincident_guid: string | null }, { ts_securityincident_formatted?: string }>;
   ts_site_guid: WebAttribute<msdyn_workorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_state: WebAttribute<msdyn_workorder_Select, { ts_state: ts_planningstate | null }, { ts_state_formatted?: string }>;
   ts_tradenameid_guid: WebAttribute<msdyn_workorder_Select, { ts_tradenameid_guid: string | null }, { ts_tradenameid_formatted?: string }>;
@@ -439,6 +443,7 @@ interface msdyn_workorder_Filter {
   ts_completedquarter: ts_msdyn_workorder_ts_completedquarter;
   ts_costexplanation: string;
   ts_country_guid: XQW.Guid;
+  ts_incident: ts_yesno;
   ts_incompleteworkorderreason_guid: XQW.Guid;
   ts_incompleteworkorderreasonforother: string;
   ts_numberoffindings: number;
@@ -452,6 +457,7 @@ interface msdyn_workorder_Filter {
   ts_region_guid: XQW.Guid;
   ts_riskscore: number;
   ts_riskthreshold_guid: XQW.Guid;
+  ts_securityincident_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_state: ts_planningstate;
   ts_tradenameid_guid: XQW.Guid;
@@ -594,6 +600,7 @@ interface msdyn_workorder_FormattedResult {
   ts_canceledinspectionjustification_formatted?: string;
   ts_completedquarter_formatted?: string;
   ts_country_formatted?: string;
+  ts_incident_formatted?: string;
   ts_incompleteworkorderreason_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
   ts_plannedcost_base_formatted?: string;
@@ -601,6 +608,7 @@ interface msdyn_workorder_FormattedResult {
   ts_reason_formatted?: string;
   ts_region_formatted?: string;
   ts_riskthreshold_formatted?: string;
+  ts_securityincident_formatted?: string;
   ts_site_formatted?: string;
   ts_state_formatted?: string;
   ts_tradenameid_formatted?: string;
@@ -665,6 +673,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ts_reason_guid: string | null;
   ts_region_guid: string | null;
   ts_riskthreshold_guid: string | null;
+  ts_securityincident_guid: string | null;
   ts_site_guid: string | null;
   ts_tradenameid_guid: string | null;
   ts_trip_guid: string | null;

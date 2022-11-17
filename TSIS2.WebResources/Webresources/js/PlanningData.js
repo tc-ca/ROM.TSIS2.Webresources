@@ -16,13 +16,6 @@ var ROM;
             recalculateVarianceAndPlannedWO(eContext);
         }
         PlanningData.onLoad = onLoad;
-        function onSave(eContext) {
-        }
-        PlanningData.onSave = onSave;
-        function gridOnSelect(eContext) {
-            //recalculateVarianceAndPlannedWO(eContext);
-        }
-        PlanningData.gridOnSelect = gridOnSelect;
         function plannedOnChange(eContext) {
             setNullQuarterValueToZero(eContext);
             recalculateVarianceAndPlannedWO(eContext);

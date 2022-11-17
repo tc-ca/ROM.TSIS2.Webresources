@@ -22,6 +22,15 @@
         const teamPlanningDataTotalHoursQ2 = formContext.getAttribute("ts_totalhoursq2").getValue();
         const teamPlanningDataTotalHoursQ3 = formContext.getAttribute("ts_totalhoursq3").getValue();
         const teamPlanningDataTotalHoursQ4 = formContext.getAttribute("ts_totalhoursq4").getValue();
+        const teamPlanningDataTotalHoursFiscalYear = formContext.getAttribute("ts_totalhoursfiscalyear").getValue();
+
+        if (teamPlanningDataTotalHoursQ1 == null) formContext.getAttribute("ts_totalhoursq1").setValue(0);
+        if (teamPlanningDataTotalHoursQ2 == null) formContext.getAttribute("ts_totalhoursq2").setValue(0);
+        if (teamPlanningDataTotalHoursQ3 == null) formContext.getAttribute("ts_totalhoursq3").setValue(0);
+        if (teamPlanningDataTotalHoursQ4 == null) formContext.getAttribute("ts_totalhoursq4").setValue(0);
+        if (teamPlanningDataTotalHoursFiscalYear == null) formContext.getAttribute("ts_totalhoursfiscalyear").setValue(0);
+
+
         let teamValue = formContext.getAttribute("ts_team").getValue();
         let teamId;
         let teamName;
@@ -45,21 +54,26 @@
         let teamPlanningDataPlannedQ2 = 0;
         let teamPlanningDataPlannedQ3 = 0;
         let teamPlanningDataPlannedQ4 = 0;
+        let teamPlanningDataPlannedTotal = 0;
+            
 
         let teamPlanningDataAvailableInspectorHoursQ1 = 0;
         let teamPlanningDataAvailableInspectorHoursQ2 = 0;
         let teamPlanningDataAvailableInspectorHoursQ3 = 0;
         let teamPlanningDataAvailableInspectorHoursQ4 = 0;
+        let teamPlanningDataAvailableInspectorHoursTotal = 0;
 
         let teamPlanningDataTeamEstimatedDurationQ1 = 0;
         let teamPlanningDataTeamEstimatedDurationQ2 = 0;
         let teamPlanningDataTeamEstimatedDurationQ3 = 0;
         let teamPlanningDataTeamEstimatedDurationQ4 = 0;
+        let teamPlanningDataTeamEstimatedDurationTotal = 0;
 
-        let ts_teamPlanningDataResidualinspectorhoursQ1 = 0;
-        let ts_teamPlanningDataResidualinspectorhoursQ2 = 0;
-        let ts_teamPlanningDataResidualinspectorhoursQ3 = 0;
-        let ts_teamPlanningDataResidualinspectorhoursQ4 = 0;
+        let teamPlanningDataResidualinspectorhoursQ1 = 0;
+        let teamPlanningDataResidualinspectorhoursQ2 = 0;
+        let teamPlanningDataResidualinspectorhoursQ3 = 0;
+        let teamPlanningDataResidualinspectorhoursQ4 = 0;
+        let teamPlanningDataResidualinspectorhoursTotal = 0;
 
         //Retrieve all users of Team with Inspector Role
         var userfetchXml = [
@@ -304,29 +318,103 @@
             }
         });
 
-        ts_teamPlanningDataResidualinspectorhoursQ1 = teamPlanningDataAvailableInspectorHoursQ1 - teamPlanningDataTeamEstimatedDurationQ1;
-        ts_teamPlanningDataResidualinspectorhoursQ2 = teamPlanningDataAvailableInspectorHoursQ2 - teamPlanningDataTeamEstimatedDurationQ2;
-        ts_teamPlanningDataResidualinspectorhoursQ3 = teamPlanningDataAvailableInspectorHoursQ3 - teamPlanningDataTeamEstimatedDurationQ3;
-        ts_teamPlanningDataResidualinspectorhoursQ4 = teamPlanningDataAvailableInspectorHoursQ4 - teamPlanningDataTeamEstimatedDurationQ4;
+        teamPlanningDataResidualinspectorhoursQ1 = teamPlanningDataAvailableInspectorHoursQ1 - teamPlanningDataTeamEstimatedDurationQ1;
+        teamPlanningDataResidualinspectorhoursQ2 = teamPlanningDataAvailableInspectorHoursQ2 - teamPlanningDataTeamEstimatedDurationQ2;
+        teamPlanningDataResidualinspectorhoursQ3 = teamPlanningDataAvailableInspectorHoursQ3 - teamPlanningDataTeamEstimatedDurationQ3;
+        teamPlanningDataResidualinspectorhoursQ4 = teamPlanningDataAvailableInspectorHoursQ4 - teamPlanningDataTeamEstimatedDurationQ4;
+
+        teamPlanningDataPlannedTotal = teamPlanningDataPlannedQ1 + teamPlanningDataPlannedQ2 + teamPlanningDataPlannedQ3 + teamPlanningDataPlannedQ4;
+        teamPlanningDataAvailableInspectorHoursTotal = teamPlanningDataAvailableInspectorHoursQ1 + teamPlanningDataAvailableInspectorHoursQ2 + teamPlanningDataAvailableInspectorHoursQ3 + teamPlanningDataAvailableInspectorHoursQ4;
+        teamPlanningDataTeamEstimatedDurationTotal = teamPlanningDataTeamEstimatedDurationQ1 + teamPlanningDataTeamEstimatedDurationQ2 + teamPlanningDataTeamEstimatedDurationQ3 + teamPlanningDataTeamEstimatedDurationQ4;
+        teamPlanningDataResidualinspectorhoursTotal = teamPlanningDataAvailableInspectorHoursTotal - teamPlanningDataTeamEstimatedDurationTotal;
 
         formContext.getAttribute("ts_name").setValue(teamName + " | " + planningDataFiscalYearName);
         formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
         formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
         formContext.getAttribute("ts_plannedactivityq3").setValue(teamPlanningDataPlannedQ3);
         formContext.getAttribute("ts_plannedactivityq4").setValue(teamPlanningDataPlannedQ4);
+        formContext.getAttribute("ts_plannedactivityfiscalyear").setValue(teamPlanningDataPlannedTotal);
         formContext.getAttribute("ts_availablehoursq1").setValue(teamPlanningDataAvailableInspectorHoursQ1);
         formContext.getAttribute("ts_availablehoursq2").setValue(teamPlanningDataAvailableInspectorHoursQ2);
         formContext.getAttribute("ts_availablehoursq3").setValue(teamPlanningDataAvailableInspectorHoursQ3);
         formContext.getAttribute("ts_availablehoursq4").setValue(teamPlanningDataAvailableInspectorHoursQ4);
-        formContext.getAttribute("ts_teamestimateddurationq1").setValue(teamPlanningDataTeamEstimatedDurationQ1)
-        formContext.getAttribute("ts_teamestimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2)
-        formContext.getAttribute("ts_teamestimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3)
-        formContext.getAttribute("ts_teamestimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4)
-        formContext.getAttribute("ts_residualinspectorhoursq1").setValue(ts_teamPlanningDataResidualinspectorhoursQ1)
-        formContext.getAttribute("ts_residualinspectorhoursq2").setValue(ts_teamPlanningDataResidualinspectorhoursQ2)
-        formContext.getAttribute("ts_residualinspectorhoursq3").setValue(ts_teamPlanningDataResidualinspectorhoursQ3)
-        formContext.getAttribute("ts_residualinspectorhoursq4").setValue(ts_teamPlanningDataResidualinspectorhoursQ4)
+        formContext.getAttribute("ts_availableinspectorhoursfiscalyear").setValue(teamPlanningDataAvailableInspectorHoursTotal);
+        formContext.getAttribute("ts_teamestimateddurationq1").setValue(teamPlanningDataTeamEstimatedDurationQ1);
+        formContext.getAttribute("ts_teamestimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
+        formContext.getAttribute("ts_teamestimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
+        formContext.getAttribute("ts_teamestimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
+        formContext.getAttribute("ts_teamestimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal);
+        formContext.getAttribute("ts_residualinspectorhoursq1").setValue(teamPlanningDataResidualinspectorhoursQ1);
+        formContext.getAttribute("ts_residualinspectorhoursq2").setValue(teamPlanningDataResidualinspectorhoursQ2);
+        formContext.getAttribute("ts_residualinspectorhoursq3").setValue(teamPlanningDataResidualinspectorhoursQ3);
+        formContext.getAttribute("ts_residualinspectorhoursq4").setValue(teamPlanningDataResidualinspectorhoursQ4);
+        formContext.getAttribute("ts_residualinspectorhoursfiscalyear").setValue(teamPlanningDataResidualinspectorhoursTotal);
         formContext.data.entity.save();
         Xrm.Utility.closeProgressIndicator();
+    }
+
+    export function setTotalInspectorHoursFiscalYear(formContext: Form.ts_teamplanningdata.Main.Information) {
+        const teamPlanningDataTotalHoursQ1 = formContext.getAttribute("ts_totalhoursq1").getValue();
+        const teamPlanningDataTotalHoursQ2 = formContext.getAttribute("ts_totalhoursq2").getValue();
+        const teamPlanningDataTotalHoursQ3 = formContext.getAttribute("ts_totalhoursq3").getValue();
+        const teamPlanningDataTotalHoursQ4 = formContext.getAttribute("ts_totalhoursq4").getValue();
+        if (teamPlanningDataTotalHoursQ1 != null && teamPlanningDataTotalHoursQ2 != null && teamPlanningDataTotalHoursQ3 != null && teamPlanningDataTotalHoursQ4 != null) {
+            formContext.getAttribute("ts_totalhoursfiscalyear").setValue(teamPlanningDataTotalHoursQ1 + teamPlanningDataTotalHoursQ2 + teamPlanningDataTotalHoursQ3 + teamPlanningDataTotalHoursQ4);
+        }
+    }
+
+    export function inspectorHoursQ1OnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        const formContext = <Form.ts_teamplanningdata.Main.Information>eContext.getFormContext();
+        const teamPlanningDataTotalHoursQ1 = formContext.getAttribute("ts_totalhoursq1").getValue();
+        if (teamPlanningDataTotalHoursQ1 == null) {
+            formContext.getAttribute("ts_totalhoursq1").setValue(0);
+        }
+        setTotalInspectorHoursFiscalYear(formContext);
+    }
+
+    export function inspectorHoursQ2OnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        const formContext = <Form.ts_teamplanningdata.Main.Information>eContext.getFormContext();
+        const teamPlanningDataTotalHoursQ2 = formContext.getAttribute("ts_totalhoursq2").getValue();
+        if (teamPlanningDataTotalHoursQ2 == null) {
+            formContext.getAttribute("ts_totalhoursq2").setValue(0);
+        }
+        setTotalInspectorHoursFiscalYear(formContext);
+    }
+
+    export function inspectorHoursQ3OnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        const formContext = <Form.ts_teamplanningdata.Main.Information>eContext.getFormContext();
+        const teamPlanningDataTotalHoursQ3 = formContext.getAttribute("ts_totalhoursq3").getValue();
+        if (teamPlanningDataTotalHoursQ3 == null) {
+            formContext.getAttribute("ts_totalhoursq3").setValue(0);
+        }
+        setTotalInspectorHoursFiscalYear(formContext);
+    }
+
+    export function inspectorHoursQ4OnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        const formContext = <Form.ts_teamplanningdata.Main.Information>eContext.getFormContext();
+        const teamPlanningDataTotalHoursQ4 = formContext.getAttribute("ts_totalhoursq4").getValue();
+        if (teamPlanningDataTotalHoursQ4 == null) {
+            formContext.getAttribute("ts_totalhoursq4").setValue(0);
+        }
+        setTotalInspectorHoursFiscalYear(formContext);
+    }
+
+    export function fiscalYearInspectorHoursOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        const formContext = <Form.ts_teamplanningdata.Main.Information>eContext.getFormContext();
+        let teamPlanningDataTotalHoursFiscalYear = formContext.getAttribute("ts_totalhoursfiscalyear").getValue()
+        if (teamPlanningDataTotalHoursFiscalYear == null) {
+            formContext.getAttribute("ts_totalhoursfiscalyear").setValue(0);
+            formContext.getAttribute("ts_totalhoursq1").setValue(0);
+            formContext.getAttribute("ts_totalhoursq2").setValue(0);
+            formContext.getAttribute("ts_totalhoursq3").setValue(0);
+            formContext.getAttribute("ts_totalhoursq4").setValue(0);
+        } else {
+            const quarterTotal = teamPlanningDataTotalHoursFiscalYear / 4
+            formContext.getAttribute("ts_totalhoursq1").setValue(quarterTotal);
+            formContext.getAttribute("ts_totalhoursq2").setValue(quarterTotal);
+            formContext.getAttribute("ts_totalhoursq3").setValue(quarterTotal);
+            formContext.getAttribute("ts_totalhoursq4").setValue(quarterTotal);
+        }
+        
     }
 }

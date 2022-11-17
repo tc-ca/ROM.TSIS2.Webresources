@@ -57,7 +57,7 @@ var ROM;
         TeamPlanningData.onSave = onSave;
         function generatePlanningData(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, teamPlanningDataId, teamPlanningDataTotalHoursQ1, teamPlanningDataTotalHoursQ2, teamPlanningDataTotalHoursQ3, teamPlanningDataTotalHoursQ4, teamValue, teamId, teamName, planningDataFiscalYearValue, planningDataFiscalYearName, planningDataFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataAvailableInspectorHoursQ1, teamPlanningDataAvailableInspectorHoursQ2, teamPlanningDataAvailableInspectorHoursQ3, teamPlanningDataAvailableInspectorHoursQ4, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, ts_teamPlanningDataResidualinspectorhoursQ1, ts_teamPlanningDataResidualinspectorhoursQ2, ts_teamPlanningDataResidualinspectorhoursQ3, ts_teamPlanningDataResidualinspectorhoursQ4, userfetchXml, fetchXml;
+                var formContext, teamPlanningDataId, teamPlanningDataTotalHoursQ1, teamPlanningDataTotalHoursQ2, teamPlanningDataTotalHoursQ3, teamPlanningDataTotalHoursQ4, teamPlanningDataTotalHoursFiscalYear, teamValue, teamId, teamName, planningDataFiscalYearValue, planningDataFiscalYearName, planningDataFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataAvailableInspectorHoursQ1, teamPlanningDataAvailableInspectorHoursQ2, teamPlanningDataAvailableInspectorHoursQ3, teamPlanningDataAvailableInspectorHoursQ4, teamPlanningDataAvailableInspectorHoursTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataResidualinspectorhoursQ1, teamPlanningDataResidualinspectorhoursQ2, teamPlanningDataResidualinspectorhoursQ3, teamPlanningDataResidualinspectorhoursQ4, teamPlanningDataResidualinspectorhoursTotal, userfetchXml, fetchXml;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -69,6 +69,17 @@ var ROM;
                             teamPlanningDataTotalHoursQ2 = formContext.getAttribute("ts_totalhoursq2").getValue();
                             teamPlanningDataTotalHoursQ3 = formContext.getAttribute("ts_totalhoursq3").getValue();
                             teamPlanningDataTotalHoursQ4 = formContext.getAttribute("ts_totalhoursq4").getValue();
+                            teamPlanningDataTotalHoursFiscalYear = formContext.getAttribute("ts_totalhoursfiscalyear").getValue();
+                            if (teamPlanningDataTotalHoursQ1 == null)
+                                formContext.getAttribute("ts_totalhoursq1").setValue(0);
+                            if (teamPlanningDataTotalHoursQ2 == null)
+                                formContext.getAttribute("ts_totalhoursq2").setValue(0);
+                            if (teamPlanningDataTotalHoursQ3 == null)
+                                formContext.getAttribute("ts_totalhoursq3").setValue(0);
+                            if (teamPlanningDataTotalHoursQ4 == null)
+                                formContext.getAttribute("ts_totalhoursq4").setValue(0);
+                            if (teamPlanningDataTotalHoursFiscalYear == null)
+                                formContext.getAttribute("ts_totalhoursfiscalyear").setValue(0);
                             teamValue = formContext.getAttribute("ts_team").getValue();
                             if (teamValue != null) {
                                 teamId = teamValue[0].id;
@@ -87,18 +98,22 @@ var ROM;
                             teamPlanningDataPlannedQ2 = 0;
                             teamPlanningDataPlannedQ3 = 0;
                             teamPlanningDataPlannedQ4 = 0;
+                            teamPlanningDataPlannedTotal = 0;
                             teamPlanningDataAvailableInspectorHoursQ1 = 0;
                             teamPlanningDataAvailableInspectorHoursQ2 = 0;
                             teamPlanningDataAvailableInspectorHoursQ3 = 0;
                             teamPlanningDataAvailableInspectorHoursQ4 = 0;
+                            teamPlanningDataAvailableInspectorHoursTotal = 0;
                             teamPlanningDataTeamEstimatedDurationQ1 = 0;
                             teamPlanningDataTeamEstimatedDurationQ2 = 0;
                             teamPlanningDataTeamEstimatedDurationQ3 = 0;
                             teamPlanningDataTeamEstimatedDurationQ4 = 0;
-                            ts_teamPlanningDataResidualinspectorhoursQ1 = 0;
-                            ts_teamPlanningDataResidualinspectorhoursQ2 = 0;
-                            ts_teamPlanningDataResidualinspectorhoursQ3 = 0;
-                            ts_teamPlanningDataResidualinspectorhoursQ4 = 0;
+                            teamPlanningDataTeamEstimatedDurationTotal = 0;
+                            teamPlanningDataResidualinspectorhoursQ1 = 0;
+                            teamPlanningDataResidualinspectorhoursQ2 = 0;
+                            teamPlanningDataResidualinspectorhoursQ3 = 0;
+                            teamPlanningDataResidualinspectorhoursQ4 = 0;
+                            teamPlanningDataResidualinspectorhoursTotal = 0;
                             userfetchXml = [
                                 "<fetch>",
                                 "  <entity name='systemuser'>",
@@ -351,27 +366,35 @@ var ROM;
                                 })];
                         case 2:
                             _a.sent();
-                            ts_teamPlanningDataResidualinspectorhoursQ1 = teamPlanningDataAvailableInspectorHoursQ1 - teamPlanningDataTeamEstimatedDurationQ1;
-                            ts_teamPlanningDataResidualinspectorhoursQ2 = teamPlanningDataAvailableInspectorHoursQ2 - teamPlanningDataTeamEstimatedDurationQ2;
-                            ts_teamPlanningDataResidualinspectorhoursQ3 = teamPlanningDataAvailableInspectorHoursQ3 - teamPlanningDataTeamEstimatedDurationQ3;
-                            ts_teamPlanningDataResidualinspectorhoursQ4 = teamPlanningDataAvailableInspectorHoursQ4 - teamPlanningDataTeamEstimatedDurationQ4;
+                            teamPlanningDataResidualinspectorhoursQ1 = teamPlanningDataAvailableInspectorHoursQ1 - teamPlanningDataTeamEstimatedDurationQ1;
+                            teamPlanningDataResidualinspectorhoursQ2 = teamPlanningDataAvailableInspectorHoursQ2 - teamPlanningDataTeamEstimatedDurationQ2;
+                            teamPlanningDataResidualinspectorhoursQ3 = teamPlanningDataAvailableInspectorHoursQ3 - teamPlanningDataTeamEstimatedDurationQ3;
+                            teamPlanningDataResidualinspectorhoursQ4 = teamPlanningDataAvailableInspectorHoursQ4 - teamPlanningDataTeamEstimatedDurationQ4;
+                            teamPlanningDataPlannedTotal = teamPlanningDataPlannedQ1 + teamPlanningDataPlannedQ2 + teamPlanningDataPlannedQ3 + teamPlanningDataPlannedQ4;
+                            teamPlanningDataAvailableInspectorHoursTotal = teamPlanningDataAvailableInspectorHoursQ1 + teamPlanningDataAvailableInspectorHoursQ2 + teamPlanningDataAvailableInspectorHoursQ3 + teamPlanningDataAvailableInspectorHoursQ4;
+                            teamPlanningDataTeamEstimatedDurationTotal = teamPlanningDataTeamEstimatedDurationQ1 + teamPlanningDataTeamEstimatedDurationQ2 + teamPlanningDataTeamEstimatedDurationQ3 + teamPlanningDataTeamEstimatedDurationQ4;
+                            teamPlanningDataResidualinspectorhoursTotal = teamPlanningDataAvailableInspectorHoursTotal - teamPlanningDataTeamEstimatedDurationTotal;
                             formContext.getAttribute("ts_name").setValue(teamName + " | " + planningDataFiscalYearName);
                             formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
                             formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
                             formContext.getAttribute("ts_plannedactivityq3").setValue(teamPlanningDataPlannedQ3);
                             formContext.getAttribute("ts_plannedactivityq4").setValue(teamPlanningDataPlannedQ4);
+                            formContext.getAttribute("ts_plannedactivityfiscalyear").setValue(teamPlanningDataPlannedTotal);
                             formContext.getAttribute("ts_availablehoursq1").setValue(teamPlanningDataAvailableInspectorHoursQ1);
                             formContext.getAttribute("ts_availablehoursq2").setValue(teamPlanningDataAvailableInspectorHoursQ2);
                             formContext.getAttribute("ts_availablehoursq3").setValue(teamPlanningDataAvailableInspectorHoursQ3);
                             formContext.getAttribute("ts_availablehoursq4").setValue(teamPlanningDataAvailableInspectorHoursQ4);
+                            formContext.getAttribute("ts_availableinspectorhoursfiscalyear").setValue(teamPlanningDataAvailableInspectorHoursTotal);
                             formContext.getAttribute("ts_teamestimateddurationq1").setValue(teamPlanningDataTeamEstimatedDurationQ1);
                             formContext.getAttribute("ts_teamestimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
                             formContext.getAttribute("ts_teamestimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
                             formContext.getAttribute("ts_teamestimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
-                            formContext.getAttribute("ts_residualinspectorhoursq1").setValue(ts_teamPlanningDataResidualinspectorhoursQ1);
-                            formContext.getAttribute("ts_residualinspectorhoursq2").setValue(ts_teamPlanningDataResidualinspectorhoursQ2);
-                            formContext.getAttribute("ts_residualinspectorhoursq3").setValue(ts_teamPlanningDataResidualinspectorhoursQ3);
-                            formContext.getAttribute("ts_residualinspectorhoursq4").setValue(ts_teamPlanningDataResidualinspectorhoursQ4);
+                            formContext.getAttribute("ts_teamestimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal);
+                            formContext.getAttribute("ts_residualinspectorhoursq1").setValue(teamPlanningDataResidualinspectorhoursQ1);
+                            formContext.getAttribute("ts_residualinspectorhoursq2").setValue(teamPlanningDataResidualinspectorhoursQ2);
+                            formContext.getAttribute("ts_residualinspectorhoursq3").setValue(teamPlanningDataResidualinspectorhoursQ3);
+                            formContext.getAttribute("ts_residualinspectorhoursq4").setValue(teamPlanningDataResidualinspectorhoursQ4);
+                            formContext.getAttribute("ts_residualinspectorhoursfiscalyear").setValue(teamPlanningDataResidualinspectorhoursTotal);
                             formContext.data.entity.save();
                             Xrm.Utility.closeProgressIndicator();
                             return [2 /*return*/];
@@ -379,5 +402,70 @@ var ROM;
                 });
             });
         }
+        function setTotalInspectorHoursFiscalYear(formContext) {
+            var teamPlanningDataTotalHoursQ1 = formContext.getAttribute("ts_totalhoursq1").getValue();
+            var teamPlanningDataTotalHoursQ2 = formContext.getAttribute("ts_totalhoursq2").getValue();
+            var teamPlanningDataTotalHoursQ3 = formContext.getAttribute("ts_totalhoursq3").getValue();
+            var teamPlanningDataTotalHoursQ4 = formContext.getAttribute("ts_totalhoursq4").getValue();
+            if (teamPlanningDataTotalHoursQ1 != null && teamPlanningDataTotalHoursQ2 != null && teamPlanningDataTotalHoursQ3 != null && teamPlanningDataTotalHoursQ4 != null) {
+                formContext.getAttribute("ts_totalhoursfiscalyear").setValue(teamPlanningDataTotalHoursQ1 + teamPlanningDataTotalHoursQ2 + teamPlanningDataTotalHoursQ3 + teamPlanningDataTotalHoursQ4);
+            }
+        }
+        TeamPlanningData.setTotalInspectorHoursFiscalYear = setTotalInspectorHoursFiscalYear;
+        function inspectorHoursQ1OnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var teamPlanningDataTotalHoursQ1 = formContext.getAttribute("ts_totalhoursq1").getValue();
+            if (teamPlanningDataTotalHoursQ1 == null) {
+                formContext.getAttribute("ts_totalhoursq1").setValue(0);
+            }
+            setTotalInspectorHoursFiscalYear(formContext);
+        }
+        TeamPlanningData.inspectorHoursQ1OnChange = inspectorHoursQ1OnChange;
+        function inspectorHoursQ2OnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var teamPlanningDataTotalHoursQ2 = formContext.getAttribute("ts_totalhoursq2").getValue();
+            if (teamPlanningDataTotalHoursQ2 == null) {
+                formContext.getAttribute("ts_totalhoursq2").setValue(0);
+            }
+            setTotalInspectorHoursFiscalYear(formContext);
+        }
+        TeamPlanningData.inspectorHoursQ2OnChange = inspectorHoursQ2OnChange;
+        function inspectorHoursQ3OnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var teamPlanningDataTotalHoursQ3 = formContext.getAttribute("ts_totalhoursq3").getValue();
+            if (teamPlanningDataTotalHoursQ3 == null) {
+                formContext.getAttribute("ts_totalhoursq3").setValue(0);
+            }
+            setTotalInspectorHoursFiscalYear(formContext);
+        }
+        TeamPlanningData.inspectorHoursQ3OnChange = inspectorHoursQ3OnChange;
+        function inspectorHoursQ4OnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var teamPlanningDataTotalHoursQ4 = formContext.getAttribute("ts_totalhoursq4").getValue();
+            if (teamPlanningDataTotalHoursQ4 == null) {
+                formContext.getAttribute("ts_totalhoursq4").setValue(0);
+            }
+            setTotalInspectorHoursFiscalYear(formContext);
+        }
+        TeamPlanningData.inspectorHoursQ4OnChange = inspectorHoursQ4OnChange;
+        function fiscalYearInspectorHoursOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var teamPlanningDataTotalHoursFiscalYear = formContext.getAttribute("ts_totalhoursfiscalyear").getValue();
+            if (teamPlanningDataTotalHoursFiscalYear == null) {
+                formContext.getAttribute("ts_totalhoursfiscalyear").setValue(0);
+                formContext.getAttribute("ts_totalhoursq1").setValue(0);
+                formContext.getAttribute("ts_totalhoursq2").setValue(0);
+                formContext.getAttribute("ts_totalhoursq3").setValue(0);
+                formContext.getAttribute("ts_totalhoursq4").setValue(0);
+            }
+            else {
+                var quarterTotal = teamPlanningDataTotalHoursFiscalYear / 4;
+                formContext.getAttribute("ts_totalhoursq1").setValue(quarterTotal);
+                formContext.getAttribute("ts_totalhoursq2").setValue(quarterTotal);
+                formContext.getAttribute("ts_totalhoursq3").setValue(quarterTotal);
+                formContext.getAttribute("ts_totalhoursq4").setValue(quarterTotal);
+            }
+        }
+        TeamPlanningData.fiscalYearInspectorHoursOnChange = fiscalYearInspectorHoursOnChange;
     })(TeamPlanningData = ROM.TeamPlanningData || (ROM.TeamPlanningData = {}));
 })(ROM || (ROM = {}));
