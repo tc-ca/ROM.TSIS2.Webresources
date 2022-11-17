@@ -162,6 +162,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_dateofinspection1"): Xrm.DateAttribute;
       get(name: "ts_dateofinspection2"): Xrm.DateAttribute;
+      get(name: "ts_incident"): Xrm.OptionSetAttribute<ts_yesno>;
       get(name: "ts_inspectiontype1"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
@@ -252,6 +253,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_dateofinspection1"): Xrm.DateControl;
       get(name: "ts_dateofinspection2"): Xrm.DateControl;
+      get(name: "ts_incident"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_inspectiontype1"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
@@ -330,6 +332,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_dateofinspection1"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_dateofinspection2"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_incident"): Xrm.OptionSetAttribute<ts_yesno>;
     getAttribute(attributeName: "ts_inspectiontype1"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
@@ -415,6 +418,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_dateofinspection1"): Xrm.DateControl;
     getControl(controlName: "ts_dateofinspection2"): Xrm.DateControl;
+    getControl(controlName: "ts_incident"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_inspectiontype1"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;

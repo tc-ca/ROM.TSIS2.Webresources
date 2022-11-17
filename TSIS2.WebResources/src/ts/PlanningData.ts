@@ -11,13 +11,6 @@
         }
         recalculateVarianceAndPlannedWO(eContext);
     }
-    export function onSave(eContext) {
-
-    }
-
-    export function gridOnSelect(eContext: Xrm.ExecutionContext<any, any>): void {
-        //recalculateVarianceAndPlannedWO(eContext);
-    }
 
     export function plannedOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         setNullQuarterValueToZero(eContext)

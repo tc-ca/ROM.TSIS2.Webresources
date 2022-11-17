@@ -57,6 +57,7 @@ interface Incident_Base extends WebEntity {
   ts_canvasappnumber?: string | null;
   ts_dateofinspection1?: Date | null;
   ts_dateofinspection2?: Date | null;
+  ts_incident?: ts_yesno | null;
   ts_numberoffindings?: number | null;
   ts_numberoffindings_date?: Date | null;
   ts_numberoffindings_state?: number | null;
@@ -235,6 +236,7 @@ interface Incident_Select {
   ts_country_guid: WebAttribute<Incident_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_dateofinspection1: WebAttribute<Incident_Select, { ts_dateofinspection1: Date | null }, { ts_dateofinspection1_formatted?: string }>;
   ts_dateofinspection2: WebAttribute<Incident_Select, { ts_dateofinspection2: Date | null }, { ts_dateofinspection2_formatted?: string }>;
+  ts_incident: WebAttribute<Incident_Select, { ts_incident: ts_yesno | null }, { ts_incident_formatted?: string }>;
   ts_inspectiontype1_guid: WebAttribute<Incident_Select, { ts_inspectiontype1_guid: string | null }, { ts_inspectiontype1_formatted?: string }>;
   ts_inspectiontype2_guid: WebAttribute<Incident_Select, { ts_inspectiontype2_guid: string | null }, { ts_inspectiontype2_formatted?: string }>;
   ts_numberoffindings: WebAttribute<Incident_Select, { ts_numberoffindings: number | null }, {  }>;
@@ -344,6 +346,7 @@ interface Incident_Filter {
   ts_country_guid: XQW.Guid;
   ts_dateofinspection1: Date;
   ts_dateofinspection2: Date;
+  ts_incident: ts_yesno;
   ts_inspectiontype1_guid: XQW.Guid;
   ts_inspectiontype2_guid: XQW.Guid;
   ts_numberoffindings: number;
@@ -466,6 +469,7 @@ interface Incident_FormattedResult {
   ts_country_formatted?: string;
   ts_dateofinspection1_formatted?: string;
   ts_dateofinspection2_formatted?: string;
+  ts_incident_formatted?: string;
   ts_inspectiontype1_formatted?: string;
   ts_inspectiontype2_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
