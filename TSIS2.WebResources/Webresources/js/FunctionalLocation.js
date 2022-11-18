@@ -179,18 +179,27 @@ var ROM;
         }
         FunctionalLocation.classOnChange = classOnChange;
         function SubGridFilterExecution(eContext) {
+            var _a;
             var formContext = eContext.getFormContext();
-            var gridControl = formContext.getControl("Operations");
-            var siteId = formContext.data.entity.getId();
-            if (gridControl === null) {
-                setTimeout(ROM.Finding.SubGridFilterExecution, 1000);
-                return;
-            }
-            else {
-                if (siteId !== null && siteId !== '') {
-                    var fetchXml = "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' no-lock='false'>\n                        <entity name='ovs_operation'>\n                        <attribute name='ovs_operationtypeid'/>\n                        <attribute name='ts_stakeholder'/>\n                        <attribute name='ovs_name'/>\n                        <attribute name='ts_operationalstatus'/>\n                        <attribute name='ownerid'/>\n                        <attribute name='ts_subsite'/>\n                        <filter type='or'>\n                          <condition attribute='ts_site' operator='eq' value='" + siteId + "'/>\n                          <condition attribute='ts_subsite' operator='eq' value='" + siteId + "'/>\n                        </filter>\n                      </entity>\n                    </fetch>";
-                    gridControl.setFilterXml(fetchXml);
-                    gridControl.refresh();
+            var ownerAttribute = formContext.getAttribute("ownerid");
+            if (ownerAttribute != null && ownerAttribute != undefined) {
+                var ownerAttributeValue = ownerAttribute.getValue();
+                if (ownerAttributeValue != null) {
+                    if ((_a = ownerAttributeValue[0].name) === null || _a === void 0 ? void 0 : _a.startsWith("Aviation")) {
+                        var gridControl = formContext.getControl("Operations");
+                        var siteId = formContext.data.entity.getId();
+                        if (gridControl === null) {
+                            setTimeout(ROM.Finding.SubGridFilterExecution, 1000);
+                            return;
+                        }
+                        else {
+                            if (siteId !== null && siteId !== '') {
+                                var fetchXml = "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' no-lock='false'>\n                                <entity name='ovs_operation'>\n                                <attribute name='ovs_operationtypeid'/>\n                                <attribute name='ts_stakeholder'/>\n                                <attribute name='ovs_name'/>\n                                <attribute name='ts_operationalstatus'/>\n                                <attribute name='ownerid'/>\n                                <attribute name='ts_subsite'/>\n                                <filter type='or'>\n                                  <condition attribute='ts_site' operator='eq' value='" + siteId + "'/>\n                                  <condition attribute='ts_subsite' operator='eq' value='" + siteId + "'/>\n                                </filter>\n                                </entity>\n                                </fetch>";
+                                gridControl.setFilterXml(fetchXml);
+                                gridControl.refresh();
+                            }
+                        }
+                    }
                 }
             }
         }
