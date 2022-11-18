@@ -52,6 +52,7 @@ var ROM;
                 form.getAttribute("ts_description").setRequiredLevel("required");
             }
             riskScoreVisibility(form);
+            SubGridFilterExecution(eContext);
         }
         FunctionalLocation.onLoad = onLoad;
         function onSave(eContext) {

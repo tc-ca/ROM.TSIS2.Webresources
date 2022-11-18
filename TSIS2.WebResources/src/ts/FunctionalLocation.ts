@@ -63,6 +63,7 @@ namespace ROM.FunctionalLocation {
             form.getAttribute("ts_description").setRequiredLevel("required");
         }
         riskScoreVisibility(form);
+        SubGridFilterExecution(eContext);
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
