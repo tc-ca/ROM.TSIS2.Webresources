@@ -187,6 +187,7 @@
     <Content Include="Webresources\js\QuestionnaireVersion.js" />
     <Content Include="Webresources\js\RiskThreshold.js" />
     <Content Include="Webresources\js\ScoreThresholds.js" />
+    <Content Include="Webresources\js\SecurityIncident.js" />
     <Content Include="Webresources\js\ServiceTaskType.js" />
     <Content Include="Webresources\js\showdown.min.js" />
     <Content Include="Webresources\js\survey-creator.min.js" />
@@ -348,6 +349,7 @@
     <TypeScriptCompile Include="src\ts\QuestionnaireVersion.ts" />
     <TypeScriptCompile Include="src\ts\RiskThreshold.ts" />
     <TypeScriptCompile Include="src\ts\ScoreThresholds.ts" />
+    <TypeScriptCompile Include="src\ts\SecurityIncident.ts" />
     <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
     <TypeScriptCompile Include="src\ts\Team.ts" />
     <TypeScriptCompile Include="src\ts\TeamPlanningData.ts" />
