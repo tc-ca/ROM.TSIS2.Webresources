@@ -76,6 +76,7 @@ interface Appointment_Relationships {
   regardingobjectid_msdyn_workorder_appointment?: msdyn_workorder_Result | null;
   regardingobjectid_msdyn_workorderservicetask_appointment?: msdyn_workorderservicetask_Result | null;
   regardingobjectid_ovs_operation_appointment?: ovs_operation_Result | null;
+  regardingobjectid_ts_securityincident_appointment?: ts_securityincident_Result | null;
 }
 interface Appointment extends Appointment_Base, Appointment_Relationships {
   ownerid_appointment_bind$systemusers?: string | null;
@@ -346,6 +347,7 @@ interface Appointment_Expand {
   regardingobjectid_msdyn_workorder_appointment: WebExpand<Appointment_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder_appointment: msdyn_workorder_Result }>;
   regardingobjectid_msdyn_workorderservicetask_appointment: WebExpand<Appointment_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { regardingobjectid_msdyn_workorderservicetask_appointment: msdyn_workorderservicetask_Result }>;
   regardingobjectid_ovs_operation_appointment: WebExpand<Appointment_Expand, ovs_operation_Select, ovs_operation_Filter, { regardingobjectid_ovs_operation_appointment: ovs_operation_Result }>;
+  regardingobjectid_ts_securityincident_appointment: WebExpand<Appointment_Expand, ts_securityincident_Select, ts_securityincident_Filter, { regardingobjectid_ts_securityincident_appointment: ts_securityincident_Result }>;
 }
 interface Appointment_FormattedResult {
   actualend_formatted?: string;
@@ -419,6 +421,7 @@ interface Appointment_RelatedOne {
   regardingobjectid_msdyn_workorder_appointment: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   regardingobjectid_msdyn_workorderservicetask_appointment: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   regardingobjectid_ovs_operation_appointment: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  regardingobjectid_ts_securityincident_appointment: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
 }
 interface Appointment_RelatedMany {
   appointment_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;

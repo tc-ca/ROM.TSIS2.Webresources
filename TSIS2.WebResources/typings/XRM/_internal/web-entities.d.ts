@@ -400,6 +400,29 @@ interface ovs_Questionnaire_Create extends ovs_Questionnaire {
 }
 interface ovs_Questionnaire_Update extends ovs_Questionnaire {
 }
+interface Team_Base extends WebEntity {
+}
+interface Team_Fixed extends WebEntity_Fixed {
+  teamid: string;
+}
+interface Team extends Team_Base, Team_Relationships {
+}
+interface Team_Relationships {
+}
+interface Team_Result extends Team_Base, Team_Relationships {
+}
+interface Team_FormattedResult {
+}
+interface Team_Select {
+}
+interface Team_Expand {
+}
+interface Team_Filter {
+}
+interface Team_Create extends Team {
+}
+interface Team_Update extends Team {
+}
 interface ts_assessmentscorethredshots_Base extends WebEntity {
 }
 interface ts_assessmentscorethredshots_Fixed extends WebEntity_Fixed {
@@ -791,6 +814,29 @@ interface ts_RiskCategory_Create extends ts_RiskCategory {
 }
 interface ts_RiskCategory_Update extends ts_RiskCategory {
 }
+interface ts_securityincident_Base extends WebEntity {
+}
+interface ts_securityincident_Fixed extends WebEntity_Fixed {
+  ts_securityincidentid: string;
+}
+interface ts_securityincident extends ts_securityincident_Base, ts_securityincident_Relationships {
+}
+interface ts_securityincident_Relationships {
+}
+interface ts_securityincident_Result extends ts_securityincident_Base, ts_securityincident_Relationships {
+}
+interface ts_securityincident_FormattedResult {
+}
+interface ts_securityincident_Select {
+}
+interface ts_securityincident_Expand {
+}
+interface ts_securityincident_Filter {
+}
+interface ts_securityincident_Create extends ts_securityincident {
+}
+interface ts_securityincident_Update extends ts_securityincident {
+}
 interface ts_TeamPlanningData_Base extends WebEntity {
 }
 interface ts_TeamPlanningData_Fixed extends WebEntity_Fixed {
@@ -998,29 +1044,6 @@ interface ts_role_Create extends ts_role {
 }
 interface ts_role_Update extends ts_role {
 }
-interface Team_Base extends WebEntity {
-}
-interface Team_Fixed extends WebEntity_Fixed {
-  teamid: string;
-}
-interface Team extends Team_Base, Team_Relationships {
-}
-interface Team_Relationships {
-}
-interface Team_Result extends Team_Base, Team_Relationships {
-}
-interface Team_FormattedResult {
-}
-interface Team_Select {
-}
-interface Team_Expand {
-}
-interface Team_Filter {
-}
-interface Team_Create extends Team {
-}
-interface Team_Update extends Team {
-}
 interface IncidentResolution_Base extends WebEntity {
 }
 interface IncidentResolution_Fixed extends WebEntity_Fixed {
@@ -1181,4 +1204,27 @@ interface BookingStatus_Filter {
 interface BookingStatus_Create extends BookingStatus {
 }
 interface BookingStatus_Update extends BookingStatus {
+}
+interface TeamMembership_Base extends WebEntity {
+}
+interface TeamMembership_Fixed extends WebEntity_Fixed {
+  teammembershipid: string;
+}
+interface TeamMembership extends TeamMembership_Base, TeamMembership_Relationships {
+}
+interface TeamMembership_Relationships {
+}
+interface TeamMembership_Result extends TeamMembership_Base, TeamMembership_Relationships {
+}
+interface TeamMembership_FormattedResult {
+}
+interface TeamMembership_Select {
+}
+interface TeamMembership_Expand {
+}
+interface TeamMembership_Filter {
+}
+interface TeamMembership_Create extends TeamMembership {
+}
+interface TeamMembership_Update extends TeamMembership {
 }

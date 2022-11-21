@@ -63,6 +63,7 @@ declare namespace Form.msdyn_workorder.Main {
       interface tab_10 extends Xrm.SectionCollectionBase {
         get(name: "tab_10_section_1"): Xrm.PageSection;
         get(name: "tab_10_section_2"): Xrm.PageSection;
+        get(name: "tab_10_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
