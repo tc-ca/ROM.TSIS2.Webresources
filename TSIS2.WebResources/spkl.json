@@ -185,6 +185,11 @@
               "description": "ROM TSIS 2.0 Service Task Type Form Scripts"
             },
             {
+              "uniquename": "ts_/js/SecurityIncident.js",
+              "file": "js\\SecurityIncident.js",
+              "description": "ROM TSIS 2.0 Security Incident Form Scripts"
+            },
+            {
               "uniquename": "ovs_/js/WorkOrder.js",
               "file": "js\\WorkOrder.js",
               "description": "ROM TSIS 2.0 Work Order Form Scripts"
