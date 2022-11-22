@@ -5,6 +5,7 @@ namespace ROM.SecurityIncident {
             StatusOfRailwayOwnerOnChange(eContext);
         }
     }
+    
     export function StatusOfRailwayOwnerOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
 
