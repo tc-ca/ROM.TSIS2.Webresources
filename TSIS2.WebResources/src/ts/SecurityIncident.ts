@@ -3,9 +3,15 @@ namespace ROM.SecurityIncident {
         const formContext = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
         if (formContext.ui.getFormType() == 2) {
             StatusOfRailwayOwnerOnChange(eContext);
+
+            const mode = formContext.getAttribute("ts_mode");
+            if (mode.getValue() == ts_securityincidentmode.IBT) {
+                formContext.getControl("ts_bridgeclosure").setVisible(true);
+                formContext.getControl("ts_damagestoibtproperty").setVisible(true);
+            }
         }
     }
-    
+
     export function StatusOfRailwayOwnerOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
 
@@ -15,11 +21,11 @@ namespace ROM.SecurityIncident {
         else
             form.getControl("ts_owneroftherailwaylinetrack").setVisible(false);
 
-        if(form.getAttribute("ts_delaystooperation").getValue() == ts_delaystooperation.Known){
+        if (form.getAttribute("ts_delaystooperation").getValue() == ts_delaystooperation.Known) {
             form.getControl("ts_delaystooperationtime").setVisible(true);
         }
 
-        if(form.getAttribute("ts_arrests").getValue() == ts_arrestsknownorunknown.Known){
+        if (form.getAttribute("ts_arrests").getValue() == ts_arrestsknownorunknown.Known) {
             form.getControl("ts_arrestscount").setVisible(true);
             form.getControl("ts_arrestsdetails").setVisible(true);
         }
@@ -43,6 +49,21 @@ namespace ROM.SecurityIncident {
         if (arrests.getValue() == ts_arrestsknownorunknown.Known) {
             form.getControl("ts_arrestscount").setVisible(true);
             form.getControl("ts_arrestsdetails").setVisible(true);
+        }
+    }
+
+    export function modeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+
+        const mode = form.getAttribute("ts_mode");
+
+        if (mode.getValue() == ts_securityincidentmode.IBT) {
+            form.getControl("ts_bridgeclosure").setVisible(true);
+            form.getControl("ts_damagestoibtproperty").setVisible(true);
+        }
+        else {
+            form.getControl("ts_bridgeclosure").setVisible(false);
+            form.getControl("ts_damagestoibtproperty").setVisible(false);
         }
     }
 }

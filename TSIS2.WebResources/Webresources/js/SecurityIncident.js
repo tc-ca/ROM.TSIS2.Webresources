@@ -7,6 +7,11 @@ var ROM;
             var formContext = eContext.getFormContext();
             if (formContext.ui.getFormType() == 2) {
                 StatusOfRailwayOwnerOnChange(eContext);
+                var mode = formContext.getAttribute("ts_mode");
+                if (mode.getValue() == 717750001 /* IBT */) {
+                    formContext.getControl("ts_bridgeclosure").setVisible(true);
+                    formContext.getControl("ts_damagestoibtproperty").setVisible(true);
+                }
             }
         }
         SecurityIncident.onLoad = onLoad;
@@ -43,5 +48,18 @@ var ROM;
             }
         }
         SecurityIncident.arrestsOnChange = arrestsOnChange;
+        function modeOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var mode = form.getAttribute("ts_mode");
+            if (mode.getValue() == 717750001 /* IBT */) {
+                form.getControl("ts_bridgeclosure").setVisible(true);
+                form.getControl("ts_damagestoibtproperty").setVisible(true);
+            }
+            else {
+                form.getControl("ts_bridgeclosure").setVisible(false);
+                form.getControl("ts_damagestoibtproperty").setVisible(false);
+            }
+        }
+        SecurityIncident.modeOnChange = modeOnChange;
     })(SecurityIncident = ROM.SecurityIncident || (ROM.SecurityIncident = {}));
 })(ROM || (ROM = {}));

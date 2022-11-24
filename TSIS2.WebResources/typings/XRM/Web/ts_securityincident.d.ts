@@ -10,6 +10,8 @@ interface ts_securityincident_Base extends WebEntity {
   ts_arrests?: ts_arrestsknownorunknown | null;
   ts_arrestscount?: number | null;
   ts_arrestsdetails?: string | null;
+  ts_bridgeclosure?: ts_bridgeclosure | null;
+  ts_damagestoibtproperty?: ts_damagestoibtproperty | null;
   ts_degreesminutesseconds?: string | null;
   ts_delaystooperation?: ts_delaystooperation | null;
   ts_delaystooperationtime?: Date | null;
@@ -31,6 +33,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_subdivision?: string | null;
   ts_tcomsid?: string | null;
   ts_tcomsofficer?: string | null;
+  ts_timetakenforstakeholdertoreport?: number | null;
   ts_timezone?: ts_timezone | null;
   ts_yardorstationname?: string | null;
   utcconversiontimezonecode?: number | null;
@@ -81,6 +84,8 @@ interface ts_securityincident_Select {
   ts_arrests: WebAttribute<ts_securityincident_Select, { ts_arrests: ts_arrestsknownorunknown | null }, { ts_arrests_formatted?: string }>;
   ts_arrestscount: WebAttribute<ts_securityincident_Select, { ts_arrestscount: number | null }, {  }>;
   ts_arrestsdetails: WebAttribute<ts_securityincident_Select, { ts_arrestsdetails: string | null }, {  }>;
+  ts_bridgeclosure: WebAttribute<ts_securityincident_Select, { ts_bridgeclosure: ts_bridgeclosure | null }, { ts_bridgeclosure_formatted?: string }>;
+  ts_damagestoibtproperty: WebAttribute<ts_securityincident_Select, { ts_damagestoibtproperty: ts_damagestoibtproperty | null }, { ts_damagestoibtproperty_formatted?: string }>;
   ts_degreesminutesseconds: WebAttribute<ts_securityincident_Select, { ts_degreesminutesseconds: string | null }, {  }>;
   ts_delaystooperation: WebAttribute<ts_securityincident_Select, { ts_delaystooperation: ts_delaystooperation | null }, { ts_delaystooperation_formatted?: string }>;
   ts_delaystooperationtime: WebAttribute<ts_securityincident_Select, { ts_delaystooperationtime: Date | null }, { ts_delaystooperationtime_formatted?: string }>;
@@ -109,6 +114,7 @@ interface ts_securityincident_Select {
   ts_targetelement_guid: WebAttribute<ts_securityincident_Select, { ts_targetelement_guid: string | null }, { ts_targetelement_formatted?: string }>;
   ts_tcomsid: WebAttribute<ts_securityincident_Select, { ts_tcomsid: string | null }, {  }>;
   ts_tcomsofficer: WebAttribute<ts_securityincident_Select, { ts_tcomsofficer: string | null }, {  }>;
+  ts_timetakenforstakeholdertoreport: WebAttribute<ts_securityincident_Select, { ts_timetakenforstakeholdertoreport: number | null }, {  }>;
   ts_timezone: WebAttribute<ts_securityincident_Select, { ts_timezone: ts_timezone | null }, { ts_timezone_formatted?: string }>;
   ts_yardorstationname: WebAttribute<ts_securityincident_Select, { ts_yardorstationname: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_securityincident_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -134,6 +140,8 @@ interface ts_securityincident_Filter {
   ts_arrests: ts_arrestsknownorunknown;
   ts_arrestscount: number;
   ts_arrestsdetails: string;
+  ts_bridgeclosure: ts_bridgeclosure;
+  ts_damagestoibtproperty: ts_damagestoibtproperty;
   ts_degreesminutesseconds: string;
   ts_delaystooperation: ts_delaystooperation;
   ts_delaystooperationtime: Date;
@@ -162,6 +170,7 @@ interface ts_securityincident_Filter {
   ts_targetelement_guid: XQW.Guid;
   ts_tcomsid: string;
   ts_tcomsofficer: string;
+  ts_timetakenforstakeholdertoreport: number;
   ts_timezone: ts_timezone;
   ts_yardorstationname: string;
   utcconversiontimezonecode: number;
@@ -199,6 +208,8 @@ interface ts_securityincident_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_arrests_formatted?: string;
+  ts_bridgeclosure_formatted?: string;
+  ts_damagestoibtproperty_formatted?: string;
   ts_delaystooperation_formatted?: string;
   ts_delaystooperationtime_formatted?: string;
   ts_incidentdatetime_formatted?: string;
