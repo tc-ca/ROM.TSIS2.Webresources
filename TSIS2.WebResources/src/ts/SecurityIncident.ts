@@ -8,6 +8,7 @@ namespace ROM.SecurityIncident {
             if (mode.getValue() == ts_securityincidentmode.IBT) {
                 formContext.getControl("ts_bridgeclosure").setVisible(true);
                 formContext.getControl("ts_damagestoibtproperty").setVisible(true);
+                formContext.getControl("ts_ibtlocation").setVisible(true);
             }
         }
     }
@@ -58,12 +59,14 @@ namespace ROM.SecurityIncident {
         const mode = form.getAttribute("ts_mode");
 
         if (mode.getValue() == ts_securityincidentmode.IBT) {
-            form.getControl("ts_bridgeclosure").setVisible(true);
+            form.getControl("ts_bridgeclosure").setVisible(true); 
             form.getControl("ts_damagestoibtproperty").setVisible(true);
+            form.getControl("ts_ibtlocation").setVisible(true);
         }
         else {
             form.getControl("ts_bridgeclosure").setVisible(false);
             form.getControl("ts_damagestoibtproperty").setVisible(false);
+            form.getControl("ts_ibtlocation").setVisible(false);
         }
     }
 }

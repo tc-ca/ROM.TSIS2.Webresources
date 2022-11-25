@@ -26,6 +26,7 @@ interface msdyn_FunctionalLocation_Base extends WebEntity {
   ts_functionallocationnamefrench?: string | null;
   ts_iatacode?: string | null;
   ts_icaocode?: string | null;
+  ts_mode?: ts_securityincidentmode | null;
   ts_riskscore?: number | null;
   ts_sitestatus?: ts_sitestatus | null;
   ts_statusenddate?: Date | null;
@@ -52,6 +53,7 @@ interface msdyn_FunctionalLocation_Relationships {
   ts_ovs_operation_subsite_msdyn_functionalloc?: ovs_operation_Result[] | null;
   ts_ts_operationactivity_Site_msdyn_functiona?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_Site_msdyn_functionalloca?: ts_PlanningData_Result[] | null;
+  ts_ts_securityincident_IBTLocation_msdyn_fun?: ts_securityincident_Result[] | null;
 }
 interface msdyn_FunctionalLocation extends msdyn_FunctionalLocation_Base, msdyn_FunctionalLocation_Relationships {
   msdyn_ParentFunctionalLocation_bind$msdyn_functionallocations?: string | null;
@@ -103,6 +105,7 @@ interface msdyn_FunctionalLocation_Select {
   ts_functionallocationnamefrench: WebAttribute<msdyn_FunctionalLocation_Select, { ts_functionallocationnamefrench: string | null }, {  }>;
   ts_iatacode: WebAttribute<msdyn_FunctionalLocation_Select, { ts_iatacode: string | null }, {  }>;
   ts_icaocode: WebAttribute<msdyn_FunctionalLocation_Select, { ts_icaocode: string | null }, {  }>;
+  ts_mode: WebAttribute<msdyn_FunctionalLocation_Select, { ts_mode: ts_securityincidentmode | null }, { ts_mode_formatted?: string }>;
   ts_region_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_riskscore: WebAttribute<msdyn_FunctionalLocation_Select, { ts_riskscore: number | null }, {  }>;
   ts_sitestatus: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitestatus: ts_sitestatus | null }, { ts_sitestatus_formatted?: string }>;
@@ -150,6 +153,7 @@ interface msdyn_FunctionalLocation_Filter {
   ts_functionallocationnamefrench: string;
   ts_iatacode: string;
   ts_icaocode: string;
+  ts_mode: ts_securityincidentmode;
   ts_region_guid: XQW.Guid;
   ts_riskscore: number;
   ts_sitestatus: ts_sitestatus;
@@ -185,6 +189,7 @@ interface msdyn_FunctionalLocation_Expand {
   ts_ovs_operation_subsite_msdyn_functionalloc: WebExpand<msdyn_FunctionalLocation_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_subsite_msdyn_functionalloc: ovs_operation_Result[] }>;
   ts_ts_operationactivity_Site_msdyn_functiona: WebExpand<msdyn_FunctionalLocation_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Site_msdyn_functiona: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_Site_msdyn_functionalloca: WebExpand<msdyn_FunctionalLocation_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Site_msdyn_functionalloca: ts_PlanningData_Result[] }>;
+  ts_ts_securityincident_IBTLocation_msdyn_fun: WebExpand<msdyn_FunctionalLocation_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_ts_securityincident_IBTLocation_msdyn_fun: ts_securityincident_Result[] }>;
 }
 interface msdyn_FunctionalLocation_FormattedResult {
   createdby_formatted?: string;
@@ -203,6 +208,7 @@ interface msdyn_FunctionalLocation_FormattedResult {
   statuscode_formatted?: string;
   ts_class_formatted?: string;
   ts_country_formatted?: string;
+  ts_mode_formatted?: string;
   ts_region_formatted?: string;
   ts_sitestatus_formatted?: string;
   ts_sitetype_formatted?: string;
@@ -252,6 +258,7 @@ interface msdyn_FunctionalLocation_RelatedMany {
   ts_ovs_operation_subsite_msdyn_functionalloc: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_ts_operationactivity_Site_msdyn_functiona: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_Site_msdyn_functionalloca: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
+  ts_ts_securityincident_IBTLocation_msdyn_fun: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_functionallocations: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
