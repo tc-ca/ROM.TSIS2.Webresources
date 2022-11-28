@@ -128,4 +128,5 @@ declare const enum connection_record1objecttypecode {
   OngoingconversationDeprecated = 10934,
   Conversation = 10944,
   Session = 10961,
+  IncidentUpdate = 11085,
 }

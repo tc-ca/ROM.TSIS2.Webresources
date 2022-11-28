@@ -10,6 +10,8 @@ interface ts_securityincident_Base extends WebEntity {
   ts_arrests?: ts_arrestsknownorunknown | null;
   ts_arrestscount?: number | null;
   ts_arrestsdetails?: string | null;
+  ts_bridgeclosure?: ts_bridgeclosure | null;
+  ts_damagestoibtproperty?: ts_damagestoibtproperty | null;
   ts_degreesminutesseconds?: string | null;
   ts_delaystooperation?: ts_delaystooperation | null;
   ts_delaystooperationtime?: Date | null;
@@ -23,6 +25,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_mode?: ts_securityincidentmode | null;
   ts_name?: string | null;
   ts_owneroftherailwaylinetrack?: string | null;
+  ts_province?: ts_province | null;
   ts_publicorprivatecrossing?: ts_publicorprivatecrossing | null;
   ts_reporteddatetime?: Date | null;
   ts_ruralorurban?: ts_ruralorurban | null;
@@ -31,6 +34,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_subdivision?: string | null;
   ts_tcomsid?: string | null;
   ts_tcomsofficer?: string | null;
+  ts_timetakenforstakeholdertoreport?: number | null;
   ts_timezone?: ts_timezone | null;
   ts_yardorstationname?: string | null;
   utcconversiontimezonecode?: number | null;
@@ -38,6 +42,7 @@ interface ts_securityincident_Base extends WebEntity {
 }
 interface ts_securityincident_Relationships {
   ts_Contact_ts_securityincident_ts_securityin?: Contact_Result[] | null;
+  ts_IBTLocation?: msdyn_FunctionalLocation_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Stakeholder?: Account_Result | null;
   ts_securityincident_Appointments?: Appointment_Result[] | null;
@@ -49,7 +54,7 @@ interface ts_securityincident_Relationships {
 interface ts_securityincident extends ts_securityincident_Base, ts_securityincident_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
-  ts_Province_bind$tc_provinces?: string | null;
+  ts_IBTLocation_bind$msdyn_functionallocations?: string | null;
   ts_Region_bind$territories?: string | null;
   ts_SecurityIncidentType_bind$ts_securityincidenttypes?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
@@ -81,9 +86,12 @@ interface ts_securityincident_Select {
   ts_arrests: WebAttribute<ts_securityincident_Select, { ts_arrests: ts_arrestsknownorunknown | null }, { ts_arrests_formatted?: string }>;
   ts_arrestscount: WebAttribute<ts_securityincident_Select, { ts_arrestscount: number | null }, {  }>;
   ts_arrestsdetails: WebAttribute<ts_securityincident_Select, { ts_arrestsdetails: string | null }, {  }>;
+  ts_bridgeclosure: WebAttribute<ts_securityincident_Select, { ts_bridgeclosure: ts_bridgeclosure | null }, { ts_bridgeclosure_formatted?: string }>;
+  ts_damagestoibtproperty: WebAttribute<ts_securityincident_Select, { ts_damagestoibtproperty: ts_damagestoibtproperty | null }, { ts_damagestoibtproperty_formatted?: string }>;
   ts_degreesminutesseconds: WebAttribute<ts_securityincident_Select, { ts_degreesminutesseconds: string | null }, {  }>;
   ts_delaystooperation: WebAttribute<ts_securityincident_Select, { ts_delaystooperation: ts_delaystooperation | null }, { ts_delaystooperation_formatted?: string }>;
   ts_delaystooperationtime: WebAttribute<ts_securityincident_Select, { ts_delaystooperationtime: Date | null }, { ts_delaystooperationtime_formatted?: string }>;
+  ts_ibtlocation_guid: WebAttribute<ts_securityincident_Select, { ts_ibtlocation_guid: string | null }, { ts_ibtlocation_formatted?: string }>;
   ts_incidentdatetime: WebAttribute<ts_securityincident_Select, { ts_incidentdatetime: Date | null }, { ts_incidentdatetime_formatted?: string }>;
   ts_injuries: WebAttribute<ts_securityincident_Select, { ts_injuries: ts_injuries | null }, { ts_injuries_formatted?: string }>;
   ts_latitude: WebAttribute<ts_securityincident_Select, { ts_latitude: number | null }, {  }>;
@@ -94,7 +102,7 @@ interface ts_securityincident_Select {
   ts_mode: WebAttribute<ts_securityincident_Select, { ts_mode: ts_securityincidentmode | null }, { ts_mode_formatted?: string }>;
   ts_name: WebAttribute<ts_securityincident_Select, { ts_name: string | null }, {  }>;
   ts_owneroftherailwaylinetrack: WebAttribute<ts_securityincident_Select, { ts_owneroftherailwaylinetrack: string | null }, {  }>;
-  ts_province_guid: WebAttribute<ts_securityincident_Select, { ts_province_guid: string | null }, { ts_province_formatted?: string }>;
+  ts_province: WebAttribute<ts_securityincident_Select, { ts_province: ts_province | null }, { ts_province_formatted?: string }>;
   ts_publicorprivatecrossing: WebAttribute<ts_securityincident_Select, { ts_publicorprivatecrossing: ts_publicorprivatecrossing | null }, { ts_publicorprivatecrossing_formatted?: string }>;
   ts_region_guid: WebAttribute<ts_securityincident_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_reporteddatetime: WebAttribute<ts_securityincident_Select, { ts_reporteddatetime: Date | null }, { ts_reporteddatetime_formatted?: string }>;
@@ -109,6 +117,7 @@ interface ts_securityincident_Select {
   ts_targetelement_guid: WebAttribute<ts_securityincident_Select, { ts_targetelement_guid: string | null }, { ts_targetelement_formatted?: string }>;
   ts_tcomsid: WebAttribute<ts_securityincident_Select, { ts_tcomsid: string | null }, {  }>;
   ts_tcomsofficer: WebAttribute<ts_securityincident_Select, { ts_tcomsofficer: string | null }, {  }>;
+  ts_timetakenforstakeholdertoreport: WebAttribute<ts_securityincident_Select, { ts_timetakenforstakeholdertoreport: number | null }, {  }>;
   ts_timezone: WebAttribute<ts_securityincident_Select, { ts_timezone: ts_timezone | null }, { ts_timezone_formatted?: string }>;
   ts_yardorstationname: WebAttribute<ts_securityincident_Select, { ts_yardorstationname: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_securityincident_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -134,9 +143,12 @@ interface ts_securityincident_Filter {
   ts_arrests: ts_arrestsknownorunknown;
   ts_arrestscount: number;
   ts_arrestsdetails: string;
+  ts_bridgeclosure: ts_bridgeclosure;
+  ts_damagestoibtproperty: ts_damagestoibtproperty;
   ts_degreesminutesseconds: string;
   ts_delaystooperation: ts_delaystooperation;
   ts_delaystooperationtime: Date;
+  ts_ibtlocation_guid: XQW.Guid;
   ts_incidentdatetime: Date;
   ts_injuries: ts_injuries;
   ts_latitude: number;
@@ -147,7 +159,7 @@ interface ts_securityincident_Filter {
   ts_mode: ts_securityincidentmode;
   ts_name: string;
   ts_owneroftherailwaylinetrack: string;
-  ts_province_guid: XQW.Guid;
+  ts_province: ts_province;
   ts_publicorprivatecrossing: ts_publicorprivatecrossing;
   ts_region_guid: XQW.Guid;
   ts_reporteddatetime: Date;
@@ -162,6 +174,7 @@ interface ts_securityincident_Filter {
   ts_targetelement_guid: XQW.Guid;
   ts_tcomsid: string;
   ts_tcomsofficer: string;
+  ts_timetakenforstakeholdertoreport: number;
   ts_timezone: ts_timezone;
   ts_yardorstationname: string;
   utcconversiontimezonecode: number;
@@ -176,6 +189,7 @@ interface ts_securityincident_Expand {
   owningteam: WebExpand<ts_securityincident_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_securityincident_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_Contact_ts_securityincident_ts_securityin: WebExpand<ts_securityincident_Expand, Contact_Select, Contact_Filter, { ts_Contact_ts_securityincident_ts_securityin: Contact_Result[] }>;
+  ts_IBTLocation: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_IBTLocation: msdyn_FunctionalLocation_Result }>;
   ts_Site: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Stakeholder: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
   ts_securityincident_Appointments: WebExpand<ts_securityincident_Expand, Appointment_Select, Appointment_Filter, { ts_securityincident_Appointments: Appointment_Result[] }>;
@@ -199,8 +213,11 @@ interface ts_securityincident_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_arrests_formatted?: string;
+  ts_bridgeclosure_formatted?: string;
+  ts_damagestoibtproperty_formatted?: string;
   ts_delaystooperation_formatted?: string;
   ts_delaystooperationtime_formatted?: string;
+  ts_ibtlocation_formatted?: string;
   ts_incidentdatetime_formatted?: string;
   ts_injuries_formatted?: string;
   ts_locationtype_formatted?: string;
@@ -228,7 +245,7 @@ interface ts_securityincident_Result extends ts_securityincident_Base, ts_securi
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
   owninguser_guid: string | null;
-  ts_province_guid: string | null;
+  ts_ibtlocation_guid: string | null;
   ts_region_guid: string | null;
   ts_securityincidenttype_guid: string | null;
   ts_site_guid: string | null;
@@ -244,6 +261,7 @@ interface ts_securityincident_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_IBTLocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }

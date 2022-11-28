@@ -180,6 +180,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_team_bind$teams?: string | null;
   record1id_territory_bind$territories?: string | null;
   record1id_ts_enforcementaction_bind$ts_enforcementactions?: string | null;
+  record1id_ts_incidentnotification_bind$ts_incidentnotifications?: string | null;
   record1id_ts_interview_bind$ts_interviews?: string | null;
   record1roleid_bind$connectionroles?: string | null;
   record2id_account_bind$accounts?: string | null;
@@ -309,6 +310,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_team_bind$teams?: string | null;
   record2id_territory_bind$territories?: string | null;
   record2id_ts_enforcementaction_bind$ts_enforcementactions?: string | null;
+  record2id_ts_incidentnotification_bind$ts_incidentnotifications?: string | null;
   record2id_ts_interview_bind$ts_interviews?: string | null;
   record2roleid_bind$connectionroles?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
