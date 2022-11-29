@@ -23,3 +23,12 @@ function lockFields(executionContext, fields) {
         });
     }
 }
+
+function isFormTypeCreate(){
+    return Xrm.Page.ui.getFormType() == 1;
+}
+
+function isFormTypeUpdate(){
+    return Xrm.Page.ui.getFormType() == 2;
+}
+
