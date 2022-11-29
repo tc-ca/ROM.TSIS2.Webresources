@@ -44,11 +44,13 @@ function generateInspection(primaryControl) {
     //Create new inspection linked to current Security Inspection
     Xrm.WebApi.createRecord("msdyn_workorder", data).then(
         function success(result) {
-            Xrm.Utility.closeProgressIndicator();
             showAlertDialog(inspectionGeneratedTextLocalized, inspectionGeneratedTitleLocalized)
             primaryControl.ui.tabs.get("tab_3").setFocus();
             primaryControl.ui.controls.get("grid_workorder").refresh();
         },
+        function error(){
+            Xrm.Utility.closeProgressIndicator();
+        }
     )
 }
 
