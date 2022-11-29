@@ -49,6 +49,9 @@ function generateInspection(primaryControl) {
             primaryControl.ui.tabs.get("tab_3").setFocus();
             primaryControl.ui.controls.get("grid_workorder").refresh();
         },
+        function (error){
+            Xrm.Utility.closeProgressIndicator();
+        }
     )
 }
 
