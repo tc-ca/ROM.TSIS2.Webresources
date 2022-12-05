@@ -11,14 +11,15 @@ var ROM;
                 formContext.getControl("ts_operationactivity").setDisabled(true);
                 formContext.getControl("ts_teamplanningdata").setDisabled(true);
                 formContext.getControl("ts_target").setDisabled(true);
-                formContext.getControl("ts_plannedwouncalculated").setDisabled(true);
+                formContext.getControl("ts_dueq1").setDisabled(true);
+                formContext.getControl("ts_dueq2").setDisabled(true);
+                formContext.getControl("ts_dueq3").setDisabled(true);
+                formContext.getControl("ts_dueq4").setDisabled(true);
             }
-            recalculateVarianceAndPlannedWO(eContext);
         }
         PlanningData.onLoad = onLoad;
         function plannedOnChange(eContext) {
             setNullQuarterValueToZero(eContext);
-            recalculateVarianceAndPlannedWO(eContext);
         }
         PlanningData.plannedOnChange = plannedOnChange;
         function estimatedDurationOnChange(eContext) {
