@@ -33,10 +33,6 @@ var ROM;
             }
         }
         PlanningData.onLoad = onLoad;
-        function onSave(eContext) {
-            var formContext = eContext.getFormContext();
-        }
-        PlanningData.onSave = onSave;
         function plannedOnChange(eContext) {
             setNullQuarterValueToZero(eContext);
         }

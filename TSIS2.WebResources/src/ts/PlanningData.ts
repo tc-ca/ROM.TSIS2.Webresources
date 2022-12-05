@@ -29,10 +29,6 @@
         }
     }
 
-    export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
-        const formContext = <Form.ts_planningdata.Main.Information>eContext.getFormContext();
-    }
-
     export function plannedOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         setNullQuarterValueToZero(eContext)
     }
