@@ -21,6 +21,7 @@ interface ts_PlanningData_Base extends WebEntity {
   ts_generationlog?: string | null;
   ts_name?: string | null;
   ts_nullnumber?: number | null;
+  ts_operationactivityisoperational?: number | null;
   ts_originalteamestimatedduration?: number | null;
   ts_plannedq1?: number | null;
   ts_plannedq2?: number | null;
@@ -39,6 +40,7 @@ interface ts_PlanningData_Base extends WebEntity {
 interface ts_PlanningData_Relationships {
   ts_ActivityType?: msdyn_incidenttype_Result | null;
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
+  ts_Operation?: ovs_operation_Result | null;
   ts_OperationActivity?: ts_OperationActivity_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Stakeholder?: Account_Result | null;
@@ -52,10 +54,12 @@ interface ts_PlanningData extends ts_PlanningData_Base, ts_PlanningData_Relation
   ts_FiscalYear_bind$tc_tcfiscalyears?: string | null;
   ts_OperationActivity_bind$ts_operationactivities?: string | null;
   ts_OperationType_bind$ovs_operationtypes?: string | null;
+  ts_Operation_bind$ovs_operations?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_Stakeholder_bind$accounts?: string | null;
   ts_TeamPlanningData_bind$ts_teamplanningdatas?: string | null;
   ts_Team_bind$teams?: string | null;
+  ts_planningdetail_bind$ts_planningdetails?: string | null;
 }
 interface ts_PlanningData_Create extends ts_PlanningData {
 }
@@ -94,7 +98,9 @@ interface ts_PlanningData_Select {
   ts_generationlog: WebAttribute<ts_PlanningData_Select, { ts_generationlog: string | null }, {  }>;
   ts_name: WebAttribute<ts_PlanningData_Select, { ts_name: string | null }, {  }>;
   ts_nullnumber: WebAttribute<ts_PlanningData_Select, { ts_nullnumber: number | null }, {  }>;
+  ts_operation_guid: WebAttribute<ts_PlanningData_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
   ts_operationactivity_guid: WebAttribute<ts_PlanningData_Select, { ts_operationactivity_guid: string | null }, { ts_operationactivity_formatted?: string }>;
+  ts_operationactivityisoperational: WebAttribute<ts_PlanningData_Select, { ts_operationactivityisoperational: number | null }, {  }>;
   ts_operationtype_guid: WebAttribute<ts_PlanningData_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
   ts_originalteamestimatedduration: WebAttribute<ts_PlanningData_Select, { ts_originalteamestimatedduration: number | null }, {  }>;
   ts_plannedq1: WebAttribute<ts_PlanningData_Select, { ts_plannedq1: number | null }, {  }>;
@@ -104,6 +110,7 @@ interface ts_PlanningData_Select {
   ts_plannedwo: WebAttribute<ts_PlanningData_Select, { ts_plannedwo: number | null }, {  }>;
   ts_plannedwouncalculated: WebAttribute<ts_PlanningData_Select, { ts_plannedwouncalculated: number | null }, {  }>;
   ts_planningdataid: WebAttribute<ts_PlanningData_Select, { ts_planningdataid: string | null }, {  }>;
+  ts_planningdetail_guid: WebAttribute<ts_PlanningData_Select, { ts_planningdetail_guid: string | null }, { ts_planningdetail_formatted?: string }>;
   ts_site_guid: WebAttribute<ts_PlanningData_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_PlanningData_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   ts_target: WebAttribute<ts_PlanningData_Select, { ts_target: number | null }, {  }>;
@@ -148,7 +155,9 @@ interface ts_PlanningData_Filter {
   ts_generationlog: string;
   ts_name: string;
   ts_nullnumber: number;
+  ts_operation_guid: XQW.Guid;
   ts_operationactivity_guid: XQW.Guid;
+  ts_operationactivityisoperational: number;
   ts_operationtype_guid: XQW.Guid;
   ts_originalteamestimatedduration: any;
   ts_plannedq1: number;
@@ -158,6 +167,7 @@ interface ts_PlanningData_Filter {
   ts_plannedwo: number;
   ts_plannedwouncalculated: number;
   ts_planningdataid: XQW.Guid;
+  ts_planningdetail_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
   ts_target: number;
@@ -179,6 +189,7 @@ interface ts_PlanningData_Expand {
   owninguser: WebExpand<ts_PlanningData_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_ActivityType: WebExpand<ts_PlanningData_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_ActivityType: msdyn_incidenttype_Result }>;
   ts_FiscalYear: WebExpand<ts_PlanningData_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
+  ts_Operation: WebExpand<ts_PlanningData_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_Operation: ovs_operation_Result }>;
   ts_OperationActivity: WebExpand<ts_PlanningData_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_OperationActivity: ts_OperationActivity_Result }>;
   ts_Site: WebExpand<ts_PlanningData_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Stakeholder: WebExpand<ts_PlanningData_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
@@ -201,8 +212,10 @@ interface ts_PlanningData_FormattedResult {
   statuscode_formatted?: string;
   ts_activitytype_formatted?: string;
   ts_fiscalyear_formatted?: string;
+  ts_operation_formatted?: string;
   ts_operationactivity_formatted?: string;
   ts_operationtype_formatted?: string;
+  ts_planningdetail_formatted?: string;
   ts_site_formatted?: string;
   ts_stakeholder_formatted?: string;
   ts_team_formatted?: string;
@@ -220,8 +233,10 @@ interface ts_PlanningData_Result extends ts_PlanningData_Base, ts_PlanningData_R
   owninguser_guid: string | null;
   ts_activitytype_guid: string | null;
   ts_fiscalyear_guid: string | null;
+  ts_operation_guid: string | null;
   ts_operationactivity_guid: string | null;
   ts_operationtype_guid: string | null;
+  ts_planningdetail_guid: string | null;
   ts_site_guid: string | null;
   ts_stakeholder_guid: string | null;
   ts_team_guid: string | null;
@@ -237,6 +252,7 @@ interface ts_PlanningData_RelatedOne {
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_ActivityType: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  ts_Operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_OperationActivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

@@ -42,6 +42,7 @@ interface ts_enforcementaction_Base extends WebEntity {
   ts_comments?: string | null;
   ts_copyofreceipt?: string | null;
   ts_dateandtimeofserviceofenforcementaction?: Date | null;
+  ts_details?: string | null;
   ts_individualposition?: string | null;
   ts_typeofenforcementaction?: ts_type | null;
   ts_verbalwarningdeliverylocation?: ts_verbalwarningdeliverylocation | null;
@@ -252,6 +253,7 @@ interface ts_enforcementaction_Select {
   ts_comments: WebAttribute<ts_enforcementaction_Select, { ts_comments: string | null }, {  }>;
   ts_copyofreceipt: WebAttribute<ts_enforcementaction_Select, { ts_copyofreceipt: string | null }, {  }>;
   ts_dateandtimeofserviceofenforcementaction: WebAttribute<ts_enforcementaction_Select, { ts_dateandtimeofserviceofenforcementaction: Date | null }, { ts_dateandtimeofserviceofenforcementaction_formatted?: string }>;
+  ts_details: WebAttribute<ts_enforcementaction_Select, { ts_details: string | null }, {  }>;
   ts_incident_guid: WebAttribute<ts_enforcementaction_Select, { ts_incident_guid: string | null }, { ts_incident_formatted?: string }>;
   ts_individualcompany_guid: WebAttribute<ts_enforcementaction_Select, { ts_individualcompany_guid: string | null }, { ts_individualcompany_formatted?: string }>;
   ts_individualposition: WebAttribute<ts_enforcementaction_Select, { ts_individualposition: string | null }, {  }>;
@@ -331,6 +333,7 @@ interface ts_enforcementaction_Filter {
   ts_comments: string;
   ts_copyofreceipt: string;
   ts_dateandtimeofserviceofenforcementaction: Date;
+  ts_details: string;
   ts_incident_guid: XQW.Guid;
   ts_individualcompany_guid: XQW.Guid;
   ts_individualposition: string;

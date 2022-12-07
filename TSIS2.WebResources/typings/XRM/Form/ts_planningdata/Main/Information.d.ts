@@ -9,7 +9,6 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_completedq2"): Xrm.NumberAttribute;
       get(name: "ts_completedq3"): Xrm.NumberAttribute;
       get(name: "ts_completedq4"): Xrm.NumberAttribute;
-      get(name: "ts_details"): Xrm.Attribute<string>;
       get(name: "ts_dueq1"): Xrm.NumberAttribute;
       get(name: "ts_dueq2"): Xrm.NumberAttribute;
       get(name: "ts_dueq3"): Xrm.NumberAttribute;
@@ -17,6 +16,7 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ts_generationlog"): Xrm.Attribute<string>;
       get(name: "ts_name"): Xrm.Attribute<string>;
+      get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ts_operationactivity"): Xrm.LookupAttribute<"ts_operationactivity">;
       get(name: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_originalteamestimatedduration"): Xrm.NumberAttribute;
@@ -24,7 +24,9 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_plannedq2"): Xrm.NumberAttribute;
       get(name: "ts_plannedq3"): Xrm.NumberAttribute;
       get(name: "ts_plannedq4"): Xrm.NumberAttribute;
+      get(name: "ts_plannedwo"): Xrm.NumberAttribute;
       get(name: "ts_plannedwouncalculated"): Xrm.NumberAttribute;
+      get(name: "ts_planningdetail"): Xrm.LookupAttribute<"ts_planningdetail">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
       get(name: "ts_target"): Xrm.NumberAttribute;
@@ -44,7 +46,6 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_completedq2"): Xrm.NumberControl;
       get(name: "ts_completedq3"): Xrm.NumberControl;
       get(name: "ts_completedq4"): Xrm.NumberControl;
-      get(name: "ts_details"): Xrm.StringControl;
       get(name: "ts_dueq1"): Xrm.NumberControl;
       get(name: "ts_dueq2"): Xrm.NumberControl;
       get(name: "ts_dueq3"): Xrm.NumberControl;
@@ -52,6 +53,7 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ts_generationlog"): Xrm.StringControl;
       get(name: "ts_name"): Xrm.StringControl;
+      get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ts_operationactivity"): Xrm.LookupControl<"ts_operationactivity">;
       get(name: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_originalteamestimatedduration"): Xrm.NumberControl;
@@ -59,14 +61,16 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_plannedq2"): Xrm.NumberControl;
       get(name: "ts_plannedq3"): Xrm.NumberControl;
       get(name: "ts_plannedq4"): Xrm.NumberControl;
+      get(name: "ts_plannedwo"): Xrm.NumberControl;
       get(name: "ts_plannedwouncalculated"): Xrm.NumberControl;
-      get(name: "ts_plannedwouncalculated1"): Xrm.NumberControl;
+      get(name: "ts_planningdetail"): Xrm.LookupControl<"ts_planningdetail">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
       get(name: "ts_target"): Xrm.NumberControl;
       get(name: "ts_teamestimatedduration"): Xrm.NumberControl;
       get(name: "ts_teamplanningdata"): Xrm.LookupControl<"ts_teamplanningdata">;
       get(name: "ts_variance"): Xrm.NumberControl;
+      get(name: "ts_variance1"): Xrm.NumberControl;
       get(name: "ts_varianceuncalculated"): Xrm.NumberControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -87,7 +91,6 @@ declare namespace Form.ts_planningdata.Main {
     getAttribute(attributeName: "ts_completedq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_completedq3"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_completedq4"): Xrm.NumberAttribute;
-    getAttribute(attributeName: "ts_details"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_dueq1"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_dueq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_dueq3"): Xrm.NumberAttribute;
@@ -95,6 +98,7 @@ declare namespace Form.ts_planningdata.Main {
     getAttribute(attributeName: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ts_generationlog"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ts_operationactivity"): Xrm.LookupAttribute<"ts_operationactivity">;
     getAttribute(attributeName: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_originalteamestimatedduration"): Xrm.NumberAttribute;
@@ -102,7 +106,9 @@ declare namespace Form.ts_planningdata.Main {
     getAttribute(attributeName: "ts_plannedq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedq3"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedq4"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_plannedwo"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedwouncalculated"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_planningdetail"): Xrm.LookupAttribute<"ts_planningdetail">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_target"): Xrm.NumberAttribute;
@@ -117,7 +123,6 @@ declare namespace Form.ts_planningdata.Main {
     getControl(controlName: "ts_completedq2"): Xrm.NumberControl;
     getControl(controlName: "ts_completedq3"): Xrm.NumberControl;
     getControl(controlName: "ts_completedq4"): Xrm.NumberControl;
-    getControl(controlName: "ts_details"): Xrm.StringControl;
     getControl(controlName: "ts_dueq1"): Xrm.NumberControl;
     getControl(controlName: "ts_dueq2"): Xrm.NumberControl;
     getControl(controlName: "ts_dueq3"): Xrm.NumberControl;
@@ -125,6 +130,7 @@ declare namespace Form.ts_planningdata.Main {
     getControl(controlName: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ts_generationlog"): Xrm.StringControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;
+    getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ts_operationactivity"): Xrm.LookupControl<"ts_operationactivity">;
     getControl(controlName: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_originalteamestimatedduration"): Xrm.NumberControl;
@@ -132,14 +138,16 @@ declare namespace Form.ts_planningdata.Main {
     getControl(controlName: "ts_plannedq2"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedq3"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedq4"): Xrm.NumberControl;
+    getControl(controlName: "ts_plannedwo"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedwouncalculated"): Xrm.NumberControl;
-    getControl(controlName: "ts_plannedwouncalculated1"): Xrm.NumberControl;
+    getControl(controlName: "ts_planningdetail"): Xrm.LookupControl<"ts_planningdetail">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_target"): Xrm.NumberControl;
     getControl(controlName: "ts_teamestimatedduration"): Xrm.NumberControl;
     getControl(controlName: "ts_teamplanningdata"): Xrm.LookupControl<"ts_teamplanningdata">;
     getControl(controlName: "ts_variance"): Xrm.NumberControl;
+    getControl(controlName: "ts_variance1"): Xrm.NumberControl;
     getControl(controlName: "ts_varianceuncalculated"): Xrm.NumberControl;
     getControl(controlName: string): undefined;
   }
