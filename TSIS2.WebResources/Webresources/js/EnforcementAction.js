@@ -14,6 +14,28 @@ var ROM;
                     }
                 });
             }
+            //Set Details visible if ISSO
+            var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+            var currentUserBusinessUnitFetchXML = [
+                "<fetch top='50'>",
+                "  <entity name='businessunit'>",
+                "    <attribute name='name' />",
+                "    <attribute name='businessunitid' />",
+                "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+                "      <filter>",
+                "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+                "      </filter>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+            Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+                var userBusinessUnitName = result.entities[0].name;
+                if (userBusinessUnitName.startsWith("Intermodal")) {
+                    formContext.getControl("ts_details").setVisible(true);
+                }
+            });
             additionalDetailsVisibility(formContext);
             filterRepresentative(formContext);
             filterCompany(formContext);

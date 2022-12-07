@@ -39,6 +39,7 @@ declare namespace Form.ts_securityincident.Main {
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "new_location"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+      get(name: "statecode"): Xrm.OptionSetAttribute<ts_securityincident_statecode>;
       get(name: "ts_arrests"): Xrm.OptionSetAttribute<ts_arrestsknownorunknown>;
       get(name: "ts_arrestscount"): Xrm.NumberAttribute;
       get(name: "ts_arrestsdetails"): Xrm.Attribute<string>;
@@ -47,13 +48,13 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_degreesminutesseconds"): Xrm.Attribute<string>;
       get(name: "ts_delaystooperation"): Xrm.OptionSetAttribute<ts_delaystooperation>;
       get(name: "ts_delaystooperationtime"): Xrm.DateAttribute;
-      get(name: "ts_ibtlocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_incidentdatetime"): Xrm.DateAttribute;
       get(name: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
       get(name: "ts_latitude"): Xrm.NumberAttribute;
       get(name: "ts_locationcontext"): Xrm.Attribute<string>;
       get(name: "ts_locationtype"): Xrm.OptionSetAttribute<ts_locationtype>;
       get(name: "ts_longitude"): Xrm.NumberAttribute;
+      get(name: "ts_markerpost"): Xrm.Attribute<string>;
       get(name: "ts_milemarker"): Xrm.Attribute<string>;
       get(name: "ts_mode"): Xrm.OptionSetAttribute<ts_securityincidentmode>;
       get(name: "ts_name"): Xrm.Attribute<string>;
@@ -84,9 +85,10 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
       get(name: "grid_doc"): Xrm.SubGridControl<"ts_file">;
       get(name: "grid_workorder"): Xrm.SubGridControl<"msdyn_workorder">;
+      get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "new_location"): Xrm.StringControl;
       get(name: "notescontrol"): Xrm.BaseControl;
-      get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
       get(name: "ts_arrests"): Xrm.OptionSetControl<ts_arrestsknownorunknown>;
       get(name: "ts_arrestscount"): Xrm.NumberControl;
       get(name: "ts_arrestsdetails"): Xrm.StringControl;
@@ -95,13 +97,13 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_degreesminutesseconds"): Xrm.StringControl;
       get(name: "ts_delaystooperation"): Xrm.OptionSetControl<ts_delaystooperation>;
       get(name: "ts_delaystooperationtime"): Xrm.DateControl;
-      get(name: "ts_ibtlocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_incidentdatetime"): Xrm.DateControl;
       get(name: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
       get(name: "ts_latitude"): Xrm.NumberControl;
       get(name: "ts_locationcontext"): Xrm.StringControl;
       get(name: "ts_locationtype"): Xrm.OptionSetControl<ts_locationtype>;
       get(name: "ts_longitude"): Xrm.NumberControl;
+      get(name: "ts_markerpost"): Xrm.StringControl;
       get(name: "ts_milemarker"): Xrm.StringControl;
       get(name: "ts_mode"): Xrm.OptionSetControl<ts_securityincidentmode>;
       get(name: "ts_name"): Xrm.StringControl;
@@ -142,6 +144,7 @@ declare namespace Form.ts_securityincident.Main {
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
     getAttribute(attributeName: "new_location"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+    getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ts_securityincident_statecode>;
     getAttribute(attributeName: "ts_arrests"): Xrm.OptionSetAttribute<ts_arrestsknownorunknown>;
     getAttribute(attributeName: "ts_arrestscount"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_arrestsdetails"): Xrm.Attribute<string>;
@@ -150,13 +153,13 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_degreesminutesseconds"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_delaystooperation"): Xrm.OptionSetAttribute<ts_delaystooperation>;
     getAttribute(attributeName: "ts_delaystooperationtime"): Xrm.DateAttribute;
-    getAttribute(attributeName: "ts_ibtlocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_incidentdatetime"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
     getAttribute(attributeName: "ts_latitude"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_locationcontext"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_locationtype"): Xrm.OptionSetAttribute<ts_locationtype>;
     getAttribute(attributeName: "ts_longitude"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_markerpost"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_milemarker"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_mode"): Xrm.OptionSetAttribute<ts_securityincidentmode>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
@@ -182,9 +185,10 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "grid_doc"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "grid_workorder"): Xrm.SubGridControl<"msdyn_workorder">;
+    getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "new_location"): Xrm.StringControl;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
-    getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
     getControl(controlName: "ts_arrests"): Xrm.OptionSetControl<ts_arrestsknownorunknown>;
     getControl(controlName: "ts_arrestscount"): Xrm.NumberControl;
     getControl(controlName: "ts_arrestsdetails"): Xrm.StringControl;
@@ -193,13 +197,13 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_degreesminutesseconds"): Xrm.StringControl;
     getControl(controlName: "ts_delaystooperation"): Xrm.OptionSetControl<ts_delaystooperation>;
     getControl(controlName: "ts_delaystooperationtime"): Xrm.DateControl;
-    getControl(controlName: "ts_ibtlocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_incidentdatetime"): Xrm.DateControl;
     getControl(controlName: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
     getControl(controlName: "ts_latitude"): Xrm.NumberControl;
     getControl(controlName: "ts_locationcontext"): Xrm.StringControl;
     getControl(controlName: "ts_locationtype"): Xrm.OptionSetControl<ts_locationtype>;
     getControl(controlName: "ts_longitude"): Xrm.NumberControl;
+    getControl(controlName: "ts_markerpost"): Xrm.StringControl;
     getControl(controlName: "ts_milemarker"): Xrm.StringControl;
     getControl(controlName: "ts_mode"): Xrm.OptionSetControl<ts_securityincidentmode>;
     getControl(controlName: "ts_name"): Xrm.StringControl;
