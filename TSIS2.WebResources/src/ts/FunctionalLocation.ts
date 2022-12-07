@@ -177,8 +177,10 @@ namespace ROM.FunctionalLocation {
         const siteClass = form.getAttribute("ts_class").getValue();
         if (siteClass == ts_msdyn_functionallocation_ts_class._2 || siteClass == ts_msdyn_functionallocation_ts_class._3) {
             form.getControl("ts_riskscore").setVisible(true);
+            form.getControl("ts_lpdtounitedstates").setVisible(true);
         } else {
             form.getControl("ts_riskscore").setVisible(false);
+            form.getControl("ts_lpdtounitedstates").setVisible(false);
         }
     }
 

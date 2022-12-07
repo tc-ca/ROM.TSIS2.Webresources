@@ -36,13 +36,12 @@ function recalculateTeamPlanningDataValues(formContext) {
         "<fetch>",
         "  <entity name='ts_planningdata'>",
         "    <filter>",
-        "      <condition attribute='ts_teamplanningdata' operator='eq' value='", teamPlanningDataId , "' uitype='team'/>",
+        "      <condition attribute='ts_teamplanningdata' operator='eq' value='", teamPlanningDataId , "'/>",
         "    </filter>",
-        "    <link-entity name='ts_operationactivity' from='ts_operationactivityid' to='ts_operationactivity'>",
-        "      <filter>",
-        "        <condition attribute='ts_operationalstatus' operator='eq' value='717750000'/>",
-        "      </filter>",
-        "    </link-entity>",
+        "    <filter type='or'>",
+        "      <condition attribute='ts_operationactivity' operator='null'/>",
+        "      <condition attribute='ts_operationactivityisoperational' operator='eq' value='1'/>",
+        "    </filter>",
         "  </entity>",
         "</fetch>"
     ].join("");

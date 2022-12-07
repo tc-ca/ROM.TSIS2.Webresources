@@ -184,6 +184,7 @@ var ROM;
                                 "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
                                 "      <attribute name='ts_class'/>",
                                 "      <attribute name='ts_riskscore'/>",
+                                "      <attribute name='ts_lpdtounitedstates'/>",
                                 "    </link-entity>",
                                 "  </entity>",
                                 "</fetch>"
@@ -191,7 +192,7 @@ var ROM;
                             fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_operationactivity", fetchXml).then(function success(result) {
                                     return __awaiter(this, void 0, void 0, function () {
-                                        var _i, _a, operationActivity, generationLog, isMissingData, planningDataName, planningDataEnglishName, planningDataFrenchName, planningDataStakeholderId, planningDataOperationTypeId, planningDataSiteId, planningDataActivityTypeId, planningDataTarget, planningDataEstimatedDuration, planningDataQuarters, estimatedDurationFetchXml, teamActivityTypeEstimatedDuration, interval, i, data;
+                                        var _i, _a, operationActivity, generationLog, isMissingData, planningDataName, planningDataEnglishName, planningDataFrenchName, planningDataStakeholderId, planningDataOperationTypeId, planningDataSiteId, planningDataActivityTypeId, planningDataOperationId, planningDataTarget, planningDataEstimatedDuration, planningDataQuarters, estimatedDurationFetchXml, teamActivityTypeEstimatedDuration, interval, i, data;
                                         return __generator(this, function (_b) {
                                             switch (_b.label) {
                                                 case 0:
@@ -209,6 +210,7 @@ var ROM;
                                                     planningDataOperationTypeId = "";
                                                     planningDataSiteId = "";
                                                     planningDataActivityTypeId = "";
+                                                    planningDataOperationId = "";
                                                     planningDataTarget = 0;
                                                     planningDataEstimatedDuration = 0;
                                                     planningDataQuarters = [0, 0, 0, 0];
@@ -261,6 +263,7 @@ var ROM;
                                                     planningDataOperationTypeId = operationActivity["_ts_operationtype_value"];
                                                     planningDataSiteId = operationActivity["_ts_site_value"];
                                                     planningDataActivityTypeId = operationActivity["_ts_activity_value"];
+                                                    planningDataOperationId = operationActivity["_ts_operation_value"];
                                                     planningDataEnglishName = operationActivity["ovs_operation1.ovs_name"] + " | " + operationActivity["msdyn_incidenttype2.ovs_incidenttypenameenglish"] + " | " + planningDataFiscalYearName;
                                                     planningDataFrenchName = operationActivity["ovs_operation1.ovs_name"] + " | " + operationActivity["msdyn_incidenttype2.ovs_incidenttypenamefrench"] + " | " + planningDataFiscalYearName;
                                                     planningDataName = planningDataEnglishName + "::" + planningDataFrenchName;
@@ -300,7 +303,7 @@ var ROM;
                                                             generationLog += "Missing Risk Score on Site\n";
                                                             isMissingData = true;
                                                         }
-                                                        if (operationActivity["msdyn_functionallocation4.ts_riskscore"] > 5) {
+                                                        if (operationActivity["msdyn_functionallocation4.ts_riskscore"] > 5 || operationActivity["msdyn_functionallocation4.ts_lpdtounitedstates"] == true) {
                                                             interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3highriskinterval'];
                                                         }
                                                         else {
@@ -336,6 +339,7 @@ var ROM;
                                                         "ts_OperationType@odata.bind": "/ovs_operationtypes(" + planningDataOperationTypeId + ")",
                                                         "ts_Site@odata.bind": "/msdyn_functionallocations(" + planningDataSiteId + ")",
                                                         "ts_ActivityType@odata.bind": "/msdyn_incidenttypes(" + planningDataActivityTypeId + ")",
+                                                        "ts_Operation@odata.bind": "/ovs_operations(" + planningDataOperationId + ")",
                                                         "ts_target": planningDataTarget,
                                                         "ts_varianceuncalculated": 0,
                                                         "ts_plannedwouncalculated": planningDataTarget,

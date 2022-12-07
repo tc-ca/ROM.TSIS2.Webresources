@@ -168,9 +168,11 @@ var ROM;
             var siteClass = form.getAttribute("ts_class").getValue();
             if (siteClass == 717750002 /* _2 */ || siteClass == 717750003 /* _3 */) {
                 form.getControl("ts_riskscore").setVisible(true);
+                form.getControl("ts_lpdtounitedstates").setVisible(true);
             }
             else {
                 form.getControl("ts_riskscore").setVisible(false);
+                form.getControl("ts_lpdtounitedstates").setVisible(false);
             }
         }
         function classOnChange(eContext) {
