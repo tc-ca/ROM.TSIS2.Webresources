@@ -8,7 +8,7 @@ var ROM;
             if (formContext.ui.getFormType() == 2) {
                 StatusOfRailwayOwnerOnChange(eContext);
                 var mode = formContext.getAttribute("ts_mode");
-                if (mode.getValue() == ts_securityincidentmode.IBT) {
+                if (mode.getValue() == 717750001 /* InternationalBridgesandTunnels */) {
                     formContext.getControl("ts_bridgeclosure").setVisible(true);
                     formContext.getControl("ts_damagestoibtproperty").setVisible(true);
                     //Retrieve IBT locations
@@ -68,7 +68,7 @@ var ROM;
         function modeOnChange(eContext) {
             var form = eContext.getFormContext();
             var mode = form.getAttribute("ts_mode");
-            if (mode.getValue() == 717750001 /* IBT */) {
+            if (mode.getValue() == 717750001 /* InternationalBridgesandTunnels */) {
                 form.getControl("ts_bridgeclosure").setVisible(true);
                 form.getControl("ts_damagestoibtproperty").setVisible(true);
                 //Retrieve IBT locations
