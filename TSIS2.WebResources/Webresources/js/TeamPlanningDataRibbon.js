@@ -33,7 +33,7 @@ function recalculateTeamPlanningDataValues(formContext) {
     let teamPlanningDataResidualinspectorhoursTotal = 0;
 
     var fetchXml = [
-        "<fetch top='50'>",
+        "<fetch>",
         "  <entity name='ts_planningdata'>",
         "    <filter>",
         "      <condition attribute='ts_teamplanningdata' operator='eq' value='", teamPlanningDataId , "'/>",
