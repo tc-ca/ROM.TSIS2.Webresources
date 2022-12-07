@@ -178,6 +178,7 @@
     <Content Include="Webresources\js\Operation.js" />
     <Content Include="Webresources\js\OperationActivity.js" />
     <Content Include="Webresources\js\OperationActivityQuickCreate.js" />
+    <Content Include="Webresources\js\OperationActivityRibbon.js" />
     <Content Include="Webresources\js\PlanningData.js" />
     <Content Include="Webresources\js\planningDataRibbon.js" />
     <Content Include="Webresources\js\PlanningSettings.js" />

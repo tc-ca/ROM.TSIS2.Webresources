@@ -270,6 +270,11 @@
               "description": "ROM TSIS 2.0 Team Planning Data Ribbon Scripts"
             },
             {
+              "uniquename": "ts_/js/OperationActivityRibbon.js",
+              "file": "js\\OperationActivityRibbon.js",
+              "description": "ROM TSIS 2.0 Operation Activity Ribbon Scripts"
+            },
+            {
               "uniquename": "ts_/js/planningDataRibbon.js",
               "file": "js\\planningDataRibbon.js",
               "description": "ROM TSIS 2.0 Planning Data Ribbon Scripts"
