@@ -11,7 +11,30 @@ namespace ROM.EnforcementAction {
                 }
             });
         }
-        
+
+        //Set Details visible if ISSO
+        let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+        let currentUserBusinessUnitFetchXML = [
+            "<fetch top='50'>",
+            "  <entity name='businessunit'>",
+            "    <attribute name='name' />",
+            "    <attribute name='businessunitid' />",
+            "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+            "      <filter>",
+            "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+        currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+            let userBusinessUnitName = result.entities[0].name;
+            if (userBusinessUnitName.startsWith("Intermodal")) {
+                formContext.getControl("ts_details").setVisible(true);
+            }
+        });
+
         additionalDetailsVisibility(formContext);
 
         filterRepresentative(formContext);
@@ -122,5 +145,5 @@ namespace ROM.EnforcementAction {
             formContext.getAttribute("ts_individualcompany").setRequiredLevel("none");
             formContext.getAttribute("ts_verbalwarningdeliverylocation").setRequiredLevel("none");
         }
-    }
+    }   
 }

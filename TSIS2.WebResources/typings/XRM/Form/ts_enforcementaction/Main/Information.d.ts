@@ -26,6 +26,7 @@ declare namespace Form.ts_enforcementaction.Main {
       get(name: "ts_comments"): Xrm.Attribute<string>;
       get(name: "ts_copyofreceipt"): Xrm.Attribute<string>;
       get(name: "ts_dateandtimeofserviceofenforcementaction"): Xrm.DateAttribute;
+      get(name: "ts_details"): Xrm.Attribute<string>;
       get(name: "ts_individualcompany"): Xrm.LookupAttribute<"account">;
       get(name: "ts_individualposition"): Xrm.Attribute<string>;
       get(name: "ts_typeofenforcementaction"): Xrm.OptionSetAttribute<ts_type>;
@@ -49,6 +50,7 @@ declare namespace Form.ts_enforcementaction.Main {
       get(name: "ts_comments"): Xrm.StringControl;
       get(name: "ts_copyofreceipt"): Xrm.StringControl;
       get(name: "ts_dateandtimeofserviceofenforcementaction"): Xrm.DateControl;
+      get(name: "ts_details"): Xrm.StringControl;
       get(name: "ts_individualcompany"): Xrm.LookupControl<"account">;
       get(name: "ts_individualposition"): Xrm.StringControl;
       get(name: "ts_typeofenforcementaction"): Xrm.OptionSetControl<ts_type>;
@@ -80,6 +82,7 @@ declare namespace Form.ts_enforcementaction.Main {
     getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_copyofreceipt"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_dateandtimeofserviceofenforcementaction"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_details"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_individualcompany"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_individualposition"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_typeofenforcementaction"): Xrm.OptionSetAttribute<ts_type>;
@@ -98,6 +101,7 @@ declare namespace Form.ts_enforcementaction.Main {
     getControl(controlName: "ts_comments"): Xrm.StringControl;
     getControl(controlName: "ts_copyofreceipt"): Xrm.StringControl;
     getControl(controlName: "ts_dateandtimeofserviceofenforcementaction"): Xrm.DateControl;
+    getControl(controlName: "ts_details"): Xrm.StringControl;
     getControl(controlName: "ts_individualcompany"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_individualposition"): Xrm.StringControl;
     getControl(controlName: "ts_typeofenforcementaction"): Xrm.OptionSetControl<ts_type>;
