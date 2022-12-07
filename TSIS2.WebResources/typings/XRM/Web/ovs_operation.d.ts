@@ -64,6 +64,7 @@ interface ovs_operation_Relationships {
   ts_ovs_operation_ovs_operation_msdyn_inciden?: msdyn_incidenttype_Result[] | null;
   ts_ovs_operation_ovs_operation_ovs_operation?: ovs_operation_Result[] | null;
   ts_ts_operationactivity_Operation_ovs_operat?: ts_OperationActivity_Result[] | null;
+  ts_ts_planningdata_Operation_ovs_operation?: ts_PlanningData_Result[] | null;
 }
 interface ovs_operation extends ovs_operation_Base, ovs_operation_Relationships {
   ovs_LOBId_bind$ovs_lobs?: string | null;
@@ -240,6 +241,7 @@ interface ovs_operation_Expand {
   ts_stakeholder: WebExpand<ovs_operation_Expand, Account_Select, Account_Filter, { ts_stakeholder: Account_Result }>;
   ts_subsite: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_subsite: msdyn_FunctionalLocation_Result }>;
   ts_ts_operationactivity_Operation_ovs_operat: WebExpand<ovs_operation_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Operation_ovs_operat: ts_OperationActivity_Result[] }>;
+  ts_ts_planningdata_Operation_ovs_operation: WebExpand<ovs_operation_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Operation_ovs_operation: ts_PlanningData_Result[] }>;
 }
 interface ovs_operation_FormattedResult {
   createdby_formatted?: string;
@@ -327,6 +329,7 @@ interface ovs_operation_RelatedMany {
   ts_ovs_operation_ovs_operation_msdyn_inciden: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_ovs_operation_ovs_operation_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_ts_operationactivity_Operation_ovs_operat: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
+  ts_ts_planningdata_Operation_ovs_operation: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ovs_operations: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;

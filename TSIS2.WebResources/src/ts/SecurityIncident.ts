@@ -5,7 +5,7 @@ namespace ROM.SecurityIncident {
             StatusOfRailwayOwnerOnChange(eContext);
 
             const mode = formContext.getAttribute("ts_mode");
-            if (mode.getValue() == ts_securityincidentmode.IBT) {
+            if (mode.getValue() == ts_securityincidentmode.InternationalBridgesandTunnels) {
                 formContext.getControl("ts_bridgeclosure").setVisible(true);
                 formContext.getControl("ts_damagestoibtproperty").setVisible(true);
                 //Retrieve IBT locations
@@ -74,7 +74,7 @@ namespace ROM.SecurityIncident {
 
         const mode = form.getAttribute("ts_mode");
 
-        if (mode.getValue() == ts_securityincidentmode.IBT) {
+        if (mode.getValue() == ts_securityincidentmode.InternationalBridgesandTunnels) {
             form.getControl("ts_bridgeclosure").setVisible(true);
             form.getControl("ts_damagestoibtproperty").setVisible(true);
             //Retrieve IBT locations

@@ -92,6 +92,8 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_functionallocationnamefrench"): Xrm.Attribute<string>;
       get(name: "ts_iatacode"): Xrm.Attribute<string>;
       get(name: "ts_icaocode"): Xrm.Attribute<string>;
+      get(name: "ts_lpdtounitedstates"): Xrm.Attribute<any>;
+      get(name: "ts_mode"): Xrm.MultiSelectOptionSetAttribute<ts_securityincidentmode>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
@@ -136,6 +138,8 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_functionallocationnamefrench"): Xrm.StringControl;
       get(name: "ts_iatacode"): Xrm.StringControl;
       get(name: "ts_icaocode"): Xrm.StringControl;
+      get(name: "ts_lpdtounitedstates"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_mode"): Xrm.MultiSelectOptionSetControl<ts_securityincidentmode>;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;
@@ -184,6 +188,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "ts_functionallocationnamefrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_iatacode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_icaocode"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_lpdtounitedstates"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_mode"): Xrm.MultiSelectOptionSetAttribute<ts_securityincidentmode>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
@@ -223,6 +229,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "ts_functionallocationnamefrench"): Xrm.StringControl;
     getControl(controlName: "ts_iatacode"): Xrm.StringControl;
     getControl(controlName: "ts_icaocode"): Xrm.StringControl;
+    getControl(controlName: "ts_lpdtounitedstates"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_mode"): Xrm.MultiSelectOptionSetControl<ts_securityincidentmode>;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;

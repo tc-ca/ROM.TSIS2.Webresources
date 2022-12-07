@@ -1,5 +1,5 @@
 declare const enum ts_securityincidentmode {
-  Rail = 717750000,
-  IBT = 717750001,
-  AvSec = 717750002,
+  RailSecurity = 717750000,
+  InternationalBridgesandTunnels = 717750001,
+  AviationSecurity = 717750002,
 }

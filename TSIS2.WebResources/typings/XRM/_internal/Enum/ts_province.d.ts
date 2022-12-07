@@ -8,4 +8,8 @@ declare const enum ts_province {
   NewBrunswick = 717750006,
   NewofundlandandLabrador = 717750007,
   Saskatchewan = 717750008,
+  NorthwestTerritories = 717750009,
+  Nunavut = 717750010,
+  PrinceEdwardIsland = 717750011,
+  YukonTerritory = 717750012,
 }
