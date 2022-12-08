@@ -26,6 +26,12 @@ namespace ROM.SecurityIncident {
                 const viewDisplayName = "Site";
                 formContext.getControl("ts_site").addCustomView(viewIBTLocationId, "msdyn_functionallocation", viewDisplayName, ibtLocationFetchXML, layoutXmlContact, true);
             }
+            if (mode.getValue() == ts_securityincidentmode.AviationSecurity) {
+                formContext.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
+            }
+            else {
+                formContext.getControl("ts_securityincidenttype").setDefaultView("b8d91bb4-6776-ed11-81ac-0022483d5ee0");
+            }
         }
     }
 
@@ -102,6 +108,15 @@ namespace ROM.SecurityIncident {
             // Set default view
             form.getControl("ts_site").setDefaultView("57f1ece8-04ac-4178-b2bd-cbd292d2ecc4");
             form.getAttribute("ts_site").setValue(null);
+        }
+
+        if (mode.getValue() == ts_securityincidentmode.AviationSecurity) {
+            form.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
+            form.getAttribute("ts_securityincidenttype").setValue(null);
+        }
+        else {
+            form.getControl("ts_securityincidenttype").setDefaultView("b8d91bb4-6776-ed11-81ac-0022483d5ee0");
+            form.getAttribute("ts_securityincidenttype").setValue(null);
         }
     }
 }
