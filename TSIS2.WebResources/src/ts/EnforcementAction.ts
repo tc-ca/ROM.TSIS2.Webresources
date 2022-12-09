@@ -12,7 +12,7 @@ namespace ROM.EnforcementAction {
             });
         }
 
-        //Set Details visible if ISSO
+        //Set fields visible if ISSO
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
             "<fetch top='50'>",
@@ -32,6 +32,11 @@ namespace ROM.EnforcementAction {
             let userBusinessUnitName = result.entities[0].name;
             if (userBusinessUnitName.startsWith("Intermodal")) {
                 formContext.getControl("ts_details").setVisible(true);
+                formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(true);
+                if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
+                    formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
+                    formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
+                }
             }
         });
 
@@ -145,5 +150,19 @@ namespace ROM.EnforcementAction {
             formContext.getAttribute("ts_individualcompany").setRequiredLevel("none");
             formContext.getAttribute("ts_verbalwarningdeliverylocation").setRequiredLevel("none");
         }
-    }   
+    }
+
+    export function elevatedEnforcementActionRequiredOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        let formContext = <Form.ts_enforcementaction.Main.Information>eContext.getFormContext();
+        if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
+            formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
+            formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
+        }
+        else {
+            formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(false);
+            formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("none");
+            formContext.getAttribute("ts_justificationelevatedenforcementaction").setValue();
+        }
+    }
+
 }

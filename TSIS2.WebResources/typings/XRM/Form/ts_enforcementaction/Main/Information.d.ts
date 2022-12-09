@@ -27,8 +27,10 @@ declare namespace Form.ts_enforcementaction.Main {
       get(name: "ts_copyofreceipt"): Xrm.Attribute<string>;
       get(name: "ts_dateandtimeofserviceofenforcementaction"): Xrm.DateAttribute;
       get(name: "ts_details"): Xrm.Attribute<string>;
+      get(name: "ts_elevatedenforcementactionrequired"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_individualcompany"): Xrm.LookupAttribute<"account">;
       get(name: "ts_individualposition"): Xrm.Attribute<string>;
+      get(name: "ts_justificationelevatedenforcementaction"): Xrm.OptionSetAttribute<ts_justificationelevatedenforcementaction>;
       get(name: "ts_typeofenforcementaction"): Xrm.OptionSetAttribute<ts_type>;
       get(name: "ts_verbalwarningdeliverylocation"): Xrm.OptionSetAttribute<ts_verbalwarningdeliverylocation>;
       get(name: "ts_verbalwarninggivento"): Xrm.LookupAttribute<"contact">;
@@ -51,8 +53,10 @@ declare namespace Form.ts_enforcementaction.Main {
       get(name: "ts_copyofreceipt"): Xrm.StringControl;
       get(name: "ts_dateandtimeofserviceofenforcementaction"): Xrm.DateControl;
       get(name: "ts_details"): Xrm.StringControl;
+      get(name: "ts_elevatedenforcementactionrequired"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_individualcompany"): Xrm.LookupControl<"account">;
       get(name: "ts_individualposition"): Xrm.StringControl;
+      get(name: "ts_justificationelevatedenforcementaction"): Xrm.OptionSetControl<ts_justificationelevatedenforcementaction>;
       get(name: "ts_typeofenforcementaction"): Xrm.OptionSetControl<ts_type>;
       get(name: "ts_verbalwarningdeliverylocation"): Xrm.OptionSetControl<ts_verbalwarningdeliverylocation>;
       get(name: "ts_verbalwarninggivento"): Xrm.LookupControl<"contact">;
@@ -83,8 +87,10 @@ declare namespace Form.ts_enforcementaction.Main {
     getAttribute(attributeName: "ts_copyofreceipt"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_dateandtimeofserviceofenforcementaction"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_details"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_elevatedenforcementactionrequired"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_individualcompany"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_individualposition"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_justificationelevatedenforcementaction"): Xrm.OptionSetAttribute<ts_justificationelevatedenforcementaction>;
     getAttribute(attributeName: "ts_typeofenforcementaction"): Xrm.OptionSetAttribute<ts_type>;
     getAttribute(attributeName: "ts_verbalwarningdeliverylocation"): Xrm.OptionSetAttribute<ts_verbalwarningdeliverylocation>;
     getAttribute(attributeName: "ts_verbalwarninggivento"): Xrm.LookupAttribute<"contact">;
@@ -102,8 +108,10 @@ declare namespace Form.ts_enforcementaction.Main {
     getControl(controlName: "ts_copyofreceipt"): Xrm.StringControl;
     getControl(controlName: "ts_dateandtimeofserviceofenforcementaction"): Xrm.DateControl;
     getControl(controlName: "ts_details"): Xrm.StringControl;
+    getControl(controlName: "ts_elevatedenforcementactionrequired"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_individualcompany"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_individualposition"): Xrm.StringControl;
+    getControl(controlName: "ts_justificationelevatedenforcementaction"): Xrm.OptionSetControl<ts_justificationelevatedenforcementaction>;
     getControl(controlName: "ts_typeofenforcementaction"): Xrm.OptionSetControl<ts_type>;
     getControl(controlName: "ts_verbalwarningdeliverylocation"): Xrm.OptionSetControl<ts_verbalwarningdeliverylocation>;
     getControl(controlName: "ts_verbalwarninggivento"): Xrm.LookupControl<"contact">;
