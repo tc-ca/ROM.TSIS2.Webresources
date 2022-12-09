@@ -14,7 +14,7 @@ var ROM;
                     }
                 });
             }
-            //Set Details visible if ISSO
+            //Set fields visible if ISSO
             var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
             var currentUserBusinessUnitFetchXML = [
                 "<fetch top='50'>",
@@ -34,6 +34,11 @@ var ROM;
                 var userBusinessUnitName = result.entities[0].name;
                 if (userBusinessUnitName.startsWith("Intermodal")) {
                     formContext.getControl("ts_details").setVisible(true);
+                    formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(true);
+                    if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
+                        formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
+                        formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
+                    }
                 }
             });
             additionalDetailsVisibility(formContext);
@@ -124,5 +129,18 @@ var ROM;
             }
         }
         EnforcementAction.additionalDetailsVisibility = additionalDetailsVisibility;
+        function elevatedEnforcementActionRequiredOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
+                formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
+                formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
+            }
+            else {
+                formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(false);
+                formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("none");
+                formContext.getAttribute("ts_justificationelevatedenforcementaction").setValue();
+            }
+        }
+        EnforcementAction.elevatedEnforcementActionRequiredOnChange = elevatedEnforcementActionRequiredOnChange;
     })(EnforcementAction = ROM.EnforcementAction || (ROM.EnforcementAction = {}));
 })(ROM || (ROM = {}));
