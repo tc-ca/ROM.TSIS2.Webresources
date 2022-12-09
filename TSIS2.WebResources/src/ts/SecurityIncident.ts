@@ -8,6 +8,8 @@ namespace ROM.SecurityIncident {
             if (mode.getValue() == ts_securityincidentmode.InternationalBridgesandTunnels) {
                 formContext.getControl("ts_bridgeclosure").setVisible(true);
                 formContext.getControl("ts_damagestoibtproperty").setVisible(true);
+                formContext.getControl("ts_ruralorurban").setVisible(false);
+                formContext.getControl("ts_publicorprivatecrossing").setVisible(false);
                 //Retrieve IBT locations
                 let ibtLocationFetchXML = [
                     "<fetch>",
@@ -83,6 +85,8 @@ namespace ROM.SecurityIncident {
         if (mode.getValue() == ts_securityincidentmode.InternationalBridgesandTunnels) {
             form.getControl("ts_bridgeclosure").setVisible(true);
             form.getControl("ts_damagestoibtproperty").setVisible(true);
+            form.getControl("ts_ruralorurban").setVisible(false);
+            form.getControl("ts_publicorprivatecrossing").setVisible(false);
             //Retrieve IBT locations
             let ibtLocationFetchXML = [
                 "<fetch>",
@@ -105,6 +109,8 @@ namespace ROM.SecurityIncident {
         else {
             form.getControl("ts_bridgeclosure").setVisible(false);
             form.getControl("ts_damagestoibtproperty").setVisible(false);
+            form.getControl("ts_ruralorurban").setVisible(true);
+            form.getControl("ts_publicorprivatecrossing").setVisible(true);
             // Set default view
             form.getControl("ts_site").setDefaultView("57f1ece8-04ac-4178-b2bd-cbd292d2ecc4");
             form.getAttribute("ts_site").setValue(null);
