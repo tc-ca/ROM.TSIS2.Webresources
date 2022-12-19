@@ -489,6 +489,8 @@ namespace ROM.WorkOrder {
                     // Custom view for Trade Names
                     setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
                 }
+            } else if (isFromCase) {
+                populateOperationField(eContext);
             }
         } catch (e) {
             throw new Error(e.Message);
@@ -1472,6 +1474,62 @@ namespace ROM.WorkOrder {
             form.getControl("ts_othercanceledjustification").setVisible(false);
             form.getAttribute("ts_othercanceledjustification").setValue(null);
             form.getAttribute("ts_othercanceledjustification").setRequiredLevel("none");
+        }
+    }
+
+    function populateOperationField(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+        const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
+        const stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
+        const siteAttribute = form.getAttribute("ts_site");
+        const workOrderTypeAttribute = form.getAttribute("msdyn_workordertype");
+        if (siteAttribute != null && siteAttribute != undefined) {
+            // Clear out operation and subsite value if not already empty
+            if (form.getAttribute("ovs_operationid").getValue() != null) form.getAttribute("ovs_operationid").setValue(null);
+
+            // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+            const operationTypeAttributeValue = operationTypeAttribute.getValue();
+            const stakeholderAttributeValue = stakeholderAttribute.getValue();
+            const siteAttributeValue = siteAttribute.getValue();
+            const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
+
+            if (siteAttributeValue != null && siteAttributeValue != undefined &&
+                stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
+                operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
+                workOrderTypeAttribute != null && workOrderTypeAttributeValue != null) {
+
+                // Populate operation asset
+                const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
+                var encodedFetchXml = encodeURIComponent(fetchXml);
+                Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXml).then(
+                    function success(result) {
+                        if (result.entities.length == 1) {
+                            const targetOperation = result.entities[0];
+                            const lookup = new Array();
+                            lookup[0] = new Object();
+                            lookup[0].id = targetOperation.ovs_operationid;
+                            lookup[0].name = targetOperation.ovs_name;
+                            lookup[0].entityType = 'ovs_operation';
+
+                            if (targetOperation.ts_operationalstatus == 717750001) {
+                                form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
+                                form.getAttribute('ts_site').setValue(null);
+                            }
+                            else {
+                                form.ui.clearFormNotification("non-operational-operation");
+                                form.getAttribute('ovs_operationid').setValue(lookup);
+                            }
+
+                            setActivityTypeFilteredView(form, lookup[0].id, workOrderTypeAttributeValue[0].id, operationTypeAttributeValue[0].id);
+                        } else {
+                            // do not set a default if multiple records are found, error.
+                        }
+                    },
+                    function (error) {
+                        showErrorMessageAlert(error);
+                    }
+                );
+            }
         }
     }
 }
