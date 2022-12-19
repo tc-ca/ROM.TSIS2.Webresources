@@ -191,7 +191,7 @@ declare namespace Form.incident.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_4"): Xrm.SubGridControl<"contact">;
-      get(name: "Subgrid_new_5"): Xrm.SubGridControl<"ts_enforcementaction">;
+      get(name: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_enforcementaction">;
       get(name: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -357,7 +357,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_4"): Xrm.SubGridControl<"contact">;
-    getControl(controlName: "Subgrid_new_5"): Xrm.SubGridControl<"ts_enforcementaction">;
+    getControl(controlName: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_enforcementaction">;
     getControl(controlName: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;

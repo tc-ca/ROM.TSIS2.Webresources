@@ -9,6 +9,7 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_completedq2"): Xrm.NumberAttribute;
       get(name: "ts_completedq3"): Xrm.NumberAttribute;
       get(name: "ts_completedq4"): Xrm.NumberAttribute;
+      get(name: "ts_details"): Xrm.Attribute<string>;
       get(name: "ts_dueq1"): Xrm.NumberAttribute;
       get(name: "ts_dueq2"): Xrm.NumberAttribute;
       get(name: "ts_dueq3"): Xrm.NumberAttribute;
@@ -46,6 +47,7 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_completedq2"): Xrm.NumberControl;
       get(name: "ts_completedq3"): Xrm.NumberControl;
       get(name: "ts_completedq4"): Xrm.NumberControl;
+      get(name: "ts_details"): Xrm.StringControl;
       get(name: "ts_dueq1"): Xrm.NumberControl;
       get(name: "ts_dueq2"): Xrm.NumberControl;
       get(name: "ts_dueq3"): Xrm.NumberControl;
@@ -91,6 +93,7 @@ declare namespace Form.ts_planningdata.Main {
     getAttribute(attributeName: "ts_completedq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_completedq3"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_completedq4"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_details"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_dueq1"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_dueq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_dueq3"): Xrm.NumberAttribute;
@@ -123,6 +126,7 @@ declare namespace Form.ts_planningdata.Main {
     getControl(controlName: "ts_completedq2"): Xrm.NumberControl;
     getControl(controlName: "ts_completedq3"): Xrm.NumberControl;
     getControl(controlName: "ts_completedq4"): Xrm.NumberControl;
+    getControl(controlName: "ts_details"): Xrm.StringControl;
     getControl(controlName: "ts_dueq1"): Xrm.NumberControl;
     getControl(controlName: "ts_dueq2"): Xrm.NumberControl;
     getControl(controlName: "ts_dueq3"): Xrm.NumberControl;

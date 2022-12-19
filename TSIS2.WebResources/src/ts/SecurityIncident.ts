@@ -47,7 +47,7 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_owneroftherailwaylinetrack").setVisible(false);
 
         if (form.getAttribute("ts_delaystooperation").getValue() == ts_delaystooperation.Known) {
-            form.getControl("ts_delaystooperationtime").setVisible(true);
+            form.getControl("ts_delaysduration").setVisible(true);
         }
 
         if (form.getAttribute("ts_arrests").getValue() == ts_arrestsknownorunknown.Known) {
@@ -62,7 +62,11 @@ namespace ROM.SecurityIncident {
         const delaysToOperations = form.getAttribute("ts_delaystooperation");
 
         if (delaysToOperations.getValue() == ts_delaystooperation.Known) {
-            form.getControl("ts_delaystooperationtime").setVisible(true);
+            form.getControl("ts_delaysduration").setVisible(true);
+        }
+        else if(delaysToOperations.getValue() == ts_delaystooperation.Unknown || delaysToOperations.getValue() == null) {
+            form.getAttribute("ts_delaysduration").setValue(null);
+            form.getControl("ts_delaysduration").setVisible(false);
         }
     }
 

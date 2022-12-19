@@ -13,8 +13,8 @@ interface ts_securityincident_Base extends WebEntity {
   ts_bridgeclosure?: ts_bridgeclosure | null;
   ts_damagestoibtproperty?: ts_damagestoibtproperty | null;
   ts_degreesminutesseconds?: string | null;
+  ts_delaysduration?: number | null;
   ts_delaystooperation?: ts_delaystooperation | null;
-  ts_delaystooperationtime?: Date | null;
   ts_incidentdatetime?: Date | null;
   ts_injuries?: ts_injuries | null;
   ts_latitude?: number | null;
@@ -43,6 +43,7 @@ interface ts_securityincident_Base extends WebEntity {
 }
 interface ts_securityincident_Relationships {
   ts_Contact_ts_securityincident_ts_securityin?: Contact_Result[] | null;
+  ts_ReportingCompany?: Account_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Stakeholder?: Account_Result | null;
   ts_securityincident_Appointments?: Appointment_Result[] | null;
@@ -55,6 +56,7 @@ interface ts_securityincident extends ts_securityincident_Base, ts_securityincid
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   ts_Region_bind$territories?: string | null;
+  ts_ReportingCompany_bind$accounts?: string | null;
   ts_SecurityIncidentType_bind$ts_securityincidenttypes?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_StakeholderOperationType_bind$ovs_operationtypes?: string | null;
@@ -88,8 +90,8 @@ interface ts_securityincident_Select {
   ts_bridgeclosure: WebAttribute<ts_securityincident_Select, { ts_bridgeclosure: ts_bridgeclosure | null }, { ts_bridgeclosure_formatted?: string }>;
   ts_damagestoibtproperty: WebAttribute<ts_securityincident_Select, { ts_damagestoibtproperty: ts_damagestoibtproperty | null }, { ts_damagestoibtproperty_formatted?: string }>;
   ts_degreesminutesseconds: WebAttribute<ts_securityincident_Select, { ts_degreesminutesseconds: string | null }, {  }>;
+  ts_delaysduration: WebAttribute<ts_securityincident_Select, { ts_delaysduration: number | null }, {  }>;
   ts_delaystooperation: WebAttribute<ts_securityincident_Select, { ts_delaystooperation: ts_delaystooperation | null }, { ts_delaystooperation_formatted?: string }>;
-  ts_delaystooperationtime: WebAttribute<ts_securityincident_Select, { ts_delaystooperationtime: Date | null }, { ts_delaystooperationtime_formatted?: string }>;
   ts_incidentdatetime: WebAttribute<ts_securityincident_Select, { ts_incidentdatetime: Date | null }, { ts_incidentdatetime_formatted?: string }>;
   ts_injuries: WebAttribute<ts_securityincident_Select, { ts_injuries: ts_injuries | null }, { ts_injuries_formatted?: string }>;
   ts_latitude: WebAttribute<ts_securityincident_Select, { ts_latitude: number | null }, {  }>;
@@ -105,6 +107,7 @@ interface ts_securityincident_Select {
   ts_publicorprivatecrossing: WebAttribute<ts_securityincident_Select, { ts_publicorprivatecrossing: ts_publicorprivatecrossing | null }, { ts_publicorprivatecrossing_formatted?: string }>;
   ts_region_guid: WebAttribute<ts_securityincident_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_reporteddatetime: WebAttribute<ts_securityincident_Select, { ts_reporteddatetime: Date | null }, { ts_reporteddatetime_formatted?: string }>;
+  ts_reportingcompany_guid: WebAttribute<ts_securityincident_Select, { ts_reportingcompany_guid: string | null }, { ts_reportingcompany_formatted?: string }>;
   ts_ruralorurban: WebAttribute<ts_securityincident_Select, { ts_ruralorurban: ts_ruralorurban | null }, { ts_ruralorurban_formatted?: string }>;
   ts_securityincidentid: WebAttribute<ts_securityincident_Select, { ts_securityincidentid: string | null }, {  }>;
   ts_securityincidenttype_guid: WebAttribute<ts_securityincident_Select, { ts_securityincidenttype_guid: string | null }, { ts_securityincidenttype_formatted?: string }>;
@@ -145,8 +148,8 @@ interface ts_securityincident_Filter {
   ts_bridgeclosure: ts_bridgeclosure;
   ts_damagestoibtproperty: ts_damagestoibtproperty;
   ts_degreesminutesseconds: string;
+  ts_delaysduration: number;
   ts_delaystooperation: ts_delaystooperation;
-  ts_delaystooperationtime: Date;
   ts_incidentdatetime: Date;
   ts_injuries: ts_injuries;
   ts_latitude: number;
@@ -162,6 +165,7 @@ interface ts_securityincident_Filter {
   ts_publicorprivatecrossing: ts_publicorprivatecrossing;
   ts_region_guid: XQW.Guid;
   ts_reporteddatetime: Date;
+  ts_reportingcompany_guid: XQW.Guid;
   ts_ruralorurban: ts_ruralorurban;
   ts_securityincidentid: XQW.Guid;
   ts_securityincidenttype_guid: XQW.Guid;
@@ -188,6 +192,7 @@ interface ts_securityincident_Expand {
   owningteam: WebExpand<ts_securityincident_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_securityincident_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_Contact_ts_securityincident_ts_securityin: WebExpand<ts_securityincident_Expand, Contact_Select, Contact_Filter, { ts_Contact_ts_securityincident_ts_securityin: Contact_Result[] }>;
+  ts_ReportingCompany: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_ReportingCompany: Account_Result }>;
   ts_Site: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Stakeholder: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
   ts_securityincident_Appointments: WebExpand<ts_securityincident_Expand, Appointment_Select, Appointment_Filter, { ts_securityincident_Appointments: Appointment_Result[] }>;
@@ -214,7 +219,6 @@ interface ts_securityincident_FormattedResult {
   ts_bridgeclosure_formatted?: string;
   ts_damagestoibtproperty_formatted?: string;
   ts_delaystooperation_formatted?: string;
-  ts_delaystooperationtime_formatted?: string;
   ts_incidentdatetime_formatted?: string;
   ts_injuries_formatted?: string;
   ts_locationtype_formatted?: string;
@@ -223,6 +227,7 @@ interface ts_securityincident_FormattedResult {
   ts_publicorprivatecrossing_formatted?: string;
   ts_region_formatted?: string;
   ts_reporteddatetime_formatted?: string;
+  ts_reportingcompany_formatted?: string;
   ts_ruralorurban_formatted?: string;
   ts_securityincidenttype_formatted?: string;
   ts_site_formatted?: string;
@@ -243,6 +248,7 @@ interface ts_securityincident_Result extends ts_securityincident_Base, ts_securi
   owningteam_guid: string | null;
   owninguser_guid: string | null;
   ts_region_guid: string | null;
+  ts_reportingcompany_guid: string | null;
   ts_securityincidenttype_guid: string | null;
   ts_site_guid: string | null;
   ts_stakeholder_guid: string | null;
@@ -257,6 +263,7 @@ interface ts_securityincident_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_ReportingCompany: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
