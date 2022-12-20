@@ -37,10 +37,7 @@ declare namespace Form.ovs_finding.Main {
         get(name: "RATE_manager_review"): Xrm.PageSection;
         get(name: "RATE_proposed_section"): Xrm.PageSection;
         get(name: "tab_4_section_1"): Xrm.PageSection;
-        get(name: "tab_4_section_2"): Xrm.PageSection;
         get(name: "tab_RATE_column_5_section_1"): Xrm.PageSection;
-        get(name: "tab_RATE_section_3"): Xrm.PageSection;
-        get(name: "tab_RATE_section_4"): Xrm.PageSection;
         get(name: "tab_RATE_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
