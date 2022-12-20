@@ -48,7 +48,7 @@ var ROM;
             else
                 form.getControl("ts_owneroftherailwaylinetrack").setVisible(false);
             if (form.getAttribute("ts_delaystooperation").getValue() == 717750000 /* Known */) {
-                form.getControl("ts_delaysduration").setVisible(true);
+                form.getControl("ts_delayduration").setVisible(true);
             }
             if (form.getAttribute("ts_arrests").getValue() == 717750000 /* Known */) {
                 form.getControl("ts_arrestscount").setVisible(true);
@@ -60,11 +60,11 @@ var ROM;
             var form = eContext.getFormContext();
             var delaysToOperations = form.getAttribute("ts_delaystooperation");
             if (delaysToOperations.getValue() == 717750000 /* Known */) {
-                form.getControl("ts_delaysduration").setVisible(true);
+                form.getControl("ts_delayduration").setVisible(true);
             }
             else if (delaysToOperations.getValue() == 717750001 /* Unknown */ || delaysToOperations.getValue() == null) {
-                form.getAttribute("ts_delaysduration").setValue(null);
-                form.getControl("ts_delaysduration").setVisible(false);
+                form.getAttribute("ts_delayduration").setValue(null);
+                form.getControl("ts_delayduration").setVisible(false);
             }
         }
         SecurityIncident.delaysToOperationOnChange = delaysToOperationOnChange;

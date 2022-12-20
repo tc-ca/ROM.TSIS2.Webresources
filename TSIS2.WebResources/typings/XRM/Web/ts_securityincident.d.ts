@@ -13,7 +13,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_bridgeclosure?: ts_bridgeclosure | null;
   ts_damagestoibtproperty?: ts_damagestoibtproperty | null;
   ts_degreesminutesseconds?: string | null;
-  ts_delaysduration?: number | null;
+  ts_delayduration?: number | null;
   ts_delaystooperation?: ts_delaystooperation | null;
   ts_incidentdatetime?: Date | null;
   ts_injuries?: ts_injuries | null;
@@ -90,7 +90,7 @@ interface ts_securityincident_Select {
   ts_bridgeclosure: WebAttribute<ts_securityincident_Select, { ts_bridgeclosure: ts_bridgeclosure | null }, { ts_bridgeclosure_formatted?: string }>;
   ts_damagestoibtproperty: WebAttribute<ts_securityincident_Select, { ts_damagestoibtproperty: ts_damagestoibtproperty | null }, { ts_damagestoibtproperty_formatted?: string }>;
   ts_degreesminutesseconds: WebAttribute<ts_securityincident_Select, { ts_degreesminutesseconds: string | null }, {  }>;
-  ts_delaysduration: WebAttribute<ts_securityincident_Select, { ts_delaysduration: number | null }, {  }>;
+  ts_delayduration: WebAttribute<ts_securityincident_Select, { ts_delayduration: number | null }, {  }>;
   ts_delaystooperation: WebAttribute<ts_securityincident_Select, { ts_delaystooperation: ts_delaystooperation | null }, { ts_delaystooperation_formatted?: string }>;
   ts_incidentdatetime: WebAttribute<ts_securityincident_Select, { ts_incidentdatetime: Date | null }, { ts_incidentdatetime_formatted?: string }>;
   ts_injuries: WebAttribute<ts_securityincident_Select, { ts_injuries: ts_injuries | null }, { ts_injuries_formatted?: string }>;
@@ -148,7 +148,7 @@ interface ts_securityincident_Filter {
   ts_bridgeclosure: ts_bridgeclosure;
   ts_damagestoibtproperty: ts_damagestoibtproperty;
   ts_degreesminutesseconds: string;
-  ts_delaysduration: number;
+  ts_delayduration: number;
   ts_delaystooperation: ts_delaystooperation;
   ts_incidentdatetime: Date;
   ts_injuries: ts_injuries;

@@ -47,7 +47,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_bridgeclosure"): Xrm.OptionSetAttribute<ts_bridgeclosure>;
       get(name: "ts_damagestoibtproperty"): Xrm.OptionSetAttribute<ts_damagestoibtproperty>;
       get(name: "ts_degreesminutesseconds"): Xrm.Attribute<string>;
-      get(name: "ts_delaysduration"): Xrm.NumberAttribute;
+      get(name: "ts_delayduration"): Xrm.Attribute<any>;
       get(name: "ts_delaystooperation"): Xrm.OptionSetAttribute<ts_delaystooperation>;
       get(name: "ts_incidentdatetime"): Xrm.DateAttribute;
       get(name: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
@@ -99,7 +99,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_bridgeclosure"): Xrm.OptionSetControl<ts_bridgeclosure>;
       get(name: "ts_damagestoibtproperty"): Xrm.OptionSetControl<ts_damagestoibtproperty>;
       get(name: "ts_degreesminutesseconds"): Xrm.StringControl;
-      get(name: "ts_delaysduration"): Xrm.NumberControl;
+      get(name: "ts_delayduration"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_delaystooperation"): Xrm.OptionSetControl<ts_delaystooperation>;
       get(name: "ts_incidentdatetime"): Xrm.DateControl;
       get(name: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
@@ -157,7 +157,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_bridgeclosure"): Xrm.OptionSetAttribute<ts_bridgeclosure>;
     getAttribute(attributeName: "ts_damagestoibtproperty"): Xrm.OptionSetAttribute<ts_damagestoibtproperty>;
     getAttribute(attributeName: "ts_degreesminutesseconds"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ts_delaysduration"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_delayduration"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_delaystooperation"): Xrm.OptionSetAttribute<ts_delaystooperation>;
     getAttribute(attributeName: "ts_incidentdatetime"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
@@ -204,7 +204,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_bridgeclosure"): Xrm.OptionSetControl<ts_bridgeclosure>;
     getControl(controlName: "ts_damagestoibtproperty"): Xrm.OptionSetControl<ts_damagestoibtproperty>;
     getControl(controlName: "ts_degreesminutesseconds"): Xrm.StringControl;
-    getControl(controlName: "ts_delaysduration"): Xrm.NumberControl;
+    getControl(controlName: "ts_delayduration"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_delaystooperation"): Xrm.OptionSetControl<ts_delaystooperation>;
     getControl(controlName: "ts_incidentdatetime"): Xrm.DateControl;
     getControl(controlName: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
