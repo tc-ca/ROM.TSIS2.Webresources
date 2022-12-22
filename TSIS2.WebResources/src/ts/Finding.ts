@@ -20,6 +20,15 @@
         let findingType = formContext.getAttribute("ts_findingtype").getValue();
 
         if (findingType != ts_findingtype.Noncompliance) return;
+
+
+        let isDualInspector = false;
+        const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+        userRoles.forEach(role => {
+            if (role.name == "ROM - Dual Inspector") {
+                isDualInspector = true;
+            }
+        });
        
         formContext.getAttribute("ts_ncatfactorguide").setValue(false);
 
@@ -40,8 +49,10 @@
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
         Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
             const userBusinessUnitName = businessunit.entities[0].name;
+
             const operationTypeAttributeValue = formContext.getAttribute("ts_ovs_operationtype").getValue();
 
+            let operationTypeOwningBusinessUnit;
             if(operationTypeAttributeValue != null){
                 let operationTypeOwningBusinessUnitFetchXML = [
                     "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
@@ -59,7 +70,8 @@
                 operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(operationTypeOwningBusinessUnitFetchXML);
         
                 Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function (result) {
-                    let operationTypeOwningBusinessUnit = result.entities[0].name;
+                    operationTypeOwningBusinessUnit = result.entities[0].name;
+
                     if (operationTypeAttributeValue != null) {
                         //Show NCAT Sections and fields if Operation Type is ISSO specific, else show RATE
                         if (issoOperationTypeGuids.includes(operationTypeAttributeValue[0].id)) {
@@ -123,10 +135,21 @@
                     }
                 });
             }
+            if(shouldShowISSOFields(isDualInspector, operationTypeOwningBusinessUnit, userBusinessUnitName)){
+                formContext.getControl("ts_issueaddressedonsite").setVisible(true);
+                formContext.getControl("ts_notetostakeholder").setVisible(true);
+                formContext.getControl("ts_sensitivitylevel").setVisible(true);
+            }
         });
-
-        
         showHideNonComplianceTimeframe(formContext);
+    }
+
+    function shouldShowISSOFields(isDualInspector: any, operationTypeOwningBusinessUnit: any, userBusinessUnitName: any): boolean {
+        if (isDualInspector || operationTypeOwningBusinessUnit?.startsWith("Aviation Security") || userBusinessUnitName.startsWith("Aviation Security")) {
+            return true;
+        }
+
+        return false;
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {

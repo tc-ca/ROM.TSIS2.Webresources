@@ -55,6 +55,13 @@ var ROM;
             var findingType = formContext.getAttribute("ts_findingtype").getValue();
             if (findingType != 717750002 /* Noncompliance */)
                 return;
+            var isDualInspector = false;
+            var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+            userRoles.forEach(function (role) {
+                if (role.name == "ROM - Dual Inspector") {
+                    isDualInspector = true;
+                }
+            });
             formContext.getAttribute("ts_ncatfactorguide").setValue(false);
             var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
             var currentUserBusinessUnitFetchXML = [
@@ -74,6 +81,7 @@ var ROM;
             Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
                 var userBusinessUnitName = businessunit.entities[0].name;
                 var operationTypeAttributeValue = formContext.getAttribute("ts_ovs_operationtype").getValue();
+                var operationTypeOwningBusinessUnit;
                 if (operationTypeAttributeValue != null) {
                     var operationTypeOwningBusinessUnitFetchXML = [
                         "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
@@ -90,7 +98,7 @@ var ROM;
                     ].join("");
                     operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(operationTypeOwningBusinessUnitFetchXML);
                     Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function (result) {
-                        var operationTypeOwningBusinessUnit = result.entities[0].name;
+                        operationTypeOwningBusinessUnit = result.entities[0].name;
                         if (operationTypeAttributeValue != null) {
                             //Show NCAT Sections and fields if Operation Type is ISSO specific, else show RATE
                             if (issoOperationTypeGuids.includes(operationTypeAttributeValue[0].id)) {
@@ -145,10 +153,21 @@ var ROM;
                         }
                     });
                 }
+                if (shouldShowISSOFields(isDualInspector, operationTypeOwningBusinessUnit, userBusinessUnitName)) {
+                    formContext.getControl("ts_issueaddressedonsite").setVisible(true);
+                    formContext.getControl("ts_notetostakeholder").setVisible(true);
+                    formContext.getControl("ts_sensitivitylevel").setVisible(true);
+                }
             });
             showHideNonComplianceTimeframe(formContext);
         }
         Finding.onLoad = onLoad;
+        function shouldShowISSOFields(isDualInspector, operationTypeOwningBusinessUnit, userBusinessUnitName) {
+            if (isDualInspector || (operationTypeOwningBusinessUnit === null || operationTypeOwningBusinessUnit === void 0 ? void 0 : operationTypeOwningBusinessUnit.startsWith("Aviation Security")) || userBusinessUnitName.startsWith("Aviation Security")) {
+                return true;
+            }
+            return false;
+        }
         function onSave(eContext) {
             var formContext = eContext.getFormContext();
             var statusCodeAttribute = formContext.getAttribute("statuscode");
@@ -208,7 +227,7 @@ var ROM;
                             factor5AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor5AssessmentRatingId, "?$select=ts_weight");
                             factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
                             factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
-                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq " + 717750000 /* NCAT */);
+                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq ".concat(717750000 /* NCAT */));
                             //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
                             return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
                                     var totalWeight = 0;
@@ -311,7 +330,7 @@ var ROM;
                             factor8AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor8AssessmentRatingId, "?$select=ts_weight");
                             if (enforcementHistory == null)
                                 enforcementHistory = 717750000 /* Nil */;
-                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_rateenforcementaction&$filter=ts_assessmenttool eq " + 717750001 /* RATE */ + " and ts_rateenforcementhistory eq " + enforcementHistory);
+                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_rateenforcementaction&$filter=ts_assessmenttool eq ".concat(717750001 /* RATE */, " and ts_rateenforcementhistory eq ").concat(enforcementHistory));
                             //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
                             return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, factor8AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
                                     var totalWeight = 0;
@@ -644,7 +663,7 @@ var ROM;
                 var entityNameApprovingManagers = "systemuser";
                 var viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
                 //Approving managers in the same region as the case with the AvSec Business Unit
-                var fetchXmlApprovingManagersNCAT = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"" + NCATApprovingTeam[0].id + "\"/></filter></link-entity></entity></fetch>";
+                var fetchXmlApprovingManagersNCAT = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"".concat(NCATApprovingTeam[0].id, "\"/></filter></link-entity></entity></fetch>");
                 var layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
                 formContext.getControl("ts_ncatmanager").addCustomView(viewIdApprovingManagerNCAT, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersNCAT, layoutXmlApprovingManagers, true);
                 if (formContext.getAttribute("ts_ncatmanager").getValue != null) {
@@ -669,7 +688,7 @@ var ROM;
                 var entityNameApprovingManagers = "systemuser";
                 var viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
                 //Approving managers in the same region as the case with the ISSO Business Unit
-                var fetchXmlApprovingManagersRATE = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"" + RATEApprovingTeam[0].id + "\"/></filter></link-entity></entity></fetch>";
+                var fetchXmlApprovingManagersRATE = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"".concat(RATEApprovingTeam[0].id, "\"/></filter></link-entity></entity></fetch>");
                 var layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
                 formContext.getControl("ts_ratemanager").addCustomView(viewIdApprovingManagerRATE, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersRATE, layoutXmlApprovingManagers, true);
                 formContext.getControl("ts_ratemanager").setDisabled(false);
