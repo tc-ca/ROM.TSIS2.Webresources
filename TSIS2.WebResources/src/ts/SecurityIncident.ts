@@ -1,6 +1,13 @@
 namespace ROM.SecurityIncident {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+
+        const delaysToOperations = formContext.getAttribute("ts_delaystooperation");
+
+        if (delaysToOperations.getValue() == ts_delaystooperation.Unknown || delaysToOperations.getValue() == null) {
+            formContext.getControl("ts_delayduration").setVisible(false);
+        }
+
         if (formContext.ui.getFormType() == 2) {
             StatusOfRailwayOwnerOnChange(eContext);
 

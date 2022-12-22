@@ -5,6 +5,10 @@ var ROM;
     (function (SecurityIncident) {
         function onLoad(eContext) {
             var formContext = eContext.getFormContext();
+            var delaysToOperations = formContext.getAttribute("ts_delaystooperation");
+            if (delaysToOperations.getValue() == 717750001 /* Unknown */ || delaysToOperations.getValue() == null) {
+                formContext.getControl("ts_delayduration").setVisible(false);
+            }
             if (formContext.ui.getFormType() == 2) {
                 StatusOfRailwayOwnerOnChange(eContext);
                 var mode = formContext.getAttribute("ts_mode");
