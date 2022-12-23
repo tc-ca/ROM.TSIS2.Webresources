@@ -40,7 +40,6 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "new_location"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<ts_securityincident_statecode>;
-      get(name: "statuscode"): Xrm.OptionSetAttribute<ts_securityincident_statuscode>;
       get(name: "ts_arrests"): Xrm.OptionSetAttribute<ts_arrestsknownorunknown>;
       get(name: "ts_arrestscount"): Xrm.NumberAttribute;
       get(name: "ts_arrestsdetails"): Xrm.Attribute<string>;
@@ -49,7 +48,10 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_degreesminutesseconds"): Xrm.Attribute<string>;
       get(name: "ts_delayduration"): Xrm.Attribute<any>;
       get(name: "ts_delaystooperation"): Xrm.OptionSetAttribute<ts_delaystooperation>;
+      get(name: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_estimatedarrivaltime"): Xrm.DateAttribute;
       get(name: "ts_incidentdatetime"): Xrm.DateAttribute;
+      get(name: "ts_inflight"): Xrm.Attribute<any>;
       get(name: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
       get(name: "ts_latitude"): Xrm.NumberAttribute;
       get(name: "ts_locationcontext"): Xrm.Attribute<string>;
@@ -59,9 +61,12 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_milemarker"): Xrm.Attribute<string>;
       get(name: "ts_mode"): Xrm.OptionSetAttribute<ts_securityincidentmode>;
       get(name: "ts_name"): Xrm.Attribute<string>;
+      get(name: "ts_origin"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_owneroftherailwaylinetrack"): Xrm.Attribute<string>;
+      get(name: "ts_policeresponse"): Xrm.Attribute<any>;
       get(name: "ts_province"): Xrm.OptionSetAttribute<ts_province>;
       get(name: "ts_publicorprivatecrossing"): Xrm.OptionSetAttribute<ts_publicorprivatecrossing>;
+      get(name: "ts_recordstatus"): Xrm.OptionSetAttribute<ts_securityincidentstatus>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_reporteddatetime"): Xrm.DateAttribute;
       get(name: "ts_reportingcompany"): Xrm.LookupAttribute<"account">;
@@ -72,6 +77,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_stakeholderoperationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_statusofrailwayowner"): Xrm.OptionSetAttribute<ts_statusofrailwayowner>;
       get(name: "ts_subdivision"): Xrm.Attribute<string>;
+      get(name: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_targetelement"): Xrm.LookupAttribute<"ts_targetelement">;
       get(name: "ts_tcomsid"): Xrm.Attribute<string>;
       get(name: "ts_tcomsofficer"): Xrm.Attribute<string>;
@@ -88,8 +94,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "grid_doc"): Xrm.SubGridControl<"ts_file">;
       get(name: "grid_workorder"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-      get(name: "header_statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
-      get(name: "header_statuscode"): Xrm.OptionSetControl<ts_securityincident_statuscode>;
+      get(name: "header_ts_recordstatus"): Xrm.OptionSetControl<ts_securityincidentstatus>;
       get(name: "new_location"): Xrm.StringControl;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
@@ -101,7 +106,10 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_degreesminutesseconds"): Xrm.StringControl;
       get(name: "ts_delayduration"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_delaystooperation"): Xrm.OptionSetControl<ts_delaystooperation>;
+      get(name: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_estimatedarrivaltime"): Xrm.DateControl;
       get(name: "ts_incidentdatetime"): Xrm.DateControl;
+      get(name: "ts_inflight"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
       get(name: "ts_latitude"): Xrm.NumberControl;
       get(name: "ts_locationcontext"): Xrm.StringControl;
@@ -111,7 +119,9 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_milemarker"): Xrm.StringControl;
       get(name: "ts_mode"): Xrm.OptionSetControl<ts_securityincidentmode>;
       get(name: "ts_name"): Xrm.StringControl;
+      get(name: "ts_origin"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_owneroftherailwaylinetrack"): Xrm.StringControl;
+      get(name: "ts_policeresponse"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_province"): Xrm.OptionSetControl<ts_province>;
       get(name: "ts_publicorprivatecrossing"): Xrm.OptionSetControl<ts_publicorprivatecrossing>;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
@@ -124,6 +134,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_stakeholderoperationtype"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_statusofrailwayowner"): Xrm.OptionSetControl<ts_statusofrailwayowner>;
       get(name: "ts_subdivision"): Xrm.StringControl;
+      get(name: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_targetelement"): Xrm.LookupControl<"ts_targetelement">;
       get(name: "ts_tcomsid"): Xrm.StringControl;
       get(name: "ts_tcomsofficer"): Xrm.StringControl;
@@ -150,7 +161,6 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "new_location"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ts_securityincident_statecode>;
-    getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<ts_securityincident_statuscode>;
     getAttribute(attributeName: "ts_arrests"): Xrm.OptionSetAttribute<ts_arrestsknownorunknown>;
     getAttribute(attributeName: "ts_arrestscount"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_arrestsdetails"): Xrm.Attribute<string>;
@@ -159,7 +169,10 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_degreesminutesseconds"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_delayduration"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_delaystooperation"): Xrm.OptionSetAttribute<ts_delaystooperation>;
+    getAttribute(attributeName: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_estimatedarrivaltime"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_incidentdatetime"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_inflight"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
     getAttribute(attributeName: "ts_latitude"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_locationcontext"): Xrm.Attribute<string>;
@@ -169,9 +182,12 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_milemarker"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_mode"): Xrm.OptionSetAttribute<ts_securityincidentmode>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_origin"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_owneroftherailwaylinetrack"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_policeresponse"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_province"): Xrm.OptionSetAttribute<ts_province>;
     getAttribute(attributeName: "ts_publicorprivatecrossing"): Xrm.OptionSetAttribute<ts_publicorprivatecrossing>;
+    getAttribute(attributeName: "ts_recordstatus"): Xrm.OptionSetAttribute<ts_securityincidentstatus>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_reporteddatetime"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_reportingcompany"): Xrm.LookupAttribute<"account">;
@@ -182,6 +198,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_stakeholderoperationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_statusofrailwayowner"): Xrm.OptionSetAttribute<ts_statusofrailwayowner>;
     getAttribute(attributeName: "ts_subdivision"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_targetelement"): Xrm.LookupAttribute<"ts_targetelement">;
     getAttribute(attributeName: "ts_tcomsid"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_tcomsofficer"): Xrm.Attribute<string>;
@@ -193,8 +210,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "grid_doc"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "grid_workorder"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-    getControl(controlName: "header_statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
-    getControl(controlName: "header_statuscode"): Xrm.OptionSetControl<ts_securityincident_statuscode>;
+    getControl(controlName: "header_ts_recordstatus"): Xrm.OptionSetControl<ts_securityincidentstatus>;
     getControl(controlName: "new_location"): Xrm.StringControl;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
@@ -206,7 +222,10 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_degreesminutesseconds"): Xrm.StringControl;
     getControl(controlName: "ts_delayduration"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_delaystooperation"): Xrm.OptionSetControl<ts_delaystooperation>;
+    getControl(controlName: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_estimatedarrivaltime"): Xrm.DateControl;
     getControl(controlName: "ts_incidentdatetime"): Xrm.DateControl;
+    getControl(controlName: "ts_inflight"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
     getControl(controlName: "ts_latitude"): Xrm.NumberControl;
     getControl(controlName: "ts_locationcontext"): Xrm.StringControl;
@@ -216,7 +235,9 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_milemarker"): Xrm.StringControl;
     getControl(controlName: "ts_mode"): Xrm.OptionSetControl<ts_securityincidentmode>;
     getControl(controlName: "ts_name"): Xrm.StringControl;
+    getControl(controlName: "ts_origin"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_owneroftherailwaylinetrack"): Xrm.StringControl;
+    getControl(controlName: "ts_policeresponse"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_province"): Xrm.OptionSetControl<ts_province>;
     getControl(controlName: "ts_publicorprivatecrossing"): Xrm.OptionSetControl<ts_publicorprivatecrossing>;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
@@ -229,6 +250,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_stakeholderoperationtype"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_statusofrailwayowner"): Xrm.OptionSetControl<ts_statusofrailwayowner>;
     getControl(controlName: "ts_subdivision"): Xrm.StringControl;
+    getControl(controlName: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_targetelement"): Xrm.LookupControl<"ts_targetelement">;
     getControl(controlName: "ts_tcomsid"): Xrm.StringControl;
     getControl(controlName: "ts_tcomsofficer"): Xrm.StringControl;
