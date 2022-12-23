@@ -2,6 +2,7 @@ namespace ROM.EnforcementAction {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         let formContext = <Form.ts_enforcementaction.Main.Information>eContext.getFormContext();
 
+
         //Enable type of enforcement action field if user is Admin
         if(formContext.ui.getFormType() == 2 || formContext.ui.getFormType() == 3){
             const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
@@ -37,6 +38,35 @@ namespace ROM.EnforcementAction {
                     formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
                     formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
                 }
+                
+                //Hide fields for ISSO if type of enforcement action is set to "Referral to REU"
+                if(formContext.getAttribute("ts_typeofenforcementaction").getValue() == 717750002 ){
+                    hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
+
+                    //Check the case BU in case the inspector is an AvSec dual inspector 
+                    const caseAttribute = formContext.getAttribute("regardingobjectid");
+                    if(caseAttribute != null){
+                        const caseAttributeValue = caseAttribute.getValue();
+                        if(caseAttributeValue != null){
+                            const caseId = caseAttributeValue[0].id;
+
+                            Xrm.WebApi.retrieveRecord('incident', caseId, "?$select=_owningbusinessunit_value").then(
+                                function success(incident) {
+                                    Xrm.WebApi.retrieveRecord('businessunit', incident._owningbusinessunit_value, "?$select=name").then(
+                                        function success(businessUnit) {
+                                            if(businessUnit.startsWith("Intermodal")){
+                                                hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
+                                            }
+                                        }
+                                    );
+                                    
+                                },
+                            );
+                        }
+                        
+                    }
+                    
+                }
             }
         });
 
@@ -44,6 +74,13 @@ namespace ROM.EnforcementAction {
 
         filterRepresentative(formContext);
         filterCompany(formContext);
+    }
+
+    function hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext: Form.ts_enforcementaction.Main.Information) {
+        formContext.getControl("ts_dateandtimeofserviceofenforcementaction").setVisible(false);
+        formContext.getControl("ts_comments").setVisible(false);
+        formContext.getControl("ts_copyofreceipt").setVisible(false);
+        formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(false);
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
