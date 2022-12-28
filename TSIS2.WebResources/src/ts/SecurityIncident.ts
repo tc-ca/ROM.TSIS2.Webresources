@@ -36,10 +36,10 @@ namespace ROM.SecurityIncident {
                 formContext.getControl("ts_site").addCustomView(viewIBTLocationId, "msdyn_functionallocation", viewDisplayName, ibtLocationFetchXML, layoutXmlContact, true);
             }
             if (mode.getValue() == ts_securityincidentmode.AviationSecurity) {
-                formContext.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
+                ShowHideFieldsOnAvSec(eContext, true);
             }
             else {
-                formContext.getControl("ts_securityincidenttype").setDefaultView("b8d91bb4-6776-ed11-81ac-0022483d5ee0");
+                ShowHideFieldsOnAvSec(eContext, false);
             }
         }
     }
@@ -128,12 +128,83 @@ namespace ROM.SecurityIncident {
         }
 
         if (mode.getValue() == ts_securityincidentmode.AviationSecurity) {
-            form.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
             form.getAttribute("ts_securityincidenttype").setValue(null);
+            ShowHideFieldsOnAvSec(eContext, true);
+        }
+        else {
+            form.getAttribute("ts_securityincidenttype").setValue(null);
+            ShowHideFieldsOnAvSec(eContext, false);
+        }
+    }
+
+    export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+        setSubSiteFilteredView(form);
+    }
+
+    function setSubSiteFilteredView(form: Form.ts_securityincident.Main.Information): void {
+        const siteAttribute = form.getAttribute("ts_site");
+        const siteAttributeValue = siteAttribute.getValue(); 
+
+        if (siteAttributeValue != null && siteAttributeValue != undefined) {
+            form.getAttribute('ts_subsite').setValue(null);
+            const viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
+            const entityName = "msdyn_functionallocation";
+            const viewDisplayName = "Filtered Sites";
+            const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+            const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+            form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+        }
+    }
+
+    function ShowHideFieldsOnAvSec(eContext: Xrm.ExecutionContext<any, any>, isAvSec): void {
+        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+
+        if (isAvSec) {
+            form.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
+
+            form.getControl("ts_targetelement").setVisible(false);
+            form.getControl("ts_statusofrailwayowner").setVisible(false);
+            form.getControl("ts_owneroftherailwaylinetrack").setVisible(false);
+            form.getControl("ts_locationtype").setVisible(false);
+            form.getControl("new_location").setVisible(false);
+            form.getControl("ts_subdivision").setVisible(false);
+            form.getControl("ts_milemarker").setVisible(false);
+            form.getControl("ts_markerpost").setVisible(false);
+            form.getControl("ts_locationcontext").setVisible(false);
+            form.getControl("ts_yardorstationname").setVisible(false);
+            form.getControl("ts_publicorprivatecrossing").setVisible(false);
+            form.getControl("ts_ruralorurban").setVisible(false);
+
+            form.getControl("ts_subsite").setVisible(true);
+            form.getControl("ts_inflight").setVisible(true);
+            form.getControl("ts_origin").setVisible(true);
+            form.getControl("ts_destination").setVisible(true);
+            form.getControl("ts_estimatedarrivaltime").setVisible(true);
+            form.getControl("ts_policeresponse").setVisible(true);
         }
         else {
             form.getControl("ts_securityincidenttype").setDefaultView("b8d91bb4-6776-ed11-81ac-0022483d5ee0");
-            form.getAttribute("ts_securityincidenttype").setValue(null);
+
+            form.getControl("ts_targetelement").setVisible(true);
+            form.getControl("ts_statusofrailwayowner").setVisible(true);
+            form.getControl("ts_owneroftherailwaylinetrack").setVisible(true);
+            form.getControl("ts_locationtype").setVisible(true);
+            form.getControl("new_location").setVisible(true);
+            form.getControl("ts_subdivision").setVisible(true);
+            form.getControl("ts_milemarker").setVisible(true);
+            form.getControl("ts_markerpost").setVisible(true);
+            form.getControl("ts_locationcontext").setVisible(true);
+            form.getControl("ts_yardorstationname").setVisible(true);
+            form.getControl("ts_publicorprivatecrossing").setVisible(true);
+            form.getControl("ts_ruralorurban").setVisible(true);
+
+            form.getControl("ts_subsite").setVisible(false);
+            form.getControl("ts_inflight").setVisible(false);
+            form.getControl("ts_origin").setVisible(false);
+            form.getControl("ts_destination").setVisible(false);
+            form.getControl("ts_estimatedarrivaltime").setVisible(false);
+            form.getControl("ts_policeresponse").setVisible(false);
         }
     }
 }
