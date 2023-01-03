@@ -127,6 +127,7 @@ namespace ROM.Operation {
                                 setOperationTypeFilteredView(form);
                                 setSiteFilteredView(form);
                                 setSubSiteFilteredView(form);
+                                setSubSubSiteFilteredView(form);
                             }
                         );
                     }
@@ -280,6 +281,26 @@ namespace ROM.Operation {
             const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") +'</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
             const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+        }
+    }
+
+    export function subsiteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+        setSubSubSiteFilteredView(form);
+    }
+
+    function setSubSubSiteFilteredView(form: Form.ovs_operation.Main.Information): void {
+        const subsiteAttribute = form.getAttribute("ts_subsite");
+        const subsiteAttributeValue = subsiteAttribute.getValue();
+
+        if (subsiteAttributeValue != null && subsiteAttributeValue != undefined) {
+            form.getControl('ts_subsubsite').setDisabled(false);
+            const viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
+            const entityName = "msdyn_functionallocation";
+            const viewDisplayName = "Filtered Sites";
+            const siteFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + subsiteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+            const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+            form.getControl("ts_subsubsite").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
         }
     }
 
