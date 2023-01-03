@@ -160,6 +160,7 @@ var ROM;
                                         setOperationTypeFilteredView(form);
                                         setSiteFilteredView(form);
                                         setSubSiteFilteredView(form);
+                                        setSubSubSiteFilteredView(form);
                                     });
                                 }
                                 if (form.getAttribute('ts_subsite').getValue() != null) {
@@ -296,6 +297,24 @@ var ROM;
                 var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
                 var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+            }
+        }
+        function subsiteOnChange(eContext) {
+            var form = eContext.getFormContext();
+            setSubSubSiteFilteredView(form);
+        }
+        Operation.subsiteOnChange = subsiteOnChange;
+        function setSubSubSiteFilteredView(form) {
+            var subsiteAttribute = form.getAttribute("ts_subsite");
+            var subsiteAttributeValue = subsiteAttribute.getValue();
+            if (subsiteAttributeValue != null && subsiteAttributeValue != undefined) {
+                form.getControl('ts_subsubsite').setDisabled(false);
+                var viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
+                var entityName = "msdyn_functionallocation";
+                var viewDisplayName = "Filtered Sites";
+                var siteFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + subsiteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+                var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                form.getControl("ts_subsubsite").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
             }
         }
         function statusStartDateOnChange(eContext) {

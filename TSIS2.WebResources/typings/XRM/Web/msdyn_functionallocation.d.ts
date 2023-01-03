@@ -46,6 +46,7 @@ interface msdyn_FunctionalLocation_Relationships {
   msdyn_msdyn_functionallocation_incident_FunctionalLocation?: Incident_Result[] | null;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation?: msdyn_workorder_Result[] | null;
   ovs_Finding_functionallocation_msdyn_Func?: ovs_Finding_Result[] | null;
+  ts_msdyn_functionallocation_ovs_operation_Subsubsite?: ovs_operation_Result[] | null;
   ts_msdyn_functionallocation_ts_securityincident_Destination?: ts_securityincident_Result[] | null;
   ts_msdyn_functionallocation_ts_securityincident_Origin?: ts_securityincident_Result[] | null;
   ts_msdyn_functionallocation_ts_securityincident_Site?: ts_securityincident_Result[] | null;
@@ -186,6 +187,7 @@ interface msdyn_FunctionalLocation_Expand {
   ownerid: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<msdyn_FunctionalLocation_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_msdyn_functionallocation_ovs_operation_Subsubsite: WebExpand<msdyn_FunctionalLocation_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_msdyn_functionallocation_ovs_operation_Subsubsite: ovs_operation_Result[] }>;
   ts_msdyn_functionallocation_ts_securityincident_Destination: WebExpand<msdyn_FunctionalLocation_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_msdyn_functionallocation_ts_securityincident_Destination: ts_securityincident_Result[] }>;
   ts_msdyn_functionallocation_ts_securityincident_Origin: WebExpand<msdyn_FunctionalLocation_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_msdyn_functionallocation_ts_securityincident_Origin: ts_securityincident_Result[] }>;
   ts_msdyn_functionallocation_ts_securityincident_Site: WebExpand<msdyn_FunctionalLocation_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_msdyn_functionallocation_ts_securityincident_Site: ts_securityincident_Result[] }>;
@@ -257,6 +259,7 @@ interface msdyn_FunctionalLocation_RelatedMany {
   msdyn_msdyn_functionallocation_incident_FunctionalLocation: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_Finding_functionallocation_msdyn_Func: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_msdyn_functionallocation_ovs_operation_Subsubsite: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_msdyn_functionallocation_ts_securityincident_Destination: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   ts_msdyn_functionallocation_ts_securityincident_Origin: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   ts_msdyn_functionallocation_ts_securityincident_Site: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
