@@ -13,6 +13,8 @@ namespace ROM.EnforcementAction {
             });
         }
 
+        let referralToREUEnforcementAction = formContext.getAttribute("ts_typeofenforcementaction").getValue() == 717750002;
+
         //Set fields visible if ISSO
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
@@ -40,33 +42,34 @@ namespace ROM.EnforcementAction {
                 }
                 
                 //Hide fields for ISSO if type of enforcement action is set to "Referral to REU"
-                if(formContext.getAttribute("ts_typeofenforcementaction").getValue() == 717750002 ){
+                if(referralToREUEnforcementAction){
                     hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
-
+                }
+            }
+            else{
+                if(referralToREUEnforcementAction){
                     //Check the case BU in case the inspector is an AvSec dual inspector 
                     const caseAttribute = formContext.getAttribute("regardingobjectid");
                     if(caseAttribute != null){
                         const caseAttributeValue = caseAttribute.getValue();
                         if(caseAttributeValue != null){
                             const caseId = caseAttributeValue[0].id;
-
+    
                             Xrm.WebApi.retrieveRecord('incident', caseId, "?$select=_owningbusinessunit_value").then(
                                 function success(incident) {
                                     Xrm.WebApi.retrieveRecord('businessunit', incident._owningbusinessunit_value, "?$select=name").then(
                                         function success(businessUnit) {
-                                            if(businessUnit.startsWith("Intermodal")){
+                                            if(businessUnit.name.startsWith("Intermodal")){
                                                 hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
                                             }
                                         }
                                     );
-                                    
                                 },
                             );
                         }
-                        
-                    }
-                    
+                    } 
                 }
+
             }
         });
 
@@ -81,6 +84,7 @@ namespace ROM.EnforcementAction {
         formContext.getControl("ts_comments").setVisible(false);
         formContext.getControl("ts_copyofreceipt").setVisible(false);
         formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(false);
+        formContext.getControl("ts_details").setVisible(true);
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {

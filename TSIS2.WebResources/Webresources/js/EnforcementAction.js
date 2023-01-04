@@ -14,6 +14,7 @@ var ROM;
                     }
                 });
             }
+            var referralToREUEnforcementAction = formContext.getAttribute("ts_typeofenforcementaction").getValue() == 717750002;
             //Set fields visible if ISSO
             var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
             var currentUserBusinessUnitFetchXML = [
@@ -40,8 +41,12 @@ var ROM;
                         formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
                     }
                     //Hide fields for ISSO if type of enforcement action is set to "Referral to REU"
-                    if (formContext.getAttribute("ts_typeofenforcementaction").getValue() == 717750002) {
+                    if (referralToREUEnforcementAction) {
                         hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
+                    }
+                }
+                else {
+                    if (referralToREUEnforcementAction) {
                         //Check the case BU in case the inspector is an AvSec dual inspector 
                         var caseAttribute = formContext.getAttribute("regardingobjectid");
                         if (caseAttribute != null) {
@@ -50,7 +55,7 @@ var ROM;
                                 var caseId = caseAttributeValue[0].id;
                                 Xrm.WebApi.retrieveRecord('incident', caseId, "?$select=_owningbusinessunit_value").then(function success(incident) {
                                     Xrm.WebApi.retrieveRecord('businessunit', incident._owningbusinessunit_value, "?$select=name").then(function success(businessUnit) {
-                                        if (businessUnit.startsWith("Intermodal")) {
+                                        if (businessUnit.name.startsWith("Intermodal")) {
                                             hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
                                         }
                                     });
@@ -70,6 +75,7 @@ var ROM;
             formContext.getControl("ts_comments").setVisible(false);
             formContext.getControl("ts_copyofreceipt").setVisible(false);
             formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(false);
+            formContext.getControl("ts_details").setVisible(true);
         }
         function onSave(eContext) {
         }
