@@ -11,31 +11,17 @@ namespace ROM.SecurityIncident {
         if (formContext.ui.getFormType() == 2) {
             StatusOfRailwayOwnerOnChange(eContext);
 
-            const mode = formContext.getAttribute("ts_mode");
-            if (mode.getValue() == ts_securityincidentmode.InternationalBridgesandTunnels) {
+            const modeAttribute = formContext.getAttribute("ts_mode");
+            const modeAttributeValue = modeAttribute.getValue()
+    
+            if (modeAttributeValue == ts_securityincidentmode.InternationalBridgesandTunnels) {
                 formContext.getControl("ts_bridgeclosure").setVisible(true);
                 formContext.getControl("ts_damagestoibtproperty").setVisible(true);
                 formContext.getControl("ts_ruralorurban").setVisible(false);
                 formContext.getControl("ts_publicorprivatecrossing").setVisible(false);
-                //Retrieve IBT locations
-                let ibtLocationFetchXML = [
-                    "<fetch>",
-                    "  <entity name='msdyn_functionallocation'>",
-                    "    <filter>",
-                    "       <condition attribute='ts_mode' operator='contain-values'>",
-                    "           <value>717750001</value>",
-                    "       </condition>",
-                    "    </filter>",
-                    "  </entity>",
-                    "</fetch>",
-                ].join("");
-                //Set custom view for Site field
-                const viewIBTLocationId = '{75e123a5-2d58-4642-a298-6d7e4edc089e}';
-                const layoutXmlContact = '<grid name="resultset" jump="msdyn_name" select="1" icon="1" preview="1" object="10117"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="300" /><cell name="createdon" width="125" /></row></grid>';
-                const viewDisplayName = "Site";
-                formContext.getControl("ts_site").addCustomView(viewIBTLocationId, "msdyn_functionallocation", viewDisplayName, ibtLocationFetchXML, layoutXmlContact, true);
+    
             }
-            if (mode.getValue() == ts_securityincidentmode.AviationSecurity) {
+            if (modeAttributeValue == ts_securityincidentmode.AviationSecurity) {
                 ShowHideFieldsOnAvSec(eContext, true);
             }
             else {
@@ -44,7 +30,7 @@ namespace ROM.SecurityIncident {
             setSubSiteFilteredView(formContext, false);
 
             if(formContext.getAttribute("ts_mode").getValue() != null){   
-                programOnChange(eContext);
+                setSiteFilteredView(formContext, modeAttributeValue != null ? modeAttributeValue : null);
             }
 
         }
@@ -124,6 +110,7 @@ namespace ROM.SecurityIncident {
         }
 
         setSiteFilteredView(form, modeAttributeValue != null ? modeAttributeValue : null);
+
     }
 
     export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -146,15 +133,6 @@ namespace ROM.SecurityIncident {
             const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
         }
-    }
-
-    function programOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
-
-        const programAttribute = form.getAttribute("ts_mode");
-        const programAttributeValue = programAttribute?.getValue();
-
-        setSiteFilteredView(form, programAttributeValue != null ? programAttributeValue : null);
     }
     
     function setSiteFilteredView(form: Form.ts_securityincident.Main.Information, mode): void {
