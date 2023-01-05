@@ -37,6 +37,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_securityincidentid?: string | null;
   ts_statusofrailwayowner?: ts_statusofrailwayowner | null;
   ts_subdivision?: string | null;
+  ts_tamperingsubcategory?: ts_tamperingsubcategory | null;
   ts_tcomsid?: string | null;
   ts_tcomsofficer?: string | null;
   ts_timetakenforstakeholdertoreport?: number | null;
@@ -133,6 +134,7 @@ interface ts_securityincident_Select {
   ts_statusofrailwayowner: WebAttribute<ts_securityincident_Select, { ts_statusofrailwayowner: ts_statusofrailwayowner | null }, { ts_statusofrailwayowner_formatted?: string }>;
   ts_subdivision: WebAttribute<ts_securityincident_Select, { ts_subdivision: string | null }, {  }>;
   ts_subsite_guid: WebAttribute<ts_securityincident_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
+  ts_tamperingsubcategory: WebAttribute<ts_securityincident_Select, { ts_tamperingsubcategory: ts_tamperingsubcategory | null }, { ts_tamperingsubcategory_formatted?: string }>;
   ts_targetelement_guid: WebAttribute<ts_securityincident_Select, { ts_targetelement_guid: string | null }, { ts_targetelement_formatted?: string }>;
   ts_tcomsid: WebAttribute<ts_securityincident_Select, { ts_tcomsid: string | null }, {  }>;
   ts_tcomsofficer: WebAttribute<ts_securityincident_Select, { ts_tcomsofficer: string | null }, {  }>;
@@ -198,6 +200,7 @@ interface ts_securityincident_Filter {
   ts_statusofrailwayowner: ts_statusofrailwayowner;
   ts_subdivision: string;
   ts_subsite_guid: XQW.Guid;
+  ts_tamperingsubcategory: ts_tamperingsubcategory;
   ts_targetelement_guid: XQW.Guid;
   ts_tcomsid: string;
   ts_tcomsofficer: string;
@@ -266,6 +269,7 @@ interface ts_securityincident_FormattedResult {
   ts_stakeholderoperationtype_formatted?: string;
   ts_statusofrailwayowner_formatted?: string;
   ts_subsite_formatted?: string;
+  ts_tamperingsubcategory_formatted?: string;
   ts_targetelement_formatted?: string;
   ts_timezone_formatted?: string;
 }
