@@ -28,11 +28,11 @@ namespace ROM.SecurityIncident {
                 ShowHideFieldsOnAvSec(eContext, false);
             }
             setSubSiteFilteredView(formContext, false);
+            securityIncidentTypeOnChange(eContext);
 
             if(formContext.getAttribute("ts_mode").getValue() != null){   
                 setSiteFilteredView(formContext, modeAttributeValue != null ? modeAttributeValue : null);
             }
-
         }
     }
 
@@ -116,6 +116,19 @@ namespace ROM.SecurityIncident {
     export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
         setSubSiteFilteredView(form, true);
+    }
+
+    export function securityIncidentTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+        const securityincidentTypeValue = form.getAttribute("ts_securityincidenttype").getValue();
+
+        //Tampering
+        if (securityincidentTypeValue != null && securityincidentTypeValue != undefined && securityincidentTypeValue[0].id.toLowerCase() == "{d5ff32e6-4a6b-ed11-81ae-0022483c536f}") {
+            form.getControl("ts_tamperingsubcategory").setVisible(true);
+        }
+        else {
+            form.getControl("ts_tamperingsubcategory").setVisible(false);
+        }
     }
 
     function setSubSiteFilteredView(form: Form.ts_securityincident.Main.Information, resetValue:boolean): void {
