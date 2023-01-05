@@ -42,6 +42,7 @@ var ROM;
                     ShowHideFieldsOnAvSec(eContext, false);
                 }
                 setSubSiteFilteredView(formContext, false);
+                securityIncidentTypeOnChange(eContext);
             }
         }
         SecurityIncident.onLoad = onLoad;
@@ -128,6 +129,18 @@ var ROM;
             }
         }
         SecurityIncident.modeOnChange = modeOnChange;
+        function securityIncidentTypeOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var securityincidentTypeValue = form.getAttribute("ts_securityincidenttype").getValue();
+            //Tampering
+            if (securityincidentTypeValue != null && securityincidentTypeValue != undefined && securityincidentTypeValue[0].id.toLowerCase() == "{d5ff32e6-4a6b-ed11-81ae-0022483c536f}") {
+                form.getControl("ts_tamperingsubcategory").setVisible(true);
+            }
+            else {
+                form.getControl("ts_tamperingsubcategory").setVisible(false);
+            }
+        }
+        SecurityIncident.securityIncidentTypeOnChange = securityIncidentTypeOnChange;
         function siteOnChange(eContext) {
             var form = eContext.getFormContext();
             setSubSiteFilteredView(form, true);
