@@ -116,3 +116,14 @@ function recalculateTeamPlanningDataValues(formContext) {
         Xrm.Utility.closeProgressIndicator();
     });
 }
+
+function createWorkOrders(formContext) {
+    //Find ID's of fiscal quarters for the fiscal year
+    Xrm.
+
+    //Iterate through each planning data record
+
+    //for each planned quarter field create a work order
+
+    //Lock the team planning data record somehow so you can't make more work orders
+}

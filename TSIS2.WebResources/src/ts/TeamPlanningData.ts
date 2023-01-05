@@ -422,3 +422,52 @@
         
     }
 }
+
+async function createWorkOrders(formContext: Form.ts_teamplanningdata.Main.Information) {
+    const teamPlanningDataId = formContext.data.entity.getId();
+    const fiscalYear = formContext.getAttribute("ts_fiscalyear");
+    if (fiscalYear == null) return;
+    const fiscalYearId = fiscalYear[0].id;
+    //Find ID's of fiscal quarters for the fiscal year
+    let fiscalQuarters = await Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalyear", `?$select=tc_tcfiscalquarterid,tc_fiscalquarternum&$filter=tc_tcfiscalyearid eq ${fiscalYearId}`).then(function (result) { return result.entities });
+
+    var planningDataFetchXml = [
+        "<fetch>",
+        "  <entity name='ts_planningdata'>",
+        "    <attribute name='ts_operation'/>",
+        "    <attribute name='ts_plannedq3'/>",
+        "    <attribute name='ts_stakeholder'/>",
+        "    <attribute name='ts_fiscalyear'/>",
+        "    <attribute name='ts_site'/>",
+        "    <attribute name='ts_activitytype'/>",
+        "    <attribute name='ts_operationtype'/>",
+        "    <attribute name='ts_plannedq4'/>",
+        "    <attribute name='ts_plannedq1'/>",
+        "    <attribute name='ts_planningdataid'/>",
+        "    <attribute name='ts_plannedq2'/>",
+        "    <filter>",
+        "      <condition attribute='ts_teamplanningdata' operator='eq' value='", teamPlanningDataId, "'/>",
+        "    </filter>",
+        "  </entity>",
+        "</fetch>"
+    ].join("");
+    planningDataFetchXml = "?fetchXml=" + encodeURIComponent(planningDataFetchXml);
+    //Iterate through each planning data record
+    Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", planningDataFetchXml).then(function(result) {
+        const planningDatas = result.entities;
+
+        let data = {
+            "ts_OperationActivity@odata.bind": "/ts_operationactivities(" + operationActivity.ts_operationactivityid + ")",
+        }
+        for (const planningData of planningDatas) {
+            //Create Q1 Work Orders
+            for (let i = 0; i < planningData.ts_plannedq1; i++) {
+
+            }
+        }
+    });
+
+    
+
+    //Lock the team planning data record somehow so you can't make more work orders
+}
