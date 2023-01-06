@@ -52,6 +52,7 @@ var ROM;
                 form.getAttribute("ts_description").setRequiredLevel("required");
             }
             riskScoreVisibility(form);
+            siteTypesVisibility(eContext);
         }
         FunctionalLocation.onLoad = onLoad;
         function onSave(eContext) {
@@ -115,6 +116,7 @@ var ROM;
                         form.getControl("ts_class").setVisible(false);
                     }
                 }
+                siteTypesVisibility(eContext);
             }
             catch (e) {
                 throw new Error(e.Message);
@@ -175,6 +177,25 @@ var ROM;
                 form.getControl("ts_lpdtounitedstates").setVisible(false);
             }
         }
+        function siteTypesVisibility(eContext) {
+            var form = eContext.getFormContext();
+            var siteType = form.getAttribute("ts_sitetype").getValue();
+            if (siteType != null) {
+                form.getControl("ts_sitetype2").setVisible(true);
+                var siteType2 = form.getAttribute("ts_sitetype2").getValue();
+                if (siteType2 != null) {
+                    form.getControl("ts_sitetype3").setVisible(true);
+                }
+                else {
+                    form.getControl("ts_sitetype3").setVisible(false);
+                }
+            }
+            else {
+                form.getControl("ts_sitetype2").setVisible(false);
+                form.getControl("ts_sitetype3").setVisible(false);
+            }
+        }
+        FunctionalLocation.siteTypesVisibility = siteTypesVisibility;
         function classOnChange(eContext) {
             var form = eContext.getFormContext();
             riskScoreVisibility(form);

@@ -98,6 +98,8 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
       get(name: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
+      get(name: "ts_sitetype2"): Xrm.LookupAttribute<"ovs_sitetype">;
+      get(name: "ts_sitetype3"): Xrm.LookupAttribute<"ovs_sitetype">;
       get(name: "ts_statusenddate"): Xrm.DateAttribute;
       get(name: "ts_statusstartdate"): Xrm.DateAttribute;
       get(name: string): undefined;
@@ -144,6 +146,8 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;
       get(name: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
+      get(name: "ts_sitetype2"): Xrm.LookupControl<"ovs_sitetype">;
+      get(name: "ts_sitetype3"): Xrm.LookupControl<"ovs_sitetype">;
       get(name: "ts_statusenddate"): Xrm.DateControl;
       get(name: "ts_statusstartdate"): Xrm.DateControl;
       get(name: string): undefined;
@@ -194,6 +198,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
     getAttribute(attributeName: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
+    getAttribute(attributeName: "ts_sitetype2"): Xrm.LookupAttribute<"ovs_sitetype">;
+    getAttribute(attributeName: "ts_sitetype3"): Xrm.LookupAttribute<"ovs_sitetype">;
     getAttribute(attributeName: "ts_statusenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_statusstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
@@ -235,6 +241,8 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;
     getControl(controlName: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
+    getControl(controlName: "ts_sitetype2"): Xrm.LookupControl<"ovs_sitetype">;
+    getControl(controlName: "ts_sitetype3"): Xrm.LookupControl<"ovs_sitetype">;
     getControl(controlName: "ts_statusenddate"): Xrm.DateControl;
     getControl(controlName: "ts_statusstartdate"): Xrm.DateControl;
     getControl(controlName: string): undefined;
