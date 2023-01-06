@@ -117,13 +117,109 @@ function recalculateTeamPlanningDataValues(formContext) {
     });
 }
 
-function createWorkOrders(formContext) {
+async function createWorkOrders(formContext) {
+    const teamPlanningDataId = formContext.data.entity.getId();
+    const fiscalYear = formContext.getAttribute("ts_fiscalyear");
+    if (fiscalYear == null) return;
+    const fiscalYearId = fiscalYear[0].id;
     //Find ID's of fiscal quarters for the fiscal year
-    Xrm.
-
+    let fiscalQuarters = await Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalyear", `?$select=tc_tcfiscalquarterid,tc_fiscalquarternum&$filter=tc_tcfiscalyearid eq ${fiscalYearId}`).then(function (result) { return result.entities });
+    let Q1Id = "";
+    let Q2Id = "";
+    let Q3Id = "";
+    let Q4Id = "";
+    for (let fiscalQuarter of fiscalQuarters) {
+        if (fiscalQuarter.tc_fiscalquarternum == 1) Q1Id = fiscalQuarter.tc_tcfiscalquarterid;
+        else if (fiscalQuarter.tc_fiscalquarternum == 2) Q2Id = fiscalQuarter.tc_tcfiscalquarterid;
+        else if (fiscalQuarter.tc_fiscalquarternum == 3) Q3Id = fiscalQuarter.tc_tcfiscalquarterid;
+        else if (fiscalQuarter.tc_fiscalquarternum == 4) Q4Id = fiscalQuarter.tc_tcfiscalquarterid;
+    }
+    var planningDataFetchXml = [
+        "<fetch>",
+        "  <entity name='ts_planningdata'>",
+        "    <attribute name='ts_operation'/>",
+        "    <attribute name='ts_plannedq3'/>",
+        "    <attribute name='ts_stakeholder'/>",
+        "    <attribute name='ts_fiscalyear'/>",
+        "    <attribute name='ts_site'/>",
+        "    <attribute name='ts_activitytype'/>",
+        "    <attribute name='ts_operationtype'/>",
+        "    <attribute name='ts_plannedq4'/>",
+        "    <attribute name='ts_plannedq1'/>",
+        "    <attribute name='ts_planningdataid'/>",
+        "    <attribute name='ts_plannedq2'/>",
+        "    <filter>",
+        "      <condition attribute='ts_teamplanningdata' operator='eq' value='", teamPlanningDataId, "'/>",
+        "    </filter>",
+        "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site' alias='ts_site'>",
+        "      <attribute name='ts_region'/>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>"
+    ].join("");
+    planningDataFetchXml = "?fetchXml=" + encodeURIComponent(planningDataFetchXml);
     //Iterate through each planning data record
+    Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", planningDataFetchXml).then(function (result) {
+        const planningDatas = result.entities;
+        for (const planningData of planningDatas) {
+            let data = {
+                "ovs_fiscalyear@odata.bind": "/tc_tcfiscalyears(" + fiscalYearId + ")",
+                "ts_Region@odata.bind": "/territories(" + planningData.ts_stakeholder + ")",
+                "msdyn_workordertype@odata.bind": "/msdyn_workordertypes(b1ee680a-7cf7-ea11-a815-000d3af3a7a7)",
+                "msdyn_serviceaccount@odata.bind": "/accounts(" + planningData.ts_stakeholder + ")",
+                "ovs_operationtypeid@odata.bind": "/ovs_operationtypes(" + planningData.ts_operationtype + ")",
+                "ts_site@odata.bind": "/msdyn_functionallocations(" + planningData.ts_site + ")",
+                "msdyn_primaryincidenttype@odata.bind": "/msdyn_incidenttypes(" + planningData.ts_activitytype + ")",
+                "ovs_OperationId@odata.bind": "/ovs_operations(" + planningData.ts_operation + ")",
+            }
+            data["ovs_fiscalquarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q1Id + ")";
+            //Create Q1 Work Orders
+            for (let i = 0; i < planningData.ts_plannedq1; i++) {
+                Xrm.WebApi.createRecord("msdyn_workorder", data).then(
+                    function success(result) {
+                    },
+                    function (error) {
+                        console.log(error.message);
+                    }
+                );
+            }
+            data["ovs_fiscalquarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q2Id + ")";
+            //Create Q2 Work Orders
+            for (let i = 0; i < planningData.ts_plannedq2; i++) {
+                Xrm.WebApi.createRecord("msdyn_workorder", data).then(
+                    function success(result) {
+                    },
+                    function (error) {
+                        console.log(error.message);
+                    }
+                );
+            }
+            data["ovs_fiscalquarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q3Id + ")";
+            //Create Q3 Work Orders
+            for (let i = 0; i < planningData.ts_plannedq3; i++) {
+                Xrm.WebApi.createRecord("msdyn_workorder", data).then(
+                    function success(result) {
+                    },
+                    function (error) {
+                        console.log(error.message);
+                    }
+                );
+            }
+            data["ovs_fiscalquarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q4Id + ")";
+            //Create Q4 Work Orders
+            for (let i = 0; i < planningData.ts_plannedq4; i++) {
+                Xrm.WebApi.createRecord("msdyn_workorder", data).then(
+                    function success(result) {
+                    },
+                    function (error) {
+                        console.log(error.message);
+                    }
+                );
+            }
+        }
+    });
 
-    //for each planned quarter field create a work order
+
 
     //Lock the team planning data record somehow so you can't make more work orders
 }
