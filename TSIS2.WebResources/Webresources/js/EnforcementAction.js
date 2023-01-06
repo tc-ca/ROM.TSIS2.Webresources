@@ -14,7 +14,8 @@ var ROM;
                     }
                 });
             }
-            //Set Details visible if ISSO
+            var referralToREUEnforcementAction = formContext.getAttribute("ts_typeofenforcementaction").getValue() == 717750002;
+            //Set fields visible if ISSO
             var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
             var currentUserBusinessUnitFetchXML = [
                 "<fetch top='50'>",
@@ -34,6 +35,34 @@ var ROM;
                 var userBusinessUnitName = result.entities[0].name;
                 if (userBusinessUnitName.startsWith("Intermodal")) {
                     formContext.getControl("ts_details").setVisible(true);
+                    formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(true);
+                    if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
+                        formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
+                        formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
+                    }
+                    //Hide fields for ISSO if type of enforcement action is set to "Referral to REU"
+                    if (referralToREUEnforcementAction) {
+                        hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
+                    }
+                }
+                else {
+                    if (referralToREUEnforcementAction) {
+                        //Check the case BU in case the inspector is an AvSec dual inspector 
+                        var caseAttribute = formContext.getAttribute("regardingobjectid");
+                        if (caseAttribute != null) {
+                            var caseAttributeValue = caseAttribute.getValue();
+                            if (caseAttributeValue != null) {
+                                var caseId = caseAttributeValue[0].id;
+                                Xrm.WebApi.retrieveRecord('incident', caseId, "?$select=_owningbusinessunit_value").then(function success(incident) {
+                                    Xrm.WebApi.retrieveRecord('businessunit', incident._owningbusinessunit_value, "?$select=name").then(function success(businessUnit) {
+                                        if (businessUnit.name.startsWith("Intermodal")) {
+                                            hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
+                                        }
+                                    });
+                                });
+                            }
+                        }
+                    }
                 }
             });
             additionalDetailsVisibility(formContext);
@@ -41,6 +70,13 @@ var ROM;
             filterCompany(formContext);
         }
         EnforcementAction.onLoad = onLoad;
+        function hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext) {
+            formContext.getControl("ts_dateandtimeofserviceofenforcementaction").setVisible(false);
+            formContext.getControl("ts_comments").setVisible(false);
+            formContext.getControl("ts_copyofreceipt").setVisible(false);
+            formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(false);
+            formContext.getControl("ts_details").setVisible(true);
+        }
         function onSave(eContext) {
         }
         EnforcementAction.onSave = onSave;
@@ -124,5 +160,18 @@ var ROM;
             }
         }
         EnforcementAction.additionalDetailsVisibility = additionalDetailsVisibility;
+        function elevatedEnforcementActionRequiredOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
+                formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
+                formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
+            }
+            else {
+                formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(false);
+                formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("none");
+                formContext.getAttribute("ts_justificationelevatedenforcementaction").setValue();
+            }
+        }
+        EnforcementAction.elevatedEnforcementActionRequiredOnChange = elevatedEnforcementActionRequiredOnChange;
     })(EnforcementAction = ROM.EnforcementAction || (ROM.EnforcementAction = {}));
 })(ROM || (ROM = {}));
