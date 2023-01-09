@@ -65,6 +65,8 @@ interface msdyn_FunctionalLocation extends msdyn_FunctionalLocation_Base, msdyn_
   ownerid_bind$teams?: string | null;
   ts_Country_bind$tc_countries?: string | null;
   ts_Region_bind$territories?: string | null;
+  ts_SiteType2_bind$ovs_sitetypes?: string | null;
+  ts_SiteType3_bind$ovs_sitetypes?: string | null;
   ts_SiteType_bind$ovs_sitetypes?: string | null;
 }
 interface msdyn_FunctionalLocation_Create extends msdyn_FunctionalLocation {
@@ -114,6 +116,8 @@ interface msdyn_FunctionalLocation_Select {
   ts_region_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_riskscore: WebAttribute<msdyn_FunctionalLocation_Select, { ts_riskscore: number | null }, {  }>;
   ts_sitestatus: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitestatus: ts_sitestatus | null }, { ts_sitestatus_formatted?: string }>;
+  ts_sitetype2_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitetype2_guid: string | null }, { ts_sitetype2_formatted?: string }>;
+  ts_sitetype3_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitetype3_guid: string | null }, { ts_sitetype3_formatted?: string }>;
   ts_sitetype_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitetype_guid: string | null }, { ts_sitetype_formatted?: string }>;
   ts_statusenddate: WebAttribute<msdyn_FunctionalLocation_Select, { ts_statusenddate: Date | null }, { ts_statusenddate_formatted?: string }>;
   ts_statusstartdate: WebAttribute<msdyn_FunctionalLocation_Select, { ts_statusstartdate: Date | null }, { ts_statusstartdate_formatted?: string }>;
@@ -163,6 +167,8 @@ interface msdyn_FunctionalLocation_Filter {
   ts_region_guid: XQW.Guid;
   ts_riskscore: number;
   ts_sitestatus: ts_sitestatus;
+  ts_sitetype2_guid: XQW.Guid;
+  ts_sitetype3_guid: XQW.Guid;
   ts_sitetype_guid: XQW.Guid;
   ts_statusenddate: Date;
   ts_statusstartdate: Date;
@@ -220,6 +226,8 @@ interface msdyn_FunctionalLocation_FormattedResult {
   ts_mode_formatted?: string;
   ts_region_formatted?: string;
   ts_sitestatus_formatted?: string;
+  ts_sitetype2_formatted?: string;
+  ts_sitetype3_formatted?: string;
   ts_sitetype_formatted?: string;
   ts_statusenddate_formatted?: string;
   ts_statusstartdate_formatted?: string;
@@ -237,6 +245,8 @@ interface msdyn_FunctionalLocation_Result extends msdyn_FunctionalLocation_Base,
   owninguser_guid: string | null;
   ts_country_guid: string | null;
   ts_region_guid: string | null;
+  ts_sitetype2_guid: string | null;
+  ts_sitetype3_guid: string | null;
   ts_sitetype_guid: string | null;
 }
 interface msdyn_FunctionalLocation_RelatedOne {

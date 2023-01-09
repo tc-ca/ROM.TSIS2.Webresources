@@ -63,6 +63,7 @@ namespace ROM.FunctionalLocation {
             form.getAttribute("ts_description").setRequiredLevel("required");
         }
         riskScoreVisibility(form);
+        siteTypesVisibility(eContext);
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -126,6 +127,8 @@ namespace ROM.FunctionalLocation {
                     form.getControl("ts_class").setVisible(false)
                 }
             }
+
+            siteTypesVisibility(eContext);
         } catch (e) {
             throw new Error(e.Message);
         }
@@ -184,6 +187,26 @@ namespace ROM.FunctionalLocation {
         }
     }
 
+    export function siteTypesVisibility(eContext: Xrm.ExecutionContext<any, any>) {
+        const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
+        const siteType = form.getAttribute("ts_sitetype").getValue();
+        if (siteType != null) {
+            form.getControl("ts_sitetype2").setVisible(true);
+
+            const siteType2 = form.getAttribute("ts_sitetype2").getValue();
+            if (siteType2 != null) {
+                form.getControl("ts_sitetype3").setVisible(true);
+            }
+            else {
+                form.getControl("ts_sitetype3").setVisible(false);
+            }
+        }
+        else {
+            form.getControl("ts_sitetype2").setVisible(false);
+            form.getControl("ts_sitetype3").setVisible(false);
+        }
+    }
+    
     export function classOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
         riskScoreVisibility(form);
