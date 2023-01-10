@@ -152,6 +152,12 @@ async function createWorkOrders(formContext) {
         "    <filter>",
         "      <condition attribute='ts_teamplanningdata' operator='eq' value='", teamPlanningDataId, "'/>",
         "    </filter>",
+        "    <filter type='or'>",
+        "      <condition attribute='ts_plannedq1' operator='gt' value='0'/>",
+        "      <condition attribute='ts_plannedq2' operator='gt' value='0'/>",
+        "      <condition attribute='ts_plannedq3' operator='gt' value='0'/>",
+        "      <condition attribute='ts_plannedq4' operator='gt' value='0'/>",
+        "    </filter>",
         "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site' alias='ts_site'>",
         "      <attribute name='ts_region'/>",
         "    </link-entity>",
@@ -172,50 +178,39 @@ async function createWorkOrders(formContext) {
                 "ts_Site@odata.bind": "/msdyn_functionallocations(" + planningData._ts_site_value + ")",
                 "msdyn_primaryincidenttype@odata.bind": "/msdyn_incidenttypes(" + planningData._ts_activitytype_value + ")",
                 "ovs_OperationId@odata.bind": "/ovs_operations(" + planningData._ts_operation_value + ")",
+                "ovs_Rational@odata.bind": "/ovs_tyrationals(994c3ec1-c104-eb11-a813-000d3af3a7a7)",
             }
-            data["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q1Id + ")";
-            //Create Q1 Work Orders
-            for (let i = 0; i < planningData.ts_plannedq1; i++) {
-                Xrm.WebApi.createRecord("msdyn_workorder", data).then(
-                    function success(result) {
-                    },
-                    function (error) {
-                        console.log(error.message);
-                    }
-                );
+            if (planningData.ts_plannedq1 > 0) {
+                const dataQ1 = { ...data };
+                dataQ1["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q1Id + ")";
+                //Create Q1 Work Orders
+                for (let i = 0; i < planningData.ts_plannedq1; i++) {
+                    Xrm.WebApi.createRecord("msdyn_workorder", dataQ1);
+                }
             }
-            data["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q2Id + ")";
-            //Create Q2 Work Orders
-            for (let i = 0; i < planningData.ts_plannedq2; i++) {
-                Xrm.WebApi.createRecord("msdyn_workorder", data).then(
-                    function success(result) {
-                    },
-                    function (error) {
-                        console.log(error.message);
-                    }
-                );
+            if (planningData.ts_plannedq2 > 0) {
+                const dataQ2 = { ...data };
+                dataQ2["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q2Id + ")";
+                //Create Q2 Work Orders
+                for (let i = 0; i < planningData.ts_plannedq2; i++) {
+                    Xrm.WebApi.createRecord("msdyn_workorder", dataQ2);
+                }
             }
-            data["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q3Id + ")";
-            //Create Q3 Work Orders
-            for (let i = 0; i < planningData.ts_plannedq3; i++) {
-                Xrm.WebApi.createRecord("msdyn_workorder", data).then(
-                    function success(result) {
-                    },
-                    function (error) {
-                        console.log(error.message);
-                    }
-                );
+            if (planningData.ts_plannedq3 > 0) {
+                const dataQ3 = { ...data };
+                dataQ3["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q3Id + ")";
+                //Create Q3 Work Orders
+                for (let i = 0; i < planningData.ts_plannedq3; i++) {
+                    Xrm.WebApi.createRecord("msdyn_workorder", dataQ3);
+                }
             }
-            data["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q4Id + ")";
-            //Create Q4 Work Orders
-            for (let i = 0; i < planningData.ts_plannedq4; i++) {
-                Xrm.WebApi.createRecord("msdyn_workorder", data).then(
-                    function success(result) {
-                    },
-                    function (error) {
-                        console.log(error.message);
-                    }
-                );
+            if (planningData.ts_plannedq4 > 0) {
+                const dataQ4 = { ...data };
+                dataQ4["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q4Id + ")";
+                //Create Q4 Work Orders
+                for (let i = 0; i < planningData.ts_plannedq4; i++) {
+                    Xrm.WebApi.createRecord("msdyn_workorder", dataQ4);
+                }
             }
         }
     });
