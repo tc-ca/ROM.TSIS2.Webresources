@@ -198,11 +198,12 @@ async function createWorkOrders(formContext) {
                             "ovs_Rational@odata.bind": "/ovs_tyrationals(994c3ec1-c104-eb11-a813-000d3af3a7a7)",
                         }
                         if (planningData.ts_plannedq1 > 0) {
+                            const currentPlannedQ1InspectionsCount = await Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", `?$select=msdyn_name&$filter=_ts_planningdata_value eq ${planningData.ts_planningdataid} and _ovs_fiscalquarter_value eq ${Q1Id}`).then(function (result) { return result.entities.length });
                             totalWorkOrders += planningData.ts_plannedq1;
                             const dataQ1 = { ...data };
                             dataQ1["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q1Id + ")";
                             //Create Q1 Work Orders
-                            for (let i = 0; i < planningData.ts_plannedq1; i++) {
+                            for (let i = 0; i < planningData.ts_plannedq1 - currentPlannedQ1InspectionsCount; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ1).then(() => {
                                     currentWorkOrders++;
                                     Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created. (" + currentWorkOrders + " / " + totalWorkOrders + " )");
@@ -210,11 +211,12 @@ async function createWorkOrders(formContext) {
                             }
                         }
                         if (planningData.ts_plannedq2 > 0) {
+                            const currentPlannedQ2InspectionsCount = await Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", `?$select=msdyn_name&$filter=_ts_planningdata_value eq ${planningData.ts_planningdataid} and _ovs_fiscalquarter_value eq ${Q2Id}`).then(function (result) { return result.entities.length });
                             totalWorkOrders += planningData.ts_plannedq2;
                             const dataQ2 = { ...data };
                             dataQ2["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q2Id + ")";
                             //Create Q2 Work Orders
-                            for (let i = 0; i < planningData.ts_plannedq2; i++) {
+                            for (let i = 0; i < planningData.ts_plannedq2 - currentPlannedQ2InspectionsCount; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ2).then(() => {
                                     currentWorkOrders++;
                                     Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created. (" + currentWorkOrders + " / " + totalWorkOrders + " )");
@@ -222,11 +224,12 @@ async function createWorkOrders(formContext) {
                             }
                         }
                         if (planningData.ts_plannedq3 > 0) {
+                            const currentPlannedQ3InspectionsCount = await Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", `?$select=msdyn_name&$filter=_ts_planningdata_value eq ${planningData.ts_planningdataid} and _ovs_fiscalquarter_value eq ${Q3Id}`).then(function (result) { return result.entities.length });
                             totalWorkOrders += planningData.ts_plannedq3;
                             const dataQ3 = { ...data };
                             dataQ3["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q3Id + ")";
                             //Create Q3 Work Orders
-                            for (let i = 0; i < planningData.ts_plannedq3; i++) {
+                            for (let i = 0; i < planningData.ts_plannedq3 - currentPlannedQ3InspectionsCount; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ3).then(() => {
                                     currentWorkOrders++;
                                     Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created. (" + currentWorkOrders + " / " + totalWorkOrders + " )");
@@ -234,11 +237,12 @@ async function createWorkOrders(formContext) {
                             }
                         }
                         if (planningData.ts_plannedq4 > 0) {
+                            const currentPlannedQ4InspectionsCount = await Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", `?$select=msdyn_name&$filter=_ts_planningdata_value eq ${planningData.ts_planningdataid} and _ovs_fiscalquarter_value eq ${Q4Id}`).then(function (result) { return result.entities.length });
                             totalWorkOrders += planningData.ts_plannedq4;
                             const dataQ4 = { ...data };
                             dataQ4["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q4Id + ")";
                             //Create Q4 Work Orders
-                            for (let i = 0; i < planningData.ts_plannedq4; i++) {
+                            for (let i = 0; i < planningData.ts_plannedq4 - currentPlannedQ4InspectionsCount; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ4).then(() => {
                                     currentWorkOrders++;
                                     Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created. (" + currentWorkOrders + " / " + totalWorkOrders + " )");
