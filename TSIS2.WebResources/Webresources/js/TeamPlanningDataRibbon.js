@@ -168,6 +168,9 @@ async function createWorkOrders(formContext) {
                     "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site' alias='ts_site'>",
                     "      <attribute name='ts_region'/>",
                     "    </link-entity>",
+                    "    <link-entity name='account' from='accountid' to='ts_stakeholder' alias='ts_stakeholder'>",
+                    "      <attribute name='name'/>",
+                    "    </link-entity>",
                     "  </entity>",
                     "</fetch>"
                 ].join("");
@@ -176,16 +179,18 @@ async function createWorkOrders(formContext) {
                 let totalWorkOrders = 0
                 let currentWorkOrders = 0
                 //Iterate through each planning data record
-                await Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", planningDataFetchXml).then(function (result) {
+                await Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", planningDataFetchXml).then(async function (result) {
                     const planningDatas = result.entities;
                     for (const planningData of planningDatas) {
+                        const tradeNameId = await determineTradeNameOfStakeholder(planningData._ts_stakeholder_value, planningData["ts_stakeholder.name"]);
                         let data = {
-                            "ts_TeamPlanningData@odata.bind": "/ts_teamplanningdatas(" + teamPlanningDataId + ")",
+                            "ts_TeamPlanningData@odata.bind": "/ts_teamplanningdatas(" + teamPlanningDataId.slice(1, -1) + ")",
                             "ts_PlanningData@odata.bind": "/ts_planningdatas(" + planningData.ts_planningdataid + ")",
                             "ovs_FiscalYear@odata.bind": "/tc_tcfiscalyears(" + fiscalYearId + ")",
                             "ts_Region@odata.bind": "/territories(" + planningData["ts_site.ts_region"] + ")",
                             "msdyn_workordertype@odata.bind": "/msdyn_workordertypes(b1ee680a-7cf7-ea11-a815-000d3af3a7a7)",
                             "msdyn_serviceaccount@odata.bind": "/accounts(" + planningData._ts_stakeholder_value + ")",
+                            "ts_tradenameId@odata.bind": "/ts_tradenames(" + tradeNameId + ")",
                             "ovs_operationtypeid@odata.bind": "/ovs_operationtypes(" + planningData._ts_operationtype_value + ")",
                             "ts_Site@odata.bind": "/msdyn_functionallocations(" + planningData._ts_site_value + ")",
                             "msdyn_primaryincidenttype@odata.bind": "/msdyn_incidenttypes(" + planningData._ts_activitytype_value + ")",
@@ -252,12 +257,12 @@ async function createWorkOrders(formContext) {
 
 //Find the TradeName that has a matching name of the stakeholder, but if it doesn't exist just use the first TradeName retrieved
 async function determineTradeNameOfStakeholder(stakeholderId, stakeholderName) {
-    const tradeNames = await Xrm.WebApi.retrieveMultipleRecords("ovs_tradename", `?$select=ovs_name,ts_tradenameid&$filter=_ts_stakeholder_value eq ${stakeholderId}`).then(function (result) { return result.entities });
+    const tradeNames = await Xrm.WebApi.retrieveMultipleRecords("ts_tradename", `?$select=ts_name,ts_tradenameid&$filter=_ts_stakeholderid_value eq ${stakeholderId}`).then(function (result) { return result.entities });
     let tradeNameId = null;
     if (tradeNames.length > 0) {
         tradeNameId = tradeNames[0].ts_tradenameid
         for (let i = 1; i < tradeNames.length; i++) {
-            if (tradeNames[i].ovs_name == stakeholderName) {
+            if (tradeNames[i].ts_name == stakeholderName) {
                 tradeNames[i].ts_tradenameid;
             }
         }
