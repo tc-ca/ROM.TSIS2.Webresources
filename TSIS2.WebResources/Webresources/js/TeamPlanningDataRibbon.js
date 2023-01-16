@@ -127,6 +127,9 @@ async function createWorkOrders(formContext) {
             if (success.confirmed) {
                 Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created.");
                 const teamPlanningDataId = formContext.data.entity.getId();
+                const team = formContext.getAttribute("ts_team").getValue();
+                let teamId = null;
+                if (team != null) teamId = team[0].id;
                 const fiscalYearValue = formContext.getAttribute("ts_fiscalyear").getValue();
                 let totalWorkOrders = formContext.getAttribute("ts_plannedactivityfiscalyear").getValue();
                 if (fiscalYearValue == null) return;
@@ -193,6 +196,7 @@ async function createWorkOrders(formContext) {
                         if (planningData["ts_stakeholder"] != null && planningData["ts_stakeholder"]) tradeNameId = await determineTradeNameOfStakeholder(planningData._ts_stakeholder_value, planningData["ts_stakeholder.name"]);
                         let workOrderData = {}
                         if (teamPlanningDataId != null) workOrderData["ts_TeamPlanningData@odata.bind"] = "/ts_teamplanningdatas(" + teamPlanningDataId.slice(1, -1) + ")";
+                        if (teamId != null) workOrderData["ownerid@odata.bind"] = "/teams(" + teamId.slice(1, -1) + ")";
                         if (planningData.ts_planningdataid != null) workOrderData["ts_PlanningData@odata.bind"] = "/ts_planningdatas(" + planningData.ts_planningdataid + ")";
                         if (fiscalYearId != null) workOrderData["ovs_FiscalYear@odata.bind"] = "/tc_tcfiscalyears(" + fiscalYearId + ")";
                         if (planningData["ts_site.ts_region"] != null) workOrderData["ts_Region@odata.bind"] = "/territories(" + planningData["ts_site.ts_region"] + ")";
