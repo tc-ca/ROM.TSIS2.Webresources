@@ -119,13 +119,26 @@ function recalculateTeamPlanningDataValues(formContext) {
     });
 }
 
+/*
+ * Triggered by Create Work Order Ribbon button on Team Planning data form.
+ * Retrieves the Planning Data related to the Team Planning Data, excluding records that are inactive
+ * or that have a non-operational operation activity, then determines how many Work Orders must be made
+ * each year by looking at the Planned Q (Number) fields, creating work orders in the specified fiscal year and quarter.
+ * If Work Orders have already been generated it will subtract the existing number of Work Orders to reduce the number of
+ * new Work Orders being generated. New Work Orders are related to the Planning Data and Team Planning Data records.
+ */
 async function createWorkOrders(formContext) {
+    //Open a confirmation dialog box to confirm Work Order Creation.
     var confirmStrings = { text: "Work Orders will be created. Do you wish to proceed?", title: "Create Work Orders", confirmButtonLabel: "Yes", cancelButtonLabel: "Cancel" };
     var confirmOptions = { height: 200, width: 450 };
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
         async function (success) {
             if (success.confirmed) {
+                //Recalculate Inspection counts to be sure the correct total will display in the Progress Indicator.
+                recalculateTeamPlanningDataValues(formContext);
                 Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created.");
+
+                //Obtain ID's of records needed for Work Order creation
                 const teamPlanningDataId = formContext.data.entity.getId();
                 const team = formContext.getAttribute("ts_team").getValue();
                 let teamId = null;
@@ -146,6 +159,7 @@ async function createWorkOrders(formContext) {
                     else if (fiscalQuarter.tc_fiscalquarternum == 3) Q3Id = fiscalQuarter.tc_tcfiscalquarterid;
                     else if (fiscalQuarter.tc_fiscalquarternum == 4) Q4Id = fiscalQuarter.tc_tcfiscalquarterid;
                 }
+
                 var planningDataFetchXml = [
                     "<fetch>",
                     "  <entity name='ts_planningdata'>",
@@ -186,6 +200,7 @@ async function createWorkOrders(formContext) {
                     "</fetch>"
                 ].join("");
                 planningDataFetchXml = "?fetchXml=" + encodeURIComponent(planningDataFetchXml);
+                //Array of Work Order creation promises. When all promises return, the Progress Indicator is closed.
                 const workOrderCreationPromises = [];
                 let currentWorkOrders = 0
                 //Iterate through each planning data record
@@ -194,6 +209,7 @@ async function createWorkOrders(formContext) {
                     for (const planningData of planningDatas) {
                         let tradeNameId = null
                         if (planningData["ts_stakeholder"] != null && planningData["ts_stakeholder"]) tradeNameId = await determineTradeNameOfStakeholder(planningData._ts_stakeholder_value, planningData["ts_stakeholder.name"]);
+                        //Set the Work Order Lookups using the Planning Data Lookups. Some can be null, so they are only added if there is a value.
                         let workOrderData = {}
                         if (teamPlanningDataId != null) workOrderData["ts_TeamPlanningData@odata.bind"] = "/ts_teamplanningdatas(" + teamPlanningDataId.slice(1, -1) + ")";
                         if (teamId != null) workOrderData["ownerid@odata.bind"] = "/teams(" + teamId.slice(1, -1) + ")";
@@ -207,13 +223,20 @@ async function createWorkOrders(formContext) {
                         if (planningData._ts_activitytype_value != null) workOrderData["msdyn_primaryincidenttype@odata.bind"] = "/msdyn_incidenttypes(" + planningData._ts_activitytype_value + ")";
                         if (planningData._ts_operation_value != null) workOrderData["ovs_OperationId@odata.bind"] = "/ovs_operations(" + planningData._ts_operation_value + ")";
 
+
+                        /*
+                         * For each ts_plannedq field, determine how many Work Orders must be created, then create them.
+                         * Subtract the current number of work orders related to the current Planning Data record to prevent duplicates.
+                         * Duplicate the above workOrderData object for each quarter so that the correct Fiscal Quarter lookup can be set.
+                         * Update the Progress Indicator after the Work Order is created.
+                         */
+
                         if (planningData.ts_plannedq1 > 0) {
                             const currentPlannedQ1InspectionsCount = await Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", `?$select=msdyn_name&$filter=_ts_planningdata_value eq ${planningData.ts_planningdataid} and _ovs_fiscalquarter_value eq ${Q1Id}`).then(function (result) { return result.entities.length });
                             const workOrdersToCreateInQ1 = planningData.ts_plannedq1 - currentPlannedQ1InspectionsCount;
                             totalWorkOrders -= currentPlannedQ1InspectionsCount;
                             const dataQ1 = { ...workOrderData };
                             dataQ1["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q1Id + ")";
-                            //Create Q1 Work Orders
                             for (let i = 0; i < workOrdersToCreateInQ1; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ1).then(() => {
                                     currentWorkOrders++;
@@ -227,7 +250,6 @@ async function createWorkOrders(formContext) {
                             totalWorkOrders -= currentPlannedQ2InspectionsCount;
                             const dataQ2 = { ...workOrderData };
                             dataQ2["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q2Id + ")";
-                            //Create Q2 Work Orders
                             for (let i = 0; i < workOrdersToCreateInQ2; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ2).then(() => {
                                     currentWorkOrders++;
@@ -241,7 +263,6 @@ async function createWorkOrders(formContext) {
                             totalWorkOrders -= currentPlannedQ3InspectionsCount;
                             const dataQ3 = { ...workOrderData };
                             dataQ3["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q3Id + ")";
-                            //Create Q3 Work Orders
                             for (let i = 0; i < workOrdersToCreateInQ3; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ3).then(() => {
                                     currentWorkOrders++;
@@ -255,7 +276,6 @@ async function createWorkOrders(formContext) {
                             totalWorkOrders -= currentPlannedQ4InspectionsCount;
                             const dataQ4 = { ...workOrderData };
                             dataQ4["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q4Id + ")";
-                            //Create Q4 Work Orders
                             for (let i = 0; i < workOrdersToCreateInQ4; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ4).then(() => {
                                     currentWorkOrders++;
@@ -266,6 +286,7 @@ async function createWorkOrders(formContext) {
                         Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created. (" + currentWorkOrders + " / " + totalWorkOrders + " )");
                     }
                 });
+                //After all Work Orders have been created, close the Progress indicator.
                 await Promise.all(workOrderCreationPromises)
                 Xrm.Utility.closeProgressIndicator();
             }
