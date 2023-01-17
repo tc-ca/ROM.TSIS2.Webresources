@@ -1,5 +1,7 @@
 ﻿const { promises } = require("stream");
 
+
+
 function recalculateTeamPlanningDataValues(formContext) {
     Xrm.Utility.showProgressIndicator();
     const teamPlanningDataId = formContext.data.entity.getId();
@@ -128,13 +130,28 @@ function recalculateTeamPlanningDataValues(formContext) {
  * new Work Orders being generated. New Work Orders are related to the Planning Data and Team Planning Data records.
  */
 async function createWorkOrders(formContext) {
+    const lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+    let createWorkOrdersTitleLocalized = "Create Work Orders";
+    let createWorkOrdersTextLocalized = "Work Orders will be created. Do you wish to proceed?";
+    let createWorkOrdersConfirmLocalized = "Yes";
+    let createWorkOrdersCancelLocalized = "Cancel";
+    let createWorkOrdersProgressIndicator = "Please wait while the Work Orders are being created."
+    if (lang == 1036) {
+        createWorkOrdersTitleLocalized = "Création d'ordres de travail";
+        createWorkOrdersTextLocalized = "Des ordres de travail seront créés. Voulez-vous continuer?";
+        createWorkOrdersConfirmLocalized = "Oui";
+        createWorkOrdersCancelLocalized = "Annuler";
+        createWorkOrdersProgressIndicator = "Veuillez patienter pendant la création des ordres de travail."
+    }
+
     //Open a confirmation dialog box to confirm Work Order Creation.
-    var confirmStrings = { text: "Work Orders will be created. Do you wish to proceed?", title: "Create Work Orders", confirmButtonLabel: "Yes", cancelButtonLabel: "Cancel" };
+    var confirmStrings = { text: createWorkOrdersTextLocalized, title: createWorkOrdersTitleLocalized, confirmButtonLabel: createWorkOrdersConfirmLocalized, cancelButtonLabel: createWorkOrdersCancelLocalized };
     var confirmOptions = { height: 200, width: 450 };
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
         async function (success) {
             if (success.confirmed) {
-                Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created.");
+                Xrm.Utility.showProgressIndicator(createWorkOrdersProgressIndicator);
                 //Obtain ID's of records needed for Work Order creation
                 const teamPlanningDataId = formContext.data.entity.getId();
                 const team = formContext.getAttribute("ts_team").getValue();
@@ -237,7 +254,7 @@ async function createWorkOrders(formContext) {
                             for (let i = 0; i < workOrdersToCreateInQ1; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ1).then(() => {
                                     currentWorkOrders++;
-                                    Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created. (" + currentWorkOrders + " / " + totalWorkOrders + " )");
+                                    Xrm.Utility.showProgressIndicator(createWorkOrdersProgressIndicator + " (" + currentWorkOrders + " / " + totalWorkOrders + " )");
                                 }));
                             }
                         }
@@ -250,7 +267,7 @@ async function createWorkOrders(formContext) {
                             for (let i = 0; i < workOrdersToCreateInQ2; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ2).then(() => {
                                     currentWorkOrders++;
-                                    Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created. (" + currentWorkOrders + " / " + totalWorkOrders + " )");
+                                    Xrm.Utility.showProgressIndicator(createWorkOrdersProgressIndicator + " (" + currentWorkOrders + " / " + totalWorkOrders + " )");
                                 }));
                             }
                         }
@@ -263,7 +280,7 @@ async function createWorkOrders(formContext) {
                             for (let i = 0; i < workOrdersToCreateInQ3; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ3).then(() => {
                                     currentWorkOrders++;
-                                    Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created. (" + currentWorkOrders + " / " + totalWorkOrders + " )");
+                                    Xrm.Utility.showProgressIndicator(createWorkOrdersProgressIndicator + " (" + currentWorkOrders + " / " + totalWorkOrders + " )");
                                 }));
                             }
                         }
@@ -276,11 +293,11 @@ async function createWorkOrders(formContext) {
                             for (let i = 0; i < workOrdersToCreateInQ4; i++) {
                                 workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ4).then(() => {
                                     currentWorkOrders++;
-                                    Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created. (" + currentWorkOrders + " / " + totalWorkOrders + " )");
+                                    Xrm.Utility.showProgressIndicator(createWorkOrdersProgressIndicator + " (" + currentWorkOrders + " / " + totalWorkOrders + " )");
                                 }));
                             }
                         }
-                        Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created. (" + currentWorkOrders + " / " + totalWorkOrders + " )");
+                        Xrm.Utility.showProgressIndicator(createWorkOrdersProgressIndicator + " (" + currentWorkOrders + " / " + totalWorkOrders + " )");
                     }
                 });
                 //After all Work Orders have been created, close the Progress indicator.
