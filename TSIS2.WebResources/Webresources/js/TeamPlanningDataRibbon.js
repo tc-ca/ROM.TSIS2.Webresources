@@ -134,10 +134,7 @@ async function createWorkOrders(formContext) {
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
         async function (success) {
             if (success.confirmed) {
-                //Recalculate Inspection counts to be sure the correct total will display in the Progress Indicator.
-                recalculateTeamPlanningDataValues(formContext);
                 Xrm.Utility.showProgressIndicator("Please wait while the Work Orders are being created.");
-
                 //Obtain ID's of records needed for Work Order creation
                 const teamPlanningDataId = formContext.data.entity.getId();
                 const team = formContext.getAttribute("ts_team").getValue();
