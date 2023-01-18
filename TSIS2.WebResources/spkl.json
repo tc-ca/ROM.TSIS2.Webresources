@@ -279,6 +279,11 @@
               "file": "js\\planningDataRibbon.js",
               "description": "ROM TSIS 2.0 Planning Data Ribbon Scripts"
             },
+            {
+              "uniquename": "ts_/js/RoleAccess.js",
+              "file": "js\\RoleAccess.js",
+              "description": "Scripts for Role Access Sheet"
+            },
             /* Styles */
             {
               "uniquename": "ovs_/css/bootstrap.min.css",
@@ -390,6 +395,11 @@
               "uniquename": "ts_/html/EmailAttachFilePopUp.html",
               "file": "html\\EmailAttachFilePopUp.html",
               "description": "Popup for Email Attach File"
+            },
+            {
+              "uniquename": "ts_/html/RoleAccess.html",
+              "file": "html\\RoleAccess.html",
+              "description": "Role Access Sheet"
             },
             /* SurveyJS dependencies */
             {
