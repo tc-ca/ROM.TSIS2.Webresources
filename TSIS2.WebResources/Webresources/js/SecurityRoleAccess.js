@@ -8,25 +8,13 @@
  */
 
 
-async function buildRoleAccessTables() {
-    const securityRoles = [
-        { name: "ROM - Base", id: "158781c7-f92c-eb11-a813-000d3af3a7a7" },
-        { name: "ROM - Inspector", id: "ed37675e-f72c-eb11-a813-000d3af3a7a7" },
-        { name: "ROM - Planner", id: "9f03e814-29f5-eb11-94ef-000d3af36036" },
-        { name: "ROM - Manager", id: "85e36d25-29f5-eb11-94ef-000d3af36036" },
-        { name: "ROM - Business Admin", id: "779105f0-8d3a-eb11-a813-000d3af3fc19" },
-    ]
+async function buildRoleAccessTables(formContext, wrCtrl) {
 
-    const powerAppsEntities = [
-        { plainTextName: "Work Order", logicalname: "msdyn_workorder" },
-        { plainTextName: "Case", logicalname: "incident" },
-        { plainTextName: "Operation", logicalname: "ovs_operation" },
-        { plainTextName: "Site", logicalname: "msdyn_functionallocation" },
-        { plainTextName: "Operation Type", logicalname: "ovs_operationtype" },
-        { plainTextName: "Stakeholder", logicalname: "account" },
-    ]
+    const contentWindow = await wrCtrl.getContentWindow().then(function (win) { return win });
+    const securityRoles = JSON.parse(formContext.getAttribute("ts_securityroles").getValue().replace(/(\r\n|\n|\r)/gm, ""));
+    const powerAppsEntities = JSON.parse(formContext.getAttribute("ts_tables").getValue().replace(/(\r\n|\n|\r)/gm, ""));
 
-    const roleAccessTablesDiv = document.getElementById("roleAccessTables");
+    const roleAccessTablesDiv = contentWindow.document.getElementById("roleAccessTables");
 
     for (let powerAppsEntity of powerAppsEntities) {
         const sercurityRoleAccessTable = document.createElement("table");
@@ -157,5 +145,6 @@ async function buildRoleAccessTables() {
 
 function onLoad(eContext) {
     const formContext = eContext.getFormContext();
-    windows.formContext = formContext;
+    const wrCtrl = formContext.getControl('WebResource_SecurityRoleAccess');
+    buildRoleAccessTables(formContext, wrCtrl);
 }

@@ -144,7 +144,7 @@
     <Content Include="Webresources\html\RATEFactor3GuidePopUp.html" />
     <Content Include="Webresources\html\RATEFactor4Guide.html" />
     <Content Include="Webresources\html\RATEFactor4GuidePopUp.html" />
-    <Content Include="Webresources\html\RoleAccess.html" />
+    <Content Include="Webresources\html\SecurityRoleAccess.html" />
     <Content Include="Webresources\html\SurveyCreator.html" />
     <Content Include="Webresources\html\SurveyRender.html" />
     <Content Include="Webresources\html\SurveyRenderPrint.html" />
@@ -188,7 +188,7 @@
     <Content Include="Webresources\js\Questionnaire.js" />
     <Content Include="Webresources\js\QuestionnaireVersion.js" />
     <Content Include="Webresources\js\RiskThreshold.js" />
-    <Content Include="Webresources\js\RoleAccess.js" />
+    <Content Include="Webresources\js\SecurityRoleAccess.js" />
     <Content Include="Webresources\js\ScoreThresholds.js" />
     <Content Include="Webresources\js\SecurityIncident.js" />
     <Content Include="Webresources\js\SecurityIncidentRibbon.js" />
