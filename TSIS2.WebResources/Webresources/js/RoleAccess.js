@@ -5,7 +5,7 @@
  * BU: 2
  * User: 1
  * None: No Privilege record
- */ 
+ */
 
 
 async function buildRoleAccessTables() {
@@ -153,4 +153,9 @@ async function buildRoleAccessTables() {
             sercurityRoleAccessTableShareData.innerHTML = workOrderPrivilegesData.Share;
         }
     }
+}
+
+function onLoad(eContext) {
+    const formContext = eContext.getFormContext();
+    windows.formContext = formContext;
 }
