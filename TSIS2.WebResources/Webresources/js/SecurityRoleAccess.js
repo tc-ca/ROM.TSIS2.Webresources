@@ -1,13 +1,4 @@
-﻿/*
- * Privilege Key
- * Org: 8
- * PC: 4
- * BU: 2
- * User: 1
- * None: No Privilege record
- */
-
-
+﻿
 async function buildRoleAccessTables(formContext, wrCtrl) {
 
     const contentWindow = await wrCtrl.getContentWindow().then(function (win) { return win });
@@ -79,40 +70,40 @@ async function buildRoleAccessTables(formContext, wrCtrl) {
             const workOrderPrivileges = await parent.Xrm.WebApi.retrieveMultipleRecords("roleprivileges", fetchXml).then(function (result) { return result.entities });
 
             const workOrderPrivilegesData = {
-                Create: 0,
-                Read: 0,
-                Write: 0,
-                Delete: 0,
-                Append: 0,
-                AppendTo: 0,
-                Assign: 0,
-                Share: 0,
+                Create: "",
+                Read: "",
+                Write: "",
+                Delete: "",
+                Append: "",
+                AppendTo: "",
+                Assign: "",
+                Share: "",
             }
             for (let privilege of workOrderPrivileges) {
                 switch (privilege["priv.name"].toLowerCase()) {
                     case "prvcreate" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Create = privilege.privilegedepthmask
+                        workOrderPrivilegesData.Create = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
                         break;
                     case "prvread" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Read = privilege.privilegedepthmask
+                        workOrderPrivilegesData.Read = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
                         break;
                     case "prvwrite" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Write = privilege.privilegedepthmask
+                        workOrderPrivilegesData.Write = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
                         break;
                     case "prvdelete" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Delete = privilege.privilegedepthmask
+                        workOrderPrivilegesData.Delete = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
                         break;
                     case "prvappend" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Append = privilege.privilegedepthmask
+                        workOrderPrivilegesData.Append = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
                         break;
                     case "prvappendTo" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.AppendTo = privilege.privilegedepthmask
+                        workOrderPrivilegesData.AppendTo = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
                         break;
                     case "prvassign" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Assign = privilege.privilegedepthmask
+                        workOrderPrivilegesData.Assign = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
                         break;
                     case "prvshare" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Share = privilege.privilegedepthmask
+                        workOrderPrivilegesData.Share = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
                         break;
 
                 }
@@ -131,6 +122,7 @@ async function buildRoleAccessTables(formContext, wrCtrl) {
             const sercurityRoleAccessTableShareData = sercurityRoleAccessTableDataRow.insertCell();
 
             sercurityRoleAccessTableRoleNameData.innerHTML = securityRole.name;
+            sercurityRoleAccessTableRoleNameData.style.textAlign = "left";
             sercurityRoleAccessTableCreateData.innerHTML = workOrderPrivilegesData.Create;
             sercurityRoleAccessTableReadData.innerHTML = workOrderPrivilegesData.Read;
             sercurityRoleAccessTableWriteData.innerHTML = workOrderPrivilegesData.Write;
@@ -147,4 +139,20 @@ function onLoad(eContext) {
     const formContext = eContext.getFormContext();
     const wrCtrl = formContext.getControl('WebResource_SecurityRoleAccess');
     buildRoleAccessTables(formContext, wrCtrl);
+}
+
+function convertPrivilegeDepthCodeToText(depth) {
+
+    switch (depth) {
+        case 8:
+            return "Org";
+        case 4:
+            return "PC";
+        case 2:
+            return "BU";
+        case 1:
+            return "User";
+        default:
+            return "Error";
+    }
 }
