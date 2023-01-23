@@ -75,7 +75,19 @@ async function populateSecurityRolePrivilegeTable(sercurityRoleAccessTable, secu
     sercurityRoleAccessTableHeaderRow.appendChild(sercurityRoleAccessTableAssignHeader);
     sercurityRoleAccessTableHeaderRow.appendChild(sercurityRoleAccessTableShareHeader);
 
+    const sercurityRoleAccessTableDataBody = sercurityRoleAccessTable.createTBody();
     for (let securityRole of securityRoles) {
+        const sercurityRoleAccessTableDataRow = sercurityRoleAccessTableDataBody.insertRow();
+        const sercurityRoleAccessTableRoleNameData = sercurityRoleAccessTableDataRow.insertCell();
+        const sercurityRoleAccessTableCreateData = sercurityRoleAccessTableDataRow.insertCell();
+        const sercurityRoleAccessTableReadData = sercurityRoleAccessTableDataRow.insertCell();
+        const sercurityRoleAccessTableWriteData = sercurityRoleAccessTableDataRow.insertCell();
+        const sercurityRoleAccessTableDeleteData = sercurityRoleAccessTableDataRow.insertCell();
+        const sercurityRoleAccessTableAppendData = sercurityRoleAccessTableDataRow.insertCell();
+        const sercurityRoleAccessTableAppendToData = sercurityRoleAccessTableDataRow.insertCell();
+        const sercurityRoleAccessTableAssignData = sercurityRoleAccessTableDataRow.insertCell();
+        const sercurityRoleAccessTableShareData = sercurityRoleAccessTableDataRow.insertCell();
+
         let fetchXml = [
             "<fetch>",
             "  <entity name='roleprivileges'>",
@@ -93,70 +105,59 @@ async function populateSecurityRolePrivilegeTable(sercurityRoleAccessTable, secu
             "</fetch>"
         ].join("");
         fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
-        const securityRolePrivileges = await parent.Xrm.WebApi.retrieveMultipleRecords("roleprivileges", fetchXml).then(function (result) { return result.entities });
-
-        const securityRolePrivilegesData = {
-            Create: "",
-            Read: "",
-            Write: "",
-            Delete: "",
-            Append: "",
-            AppendTo: "",
-            Assign: "",
-            Share: "",
-        }
-        for (let privilege of securityRolePrivileges) {
-            switch (privilege["priv.name"].toLowerCase()) {
-                case "prvcreate" + powerAppsEntity.logicalname:
-                    securityRolePrivilegesData.Create = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
-                    break;
-                case "prvread" + powerAppsEntity.logicalname:
-                    securityRolePrivilegesData.Read = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
-                    break;
-                case "prvwrite" + powerAppsEntity.logicalname:
-                    securityRolePrivilegesData.Write = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
-                    break;
-                case "prvdelete" + powerAppsEntity.logicalname:
-                    securityRolePrivilegesData.Delete = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
-                    break;
-                case "prvappend" + powerAppsEntity.logicalname:
-                    securityRolePrivilegesData.Append = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
-                    break;
-                case "prvappendto" + powerAppsEntity.logicalname:
-                    securityRolePrivilegesData.AppendTo = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
-                    break;
-                case "prvassign" + powerAppsEntity.logicalname:
-                    securityRolePrivilegesData.Assign = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
-                    break;
-                case "prvshare" + powerAppsEntity.logicalname:
-                    securityRolePrivilegesData.Share = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
-                    break;
-
+        parent.Xrm.WebApi.retrieveMultipleRecords("roleprivileges", fetchXml).then(function (result) {
+            securityRolePrivileges = result.entities;
+            const securityRolePrivilegesData = {
+                Create: "",
+                Read: "",
+                Write: "",
+                Delete: "",
+                Append: "",
+                AppendTo: "",
+                Assign: "",
+                Share: "",
             }
-        }
 
-        const sercurityRoleAccessTableDataBody = sercurityRoleAccessTable.createTBody();
-        const sercurityRoleAccessTableDataRow = sercurityRoleAccessTableDataBody.insertRow();
-        const sercurityRoleAccessTableRoleNameData = sercurityRoleAccessTableDataRow.insertCell();
-        const sercurityRoleAccessTableCreateData = sercurityRoleAccessTableDataRow.insertCell();
-        const sercurityRoleAccessTableReadData = sercurityRoleAccessTableDataRow.insertCell();
-        const sercurityRoleAccessTableWriteData = sercurityRoleAccessTableDataRow.insertCell();
-        const sercurityRoleAccessTableDeleteData = sercurityRoleAccessTableDataRow.insertCell();
-        const sercurityRoleAccessTableAppendData = sercurityRoleAccessTableDataRow.insertCell();
-        const sercurityRoleAccessTableAppendToData = sercurityRoleAccessTableDataRow.insertCell();
-        const sercurityRoleAccessTableAssignData = sercurityRoleAccessTableDataRow.insertCell();
-        const sercurityRoleAccessTableShareData = sercurityRoleAccessTableDataRow.insertCell();
+            for (let privilege of securityRolePrivileges) {
+                switch (privilege["priv.name"].toLowerCase()) {
+                    case "prvcreate" + powerAppsEntity.logicalname:
+                        securityRolePrivilegesData.Create = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
+                        break;
+                    case "prvread" + powerAppsEntity.logicalname:
+                        securityRolePrivilegesData.Read = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
+                        break;
+                    case "prvwrite" + powerAppsEntity.logicalname:
+                        securityRolePrivilegesData.Write = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
+                        break;
+                    case "prvdelete" + powerAppsEntity.logicalname:
+                        securityRolePrivilegesData.Delete = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
+                        break;
+                    case "prvappend" + powerAppsEntity.logicalname:
+                        securityRolePrivilegesData.Append = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
+                        break;
+                    case "prvappendto" + powerAppsEntity.logicalname:
+                        securityRolePrivilegesData.AppendTo = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
+                        break;
+                    case "prvassign" + powerAppsEntity.logicalname:
+                        securityRolePrivilegesData.Assign = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
+                        break;
+                    case "prvshare" + powerAppsEntity.logicalname:
+                        securityRolePrivilegesData.Share = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
+                        break;
+                }
+            }
 
-        sercurityRoleAccessTableRoleNameData.innerHTML = securityRole.name;
-        sercurityRoleAccessTableRoleNameData.style.textAlign = "left";
-        sercurityRoleAccessTableCreateData.innerHTML = securityRolePrivilegesData.Create;
-        sercurityRoleAccessTableReadData.innerHTML = securityRolePrivilegesData.Read;
-        sercurityRoleAccessTableWriteData.innerHTML = securityRolePrivilegesData.Write;
-        sercurityRoleAccessTableDeleteData.innerHTML = securityRolePrivilegesData.Delete;
-        sercurityRoleAccessTableAppendData.innerHTML = securityRolePrivilegesData.Append;
-        sercurityRoleAccessTableAppendToData.innerHTML = securityRolePrivilegesData.AppendTo;
-        sercurityRoleAccessTableAssignData.innerHTML = securityRolePrivilegesData.Assign;
-        sercurityRoleAccessTableShareData.innerHTML = securityRolePrivilegesData.Share;
+            sercurityRoleAccessTableRoleNameData.innerHTML = securityRole.name;
+            sercurityRoleAccessTableRoleNameData.style.textAlign = "left";
+            sercurityRoleAccessTableCreateData.innerHTML = securityRolePrivilegesData.Create;
+            sercurityRoleAccessTableReadData.innerHTML = securityRolePrivilegesData.Read;
+            sercurityRoleAccessTableWriteData.innerHTML = securityRolePrivilegesData.Write;
+            sercurityRoleAccessTableDeleteData.innerHTML = securityRolePrivilegesData.Delete;
+            sercurityRoleAccessTableAppendData.innerHTML = securityRolePrivilegesData.Append;
+            sercurityRoleAccessTableAppendToData.innerHTML = securityRolePrivilegesData.AppendTo;
+            sercurityRoleAccessTableAssignData.innerHTML = securityRolePrivilegesData.Assign;
+            sercurityRoleAccessTableShareData.innerHTML = securityRolePrivilegesData.Share;
+        });
     }
 }
 
