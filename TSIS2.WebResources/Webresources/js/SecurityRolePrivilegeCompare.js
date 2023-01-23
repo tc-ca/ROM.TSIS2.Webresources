@@ -161,7 +161,7 @@ async function buildRoleAccessTables(formContext, wrCtrl) {
 
 function onLoad(eContext) {
     const formContext = eContext.getFormContext();
-    const wrCtrl = formContext.getControl('WebResource_SecurityRoleAccess');
+    const wrCtrl = formContext.getControl('WebResource_securityroleprivilegecompare');
     buildRoleAccessTables(formContext, wrCtrl);
 }
 

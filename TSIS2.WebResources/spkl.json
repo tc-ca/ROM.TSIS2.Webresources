@@ -280,9 +280,9 @@
               "description": "ROM TSIS 2.0 Planning Data Ribbon Scripts"
             },
             {
-              "uniquename": "ts_/js/SecurityRoleAccess.js",
-              "file": "js\\SecurityRoleAccess.js",
-              "description": "Scripts for Security Role Access Sheet"
+              "uniquename": "ts_/js/SecurityRolePrivilegeCompare.js",
+              "file": "js\\SecurityRolePrivilegeCompare.js",
+              "description": "Scripts for Security Role Privilege Compare Sheet"
             },
             /* Styles */
             {
@@ -397,9 +397,9 @@
               "description": "Popup for Email Attach File"
             },
             {
-              "uniquename": "ts_/html/SecurityRoleAccess.html",
-              "file": "html\\SecurityRoleAccess.html",
-              "description": "Security Role Access Sheet"
+              "uniquename": "ts_/html/SecurityRolePrivilegeCompare.html",
+              "file": "html\\SecurityRolePrivilegeCompare.html",
+              "description": "Security Role Privilege Compare Sheet"
             },
             /* SurveyJS dependencies */
             {
