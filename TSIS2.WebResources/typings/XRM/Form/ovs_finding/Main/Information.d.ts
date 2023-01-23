@@ -91,6 +91,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_operationid"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ts_ovs_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
+      get(name: "ts_qm_rclegislation"): Xrm.LookupAttribute<"qm_rclegislation">;
       get(name: "ts_rateactualorpotentialharm"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_rateapprovingteam"): Xrm.LookupAttribute<"team">;
       get(name: "ts_ratecooperationwithinspectionorinvestigat"): Xrm.LookupAttribute<"ts_assessmentrating">;
@@ -164,6 +165,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_operationid"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ts_ovs_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;
+      get(name: "ts_qm_rclegislation"): Xrm.LookupControl<"qm_rclegislation">;
       get(name: "ts_rateactualorpotentialharm"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_rateapprovingteam"): Xrm.LookupControl<"team">;
       get(name: "ts_ratecooperationwithinspectionorinvestigat"): Xrm.LookupControl<"ts_assessmentrating">;
@@ -239,6 +241,7 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_operationid"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ts_ovs_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
+    getAttribute(attributeName: "ts_qm_rclegislation"): Xrm.LookupAttribute<"qm_rclegislation">;
     getAttribute(attributeName: "ts_rateactualorpotentialharm"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_rateapprovingteam"): Xrm.LookupAttribute<"team">;
     getAttribute(attributeName: "ts_ratecooperationwithinspectionorinvestigat"): Xrm.LookupAttribute<"ts_assessmentrating">;
@@ -307,6 +310,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_operationid"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ts_ovs_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;
+    getControl(controlName: "ts_qm_rclegislation"): Xrm.LookupControl<"qm_rclegislation">;
     getControl(controlName: "ts_rateactualorpotentialharm"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_rateapprovingteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_ratecooperationwithinspectionorinvestigat"): Xrm.LookupControl<"ts_assessmentrating">;

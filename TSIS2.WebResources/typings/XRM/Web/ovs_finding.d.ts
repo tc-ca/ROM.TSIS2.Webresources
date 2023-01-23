@@ -91,6 +91,7 @@ interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ts_functionallocation_bind$msdyn_functionallocations?: string | null;
   ts_operationid_bind$ovs_operations?: string | null;
   ts_ovs_operationtype_bind$ovs_operationtypes?: string | null;
+  ts_qm_rclegislation_bind$qm_rclegislations?: string | null;
 }
 interface ovs_Finding_Create extends ovs_Finding {
 }
@@ -157,6 +158,7 @@ interface ovs_Finding_Select {
   ts_ovs_operationtype_guid: WebAttribute<ovs_Finding_Select, { ts_ovs_operationtype_guid: string | null }, { ts_ovs_operationtype_formatted?: string }>;
   ts_proposealternatencatenforcementaction: WebAttribute<ovs_Finding_Select, { ts_proposealternatencatenforcementaction: boolean | null }, {  }>;
   ts_provisioncategory_guid: WebAttribute<ovs_Finding_Select, { ts_provisioncategory_guid: string | null }, { ts_provisioncategory_formatted?: string }>;
+  ts_qm_rclegislation_guid: WebAttribute<ovs_Finding_Select, { ts_qm_rclegislation_guid: string | null }, { ts_qm_rclegislation_formatted?: string }>;
   ts_rateactualorpotentialharm_guid: WebAttribute<ovs_Finding_Select, { ts_rateactualorpotentialharm_guid: string | null }, { ts_rateactualorpotentialharm_formatted?: string }>;
   ts_rateapprovingteam_guid: WebAttribute<ovs_Finding_Select, { ts_rateapprovingteam_guid: string | null }, { ts_rateapprovingteam_formatted?: string }>;
   ts_ratecompliancehistory_guid: WebAttribute<ovs_Finding_Select, { ts_ratecompliancehistory_guid: string | null }, { ts_ratecompliancehistory_formatted?: string }>;
@@ -245,6 +247,7 @@ interface ovs_Finding_Filter {
   ts_ovs_operationtype_guid: XQW.Guid;
   ts_proposealternatencatenforcementaction: boolean;
   ts_provisioncategory_guid: XQW.Guid;
+  ts_qm_rclegislation_guid: XQW.Guid;
   ts_rateactualorpotentialharm_guid: XQW.Guid;
   ts_rateapprovingteam_guid: XQW.Guid;
   ts_ratecompliancehistory_guid: XQW.Guid;
@@ -337,6 +340,7 @@ interface ovs_Finding_FormattedResult {
   ts_operationid_formatted?: string;
   ts_ovs_operationtype_formatted?: string;
   ts_provisioncategory_formatted?: string;
+  ts_qm_rclegislation_formatted?: string;
   ts_rateactualorpotentialharm_formatted?: string;
   ts_rateapprovingteam_formatted?: string;
   ts_ratecompliancehistory_formatted?: string;
@@ -388,6 +392,7 @@ interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships
   ts_operationid_guid: string | null;
   ts_ovs_operationtype_guid: string | null;
   ts_provisioncategory_guid: string | null;
+  ts_qm_rclegislation_guid: string | null;
   ts_rateactualorpotentialharm_guid: string | null;
   ts_rateapprovingteam_guid: string | null;
   ts_ratecompliancehistory_guid: string | null;

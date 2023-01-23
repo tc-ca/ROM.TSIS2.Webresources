@@ -62,6 +62,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_mode"): Xrm.OptionSetAttribute<ts_securityincidentmode>;
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_origin"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_othercompany"): Xrm.Attribute<string>;
       get(name: "ts_owneroftherailwaylinetrack"): Xrm.Attribute<string>;
       get(name: "ts_policeresponse"): Xrm.Attribute<any>;
       get(name: "ts_province"): Xrm.OptionSetAttribute<ts_province>;
@@ -74,7 +75,6 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_securityincidenttype"): Xrm.LookupAttribute<"ts_securityincidenttype">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
-      get(name: "ts_stakeholderoperationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_statusofrailwayowner"): Xrm.OptionSetAttribute<ts_statusofrailwayowner>;
       get(name: "ts_subdivision"): Xrm.Attribute<string>;
       get(name: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -121,6 +121,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_mode"): Xrm.OptionSetControl<ts_securityincidentmode>;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_origin"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_othercompany"): Xrm.StringControl;
       get(name: "ts_owneroftherailwaylinetrack"): Xrm.StringControl;
       get(name: "ts_policeresponse"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_province"): Xrm.OptionSetControl<ts_province>;
@@ -132,7 +133,6 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_securityincidenttype"): Xrm.LookupControl<"ts_securityincidenttype">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
-      get(name: "ts_stakeholderoperationtype"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_statusofrailwayowner"): Xrm.OptionSetControl<ts_statusofrailwayowner>;
       get(name: "ts_subdivision"): Xrm.StringControl;
       get(name: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
@@ -185,6 +185,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_mode"): Xrm.OptionSetAttribute<ts_securityincidentmode>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_origin"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_othercompany"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_owneroftherailwaylinetrack"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_policeresponse"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_province"): Xrm.OptionSetAttribute<ts_province>;
@@ -197,7 +198,6 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_securityincidenttype"): Xrm.LookupAttribute<"ts_securityincidenttype">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
-    getAttribute(attributeName: "ts_stakeholderoperationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_statusofrailwayowner"): Xrm.OptionSetAttribute<ts_statusofrailwayowner>;
     getAttribute(attributeName: "ts_subdivision"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -239,6 +239,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_mode"): Xrm.OptionSetControl<ts_securityincidentmode>;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_origin"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_othercompany"): Xrm.StringControl;
     getControl(controlName: "ts_owneroftherailwaylinetrack"): Xrm.StringControl;
     getControl(controlName: "ts_policeresponse"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_province"): Xrm.OptionSetControl<ts_province>;
@@ -250,7 +251,6 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_securityincidenttype"): Xrm.LookupControl<"ts_securityincidenttype">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
-    getControl(controlName: "ts_stakeholderoperationtype"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_statusofrailwayowner"): Xrm.OptionSetControl<ts_statusofrailwayowner>;
     getControl(controlName: "ts_subdivision"): Xrm.StringControl;
     getControl(controlName: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
