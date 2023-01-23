@@ -42,6 +42,7 @@ interface ts_TeamPlanningData_Relationships {
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
   ts_Team?: Team_Result | null;
   ts_ts_planningdata_TeamPlanningData_ts_teamp?: ts_PlanningData_Result[] | null;
+  ts_workorder_teamplanningdata?: msdyn_workorder_Result[] | null;
 }
 interface ts_TeamPlanningData extends ts_TeamPlanningData_Base, ts_TeamPlanningData_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -164,6 +165,7 @@ interface ts_TeamPlanningData_Expand {
   ts_FiscalYear: WebExpand<ts_TeamPlanningData_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
   ts_Team: WebExpand<ts_TeamPlanningData_Expand, Team_Select, Team_Filter, { ts_Team: Team_Result }>;
   ts_ts_planningdata_TeamPlanningData_ts_teamp: WebExpand<ts_TeamPlanningData_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_TeamPlanningData_ts_teamp: ts_PlanningData_Result[] }>;
+  ts_workorder_teamplanningdata: WebExpand<ts_TeamPlanningData_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_workorder_teamplanningdata: msdyn_workorder_Result[] }>;
 }
 interface ts_TeamPlanningData_FormattedResult {
   createdby_formatted?: string;
@@ -208,6 +210,7 @@ interface ts_TeamPlanningData_RelatedOne {
 }
 interface ts_TeamPlanningData_RelatedMany {
   ts_ts_planningdata_TeamPlanningData_ts_teamp: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
+  ts_workorder_teamplanningdata: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_teamplanningdatas: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;

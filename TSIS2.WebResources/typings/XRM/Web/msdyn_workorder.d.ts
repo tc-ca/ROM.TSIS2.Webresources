@@ -109,8 +109,10 @@ interface msdyn_workorder_Relationships {
   qm_ReportContactId?: Contact_Result | null;
   ts_Contact_msdyn_workorder_msdyn_workorder?: Contact_Result[] | null;
   ts_IncompleteWorkOrderReason?: ts_IncompleteWorkOrderReason_Result | null;
+  ts_PlanningData?: ts_PlanningData_Result | null;
   ts_SecurityIncident?: ts_securityincident_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
+  ts_TeamPlanningData?: ts_TeamPlanningData_Result | null;
   ts_WorkOrderCreationWizardId?: ts_workordercreationwizard_Result | null;
   ts_incident_WorkOrder1_msdyn_workorder?: Incident_Result[] | null;
   ts_incident_WorkOrder2_msdyn_workorder?: Incident_Result[] | null;
@@ -167,9 +169,11 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_Country_bind$tc_countries?: string | null;
   ts_IncompleteWorkOrderReason_bind$ts_incompleteworkorderreasons?: string | null;
+  ts_PlanningData_bind$ts_planningdatas?: string | null;
   ts_Region_bind$territories?: string | null;
   ts_SecurityIncident_bind$ts_securityincidents?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
+  ts_TeamPlanningData_bind$ts_teamplanningdatas?: string | null;
   ts_WorkOrderCreationWizardId_bind$ts_workordercreationwizards?: string | null;
   ts_canceledinspectionjustification_bind$ts_canceledinspectionjustifications?: string | null;
   ts_reason_bind$ts_planningreasons?: string | null;
@@ -310,6 +314,7 @@ interface msdyn_workorder_Select {
   ts_othercanceledjustification: WebAttribute<msdyn_workorder_Select, { ts_othercanceledjustification: string | null }, {  }>;
   ts_plannedcost: WebAttribute<msdyn_workorder_Select, { ts_plannedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_plannedcost_base: WebAttribute<msdyn_workorder_Select, { ts_plannedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_planningdata_guid: WebAttribute<msdyn_workorder_Select, { ts_planningdata_guid: string | null }, { ts_planningdata_formatted?: string }>;
   ts_reason_guid: WebAttribute<msdyn_workorder_Select, { ts_reason_guid: string | null }, { ts_reason_formatted?: string }>;
   ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_riskscore: WebAttribute<msdyn_workorder_Select, { ts_riskscore: number | null }, {  }>;
@@ -317,6 +322,7 @@ interface msdyn_workorder_Select {
   ts_securityincident_guid: WebAttribute<msdyn_workorder_Select, { ts_securityincident_guid: string | null }, { ts_securityincident_formatted?: string }>;
   ts_site_guid: WebAttribute<msdyn_workorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_state: WebAttribute<msdyn_workorder_Select, { ts_state: ts_planningstate | null }, { ts_state_formatted?: string }>;
+  ts_teamplanningdata_guid: WebAttribute<msdyn_workorder_Select, { ts_teamplanningdata_guid: string | null }, { ts_teamplanningdata_formatted?: string }>;
   ts_tradenameid_guid: WebAttribute<msdyn_workorder_Select, { ts_tradenameid_guid: string | null }, { ts_tradenameid_formatted?: string }>;
   ts_trip_guid: WebAttribute<msdyn_workorder_Select, { ts_trip_guid: string | null }, { ts_trip_formatted?: string }>;
   ts_workordercreationwizardid_guid: WebAttribute<msdyn_workorder_Select, { ts_workordercreationwizardid_guid: string | null }, { ts_workordercreationwizardid_formatted?: string }>;
@@ -454,6 +460,7 @@ interface msdyn_workorder_Filter {
   ts_othercanceledjustification: string;
   ts_plannedcost: number;
   ts_plannedcost_base: number;
+  ts_planningdata_guid: XQW.Guid;
   ts_reason_guid: XQW.Guid;
   ts_region_guid: XQW.Guid;
   ts_riskscore: number;
@@ -461,6 +468,7 @@ interface msdyn_workorder_Filter {
   ts_securityincident_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_state: ts_planningstate;
+  ts_teamplanningdata_guid: XQW.Guid;
   ts_tradenameid_guid: XQW.Guid;
   ts_trip_guid: XQW.Guid;
   ts_workordercreationwizardid_guid: XQW.Guid;
@@ -510,8 +518,10 @@ interface msdyn_workorder_Expand {
   qm_ReportContactId: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { qm_ReportContactId: Contact_Result }>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: Contact_Result[] }>;
   ts_IncompleteWorkOrderReason: WebExpand<msdyn_workorder_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { ts_IncompleteWorkOrderReason: ts_IncompleteWorkOrderReason_Result }>;
+  ts_PlanningData: WebExpand<msdyn_workorder_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_PlanningData: ts_PlanningData_Result }>;
   ts_SecurityIncident: WebExpand<msdyn_workorder_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_SecurityIncident: ts_securityincident_Result }>;
   ts_Site: WebExpand<msdyn_workorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
+  ts_TeamPlanningData: WebExpand<msdyn_workorder_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { ts_TeamPlanningData: ts_TeamPlanningData_Result }>;
   ts_WorkOrderCreationWizardId: WebExpand<msdyn_workorder_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_WorkOrderCreationWizardId: ts_workordercreationwizard_Result }>;
   ts_canceledinspectionjustification: WebExpand<msdyn_workorder_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result }>;
   ts_incident_WorkOrder1_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrder1_msdyn_workorder: Incident_Result[] }>;
@@ -607,12 +617,14 @@ interface msdyn_workorder_FormattedResult {
   ts_numberoffindings_date_formatted?: string;
   ts_plannedcost_base_formatted?: string;
   ts_plannedcost_formatted?: string;
+  ts_planningdata_formatted?: string;
   ts_reason_formatted?: string;
   ts_region_formatted?: string;
   ts_riskthreshold_formatted?: string;
   ts_securityincident_formatted?: string;
   ts_site_formatted?: string;
   ts_state_formatted?: string;
+  ts_teamplanningdata_formatted?: string;
   ts_tradenameid_formatted?: string;
   ts_trip_formatted?: string;
   ts_workordercreationwizardid_formatted?: string;
@@ -672,11 +684,13 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ts_canceledinspectionjustification_guid: string | null;
   ts_country_guid: string | null;
   ts_incompleteworkorderreason_guid: string | null;
+  ts_planningdata_guid: string | null;
   ts_reason_guid: string | null;
   ts_region_guid: string | null;
   ts_riskthreshold_guid: string | null;
   ts_securityincident_guid: string | null;
   ts_site_guid: string | null;
+  ts_teamplanningdata_guid: string | null;
   ts_tradenameid_guid: string | null;
   ts_trip_guid: string | null;
   ts_workordercreationwizardid_guid: string | null;
@@ -711,8 +725,10 @@ interface msdyn_workorder_RelatedOne {
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   qm_ReportContactId: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_IncompleteWorkOrderReason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
+  ts_PlanningData: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_SecurityIncident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_TeamPlanningData: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   ts_WorkOrderCreationWizardId: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   ts_riskthreshold: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;

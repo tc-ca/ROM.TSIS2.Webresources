@@ -24,7 +24,16 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
   statecode?: msdyn_workorderservicetask_statecode | null;
   statuscode?: msdyn_workorderservicetask_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_actualtime?: Date | null;
+  ts_aircraftmanufacturer?: ts_aircraftmanufacturer | null;
+  ts_aircraftmark?: string | null;
+  ts_aircraftmodel?: ts_aircraftmodel | null;
+  ts_aircraftmodelother?: string | null;
+  ts_cbonboard?: string | null;
+  ts_flightnumber?: string | null;
   ts_mandatory?: boolean | null;
+  ts_paxonboard?: string | null;
+  ts_scheduledtime?: Date | null;
   ts_servicetaskenddate?: Date | null;
   ts_servicetaskstartdate?: Date | null;
   ts_workorderstartdate?: Date | null;
@@ -41,6 +50,10 @@ interface msdyn_workorderservicetask_Relationships {
   ovs_CaseId?: Incident_Result | null;
   ovs_Questionnaire?: ovs_Questionnaire_Result | null;
   ovs_msdyn_workorderservicetask_ovs_finding?: ovs_Finding_Result[] | null;
+  ts_BoardingLounge?: msdyn_FunctionalLocation_Result | null;
+  ts_Destination?: msdyn_FunctionalLocation_Result | null;
+  ts_Gate?: msdyn_FunctionalLocation_Result | null;
+  ts_Origin?: msdyn_FunctionalLocation_Result | null;
   ts_incident_WorkOrderServiceTask1_msdyn_work?: Incident_Result[] | null;
   ts_incident_WorkOrderServiceTask2_msdyn_work?: Incident_Result[] | null;
 }
@@ -58,6 +71,10 @@ interface msdyn_workorderservicetask extends msdyn_workorderservicetask_Base, ms
   ovs_Questionnaire_bind$ovs_questionnaires?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  ts_BoardingLounge_bind$msdyn_functionallocations?: string | null;
+  ts_Destination_bind$msdyn_functionallocations?: string | null;
+  ts_Gate_bind$msdyn_functionallocations?: string | null;
+  ts_Origin_bind$msdyn_functionallocations?: string | null;
   ts_legislationsourcefilter_bind$qm_tylegislationsources?: string | null;
   ts_legislationtypefilter_bind$qm_tylegislationtypes?: string | null;
   ts_operationtypefilter_bind$ovs_operationtypes?: string | null;
@@ -111,10 +128,23 @@ interface msdyn_workorderservicetask_Select {
   statecode: WebAttribute<msdyn_workorderservicetask_Select, { statecode: msdyn_workorderservicetask_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<msdyn_workorderservicetask_Select, { statuscode: msdyn_workorderservicetask_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<msdyn_workorderservicetask_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_actualtime: WebAttribute<msdyn_workorderservicetask_Select, { ts_actualtime: Date | null }, { ts_actualtime_formatted?: string }>;
+  ts_aircraftmanufacturer: WebAttribute<msdyn_workorderservicetask_Select, { ts_aircraftmanufacturer: ts_aircraftmanufacturer | null }, { ts_aircraftmanufacturer_formatted?: string }>;
+  ts_aircraftmark: WebAttribute<msdyn_workorderservicetask_Select, { ts_aircraftmark: string | null }, {  }>;
+  ts_aircraftmodel: WebAttribute<msdyn_workorderservicetask_Select, { ts_aircraftmodel: ts_aircraftmodel | null }, { ts_aircraftmodel_formatted?: string }>;
+  ts_aircraftmodelother: WebAttribute<msdyn_workorderservicetask_Select, { ts_aircraftmodelother: string | null }, {  }>;
+  ts_boardinglounge_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_boardinglounge_guid: string | null }, { ts_boardinglounge_formatted?: string }>;
+  ts_cbonboard: WebAttribute<msdyn_workorderservicetask_Select, { ts_cbonboard: string | null }, {  }>;
+  ts_destination_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_destination_guid: string | null }, { ts_destination_formatted?: string }>;
+  ts_flightnumber: WebAttribute<msdyn_workorderservicetask_Select, { ts_flightnumber: string | null }, {  }>;
+  ts_gate_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_gate_guid: string | null }, { ts_gate_formatted?: string }>;
   ts_legislationsourcefilter_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_legislationsourcefilter_guid: string | null }, { ts_legislationsourcefilter_formatted?: string }>;
   ts_legislationtypefilter_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_legislationtypefilter_guid: string | null }, { ts_legislationtypefilter_formatted?: string }>;
   ts_mandatory: WebAttribute<msdyn_workorderservicetask_Select, { ts_mandatory: boolean | null }, {  }>;
   ts_operationtypefilter_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_operationtypefilter_guid: string | null }, { ts_operationtypefilter_formatted?: string }>;
+  ts_origin_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_origin_guid: string | null }, { ts_origin_formatted?: string }>;
+  ts_paxonboard: WebAttribute<msdyn_workorderservicetask_Select, { ts_paxonboard: string | null }, {  }>;
+  ts_scheduledtime: WebAttribute<msdyn_workorderservicetask_Select, { ts_scheduledtime: Date | null }, { ts_scheduledtime_formatted?: string }>;
   ts_servicetaskenddate: WebAttribute<msdyn_workorderservicetask_Select, { ts_servicetaskenddate: Date | null }, { ts_servicetaskenddate_formatted?: string }>;
   ts_servicetaskstartdate: WebAttribute<msdyn_workorderservicetask_Select, { ts_servicetaskstartdate: Date | null }, { ts_servicetaskstartdate_formatted?: string }>;
   ts_workorderstartdate: WebAttribute<msdyn_workorderservicetask_Select, { ts_workorderstartdate: Date | null }, { ts_workorderstartdate_formatted?: string }>;
@@ -166,10 +196,23 @@ interface msdyn_workorderservicetask_Filter {
   statecode: msdyn_workorderservicetask_statecode;
   statuscode: msdyn_workorderservicetask_statuscode;
   timezoneruleversionnumber: number;
+  ts_actualtime: Date;
+  ts_aircraftmanufacturer: ts_aircraftmanufacturer;
+  ts_aircraftmark: string;
+  ts_aircraftmodel: ts_aircraftmodel;
+  ts_aircraftmodelother: string;
+  ts_boardinglounge_guid: XQW.Guid;
+  ts_cbonboard: string;
+  ts_destination_guid: XQW.Guid;
+  ts_flightnumber: string;
+  ts_gate_guid: XQW.Guid;
   ts_legislationsourcefilter_guid: XQW.Guid;
   ts_legislationtypefilter_guid: XQW.Guid;
   ts_mandatory: boolean;
   ts_operationtypefilter_guid: XQW.Guid;
+  ts_origin_guid: XQW.Guid;
+  ts_paxonboard: string;
+  ts_scheduledtime: Date;
   ts_servicetaskenddate: Date;
   ts_servicetaskstartdate: Date;
   ts_workorderstartdate: Date;
@@ -197,6 +240,10 @@ interface msdyn_workorderservicetask_Expand {
   ownerid: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<msdyn_workorderservicetask_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_BoardingLounge: WebExpand<msdyn_workorderservicetask_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_BoardingLounge: msdyn_FunctionalLocation_Result }>;
+  ts_Destination: WebExpand<msdyn_workorderservicetask_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Destination: msdyn_FunctionalLocation_Result }>;
+  ts_Gate: WebExpand<msdyn_workorderservicetask_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Gate: msdyn_FunctionalLocation_Result }>;
+  ts_Origin: WebExpand<msdyn_workorderservicetask_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Origin: msdyn_FunctionalLocation_Result }>;
   ts_incident_WorkOrderServiceTask1_msdyn_work: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrderServiceTask1_msdyn_work: Incident_Result[] }>;
   ts_incident_WorkOrderServiceTask2_msdyn_work: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrderServiceTask2_msdyn_work: Incident_Result[] }>;
 }
@@ -227,9 +274,17 @@ interface msdyn_workorderservicetask_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  ts_actualtime_formatted?: string;
+  ts_aircraftmanufacturer_formatted?: string;
+  ts_aircraftmodel_formatted?: string;
+  ts_boardinglounge_formatted?: string;
+  ts_destination_formatted?: string;
+  ts_gate_formatted?: string;
   ts_legislationsourcefilter_formatted?: string;
   ts_legislationtypefilter_formatted?: string;
   ts_operationtypefilter_formatted?: string;
+  ts_origin_formatted?: string;
+  ts_scheduledtime_formatted?: string;
   ts_servicetaskenddate_formatted?: string;
   ts_servicetaskstartdate_formatted?: string;
   ts_workorderstartdate_formatted?: string;
@@ -255,9 +310,13 @@ interface msdyn_workorderservicetask_Result extends msdyn_workorderservicetask_B
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
   owninguser_guid: string | null;
+  ts_boardinglounge_guid: string | null;
+  ts_destination_guid: string | null;
+  ts_gate_guid: string | null;
   ts_legislationsourcefilter_guid: string | null;
   ts_legislationtypefilter_guid: string | null;
   ts_operationtypefilter_guid: string | null;
+  ts_origin_guid: string | null;
 }
 interface msdyn_workorderservicetask_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -273,6 +332,10 @@ interface msdyn_workorderservicetask_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_BoardingLounge: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_Destination: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_Gate: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_Origin: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
 }
 interface msdyn_workorderservicetask_RelatedMany {
   msdyn_workorderservicetask_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;

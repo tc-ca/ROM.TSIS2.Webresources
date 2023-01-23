@@ -14,12 +14,16 @@ namespace ROM.WorkOrderServiceTask {
         confirmDisconnectedText = "Vous ne pouvez pas récupérer l'inspection valide/active à la date sélectionnée";
         noQuestionnaireText = "Il n'y a pas de questionnaire disponible pour cette date.";
     }
+    var aircraftModelOptions;
 
     export async function onLoad(eContext: Xrm.ExecutionContext<any, any>) {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
+
+        aircraftModelOptions = Form.getControl("ts_aircraftmodel").getOptions();
         //If there's a related Work Order, filter the Task Type Lookup to match the Work Order's Activity Type Filter
         if (Form.getAttribute("msdyn_workorder").getValue() != null) {
             setTaskTypeFilteredView(Form);
+            aircraftManufacturerOnChange(eContext);
         }
 
         var taskType = Form.getAttribute("msdyn_tasktype").getValue();
@@ -260,7 +264,7 @@ namespace ROM.WorkOrderServiceTask {
     function setTaskTypeFilteredView(form: Form.msdyn_workorderservicetask.Main.SurveyJS,): void {
         const workOrderValue = form.getAttribute("msdyn_workorder").getValue();
         const workOrderId = workOrderValue ? workOrderValue[0].id : "";
-        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_workordertype_value,_ovs_operationtypeid_value").then(
+        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_workordertype_value,_ovs_operationtypeid_value,_ts_site_value").then(
             function success(result) {
                 const viewId = '{ae0d8547-6871-4854-91ba-03b0c619dbe1}';
                 const entityName = "msdyn_servicetasktype";
@@ -268,7 +272,75 @@ namespace ROM.WorkOrderServiceTask {
                 const fetchXml = `<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"> <entity name="msdyn_servicetasktype"> <attribute name="msdyn_name" /> <attribute name="createdon" /> <attribute name="msdyn_estimatedduration" /> <attribute name="msdyn_description" /> <attribute name="msdyn_servicetasktypeid" /> <order attribute="msdyn_name" descending="false" /> <link-entity name="msdyn_incidenttypeservicetask" from="msdyn_tasktype" to="msdyn_servicetasktypeid" link-type="inner" alias="ae"> <link-entity name="msdyn_incidenttype" from="msdyn_incidenttypeid" to="msdyn_incidenttype" link-type="inner" alias="af"> <filter type="and"> <condition attribute="msdyn_defaultworkordertype" operator="eq" value="${result._msdyn_workordertype_value}" /> </filter> <link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"> <link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ag"> <filter type="and"> <condition attribute="ovs_operationtypeid" operator="eq" value="${result._ovs_operationtypeid_value}" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>`;
                 const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_servicetasktype"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("msdyn_tasktype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+
+                ShowHideFieldsByOperationType(form, result._ovs_operationtypeid_value);
+                setSubSiteFilteredView(form, result._ts_site_value);
             });
+    }
+
+    function ShowHideFieldsByOperationType(form: Form.msdyn_workorderservicetask.Main.SurveyJS, operationTypeId): void {
+        if (operationTypeId == "e03381d0-c751-eb11-a812-000d3af3ac0d" || operationTypeId == "8b614ef0-c651-eb11-a812-000d3af3ac0d") {  //Air Carrier (Cargo) or Air Carrier (Passenger)
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(true);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(true);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(true);
+        }
+        else {
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(false);
+        }
+    }
+
+    function setSubSiteFilteredView(form: Form.msdyn_workorderservicetask.Main.SurveyJS, siteId): void {
+        if (siteId != null && siteId != undefined) {
+            const viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
+            const entityName = "msdyn_functionallocation";
+            const viewDisplayName = "Filtered Sites";
+            const siteFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteId + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+            const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+            form.getControl("ts_boardinglounge").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
+            form.getControl("ts_gate").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
+        }
+    }
+
+    export function aircraftManufacturerOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
+        
+        const aircraftmanufacturer = form.getAttribute("ts_aircraftmanufacturer").getValue();
+        var options = form.getControl("ts_aircraftmodel").getOptions();
+        for (var i = 0; i < options.length; i++)
+            form.getControl("ts_aircraftmodel").removeOption(options[i].value);
+        form.getControl("ts_aircraftmodelother").setVisible(false);
+        form.getControl("ts_aircraftmodel").setVisible(true);
+        if (aircraftmanufacturer == ts_aircraftmanufacturer.Boeing) {
+            for (var i = 1; i <= 11; i++) {
+                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            }
+        }
+        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Airbus) {
+            for (var i = 12; i <= 22; i++) {
+                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            }
+        }
+        else if (aircraftmanufacturer == ts_aircraftmanufacturer.DeHavilland) {
+            for (var i = 23; i <= 24; i++) {
+                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            }
+        }
+        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Bombardier) {
+            for (var i = 25; i <= 25; i++) {
+                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            }
+        }
+        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Embraer) {
+            for (var i = 26; i <= 29; i++) {
+                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            }
+        }
+        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Other) {
+            form.getControl("ts_aircraftmodelother").setVisible(true);
+            form.getControl("ts_aircraftmodel").setVisible(false);
+        }
     }
 
     async function workOrderIsDraft(eContext: Xrm.ExecutionContext<any, any>) {
