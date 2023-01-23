@@ -38,9 +38,9 @@ async function buildRoleAccessTables(formContext, wrCtrl) {
         const sercurityRoleAccessTableHeader = sercurityRoleAccessTable.createTHead();
         const sercurityRoleAccessTableHeaderTitleRow = sercurityRoleAccessTableHeader.insertRow();
         const sercurityRoleAccessTableHeaderTitleHeader = document.createElement("th");
-        sercurityRoleAccessTableHeaderTitleHeader.colSpan = 9
+        sercurityRoleAccessTableHeaderTitleHeader.colSpan = 9;
         sercurityRoleAccessTableHeaderTitleHeader.innerHTML = powerAppsEntity.plainTextName;
-        sercurityRoleAccessTableHeaderTitleRow.appendChild(sercurityRoleAccessTableHeaderTitleHeader)
+        sercurityRoleAccessTableHeaderTitleRow.appendChild(sercurityRoleAccessTableHeaderTitleHeader);
 
         const sercurityRoleAccessTableHeaderRow = sercurityRoleAccessTableHeader.insertRow();
         const sercurityRoleAccessTableRoleNameHeader = document.createElement("th");
@@ -192,4 +192,25 @@ function convertPrivilegeDepthCodeToText(depth, lang) {
         default:
             return errorLabelLocalized;
     }
+}
+
+//Takes the logical name of an entity and returns the localized display name for that entity
+//Might use this later, but it's really slow and not every table has a good display name set in both languages.
+async function getTableName(logicalname, lang) {
+    let fetchXml = [
+        "<fetch top='1'>",
+        "  <entity name='msdyn_solutioncomponentsummary'>",
+        "    <attribute name='msdyn_displayname'/>",
+        "    <filter>",
+        "      <condition attribute='msdyn_name' operator='eq' value='" + logicalname + "'/>",
+        "    </filter>",
+        "  </entity>",
+        "</fetch>"
+    ].join("");
+    fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+    let tableName = "";
+    tableName = await Xrm.WebApi.retrieveMultipleRecords("msdyn_solutioncomponentsummary", fetchXml).then(function (result) {
+        return (result.entities[0] != null) ? result.entities[0].msdyn_displayname : ((lang == 1036) ? "Erreur" : "Error");
+    });
+    return tableName;
 }
