@@ -222,7 +222,7 @@ async function createWorkOrders(formContext) {
                     const planningDatas = result.entities;
                     for (const planningData of planningDatas) {
                         let tradeNameId = null
-                        if (planningData["ts_stakeholder"] != null && planningData["ts_stakeholder"]) tradeNameId = await determineTradeNameOfStakeholder(planningData._ts_stakeholder_value, planningData["ts_stakeholder.name"]);
+                        if (planningData["_ts_stakeholder_value"] != null && planningData["ts_stakeholder.name"] != null) tradeNameId = await determineTradeNameOfStakeholder(planningData._ts_stakeholder_value, planningData["ts_stakeholder.name"]);
                         //Set the Work Order Lookups using the Planning Data Lookups. Some can be null, so they are only added if there is a value.
                         let workOrderData = {}
                         if (teamPlanningDataId != null) workOrderData["ts_TeamPlanningData@odata.bind"] = "/ts_teamplanningdatas(" + teamPlanningDataId.slice(1, -1) + ")";
