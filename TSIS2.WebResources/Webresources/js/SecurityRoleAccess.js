@@ -1,5 +1,29 @@
 ﻿
+
 async function buildRoleAccessTables(formContext, wrCtrl) {
+    const lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+    let securityRoleHeaderLocalized = "Security Role";
+    let createHeaderLocalized = "Create";
+    let readHeaderLocalized = "Read";
+    let writeHeaderLocalized = "Write";
+    let deleteHeaderLocalized = "Delete";
+    let appendHeaderLocalized = "Append";
+    let appendToHeaderLocalized = "Append To";
+    let assignHeaderLocalized = "Assign";
+    let shareHeaderLocalized = "Share";
+    
+    if (lang == 1036) {
+        securityRoleHeaderLocalized = "Rôle de sécurité";
+        createHeaderLocalized = "Créer";
+        readHeaderLocalized = "Lire";
+        writeHeaderLocalized = "Écrire";
+        deleteHeaderLocalized = "Supprimer";
+        appendHeaderLocalized = "Ajouter";
+        appendToHeaderLocalized = "Ajouter à";
+        assignHeaderLocalized = "Attribuer";
+        shareHeaderLocalized = "Partager";
+    }
 
     const contentWindow = await wrCtrl.getContentWindow().then(function (win) { return win });
     const securityRoles = JSON.parse(formContext.getAttribute("ts_securityroles").getValue().replace(/(\r\n|\n|\r)/gm, ""));
@@ -29,15 +53,15 @@ async function buildRoleAccessTables(formContext, wrCtrl) {
         const sercurityRoleAccessTableAssignHeader = document.createElement("th");
         const sercurityRoleAccessTableShareHeader = document.createElement("th");
 
-        sercurityRoleAccessTableRoleNameHeader.innerHTML = "Security Role";
-        sercurityRoleAccessTableCreateHeader.innerHTML = "Create";
-        sercurityRoleAccessTableReadHeader.innerHTML = "Read";
-        sercurityRoleAccessTableWriteHeader.innerHTML = "Write";
-        sercurityRoleAccessTableDeleteHeader.innerHTML = "Delete";
-        sercurityRoleAccessTableAppendHeader.innerHTML = "Append";
-        sercurityRoleAccessTableAppendToHeader.innerHTML = "Append To";
-        sercurityRoleAccessTableAssignHeader.innerHTML = "Assign";
-        sercurityRoleAccessTableShareHeader.innerHTML = "Share";
+        sercurityRoleAccessTableRoleNameHeader.innerHTML = securityRoleHeaderLocalized;
+        sercurityRoleAccessTableCreateHeader.innerHTML = createHeaderLocalized;
+        sercurityRoleAccessTableReadHeader.innerHTML = readHeaderLocalized;
+        sercurityRoleAccessTableWriteHeader.innerHTML = writeHeaderLocalized;
+        sercurityRoleAccessTableDeleteHeader.innerHTML = deleteHeaderLocalized;
+        sercurityRoleAccessTableAppendHeader.innerHTML = appendHeaderLocalized;
+        sercurityRoleAccessTableAppendToHeader.innerHTML = appendToHeaderLocalized;
+        sercurityRoleAccessTableAssignHeader.innerHTML = assignHeaderLocalized;
+        sercurityRoleAccessTableShareHeader.innerHTML = shareHeaderLocalized;
 
         sercurityRoleAccessTableHeaderRow.appendChild(sercurityRoleAccessTableRoleNameHeader);
         sercurityRoleAccessTableHeaderRow.appendChild(sercurityRoleAccessTableCreateHeader);
@@ -82,28 +106,28 @@ async function buildRoleAccessTables(formContext, wrCtrl) {
             for (let privilege of workOrderPrivileges) {
                 switch (privilege["priv.name"].toLowerCase()) {
                     case "prvcreate" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Create = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
+                        workOrderPrivilegesData.Create = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
                         break;
                     case "prvread" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Read = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
+                        workOrderPrivilegesData.Read = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
                         break;
                     case "prvwrite" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Write = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
+                        workOrderPrivilegesData.Write = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
                         break;
                     case "prvdelete" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Delete = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
+                        workOrderPrivilegesData.Delete = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
                         break;
                     case "prvappend" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Append = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
+                        workOrderPrivilegesData.Append = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
                         break;
                     case "prvappendTo" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.AppendTo = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
+                        workOrderPrivilegesData.AppendTo = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
                         break;
                     case "prvassign" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Assign = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
+                        workOrderPrivilegesData.Assign = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
                         break;
                     case "prvshare" + powerAppsEntity.logicalname:
-                        workOrderPrivilegesData.Share = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask);
+                        workOrderPrivilegesData.Share = convertPrivilegeDepthCodeToText(privilege.privilegedepthmask, lang);
                         break;
 
                 }
@@ -141,18 +165,31 @@ function onLoad(eContext) {
     buildRoleAccessTables(formContext, wrCtrl);
 }
 
-function convertPrivilegeDepthCodeToText(depth) {
+function convertPrivilegeDepthCodeToText(depth, lang) {
+    let userLabelLocalized = "U";
+    let BusinessUnitLabelLocalized = "BU";
+    let parentChildLabelLocalized = "P:C";
+    let OrganisationChildLabelLocalized = "Org";
+    let errorLabelLocalized = "Error";
+
+    if (lang == 1036) {
+        userLabelLocalized = "U";
+        BusinessUnitLabelLocalized = "D";
+        parentChildLabelLocalized = "M:SD";
+        OrganisationChildLabelLocalized = "Org";
+        errorLabelLocalized = "Erreur";
+    }
 
     switch (depth) {
         case 8:
-            return "Org";
+            return OrganisationChildLabelLocalized;
         case 4:
-            return "PC";
+            return parentChildLabelLocalized;
         case 2:
-            return "BU";
+            return BusinessUnitLabelLocalized;
         case 1:
-            return "User";
+            return userLabelLocalized;
         default:
-            return "Error";
+            return errorLabelLocalized;
     }
 }
