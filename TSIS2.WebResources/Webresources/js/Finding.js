@@ -226,7 +226,7 @@ var ROM;
                             factor5AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor5AssessmentRatingId, "?$select=ts_weight");
                             factor6AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor6AssessmentRatingId, "?$select=ts_weight");
                             factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
-                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq ".concat(717750000 /* NCAT */));
+                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_ncatenforcementaction&$filter=ts_assessmenttool eq " + 717750000 /* NCAT */);
                             //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
                             return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
                                     var totalWeight = 0;
@@ -329,7 +329,7 @@ var ROM;
                             factor8AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor8AssessmentRatingId, "?$select=ts_weight");
                             if (enforcementHistory == null)
                                 enforcementHistory = 717750000 /* Nil */;
-                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_rateenforcementaction&$filter=ts_assessmenttool eq ".concat(717750001 /* RATE */, " and ts_rateenforcementhistory eq ").concat(enforcementHistory));
+                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_rateenforcementaction&$filter=ts_assessmenttool eq " + 717750001 /* RATE */ + " and ts_rateenforcementhistory eq " + enforcementHistory);
                             //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
                             return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, factor8AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
                                     var totalWeight = 0;
@@ -662,7 +662,7 @@ var ROM;
                 var entityNameApprovingManagers = "systemuser";
                 var viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
                 //Approving managers in the same region as the case with the AvSec Business Unit
-                var fetchXmlApprovingManagersNCAT = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"".concat(NCATApprovingTeam[0].id, "\"/></filter></link-entity></entity></fetch>");
+                var fetchXmlApprovingManagersNCAT = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"" + NCATApprovingTeam[0].id + "\"/></filter></link-entity></entity></fetch>";
                 var layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
                 formContext.getControl("ts_ncatmanager").addCustomView(viewIdApprovingManagerNCAT, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersNCAT, layoutXmlApprovingManagers, true);
                 if (formContext.getAttribute("ts_ncatmanager").getValue != null) {
@@ -687,7 +687,7 @@ var ROM;
                 var entityNameApprovingManagers = "systemuser";
                 var viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
                 //Approving managers in the same region as the case with the ISSO Business Unit
-                var fetchXmlApprovingManagersRATE = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"".concat(RATEApprovingTeam[0].id, "\"/></filter></link-entity></entity></fetch>");
+                var fetchXmlApprovingManagersRATE = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"" + RATEApprovingTeam[0].id + "\"/></filter></link-entity></entity></fetch>";
                 var layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
                 formContext.getControl("ts_ratemanager").addCustomView(viewIdApprovingManagerRATE, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersRATE, layoutXmlApprovingManagers, true);
                 formContext.getControl("ts_ratemanager").setDisabled(false);
