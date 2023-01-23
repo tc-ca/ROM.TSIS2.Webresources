@@ -46,6 +46,7 @@ interface ts_PlanningData_Relationships {
   ts_Stakeholder?: Account_Result | null;
   ts_Team?: Team_Result | null;
   ts_TeamPlanningData?: ts_TeamPlanningData_Result | null;
+  ts_workorder_planningdata?: msdyn_workorder_Result[] | null;
 }
 interface ts_PlanningData extends ts_PlanningData_Base, ts_PlanningData_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -195,6 +196,7 @@ interface ts_PlanningData_Expand {
   ts_Stakeholder: WebExpand<ts_PlanningData_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
   ts_Team: WebExpand<ts_PlanningData_Expand, Team_Select, Team_Filter, { ts_Team: Team_Result }>;
   ts_TeamPlanningData: WebExpand<ts_PlanningData_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { ts_TeamPlanningData: ts_TeamPlanningData_Result }>;
+  ts_workorder_planningdata: WebExpand<ts_PlanningData_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_workorder_planningdata: msdyn_workorder_Result[] }>;
 }
 interface ts_PlanningData_FormattedResult {
   createdby_formatted?: string;
@@ -260,6 +262,7 @@ interface ts_PlanningData_RelatedOne {
   ts_TeamPlanningData: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
 }
 interface ts_PlanningData_RelatedMany {
+  ts_workorder_planningdata: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_planningdatas: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;

@@ -27,6 +27,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_milemarker?: string | null;
   ts_mode?: ts_securityincidentmode | null;
   ts_name?: string | null;
+  ts_othercompany?: string | null;
   ts_owneroftherailwaylinetrack?: string | null;
   ts_policeresponse?: boolean | null;
   ts_province?: ts_province | null;
@@ -69,7 +70,6 @@ interface ts_securityincident extends ts_securityincident_Base, ts_securityincid
   ts_ReportingCompany_bind$accounts?: string | null;
   ts_SecurityIncidentType_bind$ts_securityincidenttypes?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
-  ts_StakeholderOperationType_bind$ovs_operationtypes?: string | null;
   ts_Stakeholder_bind$accounts?: string | null;
   ts_Subsite_bind$msdyn_functionallocations?: string | null;
   ts_TargetElement_bind$ts_targetelements?: string | null;
@@ -117,6 +117,7 @@ interface ts_securityincident_Select {
   ts_mode: WebAttribute<ts_securityincident_Select, { ts_mode: ts_securityincidentmode | null }, { ts_mode_formatted?: string }>;
   ts_name: WebAttribute<ts_securityincident_Select, { ts_name: string | null }, {  }>;
   ts_origin_guid: WebAttribute<ts_securityincident_Select, { ts_origin_guid: string | null }, { ts_origin_formatted?: string }>;
+  ts_othercompany: WebAttribute<ts_securityincident_Select, { ts_othercompany: string | null }, {  }>;
   ts_owneroftherailwaylinetrack: WebAttribute<ts_securityincident_Select, { ts_owneroftherailwaylinetrack: string | null }, {  }>;
   ts_policeresponse: WebAttribute<ts_securityincident_Select, { ts_policeresponse: boolean | null }, {  }>;
   ts_province: WebAttribute<ts_securityincident_Select, { ts_province: ts_province | null }, { ts_province_formatted?: string }>;
@@ -130,7 +131,6 @@ interface ts_securityincident_Select {
   ts_securityincidenttype_guid: WebAttribute<ts_securityincident_Select, { ts_securityincidenttype_guid: string | null }, { ts_securityincidenttype_formatted?: string }>;
   ts_site_guid: WebAttribute<ts_securityincident_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_securityincident_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
-  ts_stakeholderoperationtype_guid: WebAttribute<ts_securityincident_Select, { ts_stakeholderoperationtype_guid: string | null }, { ts_stakeholderoperationtype_formatted?: string }>;
   ts_statusofrailwayowner: WebAttribute<ts_securityincident_Select, { ts_statusofrailwayowner: ts_statusofrailwayowner | null }, { ts_statusofrailwayowner_formatted?: string }>;
   ts_subdivision: WebAttribute<ts_securityincident_Select, { ts_subdivision: string | null }, {  }>;
   ts_subsite_guid: WebAttribute<ts_securityincident_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
@@ -183,6 +183,7 @@ interface ts_securityincident_Filter {
   ts_mode: ts_securityincidentmode;
   ts_name: string;
   ts_origin_guid: XQW.Guid;
+  ts_othercompany: string;
   ts_owneroftherailwaylinetrack: string;
   ts_policeresponse: boolean;
   ts_province: ts_province;
@@ -196,7 +197,6 @@ interface ts_securityincident_Filter {
   ts_securityincidenttype_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
-  ts_stakeholderoperationtype_guid: XQW.Guid;
   ts_statusofrailwayowner: ts_statusofrailwayowner;
   ts_subdivision: string;
   ts_subsite_guid: XQW.Guid;
@@ -266,7 +266,6 @@ interface ts_securityincident_FormattedResult {
   ts_securityincidenttype_formatted?: string;
   ts_site_formatted?: string;
   ts_stakeholder_formatted?: string;
-  ts_stakeholderoperationtype_formatted?: string;
   ts_statusofrailwayowner_formatted?: string;
   ts_subsite_formatted?: string;
   ts_tamperingsubcategory_formatted?: string;
@@ -290,7 +289,6 @@ interface ts_securityincident_Result extends ts_securityincident_Base, ts_securi
   ts_securityincidenttype_guid: string | null;
   ts_site_guid: string | null;
   ts_stakeholder_guid: string | null;
-  ts_stakeholderoperationtype_guid: string | null;
   ts_subsite_guid: string | null;
   ts_targetelement_guid: string | null;
 }
