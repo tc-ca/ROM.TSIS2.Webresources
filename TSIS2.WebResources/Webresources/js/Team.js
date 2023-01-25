@@ -4,6 +4,7 @@ var ROM;
     var Team;
     (function (Team) {
         function onLoad(eContext) {
+            //Show the Planning Tab only when in the Oversight Planning Module
             var globalContext = Xrm.Utility.getGlobalContext();
             globalContext.getCurrentAppName().then(function (appName) {
                 if (appName == "Oversight Planning Module") {
