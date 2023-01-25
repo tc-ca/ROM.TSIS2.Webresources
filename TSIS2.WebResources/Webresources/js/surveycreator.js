@@ -252,7 +252,18 @@ hasDetailQuestions.forEach(function (questionName) {
         });
 });
 
-
+//add provisions property to all questions in hasProvisions array
+var hasProvisions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
+hasProvisions.forEach(function (questionName) {
+    Survey
+        .Serializer
+        .addProperty(questionName, {
+            name: "provisions:multiplevalues",
+            category: "general",
+            choices: ["option1", "option2", "option3"],
+            default: "option1"
+        });
+});
 
 function appendDetailToQuestion(survey, options) {
     var detailSurveyId = options.question.name + "-Detail";
