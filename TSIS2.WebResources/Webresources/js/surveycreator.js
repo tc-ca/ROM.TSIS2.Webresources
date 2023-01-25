@@ -253,17 +253,48 @@ hasDetailQuestions.forEach(function (questionName) {
 });
 
 //add provisions property to all questions in hasProvisions array
-var hasProvisions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
-hasProvisions.forEach(function (questionName) {
+var hasApplicableProvisions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
+hasApplicableProvisions.forEach(function (questionName) {
     Survey
         .Serializer
         .addProperty(questionName, {
-            name: "provisions:multiplevalues",
+            name: "applicableProvisions:provisionsSelection",
             category: "general",
-            choices: ["option1", "option2", "option3"],
-            default: "option1"
         });
 });
+
+var provisionsSelectionEditor = {
+    render: async function (editor, htmlElement) {
+        if (provisionNames.length === 0) provisionNames = await retrieveProvisionNames();
+        var div = document.createElement("div");
+        div.style.position = "initial";
+        var input = document.createElement("input");
+        div.appendChild(input);
+        htmlElement.appendChild(div);
+        const autocomplete = AriaAutocomplete(input, {
+            source: provisionNames,
+            onItemRender: ({ label }) => {
+                if (!autocomplete.options.source.includes(label)) {
+                    return `Add ${label}...`;
+                }
+                return label;
+            },
+            multiple: true,
+            minLength: 1,
+        });
+        input.onchange = function () {
+            editor.koValue(input.value);
+        }
+        editor.onValueUpdated = function (newValue) {
+            input.value = editor.koValue() || "";
+        }
+        input.value = editor.koValue() || "";
+    }
+};
+
+SurveyCreator
+    .SurveyPropertyEditorFactory
+    .registerCustomEditor("provisionsSelection", provisionsSelectionEditor);
 
 function appendDetailToQuestion(survey, options) {
     var detailSurveyId = options.question.name + "-Detail";
