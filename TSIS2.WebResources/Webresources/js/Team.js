@@ -3,6 +3,20 @@ var ROM;
 (function (ROM) {
     var Team;
     (function (Team) {
+        function onLoad(eContext) {
+            //Show the Planning Tab only when in the Oversight Planning Module
+            var globalContext = Xrm.Utility.getGlobalContext();
+            globalContext.getCurrentAppName().then(function (appName) {
+                if (appName == "Oversight Planning Module") {
+                    var formContext = eContext.getFormContext();
+                    var planningTab = formContext.ui.tabs.get("tab_planning");
+                    if (planningTab != null) {
+                        planningTab.setVisible(true);
+                    }
+                }
+            });
+        }
+        Team.onLoad = onLoad;
         function setFieldsDisabled(eContext) {
             var formContext = eContext.getFormContext();
             var gridContext = formContext.getControl("activity_type_estimated_duration");
