@@ -284,6 +284,11 @@
               "file": "js\\SecurityRolePrivilegeCompare.js",
               "description": "Scripts for Security Role Privilege Compare Sheet"
             },
+            {
+              "uniquename": "ts_/js/Team.js",
+              "file": "js\\Team.js",
+              "description": "Scripts for Team Form"
+            },
             /* Styles */
             {
               "uniquename": "ovs_/css/bootstrap.min.css",
