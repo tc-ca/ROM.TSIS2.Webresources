@@ -269,6 +269,7 @@ var provisionsSelectionEditor = {
         var div = document.createElement("div");
         div.style.position = "initial";
         var input = document.createElement("input");
+        input.value = editor.koValue() || "";
         div.appendChild(input);
         htmlElement.appendChild(div);
         const autocomplete = AriaAutocomplete(input, {
@@ -288,7 +289,6 @@ var provisionsSelectionEditor = {
         editor.onValueUpdated = function (newValue) {
             input.value = editor.koValue() || "";
         }
-        input.value = editor.koValue() || "";
     }
 };
 
