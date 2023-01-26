@@ -7,7 +7,7 @@ var ROM;
             //Show the Planning Tab only when in the Oversight Planning Module
             var globalContext = Xrm.Utility.getGlobalContext();
             globalContext.getCurrentAppName().then(function (appName) {
-                if (appName == "Oversight Planning Module") {
+                if (appName == "Oversight Planning Module" || appName == "Module de planification de la surveillance") {
                     var formContext = eContext.getFormContext();
                     var planningTab = formContext.ui.tabs.get("tab_planning");
                     if (planningTab != null) {
