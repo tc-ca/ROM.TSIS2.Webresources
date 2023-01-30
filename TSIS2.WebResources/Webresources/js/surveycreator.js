@@ -184,6 +184,9 @@ SurveyCreator
 SurveyCreator
     .localization
     .locales["fr"].p.findingType = "Finding Type FR";
+SurveyCreator
+    .localization
+    .locales["fr"].p.applicableProvisions = "Applicable Provisions (fr)"
 
 SurveyCreator
     .localization
@@ -252,7 +255,108 @@ hasDetailQuestions.forEach(function (questionName) {
         });
 });
 
+//add applicableProvisions and applicableProvisionsData property to all questions in hasApplicableProvisions array
+var hasApplicableProvisions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
+hasApplicableProvisions.forEach(function (questionName) {
+    Survey
+        .Serializer
+        .addProperty(questionName, {
+            name: "applicableProvisions:provisionsSelection",
+            category: "general",
+        });
+    Survey
+        .Serializer
+        .addProperty(questionName, {
+            name: "applicableProvisionsData"
+        });
+});
 
+//When the applicableProvisions property is changed, update the question's applicableProvisionsData property.
+creator.onPropertyValueChanging.add(async function (sender, options) {
+    if (options.propertyName == "applicableProvisions") {
+        const provisionNames = options.newValue.split("|");
+        const applicableProvisionsData = [];
+        for (let provisionName of provisionNames) {
+            applicableProvisionsData.push(await gatherapplicableProvisionsData(provisionName));
+        }
+        options.obj.applicableProvisionsData = applicableProvisionsData;
+    }
+});
+
+//Takes a provision name and returns an object with the provision data needed in the applicableProvisionsData property for that provision
+async function gatherapplicableProvisionsData(provisionName) {
+    let applicableProvisionsData = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$filter=(ts_nameenglish eq '${provisionName}' or ts_namefrench eq '${provisionName}')`).then(
+        async function success(result) {
+            if (result.entities.length > 0) {
+                let provision = result.entities[0];
+                let provisionData = {
+                    provisionId: provision._qm_tylegislationsourceid_value,
+                    provisionNameEn: provision.ts_nameenglish,
+                    provisionNameFr: provision.ts_namefrench,
+                    provisionTextEn: await buildProvisionText(provision, 1033),
+                    provisionTextFr: await buildProvisionText(provision, 1036),
+                }
+                return provisionData;
+            }
+        },
+        function (error) {
+            console.log(error.message);
+            // handle error conditions
+        }
+    );
+    return applicableProvisionsData;
+}
+
+//Create the custom editor for provision selection.
+//Uses an AriaAutocomplete input to select multiple provision names
+//Provision names are divided by '|' character
+var provisionsSelectionEditor = {
+    render: async function (editor, htmlElement) {
+        if (provisionNames.length === 0) provisionNames = await retrieveProvisionNames();
+        var div = document.createElement("div");
+        div.style.position = "initial";
+        var input = document.createElement("input");
+        input.value = editor.koValue() || "";
+        div.appendChild(input);
+        htmlElement.appendChild(div);
+        const autocomplete = AriaAutocomplete(input, {
+            source: provisionNames,
+            onItemRender: ({ label }) => {
+                if (!autocomplete.options.source.includes(label)) {
+                    return `Add ${label}...`;
+                }
+                return label;
+            },
+            multiple: true,
+            minLength: 1,
+            multipleSeparator: "|"
+        });
+        input.onchange = function () {
+            editor.koValue(input.value);
+        }
+        editor.onValueUpdated = function (newValue) {
+            input.value = editor.koValue() || "";
+        }
+    }
+};
+
+SurveyCreator
+    .SurveyPropertyEditorFactory
+    .registerCustomEditor("provisionsSelection", provisionsSelectionEditor);
+
+function appendApplicableProvisionsData(survey, options) {
+    //Create HTML elements
+    const question = options.htmlElement;
+    const provisionContainer = document.createElement("div");
+    const provisionParagraph = document.createElement("p");
+
+    const applicableProvisionsData = options.question.applicableProvisionsData
+    for (let provisionData of applicableProvisionsData) {
+        provisionParagraph.innerHTML += provisionData.provisionNameEn + " ";
+    }
+    provisionContainer.appendChild(provisionParagraph);
+    question.appendChild(provisionContainer);
+}
 
 function appendDetailToQuestion(survey, options) {
     var detailSurveyId = options.question.name + "-Detail";
@@ -387,6 +491,13 @@ creator
                     options.question.nameID = options.question.id
                     options.question.name = `finding-${options.question.nameID}`;
                 });
+            options
+                .survey
+                .onAfterRenderQuestion
+                .add(function (survey, options) {
+                    if (options.question.applicableProvisionsData == null || options.question.applicableProvisionsData == undefined) return;
+                    appendApplicableProvisionsData(survey, options);
+                });
         }
         //If we are creating a surface for "Test Survey" tab
         if (options.reason == "test") {
@@ -396,6 +507,13 @@ creator
                 .add(function (survey, options) {
                     if (options.question.hasDetail != true) return;
                     appendDetailToQuestion(survey, options);
+                });
+            options
+                .survey
+                .onAfterRenderQuestion
+                .add(function (survey, options) {
+                    if (options.question.applicableProvisionsData == null || options.question.applicableProvisionsData == undefined) return;
+                    appendApplicableProvisionsData(survey, options);
                 });
         }
     });
