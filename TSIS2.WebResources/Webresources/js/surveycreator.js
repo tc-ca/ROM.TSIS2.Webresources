@@ -283,6 +283,7 @@ creator.onPropertyValueChanging.add(async function (sender, options) {
     }
 });
 
+//Takes a provision name and returns an object with the provision data needed in the applicableProvisionsData property for that provision
 async function gatherapplicableProvisionsData(provisionName) {
     let applicableProvisionsData = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$filter=(ts_nameenglish eq '${provisionName}' or ts_namefrench eq '${provisionName}')`).then(
         async function success(result) {
@@ -343,7 +344,7 @@ SurveyCreator
     .SurveyPropertyEditorFactory
     .registerCustomEditor("provisionsSelection", provisionsSelectionEditor);
 
-function appendapplicableProvisionsData(survey, options) {
+function appendApplicableProvisionsData(survey, options) {
     //Create HTML elements
     const question = options.htmlElement;
     const provisionContainer = document.createElement("div");
@@ -495,7 +496,7 @@ creator
                 .onAfterRenderQuestion
                 .add(function (survey, options) {
                     if (options.question.applicableProvisionsData == null || options.question.applicableProvisionsData == undefined) return;
-                    appendapplicableProvisionsData(survey, options);
+                    appendApplicableProvisionsData(survey, options);
                 });
         }
         //If we are creating a surface for "Test Survey" tab
@@ -512,7 +513,7 @@ creator
                 .onAfterRenderQuestion
                 .add(function (survey, options) {
                     if (options.question.applicableProvisionsData == null || options.question.applicableProvisionsData == undefined) return;
-                    appendapplicableProvisionsData(survey, options);
+                    appendApplicableProvisionsData(survey, options);
                 });
         }
     });
