@@ -252,7 +252,7 @@ hasDetailQuestions.forEach(function (questionName) {
         });
 });
 
-//add provisions property to all questions in hasProvisions array
+//add applicableProvisionNames and applicableProvisionData property to all questions in hasApplicableProvisions array
 var hasApplicableProvisions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
 hasApplicableProvisions.forEach(function (questionName) {
     Survey
@@ -268,7 +268,7 @@ hasApplicableProvisions.forEach(function (questionName) {
         });
 });
 
-//When the provisionNames property is changed, update the question's data.
+//When the provisionNames property is changed, update the question's applicableProvisionData property.
 creator.onPropertyValueChanging.add(async function (sender, options) {
     if (options.propertyName == "applicableProvisionNames") {
         const provisionNames = options.newValue.split("|");
@@ -281,7 +281,7 @@ creator.onPropertyValueChanging.add(async function (sender, options) {
 });
 
 async function gatherApplicableProvisionData(provisionName) {
-    let applicableProvisionData = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$filter=(ts_nameenglish eq '${provisionName}') and (_ts_provisioncategory_value ne 18adfa7f-33f5-eb11-94ef-000d3af36036)`).then(
+    let applicableProvisionData = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$filter=(ts_nameenglish eq '${provisionName}')`).then(
         async function success(result) {
             if (result.entities.length > 0) {
                 let provision = result.entities[0];
@@ -289,8 +289,8 @@ async function gatherApplicableProvisionData(provisionName) {
                     provisionId: provision._qm_tylegislationsourceid_value,
                     provisionNameEn: provision.ts_nameenglish,
                     provisionNameFr: provision.ts_namefrench,
-                    provisionTextEn: "<html>" + await buildProvisionText(provision, 1033) + "</html>",
-                    provisionTextFr: "<html>" + await buildProvisionText(provision, 1036) + "</html>",
+                    provisionTextEn: await buildProvisionText(provision, 1033),
+                    provisionTextFr: await buildProvisionText(provision, 1036),
                 }
                 return provisionData;
             }
@@ -336,6 +336,20 @@ var provisionsSelectionEditor = {
 SurveyCreator
     .SurveyPropertyEditorFactory
     .registerCustomEditor("provisionsSelection", provisionsSelectionEditor);
+
+function appendApplicableProvisionData(survey, options) {
+    //Create HTML elements
+    const question = options.htmlElement;
+    const provisionContainer = document.createElement("div");
+    const provisionParagraph = document.createElement("p");
+
+    const applicableProvisionData = options.question.applicableProvisionData
+    for (let provisionData of applicableProvisionData) {
+        provisionParagraph.innerHTML += provisionData.provisionNameEn + " ";
+    }
+    provisionContainer.appendChild(provisionParagraph);
+    question.appendChild(provisionContainer);
+}
 
 function appendDetailToQuestion(survey, options) {
     var detailSurveyId = options.question.name + "-Detail";
@@ -470,6 +484,13 @@ creator
                     options.question.nameID = options.question.id
                     options.question.name = `finding-${options.question.nameID}`;
                 });
+            options
+                .survey
+                .onAfterRenderQuestion
+                .add(function (survey, options) {
+                    if (options.question.applicableProvisionData == null || options.question.applicableProvisionData == undefined) return;
+                    appendApplicableProvisionData(survey, options);
+                });
         }
         //If we are creating a surface for "Test Survey" tab
         if (options.reason == "test") {
@@ -479,6 +500,13 @@ creator
                 .add(function (survey, options) {
                     if (options.question.hasDetail != true) return;
                     appendDetailToQuestion(survey, options);
+                });
+            options
+                .survey
+                .onAfterRenderQuestion
+                .add(function (survey, options) {
+                    if (options.question.applicableProvisionData == null || options.question.applicableProvisionData == undefined) return;
+                    appendApplicableProvisionData(survey, options);
                 });
         }
     });
