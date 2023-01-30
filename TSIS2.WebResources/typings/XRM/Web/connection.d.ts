@@ -145,6 +145,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_msdyn_sequence_bind$msdyn_sequences?: string | null;
   record1id_msdyn_sequencetarget_bind$msdyn_sequencetargets?: string | null;
   record1id_msdyn_shipvia_bind$msdyn_shipvias?: string | null;
+  record1id_msdyn_suggestionprincipalobjectaccess_bind$msdyn_suggestionprincipalobjectaccesses?: string | null;
   record1id_msdyn_systemuserschedulersetting_bind$msdyn_systemuserschedulersettinges?: string | null;
   record1id_msdyn_taxcode_bind$msdyn_taxcodes?: string | null;
   record1id_msdyn_timegroup_bind$msdyn_timegroups?: string | null;
@@ -276,6 +277,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_msdyn_sequence_bind$msdyn_sequences?: string | null;
   record2id_msdyn_sequencetarget_bind$msdyn_sequencetargets?: string | null;
   record2id_msdyn_shipvia_bind$msdyn_shipvias?: string | null;
+  record2id_msdyn_suggestionprincipalobjectaccess_bind$msdyn_suggestionprincipalobjectaccesses?: string | null;
   record2id_msdyn_systemuserschedulersetting_bind$msdyn_systemuserschedulersettinges?: string | null;
   record2id_msdyn_taxcode_bind$msdyn_taxcodes?: string | null;
   record2id_msdyn_timegroup_bind$msdyn_timegroups?: string | null;

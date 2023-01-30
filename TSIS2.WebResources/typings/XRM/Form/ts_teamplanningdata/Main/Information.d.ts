@@ -25,6 +25,13 @@ declare namespace Form.ts_teamplanningdata.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_workorders extends Xrm.SectionCollectionBase {
+        get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -62,6 +69,7 @@ declare namespace Form.ts_teamplanningdata.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Subgrid_new_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "Subgrid_new_2"): Xrm.BaseControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_ts_name"): Xrm.StringControl;
@@ -102,6 +110,7 @@ declare namespace Form.ts_teamplanningdata.Main {
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: "tab_hours"): Xrm.PageTab<Tabs.tab_hours>;
       get(name: "tab_planning_data"): Xrm.PageTab<Tabs.tab_planning_data>;
+      get(name: "tab_workorders"): Xrm.PageTab<Tabs.tab_workorders>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -139,6 +148,7 @@ declare namespace Form.ts_teamplanningdata.Main {
     getAttribute(attributeName: "ts_totalhoursq3"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_totalhoursq4"): Xrm.NumberAttribute;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_new_2"): Xrm.BaseControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_ts_name"): Xrm.StringControl;

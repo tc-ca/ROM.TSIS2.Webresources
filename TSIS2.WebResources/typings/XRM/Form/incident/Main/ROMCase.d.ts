@@ -35,6 +35,13 @@ declare namespace Form.incident.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface Enforcement_Action_tab extends Xrm.SectionCollectionBase {
+        get(name: "Enforcement_Action_section"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface Enhanced_SLA_Details_Tab extends Xrm.SectionCollectionBase {
         get(name: "Applicable SLA(ENHANCED)"): Xrm.PageSection;
         get(name: "SLAKPIInstances"): Xrm.PageSection;
@@ -105,7 +112,6 @@ declare namespace Form.incident.Main {
       interface tab_findings extends Xrm.SectionCollectionBase {
         get(name: "_section_369"): Xrm.PageSection;
         get(name: "tab_11_section_1"): Xrm.PageSection;
-        get(name: "tab_findings_section_4"): Xrm.PageSection;
         get(name: "tab_findings_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -275,6 +281,7 @@ declare namespace Form.incident.Main {
       get(name: "AssociatedKnowledgeBaseRecords"): Xrm.PageTab<Tabs.AssociatedKnowledgeBaseRecords>;
       get(name: "CASERELATIONSHIP_TAB"): Xrm.PageTab<Tabs.CASERELATIONSHIP_TAB>;
       get(name: "DeviceInsightsTab"): Xrm.PageTab<Tabs.DeviceInsightsTab>;
+      get(name: "Enforcement_Action_tab"): Xrm.PageTab<Tabs.Enforcement_Action_tab>;
       get(name: " Enhanced_SLA_Details_Tab"): Xrm.PageTab<Tabs.Enhanced_SLA_Details_Tab>;
       get(name: "FieldService"): Xrm.PageTab<Tabs.FieldService>;
       get(name: "KBARTICLE_TAB"): Xrm.PageTab<Tabs.KBARTICLE_TAB>;

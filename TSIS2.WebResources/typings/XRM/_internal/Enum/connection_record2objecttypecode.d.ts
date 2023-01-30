@@ -130,4 +130,5 @@ declare const enum connection_record2objecttypecode {
   Session = 10961,
   IncidentNotification = 11085,
   IncidentUpdate = 11086,
+  SuggestionPrincipalObjectAccess = 11109,
 }
