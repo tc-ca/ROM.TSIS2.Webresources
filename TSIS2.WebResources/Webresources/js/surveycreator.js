@@ -264,20 +264,44 @@ hasApplicableProvisions.forEach(function (questionName) {
     Survey
         .Serializer
         .addProperty(questionName, {
-            name: "applicableProvisionData:text"
+            name: "applicableProvisionData"
         });
 });
 
 //When the provisionNames property is changed, update the question's data.
-creator.onPropertyValueChanging.add(function (sender, options) {
+creator.onPropertyValueChanging.add(async function (sender, options) {
     if (options.propertyName == "applicableProvisionNames") {
-        // update applicableProvisionsData property
-        options.obj.applicalbleProvisionData = {
-            names: options.newValue,
-            testProp: "test"
+        const provisionNames = options.newValue.split("|");
+        const applicableProvisionData = [];
+        for (let provisionName of provisionNames) {
+            applicableProvisionData.push(await gatherApplicableProvisionData(provisionName));
         }
+        options.obj.applicableProvisionData = applicableProvisionData;
     }
 });
+
+async function gatherApplicableProvisionData(provisionName) {
+    let applicableProvisionData = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$filter=(ts_nameenglish eq '${provisionName}') and (_ts_provisioncategory_value ne 18adfa7f-33f5-eb11-94ef-000d3af36036)`).then(
+        async function success(result) {
+            if (result.entities.length > 0) {
+                let provision = result.entities[0];
+                let provisionData = {
+                    provisionId: provision._qm_tylegislationsourceid_value,
+                    provisionNameEn: provision.ts_nameenglish,
+                    provisionNameFr: provision.ts_namefrench,
+                    provisionTextEn: "<html>" + await buildProvisionText(provision, 1033) + "</html>",
+                    provisionTextFr: "<html>" + await buildProvisionText(provision, 1036) + "</html>",
+                }
+                return provisionData;
+            }
+        },
+        function (error) {
+            console.log(error.message);
+            // handle error conditions
+        }
+    );
+    return applicableProvisionData;
+}
 
 var provisionsSelectionEditor = {
     render: async function (editor, htmlElement) {
@@ -298,6 +322,7 @@ var provisionsSelectionEditor = {
             },
             multiple: true,
             minLength: 1,
+            multipleSeparator: "|"
         });
         input.onchange = function () {
             editor.koValue(input.value);
