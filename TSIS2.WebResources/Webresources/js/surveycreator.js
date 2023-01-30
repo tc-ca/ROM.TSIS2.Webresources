@@ -184,6 +184,9 @@ SurveyCreator
 SurveyCreator
     .localization
     .locales["fr"].p.findingType = "Finding Type FR";
+SurveyCreator
+    .localization
+    .locales["fr"].p.applicableProvisions = "Applicable Provisions (fr)"
 
 SurveyCreator
     .localization
@@ -252,25 +255,25 @@ hasDetailQuestions.forEach(function (questionName) {
         });
 });
 
-//add applicableProvisionNames and applicableProvisionData property to all questions in hasApplicableProvisions array
+//add applicableProvisions and applicableProvisionsData property to all questions in hasApplicableProvisions array
 var hasApplicableProvisions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
 hasApplicableProvisions.forEach(function (questionName) {
     Survey
         .Serializer
         .addProperty(questionName, {
-            name: "applicableProvisionNames:provisionsSelection",
+            name: "applicableProvisions:provisionsSelection",
             category: "general",
         });
     Survey
         .Serializer
         .addProperty(questionName, {
-            name: "applicableProvisionData"
+            name: "applicableProvisionsData"
         });
 });
 
-//When the provisionNames property is changed, update the question's applicableProvisionData property.
+//When the applicableProvisions property is changed, update the question's applicableProvisionData property.
 creator.onPropertyValueChanging.add(async function (sender, options) {
-    if (options.propertyName == "applicableProvisionNames") {
+    if (options.propertyName == "applicableProvisions") {
         const provisionNames = options.newValue.split("|");
         const applicableProvisionData = [];
         for (let provisionName of provisionNames) {
