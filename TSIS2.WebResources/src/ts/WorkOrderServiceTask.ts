@@ -15,7 +15,7 @@ namespace ROM.WorkOrderServiceTask {
         noQuestionnaireText = "Il n'y a pas de questionnaire disponible pour cette date.";
     }
     var aircraftModelOptions;
-
+    var aocRegion;
     export async function onLoad(eContext: Xrm.ExecutionContext<any, any>) {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
 
@@ -264,7 +264,8 @@ namespace ROM.WorkOrderServiceTask {
     function setTaskTypeFilteredView(form: Form.msdyn_workorderservicetask.Main.SurveyJS,): void {
         const workOrderValue = form.getAttribute("msdyn_workorder").getValue();
         const workOrderId = workOrderValue ? workOrderValue[0].id : "";
-        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_workordertype_value,_ovs_operationtypeid_value,_ts_site_value").then(
+
+        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_workordertype_value,_ovs_operationtypeid_value,_ts_site_value,_ts_region_value,_msdyn_serviceaccount_value,_ovs_operationid_value&$expand=ovs_operationtypeid($select=_ownerid_value) ").then(
             function success(result) {
                 const viewId = '{ae0d8547-6871-4854-91ba-03b0c619dbe1}';
                 const entityName = "msdyn_servicetasktype";
@@ -272,34 +273,128 @@ namespace ROM.WorkOrderServiceTask {
                 const fetchXml = `<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"> <entity name="msdyn_servicetasktype"> <attribute name="msdyn_name" /> <attribute name="createdon" /> <attribute name="msdyn_estimatedduration" /> <attribute name="msdyn_description" /> <attribute name="msdyn_servicetasktypeid" /> <order attribute="msdyn_name" descending="false" /> <link-entity name="msdyn_incidenttypeservicetask" from="msdyn_tasktype" to="msdyn_servicetasktypeid" link-type="inner" alias="ae"> <link-entity name="msdyn_incidenttype" from="msdyn_incidenttypeid" to="msdyn_incidenttype" link-type="inner" alias="af"> <filter type="and"> <condition attribute="msdyn_defaultworkordertype" operator="eq" value="${result._msdyn_workordertype_value}" /> </filter> <link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"> <link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ag"> <filter type="and"> <condition attribute="ovs_operationtypeid" operator="eq" value="${result._ovs_operationtypeid_value}" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>`;
                 const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_servicetasktype"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("msdyn_tasktype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                
+                showHideFieldsByOperationType(form, result._ovs_operationtypeid_value, result.ovs_operationtypeid._ownerid_value);
+                aocRegion = result._ts_region_value;
+               
+                if (form.getAttribute("ts_aocoperation").getValue() == null && result._ovs_operationtypeid_value == "8b614ef0-c651-eb11-a812-000d3af3ac0d") {  //Air Carrier (Passenger)
+                    var lookup = new Array();
+                    lookup[0] = new Object();
+                    lookup[0].id = result._ovs_operationid_value
+                    lookup[0].name = result["_ovs_operationid_value@OData.Community.Display.V1.FormattedValue"]
+                    lookup[0].entityType = result["_ovs_operationid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                    form.getAttribute("ts_aocoperation").setValue(lookup);
 
-                ShowHideFieldsByOperationType(form, result._ovs_operationtypeid_value);
-                setSubSiteFilteredView(form, result._ts_site_value);
+                    lookup = new Array();
+                    lookup[0] = new Object();
+                    lookup[0].id = result._ovs_operationtypeid_value
+                    lookup[0].name = result["_ovs_operationtypeid_value@OData.Community.Display.V1.FormattedValue"]
+                    lookup[0].entityType = result["_ovs_operationtypeid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                    form.getAttribute("ts_aocoperationtype").setValue(lookup);
+
+                    lookup = new Array();
+                    lookup[0] = new Object();
+                    lookup[0].id = result._msdyn_serviceaccount_value
+                    lookup[0].name = result["_msdyn_serviceaccount_value@OData.Community.Display.V1.FormattedValue"]
+                    lookup[0].entityType = result["_msdyn_serviceaccount_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                    form.getAttribute("ts_aocstakeholder").setValue(lookup);
+
+                    lookup = new Array();
+                    lookup[0] = new Object();
+                    lookup[0].id = result._ts_site_value
+                    lookup[0].name = result["_ts_site_value@OData.Community.Display.V1.FormattedValue"]
+                    lookup[0].entityType = result["_ts_site_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                    form.getAttribute("ts_aocsite").setValue(lookup);
+
+                    setAOCSiteFilteredView(form, result._ts_region_value, result._msdyn_serviceaccount_value, result._ovs_operationtypeid_value);
+                }
+                else {
+                    const aocStakeholder = form.getAttribute("ts_aocstakeholder").getValue();
+                    const aocOperationtype = form.getAttribute("ts_aocoperationtype").getValue();
+                    if (aocStakeholder != null && aocOperationtype != null) {
+                        setAOCSiteFilteredView(form, aocRegion, aocStakeholder[0].id, aocOperationtype[0].id);
+                    }
+                }
+            },
+            function error(error) {
+                Xrm.Navigation.openAlertDialog({ text: error.message });
             });
     }
 
-    function ShowHideFieldsByOperationType(form: Form.msdyn_workorderservicetask.Main.SurveyJS, operationTypeId): void {
-        if (operationTypeId == "e03381d0-c751-eb11-a812-000d3af3ac0d" || operationTypeId == "8b614ef0-c651-eb11-a812-000d3af3ac0d") {  //Air Carrier (Cargo) or Air Carrier (Passenger)
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(true);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(true);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(true);
+    function showHideFieldsByOperationType(form: Form.msdyn_workorderservicetask.Main.SurveyJS, operationTypeId, operationTypeOwnerId): void {
+        if (operationTypeOwnerId != "e2e3910d-a41f-ec11-b6e6-0022483cb5c7") {  //Owner is AvSec
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_AirCarrier').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(false);
         }
         else {
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_AirCarrier').setVisible(true);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(true);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(true);
+        }
+        if (operationTypeId == "8b614ef0-c651-eb11-a812-000d3af3ac0d") {  //Air Carrier (Passenger)
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(true);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(true);
+            form.getControl('ts_brandname').setVisible(true);
+            form.getControl('ts_aocoperation').setVisible(true);
+            form.getControl('ts_aocstakeholder').setVisible(true);
+            form.getControl('ts_aocoperationtype').setVisible(true);
+            form.getControl('ts_aocsite').setVisible(true);
+
+            form.getControl('ts_passengerservices').setVisible(true);
+            form.getControl('ts_rampservices').setVisible(true);
+            form.getControl('ts_cargoservices').setVisible(true);
+            form.getControl('ts_cbservices').setVisible(true);
+            form.getControl('ts_cateringservices').setVisible(true);
+            form.getControl('ts_groomingservices').setVisible(true);
+            form.getControl('ts_securitysearchservices').setVisible(true);
+        }
+        else {
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(false);
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(false);
+            form.getControl('ts_brandname').setVisible(false);
+            form.getControl('ts_aocoperation').setVisible(false);
+            form.getControl('ts_aocstakeholder').setVisible(false);
+            form.getControl('ts_aocoperationtype').setVisible(false);
+            form.getControl('ts_aocsite').setVisible(false);
+
+            form.getControl('ts_passengerservices').setVisible(false);
+            form.getControl('ts_rampservices').setVisible(false);
+            form.getControl('ts_cargoservices').setVisible(false);
+            form.getControl('ts_cbservices').setVisible(false);
+            form.getControl('ts_cateringservices').setVisible(false);
+            form.getControl('ts_groomingservices').setVisible(false);
+            form.getControl('ts_securitysearchservices').setVisible(false);
         }
     }
 
-    function setSubSiteFilteredView(form: Form.msdyn_workorderservicetask.Main.SurveyJS, siteId): void {
-        if (siteId != null && siteId != undefined) {
-            const viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
-            const entityName = "msdyn_functionallocation";
-            const viewDisplayName = "Filtered Sites";
-            const siteFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteId + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
-            const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-            form.getControl("ts_boardinglounge").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
-            form.getControl("ts_gate").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
+    function setAOCSiteFilteredView(form: Form.msdyn_workorderservicetask.Main.SurveyJS, regionAttributeId: string, stakeholderTypeAttributeId: string, operationTypeAttributeId): void {
+        const viewId = '{6E57251F-F695-4076-9498-49AB892154B7}';
+        const entityName = "msdyn_functionallocation";
+        const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
+        const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter>' + '</filter><filter><condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '"/></filter><filter><condition attribute="ts_sitestatus" operator="ne" value="717750001" /></filter><order attribute="msdyn_name" descending="false"/><link-entity name="ovs_operation" from="ts_site" to="msdyn_functionallocationid"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value=" ' + operationTypeAttributeId + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderTypeAttributeId + '"/><condition attribute="ts_operationalstatus" operator="eq" value="717750000"/></filter></link-entity></entity></fetch>';
+        const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+        form.getControl("ts_aocsite").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+    }
+
+    //function setSubSiteFilteredView(form: Form.msdyn_workorderservicetask.Main.SurveyJS, siteId): void {
+    //    if (siteId != null && siteId != undefined) {
+    //        const viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
+    //        const entityName = "msdyn_functionallocation";
+    //        const viewDisplayName = "Filtered Sites";
+    //        const siteFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteId + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+    //        const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+    //        form.getControl("ts_boardinglounge").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
+    //        form.getControl("ts_gate").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
+    //    }
+    //}
+
+    export function onAOCFieldsOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
+        const aocStakeholder = form.getAttribute("ts_aocstakeholder").getValue();
+        const aocOperationtype = form.getAttribute("ts_aocoperationtype").getValue();
+        if (aocStakeholder != null && aocOperationtype != null) {
+            setAOCSiteFilteredView(form, aocRegion, aocStakeholder[0].id, aocOperationtype[0].id);
         }
     }
 

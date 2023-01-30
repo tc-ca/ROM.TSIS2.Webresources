@@ -4,4 +4,5 @@ declare const enum ts_locationtype {
   Crossing = 717750002,
   MileMarker = 717750003,
   NonRailLocation = 717750004,
+  Unknown = 741130001,
 }
