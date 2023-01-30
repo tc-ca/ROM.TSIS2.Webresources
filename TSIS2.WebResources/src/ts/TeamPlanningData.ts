@@ -55,7 +55,6 @@
         let teamPlanningDataPlannedQ3 = 0;
         let teamPlanningDataPlannedQ4 = 0;
         let teamPlanningDataPlannedTotal = 0;
-            
 
         let teamPlanningDataAvailableInspectorHoursQ1 = 0;
         let teamPlanningDataAvailableInspectorHoursQ2 = 0;
@@ -136,6 +135,9 @@
             "      <attribute name='ovs_incidenttypenamefrench'/>",
             "      <attribute name='ts_riskscore'/>",
             "      <attribute name='msdyn_estimatedduration'/>",
+            "      <filter>",
+            "        <condition attribute='ts_excludefromplanning' operator='eq' value='0' />",
+            "      </filter>",
             "      <link-entity name='ts_recurrencefrequencies' from='ts_recurrencefrequenciesid' to='ts_riskscore'>",
             "        <attribute name='ts_class1interval'/>",
             "        <attribute name='ts_class2and3lowriskinterval'/>",
@@ -155,6 +157,7 @@
             for (let operationActivity of result.entities) {
 
                 let generationLog = "";
+
                 let isMissingData = false;
                 let planningDataName = "";
                 let planningDataEnglishName = "";
