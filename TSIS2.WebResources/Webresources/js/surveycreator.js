@@ -258,9 +258,25 @@ hasApplicableProvisions.forEach(function (questionName) {
     Survey
         .Serializer
         .addProperty(questionName, {
-            name: "applicableProvisions:provisionsSelection",
+            name: "applicableProvisionNames:provisionsSelection",
             category: "general",
         });
+    Survey
+        .Serializer
+        .addProperty(questionName, {
+            name: "applicableProvisionData:text"
+        });
+});
+
+//When the provisionNames property is changed, update the question's data.
+creator.onPropertyValueChanging.add(function (sender, options) {
+    if (options.propertyName == "applicableProvisionNames") {
+        // update applicableProvisionsData property
+        options.obj.applicalbleProvisionData = {
+            names: options.newValue,
+            testProp: "test"
+        }
+    }
 });
 
 var provisionsSelectionEditor = {
