@@ -67,7 +67,8 @@ var ROM;
                 }
             });
             additionalDetailsVisibility(formContext);
-            filterRepresentative(formContext);
+            //Since Operation contact was removed from ROM (app designer)
+            //filterRepresentative(formContext);
             filterCompany(formContext);
         }
         EnforcementAction.onLoad = onLoad;
