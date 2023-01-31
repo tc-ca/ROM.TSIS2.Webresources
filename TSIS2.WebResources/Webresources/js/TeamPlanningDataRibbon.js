@@ -226,7 +226,7 @@ async function createWorkOrders(formContext) {
                         //Set the Work Order Lookups using the Planning Data Lookups. Some can be null, so they are only added if there is a value.
                         let workOrderData = {}
                         if (teamPlanningDataId != null) workOrderData["ts_TeamPlanningData@odata.bind"] = "/ts_teamplanningdatas(" + teamPlanningDataId.slice(1, -1) + ")";
-                        if (teamId != null) workOrderData["ownerid@odata.bind"] = "/teams(" + teamId.slice(1, -1) + ")";
+                        //if (teamId != null) workOrderData["ownerid@odata.bind"] = "/teams(" + teamId.slice(1, -1) + ")";
                         if (planningData.ts_planningdataid != null) workOrderData["ts_PlanningData@odata.bind"] = "/ts_planningdatas(" + planningData.ts_planningdataid + ")";
                         if (fiscalYearId != null) workOrderData["ovs_FiscalYear@odata.bind"] = "/tc_tcfiscalyears(" + fiscalYearId + ")";
                         if (planningData["ts_site.ts_region"] != null) workOrderData["ts_Region@odata.bind"] = "/territories(" + planningData["ts_site.ts_region"] + ")";
