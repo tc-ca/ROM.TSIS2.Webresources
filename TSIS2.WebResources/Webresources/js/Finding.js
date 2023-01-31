@@ -157,6 +157,12 @@ var ROM;
                             formContext.getControl("ts_sensitivitylevel").setVisible(true);
                         }
                     });
+                    if (operationTypeAttributeValue != null && operationTypeAttributeValue[0].id == "{BE8B0910-C751-EB11-A812-000D3AF3AC0D}") { //Person
+                        formContext.getControl("ts_contact").setVisible(true);
+                    }
+                    else {
+                        formContext.getControl("ts_contact").setVisible(false);
+                    }
                 }
             });
         }

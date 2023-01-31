@@ -145,6 +145,7 @@ var ROM;
                             form.getControl("header_msdyn_systemstatus").setDisabled(true);
                         }
                     }
+                    showHideContact(form);
                     break;
                 default:
                     // Enable all operation related fields
@@ -471,6 +472,7 @@ var ROM;
                         // Custom view for Trade Names
                         setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
                     }
+                    showHideContact(form);
                 }
                 else if (isFromCase) {
                     populateOperationField(eContext);
@@ -1425,6 +1427,22 @@ var ROM;
                     form.getControl("ts_tradenameid").addCustomView(viewIdTradename, entityNameTradename, viewDisplayNameTradename, fetchXmlTradename, layoutXmlTradename, true);
                 }
             });
+        }
+        function showHideContact(form) {
+            var operationTypeValue = form.getAttribute("ovs_operationtypeid").getValue();
+            var operationTypeId = operationTypeValue ? operationTypeValue[0].id : "";
+            if (operationTypeId != "") {
+                Xrm.WebApi.retrieveRecord("ovs_operationtype", operationTypeId, "?$select=_ownerid_value ").then(function success(result) {
+                    if (result._ownerid_value == "e2e3910d-a41f-ec11-b6e6-0022483cb5c7") { //Owner is AvSec
+                        form.getControl("ts_contact").setVisible(true);
+                    }
+                    else {
+                        form.getControl("ts_contact").setVisible(false);
+                    }
+                }, function error(error) {
+                    Xrm.Navigation.openAlertDialog({ text: error.message });
+                });
+            }
         }
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));

@@ -107,6 +107,7 @@ interface msdyn_workorder_Relationships {
   ovs_RevisedQuarterId?: tc_TCFiscalQuarter_Result | null;
   ovs_SecondaryInspector?: BookableResource_Result | null;
   qm_ReportContactId?: Contact_Result | null;
+  ts_Contact?: Contact_Result | null;
   ts_Contact_msdyn_workorder_msdyn_workorder?: Contact_Result[] | null;
   ts_IncompleteWorkOrderReason?: ts_IncompleteWorkOrderReason_Result | null;
   ts_PlanningData?: ts_PlanningData_Result | null;
@@ -167,6 +168,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   qm_ReportContactId_bind$contacts?: string | null;
   stageid_bind$processstages?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
+  ts_Contact_bind$contacts?: string | null;
   ts_Country_bind$tc_countries?: string | null;
   ts_IncompleteWorkOrderReason_bind$ts_incompleteworkorderreasons?: string | null;
   ts_PlanningData_bind$ts_planningdatas?: string | null;
@@ -302,6 +304,7 @@ interface msdyn_workorder_Select {
   ts_cantcompleteinspection: WebAttribute<msdyn_workorder_Select, { ts_cantcompleteinspection: boolean | null }, {  }>;
   ts_canvasappnumber: WebAttribute<msdyn_workorder_Select, { ts_canvasappnumber: string | null }, {  }>;
   ts_completedquarter: WebAttribute<msdyn_workorder_Select, { ts_completedquarter: ts_msdyn_workorder_ts_completedquarter | null }, { ts_completedquarter_formatted?: string }>;
+  ts_contact_guid: WebAttribute<msdyn_workorder_Select, { ts_contact_guid: string | null }, { ts_contact_formatted?: string }>;
   ts_costexplanation: WebAttribute<msdyn_workorder_Select, { ts_costexplanation: string | null }, {  }>;
   ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_incident: WebAttribute<msdyn_workorder_Select, { ts_incident: ts_yesno | null }, { ts_incident_formatted?: string }>;
@@ -448,6 +451,7 @@ interface msdyn_workorder_Filter {
   ts_cantcompleteinspection: boolean;
   ts_canvasappnumber: string;
   ts_completedquarter: ts_msdyn_workorder_ts_completedquarter;
+  ts_contact_guid: XQW.Guid;
   ts_costexplanation: string;
   ts_country_guid: XQW.Guid;
   ts_incident: ts_yesno;
@@ -516,6 +520,7 @@ interface msdyn_workorder_Expand {
   owningteam: WebExpand<msdyn_workorder_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   qm_ReportContactId: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { qm_ReportContactId: Contact_Result }>;
+  ts_Contact: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { ts_Contact: Contact_Result }>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: Contact_Result[] }>;
   ts_IncompleteWorkOrderReason: WebExpand<msdyn_workorder_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { ts_IncompleteWorkOrderReason: ts_IncompleteWorkOrderReason_Result }>;
   ts_PlanningData: WebExpand<msdyn_workorder_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_PlanningData: ts_PlanningData_Result }>;
@@ -611,6 +616,7 @@ interface msdyn_workorder_FormattedResult {
   ts_actualcost_formatted?: string;
   ts_canceledinspectionjustification_formatted?: string;
   ts_completedquarter_formatted?: string;
+  ts_contact_formatted?: string;
   ts_country_formatted?: string;
   ts_incident_formatted?: string;
   ts_incompleteworkorderreason_formatted?: string;
@@ -682,6 +688,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   qm_reportcontactid_guid: string | null;
   transactioncurrencyid_guid: string | null;
   ts_canceledinspectionjustification_guid: string | null;
+  ts_contact_guid: string | null;
   ts_country_guid: string | null;
   ts_incompleteworkorderreason_guid: string | null;
   ts_planningdata_guid: string | null;
@@ -724,6 +731,7 @@ interface msdyn_workorder_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   qm_ReportContactId: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  ts_Contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_IncompleteWorkOrderReason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   ts_PlanningData: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_SecurityIncident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
