@@ -49,6 +49,7 @@ interface ovs_Finding_Base extends WebEntity {
 interface ovs_Finding_Relationships {
   ovs_CaseId?: Incident_Result | null;
   ovs_WorkOrderServiceTaskId?: msdyn_workorderservicetask_Result | null;
+  ts_Contact?: Contact_Result | null;
   ts_NCATApprovingTeam?: Team_Result | null;
   ts_NCATManager?: SystemUser_Result | null;
   ts_RATEApprovingTeam?: Team_Result | null;
@@ -61,6 +62,7 @@ interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ovs_WorkOrderServiceTaskId_bind$msdyn_workorderservicetasks?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  ts_Contact_bind$contacts?: string | null;
   ts_File_bind$ts_files?: string | null;
   ts_NCATActualorPotentialHarm_bind$ts_assessmentratings?: string | null;
   ts_NCATApprovingTeam_bind$teams?: string | null;
@@ -124,6 +126,7 @@ interface ovs_Finding_Select {
   ts_acceptncatrecommendation: WebAttribute<ovs_Finding_Select, { ts_acceptncatrecommendation: ts_yesno | null }, { ts_acceptncatrecommendation_formatted?: string }>;
   ts_acceptraterecommendation: WebAttribute<ovs_Finding_Select, { ts_acceptraterecommendation: ts_yesno | null }, { ts_acceptraterecommendation_formatted?: string }>;
   ts_accountid_guid: WebAttribute<ovs_Finding_Select, { ts_accountid_guid: string | null }, { ts_accountid_formatted?: string }>;
+  ts_contact_guid: WebAttribute<ovs_Finding_Select, { ts_contact_guid: string | null }, { ts_contact_formatted?: string }>;
   ts_enforcementaction: WebAttribute<ovs_Finding_Select, { ts_enforcementaction: ts_ovs_finding_ts_enforcementaction | null }, { ts_enforcementaction_formatted?: string }>;
   ts_enforcementactioncreated_guid: WebAttribute<ovs_Finding_Select, { ts_enforcementactioncreated_guid: string | null }, { ts_enforcementactioncreated_formatted?: string }>;
   ts_file_guid: WebAttribute<ovs_Finding_Select, { ts_file_guid: string | null }, { ts_file_formatted?: string }>;
@@ -213,6 +216,7 @@ interface ovs_Finding_Filter {
   ts_acceptncatrecommendation: ts_yesno;
   ts_acceptraterecommendation: ts_yesno;
   ts_accountid_guid: XQW.Guid;
+  ts_contact_guid: XQW.Guid;
   ts_enforcementaction: ts_ovs_finding_ts_enforcementaction;
   ts_enforcementactioncreated_guid: XQW.Guid;
   ts_file_guid: XQW.Guid;
@@ -285,6 +289,7 @@ interface ovs_Finding_Expand {
   ownerid: WebExpand<ovs_Finding_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ovs_Finding_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_Contact: WebExpand<ovs_Finding_Expand, Contact_Select, Contact_Filter, { ts_Contact: Contact_Result }>;
   ts_NCATApprovingTeam: WebExpand<ovs_Finding_Expand, Team_Select, Team_Filter, { ts_NCATApprovingTeam: Team_Result }>;
   ts_NCATManager: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { ts_NCATManager: SystemUser_Result }>;
   ts_RATEApprovingTeam: WebExpand<ovs_Finding_Expand, Team_Select, Team_Filter, { ts_RATEApprovingTeam: Team_Result }>;
@@ -315,6 +320,7 @@ interface ovs_Finding_FormattedResult {
   ts_acceptncatrecommendation_formatted?: string;
   ts_acceptraterecommendation_formatted?: string;
   ts_accountid_formatted?: string;
+  ts_contact_formatted?: string;
   ts_enforcementaction_formatted?: string;
   ts_enforcementactioncreated_formatted?: string;
   ts_file_formatted?: string;
@@ -377,6 +383,7 @@ interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships
   owningteam_guid: string | null;
   owninguser_guid: string | null;
   ts_accountid_guid: string | null;
+  ts_contact_guid: string | null;
   ts_enforcementactioncreated_guid: string | null;
   ts_file_guid: string | null;
   ts_functionallocation_guid: string | null;
@@ -418,6 +425,7 @@ interface ovs_Finding_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_Contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_NCATApprovingTeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_NCATManager: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_RATEApprovingTeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
