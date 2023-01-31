@@ -35,12 +35,11 @@ var ROM;
                 var userBusinessUnitName = result.entities[0].name;
                 if (userBusinessUnitName.startsWith("Intermodal")) {
                     formContext.getControl("ts_details").setVisible(true);
-                    //Don't need that for now (PBI 242536)
-                    //formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(true);
-                    //if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
-                    //    formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
-                    //    formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
-                    //}
+                    formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(true);
+                    if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
+                        formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
+                        formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
+                    }
                     //Hide fields for ISSO if type of enforcement action is set to "Referral to REU"
                     if (referralToREUEnforcementAction) {
                         hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
@@ -67,7 +66,8 @@ var ROM;
                 }
             });
             additionalDetailsVisibility(formContext);
-            filterRepresentative(formContext);
+            //Since OperationContact was removed from ROM (app designer)
+            //filterRepresentative(formContext);
             filterCompany(formContext);
         }
         EnforcementAction.onLoad = onLoad;
@@ -75,8 +75,7 @@ var ROM;
             formContext.getControl("ts_dateandtimeofserviceofenforcementaction").setVisible(false);
             formContext.getControl("ts_comments").setVisible(false);
             formContext.getControl("ts_copyofreceipt").setVisible(false);
-            //Don't need that for now (PBI 242536)
-            // formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(false);
+            formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(false);
             formContext.getControl("ts_details").setVisible(true);
         }
         function onSave(eContext) {
@@ -162,18 +161,18 @@ var ROM;
             }
         }
         EnforcementAction.additionalDetailsVisibility = additionalDetailsVisibility;
-        //Don't need that for now (PBI 242536)
-        //export function elevatedEnforcementActionRequiredOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        //    let formContext = <Form.ts_enforcementaction.Main.Information>eContext.getFormContext();
-        //    if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
-        //        formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
-        //        formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
-        //    }
-        //    else {
-        //        formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(false);
-        //        formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("none");
-        //        formContext.getAttribute("ts_justificationelevatedenforcementaction").setValue();
-        //    }
-        //}
+        function elevatedEnforcementActionRequiredOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
+                formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
+                formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
+            }
+            else {
+                formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(false);
+                formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("none");
+                formContext.getAttribute("ts_justificationelevatedenforcementaction").setValue();
+            }
+        }
+        EnforcementAction.elevatedEnforcementActionRequiredOnChange = elevatedEnforcementActionRequiredOnChange;
     })(EnforcementAction = ROM.EnforcementAction || (ROM.EnforcementAction = {}));
 })(ROM || (ROM = {}));
