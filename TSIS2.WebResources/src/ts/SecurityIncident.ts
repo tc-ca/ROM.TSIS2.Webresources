@@ -49,9 +49,11 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_delayduration").setVisible(true);
         }
 
-        if (form.getAttribute("ts_arrests").getValue() == ts_arrestsknownorunknown.Known) {
-            form.getControl("ts_arrestscount").setVisible(true);
+        if (form.getAttribute("ts_arrests").getValue() != ts_arrestsknownorunknown.Unknown && form.getAttribute("ts_arrests").getValue() != ts_arrestsknownorunknown._0) {
             form.getControl("ts_arrestsdetails").setVisible(true);
+        }
+        else {
+            form.getControl("ts_arrestsdetails").setVisible(false);
         }
     }
 
@@ -74,9 +76,11 @@ namespace ROM.SecurityIncident {
 
         const arrests = form.getAttribute("ts_arrests");
 
-        if (arrests.getValue() == ts_arrestsknownorunknown.Known) {
-            form.getControl("ts_arrestscount").setVisible(true);
+        if (arrests.getValue() != ts_arrestsknownorunknown.Unknown && arrests.getValue() != ts_arrestsknownorunknown._0) {
             form.getControl("ts_arrestsdetails").setVisible(true);
+        }
+        else {
+            form.getControl("ts_arrestsdetails").setVisible(false);
         }
     }
 

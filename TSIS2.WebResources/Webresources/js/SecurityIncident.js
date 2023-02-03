@@ -43,9 +43,11 @@ var ROM;
             if (form.getAttribute("ts_delaystooperation").getValue() == 717750000 /* Known */) {
                 form.getControl("ts_delayduration").setVisible(true);
             }
-            if (form.getAttribute("ts_arrests").getValue() == 717750000 /* Known */) {
-                form.getControl("ts_arrestscount").setVisible(true);
+            if (form.getAttribute("ts_arrests").getValue() != 717750001 /* Unknown */ && form.getAttribute("ts_arrests").getValue() != 741130000 /* _0 */) {
                 form.getControl("ts_arrestsdetails").setVisible(true);
+            }
+            else {
+                form.getControl("ts_arrestsdetails").setVisible(false);
             }
         }
         SecurityIncident.StatusOfRailwayOwnerOnChange = StatusOfRailwayOwnerOnChange;
@@ -64,9 +66,11 @@ var ROM;
         function arrestsOnChange(eContext) {
             var form = eContext.getFormContext();
             var arrests = form.getAttribute("ts_arrests");
-            if (arrests.getValue() == 717750000 /* Known */) {
-                form.getControl("ts_arrestscount").setVisible(true);
+            if (arrests.getValue() != 717750001 /* Unknown */ && arrests.getValue() != 741130000 /* _0 */) {
                 form.getControl("ts_arrestsdetails").setVisible(true);
+            }
+            else {
+                form.getControl("ts_arrestsdetails").setVisible(false);
             }
         }
         SecurityIncident.arrestsOnChange = arrestsOnChange;

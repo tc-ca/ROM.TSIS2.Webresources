@@ -21,6 +21,7 @@ interface msdyn_incidenttype_Base extends WebEntity {
   ts_cateringandstores?: boolean | null;
   ts_domesticflights?: boolean | null;
   ts_excludefromplanning?: boolean | null;
+  ts_includeinplanning?: boolean | null;
   ts_internationalflights?: boolean | null;
   ts_internationalprogramsbranchipb?: boolean | null;
   ts_mail?: boolean | null;
@@ -84,6 +85,7 @@ interface msdyn_incidenttype_Select {
   ts_cateringandstores: WebAttribute<msdyn_incidenttype_Select, { ts_cateringandstores: boolean | null }, {  }>;
   ts_domesticflights: WebAttribute<msdyn_incidenttype_Select, { ts_domesticflights: boolean | null }, {  }>;
   ts_excludefromplanning: WebAttribute<msdyn_incidenttype_Select, { ts_excludefromplanning: boolean | null }, {  }>;
+  ts_includeinplanning: WebAttribute<msdyn_incidenttype_Select, { ts_includeinplanning: boolean | null }, {  }>;
   ts_internationalflights: WebAttribute<msdyn_incidenttype_Select, { ts_internationalflights: boolean | null }, {  }>;
   ts_internationalprogramsbranchipb: WebAttribute<msdyn_incidenttype_Select, { ts_internationalprogramsbranchipb: boolean | null }, {  }>;
   ts_mail: WebAttribute<msdyn_incidenttype_Select, { ts_mail: boolean | null }, {  }>;
@@ -129,6 +131,7 @@ interface msdyn_incidenttype_Filter {
   ts_cateringandstores: boolean;
   ts_domesticflights: boolean;
   ts_excludefromplanning: boolean;
+  ts_includeinplanning: boolean;
   ts_internationalflights: boolean;
   ts_internationalprogramsbranchipb: boolean;
   ts_mail: boolean;
