@@ -13,18 +13,7 @@ var ROM;
                 StatusOfRailwayOwnerOnChange(eContext);
                 var modeAttribute = formContext.getAttribute("ts_mode");
                 var modeAttributeValue = modeAttribute.getValue();
-                if (modeAttributeValue == 717750001 /* InternationalBridgesandTunnels */) {
-                    formContext.getControl("ts_bridgeclosure").setVisible(true);
-                    formContext.getControl("ts_damagestoibtproperty").setVisible(true);
-                    formContext.getControl("ts_ruralorurban").setVisible(false);
-                    formContext.getControl("ts_publicorprivatecrossing").setVisible(false);
-                }
-                if (modeAttributeValue == 717750002 /* AviationSecurity */) {
-                    ShowHideFieldsOnAvSec(eContext, true);
-                }
-                else {
-                    ShowHideFieldsOnAvSec(eContext, false);
-                }
+                ShowHideFieldsOnMode(eContext, modeAttributeValue);
                 setSubSiteFilteredView(formContext, false);
                 securityIncidentTypeOnChange(eContext);
                 if (formContext.getAttribute("ts_mode").getValue() != null) {
@@ -78,27 +67,8 @@ var ROM;
             var form = eContext.getFormContext();
             var modeAttribute = form.getAttribute("ts_mode");
             var modeAttributeValue = modeAttribute.getValue();
-            if (modeAttributeValue == 717750001 /* InternationalBridgesandTunnels */) {
-                form.getControl("ts_bridgeclosure").setVisible(true);
-                form.getControl("ts_damagestoibtproperty").setVisible(true);
-                form.getControl("ts_ruralorurban").setVisible(false);
-                form.getControl("ts_publicorprivatecrossing").setVisible(false);
-            }
-            else {
-                form.getControl("ts_bridgeclosure").setVisible(false);
-                form.getControl("ts_damagestoibtproperty").setVisible(false);
-                form.getControl("ts_ruralorurban").setVisible(true);
-                form.getControl("ts_publicorprivatecrossing").setVisible(true);
-                form.getAttribute("ts_site").setValue(null);
-            }
-            if (modeAttributeValue == 717750002 /* AviationSecurity */) {
-                form.getAttribute("ts_securityincidenttype").setValue(null);
-                ShowHideFieldsOnAvSec(eContext, true);
-            }
-            else {
-                form.getAttribute("ts_securityincidenttype").setValue(null);
-                ShowHideFieldsOnAvSec(eContext, false);
-            }
+            form.getAttribute("ts_securityincidenttype").setValue(null);
+            ShowHideFieldsOnMode(eContext, modeAttributeValue);
             setSiteFilteredView(form, modeAttributeValue != null ? modeAttributeValue : null);
         }
         SecurityIncident.modeOnChange = modeOnChange;
@@ -144,9 +114,9 @@ var ROM;
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
-        function ShowHideFieldsOnAvSec(eContext, isAvSec) {
+        function ShowHideFieldsOnMode(eContext, mode) {
             var form = eContext.getFormContext();
-            if (isAvSec) {
+            if (mode == 717750002 /* AviationSecurity */) {
                 form.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
                 form.getControl("ts_targetelement").setVisible(false);
                 form.getControl("ts_statusofrailwayowner").setVisible(false);
@@ -166,19 +136,16 @@ var ROM;
                 form.getControl("ts_destination").setVisible(true);
                 form.getControl("ts_estimatedarrivaltime").setVisible(true);
                 form.getControl("ts_policeresponse").setVisible(true);
+                form.getControl("ts_bridgeclosure").setVisible(false);
+                form.getControl("ts_damagestoibtproperty").setVisible(false);
             }
             else {
                 form.getControl("ts_securityincidenttype").setDefaultView("b8d91bb4-6776-ed11-81ac-0022483d5ee0");
                 form.getControl("ts_targetelement").setVisible(true);
-                form.getControl("ts_statusofrailwayowner").setVisible(true);
-                form.getControl("ts_owneroftherailwaylinetrack").setVisible(true);
                 form.getControl("ts_locationtype").setVisible(true);
                 form.getControl("new_location").setVisible(true);
                 form.getControl("ts_subdivision").setVisible(true);
-                form.getControl("ts_milemarker").setVisible(true);
-                form.getControl("ts_markerpost").setVisible(true);
                 form.getControl("ts_locationcontext").setVisible(true);
-                form.getControl("ts_yardorstationname").setVisible(true);
                 form.getControl("ts_publicorprivatecrossing").setVisible(true);
                 form.getControl("ts_ruralorurban").setVisible(true);
                 form.getControl("ts_subsite").setVisible(false);
@@ -187,6 +154,27 @@ var ROM;
                 form.getControl("ts_destination").setVisible(false);
                 form.getControl("ts_estimatedarrivaltime").setVisible(false);
                 form.getControl("ts_policeresponse").setVisible(false);
+                if (mode == 717750000 /* RailSecurity */) {
+                    form.getControl("ts_statusofrailwayowner").setVisible(true);
+                    form.getControl("ts_owneroftherailwaylinetrack").setVisible(true);
+                    form.getControl("ts_milemarker").setVisible(true);
+                    form.getControl("ts_markerpost").setVisible(true);
+                    form.getControl("ts_yardorstationname").setVisible(true);
+                    form.getControl("ts_bridgeclosure").setVisible(false);
+                    form.getControl("ts_damagestoibtproperty").setVisible(false);
+                    form.getAttribute("ts_site").setValue(null);
+                }
+                if (mode == 717750001 /* InternationalBridgesandTunnels */) {
+                    form.getControl("ts_statusofrailwayowner").setVisible(false);
+                    form.getControl("ts_owneroftherailwaylinetrack").setVisible(false);
+                    form.getControl("ts_milemarker").setVisible(false);
+                    form.getControl("ts_markerpost").setVisible(false);
+                    form.getControl("ts_yardorstationname").setVisible(false);
+                    form.getControl("ts_bridgeclosure").setVisible(true);
+                    form.getControl("ts_damagestoibtproperty").setVisible(true);
+                    form.getControl("ts_ruralorurban").setVisible(false);
+                    form.getControl("ts_publicorprivatecrossing").setVisible(false);
+                }
             }
         }
     })(SecurityIncident = ROM.SecurityIncident || (ROM.SecurityIncident = {}));
