@@ -8,7 +8,7 @@ namespace ROM.SecurityIncident {
             formContext.getControl("ts_delayduration").setVisible(false);
         }
 
-        if (formContext.ui.getFormType() == 2) {
+        if (formContext.ui.getFormType() == 2 || formContext.ui.getFormType() == 3) {
             StatusOfRailwayOwnerOnChange(eContext);
 
             const modeAttribute = formContext.getAttribute("ts_mode");
