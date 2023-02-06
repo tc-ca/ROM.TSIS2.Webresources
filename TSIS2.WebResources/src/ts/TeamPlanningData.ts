@@ -289,9 +289,9 @@
                 }
                 if (planningDataStakeholderId == null) debugger;
                 let data = {
-                    "ts_name": (isMissingData) ? "ERROR " + planningDataName : planningDataName,
-                    "ts_englishname": (isMissingData) ? "ERROR " + planningDataEnglishName : planningDataEnglishName,
-                    "ts_frenchname": (isMissingData) ? "ERREUR " + planningDataFrenchName : planningDataFrenchName,
+                    "ts_name": planningDataName,
+                    "ts_englishname": planningDataEnglishName,
+                    "ts_frenchname": planningDataFrenchName,
                     "ts_OperationActivity@odata.bind": "/ts_operationactivities(" + operationActivity.ts_operationactivityid + ")",
                     "ts_FiscalYear@odata.bind": "/tc_tcfiscalyears(" + planningDataFiscalYearId + ")",
                     "ts_TeamPlanningData@odata.bind": "/ts_teamplanningdatas(" + teamPlanningDataId + ")",
