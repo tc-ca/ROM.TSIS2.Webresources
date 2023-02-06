@@ -9,7 +9,7 @@ var ROM;
             if (delaysToOperations.getValue() == 717750001 /* Unknown */ || delaysToOperations.getValue() == null) {
                 formContext.getControl("ts_delayduration").setVisible(false);
             }
-            if (formContext.ui.getFormType() == 2) {
+            if (formContext.ui.getFormType() == 2 || formContext.ui.getFormType() == 3) {
                 StatusOfRailwayOwnerOnChange(eContext);
                 var modeAttribute = formContext.getAttribute("ts_mode");
                 var modeAttributeValue = modeAttribute.getValue();
