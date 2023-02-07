@@ -633,3 +633,42 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
     }
 }
 
+function AssignCorrectiveAction(findingGUIDs, primaryControl) {
+    const enforcementActionId = primaryControl.data.entity.getId().slice(1, -1);
+
+    var correctiveActionFormOptions = {};
+    correctiveActionFormOptions["entityName"] = "ts_correctiveaction";
+    correctiveActionFormOptions["formId"] = "46ae0d3b-7957-4541-9be6-707e2b0fd741";
+    correctiveActionFormOptions["useQuickCreateForm"] = true;
+
+    // Open the form
+    Xrm.Navigation.openForm(correctiveActionFormOptions, findingGUIDs).then(
+        function (success) {
+            console.log(success);
+            var correctiveActionId = Object.values(success)[0][0].id.slice(1, -1);
+
+            let relatedFindings = [];
+            for (let findingGUID of findingGUIDs) {
+                relatedFindings.push({
+                    entityType: "ovs_finding",
+                    id: findingGUID
+                });
+            }
+            relatedFindings.forEach(function (finding) {
+                var data =
+                {
+                    "ts_Finding@odata.bind": `/ovs_findings(${finding.id})`,
+                    "ts_EnforcementAction@odata.bind": `/ts_enforcementactions(${enforcementActionId})`,
+                    "ts_CorrectiveAction@odata.bind": `/ts_correctiveactions(${correctiveActionId})`,
+                }
+
+                Xrm.WebApi.createRecord("ts_correctiveactionfinding", data).then(
+                    function (success) {
+                        console.log(success);
+                    });
+            },
+                function (error) {
+                    console.log(error);
+                });
+        });
+}

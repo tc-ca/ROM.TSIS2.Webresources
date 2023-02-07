@@ -41,7 +41,6 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<ts_securityincident_statecode>;
       get(name: "ts_arrests"): Xrm.OptionSetAttribute<ts_arrestsknownorunknown>;
-      get(name: "ts_arrestscount"): Xrm.NumberAttribute;
       get(name: "ts_arrestsdetails"): Xrm.Attribute<string>;
       get(name: "ts_bridgeclosure"): Xrm.OptionSetAttribute<ts_bridgeclosure>;
       get(name: "ts_damagestoibtproperty"): Xrm.OptionSetAttribute<ts_damagestoibtproperty>;
@@ -100,7 +99,6 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
       get(name: "ts_arrests"): Xrm.OptionSetControl<ts_arrestsknownorunknown>;
-      get(name: "ts_arrestscount"): Xrm.NumberControl;
       get(name: "ts_arrestsdetails"): Xrm.StringControl;
       get(name: "ts_bridgeclosure"): Xrm.OptionSetControl<ts_bridgeclosure>;
       get(name: "ts_damagestoibtproperty"): Xrm.OptionSetControl<ts_damagestoibtproperty>;
@@ -164,7 +162,6 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ts_securityincident_statecode>;
     getAttribute(attributeName: "ts_arrests"): Xrm.OptionSetAttribute<ts_arrestsknownorunknown>;
-    getAttribute(attributeName: "ts_arrestscount"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_arrestsdetails"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_bridgeclosure"): Xrm.OptionSetAttribute<ts_bridgeclosure>;
     getAttribute(attributeName: "ts_damagestoibtproperty"): Xrm.OptionSetAttribute<ts_damagestoibtproperty>;
@@ -218,7 +215,6 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
     getControl(controlName: "ts_arrests"): Xrm.OptionSetControl<ts_arrestsknownorunknown>;
-    getControl(controlName: "ts_arrestscount"): Xrm.NumberControl;
     getControl(controlName: "ts_arrestsdetails"): Xrm.StringControl;
     getControl(controlName: "ts_bridgeclosure"): Xrm.OptionSetControl<ts_bridgeclosure>;
     getControl(controlName: "ts_damagestoibtproperty"): Xrm.OptionSetControl<ts_damagestoibtproperty>;

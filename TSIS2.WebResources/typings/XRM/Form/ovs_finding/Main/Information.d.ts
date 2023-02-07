@@ -64,6 +64,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_acceptncatrecommendation"): Xrm.OptionSetAttribute<ts_yesno>;
       get(name: "ts_acceptraterecommendation"): Xrm.OptionSetAttribute<ts_yesno>;
       get(name: "ts_accountid"): Xrm.LookupAttribute<"account">;
+      get(name: "ts_contact"): Xrm.LookupAttribute<"contact">;
       get(name: "ts_finalenforcementaction"): Xrm.OptionSetAttribute<ts_finalenforcementaction>;
       get(name: "ts_findingprovisiontexten"): Xrm.Attribute<string>;
       get(name: "ts_findingprovisiontextfr"): Xrm.Attribute<string>;
@@ -138,6 +139,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_acceptraterecommendation"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_accountid"): Xrm.LookupControl<"account">;
       get(name: "ts_accountid1"): Xrm.LookupControl<"account">;
+      get(name: "ts_contact"): Xrm.LookupControl<"contact">;
       get(name: "ts_finalenforcementaction"): Xrm.OptionSetControl<ts_finalenforcementaction>;
       get(name: "ts_findingprovisiontexten"): Xrm.StringControl;
       get(name: "ts_findingprovisiontextfr"): Xrm.StringControl;
@@ -214,6 +216,7 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_acceptncatrecommendation"): Xrm.OptionSetAttribute<ts_yesno>;
     getAttribute(attributeName: "ts_acceptraterecommendation"): Xrm.OptionSetAttribute<ts_yesno>;
     getAttribute(attributeName: "ts_accountid"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "ts_contact"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "ts_finalenforcementaction"): Xrm.OptionSetAttribute<ts_finalenforcementaction>;
     getAttribute(attributeName: "ts_findingprovisiontexten"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_findingprovisiontextfr"): Xrm.Attribute<string>;
@@ -283,6 +286,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_acceptraterecommendation"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_accountid"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_accountid1"): Xrm.LookupControl<"account">;
+    getControl(controlName: "ts_contact"): Xrm.LookupControl<"contact">;
     getControl(controlName: "ts_finalenforcementaction"): Xrm.OptionSetControl<ts_finalenforcementaction>;
     getControl(controlName: "ts_findingprovisiontexten"): Xrm.StringControl;
     getControl(controlName: "ts_findingprovisiontextfr"): Xrm.StringControl;

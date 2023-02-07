@@ -8,25 +8,13 @@ namespace ROM.SecurityIncident {
             formContext.getControl("ts_delayduration").setVisible(false);
         }
 
-        if (formContext.ui.getFormType() == 2) {
+        if (formContext.ui.getFormType() == 2 || formContext.ui.getFormType() == 3) {
             StatusOfRailwayOwnerOnChange(eContext);
 
             const modeAttribute = formContext.getAttribute("ts_mode");
             const modeAttributeValue = modeAttribute.getValue()
     
-            if (modeAttributeValue == ts_securityincidentmode.InternationalBridgesandTunnels) {
-                formContext.getControl("ts_bridgeclosure").setVisible(true);
-                formContext.getControl("ts_damagestoibtproperty").setVisible(true);
-                formContext.getControl("ts_ruralorurban").setVisible(false);
-                formContext.getControl("ts_publicorprivatecrossing").setVisible(false);
-    
-            }
-            if (modeAttributeValue == ts_securityincidentmode.AviationSecurity) {
-                ShowHideFieldsOnAvSec(eContext, true);
-            }
-            else {
-                ShowHideFieldsOnAvSec(eContext, false);
-            }
+            ShowHideFieldsOnMode(eContext, modeAttributeValue);
             setSubSiteFilteredView(formContext, false);
             securityIncidentTypeOnChange(eContext);
 
@@ -49,9 +37,11 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_delayduration").setVisible(true);
         }
 
-        if (form.getAttribute("ts_arrests").getValue() == ts_arrestsknownorunknown.Known) {
-            form.getControl("ts_arrestscount").setVisible(true);
+        if (form.getAttribute("ts_arrests").getValue() != ts_arrestsknownorunknown.Unknown && form.getAttribute("ts_arrests").getValue() != ts_arrestsknownorunknown._0) {
             form.getControl("ts_arrestsdetails").setVisible(true);
+        }
+        else {
+            form.getControl("ts_arrestsdetails").setVisible(false);
         }
     }
 
@@ -74,9 +64,11 @@ namespace ROM.SecurityIncident {
 
         const arrests = form.getAttribute("ts_arrests");
 
-        if (arrests.getValue() == ts_arrestsknownorunknown.Known) {
-            form.getControl("ts_arrestscount").setVisible(true);
+        if (arrests.getValue() != ts_arrestsknownorunknown.Unknown && arrests.getValue() != ts_arrestsknownorunknown._0) {
             form.getControl("ts_arrestsdetails").setVisible(true);
+        }
+        else {
+            form.getControl("ts_arrestsdetails").setVisible(false);
         }
     }
 
@@ -86,29 +78,9 @@ namespace ROM.SecurityIncident {
         const modeAttribute = form.getAttribute("ts_mode");
         const modeAttributeValue = modeAttribute.getValue()
 
-        if (modeAttributeValue == ts_securityincidentmode.InternationalBridgesandTunnels) {
-            form.getControl("ts_bridgeclosure").setVisible(true);
-            form.getControl("ts_damagestoibtproperty").setVisible(true);
-            form.getControl("ts_ruralorurban").setVisible(false);
-            form.getControl("ts_publicorprivatecrossing").setVisible(false);
-        }
-        else {
-            form.getControl("ts_bridgeclosure").setVisible(false);
-            form.getControl("ts_damagestoibtproperty").setVisible(false);
-            form.getControl("ts_ruralorurban").setVisible(true);
-            form.getControl("ts_publicorprivatecrossing").setVisible(true);
-            form.getAttribute("ts_site").setValue(null);
-        }
+        form.getAttribute("ts_securityincidenttype").setValue(null);
 
-        if (modeAttributeValue == ts_securityincidentmode.AviationSecurity) {
-            form.getAttribute("ts_securityincidenttype").setValue(null);
-            ShowHideFieldsOnAvSec(eContext, true);
-        }
-        else {
-            form.getAttribute("ts_securityincidenttype").setValue(null);
-            ShowHideFieldsOnAvSec(eContext, false);
-        }
-
+        ShowHideFieldsOnMode(eContext, modeAttributeValue);
         setSiteFilteredView(form, modeAttributeValue != null ? modeAttributeValue : null);
 
     }
@@ -160,10 +132,10 @@ namespace ROM.SecurityIncident {
         form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 
-    function ShowHideFieldsOnAvSec(eContext: Xrm.ExecutionContext<any, any>, isAvSec): void {
+    function ShowHideFieldsOnMode(eContext: Xrm.ExecutionContext<any, any>, mode): void {
         const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
 
-        if (isAvSec) {
+        if (mode == ts_securityincidentmode.AviationSecurity) {
             form.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
 
             form.getControl("ts_targetelement").setVisible(false);
@@ -185,20 +157,18 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_destination").setVisible(true);
             form.getControl("ts_estimatedarrivaltime").setVisible(true);
             form.getControl("ts_policeresponse").setVisible(true);
+
+            form.getControl("ts_bridgeclosure").setVisible(false);
+            form.getControl("ts_damagestoibtproperty").setVisible(false);
         }
         else {
             form.getControl("ts_securityincidenttype").setDefaultView("b8d91bb4-6776-ed11-81ac-0022483d5ee0");
 
             form.getControl("ts_targetelement").setVisible(true);
-            form.getControl("ts_statusofrailwayowner").setVisible(true);
-            form.getControl("ts_owneroftherailwaylinetrack").setVisible(true);
             form.getControl("ts_locationtype").setVisible(true);
             form.getControl("new_location").setVisible(true);
             form.getControl("ts_subdivision").setVisible(true);
-            form.getControl("ts_milemarker").setVisible(true);
-            form.getControl("ts_markerpost").setVisible(true);
             form.getControl("ts_locationcontext").setVisible(true);
-            form.getControl("ts_yardorstationname").setVisible(true);
             form.getControl("ts_publicorprivatecrossing").setVisible(true);
             form.getControl("ts_ruralorurban").setVisible(true);
 
@@ -208,6 +178,31 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_destination").setVisible(false);
             form.getControl("ts_estimatedarrivaltime").setVisible(false);
             form.getControl("ts_policeresponse").setVisible(false);
+
+            if (mode == ts_securityincidentmode.RailSecurity) {
+                form.getControl("ts_statusofrailwayowner").setVisible(true);
+                form.getControl("ts_owneroftherailwaylinetrack").setVisible(true);
+                form.getControl("ts_milemarker").setVisible(true);
+                form.getControl("ts_markerpost").setVisible(true);
+                form.getControl("ts_yardorstationname").setVisible(true);
+
+                form.getControl("ts_bridgeclosure").setVisible(false);
+                form.getControl("ts_damagestoibtproperty").setVisible(false);
+                form.getAttribute("ts_site").setValue(null);
+            }
+
+            if (mode == ts_securityincidentmode.InternationalBridgesandTunnels) {
+                form.getControl("ts_statusofrailwayowner").setVisible(false);
+                form.getControl("ts_owneroftherailwaylinetrack").setVisible(false);
+                form.getControl("ts_milemarker").setVisible(false);
+                form.getControl("ts_markerpost").setVisible(false);
+                form.getControl("ts_yardorstationname").setVisible(false);
+
+                form.getControl("ts_bridgeclosure").setVisible(true);
+                form.getControl("ts_damagestoibtproperty").setVisible(true);
+                form.getControl("ts_ruralorurban").setVisible(false);
+                form.getControl("ts_publicorprivatecrossing").setVisible(false);
+            }
         }
     }
 }
