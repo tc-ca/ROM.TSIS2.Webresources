@@ -8,7 +8,6 @@ interface ts_securityincident_Base extends WebEntity {
   statuscode?: ts_securityincident_statuscode | null;
   timezoneruleversionnumber?: number | null;
   ts_arrests?: ts_arrestsknownorunknown | null;
-  ts_arrestscount?: number | null;
   ts_arrestsdetails?: string | null;
   ts_bridgeclosure?: ts_bridgeclosure | null;
   ts_damagestoibtproperty?: ts_damagestoibtproperty | null;
@@ -96,7 +95,6 @@ interface ts_securityincident_Select {
   statuscode: WebAttribute<ts_securityincident_Select, { statuscode: ts_securityincident_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_securityincident_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_arrests: WebAttribute<ts_securityincident_Select, { ts_arrests: ts_arrestsknownorunknown | null }, { ts_arrests_formatted?: string }>;
-  ts_arrestscount: WebAttribute<ts_securityincident_Select, { ts_arrestscount: number | null }, {  }>;
   ts_arrestsdetails: WebAttribute<ts_securityincident_Select, { ts_arrestsdetails: string | null }, {  }>;
   ts_bridgeclosure: WebAttribute<ts_securityincident_Select, { ts_bridgeclosure: ts_bridgeclosure | null }, { ts_bridgeclosure_formatted?: string }>;
   ts_damagestoibtproperty: WebAttribute<ts_securityincident_Select, { ts_damagestoibtproperty: ts_damagestoibtproperty | null }, { ts_damagestoibtproperty_formatted?: string }>;
@@ -162,7 +160,6 @@ interface ts_securityincident_Filter {
   statuscode: ts_securityincident_statuscode;
   timezoneruleversionnumber: number;
   ts_arrests: ts_arrestsknownorunknown;
-  ts_arrestscount: number;
   ts_arrestsdetails: string;
   ts_bridgeclosure: ts_bridgeclosure;
   ts_damagestoibtproperty: ts_damagestoibtproperty;
