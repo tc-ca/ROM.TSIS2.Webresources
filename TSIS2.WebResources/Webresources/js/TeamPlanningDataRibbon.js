@@ -350,9 +350,6 @@ async function addMissingPlanningData(formContext) {
         "      <attribute name='ovs_incidenttypenamefrench'/>",
         "      <attribute name='ts_riskscore'/>",
         "      <attribute name='msdyn_estimatedduration'/>",
-        "      <filter>",
-        "        <condition attribute='ts_excludefromplanning' operator='eq' value='0' />",
-        "      </filter>",
         "      <link-entity name='ts_recurrencefrequencies' from='ts_recurrencefrequenciesid' to='ts_riskscore'>",
         "        <attribute name='ts_class1interval'/>",
         "        <attribute name='ts_class2and3lowriskinterval'/>",
@@ -384,16 +381,15 @@ async function addMissingPlanningData(formContext) {
     const operationActivites = await Xrm.WebApi.retrieveMultipleRecords("ts_operationactivity", operationActivityFetchXml).then(function success(result) { return result.entities });
     const planningDataRecords = await Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", planningDataFetchXml).then(function success(result) { return result.entities });
 
-    for (let planningData of planningDataRecords) {
-        for (let operationActivity of operationActivites) {
+    for (let operationActivity of operationActivites) {
+        let foundInPlan = false;
+        for (let planningData of planningDataRecords) {
             if (planningData._ts_operationactivity_value == operationActivity.ts_operationactivityid) {
-                operationActivity.foundInPlan = true;
+                foundInPlan = true;
+                break;
             }
         }
-    }
-
-    for (let operationActivity of operationActivites) {
-        if (operationActivity.foundInPlan != true) {
+        if (foundInPlan == false) {
             for (let operationActivity of result.entities) {
 
                 let generationLog = "";
