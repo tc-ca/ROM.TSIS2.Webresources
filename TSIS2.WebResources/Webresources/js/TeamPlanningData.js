@@ -176,7 +176,7 @@ var ROM;
                                 "      <attribute name='ts_riskscore'/>",
                                 "      <attribute name='msdyn_estimatedduration'/>",
                                 "      <filter>",
-                                "        <condition attribute='ts_excludefromplanning' operator='eq' value='0' />",
+                                "        <condition attribute='ts_includeinplanning' operator='eq' value='1'/>",
                                 "      </filter>",
                                 "      <link-entity name='ts_recurrencefrequencies' from='ts_recurrencefrequenciesid' to='ts_riskscore'>",
                                 "        <attribute name='ts_class1interval'/>",
