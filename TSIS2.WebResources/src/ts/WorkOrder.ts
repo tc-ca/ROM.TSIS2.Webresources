@@ -15,6 +15,31 @@ namespace ROM.WorkOrder {
         const ownerControl = form.getControl("ownerid");
         const headerOwnerControl = form.getControl("header_ownerid");
 
+        //Set comment field visible if AvSec
+        let userBusinessUnitName;
+        let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+        let currentUserBusinessUnitFetchXML = [
+            "<fetch top='50'>",
+            "  <entity name='businessunit'>",
+            "    <attribute name='name' />",
+            "    <attribute name='businessunitid' />",
+            "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
+            "      <filter>",
+            "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+        currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
+            userBusinessUnitName = businessunit.entities[0].name;
+            if (userBusinessUnitName.startsWith("Aviation")) {
+                form.getControl("ts_details").setVisible(true);
+            }
+        });
+        
+
         //Keep track of the current system status, to be used when cancelling a status change.
         currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
         currentStatus = form.getAttribute("ts_state").getValue();
@@ -1601,6 +1626,26 @@ namespace ROM.WorkOrder {
                     Xrm.Navigation.openAlertDialog({ text: error.message });
                 });
         }
+    }
+
+    async function isAvSecBusinessUnit() {
+        let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+        let currentUserBusinessUnitFetchXML = [
+            "<fetch top='50'>",
+            "  <entity name='businessunit'>",
+            "    <attribute name='name' />",
+            "    <attribute name='businessunitid' />",
+            "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
+            "      <filter>",
+            "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+        currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+        let userBusinessUnitName = await Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML);
+        return userBusinessUnitName.entities[0].name.startsWith("Aviation");
     }
 }
 
