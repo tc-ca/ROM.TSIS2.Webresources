@@ -323,11 +323,25 @@ async function determineTradeNameOfStakeholder(stakeholderId, stakeholderName) {
     return tradeNameId;
 }
 
-//Find all Operation Activities like before. For each, check if a planning data record has already been made for this plan.
-//If not, create one.
-
 async function addMissingPlanningData(formContext) {
-    const teamPlanningDataId = formContext.data.entity.getId();
+    const teamPlanningDataId = formContext.data.entity.getId().slice(1, -1);
+    let teamValue = formContext.getAttribute("ts_team").getValue();
+    let teamId;
+    if (teamValue != null) {
+        teamId = teamValue[0].id;
+        teamName = teamValue[0].name;
+    }
+    const planningDataFiscalYearValue = formContext.getAttribute("ts_fiscalyear").getValue()
+    let planningDataFiscalYearName;
+    let planningDataFiscalYearId;
+    if (planningDataFiscalYearValue != null) {
+        planningDataFiscalYearName = planningDataFiscalYearValue[0].name;
+        planningDataFiscalYearId = planningDataFiscalYearValue[0].id.slice(1, -1);
+    }
+    if (teamId == null || planningDataFiscalYearName == null) {
+        //Xrm.Utility.closeProgressIndicator();
+        return;
+    }
     //Retrieve all Operations where OPI Team equals Team Planning Data Team
     var operationActivityFetchXml = [
         "<fetch>",
@@ -390,172 +404,162 @@ async function addMissingPlanningData(formContext) {
             }
         }
         if (foundInPlan == false) {
-            for (let operationActivity of result.entities) {
+            let generationLog = "";
+            let planningDataName = "";
+            let planningDataEnglishName = "";
+            let planningDataFrenchName = "";
+            let planningDataStakeholderId = "";
+            let planningDataOperationTypeId = "";
+            let planningDataSiteId = "";
+            let planningDataActivityTypeId = "";
+            let planningDataOperationId = "";
+            let planningDataTarget = 0;
+            let planningDataEstimatedDuration = 0;
+            let planningDataQuarters = [0, 0, 0, 0];
 
-                let generationLog = "";
-                let planningDataName = "";
-                let planningDataEnglishName = "";
-                let planningDataFrenchName = "";
-                let planningDataStakeholderId = "";
-                let planningDataOperationTypeId = "";
-                let planningDataSiteId = "";
-                let planningDataActivityTypeId = "";
-                let planningDataOperationId = "";
-                let planningDataTarget = 0;
-                let planningDataEstimatedDuration = 0;
-                let planningDataQuarters = [0, 0, 0, 0];
-
-                //Check if anything is missing from the FetchXML. Log it in the generationLog. Flag that there's missing data.
-                if (operationActivity["_ts_stakeholder_value"] == null) {
-                    generationLog += "Missing Stakeholder \n";
-                    isMissingData = true;
-                }
-                if (operationActivity["_ts_operationtype_value"] == null) {
-                    generationLog += "Missing Operation Type\n";
-                    isMissingData = true;
-                }
-                if (operationActivity["_ts_site_value"] == null) {
-                    generationLog += "Missin Site \n";
-                    isMissingData = true;
-                }
-                if (operationActivity["_ts_activity_value"] == null) {
-                    generationLog += "Missing Activity Type\n";
-                    isMissingData = true;
-                }
-                if (operationActivity["ovs_operation1.ovs_name"] == null) {
-                    generationLog += "Operation missing Name\n";
-                    isMissingData = true;
-                }
-                if (operationActivity["msdyn_incidenttype2.ovs_incidenttypenameenglish"] == null) {
-                    generationLog += "Incident Type missing english name\n";
-                    isMissingData = true;
-                }
-                if (operationActivity["msdyn_incidenttype2.ovs_incidenttypenamefrench"] == null) {
-                    generationLog += "Incident Type missing french name\n";
-                    isMissingData = true;
-                }
-                if (operationActivity["msdyn_functionallocation4.ts_class"] == null) {
-                    generationLog += "Missing Class on Site\n";
-                    isMissingData = true;
-                }
-                if (operationActivity['ts_recurrencefrequencies3.ts_class2and3highriskinterval'] == null) {
-                    generationLog += "Incident Type missing Recurrence Frequency\n";
-                    isMissingData = true;
-                }
-                if (operationActivity['ts_recurrencefrequencies3.ts_class2and3lowriskinterval'] == null) {
-                    generationLog += "Incident Type missing Recurrence Frequency\n";
-                    isMissingData = true;
-                }
-                if (operationActivity['ts_recurrencefrequencies3.ts_class1interval'] == null) {
-                    generationLog += "Incident Type missing Recurrence Frequency\n";
-                    isMissingData = true;
-                }
-
-                planningDataStakeholderId = operationActivity["_ts_stakeholder_value"];
-                planningDataOperationTypeId = operationActivity["_ts_operationtype_value"];
-                planningDataSiteId = operationActivity["_ts_site_value"];
-                planningDataActivityTypeId = operationActivity["_ts_activity_value"];
-                planningDataOperationId = operationActivity["_ts_operation_value"];
-                planningDataEnglishName = operationActivity["ovs_operation1.ovs_name"] + " | " + operationActivity["msdyn_incidenttype2.ovs_incidenttypenameenglish"] + " | " + planningDataFiscalYearName;
-                planningDataFrenchName = operationActivity["ovs_operation1.ovs_name"] + " | " + operationActivity["msdyn_incidenttype2.ovs_incidenttypenamefrench"] + " | " + planningDataFiscalYearName;
-                planningDataName = planningDataEnglishName + "::" + planningDataFrenchName;
-
-                var estimatedDurationFetchXml = [
-                    "<fetch>",
-                    "  <entity name='ts_teamactivitytypeestimatedduration'>",
-                    "    <attribute name='ts_estimatedduration'/>",
-                    "    <filter>",
-                    "      <condition attribute='ts_team' operator='eq' value='", teamId, "'/>",
-                    "      <condition attribute='ts_activitytype' operator='eq' value='", planningDataActivityTypeId, "'/>",
-                    "    </filter>",
-                    "  </entity>",
-                    "</fetch>"
-                ].join("");
-                estimatedDurationFetchXml = "?fetchXml=" + encodeURIComponent(estimatedDurationFetchXml);
-                let teamActivityTypeEstimatedDuration = await Xrm.WebApi.retrieveMultipleRecords("ts_teamactivitytypeestimatedduration", estimatedDurationFetchXml).then(function (result) { return result.entities[0] });
-
-                if (teamActivityTypeEstimatedDuration != null && teamActivityTypeEstimatedDuration.ts_estimatedduration != null) {
-                    planningDataEstimatedDuration = teamActivityTypeEstimatedDuration.ts_estimatedduration / 60;
-                }
-                else if (operationActivity["msdyn_incidenttype2.msdyn_estimatedduration"] != null) {
-                    planningDataEstimatedDuration = operationActivity["msdyn_incidenttype2.msdyn_estimatedduration"] / 60;
-                    generationLog += "Missing Team Estimated Duration for this Team and Activity Type. Using Activity Type Estimated Duration. \n";
-                } else {
-                    generationLog += "The Incident Type does not have an Estimated Duration. \n";
-                    isMissingData = true;
-                }
-                let interval = 0;
-
-                if (operationActivity["msdyn_functionallocation4.ts_class"] == 717750001) {
-                    interval = operationActivity['ts_recurrencefrequencies3.ts_class1interval'];
-                }
-                else //Class 2 or 3
-                {
-
-                    if (operationActivity["msdyn_functionallocation4.ts_riskscore"] == null) {
-                        generationLog += "Missing Risk Score on Site\n";
-                        isMissingData = true;
-                    }
-                    if (operationActivity["msdyn_functionallocation4.ts_riskscore"] > 5 || operationActivity["msdyn_functionallocation4.ts_lpdtounitedstates"] == true) {
-                        interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3highriskinterval'];
-                    }
-                    else {
-                        interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3lowriskinterval'];
-                    }
-                }
-
-                if (interval > 0) {
-                    for (let i = 0; i < 4; i += interval) {
-                        planningDataQuarters[i]++;
-                        planningDataTarget++;
-                    }
-                    if (operationActivity.ts_operationalstatus == 717750000) { //Operational
-                        teamPlanningDataTeamEstimatedDurationQ1 += planningDataQuarters[0] * planningDataEstimatedDuration;
-                        teamPlanningDataTeamEstimatedDurationQ2 += planningDataQuarters[1] * planningDataEstimatedDuration;
-                        teamPlanningDataTeamEstimatedDurationQ3 += planningDataQuarters[2] * planningDataEstimatedDuration;
-                        teamPlanningDataTeamEstimatedDurationQ4 += planningDataQuarters[3] * planningDataEstimatedDuration;
-
-                        teamPlanningDataPlannedQ1 += planningDataQuarters[0];
-                        teamPlanningDataPlannedQ2 += planningDataQuarters[1];
-                        teamPlanningDataPlannedQ3 += planningDataQuarters[2];
-                        teamPlanningDataPlannedQ4 += planningDataQuarters[3];
-                    }
-                }
-                let data = {
-                    "ts_name": planningDataName,
-                    "ts_englishname": planningDataEnglishName,
-                    "ts_frenchname": planningDataFrenchName,
-                    "ts_OperationActivity@odata.bind": "/ts_operationactivities(" + operationActivity.ts_operationactivityid + ")",
-                    "ts_FiscalYear@odata.bind": "/tc_tcfiscalyears(" + planningDataFiscalYearId + ")",
-                    "ts_TeamPlanningData@odata.bind": "/ts_teamplanningdatas(" + teamPlanningDataId + ")",
-                    "ts_Stakeholder@odata.bind": "/accounts(" + planningDataStakeholderId + ")",
-                    "ts_OperationType@odata.bind": "/ovs_operationtypes(" + planningDataOperationTypeId + ")",
-                    "ts_Site@odata.bind": "/msdyn_functionallocations(" + planningDataSiteId + ")",
-                    "ts_ActivityType@odata.bind": "/msdyn_incidenttypes(" + planningDataActivityTypeId + ")",
-                    "ts_Operation@odata.bind": "/ovs_operations(" + planningDataOperationId + ")",
-                    "ts_target": planningDataTarget,
-                    "ts_varianceuncalculated": 0,
-                    "ts_plannedwouncalculated": planningDataTarget,
-                    "ts_teamestimatedduration": planningDataEstimatedDuration,
-                    "ts_originalteamestimatedduration": planningDataEstimatedDuration,
-                    "ts_dueq1": planningDataQuarters[0],
-                    "ts_dueq2": planningDataQuarters[1],
-                    "ts_dueq3": planningDataQuarters[2],
-                    "ts_dueq4": planningDataQuarters[3],
-                    "ts_plannedq1": planningDataQuarters[0],
-                    "ts_plannedq2": planningDataQuarters[1],
-                    "ts_plannedq3": planningDataQuarters[2],
-                    "ts_plannedq4": planningDataQuarters[3],
-                    "ts_generationlog": generationLog
-                }
-                Xrm.WebApi.createRecord("ts_planningdata", data).then(
-                    function success(result) {
-                    },
-                    function (error) {
-                        console.log(error.message);
-                    }
-                );
+            //Check if anything is missing from the FetchXML. Log it in the generationLog. Flag that there's missing data.
+            if (operationActivity["_ts_stakeholder_value"] == null) {
+                generationLog += "Missing Stakeholder \n";
+                isMissingData = true;
             }
+            if (operationActivity["_ts_operationtype_value"] == null) {
+                generationLog += "Missing Operation Type\n";
+                isMissingData = true;
+            }
+            if (operationActivity["_ts_site_value"] == null) {
+                generationLog += "Missin Site \n";
+                isMissingData = true;
+            }
+            if (operationActivity["_ts_activity_value"] == null) {
+                generationLog += "Missing Activity Type\n";
+                isMissingData = true;
+            }
+            if (operationActivity["ovs_operation1.ovs_name"] == null) {
+                generationLog += "Operation missing Name\n";
+                isMissingData = true;
+            }
+            if (operationActivity["msdyn_incidenttype2.ovs_incidenttypenameenglish"] == null) {
+                generationLog += "Incident Type missing english name\n";
+                isMissingData = true;
+            }
+            if (operationActivity["msdyn_incidenttype2.ovs_incidenttypenamefrench"] == null) {
+                generationLog += "Incident Type missing french name\n";
+                isMissingData = true;
+            }
+            if (operationActivity["msdyn_functionallocation4.ts_class"] == null) {
+                generationLog += "Missing Class on Site\n";
+                isMissingData = true;
+            }
+            if (operationActivity['ts_recurrencefrequencies3.ts_class2and3highriskinterval'] == null) {
+                generationLog += "Incident Type missing Recurrence Frequency\n";
+                isMissingData = true;
+            }
+            if (operationActivity['ts_recurrencefrequencies3.ts_class2and3lowriskinterval'] == null) {
+                generationLog += "Incident Type missing Recurrence Frequency\n";
+                isMissingData = true;
+            }
+            if (operationActivity['ts_recurrencefrequencies3.ts_class1interval'] == null) {
+                generationLog += "Incident Type missing Recurrence Frequency\n";
+                isMissingData = true;
+            }
+
+            planningDataStakeholderId = operationActivity["_ts_stakeholder_value"];
+            planningDataOperationTypeId = operationActivity["_ts_operationtype_value"];
+            planningDataSiteId = operationActivity["_ts_site_value"];
+            planningDataActivityTypeId = operationActivity["_ts_activity_value"];
+            planningDataOperationId = operationActivity["_ts_operation_value"];
+            planningDataEnglishName = operationActivity["ovs_operation1.ovs_name"] + " | " + operationActivity["msdyn_incidenttype2.ovs_incidenttypenameenglish"] + " | " + planningDataFiscalYearName;
+            planningDataFrenchName = operationActivity["ovs_operation1.ovs_name"] + " | " + operationActivity["msdyn_incidenttype2.ovs_incidenttypenamefrench"] + " | " + planningDataFiscalYearName;
+            planningDataName = planningDataEnglishName + "::" + planningDataFrenchName;
+
+            var estimatedDurationFetchXml = [
+                "<fetch>",
+                "  <entity name='ts_teamactivitytypeestimatedduration'>",
+                "    <attribute name='ts_estimatedduration'/>",
+                "    <filter>",
+                "      <condition attribute='ts_team' operator='eq' value='", teamId, "'/>",
+                "      <condition attribute='ts_activitytype' operator='eq' value='", planningDataActivityTypeId, "'/>",
+                "    </filter>",
+                "  </entity>",
+                "</fetch>"
+            ].join("");
+            estimatedDurationFetchXml = "?fetchXml=" + encodeURIComponent(estimatedDurationFetchXml);
+            let teamActivityTypeEstimatedDuration = await Xrm.WebApi.retrieveMultipleRecords("ts_teamactivitytypeestimatedduration", estimatedDurationFetchXml).then(function (result) { return result.entities[0] });
+
+            if (teamActivityTypeEstimatedDuration != null && teamActivityTypeEstimatedDuration.ts_estimatedduration != null) {
+                planningDataEstimatedDuration = teamActivityTypeEstimatedDuration.ts_estimatedduration / 60;
+            }
+            else if (operationActivity["msdyn_incidenttype2.msdyn_estimatedduration"] != null) {
+                planningDataEstimatedDuration = operationActivity["msdyn_incidenttype2.msdyn_estimatedduration"] / 60;
+                generationLog += "Missing Team Estimated Duration for this Team and Activity Type. Using Activity Type Estimated Duration. \n";
+            } else {
+                generationLog += "The Incident Type does not have an Estimated Duration. \n";
+                isMissingData = true;
+            }
+            let interval = 0;
+
+            if (operationActivity["msdyn_functionallocation4.ts_class"] == 717750001) {
+                interval = operationActivity['ts_recurrencefrequencies3.ts_class1interval'];
+            }
+            else //Class 2 or 3
+            {
+
+                if (operationActivity["msdyn_functionallocation4.ts_riskscore"] == null) {
+                    generationLog += "Missing Risk Score on Site\n";
+                    isMissingData = true;
+                }
+                if (operationActivity["msdyn_functionallocation4.ts_riskscore"] > 5 || operationActivity["msdyn_functionallocation4.ts_lpdtounitedstates"] == true) {
+                    interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3highriskinterval'];
+                }
+                else {
+                    interval = operationActivity['ts_recurrencefrequencies3.ts_class2and3lowriskinterval'];
+                }
+            }
+
+            if (interval > 0) {
+                for (let i = 0; i < 4; i += interval) {
+                    planningDataQuarters[i]++;
+                    planningDataTarget++;
+                }
+            }
+            let data = {
+                "ts_name": planningDataName,
+                "ts_englishname": planningDataEnglishName,
+                "ts_frenchname": planningDataFrenchName,
+                "ts_OperationActivity@odata.bind": "/ts_operationactivities(" + operationActivity.ts_operationactivityid + ")",
+                "ts_FiscalYear@odata.bind": "/tc_tcfiscalyears(" + planningDataFiscalYearId + ")",
+                "ts_TeamPlanningData@odata.bind": "/ts_teamplanningdatas(" + teamPlanningDataId + ")",
+                "ts_Stakeholder@odata.bind": "/accounts(" + planningDataStakeholderId + ")",
+                "ts_OperationType@odata.bind": "/ovs_operationtypes(" + planningDataOperationTypeId + ")",
+                "ts_Site@odata.bind": "/msdyn_functionallocations(" + planningDataSiteId + ")",
+                "ts_ActivityType@odata.bind": "/msdyn_incidenttypes(" + planningDataActivityTypeId + ")",
+                "ts_Operation@odata.bind": "/ovs_operations(" + planningDataOperationId + ")",
+                "ts_target": planningDataTarget,
+                "ts_varianceuncalculated": 0,
+                "ts_plannedwouncalculated": planningDataTarget,
+                "ts_teamestimatedduration": planningDataEstimatedDuration,
+                "ts_originalteamestimatedduration": planningDataEstimatedDuration,
+                "ts_dueq1": planningDataQuarters[0],
+                "ts_dueq2": planningDataQuarters[1],
+                "ts_dueq3": planningDataQuarters[2],
+                "ts_dueq4": planningDataQuarters[3],
+                "ts_plannedq1": planningDataQuarters[0],
+                "ts_plannedq2": planningDataQuarters[1],
+                "ts_plannedq3": planningDataQuarters[2],
+                "ts_plannedq4": planningDataQuarters[3],
+                "ts_generationlog": generationLog
+            }
+            Xrm.WebApi.createRecord("ts_planningdata", data).then(
+                function success(result) {
+                },
+                function (error) {
+                    console.log(error.message);
+                }
+            );
         }
     }
+}
+
+function resetEstimatedDurations(formContext) {
+
 }
