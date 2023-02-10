@@ -581,12 +581,80 @@ async function addMissingPlanningData(formContext) {
             }
             Xrm.Utility.showProgressIndicator(addMissingPlanningDataProgressIndicator2);
             //After all additional Planning Data have been created, close the Progress indicator.
-            await Promise.all(planningDataCreationPromises)
-            Xrm.Utility.closeProgressIndicator();
+            await Promise.all(planningDataCreationPromises);
+            recalculateTeamPlanningDataValues(formContext);
         }
     );
 }
 
-function resetEstimatedDurations(formContext) {
 
+async function resetDurations(formContext) {
+    const lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+    let resetDurationsTitleLocalized = "Reset Durations";
+    let resetDurationsTextLocalized = "The Planning Data Durations will be reset to their default values. Any changes made to the Durations in this plan will be overwritten. Do you wish to proceed?";
+    let confirmLocalized = "Yes";
+    let cancelLocalized = "Cancel";
+    if (lang == 1036) {
+        resetDurationsTitleLocalized = "Reset Durations FR";
+        resetDurationsTextLocalized = "The Planning Data Durations will be reset to their default values. Any changes made to the Durations in this plan will be overwritten. Do you wish to proceed? FR";
+        confirmLocalized = "Oui";
+        cancelLocalized = "Annuler";
+    }
+    const teamPlanningDataId = formContext.data.entity.getId().slice(1, -1);
+    const teamValue = formContext.getAttribute("ts_team").getValue();
+    let teamId;
+    if (teamValue != null) {
+        teamId = teamValue[0].id;
+    } else {
+        return;
+    }
+    var planningDataFetchXml = [
+        "<fetch>",
+        "  <entity name='ts_planningdata'>",
+        "    <attribute name='ts_activitytype'/>",
+        "    <attribute name='ts_planningdataid'/>",
+        "    <link-entity name='msdyn_incidenttype' from='msdyn_incidenttypeid' to='ts_activitytype' alias='incidenttype'>",
+        "      <attribute name='msdyn_estimatedduration'/>",
+        "      <attribute name='msdyn_incidenttypeid'/>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>"
+    ].join("");
+    planningDataFetchXml = "?fetchXml=" + encodeURIComponent(planningDataFetchXml);
+    const planningDataRecords = await Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", planningDataFetchXml).then(function success(result) { return result.entities });
+    planningDataUpdatePromises = [];
+    Xrm.Utility.showProgressIndicator();
+    for (let planningData of planningDataRecords) {
+        if (planningData["incidenttype.msdyn_incidenttypeid"] == null) continue;
+        let planningDataEstimatedDuration = 0;
+        var estimatedDurationFetchXml = [
+            "<fetch>",
+            "  <entity name='ts_teamactivitytypeestimatedduration'>",
+            "    <attribute name='ts_estimatedduration'/>",
+            "    <filter>",
+            "      <condition attribute='ts_team' operator='eq' value='", teamId, "'/>",
+            "      <condition attribute='ts_activitytype' operator='eq' value='", planningData["incidenttype.msdyn_incidenttypeid"], "'/>",
+            "    </filter>",
+            "  </entity>",
+            "</fetch>"
+        ].join("");
+        estimatedDurationFetchXml = "?fetchXml=" + encodeURIComponent(estimatedDurationFetchXml);
+        let teamActivityTypeEstimatedDuration = await Xrm.WebApi.retrieveMultipleRecords("ts_teamactivitytypeestimatedduration", estimatedDurationFetchXml).then(function (result) { return result.entities[0] });
+
+        if (teamActivityTypeEstimatedDuration != null && teamActivityTypeEstimatedDuration.ts_estimatedduration != null) {
+            planningDataEstimatedDuration = teamActivityTypeEstimatedDuration.ts_estimatedduration / 60;
+        }
+        else if (operationActivity["msdyn_incidenttype.msdyn_estimatedduration"] != null) {
+            planningDataEstimatedDuration = operationActivity["msdyn_incidenttype2.msdyn_estimatedduration"] / 60;
+        }
+
+        var data =
+        {
+            "ts_teamestimatedduration": planningDataEstimatedDuration
+        }
+        planningDataUpdatePromises.push(Xrm.WebApi.updateRecord("ts_planningdata", planningData.ts_planningdataid, data));
+    }
+    //After all additional Planning Data have been updated, close the Progress indicator.
+    await Promise.all(planningDataUpdatePromises);
+    recalculateTeamPlanningDataValues(formContext);
 }
