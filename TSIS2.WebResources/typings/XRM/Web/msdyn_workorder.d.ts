@@ -68,6 +68,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_canvasappnumber?: string | null;
   ts_completedquarter?: ts_msdyn_workorder_ts_completedquarter | null;
   ts_costexplanation?: string | null;
+  ts_details?: string | null;
   ts_incident?: ts_yesno | null;
   ts_incompleteworkorderreasonforother?: string | null;
   ts_numberoffindings?: number | null;
@@ -307,6 +308,7 @@ interface msdyn_workorder_Select {
   ts_contact_guid: WebAttribute<msdyn_workorder_Select, { ts_contact_guid: string | null }, { ts_contact_formatted?: string }>;
   ts_costexplanation: WebAttribute<msdyn_workorder_Select, { ts_costexplanation: string | null }, {  }>;
   ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_details: WebAttribute<msdyn_workorder_Select, { ts_details: string | null }, {  }>;
   ts_incident: WebAttribute<msdyn_workorder_Select, { ts_incident: ts_yesno | null }, { ts_incident_formatted?: string }>;
   ts_incompleteworkorderreason_guid: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreason_guid: string | null }, { ts_incompleteworkorderreason_formatted?: string }>;
   ts_incompleteworkorderreasonforother: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreasonforother: string | null }, {  }>;
@@ -454,6 +456,7 @@ interface msdyn_workorder_Filter {
   ts_contact_guid: XQW.Guid;
   ts_costexplanation: string;
   ts_country_guid: XQW.Guid;
+  ts_details: string;
   ts_incident: ts_yesno;
   ts_incompleteworkorderreason_guid: XQW.Guid;
   ts_incompleteworkorderreasonforother: string;
