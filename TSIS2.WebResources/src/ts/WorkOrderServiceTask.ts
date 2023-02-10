@@ -389,6 +389,48 @@ namespace ROM.WorkOrderServiceTask {
     //    }
     //}
 
+    export function AOCOperationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
+        const aocOperation = form.getAttribute("ts_aocoperation").getValue();
+        if (aocOperation != null) {
+            Xrm.WebApi.retrieveRecord("ovs_operation", aocOperation[0].id, "?$select=_ts_stakeholder_value,_ovs_operationtypeid_value,_ts_site_value ").then(
+                function success(result) {
+                    var lookup = new Array();
+                    lookup[0] = new Object();
+                    if (result._ovs_operationtypeid_value != null) {
+                        lookup[0].id = result._ovs_operationtypeid_value
+                        lookup[0].name = result["_ovs_operationtypeid_value@OData.Community.Display.V1.FormattedValue"]
+                        lookup[0].entityType = result["_ovs_operationtypeid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                        form.getAttribute("ts_aocoperationtype").setValue(lookup);
+                    }
+                    lookup = new Array();
+                    lookup[0] = new Object();
+                    if (result._ts_stakeholder_value != null) {
+                        lookup[0].id = result._ts_stakeholder_value
+                        lookup[0].name = result["_ts_stakeholder_value@OData.Community.Display.V1.FormattedValue"]
+                        lookup[0].entityType = result["_ts_stakeholder_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                        form.getAttribute("ts_aocstakeholder").setValue(lookup);
+                    }
+                    lookup = new Array();
+                    lookup[0] = new Object();
+                    if (result._ts_site_value != null) {
+                        lookup[0].id = result._ts_site_value
+                        lookup[0].name = result["_ts_site_value@OData.Community.Display.V1.FormattedValue"]
+                        lookup[0].entityType = result["_ts_site_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                        form.getAttribute("ts_aocsite").setValue(lookup);
+                    }
+                },
+                function error(error) {
+                    Xrm.Navigation.openAlertDialog({ text: error.message });
+                });
+        }
+        else {
+            form.getAttribute("ts_aocoperationtype").setValue(null);
+            form.getAttribute("ts_aocstakeholder").setValue(null);
+            form.getAttribute("ts_aocsite").setValue(null);
+        }
+    }
+
     export function onAOCFieldsOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
         const aocStakeholder = form.getAttribute("ts_aocstakeholder").getValue();
