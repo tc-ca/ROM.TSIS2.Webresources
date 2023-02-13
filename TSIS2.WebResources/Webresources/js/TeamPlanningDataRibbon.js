@@ -326,8 +326,8 @@ async function determineTradeNameOfStakeholder(stakeholderId, stakeholderName) {
 
 async function addMissingPlanningData(formContext) {
     const lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
-    let addMissingPlanningDataTitleLocalized = "Add Missing Planning Data";
-    let addMissingPlanningDataTextLocalized = "Planning Data will be added for missing Operation Activities. Do you wish to proceed?";
+    let addMissingPlanningDataTitleLocalized = "Update Planning Data";
+    let addMissingPlanningDataTextLocalized = "Planning Data will be added for any missing Operation Activities. Do you wish to proceed?";
     let confirmLocalized = "Yes";
     let cancelLocalized = "Cancel";
     let addMissingPlanningDataProgressIndicator1 = "Finding missing Planning records";
@@ -643,7 +643,7 @@ async function resetDurations(formContext) {
                         "<fetch>",
                         "  <entity name='ts_teamactivitytypeestimatedduration'>",
                         "    <attribute name='ts_estimatedduration'/>",
-                        "    <filter>",
+                        "    <filter type='and'>",
                         "      <condition attribute='ts_team' operator='eq' value='", teamId, "'/>",
                         "      <condition attribute='ts_activitytype' operator='eq' value='", planningData["incidenttype.msdyn_incidenttypeid"], "'/>",
                         "    </filter>",
