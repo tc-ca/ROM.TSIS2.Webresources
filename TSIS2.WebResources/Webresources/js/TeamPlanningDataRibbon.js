@@ -324,7 +324,9 @@ async function determineTradeNameOfStakeholder(stakeholderId, stakeholderName) {
     return tradeNameId;
 }
 
+//Finds Operation Activities that are not being planned for in the current plan and adds Planning Data records for them.
 async function addMissingPlanningData(formContext) {
+    //Set localized label text
     const lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
     let addMissingPlanningDataTitleLocalized = "Update Planning Data";
     let addMissingPlanningDataTextLocalized = "Planning Data will be added for any missing Operation Activities. Do you wish to proceed?";
@@ -340,13 +342,14 @@ async function addMissingPlanningData(formContext) {
         addMissingPlanningDataProgressIndicator1 = "Recherche d'enregistrements de planification manquants";
         addMissingPlanningDataProgressIndicator2 = "Ajout d'enregistrements de planification manquants";
     }
-    //Open a confirmation dialog box to confirm Work Order Creation.
+    //Open a confirmation dialog box to confirm Planning Data Creation.
     var confirmStrings = { text: addMissingPlanningDataTextLocalized, title: addMissingPlanningDataTitleLocalized, confirmButtonLabel: confirmLocalized, cancelButtonLabel: cancelLocalized };
     var confirmOptions = { height: 200, width: 450 };
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
         async function (success) {
             if (success.confirmed) {
                 Xrm.Utility.showProgressIndicator(addMissingPlanningDataProgressIndicator1);
+                //Get required Id's
                 const teamPlanningDataId = formContext.data.entity.getId().slice(1, -1);
                 let teamValue = formContext.getAttribute("ts_team").getValue();
                 let teamId;
@@ -405,7 +408,7 @@ async function addMissingPlanningData(formContext) {
                     "</fetch>"
                 ].join("");
                 operationActivityFetchXml = "?fetchXml=" + encodeURIComponent(operationActivityFetchXml);
-
+                //All Planning Data related to current Team Planning Data
                 var planningDataFetchXml = [
                     "<fetch>",
                     "  <entity name='ts_planningdata'>",
@@ -420,8 +423,9 @@ async function addMissingPlanningData(formContext) {
 
                 const operationActivites = await Xrm.WebApi.retrieveMultipleRecords("ts_operationactivity", operationActivityFetchXml).then(function success(result) { return result.entities });
                 const planningDataRecords = await Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", planningDataFetchXml).then(function success(result) { return result.entities });
-                const planningDataCreationPromises = []
+                const planningDataCreationPromises = [] //Keep track of all the creation requests so the progress indicator can finish when they return
                 for (let operationActivity of operationActivites) {
+                    //Try to find a Planning Data record related to the curren Operation Activity
                     let foundInPlan = false;
                     for (let planningData of planningDataRecords) {
                         if (planningData._ts_operationactivity_value == operationActivity.ts_operationactivityid) {
@@ -429,6 +433,7 @@ async function addMissingPlanningData(formContext) {
                             break;
                         }
                     }
+                    //If a planning data record was not found for the Operation Activity, create one.
                     if (foundInPlan == false) {
                         let generationLog = "";
                         let planningDataName = "";
@@ -575,9 +580,7 @@ async function addMissingPlanningData(formContext) {
                             "ts_plannedq4": planningDataQuarters[3],
                             "ts_generationlog": generationLog
                         }
-                        planningDataCreationPromises.push(Xrm.WebApi.createRecord("ts_planningdata", data).then(
-
-                        ));
+                        planningDataCreationPromises.push(Xrm.WebApi.createRecord("ts_planningdata", data));
                     }
                 }
                 Xrm.Utility.showProgressIndicator(addMissingPlanningDataProgressIndicator2);
@@ -589,8 +592,9 @@ async function addMissingPlanningData(formContext) {
     );
 }
 
-
+//Sets all durations to the latest Team Activity Type Estimated Duration if it exists, or the Activity Type Estimated Duration if it does not.
 async function resetDurations(formContext) {
+    //Set Localized label text
     const lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
     let resetDurationsTitleLocalized = "Reset Durations";
     let resetDurationsTextLocalized = "The Planning Data Durations will be reset to their default values. Any changes made to the Durations in this plan will be overwritten. Do you wish to proceed?";
@@ -602,7 +606,7 @@ async function resetDurations(formContext) {
         confirmLocalized = "Oui";
         cancelLocalized = "Annuler";
     }
-    //Open a confirmation dialog box to confirm Work Order Creation.
+    //Open a confirmation dialog box to confirm Duration Updates.
     var confirmStrings = { text: resetDurationsTextLocalized, title: resetDurationsTitleLocalized, confirmButtonLabel: confirmLocalized, cancelButtonLabel: cancelLocalized };
     var confirmOptions = { height: 200, width: 450 };
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
@@ -616,6 +620,7 @@ async function resetDurations(formContext) {
                 } else {
                     return;
                 }
+                //All Planning Data for the current Team Planning Data. Includes estimated duration on related activity type
                 var planningDataFetchXml = [
                     "<fetch>",
                     "  <entity name='ts_planningdata'>",
@@ -634,11 +639,12 @@ async function resetDurations(formContext) {
                 ].join("");
                 planningDataFetchXml = "?fetchXml=" + encodeURIComponent(planningDataFetchXml);
                 const planningDataRecords = await Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", planningDataFetchXml).then(function success(result) { return result.entities });
-                planningDataUpdatePromises = [];
+                planningDataUpdatePromises = []; //Track update promises to close progress indicator when they all return
                 Xrm.Utility.showProgressIndicator();
                 for (let planningData of planningDataRecords) {
                     if (planningData["incidenttype.msdyn_incidenttypeid"] == null) continue;
                     let planningDataEstimatedDuration = 0;
+                    //Team Activity Type Estimated Duration for the plan's Team and the Planning Data's Activity Type
                     var estimatedDurationFetchXml = [
                         "<fetch>",
                         "  <entity name='ts_teamactivitytypeestimatedduration'>",
@@ -652,14 +658,15 @@ async function resetDurations(formContext) {
                     ].join("");
                     estimatedDurationFetchXml = "?fetchXml=" + encodeURIComponent(estimatedDurationFetchXml);
                     let teamActivityTypeEstimatedDuration = await Xrm.WebApi.retrieveMultipleRecords("ts_teamactivitytypeestimatedduration", estimatedDurationFetchXml).then(function (result) { return result.entities[0] });
-
+                    //If the Team Activity Type Estimated Duration exists, use its estimated duration
                     if (teamActivityTypeEstimatedDuration != null && teamActivityTypeEstimatedDuration.ts_estimatedduration != null) {
                         planningDataEstimatedDuration = teamActivityTypeEstimatedDuration.ts_estimatedduration / 60;
                     }
+                    //If the Team Activity Type Estimated Duration does not exists, use the activity type's estimated duration
                     else if (planningData["incidenttype.msdyn_estimatedduration"] != null) {
                         planningDataEstimatedDuration = planningData["incidenttype.msdyn_estimatedduration"] / 60;
                     }
-
+                    //Update the record if the duration will change
                     if (planningData.ts_teamestimatedduration != planningDataEstimatedDuration) {
                         let data =
                         {
