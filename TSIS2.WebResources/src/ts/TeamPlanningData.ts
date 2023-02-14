@@ -5,6 +5,34 @@
         if (formContext.ui.getFormType() == 2) { //Update type. The form has already been saved for the first time
             formContext.getControl("ts_team").setDisabled(true);
             formContext.getControl("ts_fiscalyear").setDisabled(true);
+
+            if (formContext.getAttribute("ts_planstatus").getValue() == ts_planstatus.Complete ) {
+                if (userHasRole("ROM - Business Admin")) {
+                    formContext.getControl("ts_planstatus").setDisabled(false);
+                }
+                else {
+                    formContext.getControl("ts_planstatus").setDisabled(true);
+                }
+
+                formContext.getControl("ts_totalhoursq1").setDisabled(true);
+                formContext.getControl("ts_totalhoursq2").setDisabled(true);
+                formContext.getControl("ts_totalhoursq3").setDisabled(true);
+                formContext.getControl("ts_totalhoursq4").setDisabled(true);
+                formContext.getControl("ts_totalhoursfiscalyear").setDisabled(true);
+                formContext.getControl("header_ts_name").setDisabled(true);
+                formContext.getControl("header_ownerid").setDisabled(true);
+            }
+            else {
+                formContext.getControl("ts_totalhoursq1").setDisabled(false);
+                formContext.getControl("ts_totalhoursq2").setDisabled(false);
+                formContext.getControl("ts_totalhoursq3").setDisabled(false);
+                formContext.getControl("ts_totalhoursq4").setDisabled(false);
+                formContext.getControl("ts_totalhoursfiscalyear").setDisabled(false);
+                formContext.getControl("header_ts_name").setDisabled(false);
+                formContext.getControl("header_ownerid").setDisabled(false);
+                formContext.getControl("ts_planstatus").setDisabled(false);
+            }
+
         }
     }
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -424,4 +452,51 @@
         }
         
     }
+
+    export function userHasRole(rolesName) {
+        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+        var hasRole = false;
+        var roles = rolesName.split("|");
+        roles.forEach(function (roleItem) {
+            userRoles.forEach(function (userRoleItem) {
+                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
+            });
+        });
+        return hasRole;
+    }
+
+    export function planStatusOnChange(eContext: Xrm.ExecutionContext<any, any>) {
+        const formContext = <Form.ts_teamplanningdata.Main.Information>eContext.getFormContext();
+
+        if (formContext.getAttribute("ts_planstatus").getValue() == ts_planstatus.Complete) {
+            formContext.getControl("ts_totalhoursq1").setDisabled(true);
+            formContext.getControl("ts_totalhoursq2").setDisabled(true);
+            formContext.getControl("ts_totalhoursq3").setDisabled(true);
+            formContext.getControl("ts_totalhoursq4").setDisabled(true);
+            formContext.getControl("ts_totalhoursq4").setDisabled(true);
+            formContext.getControl("ts_totalhoursfiscalyear").setDisabled(true);
+            formContext.getControl("header_ts_name").setDisabled(true);
+            formContext.getControl("header_ownerid").setDisabled(true);
+
+            if (userHasRole("ROM - Business Admin")) {
+                formContext.getControl("ts_planstatus").setDisabled(false);
+            }
+            else {
+                formContext.getControl("ts_planstatus").setDisabled(true);
+            }
+        }
+        if (formContext.getAttribute("ts_planstatus").getValue() == ts_planstatus.InProgress) {
+            formContext.getControl("ts_totalhoursq1").setDisabled(false);
+            formContext.getControl("ts_totalhoursq2").setDisabled(false);
+            formContext.getControl("ts_totalhoursq3").setDisabled(false);
+            formContext.getControl("ts_totalhoursq4").setDisabled(false);
+            formContext.getControl("ts_totalhoursfiscalyear").setDisabled(false);
+            formContext.getControl("header_ts_name").setDisabled(false);
+            formContext.getControl("header_ownerid").setDisabled(false);
+            formContext.getControl("ts_planstatus").setDisabled(false);
+        }
+        formContext.ui.refreshRibbon();
+        formContext.data.entity.save();
+    }
+
 }
