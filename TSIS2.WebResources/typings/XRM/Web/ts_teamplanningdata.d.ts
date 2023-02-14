@@ -19,6 +19,7 @@ interface ts_TeamPlanningData_Base extends WebEntity {
   ts_plannedactivityq2?: number | null;
   ts_plannedactivityq3?: number | null;
   ts_plannedactivityq4?: number | null;
+  ts_planstatus?: ts_planstatus | null;
   ts_residualinspectorhoursfiscalyear?: number | null;
   ts_residualinspectorhoursq1?: number | null;
   ts_residualinspectorhoursq2?: number | null;
@@ -41,6 +42,7 @@ interface ts_TeamPlanningData_Base extends WebEntity {
 interface ts_TeamPlanningData_Relationships {
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
   ts_Team?: Team_Result | null;
+  ts_teamplanninginspectorhours_TeamPlannin?: ts_TeamPlanningInspectorHours_Result[] | null;
   ts_ts_planningdata_TeamPlanningData_ts_teamp?: ts_PlanningData_Result[] | null;
   ts_workorder_teamplanningdata?: msdyn_workorder_Result[] | null;
 }
@@ -84,6 +86,7 @@ interface ts_TeamPlanningData_Select {
   ts_plannedactivityq2: WebAttribute<ts_TeamPlanningData_Select, { ts_plannedactivityq2: number | null }, {  }>;
   ts_plannedactivityq3: WebAttribute<ts_TeamPlanningData_Select, { ts_plannedactivityq3: number | null }, {  }>;
   ts_plannedactivityq4: WebAttribute<ts_TeamPlanningData_Select, { ts_plannedactivityq4: number | null }, {  }>;
+  ts_planstatus: WebAttribute<ts_TeamPlanningData_Select, { ts_planstatus: ts_planstatus | null }, { ts_planstatus_formatted?: string }>;
   ts_residualinspectorhoursfiscalyear: WebAttribute<ts_TeamPlanningData_Select, { ts_residualinspectorhoursfiscalyear: number | null }, {  }>;
   ts_residualinspectorhoursq1: WebAttribute<ts_TeamPlanningData_Select, { ts_residualinspectorhoursq1: number | null }, {  }>;
   ts_residualinspectorhoursq2: WebAttribute<ts_TeamPlanningData_Select, { ts_residualinspectorhoursq2: number | null }, {  }>;
@@ -134,6 +137,7 @@ interface ts_TeamPlanningData_Filter {
   ts_plannedactivityq2: number;
   ts_plannedactivityq3: number;
   ts_plannedactivityq4: number;
+  ts_planstatus: ts_planstatus;
   ts_residualinspectorhoursfiscalyear: any;
   ts_residualinspectorhoursq1: any;
   ts_residualinspectorhoursq2: any;
@@ -164,6 +168,7 @@ interface ts_TeamPlanningData_Expand {
   owninguser: WebExpand<ts_TeamPlanningData_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_FiscalYear: WebExpand<ts_TeamPlanningData_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
   ts_Team: WebExpand<ts_TeamPlanningData_Expand, Team_Select, Team_Filter, { ts_Team: Team_Result }>;
+  ts_teamplanninginspectorhours_TeamPlannin: WebExpand<ts_TeamPlanningData_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { ts_teamplanninginspectorhours_TeamPlannin: ts_TeamPlanningInspectorHours_Result[] }>;
   ts_ts_planningdata_TeamPlanningData_ts_teamp: WebExpand<ts_TeamPlanningData_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_TeamPlanningData_ts_teamp: ts_PlanningData_Result[] }>;
   ts_workorder_teamplanningdata: WebExpand<ts_TeamPlanningData_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_workorder_teamplanningdata: msdyn_workorder_Result[] }>;
 }
@@ -182,6 +187,7 @@ interface ts_TeamPlanningData_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_fiscalyear_formatted?: string;
+  ts_planstatus_formatted?: string;
   ts_team_formatted?: string;
 }
 interface ts_TeamPlanningData_Result extends ts_TeamPlanningData_Base, ts_TeamPlanningData_Relationships {
@@ -209,6 +215,7 @@ interface ts_TeamPlanningData_RelatedOne {
   ts_Team: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
 }
 interface ts_TeamPlanningData_RelatedMany {
+  ts_teamplanninginspectorhours_TeamPlannin: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
   ts_ts_planningdata_TeamPlanningData_ts_teamp: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_workorder_teamplanningdata: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
