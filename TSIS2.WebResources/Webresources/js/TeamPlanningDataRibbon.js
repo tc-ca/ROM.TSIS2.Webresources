@@ -333,12 +333,12 @@ async function addMissingPlanningData(formContext) {
     let addMissingPlanningDataProgressIndicator1 = "Finding missing Planning records";
     let addMissingPlanningDataProgressIndicator2 = "Adding missing Planning records";
     if (lang == 1036) {
-        addMissingPlanningDataTitleLocalized = "Add Missing Planning Data FR";
-        addMissingPlanningDataTextLocalized = "Planning Data will be added for missing Operation Activities. Do you wish to proceed? FR";
+        addMissingPlanningDataTitleLocalized = "Mettre à jour les données de planification";
+        addMissingPlanningDataTextLocalized = "Les données de planification seront ajoutées pour toutes les activités opérationnelles manquantes. Voulez-vous continuer?";
         confirmLocalized = "Oui";
         cancelLocalized = "Annuler";
-        addMissingPlanningDataProgressIndicator1 = "Finding missing Planning records FR";
-        addMissingPlanningDataProgressIndicator2 = "Adding missing Planning records FR";
+        addMissingPlanningDataProgressIndicator1 = "Recherche d'enregistrements de planification manquants";
+        addMissingPlanningDataProgressIndicator2 = "Ajout d'enregistrements de planification manquants";
     }
     //Open a confirmation dialog box to confirm Work Order Creation.
     var confirmStrings = { text: addMissingPlanningDataTextLocalized, title: addMissingPlanningDataTitleLocalized, confirmButtonLabel: confirmLocalized, cancelButtonLabel: cancelLocalized };
@@ -597,8 +597,8 @@ async function resetDurations(formContext) {
     let confirmLocalized = "Yes";
     let cancelLocalized = "Cancel";
     if (lang == 1036) {
-        resetDurationsTitleLocalized = "Reset Durations FR";
-        resetDurationsTextLocalized = "The Planning Data Durations will be reset to their default values. Any changes made to the Durations in this plan will be overwritten. Do you wish to proceed? FR";
+        resetDurationsTitleLocalized = "Réinitialiser les durées";
+        resetDurationsTextLocalized = "Les durées des données de planification seront réinitialisées à leurs valeurs par défaut. Toute modification apportée aux durées dans ce plan sera remplacée. Voulez-vous continuer?";
         confirmLocalized = "Oui";
         cancelLocalized = "Annuler";
     }
