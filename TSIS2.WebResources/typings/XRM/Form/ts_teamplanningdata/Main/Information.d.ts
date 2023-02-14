@@ -47,6 +47,7 @@ declare namespace Form.ts_teamplanningdata.Main {
       get(name: "ts_plannedactivityq2"): Xrm.NumberAttribute;
       get(name: "ts_plannedactivityq3"): Xrm.NumberAttribute;
       get(name: "ts_plannedactivityq4"): Xrm.NumberAttribute;
+      get(name: "ts_planstatus"): Xrm.OptionSetAttribute<ts_planstatus>;
       get(name: "ts_residualinspectorhoursfiscalyear"): Xrm.NumberAttribute;
       get(name: "ts_residualinspectorhoursq1"): Xrm.NumberAttribute;
       get(name: "ts_residualinspectorhoursq2"): Xrm.NumberAttribute;
@@ -89,6 +90,7 @@ declare namespace Form.ts_teamplanningdata.Main {
       get(name: "ts_plannedactivityq2"): Xrm.NumberControl;
       get(name: "ts_plannedactivityq3"): Xrm.NumberControl;
       get(name: "ts_plannedactivityq4"): Xrm.NumberControl;
+      get(name: "ts_planstatus"): Xrm.OptionSetControl<ts_planstatus>;
       get(name: "ts_residualinspectorhoursfiscalyear"): Xrm.NumberControl;
       get(name: "ts_team"): Xrm.LookupControl<"team">;
       get(name: "ts_teamestimateddurationfiscalyear"): Xrm.NumberControl;
@@ -131,6 +133,7 @@ declare namespace Form.ts_teamplanningdata.Main {
     getAttribute(attributeName: "ts_plannedactivityq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedactivityq3"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedactivityq4"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_planstatus"): Xrm.OptionSetAttribute<ts_planstatus>;
     getAttribute(attributeName: "ts_residualinspectorhoursfiscalyear"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_residualinspectorhoursq1"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_residualinspectorhoursq2"): Xrm.NumberAttribute;
@@ -168,6 +171,7 @@ declare namespace Form.ts_teamplanningdata.Main {
     getControl(controlName: "ts_plannedactivityq2"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedactivityq3"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedactivityq4"): Xrm.NumberControl;
+    getControl(controlName: "ts_planstatus"): Xrm.OptionSetControl<ts_planstatus>;
     getControl(controlName: "ts_residualinspectorhoursfiscalyear"): Xrm.NumberControl;
     getControl(controlName: "ts_team"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_teamestimateddurationfiscalyear"): Xrm.NumberControl;

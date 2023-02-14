@@ -357,6 +357,7 @@
     <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
     <TypeScriptCompile Include="src\ts\Team.ts" />
     <TypeScriptCompile Include="src\ts\TeamPlanningData.ts" />
+    <TypeScriptCompile Include="src\ts\TeamPlanningInspectorHours.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderCreationWizard.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderQuickCreate.ts" />

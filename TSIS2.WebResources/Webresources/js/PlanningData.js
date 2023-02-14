@@ -27,6 +27,25 @@ var ROM;
                 if (formContext.getAttribute("ts_target").getValue() != null) {
                     formContext.getControl("ts_target").setDisabled(true);
                 }
+                var planningDataId = formContext.data.entity.getId();
+                var teamPlanningDataFetchXML = [
+                    "<fetch>",
+                    "<entity name='ts_teamplanningdata'>",
+                    "<link-entity name = 'ts_planningdata' from = 'ts_teamplanningdata' to = 'ts_teamplanningdataid' link-type='inner' alias = 'ag'>",
+                    "<filter type='and'>",
+                    "<condition attribute='ts_planningdataid' operator = 'eq' value='", planningDataId, "'/>",
+                    "</filter>",
+                    "</link-entity>",
+                    "</entity>",
+                    "</fetch>"
+                ].join("");
+                teamPlanningDataFetchXML = "?fetchXml=" + encodeURIComponent(teamPlanningDataFetchXML);
+                Xrm.WebApi.retrieveMultipleRecords("ts_teamplanningdata", teamPlanningDataFetchXML).then(function (result) {
+                    if (result.entities[0].ts_planstatus == 741130001) {
+                        disableFormFields(eContext);
+                    }
+                    ;
+                });
             }
             if (formContext.getAttribute("ts_generationlog").getValue() == null) {
                 formContext.getControl("ts_generationlog").setVisible(false);
@@ -44,6 +63,15 @@ var ROM;
                     nameAttr.setValue(0);
                 }
             }
+        }
+        function disableFormFields(eContext) {
+            var form = eContext.getFormContext();
+            form.ui.controls.forEach(function (control, index) {
+                var controlType = control.getControlType();
+                if (controlType != "iframe" && controlType != "webresource" && controlType != "subgrid") {
+                    control.setDisabled(true);
+                }
+            });
         }
     })(PlanningData = ROM.PlanningData || (ROM.PlanningData = {}));
 })(ROM || (ROM = {}));
