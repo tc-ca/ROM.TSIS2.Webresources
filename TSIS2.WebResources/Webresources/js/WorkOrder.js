@@ -1489,19 +1489,27 @@ var ROM;
         }
         function showHideContact(form) {
             var operationTypeValue = form.getAttribute("ovs_operationtypeid").getValue();
-            var operationTypeId = operationTypeValue ? operationTypeValue[0].id : "";
-            if (operationTypeId != "") {
-                Xrm.WebApi.retrieveRecord("ovs_operationtype", operationTypeId, "?$select=_ownerid_value ").then(function success(result) {
-                    if (result._ownerid_value == "e2e3910d-a41f-ec11-b6e6-0022483cb5c7") { //Owner is AvSec
-                        form.getControl("ts_contact").setVisible(true);
-                    }
-                    else {
-                        form.getControl("ts_contact").setVisible(false);
-                    }
-                }, function error(error) {
-                    Xrm.Navigation.openAlertDialog({ text: error.message });
-                });
+            if (operationTypeValue != null && operationTypeValue[0].id == "{BE8B0910-C751-EB11-A812-000D3AF3AC0D}") { //Person
+                form.getControl("ts_contact").setVisible(true);
             }
+            else {
+                form.getControl("ts_contact").setVisible(false);
+            }
+            //const operationTypeId = operationTypeValue ? operationTypeValue[0].id : "";
+            //if (operationTypeId != "") {
+            //    Xrm.WebApi.retrieveRecord("ovs_operationtype", operationTypeId, "?$select=_ownerid_value ").then(
+            //        function success(result) {
+            //            if (result._ownerid_value == "e2e3910d-a41f-ec11-b6e6-0022483cb5c7") {  //Owner is AvSec
+            //                form.getControl("ts_contact").setVisible(true);
+            //            }
+            //            else {
+            //                form.getControl("ts_contact").setVisible(false);
+            //            }
+            //        },
+            //        function error(error) {
+            //            Xrm.Navigation.openAlertDialog({ text: error.message });
+            //        });
+            //}
         }
         function isAvSecBusinessUnit() {
             return __awaiter(this, void 0, void 0, function () {
