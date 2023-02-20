@@ -43,6 +43,86 @@ hasDetailQuestions.forEach(function (questionName) {
     })
 });
 
+//add applicableProvisions and applicableProvisionsData property to all questions in hasApplicableProvisions array
+var hasApplicableProvisions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
+hasApplicableProvisions.forEach(function (questionName) {
+    Survey
+        .Serializer
+        .addProperty(questionName, {
+            name: "applicableProvisions:provisionsSelection",
+            category: "general",
+        });
+    Survey
+        .Serializer
+        .addProperty(questionName, {
+            name: "applicableProvisionsData"
+        });
+});
+
+function appendApplicableProvisionsData(survey, options) {
+    //Create HTML elements
+    const question = options.htmlElement;
+    const provisionContainer = document.createElement("div");
+    const provisionParagraph = document.createElement("p");
+
+    const applicableProvisionsData = options.question.applicableProvisionsData
+    for (let provisionData of applicableProvisionsData) {
+        provisionParagraph.innerHTML += provisionData.provisionNameEn + " ";
+    }
+    provisionContainer.appendChild(provisionParagraph);
+    question.appendChild(provisionContainer);
+}
+
+async function appendExemptions(survey, options) {
+    //Create HTML elements
+    const question = options.htmlElement;
+    const exemptionContainer = document.createElement("div");
+    const exemptionParagraph = document.createElement("p");
+
+    const applicableProvisionsData = options.question.applicableProvisionsData
+    const applicableExemptions = []
+    for (let provisionData of applicableProvisionsData) {
+        let applicableExemption = getApplicableExemption(provisionData.provisionId);
+        if (applicableExemption != null) applicableExemptions.push(applicableExemption)
+    }
+
+    for (let applicableExemption of applicableExemptions) {
+        console.log(applicableExemption);
+    }
+    provisionContainer.appendChild(provisionParagraph);
+    question.appendChild(provisionContainer);
+}
+
+async function getApplicableExemption(provisionId) {
+    let provisionCondition = "";
+    let exemptionFilterFetchXml = [
+        "<fetch>",
+        "  <entity name='ts_exemptionfilter'>",
+        "    <filter>",
+        "      <condition attribute='ts_provision' operator='eq' value='", provisionId, "'/>",
+        "      <condition attribute='statecode' operator='eq' value='0'/>",
+        "    </filter>",
+        "    <link-entity name='qm_rclegislation' from='qm_rclegislationid' to='ts_provision' alias='ts_provision'>",
+        "      <attribute name='ts_nameenglish'/>",
+        "      <attribute name='ts_namefrench'/>",
+        "    </link-entity>",
+        "    <link-entity name='ts_exemption' from='ts_exemptionid' to='ts_exemption' alias='ts_exemption'>",
+        "      <attribute name='ts_name'/>",
+        "      <attribute name='ts_exemptionid'/>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>"
+    ].join("");
+    exemptionFilterFetchXml = "?fetchXml=" + encodeURIComponent(exemptionFilterFetchXml);
+    return await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemptionfilter", exemptionFilterFetchXml).then(function success(results) {
+        if (results.entities.length > 0) {
+            return result.entities[0];
+        } else {
+            return null;
+        }
+    });
+}
+
 function InitialContext(executionContext) {
     window.parentExecutionContext = executionContext;
     window.parentFormContext = executionContext.getFormContext();
@@ -290,10 +370,15 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
                     comment.readOnly = true;
                 }
             }
-
             //Load JSON definition, find current question, check hasDetail
-            if (options.question.hasDetail != true) return;
-            appendDetailToQuestion(survey, options);
+            if (options.question.hasDetail == true) {
+                appendDetailToQuestion(survey, options);
+            }
+
+            if (options.question.applicableProvisionsData != null) {
+                appendApplicableProvisionsData(survey, options);
+                appendExemptions(survey, options);
+            }
         });
 
     survey
