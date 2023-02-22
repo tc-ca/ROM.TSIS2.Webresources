@@ -77,23 +77,79 @@ async function appendExemptions(survey, options) {
     //Create HTML elements
     const question = options.htmlElement;
     const exemptionContainer = document.createElement("div");
-    const exemptionParagraph = document.createElement("p");
 
-    const applicableProvisionsData = options.question.applicableProvisionsData
-    const applicableExemptions = []
-    for (let provisionData of applicableProvisionsData) {
-        let applicableExemption = getApplicableExemption(provisionData.provisionId);
-        if (applicableExemption != null) applicableExemptions.push(applicableExemption)
-    }
+    //const applicableProvisionsData = options.question.applicableProvisionsData
+    //const applicableExemptions = []
+    //for (let provisionData of applicableProvisionsData) {
+    //    let applicableExemptions = getApplicableExemptions(provisionData.provisionId);
+    //    if (applicableExemption != null) applicableExemptions.push(applicableExemption)
+    //}
+
+    let applicableExemptions = [
+        {
+            "provisionName": "SATR 4.1 (a)",
+            "exemptionName": "EX001",
+            "exemptionId": "guid1234",
+        },
+        {
+            "provisionName": "SATR 4.1 (b)",
+            "exemptionName": "EX002",
+            "exemptionId": "guid5678",
+        }
+    ]
+
+    //Create table to contain exemption related inputs
+    const exemptionsTable = document.createElement("table");
+    const exemptionsTableHeaderRow = document.createElement("tr");
+    const invokeExemptionHeader = document.createElement("th");
+    const provisionNameHeader = document.createElement("th");
+    const exemptionNameHeader = document.createElement("th");
+
+    invokeExemptionHeader.innerHTML = "Invoke Exemption";
+    provisionNameHeader.innerHTML = "Provision";
+    exemptionNameHeader.innerHTML = "Exemption";
+
+    invokeExemptionHeader.style.width = "15%";
+    invokeExemptionHeader.style.textAlign = "left";
+    provisionNameHeader.style.width = "15%";
+    provisionNameHeader.style.textAlign = "left";
+    exemptionNameHeader.style.textAlign = "left";
+
+    exemptionsTableHeaderRow.appendChild(invokeExemptionHeader);
+    exemptionsTableHeaderRow.appendChild(provisionNameHeader);
+    exemptionsTableHeaderRow.appendChild(exemptionNameHeader);
+    exemptionsTable.appendChild(exemptionsTableHeaderRow);
 
     for (let applicableExemption of applicableExemptions) {
-        console.log(applicableExemption);
+        //Create table elements for this exemption
+        const exemptionTableRow = document.createElement("tr");
+        const invokeExemptionDataCell = document.createElement("td");
+        const provisionNameDataCell = document.createElement("td");
+        const exemptionNameDataCell = document.createElement("td");
+
+        //Create a checkbox to invoke exemption
+        invokeExemptionCheckbox = document.createElement("input");
+        invokeExemptionCheckbox.type = "checkbox";
+        invokeExemptionCheckbox.className = "invokeExemptionCheckbox";
+        invokeExemptionCheckbox.value = applicableExemption.exemptionId;
+        invokeExemptionDataCell.appendChild(invokeExemptionCheckbox);
+
+        //Populate Provision Name Cell
+        provisionNameDataCell.innerHTML = applicableExemption.provisionName;
+
+        //Populate Exemption Name Cell
+        exemptionNameDataCell.innerHTML = applicableExemption.exemptionId;
+
+        exemptionTableRow.appendChild(invokeExemptionDataCell);
+        exemptionTableRow.appendChild(provisionNameDataCell);
+        exemptionTableRow.appendChild(exemptionNameDataCell);
+        exemptionsTable.appendChild(exemptionTableRow);
     }
-    provisionContainer.appendChild(provisionParagraph);
-    question.appendChild(provisionContainer);
+    
+    question.appendChild(exemptionsTable);
 }
 
-async function getApplicableExemption(provisionId) {
+async function getApplicableExemptions(provisionId) {
     let provisionCondition = "";
     let exemptionFilterFetchXml = [
         "<fetch>",
@@ -116,7 +172,7 @@ async function getApplicableExemption(provisionId) {
     exemptionFilterFetchXml = "?fetchXml=" + encodeURIComponent(exemptionFilterFetchXml);
     return await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemptionfilter", exemptionFilterFetchXml).then(function success(results) {
         if (results.entities.length > 0) {
-            return result.entities[0];
+            return result.entities;
         } else {
             return null;
         }
