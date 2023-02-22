@@ -98,31 +98,32 @@ async function appendExemptions(survey, options) {
         }
     ]
 
-    //Create table to contain exemption related inputs
-    const exemptionsTable = document.createElement("table");
-    const exemptionsTableHeaderRow = document.createElement("tr");
-    const invokeExemptionHeader = document.createElement("th");
-    const provisionNameHeader = document.createElement("th");
-    const exemptionNameHeader = document.createElement("th");
-
-    invokeExemptionHeader.innerHTML = "Invoke Exemption";
-    provisionNameHeader.innerHTML = "Provision";
-    exemptionNameHeader.innerHTML = "Exemption";
-
-    invokeExemptionHeader.style.width = "15%";
-    invokeExemptionHeader.style.textAlign = "left";
-    provisionNameHeader.style.width = "15%";
-    provisionNameHeader.style.textAlign = "left";
-    exemptionNameHeader.style.textAlign = "left";
-
-    exemptionsTableHeaderRow.appendChild(invokeExemptionHeader);
-    exemptionsTableHeaderRow.appendChild(provisionNameHeader);
-    exemptionsTableHeaderRow.appendChild(exemptionNameHeader);
-    exemptionsTable.appendChild(exemptionsTableHeaderRow);
-
     for (let applicableExemption of applicableExemptions) {
+
+        //Create table to contain exemption related inputs
+        const exemptionsTable = document.createElement("table");
+        const exemptionsTableHeaderRow = document.createElement("tr");
+        const invokeExemptionHeader = document.createElement("th");
+        const provisionNameHeader = document.createElement("th");
+        const exemptionNameHeader = document.createElement("th");
+
+        invokeExemptionHeader.innerHTML = "Invoke Exemption";
+        provisionNameHeader.innerHTML = "Provision";
+        exemptionNameHeader.innerHTML = "Exemption";
+
+        invokeExemptionHeader.style.width = "15%";
+        invokeExemptionHeader.style.textAlign = "left";
+        provisionNameHeader.style.width = "15%";
+        provisionNameHeader.style.textAlign = "left";
+        exemptionNameHeader.style.textAlign = "left";
+
+        exemptionsTableHeaderRow.appendChild(invokeExemptionHeader);
+        exemptionsTableHeaderRow.appendChild(provisionNameHeader);
+        exemptionsTableHeaderRow.appendChild(exemptionNameHeader);
+        exemptionsTable.appendChild(exemptionsTableHeaderRow);
+
         //Create table elements for this exemption
-        const exemptionTableRow = document.createElement("tr");
+        const exemptionTableInvokeRow = document.createElement("tr");
         const invokeExemptionDataCell = document.createElement("td");
         const provisionNameDataCell = document.createElement("td");
         const exemptionNameDataCell = document.createElement("td");
@@ -138,15 +139,28 @@ async function appendExemptions(survey, options) {
         provisionNameDataCell.innerHTML = applicableExemption.provisionName;
 
         //Populate Exemption Name Cell
-        exemptionNameDataCell.innerHTML = applicableExemption.exemptionId;
+        exemptionNameDataCell.innerHTML = applicableExemption.exemptionName;
 
-        exemptionTableRow.appendChild(invokeExemptionDataCell);
-        exemptionTableRow.appendChild(provisionNameDataCell);
-        exemptionTableRow.appendChild(exemptionNameDataCell);
-        exemptionsTable.appendChild(exemptionTableRow);
+        exemptionTableInvokeRow.appendChild(invokeExemptionDataCell);
+        exemptionTableInvokeRow.appendChild(provisionNameDataCell);
+        exemptionTableInvokeRow.appendChild(exemptionNameDataCell);
+        exemptionsTable.appendChild(exemptionTableInvokeRow);
+
+        const exemptionTableCommentRow = document.createElement("tr");
+        const exemptionTableCommentDataCell = document.createElement("td");
+
+        //Create an input to invoke exemption
+        exemptionCommentBox = document.createElement("input");
+        exemptionTableCommentDataCell.appendChild(exemptionCommentBox);
+
+        exemptionTableCommentDataCell.colSpan = 3;
+        exemptionTableCommentDataCell.rowSpan = 3;
+
+        exemptionTableCommentRow.appendChild(exemptionTableCommentDataCell);
+        exemptionsTable.appendChild(exemptionTableCommentRow);
+
+        question.appendChild(exemptionsTable);
     }
-    
-    question.appendChild(exemptionsTable);
 }
 
 async function getApplicableExemptions(provisionId) {
