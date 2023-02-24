@@ -344,7 +344,6 @@ namespace ROM.WorkOrderServiceTask {
             form.getControl('ts_passengerservices').setVisible(true);
             form.getControl('ts_rampservices').setVisible(true);
             form.getControl('ts_cargoservices').setVisible(true);
-            form.getControl('ts_cbservices').setVisible(true);
             form.getControl('ts_cateringservices').setVisible(true);
             form.getControl('ts_groomingservices').setVisible(true);
             form.getControl('ts_securitysearchservices').setVisible(true);
@@ -361,7 +360,6 @@ namespace ROM.WorkOrderServiceTask {
             form.getControl('ts_passengerservices').setVisible(false);
             form.getControl('ts_rampservices').setVisible(false);
             form.getControl('ts_cargoservices').setVisible(false);
-            form.getControl('ts_cbservices').setVisible(false);
             form.getControl('ts_cateringservices').setVisible(false);
             form.getControl('ts_groomingservices').setVisible(false);
             form.getControl('ts_securitysearchservices').setVisible(false);
