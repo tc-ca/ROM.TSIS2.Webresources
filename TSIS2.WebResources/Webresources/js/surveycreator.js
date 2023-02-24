@@ -290,7 +290,7 @@ async function gatherapplicableProvisionsData(provisionName) {
             if (result.entities.length > 0) {
                 let provision = result.entities[0];
                 let provisionData = {
-                    provisionId: provision._qm_tylegislationsourceid_value,
+                    provisionId: provision.qm_rclegislationid,
                     provisionNameEn: provision.ts_nameenglish,
                     provisionNameFr: provision.ts_namefrench,
                     provisionTextEn: await buildProvisionText(provision, 1033),

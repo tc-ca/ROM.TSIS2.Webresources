@@ -79,25 +79,25 @@ async function appendExemptions(survey, options) {
     const exemptionContainer = document.createElement("div");
     const exemptionResponseId = options.question.name + "-Exemptions"
 
-    //const applicableProvisionsData = options.question.applicableProvisionsData
-    //const applicableExemptions = []
-    //for (let provisionData of applicableProvisionsData) {
-    //    let applicableExemptions = getApplicableExemptions(provisionData.provisionId);
-    //    if (applicableExemption != null) applicableExemptions.push(applicableExemption)
-    //}
+    const applicableProvisionsData = options.question.applicableProvisionsData
+    const applicableExemptions = []
+    for (let provisionData of applicableProvisionsData) {
+        let applicableExemption = await getApplicableExemptions(provisionData.provisionId);
+        if (applicableExemption != null) applicableExemptions.push(applicableExemption);
+    }
 
-    let applicableExemptions = [
-        {
-            provisionName: "SATR 4.1 (a)",
-            exemptionName: "EX001",
-            exemptionId: "guid1234",
-        },
-        {
-            provisionName: "SATR 4.1 (b)",
-            exemptionName: "EX002",
-            exemptionId: "guid5678",
-        }
-    ]
+    //let applicableExemptions = [
+    //    {
+    //        provisionName: "SATR 4.1 (a)",
+    //        exemptionName: "EX001",
+    //        exemptionId: "guid1234",
+    //    },
+    //    {
+    //        provisionName: "SATR 4.1 (b)",
+    //        exemptionName: "EX002",
+    //        exemptionId: "guid5678",
+    //    }
+    //]
 
     let exemptionInputs = [];
 
@@ -208,7 +208,6 @@ async function appendExemptions(survey, options) {
 
 
 async function getApplicableExemptions(provisionId) {
-    let provisionCondition = "";
     let exemptionFilterFetchXml = [
         "<fetch>",
         "  <entity name='ts_exemptionfilter'>",
@@ -230,7 +229,12 @@ async function getApplicableExemptions(provisionId) {
     exemptionFilterFetchXml = "?fetchXml=" + encodeURIComponent(exemptionFilterFetchXml);
     return await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemptionfilter", exemptionFilterFetchXml).then(function success(results) {
         if (results.entities.length > 0) {
-            return result.entities;
+            let exemptionObject = {
+                provisionName: results.entities[0]["ts_provision.ts_nameenglish"],
+                exemptionName: results.entities[0]["ts_exemption.ts_name"],
+                exemptionId: results.entities[0]["ts_exemption.ts_exemptionid"],
+            }
+            return exemptionObject;
         } else {
             return null;
         }
