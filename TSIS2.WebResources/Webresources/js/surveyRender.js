@@ -77,6 +77,7 @@ async function appendExemptions(survey, options) {
     //Create HTML elements
     const question = options.htmlElement;
     const exemptionContainer = document.createElement("div");
+    const exemptionResponseId = options.question.name + "-Exemptions"
 
     //const applicableProvisionsData = options.question.applicableProvisionsData
     //const applicableExemptions = []
@@ -158,6 +159,17 @@ async function appendExemptions(survey, options) {
         question.appendChild(exemptionsTable);
         question.appendChild(exemptionCommentBox);
 
+        //Load previous exemption values
+        let previousResponseValues = survey.getValue(exemptionResponseId);
+        if (previousResponseValues != null) {
+            for (let previousResponseValue of previousResponseValues) {
+                if (previousResponseValue.exemptionId == applicableExemption.exemptionId) {
+                    invokeExemptionCheckbox.checked = (previousResponseValue.exemptionInvoked == true);
+                    exemptionCommentBox.value = previousResponseValue.exemptionComment;
+                }
+            }
+        }
+
         exemptionInputs.push({
             exemptionName: applicableExemption.exemptionName,
             exemptionId: applicableExemption.exemptionId,
@@ -175,7 +187,7 @@ async function appendExemptions(survey, options) {
                     exemptionComment: exemptionInput.commentBox.value
                 });
             }
-            survey.setValue((options.question.name + "Exemptions"), exemptionValues);
+            survey.setValue((exemptionResponseId), exemptionValues);
         }
 
         exemptionCommentBox.onchange = function () {
@@ -188,7 +200,7 @@ async function appendExemptions(survey, options) {
                     exemptionComment: exemptionInput.commentBox.value
                 });
             }
-            survey.setValue((options.question.name + "-Exemptions"), exemptionValues);
+            survey.setValue((exemptionResponseId), exemptionValues);
         }
     }
 }
