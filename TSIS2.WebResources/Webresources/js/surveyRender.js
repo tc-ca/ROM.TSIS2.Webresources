@@ -87,25 +87,26 @@ async function appendExemptions(survey, options) {
 
     let applicableExemptions = [
         {
-            "provisionName": "SATR 4.1 (a)",
-            "exemptionName": "EX001",
-            "exemptionId": "guid1234",
+            provisionName: "SATR 4.1 (a)",
+            exemptionName: "EX001",
+            exemptionId: "guid1234",
         },
         {
-            "provisionName": "SATR 4.1 (b)",
-            "exemptionName": "EX002",
-            "exemptionId": "guid5678",
+            provisionName: "SATR 4.1 (b)",
+            exemptionName: "EX002",
+            exemptionId: "guid5678",
         }
     ]
 
-    for (let applicableExemption of applicableExemptions) {
+    let exemptionInputs = [];
 
+    for (let applicableExemption of applicableExemptions) {
         //Create table to contain exemption related inputs
-        const exemptionsTable = document.createElement("table");
-        const exemptionsTableHeaderRow = document.createElement("tr");
-        const invokeExemptionHeader = document.createElement("th");
-        const provisionNameHeader = document.createElement("th");
-        const exemptionNameHeader = document.createElement("th");
+        let exemptionsTable = document.createElement("table");
+        let exemptionsTableHeaderRow = document.createElement("tr");
+        let invokeExemptionHeader = document.createElement("th");
+        let provisionNameHeader = document.createElement("th");
+        let exemptionNameHeader = document.createElement("th");
 
         invokeExemptionHeader.innerHTML = "Invoke Exemption";
         provisionNameHeader.innerHTML = "Provision";
@@ -123,10 +124,10 @@ async function appendExemptions(survey, options) {
         exemptionsTable.appendChild(exemptionsTableHeaderRow);
 
         //Create table elements for this exemption
-        const exemptionTableInvokeRow = document.createElement("tr");
-        const invokeExemptionDataCell = document.createElement("td");
-        const provisionNameDataCell = document.createElement("td");
-        const exemptionNameDataCell = document.createElement("td");
+        let exemptionTableInvokeRow = document.createElement("tr");
+        let invokeExemptionDataCell = document.createElement("td");
+        let provisionNameDataCell = document.createElement("td");
+        let exemptionNameDataCell = document.createElement("td");
 
         //Create a checkbox to invoke exemption
         invokeExemptionCheckbox = document.createElement("input");
@@ -146,22 +147,53 @@ async function appendExemptions(survey, options) {
         exemptionTableInvokeRow.appendChild(exemptionNameDataCell);
         exemptionsTable.appendChild(exemptionTableInvokeRow);
 
-        const exemptionTableCommentRow = document.createElement("tr");
-        const exemptionTableCommentDataCell = document.createElement("td");
-
-        //Create an input to invoke exemption
-        exemptionCommentBox = document.createElement("input");
-        exemptionTableCommentDataCell.appendChild(exemptionCommentBox);
-
-        exemptionTableCommentDataCell.colSpan = 3;
-        exemptionTableCommentDataCell.rowSpan = 3;
-
-        exemptionTableCommentRow.appendChild(exemptionTableCommentDataCell);
-        exemptionsTable.appendChild(exemptionTableCommentRow);
+        //Create an input to write comments about the exemption
+        exemptionCommentBox = document.createElement("textarea");
+        exemptionCommentBox.className = "form-control";
+        exemptionCommentBox.rows = 3;
+        exemptionCommentBox.cols = 50;
+        exemptionCommentBox.maxLength = 2000;
+        exemptionCommentBox.style.resize = "vertical";
 
         question.appendChild(exemptionsTable);
+        question.appendChild(exemptionCommentBox);
+
+        exemptionInputs.push({
+            exemptionName: applicableExemption.exemptionName,
+            exemptionId: applicableExemption.exemptionId,
+            invokeCheckbox: invokeExemptionCheckbox,
+            commentBox: exemptionCommentBox
+        });
+
+        invokeExemptionCheckbox.onchange = function () {
+            let exemptionValues = [];
+            for (let exemptionInput of exemptionInputs) {
+                exemptionValues.push({
+                    exemptionName: exemptionInput.exemptionName,
+                    exemptionId: exemptionInput.exemptionId,
+                    exemptionInvoked: exemptionInput.invokeCheckbox.checked,
+                    exemptionComment: exemptionInput.commentBox.value
+                });
+            }
+            survey.setValue((options.question.name + "Exemptions"), exemptionValues);
+        }
+
+        exemptionCommentBox.onchange = function () {
+            let exemptionValues = [];
+            for (let exemptionInput of exemptionInputs) {
+                exemptionValues.push({
+                    exemptionName: exemptionInput.exemptionName,
+                    exemptionId: exemptionInput.exemptionId,
+                    exemptionInvoked: exemptionInput.invokeCheckbox.checked,
+                    exemptionComment: exemptionInput.commentBox.value
+                });
+            }
+            survey.setValue((options.question.name + "-Exemptions"), exemptionValues);
+        }
     }
 }
+
+
 
 async function getApplicableExemptions(provisionId) {
     let provisionCondition = "";
