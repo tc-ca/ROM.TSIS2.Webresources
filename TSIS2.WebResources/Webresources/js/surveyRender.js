@@ -77,12 +77,17 @@ async function appendExemptions(survey, options) {
     //Create HTML elements
     const question = options.htmlElement;
     const exemptionContainer = document.createElement("div");
+    const header = document.createElement("div");
+    const content = document.createElement("div");
+    const ExemptionHeaderText = document.createElement("span");
+    const ExemptionExpandSymbol = document.createElement("span");
+    
     const exemptionResponseId = options.question.name + "-Exemptions"
 
     const applicableProvisionsData = options.question.applicableProvisionsData
     const applicableExemptions = []
     for (let provisionData of applicableProvisionsData) {
-        let applicableExemption = await getApplicableExemptions(provisionData.provisionId);
+        let applicableExemption = await getApplicableExemptions(provisionData.provisionNameEn);
         if (applicableExemption != null) applicableExemptions.push(applicableExemption);
     }
 
@@ -98,6 +103,40 @@ async function appendExemptions(survey, options) {
     //        exemptionId: "guid5678",
     //    }
     //]
+
+    header.appendChild(ExemptionExpandSymbol);
+    header.appendChild(ExemptionHeaderText);
+    exemptionContainer.appendChild(header);
+    exemptionContainer.appendChild(content);
+    question.appendChild(exemptionContainer);
+
+    //Set Styles, Classes, and text
+
+    exemptionContainer.style.marginTop = "10px";
+    header.style.backgroundColor = "#d3d3d3";
+    header.style.padding = "2px";
+    header.style.cursor = "pointer";
+    header.style.fontWeight = "bold";
+    
+    ExemptionHeaderText.innerHTML = "Exemptions";
+    content.style.display = "block";
+    content.style.border = "1px solid";
+    content.style.borderColor = "#d3d3d3";
+    content.style.padding = "0px 10px 10px 10px";
+    ExemptionExpandSymbol.innerHTML = "- ";
+
+    //Add functionality to HTML elements
+
+    //Toggle visibilty of content when header is clicked
+    header.onclick = function () {
+        if (content.style.display == "block") {
+            content.style.display = "none";
+            ExemptionExpandSymbol.innerHTML = "+ ";
+        } else {
+            content.style.display = "block";
+            ExemptionExpandSymbol.innerHTML = "- ";
+        }
+    };
 
     let exemptionInputs = [];
 
@@ -138,7 +177,7 @@ async function appendExemptions(survey, options) {
         invokeExemptionDataCell.appendChild(invokeExemptionCheckbox);
 
         //Populate Provision Name Cell
-        provisionNameDataCell.innerHTML = applicableExemption.provisionName;
+        provisionNameDataCell.innerHTML = applicableExemption.provisionNameEn;
 
         //Populate Exemption Name Cell
         exemptionNameDataCell.innerHTML = applicableExemption.exemptionName;
@@ -149,15 +188,29 @@ async function appendExemptions(survey, options) {
         exemptionsTable.appendChild(exemptionTableInvokeRow);
 
         //Create an input to write comments about the exemption
-        exemptionCommentBox = document.createElement("textarea");
+        let exemptionCommentBox = document.createElement("textarea");
         exemptionCommentBox.className = "form-control";
         exemptionCommentBox.rows = 3;
         exemptionCommentBox.cols = 50;
         exemptionCommentBox.maxLength = 2000;
         exemptionCommentBox.style.resize = "vertical";
+        if (survey.mode == "display") {
+            exemptionCommentBox.readOnly = true;
+        }
 
-        question.appendChild(exemptionsTable);
-        question.appendChild(exemptionCommentBox);
+        let characterCount = document.createElement("span");
+        characterCount.style.textAlign = "left";
+
+        //Update character count onKeyUp in exemptionCommentBox
+        let exemptionCommentBoxOnKeyUpHandler = function () {
+            let currLength = exemptionCommentBox.value.length;
+            characterCount.innerText = (exemptionCommentBox.maxLength - currLength) + " " + charactersRemainingLocalizedText;
+        }
+        exemptionCommentBox.onkeyup = exemptionCommentBoxOnKeyUpHandler;
+
+        content.appendChild(exemptionsTable);
+        content.appendChild(exemptionCommentBox);
+        content.appendChild(characterCount);
 
         //Load previous exemption values
         let previousResponseValues = survey.getValue(exemptionResponseId);
@@ -169,6 +222,8 @@ async function appendExemptions(survey, options) {
                 }
             }
         }
+        //Update character coutnt
+        exemptionCommentBoxOnKeyUpHandler();
 
         exemptionInputs.push({
             exemptionName: applicableExemption.exemptionName,
@@ -207,17 +262,19 @@ async function appendExemptions(survey, options) {
 
 
 
-async function getApplicableExemptions(provisionId) {
+async function getApplicableExemptions(provisionNameEn) {
     let exemptionFilterFetchXml = [
         "<fetch>",
         "  <entity name='ts_exemptionfilter'>",
         "    <filter>",
-        "      <condition attribute='ts_provision' operator='eq' value='", provisionId, "'/>",
         "      <condition attribute='statecode' operator='eq' value='0'/>",
         "    </filter>",
         "    <link-entity name='qm_rclegislation' from='qm_rclegislationid' to='ts_provision' alias='ts_provision'>",
         "      <attribute name='ts_nameenglish'/>",
         "      <attribute name='ts_namefrench'/>",
+        "      <filter>",
+        "        <condition attribute='ts_nameenglish' operator='eq' value='", provisionNameEn , "'/>",
+        "      </filter>",
         "    </link-entity>",
         "    <link-entity name='ts_exemption' from='ts_exemptionid' to='ts_exemption' alias='ts_exemption'>",
         "      <attribute name='ts_name'/>",
@@ -230,7 +287,8 @@ async function getApplicableExemptions(provisionId) {
     return await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemptionfilter", exemptionFilterFetchXml).then(function success(results) {
         if (results.entities.length > 0) {
             let exemptionObject = {
-                provisionName: results.entities[0]["ts_provision.ts_nameenglish"],
+                provisionNameEn: results.entities[0]["ts_provision.ts_nameenglish"],
+                provisionNameFr: results.entities[0]["ts_provision.ts_namefrench"],
                 exemptionName: results.entities[0]["ts_exemption.ts_name"],
                 exemptionId: results.entities[0]["ts_exemption.ts_exemptionid"],
             }
