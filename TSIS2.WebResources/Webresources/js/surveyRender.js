@@ -77,13 +77,14 @@ async function appendExemptions(survey, options) {
     //Create HTML elements
     const question = options.htmlElement;
     const exemptionContainer = document.createElement("div");
-    const header = document.createElement("div");
+    const header = document.createElement("div"); //Collapsable Header for Exemption section
     const content = document.createElement("div");
     const ExemptionHeaderText = document.createElement("span");
     const ExemptionExpandSymbol = document.createElement("span");
     
     const exemptionResponseId = options.question.name + "-Exemptions"
 
+    //Iterate through each applicable provision, get any exemptions that apply to that provision and add the applicableExemptions array
     const applicableProvisionsData = options.question.applicableProvisionsData
     const applicableExemptions = []
     for (let provisionData of applicableProvisionsData) {
@@ -91,26 +92,13 @@ async function appendExemptions(survey, options) {
         if (applicableExemption != null) applicableExemptions.push(applicableExemption);
     }
 
-    //let applicableExemptions = [
-    //    {
-    //        provisionName: "SATR 4.1 (a)",
-    //        exemptionName: "EX001",
-    //        exemptionId: "guid1234",
-    //    },
-    //    {
-    //        provisionName: "SATR 4.1 (b)",
-    //        exemptionName: "EX002",
-    //        exemptionId: "guid5678",
-    //    }
-    //]
-
     header.appendChild(ExemptionExpandSymbol);
     header.appendChild(ExemptionHeaderText);
     exemptionContainer.appendChild(header);
     exemptionContainer.appendChild(content);
     question.appendChild(exemptionContainer);
 
-    //Set Styles, Classes, and text
+    //Set Styles, Classes, and Text
 
     exemptionContainer.style.marginTop = "10px";
     header.style.backgroundColor = "#d3d3d3";
@@ -140,8 +128,9 @@ async function appendExemptions(survey, options) {
 
     let exemptionInputs = [];
 
+    // For each exemptions, add a checkbox to invoke and a comment box
     for (let applicableExemption of applicableExemptions) {
-        //Create table to contain exemption related inputs
+        // Create table to contain exemption related inputs
         let exemptionsTable = document.createElement("table");
         let exemptionsTableHeaderRow = document.createElement("tr");
         let invokeExemptionHeader = document.createElement("th");
@@ -216,7 +205,7 @@ async function appendExemptions(survey, options) {
         let previousResponseValues = survey.getValue(exemptionResponseId);
         if (previousResponseValues != null) {
             for (let previousResponseValue of previousResponseValues) {
-                if (previousResponseValue.exemptionId == applicableExemption.exemptionId) {
+                if (previousResponseValue.exemptionId == applicableExemption. &&) {
                     invokeExemptionCheckbox.checked = (previousResponseValue.exemptionInvoked == true);
                     exemptionCommentBox.value = previousResponseValue.exemptionComment;
                 }
@@ -228,6 +217,9 @@ async function appendExemptions(survey, options) {
         exemptionInputs.push({
             exemptionName: applicableExemption.exemptionName,
             exemptionId: applicableExemption.exemptionId,
+            provisionNameEn: applicableExemption.provisionNameEn,
+            provisionNameFr: applicableExemption.provisionNameFr,
+            provisionId: applicableExemption.provisionId,
             invokeCheckbox: invokeExemptionCheckbox,
             commentBox: exemptionCommentBox
         });
@@ -237,6 +229,9 @@ async function appendExemptions(survey, options) {
             for (let exemptionInput of exemptionInputs) {
                 exemptionValues.push({
                     exemptionName: exemptionInput.exemptionName,
+                    provisionNameEn: exemptionInput.provisionNameEn,
+                    provisionNameFr: exemptionInput.provisionNameFr,
+                    provisionId: exemptionInput.provisionId,
                     exemptionId: exemptionInput.exemptionId,
                     exemptionInvoked: exemptionInput.invokeCheckbox.checked,
                     exemptionComment: exemptionInput.commentBox.value
@@ -250,6 +245,9 @@ async function appendExemptions(survey, options) {
             for (let exemptionInput of exemptionInputs) {
                 exemptionValues.push({
                     exemptionName: exemptionInput.exemptionName,
+                    provisionNameEn: exemptionInput.provisionNameEn,
+                    provisionNameFr: exemptionInput.provisionNameFr,
+                    provisionId: exemptionInput.provisionId,
                     exemptionId: exemptionInput.exemptionId,
                     exemptionInvoked: exemptionInput.invokeCheckbox.checked,
                     exemptionComment: exemptionInput.commentBox.value
@@ -272,6 +270,7 @@ async function getApplicableExemptions(provisionNameEn) {
         "    <link-entity name='qm_rclegislation' from='qm_rclegislationid' to='ts_provision' alias='ts_provision'>",
         "      <attribute name='ts_nameenglish'/>",
         "      <attribute name='ts_namefrench'/>",
+        "      <attribute name='qm_rclegislationid'/>",
         "      <filter>",
         "        <condition attribute='ts_nameenglish' operator='eq' value='", provisionNameEn , "'/>",
         "      </filter>",
@@ -287,6 +286,7 @@ async function getApplicableExemptions(provisionNameEn) {
     return await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemptionfilter", exemptionFilterFetchXml).then(function success(results) {
         if (results.entities.length > 0) {
             let exemptionObject = {
+                provisionId: results.entities[0]["ts_provision.qm_rclegislationid"],
                 provisionNameEn: results.entities[0]["ts_provision.ts_nameenglish"],
                 provisionNameFr: results.entities[0]["ts_provision.ts_namefrench"],
                 exemptionName: results.entities[0]["ts_exemption.ts_name"],
