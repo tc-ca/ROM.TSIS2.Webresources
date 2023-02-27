@@ -71,6 +71,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_details?: string | null;
   ts_incident?: ts_yesno | null;
   ts_incompleteworkorderreasonforother?: string | null;
+  ts_isisso?: number | null;
   ts_numberoffindings?: number | null;
   ts_numberoffindings_date?: Date | null;
   ts_numberoffindings_state?: number | null;
@@ -312,6 +313,7 @@ interface msdyn_workorder_Select {
   ts_incident: WebAttribute<msdyn_workorder_Select, { ts_incident: ts_yesno | null }, { ts_incident_formatted?: string }>;
   ts_incompleteworkorderreason_guid: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreason_guid: string | null }, { ts_incompleteworkorderreason_formatted?: string }>;
   ts_incompleteworkorderreasonforother: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreasonforother: string | null }, {  }>;
+  ts_isisso: WebAttribute<msdyn_workorder_Select, { ts_isisso: number | null }, {  }>;
   ts_numberoffindings: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_state: number | null }, {  }>;
@@ -460,6 +462,7 @@ interface msdyn_workorder_Filter {
   ts_incident: ts_yesno;
   ts_incompleteworkorderreason_guid: XQW.Guid;
   ts_incompleteworkorderreasonforother: string;
+  ts_isisso: number;
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;

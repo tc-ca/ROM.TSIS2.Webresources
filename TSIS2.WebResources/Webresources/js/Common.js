@@ -13,8 +13,9 @@ function userHasRole(rolesName) {
 //Used to lock specific fields in editable grids
 function lockFields(executionContext, fields) {
     let formContext = executionContext.getFormContext();
-    //If Team Plannig Data set to Complete block additional fields
-    if (parent.Xrm.Page.getAttribute("ts_planstatus").getValue() == 741130001) {
+    let planStatusValue = parent.Xrm.Page.getAttribute("ts_planstatus").getValue();
+    //If Team Plannig Data set to Complete or HQReview block additional fields
+    if (planStatusValue == 741130001 || planStatusValue == 447390001) {
         fields.push("ts_teamestimatedduration", "ts_planningdetail", "ts_details", "ts_plannedq1", "ts_plannedq2", "ts_plannedq3", "ts_plannedq4");
     }
 
@@ -32,8 +33,9 @@ function lockFields(executionContext, fields) {
 function lockFieldsInspectorHoursEditableGrid(executionContext) {
     let formContext = executionContext.getFormContext();
     fields = ["ts_varianceq1", "ts_varianceq2", "ts_varianceq3", "ts_varianceq4"];
-    //If Team Plannig Data set to Complete block fields
-    if (parent.Xrm.Page.getAttribute("ts_planstatus").getValue() == 741130001) {
+    let planStatusValue = parent.Xrm.Page.getAttribute("ts_planstatus").getValue();
+    //If Team Plannig Data set to Complete or HQReview block fields
+    if (planStatusValue == 741130001 || planStatusValue == 447390001) {
         if (formContext) {
             let entity = formContext.data.entity;
             entity.attributes.forEach(function (attribute, i) {
@@ -48,7 +50,8 @@ function lockFieldsInspectorHoursEditableGrid(executionContext) {
 
 function showButtonBasedOnPlanStatus(primaryControl) {
     var formContext = primaryControl;
-    return (formContext.getAttribute("ts_planstatus").getValue() != 741130001);
+    let planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
+    return !(planStatusValue == 741130001 || planStatusValue == 447390001);
 }
 function isFormTypeCreate(){
     return Xrm.Page.ui.getFormType() == 1;
