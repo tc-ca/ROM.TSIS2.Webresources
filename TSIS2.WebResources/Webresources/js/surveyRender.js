@@ -205,7 +205,7 @@ async function appendExemptions(survey, options) {
         let previousResponseValues = survey.getValue(exemptionResponseId);
         if (previousResponseValues != null) {
             for (let previousResponseValue of previousResponseValues) {
-                if (previousResponseValue.exemptionId == applicableExemption. &&) {
+                if (previousResponseValue.exemptionId == applicableExemption.exemptionId && previousResponseValue.provisionId == applicableExemption.provisionId) {
                     invokeExemptionCheckbox.checked = (previousResponseValue.exemptionInvoked == true);
                     exemptionCommentBox.value = previousResponseValue.exemptionComment;
                 }
