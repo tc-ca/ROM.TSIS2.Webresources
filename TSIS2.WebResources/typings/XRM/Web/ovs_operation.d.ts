@@ -65,6 +65,7 @@ interface ovs_operation_Relationships {
   ts_ovs_operation_msdyn_workorderservicetask_AOCOperation?: msdyn_workorderservicetask_Result[] | null;
   ts_ovs_operation_ovs_operation_msdyn_inciden?: msdyn_incidenttype_Result[] | null;
   ts_ovs_operation_ovs_operation_ovs_operation?: ovs_operation_Result[] | null;
+  ts_ovs_operation_qm_rclegislation_qm_rclegis?: qm_rclegislation_Result[] | null;
   ts_ts_operationactivity_Operation_ovs_operat?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_Operation_ovs_operation?: ts_PlanningData_Result[] | null;
 }
@@ -243,6 +244,7 @@ interface ovs_operation_Expand {
   ts_ovs_operation_msdyn_workorderservicetask_AOCOperation: WebExpand<ovs_operation_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_ovs_operation_msdyn_workorderservicetask_AOCOperation: msdyn_workorderservicetask_Result[] }>;
   ts_ovs_operation_ovs_operation_msdyn_inciden: WebExpand<ovs_operation_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_ovs_operation_ovs_operation_msdyn_inciden: msdyn_incidenttype_Result[] }>;
   ts_ovs_operation_ovs_operation_ovs_operation: WebExpand<ovs_operation_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_ovs_operation_ovs_operation: ovs_operation_Result[] }>;
+  ts_ovs_operation_qm_rclegislation_qm_rclegis: WebExpand<ovs_operation_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_ovs_operation_qm_rclegislation_qm_rclegis: qm_rclegislation_Result[] }>;
   ts_risk: WebExpand<ovs_operation_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { ts_risk: ts_RiskCategory_Result }>;
   ts_site: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_site: msdyn_FunctionalLocation_Result }>;
   ts_stakeholder: WebExpand<ovs_operation_Expand, Account_Select, Account_Filter, { ts_stakeholder: Account_Result }>;
@@ -339,6 +341,7 @@ interface ovs_operation_RelatedMany {
   ts_ovs_operation_msdyn_workorderservicetask_AOCOperation: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ts_ovs_operation_ovs_operation_msdyn_inciden: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_ovs_operation_ovs_operation_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_ovs_operation_qm_rclegislation_qm_rclegis: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
   ts_ts_operationactivity_Operation_ovs_operat: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_Operation_ovs_operation: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
 }

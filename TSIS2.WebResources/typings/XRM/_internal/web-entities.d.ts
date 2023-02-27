@@ -1090,6 +1090,29 @@ interface ts_role_Create extends ts_role {
 }
 interface ts_role_Update extends ts_role {
 }
+interface qm_rclegislation_Base extends WebEntity {
+}
+interface qm_rclegislation_Fixed extends WebEntity_Fixed {
+  qm_rclegislationid: string;
+}
+interface qm_rclegislation extends qm_rclegislation_Base, qm_rclegislation_Relationships {
+}
+interface qm_rclegislation_Relationships {
+}
+interface qm_rclegislation_Result extends qm_rclegislation_Base, qm_rclegislation_Relationships {
+}
+interface qm_rclegislation_FormattedResult {
+}
+interface qm_rclegislation_Select {
+}
+interface qm_rclegislation_Expand {
+}
+interface qm_rclegislation_Filter {
+}
+interface qm_rclegislation_Create extends qm_rclegislation {
+}
+interface qm_rclegislation_Update extends qm_rclegislation {
+}
 interface IncidentResolution_Base extends WebEntity {
 }
 interface IncidentResolution_Fixed extends WebEntity_Fixed {

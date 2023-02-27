@@ -120,7 +120,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_cateringservices"): Xrm.LookupAttribute<"account">;
       get(name: "ts_cbloaded"): Xrm.Attribute<string>;
       get(name: "ts_cbonboard"): Xrm.Attribute<string>;
-      get(name: "ts_cbservices"): Xrm.LookupAttribute<"account">;
       get(name: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_flightnumber"): Xrm.Attribute<string>;
       get(name: "ts_groomingservices"): Xrm.LookupAttribute<"account">;
@@ -194,7 +193,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_cateringservices"): Xrm.LookupControl<"account">;
       get(name: "ts_cbloaded"): Xrm.StringControl;
       get(name: "ts_cbonboard"): Xrm.StringControl;
-      get(name: "ts_cbservices"): Xrm.LookupControl<"account">;
       get(name: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_flightnumber"): Xrm.StringControl;
       get(name: "ts_groomingservices"): Xrm.LookupControl<"account">;
@@ -271,7 +269,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ts_cateringservices"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_cbloaded"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_cbonboard"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ts_cbservices"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_flightnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_groomingservices"): Xrm.LookupAttribute<"account">;
@@ -340,7 +337,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "ts_cateringservices"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_cbloaded"): Xrm.StringControl;
     getControl(controlName: "ts_cbonboard"): Xrm.StringControl;
-    getControl(controlName: "ts_cbservices"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
     getControl(controlName: "ts_groomingservices"): Xrm.LookupControl<"account">;

@@ -300,6 +300,7 @@ interface ovs_Finding_Expand {
   ts_enforcementactioncreated: WebExpand<ovs_Finding_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementactioncreated: ts_enforcementaction_Result }>;
   ts_functionallocation: WebExpand<ovs_Finding_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_functionallocation: msdyn_FunctionalLocation_Result }>;
   ts_operationid: WebExpand<ovs_Finding_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operationid: ovs_operation_Result }>;
+  ts_qm_rclegislation: WebExpand<ovs_Finding_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_qm_rclegislation: qm_rclegislation_Result }>;
 }
 interface ovs_Finding_FormattedResult {
   createdby_formatted?: string;
@@ -436,6 +437,7 @@ interface ovs_Finding_RelatedOne {
   ts_enforcementactioncreated: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_operationid: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_qm_rclegislation: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
 }
 interface ovs_Finding_RelatedMany {
 }
