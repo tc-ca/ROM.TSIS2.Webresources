@@ -5,8 +5,9 @@
         if (formContext.ui.getFormType() == 2) { //Update type. The form has already been saved for the first time
             formContext.getControl("ts_team").setDisabled(true);
             formContext.getControl("ts_fiscalyear").setDisabled(true);
+            const planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
 
-            if (formContext.getAttribute("ts_planstatus").getValue() == ts_planstatus.Complete ) {
+            if (planStatusValue == ts_planstatus.Complete || planStatusValue == ts_planstatus.HQreview) {
                 if (userHasRole("ROM - Business Admin")) {
                     formContext.getControl("ts_planstatus").setDisabled(false);
                 }
@@ -470,8 +471,8 @@
 
     export function planStatusOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         const formContext = <Form.ts_teamplanningdata.Main.Information>eContext.getFormContext();
-
-        if (formContext.getAttribute("ts_planstatus").getValue() == ts_planstatus.Complete) {
+        const planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
+        if (planStatusValue == ts_planstatus.Complete || planStatusValue == ts_planstatus.HQreview) {
             formContext.getControl("ts_totalhoursq1").setDisabled(true);
             formContext.getControl("ts_totalhoursq2").setDisabled(true);
             formContext.getControl("ts_totalhoursq3").setDisabled(true);
@@ -488,7 +489,7 @@
                 formContext.getControl("ts_planstatus").setDisabled(true);
             }
         }
-        if (formContext.getAttribute("ts_planstatus").getValue() == ts_planstatus.InProgress) {
+       else {
             formContext.getControl("ts_totalhoursq1").setDisabled(false);
             formContext.getControl("ts_totalhoursq2").setDisabled(false);
             formContext.getControl("ts_totalhoursq3").setDisabled(false);

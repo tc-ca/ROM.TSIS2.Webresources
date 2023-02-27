@@ -23,6 +23,7 @@ interface msdyn_servicetasktype_Relationships {
   msdyn_msdyn_servicetasktype_msdyn_incidenttypeservicetask_TaskType?: msdyn_incidenttypeservicetask_Result[] | null;
   msdyn_msdyn_servicetasktype_msdyn_workorderservicetask_TaskType?: msdyn_workorderservicetask_Result[] | null;
   ovs_Questionnaire?: ovs_Questionnaire_Result | null;
+  ovs_msdyn_servicetasktype_qm_rclegislation?: qm_rclegislation_Result[] | null;
 }
 interface msdyn_servicetasktype extends msdyn_servicetasktype_Base, msdyn_servicetasktype_Relationships {
   msdyn_Inspection_bind$msdyn_inspections?: string | null;
@@ -104,6 +105,7 @@ interface msdyn_servicetasktype_Expand {
   msdyn_msdyn_servicetasktype_msdyn_incidenttypeservicetask_TaskType: WebExpand<msdyn_servicetasktype_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { msdyn_msdyn_servicetasktype_msdyn_incidenttypeservicetask_TaskType: msdyn_incidenttypeservicetask_Result[] }>;
   msdyn_msdyn_servicetasktype_msdyn_workorderservicetask_TaskType: WebExpand<msdyn_servicetasktype_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { msdyn_msdyn_servicetasktype_msdyn_workorderservicetask_TaskType: msdyn_workorderservicetask_Result[] }>;
   ovs_Questionnaire: WebExpand<msdyn_servicetasktype_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { ovs_Questionnaire: ovs_Questionnaire_Result }>;
+  ovs_msdyn_servicetasktype_qm_rclegislation: WebExpand<msdyn_servicetasktype_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ovs_msdyn_servicetasktype_qm_rclegislation: qm_rclegislation_Result[] }>;
   ownerid: WebExpand<msdyn_servicetasktype_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<msdyn_servicetasktype_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_servicetasktype_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
@@ -151,6 +153,7 @@ interface msdyn_servicetasktype_RelatedOne {
 interface msdyn_servicetasktype_RelatedMany {
   msdyn_msdyn_servicetasktype_msdyn_incidenttypeservicetask_TaskType: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
   msdyn_msdyn_servicetasktype_msdyn_workorderservicetask_TaskType: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
+  ovs_msdyn_servicetasktype_qm_rclegislation: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_servicetasktypes: WebMappingRetrieve<msdyn_servicetasktype_Select,msdyn_servicetasktype_Expand,msdyn_servicetasktype_Filter,msdyn_servicetasktype_Fixed,msdyn_servicetasktype_Result,msdyn_servicetasktype_FormattedResult>;

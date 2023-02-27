@@ -59,7 +59,6 @@ interface msdyn_workorderservicetask_Relationships {
   ts_AOCStakeholder?: Account_Result | null;
   ts_AccessControlSecurityServices?: Account_Result | null;
   ts_BoardingLounge?: msdyn_FunctionalLocation_Result | null;
-  ts_CBServices?: Account_Result | null;
   ts_CargoServices?: Account_Result | null;
   ts_CateringServices?: Account_Result | null;
   ts_Destination?: msdyn_FunctionalLocation_Result | null;
@@ -72,6 +71,7 @@ interface msdyn_workorderservicetask_Relationships {
   ts_SecuritySearchServices?: Account_Result | null;
   ts_incident_WorkOrderServiceTask1_msdyn_work?: Incident_Result[] | null;
   ts_incident_WorkOrderServiceTask2_msdyn_work?: Incident_Result[] | null;
+  ts_workorderservicetask_qm_rclegislation?: qm_rclegislation_Result[] | null;
 }
 interface msdyn_workorderservicetask extends msdyn_workorderservicetask_Base, msdyn_workorderservicetask_Relationships {
   msdyn_Inspection_bind$msdyn_inspections?: string | null;
@@ -93,7 +93,6 @@ interface msdyn_workorderservicetask extends msdyn_workorderservicetask_Base, ms
   ts_AOCStakeholder_bind$accounts?: string | null;
   ts_AccessControlSecurityServices_bind$accounts?: string | null;
   ts_BoardingLounge_bind$msdyn_functionallocations?: string | null;
-  ts_CBServices_bind$accounts?: string | null;
   ts_CargoServices_bind$accounts?: string | null;
   ts_CateringServices_bind$accounts?: string | null;
   ts_Destination_bind$msdyn_functionallocations?: string | null;
@@ -173,7 +172,6 @@ interface msdyn_workorderservicetask_Select {
   ts_cateringservices_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_cateringservices_guid: string | null }, { ts_cateringservices_formatted?: string }>;
   ts_cbloaded: WebAttribute<msdyn_workorderservicetask_Select, { ts_cbloaded: string | null }, {  }>;
   ts_cbonboard: WebAttribute<msdyn_workorderservicetask_Select, { ts_cbonboard: string | null }, {  }>;
-  ts_cbservices_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_cbservices_guid: string | null }, { ts_cbservices_formatted?: string }>;
   ts_destination_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_destination_guid: string | null }, { ts_destination_formatted?: string }>;
   ts_flightnumber: WebAttribute<msdyn_workorderservicetask_Select, { ts_flightnumber: string | null }, {  }>;
   ts_gate_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_gate_guid: string | null }, { ts_gate_formatted?: string }>;
@@ -258,7 +256,6 @@ interface msdyn_workorderservicetask_Filter {
   ts_cateringservices_guid: XQW.Guid;
   ts_cbloaded: string;
   ts_cbonboard: string;
-  ts_cbservices_guid: XQW.Guid;
   ts_destination_guid: XQW.Guid;
   ts_flightnumber: string;
   ts_gate_guid: XQW.Guid;
@@ -308,7 +305,6 @@ interface msdyn_workorderservicetask_Expand {
   ts_AOCStakeholder: WebExpand<msdyn_workorderservicetask_Expand, Account_Select, Account_Filter, { ts_AOCStakeholder: Account_Result }>;
   ts_AccessControlSecurityServices: WebExpand<msdyn_workorderservicetask_Expand, Account_Select, Account_Filter, { ts_AccessControlSecurityServices: Account_Result }>;
   ts_BoardingLounge: WebExpand<msdyn_workorderservicetask_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_BoardingLounge: msdyn_FunctionalLocation_Result }>;
-  ts_CBServices: WebExpand<msdyn_workorderservicetask_Expand, Account_Select, Account_Filter, { ts_CBServices: Account_Result }>;
   ts_CargoServices: WebExpand<msdyn_workorderservicetask_Expand, Account_Select, Account_Filter, { ts_CargoServices: Account_Result }>;
   ts_CateringServices: WebExpand<msdyn_workorderservicetask_Expand, Account_Select, Account_Filter, { ts_CateringServices: Account_Result }>;
   ts_Destination: WebExpand<msdyn_workorderservicetask_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Destination: msdyn_FunctionalLocation_Result }>;
@@ -321,6 +317,7 @@ interface msdyn_workorderservicetask_Expand {
   ts_SecuritySearchServices: WebExpand<msdyn_workorderservicetask_Expand, Account_Select, Account_Filter, { ts_SecuritySearchServices: Account_Result }>;
   ts_incident_WorkOrderServiceTask1_msdyn_work: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrderServiceTask1_msdyn_work: Incident_Result[] }>;
   ts_incident_WorkOrderServiceTask2_msdyn_work: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrderServiceTask2_msdyn_work: Incident_Result[] }>;
+  ts_workorderservicetask_qm_rclegislation: WebExpand<msdyn_workorderservicetask_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_workorderservicetask_qm_rclegislation: qm_rclegislation_Result[] }>;
 }
 interface msdyn_workorderservicetask_FormattedResult {
   createdby_formatted?: string;
@@ -361,7 +358,6 @@ interface msdyn_workorderservicetask_FormattedResult {
   ts_brandname_formatted?: string;
   ts_cargoservices_formatted?: string;
   ts_cateringservices_formatted?: string;
-  ts_cbservices_formatted?: string;
   ts_destination_formatted?: string;
   ts_gate_formatted?: string;
   ts_groomingservices_formatted?: string;
@@ -407,7 +403,6 @@ interface msdyn_workorderservicetask_Result extends msdyn_workorderservicetask_B
   ts_boardinglounge_guid: string | null;
   ts_cargoservices_guid: string | null;
   ts_cateringservices_guid: string | null;
-  ts_cbservices_guid: string | null;
   ts_destination_guid: string | null;
   ts_gate_guid: string | null;
   ts_groomingservices_guid: string | null;
@@ -439,7 +434,6 @@ interface msdyn_workorderservicetask_RelatedOne {
   ts_AOCStakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_AccessControlSecurityServices: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_BoardingLounge: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
-  ts_CBServices: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_CargoServices: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_CateringServices: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_Destination: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
@@ -461,6 +455,7 @@ interface msdyn_workorderservicetask_RelatedMany {
   ovs_msdyn_workorderservicetask_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_incident_WorkOrderServiceTask1_msdyn_work: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_WorkOrderServiceTask2_msdyn_work: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  ts_workorderservicetask_qm_rclegislation: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_workorderservicetasks: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;

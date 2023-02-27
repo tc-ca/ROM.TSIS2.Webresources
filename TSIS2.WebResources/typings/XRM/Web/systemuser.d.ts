@@ -210,6 +210,10 @@ interface SystemUser_Relationships {
   lk_ovs_questionnaire_modifiedby?: ovs_Questionnaire_Result[] | null;
   lk_ovs_questionnaire_modifiedonbehalfby?: ovs_Questionnaire_Result[] | null;
   lk_postfollow_createdonbehalfby?: PostFollow_Result[] | null;
+  lk_qm_rclegislation_createdby?: qm_rclegislation_Result[] | null;
+  lk_qm_rclegislation_createdonbehalfby?: qm_rclegislation_Result[] | null;
+  lk_qm_rclegislation_modifiedby?: qm_rclegislation_Result[] | null;
+  lk_qm_rclegislation_modifiedonbehalfby?: qm_rclegislation_Result[] | null;
   lk_serviceappointment_createdby?: ServiceAppointment_Result[] | null;
   lk_serviceappointment_createdonbehalfby?: ServiceAppointment_Result[] | null;
   lk_serviceappointment_modifiedby?: ServiceAppointment_Result[] | null;
@@ -745,6 +749,10 @@ interface SystemUser_Expand {
   lk_ovs_questionnaire_modifiedby: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { lk_ovs_questionnaire_modifiedby: ovs_Questionnaire_Result[] }>;
   lk_ovs_questionnaire_modifiedonbehalfby: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { lk_ovs_questionnaire_modifiedonbehalfby: ovs_Questionnaire_Result[] }>;
   lk_postfollow_createdonbehalfby: WebExpand<SystemUser_Expand, PostFollow_Select, PostFollow_Filter, { lk_postfollow_createdonbehalfby: PostFollow_Result[] }>;
+  lk_qm_rclegislation_createdby: WebExpand<SystemUser_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { lk_qm_rclegislation_createdby: qm_rclegislation_Result[] }>;
+  lk_qm_rclegislation_createdonbehalfby: WebExpand<SystemUser_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { lk_qm_rclegislation_createdonbehalfby: qm_rclegislation_Result[] }>;
+  lk_qm_rclegislation_modifiedby: WebExpand<SystemUser_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { lk_qm_rclegislation_modifiedby: qm_rclegislation_Result[] }>;
+  lk_qm_rclegislation_modifiedonbehalfby: WebExpand<SystemUser_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { lk_qm_rclegislation_modifiedonbehalfby: qm_rclegislation_Result[] }>;
   lk_serviceappointment_createdby: WebExpand<SystemUser_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { lk_serviceappointment_createdby: ServiceAppointment_Result[] }>;
   lk_serviceappointment_createdonbehalfby: WebExpand<SystemUser_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { lk_serviceappointment_createdonbehalfby: ServiceAppointment_Result[] }>;
   lk_serviceappointment_modifiedby: WebExpand<SystemUser_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { lk_serviceappointment_modifiedby: ServiceAppointment_Result[] }>;
@@ -1050,6 +1058,10 @@ interface SystemUser_RelatedMany {
   lk_ovs_questionnaire_modifiedby: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
   lk_ovs_questionnaire_modifiedonbehalfby: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
   lk_postfollow_createdonbehalfby: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
+  lk_qm_rclegislation_createdby: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
+  lk_qm_rclegislation_createdonbehalfby: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
+  lk_qm_rclegislation_modifiedby: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
+  lk_qm_rclegislation_modifiedonbehalfby: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
   lk_serviceappointment_createdby: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   lk_serviceappointment_createdonbehalfby: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   lk_serviceappointment_modifiedby: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
