@@ -73,7 +73,12 @@ function appendApplicableProvisionsData(survey, options) {
 
     const applicableProvisionsData = options.question.applicableProvisionsData
     for (let provisionData of applicableProvisionsData) {
-        provisionParagraph.innerHTML += provisionData.provisionNameEn + " ";
+        if (lang == 1036) {
+            provisionParagraph.innerHTML += provisionData.provisionNameFr + " ";
+        } else {
+            provisionParagraph.innerHTML += provisionData.provisionNameEn + " ";
+        }
+        
     }
     provisionContainer.appendChild(provisionParagraph);
     question.appendChild(provisionContainer);
@@ -278,6 +283,8 @@ async function getApplicableExemptions(provisionNameEn) {
         "      <attribute name='ts_namefrench'/>",
         "      <attribute name='qm_rclegislationid'/>",
         "      <filter>",
+        //TODO change this filter to use the provision guid. Questionnaires in DATA env need to be updated to use correct guid first.
+        //Provision names are unique, so this will work for now.
         "        <condition attribute='ts_nameenglish' operator='eq' value='", provisionNameEn , "'/>",
         "      </filter>",
         "    </link-entity>",

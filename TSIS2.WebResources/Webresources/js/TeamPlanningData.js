@@ -358,8 +358,6 @@ var ROM;
                                                             teamPlanningDataPlannedQ4 += planningDataQuarters[3];
                                                         }
                                                     }
-                                                    if (planningDataStakeholderId == null)
-                                                        debugger;
                                                     data = {
                                                         "ts_name": planningDataName,
                                                         "ts_englishname": planningDataEnglishName,
