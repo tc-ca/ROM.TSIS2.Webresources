@@ -5,6 +5,8 @@ var detailTextAddLocalizedText;
 var detailTextMinusLocalizedText;
 var provideDetailsLocalizedText;
 var unsavedNotificationMessage;
+var invokeExemptionLocalized;
+var provisionLocalized;
 
 let timeSinceLastNotification;
 
@@ -13,12 +15,16 @@ if (lang == 1036) {
     provideDetailsLocalizedText = "Veuillez fournir des détails de l'inspection.";
     undecidedFindingTypeErrorLocalizedText = "Veuillez selectionner un Type de constatation.";
     unsavedNotificationMessage = "Vous avez des changements non-enregistrés dans le questionnaire.";
+    invokeExemptionLocalized = "Invoquer l'exemption";
+    provisionLocalized = "Dispositions";
 }
 else {
     charactersRemainingLocalizedText = "characters remaining";
     provideDetailsLocalizedText = "Please provide inspection details.";
     undecidedFindingTypeErrorLocalizedText = "Please decide on a Finding Type.";
     unsavedNotificationMessage = "You have unsaved changes to the Questionnaire.";
+    invokeExemptionLocalized = "Invoke Exemption";
+    provisionLocalized = "Provision";
 }
 
 'use strict';
@@ -137,8 +143,8 @@ async function appendExemptions(survey, options) {
         let provisionNameHeader = document.createElement("th");
         let exemptionNameHeader = document.createElement("th");
 
-        invokeExemptionHeader.innerHTML = "Invoke Exemption";
-        provisionNameHeader.innerHTML = "Provision";
+        invokeExemptionHeader.innerHTML = invokeExemptionLocalized;
+        provisionNameHeader.innerHTML = provisionLocalized;
         exemptionNameHeader.innerHTML = "Exemption";
 
         invokeExemptionHeader.style.width = "15%";
