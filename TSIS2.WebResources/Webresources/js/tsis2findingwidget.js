@@ -396,7 +396,7 @@ function updateQuestionProvisionData(question, provisionName) {
                 question.locDescription.values.default = "<html>" + await buildProvisionText(provision, 1033) + "</html>";
                 question.locDescription.values.fr = "<html>" + await buildProvisionText(provision, 1036) + "</html>";
                 question.provisionData = {
-                    legislationid: provision._qm_tylegislationsourceid_value,
+                    legislationid: provision.qm_rclegislationid,
                     provisioncategoryid: provision._ts_provisioncategory_value
                 };
             }

@@ -319,7 +319,6 @@
                         teamPlanningDataPlannedQ4 += planningDataQuarters[3];
                     }
                 }
-                if (planningDataStakeholderId == null) debugger;
                 let data = {
                     "ts_name": planningDataName,
                     "ts_englishname": planningDataEnglishName,

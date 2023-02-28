@@ -63,7 +63,6 @@
 
                 fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
                 parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemptionfilter", fetchXML).then(async function success(results) {
-                    debugger;
                     if (results.entities.length > 0) {
                          //Display exemptions for testing
                         var exemptions = "";
