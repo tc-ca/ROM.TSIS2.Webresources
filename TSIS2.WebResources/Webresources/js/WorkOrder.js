@@ -1281,7 +1281,6 @@ var ROM;
                     if (!(workOrderHasNewWost || !workOrderHasActiveWost)) {
                         //The Activity type should not have been able to change. Set it to the old value and lock the field.
                         Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value&$expand=msdyn_primaryincidenttype($select=ovs_incidenttypenameenglish,ovs_incidenttypenamefrench)").then(function (result) {
-                            debugger;
                             var incidentTypeName = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? result.msdyn_primaryincidenttype.ovs_incidenttypenamefrench : result.msdyn_primaryincidenttype.ovs_incidenttypenameenglish;
                             formContext.getAttribute("msdyn_primaryincidenttype").setValue([{
                                     id: result._msdyn_primaryincidenttype_value,
