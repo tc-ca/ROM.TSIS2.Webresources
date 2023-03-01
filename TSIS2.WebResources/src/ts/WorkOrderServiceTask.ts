@@ -23,6 +23,7 @@ namespace ROM.WorkOrderServiceTask {
         //If there's a related Work Order, filter the Task Type Lookup to match the Work Order's Activity Type Filter
         if (Form.getAttribute("msdyn_workorder").getValue() != null) {
             setTaskTypeFilteredView(Form);
+            showHideFieldsByIncidentType(Form);
             aircraftManufacturerOnChange(eContext);
         }
 
@@ -321,49 +322,103 @@ namespace ROM.WorkOrderServiceTask {
             });
     }
 
+    function showHideFieldsByIncidentType(form: Form.msdyn_workorderservicetask.Main.SurveyJS,): void {
+        const workOrderValue = form.getAttribute("msdyn_workorder").getValue();
+        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
+        const fieldsMap = [
+            ['ts_vlocation','ts_location'],
+            ['ts_vflightnumber', 'ts_flightnumber'],
+            ['ts_vorigin', 'ts_origin'],
+            ['ts_vdestination', 'ts_destination'],
+            ['ts_vpaxcheckedin', 'ts_paxonboard'],
+            ['ts_vpaxboarded', 'ts_paxboarded'],
+            ['ts_vcbcheckedin', 'ts_cbonboard'],
+            ['ts_vcbloaded', 'ts_cbloaded'],
+            ['ts_vscheduledtime', 'ts_scheduledtime'],
+            ['ts_vactualtime', 'ts_actualtime'],
+            ['ts_vregistration', 'ts_aircraftmark'],
+            ['ts_vmanufacturer', 'ts_aircraftmanufacturer'],
+            ['ts_vmodel', 'ts_aircraftmodel'],
+            ['ts_vbrandname', 'ts_brandname'],
+            ['ts_vaocoperation', 'ts_aocoperation'],
+            ['ts_vaocstakeholder', 'ts_aocstakeholder'],
+            ['ts_vaocoperationtype', 'ts_aocoperationtype'],
+            ['ts_vaocsite', 'ts_aocsite'],
+            ['ts_vpassengerservices', 'ts_passengerservices'],
+            ['ts_vrampservices', 'ts_rampservices'],
+            ['ts_vcargoservices', 'ts_cargoservices'],
+            ['ts_vcateringservices', 'ts_cateringservices'],
+            ['ts_vgroomingservices', 'ts_groomingservices'],
+            ['ts_vsecuritysearchservices', 'ts_securitysearchservices'],
+            ['ts_vaccesscontrolsecurityservices', 'ts_accesscontrolsecurityservices'],
+            ['ts_vothersecurityservices', 'ts_othersecurityservices']
+        ];
+        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value&$expand=msdyn_primaryincidenttype ").then(
+            function success(result) {
+                fieldsMap.forEach(function (item, index) {
+                    let isVisiable = false;
+                    if (result["msdyn_primaryincidenttype"][item[0]] == true) {
+                        isVisiable = true;
+                    }
+
+                    var control = form.getControl(item[1]);
+                    if (control != null) {
+                        (<any>control).setVisible(isVisiable);
+                    }
+                });
+            },
+            function error(error) {
+                Xrm.Navigation.openAlertDialog({ text: error.message });
+            });
+    }
+
     function showHideFieldsByOperationType(form: Form.msdyn_workorderservicetask.Main.SurveyJS, operationTypeId, operationTypeOwnerId): void {
         if (operationTypeOwnerId != "e2e3910d-a41f-ec11-b6e6-0022483cb5c7") {  //Owner is AvSec
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_AirCarrier').setVisible(false);
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(false);
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(false);
         }
         else {
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_AirCarrier').setVisible(true);
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(true);
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(true);
-        }
-        if (operationTypeId == "8b614ef0-c651-eb11-a812-000d3af3ac0d") {  //Air Carrier (Passenger)
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(true);
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(true);
-            form.getControl('ts_brandname').setVisible(true);
-            form.getControl('ts_aocoperation').setVisible(true);
-            form.getControl('ts_aocstakeholder').setVisible(true);
-            form.getControl('ts_aocoperationtype').setVisible(true);
-            form.getControl('ts_aocsite').setVisible(true);
-
-            form.getControl('ts_passengerservices').setVisible(true);
-            form.getControl('ts_rampservices').setVisible(true);
-            form.getControl('ts_cargoservices').setVisible(true);
-            form.getControl('ts_cateringservices').setVisible(true);
-            form.getControl('ts_groomingservices').setVisible(true);
-            form.getControl('ts_securitysearchservices').setVisible(true);
         }
-        else {
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(false);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(false);
-            form.getControl('ts_brandname').setVisible(false);
-            form.getControl('ts_aocoperation').setVisible(false);
-            form.getControl('ts_aocstakeholder').setVisible(false);
-            form.getControl('ts_aocoperationtype').setVisible(false);
-            form.getControl('ts_aocsite').setVisible(false);
+        //if (operationTypeId == "8b614ef0-c651-eb11-a812-000d3af3ac0d") {  //Air Carrier (Passenger)
+        //    form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(true);
+        //    form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(true);
+        //    form.getControl('ts_brandname').setVisible(true);
+        //    form.getControl('ts_aocoperation').setVisible(true);
+        //    form.getControl('ts_aocstakeholder').setVisible(true);
+        //    form.getControl('ts_aocoperationtype').setVisible(true);
+        //    form.getControl('ts_aocsite').setVisible(true);
 
-            form.getControl('ts_passengerservices').setVisible(false);
-            form.getControl('ts_rampservices').setVisible(false);
-            form.getControl('ts_cargoservices').setVisible(false);
-            form.getControl('ts_cateringservices').setVisible(false);
-            form.getControl('ts_groomingservices').setVisible(false);
-            form.getControl('ts_securitysearchservices').setVisible(false);
-        }
+        //    form.getControl('ts_passengerservices').setVisible(true);
+        //    form.getControl('ts_rampservices').setVisible(true);
+        //    form.getControl('ts_cargoservices').setVisible(true);
+        //    form.getControl('ts_cateringservices').setVisible(true);
+        //    form.getControl('ts_groomingservices').setVisible(true);
+        //    form.getControl('ts_securitysearchservices').setVisible(true);
+        //}
+        //else {
+        //    form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(false);
+        //    form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(false);
+        //    form.getControl('ts_brandname').setVisible(false);
+        //    form.getControl('ts_aocoperation').setVisible(false);
+        //    form.getControl('ts_aocstakeholder').setVisible(false);
+        //    form.getControl('ts_aocoperationtype').setVisible(false);
+        //    form.getControl('ts_aocsite').setVisible(false);
+
+        //    form.getControl('ts_passengerservices').setVisible(false);
+        //    form.getControl('ts_rampservices').setVisible(false);
+        //    form.getControl('ts_cargoservices').setVisible(false);
+        //    form.getControl('ts_cateringservices').setVisible(false);
+        //    form.getControl('ts_groomingservices').setVisible(false);
+        //    form.getControl('ts_securitysearchservices').setVisible(false);
+        //}
     }
 
     function setAOCSiteFilteredView(form: Form.msdyn_workorderservicetask.Main.SurveyJS, regionAttributeId: string, stakeholderTypeAttributeId: string, operationTypeAttributeId): void {
