@@ -33,55 +33,6 @@
                 parent.Xrm.Utility.alertDialog(error.message);
             }
         );
-
-        //Exemption visibility start
-        parent.Xrm.WebApi.online.retrieveMultipleRecords("ovs_workorderservicetaskprovision", "?$select=_ovs_provisionid_value&$filter=_ovs_workorderservicetaskid_value eq " + _ParentRecordId + "&$orderby=ovs_name asc").then(
-            async function success(results) {
-                var provisionCondition = "";
-                for (var i = 0; i < results.entities.length; i++) {
-                    provisionCondition += "<value uitype='qm_rclegislation'>{" + results.entities[i]["_ovs_provisionid_value"] + "}</value>";
-                }
-
-                var fetchXML = `<fetch>
-	                            <entity name='ts_exemptionfilter'>
-		                            <attribute name='ts_provision'/>
-		                            <attribute name='ts_exemption'/>
-		                            <filter type='and'>
-			                            <condition attribute='statecode' operator='eq' value='0'/>
-			                            <condition attribute='ts_provision' operator='in'>`
-                                        + provisionCondition +
-			                            `</condition>
-		                            </filter>
-		                            <link-entity name='ts_exemption' from='ts_exemptionid' to='ts_exemption' link-type='outer' alias='a_exp' visible='false'>
-			                            <attribute name='ts_description'/>
-			                            <attribute name='ts_exemptionnumber'/>
-			                            <attribute name='ts_name'/>
-		                            </link-entity>
-		                            <order attribute='ts_exemption' descending='false'/>
-	                            </entity>
-                            </fetch>`;
-
-                fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
-                parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemptionfilter", fetchXML).then(async function success(results) {
-                    if (results.entities.length > 0) {
-                         //Display exemptions for testing
-                        var exemptions = "";
-                        for (var i = 0; i < results.entities.length; i++) {
-                            exemptions += results.entities[i]["_ts_provision_value@OData.Community.Display.V1.FormattedValue"] + "-" + results.entities[i]["a_exp.ts_name"] + ";";
-                        }
-
-                        var span = document.createElement("Span");
-                        span.innerHTML = "Exemptions:" + exemptions + "<br><br>";
-                        document.getElementById("div1").appendChild(span);
-                    }
-
-                }, function (error) {
-                });
-            },
-            function (error) {
-                parent.Xrm.Utility.alertDialog(error.message);
-            }
-        );
     </script>
 </body>
 </html>
