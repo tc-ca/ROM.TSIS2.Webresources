@@ -5,6 +5,8 @@ var detailTextAddLocalizedText;
 var detailTextMinusLocalizedText;
 var provideDetailsLocalizedText;
 var unsavedNotificationMessage;
+var invokeExemptionLocalized;
+var provisionLocalized;
 
 let timeSinceLastNotification;
 
@@ -13,12 +15,16 @@ if (lang == 1036) {
     provideDetailsLocalizedText = "Veuillez fournir des détails de l'inspection.";
     undecidedFindingTypeErrorLocalizedText = "Veuillez selectionner un Type de constatation.";
     unsavedNotificationMessage = "Vous avez des changements non-enregistrés dans le questionnaire.";
+    invokeExemptionLocalized = "Invoquer l'exemption";
+    provisionLocalized = "Dispositions";
 }
 else {
     charactersRemainingLocalizedText = "characters remaining";
     provideDetailsLocalizedText = "Please provide inspection details.";
     undecidedFindingTypeErrorLocalizedText = "Please decide on a Finding Type.";
     unsavedNotificationMessage = "You have unsaved changes to the Questionnaire.";
+    invokeExemptionLocalized = "Invoke Exemption";
+    provisionLocalized = "Provision";
 }
 
 'use strict';
@@ -42,6 +48,269 @@ hasDetailQuestions.forEach(function (questionName) {
         default: "Détail"
     })
 });
+
+//add applicableProvisions and applicableProvisionsData property to all questions in hasApplicableProvisions array
+var hasApplicableProvisions = ["radiogroup", "checkbox", "dropdown", "image", "imagepicker", "file", "boolean", "matrix", "matrixdropdown", "matrixdynamic", "signaturepad", "rating", "expression", "html", "panel", "paneldynamic", "flowpanel"];
+hasApplicableProvisions.forEach(function (questionName) {
+    Survey
+        .Serializer
+        .addProperty(questionName, {
+            name: "applicableProvisions:provisionsSelection",
+            category: "general",
+        });
+    Survey
+        .Serializer
+        .addProperty(questionName, {
+            name: "applicableProvisionsData"
+        });
+});
+
+function appendApplicableProvisionsData(survey, options) {
+    //Create HTML elements
+    const question = options.htmlElement;
+    const provisionContainer = document.createElement("div");
+    const provisionParagraph = document.createElement("p");
+
+    const applicableProvisionsData = options.question.applicableProvisionsData
+    for (let provisionData of applicableProvisionsData) {
+        if (lang == 1036) {
+            provisionParagraph.innerHTML += provisionData.provisionNameFr + " ";
+        } else {
+            provisionParagraph.innerHTML += provisionData.provisionNameEn + " ";
+        }
+        
+    }
+    provisionContainer.appendChild(provisionParagraph);
+    question.appendChild(provisionContainer);
+}
+
+async function appendExemptions(survey, options) {
+    //Create HTML elements
+    const question = options.htmlElement;
+    const exemptionContainer = document.createElement("div");
+    const header = document.createElement("div"); //Collapsable Header for Exemption section
+    const content = document.createElement("div");
+    const ExemptionHeaderText = document.createElement("span");
+    const ExemptionExpandSymbol = document.createElement("span");
+    
+    const exemptionResponseId = options.question.name + "-Exemptions"
+
+    //Iterate through each applicable provision, get any exemptions that apply to that provision and add the applicableExemptions array
+    const applicableProvisionsData = options.question.applicableProvisionsData
+    const applicableExemptions = []
+    for (let provisionData of applicableProvisionsData) {
+        let applicableExemption = await getApplicableExemptions(provisionData.provisionNameEn);
+        if (applicableExemption != null) applicableExemptions.push(applicableExemption);
+    }
+
+    header.appendChild(ExemptionExpandSymbol);
+    header.appendChild(ExemptionHeaderText);
+    exemptionContainer.appendChild(header);
+    exemptionContainer.appendChild(content);
+    question.appendChild(exemptionContainer);
+
+    //Set Styles, Classes, and Text
+
+    exemptionContainer.style.marginTop = "10px";
+    header.style.backgroundColor = "#d3d3d3";
+    header.style.padding = "2px";
+    header.style.cursor = "pointer";
+    header.style.fontWeight = "bold";
+    
+    ExemptionHeaderText.innerHTML = "Exemptions";
+    content.style.display = "block";
+    content.style.border = "1px solid";
+    content.style.borderColor = "#d3d3d3";
+    content.style.padding = "0px 10px 10px 10px";
+    ExemptionExpandSymbol.innerHTML = "- ";
+
+    //Add functionality to HTML elements
+
+    //Toggle visibilty of content when header is clicked
+    header.onclick = function () {
+        if (content.style.display == "block") {
+            content.style.display = "none";
+            ExemptionExpandSymbol.innerHTML = "+ ";
+        } else {
+            content.style.display = "block";
+            ExemptionExpandSymbol.innerHTML = "- ";
+        }
+    };
+
+    let exemptionInputs = [];
+
+    // For each exemptions, add a checkbox to invoke and a comment box
+    for (let applicableExemption of applicableExemptions) {
+        // Create table to contain exemption related inputs
+        let exemptionsTable = document.createElement("table");
+        let exemptionsTableHeaderRow = document.createElement("tr");
+        let invokeExemptionHeader = document.createElement("th");
+        let provisionNameHeader = document.createElement("th");
+        let exemptionNameHeader = document.createElement("th");
+
+        invokeExemptionHeader.innerHTML = invokeExemptionLocalized;
+        provisionNameHeader.innerHTML = provisionLocalized;
+        exemptionNameHeader.innerHTML = "Exemption";
+
+        invokeExemptionHeader.style.width = "15%";
+        invokeExemptionHeader.style.textAlign = "left";
+        provisionNameHeader.style.width = "15%";
+        provisionNameHeader.style.textAlign = "left";
+        exemptionNameHeader.style.textAlign = "left";
+
+        exemptionsTableHeaderRow.appendChild(invokeExemptionHeader);
+        exemptionsTableHeaderRow.appendChild(provisionNameHeader);
+        exemptionsTableHeaderRow.appendChild(exemptionNameHeader);
+        exemptionsTable.appendChild(exemptionsTableHeaderRow);
+
+        //Create table elements for this exemption
+        let exemptionTableInvokeRow = document.createElement("tr");
+        let invokeExemptionDataCell = document.createElement("td");
+        let provisionNameDataCell = document.createElement("td");
+        let exemptionNameDataCell = document.createElement("td");
+
+        //Create a checkbox to invoke exemption
+        invokeExemptionCheckbox = document.createElement("input");
+        invokeExemptionCheckbox.type = "checkbox";
+        invokeExemptionCheckbox.className = "invokeExemptionCheckbox";
+        invokeExemptionCheckbox.value = applicableExemption.exemptionId;
+        invokeExemptionDataCell.appendChild(invokeExemptionCheckbox);
+
+        //Populate Provision Name Cell
+        provisionNameDataCell.innerHTML = applicableExemption.provisionNameEn;
+
+        //Populate Exemption Name Cell
+        exemptionNameDataCell.innerHTML = applicableExemption.exemptionName;
+
+        exemptionTableInvokeRow.appendChild(invokeExemptionDataCell);
+        exemptionTableInvokeRow.appendChild(provisionNameDataCell);
+        exemptionTableInvokeRow.appendChild(exemptionNameDataCell);
+        exemptionsTable.appendChild(exemptionTableInvokeRow);
+
+        //Create an input to write comments about the exemption
+        let exemptionCommentBox = document.createElement("textarea");
+        exemptionCommentBox.className = "form-control";
+        exemptionCommentBox.rows = 3;
+        exemptionCommentBox.cols = 50;
+        exemptionCommentBox.maxLength = 2000;
+        exemptionCommentBox.style.resize = "vertical";
+        if (survey.mode == "display") {
+            exemptionCommentBox.readOnly = true;
+        }
+
+        let characterCount = document.createElement("span");
+        characterCount.style.textAlign = "left";
+
+        //Update character count onKeyUp in exemptionCommentBox
+        let exemptionCommentBoxOnKeyUpHandler = function () {
+            let currLength = exemptionCommentBox.value.length;
+            characterCount.innerText = (exemptionCommentBox.maxLength - currLength) + " " + charactersRemainingLocalizedText;
+        }
+        exemptionCommentBox.onkeyup = exemptionCommentBoxOnKeyUpHandler;
+
+        content.appendChild(exemptionsTable);
+        content.appendChild(exemptionCommentBox);
+        content.appendChild(characterCount);
+
+        //Load previous exemption values
+        let previousResponseValues = survey.getValue(exemptionResponseId);
+        if (previousResponseValues != null) {
+            for (let previousResponseValue of previousResponseValues) {
+                if (previousResponseValue.exemptionId == applicableExemption.exemptionId && previousResponseValue.provisionId == applicableExemption.provisionId) {
+                    invokeExemptionCheckbox.checked = (previousResponseValue.exemptionInvoked == true);
+                    exemptionCommentBox.value = previousResponseValue.exemptionComment;
+                }
+            }
+        }
+        //Update character coutnt
+        exemptionCommentBoxOnKeyUpHandler();
+
+        exemptionInputs.push({
+            exemptionName: applicableExemption.exemptionName,
+            exemptionId: applicableExemption.exemptionId,
+            provisionNameEn: applicableExemption.provisionNameEn,
+            provisionNameFr: applicableExemption.provisionNameFr,
+            provisionId: applicableExemption.provisionId,
+            invokeCheckbox: invokeExemptionCheckbox,
+            commentBox: exemptionCommentBox
+        });
+
+        invokeExemptionCheckbox.onchange = function () {
+            let exemptionValues = [];
+            for (let exemptionInput of exemptionInputs) {
+                exemptionValues.push({
+                    exemptionName: exemptionInput.exemptionName,
+                    provisionNameEn: exemptionInput.provisionNameEn,
+                    provisionNameFr: exemptionInput.provisionNameFr,
+                    provisionId: exemptionInput.provisionId,
+                    exemptionId: exemptionInput.exemptionId,
+                    exemptionInvoked: exemptionInput.invokeCheckbox.checked,
+                    exemptionComment: exemptionInput.commentBox.value
+                });
+            }
+            survey.setValue((exemptionResponseId), exemptionValues);
+        }
+
+        exemptionCommentBox.onchange = function () {
+            let exemptionValues = [];
+            for (let exemptionInput of exemptionInputs) {
+                exemptionValues.push({
+                    exemptionName: exemptionInput.exemptionName,
+                    provisionNameEn: exemptionInput.provisionNameEn,
+                    provisionNameFr: exemptionInput.provisionNameFr,
+                    provisionId: exemptionInput.provisionId,
+                    exemptionId: exemptionInput.exemptionId,
+                    exemptionInvoked: exemptionInput.invokeCheckbox.checked,
+                    exemptionComment: exemptionInput.commentBox.value
+                });
+            }
+            survey.setValue((exemptionResponseId), exemptionValues);
+        }
+    }
+}
+
+
+
+async function getApplicableExemptions(provisionNameEn) {
+    let exemptionFilterFetchXml = [
+        "<fetch>",
+        "  <entity name='ts_exemptionfilter'>",
+        "    <filter>",
+        "      <condition attribute='statecode' operator='eq' value='0'/>",
+        "    </filter>",
+        "    <link-entity name='qm_rclegislation' from='qm_rclegislationid' to='ts_provision' alias='ts_provision'>",
+        "      <attribute name='ts_nameenglish'/>",
+        "      <attribute name='ts_namefrench'/>",
+        "      <attribute name='qm_rclegislationid'/>",
+        "      <filter>",
+        //TODO change this filter to use the provision guid. Questionnaires in DATA env need to be updated to use correct guid first.
+        //Provision names are unique, so this will work for now.
+        "        <condition attribute='ts_nameenglish' operator='eq' value='", provisionNameEn , "'/>",
+        "      </filter>",
+        "    </link-entity>",
+        "    <link-entity name='ts_exemption' from='ts_exemptionid' to='ts_exemption' alias='ts_exemption'>",
+        "      <attribute name='ts_name'/>",
+        "      <attribute name='ts_exemptionid'/>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>"
+    ].join("");
+    exemptionFilterFetchXml = "?fetchXml=" + encodeURIComponent(exemptionFilterFetchXml);
+    return await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemptionfilter", exemptionFilterFetchXml).then(function success(results) {
+        if (results.entities.length > 0) {
+            let exemptionObject = {
+                provisionId: results.entities[0]["ts_provision.qm_rclegislationid"],
+                provisionNameEn: results.entities[0]["ts_provision.ts_nameenglish"],
+                provisionNameFr: results.entities[0]["ts_provision.ts_namefrench"],
+                exemptionName: results.entities[0]["ts_exemption.ts_name"],
+                exemptionId: results.entities[0]["ts_exemption.ts_exemptionid"],
+            }
+            return exemptionObject;
+        } else {
+            return null;
+        }
+    });
+}
 
 function InitialContext(executionContext) {
     window.parentExecutionContext = executionContext;
@@ -290,10 +559,15 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
                     comment.readOnly = true;
                 }
             }
-
             //Load JSON definition, find current question, check hasDetail
-            if (options.question.hasDetail != true) return;
-            appendDetailToQuestion(survey, options);
+            if (options.question.hasDetail == true) {
+                appendDetailToQuestion(survey, options);
+            }
+
+            if (options.question.applicableProvisionsData != null) {
+                appendApplicableProvisionsData(survey, options);
+                appendExemptions(survey, options);
+            }
         });
 
     survey
