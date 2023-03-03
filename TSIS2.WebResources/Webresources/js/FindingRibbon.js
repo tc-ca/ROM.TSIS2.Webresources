@@ -69,9 +69,18 @@ function markComplete(primaryControl) {
     var issueaddressedonsite = primaryControl.getAttribute("ts_issueaddressedonsite").getValue();
     var nonComplianceTimeframe = primaryControl.getAttribute("ts_noncompliancetimeframe").getValue();
 
-    let nonComplianceTimeframeCheck = (!(issueaddressedonsite == 717750001 && nonComplianceTimeframe == null));
+    var issueaddressedonsiteVisibility = primaryControl.getControl("ts_issueaddressedonsite").getVisible();
 
-    if (finalEnforcementAction != null && issueaddressedonsite != null && nonComplianceTimeframeCheck) {
+    let nonComplianceTimeframeCheck;
+    
+    if(issueaddressedonsiteVisibility){
+        nonComplianceTimeframeCheck = (!(issueaddressedonsite == 717750001 && nonComplianceTimeframe == null)) 
+    }
+    else{
+        nonComplianceTimeframeCheck = nonComplianceTimeframe !== null
+    }
+    
+    if (finalEnforcementAction != null && (!issueaddressedonsiteVisibility || issueaddressedonsite != null) && nonComplianceTimeframeCheck) {
         primaryControl.getAttribute("statuscode").setValue(717750002); //Complete
         primaryControl.data.save().then(
             function success(result) {
@@ -85,7 +94,6 @@ function markComplete(primaryControl) {
         };
         var alertOptions = { height: 200, width: 450 };
         Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
-
     }
 }
 
