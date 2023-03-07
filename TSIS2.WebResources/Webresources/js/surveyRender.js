@@ -17,6 +17,7 @@ if (lang == 1036) {
     unsavedNotificationMessage = "Vous avez des changements non-enregistrés dans le questionnaire.";
     invokeExemptionLocalized = "Invoquer l'exemption";
     provisionLocalized = "Dispositions";
+    document.querySelector('#PrintPageButton').innerText = 'Imprimer la page';
 }
 else {
     charactersRemainingLocalizedText = "characters remaining";
@@ -25,6 +26,7 @@ else {
     unsavedNotificationMessage = "You have unsaved changes to the Questionnaire.";
     invokeExemptionLocalized = "Invoke Exemption";
     provisionLocalized = "Provision";
+    document.querySelector('#PrintPageButton').innerText = 'Print Page';
 }
 
 'use strict';
@@ -593,4 +595,75 @@ function DoComplete() {
     var currentPageNo = survey.currentPageNo;
     window.survey.doComplete();
     survey.currentPage = currentPageNo;
-} 
+}
+
+function PrintSurveyPage() {
+
+    // What we are doing is copying what is currently on the page and putting it to a new window for printing
+
+    let myWindow = window.open('', '', '');
+
+    var divID = 'surveyElement';
+
+    var mySurveyElement = document.getElementById(divID).innerHTML;
+
+    myWindow.document.write(`
+        <html>
+            <head>
+                ${document.head.innerHTML}
+            </head>
+            <body style="overflow-wrap: break-word;">
+                ${mySurveyElement}
+                <div id="surveyResult"></div>
+                <script type="text/javascript" src="../js/surveyRender.js"></script>
+                <style>
+                    @media print {
+                        .sv_row {
+                            display: block;
+                            page-break-inside: avoid;
+                        }
+
+                        .sv_main .sv_container .sv_body .sv_p_root table.sv_q_matrix td {
+                            text-align: left;
+                        }
+
+                        textarea.form-control.inspectorComments {
+                            height: 10em;
+                        }
+
+                        span.character-count {
+                            display: none;
+                        }
+
+                        .sv_prev_btn {
+                            display: none;
+                        }
+
+                        .sv_next_btn {
+                            display: none;
+                        }
+                    }
+                </style>
+            </body>
+        </html>`);
+
+    setTimeout(
+        function () {
+
+            // Circles will appear large, this code will remove them
+            const bigCircles = myWindow.document.querySelectorAll(".sv-hidden");
+
+            for (var i = 0; i < bigCircles.length; i++) {
+                bigCircles[i].remove();
+            }
+
+            myWindow.document.title = "";
+
+            // Show the print preview
+            myWindow.document.close();
+            myWindow.focus();
+            myWindow.print();
+            myWindow.close();
+        }, 1000
+    );
+}
