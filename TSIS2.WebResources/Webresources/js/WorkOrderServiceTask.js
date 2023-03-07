@@ -563,7 +563,7 @@ var ROM;
                             "</fetch>"
                         ].join("");
                         var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="qm_tylegislationsourceid"><cell name="qm_name" width="200" /></row></grid>';
-                        formContext.getControl("ts_legislationsourcefilter").addCustomView(viewId, entityName, "test", fetchXml, layoutXml, true);
+                        formContext.getControl("ts_legislationsourcefilter").addCustomView(viewId, entityName, "", fetchXml, layoutXml, true);
                     }
                 }
             });
