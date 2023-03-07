@@ -16,6 +16,7 @@ interface PostFollow_Relationships {
   regardingobjectid_msdyn_functionallocation?: msdyn_FunctionalLocation_Result | null;
   regardingobjectid_ovs_operation?: ovs_operation_Result | null;
   regardingobjectid_systemuser?: SystemUser_Result | null;
+  regardingobjectid_ts_teamplanningdata?: ts_TeamPlanningData_Result | null;
 }
 interface PostFollow extends PostFollow_Base, PostFollow_Relationships {
 }
@@ -40,6 +41,7 @@ interface PostFollow_Create extends PostFollow {
   regardingobjectid_recurringappointmentmaster_bind$recurringappointmentmasters?: string | null;
   regardingobjectid_systemuser_bind$systemusers?: string | null;
   regardingobjectid_task_bind$tasks?: string | null;
+  regardingobjectid_ts_teamplanningdata_bind$ts_teamplanningdatas?: string | null;
 }
 interface PostFollow_Update extends PostFollow {
 }
@@ -90,6 +92,7 @@ interface PostFollow_Expand {
   regardingobjectid_msdyn_functionallocation: WebExpand<PostFollow_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { regardingobjectid_msdyn_functionallocation: msdyn_FunctionalLocation_Result }>;
   regardingobjectid_ovs_operation: WebExpand<PostFollow_Expand, ovs_operation_Select, ovs_operation_Filter, { regardingobjectid_ovs_operation: ovs_operation_Result }>;
   regardingobjectid_systemuser: WebExpand<PostFollow_Expand, SystemUser_Select, SystemUser_Filter, { regardingobjectid_systemuser: SystemUser_Result }>;
+  regardingobjectid_ts_teamplanningdata: WebExpand<PostFollow_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata: ts_TeamPlanningData_Result }>;
 }
 interface PostFollow_FormattedResult {
   createdby_formatted?: string;
@@ -124,6 +127,7 @@ interface PostFollow_RelatedOne {
   regardingobjectid_msdyn_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   regardingobjectid_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   regardingobjectid_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  regardingobjectid_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
 }
 interface PostFollow_RelatedMany {
 }

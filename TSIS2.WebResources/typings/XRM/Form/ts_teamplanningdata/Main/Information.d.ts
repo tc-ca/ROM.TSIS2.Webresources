@@ -1,6 +1,13 @@
 declare namespace Form.ts_teamplanningdata.Main {
   namespace Information {
     namespace Tabs {
+      interface Timeline_tab extends Xrm.SectionCollectionBase {
+        get(name: "tab_5_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_3 extends Xrm.SectionCollectionBase {
         get(name: "null_section_3"): Xrm.PageSection;
         get(name: string): undefined;
@@ -78,6 +85,7 @@ declare namespace Form.ts_teamplanningdata.Main {
       get(name: "header_ts_residualinspectorhoursq2"): Xrm.NumberControl;
       get(name: "header_ts_residualinspectorhoursq3"): Xrm.NumberControl;
       get(name: "header_ts_residualinspectorhoursq4"): Xrm.NumberControl;
+      get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "subgrid_planning_data"): Xrm.BaseControl;
       get(name: "ts_availablehoursq1"): Xrm.NumberControl;
       get(name: "ts_availablehoursq2"): Xrm.NumberControl;
@@ -109,6 +117,7 @@ declare namespace Form.ts_teamplanningdata.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "Timeline_tab"): Xrm.PageTab<Tabs.Timeline_tab>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: "tab_hours"): Xrm.PageTab<Tabs.tab_hours>;
       get(name: "tab_planning_data"): Xrm.PageTab<Tabs.tab_planning_data>;
@@ -159,6 +168,7 @@ declare namespace Form.ts_teamplanningdata.Main {
     getControl(controlName: "header_ts_residualinspectorhoursq2"): Xrm.NumberControl;
     getControl(controlName: "header_ts_residualinspectorhoursq3"): Xrm.NumberControl;
     getControl(controlName: "header_ts_residualinspectorhoursq4"): Xrm.NumberControl;
+    getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "subgrid_planning_data"): Xrm.BaseControl;
     getControl(controlName: "ts_availablehoursq1"): Xrm.NumberControl;
     getControl(controlName: "ts_availablehoursq2"): Xrm.NumberControl;
