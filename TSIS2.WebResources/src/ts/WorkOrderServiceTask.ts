@@ -37,6 +37,7 @@ namespace ROM.WorkOrderServiceTask {
                     //If it's for a custom questionnaire, show the custom questionnaire section
                     if (result.ts_hascustomquestionnaire) {
                         Form.ui.tabs.get("tab_questionnaire").sections.get("section_custom_questionnaire").setVisible(true);
+                        filterLegislationSource(eContext);
                     }
                 }
             );
@@ -531,6 +532,34 @@ namespace ROM.WorkOrderServiceTask {
             form.getControl("ts_aircraftmodelother").setVisible(true);
             form.getControl("ts_aircraftmodel").setVisible(false);
         }
+    }
+
+    function filterLegislationSource(eContext: Xrm.ExecutionContext<any, any>) {
+        const formContext = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
+        const workOrderValue = formContext.getAttribute("msdyn_workorder").getValue();
+        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
+        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid&$expand=ovs_operationtypeid").then(function (workOrder) {
+            if (workOrder != null && workOrder.ovs_operationtypeid != null && workOrder.ovs_operationtypeid["_owningbusinessunit_value@OData.Community.Display.V1.FormattedValue"]) {
+                if (workOrder.ovs_operationtypeid["_owningbusinessunit_value@OData.Community.Display.V1.FormattedValue"].startsWith("Aviation")) {
+                    //Change Legislation Source filter to use
+                    const viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F662}';
+                    const entityName = "qm_tylegislationsource";
+                    var fetchXml = [
+                        "<fetch>",
+                        "  <entity name='qm_tylegislationsource'>",
+                        "    <link-entity name='ts_tylegislationsource_ovs_operationtype' from='qm_tylegislationsourceid' to='qm_tylegislationsourceid' intersect='true'>",
+                        "      <filter>",
+                        "        <condition attribute='ovs_operationtypeid' operator='eq' value='", workOrder.ovs_operationtypeid.ovs_operationtypeid , "' uitype='ts_tylegislationsource_ovs_operationtype'/>",
+                        "      </filter>",
+                        "    </link-entity>",
+                        "  </entity>",
+                        "</fetch>"
+                    ].join("");
+                    const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="qm_tylegislationsourceid"><cell name="qm_name" width="200" /></row></grid>';
+                    formContext.getControl("ts_legislationsourcefilter").addCustomView(viewId, entityName, "", fetchXml, layoutXml, true);
+                }
+            }
+        });
     }
 
     async function workOrderIsDraft(eContext: Xrm.ExecutionContext<any, any>) {
