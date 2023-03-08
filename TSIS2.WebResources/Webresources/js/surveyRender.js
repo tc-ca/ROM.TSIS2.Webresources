@@ -183,7 +183,22 @@ async function appendExemptions(survey, options) {
 
         //Populate Exemption Name Cell
         let exemptionAnchor = document.createElement("a");
-        exemptionAnchor.onclick = openExemptionForm();
+        //Open Exemption record in a modal form
+        exemptionAnchor.onclick = function ()
+        {
+            const pageInput = {
+                pageType: "entityrecord",
+                entityName: "ts_exemption",
+                entityId: applicableExemption.exemptionId,
+            };
+            const navigationOptions = {
+                target: 2,
+                height: { value: 80, unit: "%" },
+                width: { value: 80, unit: "%" },
+                position: 1
+            };
+            parent.Xrm.Navigation.navigateTo(pageInput, navigationOptions)
+        }
         exemptionAnchor.innerHTML = applicableExemption.exemptionName;
         exemptionNameDataCell.appendChild(exemptionAnchor);
 
