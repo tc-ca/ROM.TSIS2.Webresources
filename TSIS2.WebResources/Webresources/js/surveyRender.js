@@ -180,7 +180,10 @@ async function appendExemptions(survey, options) {
         provisionNameDataCell.innerHTML = applicableExemption.provisionNameEn;
 
         //Populate Exemption Name Cell
-        exemptionNameDataCell.innerHTML = applicableExemption.exemptionName;
+        let exemptionAnchor = document.createElement("a");
+        exemptionAnchor.onclick = openExemptionForm();
+        exemptionAnchor.innerHTML = applicableExemption.exemptionName;
+        exemptionNameDataCell.appendChild(exemptionAnchor);
 
         exemptionTableInvokeRow.appendChild(invokeExemptionDataCell);
         exemptionTableInvokeRow.appendChild(provisionNameDataCell);
@@ -310,6 +313,10 @@ async function getApplicableExemptions(provisionNameEn) {
             return null;
         }
     });
+}
+
+function openExemptionForm() {
+    console.log("exemption anchor click")
 }
 
 function InitialContext(executionContext) {
