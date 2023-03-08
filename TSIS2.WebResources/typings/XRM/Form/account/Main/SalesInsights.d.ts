@@ -115,6 +115,7 @@ declare namespace Form.account.Main {
       get(name: "primarycontactid"): Xrm.LookupControl<"contact">;
       get(name: "sic"): Xrm.StringControl;
       get(name: "telephone1"): Xrm.StringControl;
+      get(name: "telephone11"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "tickersymbol"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: "websiteurl"): Xrm.StringControl;
@@ -214,6 +215,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "primarycontactid"): Xrm.LookupControl<"contact">;
     getControl(controlName: "sic"): Xrm.StringControl;
     getControl(controlName: "telephone1"): Xrm.StringControl;
+    getControl(controlName: "telephone11"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "tickersymbol"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: "websiteurl"): Xrm.StringControl;
