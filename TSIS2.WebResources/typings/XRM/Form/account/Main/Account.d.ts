@@ -104,7 +104,7 @@ declare namespace Form.account.Main {
       get(name: "primarycontactid"): Xrm.LookupAttribute<"contact">;
       get(name: "revenue"): Xrm.NumberAttribute;
       get(name: "sic"): Xrm.Attribute<string>;
-      get(name: "telephone1"): Xrm.Attribute<string>;
+      get(name: "telephone1"): Xrm.Attribute<any>;
       get(name: "tickersymbol"): Xrm.Attribute<any>;
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
       get(name: "websiteurl"): Xrm.Attribute<string>;
@@ -169,7 +169,8 @@ declare namespace Form.account.Main {
       get(name: "preferredcontactmethodcode"): Xrm.OptionSetControl<account_preferredcontactmethodcode>;
       get(name: "primarycontactid"): Xrm.LookupControl<"contact">;
       get(name: "sic"): Xrm.StringControl;
-      get(name: "telephone1"): Xrm.StringControl;
+      get(name: "telephone1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "telephone11"): Xrm.StringControl;
       get(name: "tickersymbol"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: "websiteurl"): Xrm.StringControl;
@@ -236,7 +237,7 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "primarycontactid"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "revenue"): Xrm.NumberAttribute;
     getAttribute(attributeName: "sic"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "telephone1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "telephone1"): Xrm.Attribute<any>;
     getAttribute(attributeName: "tickersymbol"): Xrm.Attribute<any>;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string>;
@@ -296,7 +297,8 @@ declare namespace Form.account.Main {
     getControl(controlName: "preferredcontactmethodcode"): Xrm.OptionSetControl<account_preferredcontactmethodcode>;
     getControl(controlName: "primarycontactid"): Xrm.LookupControl<"contact">;
     getControl(controlName: "sic"): Xrm.StringControl;
-    getControl(controlName: "telephone1"): Xrm.StringControl;
+    getControl(controlName: "telephone1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "telephone11"): Xrm.StringControl;
     getControl(controlName: "tickersymbol"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: "websiteurl"): Xrm.StringControl;

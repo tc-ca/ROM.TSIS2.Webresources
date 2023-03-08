@@ -100,6 +100,7 @@ interface Email_Relationships {
   regardingobjectid_msdyn_workorderservicetask_email?: msdyn_workorderservicetask_Result | null;
   regardingobjectid_ovs_operation_email?: ovs_operation_Result | null;
   regardingobjectid_ts_securityincident_email?: ts_securityincident_Result | null;
+  regardingobjectid_ts_teamplanningdata_email?: ts_TeamPlanningData_Result | null;
 }
 interface Email extends Email_Base, Email_Relationships {
   ownerid_email_bind$systemusers?: string | null;
@@ -196,6 +197,7 @@ interface Email extends Email_Base, Email_Relationships {
   regardingobjectid_site_email_bind$sites?: string | null;
   regardingobjectid_ts_request_email_bind$ts_requests?: string | null;
   regardingobjectid_ts_securityincident_email_bind$ts_securityincidents?: string | null;
+  regardingobjectid_ts_teamplanningdata_email_bind$ts_teamplanningdatas?: string | null;
   serviceid_email_bind$services?: string | null;
   sla_email_sla_bind$slas?: string | null;
   stageid_processstage_bind$processstages?: string | null;
@@ -440,6 +442,7 @@ interface Email_Expand {
   regardingobjectid_msdyn_workorderservicetask_email: WebExpand<Email_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { regardingobjectid_msdyn_workorderservicetask_email: msdyn_workorderservicetask_Result }>;
   regardingobjectid_ovs_operation_email: WebExpand<Email_Expand, ovs_operation_Select, ovs_operation_Filter, { regardingobjectid_ovs_operation_email: ovs_operation_Result }>;
   regardingobjectid_ts_securityincident_email: WebExpand<Email_Expand, ts_securityincident_Select, ts_securityincident_Filter, { regardingobjectid_ts_securityincident_email: ts_securityincident_Result }>;
+  regardingobjectid_ts_teamplanningdata_email: WebExpand<Email_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata_email: ts_TeamPlanningData_Result }>;
   sendersaccount: WebExpand<Email_Expand, Account_Select, Account_Filter, { sendersaccount: Account_Result }>;
 }
 interface Email_FormattedResult {
@@ -543,6 +546,7 @@ interface Email_RelatedOne {
   regardingobjectid_msdyn_workorderservicetask_email: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   regardingobjectid_ovs_operation_email: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   regardingobjectid_ts_securityincident_email: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
+  regardingobjectid_ts_teamplanningdata_email: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   sendersaccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface Email_RelatedMany {

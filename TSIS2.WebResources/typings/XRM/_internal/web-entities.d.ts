@@ -400,29 +400,6 @@ interface ovs_Questionnaire_Create extends ovs_Questionnaire {
 }
 interface ovs_Questionnaire_Update extends ovs_Questionnaire {
 }
-interface Team_Base extends WebEntity {
-}
-interface Team_Fixed extends WebEntity_Fixed {
-  teamid: string;
-}
-interface Team extends Team_Base, Team_Relationships {
-}
-interface Team_Relationships {
-}
-interface Team_Result extends Team_Base, Team_Relationships {
-}
-interface Team_FormattedResult {
-}
-interface Team_Select {
-}
-interface Team_Expand {
-}
-interface Team_Filter {
-}
-interface Team_Create extends Team {
-}
-interface Team_Update extends Team {
-}
 interface ts_assessmentscorethredshots_Base extends WebEntity {
 }
 interface ts_assessmentscorethredshots_Fixed extends WebEntity_Fixed {
@@ -1113,6 +1090,29 @@ interface qm_rclegislation_Create extends qm_rclegislation {
 }
 interface qm_rclegislation_Update extends qm_rclegislation {
 }
+interface Team_Base extends WebEntity {
+}
+interface Team_Fixed extends WebEntity_Fixed {
+  teamid: string;
+}
+interface Team extends Team_Base, Team_Relationships {
+}
+interface Team_Relationships {
+}
+interface Team_Result extends Team_Base, Team_Relationships {
+}
+interface Team_FormattedResult {
+}
+interface Team_Select {
+}
+interface Team_Expand {
+}
+interface Team_Filter {
+}
+interface Team_Create extends Team {
+}
+interface Team_Update extends Team {
+}
 interface IncidentResolution_Base extends WebEntity {
 }
 interface IncidentResolution_Fixed extends WebEntity_Fixed {
@@ -1250,27 +1250,4 @@ interface BookingStatus_Filter {
 interface BookingStatus_Create extends BookingStatus {
 }
 interface BookingStatus_Update extends BookingStatus {
-}
-interface TeamMembership_Base extends WebEntity {
-}
-interface TeamMembership_Fixed extends WebEntity_Fixed {
-  teammembershipid: string;
-}
-interface TeamMembership extends TeamMembership_Base, TeamMembership_Relationships {
-}
-interface TeamMembership_Relationships {
-}
-interface TeamMembership_Result extends TeamMembership_Base, TeamMembership_Relationships {
-}
-interface TeamMembership_FormattedResult {
-}
-interface TeamMembership_Select {
-}
-interface TeamMembership_Expand {
-}
-interface TeamMembership_Filter {
-}
-interface TeamMembership_Create extends TeamMembership {
-}
-interface TeamMembership_Update extends TeamMembership {
 }
