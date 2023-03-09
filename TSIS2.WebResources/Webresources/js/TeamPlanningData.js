@@ -47,7 +47,7 @@ var ROM;
                 formContext.getControl("ts_fiscalyear").setDisabled(true);
                 var planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
                 if (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) {
-                    if (userHasRole("ROM - Business Admin")) {
+                    if (userHasRole("System Administrator|ROM - Business Admin")) {
                         formContext.getControl("ts_planstatus").setDisabled(false);
                     }
                     else {
@@ -526,7 +526,7 @@ var ROM;
                 formContext.getControl("ts_totalhoursfiscalyear").setDisabled(true);
                 formContext.getControl("header_ts_name").setDisabled(true);
                 formContext.getControl("header_ownerid").setDisabled(true);
-                if (userHasRole("ROM - Business Admin")) {
+                if (userHasRole("System Administrator|ROM - Business Admin")) {
                     formContext.getControl("ts_planstatus").setDisabled(false);
                 }
                 else {

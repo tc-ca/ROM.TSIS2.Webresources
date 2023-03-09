@@ -8,7 +8,7 @@
             const planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
 
             if (planStatusValue == ts_planstatus.Complete || planStatusValue == ts_planstatus.HQreview) {
-                if (userHasRole("ROM - Business Admin")) {
+                if (userHasRole("System Administrator|ROM - Business Admin")) {
                     formContext.getControl("ts_planstatus").setDisabled(false);
                 }
                 else {
@@ -481,7 +481,7 @@
             formContext.getControl("header_ts_name").setDisabled(true);
             formContext.getControl("header_ownerid").setDisabled(true);
 
-            if (userHasRole("ROM - Business Admin")) {
+            if (userHasRole("System Administrator|ROM - Business Admin")) {
                 formContext.getControl("ts_planstatus").setDisabled(false);
             }
             else {
