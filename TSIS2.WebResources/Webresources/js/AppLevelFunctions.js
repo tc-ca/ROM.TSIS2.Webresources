@@ -34,7 +34,7 @@ function showBanner(appId, dataEnv = false) {
             message = "All changes made to Questionnaires and Legislations will have to be manually migrated to the Production Environment";
         }
         else{
-            message = "Tous les changements effectués aux Questionnaires et aux Législations devront être manuellement migrés à l'environnement de Production "; 
+            message = "Tous les changements effectués aux Questionnaires et aux Législations devront être manuellement migrés à l'environnement de Production"; 
         }
     }
 
