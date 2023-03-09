@@ -486,6 +486,11 @@
               "uniquename": "ts_/js/TripRibbon.js",
               "file": "js\\TripRibbon.js",
               "description": "ROM TSIS 2.0 Trip Ribbon Scripts"
+            },
+            {
+              "uniquename": "ts_/js/AppLevelFunctions.js",
+              "file": "js\\AppLevelFunctions.js",
+              "description": "TSIS 2.0 AppLevel Scripts"
             }
           ]
         }
