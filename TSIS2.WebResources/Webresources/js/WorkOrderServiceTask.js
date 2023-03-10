@@ -545,9 +545,9 @@ var ROM;
             var formContext = eContext.getFormContext();
             var workOrderValue = formContext.getAttribute("msdyn_workorder").getValue();
             var workOrderId = workOrderValue ? workOrderValue[0].id : "";
-            Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid&$expand=ovs_operationtypeid").then(function (workOrder) {
-                if (workOrder != null && workOrder.ovs_operationtypeid != null && workOrder.ovs_operationtypeid["_owningbusinessunit_value@OData.Community.Display.V1.FormattedValue"]) {
-                    if (workOrder.ovs_operationtypeid["_owningbusinessunit_value@OData.Community.Display.V1.FormattedValue"].startsWith("Aviation")) {
+            Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid&$expand=ovs_operationtypeid($expand=owningbusinessunit($select=name))").then(function (workOrder) {
+                if (workOrder != null && workOrder.ovs_operationtypeid != null && workOrder.ovs_operationtypeid.owningbusinessunit.name != null) {
+                    if (workOrder.ovs_operationtypeid.owningbusinessunit.name.startsWith("Aviation")) {
                         //Change Legislation Source filter to use
                         var viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F662}';
                         var entityName = "qm_tylegislationsource";
