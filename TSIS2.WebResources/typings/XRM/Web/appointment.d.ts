@@ -73,6 +73,7 @@ interface Appointment_Relationships {
   regardingobjectid_contact_appointment?: Contact_Result | null;
   regardingobjectid_incident_appointment?: Incident_Result | null;
   regardingobjectid_msdyn_customerasset_appointment?: msdyn_customerasset_Result | null;
+  regardingobjectid_msdyn_functionallocation_appointment?: msdyn_FunctionalLocation_Result | null;
   regardingobjectid_msdyn_workorder_appointment?: msdyn_workorder_Result | null;
   regardingobjectid_msdyn_workorderservicetask_appointment?: msdyn_workorderservicetask_Result | null;
   regardingobjectid_ovs_operation_appointment?: ovs_operation_Result | null;
@@ -116,6 +117,7 @@ interface Appointment extends Appointment_Base, Appointment_Relationships {
   regardingobjectid_msdyn_bookingtimestamp_appointment_bind$msdyn_bookingtimestamps?: string | null;
   regardingobjectid_msdyn_customerasset_appointment_bind$msdyn_customerassets?: string | null;
   regardingobjectid_msdyn_fieldservicesetting_appointment_bind$msdyn_fieldservicesettings?: string | null;
+  regardingobjectid_msdyn_functionallocation_appointment_bind$msdyn_functionallocations?: string | null;
   regardingobjectid_msdyn_incidenttypecharacteristic_appointment_bind$msdyn_incidenttypecharacteristics?: string | null;
   regardingobjectid_msdyn_incidenttypeproduct_appointment_bind$msdyn_incidenttypeproducts?: string | null;
   regardingobjectid_msdyn_incidenttypeservice_appointment_bind$msdyn_incidenttypeservices?: string | null;
@@ -346,6 +348,7 @@ interface Appointment_Expand {
   regardingobjectid_contact_appointment: WebExpand<Appointment_Expand, Contact_Select, Contact_Filter, { regardingobjectid_contact_appointment: Contact_Result }>;
   regardingobjectid_incident_appointment: WebExpand<Appointment_Expand, Incident_Select, Incident_Filter, { regardingobjectid_incident_appointment: Incident_Result }>;
   regardingobjectid_msdyn_customerasset_appointment: WebExpand<Appointment_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { regardingobjectid_msdyn_customerasset_appointment: msdyn_customerasset_Result }>;
+  regardingobjectid_msdyn_functionallocation_appointment: WebExpand<Appointment_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { regardingobjectid_msdyn_functionallocation_appointment: msdyn_FunctionalLocation_Result }>;
   regardingobjectid_msdyn_workorder_appointment: WebExpand<Appointment_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder_appointment: msdyn_workorder_Result }>;
   regardingobjectid_msdyn_workorderservicetask_appointment: WebExpand<Appointment_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { regardingobjectid_msdyn_workorderservicetask_appointment: msdyn_workorderservicetask_Result }>;
   regardingobjectid_ovs_operation_appointment: WebExpand<Appointment_Expand, ovs_operation_Select, ovs_operation_Filter, { regardingobjectid_ovs_operation_appointment: ovs_operation_Result }>;
@@ -421,6 +424,7 @@ interface Appointment_RelatedOne {
   regardingobjectid_contact_appointment: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   regardingobjectid_incident_appointment: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   regardingobjectid_msdyn_customerasset_appointment: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
+  regardingobjectid_msdyn_functionallocation_appointment: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   regardingobjectid_msdyn_workorder_appointment: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   regardingobjectid_msdyn_workorderservicetask_appointment: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   regardingobjectid_ovs_operation_appointment: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
