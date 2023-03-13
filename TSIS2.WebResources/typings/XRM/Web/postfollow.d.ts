@@ -14,8 +14,10 @@ interface PostFollow_Relationships {
   regardingobjectid_contact?: Contact_Result | null;
   regardingobjectid_incident?: Incident_Result | null;
   regardingobjectid_msdyn_functionallocation?: msdyn_FunctionalLocation_Result | null;
+  regardingobjectid_msdyn_workorder?: msdyn_workorder_Result | null;
   regardingobjectid_ovs_operation?: ovs_operation_Result | null;
   regardingobjectid_systemuser?: SystemUser_Result | null;
+  regardingobjectid_ts_securityincident?: ts_securityincident_Result | null;
   regardingobjectid_ts_teamplanningdata?: ts_TeamPlanningData_Result | null;
 }
 interface PostFollow extends PostFollow_Base, PostFollow_Relationships {
@@ -33,6 +35,7 @@ interface PostFollow_Create extends PostFollow {
   regardingobjectid_letter_bind$letters?: string | null;
   regardingobjectid_msdyn_functionallocation_bind$msdyn_functionallocations?: string | null;
   regardingobjectid_msdyn_swarm_bind$msdyn_swarms?: string | null;
+  regardingobjectid_msdyn_workorder_bind$msdyn_workorders?: string | null;
   regardingobjectid_opportunity_bind$opportunities?: string | null;
   regardingobjectid_ovs_operation_bind$ovs_operations?: string | null;
   regardingobjectid_phonecall_bind$phonecalls?: string | null;
@@ -41,6 +44,7 @@ interface PostFollow_Create extends PostFollow {
   regardingobjectid_recurringappointmentmaster_bind$recurringappointmentmasters?: string | null;
   regardingobjectid_systemuser_bind$systemusers?: string | null;
   regardingobjectid_task_bind$tasks?: string | null;
+  regardingobjectid_ts_securityincident_bind$ts_securityincidents?: string | null;
   regardingobjectid_ts_teamplanningdata_bind$ts_teamplanningdatas?: string | null;
 }
 interface PostFollow_Update extends PostFollow {
@@ -90,8 +94,10 @@ interface PostFollow_Expand {
   regardingobjectid_contact: WebExpand<PostFollow_Expand, Contact_Select, Contact_Filter, { regardingobjectid_contact: Contact_Result }>;
   regardingobjectid_incident: WebExpand<PostFollow_Expand, Incident_Select, Incident_Filter, { regardingobjectid_incident: Incident_Result }>;
   regardingobjectid_msdyn_functionallocation: WebExpand<PostFollow_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { regardingobjectid_msdyn_functionallocation: msdyn_FunctionalLocation_Result }>;
+  regardingobjectid_msdyn_workorder: WebExpand<PostFollow_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder: msdyn_workorder_Result }>;
   regardingobjectid_ovs_operation: WebExpand<PostFollow_Expand, ovs_operation_Select, ovs_operation_Filter, { regardingobjectid_ovs_operation: ovs_operation_Result }>;
   regardingobjectid_systemuser: WebExpand<PostFollow_Expand, SystemUser_Select, SystemUser_Filter, { regardingobjectid_systemuser: SystemUser_Result }>;
+  regardingobjectid_ts_securityincident: WebExpand<PostFollow_Expand, ts_securityincident_Select, ts_securityincident_Filter, { regardingobjectid_ts_securityincident: ts_securityincident_Result }>;
   regardingobjectid_ts_teamplanningdata: WebExpand<PostFollow_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata: ts_TeamPlanningData_Result }>;
 }
 interface PostFollow_FormattedResult {
@@ -125,8 +131,10 @@ interface PostFollow_RelatedOne {
   regardingobjectid_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   regardingobjectid_incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   regardingobjectid_msdyn_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  regardingobjectid_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   regardingobjectid_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   regardingobjectid_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  regardingobjectid_ts_securityincident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   regardingobjectid_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
 }
 interface PostFollow_RelatedMany {

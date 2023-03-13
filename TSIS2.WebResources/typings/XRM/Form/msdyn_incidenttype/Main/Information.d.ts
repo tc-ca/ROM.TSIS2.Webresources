@@ -113,7 +113,9 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_vcbcheckedin"): Xrm.Attribute<any>;
       get(name: "ts_vcbloaded"): Xrm.Attribute<any>;
       get(name: "ts_vdestination"): Xrm.Attribute<any>;
+      get(name: "ts_vflightcategory"): Xrm.Attribute<any>;
       get(name: "ts_vflightnumber"): Xrm.Attribute<any>;
+      get(name: "ts_vflighttype"): Xrm.Attribute<any>;
       get(name: "ts_vgroomingservices"): Xrm.Attribute<any>;
       get(name: "ts_vlocation"): Xrm.Attribute<any>;
       get(name: "ts_vmanufacturer"): Xrm.Attribute<any>;
@@ -125,6 +127,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_vpaxcheckedin"): Xrm.Attribute<any>;
       get(name: "ts_vrampservices"): Xrm.Attribute<any>;
       get(name: "ts_vregistration"): Xrm.Attribute<any>;
+      get(name: "ts_vreportdetails"): Xrm.Attribute<any>;
       get(name: "ts_vscheduledtime"): Xrm.Attribute<any>;
       get(name: "ts_vsecuritysearchservices"): Xrm.Attribute<any>;
       get(name: string): undefined;
@@ -179,7 +182,9 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_vcbcheckedin"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_vcbloaded"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_vdestination"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_vflightcategory"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_vflightnumber"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_vflighttype"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_vgroomingservices"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_vlocation"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_vmanufacturer"): Xrm.Control<Xrm.Attribute<any>>;
@@ -191,6 +196,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_vpaxcheckedin"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_vrampservices"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_vregistration"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_vreportdetails"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_vscheduledtime"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_vsecuritysearchservices"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: string): undefined;
@@ -253,7 +259,9 @@ declare namespace Form.msdyn_incidenttype.Main {
     getAttribute(attributeName: "ts_vcbcheckedin"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_vcbloaded"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_vdestination"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_vflightcategory"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_vflightnumber"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_vflighttype"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_vgroomingservices"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_vlocation"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_vmanufacturer"): Xrm.Attribute<any>;
@@ -265,6 +273,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getAttribute(attributeName: "ts_vpaxcheckedin"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_vrampservices"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_vregistration"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_vreportdetails"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_vscheduledtime"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_vsecuritysearchservices"): Xrm.Attribute<any>;
     getAttribute(attributeName: string): undefined;
@@ -314,7 +323,9 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "ts_vcbcheckedin"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_vcbloaded"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_vdestination"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_vflightcategory"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_vflightnumber"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_vflighttype"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_vgroomingservices"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_vlocation"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_vmanufacturer"): Xrm.Control<Xrm.Attribute<any>>;
@@ -326,6 +337,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "ts_vpaxcheckedin"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_vrampservices"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_vregistration"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_vreportdetails"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_vscheduledtime"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_vsecuritysearchservices"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: string): undefined;

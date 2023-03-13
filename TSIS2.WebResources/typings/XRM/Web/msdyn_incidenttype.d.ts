@@ -42,7 +42,9 @@ interface msdyn_incidenttype_Base extends WebEntity {
   ts_vcbcheckedin?: boolean | null;
   ts_vcbloaded?: boolean | null;
   ts_vdestination?: boolean | null;
+  ts_vflightcategory?: boolean | null;
   ts_vflightnumber?: boolean | null;
+  ts_vflighttype?: boolean | null;
   ts_vgroomingservices?: boolean | null;
   ts_vlocation?: boolean | null;
   ts_vmanufacturer?: boolean | null;
@@ -54,6 +56,7 @@ interface msdyn_incidenttype_Base extends WebEntity {
   ts_vpaxcheckedin?: boolean | null;
   ts_vrampservices?: boolean | null;
   ts_vregistration?: boolean | null;
+  ts_vreportdetails?: boolean | null;
   ts_vscheduledtime?: boolean | null;
   ts_vsecuritysearchservices?: boolean | null;
   utcconversiontimezonecode?: number | null;
@@ -134,7 +137,9 @@ interface msdyn_incidenttype_Select {
   ts_vcbcheckedin: WebAttribute<msdyn_incidenttype_Select, { ts_vcbcheckedin: boolean | null }, {  }>;
   ts_vcbloaded: WebAttribute<msdyn_incidenttype_Select, { ts_vcbloaded: boolean | null }, {  }>;
   ts_vdestination: WebAttribute<msdyn_incidenttype_Select, { ts_vdestination: boolean | null }, {  }>;
+  ts_vflightcategory: WebAttribute<msdyn_incidenttype_Select, { ts_vflightcategory: boolean | null }, {  }>;
   ts_vflightnumber: WebAttribute<msdyn_incidenttype_Select, { ts_vflightnumber: boolean | null }, {  }>;
+  ts_vflighttype: WebAttribute<msdyn_incidenttype_Select, { ts_vflighttype: boolean | null }, {  }>;
   ts_vgroomingservices: WebAttribute<msdyn_incidenttype_Select, { ts_vgroomingservices: boolean | null }, {  }>;
   ts_vlocation: WebAttribute<msdyn_incidenttype_Select, { ts_vlocation: boolean | null }, {  }>;
   ts_vmanufacturer: WebAttribute<msdyn_incidenttype_Select, { ts_vmanufacturer: boolean | null }, {  }>;
@@ -146,6 +151,7 @@ interface msdyn_incidenttype_Select {
   ts_vpaxcheckedin: WebAttribute<msdyn_incidenttype_Select, { ts_vpaxcheckedin: boolean | null }, {  }>;
   ts_vrampservices: WebAttribute<msdyn_incidenttype_Select, { ts_vrampservices: boolean | null }, {  }>;
   ts_vregistration: WebAttribute<msdyn_incidenttype_Select, { ts_vregistration: boolean | null }, {  }>;
+  ts_vreportdetails: WebAttribute<msdyn_incidenttype_Select, { ts_vreportdetails: boolean | null }, {  }>;
   ts_vscheduledtime: WebAttribute<msdyn_incidenttype_Select, { ts_vscheduledtime: boolean | null }, {  }>;
   ts_vsecuritysearchservices: WebAttribute<msdyn_incidenttype_Select, { ts_vsecuritysearchservices: boolean | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<msdyn_incidenttype_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -206,7 +212,9 @@ interface msdyn_incidenttype_Filter {
   ts_vcbcheckedin: boolean;
   ts_vcbloaded: boolean;
   ts_vdestination: boolean;
+  ts_vflightcategory: boolean;
   ts_vflightnumber: boolean;
+  ts_vflighttype: boolean;
   ts_vgroomingservices: boolean;
   ts_vlocation: boolean;
   ts_vmanufacturer: boolean;
@@ -218,6 +226,7 @@ interface msdyn_incidenttype_Filter {
   ts_vpaxcheckedin: boolean;
   ts_vrampservices: boolean;
   ts_vregistration: boolean;
+  ts_vreportdetails: boolean;
   ts_vscheduledtime: boolean;
   ts_vsecuritysearchservices: boolean;
   utcconversiontimezonecode: number;
