@@ -32,11 +32,14 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
   ts_brandname?: ts_aircarrierbrandname | null;
   ts_cbloaded?: string | null;
   ts_cbonboard?: string | null;
+  ts_flightcategory?: ts_flightcategory | null;
   ts_flightnumber?: string | null;
+  ts_flighttype?: ts_flighttype | null;
   ts_location?: string | null;
   ts_mandatory?: boolean | null;
   ts_paxboarded?: string | null;
   ts_paxonboard?: string | null;
+  ts_reportdetails?: string | null;
   ts_scheduledtime?: Date | null;
   ts_servicetaskenddate?: Date | null;
   ts_servicetaskstartdate?: Date | null;
@@ -173,7 +176,9 @@ interface msdyn_workorderservicetask_Select {
   ts_cbloaded: WebAttribute<msdyn_workorderservicetask_Select, { ts_cbloaded: string | null }, {  }>;
   ts_cbonboard: WebAttribute<msdyn_workorderservicetask_Select, { ts_cbonboard: string | null }, {  }>;
   ts_destination_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_destination_guid: string | null }, { ts_destination_formatted?: string }>;
+  ts_flightcategory: WebAttribute<msdyn_workorderservicetask_Select, { ts_flightcategory: ts_flightcategory | null }, { ts_flightcategory_formatted?: string }>;
   ts_flightnumber: WebAttribute<msdyn_workorderservicetask_Select, { ts_flightnumber: string | null }, {  }>;
+  ts_flighttype: WebAttribute<msdyn_workorderservicetask_Select, { ts_flighttype: ts_flighttype | null }, { ts_flighttype_formatted?: string }>;
   ts_gate_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_gate_guid: string | null }, { ts_gate_formatted?: string }>;
   ts_groomingservices_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_groomingservices_guid: string | null }, { ts_groomingservices_formatted?: string }>;
   ts_legislationsourcefilter_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_legislationsourcefilter_guid: string | null }, { ts_legislationsourcefilter_formatted?: string }>;
@@ -187,6 +192,7 @@ interface msdyn_workorderservicetask_Select {
   ts_paxboarded: WebAttribute<msdyn_workorderservicetask_Select, { ts_paxboarded: string | null }, {  }>;
   ts_paxonboard: WebAttribute<msdyn_workorderservicetask_Select, { ts_paxonboard: string | null }, {  }>;
   ts_rampservices_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_rampservices_guid: string | null }, { ts_rampservices_formatted?: string }>;
+  ts_reportdetails: WebAttribute<msdyn_workorderservicetask_Select, { ts_reportdetails: string | null }, {  }>;
   ts_scheduledtime: WebAttribute<msdyn_workorderservicetask_Select, { ts_scheduledtime: Date | null }, { ts_scheduledtime_formatted?: string }>;
   ts_securitysearchservices_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_securitysearchservices_guid: string | null }, { ts_securitysearchservices_formatted?: string }>;
   ts_servicetaskenddate: WebAttribute<msdyn_workorderservicetask_Select, { ts_servicetaskenddate: Date | null }, { ts_servicetaskenddate_formatted?: string }>;
@@ -257,7 +263,9 @@ interface msdyn_workorderservicetask_Filter {
   ts_cbloaded: string;
   ts_cbonboard: string;
   ts_destination_guid: XQW.Guid;
+  ts_flightcategory: ts_flightcategory;
   ts_flightnumber: string;
+  ts_flighttype: ts_flighttype;
   ts_gate_guid: XQW.Guid;
   ts_groomingservices_guid: XQW.Guid;
   ts_legislationsourcefilter_guid: XQW.Guid;
@@ -271,6 +279,7 @@ interface msdyn_workorderservicetask_Filter {
   ts_paxboarded: string;
   ts_paxonboard: string;
   ts_rampservices_guid: XQW.Guid;
+  ts_reportdetails: string;
   ts_scheduledtime: Date;
   ts_securitysearchservices_guid: XQW.Guid;
   ts_servicetaskenddate: Date;
@@ -359,6 +368,8 @@ interface msdyn_workorderservicetask_FormattedResult {
   ts_cargoservices_formatted?: string;
   ts_cateringservices_formatted?: string;
   ts_destination_formatted?: string;
+  ts_flightcategory_formatted?: string;
+  ts_flighttype_formatted?: string;
   ts_gate_formatted?: string;
   ts_groomingservices_formatted?: string;
   ts_legislationsourcefilter_formatted?: string;

@@ -199,6 +199,7 @@ interface Account_Relationships {
   ts_ts_enforcementaction_Individualcompany_ac?: ts_enforcementaction_Result[] | null;
   ts_ts_operationactivity_Stakeholder_account?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_Stakeholder_account?: ts_PlanningData_Result[] | null;
+  ts_ts_securityincident_AirCarrier_account?: ts_securityincident_Result[] | null;
 }
 interface Account extends Account_Base, Account_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
@@ -663,6 +664,7 @@ interface Account_Expand {
   ts_ts_enforcementaction_Individualcompany_ac: WebExpand<Account_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Individualcompany_ac: ts_enforcementaction_Result[] }>;
   ts_ts_operationactivity_Stakeholder_account: WebExpand<Account_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Stakeholder_account: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_Stakeholder_account: WebExpand<Account_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Stakeholder_account: ts_PlanningData_Result[] }>;
+  ts_ts_securityincident_AirCarrier_account: WebExpand<Account_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_ts_securityincident_AirCarrier_account: ts_securityincident_Result[] }>;
 }
 interface Account_FormattedResult {
   accountcategorycode_formatted?: string;
@@ -844,6 +846,7 @@ interface Account_RelatedMany {
   ts_ts_enforcementaction_Individualcompany_ac: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_ts_operationactivity_Stakeholder_account: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_Stakeholder_account: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
+  ts_ts_securityincident_AirCarrier_account: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   accounts: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

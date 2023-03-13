@@ -153,6 +153,7 @@ declare namespace Form.contact.Main {
       get(name: "lastusedincampaign"): Xrm.DateControl;
       get(name: "mapcontrol"): Xrm.BaseControl;
       get(name: "mobilephone"): Xrm.StringControl;
+      get(name: "mobilephone1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "originatingleadid"): Xrm.LookupControl<"lead">;
       get(name: "parentcustomerid"): Xrm.LookupControl<"account" | "contact">;
@@ -163,6 +164,7 @@ declare namespace Form.contact.Main {
       get(name: "spousesname"): Xrm.StringControl;
       get(name: "subgrid_Entitlement"): Xrm.SubGridControl<"entitlement">;
       get(name: "telephone1"): Xrm.StringControl;
+      get(name: "telephone11"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -284,6 +286,7 @@ declare namespace Form.contact.Main {
     getControl(controlName: "lastusedincampaign"): Xrm.DateControl;
     getControl(controlName: "mapcontrol"): Xrm.BaseControl;
     getControl(controlName: "mobilephone"): Xrm.StringControl;
+    getControl(controlName: "mobilephone1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "originatingleadid"): Xrm.LookupControl<"lead">;
     getControl(controlName: "parentcustomerid"): Xrm.LookupControl<"account" | "contact">;
@@ -294,6 +297,7 @@ declare namespace Form.contact.Main {
     getControl(controlName: "spousesname"): Xrm.StringControl;
     getControl(controlName: "subgrid_Entitlement"): Xrm.SubGridControl<"entitlement">;
     getControl(controlName: "telephone1"): Xrm.StringControl;
+    getControl(controlName: "telephone11"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: string): undefined;
   }

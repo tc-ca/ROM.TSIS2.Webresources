@@ -117,6 +117,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "header_ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "header_ts_stakeholder"): Xrm.LookupControl<"account">;
       get(name: "notescontrol"): Xrm.BaseControl;
+      get(name: "notescontrol1"): Xrm.BaseControl;
       get(name: "operation_activity_grid"): Xrm.BaseControl;
       get(name: "ovs_name"): Xrm.StringControl;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
@@ -236,6 +237,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "header_ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "header_ts_stakeholder"): Xrm.LookupControl<"account">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
+    getControl(controlName: "notescontrol1"): Xrm.BaseControl;
     getControl(controlName: "operation_activity_grid"): Xrm.BaseControl;
     getControl(controlName: "ovs_name"): Xrm.StringControl;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;

@@ -341,6 +341,39 @@ var ROM;
                 Xrm.Navigation.openAlertDialog({ text: error.message });
             });
         }
+        function populateFlightCategory(eContext) {
+            var form = eContext.getFormContext();
+            var originValue = form.getAttribute("ts_origin").getValue();
+            var destinationValue = form.getAttribute("ts_destination").getValue();
+            var originCountry;
+            var distinationCountry;
+            if (originValue != null && destinationValue != null) {
+                Xrm.WebApi.retrieveRecord("msdyn_functionallocation", originValue[0].id, "?$select=_ts_country_value ").then(function success(result1) {
+                    originCountry = result1._ts_country_value;
+                    Xrm.WebApi.retrieveRecord("msdyn_functionallocation", destinationValue[0].id, "?$select=_ts_country_value ").then(function success(result2) {
+                        distinationCountry = result2._ts_country_value;
+                        if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
+                            // Domestic
+                            form.getAttribute("ts_flightcategory").setValue(741130000 /* Domestic */);
+                        }
+                        else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
+                            || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
+                            //International
+                            form.getAttribute("ts_flightcategory").setValue(741130001 /* International */);
+                        }
+                        else {
+                            //Transborder
+                            form.getAttribute("ts_flightcategory").setValue(741130002 /* Transborder */);
+                        }
+                    }, function error(error) {
+                        Xrm.Navigation.openAlertDialog({ text: error.message });
+                    });
+                }, function error(error) {
+                    Xrm.Navigation.openAlertDialog({ text: error.message });
+                });
+            }
+        }
+        WorkOrderServiceTask.populateFlightCategory = populateFlightCategory;
         function showHideFieldsByIncidentType(form) {
             var workOrderValue = form.getAttribute("msdyn_workorder").getValue();
             var workOrderId = workOrderValue ? workOrderValue[0].id : "";
@@ -349,6 +382,9 @@ var ROM;
                 ['ts_vflightnumber', 'ts_flightnumber'],
                 ['ts_vorigin', 'ts_origin'],
                 ['ts_vdestination', 'ts_destination'],
+                ['ts_vflightcategory', 'ts_flightcategory'],
+                ['ts_vflighttype', 'ts_flighttype'],
+                ['ts_vreportdetails', 'ts_reportdetails'],
                 ['ts_vpaxcheckedin', 'ts_paxonboard'],
                 ['ts_vpaxboarded', 'ts_paxboarded'],
                 ['ts_vcbcheckedin', 'ts_cbonboard'],
@@ -394,6 +430,7 @@ var ROM;
                 form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(false);
                 form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(false);
                 form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(false);
+                form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Other').setVisible(false);
             }
             else {
                 form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_AirCarrier').setVisible(true);
@@ -401,37 +438,8 @@ var ROM;
                 form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(true);
                 form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(true);
                 form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(true);
+                form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Other').setVisible(true);
             }
-            //if (operationTypeId == "8b614ef0-c651-eb11-a812-000d3af3ac0d") {  //Air Carrier (Passenger)
-            //    form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(true);
-            //    form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(true);
-            //    form.getControl('ts_brandname').setVisible(true);
-            //    form.getControl('ts_aocoperation').setVisible(true);
-            //    form.getControl('ts_aocstakeholder').setVisible(true);
-            //    form.getControl('ts_aocoperationtype').setVisible(true);
-            //    form.getControl('ts_aocsite').setVisible(true);
-            //    form.getControl('ts_passengerservices').setVisible(true);
-            //    form.getControl('ts_rampservices').setVisible(true);
-            //    form.getControl('ts_cargoservices').setVisible(true);
-            //    form.getControl('ts_cateringservices').setVisible(true);
-            //    form.getControl('ts_groomingservices').setVisible(true);
-            //    form.getControl('ts_securitysearchservices').setVisible(true);
-            //}
-            //else {
-            //    form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(false);
-            //    form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(false);
-            //    form.getControl('ts_brandname').setVisible(false);
-            //    form.getControl('ts_aocoperation').setVisible(false);
-            //    form.getControl('ts_aocstakeholder').setVisible(false);
-            //    form.getControl('ts_aocoperationtype').setVisible(false);
-            //    form.getControl('ts_aocsite').setVisible(false);
-            //    form.getControl('ts_passengerservices').setVisible(false);
-            //    form.getControl('ts_rampservices').setVisible(false);
-            //    form.getControl('ts_cargoservices').setVisible(false);
-            //    form.getControl('ts_cateringservices').setVisible(false);
-            //    form.getControl('ts_groomingservices').setVisible(false);
-            //    form.getControl('ts_securitysearchservices').setVisible(false);
-            //}
         }
         function setAOCSiteFilteredView(form, regionAttributeId, stakeholderTypeAttributeId, operationTypeAttributeId) {
             var viewId = '{6E57251F-F695-4076-9498-49AB892154B7}';
@@ -441,17 +449,6 @@ var ROM;
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_aocsite").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
-        //function setSubSiteFilteredView(form: Form.msdyn_workorderservicetask.Main.SurveyJS, siteId): void {
-        //    if (siteId != null && siteId != undefined) {
-        //        const viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
-        //        const entityName = "msdyn_functionallocation";
-        //        const viewDisplayName = "Filtered Sites";
-        //        const siteFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteId + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
-        //        const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-        //        form.getControl("ts_boardinglounge").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
-        //        form.getControl("ts_gate").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
-        //    }
-        //}
         function AOCOperationOnChange(eContext) {
             var form = eContext.getFormContext();
             var aocOperation = form.getAttribute("ts_aocoperation").getValue();

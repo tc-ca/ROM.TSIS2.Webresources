@@ -50,6 +50,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
         get(name: "tab_Oversight_Aircraft"): Xrm.PageSection;
         get(name: "tab_Oversight_Flight"): Xrm.PageSection;
         get(name: "tab_Oversight_Location"): Xrm.PageSection;
+        get(name: "tab_Oversight_Other"): Xrm.PageSection;
         get(name: "tab_Oversight_ServiceProviders"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -121,7 +122,9 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_cbloaded"): Xrm.Attribute<string>;
       get(name: "ts_cbonboard"): Xrm.Attribute<string>;
       get(name: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_flightcategory"): Xrm.OptionSetAttribute<ts_flightcategory>;
       get(name: "ts_flightnumber"): Xrm.Attribute<string>;
+      get(name: "ts_flighttype"): Xrm.OptionSetAttribute<ts_flighttype>;
       get(name: "ts_groomingservices"): Xrm.LookupAttribute<"account">;
       get(name: "ts_legislationsourcefilter"): Xrm.LookupAttribute<"qm_tylegislationsource">;
       get(name: "ts_legislationtypefilter"): Xrm.LookupAttribute<"qm_tylegislationtype">;
@@ -133,6 +136,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_paxboarded"): Xrm.Attribute<string>;
       get(name: "ts_paxonboard"): Xrm.Attribute<string>;
       get(name: "ts_rampservices"): Xrm.LookupAttribute<"account">;
+      get(name: "ts_reportdetails"): Xrm.Attribute<string>;
       get(name: "ts_scheduledtime"): Xrm.DateAttribute;
       get(name: "ts_securitysearchservices"): Xrm.LookupAttribute<"account">;
       get(name: "ts_servicetaskenddate"): Xrm.DateAttribute;
@@ -194,7 +198,9 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_cbloaded"): Xrm.StringControl;
       get(name: "ts_cbonboard"): Xrm.StringControl;
       get(name: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_flightcategory"): Xrm.OptionSetControl<ts_flightcategory>;
       get(name: "ts_flightnumber"): Xrm.StringControl;
+      get(name: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
       get(name: "ts_groomingservices"): Xrm.LookupControl<"account">;
       get(name: "ts_legislationsourcefilter"): Xrm.LookupControl<"qm_tylegislationsource">;
       get(name: "ts_legislationtypefilter"): Xrm.LookupControl<"qm_tylegislationtype">;
@@ -206,6 +212,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_paxboarded"): Xrm.StringControl;
       get(name: "ts_paxonboard"): Xrm.StringControl;
       get(name: "ts_rampservices"): Xrm.LookupControl<"account">;
+      get(name: "ts_reportdetails"): Xrm.StringControl;
       get(name: "ts_scheduledtime"): Xrm.DateControl;
       get(name: "ts_securitysearchservices"): Xrm.LookupControl<"account">;
       get(name: "ts_servicetaskenddate"): Xrm.DateControl;
@@ -270,7 +277,9 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ts_cbloaded"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_cbonboard"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_flightcategory"): Xrm.OptionSetAttribute<ts_flightcategory>;
     getAttribute(attributeName: "ts_flightnumber"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_flighttype"): Xrm.OptionSetAttribute<ts_flighttype>;
     getAttribute(attributeName: "ts_groomingservices"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_legislationsourcefilter"): Xrm.LookupAttribute<"qm_tylegislationsource">;
     getAttribute(attributeName: "ts_legislationtypefilter"): Xrm.LookupAttribute<"qm_tylegislationtype">;
@@ -282,6 +291,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ts_paxboarded"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_paxonboard"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_rampservices"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "ts_reportdetails"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_scheduledtime"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_securitysearchservices"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_servicetaskenddate"): Xrm.DateAttribute;
@@ -338,7 +348,9 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "ts_cbloaded"): Xrm.StringControl;
     getControl(controlName: "ts_cbonboard"): Xrm.StringControl;
     getControl(controlName: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_flightcategory"): Xrm.OptionSetControl<ts_flightcategory>;
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
+    getControl(controlName: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
     getControl(controlName: "ts_groomingservices"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_legislationsourcefilter"): Xrm.LookupControl<"qm_tylegislationsource">;
     getControl(controlName: "ts_legislationtypefilter"): Xrm.LookupControl<"qm_tylegislationtype">;
@@ -350,6 +362,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "ts_paxboarded"): Xrm.StringControl;
     getControl(controlName: "ts_paxonboard"): Xrm.StringControl;
     getControl(controlName: "ts_rampservices"): Xrm.LookupControl<"account">;
+    getControl(controlName: "ts_reportdetails"): Xrm.StringControl;
     getControl(controlName: "ts_scheduledtime"): Xrm.DateControl;
     getControl(controlName: "ts_securitysearchservices"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_servicetaskenddate"): Xrm.DateControl;

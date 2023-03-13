@@ -287,10 +287,6 @@ interface SystemUser_Relationships {
   lk_ts_teamplanningdata_createdonbehalfby?: ts_TeamPlanningData_Result[] | null;
   lk_ts_teamplanningdata_modifiedby?: ts_TeamPlanningData_Result[] | null;
   lk_ts_teamplanningdata_modifiedonbehalfby?: ts_TeamPlanningData_Result[] | null;
-  lk_ts_teamplanninginspectorhours_createdby?: ts_TeamPlanningInspectorHours_Result[] | null;
-  lk_ts_teamplanninginspectorhours_createdonbehalfby?: ts_TeamPlanningInspectorHours_Result[] | null;
-  lk_ts_teamplanninginspectorhours_modifiedby?: ts_TeamPlanningInspectorHours_Result[] | null;
-  lk_ts_teamplanninginspectorhours_modifiedonbehalfby?: ts_TeamPlanningInspectorHours_Result[] | null;
   lk_ts_workordercreationwizard_createdby?: ts_workordercreationwizard_Result[] | null;
   lk_ts_workordercreationwizard_createdonbehalfby?: ts_workordercreationwizard_Result[] | null;
   lk_ts_workordercreationwizard_modifiedby?: ts_workordercreationwizard_Result[] | null;
@@ -319,7 +315,6 @@ interface SystemUser_Relationships {
   ts_ovs_Finding_RATEManager_SystemUser?: ovs_Finding_Result[] | null;
   ts_systemuser_ts_planningsettings_owner?: ts_planningsettings_Result[] | null;
   ts_ts_inspectionhours_Inspector_systemuser?: ts_InspectionHours_Result[] | null;
-  ts_ts_teamplanninginspectorhours_Inspector_s?: ts_TeamPlanningInspectorHours_Result[] | null;
   user_accounts?: Account_Result[] | null;
   user_appointment?: Appointment_Result[] | null;
   user_bookableresource?: BookableResource_Result[] | null;
@@ -356,7 +351,6 @@ interface SystemUser_Relationships {
   user_ts_role?: ts_role_Result[] | null;
   user_ts_securityincident?: ts_securityincident_Result[] | null;
   user_ts_teamplanningdata?: ts_TeamPlanningData_Result[] | null;
-  user_ts_teamplanninginspectorhours?: ts_TeamPlanningInspectorHours_Result[] | null;
   user_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
 }
 interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
@@ -826,10 +820,6 @@ interface SystemUser_Expand {
   lk_ts_teamplanningdata_createdonbehalfby: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { lk_ts_teamplanningdata_createdonbehalfby: ts_TeamPlanningData_Result[] }>;
   lk_ts_teamplanningdata_modifiedby: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { lk_ts_teamplanningdata_modifiedby: ts_TeamPlanningData_Result[] }>;
   lk_ts_teamplanningdata_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { lk_ts_teamplanningdata_modifiedonbehalfby: ts_TeamPlanningData_Result[] }>;
-  lk_ts_teamplanninginspectorhours_createdby: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { lk_ts_teamplanninginspectorhours_createdby: ts_TeamPlanningInspectorHours_Result[] }>;
-  lk_ts_teamplanninginspectorhours_createdonbehalfby: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { lk_ts_teamplanninginspectorhours_createdonbehalfby: ts_TeamPlanningInspectorHours_Result[] }>;
-  lk_ts_teamplanninginspectorhours_modifiedby: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { lk_ts_teamplanninginspectorhours_modifiedby: ts_TeamPlanningInspectorHours_Result[] }>;
-  lk_ts_teamplanninginspectorhours_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { lk_ts_teamplanninginspectorhours_modifiedonbehalfby: ts_TeamPlanningInspectorHours_Result[] }>;
   lk_ts_workordercreationwizard_createdby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_createdby: ts_workordercreationwizard_Result[] }>;
   lk_ts_workordercreationwizard_createdonbehalfby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_createdonbehalfby: ts_workordercreationwizard_Result[] }>;
   lk_ts_workordercreationwizard_modifiedby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_modifiedby: ts_workordercreationwizard_Result[] }>;
@@ -861,7 +851,6 @@ interface SystemUser_Expand {
   ts_ovs_Finding_RATEManager_SystemUser: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_RATEManager_SystemUser: ovs_Finding_Result[] }>;
   ts_systemuser_ts_planningsettings_owner: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { ts_systemuser_ts_planningsettings_owner: ts_planningsettings_Result[] }>;
   ts_ts_inspectionhours_Inspector_systemuser: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { ts_ts_inspectionhours_Inspector_systemuser: ts_InspectionHours_Result[] }>;
-  ts_ts_teamplanninginspectorhours_Inspector_s: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { ts_ts_teamplanninginspectorhours_Inspector_s: ts_TeamPlanningInspectorHours_Result[] }>;
   user_accounts: WebExpand<SystemUser_Expand, Account_Select, Account_Filter, { user_accounts: Account_Result[] }>;
   user_appointment: WebExpand<SystemUser_Expand, Appointment_Select, Appointment_Filter, { user_appointment: Appointment_Result[] }>;
   user_bookableresource: WebExpand<SystemUser_Expand, BookableResource_Select, BookableResource_Filter, { user_bookableresource: BookableResource_Result[] }>;
@@ -898,7 +887,6 @@ interface SystemUser_Expand {
   user_ts_role: WebExpand<SystemUser_Expand, ts_role_Select, ts_role_Filter, { user_ts_role: ts_role_Result[] }>;
   user_ts_securityincident: WebExpand<SystemUser_Expand, ts_securityincident_Select, ts_securityincident_Filter, { user_ts_securityincident: ts_securityincident_Result[] }>;
   user_ts_teamplanningdata: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { user_ts_teamplanningdata: ts_TeamPlanningData_Result[] }>;
-  user_ts_teamplanninginspectorhours: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { user_ts_teamplanninginspectorhours: ts_TeamPlanningInspectorHours_Result[] }>;
   user_ts_workordercreationwizard: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { user_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
 }
 interface SystemUser_FormattedResult {
@@ -1135,10 +1123,6 @@ interface SystemUser_RelatedMany {
   lk_ts_teamplanningdata_createdonbehalfby: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   lk_ts_teamplanningdata_modifiedby: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   lk_ts_teamplanningdata_modifiedonbehalfby: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
-  lk_ts_teamplanninginspectorhours_createdby: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
-  lk_ts_teamplanninginspectorhours_createdonbehalfby: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
-  lk_ts_teamplanninginspectorhours_modifiedby: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
-  lk_ts_teamplanninginspectorhours_modifiedonbehalfby: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
   lk_ts_workordercreationwizard_createdby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   lk_ts_workordercreationwizard_createdonbehalfby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   lk_ts_workordercreationwizard_modifiedby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
@@ -1166,7 +1150,6 @@ interface SystemUser_RelatedMany {
   ts_ovs_Finding_RATEManager_SystemUser: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_systemuser_ts_planningsettings_owner: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
   ts_ts_inspectionhours_Inspector_systemuser: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
-  ts_ts_teamplanninginspectorhours_Inspector_s: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
   user_accounts: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   user_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   user_bookableresource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
@@ -1203,7 +1186,6 @@ interface SystemUser_RelatedMany {
   user_ts_role: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
   user_ts_securityincident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   user_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
-  user_ts_teamplanninginspectorhours: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
   user_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

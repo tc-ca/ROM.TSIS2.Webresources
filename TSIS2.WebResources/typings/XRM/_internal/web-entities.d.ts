@@ -860,29 +860,6 @@ interface ts_TeamPlanningData_Create extends ts_TeamPlanningData {
 }
 interface ts_TeamPlanningData_Update extends ts_TeamPlanningData {
 }
-interface ts_TeamPlanningInspectorHours_Base extends WebEntity {
-}
-interface ts_TeamPlanningInspectorHours_Fixed extends WebEntity_Fixed {
-  ts_teamplanninginspectorhoursid: string;
-}
-interface ts_TeamPlanningInspectorHours extends ts_TeamPlanningInspectorHours_Base, ts_TeamPlanningInspectorHours_Relationships {
-}
-interface ts_TeamPlanningInspectorHours_Relationships {
-}
-interface ts_TeamPlanningInspectorHours_Result extends ts_TeamPlanningInspectorHours_Base, ts_TeamPlanningInspectorHours_Relationships {
-}
-interface ts_TeamPlanningInspectorHours_FormattedResult {
-}
-interface ts_TeamPlanningInspectorHours_Select {
-}
-interface ts_TeamPlanningInspectorHours_Expand {
-}
-interface ts_TeamPlanningInspectorHours_Filter {
-}
-interface ts_TeamPlanningInspectorHours_Create extends ts_TeamPlanningInspectorHours {
-}
-interface ts_TeamPlanningInspectorHours_Update extends ts_TeamPlanningInspectorHours {
-}
 interface ts_workordercreationwizard_Base extends WebEntity {
 }
 interface ts_workordercreationwizard_Fixed extends WebEntity_Fixed {
@@ -1020,29 +997,6 @@ interface Contact_Filter {
 interface Contact_Create extends Contact {
 }
 interface Contact_Update extends Contact {
-}
-interface SystemUser_Base extends WebEntity {
-}
-interface SystemUser_Fixed extends WebEntity_Fixed {
-  systemuserid: string;
-}
-interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
-}
-interface SystemUser_Relationships {
-}
-interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
-}
-interface SystemUser_FormattedResult {
-}
-interface SystemUser_Select {
-}
-interface SystemUser_Expand {
-}
-interface SystemUser_Filter {
-}
-interface SystemUser_Create extends SystemUser {
-}
-interface SystemUser_Update extends SystemUser {
 }
 interface ServiceAppointment_Base extends WebEntity {
 }
@@ -1204,6 +1158,29 @@ interface BookableResource_Filter {
 interface BookableResource_Create extends BookableResource {
 }
 interface BookableResource_Update extends BookableResource {
+}
+interface SystemUser_Base extends WebEntity {
+}
+interface SystemUser_Fixed extends WebEntity_Fixed {
+  systemuserid: string;
+}
+interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_Relationships {
+}
+interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_FormattedResult {
+}
+interface SystemUser_Select {
+}
+interface SystemUser_Expand {
+}
+interface SystemUser_Filter {
+}
+interface SystemUser_Create extends SystemUser {
+}
+interface SystemUser_Update extends SystemUser {
 }
 interface msdyn_customerassetcategory_Base extends WebEntity {
 }

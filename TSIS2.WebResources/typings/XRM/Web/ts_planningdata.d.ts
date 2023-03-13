@@ -21,6 +21,7 @@ interface ts_PlanningData_Base extends WebEntity {
   ts_generationlog?: string | null;
   ts_name?: string | null;
   ts_nullnumber?: number | null;
+  ts_operationactivityisactive?: number | null;
   ts_operationactivityisoperational?: number | null;
   ts_originalteamestimatedduration?: number | null;
   ts_plannedq1?: number | null;
@@ -101,6 +102,7 @@ interface ts_PlanningData_Select {
   ts_nullnumber: WebAttribute<ts_PlanningData_Select, { ts_nullnumber: number | null }, {  }>;
   ts_operation_guid: WebAttribute<ts_PlanningData_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
   ts_operationactivity_guid: WebAttribute<ts_PlanningData_Select, { ts_operationactivity_guid: string | null }, { ts_operationactivity_formatted?: string }>;
+  ts_operationactivityisactive: WebAttribute<ts_PlanningData_Select, { ts_operationactivityisactive: number | null }, {  }>;
   ts_operationactivityisoperational: WebAttribute<ts_PlanningData_Select, { ts_operationactivityisoperational: number | null }, {  }>;
   ts_operationtype_guid: WebAttribute<ts_PlanningData_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
   ts_originalteamestimatedduration: WebAttribute<ts_PlanningData_Select, { ts_originalteamestimatedduration: number | null }, {  }>;
@@ -158,6 +160,7 @@ interface ts_PlanningData_Filter {
   ts_nullnumber: number;
   ts_operation_guid: XQW.Guid;
   ts_operationactivity_guid: XQW.Guid;
+  ts_operationactivityisactive: number;
   ts_operationactivityisoperational: number;
   ts_operationtype_guid: XQW.Guid;
   ts_originalteamestimatedduration: any;
