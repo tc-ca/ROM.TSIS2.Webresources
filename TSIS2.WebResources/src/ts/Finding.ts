@@ -12,12 +12,15 @@
 
     let issoOperationTypeGuids = ["{B27E5003-C751-EB11-A812-000D3AF3AC0D}", "{C97A1A12-D8EB-EB11-BACB-000D3AF4FBEC}", "{21CA416A-431A-EC11-B6E7-000D3A09D067}", "{3B261029-C751-EB11-A812-000D3AF3AC0D}", "{D883B39A-C751-EB11-A812-000D3AF3AC0D}", "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}", "{199E31AE-C751-EB11-A812-000D3AF3AC0D}"]
 
+    //Air Carrier (Passenger), Air Carrier(All Cargo), Operator of an Aerodrome
+    let avSecOperationTypeGuides = ["{8B614EF0-C651-EB11-A812-000D3AF3AC0D}", "{E03381D0-C751-EB11-A812-000D3AF3AC0D}", "{E3238EDD-C651-EB11-A812-000D3AF3AC0D}"];
+
     //Toggle visibility of NCAT and RATE sections depending user business unit and rolls
     //Sets field Controls parameters (required, hidden, disabled, etc) depending on current form state
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         let complianceFindingType = formContext.getAttribute("ts_findingtype").getValue() == ts_findingtype.Noncompliance;
-        
+
         let isDualInspector = false;
         const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
         userRoles.forEach(role => {
@@ -25,7 +28,7 @@
                 isDualInspector = true;
             }
         });
-       
+
         formContext.getAttribute("ts_ncatfactorguide").setValue(false);
 
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
@@ -49,7 +52,7 @@
             const operationTypeAttributeValue = formContext.getAttribute("ts_ovs_operationtype").getValue();
 
             let operationTypeOwningBusinessUnit;
-            if(operationTypeAttributeValue != null){
+            if (operationTypeAttributeValue != null) {
                 let operationTypeOwningBusinessUnitFetchXML = [
                     "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
                     "  <entity name='businessunit'>",
@@ -64,10 +67,10 @@
                     "</fetch>"
                 ].join("");
                 operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(operationTypeOwningBusinessUnitFetchXML);
-        
+
                 Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function (operationTypeBusinessUnit) {
                     operationTypeOwningBusinessUnit = operationTypeBusinessUnit.entities[0].name;
-                    if(complianceFindingType){
+                    if (complianceFindingType) {
                         if (operationTypeAttributeValue != null) {
                             //Show NCAT Sections and fields if Operation Type is ISSO specific, else show RATE
                             if (issoOperationTypeGuids.includes(operationTypeAttributeValue[0].id)) {
@@ -94,8 +97,18 @@
                                 }
                             }
                             //Show RATE Sections and fields when the operation type owning business unit is Aviation Security or if the user business unit is Transport Canada
-                            else {
-                                formContext.ui.tabs.get("tab_RATE").setVisible(true);
+                            else {                             
+
+                                //If Operation Type is Air Carrier (Passenger) or Air Carrier(All Cargo) or Operator of an Aerodrome
+                                if (avSecOperationTypeGuides.includes(operationTypeAttributeValue[0].id)) {
+                                    formContext.ui.tabs.get("tab_RATE").setVisible(true);
+                                    formContext.getControl("ts_finalenforcementaction").setDisabled(true);
+                                }
+                                else {
+                                    formContext.getControl("ts_finalenforcementaction").setDisabled(false);
+                                    formContext.ui.tabs.get("tab_RATE").setVisible(false);
+                                }
+
                                 formContext.getControl("header_ts_rateenforcementrecommendation").setVisible(true);
 
                                 //If there's a recommended enforcement action and the finding is not complete yet, then the accept rate recommendation field should be unlocked
@@ -116,13 +129,13 @@
                                     formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
                                     setPostRATERecommendationSelectionFieldsVisibility(eContext);
                                     RATEManagerDecisionOnChange(eContext);
-                                }
+                                }                               
                             }
-                        }                          
+                        }
                         approvingNCATTeamsOnChange(eContext);
                         approvingRATETeamsOnChange(eContext);
                         RATESpecificComplianceHistoryOnChange(eContext);
-                        setApprovingTeamsViews(formContext); 
+                        setApprovingTeamsViews(formContext);
 
                         if (formContext.getAttribute("statuscode").getValue() == ovs_finding_statuscode.Complete) {
                             disableFormFields(formContext);
@@ -130,7 +143,8 @@
 
                         showHideNonComplianceTimeframe(formContext);
                     }
-                    if(shouldShowISSOOnlyFields(isDualInspector, operationTypeOwningBusinessUnit, userBusinessUnitName)){
+
+                    if (shouldShowISSOOnlyFields(isDualInspector, operationTypeOwningBusinessUnit, userBusinessUnitName)) {
                         formContext.getControl("ts_issueaddressedonsite").setVisible(true);
                         formContext.getControl("ts_notetostakeholder").setVisible(true);
                         formContext.getControl("ts_sensitivitylevel").setVisible(true);
@@ -144,7 +158,7 @@
                     formContext.getControl("ts_contact").setVisible(false);
                 }
             }
-        }); 
+        });
     }
 
     function shouldShowISSOOnlyFields(isDualInspector: any, operationTypeOwningBusinessUnit: any, userBusinessUnitName: any): boolean {
@@ -196,7 +210,7 @@
 
         //If any of the ncat factors don't have a value, reset any fields that require an enforcement recommendation
         if (factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null) {
-            
+
             return true;
         }
 
@@ -362,31 +376,31 @@
         }
 
         //If the NCAT factors are all filled
-        if(formContext.getAttribute("ts_ncatactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_ncatintentionality").getValue() != null && formContext.getAttribute("ts_ncatcompliancehistory").getValue() != null && formContext.getAttribute("ts_ncateconomicbenefit").getValue() != null && formContext.getAttribute("ts_ncatmitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ncatcooperationwithinspectionorinvestigat").getValue() != null && formContext.getAttribute("ts_ncatdetectionofnoncompliances").getValue() != null && acceptNCATRecommendation != null){
+        if (formContext.getAttribute("ts_ncatactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_ncatintentionality").getValue() != null && formContext.getAttribute("ts_ncatcompliancehistory").getValue() != null && formContext.getAttribute("ts_ncateconomicbenefit").getValue() != null && formContext.getAttribute("ts_ncatmitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ncatcooperationwithinspectionorinvestigat").getValue() != null && formContext.getAttribute("ts_ncatdetectionofnoncompliances").getValue() != null && acceptNCATRecommendation != null) {
 
             var confirmStrings = { text: factorLockMessageBodyLocalizedText, title: factorLockMessageTitleLocalizedText };
             Xrm.Navigation.openConfirmDialog(confirmStrings).then(
-            function (success) {    
-                if (success.confirmed){
-                    if (acceptNCATRecommendation == ts_yesno.Yes) {
-                        //Set NCAT Final Enforcement Action to the Enforcement Recommendation
-                        const enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
-                        formContext.getAttribute("ts_finalenforcementaction").setValue(NCATEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
-                        NCATHideProposedSection(eContext);
-                        NCATHideManagerReviewSection(eContext);
+                function (success) {
+                    if (success.confirmed) {
+                        if (acceptNCATRecommendation == ts_yesno.Yes) {
+                            //Set NCAT Final Enforcement Action to the Enforcement Recommendation
+                            const enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
+                            formContext.getAttribute("ts_finalenforcementaction").setValue(NCATEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
+                            NCATHideProposedSection(eContext);
+                            NCATHideManagerReviewSection(eContext);
+                        } else {
+                            formContext.getAttribute("ts_finalenforcementaction").setValue(null);
+                        }
+                        formContext.data.save().then(function () {
+                            setPostNCATRecommendationSelectionFieldsVisibility(eContext);
+                        });
                     } else {
-                        formContext.getAttribute("ts_finalenforcementaction").setValue(null);
+                        formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
                     }
-                    formContext.data.save().then(function() {
-                        setPostNCATRecommendationSelectionFieldsVisibility(eContext);
-                    });                    
-                } else {
-                    formContext.getAttribute("ts_acceptncatrecommendation").setValue(null);
-                }
-            });          
+                });
         }
 
-       
+
     }
 
     //Sets the RATE Final Enforcement Action to the recommended Enforcement if the user accepts
@@ -401,11 +415,11 @@
         }
 
         //If the NCAT factors are all filled
-        if(formContext.getAttribute("ts_rateactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_rateintentionality").getValue() != null && formContext.getAttribute("ts_rateeconomicbenefit").getValue() != null && formContext.getAttribute("ts_rateresponsibility").getValue() != null && formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ratepreventingrecurrence").getValue() != null && formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue() != null && acceptRATERecommendation != null){
+        if (formContext.getAttribute("ts_rateactualorpotentialharm").getValue() != null && formContext.getAttribute("ts_rateintentionality").getValue() != null && formContext.getAttribute("ts_rateeconomicbenefit").getValue() != null && formContext.getAttribute("ts_rateresponsibility").getValue() != null && formContext.getAttribute("ts_ratemitigationofnoncompliantbehaviors").getValue() != null && formContext.getAttribute("ts_ratepreventingrecurrence").getValue() != null && formContext.getAttribute("ts_ratecooperationwithinspectionorinvestigat").getValue() != null && acceptRATERecommendation != null) {
 
             var confirmStrings = { text: factorLockMessageBodyLocalizedText, title: factorLockMessageTitleLocalizedText };
             Xrm.Navigation.openConfirmDialog(confirmStrings).then(
-            function (success) {    
+                function (success) {
                     if (success.confirmed) {
                         if (acceptRATERecommendation == ts_yesno.Yes) {
                             //Set RATE Final Enforcement Action to the Enforcement Recommendation
@@ -422,7 +436,7 @@
                     } else {
                         formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
                     }
-            });          
+                });
         }
     }
 
@@ -474,7 +488,7 @@
             } else {
                 formContext.getControl("ts_ncatinspectorrecommendation").setNotification("cannot match " + formContext.getControl("ts_ncatenforcementrecommendation").getLabel());
             }
-            
+
         } else {
             formContext.getControl("ts_ncatinspectorrecommendation").clearNotification();
         }
@@ -650,7 +664,7 @@
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const NCATApprovingTeam = formContext.getAttribute("ts_ncatapprovingteam").getValue();
 
-        if(NCATApprovingTeam != null){
+        if (NCATApprovingTeam != null) {
 
             const viewIdApprovingManagerNCAT = '{1c259fee-0541-4cac-8d20-7b30ee397ca7}';
             const entityNameApprovingManagers = "systemuser";
@@ -658,22 +672,22 @@
 
             //Approving managers in the same region as the case with the AvSec Business Unit
             const fetchXmlApprovingManagersNCAT = `<fetch distinct="true" page="1" no-lock="false"><entity name="systemuser"><attribute name="systemuserid"/><attribute name="fullname"/><link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true"><filter><condition attribute="teamid" operator="eq" value="${NCATApprovingTeam[0].id}"/></filter></link-entity></entity></fetch>`;
-            
+
             const layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
 
             formContext.getControl("ts_ncatmanager").addCustomView(viewIdApprovingManagerNCAT, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersNCAT, layoutXmlApprovingManagers, true);
 
-            if(formContext.getAttribute("ts_ncatmanager").getValue != null){
+            if (formContext.getAttribute("ts_ncatmanager").getValue != null) {
                 formContext.getControl("ts_ncatmanager").setDisabled(false);
             }
-            else{
+            else {
                 formContext.getAttribute("ts_ncatmanager").setValue();
                 formContext.getControl("ts_ncatmanager").setDisabled(true);
             }
         }
-        else{
+        else {
             formContext.getAttribute("ts_ncatmanager").setValue();
-                formContext.getControl("ts_ncatmanager").setDisabled(true);
+            formContext.getControl("ts_ncatmanager").setDisabled(true);
         }
     }
 
@@ -681,23 +695,23 @@
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const RATEApprovingTeam = formContext.getAttribute("ts_rateapprovingteam").getValue();
 
-        if(RATEApprovingTeam != null){
+        if (RATEApprovingTeam != null) {
             const viewIdApprovingManagerRATE = '{1c259fee-0541-4cac-8d20-7b30ee394a73}';
             const entityNameApprovingManagers = "systemuser";
             const viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
 
             //Approving managers in the same region as the case with the ISSO Business Unit
             const fetchXmlApprovingManagersRATE = `<fetch distinct="true" page="1" no-lock="false"><entity name="systemuser"><attribute name="systemuserid"/><attribute name="fullname"/><link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true"><filter><condition attribute="teamid" operator="eq" value="${RATEApprovingTeam[0].id}"/></filter></link-entity></entity></fetch>`;
-            
+
             const layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
 
             formContext.getControl("ts_ratemanager").addCustomView(viewIdApprovingManagerRATE, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersRATE, layoutXmlApprovingManagers, true);
 
             formContext.getControl("ts_ratemanager").setDisabled(false);
         }
-        else{
+        else {
             formContext.getAttribute("ts_ratemanager").setValue();
-                formContext.getControl("ts_ratemanager").setDisabled(true);
+            formContext.getControl("ts_ratemanager").setDisabled(true);
         }
     }
 
@@ -710,7 +724,7 @@
         } else {
             showHideNonComplianceTimeframe(formContext);
         }
-            
+
     }
 
     function showHideNonComplianceTimeframe(formContext) {
@@ -900,7 +914,7 @@
                 if (isAdminOrManager) formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
             }
         } else {
-            
+
             NCATHideProposedSection(eContext);
         }
     }
@@ -974,7 +988,7 @@
                         isAdminOrManager = true;
                     }
                 }
-                
+
                 if (isAdminOrManager) formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
             }
         } else {
@@ -1086,8 +1100,8 @@
 		            </filter>
 	            </entity>
             </fetch>`;
-            
-            gridControl.setFilterXml(fetchXml);
+
+                gridControl.setFilterXml(fetchXml);
                 gridControl.refresh();
             }
         }
