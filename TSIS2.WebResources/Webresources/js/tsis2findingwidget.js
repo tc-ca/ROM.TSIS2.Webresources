@@ -106,7 +106,7 @@ var widget = {
     isDefaultRender: false,
     //You should use it if your set the isDefaultRender to false
     htmlTemplate:
-        `<div><div class="form-group"><div class="operationsContainer"></div> <label for="comment" style="padding-top: 15px;"> <span class="field-name"><strong>${inspectorCommentsLocalizedText}</strong></span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="2000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
+        `<div><div class="form-group"><div class="operationsContainer"></div> <label for="comment" style="padding-top: 15px;"> <span class="field-name"><strong>${inspectorCommentsLocalizedText}</strong></span> </label> <textarea type="text" class="form-control inspectorComments" rows="3" cols="50" maxlength="4000" style="resize: vertical;"></textarea> <span class="character-count"></span> </div> </div>`,
     //The main function, rendering and two-way binding
     afterRender: function (question, el) {
         // isComplete is set onLoad of WOST form. If it wasn't set there, initialize as false.
@@ -295,7 +295,7 @@ var widget = {
         operationsContainer.appendChild(operationsTable);
 
         function updateCharacterCount() {
-            characterCount.innerText = (2000 - comments.value.length) + " " + charactersRemainingLocalizedText;
+            characterCount.innerText = (4000 - comments.value.length) + " " + charactersRemainingLocalizedText;
         }
         updateCharacterCount();
         comments.onkeyup = updateCharacterCount;
