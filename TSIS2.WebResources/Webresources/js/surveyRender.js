@@ -212,7 +212,7 @@ async function appendExemptions(survey, options) {
         exemptionCommentBox.className = "form-control";
         exemptionCommentBox.rows = 3;
         exemptionCommentBox.cols = 50;
-        exemptionCommentBox.maxLength = 2000;
+        exemptionCommentBox.maxLength = 5000;
         exemptionCommentBox.style.resize = "vertical";
         if (survey.mode == "display") {
             exemptionCommentBox.readOnly = true;
@@ -429,14 +429,14 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
 
 
     // Add a character count and limit to Comment questions.
-    // If the maxLength is the default value of -1, set maxLength to 2000.
+    // If the maxLength is the default value of -1, set maxLength to 5000.
     // No character count if maxLength was set to 0
     survey.onAfterRenderQuestion.add(function (survey, options) {
         if (options.question.getType() !== "comment") return;
         var comment = options.htmlElement.getElementsByTagName('textarea')[0];
         var maxLength = options.question.maxLength;
         if (maxLength == -1) {
-            maxLength = 2000;
+            maxLength = 5000;
         }
         if (maxLength !== 0) {
             comment.setAttribute("maxLength", maxLength);
@@ -533,7 +533,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         detailBox.className = "form-control";
         detailBox.rows = 3;
         detailBox.cols = 50;
-        detailBox.maxLength = 2000;
+        detailBox.maxLength = 5000;
         detailBox.style.resize = "vertical";
         characterCount.style.textAlign = "left";
         detailText.innerHTML = detailLabel;
