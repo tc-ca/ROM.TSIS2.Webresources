@@ -13,7 +13,7 @@ var ROM;
             var modeAttributeValue = modeAttribute.getValue();
             if (formContext.ui.getFormType() == 2 || formContext.ui.getFormType() == 3) {
                 StatusOfRailwayOwnerOnChange(eContext);
-                ShowHideFieldsOnMode(eContext, modeAttributeValue);
+                ShowHideFieldsOnMode(eContext, modeAttributeValue, true);
                 setSubSiteFilteredView(formContext, false);
                 securityIncidentTypeOnChange(eContext);
                 if (formContext.getAttribute("ts_mode").getValue() != null) {
@@ -72,7 +72,7 @@ var ROM;
             var modeAttribute = form.getAttribute("ts_mode");
             var modeAttributeValue = modeAttribute.getValue();
             form.getAttribute("ts_securityincidenttype").setValue(null);
-            ShowHideFieldsOnMode(eContext, modeAttributeValue);
+            ShowHideFieldsOnMode(eContext, modeAttributeValue, false);
             setSiteFilteredView(form, modeAttributeValue != null ? modeAttributeValue : null);
         }
         SecurityIncident.modeOnChange = modeOnChange;
@@ -118,7 +118,7 @@ var ROM;
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
-        function ShowHideFieldsOnMode(eContext, mode) {
+        function ShowHideFieldsOnMode(eContext, mode, isOnLoad) {
             var form = eContext.getFormContext();
             if (mode == 717750002 /* AviationSecurity */) {
                 form.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
@@ -184,7 +184,9 @@ var ROM;
                     form.getControl("ts_yardorstationname").setVisible(true);
                     form.getControl("ts_bridgeclosure").setVisible(false);
                     form.getControl("ts_damagestoibtproperty").setVisible(false);
-                    form.getAttribute("ts_site").setValue(null);
+                    if (!isOnLoad) {
+                        form.getAttribute("ts_site").setValue(null);
+                    }
                 }
                 if (mode == 717750001 /* InternationalBridgesandTunnels */) {
                     form.getControl("ts_statusofrailwayowner").setVisible(false);

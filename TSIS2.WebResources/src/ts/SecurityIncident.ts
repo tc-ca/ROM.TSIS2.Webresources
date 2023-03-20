@@ -14,7 +14,7 @@ namespace ROM.SecurityIncident {
         if (formContext.ui.getFormType() == 2 || formContext.ui.getFormType() == 3) {
             StatusOfRailwayOwnerOnChange(eContext);
 
-            ShowHideFieldsOnMode(eContext, modeAttributeValue);
+            ShowHideFieldsOnMode(eContext, modeAttributeValue, true);
             setSubSiteFilteredView(formContext, false);
             securityIncidentTypeOnChange(eContext);
 
@@ -84,7 +84,7 @@ namespace ROM.SecurityIncident {
 
         form.getAttribute("ts_securityincidenttype").setValue(null);
 
-        ShowHideFieldsOnMode(eContext, modeAttributeValue);
+        ShowHideFieldsOnMode(eContext, modeAttributeValue, false);
         setSiteFilteredView(form, modeAttributeValue != null ? modeAttributeValue : null);
 
     }
@@ -136,7 +136,7 @@ namespace ROM.SecurityIncident {
         form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 
-    function ShowHideFieldsOnMode(eContext: Xrm.ExecutionContext<any, any>, mode): void {
+    function ShowHideFieldsOnMode(eContext: Xrm.ExecutionContext<any, any>, mode, isOnLoad): void {
         const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
 
         if (mode == ts_securityincidentmode.AviationSecurity) {
@@ -211,7 +211,10 @@ namespace ROM.SecurityIncident {
 
                 form.getControl("ts_bridgeclosure").setVisible(false);
                 form.getControl("ts_damagestoibtproperty").setVisible(false);
-                form.getAttribute("ts_site").setValue(null);
+
+                if (!isOnLoad) {
+                    form.getAttribute("ts_site").setValue(null);
+                }
             }
 
             if (mode == ts_securityincidentmode.InternationalBridgesandTunnels) {
