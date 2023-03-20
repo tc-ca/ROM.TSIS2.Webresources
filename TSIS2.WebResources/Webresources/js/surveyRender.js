@@ -87,16 +87,6 @@ function appendApplicableProvisionsData(survey, options) {
 }
 
 async function appendExemptions(survey, options) {
-    //Create HTML elements
-    const question = options.htmlElement;
-    const exemptionContainer = document.createElement("div");
-    const header = document.createElement("div"); //Collapsable Header for Exemption section
-    const content = document.createElement("div");
-    const ExemptionHeaderText = document.createElement("span");
-    const ExemptionExpandSymbol = document.createElement("span");
-    
-    const exemptionResponseId = options.question.name + "-Exemptions"
-
     //Iterate through each applicable provision, get any exemptions that apply to that provision and add the applicableExemptions array
     const applicableProvisionsData = options.question.applicableProvisionsData
     const applicableExemptions = []
@@ -108,6 +98,18 @@ async function appendExemptions(survey, options) {
             }
         }
     }
+    //If no applicableExemptions were found, return.
+    if (applicableExemptions.length == 0) return;
+
+    //Create HTML elements
+    const question = options.htmlElement;
+    const exemptionContainer = document.createElement("div");
+    const header = document.createElement("div"); //Collapsable Header for Exemption section
+    const content = document.createElement("div");
+    const ExemptionHeaderText = document.createElement("span");
+    const ExemptionExpandSymbol = document.createElement("span");
+    
+    const exemptionResponseId = options.question.name + "-Exemptions"
 
     header.appendChild(ExemptionExpandSymbol);
     header.appendChild(ExemptionHeaderText);
@@ -323,11 +325,11 @@ async function getApplicableExemptions(provisionNameEn) {
                 let isApplicable = await exemptionIsApplicableToWorkOrder(exemption.ts_exemptionid, workOrderFilterFields);
                 if (isApplicable) {
                     let exemptionObject = {
-                        provisionId: exemption["ts_provision.qm_rclegislationid"],
-                        provisionNameEn: exemption["ts_provision.ts_nameenglish"],
-                        provisionNameFr: exemption["ts_provision.ts_namefrench"],
-                        exemptionName: exemption["ts_exemption.ts_name"],
-                        exemptionId: exemption["ts_exemption.ts_exemptionid"],
+                        provisionId: exemption["provision.qm_rclegislationid"],
+                        provisionNameEn: exemption["provision.ts_nameenglish"],
+                        provisionNameFr: exemption["provision.ts_namefrench"],
+                        exemptionName: exemption["ts_name"],
+                        exemptionId: exemption["ts_exemptionid"],
                     }
                     applicableExemptions.push(exemptionObject);
                 }
