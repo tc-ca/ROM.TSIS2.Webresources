@@ -101,8 +101,12 @@ async function appendExemptions(survey, options) {
     const applicableProvisionsData = options.question.applicableProvisionsData
     const applicableExemptions = []
     for (let provisionData of applicableProvisionsData) {
-        let applicableExemption = await getApplicableExemptions(provisionData.provisionNameEn);
-        if (applicableExemption != null) applicableExemptions.push(applicableExemption);
+        let retrieveApplicableExemptions = await getApplicableExemptions(provisionData.provisionNameEn);
+        if (retrieveApplicableExemptions != null) {
+            for (let applicableExemption of retrieveApplicableExemptions) {
+                applicableExemptions.push(applicableExemption);
+            }
+        }
     }
 
     header.appendChild(ExemptionExpandSymbol);
@@ -292,48 +296,119 @@ async function appendExemptions(survey, options) {
 
 
 async function getApplicableExemptions(provisionNameEn) {
-    let exemptionFilterFetchXml = [
+    const workOrderFilterFields = await getWorkOrderExemptionFilterFields();
+    let exemptionFetchXml = [
         "<fetch>",
-        "  <entity name='ts_exemptionfilter'>",
-        "    <filter>",
-        "      <condition attribute='statecode' operator='eq' value='0'/>",
-        "    </filter>",
-        "    <link-entity name='qm_rclegislation' from='qm_rclegislationid' to='ts_provision' alias='ts_provision'>",
-        "      <attribute name='ts_nameenglish'/>",
-        "      <attribute name='ts_namefrench'/>",
-        "      <attribute name='qm_rclegislationid'/>",
-        "      <filter>",
-        //TODO change this filter to use the provision guid. Questionnaires in DATA env need to be updated to use correct guid first.
-        //Provision names are unique, so this will work for now.
-        "        <condition attribute='ts_nameenglish' operator='eq' value='", provisionNameEn , "'/>",
-        "      </filter>",
-        "    </link-entity>",
-        "    <link-entity name='ts_exemption' from='ts_exemptionid' to='ts_exemption' alias='ts_exemption'>",
-        "      <attribute name='ts_name'/>",
-        "      <attribute name='ts_exemptionid'/>",
+        "  <entity name='ts_exemption'>",
+        "    <attribute name='ts_name'/>",
+        "    <attribute name='ts_exemptionid'/>",
+        "    <link-entity name='ts_exemption_qm_rclegislation' from='ts_exemptionid' to='ts_exemptionid' alias='exemption_provision' intersect='true'>",
+        "      <link-entity name='qm_rclegislation' from='qm_rclegislationid' to='qm_rclegislationid' alias='provision' intersect='true'>",
+        "        <attribute name='ts_nameenglish'/>",
+        "        <attribute name='qm_rclegislationid'/>",
+        "        <attribute name='ts_namefrench'/>",
+        "        <filter>",
+        "          <condition attribute='ts_nameenglish' operator='eq' value='", provisionNameEn, "'/>",
+        "        </filter>",
+        "      </link-entity>",
         "    </link-entity>",
         "  </entity>",
         "</fetch>"
     ].join("");
     exemptionFilterFetchXml = "?fetchXml=" + encodeURIComponent(exemptionFilterFetchXml);
-    return await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemptionfilter", exemptionFilterFetchXml).then(function success(results) {
+    return await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption", exemptionFilterFetchXml).then(function success(results) {
         if (results.entities.length > 0) {
-            let exemptionObject = {
-                provisionId: results.entities[0]["ts_provision.qm_rclegislationid"],
-                provisionNameEn: results.entities[0]["ts_provision.ts_nameenglish"],
-                provisionNameFr: results.entities[0]["ts_provision.ts_namefrench"],
-                exemptionName: results.entities[0]["ts_exemption.ts_name"],
-                exemptionId: results.entities[0]["ts_exemption.ts_exemptionid"],
+            const applicableExemptions = [];
+            for (let exemption of result.entities) {
+                if (await exemptionIsApplicableToWorkOrder(result.entities) == true) {
+                    let exemptionObject = {
+                        provisionId: exemption["ts_provision.qm_rclegislationid"],
+                        provisionNameEn: exemption["ts_provision.ts_nameenglish"],
+                        provisionNameFr: exemption["ts_provision.ts_namefrench"],
+                        exemptionName: exemption["ts_exemption.ts_name"],
+                        exemptionId: exemption["ts_exemption.ts_exemptionid"],
+                    }
+                    applicableExemptions.push(exemptionObject);
+                }
             }
-            return exemptionObject;
-        } else {
-            return null;
+            return applicableExemptions;
         }
+        return null;
     });
 }
 
-function openExemptionForm() {
-    console.log("exemption anchor click")
+async function getWorkOrderExemptionFilterFields() {
+    const workOrderId = window.parentFormContext.getAttribute("msdyn_workorder").getValue()[0].id;
+    if (workOrderId == null) return;
+    const workOrder = await parent.Xrm.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid,msdyn_serviceaccount");
+    if (workOrder == null) return;
+    const workOrderFilterFields = {
+        operationTypeId: workOrder.ovs_operationtypeid_value,
+        stakeholderId: workOrder.msdyn_serviceaccount_value
+    }
+    return workOrderFilterFields;
+}
+
+async function exemptionIsApplicableToWorkOrder(exemptionId, workOrderFilterFields) {
+    let exemptionIsApplicable = true;
+    let stakeholderMatch = false;
+    let operationTypeMatch = false;
+    //Operation Type
+    let operationTypeFetchXml = [
+        "<fetch>",
+        "  <entity name='ovs_operationtype'>",
+        "    <attribute name='ovs_operationtypeid'/>",
+        "    <link-entity name='ts_exemption_ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
+        "      <filter>",
+        "        <condition attribute='ts_exemptionid' operator='eq' value='", exemptionId, "'/>",
+        "      </filter>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>"
+    ].join("");
+    operationTypeFetchXml = "?fetchXml=" + encodeURIComponent(operationTypeFetchXml);
+    const exemptionOperationTypes = await parent.Xrm.retrieveMultipleRecords("ovs_operationtype", operationTypeFetchXml);
+    if (exemptionOperationTypes == null || (exemptionOperationTypes != null && exemptionOperationTypes.length == 0)) {
+        //If there are no filters for this field then it does not matter what it is, so match.
+        operationTypeMatch = true;
+    } else if (exemptionOperationTypes != null) {
+        for (let exemptionOperationType of exemptionOperationTypes) {
+            if (exemptionOperationType.accountid == workOrderFilterFields.operationTypeId) {
+                operationTypeMatch = true;
+                break;
+            }
+        }
+    }
+
+    //Stakeholder
+    let accountFetchXml = [
+        "<fetch>",
+        "  <entity name='account'>",
+        "    <attribute name='accountid'/>",
+        "    <link-entity name='ts_exemption_account' from='accountid' to='accountid' intersect='true'>",
+        "      <filter>",
+        "        <condition attribute='ts_exemptionid' operator='eq' value='", exemptionId, "'/>",
+        "      </filter>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>"
+    ].join("");
+    accountFetchXml = "?fetchXml=" + encodeURIComponent(accountFetchXml);
+    const exemptionStakeholders = await parent.Xrm.retrieveMultipleRecords("account", accountFetchXml);
+    if (exemptionStakeholders == null || (exemptionStakeholders != null && exemptionStakeholders.length == 0)) {
+        //If there are no filters for this field then it does not matter what it is, so match.
+        stakeholderMatch = true;
+    } else if (exemptionStakeholders != null) {
+        for (let exemptionStakeholder of exemptionStakeholders) {
+            if (exemptionStakeholder.accountid == workOrderFilterFields.operationTypeId) {
+                stakeholderMatch = true;
+                break;
+            }
+        }
+    }
+    //If every filter is a match, the exemption is applicable
+    exemptionIsApplicable = (stakeholderMatch && operationTypeMatch);
+    return exemptionIsApplicable;
 }
 
 function InitialContext(executionContext) {
