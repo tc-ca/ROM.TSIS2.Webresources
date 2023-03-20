@@ -315,12 +315,13 @@ async function getApplicableExemptions(provisionNameEn) {
         "  </entity>",
         "</fetch>"
     ].join("");
-    exemptionFilterFetchXml = "?fetchXml=" + encodeURIComponent(exemptionFilterFetchXml);
-    return await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption", exemptionFilterFetchXml).then(function success(results) {
-        if (results.entities.length > 0) {
+    exemptionFetchXml = "?fetchXml=" + encodeURIComponent(exemptionFetchXml);
+    return await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption", exemptionFetchXml).then(async function success(result) {
+        if (result.entities.length > 0) {
             const applicableExemptions = [];
             for (let exemption of result.entities) {
-                if (await exemptionIsApplicableToWorkOrder(result.entities) == true) {
+                let isApplicable = await exemptionIsApplicableToWorkOrder(exemption.ts_exemptionid, workOrderFilterFields);
+                if (isApplicable) {
                     let exemptionObject = {
                         provisionId: exemption["ts_provision.qm_rclegislationid"],
                         provisionNameEn: exemption["ts_provision.ts_nameenglish"],
@@ -340,11 +341,11 @@ async function getApplicableExemptions(provisionNameEn) {
 async function getWorkOrderExemptionFilterFields() {
     const workOrderId = window.parentFormContext.getAttribute("msdyn_workorder").getValue()[0].id;
     if (workOrderId == null) return;
-    const workOrder = await parent.Xrm.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid,msdyn_serviceaccount");
+    const workOrder = await parent.Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationtypeid_value,_msdyn_serviceaccount_value");
     if (workOrder == null) return;
     const workOrderFilterFields = {
-        operationTypeId: workOrder.ovs_operationtypeid_value,
-        stakeholderId: workOrder.msdyn_serviceaccount_value
+        operationTypeId: workOrder._ovs_operationtypeid_value,
+        stakeholderId: workOrder._msdyn_serviceaccount_value
     }
     return workOrderFilterFields;
 }
@@ -367,13 +368,13 @@ async function exemptionIsApplicableToWorkOrder(exemptionId, workOrderFilterFiel
         "</fetch>"
     ].join("");
     operationTypeFetchXml = "?fetchXml=" + encodeURIComponent(operationTypeFetchXml);
-    const exemptionOperationTypes = await parent.Xrm.retrieveMultipleRecords("ovs_operationtype", operationTypeFetchXml);
+    const exemptionOperationTypes = await parent.Xrm.WebApi.retrieveMultipleRecords("ovs_operationtype", operationTypeFetchXml).then(function (result) { return result.entities });
     if (exemptionOperationTypes == null || (exemptionOperationTypes != null && exemptionOperationTypes.length == 0)) {
         //If there are no filters for this field then it does not matter what it is, so match.
         operationTypeMatch = true;
     } else if (exemptionOperationTypes != null) {
         for (let exemptionOperationType of exemptionOperationTypes) {
-            if (exemptionOperationType.accountid == workOrderFilterFields.operationTypeId) {
+            if (exemptionOperationType.ovs_operationtypeid == workOrderFilterFields.operationTypeId) {
                 operationTypeMatch = true;
                 break;
             }
@@ -394,13 +395,13 @@ async function exemptionIsApplicableToWorkOrder(exemptionId, workOrderFilterFiel
         "</fetch>"
     ].join("");
     accountFetchXml = "?fetchXml=" + encodeURIComponent(accountFetchXml);
-    const exemptionStakeholders = await parent.Xrm.retrieveMultipleRecords("account", accountFetchXml);
+    const exemptionStakeholders = await parent.Xrm.WebApi.retrieveMultipleRecords("account", accountFetchXml).then(function (result) { return result.entities });
     if (exemptionStakeholders == null || (exemptionStakeholders != null && exemptionStakeholders.length == 0)) {
         //If there are no filters for this field then it does not matter what it is, so match.
         stakeholderMatch = true;
     } else if (exemptionStakeholders != null) {
         for (let exemptionStakeholder of exemptionStakeholders) {
-            if (exemptionStakeholder.accountid == workOrderFilterFields.operationTypeId) {
+            if (exemptionStakeholder.accountid == workOrderFilterFields.stakeholderId) {
                 stakeholderMatch = true;
                 break;
             }
