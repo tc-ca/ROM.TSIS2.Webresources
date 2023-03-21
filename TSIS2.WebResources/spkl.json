@@ -135,11 +135,6 @@
               "description": "ROM TSIS 2.0 Functional Location Scripts"
             },
             {
-              "uniquename": "ts_/js/html2pdf.bundle.min.js",
-              "file": "js\\html2pdf.bundle.min.js",
-              "description": "ROM TSIS 2.0 HTML2PDF Scripts"
-            },
-            {
               "uniquename": "ovs_/js/Incident.js",
               "file": "js\\Incident.js",
               "description": "ROM TSIS 2.0 Incident Form Scripts"
