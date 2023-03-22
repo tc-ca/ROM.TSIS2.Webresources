@@ -505,6 +505,12 @@ async function exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields
     }
 
     //Flight Type
+    if (exemption.ts_flighttype == null || exemption.ts_flighttype.length == 0) {
+        flightTypeMatch = true;
+    } else {
+        flightTypeMatch = exemption.ts_flighttype.includes(workOrderFilterFields.flightType);
+    }
+    
 
     //Flight Category
 
