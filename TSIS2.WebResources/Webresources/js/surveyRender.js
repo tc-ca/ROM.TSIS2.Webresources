@@ -805,71 +805,36 @@ function DoComplete() {
 
 function PrintSurveyPage() {
 
-    // What we are doing is copying what is currently on the page and putting it to a new window for printing
+    // Check if the Questionnaire name is available and set it as the pdf file name
+    var questionnairePrintPageFileName = "";
+    var surveyTitleElement = document.getElementsByClassName('sv_page_title');
 
-    let myWindow = window.open('', '', '');
+    if (surveyTitleElement.length > 0) {
 
-    var divID = 'surveyElement';
+        // Set the Questionnaire name as the pdf file name
+        var surveyTitleElementText = surveyTitleElement[0].querySelector('span').textContent;
+        questionnairePrintPageFileName = surveyTitleElementText.replace(/ /g, '_');
+    } 
 
-    var mySurveyElement = document.getElementById(divID).innerHTML;
+    // If there is no Questionnaire name available, give the pdf a default file name
+    if (questionnairePrintPageFileName === "") {
+        var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+        if (lang == 1036) {
+            questionnairePrintPageFileName = "Impression_de_la_page_du_questionnaire";
+        } else {
+            questionnairePrintPageFileName = "Questionnaire_Page_Printout";
+        }
+    } 
 
-    myWindow.document.write(`
-        <html>
-            <head>
-                ${document.head.innerHTML}
-            </head>
-            <body style="overflow-wrap: break-word;">
-                ${mySurveyElement}
-                <div id="surveyResult"></div>
-                <script type="text/javascript" src="../js/surveyRender.js"></script>
-                <style>
-                    @media print {
-                        .sv_row {
-                            display: block;
-                            page-break-inside: avoid;
-                        }
+    // https://ekoopmans.github.io/html2pdf.js/
+    // Set the options for creating the PDF
+    var opt = {
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' },
+        pagebreak: { after: '.sv_row' },
+        pagebreak: { mode: 'avoid-all', before: '.sv_nav' },
+        filename: questionnairePrintPageFileName
+    };
 
-                        .sv_main .sv_container .sv_body .sv_p_root table.sv_q_matrix td {
-                            text-align: left;
-                        }
-
-                        textarea.form-control.inspectorComments {
-                            height: 10em;
-                        }
-
-                        span.character-count {
-                            display: none;
-                        }
-
-                        .sv_prev_btn {
-                            display: none;
-                        }
-
-                        .sv_next_btn {
-                            display: none;
-                        }
-                    }
-                </style>
-            </body>
-        </html>`);
-
-    setTimeout(
-        function () {
-
-            // Circles will appear large, this code will remove them
-            const bigCircles = myWindow.document.querySelectorAll(".sv-hidden");
-
-            for (var i = 0; i < bigCircles.length; i++) {
-                bigCircles[i].remove();
-            }
-
-            myWindow.document.title = "";
-
-            // Show the print preview
-            myWindow.document.close();
-            myWindow.focus();
-            myWindow.print();
-            myWindow.close();
-        }, 1000
-    );
+    // Create the actual PDF
+    html2pdf().set(opt).from(document.getElementById('surveyElement')).saveAs();
 }

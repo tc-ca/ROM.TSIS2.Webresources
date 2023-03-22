@@ -60,6 +60,13 @@ declare namespace Form.msdyn_incidenttype.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_ControlVisibility extends Xrm.SectionCollectionBase {
+        get(name: "tab_13_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_properties extends Xrm.SectionCollectionBase {
         get(name: "tab_10_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -213,6 +220,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
+      get(name: "tab_ControlVisibility"): Xrm.PageTab<Tabs.tab_ControlVisibility>;
       get(name: "tab_properties"): Xrm.PageTab<Tabs.tab_properties>;
       get(name: "tab_visibilitycontrol"): Xrm.PageTab<Tabs.tab_visibilitycontrol>;
       get(name: string): undefined;

@@ -28,6 +28,7 @@ declare namespace Form.systemuser.Main {
       }
       interface SUMMARY_TAB extends Xrm.SectionCollectionBase {
         get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
+        get(name: "SUMMARY_TAB_section_10"): Xrm.PageSection;
         get(name: "online account information"): Xrm.PageSection;
         get(name: "onpremise account information"): Xrm.PageSection;
         get(name: "organization information"): Xrm.PageSection;
@@ -106,6 +107,7 @@ declare namespace Form.systemuser.Main {
       get(name: "siteid"): Xrm.LookupAttribute<"site">;
       get(name: "territoryid"): Xrm.LookupAttribute<"territory">;
       get(name: "title"): Xrm.Attribute<string>;
+      get(name: "ts_dualinspector"): Xrm.Attribute<any>;
       get(name: "windowsliveid"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -171,6 +173,7 @@ declare namespace Form.systemuser.Main {
       get(name: "siteid"): Xrm.LookupControl<"site">;
       get(name: "territoryid"): Xrm.LookupControl<"territory">;
       get(name: "title"): Xrm.StringControl;
+      get(name: "ts_dualinspector"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "windowsliveid"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -238,6 +241,7 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: "siteid"): Xrm.LookupAttribute<"site">;
     getAttribute(attributeName: "territoryid"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_dualinspector"): Xrm.Attribute<any>;
     getAttribute(attributeName: "windowsliveid"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "BookableResources"): Xrm.SubGridControl<"bookableresource">;
@@ -298,6 +302,7 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "siteid"): Xrm.LookupControl<"site">;
     getControl(controlName: "territoryid"): Xrm.LookupControl<"territory">;
     getControl(controlName: "title"): Xrm.StringControl;
+    getControl(controlName: "ts_dualinspector"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "windowsliveid"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
