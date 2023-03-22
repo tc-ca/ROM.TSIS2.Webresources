@@ -345,18 +345,20 @@ async function getApplicableExemptions(provisionNameEn) {
 
 async function getWorkOrderExemptionFilterFields() {
     const workOrderId = window.parentFormContext.getAttribute("msdyn_workorder").getValue()[0].id;
+    const aocOperationId = window.parentFormContext.getAttribute("ts_aocoperation").getValue()[0].id;
     const flightType = window.parentFormContext.getAttribute("ts_flighttype").getValue();
     const flightCategory = window.parentFormContext.getAttribute("ts_flightcategory").getValue();
     if (workOrderId == null) return;
-    const workOrder = await parent.Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationtypeid_value,_msdyn_serviceaccount_value,_msdyn_functionallocation_value,_ts_region_value,_ovs_operationid_value&$expand=msdyn_functionallocation($select=ts_class)");
+    const workOrder = await parent.Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationtypeid_value,_msdyn_serviceaccount_value,_ts_site_value,_ts_region_value,_ovs_operationid_value&$expand=ts_Site($select=ts_class)");
     if (workOrder == null) return;
     const workOrderFilterFields = {
         operationTypeId: workOrder._ovs_operationtypeid_value,
         stakeholderId: workOrder._msdyn_serviceaccount_value,
-        siteId: workOrder._msdyn_functionallocation_value,
+        siteId: workOrder._ts_site_value,
         regionId: workOrder._ts_region_value,
         operation1Id: workOrder._ovs_operationid_value,
-        class: workOrder["msdyn_functionallocation.ts_class"],
+        operation2Id: workOrder.aocOperationId,
+        class: workOrder.ts_Site.ts_class,
         flightType: flightType,
         flightCategory, flightCategory
     }
@@ -373,21 +375,20 @@ async function exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields
     let classMatch = false;
     let flightTypeMatch = false;
     let flightCategoryMatch = false;
+
     //Operation Type
     let operationTypeFetchXml = [
         "<fetch>",
-        "  <entity name='ovs_operationtype'>",
+        "  <entity name='ts_exemption_ovs_operationtype'>",
         "    <attribute name='ovs_operationtypeid'/>",
-        "    <link-entity name='ts_exemption_ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
-        "      <filter>",
-        "        <condition attribute='ts_exemptionid' operator='eq' value='", exemption.exemptionId, "'/>",
-        "      </filter>",
-        "    </link-entity>",
+        "    <filter>",
+        "      <condition attribute='ts_exemptionid' operator='eq' value='", exemption.ts_exemptionid, "'/>",
+        "    </filter>",
         "  </entity>",
         "</fetch>"
     ].join("");
     operationTypeFetchXml = "?fetchXml=" + encodeURIComponent(operationTypeFetchXml);
-    const exemptionOperationTypes = await parent.Xrm.WebApi.retrieveMultipleRecords("ovs_operationtype", operationTypeFetchXml).then(function (result) { return result.entities });
+    const exemptionOperationTypes = await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption_ovs_operationtype", operationTypeFetchXml).then(function (result) { return result.entities });
     if (exemptionOperationTypes == null || (exemptionOperationTypes != null && exemptionOperationTypes.length == 0)) {
         //If there are no filters for this field then it does not matter what it is, so match.
         operationTypeMatch = true;
@@ -403,18 +404,16 @@ async function exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields
     //Stakeholder
     let accountFetchXml = [
         "<fetch>",
-        "  <entity name='account'>",
+        "  <entity name='ts_exemption_account'>",
         "    <attribute name='accountid'/>",
-        "    <link-entity name='ts_exemption_account' from='accountid' to='accountid' intersect='true'>",
-        "      <filter>",
-        "        <condition attribute='ts_exemptionid' operator='eq' value='", exemption.exemptionId, "'/>",
-        "      </filter>",
-        "    </link-entity>",
+        "    <filter>",
+        "      <condition attribute='ts_exemptionid' operator='eq' value='", exemption.ts_exemptionid, "'/>",
+        "    </filter>",
         "  </entity>",
         "</fetch>"
     ].join("");
     accountFetchXml = "?fetchXml=" + encodeURIComponent(accountFetchXml);
-    const exemptionStakeholders = await parent.Xrm.WebApi.retrieveMultipleRecords("account", accountFetchXml).then(function (result) { return result.entities });
+    const exemptionStakeholders = await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption_account", accountFetchXml).then(function (result) { return result.entities });
     if (exemptionStakeholders == null || (exemptionStakeholders != null && exemptionStakeholders.length == 0)) {
         //If there are no filters for this field then it does not matter what it is, so match.
         stakeholderMatch = true;
@@ -430,24 +429,22 @@ async function exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields
     //Site
     var siteFetchXml = [
         "<fetch>",
-        "  <entity name='msdyn_functionallocation'>",
+        "  <entity name='ts_exemption_msdyn_functionallocation'>",
         "    <attribute name='msdyn_functionallocationid'/>",
-        "    <link-entity name='ts_exemption_msdyn_functionallocation' from='msdyn_functionallocationid' to='msdyn_functionallocationid' intersect='true'>",
-        "      <filter>",
-        "        <condition attribute='ts_exemptionid' operator='eq' value='", exemption.exemptionId, "'/>",
-        "      </filter>",
-        "    </link-entity>",
+        "    <filter>",
+        "      <condition attribute='ts_exemptionid' operator='eq' value='", exemption.ts_exemptionid, "'/>",
+        "    </filter>",
         "  </entity>",
         "</fetch>"
     ].join("");
     siteFetchXml = "?fetchXml=" + encodeURIComponent(siteFetchXml);
-    const exemptionSites = await parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_functionallocation", siteFetchXml).then(function (result) { return result.entities });
+    const exemptionSites = await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption_msdyn_functionallocation", siteFetchXml).then(function (result) { return result.entities });
     if (exemptionSites == null || (exemptionSites != null && exemptionSites.length == 0)) {
         //If there are no filters for this field then it does not matter what it is, so match.
         siteMatch = true;
     } else if (exemptionSites != null) {
         for (let exemptionSite of exemptionSites) {
-            if (exemptionSites.msdyn_functionallocationid == workOrderFilterFields.siteId) {
+            if (exemptionSite.msdyn_functionallocationid == workOrderFilterFields.siteId) {
                 siteMatch = true;
                 break;
             }
@@ -457,22 +454,22 @@ async function exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields
     //Region
     var regionFetchXml = [
         "<fetch>",
-        "  <entity name='ts_exemption_msdyn_functionallocation'>",
-        "    <attribute name='msdyn_functionallocationid'/>",
+        "  <entity name='ts_exemption_territory'>",
+        "    <attribute name='territoryid'/>",
         "    <filter>",
-        "      <condition attribute='ts_exemptionid' operator='eq' value='", exemption.exemptionId, "'/>",
+        "      <condition attribute='ts_exemptionid' operator='eq' value='", exemption.ts_exemptionid, "'/>",
         "    </filter>",
         "  </entity>",
         "</fetch>"
     ].join("");
     regionFetchXml = "?fetchXml=" + encodeURIComponent(regionFetchXml);
-    const exemptionRegions = await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption_msdyn_functionallocation", regionFetchXml).then(function (result) { return result.entities });
+    const exemptionRegions = await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption_territory", regionFetchXml).then(function (result) { return result.entities });
     if (exemptionRegions == null || (exemptionRegions != null && exemptionRegions.length == 0)) {
         //If there are no filters for this field then it does not matter what it is, so match.
         regionMatch = true;
     } else if (exemptionRegions != null) {
         for (let exemptionRegion of exemptionRegions) {
-            if (exemptionRegion.msdyn_functionallocationid == workOrderFilterFields.regionId) {
+            if (exemptionRegion.territoryid == workOrderFilterFields.regionId) {
                 regionMatch = true;
                 break;
             }
@@ -485,19 +482,19 @@ async function exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields
         "  <entity name='ts_exemption_ovs_operation'>",
         "    <attribute name='ovs_operationid'/>",
         "    <filter>",
-        "      <condition attribute='ts_exemptionid' operator='eq' value='", exemption.exemptionId, "'/>",
+        "      <condition attribute='ts_exemptionid' operator='eq' value='", exemption.ts_exemptionid, "'/>",
         "    </filter>",
         "  </entity>",
         "</fetch>"
     ].join("");
     operationFetchXml = "?fetchXml=" + encodeURIComponent(operationFetchXml);
-    const exemptionOperations = await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption_ovs_operation", regionFetchXml).then(function (result) { return result.entities });
+    const exemptionOperations = await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption_ovs_operation", operationFetchXml).then(function (result) { return result.entities });
     if (exemptionOperations == null || (exemptionOperations != null && exemptionOperations.length == 0)) {
         //If there are no filters for this field then it does not matter what it is, so match.
         operationMatch = true;
     } else if (exemptionOperations != null) {
         for (let exemptionOperation of exemptionOperations) {
-            if (exemptionOperation.ovs_operationid == workOrderFilterFields.operationId) {
+            if (exemptionOperation.ovs_operationid == workOrderFilterFields.operation1Id || exemptionOperation.ovs_operationid == workOrderFilterFields.operation2Id) {
                 operationMatch = true;
                 break;
             }
@@ -505,18 +502,32 @@ async function exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields
     }
 
     //Flight Type
-    if (exemption.ts_flighttype == null || exemption.ts_flighttype.length == 0) {
+    if (exemption.ts_flighttype == null) {
         flightTypeMatch = true;
-    } else {
-        flightTypeMatch = exemption.ts_flighttype.includes(workOrderFilterFields.flightType);
+    } else if (workOrderFilterFields.flightType != null) {
+        const exemptionFlightTypes = exemption.ts_flighttype.split(",");
+        flightTypeMatch = exemptionFlightTypes.includes(workOrderFilterFields.flightType.toString());
     }
     
 
     //Flight Category
+    if (exemption.ts_flightcategory == null) {
+        flightCategoryMatch = true;
+    } else if (workOrderFilterFields.flightCategory != null) {
+        const exemptionFlightCategories = exemption.ts_flightcategory.split(",");
+        flightCategoryMatch = exemptionFlightCategories.includes(workOrderFilterFields.flightCategory.toString());
+    }
 
     //Class
+    if (exemption.ts_class == null) {
+        classMatch = true;
+    } else if (workOrderFilterFields.class != null) {
+        const exemptionClasses = exemption.ts_class.split(",");
+        classMatch = exemptionClasses.includes(workOrderFilterFields.class.toString());
+    }
+
     //If every filter is a match, the exemption is applicable
-    exemptionIsApplicable = (stakeholderMatch && operationTypeMatch);
+    exemptionIsApplicable = (stakeholderMatch && operationTypeMatch && operationTypeMatch && siteMatch && regionMatch && operationMatch && classMatch && flightTypeMatch && flightCategoryMatch);
     return exemptionIsApplicable;
 }
 
