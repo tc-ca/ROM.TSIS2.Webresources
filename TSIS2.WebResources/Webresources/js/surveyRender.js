@@ -304,6 +304,9 @@ async function getApplicableExemptions(provisionNameEn) {
         "  <entity name='ts_exemption'>",
         "    <attribute name='ts_name'/>",
         "    <attribute name='ts_exemptionid'/>",
+        "    <attribute name='ts_flighttype'/>",
+        "    <attribute name='ts_flightcategory'/>",
+        "    <attribute name='ts_class'/>",
         "    <link-entity name='ts_exemption_qm_rclegislation' from='ts_exemptionid' to='ts_exemptionid' alias='exemption_provision' intersect='true'>",
         "      <link-entity name='qm_rclegislation' from='qm_rclegislationid' to='qm_rclegislationid' alias='provision' intersect='true'>",
         "        <attribute name='ts_nameenglish'/>",
@@ -322,7 +325,7 @@ async function getApplicableExemptions(provisionNameEn) {
         if (result.entities.length > 0) {
             const applicableExemptions = [];
             for (let exemption of result.entities) {
-                let isApplicable = await exemptionIsApplicableToWorkOrder(exemption.ts_exemptionid, workOrderFilterFields);
+                let isApplicable = await exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields);
                 if (isApplicable) {
                     let exemptionObject = {
                         provisionId: exemption["provision.qm_rclegislationid"],
@@ -342,17 +345,25 @@ async function getApplicableExemptions(provisionNameEn) {
 
 async function getWorkOrderExemptionFilterFields() {
     const workOrderId = window.parentFormContext.getAttribute("msdyn_workorder").getValue()[0].id;
+    const flightType = window.parentFormContext.getAttribute("ts_flighttype").getValue();
+    const flightCategory = window.parentFormContext.getAttribute("ts_flightcategory").getValue();
     if (workOrderId == null) return;
-    const workOrder = await parent.Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationtypeid_value,_msdyn_serviceaccount_value");
+    const workOrder = await parent.Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationtypeid_value,_msdyn_serviceaccount_value,_msdyn_functionallocation_value,_ts_region_value,_ovs_operationid_value&$expand=msdyn_functionallocation($select=ts_class)");
     if (workOrder == null) return;
     const workOrderFilterFields = {
         operationTypeId: workOrder._ovs_operationtypeid_value,
-        stakeholderId: workOrder._msdyn_serviceaccount_value
+        stakeholderId: workOrder._msdyn_serviceaccount_value,
+        siteId: workOrder._msdyn_functionallocation_value,
+        regionId: workOrder._ts_region_value,
+        operation1Id: workOrder._ovs_operationid_value,
+        class: workOrder["msdyn_functionallocation.ts_class"],
+        flightType: flightType,
+        flightCategory, flightCategory
     }
     return workOrderFilterFields;
 }
 
-async function exemptionIsApplicableToWorkOrder(exemptionId, workOrderFilterFields) {
+async function exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields) {
     let exemptionIsApplicable = true;
     let stakeholderMatch = false;
     let operationTypeMatch = false;
@@ -369,7 +380,7 @@ async function exemptionIsApplicableToWorkOrder(exemptionId, workOrderFilterFiel
         "    <attribute name='ovs_operationtypeid'/>",
         "    <link-entity name='ts_exemption_ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
         "      <filter>",
-        "        <condition attribute='ts_exemptionid' operator='eq' value='", exemptionId, "'/>",
+        "        <condition attribute='ts_exemptionid' operator='eq' value='", exemption.exemptionId, "'/>",
         "      </filter>",
         "    </link-entity>",
         "  </entity>",
@@ -396,7 +407,7 @@ async function exemptionIsApplicableToWorkOrder(exemptionId, workOrderFilterFiel
         "    <attribute name='accountid'/>",
         "    <link-entity name='ts_exemption_account' from='accountid' to='accountid' intersect='true'>",
         "      <filter>",
-        "        <condition attribute='ts_exemptionid' operator='eq' value='", exemptionId, "'/>",
+        "        <condition attribute='ts_exemptionid' operator='eq' value='", exemption.exemptionId, "'/>",
         "      </filter>",
         "    </link-entity>",
         "  </entity>",
@@ -423,7 +434,7 @@ async function exemptionIsApplicableToWorkOrder(exemptionId, workOrderFilterFiel
         "    <attribute name='msdyn_functionallocationid'/>",
         "    <link-entity name='ts_exemption_msdyn_functionallocation' from='msdyn_functionallocationid' to='msdyn_functionallocationid' intersect='true'>",
         "      <filter>",
-        "        <condition attribute='ts_exemptionid' operator='eq' value='", exemptionId, "'/>",
+        "        <condition attribute='ts_exemptionid' operator='eq' value='", exemption.exemptionId, "'/>",
         "      </filter>",
         "    </link-entity>",
         "  </entity>",
@@ -449,7 +460,7 @@ async function exemptionIsApplicableToWorkOrder(exemptionId, workOrderFilterFiel
         "  <entity name='ts_exemption_msdyn_functionallocation'>",
         "    <attribute name='msdyn_functionallocationid'/>",
         "    <filter>",
-        "      <condition attribute='ts_exemptionid' operator='eq' value='", exemptionId, "'/>",
+        "      <condition attribute='ts_exemptionid' operator='eq' value='", exemption.exemptionId, "'/>",
         "    </filter>",
         "  </entity>",
         "</fetch>"
@@ -474,7 +485,7 @@ async function exemptionIsApplicableToWorkOrder(exemptionId, workOrderFilterFiel
         "  <entity name='ts_exemption_ovs_operation'>",
         "    <attribute name='ovs_operationid'/>",
         "    <filter>",
-        "      <condition attribute='ts_exemptionid' operator='eq' value='", exemptionId, "'/>",
+        "      <condition attribute='ts_exemptionid' operator='eq' value='", exemption.exemptionId, "'/>",
         "    </filter>",
         "  </entity>",
         "</fetch>"
