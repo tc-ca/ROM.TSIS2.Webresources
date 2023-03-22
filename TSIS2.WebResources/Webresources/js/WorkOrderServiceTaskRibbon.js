@@ -308,25 +308,45 @@ async function retrieveWorkOrderOperationData(primaryControl) {
 
 function surveyHasErrors(primaryControl) {
     const formContext = primaryControl;
+    
     // Get the web resource control on the form
     var wrCtrl = formContext.getControl('WebResource_QuestionnaireRender');
-    wrCtrl.getContentWindow().then(function (win) {
-        var hasError = false;
-        for(var i = 0; i < win.survey.visiblePages.length; i ++) {
-            //the first parameter, fireCallback, is set to true to show errors in UI
-            hasError = win.survey.visiblePages[i].hasErrors(true) || hasError;
-        }
-        if (hasError) {
-            var alertStrings = {
-                text: markCompleteValidationTextLocalized,
-                title: markCompleteValidationTitleLocalized
-            };
-            var alertOptions = { height: 200, width: 450 };
-            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
-        } else {
-            completeConfirmation(formContext, win.survey);
-        }
-    });
+    if (wrCtrl.getObject() == null) {
+        formContext.ui.tabs.get("tab_questionnaire").setFocus();
+        setTimeout(checkSurveyHasErrors, 500, primaryControl);
+    }
+    else {
+        checkSurveyHasErrors(primaryControl);
+    }
+}
+
+function checkSurveyHasErrors(primaryControl) {
+    const formContext = primaryControl;
+
+    // Get the web resource control on the form
+    var wrCtrl = formContext.getControl('WebResource_QuestionnaireRender');
+    if (wrCtrl.getObject() == null) {
+        setTimeout(checkSurveyHasErrors, 500, primaryControl);
+    }
+    else {
+        wrCtrl.getContentWindow().then(function (win) {
+            var hasError = false;
+            for (var i = 0; i < win.survey.visiblePages.length; i++) {
+                //the first parameter, fireCallback, is set to true to show errors in UI
+                hasError = win.survey.visiblePages[i].hasErrors(true) || hasError;
+            }
+            if (hasError) {
+                var alertStrings = {
+                    text: markCompleteValidationTextLocalized,
+                    title: markCompleteValidationTitleLocalized
+                };
+                var alertOptions = { height: 200, width: 450 };
+                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+            } else {
+                completeConfirmation(formContext, win.survey);
+            }
+        });
+    }
 }
 
 function completeConfirmation(formContext, survey) {
