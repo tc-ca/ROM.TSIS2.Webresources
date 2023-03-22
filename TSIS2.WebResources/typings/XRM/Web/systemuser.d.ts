@@ -113,6 +113,7 @@ interface SystemUser_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   title?: string | null;
   traversedpath?: string | null;
+  ts_dualinspector?: boolean | null;
   userlicensetype?: number | null;
   userpuid?: string | null;
   utcconversiontimezonecode?: number | null;
@@ -508,6 +509,7 @@ interface SystemUser_Select {
   title: WebAttribute<SystemUser_Select, { title: string | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<SystemUser_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<SystemUser_Select, { traversedpath: string | null }, {  }>;
+  ts_dualinspector: WebAttribute<SystemUser_Select, { ts_dualinspector: boolean | null }, {  }>;
   ts_inspectionhours_guid: WebAttribute<SystemUser_Select, { ts_inspectionhours_guid: string | null }, { ts_inspectionhours_formatted?: string }>;
   ts_territory_guid: WebAttribute<SystemUser_Select, { ts_territory_guid: string | null }, { ts_territory_formatted?: string }>;
   userlicensetype: WebAttribute<SystemUser_Select, { userlicensetype: number | null }, {  }>;
@@ -648,6 +650,7 @@ interface SystemUser_Filter {
   title: string;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_dualinspector: boolean;
   ts_inspectionhours_guid: XQW.Guid;
   ts_territory_guid: XQW.Guid;
   userlicensetype: number;

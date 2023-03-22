@@ -156,9 +156,6 @@ declare namespace Form.account.Main {
       get(name: "name2"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "name3"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
-      get(name: "notescontrol1"): Xrm.BaseControl;
-      get(name: "notescontrol2"): Xrm.BaseControl;
-      get(name: "notescontrol3"): Xrm.BaseControl;
       get(name: "ovs_legalname"): Xrm.StringControl;
       get(name: "ovs_naicscode"): Xrm.StringControl;
       get(name: "ownershipcode"): Xrm.OptionSetControl<account_ownershipcode>;
@@ -273,9 +270,6 @@ declare namespace Form.account.Main {
     getControl(controlName: "name2"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "name3"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
-    getControl(controlName: "notescontrol1"): Xrm.BaseControl;
-    getControl(controlName: "notescontrol2"): Xrm.BaseControl;
-    getControl(controlName: "notescontrol3"): Xrm.BaseControl;
     getControl(controlName: "ovs_legalname"): Xrm.StringControl;
     getControl(controlName: "ovs_naicscode"): Xrm.StringControl;
     getControl(controlName: "ownershipcode"): Xrm.OptionSetControl<account_ownershipcode>;
