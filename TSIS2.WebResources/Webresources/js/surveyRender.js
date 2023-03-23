@@ -296,7 +296,7 @@ async function appendExemptions(survey, options) {
 }
 
 
-
+//Finds any Exemption records for the given exemption that apply to the current Work Order
 async function getApplicableExemptions(provisionNameEn) {
     const workOrderFilterFields = await getWorkOrderExemptionFilterFields();
     let exemptionFetchXml = [
@@ -323,6 +323,7 @@ async function getApplicableExemptions(provisionNameEn) {
     exemptionFetchXml = "?fetchXml=" + encodeURIComponent(exemptionFetchXml);
     return await parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption", exemptionFetchXml).then(async function success(result) {
         if (result.entities.length > 0) {
+            //Create an array of exemption objects to be used in the exemption renderer
             const applicableExemptions = [];
             for (let exemption of result.entities) {
                 let isApplicable = await exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields);
@@ -343,12 +344,14 @@ async function getApplicableExemptions(provisionNameEn) {
     });
 }
 
+//Returns all fields needed to check if an exemption applies to a work order
 async function getWorkOrderExemptionFilterFields() {
     const workOrderId = window.parentFormContext.getAttribute("msdyn_workorder").getValue()[0].id;
     const aocOperationId = window.parentFormContext.getAttribute("ts_aocoperation").getValue()[0].id;
     const flightType = window.parentFormContext.getAttribute("ts_flighttype").getValue();
     const flightCategory = window.parentFormContext.getAttribute("ts_flightcategory").getValue();
     if (workOrderId == null) return;
+    //Retrieve the related Work Order with the revelant lookup field ids
     const workOrder = await parent.Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationtypeid_value,_msdyn_serviceaccount_value,_ts_site_value,_ts_region_value,_ovs_operationid_value&$expand=ts_Site($select=ts_class)");
     if (workOrder == null) return;
     const workOrderFilterFields = {
@@ -365,8 +368,13 @@ async function getWorkOrderExemptionFilterFields() {
     return workOrderFilterFields;
 }
 
+//Checks all work order filter fields to see if they line up with the exemption's filters.
+//Exemption has Many-to-Many relationships and multi-select fields to use as filters selection.
+//For the Many-to-Many relationships, we retrieve the intermediary table records, and check if the id if the work order field is one of the ids.
+//If no intermediary table records are found for a relationship, then the check for that filter is a pass.
+//For the multiselect picklists, the values are returned as an array of optionset values.
+//All checks must pass for the exemption to be applicable.
 async function exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields) {
-    let exemptionIsApplicable = true;
     let stakeholderMatch = false;
     let operationTypeMatch = false;
     let siteMatch = false;
@@ -527,7 +535,7 @@ async function exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields
     }
 
     //If every filter is a match, the exemption is applicable
-    exemptionIsApplicable = (stakeholderMatch && operationTypeMatch && operationTypeMatch && siteMatch && regionMatch && operationMatch && classMatch && flightTypeMatch && flightCategoryMatch);
+    let exemptionIsApplicable = (stakeholderMatch && operationTypeMatch && operationTypeMatch && siteMatch && regionMatch && operationMatch && classMatch && flightTypeMatch && flightCategoryMatch);
     return exemptionIsApplicable;
 }
 
