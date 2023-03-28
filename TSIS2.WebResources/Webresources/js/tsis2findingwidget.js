@@ -22,7 +22,7 @@ if (lang == 1036){
     accountableOperationsLocalized = "Opération responsable";
     findingTypeLocalized = "Type de constatation";
     findingTypeUndecidedLocalized = "Indécis";
-    findingTypeObservationLocalized = "Observation ";
+    findingTypeObservationLocalized = "Observation";
     findingTypeNoncomplianceLocalized = "Non-conformité";
     accountableTableHeaderLocalized = "Est responsable";
     operationNameTableHeaderLocalized = "Nom de l'opération";
