@@ -183,10 +183,10 @@ SurveyCreator
     .locales["fr"].p.provision = "Dispositions";
 SurveyCreator
     .localization
-    .locales["fr"].p.findingType = "Finding Type FR";
+    .locales["fr"].p.findingType = "Type de finding";
 SurveyCreator
     .localization
-    .locales["fr"].p.applicableProvisions = "Applicable Provisions (fr)"
+    .locales["fr"].p.applicableProvisions = "Constatations applicables";
 
 SurveyCreator
     .localization

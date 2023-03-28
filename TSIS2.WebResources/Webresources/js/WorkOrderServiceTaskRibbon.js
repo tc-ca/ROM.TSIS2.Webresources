@@ -539,6 +539,8 @@ async function generateCustomSurveyDefinition(provisions) {
         var provisionTextEn = await buildProvisionText(provision, "1033");
         var provisionTextFr = await buildProvisionText(provision, "1036");
         var radioQuestionName = provisionName + "-radiogroup";
+        let applicableProvisionsData = await gatherapplicableProvisionsData(provisionName)
+
         //Create radiogroup question
         var radioQuestion = {
             type: "radiogroup",
@@ -548,19 +550,29 @@ async function generateCustomSurveyDefinition(provisions) {
                 default: provisionTextEn,
                 fr: provisionTextFr
             },
+            applicableProvisionsData: [applicableProvisionsData],
             isRequired: true,
             choices: [
                 {
                     value: "No Finding",
-                    text: "No Finding"
+                    text: {
+                        default: "No Finding",
+                        fr: "Sans constatation"
+                    }
                 },
                 {
                     value: "Observation",
-                    text: "Observation"
+                    text: {
+                        default: "Observation",
+                        fr: "Observation"
+                    }
                 },
                 {
                     value: "Non-compliance",
-                    text: "Non-compliance"
+                    text: {
+                        default: "Non-compliance",
+                        fr: "Non-conformité"
+                    }
                 }
             ]
         };
@@ -611,6 +623,30 @@ async function generateCustomSurveyDefinition(provisions) {
     };
     survey.pages[0].elements = questionArray;
     return survey;
+}
+
+//Takes a provision name and returns an object with the provision data needed in the applicableProvisionsData property for that provision
+async function gatherapplicableProvisionsData(provisionName) {
+    let applicableProvisionsData = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$filter=(ts_nameenglish eq '${provisionName}' or ts_namefrench eq '${provisionName}')`).then(
+        async function success(result) {
+            if (result.entities.length > 0) {
+                let provision = result.entities[0];
+                let provisionData = {
+                    provisionId: provision.qm_rclegislationid,
+                    provisionNameEn: provision.ts_nameenglish,
+                    provisionNameFr: provision.ts_namefrench,
+                    provisionTextEn: await buildProvisionText(provision, 1033),
+                    provisionTextFr: await buildProvisionText(provision, 1036),
+                }
+                return provisionData;
+            }
+        },
+        function (error) {
+            console.log(error.message);
+            // handle error conditions
+        }
+    );
+    return applicableProvisionsData;
 }
 
 function SendReport(primaryControl, SelectedControlSelectedItemReferences){
