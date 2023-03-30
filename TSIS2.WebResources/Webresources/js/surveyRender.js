@@ -220,8 +220,10 @@ async function appendExemptions(survey, options) {
         exemptionCommentBox.cols = 50;
         exemptionCommentBox.maxLength = 5000;
         exemptionCommentBox.style.resize = "vertical";
+
         if (survey.mode == "display") {
             exemptionCommentBox.readOnly = true;
+            invokeExemptionCheckbox.disabled = "disabled";
         }
 
         let characterCount = document.createElement("span");
