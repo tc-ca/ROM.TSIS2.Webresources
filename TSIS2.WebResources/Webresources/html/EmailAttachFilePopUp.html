@@ -86,127 +86,326 @@
             // initially disable the Attach Files button
             document.getElementById("uploadFiles").disabled = true;
 
-            // retrieve all the files that are in the file entity
+            // Find out what entity the email belongs to
             {
-                parent.Xrm.WebApi.retrieveMultipleRecords("ts_file", "?$select=ts_fileid,ts_file,ts_sensitivitylevel").then(
+                // get the ID of the selected email
+                var queryString = window.location.search;
+                var urlParams = new URLSearchParams(queryString);
+                var emailId = urlParams.get('data');
+
+                var emailFetchXML = `
+                    <fetch>
+                      <entity name="email">
+                        <attribute name="regardingobjectid" />
+                        <filter>
+                          <condition attribute="activityid" operator="eq" value="${emailId}" />
+                        </filter>
+                      </entity>
+                    </fetch>
+                `;
+
+                var encodedEmailFetchXml = encodeURIComponent(emailFetchXML);
+                var emailRegardingObjectId = "";
+                var emailTableName = "";
+
+                parent.Xrm.WebApi.retrieveMultipleRecords("email", "?fetchXml=" + encodedEmailFetchXml).then(
 
                     function success(result) {
+                        emailRegardingObjectId = result.entities[0]._regardingobjectid_value;
 
-                        // retrieve all the files that are in the document centre
-                        for (var i = 0; i < result.entities.length; i++) {
+                        result.entities.forEach(function (entity) {
+                            emailTableName = entity["_regardingobjectid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
 
-                            // create the file object
-                            var myFile = {
-                                id: result.entities[i].ts_fileid,
-                                fileName: result.entities[i].ts_file,
-                                sensitivityLevel: result.entities[i].ts_sensitivitylevel,
-                                encodedFileData: ""
-                            };
+                            if (emailRegardingObjectId.length != 0 && emailTableName.length != 0) {
+                                var fileColumnFilter = { columnName: "", manyToManyName: "", manyToManyColumnName: "" };
 
-                            allFiles[i] = myFile;
-                        }
+                                // determine what column to filter the file column by
+                                {
+                                    const fileColumns = [
+                                        {
+                                            tableName: "incident",
+                                            columnName: "ts_incident",
+                                            manyToManyName: "ts_files_incidents",
+                                            manyToManyColumnName: "incidentid"
+                                        },
+                                        {
+                                            tableName: "ts_exemption",
+                                            columnName: "ts_exemption",
+                                            manyToManyName: "none",
+                                            manyToManyColumnName: "none"
+                                        },
+                                        {
+                                            tableName: "ovs_finding",
+                                            columnName: "ts_finding",
+                                            manyToManyName: "none",
+                                            manyToManyColumnName: "none"
+                                        },
+                                        {
+                                            tableName: "ovs_operation",
+                                            columnName: "ts_ovs_operation",
+                                            manyToManyName: "ts_files_ovs_operations",
+                                            manyToManyColumnName: "ovs_operationid"
+                                        },
+                                        {
+                                            tableName: "ts_securityincident",
+                                            columnName: "ts_securityincident",
+                                            manyToManyName: "none",
+                                            manyToManyColumnName: "none"
+                                        },
+                                        {
+                                            tableName: "msdyn_functionallocation",
+                                            columnName: "ts_site",
+                                            manyToManyName: "ts_files_msdyn_functionallocations",
+                                            manyToManyColumnName: "msdyn_functionallocationid"
+                                        },
+                                        {
+                                            tableName: "account",
+                                            columnName: "ts_stakeholder",
+                                            manyToManyName: "ts_files_accounts",
+                                            manyToManyColumnName: "accountid"
+                                        },
+                                        {
+                                            tableName: "msdyn_workorder",
+                                            columnName: "ts_msdyn_workorder",
+                                            manyToManyName: "ts_files_msdyn_workorders",
+                                            manyToManyColumnName: "msdyn_workorderid"
+                                        },
+                                        {
+                                            tableName: "msdyn_workorderservicetask",
+                                            columnName: "ts_workorderservicetask",
+                                            manyToManyName: "ts_files_msdyn_workorderservicetasks",
+                                            manyToManyColumnName: "msdyn_workorderservicetaskid"
+                                        }
+                                    ];
 
-                        //define the table data
-                        table = new Tabulator("#example-table", {
-                            data: allFiles,
-                            layout: "fitColumns",
-                            pagination: "local",
-                            paginationSize: 10,
-                            locale: userLocalLanguage,
-                            langs: {
-                                "fr-fr": { //French language definition
-                                    "columns": {
-                                        "id": "ID",
-                                        "fileName": fileNameColumnHeader,
-                                        "attachFile": attachFileColumnHeader,
-                                    },
-                                    "pagination": {
-                                        "first": "Premier",
-                                        "last": "Dernier",
-                                        "prev": "Précédent",
-                                        "next": "Suivant",
-                                    },
-                                },
-                            },
-                            initialSort: [
-                                { column: "fileName", dir: "asc" },
-                            ],
-                            columns: [
-                                { title: "ID", field: "id", sorter: "string", width: 200, editor: true, visible: false },
-                                { title: fileNameColumnHeader, field: "fileName", sorter: "string", width: fileNameColumnHeaderWidth, headerFilter: "input" },
-                                { title: attachFileColumnHeader, field: "attachFile", formatter: "rowSelection", hozAlign: "center", vertAlign: "center", headerSort: false },
-                            ],
-                        });
-
-                        //keep track of how many files have been selected
-                        table.on("rowSelectionChanged", async function (data, rows) {
-
-                            document.getElementById('RowCounterLabel').innerHTML = data.length;
-
-                            var rowIsSelected = data.length > 0 ? true : false;
-
-                            var protectedBFileFound = false;
-
-                            // Check if any of the selected items is a Protected B document
-                            {
-                                if (rowIsSelected) {
-
-                                    for (var i = 0; i < data.length; i++) {
-
-                                        if (data[i].sensitivityLevel == protectedBSensitivityLevel) {
-
-                                            var selectedRowGuid = data[i].id;
-                                            var selectedRowIndex = table.getRowPosition(selectedRowGuid);
-
-                                            // deselect the selected file
-                                            table.deselectRow(selectedRowGuid);
-
-                                            protectedBFileFound = true;
+                                    // find out what table and column we need to set in the file table
+                                    for (let i = 0; i < fileColumns.length; i++) {
+                                        if (fileColumns[i].tableName === emailTableName) {
+                                            fileColumnFilter.columnName = fileColumns[i].columnName;
+                                            fileColumnFilter.manyToManyName = fileColumns[i].manyToManyName;
+                                            fileColumnFilter.manyToManyColumnName = fileColumns[i].manyToManyColumnName;
+                                            break;
                                         }
                                     }
+                                }
 
-                                    if (protectedBFileFound) {
+                                if (fileColumnFilter.columnName.length != 0 && emailRegardingObjectId.length != 0) {
 
-                                        // show the message to the user for a brief moment
-                                        // we do it this way incase the user uses the Select All button
-                                        table.alert(unableToAttachProdBFile);
+                                    var fileFetchXML = `
+                                        <fetch>
+                                          <entity name='ts_file'>
+                                            <attribute name='ts_fileid' />
+                                            <attribute name='ts_file' />
+                                            <attribute name='ts_sensitivitylevel' />
+                                            <filter>
+                                              <condition attribute="${fileColumnFilter.columnName}" operator="eq" value="${emailRegardingObjectId}" />
+                                            </filter>
+                                            <order attribute='ts_file' />
+                                          </entity>
+                                        </fetch>
+                                        `;
 
-                                        await delay(2);
+                                    //  Do the regular lookup query
+                                    var encodedFileFetchXml = encodeURIComponent(fileFetchXML);
 
-                                        table.clearAlert();
-                                    }
+                                    // retrieve all the files that are in the file entity
+                                    parent.Xrm.WebApi.retrieveMultipleRecords("ts_file", "?fetchXml=" + encodedFileFetchXml).then(
+                                        function success(result) {
+
+                                            // retrieve all the files that are in the document centre
+                                            for (var i = 0; i < result.entities.length; i++) {
+
+                                                // create the file object
+                                                var myFile = {
+                                                    id: result.entities[i].ts_fileid,
+                                                    fileName: result.entities[i].ts_file,
+                                                    sensitivityLevel: result.entities[i].ts_sensitivitylevel,
+                                                    encodedFileData: ""
+                                                };
+
+                                                allFiles[i] = myFile;
+                                            }
+
+                                            // check if we need to use a many-to-many query
+                                            if (fileColumnFilter.manyToManyName != "none") {
+
+                                                fileFetchXML = `
+                                                    <fetch>
+                                                        <entity name='${fileColumnFilter.manyToManyName}'>
+                                                            <attribute name='ts_fileid' alias="fileId"/>
+                                                            <link-entity name='ts_file' to='ts_fileid' from='ts_fileid' alias='ts_file' link-type='inner'>
+                                                              <attribute name='ts_file' alias="fileName"/>
+                                                              <attribute name='ts_sensitivitylevel' alias="sensitivityLevel"/>
+                                                            </link-entity>
+                                                            <filter>
+                                                              <condition attribute='${fileColumnFilter.manyToManyColumnName}' operator='eq' value='${emailRegardingObjectId}' />
+                                                            </filter>
+                                                        </entity>
+                                                    </fetch>
+                                                `;
+
+                                                //  Do the regular lookup query
+                                                encodedFileFetchXml = encodeURIComponent(fileFetchXML);
+
+                                                parent.Xrm.WebApi.retrieveMultipleRecords(fileColumnFilter.manyToManyName, "?fetchXml=" + encodedFileFetchXml).then(
+                                                    function success(result) {
+
+                                                        // retrieve all the files that are in the document centre
+                                                        for (var i = 0; i < result.entities.length; i++) {
+
+                                                            // create the file object
+                                                            var myFile = {
+                                                                id: result.entities[i].fileId,
+                                                                fileName: result.entities[i].fileName,
+                                                                sensitivityLevel: result.entities[i].sensitivityLevel,
+                                                                encodedFileData: ""
+                                                            };
+
+                                                            allFiles[i] = myFile;
+                                                        }
+
+                                                        setupTable(allFiles);
+                                                    },
+                                                    function (error) {
+                                                        // handle error conditions
+                                                        alert(unableToGetFilesError);
+                                                        console.log("Error retrieving many-to-many files: " + error.message);
+                                                        window.close();
+                                                    }
+                                                );
+                                            }
+                                            else {
+                                                setupTable(allFiles);
+                                            }
+                                        },
+                                        function (error) {
+                                            // handle error conditions
+                                            alert(unableToGetFilesError);
+                                            console.log("Error retrieving files: " + error.message);
+                                            window.close();
+                                        }
+                                    );
                                 }
                             }
-
-                            // Enable or disable the upload button
-                            {
-                                if (rowIsSelected) {
-                                    document.getElementById("uploadFiles").disabled = false;
-                                } else {
-                                    document.getElementById("uploadFiles").disabled = true;
-                                }
-                            }
-
-                        });
-
-                        //select all records
-                        document.getElementById("selectAll").addEventListener("click", function () {
-                            table.selectRow();
-                        });
-
-                        //deselect all records
-                        document.getElementById("deselectAll").addEventListener("click", function () {
-                            table.deselectRow();
                         });
                     },
                     function (error) {
                         // handle error conditions
-                        alert(unableToGetFilesError);
-                        console.log("Error retrieving files: " + error.message);
+                        console.log("Error retrieving what entity the email belongs to: " + error.message);
                         window.close();
                     }
                 );
             }
+        }
+
+        function setupTable(allTableFiles = []) {
+
+            allTableFiles.sort(function (a, b) {
+                var nameA = a.fileName.toUpperCase(); // ignore upper and lowercase
+                var nameB = b.fileName.toUpperCase(); // ignore upper and lowercase
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+
+                // names must be equal
+                return 0;
+            });
+
+            //define the table data
+            table = new Tabulator("#example-table", {
+                data: allTableFiles,
+                layout: "fitColumns",
+                pagination: "local",
+                paginationSize: 10,
+                locale: userLocalLanguage,
+                langs: {
+                    "fr-fr": { //French language definition
+                        "columns": {
+                            "id": "ID",
+                            "fileName": fileNameColumnHeader,
+                            "attachFile": attachFileColumnHeader,
+                        },
+                        "pagination": {
+                            "first": "Premier",
+                            "last": "Dernier",
+                            "prev": "Précédent",
+                            "next": "Suivant",
+                        },
+                    },
+                },
+                initialSort: [
+                    { column: "fileName", dir: "asc" },
+                ],
+                columns: [
+                    { title: "ID", field: "id", sorter: "string", width: 200, editor: true, visible: false },
+                    { title: fileNameColumnHeader, field: "fileName", sorter: "string", width: fileNameColumnHeaderWidth, headerFilter: "input" },
+                    { title: attachFileColumnHeader, field: "attachFile", formatter: "rowSelection", hozAlign: "center", vertAlign: "center", headerSort: false },
+                ],
+            });
+
+            //keep track of how many files have been selected
+            table.on("rowSelectionChanged", async function (data, rows) {
+
+                document.getElementById('RowCounterLabel').innerHTML = data.length;
+
+                var rowIsSelected = data.length > 0 ? true : false;
+
+                var protectedBFileFound = false;
+
+                // Check if any of the selected items is a Protected B document
+                {
+                    if (rowIsSelected) {
+
+                        for (var i = 0; i < data.length; i++) {
+
+                            if (data[i].sensitivityLevel == protectedBSensitivityLevel) {
+
+                                var selectedRowGuid = data[i].id;
+                                var selectedRowIndex = table.getRowPosition(selectedRowGuid);
+
+                                // deselect the selected file
+                                table.deselectRow(selectedRowGuid);
+
+                                protectedBFileFound = true;
+                            }
+                        }
+
+                        if (protectedBFileFound) {
+
+                            // show the message to the user for a brief moment
+                            // we do it this way incase the user uses the Select All button
+                            table.alert(unableToAttachProdBFile);
+
+                            await delay(2);
+
+                            table.clearAlert();
+                        }
+                    }
+                }
+
+                // Enable or disable the upload button
+                {
+                    if (rowIsSelected) {
+                        document.getElementById("uploadFiles").disabled = false;
+                    } else {
+                        document.getElementById("uploadFiles").disabled = true;
+                    }
+                }
+
+            });
+
+            //select all records
+            document.getElementById("selectAll").addEventListener("click", function () {
+                table.selectRow();
+            });
+
+            //deselect all records
+            document.getElementById("deselectAll").addEventListener("click", function () {
+                table.deselectRow();
+            });
         }
 
         async function UploadAttachments() {
