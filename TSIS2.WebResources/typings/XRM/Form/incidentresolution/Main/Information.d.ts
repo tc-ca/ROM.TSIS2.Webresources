@@ -10,22 +10,16 @@ declare namespace Form.incidentresolution.Main {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "description"): Xrm.Attribute<string>;
       get(name: "resolutiontypecode"): Xrm.OptionSetAttribute<incidentresolution_incident_statuscode>;
       get(name: "subject"): Xrm.Attribute<string>;
-      get(name: "timespent"): Xrm.NumberAttribute;
-      get(name: "totaltimespent"): Xrm.NumberAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "description"): Xrm.StringControl;
       get(name: "resolutiontypecode"): Xrm.OptionSetControl<incidentresolution_incident_statuscode>;
       get(name: "subject"): Xrm.StringControl;
-      get(name: "timespent"): Xrm.NumberControl;
-      get(name: "totaltimespent"): Xrm.NumberControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -40,17 +34,11 @@ declare namespace Form.incidentresolution.Main {
     }
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
-    getAttribute(attributeName: "description"): Xrm.Attribute<string>;
     getAttribute(attributeName: "resolutiontypecode"): Xrm.OptionSetAttribute<incidentresolution_incident_statuscode>;
     getAttribute(attributeName: "subject"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "timespent"): Xrm.NumberAttribute;
-    getAttribute(attributeName: "totaltimespent"): Xrm.NumberAttribute;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "description"): Xrm.StringControl;
     getControl(controlName: "resolutiontypecode"): Xrm.OptionSetControl<incidentresolution_incident_statuscode>;
     getControl(controlName: "subject"): Xrm.StringControl;
-    getControl(controlName: "timespent"): Xrm.NumberControl;
-    getControl(controlName: "totaltimespent"): Xrm.NumberControl;
     getControl(controlName: string): undefined;
   }
 }

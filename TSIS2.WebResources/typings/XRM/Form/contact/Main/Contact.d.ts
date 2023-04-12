@@ -22,6 +22,7 @@ declare namespace Form.contact.Main {
         get(name: "SUMMARY_TAB_section_6"): Xrm.PageSection;
         get(name: "Summary_section_6"): Xrm.PageSection;
         get(name: "TalkingPoints_section"): Xrm.PageSection;
+        get(name: "WKW_Section"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -118,6 +119,7 @@ declare namespace Form.contact.Main {
       get(name: "anniversary"): Xrm.DateControl;
       get(name: "birthdate"): Xrm.DateControl;
       get(name: "businesscard"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "cc_1673873754954"): Xrm.BaseControl;
       get(name: "contactcasessgrid"): Xrm.SubGridControl<"incident">;
       get(name: "contactopportunitiesgrid"): Xrm.SubGridControl<"opportunity">;
       get(name: "creditlimit"): Xrm.NumberControl;
@@ -130,6 +132,7 @@ declare namespace Form.contact.Main {
       get(name: "donotpostalmail"): Xrm.OptionSetControl<boolean>;
       get(name: "donotsendmm"): Xrm.OptionSetControl<boolean>;
       get(name: "emailaddress1"): Xrm.StringControl;
+      get(name: "emailaddress11"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "familystatuscode"): Xrm.OptionSetControl<contact_familystatuscode>;
       get(name: "fax"): Xrm.StringControl;
       get(name: "followemail"): Xrm.OptionSetControl<boolean>;
@@ -251,6 +254,7 @@ declare namespace Form.contact.Main {
     getControl(controlName: "anniversary"): Xrm.DateControl;
     getControl(controlName: "birthdate"): Xrm.DateControl;
     getControl(controlName: "businesscard"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "cc_1673873754954"): Xrm.BaseControl;
     getControl(controlName: "contactcasessgrid"): Xrm.SubGridControl<"incident">;
     getControl(controlName: "contactopportunitiesgrid"): Xrm.SubGridControl<"opportunity">;
     getControl(controlName: "creditlimit"): Xrm.NumberControl;
@@ -263,6 +267,7 @@ declare namespace Form.contact.Main {
     getControl(controlName: "donotpostalmail"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "donotsendmm"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "emailaddress1"): Xrm.StringControl;
+    getControl(controlName: "emailaddress11"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "familystatuscode"): Xrm.OptionSetControl<contact_familystatuscode>;
     getControl(controlName: "fax"): Xrm.StringControl;
     getControl(controlName: "followemail"): Xrm.OptionSetControl<boolean>;

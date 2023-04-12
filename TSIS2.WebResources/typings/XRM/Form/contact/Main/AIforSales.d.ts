@@ -13,6 +13,20 @@ declare namespace Form.contact.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface RAV2 extends Xrm.SectionCollectionBase {
+        get(name: "RAV2_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface RELATIONSHIP_ANALYTICS_TAB extends Xrm.SectionCollectionBase {
+        get(name: "Activity Analysis_section_2"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface SUMMARY_TAB extends Xrm.SectionCollectionBase {
         get(name: "CONTACT_INFORMATION"): Xrm.PageSection;
         get(name: "CUSTOMER_DETAILS_TAB"): Xrm.PageSection;
@@ -20,7 +34,9 @@ declare namespace Form.contact.Main {
         get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
         get(name: "Summary_CadenceWidget"): Xrm.PageSection;
         get(name: "Summary_section_6"): Xrm.PageSection;
+        get(name: "Summary_section_7"): Xrm.PageSection;
         get(name: "TalkingPoints_section"): Xrm.PageSection;
+        get(name: "WKW_Section"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -70,7 +86,7 @@ declare namespace Form.contact.Main {
       get(name: "paymenttermscode"): Xrm.OptionSetAttribute<contact_paymenttermscode>;
       get(name: "preferredcontactmethodcode"): Xrm.OptionSetAttribute<contact_preferredcontactmethodcode>;
       get(name: "spousesname"): Xrm.Attribute<string>;
-      get(name: "telephone1"): Xrm.Attribute<string>;
+      get(name: "telephone1"): Xrm.Attribute<any>;
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
       get(name: "websiteurl"): Xrm.Attribute<string> | null;
       get(name: string): undefined;
@@ -81,6 +97,9 @@ declare namespace Form.contact.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "ActionCards"): Xrm.BaseControl;
       get(name: "CadenceWidgetControl"): Xrm.BaseControl;
+      get(name: "Healthwidget"): Xrm.BaseControl;
+      get(name: "RICONTAINER_CHARTS"): Xrm.BaseControl;
+      get(name: "RICONTAINER_CHARTS1"): Xrm.BaseControl;
       get(name: "TalkingPoints"): Xrm.BaseControl;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
@@ -94,6 +113,7 @@ declare namespace Form.contact.Main {
       get(name: "address1_shippingmethodcode"): Xrm.OptionSetControl<contact_address1_shippingmethodcode>;
       get(name: "anniversary"): Xrm.DateControl;
       get(name: "birthdate"): Xrm.DateControl;
+      get(name: "cc_1612863187947"): Xrm.BaseControl;
       get(name: "contactopportunitiesgrid"): Xrm.SubGridControl<"opportunity">;
       get(name: "creditlimit"): Xrm.NumberControl;
       get(name: "creditonhold"): Xrm.OptionSetControl<boolean>;
@@ -105,6 +125,7 @@ declare namespace Form.contact.Main {
       get(name: "donotpostalmail"): Xrm.OptionSetControl<boolean>;
       get(name: "donotsendmm"): Xrm.OptionSetControl<boolean>;
       get(name: "emailaddress1"): Xrm.StringControl;
+      get(name: "emailaddress11"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "familystatuscode"): Xrm.OptionSetControl<contact_familystatuscode>;
       get(name: "fax"): Xrm.StringControl;
       get(name: "followemail"): Xrm.OptionSetControl<boolean>;
@@ -137,8 +158,8 @@ declare namespace Form.contact.Main {
       get(name: "preferredcontactmethodcode"): Xrm.OptionSetControl<contact_preferredcontactmethodcode>;
       get(name: "preferredcontactmethodcode1"): Xrm.OptionSetControl<contact_preferredcontactmethodcode>;
       get(name: "spousesname"): Xrm.StringControl;
-      get(name: "telephone1"): Xrm.StringControl;
-      get(name: "telephone11"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "telephone1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "telephone11"): Xrm.StringControl;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -147,6 +168,8 @@ declare namespace Form.contact.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
+      get(name: "RAV2"): Xrm.PageTab<Tabs.RAV2>;
+      get(name: "RELATIONSHIP_ANALYTICS_TAB"): Xrm.PageTab<Tabs.RELATIONSHIP_ANALYTICS_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -197,12 +220,15 @@ declare namespace Form.contact.Main {
     getAttribute(attributeName: "paymenttermscode"): Xrm.OptionSetAttribute<contact_paymenttermscode>;
     getAttribute(attributeName: "preferredcontactmethodcode"): Xrm.OptionSetAttribute<contact_preferredcontactmethodcode>;
     getAttribute(attributeName: "spousesname"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "telephone1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "telephone1"): Xrm.Attribute<any>;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ActionCards"): Xrm.BaseControl;
     getControl(controlName: "CadenceWidgetControl"): Xrm.BaseControl;
+    getControl(controlName: "Healthwidget"): Xrm.BaseControl;
+    getControl(controlName: "RICONTAINER_CHARTS"): Xrm.BaseControl;
+    getControl(controlName: "RICONTAINER_CHARTS1"): Xrm.BaseControl;
     getControl(controlName: "TalkingPoints"): Xrm.BaseControl;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
@@ -216,6 +242,7 @@ declare namespace Form.contact.Main {
     getControl(controlName: "address1_shippingmethodcode"): Xrm.OptionSetControl<contact_address1_shippingmethodcode>;
     getControl(controlName: "anniversary"): Xrm.DateControl;
     getControl(controlName: "birthdate"): Xrm.DateControl;
+    getControl(controlName: "cc_1612863187947"): Xrm.BaseControl;
     getControl(controlName: "contactopportunitiesgrid"): Xrm.SubGridControl<"opportunity">;
     getControl(controlName: "creditlimit"): Xrm.NumberControl;
     getControl(controlName: "creditonhold"): Xrm.OptionSetControl<boolean>;
@@ -227,6 +254,7 @@ declare namespace Form.contact.Main {
     getControl(controlName: "donotpostalmail"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "donotsendmm"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "emailaddress1"): Xrm.StringControl;
+    getControl(controlName: "emailaddress11"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "familystatuscode"): Xrm.OptionSetControl<contact_familystatuscode>;
     getControl(controlName: "fax"): Xrm.StringControl;
     getControl(controlName: "followemail"): Xrm.OptionSetControl<boolean>;
@@ -259,8 +287,8 @@ declare namespace Form.contact.Main {
     getControl(controlName: "preferredcontactmethodcode"): Xrm.OptionSetControl<contact_preferredcontactmethodcode>;
     getControl(controlName: "preferredcontactmethodcode1"): Xrm.OptionSetControl<contact_preferredcontactmethodcode>;
     getControl(controlName: "spousesname"): Xrm.StringControl;
-    getControl(controlName: "telephone1"): Xrm.StringControl;
-    getControl(controlName: "telephone11"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "telephone1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "telephone11"): Xrm.StringControl;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: string): undefined;
   }

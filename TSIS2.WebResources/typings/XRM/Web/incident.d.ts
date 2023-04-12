@@ -33,6 +33,8 @@ interface Incident_Base extends WebEntity {
   merged?: boolean | null;
   messagetypecode?: socialactivity_postmessagetype | null;
   modifiedon?: Date | null;
+  msdyn_precreateattachmentsid?: string | null;
+  msdyn_precreatenotesid?: string | null;
   nextsla?: string | null;
   numberofchildincidents?: number | null;
   onholdtime?: number | null;
@@ -194,6 +196,8 @@ interface Incident_Select {
   msdyn_functionallocation_guid: WebAttribute<Incident_Select, { msdyn_functionallocation_guid: string | null }, { msdyn_functionallocation_formatted?: string }>;
   msdyn_incidenttype_guid: WebAttribute<Incident_Select, { msdyn_incidenttype_guid: string | null }, { msdyn_incidenttype_formatted?: string }>;
   msdyn_iotalert_guid: WebAttribute<Incident_Select, { msdyn_iotalert_guid: string | null }, { msdyn_iotalert_formatted?: string }>;
+  msdyn_precreateattachmentsid: WebAttribute<Incident_Select, { msdyn_precreateattachmentsid: string | null }, {  }>;
+  msdyn_precreatenotesid: WebAttribute<Incident_Select, { msdyn_precreatenotesid: string | null }, {  }>;
   nextsla: WebAttribute<Incident_Select, { nextsla: string | null }, {  }>;
   numberofchildincidents: WebAttribute<Incident_Select, { numberofchildincidents: number | null }, {  }>;
   onholdtime: WebAttribute<Incident_Select, { onholdtime: number | null }, {  }>;
@@ -304,6 +308,8 @@ interface Incident_Filter {
   msdyn_functionallocation_guid: XQW.Guid;
   msdyn_incidenttype_guid: XQW.Guid;
   msdyn_iotalert_guid: XQW.Guid;
+  msdyn_precreateattachmentsid: string;
+  msdyn_precreatenotesid: string;
   nextsla: string;
   numberofchildincidents: number;
   onholdtime: number;

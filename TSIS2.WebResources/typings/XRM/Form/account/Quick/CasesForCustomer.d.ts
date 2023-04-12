@@ -1,8 +1,8 @@
-declare namespace Form.incidentresolution.QuickCreate {
-  namespace CaseResolutionQuickCreateForm {
+declare namespace Form.account.Quick {
+  namespace CasesForCustomer {
     namespace Tabs {
-      interface general extends Xrm.SectionCollectionBase {
-        get(name: "information"): Xrm.PageSection;
+      interface tab_1 extends Xrm.SectionCollectionBase {
+        get(name: "tab_1_column_1_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -10,35 +10,29 @@ declare namespace Form.incidentresolution.QuickCreate {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "resolutiontypecode"): Xrm.OptionSetAttribute<incidentresolution_incident_statuscode>;
-      get(name: "subject"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "resolutiontypecode"): Xrm.OptionSetControl<incidentresolution_incident_statuscode>;
-      get(name: "subject"): Xrm.StringControl;
+      get(name: "CasesForCustomer"): Xrm.SubGridControl<"incident">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
-      get(name: "general"): Xrm.PageTab<Tabs.general>;
+      get(name: "tab_1"): Xrm.PageTab<Tabs.tab_1>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface CaseResolutionQuickCreateForm extends Xrm.PageBase<CaseResolutionQuickCreateForm.Attributes,CaseResolutionQuickCreateForm.Tabs,CaseResolutionQuickCreateForm.Controls> {
-    getAttribute(attributeName: "resolutiontypecode"): Xrm.OptionSetAttribute<incidentresolution_incident_statuscode>;
-    getAttribute(attributeName: "subject"): Xrm.Attribute<string>;
+  interface CasesForCustomer extends Xrm.PageBase<CasesForCustomer.Attributes,CasesForCustomer.Tabs,CasesForCustomer.Controls> {
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "resolutiontypecode"): Xrm.OptionSetControl<incidentresolution_incident_statuscode>;
-    getControl(controlName: "subject"): Xrm.StringControl;
+    getControl(controlName: "CasesForCustomer"): Xrm.SubGridControl<"incident">;
     getControl(controlName: string): undefined;
   }
 }

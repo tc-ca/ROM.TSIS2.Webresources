@@ -90,6 +90,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "msdyn_lastcalculatedtime"): Xrm.DateAttribute;
       get(name: "msdyn_name"): Xrm.Attribute<string>;
       get(name: "msdyn_suggestedduration"): Xrm.NumberAttribute;
+      get(name: "msdyn_trade"): Xrm.LookupAttribute<"msdyn_trade">;
       get(name: "ovs_incidenttypenameenglish"): Xrm.Attribute<string>;
       get(name: "ovs_incidenttypenamefrench"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -157,6 +158,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "msdyn_lastcalculatedtime"): Xrm.DateControl;
       get(name: "msdyn_name"): Xrm.StringControl;
       get(name: "msdyn_suggestedduration"): Xrm.NumberControl;
+      get(name: "msdyn_trade"): Xrm.LookupControl<"msdyn_trade">;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "operation_activity_grid"): Xrm.BaseControl;
       get(name: "ovs_incidenttypenameenglish"): Xrm.StringControl;
@@ -237,6 +239,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getAttribute(attributeName: "msdyn_lastcalculatedtime"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_suggestedduration"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_trade"): Xrm.LookupAttribute<"msdyn_trade">;
     getAttribute(attributeName: "ovs_incidenttypenameenglish"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ovs_incidenttypenamefrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -299,6 +302,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "msdyn_lastcalculatedtime"): Xrm.DateControl;
     getControl(controlName: "msdyn_name"): Xrm.StringControl;
     getControl(controlName: "msdyn_suggestedduration"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_trade"): Xrm.LookupControl<"msdyn_trade">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "operation_activity_grid"): Xrm.BaseControl;
     getControl(controlName: "ovs_incidenttypenameenglish"): Xrm.StringControl;

@@ -14,6 +14,20 @@ declare namespace Form.account.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface RAV2 extends Xrm.SectionCollectionBase {
+        get(name: "RAV2_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface RELATIONSHIP_ANALYTICS_TAB extends Xrm.SectionCollectionBase {
+        get(name: "Activity Analysis_section_2"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface SUMMARY_TAB extends Xrm.SectionCollectionBase {
         get(name: "ACCOUNT_INFORMATION"): Xrm.PageSection;
         get(name: "ADDRESS"): Xrm.PageSection;
@@ -77,6 +91,8 @@ declare namespace Form.account.Main {
       get(name: "CadenceWidgetControl"): Xrm.BaseControl;
       get(name: "ChildAccounts"): Xrm.SubGridControl<"account">;
       get(name: "Contacts"): Xrm.SubGridControl<"contact">;
+      get(name: "RICONTAINER_CHARTS"): Xrm.BaseControl;
+      get(name: "RICONTAINER_CHARTS1"): Xrm.BaseControl;
       get(name: "accountopportunitiesgrid"): Xrm.SubGridControl<"opportunity">;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
@@ -126,6 +142,8 @@ declare namespace Form.account.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
+      get(name: "RAV2"): Xrm.PageTab<Tabs.RAV2>;
+      get(name: "RELATIONSHIP_ANALYTICS_TAB"): Xrm.PageTab<Tabs.RELATIONSHIP_ANALYTICS_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -177,6 +195,8 @@ declare namespace Form.account.Main {
     getControl(controlName: "CadenceWidgetControl"): Xrm.BaseControl;
     getControl(controlName: "ChildAccounts"): Xrm.SubGridControl<"account">;
     getControl(controlName: "Contacts"): Xrm.SubGridControl<"contact">;
+    getControl(controlName: "RICONTAINER_CHARTS"): Xrm.BaseControl;
+    getControl(controlName: "RICONTAINER_CHARTS1"): Xrm.BaseControl;
     getControl(controlName: "accountopportunitiesgrid"): Xrm.SubGridControl<"opportunity">;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;

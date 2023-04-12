@@ -11,11 +11,13 @@ interface ts_securityincident_Base extends WebEntity {
   ts_arrests?: ts_arrestsknownorunknown | null;
   ts_arrestsdetails?: string | null;
   ts_bridgeclosure?: ts_bridgeclosure | null;
+  ts_canvasapp?: string | null;
   ts_contact?: string | null;
   ts_damagestoibtproperty?: ts_damagestoibtproperty | null;
   ts_degreesminutesseconds?: string | null;
   ts_delayduration?: number | null;
   ts_delaystooperation?: ts_delaystooperation | null;
+  ts_details?: string | null;
   ts_email?: string | null;
   ts_estimatedarrivaltime?: Date | null;
   ts_flightnumber?: string | null;
@@ -30,6 +32,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_milemarker?: string | null;
   ts_mode?: ts_securityincidentmode | null;
   ts_name?: string | null;
+  ts_organization?: string | null;
   ts_othercompany?: string | null;
   ts_owneroftherailwaylinetrack?: string | null;
   ts_phone?: string | null;
@@ -111,12 +114,14 @@ interface ts_securityincident_Select {
   ts_arrests: WebAttribute<ts_securityincident_Select, { ts_arrests: ts_arrestsknownorunknown | null }, { ts_arrests_formatted?: string }>;
   ts_arrestsdetails: WebAttribute<ts_securityincident_Select, { ts_arrestsdetails: string | null }, {  }>;
   ts_bridgeclosure: WebAttribute<ts_securityincident_Select, { ts_bridgeclosure: ts_bridgeclosure | null }, { ts_bridgeclosure_formatted?: string }>;
+  ts_canvasapp: WebAttribute<ts_securityincident_Select, { ts_canvasapp: string | null }, {  }>;
   ts_contact: WebAttribute<ts_securityincident_Select, { ts_contact: string | null }, {  }>;
   ts_damagestoibtproperty: WebAttribute<ts_securityincident_Select, { ts_damagestoibtproperty: ts_damagestoibtproperty | null }, { ts_damagestoibtproperty_formatted?: string }>;
   ts_degreesminutesseconds: WebAttribute<ts_securityincident_Select, { ts_degreesminutesseconds: string | null }, {  }>;
   ts_delayduration: WebAttribute<ts_securityincident_Select, { ts_delayduration: number | null }, {  }>;
   ts_delaystooperation: WebAttribute<ts_securityincident_Select, { ts_delaystooperation: ts_delaystooperation | null }, { ts_delaystooperation_formatted?: string }>;
   ts_destination_guid: WebAttribute<ts_securityincident_Select, { ts_destination_guid: string | null }, { ts_destination_formatted?: string }>;
+  ts_details: WebAttribute<ts_securityincident_Select, { ts_details: string | null }, {  }>;
   ts_diversionaerodrome_guid: WebAttribute<ts_securityincident_Select, { ts_diversionaerodrome_guid: string | null }, { ts_diversionaerodrome_formatted?: string }>;
   ts_email: WebAttribute<ts_securityincident_Select, { ts_email: string | null }, {  }>;
   ts_estimatedarrivaltime: WebAttribute<ts_securityincident_Select, { ts_estimatedarrivaltime: Date | null }, { ts_estimatedarrivaltime_formatted?: string }>;
@@ -132,6 +137,7 @@ interface ts_securityincident_Select {
   ts_milemarker: WebAttribute<ts_securityincident_Select, { ts_milemarker: string | null }, {  }>;
   ts_mode: WebAttribute<ts_securityincident_Select, { ts_mode: ts_securityincidentmode | null }, { ts_mode_formatted?: string }>;
   ts_name: WebAttribute<ts_securityincident_Select, { ts_name: string | null }, {  }>;
+  ts_organization: WebAttribute<ts_securityincident_Select, { ts_organization: string | null }, {  }>;
   ts_origin_guid: WebAttribute<ts_securityincident_Select, { ts_origin_guid: string | null }, { ts_origin_formatted?: string }>;
   ts_othercompany: WebAttribute<ts_securityincident_Select, { ts_othercompany: string | null }, {  }>;
   ts_owneroftherailwaylinetrack: WebAttribute<ts_securityincident_Select, { ts_owneroftherailwaylinetrack: string | null }, {  }>;
@@ -185,12 +191,14 @@ interface ts_securityincident_Filter {
   ts_arrests: ts_arrestsknownorunknown;
   ts_arrestsdetails: string;
   ts_bridgeclosure: ts_bridgeclosure;
+  ts_canvasapp: string;
   ts_contact: string;
   ts_damagestoibtproperty: ts_damagestoibtproperty;
   ts_degreesminutesseconds: string;
   ts_delayduration: number;
   ts_delaystooperation: ts_delaystooperation;
   ts_destination_guid: XQW.Guid;
+  ts_details: string;
   ts_diversionaerodrome_guid: XQW.Guid;
   ts_email: string;
   ts_estimatedarrivaltime: Date;
@@ -206,6 +214,7 @@ interface ts_securityincident_Filter {
   ts_milemarker: string;
   ts_mode: ts_securityincidentmode;
   ts_name: string;
+  ts_organization: string;
   ts_origin_guid: XQW.Guid;
   ts_othercompany: string;
   ts_owneroftherailwaylinetrack: string;

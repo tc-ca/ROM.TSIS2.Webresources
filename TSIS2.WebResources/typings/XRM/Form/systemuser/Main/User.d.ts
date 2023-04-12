@@ -41,6 +41,21 @@ declare namespace Form.systemuser.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface VirtualAgentDetailsTab extends Xrm.SectionCollectionBase {
+        get(name: "tab_8_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface VirtualAgentSummaryTab extends Xrm.SectionCollectionBase {
+        get(name: "tab_7_section_1"): Xrm.PageSection;
+        get(name: "tab_7_section_2"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_6 extends Xrm.SectionCollectionBase {
         get(name: "tab_6_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -83,6 +98,8 @@ declare namespace Form.systemuser.Main {
       get(name: "address2_line3"): Xrm.Attribute<string> | null;
       get(name: "address2_postalcode"): Xrm.Attribute<string> | null;
       get(name: "address2_stateorprovince"): Xrm.Attribute<string> | null;
+      get(name: "applicationid"): Xrm.Attribute<string>;
+      get(name: "azureactivedirectoryobjectid"): Xrm.Attribute<string>;
       get(name: "businessunitid"): Xrm.LookupAttribute<"businessunit">;
       get(name: "caltype"): Xrm.OptionSetAttribute<systemuser_caltype>;
       get(name: "defaultmailbox"): Xrm.LookupAttribute<"mailbox">;
@@ -95,6 +112,10 @@ declare namespace Form.systemuser.Main {
       get(name: "mobilealertemail"): Xrm.Attribute<string>;
       get(name: "mobileofflineprofileid"): Xrm.LookupAttribute<"mobileofflineprofile">;
       get(name: "mobilephone"): Xrm.Attribute<string>;
+      get(name: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agenttype>;
+      get(name: "msdyn_botapplicationid"): Xrm.Attribute<string>;
+      get(name: "msdyn_botdescription"): Xrm.Attribute<string>;
+      get(name: "msdyn_botprovider"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_botprovider>;
       get(name: "msdyn_capacity"): Xrm.NumberAttribute;
       get(name: "msdyn_defaultpresenceiduser"): Xrm.LookupAttribute<"msdyn_presence">;
       get(name: "nickname"): Xrm.Attribute<string>;
@@ -119,6 +140,7 @@ declare namespace Form.systemuser.Main {
       get(name: "CapacityProfilesSubgrid"): Xrm.SubGridControl<"msdyn_capacityprofile">;
       get(name: "DirectReports"): Xrm.SubGridControl<"systemuser">;
       get(name: "LiveEngagementQueues"): Xrm.SubGridControl<"queue">;
+      get(name: "OmnichannelQueues"): Xrm.SubGridControl<"queue">;
       get(name: "PrivateQueuesSubGrid"): Xrm.SubGridControl<"queue">;
       get(name: "TeamsSubGrid"): Xrm.SubGridControl<"team">;
       get(name: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
@@ -147,6 +169,8 @@ declare namespace Form.systemuser.Main {
       get(name: "address2_composite_compositionLinkControl_address2_postalcode"): Xrm.StringControl | null;
       get(name: "address2_composite_compositionLinkControl_address2_stateorprovince"): Xrm.StringControl | null;
       get(name: "address2_line1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "applicationid"): Xrm.StringControl;
+      get(name: "azureactivedirectoryobjectid"): Xrm.StringControl;
       get(name: "businessunitid"): Xrm.LookupControl<"businessunit">;
       get(name: "caltype"): Xrm.OptionSetControl<systemuser_caltype>;
       get(name: "default_presence_user"): Xrm.LookupControl<"msdyn_presence">;
@@ -154,6 +178,7 @@ declare namespace Form.systemuser.Main {
       get(name: "domainname"): Xrm.StringControl;
       get(name: "footer_isdisabled"): Xrm.OptionSetControl<boolean>;
       get(name: "fullname"): Xrm.StringControl | null;
+      get(name: "fullname1"): Xrm.StringControl | null;
       get(name: "homephone"): Xrm.StringControl;
       get(name: "internalemailaddress"): Xrm.StringControl;
       get(name: "invitestatuscode"): Xrm.OptionSetControl<systemuser_invitestatuscode>;
@@ -161,7 +186,12 @@ declare namespace Form.systemuser.Main {
       get(name: "mobilealertemail"): Xrm.StringControl;
       get(name: "mobileofflineprofileid"): Xrm.LookupControl<"mobileofflineprofile">;
       get(name: "mobilephone"): Xrm.StringControl;
+      get(name: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agenttype>;
+      get(name: "msdyn_botapplicationid"): Xrm.StringControl;
+      get(name: "msdyn_botdescription"): Xrm.StringControl;
+      get(name: "msdyn_botprovider"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_botprovider>;
       get(name: "msdyn_capacity"): Xrm.NumberControl;
+      get(name: "msdyn_capacity1"): Xrm.NumberControl;
       get(name: "nickname"): Xrm.StringControl;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "parentsystemuserid"): Xrm.LookupControl<"systemuser">;
@@ -185,6 +215,8 @@ declare namespace Form.systemuser.Main {
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
       get(name: "MobileOfflineProfile_TAB"): Xrm.PageTab<Tabs.MobileOfflineProfile_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
+      get(name: "VirtualAgentDetailsTab"): Xrm.PageTab<Tabs.VirtualAgentDetailsTab>;
+      get(name: "VirtualAgentSummaryTab"): Xrm.PageTab<Tabs.VirtualAgentSummaryTab>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: string): undefined;
@@ -217,6 +249,8 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: "address2_line3"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address2_postalcode"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "address2_stateorprovince"): Xrm.Attribute<string> | null;
+    getAttribute(attributeName: "applicationid"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "azureactivedirectoryobjectid"): Xrm.Attribute<string>;
     getAttribute(attributeName: "businessunitid"): Xrm.LookupAttribute<"businessunit">;
     getAttribute(attributeName: "caltype"): Xrm.OptionSetAttribute<systemuser_caltype>;
     getAttribute(attributeName: "defaultmailbox"): Xrm.LookupAttribute<"mailbox">;
@@ -229,6 +263,10 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: "mobilealertemail"): Xrm.Attribute<string>;
     getAttribute(attributeName: "mobileofflineprofileid"): Xrm.LookupAttribute<"mobileofflineprofile">;
     getAttribute(attributeName: "mobilephone"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agenttype>;
+    getAttribute(attributeName: "msdyn_botapplicationid"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_botdescription"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_botprovider"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_botprovider>;
     getAttribute(attributeName: "msdyn_capacity"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_defaultpresenceiduser"): Xrm.LookupAttribute<"msdyn_presence">;
     getAttribute(attributeName: "nickname"): Xrm.Attribute<string>;
@@ -248,6 +286,7 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "CapacityProfilesSubgrid"): Xrm.SubGridControl<"msdyn_capacityprofile">;
     getControl(controlName: "DirectReports"): Xrm.SubGridControl<"systemuser">;
     getControl(controlName: "LiveEngagementQueues"): Xrm.SubGridControl<"queue">;
+    getControl(controlName: "OmnichannelQueues"): Xrm.SubGridControl<"queue">;
     getControl(controlName: "PrivateQueuesSubGrid"): Xrm.SubGridControl<"queue">;
     getControl(controlName: "TeamsSubGrid"): Xrm.SubGridControl<"team">;
     getControl(controlName: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
@@ -276,6 +315,8 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "address2_composite_compositionLinkControl_address2_postalcode"): Xrm.StringControl | null;
     getControl(controlName: "address2_composite_compositionLinkControl_address2_stateorprovince"): Xrm.StringControl | null;
     getControl(controlName: "address2_line1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "applicationid"): Xrm.StringControl;
+    getControl(controlName: "azureactivedirectoryobjectid"): Xrm.StringControl;
     getControl(controlName: "businessunitid"): Xrm.LookupControl<"businessunit">;
     getControl(controlName: "caltype"): Xrm.OptionSetControl<systemuser_caltype>;
     getControl(controlName: "default_presence_user"): Xrm.LookupControl<"msdyn_presence">;
@@ -283,6 +324,7 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "domainname"): Xrm.StringControl;
     getControl(controlName: "footer_isdisabled"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "fullname"): Xrm.StringControl | null;
+    getControl(controlName: "fullname1"): Xrm.StringControl | null;
     getControl(controlName: "homephone"): Xrm.StringControl;
     getControl(controlName: "internalemailaddress"): Xrm.StringControl;
     getControl(controlName: "invitestatuscode"): Xrm.OptionSetControl<systemuser_invitestatuscode>;
@@ -290,7 +332,12 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "mobilealertemail"): Xrm.StringControl;
     getControl(controlName: "mobileofflineprofileid"): Xrm.LookupControl<"mobileofflineprofile">;
     getControl(controlName: "mobilephone"): Xrm.StringControl;
+    getControl(controlName: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agenttype>;
+    getControl(controlName: "msdyn_botapplicationid"): Xrm.StringControl;
+    getControl(controlName: "msdyn_botdescription"): Xrm.StringControl;
+    getControl(controlName: "msdyn_botprovider"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_botprovider>;
     getControl(controlName: "msdyn_capacity"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_capacity1"): Xrm.NumberControl;
     getControl(controlName: "nickname"): Xrm.StringControl;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "parentsystemuserid"): Xrm.LookupControl<"systemuser">;
