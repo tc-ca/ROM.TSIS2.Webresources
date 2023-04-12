@@ -42,6 +42,13 @@ declare namespace Form.account.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface TradeCoveragesTab extends Xrm.SectionCollectionBase {
+        get(name: "TradeCoveragesSection"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface documents_sharepoint extends Xrm.SectionCollectionBase {
         get(name: "documents_sharepoint_section"): Xrm.PageSection;
         get(name: string): undefined;
@@ -172,6 +179,7 @@ declare namespace Form.account.Main {
       get(name: "telephone1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "telephone11"): Xrm.StringControl;
       get(name: "tickersymbol"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "trade_coverages"): Xrm.SubGridControl<"msdyn_tradecoverage">;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: "websiteurl"): Xrm.StringControl;
       get(name: string): undefined;
@@ -184,6 +192,7 @@ declare namespace Form.account.Main {
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
       get(name: "FieldService"): Xrm.PageTab<Tabs.FieldService>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
+      get(name: "TradeCoveragesTab"): Xrm.PageTab<Tabs.TradeCoveragesTab>;
       get(name: "documents_sharepoint"): Xrm.PageTab<Tabs.documents_sharepoint>;
       get(name: "urstab"): Xrm.PageTab<Tabs.urstab>;
       get(name: string): undefined;
@@ -300,6 +309,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "telephone1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "telephone11"): Xrm.StringControl;
     getControl(controlName: "tickersymbol"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "trade_coverages"): Xrm.SubGridControl<"msdyn_tradecoverage">;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: "websiteurl"): Xrm.StringControl;
     getControl(controlName: string): undefined;

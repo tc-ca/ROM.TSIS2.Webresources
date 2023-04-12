@@ -176,6 +176,7 @@ interface Account_Relationships {
   incident_customer_accounts?: Incident_Result[] | null;
   msdyn_PreferredResource?: BookableResource_Result | null;
   msdyn_account_account_BillingAccount?: Account_Result[] | null;
+  msdyn_account_msdyn_accountkpiitem_accountid?: msdyn_accountkpiitem_Result[] | null;
   msdyn_account_msdyn_customerasset_Account?: msdyn_customerasset_Result[] | null;
   msdyn_account_msdyn_workorder_BillingAccount?: msdyn_workorder_Result[] | null;
   msdyn_account_msdyn_workorder_ServiceAccount?: msdyn_workorder_Result[] | null;
@@ -204,6 +205,7 @@ interface Account_Relationships {
 interface Account extends Account_Base, Account_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
   msdyn_PreferredResource_bind$bookableresources?: string | null;
+  msdyn_accountkpiid_bind$msdyn_accountkpiitems?: string | null;
   msdyn_billingaccount_account_bind$accounts?: string | null;
   msdyn_salesaccelerationinsightid_bind$msdyn_salesaccelerationinsights?: string | null;
   msdyn_salestaxcode_bind$msdyn_taxcodes?: string | null;
@@ -332,6 +334,7 @@ interface Account_Select {
   modifiedbyexternalparty_guid: WebAttribute<Account_Select, { modifiedbyexternalparty_guid: string | null }, { modifiedbyexternalparty_formatted?: string }>;
   modifiedon: WebAttribute<Account_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Account_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msdyn_accountkpiid_guid: WebAttribute<Account_Select, { msdyn_accountkpiid_guid: string | null }, { msdyn_accountkpiid_formatted?: string }>;
   msdyn_billingaccount_guid: WebAttribute<Account_Select, { msdyn_billingaccount_guid: string | null }, { msdyn_billingaccount_formatted?: string }>;
   msdyn_gdproptout: WebAttribute<Account_Select, { msdyn_gdproptout: boolean | null }, {  }>;
   msdyn_preferredresource_guid: WebAttribute<Account_Select, { msdyn_preferredresource_guid: string | null }, { msdyn_preferredresource_formatted?: string }>;
@@ -520,6 +523,7 @@ interface Account_Filter {
   modifiedbyexternalparty_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msdyn_accountkpiid_guid: XQW.Guid;
   msdyn_billingaccount_guid: XQW.Guid;
   msdyn_gdproptout: boolean;
   msdyn_preferredresource_guid: XQW.Guid;
@@ -634,9 +638,11 @@ interface Account_Expand {
   modifiedonbehalfby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_PreferredResource: WebExpand<Account_Expand, BookableResource_Select, BookableResource_Filter, { msdyn_PreferredResource: BookableResource_Result }>;
   msdyn_account_account_BillingAccount: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_account_account_BillingAccount: Account_Result[] }>;
+  msdyn_account_msdyn_accountkpiitem_accountid: WebExpand<Account_Expand, msdyn_accountkpiitem_Select, msdyn_accountkpiitem_Filter, { msdyn_account_msdyn_accountkpiitem_accountid: msdyn_accountkpiitem_Result[] }>;
   msdyn_account_msdyn_customerasset_Account: WebExpand<Account_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { msdyn_account_msdyn_customerasset_Account: msdyn_customerasset_Result[] }>;
   msdyn_account_msdyn_workorder_BillingAccount: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_account_msdyn_workorder_BillingAccount: msdyn_workorder_Result[] }>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_account_msdyn_workorder_ServiceAccount: msdyn_workorder_Result[] }>;
+  msdyn_accountkpiid: WebExpand<Account_Expand, msdyn_accountkpiitem_Select, msdyn_accountkpiitem_Filter, { msdyn_accountkpiid: msdyn_accountkpiitem_Result }>;
   msdyn_billingaccount_account: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_billingaccount_account: Account_Result }>;
   msdyn_msdyn_functionallocation_account: WebExpand<Account_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_msdyn_functionallocation_account: msdyn_FunctionalLocation_Result[] }>;
   ownerid: WebExpand<Account_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
@@ -702,6 +708,7 @@ interface Account_FormattedResult {
   modifiedbyexternalparty_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msdyn_accountkpiid_formatted?: string;
   msdyn_billingaccount_formatted?: string;
   msdyn_preferredresource_formatted?: string;
   msdyn_salesaccelerationinsightid_formatted?: string;
@@ -761,6 +768,7 @@ interface Account_Result extends Account_Base, Account_Relationships {
   modifiedby_guid: string | null;
   modifiedbyexternalparty_guid: string | null;
   modifiedonbehalfby_guid: string | null;
+  msdyn_accountkpiid_guid: string | null;
   msdyn_billingaccount_guid: string | null;
   msdyn_preferredresource_guid: string | null;
   msdyn_salesaccelerationinsightid_guid: string | null;
@@ -794,6 +802,7 @@ interface Account_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_PreferredResource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
+  msdyn_accountkpiid: WebMappingRetrieve<msdyn_accountkpiitem_Select,msdyn_accountkpiitem_Expand,msdyn_accountkpiitem_Filter,msdyn_accountkpiitem_Fixed,msdyn_accountkpiitem_Result,msdyn_accountkpiitem_FormattedResult>;
   msdyn_billingaccount_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
@@ -824,6 +833,7 @@ interface Account_RelatedMany {
   contact_customer_accounts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   incident_customer_accounts: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_account_account_BillingAccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  msdyn_account_msdyn_accountkpiitem_accountid: WebMappingRetrieve<msdyn_accountkpiitem_Select,msdyn_accountkpiitem_Expand,msdyn_accountkpiitem_Filter,msdyn_accountkpiitem_Fixed,msdyn_accountkpiitem_Result,msdyn_accountkpiitem_FormattedResult>;
   msdyn_account_msdyn_customerasset_Account: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_account_msdyn_workorder_BillingAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;

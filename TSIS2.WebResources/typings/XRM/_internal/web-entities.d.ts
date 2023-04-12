@@ -1044,6 +1044,29 @@ interface ServiceAppointment_Create extends ServiceAppointment {
 }
 interface ServiceAppointment_Update extends ServiceAppointment {
 }
+interface msdyn_accountkpiitem_Base extends WebEntity {
+}
+interface msdyn_accountkpiitem_Fixed extends WebEntity_Fixed {
+  msdyn_accountkpiitemid: string;
+}
+interface msdyn_accountkpiitem extends msdyn_accountkpiitem_Base, msdyn_accountkpiitem_Relationships {
+}
+interface msdyn_accountkpiitem_Relationships {
+}
+interface msdyn_accountkpiitem_Result extends msdyn_accountkpiitem_Base, msdyn_accountkpiitem_Relationships {
+}
+interface msdyn_accountkpiitem_FormattedResult {
+}
+interface msdyn_accountkpiitem_Select {
+}
+interface msdyn_accountkpiitem_Expand {
+}
+interface msdyn_accountkpiitem_Filter {
+}
+interface msdyn_accountkpiitem_Create extends msdyn_accountkpiitem {
+}
+interface msdyn_accountkpiitem_Update extends msdyn_accountkpiitem {
+}
 interface ts_role_Base extends WebEntity {
 }
 interface ts_role_Fixed extends WebEntity_Fixed {

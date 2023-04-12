@@ -7,8 +7,10 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "fstab_sub_grids_section"): Xrm.PageSection;
         get(name: "fstab_summary_section_address"): Xrm.PageSection;
         get(name: "fstab_summary_section_general"): Xrm.PageSection;
+        get(name: "fstab_summary_section_nte"): Xrm.PageSection;
         get(name: "fstab_summary_section_primary_incident"): Xrm.PageSection;
         get(name: "fstab_summary_section_sales_tax"): Xrm.PageSection;
+        get(name: "total_cost_section"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_column_2_section_1"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_9"): Xrm.PageSection;
         get(name: string): undefined;
@@ -30,6 +32,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_address3"): Xrm.Attribute<string>;
       get(name: "msdyn_billingaccount"): Xrm.LookupAttribute<"account">;
       get(name: "msdyn_city"): Xrm.Attribute<string>;
+      get(name: "msdyn_costntepercent"): Xrm.Attribute<any>;
       get(name: "msdyn_country"): Xrm.Attribute<string>;
       get(name: "msdyn_customerasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
       get(name: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
@@ -45,10 +48,13 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_phoneNumber"): Xrm.Attribute<string>;
       get(name: "msdyn_postalcode"): Xrm.Attribute<string>;
       get(name: "msdyn_pricelist"): Xrm.LookupAttribute<"pricelevel">;
+      get(name: "msdyn_pricentepercent"): Xrm.Attribute<any>;
       get(name: "msdyn_primaryincidentdescription"): Xrm.Attribute<string>;
       get(name: "msdyn_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "msdyn_primaryresolution"): Xrm.LookupAttribute<"msdyn_resolution">;
       get(name: "msdyn_priority"): Xrm.LookupAttribute<"msdyn_priority">;
+      get(name: "msdyn_productsservicescost"): Xrm.NumberAttribute;
+      get(name: "msdyn_productsservicesestimatedcost"): Xrm.NumberAttribute;
       get(name: "msdyn_reportedbycontact"): Xrm.LookupAttribute<"contact">;
       get(name: "msdyn_serviceaccount"): Xrm.LookupAttribute<"account">;
       get(name: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
@@ -62,7 +68,9 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_timefrompromised"): Xrm.DateAttribute;
       get(name: "msdyn_timetopromised"): Xrm.DateAttribute;
       get(name: "msdyn_totalamount"): Xrm.NumberAttribute;
+      get(name: "msdyn_totalestimatedaftertaxprice"): Xrm.NumberAttribute;
       get(name: "msdyn_totalsalestax"): Xrm.NumberAttribute;
+      get(name: "msdyn_trade"): Xrm.LookupAttribute<"msdyn_trade">;
       get(name: "msdyn_workordersummary"): Xrm.Attribute<string>;
       get(name: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -107,6 +115,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_address3"): Xrm.StringControl;
       get(name: "msdyn_billingaccount"): Xrm.LookupControl<"account">;
       get(name: "msdyn_city"): Xrm.StringControl;
+      get(name: "msdyn_costntepercent"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_country"): Xrm.StringControl;
       get(name: "msdyn_customerasset"): Xrm.LookupControl<"msdyn_customerasset">;
       get(name: "msdyn_estimatesubtotalamount"): Xrm.NumberControl;
@@ -124,10 +133,13 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_phoneNumber"): Xrm.StringControl;
       get(name: "msdyn_postalcode"): Xrm.StringControl;
       get(name: "msdyn_pricelist"): Xrm.LookupControl<"pricelevel">;
+      get(name: "msdyn_pricentepercent"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_primaryincidentdescription"): Xrm.StringControl;
       get(name: "msdyn_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "msdyn_primaryresolution"): Xrm.LookupControl<"msdyn_resolution">;
       get(name: "msdyn_priority"): Xrm.LookupControl<"msdyn_priority">;
+      get(name: "msdyn_productsservicescost"): Xrm.NumberControl;
+      get(name: "msdyn_productsservicesestimatedcost"): Xrm.NumberControl;
       get(name: "msdyn_reportedbycontact"): Xrm.LookupControl<"contact">;
       get(name: "msdyn_serviceaccount"): Xrm.LookupControl<"account">;
       get(name: "msdyn_serviceterritory"): Xrm.LookupControl<"territory">;
@@ -141,7 +153,9 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_timefrompromised"): Xrm.DateControl;
       get(name: "msdyn_timetopromised"): Xrm.DateControl;
       get(name: "msdyn_totalamount"): Xrm.NumberControl;
+      get(name: "msdyn_totalestimatedaftertaxprice"): Xrm.NumberControl;
       get(name: "msdyn_totalsalestax"): Xrm.NumberControl;
+      get(name: "msdyn_trade"): Xrm.LookupControl<"msdyn_trade">;
       get(name: "msdyn_workordersummary"): Xrm.StringControl;
       get(name: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
       get(name: "notescontrol"): Xrm.BaseControl;
@@ -170,6 +184,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_address3"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_billingaccount"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "msdyn_city"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_costntepercent"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_country"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_customerasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
     getAttribute(attributeName: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
@@ -185,10 +200,13 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_phoneNumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_postalcode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_pricelist"): Xrm.LookupAttribute<"pricelevel">;
+    getAttribute(attributeName: "msdyn_pricentepercent"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_primaryincidentdescription"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "msdyn_primaryresolution"): Xrm.LookupAttribute<"msdyn_resolution">;
     getAttribute(attributeName: "msdyn_priority"): Xrm.LookupAttribute<"msdyn_priority">;
+    getAttribute(attributeName: "msdyn_productsservicescost"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_productsservicesestimatedcost"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_reportedbycontact"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "msdyn_serviceaccount"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
@@ -202,7 +220,9 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_timefrompromised"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_timetopromised"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_totalamount"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_totalestimatedaftertaxprice"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_totalsalestax"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_trade"): Xrm.LookupAttribute<"msdyn_trade">;
     getAttribute(attributeName: "msdyn_workordersummary"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -242,6 +262,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_address3"): Xrm.StringControl;
     getControl(controlName: "msdyn_billingaccount"): Xrm.LookupControl<"account">;
     getControl(controlName: "msdyn_city"): Xrm.StringControl;
+    getControl(controlName: "msdyn_costntepercent"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_country"): Xrm.StringControl;
     getControl(controlName: "msdyn_customerasset"): Xrm.LookupControl<"msdyn_customerasset">;
     getControl(controlName: "msdyn_estimatesubtotalamount"): Xrm.NumberControl;
@@ -259,10 +280,13 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_phoneNumber"): Xrm.StringControl;
     getControl(controlName: "msdyn_postalcode"): Xrm.StringControl;
     getControl(controlName: "msdyn_pricelist"): Xrm.LookupControl<"pricelevel">;
+    getControl(controlName: "msdyn_pricentepercent"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_primaryincidentdescription"): Xrm.StringControl;
     getControl(controlName: "msdyn_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "msdyn_primaryresolution"): Xrm.LookupControl<"msdyn_resolution">;
     getControl(controlName: "msdyn_priority"): Xrm.LookupControl<"msdyn_priority">;
+    getControl(controlName: "msdyn_productsservicescost"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_productsservicesestimatedcost"): Xrm.NumberControl;
     getControl(controlName: "msdyn_reportedbycontact"): Xrm.LookupControl<"contact">;
     getControl(controlName: "msdyn_serviceaccount"): Xrm.LookupControl<"account">;
     getControl(controlName: "msdyn_serviceterritory"): Xrm.LookupControl<"territory">;
@@ -276,7 +300,9 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_timefrompromised"): Xrm.DateControl;
     getControl(controlName: "msdyn_timetopromised"): Xrm.DateControl;
     getControl(controlName: "msdyn_totalamount"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_totalestimatedaftertaxprice"): Xrm.NumberControl;
     getControl(controlName: "msdyn_totalsalestax"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_trade"): Xrm.LookupControl<"msdyn_trade">;
     getControl(controlName: "msdyn_workordersummary"): Xrm.StringControl;
     getControl(controlName: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;

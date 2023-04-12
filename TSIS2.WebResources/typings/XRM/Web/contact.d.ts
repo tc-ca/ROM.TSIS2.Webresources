@@ -209,6 +209,7 @@ interface Contact_Relationships {
 }
 interface Contact extends Contact_Base, Contact_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
+  msdyn_contactkpiid_bind$msdyn_contactkpiitems?: string | null;
   msdyn_segmentid_bind$msdyn_segments?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
@@ -377,6 +378,7 @@ interface Contact_Select {
   modifiedbyexternalparty_guid: WebAttribute<Contact_Select, { modifiedbyexternalparty_guid: string | null }, { modifiedbyexternalparty_formatted?: string }>;
   modifiedon: WebAttribute<Contact_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Contact_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msdyn_contactkpiid_guid: WebAttribute<Contact_Select, { msdyn_contactkpiid_guid: string | null }, { msdyn_contactkpiid_formatted?: string }>;
   msdyn_gdproptout: WebAttribute<Contact_Select, { msdyn_gdproptout: boolean | null }, {  }>;
   msdyn_orgchangestatus: WebAttribute<Contact_Select, { msdyn_orgchangestatus: contact_msdyn_orgchangestatus | null }, { msdyn_orgchangestatus_formatted?: string }>;
   msdyn_segmentid_guid: WebAttribute<Contact_Select, { msdyn_segmentid_guid: string | null }, { msdyn_segmentid_formatted?: string }>;
@@ -575,6 +577,7 @@ interface Contact_Filter {
   modifiedbyexternalparty_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msdyn_contactkpiid_guid: XQW.Guid;
   msdyn_gdproptout: boolean;
   msdyn_orgchangestatus: contact_msdyn_orgchangestatus;
   msdyn_segmentid_guid: XQW.Guid;
@@ -707,6 +710,7 @@ interface Contact_FormattedResult {
   modifiedbyexternalparty_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msdyn_contactkpiid_formatted?: string;
   msdyn_orgchangestatus_formatted?: string;
   msdyn_segmentid_formatted?: string;
   originatingleadid_formatted?: string;
@@ -743,6 +747,7 @@ interface Contact_Result extends Contact_Base, Contact_Relationships {
   modifiedby_guid: string | null;
   modifiedbyexternalparty_guid: string | null;
   modifiedonbehalfby_guid: string | null;
+  msdyn_contactkpiid_guid: string | null;
   msdyn_segmentid_guid: string | null;
   originatingleadid_guid: string | null;
   ownerid_guid: string | null;

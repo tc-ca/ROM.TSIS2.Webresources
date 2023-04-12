@@ -72,6 +72,7 @@ interface msdyn_incidenttype_Relationships {
   ts_ts_planningdata_ActivityType_msdyn_incide?: ts_PlanningData_Result[] | null;
 }
 interface msdyn_incidenttype extends msdyn_incidenttype_Base, msdyn_incidenttype_Relationships {
+  msdyn_Trade_bind$msdyn_trades?: string | null;
   msdyn_defaultworkordertype_bind$msdyn_workordertypes?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
@@ -99,6 +100,7 @@ interface msdyn_incidenttype_Select {
   msdyn_name: WebAttribute<msdyn_incidenttype_Select, { msdyn_name: string | null }, {  }>;
   msdyn_resolutionrequiredonwocompletion: WebAttribute<msdyn_incidenttype_Select, { msdyn_resolutionrequiredonwocompletion: boolean | null }, {  }>;
   msdyn_suggestedduration: WebAttribute<msdyn_incidenttype_Select, { msdyn_suggestedduration: number | null }, {  }>;
+  msdyn_trade_guid: WebAttribute<msdyn_incidenttype_Select, { msdyn_trade_guid: string | null }, { msdyn_trade_formatted?: string }>;
   overriddencreatedon: WebAttribute<msdyn_incidenttype_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
   ovs_incidenttypenameenglish: WebAttribute<msdyn_incidenttype_Select, { ovs_incidenttypenameenglish: string | null }, {  }>;
   ovs_incidenttypenamefrench: WebAttribute<msdyn_incidenttype_Select, { ovs_incidenttypenamefrench: string | null }, {  }>;
@@ -174,6 +176,7 @@ interface msdyn_incidenttype_Filter {
   msdyn_name: string;
   msdyn_resolutionrequiredonwocompletion: boolean;
   msdyn_suggestedduration: number;
+  msdyn_trade_guid: XQW.Guid;
   overriddencreatedon: Date;
   ovs_incidenttypenameenglish: string;
   ovs_incidenttypenamefrench: string;
@@ -258,6 +261,7 @@ interface msdyn_incidenttype_FormattedResult {
   modifiedonbehalfby_formatted?: string;
   msdyn_defaultworkordertype_formatted?: string;
   msdyn_lastcalculatedtime_formatted?: string;
+  msdyn_trade_formatted?: string;
   overriddencreatedon_formatted?: string;
   ownerid_formatted?: string;
   owningbusinessunit_formatted?: string;
@@ -275,6 +279,7 @@ interface msdyn_incidenttype_Result extends msdyn_incidenttype_Base, msdyn_incid
   modifiedby_guid: string | null;
   modifiedonbehalfby_guid: string | null;
   msdyn_defaultworkordertype_guid: string | null;
+  msdyn_trade_guid: string | null;
   ownerid_guid: string | null;
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;

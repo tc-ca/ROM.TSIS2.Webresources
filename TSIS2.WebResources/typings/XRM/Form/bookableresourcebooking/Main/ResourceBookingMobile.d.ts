@@ -55,7 +55,7 @@ declare namespace Form.bookableresourcebooking.Main {
       get(name: "msdyn_estimatedtravelduration"): Xrm.NumberAttribute;
       get(name: "msdyn_latitude"): Xrm.NumberAttribute;
       get(name: "msdyn_longitude"): Xrm.NumberAttribute;
-      get(name: "msdyn_milestraveled"): Xrm.Attribute<any>;
+      get(name: "msdyn_milestraveled"): Xrm.NumberAttribute;
       get(name: "msdyn_offlinetimestamp"): Xrm.DateAttribute;
       get(name: "msdyn_quickNoteAction"): Xrm.OptionSetAttribute<msdyn_quicknote_type>;
       get(name: "msdyn_resourcegroup"): Xrm.LookupAttribute<"bookableresource">;
@@ -96,7 +96,7 @@ declare namespace Form.bookableresourcebooking.Main {
       get(name: "msdyn_estimatedtravelduration"): Xrm.NumberControl;
       get(name: "msdyn_latitude"): Xrm.NumberControl;
       get(name: "msdyn_longitude"): Xrm.NumberControl;
-      get(name: "msdyn_milestraveled"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "msdyn_milestraveled"): Xrm.NumberControl;
       get(name: "msdyn_offlinetimestamp"): Xrm.DateControl;
       get(name: "msdyn_quickNoteAction"): Xrm.OptionSetControl<msdyn_quicknote_type>;
       get(name: "msdyn_quicknotescontrol"): Xrm.BaseControl;
@@ -142,7 +142,7 @@ declare namespace Form.bookableresourcebooking.Main {
     getAttribute(attributeName: "msdyn_estimatedtravelduration"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_latitude"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_longitude"): Xrm.NumberAttribute;
-    getAttribute(attributeName: "msdyn_milestraveled"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "msdyn_milestraveled"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_offlinetimestamp"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_quickNoteAction"): Xrm.OptionSetAttribute<msdyn_quicknote_type>;
     getAttribute(attributeName: "msdyn_resourcegroup"): Xrm.LookupAttribute<"bookableresource">;
@@ -178,7 +178,7 @@ declare namespace Form.bookableresourcebooking.Main {
     getControl(controlName: "msdyn_estimatedtravelduration"): Xrm.NumberControl;
     getControl(controlName: "msdyn_latitude"): Xrm.NumberControl;
     getControl(controlName: "msdyn_longitude"): Xrm.NumberControl;
-    getControl(controlName: "msdyn_milestraveled"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "msdyn_milestraveled"): Xrm.NumberControl;
     getControl(controlName: "msdyn_offlinetimestamp"): Xrm.DateControl;
     getControl(controlName: "msdyn_quickNoteAction"): Xrm.OptionSetControl<msdyn_quicknote_type>;
     getControl(controlName: "msdyn_quicknotescontrol"): Xrm.BaseControl;
