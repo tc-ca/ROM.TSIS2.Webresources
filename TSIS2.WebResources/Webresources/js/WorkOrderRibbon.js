@@ -606,3 +606,29 @@ function isSystemAdministrator() {
     });
     return enable;
 }
+
+function bulkAddAdditionalInspectors(formContext, selectedWorkOrdersGuids) {
+    // Centered Dialog
+    var pageInput = {
+        pageType: "custom",
+        name: "ts_bulkaddadditionalinspectors_1936a", //Unique name of Custom page
+        recordId: selectedWorkOrdersGuids,
+    };
+    var navigationOptions = {
+        target: 2,
+        position: 1,
+        width: { value: 450, unit: "px" },
+        height: { value: 550, unit: "px" }
+    };
+    Xrm.Navigation.navigateTo(pageInput, navigationOptions)
+        .then(
+            //function () {
+            //    // Called when the dialog closes
+            //    formContext.data.refresh();
+            //}
+        ).catch(
+            function (error) {
+                // Handle error
+            }
+        );
+}
