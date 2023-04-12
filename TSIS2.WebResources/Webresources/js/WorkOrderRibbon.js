@@ -115,9 +115,10 @@ function ActivateWorkOrder(primaryControl){
                     formContext.getAttribute("statecode").setValue(0);
                     formContext.getAttribute("statuscode").setValue(1);
 
-                    if (userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
-                        formContext.getAttribute("msdyn_systemstatus").setValue(690970003); //Open - Completed
-                    }
+                    // taken out because we don't use 'Completed' as a WO System Status
+                    //if (userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
+                    //    formContext.getAttribute("msdyn_systemstatus").setValue(690970003); //Open - Completed
+                    //}
 
                     openWorkOrderServiceTasks(formContext);
                     setWorkOrderServiceTasksView(formContext);

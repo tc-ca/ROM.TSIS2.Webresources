@@ -245,6 +245,21 @@ namespace ROM.WorkOrder {
             form.getControl("ts_canceledinspectionjustification").setVisible(false);
             form.getControl("ts_othercanceledjustification").setVisible(false);
         }
+
+        //Set the Work Order Status 'Completed' to not visible
+        var workOrderStatus = form.getControl("header_msdyn_systemstatus");
+
+        if (workOrderStatus != null && workOrderStatus != undefined) {
+
+            var options = workOrderStatus.getOptions();
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].value == 690970003) {
+                    workOrderStatus.removeOption(options[i].value);
+                    break;
+                }
+            }
+        }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -880,8 +895,10 @@ namespace ROM.WorkOrder {
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             //If systemStatus is currently Closed
             if (systemStatus == 690970004 || systemStatus == 690970005) {
+
+                // taken out because we don't use 'Completed' as a WO System Status
                 //Change systemstatus to Open - Completed
-                form.getAttribute("msdyn_systemstatus").setValue(690970003);
+                //form.getAttribute("msdyn_systemstatus").setValue(690970003);
                 //Prevent User from discarding status change
                 form.data.save();
             }
