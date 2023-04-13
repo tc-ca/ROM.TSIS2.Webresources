@@ -1,5 +1,5 @@
 declare const enum msdyn_wosystemstatus {
-  Unscheduled = 690970000,
+  New = 690970000,
   Scheduled = 690970001,
   InProgress = 690970002,
   Completed = 690970003,
