@@ -1287,7 +1287,7 @@ namespace ROM.WorkOrder {
         let plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
         let validWorkOrderStatus = false;
 
-        if (systemStatus != null && (systemStatus == msdyn_wosystemstatus.Unscheduled || systemStatus == msdyn_wosystemstatus.Scheduled || systemStatus == msdyn_wosystemstatus.InProgress)) {
+        if (systemStatus != null && (systemStatus == msdyn_wosystemstatus.New || systemStatus == msdyn_wosystemstatus.Scheduled || systemStatus == msdyn_wosystemstatus.InProgress)) {
             validWorkOrderStatus = true;
         }
 

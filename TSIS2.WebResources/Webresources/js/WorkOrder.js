@@ -1188,7 +1188,7 @@ var ROM;
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
             var validWorkOrderStatus = false;
-            if (systemStatus != null && (systemStatus == 690970000 /* Unscheduled */ || systemStatus == 690970001 /* Scheduled */ || systemStatus == 690970002 /* InProgress */)) {
+            if (systemStatus != null && (systemStatus == 690970000 /* New */ || systemStatus == 690970001 /* Scheduled */ || systemStatus == 690970002 /* InProgress */)) {
                 validWorkOrderStatus = true;
             }
             if (plannedFiscalQuarter != null) {
