@@ -249,14 +249,13 @@ var ROM;
                 form.getControl("ts_canceledinspectionjustification").setVisible(false);
                 form.getControl("ts_othercanceledjustification").setVisible(false);
             }
-            //Set the Work Order Status 'Completed' to not visible
+            //Set the Work Order Status 'Completed' and 'Scheduled' to not visible
             var workOrderStatus = form.getControl("header_msdyn_systemstatus");
             if (workOrderStatus != null && workOrderStatus != undefined) {
                 var options = workOrderStatus.getOptions();
                 for (var i = 0; i < options.length; i++) {
-                    if (options[i].value == 690970003) {
+                    if (options[i].value == 690970003 || options[i].value == 690970001) {
                         workOrderStatus.removeOption(options[i].value);
-                        break;
                     }
                 }
             }
