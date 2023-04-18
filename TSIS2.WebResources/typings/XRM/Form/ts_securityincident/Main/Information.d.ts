@@ -2,7 +2,7 @@ declare namespace Form.ts_securityincident.Main {
   namespace Information {
     namespace Tabs {
       interface _99b378964f52417982963cc0e6722411 extends Xrm.SectionCollectionBase {
-        get(name: "Details"): Xrm.PageSection;
+        get(name: "IncidentDetails"): Xrm.PageSection;
         get(name: "{99b37896-4f52-4179-8296-3cc0e6722411}_column_2_section_1"): Xrm.PageSection;
         get(name: "{99b37896-4f52-4179-8296-3cc0e6722411}_section_4"): Xrm.PageSection;
         get(name: "{99b37896-4f52-4179-8296-3cc0e6722411}_section_5"): Xrm.PageSection;
