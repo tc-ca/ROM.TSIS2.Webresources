@@ -330,20 +330,30 @@ function checkSurveyHasErrors(primaryControl) {
     }
     else {
         wrCtrl.getContentWindow().then(function (win) {
-            var hasError = false;
-            for (var i = 0; i < win.survey.visiblePages.length; i++) {
-                //the first parameter, fireCallback, is set to true to show errors in UI
-                hasError = win.survey.visiblePages[i].hasErrors(true) || hasError;
+            if (win.survey === undefined || win.survey.visiblePages === undefined) {
+                setTimeout(checkSurveyHasErrors, 500, primaryControl);
             }
-            if (hasError) {
-                var alertStrings = {
-                    text: markCompleteValidationTextLocalized,
-                    title: markCompleteValidationTitleLocalized
-                };
-                var alertOptions = { height: 200, width: 450 };
-                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
-            } else {
-                completeConfirmation(formContext, win.survey);
+            else {
+                var hasError = false;
+                for (var i = 0; i < win.survey.visiblePages.length; i++) {
+                    //the first parameter, fireCallback, is set to true to show errors in UI
+                    try {
+                        hasError = win.survey.visiblePages[i].hasErrors(true) || hasError;
+                    }
+                    catch {
+                        hasError = true;
+                    }
+                }
+                if (hasError) {
+                    var alertStrings = {
+                        text: markCompleteValidationTextLocalized,
+                        title: markCompleteValidationTitleLocalized
+                    };
+                    var alertOptions = { height: 200, width: 450 };
+                    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+                } else {
+                    completeConfirmation(formContext, win.survey);
+                }
             }
         });
     }
