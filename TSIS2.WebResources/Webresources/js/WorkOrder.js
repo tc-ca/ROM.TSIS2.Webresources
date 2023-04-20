@@ -111,6 +111,12 @@ var ROM;
                     headerOwnerControl.setDefaultView(defaultViewId);
                 }
             }
+            // Show subsite field if it has value on Edit or Readonly mode etc
+            if (form.ui.getFormType() !== 1) {
+                if (form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                    form.getControl('msdyn_functionallocation').setVisible(true);
+                }
+            }
             //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
             if (state == 1) {
                 setWorkOrderServiceTasksView(form, false);
