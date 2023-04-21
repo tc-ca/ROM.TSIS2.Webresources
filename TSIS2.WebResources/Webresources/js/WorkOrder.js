@@ -255,12 +255,12 @@ var ROM;
                 form.getControl("ts_canceledinspectionjustification").setVisible(false);
                 form.getControl("ts_othercanceledjustification").setVisible(false);
             }
-            //Set the Work Order Status 'Completed' and 'Scheduled' to not visible
+            //Set the Work Order Status 'Completed', 'Scheduled', and 'In Progress - Do Not Use This' to not visible
             var workOrderStatus = form.getControl("header_msdyn_systemstatus");
             if (workOrderStatus != null && workOrderStatus != undefined) {
                 var options = workOrderStatus.getOptions();
                 for (var i = 0; i < options.length; i++) {
-                    if (options[i].value == 690970003 || options[i].value == 690970001) {
+                    if (options[i].value == 690970003 || options[i].value == 690970001 || options[i].value == 690970002) {
                         workOrderStatus.removeOption(options[i].value);
                     }
                 }
@@ -1194,7 +1194,7 @@ var ROM;
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
             var validWorkOrderStatus = false;
-            if (systemStatus != null && (systemStatus == 690970000 /* New */ || systemStatus == 690970001 /* Scheduled */ || systemStatus == 690970002 /* InProgress */)) {
+            if (systemStatus != null && (systemStatus == 690970000 /* New */ || systemStatus == 690970001 /* Scheduled */ || systemStatus == 741130001 /* InProgress */)) {
                 validWorkOrderStatus = true;
             }
             if (plannedFiscalQuarter != null) {
