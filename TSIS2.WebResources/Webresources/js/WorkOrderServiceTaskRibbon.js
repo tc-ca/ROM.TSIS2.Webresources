@@ -4,6 +4,8 @@ var markCompleteValidationTextLocalized;
 var markCompleteValidationTitleLocalized;
 var markCompleteConfirmationTextLocalized;
 var markCompleteConfirmationTitleLocalized;
+var markCompleteServiceDateValidationTextLocalized;
+var markCompleteServiceDateValidationTitleLocalized;
 
 if (lang == 1036) {
     markCompleteValidationTextLocalized = "Toutes les questions requises du questionnaire doivent être répondues avant que le questionnaire puissent être marqué comme Terminé.";
@@ -15,6 +17,8 @@ if (lang == 1036) {
     workOrderDetailsLocalized = "Détails de l'ordre de travail";
     workOrderServiceTaskResultNotPassedTitle = "Tâche de service - Sélection invalide"
     workOrderServiceTaskResultNotPassedText = "La tâche de service selectionné doit avoir « Passé » comme résultat";
+    markCompleteServiceDateValidationTextLocalized = "fr-Cannot mark Work Order Service Task to complete because Service Task Start Date is later than today's date, or Service Task Start Date is empty.";
+    markCompleteServiceDateValidationTitleLocalized = "fr-Cannot Mark Complete";
     
 } else {
     markCompleteValidationTextLocalized = "All required questions in the questionnaire must be answered before the questionnaire can be Marked Complete.";
@@ -26,6 +30,8 @@ if (lang == 1036) {
     workOrderDetailsLocalized = "Work Order Details";
     workOrderServiceTaskResultNotPassedTitle = "Work Order Service Task - Invalid selection"
     workOrderServiceTaskResultNotPassedText = "The selected work order service task must have a result of \"Pass\" ";
+    markCompleteServiceDateValidationTextLocalized = "Cannot mark Work Order Service Task to complete because Service Task Start Date is later than today's date, or Service Task Start Date is empty.";
+    markCompleteServiceDateValidationTitleLocalized = "Cannot Mark Complete";
 }
 
 //Used to hide buttons for ROM - Inspectors unless they're an admin as well
@@ -308,15 +314,25 @@ async function retrieveWorkOrderOperationData(primaryControl) {
 
 function surveyHasErrors(primaryControl) {
     const formContext = primaryControl;
-    
-    // Get the web resource control on the form
-    var wrCtrl = formContext.getControl('WebResource_QuestionnaireRender');
-    if (wrCtrl.getObject() == null) {
-        formContext.ui.tabs.get("tab_questionnaire").setFocus();
-        setTimeout(checkSurveyHasErrors, 500, primaryControl);
+    var serviceTaskStartDate = primaryControl.getAttribute("ts_servicetaskstartdate").getValue();
+    if (serviceTaskStartDate === null || serviceTaskStartDate > new Date()) {
+        var alertStrings = {
+            text: markCompleteServiceDateValidationTextLocalized,
+            title: markCompleteServiceDateValidationTitleLocalized
+        };
+        var alertOptions = { height: 200, width: 450 };
+        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
     }
     else {
-        checkSurveyHasErrors(primaryControl);
+        // Get the web resource control on the form
+        var wrCtrl = formContext.getControl('WebResource_QuestionnaireRender');
+        if (wrCtrl.getObject() == null) {
+            formContext.ui.tabs.get("tab_questionnaire").setFocus();
+            setTimeout(checkSurveyHasErrors, 500, primaryControl);
+        }
+        else {
+            checkSurveyHasErrors(primaryControl);
+        }
     }
 }
 
