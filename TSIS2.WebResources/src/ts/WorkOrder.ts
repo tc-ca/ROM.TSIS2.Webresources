@@ -253,7 +253,7 @@ namespace ROM.WorkOrder {
             form.getControl("ts_othercanceledjustification").setVisible(false);
         }
 
-        //Set the Work Order Status 'Completed' and 'Scheduled' to not visible
+        //Set the Work Order Status 'Completed', 'Scheduled', and 'In Progress - Do Not Use This' to not visible
         var workOrderStatus = form.getControl("header_msdyn_systemstatus");
 
         if (workOrderStatus != null && workOrderStatus != undefined) {
@@ -261,7 +261,7 @@ namespace ROM.WorkOrder {
             var options = workOrderStatus.getOptions();
 
             for (var i = 0; i < options.length; i++) {
-                if (options[i].value == 690970003 || options[i].value == 690970001) {
+                if (options[i].value == 690970003 || options[i].value == 690970001 || options[i].value == 690970002) {
                     workOrderStatus.removeOption(options[i].value);
                 }
             }
