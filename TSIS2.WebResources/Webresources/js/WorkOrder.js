@@ -185,6 +185,10 @@ var ROM;
                         if (stakeholderAttributeValue_1 != null) {
                             fillOrSetTradeNameView(eContext, stakeholderAttributeValue_1);
                         }
+                        // Create WO from Security Incident, enable Activity Type if Site has value 
+                        if (form.getAttribute("ts_site").getValue() != null) {
+                            form.getControl('msdyn_primaryincidenttype').setDisabled(false);
+                        }
                     }
                     break;
                 case 2:
@@ -323,8 +327,10 @@ var ROM;
                         form.getControl("msdyn_serviceaccount").setDisabled(true);
                     if (form.getControl("ts_site").getDisabled() == false)
                         form.getControl("ts_site").setDisabled(true);
-                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
-                        form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
+                        if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
+                            form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    }
                     var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                     var regionAttributeValue = regionAttribute.getValue();
                     var countryAttributeValue = countryAttribute.getValue();
@@ -407,8 +413,10 @@ var ROM;
                         form.getControl("ts_site").setDisabled(true);
                     if (form.getControl("msdyn_functionallocation").getDisabled() == false)
                         form.getControl("msdyn_functionallocation").setVisible(false);
-                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
-                        form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
+                        if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
+                            form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    }
                     // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                     var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                     var regionAttributeValue = regionAttribute.getValue();
@@ -468,8 +476,10 @@ var ROM;
                         form.getControl("ts_site").setDisabled(true);
                     if (form.getControl("msdyn_functionallocation").getDisabled() == false)
                         form.getControl("msdyn_functionallocation").setVisible(false);
-                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
-                        form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
+                        if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
+                            form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    }
                     var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                     var regionAttributeValue = regionAttribute.getValue();
                     var countryAttributeValue = countryAttribute.getValue();
@@ -524,8 +534,10 @@ var ROM;
                         form.getControl("ts_site").setDisabled(true);
                     if (form.getControl("msdyn_functionallocation").getDisabled() == false)
                         form.getControl("msdyn_functionallocation").setVisible(false);
-                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
-                        form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
+                        if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
+                            form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    }
                     // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                     var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                     var regionAttributeValue = regionAttribute.getValue();
