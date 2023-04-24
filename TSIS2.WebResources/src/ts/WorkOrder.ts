@@ -168,6 +168,11 @@ namespace ROM.WorkOrder {
                     if(stakeholderAttributeValue != null){
                         fillOrSetTradeNameView(eContext, stakeholderAttributeValue);
                     }
+
+                    // Create WO from Security Incident, enable Activity Type if Site has value 
+                    if (form.getAttribute("ts_site").getValue() != null) {
+                        form.getControl('msdyn_primaryincidenttype').setDisabled(false);
+                    }
                 }
 
                 break;
@@ -328,8 +333,10 @@ namespace ROM.WorkOrder {
                 if (form.getControl("ts_tradenameid").getDisabled() == false) form.getControl("ts_tradenameid").setDisabled(true);
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
-                if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
-
+                if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
+                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                }
+                
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                 const regionAttributeValue = regionAttribute.getValue();
                 const countryAttributeValue = countryAttribute.getValue();
@@ -409,7 +416,9 @@ namespace ROM.WorkOrder {
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_functionallocation").getDisabled() == false) form.getControl("msdyn_functionallocation").setVisible(false);
-                if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
+                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                }
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
@@ -469,7 +478,9 @@ namespace ROM.WorkOrder {
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_functionallocation").getDisabled() == false) form.getControl("msdyn_functionallocation").setVisible(false);
-                if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
+                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                }
 
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                 const regionAttributeValue = regionAttribute.getValue();
@@ -524,7 +535,9 @@ namespace ROM.WorkOrder {
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_functionallocation").getDisabled() == false) form.getControl("msdyn_functionallocation").setVisible(false);
-                if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
+                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                }
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
