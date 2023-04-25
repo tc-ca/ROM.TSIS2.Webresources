@@ -82,6 +82,16 @@
               "file": "resx\\IncompleteInspectionJustification.1036.resx",
               "description": "ROM TSIS 2.0 IncompleteInspectionJustification.js French Resource Strings"
             },
+            {
+              "uniquename": "ovs_/resx/AddAdditionalInspectors.1036.resx",
+              "file": "resx\\AddAdditionalInspectors.1036.resx",
+              "description": "ROM TSIS 2.0 Add Additional Inspectors Custom Page Resource Strings"
+            },
+            {
+              "uniquename": "ovs_/resx/AddAdditionalInspectors.1033.resx",
+              "file": "resx\\AddAdditionalInspectors.1033.resx",
+              "description": "ROM TSIS 2.0 Add Additional Inspectors Custom Page Resource Strings"
+            },
             /* Libraries */
             {
               "uniquename": "ovs_/lib/dg.xrmquery.web.min.js",

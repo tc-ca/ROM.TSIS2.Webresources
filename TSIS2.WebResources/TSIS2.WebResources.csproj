@@ -234,6 +234,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Webresources\resx\AddAdditionalInspectors.1036.Designer.cs">
+      <DependentUpon>AddAdditionalInspectors.1036.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Webresources\resx\AddAdditionalInspectors.1033.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddAdditionalInspectors.1033.resx</DependentUpon>
+    </Compile>
     <Compile Include="Webresources\resx\CanceledInspectionJustification.1033.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -828,6 +838,14 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Webresources\resx\AddAdditionalInspectors.1036.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddAdditionalInspectors.1036.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\AddAdditionalInspectors.1033.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddAdditionalInspectors.1033.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\CanceledInspectionJustification.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CanceledInspectionJustification.1033.Designer.cs</LastGenOutput>
