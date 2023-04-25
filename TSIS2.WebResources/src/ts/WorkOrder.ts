@@ -82,6 +82,13 @@ namespace ROM.WorkOrder {
             }
         }
 
+        // Show subsite field if it has value on Edit or Readonly mode etc
+        if (form.ui.getFormType() !== 1) {
+            if (form.getAttribute("msdyn_functionallocation").getValue() != null) {
+                form.getControl('msdyn_functionallocation').setVisible(true);
+            }
+        }
+
         //Prevent enabling controls if record is Inactive and set the right views (active/inactive)
         if (state == 1) {
             setWorkOrderServiceTasksView(form, false);
@@ -246,7 +253,7 @@ namespace ROM.WorkOrder {
             form.getControl("ts_othercanceledjustification").setVisible(false);
         }
 
-        //Set the Work Order Status 'Completed' to not visible
+        //Set the Work Order Status 'Completed', 'Scheduled', and 'In Progress - Do Not Use This' to not visible
         var workOrderStatus = form.getControl("header_msdyn_systemstatus");
 
         if (workOrderStatus != null && workOrderStatus != undefined) {
@@ -254,9 +261,8 @@ namespace ROM.WorkOrder {
             var options = workOrderStatus.getOptions();
 
             for (var i = 0; i < options.length; i++) {
-                if (options[i].value == 690970003) {
+                if (options[i].value == 690970003 || options[i].value == 690970001 || options[i].value == 690970002) {
                     workOrderStatus.removeOption(options[i].value);
-                    break;
                 }
             }
         }
@@ -323,7 +329,7 @@ namespace ROM.WorkOrder {
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
-
+                
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                 const regionAttributeValue = regionAttribute.getValue();
                 const countryAttributeValue = countryAttribute.getValue();
@@ -335,7 +341,7 @@ namespace ROM.WorkOrder {
 
                     if (regionAttributeValue != null && regionAttributeValue != undefined) {
                         if (regionAttributeValue[0].id != "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
-                            if (isFromCase && stakeholderAttributeValue != null && siteAttributeValue != null) {
+                            if ((isFromCase || isFromSecurityIncident) && stakeholderAttributeValue != null && siteAttributeValue != null) {
                                 setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id, stakeholderAttributeValue[0].id, siteAttributeValue[0].id);
                             } else {
                                 setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id, "", "");
@@ -345,7 +351,7 @@ namespace ROM.WorkOrder {
                             setCountryFilteredView(form);
 
                             var countryCondition = getCountryFetchXmlCondition(form);
-                            if (isFromCase && stakeholderAttributeValue != null && siteAttributeValue != null) {
+                            if ((isFromCase || isFromSecurityIncident) && stakeholderAttributeValue != null && siteAttributeValue != null) {
                                 setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, stakeholderAttributeValue[0].id, siteAttributeValue[0].id);
                             } else {
                                 setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "");
@@ -403,7 +409,9 @@ namespace ROM.WorkOrder {
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_functionallocation").getDisabled() == false) form.getControl("msdyn_functionallocation").setVisible(false);
-                if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                //if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
+                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                //}
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
@@ -493,7 +501,7 @@ namespace ROM.WorkOrder {
             const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
             const countryAttribute = form.getAttribute("ts_country");
 
-            if (operationTypeAttribute != null && operationTypeAttribute != undefined && !isFromCase) {
+            if (operationTypeAttribute != null && operationTypeAttribute != undefined && !isFromCase && !isFromSecurityIncident) {
 
                 // Clear out all dependent fields' value if they are not already disabled and not already empty
                 if (!form.getControl("ts_tradenameid").getDisabled() && form.getAttribute("ts_tradenameid").getValue() != null) {
@@ -518,7 +526,9 @@ namespace ROM.WorkOrder {
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_functionallocation").getDisabled() == false) form.getControl("msdyn_functionallocation").setVisible(false);
-                if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
+                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                }
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
@@ -547,6 +557,18 @@ namespace ROM.WorkOrder {
                 }
                 showHideContact(form);
             } else if (isFromCase) {
+                populateOperationField(eContext);
+            } else if (isFromSecurityIncident)
+            {
+                const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
+                const regionAttributeValue = regionAttribute.getValue();
+                const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                if (regionAttributeValue != null && regionAttributeValue != undefined &&
+                    operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
+                    workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined) {
+                    var countryCondition = getCountryFetchXmlCondition(form);
+                    setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
+                }
                 populateOperationField(eContext);
             }
         } catch (e) {
@@ -694,27 +716,38 @@ namespace ROM.WorkOrder {
         try {
             const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
             const TradenameAttribute = form.getAttribute("ts_tradenameid");
-            if (TradenameAttribute != null && TradenameAttribute != undefined) {
-                const TradenameAttributeValue = TradenameAttribute.getValue();
-                if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
-                    Xrm.WebApi.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(
-                        function success(result) {
-                            var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
-                            var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
-                            var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
-                            var lookup = new Array();
-                            lookup[0] = new Object();
-                            lookup[0].id = _ts_stakeholderid_value;
-                            lookup[0].name = _ts_stakeholderid_value_formatted;
-                            lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
-                            form.getAttribute('msdyn_serviceaccount').setValue(lookup);
-                            stakeholderOnChange(eContext);
-                        },
-                        function (error) {
-                            showErrorMessageAlert(error);
-                        }
-                    );
+
+            if (!(isFromSecurityIncident && form.getAttribute("msdyn_serviceaccount").getValue() != null && form.getAttribute("ts_site").getValue() != null)) {
+                if (TradenameAttribute != null && TradenameAttribute != undefined) {
+                    const TradenameAttributeValue = TradenameAttribute.getValue();
+                    if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
+                        Xrm.WebApi.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(
+                            function success(result) {
+                                var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
+                                var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
+                                var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                                var lookup = new Array();
+                                lookup[0] = new Object();
+                                lookup[0].id = _ts_stakeholderid_value;
+                                lookup[0].name = _ts_stakeholderid_value_formatted;
+                                lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
+                                form.getAttribute('msdyn_serviceaccount').setValue(lookup);
+                                if (isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null) {
+                                    populateOperationField(eContext);
+                                }
+                                else {
+                                    stakeholderOnChange(eContext);
+                                }
+                            },
+                            function (error) {
+                                showErrorMessageAlert(error);
+                            }
+                        );
+                    }
                 }
+            }
+            else {
+                populateOperationField(eContext);
             }
         } catch (e) {
             throw new Error(e.Message);
@@ -1288,7 +1321,7 @@ namespace ROM.WorkOrder {
         let plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
         let validWorkOrderStatus = false;
 
-        if (systemStatus != null && (systemStatus == msdyn_wosystemstatus.Unscheduled || systemStatus == msdyn_wosystemstatus.Scheduled || systemStatus == msdyn_wosystemstatus.InProgress)) {
+        if (systemStatus != null && (systemStatus == msdyn_wosystemstatus.New || systemStatus == msdyn_wosystemstatus.Scheduled || systemStatus == msdyn_wosystemstatus.InProgress)) {
             validWorkOrderStatus = true;
         }
 

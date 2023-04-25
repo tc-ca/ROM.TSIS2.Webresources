@@ -223,7 +223,7 @@
                                                     encodedFileData: ""
                                                 };
 
-                                                allFiles[i] = myFile;
+                                                allFiles.push(myFile);
                                             }
 
                                             // check if we need to use a many-to-many query
@@ -261,7 +261,7 @@
                                                                 encodedFileData: ""
                                                             };
 
-                                                            allFiles[i] = myFile;
+                                                            allFiles.push(myFile);
                                                         }
 
                                                         setupTable(allFiles);
