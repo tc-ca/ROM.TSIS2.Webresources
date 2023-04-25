@@ -185,10 +185,6 @@ var ROM;
                         if (stakeholderAttributeValue_1 != null) {
                             fillOrSetTradeNameView(eContext, stakeholderAttributeValue_1);
                         }
-                        // Create WO from Security Incident, enable Activity Type if Site has value 
-                        if (form.getAttribute("ts_site").getValue() != null) {
-                            form.getControl('msdyn_primaryincidenttype').setDisabled(false);
-                        }
                     }
                     break;
                 case 2:
@@ -327,10 +323,8 @@ var ROM;
                         form.getControl("msdyn_serviceaccount").setDisabled(true);
                     if (form.getControl("ts_site").getDisabled() == false)
                         form.getControl("ts_site").setDisabled(true);
-                    if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
-                        if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
-                            form.getControl("msdyn_primaryincidenttype").setDisabled(true);
-                    }
+                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
+                        form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                     var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                     var regionAttributeValue = regionAttribute.getValue();
                     var countryAttributeValue = countryAttribute.getValue();
@@ -342,7 +336,7 @@ var ROM;
                             form.getControl("ts_region").setDisabled(false);
                         if (regionAttributeValue != null && regionAttributeValue != undefined) {
                             if (regionAttributeValue[0].id != "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") {
-                                if (isFromCase && stakeholderAttributeValue != null && siteAttributeValue != null) {
+                                if ((isFromCase || isFromSecurityIncident) && stakeholderAttributeValue != null && siteAttributeValue != null) {
                                     setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id, stakeholderAttributeValue[0].id, siteAttributeValue[0].id);
                                 }
                                 else {
@@ -354,7 +348,7 @@ var ROM;
                                     form.getControl("ts_country").setDisabled(false);
                                 setCountryFilteredView(form);
                                 var countryCondition = getCountryFetchXmlCondition(form);
-                                if (isFromCase && stakeholderAttributeValue != null && siteAttributeValue != null) {
+                                if ((isFromCase || isFromSecurityIncident) && stakeholderAttributeValue != null && siteAttributeValue != null) {
                                     setOperationTypeFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, stakeholderAttributeValue[0].id, siteAttributeValue[0].id);
                                 }
                                 else {
@@ -413,10 +407,10 @@ var ROM;
                         form.getControl("ts_site").setDisabled(true);
                     if (form.getControl("msdyn_functionallocation").getDisabled() == false)
                         form.getControl("msdyn_functionallocation").setVisible(false);
-                    if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
-                        if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
-                            form.getControl("msdyn_primaryincidenttype").setDisabled(true);
-                    }
+                    //if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
+                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
+                        form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                    //}
                     // If previous fields have values, we use the filtered fetchxml in a custom lookup view
                     var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                     var regionAttributeValue = regionAttribute.getValue();
@@ -476,10 +470,8 @@ var ROM;
                         form.getControl("ts_site").setDisabled(true);
                     if (form.getControl("msdyn_functionallocation").getDisabled() == false)
                         form.getControl("msdyn_functionallocation").setVisible(false);
-                    if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
-                        if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
-                            form.getControl("msdyn_primaryincidenttype").setDisabled(true);
-                    }
+                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false)
+                        form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                     var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                     var regionAttributeValue = regionAttribute.getValue();
                     var countryAttributeValue = countryAttribute.getValue();
@@ -507,7 +499,7 @@ var ROM;
                 var regionAttribute = form.getAttribute("ts_region");
                 var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
                 var countryAttribute = form.getAttribute("ts_country");
-                if (operationTypeAttribute != null && operationTypeAttribute != undefined && !isFromCase) {
+                if (operationTypeAttribute != null && operationTypeAttribute != undefined && !isFromCase && !isFromSecurityIncident) {
                     // Clear out all dependent fields' value if they are not already disabled and not already empty
                     if (!form.getControl("ts_tradenameid").getDisabled() && form.getAttribute("ts_tradenameid").getValue() != null) {
                         form.getAttribute("ts_tradenameid").setValue(null);
@@ -562,6 +554,18 @@ var ROM;
                     showHideContact(form);
                 }
                 else if (isFromCase) {
+                    populateOperationField(eContext);
+                }
+                else if (isFromSecurityIncident) {
+                    var workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
+                    var regionAttributeValue = regionAttribute.getValue();
+                    var operationTypeAttributeValue = operationTypeAttribute.getValue();
+                    if (regionAttributeValue != null && regionAttributeValue != undefined &&
+                        operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
+                        workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined) {
+                        var countryCondition = getCountryFetchXmlCondition(form);
+                        setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
+                    }
                     populateOperationField(eContext);
                 }
             }
@@ -693,24 +697,34 @@ var ROM;
             try {
                 var form_2 = eContext.getFormContext();
                 var TradenameAttribute = form_2.getAttribute("ts_tradenameid");
-                if (TradenameAttribute != null && TradenameAttribute != undefined) {
-                    var TradenameAttributeValue = TradenameAttribute.getValue();
-                    if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
-                        Xrm.WebApi.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(function success(result) {
-                            var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
-                            var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
-                            var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
-                            var lookup = new Array();
-                            lookup[0] = new Object();
-                            lookup[0].id = _ts_stakeholderid_value;
-                            lookup[0].name = _ts_stakeholderid_value_formatted;
-                            lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
-                            form_2.getAttribute('msdyn_serviceaccount').setValue(lookup);
-                            stakeholderOnChange(eContext);
-                        }, function (error) {
-                            showErrorMessageAlert(error);
-                        });
+                if (!(isFromSecurityIncident && form_2.getAttribute("msdyn_serviceaccount").getValue() != null && form_2.getAttribute("ts_site").getValue() != null)) {
+                    if (TradenameAttribute != null && TradenameAttribute != undefined) {
+                        var TradenameAttributeValue = TradenameAttribute.getValue();
+                        if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
+                            Xrm.WebApi.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(function success(result) {
+                                var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
+                                var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
+                                var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                                var lookup = new Array();
+                                lookup[0] = new Object();
+                                lookup[0].id = _ts_stakeholderid_value;
+                                lookup[0].name = _ts_stakeholderid_value_formatted;
+                                lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
+                                form_2.getAttribute('msdyn_serviceaccount').setValue(lookup);
+                                if (isFromSecurityIncident && form_2.getAttribute("ts_site").getValue() != null) {
+                                    populateOperationField(eContext);
+                                }
+                                else {
+                                    stakeholderOnChange(eContext);
+                                }
+                            }, function (error) {
+                                showErrorMessageAlert(error);
+                            });
+                        }
                     }
+                }
+                else {
+                    populateOperationField(eContext);
                 }
             }
             catch (e) {
