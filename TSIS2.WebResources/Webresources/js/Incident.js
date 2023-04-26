@@ -53,6 +53,29 @@ var ROM;
                 }
             }, function (error) {
             });
+            //Hide Associate Evidence for AvSec users
+            var userBusinessUnitName;
+            var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+            var currentUserBusinessUnitFetchXML = [
+                "<fetch top='50'>",
+                "  <entity name='businessunit'>",
+                "    <attribute name='name' />",
+                "    <attribute name='businessunitid' />",
+                "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
+                "      <filter>",
+                "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+                "      </filter>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+            Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
+                userBusinessUnitName = businessunit.entities[0].name;
+                if (userBusinessUnitName.startsWith("Aviation")) {
+                    form.ui.tabs.get("tab_findings").sections.get("tab_findings_section_aef").setVisible(false);
+                }
+            });
             emailTemplateFieldsOnLoad(eContext);
         }
         Incident.onLoad = onLoad;
