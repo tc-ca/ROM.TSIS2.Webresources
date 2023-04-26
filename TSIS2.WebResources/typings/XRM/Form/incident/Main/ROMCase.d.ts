@@ -110,9 +110,9 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_findings extends Xrm.SectionCollectionBase {
-        get(name: "_section_369"): Xrm.PageSection;
         get(name: "tab_11_section_1"): Xrm.PageSection;
         get(name: "tab_findings_section_5"): Xrm.PageSection;
+        get(name: "tab_findings_section_aef"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;

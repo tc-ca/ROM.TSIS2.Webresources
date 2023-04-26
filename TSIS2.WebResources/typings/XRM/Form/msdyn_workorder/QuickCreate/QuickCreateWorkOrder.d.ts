@@ -14,6 +14,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "msdyn_billingaccount"): Xrm.LookupAttribute<"account"> | null;
       get(name: "msdyn_customerasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
+      get(name: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
       get(name: "msdyn_opportunityid"): Xrm.LookupAttribute<"opportunity">;
       get(name: "msdyn_pricelist"): Xrm.LookupAttribute<"pricelevel">;
@@ -67,6 +68,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
       get(name: "header_process_msdyn_workordertype_1"): Xrm.LookupControl<"msdyn_workordertype"> | null;
       get(name: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
       get(name: "msdyn_customerasset"): Xrm.LookupControl<"msdyn_customerasset">;
+      get(name: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
       get(name: "msdyn_opportunityid"): Xrm.LookupControl<"opportunity">;
       get(name: "msdyn_pricelist"): Xrm.LookupControl<"pricelevel">;
@@ -107,6 +109,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
   interface QuickCreateWorkOrder extends Xrm.PageBase<QuickCreateWorkOrder.Attributes,QuickCreateWorkOrder.Tabs,QuickCreateWorkOrder.Controls> {
     getAttribute(attributeName: "msdyn_billingaccount"): Xrm.LookupAttribute<"account"> | null;
     getAttribute(attributeName: "msdyn_customerasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
+    getAttribute(attributeName: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
     getAttribute(attributeName: "msdyn_opportunityid"): Xrm.LookupAttribute<"opportunity">;
     getAttribute(attributeName: "msdyn_pricelist"): Xrm.LookupAttribute<"pricelevel">;
@@ -155,6 +158,7 @@ declare namespace Form.msdyn_workorder.QuickCreate {
     getControl(controlName: "header_process_msdyn_workordertype_1"): Xrm.LookupControl<"msdyn_workordertype"> | null;
     getControl(controlName: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
     getControl(controlName: "msdyn_customerasset"): Xrm.LookupControl<"msdyn_customerasset">;
+    getControl(controlName: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
     getControl(controlName: "msdyn_opportunityid"): Xrm.LookupControl<"opportunity">;
     getControl(controlName: "msdyn_pricelist"): Xrm.LookupControl<"pricelevel">;
