@@ -195,9 +195,6 @@ function NCATHideProposedSection(primaryControl) {
 function NCATHideManagerReviewSection(primaryControl) {
     let formContext = primaryControl;
 
-    formContext.getAttribute("ts_rateapprovingteam").setValue(null);
-    formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
-    formContext.getControl("ts_rateapprovingteam").setVisible(false);
 
     formContext.getAttribute("ts_ncatmanagerdecision").setRequiredLevel("none");
     formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
@@ -216,10 +213,6 @@ function NCATHideManagerReviewSection(primaryControl) {
 //Clears, Hides, and sets Required level to None for every field in the RATE Proposed Section
 function RATEHideProposedSection(primaryControl) {
     let formContext = primaryControl;
-
-    formContext.getAttribute("ts_rateapprovingteam").setValue(null);
-    formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
-    formContext.getControl("ts_rateapprovingteam").setVisible(false);
 
     formContext.getAttribute("ts_ratemanager").setValue(null);
     formContext.getAttribute("ts_ratemanager").setRequiredLevel("none");

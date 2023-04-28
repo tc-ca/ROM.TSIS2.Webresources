@@ -133,7 +133,6 @@
                             }
                         }
                         approvingNCATTeamsOnChange(eContext);
-                        approvingRATETeamsOnChange(eContext);
                         RATESpecificComplianceHistoryOnChange(eContext);
                         setApprovingTeamsViews(formContext);
 
@@ -774,10 +773,6 @@
     function NCATHideManagerReviewSection(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
-        formContext.getAttribute("ts_rateapprovingteam").setValue(null);
-        formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
-        formContext.getControl("ts_rateapprovingteam").setVisible(false);
-
         formContext.getAttribute("ts_ncatmanagerdecision").setRequiredLevel("none");
         formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
         formContext.getControl("ts_ncatmanagerdecision").setVisible(false);
@@ -796,9 +791,6 @@
     function RATEHideProposedSection(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
-        formContext.getAttribute("ts_rateapprovingteam").setValue(null);
-        formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
-        formContext.getControl("ts_rateapprovingteam").setVisible(false);
 
         formContext.getAttribute("ts_ratemanager").setValue(null);
         formContext.getAttribute("ts_ratemanager").setRequiredLevel("none");
@@ -850,7 +842,6 @@
         const layoutXmlApprovingTeams = '<grid name="resultset" object="8" jump="name" select="1" icon="1" preview="1"><row name="result" id="businessunitid"><cell name="name" width="300" /></row></grid>';
 
         form.getControl("ts_ncatapprovingteam").addCustomView(viewIdApprovingTeamNCAT, entityNameApprovingTeams, viewDisplayNameApprovingTeams, fetchXmlApprovingTeamsNCAT, layoutXmlApprovingTeams, true);
-        form.getControl("ts_rateapprovingteam").addCustomView(viewIdApprovingTeamRATE, entityNameApprovingTeams, viewDisplayNameApprovingTeams, fetchXmlApprovingTeamsRATE, layoutXmlApprovingTeams, true);
     }
 
     function setPostNCATRecommendationSelectionFieldsVisibility(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -941,10 +932,6 @@
 
         //If they did not accept the RATE recommendation
         if (acceptRATERecommendation == ts_yesno.No) {
-            //Show RATE Approving Team
-            formContext.getControl("ts_rateapprovingteam").setVisible(true);
-            formContext.getControl("ts_rateapprovingteam").setDisabled(false);
-            formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("required");
             //Show RATE Approving Manager
             formContext.getControl("ts_ratemanager").setVisible(true);
             formContext.getControl("ts_ratemanager").setDisabled(false);
@@ -971,7 +958,7 @@
             }
 
             //If the proposed section has been filled out, show the manager review section
-            if (formContext.getAttribute("ts_rateapprovingteam").getValue() != null) {
+            if (formContext.getAttribute("ts_ratemanager").getValue() != null) {
                 const userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
                 //If the user is a system admin or ROM - Manager, show the RATE manager review section
                 let isAdminOrManager = false;
