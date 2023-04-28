@@ -153,7 +153,6 @@ var ROM;
                                 }
                             }
                             approvingNCATTeamsOnChange(eContext);
-                            approvingRATETeamsOnChange(eContext);
                             RATESpecificComplianceHistoryOnChange(eContext);
                             setApprovingTeamsViews(formContext);
                             if (formContext.getAttribute("statuscode").getValue() == 717750002 /* Complete */) {
@@ -766,9 +765,6 @@ var ROM;
         //Clears, Hides, and sets Required level to None for every field in the NCAT Manager Review Section
         function NCATHideManagerReviewSection(eContext) {
             var formContext = eContext.getFormContext();
-            formContext.getAttribute("ts_rateapprovingteam").setValue(null);
-            formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
-            formContext.getControl("ts_rateapprovingteam").setVisible(false);
             formContext.getAttribute("ts_ncatmanagerdecision").setRequiredLevel("none");
             formContext.getAttribute("ts_ncatmanagerdecision").setValue(null);
             formContext.getControl("ts_ncatmanagerdecision").setVisible(false);
@@ -783,9 +779,6 @@ var ROM;
         //Clears, Hides, and sets Required level to None for every field in the RATE Proposed Section
         function RATEHideProposedSection(eContext) {
             var formContext = eContext.getFormContext();
-            formContext.getAttribute("ts_rateapprovingteam").setValue(null);
-            formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("none");
-            formContext.getControl("ts_rateapprovingteam").setVisible(false);
             formContext.getAttribute("ts_ratemanager").setValue(null);
             formContext.getAttribute("ts_ratemanager").setRequiredLevel("none");
             formContext.getControl("ts_ratemanager").setVisible(false);
@@ -824,7 +817,6 @@ var ROM;
             var fetchXmlApprovingTeamsRATE = "<fetch output-format=\"xml-platform\" mapping=\"logical\" no-lock=\"false\"><entity name=\"team\"><attribute name=\"name\"/><attribute name=\"businessunitid\"/><attribute name=\"teamid\"/><attribute name=\"teamtype\"/><filter type=\"and\"><condition attribute=\"teamtype\" operator=\"eq\" value=\"0\"/><condition attribute=\"ts_territory\" operator=\"not-null\"/></filter><order attribute=\"name\" descending=\"false\"/><link-entity name=\"businessunit\" from=\"businessunitid\" to=\"businessunitid\"><filter><condition attribute=\"name\" operator=\"like\" value=\"Aviation%\"/></filter></link-entity></entity></fetch>";
             var layoutXmlApprovingTeams = '<grid name="resultset" object="8" jump="name" select="1" icon="1" preview="1"><row name="result" id="businessunitid"><cell name="name" width="300" /></row></grid>';
             form.getControl("ts_ncatapprovingteam").addCustomView(viewIdApprovingTeamNCAT, entityNameApprovingTeams, viewDisplayNameApprovingTeams, fetchXmlApprovingTeamsNCAT, layoutXmlApprovingTeams, true);
-            form.getControl("ts_rateapprovingteam").addCustomView(viewIdApprovingTeamRATE, entityNameApprovingTeams, viewDisplayNameApprovingTeams, fetchXmlApprovingTeamsRATE, layoutXmlApprovingTeams, true);
         }
         function setPostNCATRecommendationSelectionFieldsVisibility(eContext) {
             var formContext = eContext.getFormContext();
@@ -907,10 +899,6 @@ var ROM;
             }
             //If they did not accept the RATE recommendation
             if (acceptRATERecommendation == 717750001 /* No */) {
-                //Show RATE Approving Team
-                formContext.getControl("ts_rateapprovingteam").setVisible(true);
-                formContext.getControl("ts_rateapprovingteam").setDisabled(false);
-                formContext.getAttribute("ts_rateapprovingteam").setRequiredLevel("required");
                 //Show RATE Approving Manager
                 formContext.getControl("ts_ratemanager").setVisible(true);
                 formContext.getControl("ts_ratemanager").setDisabled(false);
@@ -935,7 +923,7 @@ var ROM;
                     formContext.getControl("ts_rateenforcementjustification").setDisabled(true);
                 }
                 //If the proposed section has been filled out, show the manager review section
-                if (formContext.getAttribute("ts_rateapprovingteam").getValue() != null) {
+                if (formContext.getAttribute("ts_ratemanager").getValue() != null) {
                     var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
                     //If the user is a system admin or ROM - Manager, show the RATE manager review section
                     var isAdminOrManager_2 = false;
