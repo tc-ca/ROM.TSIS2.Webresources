@@ -146,10 +146,32 @@ var ROM;
                 form.getControl("ts_damagestoibtproperty").setVisible(false);
                 form.getControl("ts_arrests").setVisible(false);
                 form.getControl("ts_arrestsdetails").setVisible(false);
-                form.getAttribute("ts_inflight").setValue(false);
-                form.getAttribute("ts_policeresponse").setValue(false);
-                inFlightOnChange(eContext);
-                policeResponseOnChange(eContext);
+                if (!isOnLoad) {
+                    form.getAttribute("ts_inflight").setValue(false);
+                    form.getAttribute("ts_policeresponse").setValue(false);
+                }
+                var inFlightAttributeValue = form.getAttribute("ts_inflight").getValue();
+                if (inFlightAttributeValue) {
+                    form.getControl("ts_origin").setVisible(true);
+                    form.getControl("ts_destination").setVisible(true);
+                    form.getControl("ts_diversionaerodrome").setVisible(true);
+                    form.getControl("ts_aircarrier").setVisible(true);
+                    form.getControl("ts_flightnumber").setVisible(true);
+                }
+                else {
+                    form.getControl("ts_origin").setVisible(false);
+                    form.getControl("ts_destination").setVisible(false);
+                    form.getControl("ts_diversionaerodrome").setVisible(false);
+                    form.getControl("ts_aircarrier").setVisible(false);
+                    form.getControl("ts_flightnumber").setVisible(false);
+                }
+                var policeResponseAttributeValue = form.getAttribute("ts_policeresponse").getValue();
+                if (policeResponseAttributeValue) {
+                    form.getControl("ts_arrests").setVisible(true);
+                }
+                else {
+                    form.getControl("ts_arrests").setVisible(false);
+                }
             }
             else {
                 form.getControl("ts_securityincidenttype").setDefaultView("b8d91bb4-6776-ed11-81ac-0022483d5ee0");
@@ -200,6 +222,7 @@ var ROM;
                     form.getControl("ts_publicorprivatecrossing").setVisible(false);
                 }
             }
+            arrestsOnChange(eContext);
         }
         function inFlightOnChange(eContext) {
             var form = eContext.getFormContext();
