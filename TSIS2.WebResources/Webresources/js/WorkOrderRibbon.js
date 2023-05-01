@@ -383,36 +383,35 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
     const currentWorkOrderRecordOwnerId = Xrm.Page.ui.formContext.getAttribute("ownerid").getValue()[0].id;
     const currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g,'');
     const teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa";
+    const incidentTypeId = Xrm.Page.ui.formContext.getAttribute("msdyn_primaryincidenttype").getValue()[0].id;
 
-    let currentUserBusinessUnitFetchXML = [
-        "<fetch top='1'>",
-        "  <entity name='businessunit'>",
-        "    <attribute name='name' />",
-        "    <attribute name='businessunitid' />",
-        "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
-        "      <filter>",
-        "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
-        "      </filter>",
-        "    </link-entity>",
-        "  </entity>",
-        "</fetch>",
+    //Identify WO (ISSO or AvSec) with the activity type field
+    var incidentTypeOwnerFetchXML = [
+    "<fetch top='1'>",
+    "  <entity name='msdyn_incidenttype'>",
+    "    <filter>",
+    "      <condition attribute='msdyn_incidenttypeid' operator='eq' value='", incidentTypeId ,"'/>",
+    "    </filter>",
+    "    <link-entity name='team' from='teamid' to='ownerid' alias='team'>",
+    "      <attribute name='name'/>",
+    "    </link-entity>",
+    "  </entity>",
+    "</fetch>"
     ].join("");
-    currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+    incidentTypeOwnerFetchXML = "?fetchXml=" + encodeURIComponent(incidentTypeOwnerFetchXML);
 
-    Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-        let businessUnitCondition;
-        let userBusinessUnitId = result.entities[0].businessunitid;
-        let userBusinessUnitName = result.entities[0].name;
+    Xrm.WebApi.retrieveMultipleRecords("msdyn_incidenttype", incidentTypeOwnerFetchXML).then(function (result) {
+        const incidentTypeOwnerName = result.entities[0]["team.name"];
 
-        //Uses the generated alias in "Enabled Users With Business Unit Name" so we can use BU in the filters the lookup conntrol
-        if(userBusinessUnitName.startsWith("Aviation")){ 
-            businessUnitCondition = '<condition entityname="a_9156d7f5d3bd47ad9f84ac9b81fa0d54" attribute="name" operator="like" value="Aviation%"/>'
+
+        let inspectorTeamConditions = "";
+        if(incidentTypeOwnerName.startsWith("Aviation")){ 
+            inspectorTeamConditions = '<condition entityname="aa" attribute="name" operator="like" value="Aviation%Inspectors" />';
         }
-        else if(userBusinessUnitName.startsWith("Intermodal")){
-            businessUnitCondition = '<condition entityname="a_9156d7f5d3bd47ad9f84ac9b81fa0d54" attribute="name" operator="like" value="Intermodal%"/>'
+        else if(incidentTypeOwnerName.startsWith("Intermodal")){
+            inspectorTeamConditions = '<condition entityname="aa" attribute="name" operator="eq" value="ISSO%Inspectors" />';
         }
 
-        //Get users that are already in the work order access team to filter them out from the lookup control
         let alreadyExistingUsersInAccessTeamCondition;
         const alreadyExistingUsersInAccessTeamFetchXML = `<fetch><entity name="systemuser"><attribute name="systemuserid"/><link-entity name="teammembership" from="systemuserid" to="systemuserid" link-type="inner" intersect="true"><link-entity name="team" from="teamid" to="teamid" link-type="inner"><link-entity name="teamtemplate" from="teamtemplateid" to="teamtemplateid" link-type="inner"><attribute name="teamtemplateid"/><filter><condition attribute="teamtemplateid" operator="eq" value="${teamTemplateId}"/></filter></link-entity><link-entity name="principalobjectaccess" from="principalid" to="teamid" link-type="inner"><link-entity name="msdyn_workorder" from="msdyn_workorderid" to="objectid" link-type="inner"><attribute name="msdyn_workorderid"/><filter><condition attribute="msdyn_workorderid" operator="eq" value="${currentWorkOrderRecordId}"/></filter></link-entity></link-entity></link-entity></link-entity></entity></fetch>`;
 
@@ -422,7 +421,6 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
                     alreadyExistingUsersInAccessTeamCondition += `<condition attribute="systemuserid" operator="neq" value="${result.entities[i].systemuserid}" />`;
                 }   
                 
-                //
                 const defaultViewId  = "d651eb0f-3ea9-ec11-983e-0022483e6bb0";
                 const viewIds = ["d651eb0f-3ea9-ec11-983e-0022483e6bb0"];
                 var lookupOptions =
@@ -433,18 +431,23 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
                     defaultViewId: `${defaultViewId}`,
                     disableMru: true,
                     viewIds : viewIds,
-                    filters: [
-                        {
-                            filterXml: `<filter type="and">` + 
-                                `${businessUnitCondition}` +
-                                `${alreadyExistingUsersInAccessTeamCondition}` +
-                                `<condition attribute="systemuserid" operator="neq" value="${currentWorkOrderRecordOwnerId}" />` +
-                                `</filter>`,
-                            entityLogicalName: "systemuser"
-                        }
-                    ]
+                    filters:
+                        [
+                            {
+                                filterXml: `<filter type="and">` + 
+                                    `${alreadyExistingUsersInAccessTeamCondition}` + //filter out users already in the WO team
+                                    `<condition attribute="systemuserid" operator="neq" value="${currentWorkOrderRecordOwnerId}" />` + //filter out current user
+                                    `</filter>`,
+                                entityLogicalName: "systemuser"
+                            },
+                            {
+                                filterXml: `<filter type="and"> ${inspectorTeamConditions} </filter>`, //filter corresponding inspector team (AvSec or ISSO)
+                                entityLogicalName: "team"
+                            }
+                        ]
                 };
                 
+                //Add selected user(s) to the WO team
                 Xrm.Utility.lookupObjects(lookupOptions).then(
                     function(result){
                         for (var i = 0; i < result.length; i++) {
@@ -484,8 +487,6 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
                                     }
                                 };
                                 req.send(JSON.stringify(payload));
-                            
-                            
                         }
                         selectedControl.refresh();
                     },
@@ -497,10 +498,7 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
             function (error) {
                 console.log(error.message);
             }
-        );
-
-
-        
+        );  
     });
 }
 
