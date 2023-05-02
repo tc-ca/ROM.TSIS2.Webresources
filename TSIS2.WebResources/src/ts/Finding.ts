@@ -98,38 +98,58 @@
                             }
                             //Show RATE Sections and fields when the operation type owning business unit is Aviation Security or if the user business unit is Transport Canada
                             else {                             
+                                const findingID = formContext.data.entity.getId();
+                                let findingFetchXml = [
+                                    "<fetch>",
+                                    "  <entity name='ovs_finding'>",
+                                    "    <filter type='and'>",
+                                    "      <condition attribute='ovs_findingid' operator='eq' value='", findingID,"'/>",
+                                    "    </filter>",
+                                    "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_functionallocation' alias='site'>",
+                                    "      <attribute name='ts_region'/>",
+                                    "    </link-entity>",
+                                    "  </entity>",
+                                    "</fetch>"
+                                ].join("");
+                                findingFetchXml = "?fetchXml=" + encodeURIComponent(findingFetchXml);
+                                Xrm.WebApi.retrieveMultipleRecords("ovs_finding", findingFetchXml).then(function (result) {
+                                    const currentFinding = result.entities[0];
+                                    const regionId = currentFinding["site.ts_region"];
 
-                                //If Operation Type is Air Carrier (Passenger) or Air Carrier(All Cargo) or Operator of an Aerodrome
-                                if (avSecOperationTypeGuides.includes(operationTypeAttributeValue[0].id)) {
-                                    formContext.ui.tabs.get("tab_RATE").setVisible(true);
-                                    formContext.getControl("ts_finalenforcementaction").setDisabled(true);
-                                }
-                                else {
-                                    formContext.getControl("ts_finalenforcementaction").setDisabled(false);
-                                    formContext.ui.tabs.get("tab_RATE").setVisible(false);
-                                }
+                                    //If Operation Type is Air Carrier (Passenger) or Air Carrier(All Cargo) or Operator of an Aerodrome and not international
+                                    if (avSecOperationTypeGuides.includes(operationTypeAttributeValue[0].id) && regionId != "3bf0fa88-150f-eb11-a813-000d3af3a7a7") { //GUID for International region
+                                        formContext.ui.tabs.get("tab_RATE").setVisible(true);
+                                        formContext.getControl("ts_finalenforcementaction").setDisabled(true);
+                                    }
+                                    else {
+                                        formContext.getControl("ts_finalenforcementaction").setDisabled(false);
+                                        formContext.ui.tabs.get("tab_RATE").setVisible(false);
+                                    }
 
-                                formContext.getControl("header_ts_rateenforcementrecommendation").setVisible(true);
+                                    formContext.getControl("header_ts_rateenforcementrecommendation").setVisible(true);
 
-                                //If there's a recommended enforcement action and the finding is not complete yet, then the accept rate recommendation field should be unlocked
-                                const enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
-                                const recordStatus = formContext.getAttribute("statuscode").getValue();
-                                if (enforcementRecommendation != null && recordStatus != ovs_finding_statuscode.Complete) {
-                                    formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
-                                }
+                                    //If there's a recommended enforcement action and the finding is not complete yet, then the accept rate recommendation field should be unlocked
+                                    const enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
+                                    const recordStatus = formContext.getAttribute("statuscode").getValue();
+                                    if (enforcementRecommendation != null && recordStatus != ovs_finding_statuscode.Complete) {
+                                        formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
+                                    }
 
-                                //If they have accepted or rejected the RATE recommendation previously, then the RATE factors should be locked.
-                                const acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
-                                if (acceptRATERecommendation != null) {
-                                    lockRATEFactors(eContext);
-                                }
+                                    //If they have accepted or rejected the RATE recommendation previously, then the RATE factors should be locked.
+                                    const acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
+                                    if (acceptRATERecommendation != null) {
+                                        lockRATEFactors(eContext);
+                                    }
 
-                                //If they did not accept the rate recommendation, show proposal sections and fields
-                                if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == ts_yesno.No) {
-                                    formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
-                                    setPostRATERecommendationSelectionFieldsVisibility(eContext);
-                                    RATEManagerDecisionOnChange(eContext);
-                                }                               
+                                    //If they did not accept the rate recommendation, show proposal sections and fields
+                                    if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == ts_yesno.No) {
+                                        formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
+                                        setPostRATERecommendationSelectionFieldsVisibility(eContext);
+                                        RATEManagerDecisionOnChange(eContext);
+                                    }
+                                });
+
+                                
                             }
                         }
                         approvingNCATTeamsOnChange(eContext);
