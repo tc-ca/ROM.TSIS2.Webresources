@@ -11,7 +11,7 @@
             const form = <Form.ts_riskcategory.Main.Information>eContext.getFormContext(); 
             setCycleLengthAndInspectionsPerCycle(form);
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 

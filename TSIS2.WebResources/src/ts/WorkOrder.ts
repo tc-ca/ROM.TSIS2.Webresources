@@ -364,7 +364,7 @@ namespace ROM.WorkOrder {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -430,7 +430,7 @@ namespace ROM.WorkOrder {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -483,7 +483,7 @@ namespace ROM.WorkOrder {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -572,7 +572,7 @@ namespace ROM.WorkOrder {
                 populateOperationField(eContext);
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -617,7 +617,7 @@ namespace ROM.WorkOrder {
 
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -708,7 +708,7 @@ namespace ROM.WorkOrder {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -750,7 +750,7 @@ namespace ROM.WorkOrder {
                 populateOperationField(eContext);
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -802,7 +802,7 @@ namespace ROM.WorkOrder {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -821,7 +821,7 @@ namespace ROM.WorkOrder {
         else
             //If system status is set to closed
             if (newSystemStatus == 690970004) {
-                Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
+                Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and statuscode ne 2 and ts_mandatory eq true").then(function success(result) {
                     if (result.entities.length > 0) {
                         var alertStrings = {
                             text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithUnCompletedSTText"),
@@ -988,7 +988,7 @@ namespace ROM.WorkOrder {
             }
 
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 

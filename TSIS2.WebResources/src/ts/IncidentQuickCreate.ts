@@ -87,7 +87,7 @@ namespace ROM.IncidentQuickCreate {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 

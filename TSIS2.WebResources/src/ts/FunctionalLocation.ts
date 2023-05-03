@@ -130,7 +130,7 @@ namespace ROM.FunctionalLocation {
 
             siteTypesVisibility(eContext);
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
