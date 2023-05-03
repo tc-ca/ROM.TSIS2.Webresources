@@ -717,37 +717,27 @@ namespace ROM.WorkOrder {
             const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
             const TradenameAttribute = form.getAttribute("ts_tradenameid");
 
-            if (!(isFromSecurityIncident && form.getAttribute("msdyn_serviceaccount").getValue() != null && form.getAttribute("ts_site").getValue() != null)) {
-                if (TradenameAttribute != null && TradenameAttribute != undefined) {
-                    const TradenameAttributeValue = TradenameAttribute.getValue();
-                    if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
-                        Xrm.WebApi.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(
-                            function success(result) {
-                                var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
-                                var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
-                                var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
-                                var lookup = new Array();
-                                lookup[0] = new Object();
-                                lookup[0].id = _ts_stakeholderid_value;
-                                lookup[0].name = _ts_stakeholderid_value_formatted;
-                                lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
-                                form.getAttribute('msdyn_serviceaccount').setValue(lookup);
-                                if (isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null) {
-                                    populateOperationField(eContext);
-                                }
-                                else {
-                                    stakeholderOnChange(eContext);
-                                }
-                            },
-                            function (error) {
-                                showErrorMessageAlert(error);
-                            }
-                        );
-                    }
+            if (TradenameAttribute != null && TradenameAttribute != undefined) {
+                const TradenameAttributeValue = TradenameAttribute.getValue();
+                if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
+                    Xrm.WebApi.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(
+                        function success(result) {
+                            var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
+                            var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
+                            var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                            var lookup = new Array();
+                            lookup[0] = new Object();
+                            lookup[0].id = _ts_stakeholderid_value;
+                            lookup[0].name = _ts_stakeholderid_value_formatted;
+                            lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
+                            form.getAttribute('msdyn_serviceaccount').setValue(lookup);
+                            stakeholderOnChange(eContext);
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
                 }
-            }
-            else {
-                populateOperationField(eContext);
             }
         } catch (e) {
             throw new Error((e as any).Message);

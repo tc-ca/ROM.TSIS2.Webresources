@@ -234,7 +234,7 @@ var ROM;
                     break;
             }
             // Lock some fields if there exist a Case that has this WO associated to it
-            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>");
+            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>";
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
@@ -697,34 +697,24 @@ var ROM;
             try {
                 var form_2 = eContext.getFormContext();
                 var TradenameAttribute = form_2.getAttribute("ts_tradenameid");
-                if (!(isFromSecurityIncident && form_2.getAttribute("msdyn_serviceaccount").getValue() != null && form_2.getAttribute("ts_site").getValue() != null)) {
-                    if (TradenameAttribute != null && TradenameAttribute != undefined) {
-                        var TradenameAttributeValue = TradenameAttribute.getValue();
-                        if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
-                            Xrm.WebApi.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(function success(result) {
-                                var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
-                                var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
-                                var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
-                                var lookup = new Array();
-                                lookup[0] = new Object();
-                                lookup[0].id = _ts_stakeholderid_value;
-                                lookup[0].name = _ts_stakeholderid_value_formatted;
-                                lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
-                                form_2.getAttribute('msdyn_serviceaccount').setValue(lookup);
-                                if (isFromSecurityIncident && form_2.getAttribute("ts_site").getValue() != null) {
-                                    populateOperationField(eContext);
-                                }
-                                else {
-                                    stakeholderOnChange(eContext);
-                                }
-                            }, function (error) {
-                                showErrorMessageAlert(error);
-                            });
-                        }
+                if (TradenameAttribute != null && TradenameAttribute != undefined) {
+                    var TradenameAttributeValue = TradenameAttribute.getValue();
+                    if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
+                        Xrm.WebApi.retrieveRecord("ts_tradename", TradenameAttributeValue[0].id, "?$select=_ts_stakeholderid_value").then(function success(result) {
+                            var _ts_stakeholderid_value = result["_ts_stakeholderid_value"];
+                            var _ts_stakeholderid_value_formatted = result["_ts_stakeholderid_value@OData.Community.Display.V1.FormattedValue"];
+                            var _ts_stakeholderid_value_lookuplogicalname = result["_ts_stakeholderid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                            var lookup = new Array();
+                            lookup[0] = new Object();
+                            lookup[0].id = _ts_stakeholderid_value;
+                            lookup[0].name = _ts_stakeholderid_value_formatted;
+                            lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
+                            form_2.getAttribute('msdyn_serviceaccount').setValue(lookup);
+                            stakeholderOnChange(eContext);
+                        }, function (error) {
+                            showErrorMessageAlert(error);
+                        });
                     }
-                }
-                else {
-                    populateOperationField(eContext);
                 }
             }
             catch (e) {
@@ -1182,7 +1172,7 @@ var ROM;
             return "";
         }
         function closeWorkOrderServiceTasks(formContext, workOrderServiceTaskData) {
-            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ".concat(formContext.data.entity.getId())).then(function success(result) {
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {
                 for (var i = 0; i < result.entities.length; i++) {
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(function success(result) {
                         //work order service task closed successfully
