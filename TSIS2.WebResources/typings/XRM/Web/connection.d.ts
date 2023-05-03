@@ -98,6 +98,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_msdyn_bookingalertstatus_bind$msdyn_bookingalertstatuses?: string | null;
   record1id_msdyn_bookingrule_bind$msdyn_bookingrules?: string | null;
   record1id_msdyn_bookingtimestamp_bind$msdyn_bookingtimestamps?: string | null;
+  record1id_msdyn_copilottranscript_bind$msdyn_copilottranscripts?: string | null;
   record1id_msdyn_customerasset_bind$msdyn_customerassets?: string | null;
   record1id_msdyn_functionallocation_bind$msdyn_functionallocations?: string | null;
   record1id_msdyn_incidenttypecharacteristic_bind$msdyn_incidenttypecharacteristics?: string | null;
@@ -230,6 +231,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_msdyn_bookingalertstatus_bind$msdyn_bookingalertstatuses?: string | null;
   record2id_msdyn_bookingrule_bind$msdyn_bookingrules?: string | null;
   record2id_msdyn_bookingtimestamp_bind$msdyn_bookingtimestamps?: string | null;
+  record2id_msdyn_copilottranscript_bind$msdyn_copilottranscripts?: string | null;
   record2id_msdyn_customerasset_bind$msdyn_customerassets?: string | null;
   record2id_msdyn_functionallocation_bind$msdyn_functionallocations?: string | null;
   record2id_msdyn_incidenttypecharacteristic_bind$msdyn_incidenttypecharacteristics?: string | null;

@@ -25,4 +25,5 @@ declare const enum activitypointer_activitytypecode {
   Session = 10961,
   IncidentNotification = 11085,
   IncidentUpdate = 11086,
+  CopilotTranscript = 11401,
 }

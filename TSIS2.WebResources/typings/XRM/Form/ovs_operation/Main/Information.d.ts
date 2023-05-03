@@ -40,6 +40,20 @@ declare namespace Form.ovs_operation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_8 extends Xrm.SectionCollectionBase {
+        get(name: "tab_8_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_9 extends Xrm.SectionCollectionBase {
+        get(name: "tab_9_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_properties_avsec extends Xrm.SectionCollectionBase {
         get(name: "tab_avsec_properties_air_carrier_passenger"): Xrm.PageSection;
         get(name: string): undefined;
@@ -123,6 +137,8 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
+      get(name: "subgrid_related_actions"): Xrm.SubGridControl<"ts_action">;
+      get(name: "subgrid_related_actions_nested"): Xrm.BaseControl;
       get(name: "ts_aviationsecuritytraining"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_cargo"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_cateringandstores"): Xrm.Control<Xrm.Attribute<any>>;
@@ -175,6 +191,8 @@ declare namespace Form.ovs_operation.Main {
       get(name: "operation_activity_tab"): Xrm.PageTab<Tabs.operation_activity_tab>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
+      get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
+      get(name: "tab_9"): Xrm.PageTab<Tabs.tab_9>;
       get(name: "tab_properties_avsec"): Xrm.PageTab<Tabs.tab_properties_avsec>;
       get(name: "tab_properties_isso"): Xrm.PageTab<Tabs.tab_properties_isso>;
       get(name: string): undefined;
@@ -243,6 +261,8 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ovs_operation_statecode>;
+    getControl(controlName: "subgrid_related_actions"): Xrm.SubGridControl<"ts_action">;
+    getControl(controlName: "subgrid_related_actions_nested"): Xrm.BaseControl;
     getControl(controlName: "ts_aviationsecuritytraining"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_cargo"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_cateringandstores"): Xrm.Control<Xrm.Attribute<any>>;

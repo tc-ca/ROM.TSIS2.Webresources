@@ -140,7 +140,9 @@ interface Contact_Base extends WebEntity {
   middlename?: string | null;
   mobilephone?: string | null;
   modifiedon?: Date | null;
+  msdyn_decisioninfluencetag?: contact_msdyn_decisioninfluencetag | null;
   msdyn_gdproptout?: boolean | null;
+  msdyn_isassistantinorgchart?: boolean | null;
   msdyn_orgchangestatus?: contact_msdyn_orgchangestatus | null;
   nickname?: string | null;
   numberofchildren?: number | null;
@@ -379,7 +381,9 @@ interface Contact_Select {
   modifiedon: WebAttribute<Contact_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Contact_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
   msdyn_contactkpiid_guid: WebAttribute<Contact_Select, { msdyn_contactkpiid_guid: string | null }, { msdyn_contactkpiid_formatted?: string }>;
+  msdyn_decisioninfluencetag: WebAttribute<Contact_Select, { msdyn_decisioninfluencetag: contact_msdyn_decisioninfluencetag | null }, { msdyn_decisioninfluencetag_formatted?: string }>;
   msdyn_gdproptout: WebAttribute<Contact_Select, { msdyn_gdproptout: boolean | null }, {  }>;
+  msdyn_isassistantinorgchart: WebAttribute<Contact_Select, { msdyn_isassistantinorgchart: boolean | null }, {  }>;
   msdyn_orgchangestatus: WebAttribute<Contact_Select, { msdyn_orgchangestatus: contact_msdyn_orgchangestatus | null }, { msdyn_orgchangestatus_formatted?: string }>;
   msdyn_segmentid_guid: WebAttribute<Contact_Select, { msdyn_segmentid_guid: string | null }, { msdyn_segmentid_formatted?: string }>;
   nickname: WebAttribute<Contact_Select, { nickname: string | null }, {  }>;
@@ -578,7 +582,9 @@ interface Contact_Filter {
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
   msdyn_contactkpiid_guid: XQW.Guid;
+  msdyn_decisioninfluencetag: contact_msdyn_decisioninfluencetag;
   msdyn_gdproptout: boolean;
+  msdyn_isassistantinorgchart: boolean;
   msdyn_orgchangestatus: contact_msdyn_orgchangestatus;
   msdyn_segmentid_guid: XQW.Guid;
   nickname: string;
@@ -711,6 +717,7 @@ interface Contact_FormattedResult {
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
   msdyn_contactkpiid_formatted?: string;
+  msdyn_decisioninfluencetag_formatted?: string;
   msdyn_orgchangestatus_formatted?: string;
   msdyn_segmentid_formatted?: string;
   originatingleadid_formatted?: string;

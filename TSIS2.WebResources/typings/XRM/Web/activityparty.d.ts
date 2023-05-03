@@ -40,6 +40,7 @@ interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships 
   activityid_incidentresolution_bind$incidentresolutions?: string | null;
   activityid_letter_bind$letters?: string | null;
   activityid_msdyn_bookingalert_activityparty_bind$msdyn_bookingalerts?: string | null;
+  activityid_msdyn_copilottranscript_activityparty_bind$msdyn_copilottranscripts?: string | null;
   activityid_msdyn_ocliveworkitem_activityparty_bind$msdyn_ocliveworkitems?: string | null;
   activityid_msdyn_ocsession_activityparty_bind$msdyn_ocsessions?: string | null;
   activityid_msfp_alert_activityparty_bind$msfp_alerts?: string | null;

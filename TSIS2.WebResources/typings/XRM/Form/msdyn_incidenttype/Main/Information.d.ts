@@ -98,8 +98,10 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_aircargo"): Xrm.Attribute<any>;
       get(name: "ts_aviationsecuritytraining"): Xrm.Attribute<any>;
       get(name: "ts_cateringandstores"): Xrm.Attribute<any>;
+      get(name: "ts_domestic"): Xrm.Attribute<any>;
       get(name: "ts_domesticflights"): Xrm.Attribute<any>;
       get(name: "ts_includeinplanning"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "ts_international"): Xrm.Attribute<any>;
       get(name: "ts_internationalflights"): Xrm.Attribute<any>;
       get(name: "ts_internationalprogramsbranchipb"): Xrm.Attribute<any>;
       get(name: "ts_mail"): Xrm.Attribute<any>;
@@ -168,8 +170,10 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_aircargo"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_aviationsecuritytraining"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_cateringandstores"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_domestic"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_domesticflights"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_includeinplanning"): Xrm.OptionSetControl<boolean>;
+      get(name: "ts_international"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_internationalflights"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_internationalprogramsbranchipb"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_mail"): Xrm.Control<Xrm.Attribute<any>>;
@@ -247,8 +251,10 @@ declare namespace Form.msdyn_incidenttype.Main {
     getAttribute(attributeName: "ts_aircargo"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_aviationsecuritytraining"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_cateringandstores"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_domestic"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_domesticflights"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_includeinplanning"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "ts_international"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_internationalflights"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_internationalprogramsbranchipb"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_mail"): Xrm.Attribute<any>;
@@ -312,8 +318,10 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "ts_aircargo"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_aviationsecuritytraining"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_cateringandstores"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_domestic"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_domesticflights"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_includeinplanning"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "ts_international"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_internationalflights"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_internationalprogramsbranchipb"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_mail"): Xrm.Control<Xrm.Attribute<any>>;

@@ -39,7 +39,7 @@ declare namespace Form.incident.Main {
       get(name: "productid"): Xrm.LookupAttribute<"product">;
       get(name: "productserialnumber"): Xrm.Attribute<string>;
       get(name: "statuscode"): Xrm.Attribute<any>;
-      get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
+      get(name: "subjectid"): Xrm.Attribute<any>;
       get(name: "title"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -76,7 +76,7 @@ declare namespace Form.incident.Main {
       get(name: "productid"): Xrm.LookupControl<"product">;
       get(name: "productserialnumber"): Xrm.StringControl;
       get(name: "statuscode"): Xrm.Control<Xrm.Attribute<any>>;
-      get(name: "subjectid"): Xrm.LookupControl<"subject">;
+      get(name: "subjectid"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "title"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -109,7 +109,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "productid"): Xrm.LookupAttribute<"product">;
     getAttribute(attributeName: "productserialnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "statuscode"): Xrm.Attribute<any>;
-    getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
+    getAttribute(attributeName: "subjectid"): Xrm.Attribute<any>;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -141,7 +141,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "productid"): Xrm.LookupControl<"product">;
     getControl(controlName: "productserialnumber"): Xrm.StringControl;
     getControl(controlName: "statuscode"): Xrm.Control<Xrm.Attribute<any>>;
-    getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
+    getControl(controlName: "subjectid"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "title"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }

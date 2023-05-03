@@ -1,6 +1,13 @@
 declare namespace Form.account.Main {
   namespace ROMInformation {
     namespace Tabs {
+      interface Action_tab extends Xrm.SectionCollectionBase {
+        get(name: "tab_10_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface AssetsAndLocationsTab extends Xrm.SectionCollectionBase {
         get(name: "AssetsAndLocationsSection"): Xrm.PageSection;
         get(name: string): undefined;
@@ -121,6 +128,7 @@ declare namespace Form.account.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Action"): Xrm.SubGridControl<"ts_action">;
       get(name: "Cases"): Xrm.SubGridControl<"incident">;
       get(name: "ChildAccounts"): Xrm.SubGridControl<"account">;
       get(name: "Contacts"): Xrm.SubGridControl<"contact">;
@@ -179,6 +187,7 @@ declare namespace Form.account.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "Action_tab"): Xrm.PageTab<Tabs.Action_tab>;
       get(name: "AssetsAndLocationsTab"): Xrm.PageTab<Tabs.AssetsAndLocationsTab>;
       get(name: "Case_tab"): Xrm.PageTab<Tabs.Case_tab>;
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
@@ -235,6 +244,7 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "ts_statusstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Action"): Xrm.SubGridControl<"ts_action">;
     getControl(controlName: "Cases"): Xrm.SubGridControl<"incident">;
     getControl(controlName: "ChildAccounts"): Xrm.SubGridControl<"account">;
     getControl(controlName: "Contacts"): Xrm.SubGridControl<"contact">;
