@@ -135,7 +135,7 @@ namespace ROM.Incident {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -178,7 +178,7 @@ namespace ROM.Incident {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -227,7 +227,7 @@ namespace ROM.Incident {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -260,7 +260,7 @@ namespace ROM.Incident {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 

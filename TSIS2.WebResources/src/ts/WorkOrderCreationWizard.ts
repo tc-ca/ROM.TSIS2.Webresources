@@ -113,7 +113,7 @@ namespace ROM.WorkOrderCreationWizard {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -165,7 +165,7 @@ namespace ROM.WorkOrderCreationWizard {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -207,7 +207,7 @@ namespace ROM.WorkOrderCreationWizard {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -269,7 +269,7 @@ namespace ROM.WorkOrderCreationWizard {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -323,7 +323,7 @@ namespace ROM.WorkOrderCreationWizard {
 
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -383,7 +383,7 @@ namespace ROM.WorkOrderCreationWizard {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 
@@ -434,7 +434,7 @@ namespace ROM.WorkOrderCreationWizard {
                 }
             }
         } catch (e) {
-            throw new Error(e.Message);
+            throw new Error((e as any).Message);
         }
     }
 

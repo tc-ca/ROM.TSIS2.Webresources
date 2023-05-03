@@ -22,7 +22,6 @@
                 };
             });
         }
-        
     }
 
     function disableFormFields(eContext: Xrm.ExecutionContext<any, any>): void {

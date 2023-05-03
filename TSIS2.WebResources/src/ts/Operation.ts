@@ -415,4 +415,22 @@ namespace ROM.Operation {
             );
         };
     }
+
+    export function setRelatedActionFetchXML(eContext: Xrm.ExecutionContext<any, any>) {
+        const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
+        let gridControl = form.getControl("subgrid_related_actions") as Xrm.SubGridControl<"ts_action"> | null;
+    
+        if (gridControl === null) {
+            setTimeout(ROM.Operation.setRelatedActionFetchXML, 1000);
+            return;
+        }
+        else{
+            let operationId = form.data.entity.getId();
+
+            let fetchXml = `<fetch version="1.0" mapping="logical" distinct="true"><entity name="ts_action"><attribute name="ts_name"/><attribute name="createdon"/><order attribute="ts_name" descending="false"/><attribute name="ts_actiontype"/><attribute name="ts_actionstatus"/><attribute name="ts_actioncategory"/><attribute name="ownerid"/><attribute name="ts_actionid"/><order attribute="ts_finding" /><order attribute="ts_name" /><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><link-entity name="ovs_finding" alias="aa" link-type="inner" from="ovs_findingid" to="ts_finding"><attribute name="ovs_finding" /><link-entity name="ovs_operation" alias="ac" link-type="inner" from="ovs_operationid" to="ts_operationid"><attribute name="ovs_operationid"/><filter><condition attribute="ovs_operationid" operator="eq" value = "${operationId}"/></filter></link-entity></link-entity></entity></fetch>`;
+          
+            (gridControl as any).setFilterXml(fetchXml);
+            gridControl.refresh(); 
+        }
+    }
 }

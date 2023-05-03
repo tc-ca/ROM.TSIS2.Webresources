@@ -428,5 +428,20 @@ var ROM;
             ;
         }
         Operation.setFieldsDisabled = setFieldsDisabled;
+        function setRelatedActionFetchXML(eContext) {
+            var form = eContext.getFormContext();
+            var gridControl = form.getControl("subgrid_related_actions");
+            if (gridControl === null) {
+                setTimeout(ROM.Operation.setRelatedActionFetchXML, 1000);
+                return;
+            }
+            else {
+                var operationId = form.data.entity.getId();
+                var fetchXml = "<fetch version=\"1.0\" mapping=\"logical\" distinct=\"true\"><entity name=\"ts_action\"><attribute name=\"ts_name\"/><attribute name=\"createdon\"/><order attribute=\"ts_name\" descending=\"false\"/><attribute name=\"ts_actiontype\"/><attribute name=\"ts_actionstatus\"/><attribute name=\"ts_actioncategory\"/><attribute name=\"ownerid\"/><attribute name=\"ts_actionid\"/><order attribute=\"ts_finding\" /><order attribute=\"ts_name\" /><filter type=\"and\"><condition attribute=\"statecode\" operator=\"eq\" value=\"0\"/></filter><link-entity name=\"ovs_finding\" alias=\"aa\" link-type=\"inner\" from=\"ovs_findingid\" to=\"ts_finding\"><attribute name=\"ovs_finding\" /><link-entity name=\"ovs_operation\" alias=\"ac\" link-type=\"inner\" from=\"ovs_operationid\" to=\"ts_operationid\"><attribute name=\"ovs_operationid\"/><filter><condition attribute=\"ovs_operationid\" operator=\"eq\" value = \"".concat(operationId, "\"/></filter></link-entity></link-entity></entity></fetch>");
+                gridControl.setFilterXml(fetchXml);
+                gridControl.refresh();
+            }
+        }
+        Operation.setRelatedActionFetchXML = setRelatedActionFetchXML;
     })(Operation = ROM.Operation || (ROM.Operation = {}));
 })(ROM || (ROM = {}));

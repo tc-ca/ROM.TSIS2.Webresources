@@ -42,6 +42,7 @@ interface Email_Base extends WebEntity {
   messageiddupcheck?: string | null;
   mimetype?: string | null;
   modifiedon?: Date | null;
+  msdyn_copilotengaged?: boolean | null;
   msdyn_recipientlist?: string | null;
   notifications?: email_notifications | null;
   onholdtime?: number | null;
@@ -270,6 +271,7 @@ interface Email_Select {
   modifiedby_guid: WebAttribute<Email_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
   modifiedon: WebAttribute<Email_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Email_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msdyn_copilotengaged: WebAttribute<Email_Select, { msdyn_copilotengaged: boolean | null }, {  }>;
   msdyn_recipientlist: WebAttribute<Email_Select, { msdyn_recipientlist: string | null }, {  }>;
   notifications: WebAttribute<Email_Select, { notifications: email_notifications | null }, { notifications_formatted?: string }>;
   onholdtime: WebAttribute<Email_Select, { onholdtime: number | null }, {  }>;
@@ -370,6 +372,7 @@ interface Email_Filter {
   modifiedby_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msdyn_copilotengaged: boolean;
   msdyn_recipientlist: string;
   notifications: email_notifications;
   onholdtime: number;
