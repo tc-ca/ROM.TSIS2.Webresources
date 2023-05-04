@@ -1137,7 +1137,7 @@ namespace ROM.WorkOrder {
         Xrm.WebApi.retrieveMultipleRecords('businessunit', operationTypeOwningBusinessUnitFetchXML).then(
             function success(result) {
                 let operationActivityFilter = "";
-                if (result.entities.length == 1) { //Add the operation activity filter if it's an AvSec workorder
+                if (result.entities.length == 1 && !isFromSecurityIncident) { //Add the operation activity filter if it's an AvSec workorder
                     operationActivityFilter += "<link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
                 }
 
@@ -1603,7 +1603,17 @@ namespace ROM.WorkOrder {
 
                             setActivityTypeFilteredView(form, lookup[0].id, workOrderTypeAttributeValue[0].id, operationTypeAttributeValue[0].id);
                         } else {
-                            // do not set a default if multiple records are found, error.
+                            if(isFromSecurityIncident){
+                                const placeHolderOperation: { id: string; name: string; entityType: "ovs_operation" }[] = [
+                                    {
+                                        id: "e9fa69ee-85ea-ed11-a7c6-0022483c5061",
+                                        name: "Security Incident Operation",
+                                        entityType: "ovs_operation"
+                                    }
+                                ]
+                                form.getAttribute('ovs_operationid').setValue(placeHolderOperation);
+                                setActivityTypeFilteredView(form, placeHolderOperation[0].id, workOrderTypeAttributeValue[0].id, operationTypeAttributeValue[0].id);
+                            }
                         }
                     },
                     function (error) {
