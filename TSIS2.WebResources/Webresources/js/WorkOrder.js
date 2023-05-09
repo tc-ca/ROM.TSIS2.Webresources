@@ -234,7 +234,7 @@ var ROM;
                     break;
             }
             // Lock some fields if there exist a Case that has this WO associated to it
-            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>";
+            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>");
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
@@ -1071,7 +1071,7 @@ var ROM;
             operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
             Xrm.WebApi.retrieveMultipleRecords('businessunit', operationTypeOwningBusinessUnitFetchXML).then(function success(result) {
                 var operationActivityFilter = "";
-                if (result.entities.length == 1) { //Add the operation activity filter if it's an AvSec workorder
+                if (result.entities.length == 1 && !isFromSecurityIncident) { //Add the operation activity filter if it's an AvSec workorder
                     operationActivityFilter += "<link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
                 }
                 var fetchXmlActivity = "";
@@ -1172,7 +1172,7 @@ var ROM;
             return "";
         }
         function closeWorkOrderServiceTasks(formContext, workOrderServiceTaskData) {
-            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ".concat(formContext.data.entity.getId())).then(function success(result) {
                 for (var i = 0; i < result.entities.length; i++) {
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(function success(result) {
                         //work order service task closed successfully
@@ -1486,7 +1486,17 @@ var ROM;
                             setActivityTypeFilteredView(form, lookup[0].id, workOrderTypeAttributeValue_2[0].id, operationTypeAttributeValue_2[0].id);
                         }
                         else {
-                            // do not set a default if multiple records are found, error.
+                            if (isFromSecurityIncident) {
+                                var placeHolderOperation = [
+                                    {
+                                        id: "e9fa69ee-85ea-ed11-a7c6-0022483c5061",
+                                        name: "Security Incident Operation",
+                                        entityType: "ovs_operation"
+                                    }
+                                ];
+                                form.getAttribute('ovs_operationid').setValue(placeHolderOperation);
+                                setActivityTypeFilteredView(form, placeHolderOperation[0].id, workOrderTypeAttributeValue_2[0].id, operationTypeAttributeValue_2[0].id);
+                            }
                         }
                     }, function (error) {
                         showErrorMessageAlert(error);
