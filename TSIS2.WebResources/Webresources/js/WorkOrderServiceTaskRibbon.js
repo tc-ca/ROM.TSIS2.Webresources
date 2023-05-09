@@ -17,8 +17,8 @@ if (lang == 1036) {
     workOrderDetailsLocalized = "Détails de l'ordre de travail";
     workOrderServiceTaskResultNotPassedTitle = "Tâche de service - Sélection invalide"
     workOrderServiceTaskResultNotPassedText = "La tâche de service selectionné doit avoir « Passé » comme résultat";
-    markCompleteServiceDateValidationTextLocalized = "fr-Cannot mark Work Order Service Task to complete because Service Task Start Date is later than today's date, or Service Task Start Date is empty.";
-    markCompleteServiceDateValidationTitleLocalized = "fr-Cannot Mark Complete";
+    markCompleteServiceDateValidationTextLocalized = "Impossible de marquer la tâche de service de l'ordre de travail comme terminée car la date de début de la tâche de service est postérieure à la date d'aujourd'hui ou la date de début de la tâche de service est vide.";
+    markCompleteServiceDateValidationTitleLocalized = "Impossible de marquer comme terminé";
     
 } else {
     markCompleteValidationTextLocalized = "All required questions in the questionnaire must be answered before the questionnaire can be Marked Complete.";
