@@ -161,6 +161,7 @@ declare namespace Form.incident.Main {
       get(name: "responseby"): Xrm.DateAttribute;
       get(name: "sentimentvalue"): Xrm.NumberAttribute;
       get(name: "socialprofileid"): Xrm.LookupAttribute<"socialprofile">;
+      get(name: "statecode"): Xrm.OptionSetAttribute<incident_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<incident_statuscode>;
       get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
       get(name: "ticketnumber"): Xrm.Attribute<string>;
@@ -230,6 +231,7 @@ declare namespace Form.incident.Main {
       get(name: "header_process_primarycontactid_2"): Xrm.LookupControl<"contact"> | null;
       get(name: "header_process_title"): Xrm.StringControl | null;
       get(name: "header_process_title_1"): Xrm.StringControl | null;
+      get(name: "header_statecode"): Xrm.OptionSetControl<incident_statecode>;
       get(name: "header_statuscode"): Xrm.OptionSetControl<incident_statuscode>;
       get(name: "influencescore"): Xrm.NumberControl;
       get(name: "isescalated"): Xrm.OptionSetControl<boolean>;
@@ -333,6 +335,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "responseby"): Xrm.DateAttribute;
     getAttribute(attributeName: "sentimentvalue"): Xrm.NumberAttribute;
     getAttribute(attributeName: "socialprofileid"): Xrm.LookupAttribute<"socialprofile">;
+    getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<incident_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<incident_statuscode>;
     getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
     getAttribute(attributeName: "ticketnumber"): Xrm.Attribute<string>;
@@ -397,6 +400,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "header_process_primarycontactid_2"): Xrm.LookupControl<"contact"> | null;
     getControl(controlName: "header_process_title"): Xrm.StringControl | null;
     getControl(controlName: "header_process_title_1"): Xrm.StringControl | null;
+    getControl(controlName: "header_statecode"): Xrm.OptionSetControl<incident_statecode>;
     getControl(controlName: "header_statuscode"): Xrm.OptionSetControl<incident_statuscode>;
     getControl(controlName: "influencescore"): Xrm.NumberControl;
     getControl(controlName: "isescalated"): Xrm.OptionSetControl<boolean>;

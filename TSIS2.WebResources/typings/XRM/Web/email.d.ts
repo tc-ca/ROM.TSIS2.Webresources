@@ -44,6 +44,7 @@ interface Email_Base extends WebEntity {
   modifiedon?: Date | null;
   msdyn_copilotengaged?: boolean | null;
   msdyn_recipientlist?: string | null;
+  msft_datastate?: msft_datastate | null;
   notifications?: email_notifications | null;
   onholdtime?: number | null;
   opencount?: number | null;
@@ -273,6 +274,7 @@ interface Email_Select {
   modifiedonbehalfby_guid: WebAttribute<Email_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
   msdyn_copilotengaged: WebAttribute<Email_Select, { msdyn_copilotengaged: boolean | null }, {  }>;
   msdyn_recipientlist: WebAttribute<Email_Select, { msdyn_recipientlist: string | null }, {  }>;
+  msft_datastate: WebAttribute<Email_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   notifications: WebAttribute<Email_Select, { notifications: email_notifications | null }, { notifications_formatted?: string }>;
   onholdtime: WebAttribute<Email_Select, { onholdtime: number | null }, {  }>;
   opencount: WebAttribute<Email_Select, { opencount: number | null }, {  }>;
@@ -374,6 +376,7 @@ interface Email_Filter {
   modifiedonbehalfby_guid: XQW.Guid;
   msdyn_copilotengaged: boolean;
   msdyn_recipientlist: string;
+  msft_datastate: msft_datastate;
   notifications: email_notifications;
   onholdtime: number;
   opencount: number;
@@ -474,6 +477,7 @@ interface Email_FormattedResult {
   modifiedby_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msft_datastate_formatted?: string;
   notifications_formatted?: string;
   overriddencreatedon_formatted?: string;
   ownerid_formatted?: string;

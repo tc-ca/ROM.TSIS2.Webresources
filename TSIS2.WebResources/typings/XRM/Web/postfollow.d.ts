@@ -1,5 +1,6 @@
 interface PostFollow_Base extends WebEntity {
   createdon?: Date | null;
+  msft_datastate?: msft_datastate | null;
   postfollowid?: string | null;
   posttoyammer?: boolean | null;
   timezoneruleversionnumber?: number | null;
@@ -54,6 +55,7 @@ interface PostFollow_Select {
   createdby_guid: WebAttribute<PostFollow_Select, { createdby_guid: string | null }, { createdby_formatted?: string }>;
   createdon: WebAttribute<PostFollow_Select, { createdon: Date | null }, { createdon_formatted?: string }>;
   createdonbehalfby_guid: WebAttribute<PostFollow_Select, { createdonbehalfby_guid: string | null }, { createdonbehalfby_formatted?: string }>;
+  msft_datastate: WebAttribute<PostFollow_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   ownerid_guid: WebAttribute<PostFollow_Select, { ownerid_guid: string | null }, { ownerid_formatted?: string }>;
   owningbusinessunit_guid: WebAttribute<PostFollow_Select, { owningbusinessunit_guid: string | null }, { owningbusinessunit_formatted?: string }>;
   owningteam_guid: WebAttribute<PostFollow_Select, { owningteam_guid: string | null }, { owningteam_formatted?: string }>;
@@ -71,6 +73,7 @@ interface PostFollow_Filter {
   createdby_guid: XQW.Guid;
   createdon: Date;
   createdonbehalfby_guid: XQW.Guid;
+  msft_datastate: msft_datastate;
   ownerid_guid: XQW.Guid;
   owningbusinessunit_guid: XQW.Guid;
   owningteam_guid: XQW.Guid;
@@ -105,6 +108,7 @@ interface PostFollow_FormattedResult {
   createdby_formatted?: string;
   createdon_formatted?: string;
   createdonbehalfby_formatted?: string;
+  msft_datastate_formatted?: string;
   ownerid_formatted?: string;
   owningbusinessunit_formatted?: string;
   owningteam_formatted?: string;

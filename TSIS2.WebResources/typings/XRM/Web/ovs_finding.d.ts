@@ -89,6 +89,7 @@ interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ts_VerbalWarningGivenTo_bind$contacts?: string | null;
   ts_WorkOrder_bind$msdyn_workorders?: string | null;
   ts_accountid_bind$accounts?: string | null;
+  ts_actioncreated_bind$ts_actions?: string | null;
   ts_enforcementactioncreated_bind$ts_enforcementactions?: string | null;
   ts_functionallocation_bind$msdyn_functionallocations?: string | null;
   ts_operationid_bind$ovs_operations?: string | null;
@@ -126,6 +127,7 @@ interface ovs_Finding_Select {
   ts_acceptncatrecommendation: WebAttribute<ovs_Finding_Select, { ts_acceptncatrecommendation: ts_yesno | null }, { ts_acceptncatrecommendation_formatted?: string }>;
   ts_acceptraterecommendation: WebAttribute<ovs_Finding_Select, { ts_acceptraterecommendation: ts_yesno | null }, { ts_acceptraterecommendation_formatted?: string }>;
   ts_accountid_guid: WebAttribute<ovs_Finding_Select, { ts_accountid_guid: string | null }, { ts_accountid_formatted?: string }>;
+  ts_actioncreated_guid: WebAttribute<ovs_Finding_Select, { ts_actioncreated_guid: string | null }, { ts_actioncreated_formatted?: string }>;
   ts_contact_guid: WebAttribute<ovs_Finding_Select, { ts_contact_guid: string | null }, { ts_contact_formatted?: string }>;
   ts_enforcementaction: WebAttribute<ovs_Finding_Select, { ts_enforcementaction: ts_ovs_finding_ts_enforcementaction | null }, { ts_enforcementaction_formatted?: string }>;
   ts_enforcementactioncreated_guid: WebAttribute<ovs_Finding_Select, { ts_enforcementactioncreated_guid: string | null }, { ts_enforcementactioncreated_formatted?: string }>;
@@ -216,6 +218,7 @@ interface ovs_Finding_Filter {
   ts_acceptncatrecommendation: ts_yesno;
   ts_acceptraterecommendation: ts_yesno;
   ts_accountid_guid: XQW.Guid;
+  ts_actioncreated_guid: XQW.Guid;
   ts_contact_guid: XQW.Guid;
   ts_enforcementaction: ts_ovs_finding_ts_enforcementaction;
   ts_enforcementactioncreated_guid: XQW.Guid;
@@ -321,6 +324,7 @@ interface ovs_Finding_FormattedResult {
   ts_acceptncatrecommendation_formatted?: string;
   ts_acceptraterecommendation_formatted?: string;
   ts_accountid_formatted?: string;
+  ts_actioncreated_formatted?: string;
   ts_contact_formatted?: string;
   ts_enforcementaction_formatted?: string;
   ts_enforcementactioncreated_formatted?: string;
@@ -384,6 +388,7 @@ interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships
   owningteam_guid: string | null;
   owninguser_guid: string | null;
   ts_accountid_guid: string | null;
+  ts_actioncreated_guid: string | null;
   ts_contact_guid: string | null;
   ts_enforcementactioncreated_guid: string | null;
   ts_file_guid: string | null;

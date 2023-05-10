@@ -29,6 +29,7 @@ interface msdyn_accountkpiitem_Base extends WebEntity {
   msdyn_timespentbycustomer_calculated?: number | null;
   msdyn_timespentbyteam?: number | null;
   msdyn_timespentbyteam_calculated?: number | null;
+  msft_datastate?: msft_datastate | null;
   overriddencreatedon?: Date | null;
   statecode?: msdyn_accountkpiitem_statecode | null;
   statuscode?: msdyn_accountkpiitem_statuscode | null;
@@ -82,6 +83,7 @@ interface msdyn_accountkpiitem_Select {
   msdyn_timespentbycustomer_calculated: WebAttribute<msdyn_accountkpiitem_Select, { msdyn_timespentbycustomer_calculated: number | null }, {  }>;
   msdyn_timespentbyteam: WebAttribute<msdyn_accountkpiitem_Select, { msdyn_timespentbyteam: number | null }, {  }>;
   msdyn_timespentbyteam_calculated: WebAttribute<msdyn_accountkpiitem_Select, { msdyn_timespentbyteam_calculated: number | null }, {  }>;
+  msft_datastate: WebAttribute<msdyn_accountkpiitem_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   organizationid_guid: WebAttribute<msdyn_accountkpiitem_Select, { organizationid_guid: string | null }, { organizationid_formatted?: string }>;
   overriddencreatedon: WebAttribute<msdyn_accountkpiitem_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
   statecode: WebAttribute<msdyn_accountkpiitem_Select, { statecode: msdyn_accountkpiitem_statecode | null }, { statecode_formatted?: string }>;
@@ -126,6 +128,7 @@ interface msdyn_accountkpiitem_Filter {
   msdyn_timespentbycustomer_calculated: any;
   msdyn_timespentbyteam: number;
   msdyn_timespentbyteam_calculated: any;
+  msft_datastate: msft_datastate;
   organizationid_guid: XQW.Guid;
   overriddencreatedon: Date;
   statecode: msdyn_accountkpiitem_statecode;
@@ -155,6 +158,7 @@ interface msdyn_accountkpiitem_FormattedResult {
   msdyn_date_formatted?: string;
   msdyn_relationshiphealthscorestate_formatted?: string;
   msdyn_relationshiphealthtrend_formatted?: string;
+  msft_datastate_formatted?: string;
   organizationid_formatted?: string;
   overriddencreatedon_formatted?: string;
   statecode_formatted?: string;

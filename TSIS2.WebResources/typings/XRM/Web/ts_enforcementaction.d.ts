@@ -22,6 +22,7 @@ interface ts_enforcementaction_Base extends WebEntity {
   lastonholdtime?: Date | null;
   leftvoicemail?: boolean | null;
   modifiedon?: Date | null;
+  msft_datastate?: msft_datastate | null;
   onholdtime?: number | null;
   overriddencreatedon?: Date | null;
   postponeactivityprocessinguntil?: Date | null;
@@ -223,6 +224,7 @@ interface ts_enforcementaction_Select {
   modifiedby_guid: WebAttribute<ts_enforcementaction_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
   modifiedon: WebAttribute<ts_enforcementaction_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<ts_enforcementaction_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msft_datastate: WebAttribute<ts_enforcementaction_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   onholdtime: WebAttribute<ts_enforcementaction_Select, { onholdtime: number | null }, {  }>;
   optionalattendees_guid: WebAttribute<ts_enforcementaction_Select, { optionalattendees_guid: string | null }, { optionalattendees_formatted?: string }>;
   organizer_guid: WebAttribute<ts_enforcementaction_Select, { organizer_guid: string | null }, { organizer_formatted?: string }>;
@@ -305,6 +307,7 @@ interface ts_enforcementaction_Filter {
   modifiedby_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msft_datastate: msft_datastate;
   onholdtime: number;
   optionalattendees_guid: XQW.Guid;
   organizer_guid: XQW.Guid;
@@ -401,6 +404,7 @@ interface ts_enforcementaction_FormattedResult {
   modifiedby_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msft_datastate_formatted?: string;
   optionalattendees_formatted?: string;
   organizer_formatted?: string;
   overriddencreatedon_formatted?: string;

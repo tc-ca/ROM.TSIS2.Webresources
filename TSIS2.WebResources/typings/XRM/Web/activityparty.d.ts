@@ -10,6 +10,7 @@ interface ActivityParty_Base extends WebEntity {
   exchangeentryid?: string | null;
   instancetypecode?: activityparty_instancetypecode | null;
   ispartydeleted?: boolean | null;
+  msft_datastate?: msft_datastate | null;
   owningbusinessunit?: string | null;
   owninguser?: string | null;
   participationtypemask?: activityparty_participationtypemask | null;
@@ -95,6 +96,7 @@ interface ActivityParty_Select {
   exchangeentryid: WebAttribute<ActivityParty_Select, { exchangeentryid: string | null }, {  }>;
   instancetypecode: WebAttribute<ActivityParty_Select, { instancetypecode: activityparty_instancetypecode | null }, { instancetypecode_formatted?: string }>;
   ispartydeleted: WebAttribute<ActivityParty_Select, { ispartydeleted: boolean | null }, {  }>;
+  msft_datastate: WebAttribute<ActivityParty_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   ownerid_guid: WebAttribute<ActivityParty_Select, { ownerid_guid: string | null }, { ownerid_formatted?: string }>;
   owningbusinessunit: WebAttribute<ActivityParty_Select, { owningbusinessunit: string | null }, {  }>;
   owninguser: WebAttribute<ActivityParty_Select, { owninguser: string | null }, {  }>;
@@ -119,6 +121,7 @@ interface ActivityParty_Filter {
   exchangeentryid: string;
   instancetypecode: activityparty_instancetypecode;
   ispartydeleted: boolean;
+  msft_datastate: msft_datastate;
   ownerid_guid: XQW.Guid;
   owningbusinessunit: XQW.Guid;
   owninguser: XQW.Guid;
@@ -144,6 +147,7 @@ interface ActivityParty_Expand {
 interface ActivityParty_FormattedResult {
   activityid_formatted?: string;
   instancetypecode_formatted?: string;
+  msft_datastate_formatted?: string;
   ownerid_formatted?: string;
   participationtypemask_formatted?: string;
   partyid_formatted?: string;

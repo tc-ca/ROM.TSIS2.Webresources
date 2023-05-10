@@ -98,6 +98,7 @@ interface Account_Base extends WebEntity {
   msdyn_travelcharge_base?: number | null;
   msdyn_travelchargetype?: msdyn_travelchargetype | null;
   msdyn_workorderinstructions?: string | null;
+  msft_datastate?: msft_datastate | null;
   name?: string | null;
   numberofemployees?: number | null;
   onholdtime?: number | null;
@@ -349,6 +350,7 @@ interface Account_Select {
   msdyn_travelchargetype: WebAttribute<Account_Select, { msdyn_travelchargetype: msdyn_travelchargetype | null }, { msdyn_travelchargetype_formatted?: string }>;
   msdyn_workhourtemplate_guid: WebAttribute<Account_Select, { msdyn_workhourtemplate_guid: string | null }, { msdyn_workhourtemplate_formatted?: string }>;
   msdyn_workorderinstructions: WebAttribute<Account_Select, { msdyn_workorderinstructions: string | null }, {  }>;
+  msft_datastate: WebAttribute<Account_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   name: WebAttribute<Account_Select, { name: string | null }, {  }>;
   numberofemployees: WebAttribute<Account_Select, { numberofemployees: number | null }, {  }>;
   onholdtime: WebAttribute<Account_Select, { onholdtime: number | null }, {  }>;
@@ -538,6 +540,7 @@ interface Account_Filter {
   msdyn_travelchargetype: msdyn_travelchargetype;
   msdyn_workhourtemplate_guid: XQW.Guid;
   msdyn_workorderinstructions: string;
+  msft_datastate: msft_datastate;
   name: string;
   numberofemployees: number;
   onholdtime: number;
@@ -719,6 +722,7 @@ interface Account_FormattedResult {
   msdyn_travelcharge_formatted?: string;
   msdyn_travelchargetype_formatted?: string;
   msdyn_workhourtemplate_formatted?: string;
+  msft_datastate_formatted?: string;
   opendeals_date_formatted?: string;
   openrevenue_base_formatted?: string;
   openrevenue_date_formatted?: string;

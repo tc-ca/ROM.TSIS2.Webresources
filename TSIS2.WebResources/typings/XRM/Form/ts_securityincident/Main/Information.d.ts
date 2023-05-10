@@ -58,6 +58,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_estimatedarrivaltime"): Xrm.DateAttribute;
       get(name: "ts_flightnumber"): Xrm.Attribute<string>;
       get(name: "ts_incidentdatetime"): Xrm.DateAttribute;
+      get(name: "ts_incidentdetailsattachment"): Xrm.Attribute<any>;
       get(name: "ts_inflight"): Xrm.Attribute<any>;
       get(name: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
       get(name: "ts_latitude"): Xrm.NumberAttribute;
@@ -127,6 +128,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_estimatedarrivaltime"): Xrm.DateControl;
       get(name: "ts_flightnumber"): Xrm.StringControl;
       get(name: "ts_incidentdatetime"): Xrm.DateControl;
+      get(name: "ts_incidentdetailsattachment"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_inflight"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
       get(name: "ts_latitude"): Xrm.NumberControl;
@@ -201,6 +203,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_estimatedarrivaltime"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_flightnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_incidentdatetime"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_incidentdetailsattachment"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_inflight"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
     getAttribute(attributeName: "ts_latitude"): Xrm.NumberAttribute;
@@ -265,6 +268,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_estimatedarrivaltime"): Xrm.DateControl;
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
     getControl(controlName: "ts_incidentdatetime"): Xrm.DateControl;
+    getControl(controlName: "ts_incidentdetailsattachment"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_inflight"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
     getControl(controlName: "ts_latitude"): Xrm.NumberControl;
