@@ -77,8 +77,26 @@ var ROM;
                 }
             });
             emailTemplateFieldsOnLoad(eContext);
+            //Hide OOB status code we don't use
+            var caseStatus = form.getControl("header_statuscode");
+            if (caseStatus != null && caseStatus != undefined) {
+                var options = caseStatus.getOptions();
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].value == 3 || options[i].value == 4) {
+                        caseStatus.removeOption(options[i].value);
+                    }
+                }
+            }
         }
         Incident.onLoad = onLoad;
+        function systemStatusCodeOnChange(eContext) {
+            var form = eContext.getFormContext();
+            if (form.getAttribute("statuscode").getValue() == 7) {
+                form.getAttribute("statuscode").setValue(5);
+                form.getAttribute("statecode").setValue(1); //Close Case when to closed
+            }
+        }
+        Incident.systemStatusCodeOnChange = systemStatusCodeOnChange;
         function regionOnChange(eContext) {
             try {
                 var form = eContext.getFormContext();
