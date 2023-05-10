@@ -61,3 +61,67 @@ function isFormTypeUpdate(){
     return Xrm.Page.ui.getFormType() == 2;
 }
 
+function openLookupModalDialogWOForm(executionContext) {
+    var formContext = executionContext.getFormContext(); 
+    
+    formContext.getControl("msdyn_workordertype").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_region").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ovs_operationtypeid").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_tradenameid").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("msdyn_serviceaccount").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_site").addOnLookupTagClick(onLookupClick);    
+}
+
+function openLookupModalDialogCaseForm(executionContext) {
+    var formContext = executionContext.getFormContext();
+
+    formContext.getControl("ovs_region").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_tradenameid").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("customerid").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("msdyn_functionallocation").addOnLookupTagClick(onLookupClick);
+}
+
+function openLookupModalDialogFindingForm(executionContext) {
+    var formContext = executionContext.getFormContext();
+
+    formContext.getControl("ts_operationid").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_accountid").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_ovs_operationtype").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_functionallocation").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_qm_rclegislation").addOnLookupTagClick(onLookupClick);
+}
+
+function openLookupModalDialogEmailForm(executionContext) {
+    var formContext = executionContext.getFormContext();
+
+    formContext.getControl("from").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("to").addOnLookupTagClick(onLookupClick);
+}
+
+function openLookupModalDialogSecurityIncidentForm(executionContext) {
+    var formContext = executionContext.getFormContext();
+
+    formContext.getControl("ts_securityincidenttype").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_reportingcompany").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_stakeholder").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_region").addOnLookupTagClick(onLookupClick);
+    formContext.getControl("ts_site").addOnLookupTagClick(onLookupClick);
+}
+function onLookupClick(executionContext) {
+    executionContext.getEventArgs().preventDefault();
+    var record = executionContext.getEventArgs().getTagValue();
+    Xrm.Navigation.navigateTo({
+        pageType: "entityrecord",
+        entityName: record.entityType,
+        entityId: record.id
+    }, {
+        target: 2,      
+        position: 2,
+        width:
+        {
+            value: 30,
+            unit: "%"
+        }
+    });
+}
+
