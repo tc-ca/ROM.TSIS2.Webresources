@@ -616,7 +616,8 @@ function bulkAddAdditionalInspectors(formContext, selectedWorkOrdersGuids) {
         target: 2,
         position: 1,
         width: { value: 450, unit: "px" },
-        height: { value: 550, unit: "px" }
+        height: { value: 550, unit: "px" },
+        title: (lang == 1036) ? "Ajouter des inspecteurs supplémentaires" : "Add Additional Inspectors"
     };
     Xrm.Navigation.navigateTo(pageInput, navigationOptions)
         .then(
