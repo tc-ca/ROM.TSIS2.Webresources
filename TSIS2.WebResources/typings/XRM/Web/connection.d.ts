@@ -9,6 +9,7 @@ interface Connection_Base extends WebEntity {
   importsequencenumber?: number | null;
   ismaster?: boolean | null;
   modifiedon?: Date | null;
+  msft_datastate?: msft_datastate | null;
   name?: string | null;
   overriddencreatedon?: Date | null;
   record1objecttypecode?: connection_record1objecttypecode | null;
@@ -340,6 +341,7 @@ interface Connection_Select {
   modifiedby_guid: WebAttribute<Connection_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
   modifiedon: WebAttribute<Connection_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Connection_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msft_datastate: WebAttribute<Connection_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   name: WebAttribute<Connection_Select, { name: string | null }, {  }>;
   overriddencreatedon: WebAttribute<Connection_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
   ownerid_guid: WebAttribute<Connection_Select, { ownerid_guid: string | null }, { ownerid_formatted?: string }>;
@@ -373,6 +375,7 @@ interface Connection_Filter {
   modifiedby_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msft_datastate: msft_datastate;
   name: string;
   overriddencreatedon: Date;
   ownerid_guid: XQW.Guid;
@@ -437,6 +440,7 @@ interface Connection_FormattedResult {
   modifiedby_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msft_datastate_formatted?: string;
   overriddencreatedon_formatted?: string;
   ownerid_formatted?: string;
   owningbusinessunit_formatted?: string;

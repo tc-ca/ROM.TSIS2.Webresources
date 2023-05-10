@@ -25,6 +25,7 @@ interface ServiceAppointment_Base extends WebEntity {
   leftvoicemail?: boolean | null;
   location?: string | null;
   modifiedon?: Date | null;
+  msft_datastate?: msft_datastate | null;
   onholdtime?: number | null;
   overriddencreatedon?: Date | null;
   postponeactivityprocessinguntil?: Date | null;
@@ -216,6 +217,7 @@ interface ServiceAppointment_Select {
   modifiedon: WebAttribute<ServiceAppointment_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<ServiceAppointment_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
   msdyn_organizationalunitid_guid: WebAttribute<ServiceAppointment_Select, { msdyn_organizationalunitid_guid: string | null }, { msdyn_organizationalunitid_formatted?: string }>;
+  msft_datastate: WebAttribute<ServiceAppointment_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   onholdtime: WebAttribute<ServiceAppointment_Select, { onholdtime: number | null }, {  }>;
   optionalattendees_guid: WebAttribute<ServiceAppointment_Select, { optionalattendees_guid: string | null }, { optionalattendees_formatted?: string }>;
   organizer_guid: WebAttribute<ServiceAppointment_Select, { organizer_guid: string | null }, { organizer_formatted?: string }>;
@@ -291,6 +293,7 @@ interface ServiceAppointment_Filter {
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
   msdyn_organizationalunitid_guid: XQW.Guid;
+  msft_datastate: msft_datastate;
   onholdtime: number;
   optionalattendees_guid: XQW.Guid;
   organizer_guid: XQW.Guid;
@@ -373,6 +376,7 @@ interface ServiceAppointment_FormattedResult {
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
   msdyn_organizationalunitid_formatted?: string;
+  msft_datastate_formatted?: string;
   optionalattendees_formatted?: string;
   organizer_formatted?: string;
   overriddencreatedon_formatted?: string;

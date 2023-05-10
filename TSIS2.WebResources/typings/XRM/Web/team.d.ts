@@ -9,6 +9,7 @@ interface Team_Base extends WebEntity {
   issastokenset?: boolean | null;
   membershiptype?: team_membershiptype | null;
   modifiedon?: Date | null;
+  msft_datastate?: msft_datastate | null;
   name?: string | null;
   organizationid?: string | null;
   overriddencreatedon?: Date | null;
@@ -85,6 +86,7 @@ interface Team extends Team_Base, Team_Relationships {
 }
 interface Team_Create extends Team {
   associatedteamtemplateid_bind$teamtemplates?: string | null;
+  delegatedauthorizationid_bind$DelegatedAuthorizations?: string | null;
   regardingobjectid_account_bind$accounts?: string | null;
   regardingobjectid_knowledgearticle_bind$knowledgearticles?: string | null;
   regardingobjectid_msdyn_workorder_bind$msdyn_workorders?: string | null;
@@ -99,6 +101,7 @@ interface Team_Select {
   createdby_guid: WebAttribute<Team_Select, { createdby_guid: string | null }, { createdby_formatted?: string }>;
   createdon: WebAttribute<Team_Select, { createdon: Date | null }, { createdon_formatted?: string }>;
   createdonbehalfby_guid: WebAttribute<Team_Select, { createdonbehalfby_guid: string | null }, { createdonbehalfby_formatted?: string }>;
+  delegatedauthorizationid_guid: WebAttribute<Team_Select, { delegatedauthorizationid_guid: string | null }, { delegatedauthorizationid_formatted?: string }>;
   description: WebAttribute<Team_Select, { description: string | null }, {  }>;
   emailaddress: WebAttribute<Team_Select, { emailaddress: string | null }, {  }>;
   exchangerate: WebAttribute<Team_Select, { exchangerate: number | null }, {  }>;
@@ -109,6 +112,7 @@ interface Team_Select {
   modifiedby_guid: WebAttribute<Team_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
   modifiedon: WebAttribute<Team_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Team_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msft_datastate: WebAttribute<Team_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   name: WebAttribute<Team_Select, { name: string | null }, {  }>;
   organizationid: WebAttribute<Team_Select, { organizationid: string | null }, {  }>;
   overriddencreatedon: WebAttribute<Team_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
@@ -134,6 +138,7 @@ interface Team_Filter {
   createdby_guid: XQW.Guid;
   createdon: Date;
   createdonbehalfby_guid: XQW.Guid;
+  delegatedauthorizationid_guid: XQW.Guid;
   description: string;
   emailaddress: string;
   exchangerate: any;
@@ -144,6 +149,7 @@ interface Team_Filter {
   modifiedby_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msft_datastate: msft_datastate;
   name: string;
   organizationid: XQW.Guid;
   overriddencreatedon: Date;
@@ -226,10 +232,12 @@ interface Team_FormattedResult {
   createdby_formatted?: string;
   createdon_formatted?: string;
   createdonbehalfby_formatted?: string;
+  delegatedauthorizationid_formatted?: string;
   membershiptype_formatted?: string;
   modifiedby_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msft_datastate_formatted?: string;
   overriddencreatedon_formatted?: string;
   queueid_formatted?: string;
   regardingobjectid_formatted?: string;
@@ -244,6 +252,7 @@ interface Team_Result extends Team_Base, Team_Relationships {
   businessunitid_guid: string | null;
   createdby_guid: string | null;
   createdonbehalfby_guid: string | null;
+  delegatedauthorizationid_guid: string | null;
   modifiedby_guid: string | null;
   modifiedonbehalfby_guid: string | null;
   queueid_guid: string | null;

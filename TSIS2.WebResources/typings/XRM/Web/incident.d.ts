@@ -36,6 +36,7 @@ interface Incident_Base extends WebEntity {
   msdyn_copilotengaged?: boolean | null;
   msdyn_precreateattachmentsid?: string | null;
   msdyn_precreatenotesid?: string | null;
+  msft_datastate?: msft_datastate | null;
   nextsla?: string | null;
   numberofchildincidents?: number | null;
   onholdtime?: number | null;
@@ -200,6 +201,7 @@ interface Incident_Select {
   msdyn_iotalert_guid: WebAttribute<Incident_Select, { msdyn_iotalert_guid: string | null }, { msdyn_iotalert_formatted?: string }>;
   msdyn_precreateattachmentsid: WebAttribute<Incident_Select, { msdyn_precreateattachmentsid: string | null }, {  }>;
   msdyn_precreatenotesid: WebAttribute<Incident_Select, { msdyn_precreatenotesid: string | null }, {  }>;
+  msft_datastate: WebAttribute<Incident_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   nextsla: WebAttribute<Incident_Select, { nextsla: string | null }, {  }>;
   numberofchildincidents: WebAttribute<Incident_Select, { numberofchildincidents: number | null }, {  }>;
   onholdtime: WebAttribute<Incident_Select, { onholdtime: number | null }, {  }>;
@@ -313,6 +315,7 @@ interface Incident_Filter {
   msdyn_iotalert_guid: XQW.Guid;
   msdyn_precreateattachmentsid: string;
   msdyn_precreatenotesid: string;
+  msft_datastate: msft_datastate;
   nextsla: string;
   numberofchildincidents: number;
   onholdtime: number;
@@ -449,6 +452,7 @@ interface Incident_FormattedResult {
   msdyn_functionallocation_formatted?: string;
   msdyn_incidenttype_formatted?: string;
   msdyn_iotalert_formatted?: string;
+  msft_datastate_formatted?: string;
   overriddencreatedon_formatted?: string;
   ovs_region_formatted?: string;
   ownerid_formatted?: string;

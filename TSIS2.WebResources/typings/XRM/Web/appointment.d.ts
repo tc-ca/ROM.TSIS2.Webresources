@@ -28,6 +28,7 @@ interface Appointment_Base extends WebEntity {
   location?: string | null;
   modifiedfieldsmask?: string | null;
   modifiedon?: Date | null;
+  msft_datastate?: msft_datastate | null;
   onholdtime?: number | null;
   onlinemeetingchatid?: string | null;
   onlinemeetingid?: string | null;
@@ -220,6 +221,7 @@ interface Appointment_Select {
   modifiedfieldsmask: WebAttribute<Appointment_Select, { modifiedfieldsmask: string | null }, {  }>;
   modifiedon: WebAttribute<Appointment_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Appointment_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msft_datastate: WebAttribute<Appointment_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   onholdtime: WebAttribute<Appointment_Select, { onholdtime: number | null }, {  }>;
   onlinemeetingchatid: WebAttribute<Appointment_Select, { onlinemeetingchatid: string | null }, {  }>;
   onlinemeetingid: WebAttribute<Appointment_Select, { onlinemeetingid: string | null }, {  }>;
@@ -292,6 +294,7 @@ interface Appointment_Filter {
   modifiedfieldsmask: string;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msft_datastate: msft_datastate;
   onholdtime: number;
   onlinemeetingchatid: string;
   onlinemeetingid: string;
@@ -369,6 +372,7 @@ interface Appointment_FormattedResult {
   modifiedby_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msft_datastate_formatted?: string;
   onlinemeetingtype_formatted?: string;
   optionalattendees_formatted?: string;
   organizer_formatted?: string;

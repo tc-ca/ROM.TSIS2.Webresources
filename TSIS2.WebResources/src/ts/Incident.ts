@@ -83,6 +83,25 @@ namespace ROM.Incident {
         });
 
         emailTemplateFieldsOnLoad(eContext);
+
+        //Hide OOB status code we don't use
+        let caseStatus = form.getControl("header_statuscode");
+        if (caseStatus != null && caseStatus != undefined) {
+
+            var options = caseStatus.getOptions();
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].value == 3 || options[i].value == 4) {
+                    caseStatus.removeOption(options[i].value);
+                }
+            }
+        }
+    }
+
+    export function systemStatusCodeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
+        if(form.getAttribute("statuscode").getValue() == 7){
+        }
     }
 
     export function regionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {

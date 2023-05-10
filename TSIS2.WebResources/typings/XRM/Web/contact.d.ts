@@ -144,6 +144,7 @@ interface Contact_Base extends WebEntity {
   msdyn_gdproptout?: boolean | null;
   msdyn_isassistantinorgchart?: boolean | null;
   msdyn_orgchangestatus?: contact_msdyn_orgchangestatus | null;
+  msft_datastate?: msft_datastate | null;
   nickname?: string | null;
   numberofchildren?: number | null;
   onholdtime?: number | null;
@@ -386,6 +387,7 @@ interface Contact_Select {
   msdyn_isassistantinorgchart: WebAttribute<Contact_Select, { msdyn_isassistantinorgchart: boolean | null }, {  }>;
   msdyn_orgchangestatus: WebAttribute<Contact_Select, { msdyn_orgchangestatus: contact_msdyn_orgchangestatus | null }, { msdyn_orgchangestatus_formatted?: string }>;
   msdyn_segmentid_guid: WebAttribute<Contact_Select, { msdyn_segmentid_guid: string | null }, { msdyn_segmentid_formatted?: string }>;
+  msft_datastate: WebAttribute<Contact_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   nickname: WebAttribute<Contact_Select, { nickname: string | null }, {  }>;
   numberofchildren: WebAttribute<Contact_Select, { numberofchildren: number | null }, {  }>;
   onholdtime: WebAttribute<Contact_Select, { onholdtime: number | null }, {  }>;
@@ -587,6 +589,7 @@ interface Contact_Filter {
   msdyn_isassistantinorgchart: boolean;
   msdyn_orgchangestatus: contact_msdyn_orgchangestatus;
   msdyn_segmentid_guid: XQW.Guid;
+  msft_datastate: msft_datastate;
   nickname: string;
   numberofchildren: number;
   onholdtime: number;
@@ -720,6 +723,7 @@ interface Contact_FormattedResult {
   msdyn_decisioninfluencetag_formatted?: string;
   msdyn_orgchangestatus_formatted?: string;
   msdyn_segmentid_formatted?: string;
+  msft_datastate_formatted?: string;
   originatingleadid_formatted?: string;
   overriddencreatedon_formatted?: string;
   ownerid_formatted?: string;
