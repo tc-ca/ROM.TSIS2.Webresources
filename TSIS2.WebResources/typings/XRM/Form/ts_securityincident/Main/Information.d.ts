@@ -104,6 +104,7 @@ declare namespace Form.ts_securityincident.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
+      get(name: "WebResource_SecurityIncidentDetailsDisplay"): Xrm.WebResourceControl;
       get(name: "grid_doc"): Xrm.SubGridControl<"ts_file">;
       get(name: "grid_workorder"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -244,6 +245,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_yardorstationname"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
+    getControl(controlName: "WebResource_SecurityIncidentDetailsDisplay"): Xrm.WebResourceControl;
     getControl(controlName: "grid_doc"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "grid_workorder"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
