@@ -12,7 +12,7 @@ var ROM;
                 var activityTypeAttributeValue = activityTypeAttribute.getValue();
                 if (operationAttributeValue != null && activityTypeAttributeValue != null) {
                     form.ui.tabs.get("related_wos_tab").setVisible(true);
-                    var fetchXml = "<filter><condition attribute=\"msdyn_primaryincidenttype\" operator=\"eq\" value=\"".concat(activityTypeAttributeValue[0].id, "\"/><condition attribute=\"ovs_operationid\" operator=\"eq\" value=\"").concat(operationAttributeValue[0].id, "\"/><condition attribute=\"statecode\" operator=\"eq\" value=\"0\" /></filter>");
+                    var fetchXml = "<filter><condition attribute=\"msdyn_primaryincidenttype\" operator=\"eq\" value=\"" + activityTypeAttributeValue[0].id + "\"/><condition attribute=\"ovs_operationid\" operator=\"eq\" value=\"" + operationAttributeValue[0].id + "\"/><condition attribute=\"statecode\" operator=\"eq\" value=\"0\" /></filter>";
                     setSubgridFilterXml(eContext, "related_wos", fetchXml);
                 }
             }
@@ -58,9 +58,9 @@ var ROM;
         }
         function removeXmlNode(xml, nodeName) {
             // Remove Empty tags i.e. <example /> or <example a="b" />
-            xml = xml.replace(new RegExp("<[s]*".concat(nodeName, "[^/>]*\\/>"), "gm"), "");
+            xml = xml.replace(new RegExp("<[s]*" + nodeName + "[^/>]*\\/>", "gm"), "");
             var startTag = "<" + nodeName;
-            var endTag = "</".concat(nodeName, ">");
+            var endTag = "</" + nodeName + ">";
             var endIndex = xml.indexOf(endTag);
             // use first end Tag to do inner search
             while (endIndex >= 0) {

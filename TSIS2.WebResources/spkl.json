@@ -416,6 +416,11 @@
               "file": "html\\SecurityRolePrivilegeCompare.html",
               "description": "Security Role Privilege Compare Sheet"
             },
+            {
+              "uniquename": "ts_/html/SecurityIncidentDetailsDisplay.html",
+              "file": "html\\SecurityIncidentDetailsDisplay.html",
+              "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincident"
+            },
             /* SurveyJS dependencies */
             {
               "uniquename": "ovs_/js/ace.min.js",

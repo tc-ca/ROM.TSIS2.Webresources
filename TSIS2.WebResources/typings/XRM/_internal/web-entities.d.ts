@@ -1136,6 +1136,29 @@ interface qm_rclegislation_Create extends qm_rclegislation {
 }
 interface qm_rclegislation_Update extends qm_rclegislation {
 }
+interface ts_ActionFinding_Base extends WebEntity {
+}
+interface ts_ActionFinding_Fixed extends WebEntity_Fixed {
+  ts_actionfindingid: string;
+}
+interface ts_ActionFinding extends ts_ActionFinding_Base, ts_ActionFinding_Relationships {
+}
+interface ts_ActionFinding_Relationships {
+}
+interface ts_ActionFinding_Result extends ts_ActionFinding_Base, ts_ActionFinding_Relationships {
+}
+interface ts_ActionFinding_FormattedResult {
+}
+interface ts_ActionFinding_Select {
+}
+interface ts_ActionFinding_Expand {
+}
+interface ts_ActionFinding_Filter {
+}
+interface ts_ActionFinding_Create extends ts_ActionFinding {
+}
+interface ts_ActionFinding_Update extends ts_ActionFinding {
+}
 interface IncidentResolution_Base extends WebEntity {
 }
 interface IncidentResolution_Fixed extends WebEntity_Fixed {

@@ -42,7 +42,7 @@ var ROM;
                 }
             }
             // Lock some fields if there are associated WOs
-            var fetchXML = "<fetch> <entity name=\"incident\" > <attribute name=\"incidentid\" /> <filter> <condition attribute=\"incidentid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\" /> </filter> <link-entity name=\"msdyn_workorder\" from=\"msdyn_servicerequest\" to=\"incidentid\" /> </entity> </fetch>");
+            var fetchXML = "<fetch> <entity name=\"incident\" > <attribute name=\"incidentid\" /> <filter> <condition attribute=\"incidentid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\" /> </filter> <link-entity name=\"msdyn_workorder\" from=\"msdyn_servicerequest\" to=\"incidentid\" /> </entity> </fetch>";
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
@@ -92,8 +92,6 @@ var ROM;
         function systemStatusCodeOnChange(eContext) {
             var form = eContext.getFormContext();
             if (form.getAttribute("statuscode").getValue() == 7) {
-                form.getAttribute("statuscode").setValue(5);
-                form.getAttribute("statecode").setValue(1); //Close Case when to closed
             }
         }
         Incident.systemStatusCodeOnChange = systemStatusCodeOnChange;

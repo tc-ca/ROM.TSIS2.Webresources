@@ -245,6 +245,10 @@ interface SystemUser_Relationships {
   lk_teambase_administratorid?: Team_Result[] | null;
   lk_teambase_createdby?: Team_Result[] | null;
   lk_teambase_modifiedby?: Team_Result[] | null;
+  lk_ts_actionfinding_createdby?: ts_ActionFinding_Result[] | null;
+  lk_ts_actionfinding_createdonbehalfby?: ts_ActionFinding_Result[] | null;
+  lk_ts_actionfinding_modifiedby?: ts_ActionFinding_Result[] | null;
+  lk_ts_actionfinding_modifiedonbehalfby?: ts_ActionFinding_Result[] | null;
   lk_ts_assessmentscorethredshots_createdby?: ts_assessmentscorethredshots_Result[] | null;
   lk_ts_assessmentscorethredshots_createdonbehalfby?: ts_assessmentscorethredshots_Result[] | null;
   lk_ts_assessmentscorethredshots_modifiedby?: ts_assessmentscorethredshots_Result[] | null;
@@ -353,6 +357,7 @@ interface SystemUser_Relationships {
   user_parent_user?: SystemUser_Result[] | null;
   user_tc_tcfiscalquarter?: tc_TCFiscalQuarter_Result[] | null;
   user_tc_tcfiscalyear?: tc_TCFiscalYear_Result[] | null;
+  user_ts_actionfinding?: ts_ActionFinding_Result[] | null;
   user_ts_assessmentscorethredshots?: ts_assessmentscorethredshots_Result[] | null;
   user_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
   user_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
@@ -800,6 +805,10 @@ interface SystemUser_Expand {
   lk_teambase_administratorid: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_administratorid: Team_Result[] }>;
   lk_teambase_createdby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_createdby: Team_Result[] }>;
   lk_teambase_modifiedby: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { lk_teambase_modifiedby: Team_Result[] }>;
+  lk_ts_actionfinding_createdby: WebExpand<SystemUser_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { lk_ts_actionfinding_createdby: ts_ActionFinding_Result[] }>;
+  lk_ts_actionfinding_createdonbehalfby: WebExpand<SystemUser_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { lk_ts_actionfinding_createdonbehalfby: ts_ActionFinding_Result[] }>;
+  lk_ts_actionfinding_modifiedby: WebExpand<SystemUser_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { lk_ts_actionfinding_modifiedby: ts_ActionFinding_Result[] }>;
+  lk_ts_actionfinding_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { lk_ts_actionfinding_modifiedonbehalfby: ts_ActionFinding_Result[] }>;
   lk_ts_assessmentscorethredshots_createdby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_createdby: ts_assessmentscorethredshots_Result[] }>;
   lk_ts_assessmentscorethredshots_createdonbehalfby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_createdonbehalfby: ts_assessmentscorethredshots_Result[] }>;
   lk_ts_assessmentscorethredshots_modifiedby: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { lk_ts_assessmentscorethredshots_modifiedby: ts_assessmentscorethredshots_Result[] }>;
@@ -911,6 +920,7 @@ interface SystemUser_Expand {
   user_parent_user: WebExpand<SystemUser_Expand, SystemUser_Select, SystemUser_Filter, { user_parent_user: SystemUser_Result[] }>;
   user_tc_tcfiscalquarter: WebExpand<SystemUser_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { user_tc_tcfiscalquarter: tc_TCFiscalQuarter_Result[] }>;
   user_tc_tcfiscalyear: WebExpand<SystemUser_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { user_tc_tcfiscalyear: tc_TCFiscalYear_Result[] }>;
+  user_ts_actionfinding: WebExpand<SystemUser_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { user_ts_actionfinding: ts_ActionFinding_Result[] }>;
   user_ts_assessmentscorethredshots: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { user_ts_assessmentscorethredshots: ts_assessmentscorethredshots_Result[] }>;
   user_ts_canceledinspectionjustification: WebExpand<SystemUser_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { user_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
   user_ts_incompleteworkorderreason: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { user_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
@@ -1115,6 +1125,10 @@ interface SystemUser_RelatedMany {
   lk_teambase_administratorid: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   lk_teambase_createdby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   lk_teambase_modifiedby: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  lk_ts_actionfinding_createdby: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;
+  lk_ts_actionfinding_createdonbehalfby: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;
+  lk_ts_actionfinding_modifiedby: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;
+  lk_ts_actionfinding_modifiedonbehalfby: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;
   lk_ts_assessmentscorethredshots_createdby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   lk_ts_assessmentscorethredshots_createdonbehalfby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   lk_ts_assessmentscorethredshots_modifiedby: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
@@ -1222,6 +1236,7 @@ interface SystemUser_RelatedMany {
   user_parent_user: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   user_tc_tcfiscalquarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   user_tc_tcfiscalyear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  user_ts_actionfinding: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;
   user_ts_assessmentscorethredshots: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   user_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   user_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;

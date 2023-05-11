@@ -49,6 +49,7 @@ interface ovs_Finding_Base extends WebEntity {
 interface ovs_Finding_Relationships {
   ovs_CaseId?: Incident_Result | null;
   ovs_WorkOrderServiceTaskId?: msdyn_workorderservicetask_Result | null;
+  ts_ActionFinding_ovs_Finding_ovs_Finding?: ts_ActionFinding_Result[] | null;
   ts_Contact?: Contact_Result | null;
   ts_NCATApprovingTeam?: Team_Result | null;
   ts_NCATManager?: SystemUser_Result | null;
@@ -292,6 +293,7 @@ interface ovs_Finding_Expand {
   ownerid: WebExpand<ovs_Finding_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ovs_Finding_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_ActionFinding_ovs_Finding_ovs_Finding: WebExpand<ovs_Finding_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { ts_ActionFinding_ovs_Finding_ovs_Finding: ts_ActionFinding_Result[] }>;
   ts_Contact: WebExpand<ovs_Finding_Expand, Contact_Select, Contact_Filter, { ts_Contact: Contact_Result }>;
   ts_NCATApprovingTeam: WebExpand<ovs_Finding_Expand, Team_Select, Team_Filter, { ts_NCATApprovingTeam: Team_Result }>;
   ts_NCATManager: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { ts_NCATManager: SystemUser_Result }>;
@@ -445,6 +447,7 @@ interface ovs_Finding_RelatedOne {
   ts_qm_rclegislation: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
 }
 interface ovs_Finding_RelatedMany {
+  ts_ActionFinding_ovs_Finding_ovs_Finding: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ovs_findings: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
