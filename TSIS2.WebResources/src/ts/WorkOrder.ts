@@ -744,6 +744,8 @@ namespace ROM.WorkOrder {
         }
     }
 
+    // Just removed this from subsite onchange. I see there's also SiteOnChange in here which we're using for the actual site field. I'm not sure if we need this function anymore.
+
     export function functionalLocationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
