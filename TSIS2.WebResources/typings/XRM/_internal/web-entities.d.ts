@@ -423,6 +423,29 @@ interface Team_Create extends Team {
 }
 interface Team_Update extends Team {
 }
+interface ts_action_Base extends WebEntity {
+}
+interface ts_action_Fixed extends WebEntity_Fixed {
+  ts_actionid: string;
+}
+interface ts_action extends ts_action_Base, ts_action_Relationships {
+}
+interface ts_action_Relationships {
+}
+interface ts_action_Result extends ts_action_Base, ts_action_Relationships {
+}
+interface ts_action_FormattedResult {
+}
+interface ts_action_Select {
+}
+interface ts_action_Expand {
+}
+interface ts_action_Filter {
+}
+interface ts_action_Create extends ts_action {
+}
+interface ts_action_Update extends ts_action {
+}
 interface ts_assessmentscorethredshots_Base extends WebEntity {
 }
 interface ts_assessmentscorethredshots_Fixed extends WebEntity_Fixed {

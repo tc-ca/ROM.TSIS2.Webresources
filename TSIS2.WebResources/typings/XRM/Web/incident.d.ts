@@ -100,6 +100,7 @@ interface Incident_Relationships {
   ts_WorkOrderServiceTask1?: msdyn_workorderservicetask_Result | null;
   ts_WorkOrderServiceTask2?: msdyn_workorderservicetask_Result | null;
   ts_enforcementaction_Incident_Incident?: ts_enforcementaction_Result[] | null;
+  ts_incident_ts_action_Case?: ts_action_Result[] | null;
   ts_incident_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
 }
 interface Incident extends Incident_Base, Incident_Relationships {
@@ -417,6 +418,7 @@ interface Incident_Expand {
   ts_WorkOrderServiceTask1: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_WorkOrderServiceTask1: msdyn_workorderservicetask_Result }>;
   ts_WorkOrderServiceTask2: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_WorkOrderServiceTask2: msdyn_workorderservicetask_Result }>;
   ts_enforcementaction_Incident_Incident: WebExpand<Incident_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_Incident_Incident: ts_enforcementaction_Result[] }>;
+  ts_incident_ts_action_Case: WebExpand<Incident_Expand, ts_action_Select, ts_action_Filter, { ts_incident_ts_action_Case: ts_action_Result[] }>;
   ts_incident_ts_workordercreationwizard: WebExpand<Incident_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_incident_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
 }
 interface Incident_FormattedResult {
@@ -586,6 +588,7 @@ interface Incident_RelatedMany {
   ts_Incident_Incident_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_Incident_ts_operationcontact_ts_operation: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_enforcementaction_Incident_Incident: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
+  ts_incident_ts_action_Case: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_incident_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

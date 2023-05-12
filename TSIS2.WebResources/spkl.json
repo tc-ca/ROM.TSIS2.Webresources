@@ -105,6 +105,11 @@
               "description": "ROM TSIS 2.0 Account Form Scripts"
             },
             {
+              "uniquename": "ts_/js/Action.js",
+              "file": "js\\Action.js",
+              "description": "ROM TSIS 2.0 Action Form Scripts"
+            },
+            {
               "uniquename": "ovs_/js/BookableResourceBooking.js",
               "file": "js\\BookableResourceBooking.js",
               "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"

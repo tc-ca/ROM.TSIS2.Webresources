@@ -57,6 +57,7 @@ interface ovs_Finding_Relationships {
   ts_RATEManager?: SystemUser_Result | null;
   ts_VerbalWarningGivenTo?: Contact_Result | null;
   ts_WorkOrder?: msdyn_workorder_Result | null;
+  ts_finding_ts_action_finding?: ts_action_Result[] | null;
 }
 interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ovs_CaseId_bind$incidents?: string | null;
@@ -302,7 +303,9 @@ interface ovs_Finding_Expand {
   ts_VerbalWarningGivenTo: WebExpand<ovs_Finding_Expand, Contact_Select, Contact_Filter, { ts_VerbalWarningGivenTo: Contact_Result }>;
   ts_WorkOrder: WebExpand<ovs_Finding_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder: msdyn_workorder_Result }>;
   ts_accountid: WebExpand<ovs_Finding_Expand, Account_Select, Account_Filter, { ts_accountid: Account_Result }>;
+  ts_actioncreated: WebExpand<ovs_Finding_Expand, ts_action_Select, ts_action_Filter, { ts_actioncreated: ts_action_Result }>;
   ts_enforcementactioncreated: WebExpand<ovs_Finding_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementactioncreated: ts_enforcementaction_Result }>;
+  ts_finding_ts_action_finding: WebExpand<ovs_Finding_Expand, ts_action_Select, ts_action_Filter, { ts_finding_ts_action_finding: ts_action_Result[] }>;
   ts_functionallocation: WebExpand<ovs_Finding_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_functionallocation: msdyn_FunctionalLocation_Result }>;
   ts_operationid: WebExpand<ovs_Finding_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operationid: ovs_operation_Result }>;
   ts_qm_rclegislation: WebExpand<ovs_Finding_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_qm_rclegislation: qm_rclegislation_Result }>;
@@ -441,6 +444,7 @@ interface ovs_Finding_RelatedOne {
   ts_VerbalWarningGivenTo: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_accountid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_actioncreated: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_enforcementactioncreated: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_operationid: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
@@ -448,6 +452,7 @@ interface ovs_Finding_RelatedOne {
 }
 interface ovs_Finding_RelatedMany {
   ts_ActionFinding_ovs_Finding_ovs_Finding: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;
+  ts_finding_ts_action_finding: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ovs_findings: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
