@@ -78,6 +78,7 @@ interface ts_ActionFinding_Expand {
   ownerid: WebExpand<ts_ActionFinding_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ts_ActionFinding_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_ActionFinding_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_action: WebExpand<ts_ActionFinding_Expand, ts_action_Select, ts_action_Filter, { ts_action: ts_action_Result }>;
   ts_ovs_Finding: WebExpand<ts_ActionFinding_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding: ovs_Finding_Result }>;
 }
 interface ts_ActionFinding_FormattedResult {
@@ -118,6 +119,7 @@ interface ts_ActionFinding_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_action: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_ovs_Finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
 }
 interface ts_ActionFinding_RelatedMany {
