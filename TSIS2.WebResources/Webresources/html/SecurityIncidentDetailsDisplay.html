@@ -4,7 +4,42 @@
     <meta charset="utf-8" />
     <title></title>
 </head>
-<body>
-    <b>Security Incident Details will go here</b>
+<body onload="loadDetailsHTML()">
+    <script type="text/javascript">
+
+        function loadDetailsHTML() {
+
+            var securityIncident = parent.Xrm.Page.getAttribute("ts_incidentdetailsattachment").getValue();
+
+            // Make sure we have an attachment
+            if (securityIncident ?? null) {
+
+                if (securityIncident) {
+                    var fileUrl = securityIncident.fileUrl;
+                    fetch(fileUrl)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.text();
+                            } else {
+                                throw new Error("Can't retrieve file");
+                            }
+                        })
+                        .then(fileContents => {
+                            // Get the file contents and put it in the body.  TCOMs always sends html code that you can simply append to the body
+
+                            var div = document.createElement("div");
+                            div.innerHTML = fileContents;
+
+                            // Append the div to the page
+                            document.body.appendChild(div);
+                        })
+                        .catch(error => {
+                            console.error("Error fetching file:", error);
+                        });
+                }
+            } 
+        }
+
+    </script>
 </body>
 </html>
