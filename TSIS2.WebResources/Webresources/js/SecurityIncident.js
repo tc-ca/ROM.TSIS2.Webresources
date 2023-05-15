@@ -23,6 +23,11 @@ var ROM;
             if (modeAttributeValue == 717750002 /* AviationSecurity */) {
                 setDefaultView(formContext);
             }
+            // only show the Security Incident Details if we actually have an attachment
+            var incidentDetailsAttachment = formContext.getAttribute("ts_incidentdetailsattachment").getValue();
+            if (incidentDetailsAttachment == null || incidentDetailsAttachment == undefined) {
+                formContext.ui.tabs.get("{99b37896-4f52-4179-8296-3cc0e6722411}").sections.get("IncidentDetails").setVisible(false);
+            }
         }
         SecurityIncident.onLoad = onLoad;
         function StatusOfRailwayOwnerOnChange(eContext) {
