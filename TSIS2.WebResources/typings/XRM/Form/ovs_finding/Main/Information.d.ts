@@ -126,7 +126,7 @@ declare namespace Form.ovs_finding.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "Actions"): Xrm.SubGridControl<"ts_action">;
+      get(name: "Actions"): Xrm.SubGridControl<"ts_actionfinding">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
       get(name: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
       get(name: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
@@ -275,7 +275,7 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_sensitivitylevel"): Xrm.OptionSetAttribute<ts_sensitivitylevel>;
     getAttribute(attributeName: "ts_workorder"): Xrm.Attribute<any>;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "Actions"): Xrm.SubGridControl<"ts_action">;
+    getControl(controlName: "Actions"): Xrm.SubGridControl<"ts_actionfinding">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
