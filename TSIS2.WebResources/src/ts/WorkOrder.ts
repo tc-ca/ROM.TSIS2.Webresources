@@ -114,13 +114,12 @@ namespace ROM.WorkOrder {
                     isFromSecurityIncident = true;
                 }
                 
-
                 // Set default values
                 setDefaultFiscalYear(form);
                 setRegion(form);
 
                 //If the new work order is coming from a case, set default rational to planned
-                if (form.getAttribute("msdyn_servicerequest").getValue() != null) {
+                if (isFromCase) {
                     var lookup = new Array();
                     lookup[0] = new Object();
                     lookup[0].id = "{994c3ec1-c104-eb11-a813-000d3af3a7a7}"
@@ -135,8 +134,7 @@ namespace ROM.WorkOrder {
                     lookup[0].entityType = "ovs_tyrational";
                     form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
 
-                    let currentFiscalQuarter = getCurrentFiscalQuarter(form);
-                    form.getAttribute("ovs_fiscalquarter").setValue(currentFiscalQuarter);
+                    setFiscalQuarter(form);
                 }
 
                 // Disable all operation related fields
@@ -1715,18 +1713,25 @@ namespace ROM.WorkOrder {
         return userBusinessUnitName.entities[0].name.startsWith("Aviation");
     }
         
-    function getCurrentFiscalQuarter(form: Form.msdyn_workorder.Main.ROMOversightActivity) {
-        let fetchXml = '<fetch top="1"><entity name="tc_tcfiscalquarter"><attribute name="tc_name"/><attribute name="tc_tcfiscalquarterid"/><filter><condition attribute="tc_quarterstart" operator="this-fiscal-period"/></filter></entity></fetch>';
+    function setFiscalQuarter(form: Form.msdyn_workorder.Main.ROMOversightActivity) {
+        let currentDate = new Date();
+        let currentDateString = currentDate.toISOString();
+
+        let fetchXml = `<fetch top="1"><entity name="tc_tcfiscalquarter"><attribute name="tc_name"/><attribute name="tc_tcfiscalquarterid"/><filter type="and"><condition attribute="tc_quarterstart" operator="le" value="${currentDateString}"/><condition attribute="tc_quarterend" operator="ge" value="${currentDateString}"/></filter></entity></fetch>`;
+
         let lookup = new Array();
-        Xrm.WebApi.retrieveMultipleRecords('tc_tcfiscalquarter', fetchXml).then(
+        Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(
             function success(result) {
                 lookup[0] = new Object();
-                lookup[0].id = result.entitits[0].tc_tcfiscalquarterid;
+                lookup[0].entityType = "tc_tcfiscalquarter"; 
                 lookup[0].name = result.entities[0].tc_name;
-                lookup[0].entityType = "tc_tcfiscalquarter";      
+                lookup[0].id = result.entities[0].tc_tcfiscalquarterid;
+
+                form.getAttribute("ovs_fiscalquarter").setValue(lookup);
+            },
+            function (error) {
             }
         );
-        return lookup;
     }
 }
 
