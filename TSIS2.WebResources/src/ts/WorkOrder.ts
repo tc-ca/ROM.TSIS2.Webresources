@@ -134,6 +134,9 @@ namespace ROM.WorkOrder {
                     lookup[0].name = "Unplanned";
                     lookup[0].entityType = "ovs_tyrational";
                     form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
+
+                    let currentFiscalQuarter = getCurrentFiscalQuarter(form);
+                    form.getAttribute("ovs_fiscalquarter").setValue(currentFiscalQuarter);
                 }
 
                 // Disable all operation related fields
@@ -1710,6 +1713,20 @@ namespace ROM.WorkOrder {
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
         let userBusinessUnitName = await Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML);
         return userBusinessUnitName.entities[0].name.startsWith("Aviation");
+    }
+        
+    function getCurrentFiscalQuarter(form: Form.msdyn_workorder.Main.ROMOversightActivity) {
+        let fetchXml = '<fetch top="1"><entity name="tc_tcfiscalquarter"><attribute name="tc_name"/><attribute name="tc_tcfiscalquarterid"/><filter><condition attribute="tc_quarterstart" operator="this-fiscal-period"/></filter></entity></fetch>';
+        let lookup = new Array();
+        Xrm.WebApi.retrieveMultipleRecords('tc_tcfiscalquarter', fetchXml).then(
+            function success(result) {
+                lookup[0] = new Object();
+                lookup[0].id = result.entitits[0].tc_tcfiscalquarterid;
+                lookup[0].name = result.entities[0].tc_name;
+                lookup[0].entityType = "tc_tcfiscalquarter";      
+            }
+        );
+        return lookup;
     }
 }
 
