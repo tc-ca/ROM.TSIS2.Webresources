@@ -15,8 +15,7 @@
         "resolveJsonModule": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "emitBOM": true,
-        "charset": "utf8"
+        "emitBOM": true
     },
     "include": [
         "./src/ts/**/*",
