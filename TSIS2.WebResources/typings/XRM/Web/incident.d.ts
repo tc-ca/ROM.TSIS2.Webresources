@@ -59,12 +59,14 @@ interface Incident_Base extends WebEntity {
   title?: string | null;
   traversedpath?: string | null;
   ts_canvasappnumber?: string | null;
+  ts_casereportinganddocumentation?: number | null;
   ts_dateofinspection1?: Date | null;
   ts_dateofinspection2?: Date | null;
   ts_incident?: ts_yesno | null;
   ts_numberoffindings?: number | null;
   ts_numberoffindings_date?: Date | null;
   ts_numberoffindings_state?: number | null;
+  ts_traveltime?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -242,6 +244,7 @@ interface Incident_Select {
   ts_additionalinspectors1_guid: WebAttribute<Incident_Select, { ts_additionalinspectors1_guid: string | null }, { ts_additionalinspectors1_formatted?: string }>;
   ts_additionalinspectors2_guid: WebAttribute<Incident_Select, { ts_additionalinspectors2_guid: string | null }, { ts_additionalinspectors2_formatted?: string }>;
   ts_canvasappnumber: WebAttribute<Incident_Select, { ts_canvasappnumber: string | null }, {  }>;
+  ts_casereportinganddocumentation: WebAttribute<Incident_Select, { ts_casereportinganddocumentation: number | null }, {  }>;
   ts_country_guid: WebAttribute<Incident_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_dateofinspection1: WebAttribute<Incident_Select, { ts_dateofinspection1: Date | null }, { ts_dateofinspection1_formatted?: string }>;
   ts_dateofinspection2: WebAttribute<Incident_Select, { ts_dateofinspection2: Date | null }, { ts_dateofinspection2_formatted?: string }>;
@@ -252,6 +255,7 @@ interface Incident_Select {
   ts_numberoffindings_date: WebAttribute<Incident_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<Incident_Select, { ts_numberoffindings_state: number | null }, {  }>;
   ts_tradenameid_guid: WebAttribute<Incident_Select, { ts_tradenameid_guid: string | null }, { ts_tradenameid_formatted?: string }>;
+  ts_traveltime: WebAttribute<Incident_Select, { ts_traveltime: number | null }, {  }>;
   ts_workorder1_guid: WebAttribute<Incident_Select, { ts_workorder1_guid: string | null }, { ts_workorder1_formatted?: string }>;
   ts_workorder2_guid: WebAttribute<Incident_Select, { ts_workorder2_guid: string | null }, { ts_workorder2_formatted?: string }>;
   ts_workorderservicetask1_guid: WebAttribute<Incident_Select, { ts_workorderservicetask1_guid: string | null }, { ts_workorderservicetask1_formatted?: string }>;
@@ -356,6 +360,7 @@ interface Incident_Filter {
   ts_additionalinspectors1_guid: XQW.Guid;
   ts_additionalinspectors2_guid: XQW.Guid;
   ts_canvasappnumber: string;
+  ts_casereportinganddocumentation: any;
   ts_country_guid: XQW.Guid;
   ts_dateofinspection1: Date;
   ts_dateofinspection2: Date;
@@ -366,6 +371,7 @@ interface Incident_Filter {
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;
   ts_tradenameid_guid: XQW.Guid;
+  ts_traveltime: any;
   ts_workorder1_guid: XQW.Guid;
   ts_workorder2_guid: XQW.Guid;
   ts_workorderservicetask1_guid: XQW.Guid;
