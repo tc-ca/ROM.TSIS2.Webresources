@@ -79,6 +79,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_cantcompleteinspection?: boolean | null;
   ts_canvasappnumber?: string | null;
   ts_completedquarter?: ts_msdyn_workorder_ts_completedquarter | null;
+  ts_conductingoversight?: number | null;
   ts_costexplanation?: string | null;
   ts_details?: string | null;
   ts_incident?: ts_yesno | null;
@@ -91,8 +92,11 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_othercanceledjustification?: string | null;
   ts_plannedcost?: number | null;
   ts_plannedcost_base?: number | null;
+  ts_preparationtime?: number | null;
   ts_riskscore?: number | null;
   ts_state?: ts_planningstate | null;
+  ts_traveltime?: number | null;
+  ts_woreportinganddocumentation?: number | null;
   ts_workorderenddate?: Date | null;
   ts_workorderstartdate?: Date | null;
   utcconversiontimezonecode?: number | null;
@@ -333,6 +337,7 @@ interface msdyn_workorder_Select {
   ts_cantcompleteinspection: WebAttribute<msdyn_workorder_Select, { ts_cantcompleteinspection: boolean | null }, {  }>;
   ts_canvasappnumber: WebAttribute<msdyn_workorder_Select, { ts_canvasappnumber: string | null }, {  }>;
   ts_completedquarter: WebAttribute<msdyn_workorder_Select, { ts_completedquarter: ts_msdyn_workorder_ts_completedquarter | null }, { ts_completedquarter_formatted?: string }>;
+  ts_conductingoversight: WebAttribute<msdyn_workorder_Select, { ts_conductingoversight: number | null }, {  }>;
   ts_contact_guid: WebAttribute<msdyn_workorder_Select, { ts_contact_guid: string | null }, { ts_contact_formatted?: string }>;
   ts_costexplanation: WebAttribute<msdyn_workorder_Select, { ts_costexplanation: string | null }, {  }>;
   ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
@@ -349,6 +354,7 @@ interface msdyn_workorder_Select {
   ts_plannedcost: WebAttribute<msdyn_workorder_Select, { ts_plannedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_plannedcost_base: WebAttribute<msdyn_workorder_Select, { ts_plannedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_planningdata_guid: WebAttribute<msdyn_workorder_Select, { ts_planningdata_guid: string | null }, { ts_planningdata_formatted?: string }>;
+  ts_preparationtime: WebAttribute<msdyn_workorder_Select, { ts_preparationtime: number | null }, {  }>;
   ts_reason_guid: WebAttribute<msdyn_workorder_Select, { ts_reason_guid: string | null }, { ts_reason_formatted?: string }>;
   ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_riskscore: WebAttribute<msdyn_workorder_Select, { ts_riskscore: number | null }, {  }>;
@@ -358,7 +364,9 @@ interface msdyn_workorder_Select {
   ts_state: WebAttribute<msdyn_workorder_Select, { ts_state: ts_planningstate | null }, { ts_state_formatted?: string }>;
   ts_teamplanningdata_guid: WebAttribute<msdyn_workorder_Select, { ts_teamplanningdata_guid: string | null }, { ts_teamplanningdata_formatted?: string }>;
   ts_tradenameid_guid: WebAttribute<msdyn_workorder_Select, { ts_tradenameid_guid: string | null }, { ts_tradenameid_formatted?: string }>;
+  ts_traveltime: WebAttribute<msdyn_workorder_Select, { ts_traveltime: number | null }, {  }>;
   ts_trip_guid: WebAttribute<msdyn_workorder_Select, { ts_trip_guid: string | null }, { ts_trip_formatted?: string }>;
+  ts_woreportinganddocumentation: WebAttribute<msdyn_workorder_Select, { ts_woreportinganddocumentation: number | null }, {  }>;
   ts_workordercreationwizardid_guid: WebAttribute<msdyn_workorder_Select, { ts_workordercreationwizardid_guid: string | null }, { ts_workordercreationwizardid_formatted?: string }>;
   ts_workorderenddate: WebAttribute<msdyn_workorder_Select, { ts_workorderenddate: Date | null }, { ts_workorderenddate_formatted?: string }>;
   ts_workorderstartdate: WebAttribute<msdyn_workorder_Select, { ts_workorderstartdate: Date | null }, { ts_workorderstartdate_formatted?: string }>;
@@ -495,6 +503,7 @@ interface msdyn_workorder_Filter {
   ts_cantcompleteinspection: boolean;
   ts_canvasappnumber: string;
   ts_completedquarter: ts_msdyn_workorder_ts_completedquarter;
+  ts_conductingoversight: any;
   ts_contact_guid: XQW.Guid;
   ts_costexplanation: string;
   ts_country_guid: XQW.Guid;
@@ -511,6 +520,7 @@ interface msdyn_workorder_Filter {
   ts_plannedcost: number;
   ts_plannedcost_base: number;
   ts_planningdata_guid: XQW.Guid;
+  ts_preparationtime: any;
   ts_reason_guid: XQW.Guid;
   ts_region_guid: XQW.Guid;
   ts_riskscore: number;
@@ -520,7 +530,9 @@ interface msdyn_workorder_Filter {
   ts_state: ts_planningstate;
   ts_teamplanningdata_guid: XQW.Guid;
   ts_tradenameid_guid: XQW.Guid;
+  ts_traveltime: any;
   ts_trip_guid: XQW.Guid;
+  ts_woreportinganddocumentation: any;
   ts_workordercreationwizardid_guid: XQW.Guid;
   ts_workorderenddate: Date;
   ts_workorderstartdate: Date;

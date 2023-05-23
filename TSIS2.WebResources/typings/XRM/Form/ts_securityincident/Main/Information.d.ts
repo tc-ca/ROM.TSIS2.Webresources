@@ -36,6 +36,13 @@ declare namespace Form.ts_securityincident.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_time_tracking extends Xrm.SectionCollectionBase {
+        get(name: "tab_5_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "new_location"): Xrm.Attribute<string>;
@@ -82,6 +89,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_reportingcompany"): Xrm.LookupAttribute<"account">;
       get(name: "ts_reportingcompany_name"): Xrm.Attribute<string>;
       get(name: "ts_ruralorurban"): Xrm.OptionSetAttribute<ts_ruralorurban>;
+      get(name: "ts_securityincidenttime"): Xrm.NumberAttribute;
       get(name: "ts_securityincidenttype"): Xrm.LookupAttribute<"ts_securityincidenttype">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
@@ -95,6 +103,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_tcomsofficer"): Xrm.Attribute<string>;
       get(name: "ts_timetakenforstakeholdertoreport"): Xrm.NumberAttribute;
       get(name: "ts_timezone"): Xrm.OptionSetAttribute<ts_timezone>;
+      get(name: "ts_traveltime"): Xrm.NumberAttribute;
       get(name: "ts_yardorstationname"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -151,6 +160,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_reportingcompany"): Xrm.LookupControl<"account">;
       get(name: "ts_reportingcompany_name"): Xrm.StringControl;
       get(name: "ts_ruralorurban"): Xrm.OptionSetControl<ts_ruralorurban>;
+      get(name: "ts_securityincidenttime"): Xrm.NumberControl;
       get(name: "ts_securityincidenttype"): Xrm.LookupControl<"ts_securityincidenttype">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
@@ -164,6 +174,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_tcomsofficer"): Xrm.StringControl;
       get(name: "ts_timetakenforstakeholdertoreport"): Xrm.NumberControl;
       get(name: "ts_timezone"): Xrm.OptionSetControl<ts_timezone>;
+      get(name: "ts_traveltime"): Xrm.NumberControl;
       get(name: "ts_yardorstationname"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -175,6 +186,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: "tab_4"): Xrm.PageTab<Tabs.tab_4>;
+      get(name: "tab_time_tracking"): Xrm.PageTab<Tabs.tab_time_tracking>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -226,6 +238,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_reportingcompany"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_reportingcompany_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_ruralorurban"): Xrm.OptionSetAttribute<ts_ruralorurban>;
+    getAttribute(attributeName: "ts_securityincidenttime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_securityincidenttype"): Xrm.LookupAttribute<"ts_securityincidenttype">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
@@ -239,6 +252,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_tcomsofficer"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_timetakenforstakeholdertoreport"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_timezone"): Xrm.OptionSetAttribute<ts_timezone>;
+    getAttribute(attributeName: "ts_traveltime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_yardorstationname"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
@@ -290,6 +304,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_reportingcompany"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_reportingcompany_name"): Xrm.StringControl;
     getControl(controlName: "ts_ruralorurban"): Xrm.OptionSetControl<ts_ruralorurban>;
+    getControl(controlName: "ts_securityincidenttime"): Xrm.NumberControl;
     getControl(controlName: "ts_securityincidenttype"): Xrm.LookupControl<"ts_securityincidenttype">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
@@ -303,6 +318,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_tcomsofficer"): Xrm.StringControl;
     getControl(controlName: "ts_timetakenforstakeholdertoreport"): Xrm.NumberControl;
     getControl(controlName: "ts_timezone"): Xrm.OptionSetControl<ts_timezone>;
+    getControl(controlName: "ts_traveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_yardorstationname"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
