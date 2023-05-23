@@ -304,6 +304,11 @@
               "file": "js\\Team.js",
               "description": "Scripts for Team Form"
             },
+            {
+              "uniquename": "ts_/js/AttachFile.js",
+              "file": "js\\AttachFile.js",
+              "description": "Scripts for Attaching Files"
+            },
             /* Styles */
             {
               "uniquename": "ovs_/css/bootstrap.min.css",

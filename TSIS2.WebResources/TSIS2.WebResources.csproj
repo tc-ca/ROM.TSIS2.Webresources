@@ -165,6 +165,7 @@
     <Content Include="Webresources\js\Email.js" />
     <Content Include="Webresources\js\EnforcementAction.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
+    <Content Include="Webresources\js\AttachFile.js" />
     <Content Include="Webresources\js\Finding.js" />
     <Content Include="Webresources\js\FindingRibbon.js" />
     <Content Include="Webresources\js\FindingsReportRibbon.js" />
