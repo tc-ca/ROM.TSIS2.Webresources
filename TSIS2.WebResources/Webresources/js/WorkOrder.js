@@ -93,8 +93,10 @@ var ROM;
             if (form.getAttribute("msdyn_servicerequest").getValue() != null) {
                 form.getAttribute("msdyn_servicerequest").setRequiredLevel("required");
             }
-            //Set Case Lookup Navigation to open Case Time Tracking form when on Time Tracking Tab
+            //Set Case Lookup Navigation to open Time Tracking form when on Time Tracking Tab
             setCaseLookupClickNavigation(eContext);
+            //Set Security Incident Lookup Navigation to open Time Tracking form when on Time Tracking Tab
+            setSecurityIncidentLookupClickNavigation(eContext);
             if (currentSystemStatus == 690970004) {
                 form.getControl("ts_completedquarter").setVisible(true);
             }

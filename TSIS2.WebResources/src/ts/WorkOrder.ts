@@ -65,7 +65,7 @@ namespace ROM.WorkOrder {
         setCaseLookupClickNavigation(eContext);
 
         //Set Security Incident Lookup Navigation to open Time Tracking form when on Time Tracking Tab
-        setSecurityIncidentLookupClickNavigation
+        setSecurityIncidentLookupClickNavigation(eContext);
 
         if (currentSystemStatus == 690970004) { 
             form.getControl("ts_completedquarter").setVisible(true);
