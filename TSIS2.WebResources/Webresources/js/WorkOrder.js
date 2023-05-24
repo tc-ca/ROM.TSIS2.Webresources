@@ -93,6 +93,7 @@ var ROM;
             if (form.getAttribute("msdyn_servicerequest").getValue() != null) {
                 form.getAttribute("msdyn_servicerequest").setRequiredLevel("required");
             }
+            //Set Case Lookup Navigation to open Case Time Tracking form when on Time Tracking Tab
             setCaseLookupClickNavigation(eContext);
             if (currentSystemStatus == 690970004) {
                 form.getControl("ts_completedquarter").setVisible(true);
