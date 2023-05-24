@@ -2,9 +2,9 @@ function userHasRole(rolesName) {
     var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
     var hasRole = false;
     var roles = rolesName.split("|");
-    roles.forEach(function(roleItem){
+    roles.forEach(function (roleItem) {
         userRoles.forEach(function (userRoleItem) {
-            if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole =true;
+            if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
         });
     });
     return hasRole;
@@ -53,23 +53,41 @@ function showButtonBasedOnPlanStatus(primaryControl) {
     let planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
     return !(planStatusValue == 741130001 || planStatusValue == 447390001);
 }
-function isFormTypeCreate(){
+function isFormTypeCreate() {
     return Xrm.Page.ui.getFormType() == 1;
 }
 
-function isFormTypeUpdate(){
+function isFormTypeUpdate() {
     return Xrm.Page.ui.getFormType() == 2;
 }
 
 function openLookupModalDialogWOForm(executionContext) {
-    var formContext = executionContext.getFormContext(); 
-    
+    var formContext = executionContext.getFormContext();
+
     formContext.getControl("msdyn_workordertype").addOnLookupTagClick(onLookupClick);
     formContext.getControl("ts_region").addOnLookupTagClick(onLookupClick);
     formContext.getControl("ovs_operationtypeid").addOnLookupTagClick(onLookupClick);
     formContext.getControl("ts_tradenameid").addOnLookupTagClick(onLookupClick);
     formContext.getControl("msdyn_serviceaccount").addOnLookupTagClick(onLookupClick);
-    formContext.getControl("ts_site").addOnLookupTagClick(onLookupClick);    
+    formContext.getControl("ts_site").addOnLookupTagClick(onLookupClick);
+
+    formContext.getControl("msdyn_servicerequest").addOnLookupTagClick(onLookupClickCaseSummary);
+    //formContext.ui.tabs.get("{b8e326ee-5c21-4a18-ba55-e3b56966c249}").addTabStateChange(setLookupClickCaseSummary);
+    //formContext.ui.tabs.get("tab_TimeTracking").addTabStateChange(setLookupClickCaseTimeTracking);
+
+
+}
+
+function setLookupClickCaseTimeTracking(executionContext) {
+    var formContext = executionContext.getFormContext();
+    formContext.getControl("msdyn_servicerequest").removeOnLookupTagClick(onLookupClickCaseSummary);
+    formContext.getControl("msdyn_servicerequest").addOnLookupTagClick(onLookupClickCaseTimeTracking);
+}
+
+function setLookupClickCaseSummary(executionContext) {
+    var formContext = executionContext.getFormContext();
+    formContext.getControl("msdyn_servicerequest").removeOnLookupTagClick(onLookupClickCaseTimeTracking);
+    formContext.getControl("msdyn_servicerequest").addOnLookupTagClick(onLookupClickCaseSummary);
 }
 
 function openLookupModalDialogCaseForm(executionContext) {
@@ -115,7 +133,7 @@ function onLookupClick(executionContext) {
         entityName: record.entityType,
         entityId: record.id
     }, {
-        target: 2,      
+        target: 2,
         position: 2,
         width:
         {
@@ -125,3 +143,36 @@ function onLookupClick(executionContext) {
     });
 }
 
+function onLookupClickCaseTimeTracking(executionContext) {
+    //executionContext.getEventArgs().preventDefault();
+    //var record = executionContext.getEventArgs().getTagValue();
+    var formContext = executionContext.getFormContext();
+    var caseValue = formContext.getAttribute("msdyn_servicerequest").getValue();
+    Xrm.Navigation.navigateTo({
+        pageType: "entityrecord",
+        entityName: "incident",
+        entityId: caseValue[0].id,
+        formId: "cc169f8e-7df9-ed11-8f6e-000d3af36bac"
+    }, {
+        target: 2,
+        position: 2,
+        width:
+        {
+            value: 30,
+            unit: "%"
+        }
+    });
+}
+
+function onLookupClickCaseSummary(executionContext) {
+    //executionContext.getEventArgs().preventDefault();
+    //var record = executionContext.getEventArgs().getTagValue();
+    var formContext = executionContext.getFormContext();
+    var caseValue = formContext.getAttribute("msdyn_servicerequest").getValue();
+    Xrm.Navigation.navigateTo({
+        pageType: "entityrecord",
+        entityName: "incident",
+        entityId: caseValue[0].id,
+        formId: "45b022a4-928d-eb11-b1ac-000d3ae92dbf"
+    });
+}
