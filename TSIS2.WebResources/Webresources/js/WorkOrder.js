@@ -93,6 +93,7 @@ var ROM;
             if (form.getAttribute("msdyn_servicerequest").getValue() != null) {
                 form.getAttribute("msdyn_servicerequest").setRequiredLevel("required");
             }
+            setCaseLookupClickNavigation(eContext);
             if (currentSystemStatus == 690970004) {
                 form.getControl("ts_completedquarter").setVisible(true);
             }
@@ -1591,7 +1592,7 @@ var ROM;
         function setFiscalQuarter(form) {
             var currentDate = new Date();
             var currentDateString = currentDate.toISOString();
-            var fetchXml = "<fetch top=\"1\"><entity name=\"tc_tcfiscalquarter\"><attribute name=\"tc_name\"/><attribute name=\"tc_tcfiscalquarterid\"/><filter type=\"and\"><condition attribute=\"tc_quarterstart\" operator=\"le\" value=\"".concat(currentDateString, "\"/><condition attribute=\"tc_quarterend\" operator=\"ge\" value=\"").concat(currentDateString, "\"/></filter></entity></fetch>");
+            var fetchXml = "<fetch top=\"1\"><entity name=\"tc_tcfiscalquarter\"><attribute name=\"tc_name\"/><attribute name=\"tc_tcfiscalquarterid\"/><filter type=\"and\"><condition attribute=\"tc_quarterstart\" operator=\"le\" value=\"" + currentDateString + "\"/><condition attribute=\"tc_quarterend\" operator=\"ge\" value=\"" + currentDateString + "\"/></filter></entity></fetch>";
             var lookup = new Array();
             Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(function success(result) {
                 lookup[0] = new Object();
@@ -1600,6 +1601,30 @@ var ROM;
                 lookup[0].id = result.entities[0].tc_tcfiscalquarterid;
                 form.getAttribute("ovs_fiscalquarter").setValue(lookup);
             }, function (error) {
+            });
+        }
+        function setCaseLookupClickNavigation(eContext) {
+            var formContext = eContext.getFormContext();
+            formContext.getControl("msdyn_servicerequest").addOnLookupTagClick(function (eContext) {
+                var formContext = eContext.getFormContext();
+                //Check if the Time Tracking Tab is Expanded
+                if (formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded') {
+                    eContext.getEventArgs().preventDefault(); //Prevent default navigation to normal Case form
+                    var record = eContext.getEventArgs().getTagValue();
+                    Xrm.Navigation.navigateTo({
+                        pageType: "entityrecord",
+                        entityName: record.entityType,
+                        entityId: record.id,
+                        formId: "cc169f8e-7df9-ed11-8f6e-000d3af36bac"
+                    }, {
+                        target: 2,
+                        position: 2,
+                        width: {
+                            value: 30,
+                            unit: "%"
+                        }
+                    });
+                }
             });
         }
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
