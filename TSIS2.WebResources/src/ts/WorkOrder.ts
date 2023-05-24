@@ -61,6 +61,12 @@ namespace ROM.WorkOrder {
             form.getAttribute("msdyn_servicerequest").setRequiredLevel("required");
         }
 
+        //Set Case Lookup Navigation to open Time Tracking form when on Time Tracking Tab
+        setCaseLookupClickNavigation(eContext);
+
+        //Set Security Incident Lookup Navigation to open Time Tracking form when on Time Tracking Tab
+        setSecurityIncidentLookupClickNavigation(eContext);
+
         if (currentSystemStatus == 690970004) { 
             form.getControl("ts_completedquarter").setVisible(true);
         }
@@ -1732,6 +1738,58 @@ namespace ROM.WorkOrder {
             function (error) {
             }
         );
+    }
+
+    function setCaseLookupClickNavigation(eContext) {
+        const formContext = eContext.getFormContext();
+        formContext.getControl("msdyn_servicerequest").addOnLookupTagClick(function (eContext) {
+            const formContext = eContext.getFormContext();
+            //Check if the Time Tracking Tab is Expanded
+            if (formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded') {
+                eContext.getEventArgs().preventDefault(); //Prevent default navigation to normal Case form
+                var record = eContext.getEventArgs().getTagValue();
+                Xrm.Navigation.navigateTo({
+                    pageType: "entityrecord",
+                    entityName: record.entityType,
+                    entityId: record.id,
+                    formId: "cc169f8e-7df9-ed11-8f6e-000d3af36bac"
+                }, {
+                    target: 2,
+                    position: 2,
+                    width:
+                    {
+                        value: 30,
+                        unit: "%"
+                    }
+                });
+            }
+        });
+    }
+
+    function setSecurityIncidentLookupClickNavigation(eContext) {
+        const formContext = eContext.getFormContext();
+        formContext.getControl("ts_securityincident").addOnLookupTagClick(function (eContext) {
+            const formContext = eContext.getFormContext();
+            //Check if the Time Tracking Tab is Expanded
+            if (formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded') {
+                eContext.getEventArgs().preventDefault(); //Prevent default navigation to normal Case form
+                var record = eContext.getEventArgs().getTagValue();
+                Xrm.Navigation.navigateTo({
+                    pageType: "entityrecord",
+                    entityName: record.entityType,
+                    entityId: record.id,
+                    formId: "54b321b6-6afa-ed11-8f6e-0022483c5061"
+                }, {
+                    target: 2,
+                    position: 2,
+                    width:
+                    {
+                        value: 30,
+                        unit: "%"
+                    }
+                });
+            }
+        });
     }
 }
 
