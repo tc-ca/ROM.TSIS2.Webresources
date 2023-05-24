@@ -19,16 +19,15 @@ var ROM;
             }
             else {
                 var actionId = form.data.entity.getId();
-                var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\"><entity name=\"ovs_finding\"><attribute name=\"ovs_finding\"/><attribute name=\"ovs_findingid\"/><attribute name=\"ovs_findingprovisionreference\"/><attribute name=\"ts_findingtype\"/><link-entity name=\"ts_actionfinding\" alias=\"aa\" link-type=\"inner\" from=\"ts_ovs_finding\" to=\"ovs_findingid\"><attribute name=\"ts_ovs_finding\" /></filter><link-entity name=\"ts_action\" alias=\"ab\" link-type=\"inner\" from=\"ts_actionid\" to=\"ts_action\"><attribute name=\"ts_actionid\"/><filter type=\"and\"><condition attribute=\"ts_actionid\" operator=\"eq\" value=\"" + actionId + "\"/></filter></link-entity></link-entity></entity></fetch>";
-                gridControl.setFilterXml(fetchXml);
-                gridControl.refresh();
+                var fetchXml = "<link-entity name=\"ts_actionfinding\" from=\"ts_ovs_finding\" to=\"ovs_findingid\" link-type=\"inner\" alias=\"aa\"><attribute name=\"ts_ovs_finding\"/><filter type=\"and\"><condition attribute=\"ts_ovs_finding\" operator=\"not-null\"/></filter><link-entity name=\"ts_action\" from=\"ts_actionid\" to=\"ts_action\" link-type=\"inner\" alias=\"ab\"><attribute name=\"ts_actionid\"/><filter type=\"and\"><condition attribute=\"ts_actionid\" operator=\"eq\" value=\"".concat(actionId, "\"/></filter></link-entity></link-entity>");
+                ROM.Utils.setSubgridFilterXml(form, "subgrid_related_findings", fetchXml);
             }
         }
         Action.setRelatedFindingsFetchXML = setRelatedFindingsFetchXML;
         function actionStatusOnChange(eContext) {
             var form = eContext.getFormContext();
             var actionStatus = form.getAttribute("ts_actionstatus").getValue();
-            if (actionStatus != null && (actionStatus == 741130000 /* Consulted */ || actionStatus == 741130001 /* Convened */)) {
+            if (actionStatus != null && (actionStatus == 741130000 /* ts_actionstatus.Consulted */ || actionStatus == 741130001 /* ts_actionstatus.Convened */)) {
                 form.getControl("ts_deliverymethod").setVisible(false);
                 form.getControl("ts_amtamount").setVisible(false);
                 form.getControl("ts_duedate").setVisible(false);
@@ -38,9 +37,9 @@ var ROM;
                 form.getControl("ts_amtamount").setVisible(true);
                 form.getControl("ts_duedate").setVisible(true);
                 var actionType = form.getAttribute("ts_actiontype").getValue();
-                if (actionType != null && actionType == 741130007 /* AMPPayment */) {
+                if (actionType != null && actionType == 741130007 /* ts_actiontype.AMPPayment */) {
                     form.getControl("ts_amtamount").setVisible(true);
-                    if (actionStatus != null && actionStatus == 741130004 /* Requested */) {
+                    if (actionStatus != null && actionStatus == 741130004 /* ts_actionstatus.Requested */) {
                         form.getControl("ts_duedate").setVisible(true);
                     }
                     else {
