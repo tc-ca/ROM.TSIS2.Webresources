@@ -118,6 +118,13 @@ declare namespace Form.incident.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_timetracking extends Xrm.SectionCollectionBase {
+        get(name: "tab_16_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tags_tab extends Xrm.SectionCollectionBase {
         get(name: "tab_14_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -168,6 +175,7 @@ declare namespace Form.incident.Main {
       get(name: "title"): Xrm.Attribute<string>;
       get(name: "ts_additionalinspectors1"): Xrm.LookupAttribute<"systemuser">;
       get(name: "ts_additionalinspectors2"): Xrm.LookupAttribute<"systemuser">;
+      get(name: "ts_casereportinganddocumentation"): Xrm.NumberAttribute;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_dateofinspection1"): Xrm.DateAttribute;
       get(name: "ts_dateofinspection2"): Xrm.DateAttribute;
@@ -176,6 +184,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
       get(name: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
+      get(name: "ts_traveltime"): Xrm.NumberAttribute;
       get(name: "ts_workorder1"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: "ts_workorder2"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: "ts_workorderservicetask1"): Xrm.LookupAttribute<"msdyn_workorderservicetask">;
@@ -261,6 +270,7 @@ declare namespace Form.incident.Main {
       get(name: "title2"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_additionalinspectors1"): Xrm.LookupControl<"systemuser">;
       get(name: "ts_additionalinspectors2"): Xrm.LookupControl<"systemuser">;
+      get(name: "ts_casereportinganddocumentation"): Xrm.NumberControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_dateofinspection1"): Xrm.DateControl;
       get(name: "ts_dateofinspection2"): Xrm.DateControl;
@@ -269,6 +279,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
       get(name: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
+      get(name: "ts_traveltime"): Xrm.NumberControl;
       get(name: "ts_workorder1"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: "ts_workorder2"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: "ts_workorderservicetask1"): Xrm.LookupControl<"msdyn_workorderservicetask">;
@@ -293,6 +304,7 @@ declare namespace Form.incident.Main {
       get(name: "tab_13"): Xrm.PageTab<Tabs.tab_13>;
       get(name: "tab_14"): Xrm.PageTab<Tabs.tab_14>;
       get(name: "tab_findings"): Xrm.PageTab<Tabs.tab_findings>;
+      get(name: "tab_timetracking"): Xrm.PageTab<Tabs.tab_timetracking>;
       get(name: "tags_tab"): Xrm.PageTab<Tabs.tags_tab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -342,6 +354,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_additionalinspectors1"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "ts_additionalinspectors2"): Xrm.LookupAttribute<"systemuser">;
+    getAttribute(attributeName: "ts_casereportinganddocumentation"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_dateofinspection1"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_dateofinspection2"): Xrm.DateAttribute;
@@ -350,6 +363,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
+    getAttribute(attributeName: "ts_traveltime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_workorder1"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: "ts_workorder2"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: "ts_workorderservicetask1"): Xrm.LookupAttribute<"msdyn_workorderservicetask">;
@@ -430,6 +444,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "title2"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_additionalinspectors1"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "ts_additionalinspectors2"): Xrm.LookupControl<"systemuser">;
+    getControl(controlName: "ts_casereportinganddocumentation"): Xrm.NumberControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_dateofinspection1"): Xrm.DateControl;
     getControl(controlName: "ts_dateofinspection2"): Xrm.DateControl;
@@ -438,6 +453,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
     getControl(controlName: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
+    getControl(controlName: "ts_traveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_workorder1"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: "ts_workorder2"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: "ts_workorderservicetask1"): Xrm.LookupControl<"msdyn_workorderservicetask">;

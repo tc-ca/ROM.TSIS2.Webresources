@@ -44,6 +44,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_reportingcompany_name?: string | null;
   ts_ruralorurban?: ts_ruralorurban | null;
   ts_securityincidentid?: string | null;
+  ts_securityincidenttime?: number | null;
   ts_stakeholder_name?: string | null;
   ts_statusofrailwayowner?: ts_statusofrailwayowner | null;
   ts_subdivision?: string | null;
@@ -52,6 +53,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_tcomsofficer?: string | null;
   ts_timetakenforstakeholdertoreport?: number | null;
   ts_timezone?: ts_timezone | null;
+  ts_traveltime?: number | null;
   ts_yardorstationname?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
@@ -152,6 +154,7 @@ interface ts_securityincident_Select {
   ts_reportingcompany_name: WebAttribute<ts_securityincident_Select, { ts_reportingcompany_name: string | null }, {  }>;
   ts_ruralorurban: WebAttribute<ts_securityincident_Select, { ts_ruralorurban: ts_ruralorurban | null }, { ts_ruralorurban_formatted?: string }>;
   ts_securityincidentid: WebAttribute<ts_securityincident_Select, { ts_securityincidentid: string | null }, {  }>;
+  ts_securityincidenttime: WebAttribute<ts_securityincident_Select, { ts_securityincidenttime: number | null }, {  }>;
   ts_securityincidenttype_guid: WebAttribute<ts_securityincident_Select, { ts_securityincidenttype_guid: string | null }, { ts_securityincidenttype_formatted?: string }>;
   ts_site_guid: WebAttribute<ts_securityincident_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_securityincident_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
@@ -165,6 +168,7 @@ interface ts_securityincident_Select {
   ts_tcomsofficer: WebAttribute<ts_securityincident_Select, { ts_tcomsofficer: string | null }, {  }>;
   ts_timetakenforstakeholdertoreport: WebAttribute<ts_securityincident_Select, { ts_timetakenforstakeholdertoreport: number | null }, {  }>;
   ts_timezone: WebAttribute<ts_securityincident_Select, { ts_timezone: ts_timezone | null }, { ts_timezone_formatted?: string }>;
+  ts_traveltime: WebAttribute<ts_securityincident_Select, { ts_traveltime: number | null }, {  }>;
   ts_yardorstationname: WebAttribute<ts_securityincident_Select, { ts_yardorstationname: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_securityincident_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_securityincident_Select, { versionnumber: number | null }, {  }>;
@@ -229,6 +233,7 @@ interface ts_securityincident_Filter {
   ts_reportingcompany_name: string;
   ts_ruralorurban: ts_ruralorurban;
   ts_securityincidentid: XQW.Guid;
+  ts_securityincidenttime: any;
   ts_securityincidenttype_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
@@ -242,6 +247,7 @@ interface ts_securityincident_Filter {
   ts_tcomsofficer: string;
   ts_timetakenforstakeholdertoreport: number;
   ts_timezone: ts_timezone;
+  ts_traveltime: any;
   ts_yardorstationname: string;
   utcconversiontimezonecode: number;
   versionnumber: number;
