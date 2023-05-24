@@ -304,6 +304,11 @@
               "file": "js\\Team.js",
               "description": "Scripts for Team Form"
             },
+            {
+              "uniquename": "ts_/js/utils/SubGridFetchXmlModifier.js",
+              "file": "js\\utils\\SubGridFetchXmlModifier.js",
+              "description": "Scripts to modify a subgrid fetchxml"
+            },
             /* Styles */
             {
               "uniquename": "ovs_/css/bootstrap.min.css",

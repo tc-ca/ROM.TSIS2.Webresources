@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -99,14 +99,14 @@ var ROM;
                                 if (operationType != null) {
                                     if (operationType[0].id == "{D883B39A-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}") {
                                         form.getControl("ts_typeofdangerousgoods").setVisible(true);
-                                        if (form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750002 /* NonSchedule1DangerousGoods */ || form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750001 /* Schedule1DangerousGoods */) {
+                                        if (form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750002 /* ts_typeofdangerousgoods.NonSchedule1DangerousGoods */ || form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750001 /* ts_typeofdangerousgoods.Schedule1DangerousGoods */) {
                                             form.getControl("ts_visualsecurityinspection").setVisible(true);
                                             //Set default value for existing operations
                                             if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
-                                                form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* Unconfirmed */);
+                                                form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* ts_visualsecurityinspection.Unconfirmed */);
                                             }
                                             else {
-                                                if (form.getAttribute("ts_visualsecurityinspection").getValue() == 717750001 /* Yes */) {
+                                                if (form.getAttribute("ts_visualsecurityinspection").getValue() == 717750001 /* ts_visualsecurityinspection.Yes */) {
                                                     form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
                                                 }
                                             }
@@ -117,10 +117,10 @@ var ROM;
                                         form.getControl("ts_issecurityinspectionsite").setVisible(true);
                                         //Set default value for existing operations
                                         if (form.getAttribute("ts_issecurityinspectionsite").getValue() == null) {
-                                            form.getAttribute("ts_issecurityinspectionsite").setValue(717750000 /* Unconfirmed */);
+                                            form.getAttribute("ts_issecurityinspectionsite").setValue(717750000 /* ts_issecurityinspectionsite.Unconfirmed */);
                                         }
                                         else {
-                                            if (form.getAttribute("ts_issecurityinspectionsite").getValue() == 717750001 /* Yes */) {
+                                            if (form.getAttribute("ts_issecurityinspectionsite").getValue() == 717750001 /* ts_issecurityinspectionsite.Yes */) {
                                                 form.getControl("ts_securityinspectiondetails").setVisible(true);
                                             }
                                         }
@@ -167,6 +167,9 @@ var ROM;
                                     form.getControl('ts_subsite').setDisabled(false);
                                 }
                             }
+                            if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
+                                setRelatedActionsFetchXML(form);
+                            }
                         }
                     });
                     if (form.getAttribute("ts_statusstartdate").getValue() != null) {
@@ -185,12 +188,12 @@ var ROM;
             var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
             if (statusStartDateValue != null) {
                 if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_operationalstatus").setValue(717750001 /* NonOperational */);
+                    form.getAttribute("ts_operationalstatus").setValue(717750001 /* ts_operationalstatus.NonOperational */);
                 }
             }
             if (statusEndDateValue != null) {
                 if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_operationalstatus").setValue(717750000 /* Operational */);
+                    form.getAttribute("ts_operationalstatus").setValue(717750000 /* ts_operationalstatus.Operational */);
                 }
             }
         }
@@ -376,7 +379,7 @@ var ROM;
             var form = eContext.getFormContext();
             var VSIConducted = form.getAttribute("ts_visualsecurityinspection").getValue();
             var VSIDetails = form.getControl("ts_visualsecurityinspectiondetails");
-            if (VSIConducted == 717750001 /* Yes */) {
+            if (VSIConducted == 717750001 /* ts_visualsecurityinspection.Yes */) {
                 VSIDetails.setVisible(true);
             }
             else {
@@ -389,7 +392,7 @@ var ROM;
             var form = eContext.getFormContext();
             var SIConducted = form.getAttribute("ts_issecurityinspectionsite").getValue();
             var SIDetails = form.getControl("ts_securityinspectiondetails");
-            if (SIConducted == 717750001 /* Yes */) {
+            if (SIConducted == 717750001 /* ts_issecurityinspectionsite.Yes */) {
                 SIDetails.setVisible(true);
             }
             else {
@@ -401,7 +404,7 @@ var ROM;
         function typeOfDangerousGoodsOnChange(eContext) {
             var form = eContext.getFormContext();
             var typeOfDangerousGoods = form.getAttribute("ts_typeofdangerousgoods").getValue();
-            if (typeOfDangerousGoods == 717750002 /* NonSchedule1DangerousGoods */ || typeOfDangerousGoods == 717750001 /* Schedule1DangerousGoods */) {
+            if (typeOfDangerousGoods == 717750002 /* ts_typeofdangerousgoods.NonSchedule1DangerousGoods */ || typeOfDangerousGoods == 717750001 /* ts_typeofdangerousgoods.Schedule1DangerousGoods */) {
                 form.getControl("ts_visualsecurityinspection").setVisible(true);
             }
             else {
@@ -428,20 +431,18 @@ var ROM;
             ;
         }
         Operation.setFieldsDisabled = setFieldsDisabled;
-        function setRelatedActionFetchXML(eContext) {
-            var form = eContext.getFormContext();
+        function setRelatedActionsFetchXML(form) {
             var gridControl = form.getControl("subgrid_related_actions");
             if (gridControl === null) {
-                setTimeout(ROM.Operation.setRelatedActionFetchXML, 1000);
+                setTimeout(ROM.Operation.setRelatedActionsFetchXML, 1000);
                 return;
             }
             else {
                 var operationId = form.data.entity.getId();
-                var fetchXml = "<fetch version=\"1.0\" mapping=\"logical\" distinct=\"true\"><entity name=\"ts_action\"><attribute name=\"ts_name\"/><attribute name=\"createdon\"/><order attribute=\"ts_name\" descending=\"false\"/><attribute name=\"ts_actiontype\"/><attribute name=\"ts_actionstatus\"/><attribute name=\"ts_actioncategory\"/><attribute name=\"ownerid\"/><attribute name=\"ts_actionid\"/><order attribute=\"ts_finding\" /><order attribute=\"ts_name\" /><filter type=\"and\"><condition attribute=\"statecode\" operator=\"eq\" value=\"0\"/></filter><link-entity name=\"ovs_finding\" alias=\"aa\" link-type=\"inner\" from=\"ovs_findingid\" to=\"ts_finding\"><attribute name=\"ovs_finding\" /><link-entity name=\"ovs_operation\" alias=\"ac\" link-type=\"inner\" from=\"ovs_operationid\" to=\"ts_operationid\"><attribute name=\"ovs_operationid\"/><filter><condition attribute=\"ovs_operationid\" operator=\"eq\" value = \"" + operationId + "\"/></filter></link-entity></link-entity></entity></fetch>";
-                gridControl.setFilterXml(fetchXml);
-                gridControl.refresh();
+                var fetchXml = "<link-entity name=\"ts_actionfinding\" from=\"ts_action\" to=\"ts_actionid\" link-type=\"inner\" alias=\"af\"><attribute name=\"ts_ovs_finding\"/><order attribute=\"ts_ovs_finding\"/><link-entity name=\"ovs_finding\" from=\"ovs_findingid\" to=\"ts_ovs_finding\" link-type=\"inner\" alias=\"f\"><link-entity name=\"ovs_operation\" from=\"ovs_operationid\" to=\"ts_operationid\" link-type=\"inner\" alias=\"op\"><filter><condition attribute=\"ovs_operationid\" operator=\"eq\" value=\"".concat(operationId, "\"/></filter></link-entity></link-entity></link-entity");
+                ROM.Utils.setSubgridFilterXml(form, "subgrid_related_actions", fetchXml);
             }
         }
-        Operation.setRelatedActionFetchXML = setRelatedActionFetchXML;
+        Operation.setRelatedActionsFetchXML = setRelatedActionsFetchXML;
     })(Operation = ROM.Operation || (ROM.Operation = {}));
 })(ROM || (ROM = {}));
