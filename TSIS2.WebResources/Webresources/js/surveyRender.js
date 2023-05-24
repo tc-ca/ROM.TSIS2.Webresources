@@ -70,17 +70,34 @@ hasApplicableProvisions.forEach(function (questionName) {
 function appendApplicableProvisionsData(survey, options) {
     //Create HTML elements
     const question = options.htmlElement;
-    const provisionContainer = document.createElement("div");
+    var provisionContainer = document.createElement("div");
     const provisionParagraph = document.createElement("p");
 
     const applicableProvisionsData = options.question.applicableProvisionsData
     for (let provisionData of applicableProvisionsData) {
+
+        var provisionButton = document.createElement("button");
+        provisionButton.classList.add("btn", "btn-info");
+        provisionButton.setAttribute("data-target", "#provision-text");
+        provisionButton.setAttribute("data-toggle", "collapse");
+
+        var provisionText = document.createElement("div");
+        provisionText.id = "provision-text";
+        provisionText.classList.add("collapse");
+
+        // Turn each provision into a button for the user to click and then view the details
+
         if (lang == 1036) {
-            provisionParagraph.innerHTML += provisionData.provisionNameFr + " ";
+            provisionButton.innerText = provisionData.provisionNameFr;
+            provisionText.innerHTML = provisionData.provisionTextFr;
         } else {
-            provisionParagraph.innerHTML += provisionData.provisionNameEn + " ";
+            provisionButton.innerText = provisionData.provisionNameEn;
+            provisionText.innerHTML = provisionData.provisionTextEn;
         }
-        
+
+        provisionParagraph.appendChild(provisionButton);
+        provisionParagraph.appendChild(provisionText);
+
     }
     provisionContainer.appendChild(provisionParagraph);
     question.appendChild(provisionContainer);
