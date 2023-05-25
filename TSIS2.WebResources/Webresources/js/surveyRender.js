@@ -73,16 +73,18 @@ function appendApplicableProvisionsData(survey, options) {
     var provisionContainer = document.createElement("div");
     const provisionParagraph = document.createElement("p");
 
-    const applicableProvisionsData = options.question.applicableProvisionsData
+    const applicableProvisionsData = options.question.applicableProvisionsData;
+    var uniqueName = `id_${Date.now()}`; // this makes sure the provision-text has unique ID's
+
     for (let provisionData of applicableProvisionsData) {
 
         var provisionButton = document.createElement("button");
         provisionButton.classList.add("btn", "btn-info");
-        provisionButton.setAttribute("data-target", "#provision-text");
+        provisionButton.setAttribute("data-target", "#provision-text" + uniqueName);
         provisionButton.setAttribute("data-toggle", "collapse");
 
         var provisionText = document.createElement("div");
-        provisionText.id = "provision-text";
+        provisionText.id = "provision-text" + uniqueName;
         provisionText.classList.add("collapse");
 
         // Turn each provision into a button for the user to click and then view the details
