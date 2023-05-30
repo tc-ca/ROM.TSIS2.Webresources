@@ -8,6 +8,12 @@ namespace ROM.Operation {
 
     let issoOperationTypeGuids = ["{B27E5003-C751-EB11-A812-000D3AF3AC0D}", "{C97A1A12-D8EB-EB11-BACB-000D3AF4FBEC}", "{21CA416A-431A-EC11-B6E7-000D3A09D067}", "{3B261029-C751-EB11-A812-000D3AF3AC0D}", "{D883B39A-C751-EB11-A812-000D3AF3AC0D}", "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}", "{199E31AE-C751-EB11-A812-000D3AF3AC0D}"]
 
+    let generatedName;
+
+    let ISSOOperation = false;
+
+    let altLang;
+
     export async function onLoad(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
 
@@ -40,7 +46,7 @@ namespace ROM.Operation {
         Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
             userBusinessUnitName = result.entities[0].name;
             businessUnitCondition = '<condition attribute="owningbusinessunit" operator="eq" value="' + result.entities[0].businessunitid + '" />';
-            
+
             form.getAttribute("ts_ppeguide").setValue(false);
             var operationType = form.getAttribute("ovs_operationtypeid").getValue();
             //Show ISSO Properties Tab if OperationType is ISSO, show Avsec if not 
@@ -101,7 +107,7 @@ namespace ROM.Operation {
                     //    avsecPropertiesTab.sections.get("tab_avsec_properties_air_carrier_passenger").setVisible(true);
                     //}
                 }
-                
+
                 if (form.ui.getFormType() == 1) { //Create
                     //If the form is opened with the stakeholder or site value already filled (from account/site subgrids)
                     if (form.getAttribute('ts_stakeholder').getValue() != null) {
@@ -137,9 +143,57 @@ namespace ROM.Operation {
                     }
                 }
 
-                if(form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6){
+                if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
                     setRelatedActionsFetchXML(form)
                 }
+            }
+            //Name generation only for ISSO records
+            if (userBusinessUnitName.startsWith("Intermodal")) {
+                ISSOOperation = true;
+
+                //Get alternate language (either eng or fre)
+                altLang = Xrm.Utility.getGlobalContext().userSettings.languageId === 1033 ? "french" : "english";
+
+                generatedName = {
+                    stakeHolder: '',
+                    operationType: '',
+                    site: '',
+                    stakeHolderAlt: '',
+                    operationTypeAlt: '',
+                    siteAlt: '',
+                    loadAlternateName: async function (attributeName, attributeKey, altNameKey, entityName, altNameAttr, nameAttr) {
+                        const attribute = form.getAttribute(attributeName) as Xrm.LookupAttribute<any>;
+                        if (attribute) {
+                            const attributeValue = attribute.getValue();
+                            if (attributeValue !== null && attributeValue !== undefined) {
+                                //Retrieve other language name (altNameAttr) for entityName
+                                const result = await Xrm.WebApi.retrieveRecord(entityName, attributeValue[0].id.replace(/[{}]/g, ""), `?$select=${nameAttr}, ${altNameAttr}`);
+                                this[attributeKey] = result[nameAttr];
+                                this[altNameKey] = result[altNameAttr];
+
+                                this.updateNameFields();
+                            }
+                        }
+                    },
+                    updateNameFields: function () {
+                        const name = `${this.stakeHolder} | ${this.operationType} | ${this.site}`;
+                        const altLangName = `${this.stakeHolderAlt} | ${this.operationTypeAlt} | ${this.siteAlt}`;
+
+                        const nameAttribute = form.getAttribute("ovs_name");
+                        const nameAttributeEnglish = form.getAttribute("ts_operationnameenglish");
+                        const nameAttributeFrench = form.getAttribute("ts_operationnamefrench");
+
+                        if (altLang === "french") {
+                            nameAttributeEnglish.setValue(name);
+                            nameAttributeFrench.setValue(altLangName);
+                            nameAttribute.setValue(altLangName);
+                        } else {
+                            nameAttributeFrench.setValue(name);
+                            nameAttributeEnglish.setValue(altLangName);
+                            nameAttribute.setValue(name);
+                        }
+                    }
+                };
             }
         });
 
@@ -171,7 +225,7 @@ namespace ROM.Operation {
         const viewId = '{3BC6D613-1CBD-48DC-86C3-33830D34EF7D}';
         const entityName = "account";
         const viewDisplayName = "Filtered Stakeholders";
-        const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="account"><attribute name="statecode"/><attribute name="name"/><attribute name="accountnumber"/><attribute name="primarycontactid"/><attribute name="address1_city"/><attribute name="telephone1"/><attribute name="emailaddress1"/><attribute name="accountid"/><attribute name="fax"/><attribute name="address1_name"/><attribute name="address1_fax"/><order attribute="name" descending="false"/><attribute name="ovs_legalname"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_stakeholderstatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") +'</filter></entity></fetch>';
+        const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="account"><attribute name="statecode"/><attribute name="name"/><attribute name="accountnumber"/><attribute name="primarycontactid"/><attribute name="address1_city"/><attribute name="telephone1"/><attribute name="emailaddress1"/><attribute name="accountid"/><attribute name="fax"/><attribute name="address1_name"/><attribute name="address1_fax"/><order attribute="name" descending="false"/><attribute name="ovs_legalname"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_stakeholderstatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter></entity></fetch>';
         const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
         form.getControl("ts_stakeholder").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
     }
@@ -181,24 +235,24 @@ namespace ROM.Operation {
         const viewId = '{1BC6D613-1CBD-48DC-86C3-77830D34EF7D}';
         const entityName = "ovs_operationtype";
         const viewDisplayName = "Filtered Operation Types";
-        const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="ownerid"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") +'</filter><order attribute="ovs_name" descending="false"/></entity></fetch>';
+        const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="ownerid"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter><order attribute="ovs_name" descending="false"/></entity></fetch>';
         const layoutXml = '<grid name="resultset" object="10010" jump="ovs_name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
         form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
     }
 
-    function getStakeholderOwningBusinessUnitAndSetOperationTypeView(form: Form.ovs_operation.Main.Information){
+    function getStakeholderOwningBusinessUnitAndSetOperationTypeView(form: Form.ovs_operation.Main.Information) {
         const stakeholder = form.getAttribute("ts_stakeholder");
         const stakeholderValue = stakeholder.getValue();
 
-        if(stakeholderValue != null){
+        if (stakeholderValue != null) {
             Xrm.WebApi.retrieveRecord('account', stakeholderValue[0].id, "?$select=_owningbusinessunit_value").then(
                 function success(result) {
                     owningBusinessUnit = result._owningbusinessunit_value;
-                    if(!formOpenedInCreateModeWithSiteFilled){
+                    if (!formOpenedInCreateModeWithSiteFilled) {
                         setOperationTypeFilteredView(form);
                     }
                 },
-                function (error) {}
+                function (error) { }
             );
         }
     }
@@ -208,8 +262,8 @@ namespace ROM.Operation {
         const stakeholder = form.getAttribute("ts_stakeholder");
         const stakeholderValue = stakeholder.getValue();
 
-        if(form.ui.getFormType() != 2){  
-            if(!formOpenedInCreateModeWithSiteFilled){
+        if (form.ui.getFormType() != 2) {
+            if (!formOpenedInCreateModeWithSiteFilled) {
                 form.getControl('ovs_operationtypeid').setDisabled(true);
                 form.getAttribute("ovs_operationtypeid").setValue();
                 form.getControl('ts_site').setDisabled(true);
@@ -218,6 +272,11 @@ namespace ROM.Operation {
                 form.getAttribute("ts_subsite").setValue();
                 getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
             }
+        }
+
+        if (ISSOOperation) {
+            const altNameAttr = altLang === "french" ? "ovs_accountnamefrench" : "ovs_accountnameenglish";
+            generatedName.loadAlternateName("ts_stakeholder", "stakeHolder", "stakeHolderAlt", "account", altNameAttr, "name");
         }
     }
 
@@ -231,24 +290,24 @@ namespace ROM.Operation {
             const viewId = '{26A950A2-BD89-4B6D-AB80-5074DF8AD580}';
             const entityName = "msdyn_functionallocation";
             const viewDisplayName = "Filtered Sites";
-            const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") +'</filter></entity></fetch>';
+            const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter></entity></fetch>';
             const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
         }
     }
 
-    function getSiteOwningBusinessUnitAndSetOperationTypeAndStakeholderView(form: Form.ovs_operation.Main.Information){
+    function getSiteOwningBusinessUnitAndSetOperationTypeAndStakeholderView(form: Form.ovs_operation.Main.Information) {
         const functionalLocation = form.getAttribute("ts_site");
         const functionalLocationValue = functionalLocation.getValue();
 
-        if(functionalLocationValue != null){
+        if (functionalLocationValue != null) {
             Xrm.WebApi.retrieveRecord('msdyn_functionallocation', functionalLocationValue[0].id, "?$select=_owningbusinessunit_value").then(
                 function success(result) {
                     owningBusinessUnit = result._owningbusinessunit_value;
                     setOperationTypeFilteredView(form);
                     setStakeholderFilteredView(form);
                 },
-                function (error) {}
+                function (error) { }
             );
         }
     }
@@ -257,7 +316,7 @@ namespace ROM.Operation {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
         const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
 
-        if(!formOpenedInCreateModeWithSiteFilled && form.ui.getFormType() != 2){
+        if (!formOpenedInCreateModeWithSiteFilled && form.ui.getFormType() != 2) {
             if (operationTypeAttribute != null) {
                 setSiteFilteredView(form);
             }
@@ -265,11 +324,21 @@ namespace ROM.Operation {
                 form.getControl('ts_site').setDisabled(true);
             }
         }
+
+        if (ISSOOperation) {
+            const altNameAttr = altLang === "french" ? "ovs_operationtypenamefrench" : "ovs_operationtypenameenglish";
+            generatedName.loadAlternateName("ovs_operationtypeid", "operationType", "operationTypeAlt", "ovs_operationtype", altNameAttr, "ovs_name");
+        }
     }
 
     export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
         setSubSiteFilteredView(form);
+        
+        if (ISSOOperation) {
+            const altNameAttr = altLang === "french" ? "ts_functionallocationnamefrench" : "ts_functionallocationnameenglish";
+            generatedName.loadAlternateName("ts_site", "site", "siteAlt", "msdyn_functionallocation", altNameAttr, "msdyn_name");
+        }
     }
 
     function setSubSiteFilteredView(form: Form.ovs_operation.Main.Information): void {
@@ -282,7 +351,7 @@ namespace ROM.Operation {
             const viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
             const entityName = "msdyn_functionallocation";
             const viewDisplayName = "Filtered Sites";
-            const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") +'</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+            const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
             const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
         }
@@ -344,7 +413,7 @@ namespace ROM.Operation {
     export function specializedPPERequiredOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
         const specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
-        if (specializedPPERequired){
+        if (specializedPPERequired) {
             form.getControl("ts_typesofspecializedppe").setVisible(true);
         }
         else {
@@ -352,7 +421,7 @@ namespace ROM.Operation {
             form.getAttribute("ts_typesofspecializedppe").setValue(null);
         }
     }
-    
+
     export function ppeGuideOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
         let NCATFactorGuide = form.getAttribute("ts_ppeguide").getValue();
@@ -391,7 +460,7 @@ namespace ROM.Operation {
 
     export function typeOfDangerousGoodsOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
-        let typeOfDangerousGoods = form.getAttribute("ts_typeofdangerousgoods").getValue();        
+        let typeOfDangerousGoods = form.getAttribute("ts_typeofdangerousgoods").getValue();
         if (typeOfDangerousGoods == ts_typeofdangerousgoods.NonSchedule1DangerousGoods || typeOfDangerousGoods == ts_typeofdangerousgoods.Schedule1DangerousGoods) {
             form.getControl("ts_visualsecurityinspection").setVisible(true);
         }
@@ -410,7 +479,7 @@ namespace ROM.Operation {
             let arrFields = ["ts_operation", "ts_activity"];
             let objEntity = formContext.data.entity;
             objEntity.attributes.forEach(
-                function (attribute, i) { 
+                function (attribute, i) {
                     if (arrFields.indexOf(attribute.getName()) > -1) {
                         let attributeToDisable = attribute.controls.get(0);
                         attributeToDisable.setDisabled(true);
@@ -427,12 +496,12 @@ namespace ROM.Operation {
             setTimeout(ROM.Operation.setRelatedActionsFetchXML, 1000);
             return;
         }
-        else{
+        else {
             let operationId = form.data.entity.getId();
 
             let fetchXml = `<link-entity name="ts_actionfinding" from="ts_action" to="ts_actionid" link-type="inner" alias="af"><attribute name="ts_ovs_finding"/><order attribute="ts_ovs_finding"/><link-entity name="ovs_finding" from="ovs_findingid" to="ts_ovs_finding" link-type="inner" alias="f"><link-entity name="ovs_operation" from="ovs_operationid" to="ts_operationid" link-type="inner" alias="op"><filter><condition attribute="ovs_operationid" operator="eq" value="${operationId}"/></filter></link-entity></link-entity></link-entity`
 
             ROM.Utils.setSubgridFilterXml(form, "subgrid_related_actions", fetchXml);
         }
-    } 
+    }
 }

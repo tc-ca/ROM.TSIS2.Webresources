@@ -104,6 +104,8 @@ declare namespace Form.account.Main {
       get(name: "industrycode"): Xrm.OptionSetAttribute<account_industrycode>;
       get(name: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
       get(name: "name"): Xrm.Attribute<string>;
+      get(name: "ovs_accountnameenglish"): Xrm.Attribute<string>;
+      get(name: "ovs_accountnamefrench"): Xrm.Attribute<string>;
       get(name: "ovs_legalname"): Xrm.Attribute<string>;
       get(name: "ovs_naicscode"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -164,6 +166,8 @@ declare namespace Form.account.Main {
       get(name: "name2"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "name3"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
+      get(name: "ovs_accountnameenglish"): Xrm.StringControl;
+      get(name: "ovs_accountnamefrench"): Xrm.StringControl;
       get(name: "ovs_legalname"): Xrm.StringControl;
       get(name: "ovs_naicscode"): Xrm.StringControl;
       get(name: "ownershipcode"): Xrm.OptionSetControl<account_ownershipcode>;
@@ -225,6 +229,8 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "industrycode"): Xrm.OptionSetAttribute<account_industrycode>;
     getAttribute(attributeName: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ovs_accountnameenglish"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ovs_accountnamefrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ovs_legalname"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ovs_naicscode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -280,6 +286,8 @@ declare namespace Form.account.Main {
     getControl(controlName: "name2"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "name3"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
+    getControl(controlName: "ovs_accountnameenglish"): Xrm.StringControl;
+    getControl(controlName: "ovs_accountnamefrench"): Xrm.StringControl;
     getControl(controlName: "ovs_legalname"): Xrm.StringControl;
     getControl(controlName: "ovs_naicscode"): Xrm.StringControl;
     getControl(controlName: "ownershipcode"): Xrm.OptionSetControl<account_ownershipcode>;
