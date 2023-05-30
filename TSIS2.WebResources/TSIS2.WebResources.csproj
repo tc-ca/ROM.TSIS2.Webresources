@@ -256,6 +256,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CanceledInspectionJustification.1036.resx</DependentUpon>
     </Compile>
+    <Compile Include="Webresources\resx\Common.1033.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Common.1033.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Webresources\resx\Common.1036.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Common.1036.resx</DependentUpon>
+    </Compile>
     <Compile Include="Webresources\resx\Incident.1036.Designer.cs">
       <DependentUpon>Incident.1036.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -856,6 +866,14 @@
     <EmbeddedResource Include="Webresources\resx\CanceledInspectionJustification.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CanceledInspectionJustification.1036.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\Common.1033.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.1033.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\Common.1036.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.1036.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\Incident.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
