@@ -78,6 +78,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_actualcost_base?: number | null;
   ts_cantcompleteinspection?: boolean | null;
   ts_canvasappnumber?: string | null;
+  ts_comments?: string | null;
   ts_completedquarter?: ts_msdyn_workorder_ts_completedquarter | null;
   ts_conductingoversight?: number | null;
   ts_costexplanation?: string | null;
@@ -339,6 +340,7 @@ interface msdyn_workorder_Select {
   ts_cantcompleteinspection: WebAttribute<msdyn_workorder_Select, { ts_cantcompleteinspection: boolean | null }, {  }>;
   ts_canvasappnumber: WebAttribute<msdyn_workorder_Select, { ts_canvasappnumber: string | null }, {  }>;
   ts_casetimetracking_guid: WebAttribute<msdyn_workorder_Select, { ts_casetimetracking_guid: string | null }, { ts_casetimetracking_formatted?: string }>;
+  ts_comments: WebAttribute<msdyn_workorder_Select, { ts_comments: string | null }, {  }>;
   ts_completedquarter: WebAttribute<msdyn_workorder_Select, { ts_completedquarter: ts_msdyn_workorder_ts_completedquarter | null }, { ts_completedquarter_formatted?: string }>;
   ts_conductingoversight: WebAttribute<msdyn_workorder_Select, { ts_conductingoversight: number | null }, {  }>;
   ts_contact_guid: WebAttribute<msdyn_workorder_Select, { ts_contact_guid: string | null }, { ts_contact_formatted?: string }>;
@@ -506,6 +508,7 @@ interface msdyn_workorder_Filter {
   ts_cantcompleteinspection: boolean;
   ts_canvasappnumber: string;
   ts_casetimetracking_guid: XQW.Guid;
+  ts_comments: string;
   ts_completedquarter: ts_msdyn_workorder_ts_completedquarter;
   ts_conductingoversight: any;
   ts_contact_guid: XQW.Guid;
