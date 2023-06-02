@@ -15,8 +15,8 @@
 
     export function onOwnerChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_canceledinspectionjustification.Main.Information>eContext.getFormContext();
-        showFieldWarningMessageIfOwnerIsNotISSONorAvSec(form, "ownerid");
+        showFieldWarningMessageIfOwnerIsNotISSONorAvSec(form);
     }
 }
 
-declare function showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext: any, ownerControlToShowNotification: string): void;
+declare function showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext: any): boolean;
