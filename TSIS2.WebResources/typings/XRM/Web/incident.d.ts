@@ -60,6 +60,7 @@ interface Incident_Base extends WebEntity {
   traversedpath?: string | null;
   ts_canvasappnumber?: string | null;
   ts_casereportinganddocumentation?: number | null;
+  ts_comments?: string | null;
   ts_dateofinspection1?: Date | null;
   ts_dateofinspection2?: Date | null;
   ts_incident?: ts_yesno | null;
@@ -246,6 +247,7 @@ interface Incident_Select {
   ts_additionalinspectors2_guid: WebAttribute<Incident_Select, { ts_additionalinspectors2_guid: string | null }, { ts_additionalinspectors2_formatted?: string }>;
   ts_canvasappnumber: WebAttribute<Incident_Select, { ts_canvasappnumber: string | null }, {  }>;
   ts_casereportinganddocumentation: WebAttribute<Incident_Select, { ts_casereportinganddocumentation: number | null }, {  }>;
+  ts_comments: WebAttribute<Incident_Select, { ts_comments: string | null }, {  }>;
   ts_country_guid: WebAttribute<Incident_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_dateofinspection1: WebAttribute<Incident_Select, { ts_dateofinspection1: Date | null }, { ts_dateofinspection1_formatted?: string }>;
   ts_dateofinspection2: WebAttribute<Incident_Select, { ts_dateofinspection2: Date | null }, { ts_dateofinspection2_formatted?: string }>;
@@ -362,6 +364,7 @@ interface Incident_Filter {
   ts_additionalinspectors2_guid: XQW.Guid;
   ts_canvasappnumber: string;
   ts_casereportinganddocumentation: any;
+  ts_comments: string;
   ts_country_guid: XQW.Guid;
   ts_dateofinspection1: Date;
   ts_dateofinspection2: Date;
