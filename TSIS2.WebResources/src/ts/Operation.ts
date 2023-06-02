@@ -28,6 +28,10 @@ namespace ROM.Operation {
             }
         });
 
+        if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
+            setRelatedActionsFetchXML(form)
+        }
+
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
             "<fetch top='50'>",
@@ -141,10 +145,6 @@ namespace ROM.Operation {
                     if (form.getAttribute('ts_subsite').getValue() != null) {
                         form.getControl('ts_subsite').setDisabled(false);
                     }
-                }
-
-                if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
-                    setRelatedActionsFetchXML(form)
                 }
             }
             //Name generation only for ISSO records
@@ -499,7 +499,7 @@ namespace ROM.Operation {
         else {
             let operationId = form.data.entity.getId();
 
-            let fetchXml = `<link-entity name="ts_actionfinding" from="ts_action" to="ts_actionid" link-type="inner" alias="af"><attribute name="ts_ovs_finding"/><order attribute="ts_ovs_finding"/><link-entity name="ovs_finding" from="ovs_findingid" to="ts_ovs_finding" link-type="inner" alias="f"><link-entity name="ovs_operation" from="ovs_operationid" to="ts_operationid" link-type="inner" alias="op"><filter><condition attribute="ovs_operationid" operator="eq" value="${operationId}"/></filter></link-entity></link-entity></link-entity`
+            let fetchXml = `<link-entity name="ts_actionfinding" from="ts_action" to="ts_actionid" link-type="inner" alias="af"><attribute name="ts_ovs_finding"/><order attribute="ts_ovs_finding"/><link-entity name="ovs_finding" from="ovs_findingid" to="ts_ovs_finding" link-type="inner" alias="f"><link-entity name="ovs_operation" from="ovs_operationid" to="ts_operationid" link-type="inner" alias="op"><filter><condition attribute="ovs_operationid" operator="eq" value="${operationId}"/></filter></link-entity></link-entity></link-entity>`
 
             ROM.Utils.setSubgridFilterXml(form, "subgrid_related_actions", fetchXml);
         }
