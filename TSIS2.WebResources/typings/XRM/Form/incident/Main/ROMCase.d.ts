@@ -176,6 +176,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_additionalinspectors1"): Xrm.LookupAttribute<"systemuser">;
       get(name: "ts_additionalinspectors2"): Xrm.LookupAttribute<"systemuser">;
       get(name: "ts_casereportinganddocumentation"): Xrm.NumberAttribute;
+      get(name: "ts_comments"): Xrm.Attribute<string>;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_dateofinspection1"): Xrm.DateAttribute;
       get(name: "ts_dateofinspection2"): Xrm.DateAttribute;
@@ -271,6 +272,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_additionalinspectors1"): Xrm.LookupControl<"systemuser">;
       get(name: "ts_additionalinspectors2"): Xrm.LookupControl<"systemuser">;
       get(name: "ts_casereportinganddocumentation"): Xrm.NumberControl;
+      get(name: "ts_comments"): Xrm.StringControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_dateofinspection1"): Xrm.DateControl;
       get(name: "ts_dateofinspection2"): Xrm.DateControl;
@@ -355,6 +357,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "ts_additionalinspectors1"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "ts_additionalinspectors2"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "ts_casereportinganddocumentation"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_dateofinspection1"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_dateofinspection2"): Xrm.DateAttribute;
@@ -445,6 +448,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "ts_additionalinspectors1"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "ts_additionalinspectors2"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "ts_casereportinganddocumentation"): Xrm.NumberControl;
+    getControl(controlName: "ts_comments"): Xrm.StringControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_dateofinspection1"): Xrm.DateControl;
     getControl(controlName: "ts_dateofinspection2"): Xrm.DateControl;

@@ -248,6 +248,16 @@ namespace ROM.SecurityIncident {
             }
 
             if (mode == ts_securityincidentmode.InternationalBridgesandTunnels) {
+                const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+                var lookup = new Array();
+                lookup[0] = new Object();
+                lookup[0].id = "{051bb19d-f065-ed11-9569-0022483c0cc5}";
+                lookup[0].name = (lang == 1036) ? "PTI" : "IBT";
+                lookup[0].entityType = "ts_targetelement";
+
+                form.getAttribute("ts_targetelement").setValue(lookup);
+                form.getControl("ts_targetelement").setDisabled(true);
+
                 form.getControl("ts_statusofrailwayowner").setVisible(false);
                 form.getControl("ts_owneroftherailwaylinetrack").setVisible(false);
                 form.getControl("ts_milemarker").setVisible(false);
@@ -258,6 +268,9 @@ namespace ROM.SecurityIncident {
                 form.getControl("ts_damagestoibtproperty").setVisible(true);
                 form.getControl("ts_ruralorurban").setVisible(false);
                 form.getControl("ts_publicorprivatecrossing").setVisible(false);
+            }
+            else {
+                form.getControl("ts_targetelement").setDisabled(false);
             }
         }
         arrestsOnChange(eContext);
