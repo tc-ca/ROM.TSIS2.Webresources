@@ -216,10 +216,11 @@ var ROM;
                     }
                 }
                 if (mode == 717750001 /* ts_securityincidentmode.InternationalBridgesandTunnels */) {
+                    var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
                     var lookup = new Array();
                     lookup[0] = new Object();
                     lookup[0].id = "{051bb19d-f065-ed11-9569-0022483c0cc5}";
-                    lookup[0].name = "IBT";
+                    lookup[0].name = (lang == 1036) ? "PTI" : "IBT";
                     lookup[0].entityType = "ts_targetelement";
                     form.getAttribute("ts_targetelement").setValue(lookup);
                     form.getControl("ts_targetelement").setDisabled(true);
