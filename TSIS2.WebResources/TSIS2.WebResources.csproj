@@ -169,6 +169,7 @@
     <Content Include="Webresources\js\Finding.js" />
     <Content Include="Webresources\js\FindingRibbon.js" />
     <Content Include="Webresources\js\FindingsReportRibbon.js" />
+    <Content Include="Webresources\js\findingWidgetProvisionSelector.js" />
     <Content Include="Webresources\js\FunctionalLocation.js" />
     <Content Include="Webresources\js\Incident.js" />
     <Content Include="Webresources\js\IncidentQuickCreate.js" />

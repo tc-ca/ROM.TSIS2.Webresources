@@ -350,7 +350,7 @@ var widget = {
 
 
 //Register our widget in singleton custom widget collection
-Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
+Survey.CustomWidgetCollection.Instance.add(widget);
 
 function updateQuestionValue(question) {
     question.value = {
