@@ -36,7 +36,6 @@ var ROM;
         SecurityIncidentType.ownerOnChange = ownerOnChange;
         function nameOnChange(eContext, field) {
             var form = eContext.getFormContext();
-            console.log("NameOnChange");
             checkIfExistingRecordExistWithSameNameAndBU(form, field);
         }
         SecurityIncidentType.nameOnChange = nameOnChange;
