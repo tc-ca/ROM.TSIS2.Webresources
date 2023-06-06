@@ -87,24 +87,21 @@ var autocompleteEditor = {
         htmlElement.appendChild(submit);
     }
 };
-
-Survey.Serializer.addProperty("finding", {
-    name: "provision",
-    type: "provision",
-    isRequired: true,
-    category: "general",
-    visibleIndex: 3
+// Add a property to the base Question class and to all questions as a result
+Survey.Serializer.addProperty("question", {
+    name: "customNumericProperty",
+    type: "provisionautocomplete",
+    category: "general"
 });
+
 
 SurveyCreator.PropertyGridEditorCollection.register({
     // Returns `true` for a property with type "shorttext"
     fit: function (prop) {
-        return prop.type === "provision";
+        return prop.type === "provisionautocomplete";
     },
-    // Returns a standard question JSON configuration for the property editor
-    // (a text editor that is limited to 5 characters)
     getJSON: function (obj, prop, options) {
-        return { type: "text"};
+        return { type: "provisionautocomplete"};
     }
 });
 
@@ -123,10 +120,6 @@ SurveyCreatorCore.PropertyGridEditorCollection.register(
     });
 
 Survey.surveyLocalization.supportedLocales = ["en", "fr"];
-
-SurveyCreator
-    .SurveyPropertyEditorFactory
-    .registerCustomEditor("provisionAutoComplete", autocompleteEditor);
 
 var questionDef = SurveyCreator.SurveyQuestionEditorDefinition.definition.question;
 

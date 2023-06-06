@@ -310,8 +310,8 @@
               "description": "Scripts to modify a subgrid fetchxml"
             },
             {
-              "uniquename": "ts_/js/utils/findingWidgetProvisionSelector.js",
-              "file": "js\\utils\\findingWidgetProvisionSelector.js",
+              "uniquename": "ts_/js/findingWidgetProvisionSelector.js",
+              "file": "js\\findingWidgetProvisionSelector.js",
               "description": "Custom Widget to select provisions within the finding widget"
             },
             /* Styles */

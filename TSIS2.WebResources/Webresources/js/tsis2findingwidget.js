@@ -78,7 +78,7 @@ var widget = {
         //we do not need to check acticatedBy parameter, since we will use our widget for customType only
         //We are creating a new class and derived it from text question type. It means that text model (properties and fuctions) will be available to us
         Survey.JsonObject.metaData.addClass("finding", [
-            { name: "provision", category: "general", visibleIndex: 1, type: "provisionAutoComplete" },
+            //{ name: "provision", category: "general", visibleIndex: 1, type: "provisionautocomplete" },
             { name: "name", readOnly: true },
             { name: "description", type: "textarea" },
             { name: "reference" },

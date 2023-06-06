@@ -2,12 +2,12 @@
     /**
      * Required attribute. Unique name in lower case.
      */
-    name: "provision",
+    name: "provisionautocomplete",
     /**
      * Optional attribute. Toolbox use this value to display it as a text in toolbox item.
      * If it is empty, then name is used.
      */
-    title: "Finding Widget Provision Selector",
+    title: "Finding Widget Provision Auto Complete Selector",
     /**
      * This function is required if you are going to introduce a new question type
      * and register it on SurveyJS Creator toolbox.
@@ -51,10 +51,9 @@
         const testTag = document.createElement("p");
         testTag.innerHTML = "TEST";
         element.appendChild(testTag);
+        debugger;
     }
 };
 
-//leave this parameter empty or set it to "customtype" if you want to register a new item on SurveyJS Creator toolbox
-var activatedByType = "customtype";
-Survey.CustomWidgetCollection.Instance.add(findingWidgetProvisionSelectorJSON, activatedByType);
+Survey.CustomWidgetCollection.Instance.add(findingWidgetProvisionSelectorJSON);
 
