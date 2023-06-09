@@ -35,6 +35,7 @@ declare namespace Form.ovs_finding.Main {
         get(name: "NCAT_proposed_section"): Xrm.PageSection;
         get(name: "summary_ncatfactorguide"): Xrm.PageSection;
         get(name: "tab_NCAT_section_5"): Xrm.PageSection;
+        get(name: "tab_NCAT_section_6"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -82,6 +83,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncatapprovingteam"): Xrm.LookupAttribute<"team">;
       get(name: "ts_ncatcompliancehistory"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_ncatcooperationwithinspectionorinvestigat"): Xrm.LookupAttribute<"ts_assessmentrating">;
+      get(name: "ts_ncatdetailstosupport"): Xrm.Attribute<string>;
       get(name: "ts_ncatdetectionofnoncompliances"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_ncateconomicbenefit"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_ncatenforcementjustification"): Xrm.Attribute<string>;
@@ -158,6 +160,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncatapprovingteam"): Xrm.LookupControl<"team">;
       get(name: "ts_ncatcompliancehistory"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_ncatcooperationwithinspectionorinvestigat"): Xrm.LookupControl<"ts_assessmentrating">;
+      get(name: "ts_ncatdetailstosupport"): Xrm.StringControl;
       get(name: "ts_ncatdetectionofnoncompliances"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_ncateconomicbenefit"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_ncatenforcementjustification"): Xrm.StringControl;
@@ -236,6 +239,7 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_ncatapprovingteam"): Xrm.LookupAttribute<"team">;
     getAttribute(attributeName: "ts_ncatcompliancehistory"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_ncatcooperationwithinspectionorinvestigat"): Xrm.LookupAttribute<"ts_assessmentrating">;
+    getAttribute(attributeName: "ts_ncatdetailstosupport"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_ncatdetectionofnoncompliances"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_ncateconomicbenefit"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_ncatenforcementjustification"): Xrm.Attribute<string>;
@@ -307,6 +311,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_ncatapprovingteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_ncatcompliancehistory"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_ncatcooperationwithinspectionorinvestigat"): Xrm.LookupControl<"ts_assessmentrating">;
+    getControl(controlName: "ts_ncatdetailstosupport"): Xrm.StringControl;
     getControl(controlName: "ts_ncatdetectionofnoncompliances"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_ncateconomicbenefit"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_ncatenforcementjustification"): Xrm.StringControl;

@@ -22,6 +22,7 @@ interface ovs_Finding_Base extends WebEntity {
   ts_findingtype?: ts_findingtype | null;
   ts_issueaddressedonsite?: ts_yesno | null;
   ts_justificationof?: string | null;
+  ts_ncatdetailstosupport?: string | null;
   ts_ncatenforcementjustification?: string | null;
   ts_ncatenforcementrecommendation?: ts_ncatrecommendations | null;
   ts_ncatfactorguide?: boolean | null;
@@ -147,6 +148,7 @@ interface ovs_Finding_Select {
   ts_ncatapprovingteam_guid: WebAttribute<ovs_Finding_Select, { ts_ncatapprovingteam_guid: string | null }, { ts_ncatapprovingteam_formatted?: string }>;
   ts_ncatcompliancehistory_guid: WebAttribute<ovs_Finding_Select, { ts_ncatcompliancehistory_guid: string | null }, { ts_ncatcompliancehistory_formatted?: string }>;
   ts_ncatcooperationwithinspectionorinvestigat_guid: WebAttribute<ovs_Finding_Select, { ts_ncatcooperationwithinspectionorinvestigat_guid: string | null }, { ts_ncatcooperationwithinspectionorinvestigat_formatted?: string }>;
+  ts_ncatdetailstosupport: WebAttribute<ovs_Finding_Select, { ts_ncatdetailstosupport: string | null }, {  }>;
   ts_ncatdetectionofnoncompliances_guid: WebAttribute<ovs_Finding_Select, { ts_ncatdetectionofnoncompliances_guid: string | null }, { ts_ncatdetectionofnoncompliances_formatted?: string }>;
   ts_ncateconomicbenefit_guid: WebAttribute<ovs_Finding_Select, { ts_ncateconomicbenefit_guid: string | null }, { ts_ncateconomicbenefit_formatted?: string }>;
   ts_ncatenforcementjustification: WebAttribute<ovs_Finding_Select, { ts_ncatenforcementjustification: string | null }, {  }>;
@@ -238,6 +240,7 @@ interface ovs_Finding_Filter {
   ts_ncatapprovingteam_guid: XQW.Guid;
   ts_ncatcompliancehistory_guid: XQW.Guid;
   ts_ncatcooperationwithinspectionorinvestigat_guid: XQW.Guid;
+  ts_ncatdetailstosupport: string;
   ts_ncatdetectionofnoncompliances_guid: XQW.Guid;
   ts_ncateconomicbenefit_guid: XQW.Guid;
   ts_ncatenforcementjustification: string;
