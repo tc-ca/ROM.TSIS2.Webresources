@@ -75,14 +75,14 @@ var ROM;
                                             result.ts_functionallocationnameenglish != null ? generatedAlternateLangName += result.ts_functionallocationnameenglish : generatedAlternateLangName += result.msdyn_name;
                                         }
                                         if (lang_1 == "english") {
-                                            nameAttributeEnglish_1.setValue("".concat(accountAttributeValue_1[0].name, " / ").concat(customerAssetCategoryAttributeValue_1[0].name, " / ").concat(functionalLocationAttributeValue_1.name));
+                                            nameAttributeEnglish_1.setValue(accountAttributeValue_1[0].name + " / " + customerAssetCategoryAttributeValue_1[0].name + " / " + functionalLocationAttributeValue_1.name);
                                             nameAttributeFrench_1.setValue(generatedAlternateLangName);
-                                            nameAttribute_1.setValue("".concat(accountAttributeValue_1[0].name, " / ").concat(customerAssetCategoryAttributeValue_1[0].name, " / ").concat(functionalLocationAttributeValue_1.name));
+                                            nameAttribute_1.setValue(accountAttributeValue_1[0].name + " / " + customerAssetCategoryAttributeValue_1[0].name + " / " + functionalLocationAttributeValue_1.name);
                                         }
                                         else {
-                                            nameAttributeFrench_1.setValue("".concat(accountAttributeValue_1[0].name, " / ").concat(customerAssetCategoryAttributeValue_1[0].name, " / ").concat(functionalLocationAttributeValue_1.name));
+                                            nameAttributeFrench_1.setValue(accountAttributeValue_1[0].name + " / " + customerAssetCategoryAttributeValue_1[0].name + " / " + functionalLocationAttributeValue_1.name);
                                             nameAttributeEnglish_1.setValue(generatedAlternateLangName);
-                                            nameAttribute_1.setValue("".concat(accountAttributeValue_1[0].name, " / ").concat(customerAssetCategoryAttributeValue_1[0].name, " / ").concat(functionalLocationAttributeValue_1.name));
+                                            nameAttribute_1.setValue(accountAttributeValue_1[0].name + " / " + customerAssetCategoryAttributeValue_1[0].name + " / " + functionalLocationAttributeValue_1.name);
                                         }
                                         form.data.entity.save();
                                     });

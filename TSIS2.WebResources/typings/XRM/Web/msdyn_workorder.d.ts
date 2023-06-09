@@ -127,6 +127,7 @@ interface msdyn_workorder_Relationships {
   ovs_RevisedQuarterId?: tc_TCFiscalQuarter_Result | null;
   ovs_SecondaryInspector?: BookableResource_Result | null;
   qm_ReportContactId?: Contact_Result | null;
+  ts_AccountableTeam?: Team_Result | null;
   ts_CaseTimeTracking?: Incident_Result | null;
   ts_Contact?: Contact_Result | null;
   ts_Contact_msdyn_workorder_msdyn_workorder?: Contact_Result[] | null;
@@ -190,6 +191,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   qm_ReportContactId_bind$contacts?: string | null;
   stageid_bind$processstages?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
+  ts_AccountableTeam_bind$teams?: string | null;
   ts_CaseTimeTracking_bind$incidents?: string | null;
   ts_Contact_bind$contacts?: string | null;
   ts_Country_bind$tc_countries?: string | null;
@@ -334,6 +336,7 @@ interface msdyn_workorder_Select {
   timezoneruleversionnumber: WebAttribute<msdyn_workorder_Select, { timezoneruleversionnumber: number | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<msdyn_workorder_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<msdyn_workorder_Select, { traversedpath: string | null }, {  }>;
+  ts_accountableteam_guid: WebAttribute<msdyn_workorder_Select, { ts_accountableteam_guid: string | null }, { ts_accountableteam_formatted?: string }>;
   ts_actualcost: WebAttribute<msdyn_workorder_Select, { ts_actualcost: number | null; transactioncurrencyid_guid: string | null }, { ts_actualcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_actualcost_base: WebAttribute<msdyn_workorder_Select, { ts_actualcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_actualcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_canceledinspectionjustification_guid: WebAttribute<msdyn_workorder_Select, { ts_canceledinspectionjustification_guid: string | null }, { ts_canceledinspectionjustification_formatted?: string }>;
@@ -502,6 +505,7 @@ interface msdyn_workorder_Filter {
   timezoneruleversionnumber: number;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_accountableteam_guid: XQW.Guid;
   ts_actualcost: number;
   ts_actualcost_base: number;
   ts_canceledinspectionjustification_guid: XQW.Guid;
@@ -586,6 +590,7 @@ interface msdyn_workorder_Expand {
   owningteam: WebExpand<msdyn_workorder_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   qm_ReportContactId: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { qm_ReportContactId: Contact_Result }>;
+  ts_AccountableTeam: WebExpand<msdyn_workorder_Expand, Team_Select, Team_Filter, { ts_AccountableTeam: Team_Result }>;
   ts_CaseTimeTracking: WebExpand<msdyn_workorder_Expand, Incident_Select, Incident_Filter, { ts_CaseTimeTracking: Incident_Result }>;
   ts_Contact: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { ts_Contact: Contact_Result }>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: Contact_Result[] }>;
@@ -690,6 +695,7 @@ interface msdyn_workorder_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   transactioncurrencyid_formatted?: string;
+  ts_accountableteam_formatted?: string;
   ts_actualcost_base_formatted?: string;
   ts_actualcost_formatted?: string;
   ts_canceledinspectionjustification_formatted?: string;
@@ -767,6 +773,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   owninguser_guid: string | null;
   qm_reportcontactid_guid: string | null;
   transactioncurrencyid_guid: string | null;
+  ts_accountableteam_guid: string | null;
   ts_canceledinspectionjustification_guid: string | null;
   ts_casetimetracking_guid: string | null;
   ts_contact_guid: string | null;
@@ -812,6 +819,7 @@ interface msdyn_workorder_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   qm_ReportContactId: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  ts_AccountableTeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_CaseTimeTracking: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_Contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_IncompleteWorkOrderReason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;

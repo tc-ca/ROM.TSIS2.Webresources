@@ -29,6 +29,7 @@ interface Email_Base extends WebEntity {
   followemailuserpreference?: boolean | null;
   importsequencenumber?: number | null;
   inreplyto?: string | null;
+  internetmessageheaders?: string | null;
   isbilled?: boolean | null;
   isemailfollowed?: boolean | null;
   isemailreminderset?: boolean | null;
@@ -257,6 +258,7 @@ interface Email_Select {
   from_guid: WebAttribute<Email_Select, { from_guid: string | null }, { from_formatted?: string }>;
   importsequencenumber: WebAttribute<Email_Select, { importsequencenumber: number | null }, {  }>;
   inreplyto: WebAttribute<Email_Select, { inreplyto: string | null }, {  }>;
+  internetmessageheaders: WebAttribute<Email_Select, { internetmessageheaders: string | null }, {  }>;
   isbilled: WebAttribute<Email_Select, { isbilled: boolean | null }, {  }>;
   isemailfollowed: WebAttribute<Email_Select, { isemailfollowed: boolean | null }, {  }>;
   isemailreminderset: WebAttribute<Email_Select, { isemailreminderset: boolean | null }, {  }>;
@@ -359,6 +361,7 @@ interface Email_Filter {
   from_guid: XQW.Guid;
   importsequencenumber: number;
   inreplyto: string;
+  internetmessageheaders: string;
   isbilled: boolean;
   isemailfollowed: boolean;
   isemailreminderset: boolean;
