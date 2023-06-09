@@ -939,6 +939,7 @@
         formContext.getControl("ts_ncatmitigationofnoncompliantbehaviors").setDisabled(true);
         formContext.getControl("ts_ncatcooperationwithinspectionorinvestigat").setDisabled(true);
         formContext.getControl("ts_ncatdetectionofnoncompliances").setDisabled(true);
+        formContext.getControl("ts_ncatdetailstosupport").setDisabled(true);
     }
 
     function setPostRATERecommendationSelectionFieldsVisibility(eContext: Xrm.ExecutionContext<any, any>): void {
