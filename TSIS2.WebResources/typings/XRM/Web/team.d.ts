@@ -76,6 +76,7 @@ interface Team_Relationships {
   ts_ovs_Finding_NCATApprovingTeam_Team?: ovs_Finding_Result[] | null;
   ts_ovs_Finding_RATEApprovingTeam_Team?: ovs_Finding_Result[] | null;
   ts_ovs_operation_OPITeam_team?: ovs_operation_Result[] | null;
+  ts_team_msdyn_workorder_AccountableTeam?: msdyn_workorder_Result[] | null;
   ts_ts_planningdata_Team_team?: ts_PlanningData_Result[] | null;
   ts_ts_teamplanningdata_Team_team?: ts_TeamPlanningData_Result[] | null;
 }
@@ -229,6 +230,7 @@ interface Team_Expand {
   ts_ovs_Finding_NCATApprovingTeam_Team: WebExpand<Team_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_NCATApprovingTeam_Team: ovs_Finding_Result[] }>;
   ts_ovs_Finding_RATEApprovingTeam_Team: WebExpand<Team_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_RATEApprovingTeam_Team: ovs_Finding_Result[] }>;
   ts_ovs_operation_OPITeam_team: WebExpand<Team_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_OPITeam_team: ovs_operation_Result[] }>;
+  ts_team_msdyn_workorder_AccountableTeam: WebExpand<Team_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_team_msdyn_workorder_AccountableTeam: msdyn_workorder_Result[] }>;
   ts_ts_planningdata_Team_team: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Team_team: ts_PlanningData_Result[] }>;
   ts_ts_teamplanningdata_Team_team: WebExpand<Team_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { ts_ts_teamplanningdata_Team_team: ts_TeamPlanningData_Result[] }>;
 }
@@ -327,6 +329,7 @@ interface Team_RelatedMany {
   ts_ovs_Finding_NCATApprovingTeam_Team: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_Finding_RATEApprovingTeam_Team: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_OPITeam_team: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_team_msdyn_workorder_AccountableTeam: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ts_planningdata_Team_team: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_ts_teamplanningdata_Team_team: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
 }
