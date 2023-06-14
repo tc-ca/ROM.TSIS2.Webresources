@@ -32,7 +32,7 @@ namespace ROM.SecurityIncident {
             formContext.ui.tabs.get("{99b37896-4f52-4179-8296-3cc0e6722411}").sections.get("IncidentDetails").setVisible(false);
         }
     }
-
+   
     export function StatusOfRailwayOwnerOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
         const arrests = form.getAttribute("ts_arrests");
@@ -169,6 +169,7 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_email").setVisible(true);
             form.getControl("ts_phone").setVisible(true);
             form.getControl("ts_additionaldetails").setVisible(true);
+            form.getControl("ts_organization").setVisible(true);
 
             form.getControl("ts_bridgeclosure").setVisible(false);
             form.getControl("ts_damagestoibtproperty").setVisible(false);
@@ -231,6 +232,7 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_flightnumber").setVisible(false);
             form.getControl("ts_reportingcompany_name").setVisible(false);
             form.getControl("ts_stakeholder_name").setVisible(false);
+            form.getControl("ts_organization").setVisible(false);
 
             if (mode == ts_securityincidentmode.RailSecurity) {
                 form.getControl("ts_statusofrailwayowner").setVisible(true);
