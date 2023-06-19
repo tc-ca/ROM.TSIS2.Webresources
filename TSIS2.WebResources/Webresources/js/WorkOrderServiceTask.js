@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -58,7 +58,7 @@ var ROM;
         var aocRegion;
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var Form, taskType, statusReason, workOrderStartDateCtl, workOrderEndDateCtl, workOrderTaskTypeCtl;
+                var Form, taskType, statusReason, workOrderStartDateCtl, workOrderStartDateValue, workOrderEndDateCtl, workOrderTaskTypeCtl;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -88,6 +88,7 @@ var ROM;
                             }
                             statusReason = Form.getAttribute("statuscode").getValue();
                             workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
+                            workOrderStartDateValue = Form.getAttribute("ts_servicetaskstartdate").getValue();
                             workOrderEndDateCtl = Form.getControl("ts_servicetaskenddate");
                             workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
                             workOrderEndDateCtl.setDisabled(true);
@@ -100,12 +101,20 @@ var ROM;
                             else if (statusReason == 918640005) {
                                 workOrderStartDateCtl.setDisabled(false);
                                 // Also, add a message that work order service task start date should be filled in to proceed.
-                                workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
+                                if (workOrderStartDateValue == null) {
+                                    workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
+                                    Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
+                                }
+                                //If work order service task is in new status but has start date and questionnaire (it was copied from anothe WO)
+                                else {
+                                    workOrderStartDateCtl.setDisabled(true);
+                                    ToggleQuestionnaire(eContext);
+                                }
                                 // Also, add a message that task type start date should be filled in to proceed.
                                 if (taskType == null) {
                                     workOrderTaskTypeCtl.setNotification(enterTaskTypeToProccedText, "ts_tasktype_entertoproceed");
+                                    Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
                                 }
-                                Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
                             }
                             else {
                                 workOrderStartDateCtl.setDisabled(true);
@@ -299,7 +308,7 @@ var ROM;
                 var viewId = '{ae0d8547-6871-4854-91ba-03b0c619dbe1}';
                 var entityName = "msdyn_servicetasktype";
                 var viewDisplayName = (lang == 1036) ? "Type de tâche relative au service" : "Service Task Types";
-                var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\"> <entity name=\"msdyn_servicetasktype\"> <attribute name=\"msdyn_name\" /> <attribute name=\"createdon\" /> <attribute name=\"msdyn_estimatedduration\" /> <attribute name=\"msdyn_description\" /> <attribute name=\"msdyn_servicetasktypeid\" /> <order attribute=\"msdyn_name\" descending=\"false\" /> <link-entity name=\"msdyn_incidenttypeservicetask\" from=\"msdyn_tasktype\" to=\"msdyn_servicetasktypeid\" link-type=\"inner\" alias=\"ae\"> <link-entity name=\"msdyn_incidenttype\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttype\" link-type=\"inner\" alias=\"af\"> <filter type=\"and\"> <condition attribute=\"msdyn_defaultworkordertype\" operator=\"eq\" value=\"".concat(result._msdyn_workordertype_value, "\" /> </filter> <link-entity name=\"ts_ovs_operationtypes_msdyn_incidenttypes\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttypeid\" visible=\"false\" intersect=\"true\"> <link-entity name=\"ovs_operationtype\" from=\"ovs_operationtypeid\" to=\"ovs_operationtypeid\" alias=\"ag\"> <filter type=\"and\"> <condition attribute=\"ovs_operationtypeid\" operator=\"eq\" value=\"").concat(result._ovs_operationtypeid_value, "\" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>");
+                var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\"> <entity name=\"msdyn_servicetasktype\"> <attribute name=\"msdyn_name\" /> <attribute name=\"createdon\" /> <attribute name=\"msdyn_estimatedduration\" /> <attribute name=\"msdyn_description\" /> <attribute name=\"msdyn_servicetasktypeid\" /> <order attribute=\"msdyn_name\" descending=\"false\" /> <link-entity name=\"msdyn_incidenttypeservicetask\" from=\"msdyn_tasktype\" to=\"msdyn_servicetasktypeid\" link-type=\"inner\" alias=\"ae\"> <link-entity name=\"msdyn_incidenttype\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttype\" link-type=\"inner\" alias=\"af\"> <filter type=\"and\"> <condition attribute=\"msdyn_defaultworkordertype\" operator=\"eq\" value=\"" + result._msdyn_workordertype_value + "\" /> </filter> <link-entity name=\"ts_ovs_operationtypes_msdyn_incidenttypes\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttypeid\" visible=\"false\" intersect=\"true\"> <link-entity name=\"ovs_operationtype\" from=\"ovs_operationtypeid\" to=\"ovs_operationtypeid\" alias=\"ag\"> <filter type=\"and\"> <condition attribute=\"ovs_operationtypeid\" operator=\"eq\" value=\"" + result._ovs_operationtypeid_value + "\" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>";
                 var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_servicetasktype"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("msdyn_tasktype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 showHideFieldsByOperationType(form, result._ovs_operationtypeid_value, result.ovs_operationtypeid._ownerid_value);
@@ -355,16 +364,16 @@ var ROM;
                         distinationCountry = result2._ts_country_value;
                         if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
                             // Domestic
-                            form.getAttribute("ts_flightcategory").setValue(741130000 /* ts_flightcategory.Domestic */);
+                            form.getAttribute("ts_flightcategory").setValue(741130000 /* Domestic */);
                         }
                         else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
                             || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
                             //International
-                            form.getAttribute("ts_flightcategory").setValue(741130001 /* ts_flightcategory.International */);
+                            form.getAttribute("ts_flightcategory").setValue(741130001 /* International */);
                         }
                         else {
                             //Transborder
-                            form.getAttribute("ts_flightcategory").setValue(741130002 /* ts_flightcategory.Transborder */);
+                            form.getAttribute("ts_flightcategory").setValue(741130002 /* Transborder */);
                         }
                     }, function error(error) {
                         Xrm.Navigation.openAlertDialog({ text: error.message });
@@ -507,32 +516,32 @@ var ROM;
                 form.getControl("ts_aircraftmodel").removeOption(options[i].value);
             form.getControl("ts_aircraftmodelother").setVisible(false);
             form.getControl("ts_aircraftmodel").setVisible(true);
-            if (aircraftmanufacturer == 741130000 /* ts_aircraftmanufacturer.Boeing */) {
+            if (aircraftmanufacturer == 741130000 /* Boeing */) {
                 for (var i = 1; i <= 11; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130001 /* ts_aircraftmanufacturer.Airbus */) {
+            else if (aircraftmanufacturer == 741130001 /* Airbus */) {
                 for (var i = 12; i <= 22; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130002 /* ts_aircraftmanufacturer.DeHavilland */) {
+            else if (aircraftmanufacturer == 741130002 /* DeHavilland */) {
                 for (var i = 23; i <= 24; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130003 /* ts_aircraftmanufacturer.Bombardier */) {
+            else if (aircraftmanufacturer == 741130003 /* Bombardier */) {
                 for (var i = 25; i <= 25; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130004 /* ts_aircraftmanufacturer.Embraer */) {
+            else if (aircraftmanufacturer == 741130004 /* Embraer */) {
                 for (var i = 26; i <= 29; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130005 /* ts_aircraftmanufacturer.Other */) {
+            else if (aircraftmanufacturer == 741130005 /* Other */) {
                 form.getControl("ts_aircraftmodelother").setVisible(true);
                 form.getControl("ts_aircraftmodel").setVisible(false);
             }
@@ -577,7 +586,7 @@ var ROM;
                             return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ts_state")];
                         case 1:
                             workOrder = _a.sent();
-                            return [2 /*return*/, workOrder.ts_state == 717750000 /* ts_planningstate.Draft */];
+                            return [2 /*return*/, workOrder.ts_state == 717750000 /* Draft */];
                     }
                 });
             });
