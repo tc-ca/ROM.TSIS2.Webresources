@@ -282,7 +282,7 @@ var ROM;
             // Get formContext
             var Form = eContext.getFormContext();
             var percentComplete = Form.getAttribute("msdyn_percentcomplete").getValue();
-            if (percentComplete != 100.00) {
+            if (percentComplete != 100.00 && Form.getAttribute("statecode").getValue() == 0 /* Active */) {
                 //Set percentComplete to 50.00
                 Form.getAttribute("msdyn_percentcomplete").setValue(50.00);
                 //Set Status Reason to In-Progress

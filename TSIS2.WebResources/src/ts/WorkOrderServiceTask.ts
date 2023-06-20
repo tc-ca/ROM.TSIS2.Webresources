@@ -254,7 +254,7 @@ namespace ROM.WorkOrderServiceTask {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
 
         const percentComplete = Form.getAttribute("msdyn_percentcomplete").getValue();
-        if (percentComplete != 100.00) {
+        if (percentComplete != 100.00 && Form.getAttribute("statecode").getValue() == msdyn_workorderservicetask_statecode.Active) {
             //Set percentComplete to 50.00
             Form.getAttribute("msdyn_percentcomplete").setValue(50.00);
             //Set Status Reason to In-Progress
