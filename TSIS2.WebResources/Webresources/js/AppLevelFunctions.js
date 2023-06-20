@@ -3,8 +3,6 @@ function appOnLoad() {
 
     const appUrl = getAppURL()
 
-    debugger;
-
     if (Xrm.Utility.getGlobalContext().userSettings.languageId == 1033) {
         message1 = "All changes made in this environment will not appear in the Production Environment";
         message2 = "You can now submit feedback to the team by using the form available in the Support section in the left-side menu!";
