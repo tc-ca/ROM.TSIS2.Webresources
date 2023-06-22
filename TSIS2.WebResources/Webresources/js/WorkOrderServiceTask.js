@@ -117,7 +117,7 @@ var ROM;
                                 }
                             }
                             else {
-                                //Make sure that if for whatever reason the start date does not have a value that it remains unlocked.
+                                //Make sure that if for whatever reason the start date does not have a value, that it remains unlocked.
                                 if (workOrderStartDateValue == null) {
                                     workOrderStartDateCtl.setDisabled(false);
                                 }
