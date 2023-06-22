@@ -6,7 +6,7 @@ var ROM;
         function onLoad(eContext) {
             var formContext = eContext.getFormContext();
             var delaysToOperations = formContext.getAttribute("ts_delaystooperation");
-            if (delaysToOperations.getValue() == 717750001 /* ts_delaystooperation.Unknown */ || delaysToOperations.getValue() == null) {
+            if (delaysToOperations.getValue() == 717750001 /* Unknown */ || delaysToOperations.getValue() == null) {
                 formContext.getControl("ts_delayduration").setVisible(false);
             }
             var modeAttribute = formContext.getAttribute("ts_mode");
@@ -20,7 +20,7 @@ var ROM;
                     setSiteFilteredView(formContext, modeAttributeValue != null ? modeAttributeValue : null);
                 }
             }
-            if (modeAttributeValue == 717750002 /* ts_securityincidentmode.AviationSecurity */) {
+            if (modeAttributeValue == 717750002 /* AviationSecurity */) {
                 setDefaultView(formContext);
             }
             // only show the Security Incident Details if we actually have an attachment
@@ -34,14 +34,14 @@ var ROM;
             var form = eContext.getFormContext();
             var arrests = form.getAttribute("ts_arrests");
             var statusOfRailwayOwner = form.getAttribute("ts_statusofrailwayowner").getValue();
-            if (statusOfRailwayOwner == null || (statusOfRailwayOwner != null && statusOfRailwayOwner == 717750000 /* ts_statusofrailwayowner.Known */))
+            if (statusOfRailwayOwner == null || (statusOfRailwayOwner != null && statusOfRailwayOwner == 717750000 /* Known */))
                 form.getControl("ts_owneroftherailwaylinetrack").setVisible(true);
             else
                 form.getControl("ts_owneroftherailwaylinetrack").setVisible(false);
-            if (form.getAttribute("ts_delaystooperation").getValue() == 717750000 /* ts_delaystooperation.Known */) {
+            if (form.getAttribute("ts_delaystooperation").getValue() == 717750000 /* Known */) {
                 form.getControl("ts_delayduration").setVisible(true);
             }
-            if (arrests.getValue() == 717750001 /* ts_arrestsknownorunknown.Unknown */ || arrests.getValue() == 741130000 /* ts_arrestsknownorunknown._0 */ || arrests.getValue() == null) {
+            if (arrests.getValue() == 717750001 /* Unknown */ || arrests.getValue() == 741130000 /* _0 */ || arrests.getValue() == null) {
                 form.getControl("ts_arrestsdetails").setVisible(false);
             }
             else {
@@ -52,10 +52,10 @@ var ROM;
         function delaysToOperationOnChange(eContext) {
             var form = eContext.getFormContext();
             var delaysToOperations = form.getAttribute("ts_delaystooperation");
-            if (delaysToOperations.getValue() == 717750000 /* ts_delaystooperation.Known */) {
+            if (delaysToOperations.getValue() == 717750000 /* Known */) {
                 form.getControl("ts_delayduration").setVisible(true);
             }
-            else if (delaysToOperations.getValue() == 717750001 /* ts_delaystooperation.Unknown */ || delaysToOperations.getValue() == null) {
+            else if (delaysToOperations.getValue() == 717750001 /* Unknown */ || delaysToOperations.getValue() == null) {
                 form.getAttribute("ts_delayduration").setValue(null);
                 form.getControl("ts_delayduration").setVisible(false);
             }
@@ -64,7 +64,7 @@ var ROM;
         function arrestsOnChange(eContext) {
             var form = eContext.getFormContext();
             var arrests = form.getAttribute("ts_arrests");
-            if (arrests.getValue() == 717750001 /* ts_arrestsknownorunknown.Unknown */ || arrests.getValue() == 741130000 /* ts_arrestsknownorunknown._0 */ || arrests.getValue() == null) {
+            if (arrests.getValue() == 717750001 /* Unknown */ || arrests.getValue() == 741130000 /* _0 */ || arrests.getValue() == null) {
                 form.getControl("ts_arrestsdetails").setVisible(false);
             }
             else {
@@ -125,7 +125,7 @@ var ROM;
         }
         function ShowHideFieldsOnMode(eContext, mode, isOnLoad) {
             var form = eContext.getFormContext();
-            if (mode == 717750002 /* ts_securityincidentmode.AviationSecurity */) {
+            if (mode == 717750002 /* AviationSecurity */) {
                 form.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
                 form.getControl("ts_targetelement").setVisible(false);
                 form.getControl("ts_statusofrailwayowner").setVisible(false);
@@ -205,7 +205,7 @@ var ROM;
                 form.getControl("ts_reportingcompany_name").setVisible(false);
                 form.getControl("ts_stakeholder_name").setVisible(false);
                 form.getControl("ts_organization").setVisible(false);
-                if (mode == 717750000 /* ts_securityincidentmode.RailSecurity */) {
+                if (mode == 717750000 /* RailSecurity */) {
                     form.getControl("ts_statusofrailwayowner").setVisible(true);
                     form.getControl("ts_owneroftherailwaylinetrack").setVisible(true);
                     form.getControl("ts_milemarker").setVisible(true);
@@ -217,7 +217,7 @@ var ROM;
                         form.getAttribute("ts_site").setValue(null);
                     }
                 }
-                if (mode == 717750001 /* ts_securityincidentmode.InternationalBridgesandTunnels */) {
+                if (mode == 717750001 /* InternationalBridgesandTunnels */) {
                     var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
                     var lookup = new Array();
                     lookup[0] = new Object();
@@ -282,7 +282,7 @@ var ROM;
             var form = eContext.getFormContext();
             var reportingCompanyAttributeValue = form.getAttribute("ts_reportingcompany").getValue();
             var mode = form.getAttribute("ts_mode").getValue();
-            if (mode == 717750002 /* ts_securityincidentmode.AviationSecurity */ && reportingCompanyAttributeValue != null && reportingCompanyAttributeValue[0].id.toLowerCase() == '{26b2346f-ba69-ed11-81ac-000d3af4c525}') {
+            if (mode == 717750002 /* AviationSecurity */ && reportingCompanyAttributeValue != null && reportingCompanyAttributeValue[0].id.toLowerCase() == '{26b2346f-ba69-ed11-81ac-000d3af4c525}') {
                 form.getControl("ts_reportingcompany_name").setVisible(true);
             }
             else {
@@ -294,7 +294,7 @@ var ROM;
             var form = eContext.getFormContext();
             var stakeholderAttributeValue = form.getAttribute("ts_stakeholder").getValue();
             var mode = form.getAttribute("ts_mode").getValue();
-            if (mode == 717750002 /* ts_securityincidentmode.AviationSecurity */ && stakeholderAttributeValue != null && stakeholderAttributeValue[0].id.toLowerCase() == '{26b2346f-ba69-ed11-81ac-000d3af4c525}') {
+            if (mode == 717750002 /* AviationSecurity */ && stakeholderAttributeValue != null && stakeholderAttributeValue[0].id.toLowerCase() == '{26b2346f-ba69-ed11-81ac-000d3af4c525}') {
                 form.getControl("ts_stakeholder_name").setVisible(true);
             }
             else {
