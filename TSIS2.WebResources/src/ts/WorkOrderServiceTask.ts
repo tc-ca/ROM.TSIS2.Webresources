@@ -80,7 +80,13 @@ namespace ROM.WorkOrderServiceTask {
             }
 
         } else {
-            workOrderStartDateCtl.setDisabled(true);
+            //Make sure that if for whatever reason the start date does not have a value, that it remains unlocked.
+            if (workOrderStartDateValue == null) {
+                workOrderStartDateCtl.setDisabled(false);
+            } else {
+                workOrderStartDateCtl.setDisabled(true);
+            }
+            
             ToggleQuestionnaire(eContext);
         }
     }
