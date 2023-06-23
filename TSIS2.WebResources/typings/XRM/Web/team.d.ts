@@ -67,6 +67,7 @@ interface Team_Relationships {
   team_ts_riskcategory?: ts_RiskCategory_Result[] | null;
   team_ts_role?: ts_role_Result[] | null;
   team_ts_securityincident?: ts_securityincident_Result[] | null;
+  team_ts_securityincidenttype?: ts_securityincidenttype_Result[] | null;
   team_ts_teamplanningdata?: ts_TeamPlanningData_Result[] | null;
   team_ts_teamplanninginspectorhours?: ts_TeamPlanningInspectorHours_Result[] | null;
   team_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
@@ -75,6 +76,7 @@ interface Team_Relationships {
   ts_ovs_Finding_NCATApprovingTeam_Team?: ovs_Finding_Result[] | null;
   ts_ovs_Finding_RATEApprovingTeam_Team?: ovs_Finding_Result[] | null;
   ts_ovs_operation_OPITeam_team?: ovs_operation_Result[] | null;
+  ts_team_msdyn_workorder_AccountableTeam?: msdyn_workorder_Result[] | null;
   ts_ts_planningdata_Team_team?: ts_PlanningData_Result[] | null;
   ts_ts_teamplanningdata_Team_team?: ts_TeamPlanningData_Result[] | null;
 }
@@ -219,6 +221,7 @@ interface Team_Expand {
   team_ts_riskcategory: WebExpand<Team_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { team_ts_riskcategory: ts_RiskCategory_Result[] }>;
   team_ts_role: WebExpand<Team_Expand, ts_role_Select, ts_role_Filter, { team_ts_role: ts_role_Result[] }>;
   team_ts_securityincident: WebExpand<Team_Expand, ts_securityincident_Select, ts_securityincident_Filter, { team_ts_securityincident: ts_securityincident_Result[] }>;
+  team_ts_securityincidenttype: WebExpand<Team_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { team_ts_securityincidenttype: ts_securityincidenttype_Result[] }>;
   team_ts_teamplanningdata: WebExpand<Team_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { team_ts_teamplanningdata: ts_TeamPlanningData_Result[] }>;
   team_ts_teamplanninginspectorhours: WebExpand<Team_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { team_ts_teamplanninginspectorhours: ts_TeamPlanningInspectorHours_Result[] }>;
   team_ts_workordercreationwizard: WebExpand<Team_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { team_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
@@ -227,6 +230,7 @@ interface Team_Expand {
   ts_ovs_Finding_NCATApprovingTeam_Team: WebExpand<Team_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_NCATApprovingTeam_Team: ovs_Finding_Result[] }>;
   ts_ovs_Finding_RATEApprovingTeam_Team: WebExpand<Team_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_RATEApprovingTeam_Team: ovs_Finding_Result[] }>;
   ts_ovs_operation_OPITeam_team: WebExpand<Team_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_OPITeam_team: ovs_operation_Result[] }>;
+  ts_team_msdyn_workorder_AccountableTeam: WebExpand<Team_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_team_msdyn_workorder_AccountableTeam: msdyn_workorder_Result[] }>;
   ts_ts_planningdata_Team_team: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Team_team: ts_PlanningData_Result[] }>;
   ts_ts_teamplanningdata_Team_team: WebExpand<Team_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { ts_ts_teamplanningdata_Team_team: ts_TeamPlanningData_Result[] }>;
 }
@@ -316,6 +320,7 @@ interface Team_RelatedMany {
   team_ts_riskcategory: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
   team_ts_role: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
   team_ts_securityincident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
+  team_ts_securityincidenttype: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
   team_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   team_ts_teamplanninginspectorhours: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
   team_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
@@ -324,6 +329,7 @@ interface Team_RelatedMany {
   ts_ovs_Finding_NCATApprovingTeam_Team: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_Finding_RATEApprovingTeam_Team: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_OPITeam_team: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_team_msdyn_workorder_AccountableTeam: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ts_planningdata_Team_team: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_ts_teamplanningdata_Team_team: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
 }

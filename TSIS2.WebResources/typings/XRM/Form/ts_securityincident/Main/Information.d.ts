@@ -54,6 +54,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_arrestsdetails"): Xrm.Attribute<string>;
       get(name: "ts_bridgeclosure"): Xrm.OptionSetAttribute<ts_bridgeclosure>;
       get(name: "ts_canvasapp"): Xrm.Attribute<any>;
+      get(name: "ts_comments"): Xrm.Attribute<string>;
       get(name: "ts_contact"): Xrm.Attribute<string>;
       get(name: "ts_damagestoibtproperty"): Xrm.OptionSetAttribute<ts_damagestoibtproperty>;
       get(name: "ts_delayduration"): Xrm.Attribute<any>;
@@ -126,6 +127,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_arrestsdetails"): Xrm.StringControl;
       get(name: "ts_bridgeclosure"): Xrm.OptionSetControl<ts_bridgeclosure>;
       get(name: "ts_canvasapp"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_comments"): Xrm.StringControl;
       get(name: "ts_contact"): Xrm.StringControl;
       get(name: "ts_damagestoibtproperty"): Xrm.OptionSetControl<ts_damagestoibtproperty>;
       get(name: "ts_delayduration"): Xrm.Control<Xrm.Attribute<any>>;
@@ -203,6 +205,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_arrestsdetails"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_bridgeclosure"): Xrm.OptionSetAttribute<ts_bridgeclosure>;
     getAttribute(attributeName: "ts_canvasapp"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_contact"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_damagestoibtproperty"): Xrm.OptionSetAttribute<ts_damagestoibtproperty>;
     getAttribute(attributeName: "ts_delayduration"): Xrm.Attribute<any>;
@@ -270,6 +273,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_arrestsdetails"): Xrm.StringControl;
     getControl(controlName: "ts_bridgeclosure"): Xrm.OptionSetControl<ts_bridgeclosure>;
     getControl(controlName: "ts_canvasapp"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_comments"): Xrm.StringControl;
     getControl(controlName: "ts_contact"): Xrm.StringControl;
     getControl(controlName: "ts_damagestoibtproperty"): Xrm.OptionSetControl<ts_damagestoibtproperty>;
     getControl(controlName: "ts_delayduration"): Xrm.Control<Xrm.Attribute<any>>;

@@ -61,6 +61,12 @@ namespace ROM.WorkOrder {
             form.getAttribute("msdyn_servicerequest").setRequiredLevel("required");
         }
 
+        //Set Case Lookup Navigation to open Time Tracking form when on Time Tracking Tab
+        setCaseLookupClickNavigation(eContext);
+
+        //Set Security Incident Lookup Navigation to open Time Tracking form when on Time Tracking Tab
+        setSecurityIncidentLookupClickNavigation(eContext);
+
         if (currentSystemStatus == 690970004) { 
             form.getControl("ts_completedquarter").setVisible(true);
         }
@@ -114,13 +120,12 @@ namespace ROM.WorkOrder {
                     isFromSecurityIncident = true;
                 }
                 
-
                 // Set default values
                 setDefaultFiscalYear(form);
                 setRegion(form);
 
                 //If the new work order is coming from a case, set default rational to planned
-                if (form.getAttribute("msdyn_servicerequest").getValue() != null) {
+                if (isFromCase) {
                     var lookup = new Array();
                     lookup[0] = new Object();
                     lookup[0].id = "{994c3ec1-c104-eb11-a813-000d3af3a7a7}"
@@ -135,8 +140,7 @@ namespace ROM.WorkOrder {
                     lookup[0].entityType = "ovs_tyrational";
                     form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
 
-                    let currentFiscalQuarter = getCurrentFiscalQuarter(form);
-                    form.getAttribute("ovs_fiscalquarter").setValue(currentFiscalQuarter);
+                    setFiscalQuarter(form);
                 }
 
                 // Disable all operation related fields
@@ -1158,13 +1162,13 @@ namespace ROM.WorkOrder {
                 const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
 
                 if (!isFromCase) {
-                    fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity>' + operationActivityFilter + '</entity></fetch>';
+                    fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity>' + operationActivityFilter + '</entity></fetch>';
                 }
                 else {
                     const viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
                     const entityNameActivity = "msdyn_incidenttype";
                     const viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
-                    fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity></entity></fetch>';
+                    fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity></entity></fetch>';
                     const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
 
                 }
@@ -1715,18 +1719,77 @@ namespace ROM.WorkOrder {
         return userBusinessUnitName.entities[0].name.startsWith("Aviation");
     }
         
-    function getCurrentFiscalQuarter(form: Form.msdyn_workorder.Main.ROMOversightActivity) {
-        let fetchXml = '<fetch top="1"><entity name="tc_tcfiscalquarter"><attribute name="tc_name"/><attribute name="tc_tcfiscalquarterid"/><filter><condition attribute="tc_quarterstart" operator="this-fiscal-period"/></filter></entity></fetch>';
+    function setFiscalQuarter(form: Form.msdyn_workorder.Main.ROMOversightActivity) {
+        let currentDate = new Date();
+        let currentDateString = currentDate.toISOString();
+
+        let fetchXml = `<fetch top="1"><entity name="tc_tcfiscalquarter"><attribute name="tc_name"/><attribute name="tc_tcfiscalquarterid"/><filter type="and"><condition attribute="tc_quarterstart" operator="le" value="${currentDateString}"/><condition attribute="tc_quarterend" operator="ge" value="${currentDateString}"/></filter></entity></fetch>`;
+
         let lookup = new Array();
-        Xrm.WebApi.retrieveMultipleRecords('tc_tcfiscalquarter', fetchXml).then(
+        Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(
             function success(result) {
                 lookup[0] = new Object();
-                lookup[0].id = result.entitits[0].tc_tcfiscalquarterid;
+                lookup[0].entityType = "tc_tcfiscalquarter"; 
                 lookup[0].name = result.entities[0].tc_name;
-                lookup[0].entityType = "tc_tcfiscalquarter";      
+                lookup[0].id = result.entities[0].tc_tcfiscalquarterid;
+
+                form.getAttribute("ovs_fiscalquarter").setValue(lookup);
+            },
+            function (error) {
             }
         );
-        return lookup;
+    }
+
+    function setCaseLookupClickNavigation(eContext) {
+        const formContext = eContext.getFormContext();
+        formContext.getControl("msdyn_servicerequest").addOnLookupTagClick(function (eContext) {
+            const formContext = eContext.getFormContext();
+            //Check if the Time Tracking Tab is Expanded
+            if (formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded') {
+                eContext.getEventArgs().preventDefault(); //Prevent default navigation to normal Case form
+                var record = eContext.getEventArgs().getTagValue();
+                Xrm.Navigation.navigateTo({
+                    pageType: "entityrecord",
+                    entityName: record.entityType,
+                    entityId: record.id,
+                    formId: "cc169f8e-7df9-ed11-8f6e-000d3af36bac"
+                }, {
+                    target: 2,
+                    position: 2,
+                    width:
+                    {
+                        value: 30,
+                        unit: "%"
+                    }
+                });
+            }
+        });
+    }
+
+    function setSecurityIncidentLookupClickNavigation(eContext) {
+        const formContext = eContext.getFormContext();
+        formContext.getControl("ts_securityincident").addOnLookupTagClick(function (eContext) {
+            const formContext = eContext.getFormContext();
+            //Check if the Time Tracking Tab is Expanded
+            if (formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded') {
+                eContext.getEventArgs().preventDefault(); //Prevent default navigation to normal Case form
+                var record = eContext.getEventArgs().getTagValue();
+                Xrm.Navigation.navigateTo({
+                    pageType: "entityrecord",
+                    entityName: record.entityType,
+                    entityId: record.id,
+                    formId: "54b321b6-6afa-ed11-8f6e-0022483c5061"
+                }, {
+                    target: 2,
+                    position: 2,
+                    width:
+                    {
+                        value: 30,
+                        unit: "%"
+                    }
+                });
+            }
+        });
     }
 }
 

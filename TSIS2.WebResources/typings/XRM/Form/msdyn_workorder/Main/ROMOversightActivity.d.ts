@@ -180,9 +180,11 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
+      get(name: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
       get(name: "ts_actualcost"): Xrm.NumberAttribute;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
+      get(name: "ts_comments"): Xrm.Attribute<string>;
       get(name: "ts_completedquarter"): Xrm.OptionSetAttribute<ts_msdyn_workorder_ts_completedquarter>;
       get(name: "ts_conductingoversight"): Xrm.NumberAttribute;
       get(name: "ts_contact"): Xrm.LookupAttribute<"contact">;
@@ -320,9 +322,11 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
+      get(name: "ts_accountableteam"): Xrm.LookupControl<"team">;
       get(name: "ts_actualcost"): Xrm.NumberControl;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_comments"): Xrm.StringControl;
       get(name: "ts_completedquarter"): Xrm.OptionSetControl<ts_msdyn_workorder_ts_completedquarter>;
       get(name: "ts_conductingoversight"): Xrm.NumberControl;
       get(name: "ts_contact"): Xrm.LookupControl<"contact">;
@@ -447,9 +451,11 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorder_statuscode>;
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
+    getAttribute(attributeName: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
     getAttribute(attributeName: "ts_actualcost"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
     getAttribute(attributeName: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_completedquarter"): Xrm.OptionSetAttribute<ts_msdyn_workorder_ts_completedquarter>;
     getAttribute(attributeName: "ts_conductingoversight"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_contact"): Xrm.LookupAttribute<"contact">;
@@ -582,9 +588,11 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
+    getControl(controlName: "ts_accountableteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_actualcost"): Xrm.NumberControl;
     getControl(controlName: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
     getControl(controlName: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_comments"): Xrm.StringControl;
     getControl(controlName: "ts_completedquarter"): Xrm.OptionSetControl<ts_msdyn_workorder_ts_completedquarter>;
     getControl(controlName: "ts_conductingoversight"): Xrm.NumberControl;
     getControl(controlName: "ts_contact"): Xrm.LookupControl<"contact">;

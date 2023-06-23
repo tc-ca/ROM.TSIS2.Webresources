@@ -22,6 +22,7 @@ interface ovs_Finding_Base extends WebEntity {
   ts_findingtype?: ts_findingtype | null;
   ts_issueaddressedonsite?: ts_yesno | null;
   ts_justificationof?: string | null;
+  ts_ncatdetailstosupport?: string | null;
   ts_ncatenforcementjustification?: string | null;
   ts_ncatenforcementrecommendation?: ts_ncatrecommendations | null;
   ts_ncatfactorguide?: boolean | null;
@@ -49,6 +50,7 @@ interface ovs_Finding_Base extends WebEntity {
 interface ovs_Finding_Relationships {
   ovs_CaseId?: Incident_Result | null;
   ovs_WorkOrderServiceTaskId?: msdyn_workorderservicetask_Result | null;
+  ovs_finding_PostFollows?: PostFollow_Result[] | null;
   ts_ActionFinding_ovs_Finding_ovs_Finding?: ts_ActionFinding_Result[] | null;
   ts_Contact?: Contact_Result | null;
   ts_NCATApprovingTeam?: Team_Result | null;
@@ -146,6 +148,7 @@ interface ovs_Finding_Select {
   ts_ncatapprovingteam_guid: WebAttribute<ovs_Finding_Select, { ts_ncatapprovingteam_guid: string | null }, { ts_ncatapprovingteam_formatted?: string }>;
   ts_ncatcompliancehistory_guid: WebAttribute<ovs_Finding_Select, { ts_ncatcompliancehistory_guid: string | null }, { ts_ncatcompliancehistory_formatted?: string }>;
   ts_ncatcooperationwithinspectionorinvestigat_guid: WebAttribute<ovs_Finding_Select, { ts_ncatcooperationwithinspectionorinvestigat_guid: string | null }, { ts_ncatcooperationwithinspectionorinvestigat_formatted?: string }>;
+  ts_ncatdetailstosupport: WebAttribute<ovs_Finding_Select, { ts_ncatdetailstosupport: string | null }, {  }>;
   ts_ncatdetectionofnoncompliances_guid: WebAttribute<ovs_Finding_Select, { ts_ncatdetectionofnoncompliances_guid: string | null }, { ts_ncatdetectionofnoncompliances_formatted?: string }>;
   ts_ncateconomicbenefit_guid: WebAttribute<ovs_Finding_Select, { ts_ncateconomicbenefit_guid: string | null }, { ts_ncateconomicbenefit_formatted?: string }>;
   ts_ncatenforcementjustification: WebAttribute<ovs_Finding_Select, { ts_ncatenforcementjustification: string | null }, {  }>;
@@ -237,6 +240,7 @@ interface ovs_Finding_Filter {
   ts_ncatapprovingteam_guid: XQW.Guid;
   ts_ncatcompliancehistory_guid: XQW.Guid;
   ts_ncatcooperationwithinspectionorinvestigat_guid: XQW.Guid;
+  ts_ncatdetailstosupport: string;
   ts_ncatdetectionofnoncompliances_guid: XQW.Guid;
   ts_ncateconomicbenefit_guid: XQW.Guid;
   ts_ncatenforcementjustification: string;
@@ -291,6 +295,7 @@ interface ovs_Finding_Expand {
   modifiedonbehalfby: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ovs_CaseId: WebExpand<ovs_Finding_Expand, Incident_Select, Incident_Filter, { ovs_CaseId: Incident_Result }>;
   ovs_WorkOrderServiceTaskId: WebExpand<ovs_Finding_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ovs_WorkOrderServiceTaskId: msdyn_workorderservicetask_Result }>;
+  ovs_finding_PostFollows: WebExpand<ovs_Finding_Expand, PostFollow_Select, PostFollow_Filter, { ovs_finding_PostFollows: PostFollow_Result[] }>;
   ownerid: WebExpand<ovs_Finding_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ovs_Finding_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
@@ -451,6 +456,7 @@ interface ovs_Finding_RelatedOne {
   ts_qm_rclegislation: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
 }
 interface ovs_Finding_RelatedMany {
+  ovs_finding_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   ts_ActionFinding_ovs_Finding_ovs_Finding: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;
   ts_finding_ts_action_finding: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
 }

@@ -120,6 +120,7 @@ function unlockNCAT(primaryControl) {
     primaryControl.getControl("ts_issueaddressedonsite").setDisabled(false);
     primaryControl.getControl("ts_noncompliancetimeframe").setDisabled(false);
     primaryControl.getControl("ts_notetostakeholder").setDisabled(false);
+    primaryControl.getControl("ts_ncatdetailstosupport").setDisabled(false);
 
     primaryControl.getAttribute("ts_acceptncatrecommendation").setValue(null);
     primaryControl.getAttribute("ts_finalenforcementaction").setValue(null);

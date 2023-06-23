@@ -73,16 +73,21 @@ function appendApplicableProvisionsData(survey, options) {
     var provisionContainer = document.createElement("div");
     const provisionParagraph = document.createElement("p");
 
-    const applicableProvisionsData = options.question.applicableProvisionsData
+    const applicableProvisionsData = options.question.applicableProvisionsData;
+
     for (let provisionData of applicableProvisionsData) {
+        var uniqueName = Math.floor(Math.random() * 900000) + 100000; // this makes sure the provision-text has unique ID's
 
         var provisionButton = document.createElement("button");
         provisionButton.classList.add("btn", "btn-info");
-        provisionButton.setAttribute("data-target", "#provision-text");
+        provisionButton.setAttribute("data-target", "#provision-text" + uniqueName);
         provisionButton.setAttribute("data-toggle", "collapse");
 
+        var provisionBreak1 = document.createElement("br");
+        var provisionBreak2 = document.createElement("br");
+
         var provisionText = document.createElement("div");
-        provisionText.id = "provision-text";
+        provisionText.id = "provision-text" + uniqueName;
         provisionText.classList.add("collapse");
 
         // Turn each provision into a button for the user to click and then view the details
@@ -95,7 +100,9 @@ function appendApplicableProvisionsData(survey, options) {
             provisionText.innerHTML = provisionData.provisionTextEn;
         }
 
+        provisionParagraph.appendChild(provisionBreak1);
         provisionParagraph.appendChild(provisionButton);
+        provisionParagraph.appendChild(provisionBreak2);
         provisionParagraph.appendChild(provisionText);
 
     }
@@ -366,7 +373,6 @@ async function getApplicableExemptions(provisionNameEn) {
 //Returns all fields needed to check if an exemption applies to a work order
 async function getWorkOrderExemptionFilterFields() {
     const workOrderId = window.parentFormContext.getAttribute("msdyn_workorder").getValue()[0].id;
-    const aocOperationId = window.parentFormContext.getAttribute("ts_aocoperation").getValue()[0].id;
     const flightType = window.parentFormContext.getAttribute("ts_flighttype").getValue();
     const flightCategory = window.parentFormContext.getAttribute("ts_flightcategory").getValue();
     if (workOrderId == null) return;
