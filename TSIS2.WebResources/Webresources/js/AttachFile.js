@@ -1,11 +1,19 @@
 ﻿
-function OpenFileUploadPage(PrimaryControlId) {
+function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryControlId) {
     const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+    let recordTags = "";
+
+    //Logic for getting tags when attaching files to Work Orders
+    if (PrimaryTypeEntityName == "Work Order") {
+        recordTags += PrimaryControl.getAttribute("msdyn_name").getValue();
+    }
+
     // Centered Dialog
     var pageInput = {
         pageType: "custom",
         name: "ts_fileupload_2bf02", //Unique name of Custom page
-        recordId: PrimaryControlId,
+        recordId: recordTags, //Using the recordId param as a way to pass data to the custom page
     };
     var navigationOptions = {
         target: 2,
