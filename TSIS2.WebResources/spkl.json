@@ -309,6 +309,11 @@
               "file": "js\\utils\\SubGridFetchXmlModifier.js",
               "description": "Scripts to modify a subgrid fetchxml"
             },
+            {
+              "uniquename": "ts_/js/AttachFile.js",
+              "file": "js\\AttachFile.js",
+              "description": "ROM TSIS 2.0 Scripts to attach files"
+            },
             /* Styles */
             {
               "uniquename": "ovs_/css/bootstrap.min.css",
