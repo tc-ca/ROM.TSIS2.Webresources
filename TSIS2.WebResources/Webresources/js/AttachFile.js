@@ -5,7 +5,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
     let recordTags = "";
 
     //Logic for getting tags when attaching files to Work Orders
-    if (PrimaryTypeEntityName == "Work Order") {
+    if (PrimaryTypeEntityName == "msdyn_workorder") {
         recordTags += PrimaryControl.getAttribute("msdyn_name").getValue();
     }
 
