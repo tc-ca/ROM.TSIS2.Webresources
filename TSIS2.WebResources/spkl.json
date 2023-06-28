@@ -513,6 +513,11 @@
               "description": "ROM TSIS 2.0 Trip Ribbon Scripts"
             },
             {
+              "uniquename": "ts_/js/nonoversightactivity.js",
+              "file": "js\\nonoversightactivity.js",
+              "description": "Function library to build NonOversightActivity"
+            },
+            {
               "uniquename": "ts_/js/AppLevelFunctions.js",
               "file": "js\\AppLevelFunctions.js",
               "description": "TSIS 2.0 AppLevel Scripts"
