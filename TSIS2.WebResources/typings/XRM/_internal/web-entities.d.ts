@@ -676,6 +676,29 @@ interface ts_msdyn_workorder_ts_operationcontact_Create extends ts_msdyn_workord
 }
 interface ts_msdyn_workorder_ts_operationcontact_Update extends ts_msdyn_workorder_ts_operationcontact {
 }
+interface ts_nonoversightactivity_Base extends WebEntity {
+}
+interface ts_nonoversightactivity_Fixed extends WebEntity_Fixed {
+  ts_nonoversightactivityid: string;
+}
+interface ts_nonoversightactivity extends ts_nonoversightactivity_Base, ts_nonoversightactivity_Relationships {
+}
+interface ts_nonoversightactivity_Relationships {
+}
+interface ts_nonoversightactivity_Result extends ts_nonoversightactivity_Base, ts_nonoversightactivity_Relationships {
+}
+interface ts_nonoversightactivity_FormattedResult {
+}
+interface ts_nonoversightactivity_Select {
+}
+interface ts_nonoversightactivity_Expand {
+}
+interface ts_nonoversightactivity_Filter {
+}
+interface ts_nonoversightactivity_Create extends ts_nonoversightactivity {
+}
+interface ts_nonoversightactivity_Update extends ts_nonoversightactivity {
+}
 interface ts_OperationActivity_Base extends WebEntity {
 }
 interface ts_OperationActivity_Fixed extends WebEntity_Fixed {
@@ -859,29 +882,6 @@ interface ts_securityincident_Filter {
 interface ts_securityincident_Create extends ts_securityincident {
 }
 interface ts_securityincident_Update extends ts_securityincident {
-}
-interface ts_securityincidenttype_Base extends WebEntity {
-}
-interface ts_securityincidenttype_Fixed extends WebEntity_Fixed {
-  ts_securityincidenttypeid: string;
-}
-interface ts_securityincidenttype extends ts_securityincidenttype_Base, ts_securityincidenttype_Relationships {
-}
-interface ts_securityincidenttype_Relationships {
-}
-interface ts_securityincidenttype_Result extends ts_securityincidenttype_Base, ts_securityincidenttype_Relationships {
-}
-interface ts_securityincidenttype_FormattedResult {
-}
-interface ts_securityincidenttype_Select {
-}
-interface ts_securityincidenttype_Expand {
-}
-interface ts_securityincidenttype_Filter {
-}
-interface ts_securityincidenttype_Create extends ts_securityincidenttype {
-}
-interface ts_securityincidenttype_Update extends ts_securityincidenttype {
 }
 interface ts_TeamPlanningData_Base extends WebEntity {
 }
