@@ -81,10 +81,6 @@ var ROM;
             currentStatus = form.getAttribute("ts_state").getValue();
             form.getControl("msdyn_worklocation").removeOption(690970001); //Remove Facility Work Location Option
             updateCaseView(eContext);
-            //Show banner if State is Draft
-            if (currentStatus == 717750000) {
-                form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "Manager must set State to \"Committed\" in order to proceed." : "Le gestionnaire doit définir l'état comme étant \"engagé\" afin de poursuivre la procédure."), "WARNING", "draft");
-            }
             //Set required fields
             form.getAttribute("ts_region").setRequiredLevel("required");
             form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
