@@ -67,6 +67,8 @@ interface Incident_Base extends WebEntity {
   ts_numberoffindings?: number | null;
   ts_numberoffindings_date?: Date | null;
   ts_numberoffindings_state?: number | null;
+  ts_quarterofreportinganddocumentation?: ts_quarter | null;
+  ts_quarteroftraveltime?: ts_quarter | null;
   ts_traveltime?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
@@ -257,6 +259,8 @@ interface Incident_Select {
   ts_numberoffindings: WebAttribute<Incident_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<Incident_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<Incident_Select, { ts_numberoffindings_state: number | null }, {  }>;
+  ts_quarterofreportinganddocumentation: WebAttribute<Incident_Select, { ts_quarterofreportinganddocumentation: ts_quarter | null }, { ts_quarterofreportinganddocumentation_formatted?: string }>;
+  ts_quarteroftraveltime: WebAttribute<Incident_Select, { ts_quarteroftraveltime: ts_quarter | null }, { ts_quarteroftraveltime_formatted?: string }>;
   ts_tradenameid_guid: WebAttribute<Incident_Select, { ts_tradenameid_guid: string | null }, { ts_tradenameid_formatted?: string }>;
   ts_traveltime: WebAttribute<Incident_Select, { ts_traveltime: number | null }, {  }>;
   ts_workorder1_guid: WebAttribute<Incident_Select, { ts_workorder1_guid: string | null }, { ts_workorder1_formatted?: string }>;
@@ -374,6 +378,8 @@ interface Incident_Filter {
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;
+  ts_quarterofreportinganddocumentation: ts_quarter;
+  ts_quarteroftraveltime: ts_quarter;
   ts_tradenameid_guid: XQW.Guid;
   ts_traveltime: any;
   ts_workorder1_guid: XQW.Guid;
@@ -499,6 +505,8 @@ interface Incident_FormattedResult {
   ts_inspectiontype1_formatted?: string;
   ts_inspectiontype2_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
+  ts_quarterofreportinganddocumentation_formatted?: string;
+  ts_quarteroftraveltime_formatted?: string;
   ts_tradenameid_formatted?: string;
   ts_workorder1_formatted?: string;
   ts_workorder2_formatted?: string;

@@ -12,6 +12,8 @@ declare namespace Form.ts_securityincident.Main {
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<ts_securityincident_statecode>;
+      get(name: "ts_quarterofsitime"): Xrm.OptionSetAttribute<ts_quarter>;
+      get(name: "ts_quarterofsitraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
       get(name: "ts_recordstatus"): Xrm.OptionSetAttribute<ts_securityincidentstatus>;
       get(name: "ts_securityincidenttime"): Xrm.NumberAttribute;
       get(name: "ts_tamperingsubcategory"): Xrm.OptionSetAttribute<ts_tamperingsubcategory>;
@@ -25,6 +27,8 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_ts_recordstatus"): Xrm.OptionSetControl<ts_securityincidentstatus>;
       get(name: "statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
+      get(name: "ts_quarterofsitime"): Xrm.OptionSetControl<ts_quarter>;
+      get(name: "ts_quarterofsitraveltime"): Xrm.OptionSetControl<ts_quarter>;
       get(name: "ts_securityincidenttime"): Xrm.NumberControl;
       get(name: "ts_tamperingsubcategory"): Xrm.OptionSetControl<ts_tamperingsubcategory>;
       get(name: "ts_traveltime"): Xrm.NumberControl;
@@ -44,6 +48,8 @@ declare namespace Form.ts_securityincident.Main {
   interface TimeTracking extends Xrm.PageBase<TimeTracking.Attributes,TimeTracking.Tabs,TimeTracking.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ts_securityincident_statecode>;
+    getAttribute(attributeName: "ts_quarterofsitime"): Xrm.OptionSetAttribute<ts_quarter>;
+    getAttribute(attributeName: "ts_quarterofsitraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
     getAttribute(attributeName: "ts_recordstatus"): Xrm.OptionSetAttribute<ts_securityincidentstatus>;
     getAttribute(attributeName: "ts_securityincidenttime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_tamperingsubcategory"): Xrm.OptionSetAttribute<ts_tamperingsubcategory>;
@@ -52,6 +58,8 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_ts_recordstatus"): Xrm.OptionSetControl<ts_securityincidentstatus>;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
+    getControl(controlName: "ts_quarterofsitime"): Xrm.OptionSetControl<ts_quarter>;
+    getControl(controlName: "ts_quarterofsitraveltime"): Xrm.OptionSetControl<ts_quarter>;
     getControl(controlName: "ts_securityincidenttime"): Xrm.NumberControl;
     getControl(controlName: "ts_tamperingsubcategory"): Xrm.OptionSetControl<ts_tamperingsubcategory>;
     getControl(controlName: "ts_traveltime"): Xrm.NumberControl;

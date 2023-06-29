@@ -5,4 +5,6 @@ declare const enum ts_deliverymethod {
   LetterHandDelivered = 741130003,
   LetterMail = 741130004,
   LetterRegisteredMail = 741130005,
+  InPerson = 741130006,
+  Telephone = 741130007,
 }

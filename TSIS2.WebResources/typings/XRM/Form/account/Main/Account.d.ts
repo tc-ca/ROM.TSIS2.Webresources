@@ -35,6 +35,7 @@ declare namespace Form.account.Main {
         get(name: "ADDRESS"): Xrm.PageSection;
         get(name: "MapSection"): Xrm.PageSection;
         get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
+        get(name: "SUMMARY_TAB_ADDRESSINPUT_SECTION"): Xrm.PageSection;
         get(name: "SUMMARY_TAB_section_6"): Xrm.PageSection;
         get(name: "Summary_section_6"): Xrm.PageSection;
         get(name: string): undefined;
@@ -138,6 +139,7 @@ declare namespace Form.account.Main {
       get(name: "address1_latitude"): Xrm.NumberControl;
       get(name: "address1_latitude1"): Xrm.NumberControl;
       get(name: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "address1_line11"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "address1_longitude"): Xrm.NumberControl;
       get(name: "address1_longitude1"): Xrm.NumberControl;
       get(name: "address1_shippingmethodcode"): Xrm.OptionSetControl<account_address1_shippingmethodcode>;
@@ -268,6 +270,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "address1_latitude"): Xrm.NumberControl;
     getControl(controlName: "address1_latitude1"): Xrm.NumberControl;
     getControl(controlName: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "address1_line11"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "address1_longitude"): Xrm.NumberControl;
     getControl(controlName: "address1_longitude1"): Xrm.NumberControl;
     getControl(controlName: "address1_shippingmethodcode"): Xrm.OptionSetControl<account_address1_shippingmethodcode>;
