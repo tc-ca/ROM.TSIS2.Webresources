@@ -45,12 +45,7 @@ namespace ROM.WorkOrder {
         currentStatus = form.getAttribute("ts_state").getValue();
         form.getControl("msdyn_worklocation").removeOption(690970001);  //Remove Facility Work Location Option
         updateCaseView(eContext);
-
-        //Show banner if State is Draft
-        if (currentStatus == 717750000) {
-            form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "Manager must set State to \"Committed\" in order to proceed." : "Le gestionnaire doit définir l'état comme étant \"engagé\" afin de poursuivre la procédure."), "WARNING", "draft");
-        }
-
+          
         //Set required fields
         form.getAttribute("ts_region").setRequiredLevel("required");
         form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
@@ -825,7 +820,7 @@ namespace ROM.WorkOrder {
         else
             //If system status is set to closed
             if (newSystemStatus == 690970004) {
-                Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
+                Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=statecode eq 0 and msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
                     if (result.entities.length > 0) {
                         var alertStrings = {
                             text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithUnCompletedSTText"),
