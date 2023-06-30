@@ -46,7 +46,6 @@ var ROM;
         var currentStatus;
         // EVENTS
         function onLoad(eContext) {
-            debugger;
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
             var form = eContext.getFormContext();
             var state = (_a = form.getAttribute("statecode").getValue()) !== null && _a !== void 0 ? _a : null;
@@ -277,7 +276,6 @@ var ROM;
         WorkOrder.onLoad = onLoad;
 
         function RemoveOptionCancel(eContext) {
-            debugger;
             var formContext = eContext.getFormContext();
             var userSettings = Xrm.Utility.getGlobalContext().userSettings;
 
@@ -289,7 +287,6 @@ var ROM;
 
             for (var i = 0; i < securityRoles.length; i++) {
                 if (securityRoles[i].toUpperCase() == securityRoleId.toUpperCase()) {
-                    debugger;
                     //formContext.getControl("msdyn_systemstatus").setVisible(false);
                     formContext.getControl("msdyn_systemstatus").removeOption(690970005);
                 }
