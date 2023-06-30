@@ -46,6 +46,7 @@ var ROM;
         var currentStatus;
         // EVENTS
         function onLoad(eContext) {
+            debugger;
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
             var form = eContext.getFormContext();
             var state = (_a = form.getAttribute("statecode").getValue()) !== null && _a !== void 0 ? _a : null;
@@ -270,8 +271,30 @@ var ROM;
                     }
                 }
             }
+
+            RemoveOptionCancel(eContext);
         }
         WorkOrder.onLoad = onLoad;
+
+        function RemoveOptionCancel(eContext) {
+            debugger;
+            var formContext = eContext.getFormContext();
+            var userSettings = Xrm.Utility.getGlobalContext().userSettings;
+
+            //Get Security Roles of the current User
+            var securityRoles = userSettings.securityRoles;
+
+            //Below is the GUID of the Security Role "ROM Inspector"
+            var securityRoleId = "ED37675E-F72C-EB11-A813-000D3AF3A7A7";
+
+            for (var i = 0; i < securityRoles.length; i++) {
+                if (securityRoles[i].toUpperCase() == securityRoleId.toUpperCase()) {
+                    debugger;
+                    //formContext.getControl("msdyn_systemstatus").setVisible(false);
+                    formContext.getControl("msdyn_systemstatus").removeOption(690970005);
+                }
+            }
+        }
         function onSave(eContext) {
             var form = eContext.getFormContext();
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
