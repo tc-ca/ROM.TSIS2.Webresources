@@ -883,6 +883,29 @@ interface ts_securityincident_Create extends ts_securityincident {
 }
 interface ts_securityincident_Update extends ts_securityincident {
 }
+interface ts_securityincidenttype_Base extends WebEntity {
+}
+interface ts_securityincidenttype_Fixed extends WebEntity_Fixed {
+  ts_securityincidenttypeid: string;
+}
+interface ts_securityincidenttype extends ts_securityincidenttype_Base, ts_securityincidenttype_Relationships {
+}
+interface ts_securityincidenttype_Relationships {
+}
+interface ts_securityincidenttype_Result extends ts_securityincidenttype_Base, ts_securityincidenttype_Relationships {
+}
+interface ts_securityincidenttype_FormattedResult {
+}
+interface ts_securityincidenttype_Select {
+}
+interface ts_securityincidenttype_Expand {
+}
+interface ts_securityincidenttype_Filter {
+}
+interface ts_securityincidenttype_Create extends ts_securityincidenttype {
+}
+interface ts_securityincidenttype_Update extends ts_securityincidenttype {
+}
 interface ts_TeamPlanningData_Base extends WebEntity {
 }
 interface ts_TeamPlanningData_Fixed extends WebEntity_Fixed {

@@ -94,6 +94,10 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_plannedcost?: number | null;
   ts_plannedcost_base?: number | null;
   ts_preparationtime?: number | null;
+  ts_quarterofconductingoversight?: ts_quarter | null;
+  ts_quarterofpreparationtime?: ts_quarter | null;
+  ts_quarterofreportinganddocumentation?: ts_quarter | null;
+  ts_quarteroftraveltime?: ts_quarter | null;
   ts_riskscore?: number | null;
   ts_state?: ts_planningstate | null;
   ts_traveltime?: number | null;
@@ -363,6 +367,10 @@ interface msdyn_workorder_Select {
   ts_plannedcost_base: WebAttribute<msdyn_workorder_Select, { ts_plannedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_planningdata_guid: WebAttribute<msdyn_workorder_Select, { ts_planningdata_guid: string | null }, { ts_planningdata_formatted?: string }>;
   ts_preparationtime: WebAttribute<msdyn_workorder_Select, { ts_preparationtime: number | null }, {  }>;
+  ts_quarterofconductingoversight: WebAttribute<msdyn_workorder_Select, { ts_quarterofconductingoversight: ts_quarter | null }, { ts_quarterofconductingoversight_formatted?: string }>;
+  ts_quarterofpreparationtime: WebAttribute<msdyn_workorder_Select, { ts_quarterofpreparationtime: ts_quarter | null }, { ts_quarterofpreparationtime_formatted?: string }>;
+  ts_quarterofreportinganddocumentation: WebAttribute<msdyn_workorder_Select, { ts_quarterofreportinganddocumentation: ts_quarter | null }, { ts_quarterofreportinganddocumentation_formatted?: string }>;
+  ts_quarteroftraveltime: WebAttribute<msdyn_workorder_Select, { ts_quarteroftraveltime: ts_quarter | null }, { ts_quarteroftraveltime_formatted?: string }>;
   ts_reason_guid: WebAttribute<msdyn_workorder_Select, { ts_reason_guid: string | null }, { ts_reason_formatted?: string }>;
   ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_riskscore: WebAttribute<msdyn_workorder_Select, { ts_riskscore: number | null }, {  }>;
@@ -532,6 +540,10 @@ interface msdyn_workorder_Filter {
   ts_plannedcost_base: number;
   ts_planningdata_guid: XQW.Guid;
   ts_preparationtime: any;
+  ts_quarterofconductingoversight: ts_quarter;
+  ts_quarterofpreparationtime: ts_quarter;
+  ts_quarterofreportinganddocumentation: ts_quarter;
+  ts_quarteroftraveltime: ts_quarter;
   ts_reason_guid: XQW.Guid;
   ts_region_guid: XQW.Guid;
   ts_riskscore: number;
@@ -709,6 +721,10 @@ interface msdyn_workorder_FormattedResult {
   ts_plannedcost_base_formatted?: string;
   ts_plannedcost_formatted?: string;
   ts_planningdata_formatted?: string;
+  ts_quarterofconductingoversight_formatted?: string;
+  ts_quarterofpreparationtime_formatted?: string;
+  ts_quarterofreportinganddocumentation_formatted?: string;
+  ts_quarteroftraveltime_formatted?: string;
   ts_reason_formatted?: string;
   ts_region_formatted?: string;
   ts_riskthreshold_formatted?: string;
