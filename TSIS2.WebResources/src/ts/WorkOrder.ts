@@ -303,13 +303,12 @@ namespace ROM.WorkOrder {
 
     function CheckRolesBeforeCancel(securityRoles) {
         let match = false;
-        var allowedRoles = ["CA432C33-29A1-EB11-B1AC-000D3AE8BBE0", "85E36D25-29F5-EB11-94EF-000D3AF36036", "9F03E814-29F5-EB11-94EF-000D3AF36036", "779105F0-8D3A-EB11-A813-000D3AF3FC19"]
-        for (let role in securityRoles) {
-            if (allowedRoles.includes(role.toUpperCase())) {
+        var allowedRoles = ["ROM - Planner", "ROM - Business Admin", "ROM - Manager", "System Administrator"]
+        securityRoles.forEach(function (role) {
+            if (allowedRoles.includes(role.name)) {
                 match = true;
-                break;
             }
-        }
+        });
         return match;
     }
 
