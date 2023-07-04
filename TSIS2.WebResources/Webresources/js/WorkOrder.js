@@ -283,60 +283,29 @@ var ROM;
                     }
                 }
             }
-
             RemoveOptionCancel(eContext);
         }
         WorkOrder.onLoad = onLoad;
-
         function RemoveOptionCancel(eContext) {
             var formContext = eContext.getFormContext();
             var userSettings = Xrm.Utility.getGlobalContext().userSettings;
-
             //Get Security Roles of the current User
-            var securityRoles = userSettings.securityRoles;
-
-            //Below is the GUID of the Security Role "ROM Inspector"
-            var securityRoleInspector = "ED37675E-F72C-EB11-A813-000D3AF3A7A7";
-
-            for (var i = 0; i < securityRoles.length; i++) {
-                if (securityRoles[i].toUpperCase() == securityRoleInspector.toUpperCase()) {
-
-                    if (CheckRolesBeforeCancel(securityRoles) == true) {
-                        formContext.getControl("msdyn_systemstatus").removeOption(690970005);
-                    }
-                }
+            var securityRoles = userSettings.roles;
+            if (CheckRolesBeforeCancel(securityRoles)) {
+                formContext.getControl("msdyn_systemstatus").removeOption(690970005);
             }
         }
-
         function CheckRolesBeforeCancel(securityRoles) {
-            var value = true;
-            var securityRoleAdmin = "CA432C33-29A1-EB11-B1AC-000D3AE8BBE0";
-            var securityRoleManager = "85E36D25-29F5-EB11-94EF-000D3AF36036";
-            var securityRolePlanner = "9F03E814-29F5-EB11-94EF-000D3AF36036";
-            var securityRoleBusinessAdmin = "779105F0-8D3A-EB11-A813-000D3AF3FC19";
-
-            for (var i = 0; i < securityRoles.length; i++) {
-                if (securityRoles[i].toUpperCase() == securityRoleAdmin.toUpperCase()) {
-
-                    value = false;
-                    break;
-                }
-                else if (securityRoles[i].toUpperCase() == securityRoleManager.toUpperCase() ) {
-                    value = false;
-                    break;
-                }
-                else if (securityRoles[i].toUpperCase() == securityRolePlanner.toUpperCase()) {
-                    value = false;
-                    break;
-                }
-                else if (securityRoles[i].toUpperCase() == securityRoleBusinessAdmin.toUpperCase()) {
-                    value = false;
+            var match = false;
+            var allowedRoles = ["CA432C33-29A1-EB11-B1AC-000D3AE8BBE0", "85E36D25-29F5-EB11-94EF-000D3AF36036", "9F03E814-29F5-EB11-94EF-000D3AF36036", "779105F0-8D3A-EB11-A813-000D3AF3FC19"];
+            for (var role in securityRoles) {
+                if (allowedRoles.includes(role.toUpperCase())) {
+                    match = true;
                     break;
                 }
             }
-            return value;
+            return match;
         }
-
         function onSave(eContext) {
             var form = eContext.getFormContext();
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
