@@ -37,18 +37,6 @@ namespace ROM.WorkOrder {
             if (userBusinessUnitName.startsWith("Aviation")) {
                 form.getControl("ts_details").setVisible(true);
             }
-            //Set disabled false for quarter fields if ISSO
-            else {
-                if (userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
-                    form.getControl("ts_completedquarter").setDisabled(false);
-                    form.getControl("ovs_fiscalquarter").setDisabled(false);
-                    form.getControl("ovs_revisedquarterid").setDisabled(false);
-                } else {
-                    form.getControl("ts_completedquarter").setDisabled(true);
-                    form.getControl("ovs_fiscalquarter").setDisabled(true);
-                    form.getControl("ovs_revisedquarterid").setDisabled(true);
-                }
-            }
         });
         
 
