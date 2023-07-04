@@ -40,6 +40,8 @@ interface ts_securityincident_Base extends WebEntity {
   ts_policeresponse?: boolean | null;
   ts_province?: ts_province | null;
   ts_publicorprivatecrossing?: ts_publicorprivatecrossing | null;
+  ts_quarterofsitime?: ts_quarter | null;
+  ts_quarterofsitraveltime?: ts_quarter | null;
   ts_recordstatus?: ts_securityincidentstatus | null;
   ts_reporteddatetime?: Date | null;
   ts_reportingcompany_name?: string | null;
@@ -150,6 +152,8 @@ interface ts_securityincident_Select {
   ts_policeresponse: WebAttribute<ts_securityincident_Select, { ts_policeresponse: boolean | null }, {  }>;
   ts_province: WebAttribute<ts_securityincident_Select, { ts_province: ts_province | null }, { ts_province_formatted?: string }>;
   ts_publicorprivatecrossing: WebAttribute<ts_securityincident_Select, { ts_publicorprivatecrossing: ts_publicorprivatecrossing | null }, { ts_publicorprivatecrossing_formatted?: string }>;
+  ts_quarterofsitime: WebAttribute<ts_securityincident_Select, { ts_quarterofsitime: ts_quarter | null }, { ts_quarterofsitime_formatted?: string }>;
+  ts_quarterofsitraveltime: WebAttribute<ts_securityincident_Select, { ts_quarterofsitraveltime: ts_quarter | null }, { ts_quarterofsitraveltime_formatted?: string }>;
   ts_recordstatus: WebAttribute<ts_securityincident_Select, { ts_recordstatus: ts_securityincidentstatus | null }, { ts_recordstatus_formatted?: string }>;
   ts_region_guid: WebAttribute<ts_securityincident_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_reporteddatetime: WebAttribute<ts_securityincident_Select, { ts_reporteddatetime: Date | null }, { ts_reporteddatetime_formatted?: string }>;
@@ -230,6 +234,8 @@ interface ts_securityincident_Filter {
   ts_policeresponse: boolean;
   ts_province: ts_province;
   ts_publicorprivatecrossing: ts_publicorprivatecrossing;
+  ts_quarterofsitime: ts_quarter;
+  ts_quarterofsitraveltime: ts_quarter;
   ts_recordstatus: ts_securityincidentstatus;
   ts_region_guid: XQW.Guid;
   ts_reporteddatetime: Date;
@@ -310,6 +316,8 @@ interface ts_securityincident_FormattedResult {
   ts_origin_formatted?: string;
   ts_province_formatted?: string;
   ts_publicorprivatecrossing_formatted?: string;
+  ts_quarterofsitime_formatted?: string;
+  ts_quarterofsitraveltime_formatted?: string;
   ts_recordstatus_formatted?: string;
   ts_region_formatted?: string;
   ts_reporteddatetime_formatted?: string;

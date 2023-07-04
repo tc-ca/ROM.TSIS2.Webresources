@@ -73,6 +73,7 @@ declare namespace Form.incident.Main {
         get(name: "Customer"): Xrm.PageSection;
         get(name: "Details"): Xrm.PageSection;
         get(name: "TabsControl"): Xrm.PageSection;
+        get(name: "case_summary_section"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -132,6 +133,7 @@ declare namespace Form.incident.Main {
       get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
       get(name: "ticketnumber"): Xrm.Attribute<string>;
       get(name: "title"): Xrm.Attribute<string>;
+      get(name: "traversedpath"): Xrm.Attribute<any>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -202,6 +204,7 @@ declare namespace Form.incident.Main {
       get(name: "subjectid"): Xrm.LookupControl<"subject">;
       get(name: "ticketnumber"): Xrm.StringControl;
       get(name: "title"): Xrm.StringControl;
+      get(name: "traversedpath"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -264,6 +267,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
     getAttribute(attributeName: "ticketnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "traversedpath"): Xrm.Attribute<any>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Associated_Articles"): Xrm.SubGridControl<"knowledgebaserecord">;
     getControl(controlName: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
@@ -329,6 +333,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
     getControl(controlName: "ticketnumber"): Xrm.StringControl;
     getControl(controlName: "title"): Xrm.StringControl;
+    getControl(controlName: "traversedpath"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: string): undefined;
   }
 }
