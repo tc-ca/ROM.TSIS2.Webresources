@@ -291,7 +291,7 @@ var ROM;
             var userSettings = Xrm.Utility.getGlobalContext().userSettings;
             //Get Security Roles of the current User
             var securityRoles = userSettings.roles;
-            if (CheckRolesBeforeCancel(securityRoles)) {
+            if (!CheckRolesBeforeCancel(securityRoles)) {
                 formContext.getControl("msdyn_systemstatus").removeOption(690970005);
             }
         }
