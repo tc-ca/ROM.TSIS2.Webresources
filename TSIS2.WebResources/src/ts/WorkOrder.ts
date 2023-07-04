@@ -285,6 +285,31 @@ namespace ROM.WorkOrder {
                 }
             }
         }
+
+        RemoveOptionCancel(eContext);
+    }
+
+    function RemoveOptionCancel(eContext) {
+        var formContext = eContext.getFormContext();
+        var userSettings = Xrm.Utility.getGlobalContext().userSettings;
+
+        //Get Security Roles of the current User
+        var securityRoles = userSettings.roles;
+
+        if (!CheckRolesBeforeCancel(securityRoles)) {
+            formContext.getControl("msdyn_systemstatus").removeOption(690970005);
+        }
+    }
+
+    function CheckRolesBeforeCancel(securityRoles) {
+        let match = false;
+        var allowedRoles = ["ROM - Planner", "ROM - Business Admin", "ROM - Manager", "System Administrator"]
+        securityRoles.forEach(function (role) {
+            if (allowedRoles.includes(role.name)) {
+                match = true;
+            }
+        });
+        return match;
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
