@@ -334,6 +334,11 @@
             "file": "js\\utils\\SubGridFetchXmlModifier.js",
             "description": "Scripts to modify a subgrid fetchxml"
           },
+          {
+            "uniquename": "ts_/js/AttachFile.js",
+            "file": "js\\AttachFile.js",
+            "description": "Scripts to handle attaching files to records"
+          },
           /* Styles */
           {
             "uniquename": "ovs_/css/bootstrap.min.css",
