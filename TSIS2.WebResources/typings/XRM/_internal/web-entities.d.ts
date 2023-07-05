@@ -676,6 +676,29 @@ interface ts_msdyn_workorder_ts_operationcontact_Create extends ts_msdyn_workord
 }
 interface ts_msdyn_workorder_ts_operationcontact_Update extends ts_msdyn_workorder_ts_operationcontact {
 }
+interface ts_nonoversightactivity_Base extends WebEntity {
+}
+interface ts_nonoversightactivity_Fixed extends WebEntity_Fixed {
+  ts_nonoversightactivityid: string;
+}
+interface ts_nonoversightactivity extends ts_nonoversightactivity_Base, ts_nonoversightactivity_Relationships {
+}
+interface ts_nonoversightactivity_Relationships {
+}
+interface ts_nonoversightactivity_Result extends ts_nonoversightactivity_Base, ts_nonoversightactivity_Relationships {
+}
+interface ts_nonoversightactivity_FormattedResult {
+}
+interface ts_nonoversightactivity_Select {
+}
+interface ts_nonoversightactivity_Expand {
+}
+interface ts_nonoversightactivity_Filter {
+}
+interface ts_nonoversightactivity_Create extends ts_nonoversightactivity {
+}
+interface ts_nonoversightactivity_Update extends ts_nonoversightactivity {
+}
 interface ts_OperationActivity_Base extends WebEntity {
 }
 interface ts_OperationActivity_Fixed extends WebEntity_Fixed {

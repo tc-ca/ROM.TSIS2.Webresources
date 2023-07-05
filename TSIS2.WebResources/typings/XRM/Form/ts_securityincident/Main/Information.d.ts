@@ -84,6 +84,8 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_policeresponse"): Xrm.Attribute<any>;
       get(name: "ts_province"): Xrm.OptionSetAttribute<ts_province>;
       get(name: "ts_publicorprivatecrossing"): Xrm.OptionSetAttribute<ts_publicorprivatecrossing>;
+      get(name: "ts_quarterofsitime"): Xrm.OptionSetAttribute<ts_quarter>;
+      get(name: "ts_quarterofsitraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
       get(name: "ts_recordstatus"): Xrm.OptionSetAttribute<ts_securityincidentstatus>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_reporteddatetime"): Xrm.DateAttribute;
@@ -157,6 +159,8 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_policeresponse"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_province"): Xrm.OptionSetControl<ts_province>;
       get(name: "ts_publicorprivatecrossing"): Xrm.OptionSetControl<ts_publicorprivatecrossing>;
+      get(name: "ts_quarterofsitime"): Xrm.OptionSetControl<ts_quarter>;
+      get(name: "ts_quarterofsitraveltime"): Xrm.OptionSetControl<ts_quarter>;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_reporteddatetime"): Xrm.DateControl;
       get(name: "ts_reportingcompany"): Xrm.LookupControl<"account">;
@@ -235,6 +239,8 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_policeresponse"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_province"): Xrm.OptionSetAttribute<ts_province>;
     getAttribute(attributeName: "ts_publicorprivatecrossing"): Xrm.OptionSetAttribute<ts_publicorprivatecrossing>;
+    getAttribute(attributeName: "ts_quarterofsitime"): Xrm.OptionSetAttribute<ts_quarter>;
+    getAttribute(attributeName: "ts_quarterofsitraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
     getAttribute(attributeName: "ts_recordstatus"): Xrm.OptionSetAttribute<ts_securityincidentstatus>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_reporteddatetime"): Xrm.DateAttribute;
@@ -303,6 +309,8 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_policeresponse"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_province"): Xrm.OptionSetControl<ts_province>;
     getControl(controlName: "ts_publicorprivatecrossing"): Xrm.OptionSetControl<ts_publicorprivatecrossing>;
+    getControl(controlName: "ts_quarterofsitime"): Xrm.OptionSetControl<ts_quarter>;
+    getControl(controlName: "ts_quarterofsitraveltime"): Xrm.OptionSetControl<ts_quarter>;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_reporteddatetime"): Xrm.DateControl;
     getControl(controlName: "ts_reportingcompany"): Xrm.LookupControl<"account">;

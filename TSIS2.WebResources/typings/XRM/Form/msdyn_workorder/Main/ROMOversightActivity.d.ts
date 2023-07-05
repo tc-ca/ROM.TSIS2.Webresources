@@ -199,6 +199,10 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_plannedcost"): Xrm.NumberAttribute;
       get(name: "ts_planningdata"): Xrm.LookupAttribute<"ts_planningdata">;
       get(name: "ts_preparationtime"): Xrm.NumberAttribute;
+      get(name: "ts_quarterofconductingoversight"): Xrm.OptionSetAttribute<ts_quarter>;
+      get(name: "ts_quarterofpreparationtime"): Xrm.OptionSetAttribute<ts_quarter>;
+      get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
+      get(name: "ts_quarteroftraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
       get(name: "ts_reason"): Xrm.LookupAttribute<"ts_planningreason">;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
@@ -341,6 +345,10 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_plannedcost"): Xrm.NumberControl;
       get(name: "ts_planningdata"): Xrm.LookupControl<"ts_planningdata">;
       get(name: "ts_preparationtime"): Xrm.NumberControl;
+      get(name: "ts_quarterofconductingoversight"): Xrm.OptionSetControl<ts_quarter>;
+      get(name: "ts_quarterofpreparationtime"): Xrm.OptionSetControl<ts_quarter>;
+      get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;
+      get(name: "ts_quarteroftraveltime"): Xrm.OptionSetControl<ts_quarter>;
       get(name: "ts_reason"): Xrm.LookupControl<"ts_planningreason">;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
@@ -470,6 +478,10 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_plannedcost"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_planningdata"): Xrm.LookupAttribute<"ts_planningdata">;
     getAttribute(attributeName: "ts_preparationtime"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_quarterofconductingoversight"): Xrm.OptionSetAttribute<ts_quarter>;
+    getAttribute(attributeName: "ts_quarterofpreparationtime"): Xrm.OptionSetAttribute<ts_quarter>;
+    getAttribute(attributeName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
+    getAttribute(attributeName: "ts_quarteroftraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
     getAttribute(attributeName: "ts_reason"): Xrm.LookupAttribute<"ts_planningreason">;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
@@ -607,6 +619,10 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_plannedcost"): Xrm.NumberControl;
     getControl(controlName: "ts_planningdata"): Xrm.LookupControl<"ts_planningdata">;
     getControl(controlName: "ts_preparationtime"): Xrm.NumberControl;
+    getControl(controlName: "ts_quarterofconductingoversight"): Xrm.OptionSetControl<ts_quarter>;
+    getControl(controlName: "ts_quarterofpreparationtime"): Xrm.OptionSetControl<ts_quarter>;
+    getControl(controlName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;
+    getControl(controlName: "ts_quarteroftraveltime"): Xrm.OptionSetControl<ts_quarter>;
     getControl(controlName: "ts_reason"): Xrm.LookupControl<"ts_planningreason">;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;

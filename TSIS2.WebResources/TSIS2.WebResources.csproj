@@ -180,6 +180,7 @@
     <Content Include="Webresources\js\jquery.js" />
     <Content Include="Webresources\js\knockout-min.js" />
     <Content Include="Webresources\js\LegislationRibbon.js" />
+    <Content Include="Webresources\js\NonOversightActivity.js" />
     <Content Include="Webresources\js\Operation.js" />
     <Content Include="Webresources\js\OperationActivity.js" />
     <Content Include="Webresources\js\OperationActivityQuickCreate.js" />
@@ -372,6 +373,7 @@
     <TypeScriptCompile Include="src\ts\OperationActivity.ts" />
     <TypeScriptCompile Include="src\ts\OperationActivityQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\PlanningData.ts" />
+    <TypeScriptCompile Include="src\ts\NonOversightActivity.ts" />
     <TypeScriptCompile Include="src\ts\PlanningSettings.ts" />
     <TypeScriptCompile Include="src\ts\OperationContact.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />

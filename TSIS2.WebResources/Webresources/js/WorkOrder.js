@@ -75,16 +75,25 @@ var ROM;
                 if (userBusinessUnitName.startsWith("Aviation")) {
                     form.getControl("ts_details").setVisible(true);
                 }
+                //Set disabled false for quarter fields if ISSO
+                else {
+                    if (userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
+                        form.getControl("ts_completedquarter").setDisabled(false);
+                        form.getControl("ovs_fiscalquarter").setDisabled(false);
+                        form.getControl("ovs_revisedquarterid").setDisabled(false);
+                    }
+                    else {
+                        form.getControl("ts_completedquarter").setDisabled(true);
+                        form.getControl("ovs_fiscalquarter").setDisabled(true);
+                        form.getControl("ovs_revisedquarterid").setDisabled(true);
+                    }
+                }
             });
             //Keep track of the current system status, to be used when cancelling a status change.
             currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             currentStatus = form.getAttribute("ts_state").getValue();
             form.getControl("msdyn_worklocation").removeOption(690970001); //Remove Facility Work Location Option
             updateCaseView(eContext);
-            //Show banner if State is Draft
-            if (currentStatus == 717750000) {
-                form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "Manager must set State to \"Committed\" in order to proceed." : "Le gestionnaire doit définir l'état comme étant \"engagé\" afin de poursuivre la procédure."), "WARNING", "draft");
-            }
             //Set required fields
             form.getAttribute("ts_region").setRequiredLevel("required");
             form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
@@ -274,8 +283,28 @@ var ROM;
                     }
                 }
             }
+            RemoveOptionCancel(eContext);
         }
         WorkOrder.onLoad = onLoad;
+        function RemoveOptionCancel(eContext) {
+            var formContext = eContext.getFormContext();
+            var userSettings = Xrm.Utility.getGlobalContext().userSettings;
+            //Get Security Roles of the current User
+            var securityRoles = userSettings.roles;
+            if (!CheckRolesBeforeCancel(securityRoles)) {
+                formContext.getControl("msdyn_systemstatus").removeOption(690970005);
+            }
+        }
+        function CheckRolesBeforeCancel(securityRoles) {
+            var match = false;
+            var allowedRoles = ["ROM - Planner", "ROM - Business Admin", "ROM - Manager", "System Administrator"];
+            securityRoles.forEach(function (role) {
+                if (allowedRoles.includes(role.name)) {
+                    match = true;
+                }
+            });
+            return match;
+        }
         function onSave(eContext) {
             var form = eContext.getFormContext();
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
@@ -795,7 +824,7 @@ var ROM;
             else 
             //If system status is set to closed
             if (newSystemStatus == 690970004) {
-                Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
+                Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=statecode eq 0 and msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
                     if (result.entities.length > 0) {
                         var alertStrings = {
                             text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithUnCompletedSTText"),

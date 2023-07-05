@@ -269,6 +269,10 @@ interface SystemUser_Relationships {
   lk_ts_inspectionhours_createdonbehalfby?: ts_InspectionHours_Result[] | null;
   lk_ts_inspectionhours_modifiedby?: ts_InspectionHours_Result[] | null;
   lk_ts_inspectionhours_modifiedonbehalfby?: ts_InspectionHours_Result[] | null;
+  lk_ts_nonoversightactivity_createdby?: ts_nonoversightactivity_Result[] | null;
+  lk_ts_nonoversightactivity_createdonbehalfby?: ts_nonoversightactivity_Result[] | null;
+  lk_ts_nonoversightactivity_modifiedby?: ts_nonoversightactivity_Result[] | null;
+  lk_ts_nonoversightactivity_modifiedonbehalfby?: ts_nonoversightactivity_Result[] | null;
   lk_ts_operationactivity_createdby?: ts_OperationActivity_Result[] | null;
   lk_ts_operationactivity_createdonbehalfby?: ts_OperationActivity_Result[] | null;
   lk_ts_operationactivity_modifiedby?: ts_OperationActivity_Result[] | null;
@@ -371,6 +375,7 @@ interface SystemUser_Relationships {
   user_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
   user_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
   user_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
+  user_ts_nonoversightactivity?: ts_nonoversightactivity_Result[] | null;
   user_ts_operationactivity?: ts_OperationActivity_Result[] | null;
   user_ts_operationcontact?: ts_operationcontact_Result[] | null;
   user_ts_planningdata?: ts_PlanningData_Result[] | null;
@@ -839,6 +844,10 @@ interface SystemUser_Expand {
   lk_ts_inspectionhours_createdonbehalfby: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { lk_ts_inspectionhours_createdonbehalfby: ts_InspectionHours_Result[] }>;
   lk_ts_inspectionhours_modifiedby: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { lk_ts_inspectionhours_modifiedby: ts_InspectionHours_Result[] }>;
   lk_ts_inspectionhours_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { lk_ts_inspectionhours_modifiedonbehalfby: ts_InspectionHours_Result[] }>;
+  lk_ts_nonoversightactivity_createdby: WebExpand<SystemUser_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { lk_ts_nonoversightactivity_createdby: ts_nonoversightactivity_Result[] }>;
+  lk_ts_nonoversightactivity_createdonbehalfby: WebExpand<SystemUser_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { lk_ts_nonoversightactivity_createdonbehalfby: ts_nonoversightactivity_Result[] }>;
+  lk_ts_nonoversightactivity_modifiedby: WebExpand<SystemUser_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { lk_ts_nonoversightactivity_modifiedby: ts_nonoversightactivity_Result[] }>;
+  lk_ts_nonoversightactivity_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { lk_ts_nonoversightactivity_modifiedonbehalfby: ts_nonoversightactivity_Result[] }>;
   lk_ts_operationactivity_createdby: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { lk_ts_operationactivity_createdby: ts_OperationActivity_Result[] }>;
   lk_ts_operationactivity_createdonbehalfby: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { lk_ts_operationactivity_createdonbehalfby: ts_OperationActivity_Result[] }>;
   lk_ts_operationactivity_modifiedby: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { lk_ts_operationactivity_modifiedby: ts_OperationActivity_Result[] }>;
@@ -944,6 +953,7 @@ interface SystemUser_Expand {
   user_ts_canceledinspectionjustification: WebExpand<SystemUser_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { user_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
   user_ts_incompleteworkorderreason: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { user_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
   user_ts_inspectionhours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { user_ts_inspectionhours: ts_InspectionHours_Result[] }>;
+  user_ts_nonoversightactivity: WebExpand<SystemUser_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { user_ts_nonoversightactivity: ts_nonoversightactivity_Result[] }>;
   user_ts_operationactivity: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { user_ts_operationactivity: ts_OperationActivity_Result[] }>;
   user_ts_operationcontact: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { user_ts_operationcontact: ts_operationcontact_Result[] }>;
   user_ts_planningdata: WebExpand<SystemUser_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { user_ts_planningdata: ts_PlanningData_Result[] }>;
@@ -1169,6 +1179,10 @@ interface SystemUser_RelatedMany {
   lk_ts_inspectionhours_createdonbehalfby: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   lk_ts_inspectionhours_modifiedby: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   lk_ts_inspectionhours_modifiedonbehalfby: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
+  lk_ts_nonoversightactivity_createdby: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
+  lk_ts_nonoversightactivity_createdonbehalfby: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
+  lk_ts_nonoversightactivity_modifiedby: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
+  lk_ts_nonoversightactivity_modifiedonbehalfby: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
   lk_ts_operationactivity_createdby: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   lk_ts_operationactivity_createdonbehalfby: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   lk_ts_operationactivity_modifiedby: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
@@ -1270,6 +1284,7 @@ interface SystemUser_RelatedMany {
   user_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   user_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   user_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
+  user_ts_nonoversightactivity: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
   user_ts_operationactivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   user_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   user_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;

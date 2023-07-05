@@ -31,7 +31,7 @@ declare namespace Form.ts_action.Main {
       get(name: "ts_amtamount"): Xrm.NumberAttribute;
       get(name: "ts_contact"): Xrm.LookupAttribute<"contact">;
       get(name: "ts_deliverymethod"): Xrm.OptionSetAttribute<ts_deliverymethod>;
-      get(name: "ts_details"): Xrm.Attribute<string>;
+      get(name: "ts_details"): Xrm.Attribute<any>;
       get(name: "ts_duedate"): Xrm.DateAttribute;
       get(name: "ts_location"): Xrm.Attribute<string>;
       get(name: "ts_name"): Xrm.Attribute<string>;
@@ -52,7 +52,7 @@ declare namespace Form.ts_action.Main {
       get(name: "ts_amtamount"): Xrm.NumberControl;
       get(name: "ts_contact"): Xrm.LookupControl<"contact">;
       get(name: "ts_deliverymethod"): Xrm.OptionSetControl<ts_deliverymethod>;
-      get(name: "ts_details"): Xrm.StringControl;
+      get(name: "ts_details"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_duedate"): Xrm.DateControl;
       get(name: "ts_location"): Xrm.StringControl;
       get(name: "ts_name"): Xrm.StringControl;
@@ -81,7 +81,7 @@ declare namespace Form.ts_action.Main {
     getAttribute(attributeName: "ts_amtamount"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_contact"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "ts_deliverymethod"): Xrm.OptionSetAttribute<ts_deliverymethod>;
-    getAttribute(attributeName: "ts_details"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_details"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_duedate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_location"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
@@ -97,7 +97,7 @@ declare namespace Form.ts_action.Main {
     getControl(controlName: "ts_amtamount"): Xrm.NumberControl;
     getControl(controlName: "ts_contact"): Xrm.LookupControl<"contact">;
     getControl(controlName: "ts_deliverymethod"): Xrm.OptionSetControl<ts_deliverymethod>;
-    getControl(controlName: "ts_details"): Xrm.StringControl;
+    getControl(controlName: "ts_details"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_duedate"): Xrm.DateControl;
     getControl(controlName: "ts_location"): Xrm.StringControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;

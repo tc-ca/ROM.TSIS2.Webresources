@@ -6,6 +6,7 @@ interface BookingStatus_Base extends WebEntity {
   importsequencenumber?: number | null;
   modifiedon?: Date | null;
   msdyn_fieldservicestatus?: msdyn_bookingsystemstatus | null;
+  msdyn_iconname?: string | null;
   msdyn_imageurl?: string | null;
   msdyn_internalflags?: string | null;
   msdyn_serviceappointmentstatus?: msdyn_serviceappointmentstatus | null;
@@ -47,6 +48,7 @@ interface BookingStatus_Select {
   modifiedon: WebAttribute<BookingStatus_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<BookingStatus_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
   msdyn_fieldservicestatus: WebAttribute<BookingStatus_Select, { msdyn_fieldservicestatus: msdyn_bookingsystemstatus | null }, { msdyn_fieldservicestatus_formatted?: string }>;
+  msdyn_iconname: WebAttribute<BookingStatus_Select, { msdyn_iconname: string | null }, {  }>;
   msdyn_imageurl: WebAttribute<BookingStatus_Select, { msdyn_imageurl: string | null }, {  }>;
   msdyn_internalflags: WebAttribute<BookingStatus_Select, { msdyn_internalflags: string | null }, {  }>;
   msdyn_serviceappointmentstatus: WebAttribute<BookingStatus_Select, { msdyn_serviceappointmentstatus: msdyn_serviceappointmentstatus | null }, { msdyn_serviceappointmentstatus_formatted?: string }>;
@@ -77,6 +79,7 @@ interface BookingStatus_Filter {
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
   msdyn_fieldservicestatus: msdyn_bookingsystemstatus;
+  msdyn_iconname: string;
   msdyn_imageurl: string;
   msdyn_internalflags: string;
   msdyn_serviceappointmentstatus: msdyn_serviceappointmentstatus;
