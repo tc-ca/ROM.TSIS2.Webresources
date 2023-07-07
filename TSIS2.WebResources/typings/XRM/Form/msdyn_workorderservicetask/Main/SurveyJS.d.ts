@@ -122,6 +122,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_cbloaded"): Xrm.Attribute<string>;
       get(name: "ts_cbonboard"): Xrm.Attribute<string>;
       get(name: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_documenteddate"): Xrm.DateAttribute;
       get(name: "ts_flightcategory"): Xrm.OptionSetAttribute<ts_flightcategory>;
       get(name: "ts_flightnumber"): Xrm.Attribute<string>;
       get(name: "ts_flighttype"): Xrm.OptionSetAttribute<ts_flighttype>;
@@ -198,6 +199,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_cbloaded"): Xrm.StringControl;
       get(name: "ts_cbonboard"): Xrm.StringControl;
       get(name: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_documenteddate"): Xrm.DateControl;
       get(name: "ts_flightcategory"): Xrm.OptionSetControl<ts_flightcategory>;
       get(name: "ts_flightnumber"): Xrm.StringControl;
       get(name: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
@@ -277,6 +279,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ts_cbloaded"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_cbonboard"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_documenteddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_flightcategory"): Xrm.OptionSetAttribute<ts_flightcategory>;
     getAttribute(attributeName: "ts_flightnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_flighttype"): Xrm.OptionSetAttribute<ts_flighttype>;
@@ -348,6 +351,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "ts_cbloaded"): Xrm.StringControl;
     getControl(controlName: "ts_cbonboard"): Xrm.StringControl;
     getControl(controlName: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_documenteddate"): Xrm.DateControl;
     getControl(controlName: "ts_flightcategory"): Xrm.OptionSetControl<ts_flightcategory>;
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
     getControl(controlName: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;

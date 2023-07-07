@@ -32,6 +32,7 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
   ts_brandname?: ts_aircarrierbrandname | null;
   ts_cbloaded?: string | null;
   ts_cbonboard?: string | null;
+  ts_documenteddate?: Date | null;
   ts_flightcategory?: ts_flightcategory | null;
   ts_flightnumber?: string | null;
   ts_flighttype?: ts_flighttype | null;
@@ -176,6 +177,7 @@ interface msdyn_workorderservicetask_Select {
   ts_cbloaded: WebAttribute<msdyn_workorderservicetask_Select, { ts_cbloaded: string | null }, {  }>;
   ts_cbonboard: WebAttribute<msdyn_workorderservicetask_Select, { ts_cbonboard: string | null }, {  }>;
   ts_destination_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_destination_guid: string | null }, { ts_destination_formatted?: string }>;
+  ts_documenteddate: WebAttribute<msdyn_workorderservicetask_Select, { ts_documenteddate: Date | null }, { ts_documenteddate_formatted?: string }>;
   ts_flightcategory: WebAttribute<msdyn_workorderservicetask_Select, { ts_flightcategory: ts_flightcategory | null }, { ts_flightcategory_formatted?: string }>;
   ts_flightnumber: WebAttribute<msdyn_workorderservicetask_Select, { ts_flightnumber: string | null }, {  }>;
   ts_flighttype: WebAttribute<msdyn_workorderservicetask_Select, { ts_flighttype: ts_flighttype | null }, { ts_flighttype_formatted?: string }>;
@@ -263,6 +265,7 @@ interface msdyn_workorderservicetask_Filter {
   ts_cbloaded: string;
   ts_cbonboard: string;
   ts_destination_guid: XQW.Guid;
+  ts_documenteddate: Date;
   ts_flightcategory: ts_flightcategory;
   ts_flightnumber: string;
   ts_flighttype: ts_flighttype;
@@ -368,6 +371,7 @@ interface msdyn_workorderservicetask_FormattedResult {
   ts_cargoservices_formatted?: string;
   ts_cateringservices_formatted?: string;
   ts_destination_formatted?: string;
+  ts_documenteddate_formatted?: string;
   ts_flightcategory_formatted?: string;
   ts_flighttype_formatted?: string;
   ts_gate_formatted?: string;

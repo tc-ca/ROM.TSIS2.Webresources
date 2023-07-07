@@ -83,6 +83,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_conductingoversight?: number | null;
   ts_costexplanation?: string | null;
   ts_details?: string | null;
+  ts_documenteddate?: Date | null;
   ts_incident?: ts_yesno | null;
   ts_incompleteworkorderreasonforother?: string | null;
   ts_isisso?: number | null;
@@ -354,6 +355,7 @@ interface msdyn_workorder_Select {
   ts_costexplanation: WebAttribute<msdyn_workorder_Select, { ts_costexplanation: string | null }, {  }>;
   ts_country_guid: WebAttribute<msdyn_workorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_details: WebAttribute<msdyn_workorder_Select, { ts_details: string | null }, {  }>;
+  ts_documenteddate: WebAttribute<msdyn_workorder_Select, { ts_documenteddate: Date | null }, { ts_documenteddate_formatted?: string }>;
   ts_incident: WebAttribute<msdyn_workorder_Select, { ts_incident: ts_yesno | null }, { ts_incident_formatted?: string }>;
   ts_incompleteworkorderreason_guid: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreason_guid: string | null }, { ts_incompleteworkorderreason_formatted?: string }>;
   ts_incompleteworkorderreasonforother: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreasonforother: string | null }, {  }>;
@@ -527,6 +529,7 @@ interface msdyn_workorder_Filter {
   ts_costexplanation: string;
   ts_country_guid: XQW.Guid;
   ts_details: string;
+  ts_documenteddate: Date;
   ts_incident: ts_yesno;
   ts_incompleteworkorderreason_guid: XQW.Guid;
   ts_incompleteworkorderreasonforother: string;
@@ -715,6 +718,7 @@ interface msdyn_workorder_FormattedResult {
   ts_completedquarter_formatted?: string;
   ts_contact_formatted?: string;
   ts_country_formatted?: string;
+  ts_documenteddate_formatted?: string;
   ts_incident_formatted?: string;
   ts_incompleteworkorderreason_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
