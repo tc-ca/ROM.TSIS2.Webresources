@@ -2,21 +2,24 @@ namespace ROM.User {
     let userId: string;
     let dualInspectorRoleId: string;
     const clientUrl = Xrm.Utility.getGlobalContext().getClientUrl();
+    const isUnifiedClientInterface = (Xrm as any).Internal.isUci();
 
     export async function onLoad(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
-        const form = <Form.systemuser.Main.User>eContext.getFormContext();
-        userId = form.data.entity.getId().replace(/[{}]/g, "");
+        if (isUnifiedClientInterface) {
+            const form = <Form.systemuser.Main.User>eContext.getFormContext();
+            userId = form.data.entity.getId().replace(/[{}]/g, "");
 
-        if (form.ui.getFormType() == 2) {
-            try {
-                const id = await getDualInspectorRoleId(form);
-                if (id) {
-                    dualInspectorRoleId = id;
-                    checkIfUserHasDualInspectorRole(form);
+            if (form.ui.getFormType() == 2) {
+                try {
+                    const id = await getDualInspectorRoleId(form);
+                    if (id) {
+                        dualInspectorRoleId = id;
+                        checkIfUserHasDualInspectorRole(form);
+                    }
+                    form.getControl("ts_dualinspector").setVisible(true);
+                } catch (error) {
+                    console.error('Error:', error);
                 }
-                form.getControl("ts_dualinspector").setVisible(true);
-            } catch (error) {
-                console.error('Error:', error);
             }
         }
     }
@@ -56,52 +59,54 @@ namespace ROM.User {
     }
 
     export function dualInspectorToggleOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.systemuser.Main.User>eContext.getFormContext();
-        const dualInspectorToggleAttribute = form.getAttribute("ts_dualinspector");
+        if (isUnifiedClientInterface) {
+            const form = <Form.systemuser.Main.User>eContext.getFormContext();
+            const dualInspectorToggleAttribute = form.getAttribute("ts_dualinspector");
 
-        if (dualInspectorToggleAttribute != null) {
-            form.getControl("ts_dualinspector").setDisabled(true);
-            const dualInspectorToggleAttributeValue = dualInspectorToggleAttribute.getValue();
-            Xrm.Utility.showProgressIndicator(dualInspectorToggleAttributeValue ? "Adding ROM - Dual Inspector role..." : "Removing ROM - Dual Inspector role...");
+            if (dualInspectorToggleAttribute != null) {
+                form.getControl("ts_dualinspector").setDisabled(true);
+                const dualInspectorToggleAttributeValue = dualInspectorToggleAttribute.getValue();
+                Xrm.Utility.showProgressIndicator(dualInspectorToggleAttributeValue ? "Adding ROM - Dual Inspector role..." : "Removing ROM - Dual Inspector role...");
 
-            const operation = dualInspectorToggleAttributeValue == true
-                ? 'POST'
-                : 'DELETE';
+                const operation = dualInspectorToggleAttributeValue == true
+                    ? 'POST'
+                    : 'DELETE';
 
-            const operationUrl = dualInspectorToggleAttributeValue == true
-                ? `${clientUrl}/api/data/v9.2/systemusers(${userId})/systemuserroles_association/$ref`
-                : `${clientUrl}/api/data/v9.2/systemusers(${userId})/systemuserroles_association/$ref?$id=${clientUrl}/api/data/v9.2/roles(${dualInspectorRoleId})`;
+                const operationUrl = dualInspectorToggleAttributeValue == true
+                    ? `${clientUrl}/api/data/v9.2/systemusers(${userId})/systemuserroles_association/$ref`
+                    : `${clientUrl}/api/data/v9.2/systemusers(${userId})/systemuserroles_association/$ref?$id=${clientUrl}/api/data/v9.2/roles(${dualInspectorRoleId})`;
 
-            const operationError = dualInspectorToggleAttributeValue == true
-                ? 'Failed to add role to user'
-                : 'Failed to remove role from user';
+                const operationError = dualInspectorToggleAttributeValue == true
+                    ? 'Failed to add role to user'
+                    : 'Failed to remove role from user';
 
-            let body: any;
-            if (operation == 'POST') {
-                body = JSON.stringify({ "@odata.id": `${clientUrl}/api/data/v9.2/roles(${dualInspectorRoleId})` });
-            }
-
-            fetch(operationUrl, {
-                method: operation,
-                headers: {
-                    'OData-MaxVersion': '4.0',
-                    'OData-Version': '4.0',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: body,
-            }).then(response => {
-                if (!response.ok) throw new Error(operationError);
-                else {
-                    form.data.save().then(() => Xrm.Utility.closeProgressIndicator());
+                let body: any;
+                if (operation == 'POST') {
+                    body = JSON.stringify({ "@odata.id": `${clientUrl}/api/data/v9.2/roles(${dualInspectorRoleId})` });
                 }
-            }).catch(error => {
-                dualInspectorToggleAttribute.setValue(!dualInspectorToggleAttributeValue);
-                Xrm.Utility.closeProgressIndicator();
-                Xrm.Navigation.openAlertDialog({ text: error, title: "Error" });
+
+                fetch(operationUrl, {
+                    method: operation,
+                    headers: {
+                        'OData-MaxVersion': '4.0',
+                        'OData-Version': '4.0',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: body,
+                }).then(response => {
+                    if (!response.ok) throw new Error(operationError);
+                    else {
+                        form.data.save().then(() => Xrm.Utility.closeProgressIndicator());
+                    }
+                }).catch(error => {
+                    dualInspectorToggleAttribute.setValue(!dualInspectorToggleAttributeValue);
+                    Xrm.Utility.closeProgressIndicator();
+                    Xrm.Navigation.openAlertDialog({ text: error, title: "Error" });
+                    form.getControl("ts_dualinspector").setDisabled(false);
+                });
                 form.getControl("ts_dualinspector").setDisabled(false);
-            });
-            form.getControl("ts_dualinspector").setDisabled(false);
+            }
         }
     }
 }

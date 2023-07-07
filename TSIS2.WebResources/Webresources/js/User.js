@@ -42,12 +42,14 @@ var ROM;
         var userId;
         var dualInspectorRoleId;
         var clientUrl = Xrm.Utility.getGlobalContext().getClientUrl();
+        var isUnifiedClientInterface = Xrm.Internal.isUci();
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
                 var form, id, error_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
+                            if (!isUnifiedClientInterface) return [3 /*break*/, 4];
                             form = eContext.getFormContext();
                             userId = form.data.entity.getId().replace(/[{}]/g, "");
                             if (!(form.ui.getFormType() == 2)) return [3 /*break*/, 4];
@@ -119,47 +121,49 @@ var ROM;
             });
         }
         function dualInspectorToggleOnChange(eContext) {
-            var form = eContext.getFormContext();
-            var dualInspectorToggleAttribute = form.getAttribute("ts_dualinspector");
-            if (dualInspectorToggleAttribute != null) {
-                form.getControl("ts_dualinspector").setDisabled(true);
-                var dualInspectorToggleAttributeValue_1 = dualInspectorToggleAttribute.getValue();
-                Xrm.Utility.showProgressIndicator(dualInspectorToggleAttributeValue_1 ? "Adding ROM - Dual Inspector role..." : "Removing ROM - Dual Inspector role...");
-                var operation = dualInspectorToggleAttributeValue_1 == true
-                    ? 'POST'
-                    : 'DELETE';
-                var operationUrl = dualInspectorToggleAttributeValue_1 == true
-                    ? clientUrl + "/api/data/v9.2/systemusers(" + userId + ")/systemuserroles_association/$ref"
-                    : clientUrl + "/api/data/v9.2/systemusers(" + userId + ")/systemuserroles_association/$ref?$id=" + clientUrl + "/api/data/v9.2/roles(" + dualInspectorRoleId + ")";
-                var operationError_1 = dualInspectorToggleAttributeValue_1 == true
-                    ? 'Failed to add role to user'
-                    : 'Failed to remove role from user';
-                var body = void 0;
-                if (operation == 'POST') {
-                    body = JSON.stringify({ "@odata.id": clientUrl + "/api/data/v9.2/roles(" + dualInspectorRoleId + ")" });
-                }
-                fetch(operationUrl, {
-                    method: operation,
-                    headers: {
-                        'OData-MaxVersion': '4.0',
-                        'OData-Version': '4.0',
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: body,
-                }).then(function (response) {
-                    if (!response.ok)
-                        throw new Error(operationError_1);
-                    else {
-                        form.data.save().then(function () { return Xrm.Utility.closeProgressIndicator(); });
+            if (isUnifiedClientInterface) {
+                var form_1 = eContext.getFormContext();
+                var dualInspectorToggleAttribute_1 = form_1.getAttribute("ts_dualinspector");
+                if (dualInspectorToggleAttribute_1 != null) {
+                    form_1.getControl("ts_dualinspector").setDisabled(true);
+                    var dualInspectorToggleAttributeValue_1 = dualInspectorToggleAttribute_1.getValue();
+                    Xrm.Utility.showProgressIndicator(dualInspectorToggleAttributeValue_1 ? "Adding ROM - Dual Inspector role..." : "Removing ROM - Dual Inspector role...");
+                    var operation = dualInspectorToggleAttributeValue_1 == true
+                        ? 'POST'
+                        : 'DELETE';
+                    var operationUrl = dualInspectorToggleAttributeValue_1 == true
+                        ? clientUrl + "/api/data/v9.2/systemusers(" + userId + ")/systemuserroles_association/$ref"
+                        : clientUrl + "/api/data/v9.2/systemusers(" + userId + ")/systemuserroles_association/$ref?$id=" + clientUrl + "/api/data/v9.2/roles(" + dualInspectorRoleId + ")";
+                    var operationError_1 = dualInspectorToggleAttributeValue_1 == true
+                        ? 'Failed to add role to user'
+                        : 'Failed to remove role from user';
+                    var body = void 0;
+                    if (operation == 'POST') {
+                        body = JSON.stringify({ "@odata.id": clientUrl + "/api/data/v9.2/roles(" + dualInspectorRoleId + ")" });
                     }
-                }).catch(function (error) {
-                    dualInspectorToggleAttribute.setValue(!dualInspectorToggleAttributeValue_1);
-                    Xrm.Utility.closeProgressIndicator();
-                    Xrm.Navigation.openAlertDialog({ text: error, title: "Error" });
-                    form.getControl("ts_dualinspector").setDisabled(false);
-                });
-                form.getControl("ts_dualinspector").setDisabled(false);
+                    fetch(operationUrl, {
+                        method: operation,
+                        headers: {
+                            'OData-MaxVersion': '4.0',
+                            'OData-Version': '4.0',
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: body,
+                    }).then(function (response) {
+                        if (!response.ok)
+                            throw new Error(operationError_1);
+                        else {
+                            form_1.data.save().then(function () { return Xrm.Utility.closeProgressIndicator(); });
+                        }
+                    }).catch(function (error) {
+                        dualInspectorToggleAttribute_1.setValue(!dualInspectorToggleAttributeValue_1);
+                        Xrm.Utility.closeProgressIndicator();
+                        Xrm.Navigation.openAlertDialog({ text: error, title: "Error" });
+                        form_1.getControl("ts_dualinspector").setDisabled(false);
+                    });
+                    form_1.getControl("ts_dualinspector").setDisabled(false);
+                }
             }
         }
         User.dualInspectorToggleOnChange = dualInspectorToggleOnChange;
