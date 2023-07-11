@@ -411,45 +411,96 @@
             "file": "html\\SurveyRenderPrint.html",
             "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
           },
+          /* RATE Factor Guides */
           {
-            "uniquename": "ts_/html/RATEFactor1Guide.html",
-            "file": "html\\RATEFactor1Guide.html",
-            "description": "Guide for RATE Factor 1"
+            "uniquename": "ts_/html/RATEFactorGuide_AcceptanceOfResponsibility.html",
+            "file": "html\\RATEFactorGuide_AcceptanceOfResponsibility.html",
+            "description": "Guide for RATE Factor (AcceptanceOfResponsibility)"
           },
           {
-            "uniquename": "ts_/html/RATEFactor1GuidePopUp.html",
-            "file": "html\\RATEFactor1GuidePopUp.html",
-            "description": "Popup for RATE Factor 1"
+            "uniquename": "ts_/html/RATEFactorGuidePopUp_AcceptanceOfResponsibility.html",
+            "file": "html\\RATEFactorGuidePopUp_AcceptanceOfResponsibility.html",
+            "description": "Popup for RATE Factor (AcceptanceOfResponsibility)"
           },
           {
-            "uniquename": "ts_/html/RATEFactor2Guide.html",
-            "file": "html\\RATEFactor2Guide.html",
-            "description": "Guide for RATE Factor 2"
+            "uniquename": "ts_/html/RATEFactorGuide_ActualPotentialHarmVulnerability.html",
+            "file": "html\\RATEFactorGuide_ActualPotentialHarmVulnerability.html",
+            "description": "Guide for RATE Factor (ActualPotentialHarmVulnerability)"
           },
           {
-            "uniquename": "ts_/html/RATEFactor2GuidePopUp.html",
-            "file": "html\\RATEFactor2GuidePopUp.html",
-            "description": "Popup for RATE Factor 2"
+            "uniquename": "ts_/html/RATEFactorGuidePopUp_ActualPotentialHarmVulnerability.html",
+            "file": "html\\RATEFactorGuidePopUp_ActualPotentialHarmVulnerability.html",
+            "description": "Popup for RATE Factor (ActualPotentialHarmVulnerability)"
           },
           {
-            "uniquename": "ts_/html/RATEFactor3Guide.html",
-            "file": "html\\RATEFactor3Guide.html",
-            "description": "Guide for RATE Factor 3"
+            "uniquename": "ts_/html/RATEFactorGuide_Cooperation.html",
+            "file": "html\\RATEFactorGuide_Cooperation.html",
+            "description": "Guide for RATE Factor (Cooperation)"
           },
           {
-            "uniquename": "ts_/html/RATEFactor3GuidePopUp.html",
-            "file": "html\\RATEFactor3GuidePopUp.html",
-            "description": "Popup for RATE Factor 3"
+            "uniquename": "ts_/html/RATEFactorGuidePopUp_Cooperation.html",
+            "file": "html\\RATEFactorGuidePopUp_Cooperation.html",
+            "description": "Popup for RATE Factor (Cooperation)"
           },
           {
-            "uniquename": "ts_/html/RATEFactor4Guide.html",
-            "file": "html\\RATEFactor4Guide.html",
-            "description": "Guide for RATE Factor 4"
+            "uniquename": "ts_/html/RATEFactorGuide_EconomicBenefit.html",
+            "file": "html\\RATEFactorGuide_EconomicBenefit.html",
+            "description": "Guide for RATE Factor (EconomicBenefit)"
           },
           {
-            "uniquename": "ts_/html/RATEFactor4GuidePopUp.html",
-            "file": "html\\RATEFactor4GuidePopUp.html",
-            "description": "Popup for RATE Factor 4"
+            "uniquename": "ts_/html/RATEFactorGuidePopUp_EconomicBenefit.html",
+            "file": "html\\RATEFactorGuidePopUp_EconomicBenefit.html",
+            "description": "Popup for RATE Factor (EconomicBenefit)"
+          },
+          {
+            "uniquename": "ts_/html/RATEFactorGuide_GeneralNonComplianceHistory.html",
+            "file": "html\\RATEFactorGuide_GeneralNonComplianceHistory.html",
+            "description": "Guide for RATE Factor (GeneralNonComplianceHistory)"
+          },
+          {
+            "uniquename": "ts_/html/RATEFactorGuidePopUp_GeneralNonComplianceHistory.html",
+            "file": "html\\RATEFactorGuidePopUp_GeneralNonComplianceHistory.html",
+            "description": "Popup for RATE Factor (GeneralNonComplianceHistory)"
+          },
+          {
+            "uniquename": "ts_/html/RATEFactorGuide_Intentionality.html",
+            "file": "html\\RATEFactorGuide_Intentionality.html",
+            "description": "Guide for RATE Factor (Intentionality)"
+          },
+          {
+            "uniquename": "ts_/html/RATEFactorGuidePopUp_Intentionality.html",
+            "file": "html\\RATEFactorGuidePopUp_Intentionality.html",
+            "description": "Popup for RATE Factor (Intentionality)"
+          },
+          {
+            "uniquename": "ts_/html/RATEFactorGuide_MitigationOfHarm.html",
+            "file": "html\\RATEFactorGuide_MitigationOfHarm.html",
+            "description": "Guide for RATE Factor (MitigationOfHarm)"
+          },
+          {
+            "uniquename": "ts_/html/RATEFactorGuidePopUp_MitigationOfHarm.html",
+            "file": "html\\RATEFactorGuidePopUp_MitigationOfHarm.html",
+            "description": "Popup for RATE Factor (MitigationOfHarm)"
+          },
+          {
+            "uniquename": "ts_/html/RATEFactorGuide_PreventionOfRecurrence.html",
+            "file": "html\\RATEFactorGuide_PreventionOfRecurrence.html",
+            "description": "Guide for RATE Factor (PreventionOfRecurrence)"
+          },
+          {
+            "uniquename": "ts_/html/RATEFactorGuidePopUp_PreventionOfRecurrence.html",
+            "file": "html\\RATEFactorGuidePopUp_PreventionOfRecurrence.html",
+            "description": "Popup for RATE Factor (PreventionOfRecurrence)"
+          },
+          {
+            "uniquename": "ts_/html/RATEFactorGuide_SpecificNonComplianceHistory.html",
+            "file": "html\\RATEFactorGuide_SpecificNonComplianceHistory.html",
+            "description": "Guide for RATE Factor (SpecificNonComplianceHistory)"
+          },
+          {
+            "uniquename": "ts_/html/RATEFactorGuidePopUp_SpecificNonComplianceHistory.html",
+            "file": "html\\RATEFactorGuidePopUp_SpecificNonComplianceHistory.html",
+            "description": "Popup for RATE Factor (SpecificNonComplianceHistory)"
           },
           {
             "uniquename": "ts_/html/EmailAttachFile.html",

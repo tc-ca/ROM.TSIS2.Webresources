@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      loadHTML = function () {
+        var pageInput = {
+          pageType: "webresource",
+          webresourceName: "ts_/html/RATEFactorGuidePopUp_Intentionality.html",
+        };
+        var navigationOptions = {
+          target: 2,
+          width: 700,
+          height: 375,
+          position: 1,
+          title: " ",
+        };
+        parent.Xrm.Navigation.navigateTo(pageInput, navigationOptions).then();
+      };
+    </script>
+    <button type="button" class="btn btn-default btn-lg" onclick="loadHTML()">
+      <span class="glyphicon glyphicon-info-sign"></span>
+    </button>
+  </body>
+</html>
