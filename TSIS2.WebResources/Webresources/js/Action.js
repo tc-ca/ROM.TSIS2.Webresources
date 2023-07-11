@@ -13,20 +13,31 @@ var ROM;
             { text: "Letter - Mail", value: 741130004 /* LetterMail */ },
             { text: "Letter - Registered Mail", value: 741130005 /* LetterRegisteredMail */ }
         ];
+        var allActionStatus = [
+            { text: "Consulted", value: 741130000 /* Consulted */ },
+            { text: "Convened", value: 741130001 /* Convened */ },
+            { text: "Delivered", value: 741130002 /* Delivered */ },
+            { text: "Received", value: 741130003 /* Received */ },
+            { text: "Requested", value: 741130004 /* Requested */ },
+            { text: "Sworn", value: 741130005 /* Sworn */ }
+        ];
         function onLoad(eContext) {
             var form = eContext.getFormContext();
-            if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
-                setRelatedFindingsFetchXML(form);
-            }
-            else if (form.ui.getFormType() != 2) {
+            var formType = form.ui.getFormType();
+            if (formType === 1 || formType === 2) {
                 actionCategoryOnChange(eContext);
+            }
+            else if (formType !== 0 && formType !== 6) {
+                setRelatedFindingsFetchXML(form);
             }
             actionStatusOnChange(eContext);
         }
         Action.onLoad = onLoad;
         function setOptions(attribute, options) {
-            attribute.clearOptions();
-            options.forEach(function (option) { return attribute.addOption(option); });
+            if (options) {
+                attribute.clearOptions();
+                options.forEach(function (option) { return attribute.addOption(option); });
+            }
         }
         function resetFieldsVisibility(form) {
             form.getControl("ts_stakeholder").setVisible(true);
@@ -39,10 +50,12 @@ var ROM;
             var actionCategoryAttributeValue = form.getAttribute("ts_actioncategory").getValue();
             var actionTypeAttributeValue = form.getAttribute("ts_actiontype").getValue();
             var deliveryMethodAttribute = form.getControl("ts_deliverymethod");
+            var actionStatusAttribute = form.getControl("ts_actionstatus");
             if (actionCategoryAttributeValue == 741130002 /* EnforcementAction */) {
-                var filteredOptions = allDeliveryMethodOptions;
+                var filteredDeliveryOptions = allDeliveryMethodOptions;
+                var filteredStatusOptions = allActionStatus;
                 if (actionTypeAttributeValue == 741130012 /* VerbalWarning */) {
-                    filteredOptions = [
+                    filteredDeliveryOptions = [
                         { text: "In Person", value: 741130006 /* InPerson */ },
                         { text: "Telephone", value: 741130007 /* Telephone */ },
                         { text: "Email", value: 741130001 /* Email */ }
@@ -51,12 +64,15 @@ var ROM;
                     form.getControl("ts_location").setVisible(false);
                 }
                 else if (actionTypeAttributeValue == 741130013 /* WrittenWarning */) {
-                    filteredOptions = [
+                    filteredDeliveryOptions = [
                         { text: "Email", value: 741130001 /* Email */ },
                         { text: "Letter - Hand delivered", value: 741130003 /* LetterHandDelivered */ },
                         { text: "Letter - Mail", value: 741130004 /* LetterMail */ },
                         { text: "Letter - Registered Mail", value: 741130005 /* LetterRegisteredMail */ },
                         { text: "SSCIMS", value: 741130002 /* SSCIMS */ }
+                    ];
+                    filteredStatusOptions = [
+                        { text: "Delivered", value: 741130002 /* Delivered */ }
                     ];
                     resetFieldsVisibility(form);
                     form.getControl("ts_location").setVisible(false);
@@ -68,14 +84,17 @@ var ROM;
                     form.getControl("ts_location").setVisible(false);
                 }
                 else {
-                    filteredOptions = allDeliveryMethodOptions;
+                    filteredDeliveryOptions = allDeliveryMethodOptions;
+                    filteredStatusOptions = allActionStatus;
                     resetFieldsVisibility(form);
                 }
-                setOptions(deliveryMethodAttribute, filteredOptions);
+                setOptions(deliveryMethodAttribute, filteredDeliveryOptions);
+                setOptions(actionStatusAttribute, filteredStatusOptions);
             }
             else {
                 resetFieldsVisibility(form);
                 setOptions(deliveryMethodAttribute, allDeliveryMethodOptions);
+                setOptions(actionStatusAttribute, allActionStatus);
             }
         }
         Action.actionCategoryOnChange = actionCategoryOnChange;

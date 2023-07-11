@@ -9,21 +9,33 @@ namespace ROM.Action {
         { text: "Letter - Mail", value: ts_deliverymethod.LetterMail },
         { text: "Letter - Registered Mail", value: ts_deliverymethod.LetterRegisteredMail }
     ];
-       
+
+    const allActionStatus = [
+        { text: "Consulted", value: ts_actionstatus.Consulted },
+        { text: "Convened", value: ts_actionstatus.Convened },
+        { text: "Delivered", value: ts_actionstatus.Delivered },
+        { text: "Received", value: ts_actionstatus.Received },
+        { text: "Requested", value: ts_actionstatus.Requested },
+        { text: "Sworn", value: ts_actionstatus.Sworn }
+    ];
+
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_action.Main.Information>eContext.getFormContext();
-        if(form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6){
-            setRelatedFindingsFetchXML(form)
-        }
-        else if(form.ui.getFormType() != 2){
+        const formType = form.ui.getFormType();
+
+        if (formType === 1 || formType === 2) {
             actionCategoryOnChange(eContext);
+        } else if (formType !== 0 && formType !== 6) {
+            setRelatedFindingsFetchXML(form);
         }
         actionStatusOnChange(eContext);
     }
 
     function setOptions(attribute, options) {
-        attribute.clearOptions();
-        options.forEach(option => attribute.addOption(option));
+        if (options) {
+            attribute.clearOptions();
+            options.forEach(option => attribute.addOption(option));
+        }
     }
 
     function resetFieldsVisibility(form: Form.ts_action.Main.ROMAction) {
@@ -38,12 +50,14 @@ namespace ROM.Action {
         const actionCategoryAttributeValue = form.getAttribute("ts_actioncategory").getValue();
         const actionTypeAttributeValue = form.getAttribute("ts_actiontype").getValue();
         const deliveryMethodAttribute = form.getControl("ts_deliverymethod");
-    
+        const actionStatusAttribute = form.getControl("ts_actionstatus");
+
         if (actionCategoryAttributeValue == ts_actioncategory.EnforcementAction) {
-            let filteredOptions = allDeliveryMethodOptions
-    
+            let filteredDeliveryOptions = allDeliveryMethodOptions
+            let filteredStatusOptions = allActionStatus;
+
             if (actionTypeAttributeValue == ts_actiontype.VerbalWarning) {
-                filteredOptions = [
+                filteredDeliveryOptions = [
                     { text: "In Person", value: ts_deliverymethod.InPerson },
                     { text: "Telephone", value: ts_deliverymethod.Telephone },
                     { text: "Email", value: ts_deliverymethod.Email }
@@ -51,13 +65,18 @@ namespace ROM.Action {
                 resetFieldsVisibility(form);
                 form.getControl("ts_location").setVisible(false);
             } else if (actionTypeAttributeValue == ts_actiontype.WrittenWarning) {
-                filteredOptions = [
+                filteredDeliveryOptions = [
                     { text: "Email", value: ts_deliverymethod.Email },
                     { text: "Letter - Hand delivered", value: ts_deliverymethod.LetterHandDelivered },
                     { text: "Letter - Mail", value: ts_deliverymethod.LetterMail },
                     { text: "Letter - Registered Mail", value: ts_deliverymethod.LetterRegisteredMail },
                     { text: "SSCIMS", value: ts_deliverymethod.SSCIMS }
                 ];
+
+                filteredStatusOptions = [
+                    { text: "Delivered", value: ts_actionstatus.Delivered }
+                ]
+
                 resetFieldsVisibility(form);
                 form.getControl("ts_location").setVisible(false);
             } else if (actionTypeAttributeValue == ts_actiontype.RegionalEnforcementUnitREU) {
@@ -66,14 +85,18 @@ namespace ROM.Action {
                 form.getControl("ts_deliverymethod").setVisible(false);
                 form.getControl("ts_location").setVisible(false);
             } else {
-                filteredOptions = allDeliveryMethodOptions;
+                filteredDeliveryOptions = allDeliveryMethodOptions;
+                filteredStatusOptions = allActionStatus;
+
                 resetFieldsVisibility(form);
             }
-            setOptions(deliveryMethodAttribute, filteredOptions);
+            setOptions(deliveryMethodAttribute, filteredDeliveryOptions);
+            setOptions(actionStatusAttribute, filteredStatusOptions);
         }
         else {
             resetFieldsVisibility(form);
             setOptions(deliveryMethodAttribute, allDeliveryMethodOptions);
+            setOptions(actionStatusAttribute, allActionStatus);
         }
     }
 
@@ -84,14 +107,14 @@ namespace ROM.Action {
             setTimeout(ROM.Action.setRelatedFindingsFetchXML, 1000);
             return;
         }
-        else{
+        else {
             let actionId = form.data.entity.getId();
 
             let fetchXml = `<link-entity name="ts_actionfinding" from="ts_ovs_finding" to="ovs_findingid" link-type="inner" alias="aa"><attribute name="ts_ovs_finding"/><filter type="and"><condition attribute="ts_ovs_finding" operator="not-null"/></filter><link-entity name="ts_action" from="ts_actionid" to="ts_action" link-type="inner" alias="ab"><attribute name="ts_actionid"/><filter type="and"><condition attribute="ts_actionid" operator="eq" value="${actionId}"/></filter></link-entity></link-entity>`
 
             ROM.Utils.setSubgridFilterXml(form, "subgrid_related_findings", fetchXml);
         }
-    } 
+    }
 
     export function actionStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_action.Main.ROMAction>eContext.getFormContext();
