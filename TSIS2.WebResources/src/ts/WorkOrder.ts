@@ -74,14 +74,14 @@ namespace ROM.WorkOrder {
         //Set Security Incident Lookup Navigation to open Time Tracking form when on Time Tracking Tab
         setSecurityIncidentLookupClickNavigation(eContext);
 
-        if (currentSystemStatus == 690970004) { 
+        if (currentSystemStatus == 690970004 || currentSystemStatus == msdyn_wosystemstatus.Closed) {
             form.getControl("ts_completedquarter").setVisible(true);
         }
         else {
             form.getControl("ts_completedquarter").setVisible(false);
         }
 
-        if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003) { //Closed ; Completed
+        if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == msdyn_wosystemstatus.Closed) { //Closed ; Completed
             form.getControl("ovs_revisedquarterid").setDisabled(true);
         }
 
@@ -211,7 +211,7 @@ namespace ROM.WorkOrder {
                 }
                 setActivityTypeDisabled(eContext);
 
-                if (currentSystemStatus == 690970004) {
+                if (currentSystemStatus == 690970004 || currentSystemStatus == msdyn_wosystemstatus.Closed) {
                     if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
                         form.getControl("header_msdyn_systemstatus").setDisabled(true);
                     }
@@ -280,7 +280,7 @@ namespace ROM.WorkOrder {
             var options = workOrderStatus.getOptions();
 
             for (var i = 0; i < options.length; i++) {
-                if (options[i].value == 690970003 || options[i].value == 690970001 || options[i].value == 690970002) {
+                if (options[i].value == 690970003 || options[i].value == 690970001 || options[i].value == 690970002 || options[i].value== 690970004) {
                     workOrderStatus.removeOption(options[i].value);
                 }
             }
@@ -318,7 +318,7 @@ namespace ROM.WorkOrder {
 
         var workOrderServiceTaskData;
 
-        if (systemStatus == 690970004) { //Only close associated entities when Record Status is set to Closed - Posted
+        if (systemStatus == msdyn_wosystemstatus.ClosedInactive) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
             workOrderServiceTaskData =
             {
                 "statecode": 1,           //open -> 0
@@ -856,7 +856,7 @@ namespace ROM.WorkOrder {
         }
         else
             //If system status is set to closed
-            if (newSystemStatus == 690970004) {
+            if (newSystemStatus == msdyn_wosystemstatus.ClosedInactive || newSystemStatus == msdyn_wosystemstatus.Closed) {
                 Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=statecode eq 0 and msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
                     if (result.entities.length > 0) {
                         var alertStrings = {
@@ -869,33 +869,45 @@ namespace ROM.WorkOrder {
                         form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
                     }
                     else {
-                        var confirmStrings = {
-                            text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationText"),
-                            title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationTitle")
+                        if (newSystemStatus == msdyn_wosystemstatus.ClosedInactive) {
+                            var confirmStrings = {
+                                text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationText"),
+                                title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationTitle")
 
-                        };
-                        var confirmOptions = { height: 200, width: 450 };
+                            };
+                            var confirmOptions = { height: 200, width: 450 };
 
-                        Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
-                            function (success) {
-                                if (success.confirmed) {
-                                    //Set state to Inactive
-                                    form.getAttribute("statecode").setValue(1);
-                                    //Set Status Reason to Closed
-                                    form.getAttribute("statuscode").setValue(918640000);
-                                    currentSystemStatus = newSystemStatus;
-                                    //At Transport Canada, Fiscal Years run from Apr 1st to Mar 31, Q1 = Apr-Jun, Q2 = Jul-Sept, Q3 = Oct-Dec, Q4 = Jan-Mar
-                                    var currentQuarter = Math.floor(new Date().getMonth() / 3);
-                                    if (currentQuarter == 0) {
-                                        currentQuarter = 4;
+                            Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
+                                function (success) {
+                                    if (success.confirmed) {
+                                        //Set state to Inactive
+                                        form.getAttribute("statecode").setValue(1);
+                                        //Set Status Reason to Closed
+                                        form.getAttribute("statuscode").setValue(918640000);
+
+                                        currentSystemStatus = newSystemStatus;
+                                        //At Transport Canada, Fiscal Years run from Apr 1st to Mar 31, Q1 = Apr-Jun, Q2 = Jul-Sept, Q3 = Oct-Dec, Q4 = Jan-Mar
+                                        var currentQuarter = Math.floor(new Date().getMonth() / 3);
+                                        if (currentQuarter == 0) {
+                                            currentQuarter = 4;
+                                        }
+                                        form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
+                                        form.getControl("ts_completedquarter").setVisible(true);
+                                    } else {
+                                        //Undo the system status change
+                                        form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
                                     }
-                                    form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
-                                    form.getControl("ts_completedquarter").setVisible(true);
-                                } else {
-                                    //Undo the system status change
-                                    form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
-                                }
-                            });
+                                });
+                        }
+                        else {
+                            //At Transport Canada, Fiscal Years run from Apr 1st to Mar 31, Q1 = Apr-Jun, Q2 = Jul-Sept, Q3 = Oct-Dec, Q4 = Jan-Mar
+                            var currentQuarter = Math.floor(new Date().getMonth() / 3);
+                            if (currentQuarter == 0) {
+                                currentQuarter = 4;
+                            }
+                            form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
+                            form.getControl("ts_completedquarter").setVisible(true);
+                        }
                     }
 
                 }, function (error) {

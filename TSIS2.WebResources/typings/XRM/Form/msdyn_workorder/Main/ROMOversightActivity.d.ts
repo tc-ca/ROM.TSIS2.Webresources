@@ -191,6 +191,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_costexplanation"): Xrm.Attribute<string>;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_details"): Xrm.Attribute<string>;
+      get(name: "ts_documenteddate"): Xrm.DateAttribute;
       get(name: "ts_incompleteworkorderreason"): Xrm.LookupAttribute<"ts_incompleteworkorderreason">;
       get(name: "ts_incompleteworkorderreasonforother"): Xrm.Attribute<string>;
       get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
@@ -300,6 +301,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_substatus"): Xrm.LookupControl<"msdyn_workordersubstatus">;
       get(name: "msdyn_subtotalamount"): Xrm.NumberControl;
       get(name: "msdyn_supportcontact"): Xrm.LookupControl<"bookableresource">;
+      get(name: "msdyn_systemstatus"): Xrm.OptionSetControl<msdyn_wosystemstatus>;
       get(name: "msdyn_taxable"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_taxcode"): Xrm.LookupControl<"msdyn_taxcode">;
       get(name: "msdyn_timeclosed"): Xrm.DateControl;
@@ -337,6 +339,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_costexplanation"): Xrm.StringControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_details"): Xrm.StringControl;
+      get(name: "ts_documenteddate"): Xrm.DateControl;
       get(name: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;
       get(name: "ts_incompleteworkorderreasonforother"): Xrm.StringControl;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
@@ -470,6 +473,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_costexplanation"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_details"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_documenteddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_incompleteworkorderreason"): Xrm.LookupAttribute<"ts_incompleteworkorderreason">;
     getAttribute(attributeName: "ts_incompleteworkorderreasonforother"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
@@ -574,6 +578,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_substatus"): Xrm.LookupControl<"msdyn_workordersubstatus">;
     getControl(controlName: "msdyn_subtotalamount"): Xrm.NumberControl;
     getControl(controlName: "msdyn_supportcontact"): Xrm.LookupControl<"bookableresource">;
+    getControl(controlName: "msdyn_systemstatus"): Xrm.OptionSetControl<msdyn_wosystemstatus>;
     getControl(controlName: "msdyn_taxable"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_taxcode"): Xrm.LookupControl<"msdyn_taxcode">;
     getControl(controlName: "msdyn_timeclosed"): Xrm.DateControl;
@@ -611,6 +616,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_costexplanation"): Xrm.StringControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_details"): Xrm.StringControl;
+    getControl(controlName: "ts_documenteddate"): Xrm.DateControl;
     getControl(controlName: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;
     getControl(controlName: "ts_incompleteworkorderreasonforother"): Xrm.StringControl;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
