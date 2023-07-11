@@ -118,18 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddAttachmentText" xml:space="preserve">
-    <value>Select file (fr)</value>
+    <value>Add File(s) (fr)</value>
   </data>
   <data name="ErrorNotificationLabel" xml:space="preserve">
     <value>ERROR (fr)</value>
   </data>
+  <data name="NameColumnText" xml:space="preserve">
+    <value>Name (fr)</value>
+  </data>
   <data name="NoAttachmentsText" xml:space="preserve">
-    <value>There is no file. (fr)</value>
+    <value />
   </data>
   <data name="SuccessNotificationLabel" xml:space="preserve">
     <value>SUCCESS (fr)</value>
   </data>
   <data name="UploadButtonText" xml:space="preserve">
     <value>Upload (fr)</value>
+  </data>
+  <data name="UploadDateColumnText" xml:space="preserve">
+    <value>Upload Date (fr)</value>
   </data>
 </root>

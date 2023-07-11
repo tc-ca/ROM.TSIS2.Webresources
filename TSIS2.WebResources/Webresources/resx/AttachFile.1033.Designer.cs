@@ -61,7 +61,7 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select file.
+        ///   Looks up a localized string similar to Add File(s).
         /// </summary>
         internal static string AddAttachmentText {
             get {
@@ -79,7 +79,16 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is no file..
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string NameColumnText {
+            get {
+                return ResourceManager.GetString("NameColumnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string NoAttachmentsText {
             get {
@@ -102,6 +111,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static string UploadButtonText {
             get {
                 return ResourceManager.GetString("UploadButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Date.
+        /// </summary>
+        internal static string UploadDateColumnText {
+            get {
+                return ResourceManager.GetString("UploadDateColumnText", resourceCulture);
             }
         }
     }
