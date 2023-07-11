@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1033
+          ? $("[lang=fr]").hide()
+          : $("[lang=en]").hide();
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="container-fluid" lang="en">
+      <h1>Intentionality</h1>
+      <div class="row">
+        <div class="col-sm-12">
+          The TSI must evaluate the Stakeholder’s understanding of the requirements and whether they knowingly did not
+          comply. This could also include whether the Stakeholder benefited by the non-compliance.
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" lang="fr">
+      <h1>Intention</h1>
+      <div class="row">
+        <div class="col-sm-12">
+          L’IST doit évaluer dans quelle mesure l’intervenant comprend les exigences et déterminer s’il a
+          intentionnellement manqué à son obligation de se conformer. Cela pourrait aussi inclure si l’intervenant a
+          bénéficié de ce manquement.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

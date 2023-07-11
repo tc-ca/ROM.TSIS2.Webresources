@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1033
+          ? $("[lang=fr]").hide()
+          : $("[lang=en]").hide();
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="container-fluid" lang="en">
+      <h1>Compliance and Enforcement History Information</h1>
+      <div class="row">
+        <div class="col-sm-12">
+          The TSI must evaluate the non-compliance history of the Stakeholder in relation to the specific provision
+          associated with the non-compliance/finding being assessed in the RATE tool. Local and national factors should
+          be considered as applicable (e.g., an air carrier that has operations at multiple aerodromes). The TSI should
+          also consider similar provisions while reviewing this section.
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" lang="fr">
+      <h1>Historique précis des cas de non-conformité</h1>
+      <div class="row">
+        <div class="col-sm-12">
+          L’IST doit évaluer l’historique des cas de non-conformité de l’intervenant en ce qui a trait à la disposition
+          précise associée au cas de non-conformité ou à la constatation ayant fait l’objet de l’évaluation dans l’outil
+          RATE. Des facteurs locaux et nationaux devraient être pris en considération, au besoin (p. ex. un transporteur
+          aérien qui mène des opérations à plusieurs aérodromes). L’IST devrait aussi prendre en considération des
+          dispositions similaires quand il passe en revue cette section.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

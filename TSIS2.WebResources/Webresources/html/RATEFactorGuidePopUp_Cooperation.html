@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1033
+          ? $("[lang=fr]").hide()
+          : $("[lang=en]").hide();
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="container-fluid" lang="en">
+      <h1>Cooperation</h1>
+      <div class="row">
+        <div class="col-sm-12">
+          The intent of this component is to evaluate the degree of cooperation the stakeholder provided to the TSI
+          during the oversight activity, the finding of non-compliance, enforcement, follow-up actions and mitigation
+          processes.
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" lang="fr">
+      <h1>Collaboration</h1>
+      <div class="row">
+        <div class="col-sm-12">
+          Ce volet vise à évaluer le degré de collaboration qu’a offert l’intervenant à l’IST pendant l’activité de
+          supervision, la constatation de non-conformité, l’application de la loi, les mesures de suivi, et les
+          processus d’atténuation.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
