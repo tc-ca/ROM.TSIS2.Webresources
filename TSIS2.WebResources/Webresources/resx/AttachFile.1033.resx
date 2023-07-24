@@ -120,8 +120,14 @@
   <data name="AddAttachmentText" xml:space="preserve">
     <value>Add File(s)</value>
   </data>
+  <data name="AttachedFilesGalleryAccessibleLabel" xml:space="preserve">
+    <value>List of uploaded files</value>
+  </data>
   <data name="ErrorNotificationLabel" xml:space="preserve">
     <value>ERROR</value>
+  </data>
+  <data name="FileThumbnailAccessibleLabel" xml:space="preserve">
+    <value>Thumbnail image of </value>
   </data>
   <data name="NameColumnText" xml:space="preserve">
     <value>Name</value>
@@ -129,13 +135,25 @@
   <data name="NoAttachmentsText" xml:space="preserve">
     <value />
   </data>
+  <data name="ReturnButtonAccessibleLabel" xml:space="preserve">
+    <value>Return to upload file section</value>
+  </data>
+  <data name="ReturnButtonText" xml:space="preserve">
+    <value>Return</value>
+  </data>
   <data name="SuccessNotificationLabel" xml:space="preserve">
     <value>SUCCESS</value>
+  </data>
+  <data name="TagInputAccessibleLabel" xml:space="preserve">
+    <value>The files will be tagged with </value>
   </data>
   <data name="UploadButtonText" xml:space="preserve">
     <value>Upload</value>
   </data>
   <data name="UploadDateColumnText" xml:space="preserve">
     <value>Upload Date</value>
+  </data>
+  <data name="UploadingProgressText" xml:space="preserve">
+    <value>Your files are being uploaded</value>
   </data>
 </root>
