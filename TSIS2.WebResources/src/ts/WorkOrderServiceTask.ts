@@ -89,6 +89,11 @@ namespace ROM.WorkOrderServiceTask {
             
             ToggleQuestionnaire(eContext);
         }
+
+        if (statusReason == 918640002) {
+            Form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "To unlock completed questionnaires please contact your manager." : "Pour déverrouiller un questionnaire complété, veuillez contacter votre gestionnaire."), "WARNING", "completed_questionnaire");
+
+        }
     }
 
     export function serviceTaskStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
