@@ -70,11 +70,29 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of uploaded files.
+        /// </summary>
+        internal static string AttachedFilesGalleryAccessibleLabel {
+            get {
+                return ResourceManager.GetString("AttachedFilesGalleryAccessibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ERROR.
         /// </summary>
         internal static string ErrorNotificationLabel {
             get {
                 return ResourceManager.GetString("ErrorNotificationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thumbnail image of .
+        /// </summary>
+        internal static string FileThumbnailAccessibleLabel {
+            get {
+                return ResourceManager.GetString("FileThumbnailAccessibleLabel", resourceCulture);
             }
         }
         
@@ -97,11 +115,38 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return to upload file section.
+        /// </summary>
+        internal static string ReturnButtonAccessibleLabel {
+            get {
+                return ResourceManager.GetString("ReturnButtonAccessibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        internal static string ReturnButtonText {
+            get {
+                return ResourceManager.GetString("ReturnButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SUCCESS.
         /// </summary>
         internal static string SuccessNotificationLabel {
             get {
                 return ResourceManager.GetString("SuccessNotificationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The files will be tagged with .
+        /// </summary>
+        internal static string TagInputAccessibleLabel {
+            get {
+                return ResourceManager.GetString("TagInputAccessibleLabel", resourceCulture);
             }
         }
         
@@ -120,6 +165,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static string UploadDateColumnText {
             get {
                 return ResourceManager.GetString("UploadDateColumnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your files are being uploaded.
+        /// </summary>
+        internal static string UploadingProgressText {
+            get {
+                return ResourceManager.GetString("UploadingProgressText", resourceCulture);
             }
         }
     }

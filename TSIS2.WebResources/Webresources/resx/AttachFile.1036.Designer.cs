@@ -61,7 +61,7 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add File(s) (fr).
+        ///   Looks up a localized string similar to Ajouter un/des fichier(s).
         /// </summary>
         internal static string AddAttachmentText {
             get {
@@ -70,7 +70,16 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ERROR (fr).
+        ///   Looks up a localized string similar to Liste de fichiers téléchargés.
+        /// </summary>
+        internal static string AttachedFilesGalleryAccessibleLabel {
+            get {
+                return ResourceManager.GetString("AttachedFilesGalleryAccessibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERREUR.
         /// </summary>
         internal static string ErrorNotificationLabel {
             get {
@@ -79,7 +88,16 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name (fr).
+        ///   Looks up a localized string similar to Image miniature de.
+        /// </summary>
+        internal static string FileThumbnailAccessibleLabel {
+            get {
+                return ResourceManager.GetString("FileThumbnailAccessibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nom.
         /// </summary>
         internal static string NameColumnText {
             get {
@@ -97,7 +115,25 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SUCCESS (fr).
+        ///   Looks up a localized string similar to Retourner à la section pour télécharger vos fichiers.
+        /// </summary>
+        internal static string ReturnButtonAccessibleLabel {
+            get {
+                return ResourceManager.GetString("ReturnButtonAccessibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retourner.
+        /// </summary>
+        internal static string ReturnButtonText {
+            get {
+                return ResourceManager.GetString("ReturnButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SUCCÈS.
         /// </summary>
         internal static string SuccessNotificationLabel {
             get {
@@ -106,7 +142,16 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload (fr).
+        ///   Looks up a localized string similar to Le fichier va être marqué avec.
+        /// </summary>
+        internal static string TagInputAccessibleLabel {
+            get {
+                return ResourceManager.GetString("TagInputAccessibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Télécharger.
         /// </summary>
         internal static string UploadButtonText {
             get {
@@ -115,11 +160,20 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload Date (fr).
+        ///   Looks up a localized string similar to Date du téléchargement.
         /// </summary>
         internal static string UploadDateColumnText {
             get {
                 return ResourceManager.GetString("UploadDateColumnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vos fichiers ont été téléchargés.
+        /// </summary>
+        internal static string UploadingProgressText {
+            get {
+                return ResourceManager.GetString("UploadingProgressText", resourceCulture);
             }
         }
     }
