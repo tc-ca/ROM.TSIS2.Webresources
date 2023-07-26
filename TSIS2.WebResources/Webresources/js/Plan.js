@@ -48,7 +48,7 @@ var ROM;
         Plan.onLoad = onLoad;
         function generateSuggestedInspections(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, planId, teamValue, teamId, teamName, planningDataFiscalYearValue, planningDataFiscalYearName, planningDataFiscalYearId, baselineHoursfetchXml, baselineHours, inspectorHoursfetchXml, teamInspectorHours, _i, teamInspectorHours_1, inspectorHours, data;
+                var formContext, planId, teamValue, teamId, teamName, planningDataFiscalYearValue, planningDataFiscalYearName, planningDataFiscalYearId, inspectorHoursfetchXml, teamInspectorHours, _i, teamInspectorHours_1, inspectorHours, data;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -65,24 +65,7 @@ var ROM;
                                 planningDataFiscalYearName = planningDataFiscalYearValue[0].name;
                                 planningDataFiscalYearId = planningDataFiscalYearValue[0].id.slice(1, -1);
                             }
-                            if (!(teamId != null && planningDataFiscalYearId != null)) return [3 /*break*/, 3];
-                            baselineHoursfetchXml = [
-                                "<fetch>",
-                                "  <entity name='ts_baselinehours'>",
-                                "    <attribute name='ts_team'/>",
-                                "    <filter>",
-                                "      <condition attribute='ts_team' operator='eq' value='", teamId, "'uitype='team'/>",
-                                "    </filter>",
-                                "  </entity>",
-                                "</fetch>"
-                            ].join("");
-                            baselineHoursfetchXml = "?fetchXml=" + encodeURIComponent(baselineHoursfetchXml);
-                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_baselinehours", baselineHoursfetchXml).then(function success(result) {
-                                    return result.entities[0];
-                                })];
-                        case 1:
-                            baselineHours = _a.sent();
-                            if (!(baselineHours != null && baselineHours.ts_baselinehoursid != null)) return [3 /*break*/, 3];
+                            if (!(teamId != null && planningDataFiscalYearId != null)) return [3 /*break*/, 2];
                             inspectorHoursfetchXml = [
                                 "<fetch>",
                                 "  <entity name='ts_inspectionhours'>",
@@ -91,11 +74,13 @@ var ROM;
                                 "    <attribute name='ts_totalhoursq3'/>",
                                 "    <attribute name='ts_totalhoursq4'/>",
                                 "    <attribute name='ts_inspectionhoursid'/>",
-                                "    <filter>",
-                                "      <condition attribute='ts_baselinehours' operator='eq' value='", baselineHours.ts_baselinehoursid, "' uitype='ts_baselinehours'/>",
-                                "    </filter>",
                                 "    <link-entity name='systemuser' from='systemuserid' to='ts_inspector' alias='user'>",
                                 "      <attribute name='fullname'/>",
+                                "    </link-entity>",
+                                "    <link-entity name='ts_baselinehours' from='ts_baselinehoursid' to='ts_baselinehours'>",
+                                "      <filter>",
+                                "        <condition attribute='ts_team' operator='eq' value='", teamId, "' uitype='team'/>",
+                                "      </filter>",
                                 "    </link-entity>",
                                 "  </entity>",
                                 "</fetch>"
@@ -104,7 +89,7 @@ var ROM;
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_inspectionhours", inspectorHoursfetchXml).then(function success(result) {
                                     return result.entities;
                                 })];
-                        case 2:
+                        case 1:
                             teamInspectorHours = _a.sent();
                             if (teamInspectorHours != null && teamInspectorHours.length > 0) {
                                 //For each inspector, create an Plan Inspector Hours record
@@ -126,8 +111,8 @@ var ROM;
                                     Xrm.WebApi.createRecord("ts_planinspectorhours", data);
                                 }
                             }
-                            _a.label = 3;
-                        case 3: return [2 /*return*/];
+                            _a.label = 2;
+                        case 2: return [2 /*return*/];
                     }
                 });
             });
