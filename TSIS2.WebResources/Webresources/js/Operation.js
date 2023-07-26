@@ -46,9 +46,6 @@ var ROM;
         //Condition to filter fields based on current user BU
         var businessUnitCondition;
         var issoOperationTypeGuids = ["{B27E5003-C751-EB11-A812-000D3AF3AC0D}", "{C97A1A12-D8EB-EB11-BACB-000D3AF4FBEC}", "{21CA416A-431A-EC11-B6E7-000D3A09D067}", "{3B261029-C751-EB11-A812-000D3AF3AC0D}", "{D883B39A-C751-EB11-A812-000D3AF3AC0D}", "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}", "{199E31AE-C751-EB11-A812-000D3AF3AC0D}"];
-        var generatedName;
-        var ISSOOperation = false;
-        var altLang;
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
                 var form, userRoles, userId, currentUserBusinessUnitFetchXML;
@@ -66,6 +63,9 @@ var ROM;
                     });
                     if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
                         setRelatedActionsFetchXML(form);
+                    }
+                    else if (form.ui.getFormType() == 1) {
+                        setOwnerToUserBusinessUnit(form);
                     }
                     userId = Xrm.Utility.getGlobalContext().userSettings.userId;
                     currentUserBusinessUnitFetchXML = [
@@ -174,59 +174,6 @@ var ROM;
                                 }
                             }
                         }
-                        //Name generation only for ISSO records
-                        if (userBusinessUnitName.startsWith("Intermodal")) {
-                            ISSOOperation = true;
-                            //Get alternate language (either eng or fre)
-                            altLang = Xrm.Utility.getGlobalContext().userSettings.languageId === 1033 ? "french" : "english";
-                            generatedName = {
-                                stakeHolder: '',
-                                operationType: '',
-                                site: '',
-                                stakeHolderAlt: '',
-                                operationTypeAlt: '',
-                                siteAlt: '',
-                                loadAlternateName: function (attributeName, attributeKey, altNameKey, entityName, altNameAttr, nameAttr) {
-                                    return __awaiter(this, void 0, void 0, function () {
-                                        var attribute, attributeValue, result_1;
-                                        return __generator(this, function (_a) {
-                                            switch (_a.label) {
-                                                case 0:
-                                                    attribute = form.getAttribute(attributeName);
-                                                    if (!attribute) return [3 /*break*/, 2];
-                                                    attributeValue = attribute.getValue();
-                                                    if (!(attributeValue !== null && attributeValue !== undefined)) return [3 /*break*/, 2];
-                                                    return [4 /*yield*/, Xrm.WebApi.retrieveRecord(entityName, attributeValue[0].id.replace(/[{}]/g, ""), "?$select=" + nameAttr + ", " + altNameAttr)];
-                                                case 1:
-                                                    result_1 = _a.sent();
-                                                    this[attributeKey] = result_1[nameAttr];
-                                                    this[altNameKey] = result_1[altNameAttr];
-                                                    this.updateNameFields();
-                                                    _a.label = 2;
-                                                case 2: return [2 /*return*/];
-                                            }
-                                        });
-                                    });
-                                },
-                                updateNameFields: function () {
-                                    var name = this.stakeHolder + " | " + this.operationType + " | " + this.site;
-                                    var altLangName = this.stakeHolderAlt + " | " + this.operationTypeAlt + " | " + this.siteAlt;
-                                    var nameAttribute = form.getAttribute("ovs_name");
-                                    var nameAttributeEnglish = form.getAttribute("ts_operationnameenglish");
-                                    var nameAttributeFrench = form.getAttribute("ts_operationnamefrench");
-                                    if (altLang === "french") {
-                                        nameAttributeEnglish.setValue(name);
-                                        nameAttributeFrench.setValue(altLangName);
-                                        nameAttribute.setValue(altLangName);
-                                    }
-                                    else {
-                                        nameAttributeFrench.setValue(name);
-                                        nameAttributeEnglish.setValue(altLangName);
-                                        nameAttribute.setValue(name);
-                                    }
-                                }
-                            };
-                        }
                     });
                     if (form.getAttribute("ts_statusstartdate").getValue() != null) {
                         form.getControl("ts_statusenddate").setDisabled(false);
@@ -299,10 +246,6 @@ var ROM;
                     getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
                 }
             }
-            if (ISSOOperation) {
-                var altNameAttr = altLang === "french" ? "ovs_accountnamefrench" : "ovs_accountnameenglish";
-                generatedName.loadAlternateName("ts_stakeholder", "stakeHolder", "stakeHolderAlt", "account", altNameAttr, "name");
-            }
         }
         Operation.stakeholderOnChange = stakeholderOnChange;
         function setSiteFilteredView(form) {
@@ -341,19 +284,11 @@ var ROM;
                     form.getControl('ts_site').setDisabled(true);
                 }
             }
-            if (ISSOOperation) {
-                var altNameAttr = altLang === "french" ? "ovs_operationtypenamefrench" : "ovs_operationtypenameenglish";
-                generatedName.loadAlternateName("ovs_operationtypeid", "operationType", "operationTypeAlt", "ovs_operationtype", altNameAttr, "ovs_name");
-            }
         }
         Operation.operationTypeOnChange = operationTypeOnChange;
         function siteOnChange(eContext) {
             var form = eContext.getFormContext();
             setSubSiteFilteredView(form);
-            if (ISSOOperation) {
-                var altNameAttr = altLang === "french" ? "ts_functionallocationnamefrench" : "ts_functionallocationnameenglish";
-                generatedName.loadAlternateName("ts_site", "site", "siteAlt", "msdyn_functionallocation", altNameAttr, "msdyn_name");
-            }
         }
         Operation.siteOnChange = siteOnChange;
         function setSubSiteFilteredView(form) {
