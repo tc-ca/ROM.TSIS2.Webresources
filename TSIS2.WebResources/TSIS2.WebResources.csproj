@@ -185,6 +185,7 @@
     <Content Include="Webresources\js\OperationActivity.js" />
     <Content Include="Webresources\js\OperationActivityQuickCreate.js" />
     <Content Include="Webresources\js\OperationActivityRibbon.js" />
+    <Content Include="Webresources\js\Plan.js" />
     <Content Include="Webresources\js\PlanningData.js" />
     <Content Include="Webresources\js\planningDataRibbon.js" />
     <Content Include="Webresources\js\PlanningSettings.js" />
@@ -353,6 +354,7 @@
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\ts\Plan.ts" />
     <TypeScriptCompile Include="src\ts\Account.ts" />
     <TypeScriptCompile Include="src\ts\Action.ts" />
     <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
