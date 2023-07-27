@@ -38,7 +38,7 @@ namespace ROM.SecurityIncident {
         var incidentDatetime = formContext.getAttribute("ts_incidentdatetime").getValue();
         var reportedDatetime = formContext.getAttribute("ts_reporteddatetime").getValue();
         var timezone = formContext.getAttribute("ts_timezone").getValue();
-
+        
         if (formContext.ui.getFormType() != 1) {
             if (incidentDatetime != null) {
                 formContext.getControl("ts_incidentdatetimeadjust").setDisabled(true);

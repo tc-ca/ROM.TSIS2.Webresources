@@ -65,6 +65,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_estimatedarrivaltime"): Xrm.DateAttribute;
       get(name: "ts_flightnumber"): Xrm.Attribute<string>;
       get(name: "ts_incidentdatetime"): Xrm.DateAttribute;
+      get(name: "ts_incidentdatetimeadjust"): Xrm.DateAttribute;
       get(name: "ts_incidentdetailsattachment"): Xrm.Attribute<any>;
       get(name: "ts_inflight"): Xrm.Attribute<any>;
       get(name: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
@@ -89,6 +90,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_recordstatus"): Xrm.OptionSetAttribute<ts_securityincidentstatus>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_reporteddatetime"): Xrm.DateAttribute;
+      get(name: "ts_reporteddatetimeadjust"): Xrm.DateAttribute;
       get(name: "ts_reportingcompany"): Xrm.LookupAttribute<"account">;
       get(name: "ts_reportingcompany_name"): Xrm.Attribute<string>;
       get(name: "ts_ruralorurban"): Xrm.OptionSetAttribute<ts_ruralorurban>;
@@ -99,7 +101,6 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_stakeholder_name"): Xrm.Attribute<string>;
       get(name: "ts_statusofrailwayowner"): Xrm.OptionSetAttribute<ts_statusofrailwayowner>;
       get(name: "ts_subdivision"): Xrm.Attribute<string>;
-      get(name: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_tamperingsubcategory"): Xrm.OptionSetAttribute<ts_tamperingsubcategory>;
       get(name: "ts_targetelement"): Xrm.LookupAttribute<"ts_targetelement">;
       get(name: "ts_tcomsid"): Xrm.Attribute<string>;
@@ -140,6 +141,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_estimatedarrivaltime"): Xrm.DateControl;
       get(name: "ts_flightnumber"): Xrm.StringControl;
       get(name: "ts_incidentdatetime"): Xrm.DateControl;
+      get(name: "ts_incidentdatetimeadjust"): Xrm.DateControl;
       get(name: "ts_incidentdetailsattachment"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_inflight"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
@@ -163,6 +165,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_quarterofsitraveltime"): Xrm.OptionSetControl<ts_quarter>;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_reporteddatetime"): Xrm.DateControl;
+      get(name: "ts_reporteddatetimeadjust"): Xrm.DateControl;
       get(name: "ts_reportingcompany"): Xrm.LookupControl<"account">;
       get(name: "ts_reportingcompany_name"): Xrm.StringControl;
       get(name: "ts_ruralorurban"): Xrm.OptionSetControl<ts_ruralorurban>;
@@ -173,7 +176,6 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_stakeholder_name"): Xrm.StringControl;
       get(name: "ts_statusofrailwayowner"): Xrm.OptionSetControl<ts_statusofrailwayowner>;
       get(name: "ts_subdivision"): Xrm.StringControl;
-      get(name: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_tamperingsubcategory"): Xrm.OptionSetControl<ts_tamperingsubcategory>;
       get(name: "ts_targetelement"): Xrm.LookupControl<"ts_targetelement">;
       get(name: "ts_tcomsid"): Xrm.StringControl;
@@ -220,6 +222,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_estimatedarrivaltime"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_flightnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_incidentdatetime"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_incidentdatetimeadjust"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_incidentdetailsattachment"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_inflight"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
@@ -244,6 +247,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_recordstatus"): Xrm.OptionSetAttribute<ts_securityincidentstatus>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_reporteddatetime"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_reporteddatetimeadjust"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_reportingcompany"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_reportingcompany_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_ruralorurban"): Xrm.OptionSetAttribute<ts_ruralorurban>;
@@ -254,7 +258,6 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_stakeholder_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_statusofrailwayowner"): Xrm.OptionSetAttribute<ts_statusofrailwayowner>;
     getAttribute(attributeName: "ts_subdivision"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_tamperingsubcategory"): Xrm.OptionSetAttribute<ts_tamperingsubcategory>;
     getAttribute(attributeName: "ts_targetelement"): Xrm.LookupAttribute<"ts_targetelement">;
     getAttribute(attributeName: "ts_tcomsid"): Xrm.Attribute<string>;
@@ -290,6 +293,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_estimatedarrivaltime"): Xrm.DateControl;
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
     getControl(controlName: "ts_incidentdatetime"): Xrm.DateControl;
+    getControl(controlName: "ts_incidentdatetimeadjust"): Xrm.DateControl;
     getControl(controlName: "ts_incidentdetailsattachment"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_inflight"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
@@ -313,6 +317,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_quarterofsitraveltime"): Xrm.OptionSetControl<ts_quarter>;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_reporteddatetime"): Xrm.DateControl;
+    getControl(controlName: "ts_reporteddatetimeadjust"): Xrm.DateControl;
     getControl(controlName: "ts_reportingcompany"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_reportingcompany_name"): Xrm.StringControl;
     getControl(controlName: "ts_ruralorurban"): Xrm.OptionSetControl<ts_ruralorurban>;
@@ -323,7 +328,6 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_stakeholder_name"): Xrm.StringControl;
     getControl(controlName: "ts_statusofrailwayowner"): Xrm.OptionSetControl<ts_statusofrailwayowner>;
     getControl(controlName: "ts_subdivision"): Xrm.StringControl;
-    getControl(controlName: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_tamperingsubcategory"): Xrm.OptionSetControl<ts_tamperingsubcategory>;
     getControl(controlName: "ts_targetelement"): Xrm.LookupControl<"ts_targetelement">;
     getControl(controlName: "ts_tcomsid"): Xrm.StringControl;
