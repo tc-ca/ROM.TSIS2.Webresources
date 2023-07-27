@@ -28,8 +28,64 @@ var ROM;
             if (incidentDetailsAttachment == null || incidentDetailsAttachment == undefined) {
                 formContext.ui.tabs.get("{99b37896-4f52-4179-8296-3cc0e6722411}").sections.get("IncidentDetails").setVisible(false);
             }
+            adjustIncidentDateTime(formContext);
         }
         SecurityIncident.onLoad = onLoad;
+        function adjustIncidentDateTime(formContext) {
+            var incidentDatetime = formContext.getAttribute("ts_incidentdatetime").getValue();
+            var reportedDatetime = formContext.getAttribute("ts_reporteddatetime").getValue();
+            var timezone = formContext.getAttribute("ts_timezone").getValue();
+            if (formContext.ui.getFormType() != 1) {
+                if (incidentDatetime != null) {
+                    formContext.getControl("ts_incidentdatetimeadjust").setDisabled(true);
+                }
+                if (reportedDatetime != null) {
+                    formContext.getControl("ts_reporteddatetimeadjust").setDisabled(true);
+                }
+            }
+            if (timezone != null) {
+                var timeZoneHoursAdjust = 0;
+                if (timezone == 717750004 /* AtlanticTime */) {
+                    timeZoneHoursAdjust = -4;
+                }
+                else if (timezone == 717750002 /* CentralTime */) {
+                    timeZoneHoursAdjust = -6;
+                }
+                else if (timezone == 717750003 /* EasternTime */) {
+                    timeZoneHoursAdjust = -5;
+                }
+                else if (timezone == 717750001 /* MountainTime */) {
+                    timeZoneHoursAdjust = -7;
+                }
+                else if (timezone == 717750000 /* PacificTime */) {
+                    timeZoneHoursAdjust = -8;
+                }
+                if (incidentDatetime != null) {
+                    var timezoneOffset = incidentDatetime.getTimezoneOffset();
+                    var stTimezoneOffset = new Date(incidentDatetime.getFullYear(), 0, 1).getTimezoneOffset();
+                    var isDayLightSaving = stTimezoneOffset > timezoneOffset;
+                    if (isDayLightSaving) {
+                        incidentDatetime.setHours(incidentDatetime.getHours() + timeZoneHoursAdjust + timezoneOffset / 60 + 1);
+                    }
+                    else {
+                        incidentDatetime.setHours(incidentDatetime.getHours() + timeZoneHoursAdjust + timezoneOffset / 60);
+                    }
+                    formContext.getAttribute("ts_incidentdatetimeadjust").setValue(incidentDatetime);
+                }
+                if (reportedDatetime != null) {
+                    var timezoneOffset = reportedDatetime.getTimezoneOffset();
+                    var stTimezoneOffset = new Date(reportedDatetime.getFullYear(), 0, 1).getTimezoneOffset();
+                    var isDayLightSaving = stTimezoneOffset > timezoneOffset;
+                    if (isDayLightSaving) {
+                        reportedDatetime.setHours(reportedDatetime.getHours() + timeZoneHoursAdjust + timezoneOffset / 60 + 1);
+                    }
+                    else {
+                        reportedDatetime.setHours(reportedDatetime.getHours() + timeZoneHoursAdjust + timezoneOffset / 60);
+                    }
+                    formContext.getAttribute("ts_reporteddatetimeadjust").setValue(reportedDatetime);
+                }
+            }
+        }
         function StatusOfRailwayOwnerOnChange(eContext) {
             var form = eContext.getFormContext();
             var arrests = form.getAttribute("ts_arrests");
