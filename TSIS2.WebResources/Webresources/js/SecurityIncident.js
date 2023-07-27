@@ -14,7 +14,6 @@ var ROM;
             if (formContext.ui.getFormType() == 2 || formContext.ui.getFormType() == 3) {
                 StatusOfRailwayOwnerOnChange(eContext);
                 ShowHideFieldsOnMode(eContext, modeAttributeValue, true);
-                setSubSiteFilteredView(formContext, false);
                 securityIncidentTypeOnChange(eContext);
                 if (formContext.getAttribute("ts_mode").getValue() != null) {
                     setSiteFilteredView(formContext, modeAttributeValue != null ? modeAttributeValue : null);
@@ -81,11 +80,6 @@ var ROM;
             setSiteFilteredView(form, modeAttributeValue != null ? modeAttributeValue : null);
         }
         SecurityIncident.modeOnChange = modeOnChange;
-        function siteOnChange(eContext) {
-            var form = eContext.getFormContext();
-            setSubSiteFilteredView(form, true);
-        }
-        SecurityIncident.siteOnChange = siteOnChange;
         function securityIncidentTypeOnChange(eContext) {
             var form = eContext.getFormContext();
             var securityincidentTypeValue = form.getAttribute("ts_securityincidenttype").getValue();
@@ -98,21 +92,6 @@ var ROM;
             }
         }
         SecurityIncident.securityIncidentTypeOnChange = securityIncidentTypeOnChange;
-        function setSubSiteFilteredView(form, resetValue) {
-            var siteAttribute = form.getAttribute("ts_site");
-            var siteAttributeValue = siteAttribute.getValue();
-            if (siteAttributeValue != null && siteAttributeValue != undefined) {
-                if (resetValue) {
-                    form.getAttribute('ts_subsite').setValue(null);
-                }
-                var viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
-                var entityName = "msdyn_functionallocation";
-                var viewDisplayName = "Filtered Sites";
-                var siteFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
-                var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-                form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
-            }
-        }
         function setSiteFilteredView(form, mode) {
             // Custom view
             var modeCondition = mode != null ? ('<condition attribute="ts_mode" operator="contain-values" value=""><value>' + mode + '</value></condition>') : null;
@@ -139,7 +118,6 @@ var ROM;
                 form.getControl("ts_yardorstationname").setVisible(false);
                 form.getControl("ts_publicorprivatecrossing").setVisible(false);
                 form.getControl("ts_ruralorurban").setVisible(false);
-                form.getControl("ts_subsite").setVisible(true);
                 form.getControl("ts_inflight").setVisible(true);
                 form.getControl("ts_estimatedarrivaltime").setVisible(true);
                 form.getControl("ts_policeresponse").setVisible(true);
@@ -189,7 +167,6 @@ var ROM;
                 form.getControl("ts_publicorprivatecrossing").setVisible(true);
                 form.getControl("ts_ruralorurban").setVisible(true);
                 form.getControl("ts_arrests").setVisible(true);
-                form.getControl("ts_subsite").setVisible(false);
                 form.getControl("ts_inflight").setVisible(false);
                 form.getControl("ts_estimatedarrivaltime").setVisible(false);
                 form.getControl("ts_policeresponse").setVisible(false);

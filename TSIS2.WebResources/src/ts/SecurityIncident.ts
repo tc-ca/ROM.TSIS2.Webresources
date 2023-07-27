@@ -15,7 +15,6 @@ namespace ROM.SecurityIncident {
             StatusOfRailwayOwnerOnChange(eContext);
 
             ShowHideFieldsOnMode(eContext, modeAttributeValue, true);
-            setSubSiteFilteredView(formContext, false);
             securityIncidentTypeOnChange(eContext);
 
             if (formContext.getAttribute("ts_mode").getValue() != null) {
@@ -95,11 +94,6 @@ namespace ROM.SecurityIncident {
 
     }
 
-    export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
-        setSubSiteFilteredView(form, true);
-    }
-
     export function securityIncidentTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
         const securityincidentTypeValue = form.getAttribute("ts_securityincidenttype").getValue();
@@ -110,23 +104,6 @@ namespace ROM.SecurityIncident {
         }
         else {
             form.getControl("ts_tamperingsubcategory").setVisible(false);
-        }
-    }
-
-    function setSubSiteFilteredView(form: Form.ts_securityincident.Main.Information, resetValue: boolean): void {
-        const siteAttribute = form.getAttribute("ts_site");
-        const siteAttributeValue = siteAttribute.getValue();
-
-        if (siteAttributeValue != null && siteAttributeValue != undefined) {
-            if (resetValue) {
-                form.getAttribute('ts_subsite').setValue(null);
-            }
-            const viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
-            const entityName = "msdyn_functionallocation";
-            const viewDisplayName = "Filtered Sites";
-            const siteFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
-            const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-            form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, siteFetchXml, layoutXml, true);
         }
     }
 
@@ -161,7 +138,6 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_publicorprivatecrossing").setVisible(false);
             form.getControl("ts_ruralorurban").setVisible(false);
 
-            form.getControl("ts_subsite").setVisible(true);
             form.getControl("ts_inflight").setVisible(true);
             form.getControl("ts_estimatedarrivaltime").setVisible(true);
             form.getControl("ts_policeresponse").setVisible(true);
@@ -217,7 +193,6 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_ruralorurban").setVisible(true);
             form.getControl("ts_arrests").setVisible(true);
 
-            form.getControl("ts_subsite").setVisible(false);
             form.getControl("ts_inflight").setVisible(false);
             form.getControl("ts_estimatedarrivaltime").setVisible(false);
             form.getControl("ts_policeresponse").setVisible(false);
