@@ -23,6 +23,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_estimatedarrivaltime?: Date | null;
   ts_flightnumber?: string | null;
   ts_incidentdatetime?: Date | null;
+  ts_incidentdatetimeadjust?: Date | null;
   ts_inflight?: boolean | null;
   ts_injuries?: ts_injuries | null;
   ts_latitude?: number | null;
@@ -44,6 +45,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_quarterofsitraveltime?: ts_quarter | null;
   ts_recordstatus?: ts_securityincidentstatus | null;
   ts_reporteddatetime?: Date | null;
+  ts_reporteddatetimeadjust?: Date | null;
   ts_reportingcompany_name?: string | null;
   ts_ruralorurban?: ts_ruralorurban | null;
   ts_securityincidentid?: string | null;
@@ -68,7 +70,6 @@ interface ts_securityincident_Relationships {
   ts_DiversionAerodrome?: msdyn_FunctionalLocation_Result | null;
   ts_Origin?: msdyn_FunctionalLocation_Result | null;
   ts_ReportingCompany?: Account_Result | null;
-  ts_SecurityIncidentType?: ts_securityincidenttype_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Stakeholder?: Account_Result | null;
   ts_Subsite?: msdyn_FunctionalLocation_Result | null;
@@ -134,6 +135,7 @@ interface ts_securityincident_Select {
   ts_estimatedarrivaltime: WebAttribute<ts_securityincident_Select, { ts_estimatedarrivaltime: Date | null }, { ts_estimatedarrivaltime_formatted?: string }>;
   ts_flightnumber: WebAttribute<ts_securityincident_Select, { ts_flightnumber: string | null }, {  }>;
   ts_incidentdatetime: WebAttribute<ts_securityincident_Select, { ts_incidentdatetime: Date | null }, { ts_incidentdatetime_formatted?: string }>;
+  ts_incidentdatetimeadjust: WebAttribute<ts_securityincident_Select, { ts_incidentdatetimeadjust: Date | null }, { ts_incidentdatetimeadjust_formatted?: string }>;
   ts_inflight: WebAttribute<ts_securityincident_Select, { ts_inflight: boolean | null }, {  }>;
   ts_injuries: WebAttribute<ts_securityincident_Select, { ts_injuries: ts_injuries | null }, { ts_injuries_formatted?: string }>;
   ts_latitude: WebAttribute<ts_securityincident_Select, { ts_latitude: number | null }, {  }>;
@@ -157,6 +159,7 @@ interface ts_securityincident_Select {
   ts_recordstatus: WebAttribute<ts_securityincident_Select, { ts_recordstatus: ts_securityincidentstatus | null }, { ts_recordstatus_formatted?: string }>;
   ts_region_guid: WebAttribute<ts_securityincident_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_reporteddatetime: WebAttribute<ts_securityincident_Select, { ts_reporteddatetime: Date | null }, { ts_reporteddatetime_formatted?: string }>;
+  ts_reporteddatetimeadjust: WebAttribute<ts_securityincident_Select, { ts_reporteddatetimeadjust: Date | null }, { ts_reporteddatetimeadjust_formatted?: string }>;
   ts_reportingcompany_guid: WebAttribute<ts_securityincident_Select, { ts_reportingcompany_guid: string | null }, { ts_reportingcompany_formatted?: string }>;
   ts_reportingcompany_name: WebAttribute<ts_securityincident_Select, { ts_reportingcompany_name: string | null }, {  }>;
   ts_ruralorurban: WebAttribute<ts_securityincident_Select, { ts_ruralorurban: ts_ruralorurban | null }, { ts_ruralorurban_formatted?: string }>;
@@ -216,6 +219,7 @@ interface ts_securityincident_Filter {
   ts_estimatedarrivaltime: Date;
   ts_flightnumber: string;
   ts_incidentdatetime: Date;
+  ts_incidentdatetimeadjust: Date;
   ts_inflight: boolean;
   ts_injuries: ts_injuries;
   ts_latitude: number;
@@ -239,6 +243,7 @@ interface ts_securityincident_Filter {
   ts_recordstatus: ts_securityincidentstatus;
   ts_region_guid: XQW.Guid;
   ts_reporteddatetime: Date;
+  ts_reporteddatetimeadjust: Date;
   ts_reportingcompany_guid: XQW.Guid;
   ts_reportingcompany_name: string;
   ts_ruralorurban: ts_ruralorurban;
@@ -276,7 +281,6 @@ interface ts_securityincident_Expand {
   ts_DiversionAerodrome: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_DiversionAerodrome: msdyn_FunctionalLocation_Result }>;
   ts_Origin: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Origin: msdyn_FunctionalLocation_Result }>;
   ts_ReportingCompany: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_ReportingCompany: Account_Result }>;
-  ts_SecurityIncidentType: WebExpand<ts_securityincident_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { ts_SecurityIncidentType: ts_securityincidenttype_Result }>;
   ts_Site: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Stakeholder: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
   ts_Subsite: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsite: msdyn_FunctionalLocation_Result }>;
@@ -310,6 +314,7 @@ interface ts_securityincident_FormattedResult {
   ts_diversionaerodrome_formatted?: string;
   ts_estimatedarrivaltime_formatted?: string;
   ts_incidentdatetime_formatted?: string;
+  ts_incidentdatetimeadjust_formatted?: string;
   ts_injuries_formatted?: string;
   ts_locationtype_formatted?: string;
   ts_mode_formatted?: string;
@@ -321,6 +326,7 @@ interface ts_securityincident_FormattedResult {
   ts_recordstatus_formatted?: string;
   ts_region_formatted?: string;
   ts_reporteddatetime_formatted?: string;
+  ts_reporteddatetimeadjust_formatted?: string;
   ts_reportingcompany_formatted?: string;
   ts_ruralorurban_formatted?: string;
   ts_securityincidenttype_formatted?: string;
@@ -367,7 +373,6 @@ interface ts_securityincident_RelatedOne {
   ts_DiversionAerodrome: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Origin: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_ReportingCompany: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
-  ts_SecurityIncidentType: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_Subsite: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
