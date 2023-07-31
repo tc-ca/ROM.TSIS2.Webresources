@@ -23,6 +23,41 @@ namespace ROM.NonOversightActivity {
             else if (month >= 9 && month < 12) { //Q3
                 form.getAttribute('ts_quarter').setValue(ts_quarter.Q3);
             }
+
+
+            let fetchXML = `
+            <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+              <entity name="tc_tcfiscalyear">
+                <attribute name="tc_tcfiscalyearid" />
+                <attribute name="tc_name" />
+                <attribute name="tc_tcfiscalyearid" />
+                <order attribute="tc_name" descending="false" />
+                <filter type="and">
+                  <condition attribute="tc_fiscalstart" operator="on-or-before" value="` + activityDate.toISOString().split('T')[0] + `" />
+                  <condition attribute="tc_fiscalend" operator="on-or-after" value="` + activityDate.toISOString().split('T')[0] + `" />
+                </filter>
+              </entity>
+            </fetch>
+            `;
+            fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
+
+            debugger;
+            Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalyear", fetchXML).then(
+                function success(result) {
+                    if (result.entities.length > 0) {
+                        const targetedFiscalYear = result.entities[0];
+                        const lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = targetedFiscalYear.tc_tcfiscalyearid;
+                        lookup[0].name = targetedFiscalYear.tc_name;
+                        lookup[0].entityType = 'tc_tcfiscalyear';
+                        var test = form.getAttribute('ts_fiscalyear');
+                        form.getAttribute('ts_fiscalyear').setValue(lookup);
+                    }
+                },
+                function (error) {
+                }
+            );
         }
     }
 

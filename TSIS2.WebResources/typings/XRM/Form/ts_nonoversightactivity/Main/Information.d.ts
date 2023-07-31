@@ -8,6 +8,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
       get(name: "ts_category"): Xrm.LookupAttribute<"ts_timetrackingcategory">;
       get(name: "ts_dateofactivity"): Xrm.DateAttribute;
       get(name: "ts_description"): Xrm.Attribute<string>;
+      get(name: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_program"): Xrm.LookupAttribute<"businessunit">;
       get(name: "ts_quarter"): Xrm.OptionSetAttribute<ts_quarter>;
@@ -22,6 +23,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
       get(name: "ts_category"): Xrm.LookupControl<"ts_timetrackingcategory">;
       get(name: "ts_dateofactivity"): Xrm.DateControl;
       get(name: "ts_description"): Xrm.StringControl;
+      get(name: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_program"): Xrm.LookupControl<"businessunit">;
       get(name: "ts_quarter"): Xrm.OptionSetControl<ts_quarter>;
@@ -43,6 +45,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
     getAttribute(attributeName: "ts_category"): Xrm.LookupAttribute<"ts_timetrackingcategory">;
     getAttribute(attributeName: "ts_dateofactivity"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_description"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_program"): Xrm.LookupAttribute<"businessunit">;
     getAttribute(attributeName: "ts_quarter"): Xrm.OptionSetAttribute<ts_quarter>;
@@ -52,6 +55,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
     getControl(controlName: "ts_category"): Xrm.LookupControl<"ts_timetrackingcategory">;
     getControl(controlName: "ts_dateofactivity"): Xrm.DateControl;
     getControl(controlName: "ts_description"): Xrm.StringControl;
+    getControl(controlName: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_program"): Xrm.LookupControl<"businessunit">;
     getControl(controlName: "ts_quarter"): Xrm.OptionSetControl<ts_quarter>;

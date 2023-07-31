@@ -27,6 +27,22 @@ var ROM;
                 else if (month >= 9 && month < 12) { //Q3
                     form.getAttribute('ts_quarter').setValue(741130002 /* Q3 */);
                 }
+                var fetchXML = "\n            <fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"false\">\n              <entity name=\"tc_tcfiscalyear\">\n                <attribute name=\"tc_tcfiscalyearid\" />\n                <attribute name=\"tc_name\" />\n                <attribute name=\"tc_tcfiscalyearid\" />\n                <order attribute=\"tc_name\" descending=\"false\" />\n                <filter type=\"and\">\n                  <condition attribute=\"tc_fiscalstart\" operator=\"on-or-before\" value=\"" + activityDate.toISOString().split('T')[0] + "\" />\n                  <condition attribute=\"tc_fiscalend\" operator=\"on-or-after\" value=\"" + activityDate.toISOString().split('T')[0] + "\" />\n                </filter>\n              </entity>\n            </fetch>\n            ";
+                fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
+                debugger;
+                Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalyear", fetchXML).then(function success(result) {
+                    if (result.entities.length > 0) {
+                        var targetedFiscalYear = result.entities[0];
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = targetedFiscalYear.tc_tcfiscalyearid;
+                        lookup[0].name = targetedFiscalYear.tc_name;
+                        lookup[0].entityType = 'tc_tcfiscalyear';
+                        var test = form.getAttribute('ts_fiscalyear');
+                        form.getAttribute('ts_fiscalyear').setValue(lookup);
+                    }
+                }, function (error) {
+                });
             }
         }
         NonOversightActivity.dateOfActivityOnChange = dateOfActivityOnChange;

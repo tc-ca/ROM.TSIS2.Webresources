@@ -16,11 +16,13 @@ interface ts_nonoversightactivity_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_nonoversightactivity_Relationships {
+  ts_FiscalYear?: tc_TCFiscalYear_Result | null;
 }
 interface ts_nonoversightactivity extends ts_nonoversightactivity_Base, ts_nonoversightactivity_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   ts_Category_bind$ts_timetrackingcategories?: string | null;
+  ts_FiscalYear_bind$tc_tcfiscalyears?: string | null;
   ts_Program_bind$businessunits?: string | null;
 }
 interface ts_nonoversightactivity_Create extends ts_nonoversightactivity {
@@ -47,6 +49,7 @@ interface ts_nonoversightactivity_Select {
   ts_category_guid: WebAttribute<ts_nonoversightactivity_Select, { ts_category_guid: string | null }, { ts_category_formatted?: string }>;
   ts_dateofactivity: WebAttribute<ts_nonoversightactivity_Select, { ts_dateofactivity: Date | null }, { ts_dateofactivity_formatted?: string }>;
   ts_description: WebAttribute<ts_nonoversightactivity_Select, { ts_description: string | null }, {  }>;
+  ts_fiscalyear_guid: WebAttribute<ts_nonoversightactivity_Select, { ts_fiscalyear_guid: string | null }, { ts_fiscalyear_formatted?: string }>;
   ts_name: WebAttribute<ts_nonoversightactivity_Select, { ts_name: string | null }, {  }>;
   ts_nonoversightactivityid: WebAttribute<ts_nonoversightactivity_Select, { ts_nonoversightactivityid: string | null }, {  }>;
   ts_program_guid: WebAttribute<ts_nonoversightactivity_Select, { ts_program_guid: string | null }, { ts_program_formatted?: string }>;
@@ -74,6 +77,7 @@ interface ts_nonoversightactivity_Filter {
   ts_category_guid: XQW.Guid;
   ts_dateofactivity: Date;
   ts_description: string;
+  ts_fiscalyear_guid: XQW.Guid;
   ts_name: string;
   ts_nonoversightactivityid: XQW.Guid;
   ts_program_guid: XQW.Guid;
@@ -89,6 +93,7 @@ interface ts_nonoversightactivity_Expand {
   ownerid: WebExpand<ts_nonoversightactivity_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ts_nonoversightactivity_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_nonoversightactivity_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_FiscalYear: WebExpand<ts_nonoversightactivity_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
 }
 interface ts_nonoversightactivity_FormattedResult {
   createdby_formatted?: string;
@@ -106,6 +111,7 @@ interface ts_nonoversightactivity_FormattedResult {
   statuscode_formatted?: string;
   ts_category_formatted?: string;
   ts_dateofactivity_formatted?: string;
+  ts_fiscalyear_formatted?: string;
   ts_program_formatted?: string;
   ts_quarter_formatted?: string;
 }
@@ -120,6 +126,7 @@ interface ts_nonoversightactivity_Result extends ts_nonoversightactivity_Base, t
   owningteam_guid: string | null;
   owninguser_guid: string | null;
   ts_category_guid: string | null;
+  ts_fiscalyear_guid: string | null;
   ts_program_guid: string | null;
 }
 interface ts_nonoversightactivity_RelatedOne {
@@ -130,6 +137,7 @@ interface ts_nonoversightactivity_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
 }
 interface ts_nonoversightactivity_RelatedMany {
 }
