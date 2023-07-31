@@ -9,6 +9,7 @@
     async function generateSuggestedInspections(eContext: Xrm.ExecutionContext<any, any>) {
         const formContext: any = eContext.getFormContext();
         formContext.data.entity.removeOnPostSave(generateSuggestedInspections);
+
         const planId = formContext.data.entity.getId().slice(1, -1);
         let teamValue = formContext.getAttribute("ts_team").getValue();
         let teamId;
@@ -18,18 +19,80 @@
             teamName = teamValue[0].name;
         }
 
-        const planningDataFiscalYearValue = formContext.getAttribute("ts_fiscalyear").getValue()
-        let planningDataFiscalYearName;
-        let planningDataFiscalYearId;
-        if (planningDataFiscalYearValue != null) {
-            planningDataFiscalYearName = planningDataFiscalYearValue[0].name;
-            planningDataFiscalYearId = planningDataFiscalYearValue[0].id.slice(1, -1);
+        const planFiscalYearValue = formContext.getAttribute("ts_fiscalyear").getValue()
+        let planFiscalYearName;
+        let planFiscalYearId;
+        if (planFiscalYearValue != null) {
+            planFiscalYearName = planFiscalYearValue[0].name;
+            planFiscalYearId = planFiscalYearValue[0].id.slice(1, -1);
         }
 
-        if (teamId != null && planningDataFiscalYearId != null) {
+        if (teamId != null && planFiscalYearId != null) {
+
+            formContext.getAttribute("ts_name").setValue(`${teamName} ${planFiscalYearName}`);
             //Show Loading Wheel
 
-            //TODO Add some code to generate some mock suggested inspections
+            //TEST CODE (To be replaced with flow logic currently in azure functions
+            //Retrieve 20 ISSO Operations to suggest inspections for
+            var issoActivitiesFetchXml = [
+                "<fetch top='20'>",
+                "  <entity name='msdyn_incidenttype'>",
+                "    <attribute name='msdyn_incidenttypeid'/>",
+                "    <attribute name='msdyn_name'/>",
+                "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' intersect='true'>",
+                "      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
+                "        <link-entity name='ovs_operation' from='ovs_operationtypeid' to='ovs_operationtypeid' alias='operation'>",
+                "          <attribute name='ovs_operationtypeid'/>",
+                "          <attribute name='ts_site'/>",
+                "          <attribute name='ts_stakeholder'/>",
+                "          <attribute name='ovs_operationid'/>",
+                "          <attribute name='ts_risk'/>",
+                "          <attribute name='ts_operationnameenglish'/>",
+                "          <attribute name='ts_operationnamefrench'/>",
+                "          <filter>",
+                "            <condition attribute='owningbusinessunit' operator='eq' value='4ff4b827-bead-eb11-8236-000d3ae8b866' uitype='businessunit'/>",
+                "          </filter>",
+                "          <filter type='and'>",
+                "            <condition attribute='ts_stakeholder' operator='not-null'/>",
+                "            <condition attribute='ovs_operationtypeid' operator='not-null'/>",
+                "            <condition attribute='ts_site' operator='not-null'/>",
+                "            <condition attribute='ts_risk' operator='not-null'/>",
+                "          </filter>",
+                "        </link-entity>",
+                "      </link-entity>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>"
+            ].join("");
+            issoActivitiesFetchXml = "?fetchXml=" + encodeURIComponent(issoActivitiesFetchXml);
+            let issoActivities = await Xrm.WebApi.retrieveMultipleRecords("ovs_operation", issoActivitiesFetchXml).then(function success(result) {
+                return result.entities;
+            });
+
+            //Create a suggested inspection for each operation
+            for (let activity of issoActivities) {
+                let data = {
+                    "ts_name": `${activity["operation.ts_operationnameenglish"]} | ${activity.msdyn_name} | ${planFiscalYearName}`,
+                    "ts_FiscalYear@odata.bind": "/tc_tcfiscalyears(" + planFiscalYearId + ")",
+                    "ts_plan@odata.bind": "/ts_plan(" + planId + ")",
+                    "ts_stakeholder@odata.bind": "/accounts(" + activity["operation.ts_stakeholder"] + ")",
+                    "ts_operationtype@odata.bind": "/ovs_operationtypes(" + activity["operation.ovs_operationtypeid"] + ")",
+                    "ts_site@odata.bind": "/msdyn_functionallocations(" + activity["operation.ts_site"] + ")",
+                    "ts_activitytype@odata.bind": "/msdyn_incidenttypes(" + activity["operation.ovs_operationtypeid"] + ")",
+                    "ts_operation@odata.bind": "/ovs_operations(" + activity.msdyn_incidenttypeid + ")",
+                    "ts_q1": 1,
+                    "ts_q2": 0,
+                    "ts_q3": 0,
+                    "ts_q4": 0,
+                }
+                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(
+                    function success(result) {
+                    },
+                    function (error) {
+                        console.log(error.message);
+                    }
+                );
+            }
             
             //Retrieve all inspector hours records related to the Plan's team
             var inspectorHoursfetchXml = [
@@ -60,7 +123,7 @@
                 //For each inspector, create an Plan Inspector Hours record
                 for (let inspectorHours of teamInspectorHours) {
                     let data = {
-                        "ts_name": inspectorHours["user.fullname"] + " | " + teamName + " | " + planningDataFiscalYearName,
+                        "ts_name": inspectorHours["user.fullname"] + " | " + teamName + " | " + planFiscalYearName,
                         "ts_inspectorhours@odata.bind": "/ts_inspectorhours(" + inspectorHours.ts_inspectionhoursid + ")",
                         "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
                         "ts_totalhoursq1": inspectorHours.ts_totalhoursq1,

@@ -48,9 +48,9 @@ var ROM;
         Plan.onLoad = onLoad;
         function generateSuggestedInspections(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, planId, teamValue, teamId, teamName, planningDataFiscalYearValue, planningDataFiscalYearName, planningDataFiscalYearId, inspectorHoursfetchXml, teamInspectorHours, _i, teamInspectorHours_1, inspectorHours, data;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
+                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, issoActivitiesFetchXml, issoActivities, _i, issoActivities_1, activity, data, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
                         case 0:
                             formContext = eContext.getFormContext();
                             formContext.data.entity.removeOnPostSave(generateSuggestedInspections);
@@ -60,12 +60,71 @@ var ROM;
                                 teamId = teamValue[0].id;
                                 teamName = teamValue[0].name;
                             }
-                            planningDataFiscalYearValue = formContext.getAttribute("ts_fiscalyear").getValue();
-                            if (planningDataFiscalYearValue != null) {
-                                planningDataFiscalYearName = planningDataFiscalYearValue[0].name;
-                                planningDataFiscalYearId = planningDataFiscalYearValue[0].id.slice(1, -1);
+                            planFiscalYearValue = formContext.getAttribute("ts_fiscalyear").getValue();
+                            if (planFiscalYearValue != null) {
+                                planFiscalYearName = planFiscalYearValue[0].name;
+                                planFiscalYearId = planFiscalYearValue[0].id.slice(1, -1);
                             }
-                            if (!(teamId != null && planningDataFiscalYearId != null)) return [3 /*break*/, 2];
+                            if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 3];
+                            formContext.getAttribute("ts_name").setValue(teamName + " " + planFiscalYearName);
+                            issoActivitiesFetchXml = [
+                                "<fetch top='20'>",
+                                "  <entity name='msdyn_incidenttype'>",
+                                "    <attribute name='msdyn_incidenttypeid'/>",
+                                "    <attribute name='msdyn_name'/>",
+                                "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' intersect='true'>",
+                                "      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
+                                "        <link-entity name='ovs_operation' from='ovs_operationtypeid' to='ovs_operationtypeid' alias='operation'>",
+                                "          <attribute name='ovs_operationtypeid'/>",
+                                "          <attribute name='ts_site'/>",
+                                "          <attribute name='ts_stakeholder'/>",
+                                "          <attribute name='ovs_operationid'/>",
+                                "          <attribute name='ts_risk'/>",
+                                "          <attribute name='ts_operationnameenglish'/>",
+                                "          <attribute name='ts_operationnamefrench'/>",
+                                "          <filter>",
+                                "            <condition attribute='owningbusinessunit' operator='eq' value='4ff4b827-bead-eb11-8236-000d3ae8b866' uitype='businessunit'/>",
+                                "          </filter>",
+                                "          <filter type='and'>",
+                                "            <condition attribute='ts_stakeholder' operator='not-null'/>",
+                                "            <condition attribute='ovs_operationtypeid' operator='not-null'/>",
+                                "            <condition attribute='ts_site' operator='not-null'/>",
+                                "            <condition attribute='ts_risk' operator='not-null'/>",
+                                "          </filter>",
+                                "        </link-entity>",
+                                "      </link-entity>",
+                                "    </link-entity>",
+                                "  </entity>",
+                                "</fetch>"
+                            ].join("");
+                            issoActivitiesFetchXml = "?fetchXml=" + encodeURIComponent(issoActivitiesFetchXml);
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ovs_operation", issoActivitiesFetchXml).then(function success(result) {
+                                    return result.entities;
+                                })];
+                        case 1:
+                            issoActivities = _b.sent();
+                            //Create a suggested inspection for each operation
+                            for (_i = 0, issoActivities_1 = issoActivities; _i < issoActivities_1.length; _i++) {
+                                activity = issoActivities_1[_i];
+                                data = {
+                                    "ts_name": activity["operation.ts_operationnameenglish"] + " | " + activity.msdyn_name + " | " + planFiscalYearName,
+                                    "ts_FiscalYear@odata.bind": "/tc_tcfiscalyears(" + planFiscalYearId + ")",
+                                    "ts_plan@odata.bind": "/ts_plan(" + planId + ")",
+                                    "ts_stakeholder@odata.bind": "/accounts(" + activity["operation.ts_stakeholder"] + ")",
+                                    "ts_operationtype@odata.bind": "/ovs_operationtypes(" + activity["operation.ovs_operationtypeid"] + ")",
+                                    "ts_site@odata.bind": "/msdyn_functionallocations(" + activity["operation.ts_site"] + ")",
+                                    "ts_activitytype@odata.bind": "/msdyn_incidenttypes(" + activity["operation.ovs_operationtypeid"] + ")",
+                                    "ts_operation@odata.bind": "/ovs_operations(" + activity.msdyn_incidenttypeid + ")",
+                                    "ts_q1": 1,
+                                    "ts_q2": 0,
+                                    "ts_q3": 0,
+                                    "ts_q4": 0,
+                                };
+                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
+                                }, function (error) {
+                                    console.log(error.message);
+                                });
+                            }
                             inspectorHoursfetchXml = [
                                 "<fetch>",
                                 "  <entity name='ts_inspectionhours'>",
@@ -89,14 +148,14 @@ var ROM;
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_inspectionhours", inspectorHoursfetchXml).then(function success(result) {
                                     return result.entities;
                                 })];
-                        case 1:
-                            teamInspectorHours = _a.sent();
+                        case 2:
+                            teamInspectorHours = _b.sent();
                             if (teamInspectorHours != null && teamInspectorHours.length > 0) {
                                 //For each inspector, create an Plan Inspector Hours record
-                                for (_i = 0, teamInspectorHours_1 = teamInspectorHours; _i < teamInspectorHours_1.length; _i++) {
-                                    inspectorHours = teamInspectorHours_1[_i];
+                                for (_a = 0, teamInspectorHours_1 = teamInspectorHours; _a < teamInspectorHours_1.length; _a++) {
+                                    inspectorHours = teamInspectorHours_1[_a];
                                     data = {
-                                        "ts_name": inspectorHours["user.fullname"] + " | " + teamName + " | " + planningDataFiscalYearName,
+                                        "ts_name": inspectorHours["user.fullname"] + " | " + teamName + " | " + planFiscalYearName,
                                         "ts_inspectorhours@odata.bind": "/ts_inspectorhours(" + inspectorHours.ts_inspectionhoursid + ")",
                                         "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
                                         "ts_totalhoursq1": inspectorHours.ts_totalhoursq1,
@@ -111,8 +170,8 @@ var ROM;
                                     Xrm.WebApi.createRecord("ts_planinspectorhours", data);
                                 }
                             }
-                            _a.label = 2;
-                        case 2: return [2 /*return*/];
+                            _b.label = 3;
+                        case 3: return [2 /*return*/];
                     }
                 });
             });
