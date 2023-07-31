@@ -65,7 +65,7 @@
                 "</fetch>"
             ].join("");
             issoActivitiesFetchXml = "?fetchXml=" + encodeURIComponent(issoActivitiesFetchXml);
-            let issoActivities = await Xrm.WebApi.retrieveMultipleRecords("ovs_operation", issoActivitiesFetchXml).then(function success(result) {
+            let issoActivities = await Xrm.WebApi.retrieveMultipleRecords("msdyn_incidenttype", issoActivitiesFetchXml).then(function success(result) {
                 return result.entities;
             });
 
@@ -73,13 +73,13 @@
             for (let activity of issoActivities) {
                 let data = {
                     "ts_name": `${activity["operation.ts_operationnameenglish"]} | ${activity.msdyn_name} | ${planFiscalYearName}`,
-                    "ts_FiscalYear@odata.bind": "/tc_tcfiscalyears(" + planFiscalYearId + ")",
-                    "ts_plan@odata.bind": "/ts_plan(" + planId + ")",
+                    "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
                     "ts_stakeholder@odata.bind": "/accounts(" + activity["operation.ts_stakeholder"] + ")",
                     "ts_operationtype@odata.bind": "/ovs_operationtypes(" + activity["operation.ovs_operationtypeid"] + ")",
                     "ts_site@odata.bind": "/msdyn_functionallocations(" + activity["operation.ts_site"] + ")",
-                    "ts_activitytype@odata.bind": "/msdyn_incidenttypes(" + activity["operation.ovs_operationtypeid"] + ")",
-                    "ts_operation@odata.bind": "/ovs_operations(" + activity.msdyn_incidenttypeid + ")",
+                    "ts_activitytype@odata.bind": "/msdyn_incidenttypes(" + activity.msdyn_incidenttypeid + ")",
+                    "ts_operation@odata.bind": "/ovs_operations(" + activity["operation.ovs_operationtypeid"] + ")",
+                    "ts_riskthreshold@odata.bind": "/ts_riskcategories(" + activity["operation.ts_risk"] + ")",
                     "ts_q1": 1,
                     "ts_q2": 0,
                     "ts_q3": 0,
@@ -124,7 +124,7 @@
                 for (let inspectorHours of teamInspectorHours) {
                     let data = {
                         "ts_name": inspectorHours["user.fullname"] + " | " + teamName + " | " + planFiscalYearName,
-                        "ts_inspectorhours@odata.bind": "/ts_inspectorhours(" + inspectorHours.ts_inspectionhoursid + ")",
+                        "ts_inspectorhours@odata.bind": "/ts_inspectionhourses(" + inspectorHours.ts_inspectionhoursid + ")",
                         "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
                         "ts_totalhoursq1": inspectorHours.ts_totalhoursq1,
                         "ts_totalhoursq2": inspectorHours.ts_totalhoursq2,
