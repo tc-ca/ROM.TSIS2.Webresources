@@ -130,10 +130,10 @@
                         "ts_totalhoursq2": inspectorHours.ts_totalhoursq2,
                         "ts_totalhoursq3": inspectorHours.ts_totalhoursq3,
                         "ts_totalhoursq4": inspectorHours.ts_totalhoursq4,
-                        "ts_remaininghoursq1": 0,
-                        "ts_remaininghoursq2": 0,
-                        "ts_remaininghoursq3": 0,
-                        "ts_remaininghoursq4": 0
+                        "ts_remaininghoursq1": inspectorHours.ts_totalhoursq1,
+                        "ts_remaininghoursq2": inspectorHours.ts_totalhoursq2,
+                        "ts_remaininghoursq3": inspectorHours.ts_totalhoursq3,
+                        "ts_remaininghoursq4": inspectorHours.ts_totalhoursq4
                     }
                     Xrm.WebApi.createRecord("ts_planinspectorhours", data);
                 }
@@ -141,9 +141,5 @@
         }
 
         //Hide loading wheel
-    }
-
-    function recalculate() {
-
     }
 }
