@@ -35,18 +35,22 @@ namespace ROM.SecurityIncident {
     }
    
     function adjustIncidentDateTime(formContext: Form.ts_securityincident.Main.Information) {
+        if (formContext.ui.getFormType() != 1) {
+            if (formContext.getAttribute("ts_incidentdatetime").getValue() != null && formContext.getAttribute("ts_incidentdatetimeadjust").getValue() != null) {
+                formContext.getControl("ts_incidentdatetime").setVisible(false);
+                formContext.getControl("ts_incidentdatetimeadjust").setVisible(true);
+            }
+            if (formContext.getAttribute("ts_reporteddatetime").getValue() != null && formContext.getAttribute("ts_reporteddatetimeadjust").getValue() != null) {
+                formContext.getControl("ts_reporteddatetime").setVisible(false);
+                formContext.getControl("ts_reporteddatetimeadjust").setVisible(true);
+            }
+        }
+
+        /*
         var incidentDatetime = formContext.getAttribute("ts_incidentdatetime").getValue();
         var reportedDatetime = formContext.getAttribute("ts_reporteddatetime").getValue();
         var timezone = formContext.getAttribute("ts_timezone").getValue();
         
-        if (formContext.ui.getFormType() != 1) {
-            if (incidentDatetime != null) {
-                formContext.getControl("ts_incidentdatetimeadjust").setDisabled(true);
-            }
-            if (reportedDatetime != null) {
-                formContext.getControl("ts_reporteddatetimeadjust").setDisabled(true);
-            }
-        }
         if (timezone != null) {
             var timeZoneHoursAdjust = 0;
             if (timezone == ts_timezone.AtlanticTime) {
@@ -93,6 +97,15 @@ namespace ROM.SecurityIncident {
                 formContext.getAttribute("ts_reporteddatetimeadjust").setValue(reportedDatetime);
             }
         }
+        */
+    }
+
+    export function TimeZoneOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+        formContext.getControl("ts_incidentdatetime").setVisible(true);
+        formContext.getControl("ts_incidentdatetimeadjust").setVisible(false);
+        formContext.getControl("ts_reporteddatetime").setVisible(true);
+        formContext.getControl("ts_reporteddatetimeadjust").setVisible(false);
     }
 
     export function StatusOfRailwayOwnerOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
