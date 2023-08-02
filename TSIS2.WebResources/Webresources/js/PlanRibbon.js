@@ -25,6 +25,8 @@
         let inspectorHours = {};
         for (let planInspectorHoursRecord of result.entities) {
             //Total hours data for an inspector will be stored as property on the inspectorHours object, with the inspector's id as the property's name
+            //This let's us quickly find the inspector without having to iterate through an array to find a matching id
+
             //Start the remaining hours as the total hours
             inspectorHours[planInspectorHoursRecord["inspectorhours.ts_inspector"]] = {
                 remainingHoursQ1: planInspectorHoursRecord.ts_totalhoursq1,
@@ -37,7 +39,7 @@
         }
         return inspectorHours;
     });
-    //Retrieve suggested inspections
+    //Retrieve suggested inspections on the plan
     let suggestedInspectionsFetchXml = [
         "<fetch>",
         "  <entity name='ts_suggestedinspection'>",
@@ -69,7 +71,7 @@
         }
     }
 
-    //Update each insectorHours with the updated remaining hours
+    //Update each ts_planinspectorhours with the updated remaining hours
     for (let inspectorId of inspectorIds) {
         if (planInspectorHours[inspectorId] != null) {
             let data =

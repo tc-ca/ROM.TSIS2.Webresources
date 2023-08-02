@@ -139,6 +139,7 @@ interface Incident extends Incident_Base, Incident_Relationships {
   ts_Country_bind$tc_countries?: string | null;
   ts_InspectionType1_bind$msdyn_incidenttypes?: string | null;
   ts_InspectionType2_bind$msdyn_incidenttypes?: string | null;
+  ts_SharePointFileGroup_bind$ts_sharepointfilegroups?: string | null;
   ts_TradeNameId_bind$ts_tradenames?: string | null;
   ts_WorkOrder1_bind$msdyn_workorders?: string | null;
   ts_WorkOrder2_bind$msdyn_workorders?: string | null;
@@ -261,6 +262,7 @@ interface Incident_Select {
   ts_numberoffindings_state: WebAttribute<Incident_Select, { ts_numberoffindings_state: number | null }, {  }>;
   ts_quarterofreportinganddocumentation: WebAttribute<Incident_Select, { ts_quarterofreportinganddocumentation: ts_quarter | null }, { ts_quarterofreportinganddocumentation_formatted?: string }>;
   ts_quarteroftraveltime: WebAttribute<Incident_Select, { ts_quarteroftraveltime: ts_quarter | null }, { ts_quarteroftraveltime_formatted?: string }>;
+  ts_sharepointfilegroup_guid: WebAttribute<Incident_Select, { ts_sharepointfilegroup_guid: string | null }, { ts_sharepointfilegroup_formatted?: string }>;
   ts_tradenameid_guid: WebAttribute<Incident_Select, { ts_tradenameid_guid: string | null }, { ts_tradenameid_formatted?: string }>;
   ts_traveltime: WebAttribute<Incident_Select, { ts_traveltime: number | null }, {  }>;
   ts_workorder1_guid: WebAttribute<Incident_Select, { ts_workorder1_guid: string | null }, { ts_workorder1_formatted?: string }>;
@@ -380,6 +382,7 @@ interface Incident_Filter {
   ts_numberoffindings_state: number;
   ts_quarterofreportinganddocumentation: ts_quarter;
   ts_quarteroftraveltime: ts_quarter;
+  ts_sharepointfilegroup_guid: XQW.Guid;
   ts_tradenameid_guid: XQW.Guid;
   ts_traveltime: any;
   ts_workorder1_guid: XQW.Guid;
@@ -507,6 +510,7 @@ interface Incident_FormattedResult {
   ts_numberoffindings_date_formatted?: string;
   ts_quarterofreportinganddocumentation_formatted?: string;
   ts_quarteroftraveltime_formatted?: string;
+  ts_sharepointfilegroup_formatted?: string;
   ts_tradenameid_formatted?: string;
   ts_workorder1_formatted?: string;
   ts_workorder2_formatted?: string;
@@ -554,6 +558,7 @@ interface Incident_Result extends Incident_Base, Incident_Relationships {
   ts_country_guid: string | null;
   ts_inspectiontype1_guid: string | null;
   ts_inspectiontype2_guid: string | null;
+  ts_sharepointfilegroup_guid: string | null;
   ts_tradenameid_guid: string | null;
   ts_workorder1_guid: string | null;
   ts_workorder2_guid: string | null;

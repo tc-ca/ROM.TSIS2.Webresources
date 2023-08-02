@@ -56,6 +56,8 @@ interface Connection extends Connection_Base, Connection_Relationships {
   profileruleid1_bind$channelaccessprofilerules?: string | null;
   record1id_account_bind$accounts?: string | null;
   record1id_activitypointer_bind$activitypointers?: string | null;
+  record1id_adx_invitation_bind$adx_invitations?: string | null;
+  record1id_adx_inviteredemption_bind$adx_inviteredemptions?: string | null;
   record1id_appointment_bind$appointments?: string | null;
   record1id_campaign_bind$campaigns?: string | null;
   record1id_campaignactivity_bind$campaignactivities?: string | null;
@@ -164,6 +166,9 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_msfp_alert_bind$msfp_alerts?: string | null;
   record1id_msfp_surveyinvite_bind$msfp_surveyinvites?: string | null;
   record1id_msfp_surveyresponse_bind$msfp_surveyresponses?: string | null;
+  record1id_mspp_publishingstatetransitionrule_bind$mspp_publishingstatetransitionrules?: string | null;
+  record1id_mspp_shortcut_bind$mspp_shortcuts?: string | null;
+  record1id_mspp_website_bind$mspp_websites?: string | null;
   record1id_opportunity_bind$opportunities?: string | null;
   record1id_ovs_operation_bind$ovs_operations?: string | null;
   record1id_phonecall_bind$phonecalls?: string | null;
@@ -189,6 +194,8 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1roleid_bind$connectionroles?: string | null;
   record2id_account_bind$accounts?: string | null;
   record2id_activitypointer_bind$activitypointers?: string | null;
+  record2id_adx_invitation_bind$adx_invitations?: string | null;
+  record2id_adx_inviteredemption_bind$adx_inviteredemptions?: string | null;
   record2id_appointment_bind$appointments?: string | null;
   record2id_campaign_bind$campaigns?: string | null;
   record2id_campaignactivity_bind$campaignactivities?: string | null;
@@ -297,6 +304,9 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_msfp_alert_bind$msfp_alerts?: string | null;
   record2id_msfp_surveyinvite_bind$msfp_surveyinvites?: string | null;
   record2id_msfp_surveyresponse_bind$msfp_surveyresponses?: string | null;
+  record2id_mspp_publishingstatetransitionrule_bind$mspp_publishingstatetransitionrules?: string | null;
+  record2id_mspp_shortcut_bind$mspp_shortcuts?: string | null;
+  record2id_mspp_website_bind$mspp_websites?: string | null;
   record2id_opportunity_bind$opportunities?: string | null;
   record2id_ovs_operation_bind$ovs_operations?: string | null;
   record2id_phonecall_bind$phonecalls?: string | null;

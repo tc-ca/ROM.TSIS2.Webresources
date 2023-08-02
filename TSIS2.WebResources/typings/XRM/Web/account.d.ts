@@ -52,6 +52,10 @@ interface Account_Base extends WebEntity {
   address2_telephone3?: string | null;
   address2_upszone?: string | null;
   address2_utcoffset?: number | null;
+  adx_createdbyipaddress?: string | null;
+  adx_createdbyusername?: string | null;
+  adx_modifiedbyipaddress?: string | null;
+  adx_modifiedbyusername?: string | null;
   aging30?: number | null;
   aging30_base?: number | null;
   aging60?: number | null;
@@ -175,6 +179,8 @@ interface Account_Relationships {
   account_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   contact_customer_accounts?: Contact_Result[] | null;
   incident_customer_accounts?: Incident_Result[] | null;
+  msa_account_managingpartner?: Account_Result[] | null;
+  msa_contact_managingpartner?: Contact_Result[] | null;
   msdyn_PreferredResource?: BookableResource_Result | null;
   msdyn_account_account_BillingAccount?: Account_Result[] | null;
   msdyn_account_msdyn_accountkpiitem_accountid?: msdyn_accountkpiitem_Result[] | null;
@@ -206,6 +212,7 @@ interface Account_Relationships {
 }
 interface Account extends Account_Base, Account_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
+  msa_managingpartnerid_bind$accounts?: string | null;
   msdyn_PreferredResource_bind$bookableresources?: string | null;
   msdyn_accountkpiid_bind$msdyn_accountkpiitems?: string | null;
   msdyn_billingaccount_account_bind$accounts?: string | null;
@@ -289,6 +296,10 @@ interface Account_Select {
   address2_telephone3: WebAttribute<Account_Select, { address2_telephone3: string | null }, {  }>;
   address2_upszone: WebAttribute<Account_Select, { address2_upszone: string | null }, {  }>;
   address2_utcoffset: WebAttribute<Account_Select, { address2_utcoffset: number | null }, {  }>;
+  adx_createdbyipaddress: WebAttribute<Account_Select, { adx_createdbyipaddress: string | null }, {  }>;
+  adx_createdbyusername: WebAttribute<Account_Select, { adx_createdbyusername: string | null }, {  }>;
+  adx_modifiedbyipaddress: WebAttribute<Account_Select, { adx_modifiedbyipaddress: string | null }, {  }>;
+  adx_modifiedbyusername: WebAttribute<Account_Select, { adx_modifiedbyusername: string | null }, {  }>;
   aging30: WebAttribute<Account_Select, { aging30: number | null; transactioncurrencyid_guid: string | null }, { aging30_formatted?: string; transactioncurrencyid_formatted?: string }>;
   aging30_base: WebAttribute<Account_Select, { aging30_base: number | null; transactioncurrencyid_guid: string | null }, { aging30_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   aging60: WebAttribute<Account_Select, { aging60: number | null; transactioncurrencyid_guid: string | null }, { aging60_formatted?: string; transactioncurrencyid_formatted?: string }>;
@@ -336,6 +347,7 @@ interface Account_Select {
   modifiedbyexternalparty_guid: WebAttribute<Account_Select, { modifiedbyexternalparty_guid: string | null }, { modifiedbyexternalparty_formatted?: string }>;
   modifiedon: WebAttribute<Account_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Account_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msa_managingpartnerid_guid: WebAttribute<Account_Select, { msa_managingpartnerid_guid: string | null }, { msa_managingpartnerid_formatted?: string }>;
   msdyn_accountkpiid_guid: WebAttribute<Account_Select, { msdyn_accountkpiid_guid: string | null }, { msdyn_accountkpiid_formatted?: string }>;
   msdyn_billingaccount_guid: WebAttribute<Account_Select, { msdyn_billingaccount_guid: string | null }, { msdyn_billingaccount_formatted?: string }>;
   msdyn_gdproptout: WebAttribute<Account_Select, { msdyn_gdproptout: boolean | null }, {  }>;
@@ -479,6 +491,10 @@ interface Account_Filter {
   address2_telephone3: string;
   address2_upszone: string;
   address2_utcoffset: number;
+  adx_createdbyipaddress: string;
+  adx_createdbyusername: string;
+  adx_modifiedbyipaddress: string;
+  adx_modifiedbyusername: string;
   aging30: number;
   aging30_base: number;
   aging60: number;
@@ -526,6 +542,7 @@ interface Account_Filter {
   modifiedbyexternalparty_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msa_managingpartnerid_guid: XQW.Guid;
   msdyn_accountkpiid_guid: XQW.Guid;
   msdyn_billingaccount_guid: XQW.Guid;
   msdyn_gdproptout: boolean;
@@ -640,6 +657,9 @@ interface Account_Expand {
   masterid: WebExpand<Account_Expand, Account_Select, Account_Filter, { masterid: Account_Result }>;
   modifiedby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
+  msa_account_managingpartner: WebExpand<Account_Expand, Account_Select, Account_Filter, { msa_account_managingpartner: Account_Result[] }>;
+  msa_contact_managingpartner: WebExpand<Account_Expand, Contact_Select, Contact_Filter, { msa_contact_managingpartner: Contact_Result[] }>;
+  msa_managingpartnerid: WebExpand<Account_Expand, Account_Select, Account_Filter, { msa_managingpartnerid: Account_Result }>;
   msdyn_PreferredResource: WebExpand<Account_Expand, BookableResource_Select, BookableResource_Filter, { msdyn_PreferredResource: BookableResource_Result }>;
   msdyn_account_account_BillingAccount: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_account_account_BillingAccount: Account_Result[] }>;
   msdyn_account_msdyn_accountkpiitem_accountid: WebExpand<Account_Expand, msdyn_accountkpiitem_Select, msdyn_accountkpiitem_Filter, { msdyn_account_msdyn_accountkpiitem_accountid: msdyn_accountkpiitem_Result[] }>;
@@ -713,6 +733,7 @@ interface Account_FormattedResult {
   modifiedbyexternalparty_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msa_managingpartnerid_formatted?: string;
   msdyn_accountkpiid_formatted?: string;
   msdyn_billingaccount_formatted?: string;
   msdyn_preferredresource_formatted?: string;
@@ -774,6 +795,7 @@ interface Account_Result extends Account_Base, Account_Relationships {
   modifiedby_guid: string | null;
   modifiedbyexternalparty_guid: string | null;
   modifiedonbehalfby_guid: string | null;
+  msa_managingpartnerid_guid: string | null;
   msdyn_accountkpiid_guid: string | null;
   msdyn_billingaccount_guid: string | null;
   msdyn_preferredresource_guid: string | null;
@@ -807,6 +829,7 @@ interface Account_RelatedOne {
   masterid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  msa_managingpartnerid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_PreferredResource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   msdyn_accountkpiid: WebMappingRetrieve<msdyn_accountkpiitem_Select,msdyn_accountkpiitem_Expand,msdyn_accountkpiitem_Filter,msdyn_accountkpiitem_Fixed,msdyn_accountkpiitem_Result,msdyn_accountkpiitem_FormattedResult>;
   msdyn_billingaccount_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
@@ -838,6 +861,8 @@ interface Account_RelatedMany {
   account_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   contact_customer_accounts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   incident_customer_accounts: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  msa_account_managingpartner: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  msa_contact_managingpartner: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   msdyn_account_account_BillingAccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_account_msdyn_accountkpiitem_accountid: WebMappingRetrieve<msdyn_accountkpiitem_Select,msdyn_accountkpiitem_Expand,msdyn_accountkpiitem_Filter,msdyn_accountkpiitem_Fixed,msdyn_accountkpiitem_Result,msdyn_accountkpiitem_FormattedResult>;
   msdyn_account_msdyn_customerasset_Account: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;

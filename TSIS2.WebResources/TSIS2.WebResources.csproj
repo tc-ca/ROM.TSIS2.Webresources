@@ -385,6 +385,7 @@
     <TypeScriptCompile Include="src\ts\ScoreThresholds.ts" />
     <TypeScriptCompile Include="src\ts\SecurityIncident.ts" />
     <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
+    <TypeScriptCompile Include="src\ts\SuggestedInspection.ts" />
     <TypeScriptCompile Include="src\ts\Team.ts" />
     <TypeScriptCompile Include="src\ts\TeamPlanningData.ts" />
     <TypeScriptCompile Include="src\ts\TeamPlanningInspectorHours.ts" />

@@ -86,6 +86,7 @@ interface ts_enforcementaction extends ts_enforcementaction_Base, ts_enforcement
   ownerid_ts_enforcementaction_bind$systemusers?: string | null;
   ownerid_ts_enforcementaction_bind$teams?: string | null;
   regardingobjectid_account_ts_enforcementaction_bind$accounts?: string | null;
+  regardingobjectid_adx_invitation_ts_enforcementaction_bind$adx_invitations?: string | null;
   regardingobjectid_bookableresourcebooking_ts_enforcementaction_bind$bookableresourcebookings?: string | null;
   regardingobjectid_bookableresourcebookingheader_ts_enforcementaction_bind$bookableresourcebookingheaders?: string | null;
   regardingobjectid_bulkoperation_ts_enforcementaction_bind$bulkoperations?: string | null;
@@ -169,6 +170,12 @@ interface ts_enforcementaction extends ts_enforcementaction_Base, ts_enforcement
   regardingobjectid_msdyn_workorderresourcerestriction_ts_enforcementaction_bind$msdyn_workorderresourcerestrictions?: string | null;
   regardingobjectid_msdyn_workorderservice_ts_enforcementaction_bind$msdyn_workorderservices?: string | null;
   regardingobjectid_msdyn_workorderservicetask_ts_enforcementaction_bind$msdyn_workorderservicetasks?: string | null;
+  regardingobjectid_mspp_adplacement_ts_enforcementaction_bind$mspp_adplacements?: string | null;
+  regardingobjectid_mspp_pollplacement_ts_enforcementaction_bind$mspp_pollplacements?: string | null;
+  regardingobjectid_mspp_publishingstatetransitionrule_ts_enforcementaction_bind$mspp_publishingstatetransitionrules?: string | null;
+  regardingobjectid_mspp_redirect_ts_enforcementaction_bind$mspp_redirects?: string | null;
+  regardingobjectid_mspp_shortcut_ts_enforcementaction_bind$mspp_shortcuts?: string | null;
+  regardingobjectid_mspp_website_ts_enforcementaction_bind$mspp_websites?: string | null;
   regardingobjectid_new_interactionforemail_ts_enforcementaction_bind$interactionforemails?: string | null;
   regardingobjectid_opportunity_ts_enforcementaction_bind$opportunities?: string | null;
   regardingobjectid_ovs_operation_ts_enforcementaction_bind$ovs_operations?: string | null;

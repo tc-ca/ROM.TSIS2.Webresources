@@ -79,6 +79,7 @@ interface ServiceAppointment extends ServiceAppointment_Base, ServiceAppointment
   ownerid_serviceappointment_bind$systemusers?: string | null;
   ownerid_serviceappointment_bind$teams?: string | null;
   regardingobjectid_account_serviceappointment_bind$accounts?: string | null;
+  regardingobjectid_adx_invitation_serviceappointment_bind$adx_invitations?: string | null;
   regardingobjectid_bookableresourcebooking_serviceappointment_bind$bookableresourcebookings?: string | null;
   regardingobjectid_bookableresourcebookingheader_serviceappointment_bind$bookableresourcebookingheaders?: string | null;
   regardingobjectid_bulkoperation_serviceappointment_bind$bulkoperations?: string | null;
