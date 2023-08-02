@@ -1,19 +1,20 @@
 ﻿async function recalculate(formContext) {
     const planId = formContext.data.entity.getId().slice(1, -1);
+    Xrm.Utility.showProgressIndicator();
     //Retrieve the Plan Inspector Hours records with the user id
     let planInspectorHoursFetchXml = [
         "<fetch>",
         "  <entity name='ts_planinspectorhours'>",
-        "    <attribute name='ts_totalhoursq1'/>",
-        "    <attribute name='ts_totalhoursq2'/>",
-        "    <attribute name='ts_totalhoursq3'/>",
-        "    <attribute name='ts_totalhoursq4'/>",
         "    <attribute name='ts_planinspectorhoursid'/>",
         "    <filter>",
         "      <condition attribute='ts_plan' operator='eq' value='", planId, "' uiname='Test Plan 1' uitype='ts_plan'/>",
         "    </filter>",
         "    <link-entity name='ts_inspectionhours' from='ts_inspectionhoursid' to='ts_inspectorhours' alias='inspectorhours'>",
         "      <attribute name='ts_inspector'/>",
+        "      <attribute name='ts_totalhoursq1'/>",
+        "      <attribute name='ts_totalhoursq2'/>",
+        "      <attribute name='ts_totalhoursq3'/>",
+        "      <attribute name='ts_totalhoursq4'/>",
         "    </link-entity>",
         "  </entity>",
         "</fetch>"
@@ -29,10 +30,10 @@
 
             //Start the remaining hours as the total hours
             inspectorHours[planInspectorHoursRecord["inspectorhours.ts_inspector"]] = {
-                remainingHoursQ1: planInspectorHoursRecord.ts_totalhoursq1,
-                remainingHoursQ2: planInspectorHoursRecord.ts_totalhoursq2,
-                remainingHoursQ3: planInspectorHoursRecord.ts_totalhoursq3,
-                remainingHoursQ4: planInspectorHoursRecord.ts_totalhoursq4,
+                remainingHoursQ1: planInspectorHoursRecord["inspectorhours.ts_totalhoursq1"],
+                remainingHoursQ2: planInspectorHoursRecord["inspectorhours.ts_totalhoursq2"],
+                remainingHoursQ3: planInspectorHoursRecord["inspectorhours.ts_totalhoursq3"],
+                remainingHoursQ4: planInspectorHoursRecord["inspectorhours.ts_totalhoursq4"],
                 planInspectorHoursId: planInspectorHoursRecord.ts_planinspectorhoursid
             }
             inspectorIds.push(planInspectorHoursRecord["inspectorhours.ts_inspector"]);
@@ -71,6 +72,8 @@
         }
     }
 
+    let updatePromises = [];
+
     //Update each ts_planinspectorhours with the updated remaining hours
     for (let inspectorId of inspectorIds) {
         if (planInspectorHours[inspectorId] != null) {
@@ -81,7 +84,12 @@
                 "ts_remaininghoursq3": planInspectorHours[inspectorId].remainingHoursQ3,
                 "ts_remaininghoursq4": planInspectorHours[inspectorId].remainingHoursQ4
             }
-            Xrm.WebApi.updateRecord("ts_planinspectorhours", planInspectorHours[inspectorId].planInspectorHoursId, data)
+            updatePromises.push(Xrm.WebApi.updateRecord("ts_planinspectorhours", planInspectorHours[inspectorId].planInspectorHoursId, data));
         }
     }
+    //wait until all updates have finished
+    await Promise.all(updatePromises);
+    formContext.data.entity.save();
+    Xrm.Page.getControl("suggested_inspectorhours_grid").refresh();
+    Xrm.Utility.closeProgressIndicator();
 }

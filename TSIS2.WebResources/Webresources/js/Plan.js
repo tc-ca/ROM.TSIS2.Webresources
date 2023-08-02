@@ -53,6 +53,7 @@ var ROM;
                     switch (_b.label) {
                         case 0:
                             formContext = eContext.getFormContext();
+                            Xrm.Utility.showProgressIndicator("Please wait while the Suggested Inspection records are being created.");
                             formContext.data.entity.removeOnPostSave(generateSuggestedInspections);
                             planId = formContext.data.entity.getId().slice(1, -1);
                             teamValue = formContext.getAttribute("ts_team").getValue();
@@ -158,10 +159,6 @@ var ROM;
                                         "ts_name": inspectorHours["user.fullname"] + " | " + teamName + " | " + planFiscalYearName,
                                         "ts_inspectorhours@odata.bind": "/ts_inspectionhourses(" + inspectorHours.ts_inspectionhoursid + ")",
                                         "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
-                                        "ts_totalhoursq1": inspectorHours.ts_totalhoursq1,
-                                        "ts_totalhoursq2": inspectorHours.ts_totalhoursq2,
-                                        "ts_totalhoursq3": inspectorHours.ts_totalhoursq3,
-                                        "ts_totalhoursq4": inspectorHours.ts_totalhoursq4,
                                         "ts_remaininghoursq1": inspectorHours.ts_totalhoursq1,
                                         "ts_remaininghoursq2": inspectorHours.ts_totalhoursq2,
                                         "ts_remaininghoursq3": inspectorHours.ts_totalhoursq3,
@@ -171,10 +168,27 @@ var ROM;
                                 }
                             }
                             _b.label = 3;
-                        case 3: return [2 /*return*/];
+                        case 3:
+                            formContext.data.entity.save();
+                            Xrm.Utility.closeProgressIndicator();
+                            return [2 /*return*/];
                     }
                 });
             });
         }
+        //Used to lock specific fields in editable grids
+        function lockSuggestedInspectionEditableGridFields(executionContext, fields) {
+            var formContext = executionContext.getFormContext();
+            if (formContext) {
+                var entity = formContext.data.entity;
+                entity.attributes.forEach(function (attribute, i) {
+                    if (fields.indexOf(attribute.getName()) > -1) {
+                        var attributeToDisable = attribute.controls.get(0);
+                        attributeToDisable.setDisabled(true);
+                    }
+                });
+            }
+        }
+        Plan.lockSuggestedInspectionEditableGridFields = lockSuggestedInspectionEditableGridFields;
     })(Plan = ROM.Plan || (ROM.Plan = {}));
 })(ROM || (ROM = {}));

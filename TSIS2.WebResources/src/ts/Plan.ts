@@ -8,8 +8,8 @@
 
     async function generateSuggestedInspections(eContext: Xrm.ExecutionContext<any, any>) {
         const formContext: any = eContext.getFormContext();
+        Xrm.Utility.showProgressIndicator("Please wait while the Suggested Inspection records are being created.");
         formContext.data.entity.removeOnPostSave(generateSuggestedInspections);
-
         const planId = formContext.data.entity.getId().slice(1, -1);
         let teamValue = formContext.getAttribute("ts_team").getValue();
         let teamId;
@@ -126,10 +126,6 @@
                         "ts_name": inspectorHours["user.fullname"] + " | " + teamName + " | " + planFiscalYearName,
                         "ts_inspectorhours@odata.bind": "/ts_inspectionhourses(" + inspectorHours.ts_inspectionhoursid + ")",
                         "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
-                        "ts_totalhoursq1": inspectorHours.ts_totalhoursq1,
-                        "ts_totalhoursq2": inspectorHours.ts_totalhoursq2,
-                        "ts_totalhoursq3": inspectorHours.ts_totalhoursq3,
-                        "ts_totalhoursq4": inspectorHours.ts_totalhoursq4,
                         "ts_remaininghoursq1": inspectorHours.ts_totalhoursq1,
                         "ts_remaininghoursq2": inspectorHours.ts_totalhoursq2,
                         "ts_remaininghoursq3": inspectorHours.ts_totalhoursq3,
@@ -139,7 +135,21 @@
                 }
             }
         }
+        formContext.data.entity.save();
+        Xrm.Utility.closeProgressIndicator();
+    }
 
-        //Hide loading wheel
+    //Used to lock specific fields in editable grids
+    export function lockSuggestedInspectionEditableGridFields(executionContext, fields) {
+        let formContext = executionContext.getFormContext();
+        if (formContext) {
+            let entity = formContext.data.entity;
+            entity.attributes.forEach(function (attribute, i) {
+                if (fields.indexOf(attribute.getName()) > -1) {
+                    let attributeToDisable = attribute.controls.get(0);
+                    attributeToDisable.setDisabled(true);
+                }
+            });
+        }
     }
 }
