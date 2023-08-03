@@ -65,10 +65,14 @@
     //For each suggested inspection, if the assigned inspector has a matching inspector hours object, subtract from the total hours of each quarter 
     for (let suggestedInspection of suggestedInspections) {
         if (planInspectorHours[suggestedInspection._ts_inspector_value] != null) {
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ1 -= suggestedInspection.ts_q1 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ2 -= suggestedInspection.ts_q2 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ3 -= suggestedInspection.ts_q3 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ4 -= suggestedInspection.ts_q4 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
+            const q1 = (suggestedInspection.ts_q1 != null) ? suggestedInspection.ts_q1 : 0;
+            const q2 = (suggestedInspection.ts_q2 != null) ? suggestedInspection.ts_q2 : 0;
+            const q3 = (suggestedInspection.ts_q3 != null) ? suggestedInspection.ts_q3 : 0;
+            const q4 = (suggestedInspection.ts_q4 != null) ? suggestedInspection.ts_q4 : 0;
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ1 -= q1 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ2 -= q2 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ3 -= q3 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ4 -= q4 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
         }
     }
 
