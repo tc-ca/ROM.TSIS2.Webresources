@@ -132,4 +132,9 @@ declare const enum connection_record1objecttypecode {
   IncidentUpdate = 11086,
   SuggestionPrincipalObjectAccess = 11109,
   CopilotTranscript = 11401,
+  Invitation = 11491,
+  InviteRedemption = 11492,
+  PublishingStateTransitionRule = 11511,
+  Shortcut = 11513,
+  Website = 11525,
 }

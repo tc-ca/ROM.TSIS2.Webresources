@@ -5,4 +5,5 @@ declare const enum ts_actionstatus {
   Received = 741130003,
   Requested = 741130004,
   Sworn = 741130005,
+  Referred = 741130006,
 }

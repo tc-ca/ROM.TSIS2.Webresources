@@ -24,8 +24,15 @@ declare namespace Form.team.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_planning extends Xrm.SectionCollectionBase {
+      interface tab_planning_avsec extends Xrm.SectionCollectionBase {
         get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_planning_isso extends Xrm.SectionCollectionBase {
+        get(name: "tab_5_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -59,6 +66,7 @@ declare namespace Form.team.Main {
       get(name: "header_queueid"): Xrm.LookupControl<"queue">;
       get(name: "membershiptype"): Xrm.OptionSetControl<team_membershiptype>;
       get(name: "name"): Xrm.StringControl;
+      get(name: "plans_grid"): Xrm.SubGridControl<"ts_plan">;
       get(name: "teamtype"): Xrm.OptionSetControl<team_type>;
       get(name: "ts_territory"): Xrm.LookupControl<"territory">;
       get(name: string): undefined;
@@ -70,7 +78,8 @@ declare namespace Form.team.Main {
       get(name: "Operations"): Xrm.PageTab<Tabs.Operations>;
       get(name: "general"): Xrm.PageTab<Tabs.general>;
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
-      get(name: "tab_planning"): Xrm.PageTab<Tabs.tab_planning>;
+      get(name: "tab_planning_avsec"): Xrm.PageTab<Tabs.tab_planning_avsec>;
+      get(name: "tab_planning_isso"): Xrm.PageTab<Tabs.tab_planning_isso>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -99,6 +108,7 @@ declare namespace Form.team.Main {
     getControl(controlName: "header_queueid"): Xrm.LookupControl<"queue">;
     getControl(controlName: "membershiptype"): Xrm.OptionSetControl<team_membershiptype>;
     getControl(controlName: "name"): Xrm.StringControl;
+    getControl(controlName: "plans_grid"): Xrm.SubGridControl<"ts_plan">;
     getControl(controlName: "teamtype"): Xrm.OptionSetControl<team_type>;
     getControl(controlName: "ts_territory"): Xrm.LookupControl<"territory">;
     getControl(controlName: string): undefined;

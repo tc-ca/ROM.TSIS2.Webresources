@@ -315,6 +315,16 @@
             "description": "ROM TSIS 2.0 Planning Data Form Scripts"
           },
           {
+            "uniquename": "ts_/js/Plan.js",
+            "file": "js\\Plan.js",
+            "description": "ROM TSIS 2.0 Plan Form Scripts"
+          },
+          {
+            "uniquename": "ts_/js/PlanRibbon.js",
+            "file": "js\\PlanRibbon.js",
+            "description": "ROM TSIS 2.0 Plan Ribbon Scripts"
+          },
+          {
             "uniquename": "ts_/js/TeamPlanningDataRibbon.js",
             "file": "js\\TeamPlanningDataRibbon.js",
             "description": "ROM TSIS 2.0 Team Planning Data Ribbon Scripts"

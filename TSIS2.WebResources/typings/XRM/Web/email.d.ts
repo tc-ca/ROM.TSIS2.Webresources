@@ -110,6 +110,7 @@ interface Email extends Email_Base, Email_Relationships {
   ownerid_email_bind$systemusers?: string | null;
   ownerid_email_bind$teams?: string | null;
   regardingobjectid_account_email_bind$accounts?: string | null;
+  regardingobjectid_adx_invitation_email_bind$adx_invitations?: string | null;
   regardingobjectid_asyncoperation_bind$asyncoperations?: string | null;
   regardingobjectid_bookableresourcebooking_email_bind$bookableresourcebookings?: string | null;
   regardingobjectid_bookableresourcebookingheader_email_bind$bookableresourcebookingheaders?: string | null;
@@ -194,6 +195,12 @@ interface Email extends Email_Base, Email_Relationships {
   regardingobjectid_msdyn_workorderresourcerestriction_email_bind$msdyn_workorderresourcerestrictions?: string | null;
   regardingobjectid_msdyn_workorderservice_email_bind$msdyn_workorderservices?: string | null;
   regardingobjectid_msdyn_workorderservicetask_email_bind$msdyn_workorderservicetasks?: string | null;
+  regardingobjectid_mspp_adplacement_email_bind$mspp_adplacements?: string | null;
+  regardingobjectid_mspp_pollplacement_email_bind$mspp_pollplacements?: string | null;
+  regardingobjectid_mspp_publishingstatetransitionrule_email_bind$mspp_publishingstatetransitionrules?: string | null;
+  regardingobjectid_mspp_redirect_email_bind$mspp_redirects?: string | null;
+  regardingobjectid_mspp_shortcut_email_bind$mspp_shortcuts?: string | null;
+  regardingobjectid_mspp_website_email_bind$mspp_websites?: string | null;
   regardingobjectid_opportunity_email_bind$opportunities?: string | null;
   regardingobjectid_ovs_operation_email_bind$ovs_operations?: string | null;
   regardingobjectid_ppp_traveller_email_bind$ppp_travellers?: string | null;

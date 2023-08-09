@@ -107,6 +107,7 @@ interface msdyn_workorderservicetask extends msdyn_workorderservicetask_Base, ms
   ts_PassengerServices_bind$accounts?: string | null;
   ts_RampServices_bind$accounts?: string | null;
   ts_SecuritySearchServices_bind$accounts?: string | null;
+  ts_SharePointFileGroup_bind$ts_sharepointfilegroups?: string | null;
   ts_legislationsourcefilter_bind$qm_tylegislationsources?: string | null;
   ts_legislationtypefilter_bind$qm_tylegislationtypes?: string | null;
   ts_operationtypefilter_bind$ovs_operationtypes?: string | null;
@@ -199,6 +200,7 @@ interface msdyn_workorderservicetask_Select {
   ts_securitysearchservices_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_securitysearchservices_guid: string | null }, { ts_securitysearchservices_formatted?: string }>;
   ts_servicetaskenddate: WebAttribute<msdyn_workorderservicetask_Select, { ts_servicetaskenddate: Date | null }, { ts_servicetaskenddate_formatted?: string }>;
   ts_servicetaskstartdate: WebAttribute<msdyn_workorderservicetask_Select, { ts_servicetaskstartdate: Date | null }, { ts_servicetaskstartdate_formatted?: string }>;
+  ts_sharepointfilegroup_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_sharepointfilegroup_guid: string | null }, { ts_sharepointfilegroup_formatted?: string }>;
   ts_workorderstartdate: WebAttribute<msdyn_workorderservicetask_Select, { ts_workorderstartdate: Date | null }, { ts_workorderstartdate_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_workorderservicetask_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_workorderservicetask_Select, { versionnumber: number | null }, {  }>;
@@ -287,6 +289,7 @@ interface msdyn_workorderservicetask_Filter {
   ts_securitysearchservices_guid: XQW.Guid;
   ts_servicetaskenddate: Date;
   ts_servicetaskstartdate: Date;
+  ts_sharepointfilegroup_guid: XQW.Guid;
   ts_workorderstartdate: Date;
   utcconversiontimezonecode: number;
   versionnumber: number;
@@ -387,6 +390,7 @@ interface msdyn_workorderservicetask_FormattedResult {
   ts_securitysearchservices_formatted?: string;
   ts_servicetaskenddate_formatted?: string;
   ts_servicetaskstartdate_formatted?: string;
+  ts_sharepointfilegroup_formatted?: string;
   ts_workorderstartdate_formatted?: string;
 }
 interface msdyn_workorderservicetask_Result extends msdyn_workorderservicetask_Base, msdyn_workorderservicetask_Relationships {
@@ -429,6 +433,7 @@ interface msdyn_workorderservicetask_Result extends msdyn_workorderservicetask_B
   ts_passengerservices_guid: string | null;
   ts_rampservices_guid: string | null;
   ts_securitysearchservices_guid: string | null;
+  ts_sharepointfilegroup_guid: string | null;
 }
 interface msdyn_workorderservicetask_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;

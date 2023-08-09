@@ -204,6 +204,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ts_PlanningData_bind$ts_planningdatas?: string | null;
   ts_Region_bind$territories?: string | null;
   ts_SecurityIncident_bind$ts_securityincidents?: string | null;
+  ts_SharePointFileGroup_bind$ts_sharepointfilegroups?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_TeamPlanningData_bind$ts_teamplanningdatas?: string | null;
   ts_WorkOrderCreationWizardId_bind$ts_workordercreationwizards?: string | null;
@@ -378,6 +379,7 @@ interface msdyn_workorder_Select {
   ts_riskscore: WebAttribute<msdyn_workorder_Select, { ts_riskscore: number | null }, {  }>;
   ts_riskthreshold_guid: WebAttribute<msdyn_workorder_Select, { ts_riskthreshold_guid: string | null }, { ts_riskthreshold_formatted?: string }>;
   ts_securityincident_guid: WebAttribute<msdyn_workorder_Select, { ts_securityincident_guid: string | null }, { ts_securityincident_formatted?: string }>;
+  ts_sharepointfilegroup_guid: WebAttribute<msdyn_workorder_Select, { ts_sharepointfilegroup_guid: string | null }, { ts_sharepointfilegroup_formatted?: string }>;
   ts_site_guid: WebAttribute<msdyn_workorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_state: WebAttribute<msdyn_workorder_Select, { ts_state: ts_planningstate | null }, { ts_state_formatted?: string }>;
   ts_teamplanningdata_guid: WebAttribute<msdyn_workorder_Select, { ts_teamplanningdata_guid: string | null }, { ts_teamplanningdata_formatted?: string }>;
@@ -552,6 +554,7 @@ interface msdyn_workorder_Filter {
   ts_riskscore: number;
   ts_riskthreshold_guid: XQW.Guid;
   ts_securityincident_guid: XQW.Guid;
+  ts_sharepointfilegroup_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_state: ts_planningstate;
   ts_teamplanningdata_guid: XQW.Guid;
@@ -733,6 +736,7 @@ interface msdyn_workorder_FormattedResult {
   ts_region_formatted?: string;
   ts_riskthreshold_formatted?: string;
   ts_securityincident_formatted?: string;
+  ts_sharepointfilegroup_formatted?: string;
   ts_site_formatted?: string;
   ts_state_formatted?: string;
   ts_teamplanningdata_formatted?: string;
@@ -804,6 +808,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ts_region_guid: string | null;
   ts_riskthreshold_guid: string | null;
   ts_securityincident_guid: string | null;
+  ts_sharepointfilegroup_guid: string | null;
   ts_site_guid: string | null;
   ts_teamplanningdata_guid: string | null;
   ts_tradenameid_guid: string | null;
