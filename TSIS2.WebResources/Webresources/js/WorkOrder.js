@@ -228,6 +228,16 @@ var ROM;
                             form.getControl("header_msdyn_systemstatus").setDisabled(true);
                         }
                     }
+                    if (currentSystemStatus == 741130000 /* Closed */) {
+                        form.getControl("msdyn_workordertype").setDisabled(true);
+                        form.getControl("ts_region").setDisabled(true);
+                        form.getControl("ovs_operationtypeid").setDisabled(true);
+                        form.getControl("ts_tradenameid").setDisabled(true);
+                        form.getControl("ts_site").setDisabled(true);
+                        form.getControl("msdyn_worklocation").setDisabled(true);
+                        form.getControl("header_ownerid").setDisabled(true);
+                        form.getControl("ownerid").setDisabled(true);
+                    }
                     showHideContact(form);
                     break;
                 default:
@@ -871,6 +881,14 @@ var ROM;
                             form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
                             form.getControl("ts_completedquarter").setVisible(true);
                         }
+                        form.getControl("msdyn_workordertype").setDisabled(true);
+                        form.getControl("ts_region").setDisabled(true);
+                        form.getControl("ovs_operationtypeid").setDisabled(true);
+                        form.getControl("ts_tradenameid").setDisabled(true);
+                        form.getControl("ts_site").setDisabled(true);
+                        form.getControl("msdyn_worklocation").setDisabled(true);
+                        form.getControl("header_ownerid").setDisabled(true);
+                        form.getControl("ownerid").setDisabled(true);
                     }
                 }, function (error) {
                     showErrorMessageAlert(error);
@@ -909,6 +927,14 @@ var ROM;
                     form.getAttribute("ts_canceledinspectionjustification").setRequiredLevel("none");
                     currentSystemStatus = newSystemStatus;
                 }
+                form.getControl("msdyn_workordertype").setDisabled(false);
+                form.getControl("ts_region").setDisabled(false);
+                form.getControl("ovs_operationtypeid").setDisabled(false);
+                form.getControl("ts_tradenameid").setDisabled(false);
+                form.getControl("ts_site").setDisabled(false);
+                form.getControl("msdyn_worklocation").setDisabled(false);
+                form.getControl("header_ownerid").setDisabled(false);
+                form.getControl("ownerid").setDisabled(false);
             }
         }
         WorkOrder.systemStatusOnChange = systemStatusOnChange;
