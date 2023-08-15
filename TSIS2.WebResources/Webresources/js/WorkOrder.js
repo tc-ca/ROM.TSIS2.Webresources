@@ -293,6 +293,14 @@ var ROM;
                     }
                 }
             }
+            if (currentSystemStatus == 741130000 /* Closed */) {
+                form.getControl("msdyn_systemstatus").removeOption(690970000 /* New */);
+                form.getControl("msdyn_systemstatus").removeOption(690970001 /* Scheduled */);
+                form.getControl("msdyn_systemstatus").removeOption(690970005 /* Canceled */);
+                if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
+                    form.getControl("msdyn_systemstatus").removeOption(741130001 /* InProgress */);
+                }
+            }
             RemoveOptionCancel(eContext);
         }
         WorkOrder.onLoad = onLoad;
