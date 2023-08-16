@@ -33,6 +33,7 @@ namespace ROM.SecurityIncident {
 
         unlockRecordLogFieldsIfUserIsSystemAdmin(formContext);
         adjustIncidentDateTime(formContext);
+        lockAllSummaryFieldsWhenStatusClosed(eContext);
     }
    
     function adjustIncidentDateTime(formContext: Form.ts_securityincident.Main.Information) {
@@ -394,6 +395,40 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_stakeholder_name").setVisible(false);
         }
     }
+
+    export function lockAllSummaryFieldsWhenStatusClosed(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+        const recordstatus = formContext.getAttribute("ts_recordstatus").getValue();
+
+        if (recordstatus == ts_securityincidentstatus.Closed) {
+            setAllFieldsDisabledInTab(formContext, "{99b37896-4f52-4179-8296-3cc0e6722411}");
+        }
+    }
+
+    function setAllFieldsDisabledInTab(formContext, tabname) {
+        var tab = formContext.ui.tabs.get(tabname);
+        if (tab != null) 
+        {
+            var tabSections = tab.sections.get();
+            for (var i in tabSections) {
+                var secName = tabSections[i].getName();
+                setAllFieldsDisabledInSection(formContext,secName);
+            }
+        }
+     }   
+
+    function setAllFieldsDisabledInSection(formContext, sectionName) {
+        var ctrlName = formContext.ui.controls.get();
+        for (var i in ctrlName) {
+            var ctrl = ctrlName[i];
+            if (ctrl.getParent() != null) {
+                var ctrlSection = ctrl.getParent().getName();
+                if (ctrlSection == sectionName) {
+                    ctrl.setDisabled(true);
+                }
+            }
+        }
+    }  
 
     function setDefaultView(form: Form.ts_securityincident.Main.Information) {
         form.getControl("ts_aircarrier").setDefaultView("d06d7b47-80bf-ed11-83ff-0022483c5061");

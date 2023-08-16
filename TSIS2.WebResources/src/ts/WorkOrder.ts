@@ -297,6 +297,16 @@ namespace ROM.WorkOrder {
                 }
             }
         }
+
+        if (currentSystemStatus == msdyn_wosystemstatus.Closed) {
+            form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.New);
+            form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.Scheduled);
+            form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.Canceled);
+            if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
+                form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.InProgress);
+            }
+        }
+
         unlockRecordLogFieldsIfUserIsSystemAdmin(form);
         RemoveOptionCancel(eContext);
     }
