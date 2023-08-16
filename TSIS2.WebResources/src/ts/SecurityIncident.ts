@@ -404,22 +404,11 @@ namespace ROM.SecurityIncident {
         if (recordstatus == ts_securityincidentstatus.Closed) {
             formContext.getControl("header_ts_recordstatus").removeOption(ts_securityincidentstatus.New);
             formContext.getControl("header_ts_recordstatus").removeOption(ts_securityincidentstatus.Onhold);
+            formContext.getControl("header_ts_recordstatus").removeOption(ts_securityincidentstatus.Inactive);
             if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
                 formContext.getControl("header_ts_recordstatus").removeOption(msdyn_wosystemstatus.InProgress);
             }
         }
-    }
-
-    export function userHasRole(rolesName) {
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-        var hasRole = false;
-        var roles = rolesName.split("|");
-        roles.forEach(function (roleItem) {
-            userRoles.forEach(function (userRoleItem) {
-                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
-            });
-        });
-        return hasRole;
     }
 
     export function lockAllSummaryFieldsWhenStatusClosed(eContext: Xrm.ExecutionContext<any, any>): void {

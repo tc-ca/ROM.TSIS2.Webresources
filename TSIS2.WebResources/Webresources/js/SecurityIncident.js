@@ -361,25 +361,13 @@ var ROM;
             if (recordstatus == 741130002 /* Closed */) {
                 formContext.getControl("header_ts_recordstatus").removeOption(741130000 /* New */);
                 formContext.getControl("header_ts_recordstatus").removeOption(447390001 /* Onhold */);
+                formContext.getControl("header_ts_recordstatus").removeOption(741130003 /* Inactive */);
                 if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
                     formContext.getControl("header_ts_recordstatus").removeOption(741130001 /* InProgress */);
                 }
             }
         }
         SecurityIncident.restrictStatusFieldWhenStatusClosed = restrictStatusFieldWhenStatusClosed;
-        function userHasRole(rolesName) {
-            var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-            var hasRole = false;
-            var roles = rolesName.split("|");
-            roles.forEach(function (roleItem) {
-                userRoles.forEach(function (userRoleItem) {
-                    if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase())
-                        hasRole = true;
-                });
-            });
-            return hasRole;
-        }
-        SecurityIncident.userHasRole = userHasRole;
         function lockAllSummaryFieldsWhenStatusClosed(eContext) {
             var formContext = eContext.getFormContext();
             var recordstatus = formContext.getAttribute("ts_recordstatus").getValue();
