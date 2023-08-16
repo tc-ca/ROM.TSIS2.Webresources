@@ -307,6 +307,7 @@ namespace ROM.WorkOrder {
             }
         }
 
+        unlockRecordLogFieldsIfUserIsSystemAdmin(form);
         RemoveOptionCancel(eContext);
     }
 
@@ -1875,6 +1876,13 @@ namespace ROM.WorkOrder {
                 });
             }
         });
+    }
+
+    function unlockRecordLogFieldsIfUserIsSystemAdmin(formContext) {
+        if (userHasRole("System Administrator")) {
+            formContext.getControl("msdyn_timeclosed").setDisabled(false);
+            formContext.getControl("msdyn_closedby").setDisabled(false);
+        }
     }
 }
 

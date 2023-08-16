@@ -78,7 +78,7 @@
                     "ts_operationtype@odata.bind": "/ovs_operationtypes(" + activity["operation.ovs_operationtypeid"] + ")",
                     "ts_site@odata.bind": "/msdyn_functionallocations(" + activity["operation.ts_site"] + ")",
                     "ts_activitytype@odata.bind": "/msdyn_incidenttypes(" + activity.msdyn_incidenttypeid + ")",
-                    "ts_operation@odata.bind": "/ovs_operations(" + activity["operation.ovs_operationtypeid"] + ")",
+                    "ts_operation@odata.bind": "/ovs_operations(" + activity["operation.ovs_operationid"] + ")",
                     "ts_riskthreshold@odata.bind": "/ts_riskcategories(" + activity["operation.ts_risk"] + ")",
                     "ts_q1": 1,
                     "ts_q2": 0,

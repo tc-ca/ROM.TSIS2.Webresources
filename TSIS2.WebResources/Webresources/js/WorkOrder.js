@@ -301,6 +301,7 @@ var ROM;
                     form.getControl("msdyn_systemstatus").removeOption(741130001 /* InProgress */);
                 }
             }
+            unlockRecordLogFieldsIfUserIsSystemAdmin(form);
             RemoveOptionCancel(eContext);
         }
         WorkOrder.onLoad = onLoad;
@@ -1727,6 +1728,12 @@ var ROM;
                     });
                 }
             });
+        }
+        function unlockRecordLogFieldsIfUserIsSystemAdmin(formContext) {
+            if (userHasRole("System Administrator")) {
+                formContext.getControl("msdyn_timeclosed").setDisabled(false);
+                formContext.getControl("msdyn_closedby").setDisabled(false);
+            }
         }
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));
