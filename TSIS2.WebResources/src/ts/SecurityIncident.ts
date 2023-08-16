@@ -33,6 +33,7 @@ namespace ROM.SecurityIncident {
 
         adjustIncidentDateTime(formContext);
         lockAllSummaryFieldsWhenStatusClosed(eContext);
+        restrictStatusFieldWhenStatusClosed(eContext);
     }
    
     function adjustIncidentDateTime(formContext: Form.ts_securityincident.Main.Information) {
@@ -393,6 +394,31 @@ namespace ROM.SecurityIncident {
         else {
             form.getControl("ts_stakeholder_name").setVisible(false);
         }
+    }
+
+    export function restrictStatusFieldWhenStatusClosed(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+        const recordstatus = formContext.getAttribute("ts_recordstatus").getValue();
+
+        if (recordstatus == ts_securityincidentstatus.Closed) {
+            formContext.getControl("header_ts_recordstatus").removeOption(ts_securityincidentstatus.New);
+            formContext.getControl("header_ts_recordstatus").removeOption(ts_securityincidentstatus.Onhold);
+            if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
+                formContext.getControl("header_ts_recordstatus").removeOption(msdyn_wosystemstatus.InProgress);
+            }
+        }
+    }
+
+    export function userHasRole(rolesName) {
+        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+        var hasRole = false;
+        var roles = rolesName.split("|");
+        roles.forEach(function (roleItem) {
+            userRoles.forEach(function (userRoleItem) {
+                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
+            });
+        });
+        return hasRole;
     }
 
     export function lockAllSummaryFieldsWhenStatusClosed(eContext: Xrm.ExecutionContext<any, any>): void {
