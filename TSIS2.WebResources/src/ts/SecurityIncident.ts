@@ -34,6 +34,7 @@ namespace ROM.SecurityIncident {
         unlockRecordLogFieldsIfUserIsSystemAdmin(formContext);
         adjustIncidentDateTime(formContext);
         lockAllSummaryFieldsWhenStatusClosed(eContext);
+        restrictStatusFieldWhenStatusClosed(eContext);
     }
    
     function adjustIncidentDateTime(formContext: Form.ts_securityincident.Main.Information) {
@@ -393,6 +394,20 @@ namespace ROM.SecurityIncident {
         }
         else {
             form.getControl("ts_stakeholder_name").setVisible(false);
+        }
+    }
+
+    export function restrictStatusFieldWhenStatusClosed(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+        const recordstatus = formContext.getAttribute("ts_recordstatus").getValue();
+
+        if (recordstatus == ts_securityincidentstatus.Closed) {
+            formContext.getControl("header_ts_recordstatus").removeOption(ts_securityincidentstatus.New);
+            formContext.getControl("header_ts_recordstatus").removeOption(ts_securityincidentstatus.Onhold);
+            formContext.getControl("header_ts_recordstatus").removeOption(ts_securityincidentstatus.Inactive);
+            if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
+                formContext.getControl("header_ts_recordstatus").removeOption(msdyn_wosystemstatus.InProgress);
+            }
         }
     }
 

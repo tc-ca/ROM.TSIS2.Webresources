@@ -30,6 +30,7 @@ var ROM;
             unlockRecordLogFieldsIfUserIsSystemAdmin(formContext);
             adjustIncidentDateTime(formContext);
             lockAllSummaryFieldsWhenStatusClosed(eContext);
+            restrictStatusFieldWhenStatusClosed(eContext);
         }
         SecurityIncident.onLoad = onLoad;
         function adjustIncidentDateTime(formContext) {
@@ -354,6 +355,19 @@ var ROM;
             }
         }
         SecurityIncident.stakeholderCompanyOnChange = stakeholderCompanyOnChange;
+        function restrictStatusFieldWhenStatusClosed(eContext) {
+            var formContext = eContext.getFormContext();
+            var recordstatus = formContext.getAttribute("ts_recordstatus").getValue();
+            if (recordstatus == 741130002 /* Closed */) {
+                formContext.getControl("header_ts_recordstatus").removeOption(741130000 /* New */);
+                formContext.getControl("header_ts_recordstatus").removeOption(447390001 /* Onhold */);
+                formContext.getControl("header_ts_recordstatus").removeOption(741130003 /* Inactive */);
+                if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
+                    formContext.getControl("header_ts_recordstatus").removeOption(741130001 /* InProgress */);
+                }
+            }
+        }
+        SecurityIncident.restrictStatusFieldWhenStatusClosed = restrictStatusFieldWhenStatusClosed;
         function lockAllSummaryFieldsWhenStatusClosed(eContext) {
             var formContext = eContext.getFormContext();
             var recordstatus = formContext.getAttribute("ts_recordstatus").getValue();
