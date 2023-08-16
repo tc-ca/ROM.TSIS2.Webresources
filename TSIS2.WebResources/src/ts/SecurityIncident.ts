@@ -31,6 +31,7 @@ namespace ROM.SecurityIncident {
             formContext.ui.tabs.get("{99b37896-4f52-4179-8296-3cc0e6722411}").sections.get("IncidentDetails").setVisible(false);
         }
 
+        unlockRecordLogFieldsIfUserIsSystemAdmin(formContext);
         adjustIncidentDateTime(formContext);
     }
    
@@ -399,5 +400,24 @@ namespace ROM.SecurityIncident {
         form.getControl("ts_origin").setDefaultView("3507a249-81bf-ed11-83ff-0022483d7716");
         form.getControl("ts_destination").setDefaultView("3507a249-81bf-ed11-83ff-0022483d7716");
         form.getControl("ts_diversionaerodrome").setDefaultView("3507a249-81bf-ed11-83ff-0022483d7716");
+    }
+
+    export function userHasRole(rolesName) {
+        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+        var hasRole = false;
+        var roles = rolesName.split("|");
+        roles.forEach(function (roleItem) {
+            userRoles.forEach(function (userRoleItem) {
+                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
+            });
+        });
+        return hasRole;
+    }
+
+    function unlockRecordLogFieldsIfUserIsSystemAdmin(formContext) {
+        if (userHasRole("System Administrator")) {
+            formContext.getControl("ts_closedon").setDisabled(false);
+            formContext.getControl("ts_closedby").setDisabled(false);
+        }
     }
 }
