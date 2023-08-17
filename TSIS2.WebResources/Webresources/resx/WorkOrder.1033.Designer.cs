@@ -106,6 +106,24 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All required time tracking fields must be input before the Work order can be closed..
+        /// </summary>
+        internal static string CloseWOWithoutTimeTrackingFieldsText {
+            get {
+                return ResourceManager.GetString("CloseWOWithoutTimeTrackingFieldsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Required time tracking fields.
+        /// </summary>
+        internal static string CloseWOWithoutTimeTrackingFieldsTitle {
+            get {
+                return ResourceManager.GetString("CloseWOWithoutTimeTrackingFieldsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mandatory Service Task must be completed before closing the Work Order..
         /// </summary>
         internal static string CloseWOWithUnCompletedSTText {

@@ -50,14 +50,14 @@ namespace ROM.WorkOrder {
                 }
             }
         });
-        
+
 
         //Keep track of the current system status, to be used when cancelling a status change.
         currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
         currentStatus = form.getAttribute("ts_state").getValue();
         form.getControl("msdyn_worklocation").removeOption(690970001);  //Remove Facility Work Location Option
         updateCaseView(eContext);
-          
+
         //Set required fields
         form.getAttribute("ts_region").setRequiredLevel("required");
         form.getAttribute("ovs_operationtypeid").setRequiredLevel("required");
@@ -126,7 +126,7 @@ namespace ROM.WorkOrder {
                 else if (form.getAttribute("ts_securityincident").getValue() != null) {
                     isFromSecurityIncident = true;
                 }
-                
+
                 // Set default values
                 setDefaultFiscalYear(form);
                 setRegion(form);
@@ -180,11 +180,11 @@ namespace ROM.WorkOrder {
                     form.getControl("ts_country").setDisabled(true);
                 }
 
-                if (isFromSecurityIncident){
+                if (isFromSecurityIncident) {
                     const stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
                     const stakeholderAttributeValue = stakeholderAttribute!.getValue();
 
-                    if(stakeholderAttributeValue != null){
+                    if (stakeholderAttributeValue != null) {
                         fillOrSetTradeNameView(eContext, stakeholderAttributeValue);
                     }
                 }
@@ -292,7 +292,7 @@ namespace ROM.WorkOrder {
             var options = workOrderStatus.getOptions();
 
             for (var i = 0; i < options.length; i++) {
-                if (options[i].value == 690970003 || options[i].value == 690970001 || options[i].value == 690970002 || options[i].value== 690970004) {
+                if (options[i].value == 690970003 || options[i].value == 690970001 || options[i].value == 690970002 || options[i].value == 690970004) {
                     workOrderStatus.removeOption(options[i].value);
                 }
             }
@@ -395,7 +395,7 @@ namespace ROM.WorkOrder {
                 if (form.getControl("msdyn_serviceaccount").getDisabled() == false) form.getControl("msdyn_serviceaccount").setDisabled(true);
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
-                
+
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                 const regionAttributeValue = regionAttribute.getValue();
                 const countryAttributeValue = countryAttribute.getValue();
@@ -476,7 +476,7 @@ namespace ROM.WorkOrder {
                 if (form.getControl("ts_site").getDisabled() == false) form.getControl("ts_site").setDisabled(true);
                 if (form.getControl("msdyn_functionallocation").getDisabled() == false) form.getControl("msdyn_functionallocation").setVisible(false);
                 //if (!(isFromSecurityIncident && form.getAttribute("ts_site").getValue() != null)) {
-                    if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
+                if (form.getControl("msdyn_primaryincidenttype").getDisabled() == false) form.getControl("msdyn_primaryincidenttype").setDisabled(true);
                 //}
 
                 // If previous fields have values, we use the filtered fetchxml in a custom lookup view
@@ -624,8 +624,7 @@ namespace ROM.WorkOrder {
                 showHideContact(form);
             } else if (isFromCase) {
                 populateOperationField(eContext);
-            } else if (isFromSecurityIncident)
-            {
+            } else if (isFromSecurityIncident) {
                 const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
                 const regionAttributeValue = regionAttribute.getValue();
                 const operationTypeAttributeValue = operationTypeAttribute.getValue();
@@ -867,6 +866,9 @@ namespace ROM.WorkOrder {
     export function systemStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
         var newSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
+        var preparationTime = form.getAttribute("ts_preparationtime").getValue();
+        var conductingOversight = form.getAttribute("ts_conductingoversight").getValue();
+        var woReportingAndDocumentation = form.getAttribute("ts_woreportinganddocumentation").getValue();
         //If user try to cancel Complete WO
         if (currentSystemStatus == 690970003 && newSystemStatus == 690970005) {
             var alertStrings = {
@@ -930,21 +932,37 @@ namespace ROM.WorkOrder {
                             form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
                             form.getControl("ts_completedquarter").setVisible(true);
                         }
+                        if (preparationTime == null || woReportingAndDocumentation == null || conductingOversight == null) {
+                            var alertStrings = {
+                                text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithoutTimeTrackingFieldsText"),
+                                title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithoutTimeTrackingFieldsTitle")
+                            };
+                            var alertOptions = { height: 160, width: 340 };
+                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
+                                form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
 
-                        form.getControl("msdyn_workordertype").setDisabled(true);
-                        form.getControl("ts_region").setDisabled(true);
-                        form.getControl("ovs_operationtypeid").setDisabled(true);
-                        form.getControl("ts_tradenameid").setDisabled(true);
-                        form.getControl("ts_site").setDisabled(true);
-                        form.getControl("msdyn_worklocation").setDisabled(true);
-                        form.getControl("header_ownerid").setDisabled(true);
-                        form.getControl("ownerid").setDisabled(true);
+                                //All required time tracking fields must be input before the Work order can be closed.
+                                form.getAttribute("ts_preparationtime").setRequiredLevel("required");
+                                form.getAttribute("ts_conductingoversight").setRequiredLevel("required");
+                                form.getAttribute("ts_woreportinganddocumentation").setRequiredLevel("required");
+                            });
+                        }
+                        else {
+                            form.getControl("msdyn_workordertype").setDisabled(true);
+                            form.getControl("ts_region").setDisabled(true);
+                            form.getControl("ovs_operationtypeid").setDisabled(true);
+                            form.getControl("ts_tradenameid").setDisabled(true);
+                            form.getControl("ts_site").setDisabled(true);
+                            form.getControl("msdyn_worklocation").setDisabled(true);
+                            form.getControl("header_ownerid").setDisabled(true);
+                            form.getControl("ownerid").setDisabled(true);
+                        }
 
                     }
 
                 }, function (error) {
                     showErrorMessageAlert(error);
-                });              
+                });
 
             }
             else {
@@ -993,6 +1011,10 @@ namespace ROM.WorkOrder {
                 form.getControl("msdyn_worklocation").setDisabled(false);
                 form.getControl("header_ownerid").setDisabled(false);
                 form.getControl("ownerid").setDisabled(false);
+
+                form.getAttribute("ts_preparationtime").setRequiredLevel("none");
+                form.getAttribute("ts_conductingoversight").setRequiredLevel("none");
+                form.getAttribute("ts_woreportinganddocumentation").setRequiredLevel("none");
             }
     }
 
@@ -1703,7 +1725,7 @@ namespace ROM.WorkOrder {
 
                             setActivityTypeFilteredView(form, lookup[0].id, workOrderTypeAttributeValue[0].id, operationTypeAttributeValue[0].id);
                         } else {
-                            if(isFromSecurityIncident){
+                            if (isFromSecurityIncident) {
                                 const placeHolderOperation: { id: string; name: string; entityType: "ovs_operation" }[] = [
                                     {
                                         id: "e9fa69ee-85ea-ed11-a7c6-0022483c5061",
@@ -1731,7 +1753,7 @@ namespace ROM.WorkOrder {
 
         Xrm.WebApi.retrieveMultipleRecords('ts_tradename', tradeNameFetchXML).then(
             function success(tradeNames) {
-                if(tradeNames.entities.length == 1){
+                if (tradeNames.entities.length == 1) {
                     var tradeName = new Array();
                     tradeName[0] = new Object();
                     tradeName[0].id = tradeNames.entities[0].ts_tradenameid
@@ -1740,20 +1762,20 @@ namespace ROM.WorkOrder {
 
                     form.getAttribute("ts_tradenameid").setValue(tradeName);
                 }
-                else if(tradeNames.entities.length > 1){
+                else if (tradeNames.entities.length > 1) {
                     form.getControl("ts_tradenameid").setDisabled(false);
 
                     let tradeNameCondition = '';
 
-                    tradeNames.entities.forEach((tradeName) => {tradeNameCondition += '<condition attribute="ts_tradenameid" operator="eq" value="' + tradeName.ts_tradenameid + '" />'})
-                    
+                    tradeNames.entities.forEach((tradeName) => { tradeNameCondition += '<condition attribute="ts_tradenameid" operator="eq" value="' + tradeName.ts_tradenameid + '" />' })
+
                     const viewIdTradename = '{1c859fee-0541-2cac-8d20-7b50ee398066}';
                     const entityNameTradename = "ts_tradename";
                     const viewDisplayNameTradename = "FilteredSTradenames";
-                    const fetchXmlTradename = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ts_tradename"><attribute name="statecode"/><attribute name="ts_tradenameid"/><attribute name="ts_name"/><attribute name="createdon"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><filter type="or">' + tradeNameCondition +'</filter><attribute name="ts_stakeholderid"/><order attribute="ts_name" descending="false"/></entity></fetch>';
+                    const fetchXmlTradename = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ts_tradename"><attribute name="statecode"/><attribute name="ts_tradenameid"/><attribute name="ts_name"/><attribute name="createdon"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><filter type="or">' + tradeNameCondition + '</filter><attribute name="ts_stakeholderid"/><order attribute="ts_name" descending="false"/></entity></fetch>';
                     const layoutXmlTradename = '<grid name="resultset" object="10010" jump="ts_name" select="1" icon="1" preview="1"><row name="result" id="ts_tradenameid"><cell name="ts_name" width="200" /></row></grid>';
                     form.getControl("ts_tradenameid").addCustomView(viewIdTradename, entityNameTradename, viewDisplayNameTradename, fetchXmlTradename, layoutXmlTradename, true);
-                }             
+                }
             }
         );
     }
@@ -1804,7 +1826,7 @@ namespace ROM.WorkOrder {
         let userBusinessUnitName = await Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML);
         return userBusinessUnitName.entities[0].name.startsWith("Aviation");
     }
-        
+
     function setFiscalQuarter(form: Form.msdyn_workorder.Main.ROMOversightActivity) {
         let currentDate = new Date();
         let currentDateString = currentDate.toISOString();
@@ -1815,7 +1837,7 @@ namespace ROM.WorkOrder {
         Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(
             function success(result) {
                 lookup[0] = new Object();
-                lookup[0].entityType = "tc_tcfiscalquarter"; 
+                lookup[0].entityType = "tc_tcfiscalquarter";
                 lookup[0].name = result.entities[0].tc_name;
                 lookup[0].id = result.entities[0].tc_tcfiscalquarterid;
 
