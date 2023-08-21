@@ -12,6 +12,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_arrestsdetails?: string | null;
   ts_bridgeclosure?: ts_bridgeclosure | null;
   ts_canvasapp?: string | null;
+  ts_closedon?: Date | null;
   ts_comments?: string | null;
   ts_contact?: string | null;
   ts_damagestoibtproperty?: ts_damagestoibtproperty | null;
@@ -53,6 +54,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_securityincidenttime?: number | null;
   ts_stakeholder_name?: string | null;
   ts_statusofrailwayowner?: ts_statusofrailwayowner | null;
+  ts_statusrationale?: string | null;
   ts_subdivision?: string | null;
   ts_tamperingsubcategory?: ts_tamperingsubcategory | null;
   ts_tcomscategoryenglish?: string | null;
@@ -82,7 +84,6 @@ interface ts_securityincident_Relationships {
   ts_DiversionAerodrome?: msdyn_FunctionalLocation_Result | null;
   ts_Origin?: msdyn_FunctionalLocation_Result | null;
   ts_ReportingCompany?: Account_Result | null;
-  ts_SecurityIncidentType?: ts_securityincidenttype_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Stakeholder?: Account_Result | null;
   ts_Subsite?: msdyn_FunctionalLocation_Result | null;
@@ -107,6 +108,7 @@ interface ts_securityincident extends ts_securityincident_Base, ts_securityincid
   ts_Stakeholder_bind$accounts?: string | null;
   ts_Subsite_bind$msdyn_functionallocations?: string | null;
   ts_TargetElement_bind$ts_targetelements?: string | null;
+  ts_closedby_bind$systemusers?: string | null;
 }
 interface ts_securityincident_Create extends ts_securityincident {
 }
@@ -135,6 +137,8 @@ interface ts_securityincident_Select {
   ts_arrestsdetails: WebAttribute<ts_securityincident_Select, { ts_arrestsdetails: string | null }, {  }>;
   ts_bridgeclosure: WebAttribute<ts_securityincident_Select, { ts_bridgeclosure: ts_bridgeclosure | null }, { ts_bridgeclosure_formatted?: string }>;
   ts_canvasapp: WebAttribute<ts_securityincident_Select, { ts_canvasapp: string | null }, {  }>;
+  ts_closedby_guid: WebAttribute<ts_securityincident_Select, { ts_closedby_guid: string | null }, { ts_closedby_formatted?: string }>;
+  ts_closedon: WebAttribute<ts_securityincident_Select, { ts_closedon: Date | null }, { ts_closedon_formatted?: string }>;
   ts_comments: WebAttribute<ts_securityincident_Select, { ts_comments: string | null }, {  }>;
   ts_contact: WebAttribute<ts_securityincident_Select, { ts_contact: string | null }, {  }>;
   ts_damagestoibtproperty: WebAttribute<ts_securityincident_Select, { ts_damagestoibtproperty: ts_damagestoibtproperty | null }, { ts_damagestoibtproperty_formatted?: string }>;
@@ -184,6 +188,7 @@ interface ts_securityincident_Select {
   ts_stakeholder_guid: WebAttribute<ts_securityincident_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   ts_stakeholder_name: WebAttribute<ts_securityincident_Select, { ts_stakeholder_name: string | null }, {  }>;
   ts_statusofrailwayowner: WebAttribute<ts_securityincident_Select, { ts_statusofrailwayowner: ts_statusofrailwayowner | null }, { ts_statusofrailwayowner_formatted?: string }>;
+  ts_statusrationale: WebAttribute<ts_securityincident_Select, { ts_statusrationale: string | null }, {  }>;
   ts_subdivision: WebAttribute<ts_securityincident_Select, { ts_subdivision: string | null }, {  }>;
   ts_subsite_guid: WebAttribute<ts_securityincident_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
   ts_tamperingsubcategory: WebAttribute<ts_securityincident_Select, { ts_tamperingsubcategory: ts_tamperingsubcategory | null }, { ts_tamperingsubcategory_formatted?: string }>;
@@ -231,6 +236,8 @@ interface ts_securityincident_Filter {
   ts_arrestsdetails: string;
   ts_bridgeclosure: ts_bridgeclosure;
   ts_canvasapp: string;
+  ts_closedby_guid: XQW.Guid;
+  ts_closedon: Date;
   ts_comments: string;
   ts_contact: string;
   ts_damagestoibtproperty: ts_damagestoibtproperty;
@@ -280,6 +287,7 @@ interface ts_securityincident_Filter {
   ts_stakeholder_guid: XQW.Guid;
   ts_stakeholder_name: string;
   ts_statusofrailwayowner: ts_statusofrailwayowner;
+  ts_statusrationale: string;
   ts_subdivision: string;
   ts_subsite_guid: XQW.Guid;
   ts_tamperingsubcategory: ts_tamperingsubcategory;
@@ -318,10 +326,10 @@ interface ts_securityincident_Expand {
   ts_DiversionAerodrome: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_DiversionAerodrome: msdyn_FunctionalLocation_Result }>;
   ts_Origin: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Origin: msdyn_FunctionalLocation_Result }>;
   ts_ReportingCompany: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_ReportingCompany: Account_Result }>;
-  ts_SecurityIncidentType: WebExpand<ts_securityincident_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { ts_SecurityIncidentType: ts_securityincidenttype_Result }>;
   ts_Site: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Stakeholder: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
   ts_Subsite: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsite: msdyn_FunctionalLocation_Result }>;
+  ts_closedby: WebExpand<ts_securityincident_Expand, SystemUser_Select, SystemUser_Filter, { ts_closedby: SystemUser_Result }>;
   ts_securityincident_Appointments: WebExpand<ts_securityincident_Expand, Appointment_Select, Appointment_Filter, { ts_securityincident_Appointments: Appointment_Result[] }>;
   ts_securityincident_Emails: WebExpand<ts_securityincident_Expand, Email_Select, Email_Filter, { ts_securityincident_Emails: Email_Result[] }>;
   ts_securityincident_PostFollows: WebExpand<ts_securityincident_Expand, PostFollow_Select, PostFollow_Filter, { ts_securityincident_PostFollows: PostFollow_Result[] }>;
@@ -346,6 +354,8 @@ interface ts_securityincident_FormattedResult {
   ts_aircarrier_formatted?: string;
   ts_arrests_formatted?: string;
   ts_bridgeclosure_formatted?: string;
+  ts_closedby_formatted?: string;
+  ts_closedon_formatted?: string;
   ts_damagestoibtproperty_formatted?: string;
   ts_delaystooperation_formatted?: string;
   ts_destination_formatted?: string;
@@ -387,6 +397,7 @@ interface ts_securityincident_Result extends ts_securityincident_Base, ts_securi
   owningteam_guid: string | null;
   owninguser_guid: string | null;
   ts_aircarrier_guid: string | null;
+  ts_closedby_guid: string | null;
   ts_destination_guid: string | null;
   ts_diversionaerodrome_guid: string | null;
   ts_origin_guid: string | null;
@@ -411,10 +422,10 @@ interface ts_securityincident_RelatedOne {
   ts_DiversionAerodrome: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Origin: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_ReportingCompany: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
-  ts_SecurityIncidentType: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_Subsite: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_closedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface ts_securityincident_RelatedMany {
   ts_Contact_ts_securityincident_ts_securityin: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;

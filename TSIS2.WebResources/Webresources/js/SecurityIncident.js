@@ -232,6 +232,37 @@ var ROM;
                 else {
                     form.getControl("ts_arrests").setVisible(false);
                 }
+                var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+                if (lang == 1036) {
+                    form.getControl("ts_tcomscategoryenglish").setVisible(false);
+                    form.getControl("ts_tcomscategoryfrench").setVisible(true);
+                    form.getControl("ts_tcomssubcategoryenglish").setVisible(false);
+                    form.getControl("ts_tcomssubcategoryfrench").setVisible(true);
+                    form.getControl("ts_tcomsinteractionenglish").setVisible(false);
+                    form.getControl("ts_tcomsinteractionfrench").setVisible(true);
+                    form.getControl("ts_furtheractionrequired").setVisible(true);
+                    form.getControl("ts_tcomsseverityenglish").setVisible(false);
+                    form.getControl("ts_tcomsseverityfrench").setVisible(true);
+                    form.getControl("ts_tcomseventname").setVisible(true);
+                    form.getControl("ts_tcomseventfollowupenglish").setVisible(false);
+                    form.getControl("ts_tcomseventfollowupfrench").setVisible(true);
+                    form.getControl("ts_statusrationale").setVisible(true);
+                }
+                else {
+                    form.getControl("ts_tcomscategoryenglish").setVisible(true);
+                    form.getControl("ts_tcomscategoryfrench").setVisible(false);
+                    form.getControl("ts_tcomssubcategoryenglish").setVisible(true);
+                    form.getControl("ts_tcomssubcategoryfrench").setVisible(false);
+                    form.getControl("ts_tcomsinteractionenglish").setVisible(true);
+                    form.getControl("ts_tcomsinteractionfrench").setVisible(false);
+                    form.getControl("ts_furtheractionrequired").setVisible(true);
+                    form.getControl("ts_tcomsseverityenglish").setVisible(true);
+                    form.getControl("ts_tcomsseverityfrench").setVisible(false);
+                    form.getControl("ts_tcomseventname").setVisible(true);
+                    form.getControl("ts_tcomseventfollowupenglish").setVisible(true);
+                    form.getControl("ts_tcomseventfollowupfrench").setVisible(false);
+                    form.getControl("ts_statusrationale").setVisible(true);
+                }
             }
             else {
                 form.getControl("ts_securityincidenttype").setDefaultView("b8d91bb4-6776-ed11-81ac-0022483d5ee0");
@@ -271,11 +302,11 @@ var ROM;
                     }
                 }
                 if (mode == 717750001 /* InternationalBridgesandTunnels */) {
-                    var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+                    var lang_1 = Xrm.Utility.getGlobalContext().userSettings.languageId;
                     var lookup = new Array();
                     lookup[0] = new Object();
                     lookup[0].id = "{051bb19d-f065-ed11-9569-0022483c0cc5}";
-                    lookup[0].name = (lang == 1036) ? "PTI" : "IBT";
+                    lookup[0].name = (lang_1 == 1036) ? "PTI" : "IBT";
                     lookup[0].entityType = "ts_targetelement";
                     form.getAttribute("ts_targetelement").setValue(lookup);
                     form.getControl("ts_targetelement").setDisabled(true);
@@ -292,6 +323,19 @@ var ROM;
                 else {
                     form.getControl("ts_targetelement").setDisabled(false);
                 }
+                form.getControl("ts_tcomscategoryenglish").setVisible(false);
+                form.getControl("ts_tcomscategoryfrench").setVisible(false);
+                form.getControl("ts_tcomssubcategoryenglish").setVisible(false);
+                form.getControl("ts_tcomssubcategoryfrench").setVisible(false);
+                form.getControl("ts_tcomsinteractionenglish").setVisible(false);
+                form.getControl("ts_tcomsinteractionfrench").setVisible(false);
+                form.getControl("ts_furtheractionrequired").setVisible(false);
+                form.getControl("ts_tcomsseverityenglish").setVisible(false);
+                form.getControl("ts_tcomsseverityfrench").setVisible(false);
+                form.getControl("ts_tcomseventname").setVisible(false);
+                form.getControl("ts_tcomseventfollowupenglish").setVisible(false);
+                form.getControl("ts_tcomseventfollowupfrench").setVisible(false);
+                form.getControl("ts_statusrationale").setVisible(false);
             }
             arrestsOnChange(eContext);
         }
