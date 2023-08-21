@@ -180,6 +180,7 @@ var ROM;
         }
         function ShowHideFieldsOnMode(eContext, mode, isOnLoad) {
             var form = eContext.getFormContext();
+            var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
             if (mode == 717750002 /* AviationSecurity */) {
                 form.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
                 form.getControl("ts_targetelement").setVisible(false);
@@ -232,7 +233,6 @@ var ROM;
                 else {
                     form.getControl("ts_arrests").setVisible(false);
                 }
-                var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
                 if (lang == 1036) {
                     form.getControl("ts_tcomscategoryenglish").setVisible(false);
                     form.getControl("ts_tcomscategoryfrench").setVisible(true);
@@ -302,11 +302,10 @@ var ROM;
                     }
                 }
                 if (mode == 717750001 /* InternationalBridgesandTunnels */) {
-                    var lang_1 = Xrm.Utility.getGlobalContext().userSettings.languageId;
                     var lookup = new Array();
                     lookup[0] = new Object();
                     lookup[0].id = "{051bb19d-f065-ed11-9569-0022483c0cc5}";
-                    lookup[0].name = (lang_1 == 1036) ? "PTI" : "IBT";
+                    lookup[0].name = (lang == 1036) ? "PTI" : "IBT";
                     lookup[0].entityType = "ts_targetelement";
                     form.getAttribute("ts_targetelement").setValue(lookup);
                     form.getControl("ts_targetelement").setDisabled(true);

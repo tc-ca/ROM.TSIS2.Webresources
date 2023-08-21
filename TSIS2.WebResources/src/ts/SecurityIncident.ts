@@ -200,6 +200,7 @@ namespace ROM.SecurityIncident {
 
     function ShowHideFieldsOnMode(eContext: Xrm.ExecutionContext<any, any>, mode, isOnLoad): void {
         const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+        const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
 
         if (mode == ts_securityincidentmode.AviationSecurity) {
             form.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
@@ -260,7 +261,6 @@ namespace ROM.SecurityIncident {
                 form.getControl("ts_arrests").setVisible(false);
             }
 
-            var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
             if (lang == 1036) {
                 form.getControl("ts_tcomscategoryenglish").setVisible(false);
                 form.getControl("ts_tcomscategoryfrench").setVisible(true);
@@ -337,7 +337,6 @@ namespace ROM.SecurityIncident {
             }
 
             if (mode == ts_securityincidentmode.InternationalBridgesandTunnels) {
-                const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
                 var lookup = new Array();
                 lookup[0] = new Object();
                 lookup[0].id = "{051bb19d-f065-ed11-9569-0022483c0cc5}";
