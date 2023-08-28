@@ -12,7 +12,7 @@ var ROM;
                 var activityTypeAttributeValue = activityTypeAttribute.getValue();
                 if (operationAttributeValue != null && activityTypeAttributeValue != null) {
                     form.ui.tabs.get("related_wos_tab").setVisible(true);
-                    var fetchXml = "<filter><condition attribute=\"msdyn_primaryincidenttype\" operator=\"eq\" value=\"" + activityTypeAttributeValue[0].id + "\"/><condition attribute=\"ovs_operationid\" operator=\"eq\" value=\"" + operationAttributeValue[0].id + "\"/><condition attribute=\"statecode\" operator=\"eq\" value=\"0\" /></filter>";
+                    var fetchXml = "<filter><condition attribute=\"msdyn_primaryincidenttype\" operator=\"eq\" value=\"".concat(activityTypeAttributeValue[0].id, "\"/><condition attribute=\"ovs_operationid\" operator=\"eq\" value=\"").concat(operationAttributeValue[0].id, "\"/><condition attribute=\"statecode\" operator=\"eq\" value=\"0\" /></filter>");
                     if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
                         setRelatedWorkOrdersFetchXML(form, fetchXml);
                     }

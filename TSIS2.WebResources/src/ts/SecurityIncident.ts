@@ -36,7 +36,7 @@ namespace ROM.SecurityIncident {
         lockAllSummaryFieldsWhenStatusClosed(eContext);
         restrictStatusFieldWhenStatusClosed(eContext);
     }
-   
+
     function adjustIncidentDateTime(formContext: Form.ts_securityincident.Main.Information) {
         if (formContext.ui.getFormType() != 1) {
             if (formContext.getAttribute("ts_incidentdatetime").getValue() != null && formContext.getAttribute("ts_incidentdatetimeadjust").getValue() != null) {
@@ -166,6 +166,8 @@ namespace ROM.SecurityIncident {
         const modeAttribute = form.getAttribute("ts_mode");
         const modeAttributeValue = modeAttribute.getValue()
 
+        ShowHideFieldsOnMode(eContext, modeAttributeValue, false);
+      
         form.getAttribute("ts_securityincidenttype").setValue(null);
 
         ShowHideFieldsOnMode(eContext, modeAttributeValue, false);
@@ -217,6 +219,9 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_yardorstationname").setVisible(false);
             form.getControl("ts_publicorprivatecrossing").setVisible(false);
             form.getControl("ts_ruralorurban").setVisible(false);
+
+            let tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
+            tab_time_tracking.setVisible(true);
 
             form.getControl("ts_inflight").setVisible(true);
             form.getControl("ts_estimatedarrivaltime").setVisible(true);
@@ -328,6 +333,9 @@ namespace ROM.SecurityIncident {
                 form.getControl("ts_markerpost").setVisible(true);
                 form.getControl("ts_yardorstationname").setVisible(true);
 
+                let tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
+                tab_time_tracking.setVisible(false);
+
                 form.getControl("ts_bridgeclosure").setVisible(false);
                 form.getControl("ts_damagestoibtproperty").setVisible(false);
 
@@ -351,6 +359,9 @@ namespace ROM.SecurityIncident {
                 form.getControl("ts_milemarker").setVisible(false);
                 form.getControl("ts_markerpost").setVisible(false);
                 form.getControl("ts_yardorstationname").setVisible(false);
+
+                let tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
+                tab_time_tracking.setVisible(false);
 
                 form.getControl("ts_bridgeclosure").setVisible(true);
                 form.getControl("ts_damagestoibtproperty").setVisible(true);
