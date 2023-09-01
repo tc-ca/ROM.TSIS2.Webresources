@@ -29,6 +29,11 @@ var ROM;
                     }
                 }
             }
+            //Lock for non Admin users
+            if (!userHasRole("System Administrator|ROM - Business Admin")) {
+                form.getControl("name").setDisabled(true);
+                form.getControl("ovs_legalname").setDisabled(true);
+            }
         }
         Account.onLoad = onLoad;
         function onSave(eContext) {
@@ -37,12 +42,12 @@ var ROM;
             var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
             if (statusStartDateValue != null) {
                 if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_stakeholderstatus").setValue(717750001 /* ts_stakeholderstatus.NonOperational */);
+                    form.getAttribute("ts_stakeholderstatus").setValue(717750001 /* NonOperational */);
                 }
             }
             if (statusEndDateValue != null) {
                 if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_stakeholderstatus").setValue(717750000 /* ts_stakeholderstatus.Operational */);
+                    form.getAttribute("ts_stakeholderstatus").setValue(717750000 /* Operational */);
                 }
             }
         }
@@ -140,5 +145,18 @@ var ROM;
             }
         }
         Account.statusStartDateOnChange = statusStartDateOnChange;
+        function userHasRole(rolesName) {
+            var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+            var hasRole = false;
+            var roles = rolesName.split("|");
+            roles.forEach(function (roleItem) {
+                userRoles.forEach(function (userRoleItem) {
+                    if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase())
+                        hasRole = true;
+                });
+            });
+            return hasRole;
+        }
+        Account.userHasRole = userHasRole;
     })(Account = ROM.Account || (ROM.Account = {}));
 })(ROM || (ROM = {}));
