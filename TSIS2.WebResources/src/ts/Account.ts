@@ -30,7 +30,13 @@ namespace ROM.Account {
                     form.getControl("Operations").getViewSelector().setCurrentView(operationView);
                 }
             }
-        } 
+        }
+
+        //Lock for non Admin users
+        if (!userHasRole("System Administrator|ROM - Business Admin")) {
+            form.getControl("name").setDisabled(true);
+            form.getControl("ovs_legalname").setDisabled(true);         
+        }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -151,5 +157,17 @@ namespace ROM.Account {
             form.getControl("ts_statusdescription").setDisabled(true);
         }
         
+    }
+
+    export function userHasRole(rolesName) {
+        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+        var hasRole = false;
+        var roles = rolesName.split("|");
+        roles.forEach(function (roleItem) {
+            userRoles.forEach(function (userRoleItem) {
+                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
+            });
+        });
+        return hasRole;
     }
 }

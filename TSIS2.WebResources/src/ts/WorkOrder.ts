@@ -274,6 +274,37 @@ namespace ROM.WorkOrder {
             }
         );
 
+        //Hide Quarters field for ISSO WO based on Operation Type owner
+        const operationType = form.getAttribute("ovs_operationtypeid").getValue();
+        if (operationType != null) {
+        let operationTypeOwningBusinessUnitFetchXML = [
+            "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
+            "  <entity name='businessunit'>",
+            "    <attribute name='name'/>",
+            "    <attribute name='businessunitid'/>",
+            "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
+            "      <filter>",
+            "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationType[0].id, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>"
+        ].join("");
+            operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+            Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(
+                function success(result) {
+                    if (!result.entities[0].name.startsWith("Avia")) {                        
+                        form.getControl("ts_quarterofpreparationtime").setVisible(false);
+                        form.getControl("ts_quarterofconductingoversight").setVisible(false);
+                        form.getControl("ts_quarterofreportinganddocumentation").setVisible(false);
+                        form.getControl("ts_quarteroftraveltime").setVisible(false);
+                    }
+                },
+                function (error) {
+                }
+            );
+        }
+
         //Check if the Work Order is past the Planned Fiscal Quarter
         setCantCompleteinspectionVisibility(form);
         setIncompleteWorkOrderReasonFilteredView(form);

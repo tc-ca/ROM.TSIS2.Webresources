@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -67,7 +67,7 @@ var ROM;
                                 planFiscalYearId = planFiscalYearValue[0].id.slice(1, -1);
                             }
                             if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 3];
-                            formContext.getAttribute("ts_name").setValue(teamName + " " + planFiscalYearName);
+                            formContext.getAttribute("ts_name").setValue("".concat(teamName, " ").concat(planFiscalYearName));
                             issoActivitiesFetchXml = [
                                 "<fetch top='20'>",
                                 "  <entity name='msdyn_incidenttype'>",
@@ -110,7 +110,7 @@ var ROM;
                             for (_i = 0, issoActivities_1 = issoActivities; _i < issoActivities_1.length; _i++) {
                                 activity = issoActivities_1[_i];
                                 data = {
-                                    "ts_name": activity["operation.ts_operationnameenglish"] + " | " + activity.msdyn_name + " | " + planFiscalYearName,
+                                    "ts_name": "".concat(activity["operation.ts_operationnameenglish"], " | ").concat(activity.msdyn_name, " | ").concat(planFiscalYearName),
                                     "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
                                     "ts_stakeholder@odata.bind": "/accounts(" + activity["operation.ts_stakeholder"] + ")",
                                     "ts_operationtype@odata.bind": "/ovs_operationtypes(" + activity["operation.ovs_operationtypeid"] + ")",

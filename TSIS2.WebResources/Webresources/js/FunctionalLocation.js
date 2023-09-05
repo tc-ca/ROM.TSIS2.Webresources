@@ -53,6 +53,12 @@ var ROM;
             }
             riskScoreVisibility(form);
             siteTypesVisibility(eContext);
+            //Lock for non Admin users
+            if (!userHasRole("System Administrator|ROM - Business Admin")) {
+                form.getControl("msdyn_name").setDisabled(true);
+                form.getControl("ts_functionallocationnameenglish").setDisabled(true);
+                form.getControl("ts_functionallocationnamefrench").setDisabled(true);
+            }
         }
         FunctionalLocation.onLoad = onLoad;
         function onSave(eContext) {
@@ -201,5 +207,18 @@ var ROM;
             riskScoreVisibility(form);
         }
         FunctionalLocation.classOnChange = classOnChange;
+        function userHasRole(rolesName) {
+            var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+            var hasRole = false;
+            var roles = rolesName.split("|");
+            roles.forEach(function (roleItem) {
+                userRoles.forEach(function (userRoleItem) {
+                    if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase())
+                        hasRole = true;
+                });
+            });
+            return hasRole;
+        }
+        FunctionalLocation.userHasRole = userHasRole;
     })(FunctionalLocation = ROM.FunctionalLocation || (ROM.FunctionalLocation = {}));
 })(ROM || (ROM = {}));
