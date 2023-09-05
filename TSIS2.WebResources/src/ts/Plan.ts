@@ -49,9 +49,11 @@
                 "          <attribute name='ts_risk'/>",
                 "          <attribute name='ts_operationnameenglish'/>",
                 "          <attribute name='ts_operationnamefrench'/>",
-                "          <filter>",
-                "            <condition attribute='owningbusinessunit' operator='eq' value='4ff4b827-bead-eb11-8236-000d3ae8b866' uitype='businessunit'/>",
-                "          </filter>",
+                "          <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit' alias='businessunit'>",
+                "             <filter>",
+                "                 <condition attribute='name' operator='begins-with' value='Intermodal'/>",
+                "             </filter>",
+                "          </link-entity>",
                 "          <filter type='and'>",
                 "            <condition attribute='ts_stakeholder' operator='not-null'/>",
                 "            <condition attribute='ovs_operationtypeid' operator='not-null'/>",
@@ -151,5 +153,28 @@
                 }
             });
         }
+    }
+
+    function TDGComprehensiveSuggestedInspections(formContext) {
+
+        //Retrieve all Operations of Operation Type "Railway Carrier", "Railway Loader", and "HQ - TDG"
+
+        //Foreach Operation
+
+            // If Security Plan Type equals Corporate Security Plan
+
+                // If Operation Type does not equal HQ - TDG
+
+                    // If Operation ts_typeofdangerousgoods equals null or Schedule 1 DG
+
+                        // If Last SPR Inspection was over 4 years ago, add SPR to activities list
+
+                        // If Last Comprehensive inspection was over 4 years ago, add comprehensive to activities list
+
+            // Elif Security Plan Type equals Site Security Plan
+
+                // If Operation ts_typeofdangerousgoods equals null or Schedule 1 DG
+
+                        // If Last Inspection was over 4 years ago, add SPR to activities list
     }
 }
