@@ -93,6 +93,16 @@ namespace ROM.Action {
             setOptions(deliveryMethodAttribute, filteredDeliveryOptions);
             setOptions(actionStatusAttribute, filteredStatusOptions);
         }
+        else if (actionCategoryAttributeValue == ts_actioncategory.CorrectiveAction && actionTypeAttributeValue == ts_actiontype.CorrectiveActionPlan) {
+            form.getControl("ts_stakeholder").setVisible(true);
+            form.getControl("ts_contact").setVisible(true);
+            form.getControl("ts_duedate").setVisible(true);
+
+            form.getControl("ts_location").setVisible(false);
+            form.getControl("ts_deliverymethod").setVisible(false);
+            form.getControl("ts_amtamount").setVisible(false);
+            setOptions(actionStatusAttribute, allActionStatus);
+        }
         else {
             resetFieldsVisibility(form);
             setOptions(deliveryMethodAttribute, allDeliveryMethodOptions);
@@ -120,29 +130,34 @@ namespace ROM.Action {
         const form = <Form.ts_action.Main.ROMAction>eContext.getFormContext();
 
         let actionStatus = form.getAttribute("ts_actionstatus").getValue();
-        if (actionStatus != null && (actionStatus == ts_actionstatus.Consulted || actionStatus == ts_actionstatus.Convened)) {
-            form.getControl("ts_deliverymethod").setVisible(false);
-            form.getControl("ts_amtamount").setVisible(false);
-            form.getControl("ts_duedate").setVisible(false);
-        }
-        else {
-            form.getControl("ts_deliverymethod").setVisible(true);
-            form.getControl("ts_amtamount").setVisible(true);
-            form.getControl("ts_duedate").setVisible(true);
+        let actionCategoryAttributeValue = form.getAttribute("ts_actioncategory").getValue();
+        let actionTypeAttributeValue = form.getAttribute("ts_actiontype").getValue();
 
-            let actionType = form.getAttribute("ts_actiontype").getValue();
-            if (actionType != null && actionType == ts_actiontype.AMPPayment) {
-                form.getControl("ts_amtamount").setVisible(true);
-                if (actionStatus != null && actionStatus == ts_actionstatus.Requested) {
-                    form.getControl("ts_duedate").setVisible(true);
-                }
-                else {
-                    form.getControl("ts_duedate").setVisible(false);
-                }
-            }
-            else {
+        if (!(actionStatus != null && actionTypeAttributeValue != null && actionCategoryAttributeValue == ts_actioncategory.CorrectiveAction && actionTypeAttributeValue == ts_actiontype.CorrectiveActionPlan)) {
+            if (actionStatus != null && (actionStatus == ts_actionstatus.Consulted || actionStatus == ts_actionstatus.Convened)) {
+                form.getControl("ts_deliverymethod").setVisible(false);
                 form.getControl("ts_amtamount").setVisible(false);
                 form.getControl("ts_duedate").setVisible(false);
+            }
+            else {
+                form.getControl("ts_deliverymethod").setVisible(true);
+                form.getControl("ts_amtamount").setVisible(true);
+                form.getControl("ts_duedate").setVisible(true);
+
+                let actionType = form.getAttribute("ts_actiontype").getValue();
+                if (actionType != null && actionType == ts_actiontype.AMPPayment) {
+                    form.getControl("ts_amtamount").setVisible(true);
+                    if (actionStatus != null && actionStatus == ts_actionstatus.Requested) {
+                        form.getControl("ts_duedate").setVisible(true);
+                    }
+                    else {
+                        form.getControl("ts_duedate").setVisible(false);
+                    }
+                }
+                else {
+                    form.getControl("ts_amtamount").setVisible(false);
+                    form.getControl("ts_duedate").setVisible(false);
+                }
             }
         }
     }
