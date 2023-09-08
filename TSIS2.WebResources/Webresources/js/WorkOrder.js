@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -106,13 +106,15 @@ var ROM;
             setCaseLookupClickNavigation(eContext);
             //Set Security Incident Lookup Navigation to open Time Tracking form when on Time Tracking Tab
             setSecurityIncidentLookupClickNavigation(eContext);
-            if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+            //Set Trip Lookup Navigation to open Time Tracking form when on Time Tracking Tab
+            setTripLookupClickNavigation(eContext);
+            if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* Closed */) {
                 form.getControl("ts_completedquarter").setVisible(true);
             }
             else {
                 form.getControl("ts_completedquarter").setVisible(false);
             }
-            if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) { //Closed ; Completed
+            if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == 741130000 /* Closed */) { //Closed ; Completed
                 form.getControl("ovs_revisedquarterid").setDisabled(true);
             }
             if (currentStatus == 717750001) { //Committed
@@ -223,12 +225,12 @@ var ROM;
                         }
                     }
                     setActivityTypeDisabled(eContext);
-                    if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+                    if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* Closed */) {
                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
                             form.getControl("header_msdyn_systemstatus").setDisabled(true);
                         }
                     }
-                    if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+                    if (currentSystemStatus == 741130000 /* Closed */) {
                         form.getControl("msdyn_workordertype").setDisabled(true);
                         form.getControl("ts_region").setDisabled(true);
                         form.getControl("ovs_operationtypeid").setDisabled(true);
@@ -237,6 +239,9 @@ var ROM;
                         form.getControl("msdyn_worklocation").setDisabled(true);
                         form.getControl("header_ownerid").setDisabled(true);
                         form.getControl("ownerid").setDisabled(true);
+                    }
+                    if (form.getAttribute("ts_trip").getValue() != null) {
+                        form.getControl("ts_traveltime").setVisible(false);
                     }
                     showHideContact(form);
                     break;
@@ -262,7 +267,7 @@ var ROM;
                     break;
             }
             // Lock some fields if there exist a Case that has this WO associated to it
-            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>");
+            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>";
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
@@ -320,12 +325,12 @@ var ROM;
                     }
                 }
             }
-            if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
-                form.getControl("msdyn_systemstatus").removeOption(690970000 /* msdyn_wosystemstatus.New */);
-                form.getControl("msdyn_systemstatus").removeOption(690970001 /* msdyn_wosystemstatus.Scheduled */);
-                form.getControl("msdyn_systemstatus").removeOption(690970005 /* msdyn_wosystemstatus.Canceled */);
+            if (currentSystemStatus == 741130000 /* Closed */) {
+                form.getControl("msdyn_systemstatus").removeOption(690970000 /* New */);
+                form.getControl("msdyn_systemstatus").removeOption(690970001 /* Scheduled */);
+                form.getControl("msdyn_systemstatus").removeOption(690970005 /* Canceled */);
                 if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
-                    form.getControl("msdyn_systemstatus").removeOption(741130001 /* msdyn_wosystemstatus.InProgress */);
+                    form.getControl("msdyn_systemstatus").removeOption(741130001 /* InProgress */);
                 }
             }
             unlockRecordLogFieldsIfUserIsSystemAdmin(form);
@@ -355,7 +360,7 @@ var ROM;
             var form = eContext.getFormContext();
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var workOrderServiceTaskData;
-            if (systemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
+            if (systemStatus == 690970004 /* ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
                 workOrderServiceTaskData =
                     {
                         "statecode": 1,
@@ -872,7 +877,7 @@ var ROM;
             }
             else 
             //If system status is set to closed
-            if (newSystemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */ || newSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+            if (newSystemStatus == 690970004 /* ClosedInactive */ || newSystemStatus == 741130000 /* Closed */) {
                 Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=statecode eq 0 and msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
                     if (result.entities.length > 0) {
                         var alertStrings = {
@@ -884,7 +889,7 @@ var ROM;
                         form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
                     }
                     else {
-                        if (newSystemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) {
+                        if (newSystemStatus == 690970004 /* ClosedInactive */) {
                             var confirmStrings = {
                                 text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationText"),
                                 title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationTitle")
@@ -1306,7 +1311,7 @@ var ROM;
             return "";
         }
         function closeWorkOrderServiceTasks(formContext, workOrderServiceTaskData) {
-            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ".concat(formContext.data.entity.getId())).then(function success(result) {
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {
                 for (var i = 0; i < result.entities.length; i++) {
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(function success(result) {
                         //work order service task closed successfully
@@ -1344,7 +1349,7 @@ var ROM;
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
             var validWorkOrderStatus = false;
-            if (systemStatus != null && (systemStatus == 690970000 /* msdyn_wosystemstatus.New */ || systemStatus == 690970001 /* msdyn_wosystemstatus.Scheduled */ || systemStatus == 741130001 /* msdyn_wosystemstatus.InProgress */)) {
+            if (systemStatus != null && (systemStatus == 690970000 /* New */ || systemStatus == 690970001 /* Scheduled */ || systemStatus == 741130001 /* InProgress */)) {
                 validWorkOrderStatus = true;
             }
             if (plannedFiscalQuarter != null) {
@@ -1441,7 +1446,7 @@ var ROM;
                         var wost = _a[_i];
                         if (wost.statecode == 0) {
                             workOrderHasActiveWost = true;
-                            if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
+                            if (wost.statuscode == 918640005 /* New */)
                                 workOrderHasNewWost = true;
                         }
                     }
@@ -1499,7 +1504,7 @@ var ROM;
                         var wost = _a[_i];
                         if (wost.statecode == 0) {
                             workOrderHasActiveWost = true;
-                            if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
+                            if (wost.statuscode == 918640005 /* New */)
                                 workOrderHasNewWost = true;
                         }
                     }
@@ -1719,7 +1724,7 @@ var ROM;
         function setFiscalQuarter(form) {
             var currentDate = new Date();
             var currentDateString = currentDate.toISOString();
-            var fetchXml = "<fetch top=\"1\"><entity name=\"tc_tcfiscalquarter\"><attribute name=\"tc_name\"/><attribute name=\"tc_tcfiscalquarterid\"/><filter type=\"and\"><condition attribute=\"tc_quarterstart\" operator=\"le\" value=\"".concat(currentDateString, "\"/><condition attribute=\"tc_quarterend\" operator=\"ge\" value=\"").concat(currentDateString, "\"/></filter></entity></fetch>");
+            var fetchXml = "<fetch top=\"1\"><entity name=\"tc_tcfiscalquarter\"><attribute name=\"tc_name\"/><attribute name=\"tc_tcfiscalquarterid\"/><filter type=\"and\"><condition attribute=\"tc_quarterstart\" operator=\"le\" value=\"" + currentDateString + "\"/><condition attribute=\"tc_quarterend\" operator=\"ge\" value=\"" + currentDateString + "\"/></filter></entity></fetch>";
             var lookup = new Array();
             Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(function success(result) {
                 lookup[0] = new Object();
@@ -1767,6 +1772,30 @@ var ROM;
                         entityName: record.entityType,
                         entityId: record.id,
                         formId: "54b321b6-6afa-ed11-8f6e-0022483c5061"
+                    }, {
+                        target: 2,
+                        position: 2,
+                        width: {
+                            value: 30,
+                            unit: "%"
+                        }
+                    });
+                }
+            });
+        }
+        function setTripLookupClickNavigation(eContext) {
+            var formContext = eContext.getFormContext();
+            formContext.getControl("ts_trip").addOnLookupTagClick(function (eContext) {
+                var formContext = eContext.getFormContext();
+                //Check if the Time Tracking Tab is Expanded
+                if (formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded') {
+                    eContext.getEventArgs().preventDefault(); //Prevent default navigation to normal Case form
+                    var record = eContext.getEventArgs().getTagValue();
+                    Xrm.Navigation.navigateTo({
+                        pageType: "entityrecord",
+                        entityName: record.entityType,
+                        entityId: record.id,
+                        formId: "F9A735C7-D9C6-4CFF-B0CE-C78A28C8E5AD"
                     }, {
                         target: 2,
                         position: 2,
