@@ -24,4 +24,9 @@ declare const enum ts_actiontype {
   TATCDetermination = 741130022,
   TATCReviewApplication = 741130023,
   TATCReviewHearing = 741130024,
+  AffidavitOfServiceAMP = 741130025,
+  AffidavitOfServiceCancellationSuspensionofCAD = 741130026,
+  NotificationNoncompliance = 741130027,
+  WrittenNotice = 741130028,
+  AMP = 741130029,
 }

@@ -29,11 +29,6 @@ var ROM;
                     }
                 }
             }
-            //Lock for non Admin users
-            if (!userHasRole("System Administrator|ROM - Business Admin")) {
-                form.getControl("name").setDisabled(true);
-                form.getControl("ovs_legalname").setDisabled(true);
-            }
         }
         Account.onLoad = onLoad;
         function onSave(eContext) {
@@ -145,18 +140,5 @@ var ROM;
             }
         }
         Account.statusStartDateOnChange = statusStartDateOnChange;
-        function userHasRole(rolesName) {
-            var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-            var hasRole = false;
-            var roles = rolesName.split("|");
-            roles.forEach(function (roleItem) {
-                userRoles.forEach(function (userRoleItem) {
-                    if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase())
-                        hasRole = true;
-                });
-            });
-            return hasRole;
-        }
-        Account.userHasRole = userHasRole;
     })(Account = ROM.Account || (ROM.Account = {}));
 })(ROM || (ROM = {}));
