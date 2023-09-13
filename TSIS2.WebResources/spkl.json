@@ -320,6 +320,11 @@
             "description": "ROM TSIS 2.0 Plan Form Scripts"
           },
           {
+            "uniquename": "ts_/js/SuggestedInspection.js",
+            "file": "js\\SuggestedInspection.js",
+            "description": "ROM TSIS 2.0 SuggestedInspection Form Scripts"
+          },
+          {
             "uniquename": "ts_/js/PlanRibbon.js",
             "file": "js\\PlanRibbon.js",
             "description": "ROM TSIS 2.0 Plan Ribbon Scripts"
