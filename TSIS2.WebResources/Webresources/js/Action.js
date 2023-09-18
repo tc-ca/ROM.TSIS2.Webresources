@@ -28,7 +28,7 @@ var ROM;
                 actionCategoryOnChange(eContext);
             }
             else if (formType !== 0 && formType !== 6) {
-                setRelatedFindingsFetchXML(form);
+                //setRelatedFindingsFetchXML(form);
             }
             actionStatusOnChange(eContext);
         }
