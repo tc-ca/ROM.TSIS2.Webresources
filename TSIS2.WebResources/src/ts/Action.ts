@@ -26,7 +26,7 @@ namespace ROM.Action {
         if (formType === 1 || formType === 2) {
             actionCategoryOnChange(eContext);
         } else if (formType !== 0 && formType !== 6) {
-            setRelatedFindingsFetchXML(form);
+            //setRelatedFindingsFetchXML(form);
         }
         actionStatusOnChange(eContext);
     }
