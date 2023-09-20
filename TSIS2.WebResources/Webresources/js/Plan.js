@@ -44,8 +44,39 @@ var ROM;
             if (formContext.ui.getFormType() == 1) { //Create
                 formContext.data.entity.addOnPostSave(generateSuggestedInspections);
             }
+            var subgrid = formContext.getControl('suggested_inspections_grid');
+            subgrid.addOnLoad(function () { onGridLoad(); });
         }
         Plan.onLoad = onLoad;
+        function onGridLoad() {
+            try {
+                //setting timeout beacuse subgrid take some time to load after the form is loaded
+                setTimeout(function () {
+                    var button_obj = suggested_inspections_grid_AddExisting();
+                    if (button_obj != null) {
+                        HideAddSuggestionButton(button_obj);
+                    }
+                    else {
+                        onGridLoad();
+                    }
+                }, 2000);
+            }
+            catch (e) {
+            }
+        }
+        function suggested_inspections_grid_AddExisting() {
+            var searchby = '[id^="ts_suggestedinspection|NoRelationship|SubGridStandard|Mscrm.AddExistingRecordFromSubGridStandard1id-"]';
+            var button_obj = parent.document.querySelector(searchby);
+            return button_obj;
+        }
+        function HideAddSuggestionButton(button_obj) {
+            var name = button_obj.id + "-button";
+            var button1 = parent.document.getElementById(name);
+            if (button1 != null) {
+                button1.style.visibility = 'hidden';
+                button1.style.display = "none";
+            }
+        }
         function generateSuggestedInspections(eContext) {
             return __awaiter(this, void 0, void 0, function () {
                 var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, issoActivitiesFetchXml, issoActivities, _i, issoActivities_1, activity, data, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data;
