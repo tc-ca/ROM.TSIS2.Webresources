@@ -14,13 +14,16 @@ if (lang == 1036) {
     missingFinalEnforcementActionTitleLocalized = "Mesure d'application finale manquante";
     missingFinalEnforcementActionTextLocalized = "Un ou plusieurs enregistrements de constatations sélectionnés n'ont pas de mesure d'application finale. Toutes les constatations sélectionnées doivent avoir une mesure d'application finale pour créer un rapport de constatations."
     missingFinalEnforcementActionForActionCreateTextLocalized = "Un ou plusieurs enregistrements de constatations sélectionnés n'ont pas de mesure d'application finale. Toutes les constatations sélectionnées doivent avoir une mesure d'application finale."
-
+    createAcionFromObservationTitleLocalized = "Erreur de validation";
+    createAcionFromObservationTextLocalized = "Il n'est pas possible de créer des mesures d'exécution pour les observations.";
 } else {
     markCompleteValidationTextLocalized = "All fields denoted by blue '+' must be completed in order to Mark Complete.";
     markCompleteValidationTitleLocalized = "Form Incomplete";
     missingFinalEnforcementActionTitleLocalized = "Missing Final Enforcement Action"
     missingFinalEnforcementActionTextLocalized = "One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action to create a Findings Report.";
     missingFinalEnforcementActionForActionCreateTextLocalized = "One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action.";
+    createAcionFromObservationTitleLocalized = "Validation Error";
+    createAcionFromObservationTextLocalized = "Enforcement actions cannot be created for observations.";
 }
 
 let issoOperationTypeGuids = ["b27e5003-c751-eb11-a812-000d3af3ac0d", "c97a1a12-d8eb-eb11-bacb-000d3af4fbec", "21ca416a-431a-ec11-b6e7-000d3a09d067", "3b261029-c751-eb11-a812-000d3af3ac0d", "d883b39a-c751-eb11-a812-000d3af3ac0d", "da56fea1-c751-eb11-a812-000d3af3ac0d", "199e31ae-c751-eb11-a812-000d3af3ac0d"]
@@ -317,7 +320,7 @@ function FindingsReport(findingGUIDs, primaryControl) {
     const findingRows = gridContext.getGrid().getSelectedRows();
 
     //Confirm all selected findings have a final enforcement action
-    let { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB } = checkIfAllFindingsHaveEnforcementAction(findingRows);
+    let { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB, aFindingIsObservation } = checkIfAllFindingsHaveEnforcementAction(findingRows);
 
     //If a finding does not have a final enforcement action, open an alert dialog
     if (!allFindingsHaveFinalEnforcementAction) {
@@ -408,17 +411,23 @@ function FindingsReport(findingGUIDs, primaryControl) {
 function checkIfAllFindingsHaveEnforcementAction(findingRows) {
     let allFindingsHaveFinalEnforcementAction = true;
     let aFindingIsProtectedB = false;
+    let aFindingIsObservation = false;
     findingRows.forEach(function (findingRow) {
         const findingFinalEnforcementAction = findingRow.getAttribute("ts_finalenforcementaction").getValue();
         const findingSensitivityLevel = findingRow.getAttribute("ts_sensitivitylevel").getValue();
+        const findingType = findingRow.getAttribute("ts_findingtype").getValue();
+
         if (findingFinalEnforcementAction == null) {
             allFindingsHaveFinalEnforcementAction = false;
         }
         if (findingSensitivityLevel == 717750001) { //Protected B
             aFindingIsProtectedB = true;
         }
+        if (findingType == 717750001) { // Observation 
+            aFindingIsObservation  = true;
+        }
     });
-    return { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB };
+    return { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB, aFindingIsObservation };
 }
 
 function getHighestEnforcementActionFromFindings(findingRows) {
@@ -550,14 +559,17 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
     const findingRows = gridContext.getGrid().getSelectedRows();
 
     //Confirm all selected findings have a final enforcement action
-    let { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB } = checkIfAllFindingsHaveEnforcementAction(findingRows);
+    let { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB, aFindingIsObservation } = checkIfAllFindingsHaveEnforcementAction(findingRows);
 
     //If a finding does not have a final enforcement action, open an alert dialog
     if (!allFindingsHaveFinalEnforcementAction) {
         showAlertDialog(missingFinalEnforcementActionForActionCreateTextLocalized, missingFinalEnforcementActionTitleLocalized);
         return;
     }
-
+    if (aFindingIsObservation) {
+        showAlertDialog(createAcionFromObservationTextLocalized, createAcionFromObservationTitleLocalized);
+        return;
+    }
     const caseId = primaryControl.data.entity.getId().slice(1, -1);
    
     if (await isNCAT(findingGUIDs[0])) {
