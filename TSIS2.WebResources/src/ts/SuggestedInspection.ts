@@ -50,7 +50,7 @@
         }
     }
 
-    export function siteOnChange(eContext) {
+    export async function siteOnChange(eContext) {
         const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
 
         const siteValue = form.getAttribute("ts_site").getValue();
@@ -66,6 +66,55 @@
         } else {
             //Set Operation Field
 
+            //Get
+            const operationTypeValue = form.getAttribute("ts_site").getValue();
+            const stakeholderValue = form.getAttribute("ts_site").getValue();
+            let operationTypeId;
+            let stakeholderId;
+            let siteId;
+            if (operationTypeValue != null && stakeholderValue != null) {
+                operationTypeId = operationTypeValue[0].id;
+                stakeholderId = operationTypeValue[0].id;
+                siteId = siteValue[0].id;
+            }
+            if (operationTypeId != null && stakeholderId != null && siteId != null) {
+                let fetchXml = [
+                    "<fetch>",
+                    "  <entity name='ovs_operation'>",
+                    "    <attribute name='ovs_operationid'/>",
+                    "    <attribute name='ts_operationalstatus'/>",
+                    "    <attribute name='ovs_name'/>",
+                    "    <filter>",
+                    "      <condition attribute='ts_stakeholder' operator='eq' value='", stakeholderId, "' uitype='account'/>",
+                    "      <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeId, "' uitype='ovs_operationtype'/>",
+                    "      <condition attribute='ts_site' operator='eq' value='", siteId, "' uitype='msdyn_functionallocation'/>",
+                    "    </filter>",
+                    "  </entity>",
+                    "</fetch>"
+                ].join("");
+                fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+                let operation = await Xrm.WebApi.retrieveMultipleRecords("ovs_operation", fetchXml).then(function success(result) {
+                    return result.entities[0];
+                });
+                if (operation != null) {
+                    const lookup = new Array();
+                    lookup[0] = new Object();
+                    lookup[0].id = operation.ovs_operationid;
+                    lookup[0].name = operation.ovs_name;
+                    lookup[0].entityType = 'ovs_operation';
+
+                    if (operation.ts_operationalstatus == 717750001) {
+                        form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + operation.ovs_name + "\" is non-operational." : "L'opération \"" + operation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
+                        form.getAttribute('ts_site').setValue(null);
+                    }
+                    else {
+                        form.ui.clearFormNotification("non-operational-operation");
+                        form.getAttribute('ts_operation').setValue(lookup);
+                        setActivityTypeFilteredView(form);
+                    }
+                }
+            }
+            
         }
     }
 
