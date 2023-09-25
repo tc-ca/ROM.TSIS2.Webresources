@@ -21,9 +21,11 @@ var ROM;
             { text: "Requested", value: 741130004 /* Requested */ },
             { text: "Sworn", value: 741130005 /* Sworn */ }
         ];
+        var actionTypeOptions;
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             var formType = form.ui.getFormType();
+            actionTypeOptions = form.getControl("ts_actiontype").getOptions();
             if (formType === 1 || formType === 2) {
                 actionCategoryOnChange(eContext);
             }
@@ -105,6 +107,53 @@ var ROM;
                 setOptions(deliveryMethodAttribute, allDeliveryMethodOptions);
                 setOptions(actionStatusAttribute, allActionStatus);
             }
+            //Hide action type options for ISSO
+            if (form.ui.getFormType() != 1) {
+                var actionId = form.data.entity.getId();
+                var operationTypeFetchXML = [
+                    "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\">\n                  <entity name=\"msdyn_workorder\">\n                    <attribute name=\"msdyn_name\" />\n                    <attribute name=\"msdyn_workorderid\" />\n                    <attribute name=\"ovs_operationtypeid\" />\n                    <link-entity name=\"ovs_finding\" from=\"ts_workorder\" to=\"msdyn_workorderid\" link-type=\"inner\" alias=\"ac\">\n                      <link-entity name=\"ts_actionfinding\" from=\"ts_ovs_finding\" to=\"ovs_findingid\" link-type=\"inner\" alias=\"ad\">\n                        <filter type=\"and\">\n                          <condition attribute=\"ts_action\" operator=\"eq\" uitype=\"ts_action\" value=\"" + actionId + "\" />\n                        </filter>\n                      </link-entity>\n                    </link-entity>\n                  </entity>\n                </fetch>"
+                ].join("");
+                operationTypeFetchXML = "?fetchXml=" + encodeURIComponent(operationTypeFetchXML);
+                Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", operationTypeFetchXML).then(function success(result) {
+                    var operationTypeOwningBusinessUnitFetchXML = [
+                        "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
+                        "  <entity name='businessunit'>",
+                        "    <attribute name='name'/>",
+                        "    <attribute name='businessunitid'/>",
+                        "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
+                        "      <filter>",
+                        "        <condition attribute='ovs_operationtypeid' operator='eq' value='", result.entities[0]._ovs_operationtypeid_value, "'/>",
+                        "      </filter>",
+                        "    </link-entity>",
+                        "  </entity>",
+                        "</fetch>"
+                    ].join("");
+                    operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+                    Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function success(resultBusinessUnit) {
+                        if (!resultBusinessUnit.entities[0].name.startsWith("Avia")) {
+                            var actiontypes = form.getControl("ts_actiontype");
+                            setOptions(actiontypes, actionTypeOptions);
+                            if (actionCategoryAttributeValue == 741130002 /* EnforcementAction */) {
+                                for (var i = 0; i < actionTypeOptions.length; i++) {
+                                    if (actionTypeOptions[i].value != 741130012 /* VerbalWarning */ && actionTypeOptions[i].value != 741130013 /* WrittenWarning */ && actionTypeOptions[i].value != 741130017 /* RegionalEnforcementUnitREU */) {
+                                        actiontypes.removeOption(actionTypeOptions[i].value);
+                                    }
+                                }
+                            }
+                            else if (actionCategoryAttributeValue == 741130001 /* CorrectiveAction */) {
+                                for (var i = 0; i < actionTypeOptions.length; i++) {
+                                    if (actionTypeOptions[i].value != 741130008 /* CorrectiveActionPlan */) {
+                                        actiontypes.removeOption(actionTypeOptions[i].value);
+                                    }
+                                }
+                            }
+                        }
+                    }, function (error) {
+                    });
+                }, function (error) {
+                });
+            }
+            ///end
         }
         Action.actionCategoryOnChange = actionCategoryOnChange;
         function setRelatedFindingsFetchXML(form) {

@@ -18,11 +18,12 @@ namespace ROM.Action {
         { text: "Requested", value: ts_actionstatus.Requested },
         { text: "Sworn", value: ts_actionstatus.Sworn }
     ];
-
+    var actionTypeOptions;
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.ts_action.Main.Information>eContext.getFormContext();
+        const form = <Form.ts_action.Main.ROMAction>eContext.getFormContext();
         const formType = form.ui.getFormType();
 
+        actionTypeOptions = form.getControl("ts_actiontype").getOptions();
         if (formType === 1 || formType === 2) {
             actionCategoryOnChange(eContext);
         } else if (formType !== 0 && formType !== 6) {
@@ -108,6 +109,75 @@ namespace ROM.Action {
             setOptions(deliveryMethodAttribute, allDeliveryMethodOptions);
             setOptions(actionStatusAttribute, allActionStatus);
         }
+
+        //Hide action type options for ISSO
+        if (form.ui.getFormType() != 1) {
+            let actionId = form.data.entity.getId();
+            let operationTypeFetchXML = [
+                `<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
+                  <entity name="msdyn_workorder">
+                    <attribute name="msdyn_name" />
+                    <attribute name="msdyn_workorderid" />
+                    <attribute name="ovs_operationtypeid" />
+                    <link-entity name="ovs_finding" from="ts_workorder" to="msdyn_workorderid" link-type="inner" alias="ac">
+                      <link-entity name="ts_actionfinding" from="ts_ovs_finding" to="ovs_findingid" link-type="inner" alias="ad">
+                        <filter type="and">
+                          <condition attribute="ts_action" operator="eq" uitype="ts_action" value="` + actionId + `" />
+                        </filter>
+                      </link-entity>
+                    </link-entity>
+                  </entity>
+                </fetch>`
+            ].join("");
+
+            operationTypeFetchXML = "?fetchXml=" + encodeURIComponent(operationTypeFetchXML);
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", operationTypeFetchXML).then(
+                function success(result) {
+                    let operationTypeOwningBusinessUnitFetchXML = [
+                        "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
+                        "  <entity name='businessunit'>",
+                        "    <attribute name='name'/>",
+                        "    <attribute name='businessunitid'/>",
+                        "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
+                        "      <filter>",
+                        "        <condition attribute='ovs_operationtypeid' operator='eq' value='", result.entities[0]._ovs_operationtypeid_value, "'/>",
+                        "      </filter>",
+                        "    </link-entity>",
+                        "  </entity>",
+                        "</fetch>"
+                    ].join("");
+                    operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+                    Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(
+                        function success(resultBusinessUnit) {
+                            if (!resultBusinessUnit.entities[0].name.startsWith("Avia")) {
+                                var actiontypes = form.getControl("ts_actiontype");
+                                setOptions(actiontypes, actionTypeOptions);
+                                if (actionCategoryAttributeValue == ts_actioncategory.EnforcementAction) {
+                                    for (var i = 0; i < actionTypeOptions.length; i++) {
+                                        if (actionTypeOptions[i].value != ts_actiontype.VerbalWarning && actionTypeOptions[i].value != ts_actiontype.WrittenWarning && actionTypeOptions[i].value != ts_actiontype.RegionalEnforcementUnitREU) {
+                                            actiontypes.removeOption(actionTypeOptions[i].value);
+                                        }
+                                    }
+                                }
+                                else if (actionCategoryAttributeValue == ts_actioncategory.CorrectiveAction) {
+                                    for (var i = 0; i < actionTypeOptions.length; i++) {
+                                        if (actionTypeOptions[i].value != ts_actiontype.CorrectiveActionPlan) {
+                                            actiontypes.removeOption(actionTypeOptions[i].value);
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        function (error) {
+                        }
+                    );
+                },
+                function (error) {
+                }
+            );
+
+        }
+        ///end
     }
 
     export function setRelatedFindingsFetchXML(form: Form.ts_action.Main.Information) {
