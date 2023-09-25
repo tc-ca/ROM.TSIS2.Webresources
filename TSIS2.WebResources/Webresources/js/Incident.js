@@ -87,6 +87,45 @@ var ROM;
                     }
                 }
             }
+            //Hide quarter fields for ISSO
+            var operationTypeFetchXML = [
+                "<fetch top='50'>",
+                "<entity name='msdyn_workorder'>",
+                "<attribute name='msdyn_name'/>",
+                "<attribute name='ovs_operationtypeid'/>",
+                "<link-entity name='incident' from='incidentid' to='msdyn_servicerequest'>",
+                "<filter>",
+                "<condition attribute='incidentid' operator='eq' value='", form.data.entity.getId(), "'/>",
+                "</filter>",
+                "</link-entity>",
+                "</entity>",
+                "</fetch>"
+            ].join("");
+            operationTypeFetchXML = "?fetchXml=" + operationTypeFetchXML;
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", operationTypeFetchXML).then(function success(result) {
+                var operationTypeOwningBusinessUnitFetchXML = [
+                    "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
+                    "  <entity name='businessunit'>",
+                    "    <attribute name='name'/>",
+                    "    <attribute name='businessunitid'/>",
+                    "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
+                    "      <filter>",
+                    "        <condition attribute='ovs_operationtypeid' operator='eq' value='", result.entities[0]._ovs_operationtypeid_value, "'/>",
+                    "      </filter>",
+                    "    </link-entity>",
+                    "  </entity>",
+                    "</fetch>"
+                ].join("");
+                operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+                Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function success(resultBusinessUnit) {
+                    if (!resultBusinessUnit.entities[0].name.startsWith("Avia")) {
+                        form.getControl("ts_quarterofreportinganddocumentation").setVisible(false);
+                        form.getControl("ts_quarteroftraveltime").setVisible(false);
+                    }
+                }, function (error) {
+                });
+            }, function (error) {
+            });
         }
         Incident.onLoad = onLoad;
         function systemStatusCodeOnChange(eContext) {
