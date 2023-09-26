@@ -21,6 +21,8 @@
             form.getControl("ts_operation").setDisabled(true);
             form.getControl("ts_activitytype").setDisabled(true);
             form.getControl("ts_riskthreshold").setDisabled(true);
+
+            setOperationTypeFilteredView(form);
         } else {
             //Unlock next field
             form.getControl("ts_stakeholder").setDisabled(false);
@@ -43,6 +45,9 @@
             form.getControl("ts_operation").setDisabled(true);
             form.getControl("ts_activitytype").setDisabled(true);
             form.getControl("ts_riskthreshold").setDisabled(true);
+
+            setOperationTypeFilteredView(form);
+            setStakeholderFilteredView(form);
         } else {
             //Unlock next field
             form.getControl("ts_site").setDisabled(false);
@@ -63,18 +68,21 @@
             form.getControl("ts_operation").setDisabled(true);
             form.getControl("ts_activitytype").setDisabled(true);
             form.getControl("ts_riskthreshold").setDisabled(true);
+
+            setStakeholderFilteredView(form);
+            setSiteFilteredView(form);
         } else {
             //Set Operation Field
 
             //Get
-            const operationTypeValue = form.getAttribute("ts_site").getValue();
-            const stakeholderValue = form.getAttribute("ts_site").getValue();
+            const operationTypeValue = form.getAttribute("ts_operationtype").getValue();
+            const stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
             let operationTypeId;
             let stakeholderId;
             let siteId;
             if (operationTypeValue != null && stakeholderValue != null) {
                 operationTypeId = operationTypeValue[0].id;
-                stakeholderId = operationTypeValue[0].id;
+                stakeholderId = stakeholderValue[0].id;
                 siteId = siteValue[0].id;
             }
             if (operationTypeId != null && stakeholderId != null && siteId != null) {
@@ -154,7 +162,7 @@
         //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
         const viewDisplayName = "Operation Types";
         const fetchXml = [
-            "<fetch>",
+            "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>",
             "  <entity name='ovs_operationtype'>",
             "    <attribute name='createdon'/>",
             "    <attribute name='ovs_name'/>",
@@ -167,7 +175,7 @@
             "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
             "      <link-entity name='msdyn_incidenttype' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' alias='incidenttype'>",
             "        <filter>",
-            "          <condition attribute='msdyn_defaultworkordertype' operator='eq' value='b1ee680a-7cf7-ea11-a815-000d3af3a7a7' uiname='Inspection' uitype='msdyn_workordertype'/>",
+            "          <condition attribute='msdyn_defaultworkordertype' operator='eq' value='b1ee680a-7cf7-ea11-a815-000d3af3a7a7'/>",
             "        </filter>",
             "      </link-entity>",
             "    </link-entity>",
@@ -184,25 +192,25 @@
         if (operationTypeValue != null) {
             operationTypeId = operationTypeValue[0].id;
         }
-        const viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE98}';
+        const viewId = '{8982C38D-8BB4-4C95-BD05-493398F11111}';
         const entityName = "account";
         //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredStakeholders");
         const viewDisplayName = "Stakeholders";
-        const fetchXml = [
-            "<fetch>",
+        var fetchXml = [
+            "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>",
             "  <entity name='account'>",
             "    <attribute name='accountid'/>",
             "    <attribute name='createdon'/>",
             "    <attribute name='name'/>",
-            "    <link-entity name='ovs_operation' from='ts_stakeholder' to='accountid'>",
+            "    <link-entity name='ovs_operation' from='ts_stakeholder' to='accountid' link-type='inner' alias='operation' intersect='true'>",
             "      <filter>",
-            "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeId, "'uitype='ovs_operationtype'/>",
+            "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeId, "'/>",
             "      </filter>",
             "    </link-entity>",
             "  </entity>",
             "</fetch>"
         ].join("");
-        const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
+        const layoutXml = '<grid name="resultset" jump="name" select="1" icon="1" preview="1"> <row name="result" id="accountid"> <cell name="name" width="300" /></row> </grid>';
         form.getControl("ts_stakeholder").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 
@@ -213,26 +221,29 @@
         let stakeholderId;
         if (operationTypeValue != null && stakeholderValue != null) {
             operationTypeId = operationTypeValue[0].id;
-            stakeholderId = operationTypeValue[0].id;
+            stakeholderId = stakeholderValue[0].id;
         }
-        const viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE98}';
-        const entityName = "account";
+        const viewId = '{8982C38D-8BB4-4C95-BD05-493398F00000}';
+        const entityName = "msdyn_functionallocation";
         //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredStakeholders");
-        const viewDisplayName = "Stakeholders";
+        const viewDisplayName = "Sites";
         const fetchXml = [
-            "<fetch>",
+            "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>",
             "  <entity name='msdyn_functionallocation'>",
-            "    <link-entity name='ovs_operation' from='ts_site' to='msdyn_functionallocationid' alias='operation'>",
+            "    <attribute name='createdon'/>",
+            "    <attribute name='msdyn_name'/>",
+            "    <attribute name='msdyn_functionallocationid'/>",
+            "    <link-entity name='ovs_operation' from='ts_site' to='msdyn_functionallocationid' alias='operation'  intersect='true'>",
             "      <filter>",
-            "        <condition attribute='ts_stakeholder' operator='eq' value='", stakeholderId, "' uitype='account'/>",
-            "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeId, "' uitype='ovs_operationtype'/>",
+            "        <condition attribute='ts_stakeholder' operator='eq' value='", stakeholderId, "'/>",
+            "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeId, "'/>",
             "      </filter>",
             "    </link-entity>",
             "  </entity>",
             "</fetch>"
         ].join("");
-        const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
-        form.getControl("ts_stakeholder").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+        const layoutXml = '<grid name="resultset" jump="msdyn_name" select="1" preview="1" icon="1"> <row name="result" id="msdyn_functionallocationid"> <cell name="msdyn_name" width="150" /> </row> </grid>';
+        form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 
     function setActivityTypeFilteredView(form: Form.ts_suggestedinspection.Main.Information): void {
