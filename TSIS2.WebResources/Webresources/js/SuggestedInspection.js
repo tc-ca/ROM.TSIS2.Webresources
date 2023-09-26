@@ -93,7 +93,7 @@ var ROM;
         SuggestedInspection.stakeholderOnChange = stakeholderOnChange;
         function siteOnChange(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, siteValue, operationTypeValue, stakeholderValue, operationTypeId, stakeholderId, siteId, fetchXml, operation, lookup;
+                var form, siteValue, operationTypeValue, stakeholderValue, operationTypeId, stakeholderId, siteId, fetchXml, operation, lookup, operationValue;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -132,6 +132,7 @@ var ROM;
                                 "      <condition attribute='ts_stakeholder' operator='eq' value='", stakeholderId, "' uitype='account'/>",
                                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeId, "' uitype='ovs_operationtype'/>",
                                 "      <condition attribute='ts_site' operator='eq' value='", siteId, "' uitype='msdyn_functionallocation'/>",
+                                "      <condition attribute='statecode' operator='eq' value='0'/>",
                                 "    </filter>",
                                 "  </entity>",
                                 "</fetch>"
@@ -155,6 +156,8 @@ var ROM;
                                 else {
                                     form.ui.clearFormNotification("non-operational-operation");
                                     form.getAttribute('ts_operation').setValue(lookup);
+                                    operationValue = form.getAttribute("ts_operation").getValue();
+                                    form.getControl("ts_activitytype").setDisabled(false);
                                     setActivityTypeFilteredView(form);
                                 }
                             }
@@ -165,30 +168,23 @@ var ROM;
             });
         }
         SuggestedInspection.siteOnChange = siteOnChange;
-        function operationOnChange(eContext) {
-            var form = eContext.getFormContext();
-            var operationValue = form.getAttribute("ts_operation").getValue();
-            if (operationValue == null) {
-                //Clear and lock all dependent fields
-                form.getAttribute("ts_activitytype").setValue(null);
-                form.getAttribute("ts_riskthreshold").setValue(null);
-                form.getControl("ts_activitytype").setDisabled(true);
-                form.getControl("ts_riskthreshold").setDisabled(true);
-            }
-            else {
-                //Unlock next field
-                form.getControl("ts_activitytype").setDisabled(false);
-                setActivityTypeFilteredView(form);
-            }
-        }
-        SuggestedInspection.operationOnChange = operationOnChange;
         function activityTypeOnChange(eContext) {
             var form = eContext.getFormContext();
             var activtyTypeValue = form.getAttribute("ts_activitytype").getValue();
-            if (activtyTypeValue == null) {
-                //Clear and lock all dependent fields
-                form.getAttribute("ts_riskthreshold").setValue(null);
-                form.getControl("ts_riskthreshold").setDisabled(true);
+            var activityypeId;
+            if (activtyTypeValue != null) {
+                activityypeId = activtyTypeValue[0].id;
+                Xrm.WebApi.retrieveRecord("msdyn_incidenttype", activityypeId, "?$select=msdyn_name,_ts_riskscore_value&$expand=ts_RiskScore($select=ts_englishname,ts_frenchname,ts_recurrencefrequenciesid)")
+                    .then(function success(result) {
+                    if (result != null) {
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = result.ts_RiskScore.ts_recurrencefrequenciesid;
+                        lookup[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? result.ts_RiskScore.ts_frenchname : result.ts_RiskScore.ts_englishname;
+                        lookup[0].entityType = 'ts_riskcategory';
+                        form.getAttribute('ts_riskthreshold').setValue(lookup);
+                    }
+                });
             }
         }
         SuggestedInspection.activityTypeOnChange = activityTypeOnChange;
@@ -197,12 +193,16 @@ var ROM;
             var entityName = "ovs_operationtype";
             //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
             var viewDisplayName = "Operation Types";
+            //Active Operation Types with Inspection Incident Types that belong to ISSO
             var fetchXml = [
                 "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>",
                 "  <entity name='ovs_operationtype'>",
                 "    <attribute name='createdon'/>",
                 "    <attribute name='ovs_name'/>",
                 "    <attribute name='ovs_operationtypeid'/>",
+                "    <filter>",
+                "      <condition attribute='statecode' operator='eq' value='0'/>",
+                "    </filter>",
                 "    <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit' alias='businessunit'>",
                 "      <filter>",
                 "        <condition attribute='name' operator='begins-with' value='Intermodal'/>",
@@ -212,6 +212,7 @@ var ROM;
                 "      <link-entity name='msdyn_incidenttype' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' alias='incidenttype'>",
                 "        <filter>",
                 "          <condition attribute='msdyn_defaultworkordertype' operator='eq' value='b1ee680a-7cf7-ea11-a815-000d3af3a7a7'/>",
+                "          <condition attribute='statecode' operator='eq' value='0'/>",
                 "        </filter>",
                 "      </link-entity>",
                 "    </link-entity>",
@@ -231,15 +232,20 @@ var ROM;
             var entityName = "account";
             //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredStakeholders");
             var viewDisplayName = "Stakeholders";
+            //All Active Stakeholders/Accounts that have an Operation with a matching Operation Type
             var fetchXml = [
                 "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>",
                 "  <entity name='account'>",
                 "    <attribute name='accountid'/>",
                 "    <attribute name='createdon'/>",
                 "    <attribute name='name'/>",
+                "    <filter>",
+                "      <condition attribute='statecode' operator='eq' value='0'/>",
+                "    </filter>",
                 "    <link-entity name='ovs_operation' from='ts_stakeholder' to='accountid' link-type='inner' alias='operation' intersect='true'>",
                 "      <filter>",
                 "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeId, "'/>",
+                "        <condition attribute='statecode' operator='eq' value='0'/>",
                 "      </filter>",
                 "    </link-entity>",
                 "  </entity>",
@@ -261,16 +267,21 @@ var ROM;
             var entityName = "msdyn_functionallocation";
             //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredStakeholders");
             var viewDisplayName = "Sites";
+            //All Active Sites/FunctionalLocations that have an Operation with matching Stakeholder and Operation Type
             var fetchXml = [
                 "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>",
                 "  <entity name='msdyn_functionallocation'>",
                 "    <attribute name='createdon'/>",
                 "    <attribute name='msdyn_name'/>",
                 "    <attribute name='msdyn_functionallocationid'/>",
+                "    <filter>",
+                "      <condition attribute='statecode' operator='eq' value='0'/>",
+                "    </filter>",
                 "    <link-entity name='ovs_operation' from='ts_site' to='msdyn_functionallocationid' alias='operation'  intersect='true'>",
                 "      <filter>",
                 "        <condition attribute='ts_stakeholder' operator='eq' value='", stakeholderId, "'/>",
                 "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeId, "'/>",
+                "        <condition attribute='statecode' operator='eq' value='0'/>",
                 "      </filter>",
                 "    </link-entity>",
                 "  </entity>",
@@ -280,6 +291,33 @@ var ROM;
             form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
         function setActivityTypeFilteredView(form) {
+            var viewId = '{8982C38D-8BB4-4C95-BD05-493398666666}';
+            var entityName = "msdyn_incidenttype";
+            //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
+            var viewDisplayName = "Activity Types";
+            //All Active Inspection ActivityTypes/IncidentTypes related to the selected Operation Type  
+            var fetchXml = [
+                "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>",
+                "  <entity name='msdyn_incidenttype'>",
+                "    <attribute name='msdyn_incidenttypeid'/>",
+                "    <attribute name='msdyn_name'/>",
+                "    <filter>",
+                "      <condition attribute='msdyn_defaultworkordertype' operator='eq' value='b1ee680a-7cf7-ea11-a815-000d3af3a7a7'/>",
+                "      <condition attribute='statecode' operator='eq' value='0'/>",
+                "    </filter>",
+                "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' intersect='true'>",
+                "      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
+                "        <filter>",
+                "          <condition attribute='ovs_operationtypeid' operator='eq' value='d883b39a-c751-eb11-a812-000d3af3ac0d'/>",
+                "          <condition attribute='statecode' operator='eq' value='0'/>",
+                "        </filter>",
+                "      </link-entity>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>"
+            ].join("");
+            var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
+            form.getControl("ts_activitytype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
     })(SuggestedInspection = ROM.SuggestedInspection || (ROM.SuggestedInspection = {}));
 })(ROM || (ROM = {}));
