@@ -151,6 +151,8 @@
                         form.getAttribute('ts_riskthreshold').setValue(lookup);
                     }
                 });
+        } else {
+            form.getAttribute('ts_riskthreshold').setValue(null);
         }
     }
 

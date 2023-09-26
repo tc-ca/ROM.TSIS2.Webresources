@@ -186,6 +186,9 @@ var ROM;
                     }
                 });
             }
+            else {
+                form.getAttribute('ts_riskthreshold').setValue(null);
+            }
         }
         SuggestedInspection.activityTypeOnChange = activityTypeOnChange;
         function setOperationTypeFilteredView(form) {
