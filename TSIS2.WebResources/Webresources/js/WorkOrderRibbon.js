@@ -1,4 +1,4 @@
-var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+var workorderRibbon_lang = parent.Xrm.Utility.getGlobalContext().userSettings.workorderRibbon_languageId;
 
 var workOrderLocalized = "Work Order";
 var workOrderDetailsLocalized = "Work Order Details";
@@ -17,7 +17,7 @@ var inspectorCommentLocalized = "Inspector Comment";
 var workOrderCommitMessageText = "The selected Work Order(s) have been set to a Committed State";
 var workOrderCommitMessageTitle = "Work Orders Committed";
 
-if (lang == 1036) {
+if (workorderRibbon_lang == 1036) {
     workOrderLocalized = "Ordre de travail";
     workOrderDetailsLocalized = "Détails de l'ordre de travail";
     WorkOrderServiceTaskDetailsLocalized = "Détails de la tâche du service d'ordre de travail";
@@ -327,7 +327,7 @@ function exportWorkOrder(primaryControl) {
                                     var accountableOperation = finding["_ts_operationid_value@OData.Community.Display.V1.FormattedValue"] || "";
                                     var accountableStakeholder = finding["_ts_accountid_value@OData.Community.Display.V1.FormattedValue"] || "";
                                     var findingComments = finding.ovs_findingcomments || "";
-                                    if (lang == 1036 && finding.ts_findingprovisiontextfr != undefined) provisiontText = finding.ts_findingprovisiontextfr;
+                                    if (workorderRibbon_lang == 1036 && finding.ts_findingprovisiontextfr != undefined) provisiontText = finding.ts_findingprovisiontextfr;
                                     findingsData.innerHTML += "<strong>" + provisionReferenceLocalized + ":</strong> " + provisionReference + "<br>";
                                     findingsData.innerHTML += provisiontText + "<br>";
                                     findingsData.innerHTML += "<strong>" + findingTypeLocalized + ":</strong> " + findingType + "<br>";
@@ -617,7 +617,7 @@ function bulkAddAdditionalInspectors(formContext, selectedWorkOrdersGuids) {
         position: 1,
         width: { value: 450, unit: "px" },
         height: { value: 550, unit: "px" },
-        title: (lang == 1036) ? "Ajouter des inspecteurs supplémentaires" : "Add Additional Inspectors"
+        title: (workorderRibbon_lang == 1036) ? "Ajouter des inspecteurs supplémentaires" : "Add Additional Inspectors"
     };
     Xrm.Navigation.navigateTo(pageInput, navigationOptions)
         .then(
@@ -645,7 +645,7 @@ function copyServiceTask(formContext) {
         position: 1,
         width: { value: 450, unit: "px" },
         height: { value: 550, unit: "px" },
-        title: (lang == 1036) ? "Copier la tâche de service" : "Copy Service Task"
+        title: (workorderRibbon_lang == 1036) ? "Copier la tâche de service" : "Copy Service Task"
     };
     Xrm.Navigation.navigateTo(pageInput, navigationOptions)
         .then(
