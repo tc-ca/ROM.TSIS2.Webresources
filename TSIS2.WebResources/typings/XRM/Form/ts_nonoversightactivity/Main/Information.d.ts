@@ -18,7 +18,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_activitytime"): Xrm.NumberControl;
       get(name: "ts_category"): Xrm.LookupControl<"ts_timetrackingcategory">;
       get(name: "ts_dateofactivity"): Xrm.DateControl;
@@ -50,7 +50,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
     getAttribute(attributeName: "ts_program"): Xrm.LookupAttribute<"businessunit">;
     getAttribute(attributeName: "ts_quarter"): Xrm.OptionSetAttribute<ts_quarter>;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_activitytime"): Xrm.NumberControl;
     getControl(controlName: "ts_category"): Xrm.LookupControl<"ts_timetrackingcategory">;
     getControl(controlName: "ts_dateofactivity"): Xrm.DateControl;
