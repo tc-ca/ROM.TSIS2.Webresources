@@ -290,6 +290,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_postalcode"): Xrm.StringControl;
       get(name: "msdyn_primaryincidentdescription"): Xrm.StringControl;
       get(name: "msdyn_primaryincidentestimatedduration"): Xrm.NumberControl;
+      get(name: "msdyn_primaryincidentestimatedduration1"): Xrm.NumberControl;
       get(name: "msdyn_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "msdyn_priority"): Xrm.LookupControl<"msdyn_priority">;
       get(name: "msdyn_reportedbycontact"): Xrm.LookupControl<"contact">;
@@ -362,6 +363,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
       get(name: "ts_traveltime"): Xrm.NumberControl;
       get(name: "ts_trip"): Xrm.LookupControl<"ts_trip">;
+      get(name: "ts_trip1"): Xrm.LookupControl<"ts_trip">;
       get(name: "ts_woreportinganddocumentation"): Xrm.NumberControl;
       get(name: "ts_workorderenddate"): Xrm.DateControl;
       get(name: "ts_workorderstartdate"): Xrm.DateControl;
@@ -567,6 +569,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_postalcode"): Xrm.StringControl;
     getControl(controlName: "msdyn_primaryincidentdescription"): Xrm.StringControl;
     getControl(controlName: "msdyn_primaryincidentestimatedduration"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_primaryincidentestimatedduration1"): Xrm.NumberControl;
     getControl(controlName: "msdyn_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "msdyn_priority"): Xrm.LookupControl<"msdyn_priority">;
     getControl(controlName: "msdyn_reportedbycontact"): Xrm.LookupControl<"contact">;
@@ -639,6 +642,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
     getControl(controlName: "ts_traveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_trip"): Xrm.LookupControl<"ts_trip">;
+    getControl(controlName: "ts_trip1"): Xrm.LookupControl<"ts_trip">;
     getControl(controlName: "ts_woreportinganddocumentation"): Xrm.NumberControl;
     getControl(controlName: "ts_workorderenddate"): Xrm.DateControl;
     getControl(controlName: "ts_workorderstartdate"): Xrm.DateControl;

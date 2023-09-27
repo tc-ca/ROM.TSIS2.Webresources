@@ -39,6 +39,7 @@
                 "  <entity name='msdyn_incidenttype'>",
                 "    <attribute name='msdyn_incidenttypeid'/>",
                 "    <attribute name='msdyn_name'/>",
+                "    <attribute name='msdyn_estimatedduration'/>",
                 "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' intersect='true'>",
                 "      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
                 "        <link-entity name='ovs_operation' from='ovs_operationtypeid' to='ovs_operationtypeid' alias='operation'>",
@@ -49,9 +50,11 @@
                 "          <attribute name='ts_risk'/>",
                 "          <attribute name='ts_operationnameenglish'/>",
                 "          <attribute name='ts_operationnamefrench'/>",
-                "          <filter>",
-                "            <condition attribute='owningbusinessunit' operator='eq' value='4ff4b827-bead-eb11-8236-000d3ae8b866' uitype='businessunit'/>",
-                "          </filter>",
+                "          <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit' alias='businessunit'>",
+                "             <filter>",
+                "                 <condition attribute='name' operator='begins-with' value='Intermodal'/>",
+                "             </filter>",
+                "          </link-entity>",
                 "          <filter type='and'>",
                 "            <condition attribute='ts_stakeholder' operator='not-null'/>",
                 "            <condition attribute='ovs_operationtypeid' operator='not-null'/>",
@@ -80,6 +83,7 @@
                     "ts_activitytype@odata.bind": "/msdyn_incidenttypes(" + activity.msdyn_incidenttypeid + ")",
                     "ts_operation@odata.bind": "/ovs_operations(" + activity["operation.ovs_operationid"] + ")",
                     "ts_riskthreshold@odata.bind": "/ts_riskcategories(" + activity["operation.ts_risk"] + ")",
+                    "ts_estimatedduration": activity.msdyn_estimatedduration / 60,
                     "ts_q1": 1,
                     "ts_q2": 0,
                     "ts_q3": 0,
@@ -151,5 +155,28 @@
                 }
             });
         }
+    }
+
+    function TDGComprehensiveSuggestedInspections(formContext) {
+
+        //Retrieve all Operations of Operation Type "Railway Carrier", "Railway Loader", and "HQ - TDG"
+
+        //Foreach Operation
+
+            // If Security Plan Type equals Corporate Security Plan
+
+                // If Operation Type does not equal HQ - TDG
+
+                    // If Operation ts_typeofdangerousgoods equals null or Schedule 1 DG
+
+                        // If Last SPR Inspection was over 4 years ago, add SPR to activities list
+
+                        // If Last Comprehensive inspection was over 4 years ago, add comprehensive to activities list
+
+            // Elif Security Plan Type equals Site Security Plan
+
+                // If Operation ts_typeofdangerousgoods equals null or Schedule 1 DG
+
+                        // If Last Inspection was over 4 years ago, add SPR to activities list
     }
 }

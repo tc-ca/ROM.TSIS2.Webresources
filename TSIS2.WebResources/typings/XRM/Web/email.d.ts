@@ -12,6 +12,7 @@ interface Email_Base extends WebEntity {
   compressed?: boolean | null;
   conversationindex?: string | null;
   conversationtrackingid?: string | null;
+  correlatedsubjectchanged?: boolean | null;
   correlationmethod?: email_correlationmethod | null;
   createdon?: Date | null;
   delayedemailsendtime?: Date | null;
@@ -244,6 +245,7 @@ interface Email_Select {
   conversationindex: WebAttribute<Email_Select, { conversationindex: string | null }, {  }>;
   conversationtrackingid: WebAttribute<Email_Select, { conversationtrackingid: string | null }, {  }>;
   correlatedactivityid_guid: WebAttribute<Email_Select, { correlatedactivityid_guid: string | null }, { correlatedactivityid_formatted?: string }>;
+  correlatedsubjectchanged: WebAttribute<Email_Select, { correlatedsubjectchanged: boolean | null }, {  }>;
   correlationmethod: WebAttribute<Email_Select, { correlationmethod: email_correlationmethod | null }, { correlationmethod_formatted?: string }>;
   createdby_guid: WebAttribute<Email_Select, { createdby_guid: string | null }, { createdby_formatted?: string }>;
   createdon: WebAttribute<Email_Select, { createdon: Date | null }, { createdon_formatted?: string }>;
@@ -299,6 +301,7 @@ interface Email_Select {
   readreceiptrequested: WebAttribute<Email_Select, { readreceiptrequested: boolean | null }, {  }>;
   receivingmailboxid_guid: WebAttribute<Email_Select, { receivingmailboxid_guid: string | null }, { receivingmailboxid_formatted?: string }>;
   regardingobjectid_guid: WebAttribute<Email_Select, { regardingobjectid_guid: string | null }, { regardingobjectid_formatted?: string }>;
+  related_guid: WebAttribute<Email_Select, { related_guid: string | null }, { related_formatted?: string }>;
   reminderactioncardid: WebAttribute<Email_Select, { reminderactioncardid: string | null }, {  }>;
   replycount: WebAttribute<Email_Select, { replycount: number | null }, {  }>;
   reservedforinternaluse: WebAttribute<Email_Select, { reservedforinternaluse: string | null }, {  }>;
@@ -347,6 +350,7 @@ interface Email_Filter {
   conversationindex: string;
   conversationtrackingid: XQW.Guid;
   correlatedactivityid_guid: XQW.Guid;
+  correlatedsubjectchanged: boolean;
   correlationmethod: email_correlationmethod;
   createdby_guid: XQW.Guid;
   createdon: Date;
@@ -402,6 +406,7 @@ interface Email_Filter {
   readreceiptrequested: boolean;
   receivingmailboxid_guid: XQW.Guid;
   regardingobjectid_guid: XQW.Guid;
+  related_guid: XQW.Guid;
   reminderactioncardid: XQW.Guid;
   replycount: number;
   reservedforinternaluse: string;
@@ -499,6 +504,7 @@ interface Email_FormattedResult {
   prioritycode_formatted?: string;
   receivingmailboxid_formatted?: string;
   regardingobjectid_formatted?: string;
+  related_formatted?: string;
   scheduledend_formatted?: string;
   scheduledstart_formatted?: string;
   sendermailboxid_formatted?: string;
@@ -533,6 +539,7 @@ interface Email_Result extends Email_Base, Email_Relationships {
   parentactivityid_guid: string | null;
   receivingmailboxid_guid: string | null;
   regardingobjectid_guid: string | null;
+  related_guid: string | null;
   sendermailboxid_guid: string | null;
   sendersaccount_guid: string | null;
   serviceid_guid: string | null;

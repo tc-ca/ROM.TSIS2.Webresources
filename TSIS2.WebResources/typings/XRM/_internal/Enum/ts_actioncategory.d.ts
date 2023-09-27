@@ -5,4 +5,5 @@ declare const enum ts_actioncategory {
   ImmediateHarmReductionMeasure = 741130003,
   LegalAction = 741130004,
   TATCAction = 741130005,
+  REUEnforcementAction = 741130006,
 }
