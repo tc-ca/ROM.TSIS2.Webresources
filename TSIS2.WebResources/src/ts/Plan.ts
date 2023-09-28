@@ -52,50 +52,7 @@
                 return result.entities;
             });
             if (planData == null) {
-                console.log("Failed to current Plan");
-                return;
-            }
-
-            let fiscalQuartersfetchXml = [
-                "<fetch>",
-                "  <entity name='tc_tcfiscalquarter'>",
-                "    <attribute name='tc_fiscalquarternum'/>",
-                "    <attribute name='tc_quarterend'/>",
-                "    <attribute name='tc_quarterstart'/>",
-                "    <link-entity name='tc_tcfiscalyear' from='tc_tcfiscalyearid' to='tc_tcfiscalyearid' alias='quarter'>",
-                "      <filter>",
-                "        <condition attribute='tc_tcfiscalyearid' operator='eq' value='", planData.tc_tcfiscalyearid, "' uiname='2024-2025' uitype='tc_tcfiscalyear'/>",
-                "      </filter>",
-                "    </link-entity>",
-                "  </entity>",
-                "</fetch>"
-            ].join("");
-            fiscalQuartersfetchXml = "?fetchXml=" + encodeURIComponent(fiscalQuartersfetchXml);
-            let fiscalQuarters = await Xrm.WebApi.retrieveMultipleRecords("ts_plan", planfetchXml).then(function success(result) {
-                return result.entities;
-            });
-            if (fiscalQuarters == null) {
-                console.log("Failed to retrieve fiscal quarters");
-            }
-
-            let q1, q2, q3, q4;
-            for (let fiscalQuarter of fiscalQuarters) {
-                if (fiscalQuarter.tc_fiscalquarternum == 1) {
-                    q1 = fiscalQuarter;
-                }
-                else if (fiscalQuarter.tc_fiscalquarternum == 2) {
-                    q2 = fiscalQuarter;
-                }
-                else if (fiscalQuarter.tc_fiscalquarternum == 3) {
-                    q3 = fiscalQuarter;
-                }
-                else if (fiscalQuarter.tc_fiscalquarternum == 4) {
-                    q4 = fiscalQuarter;
-                }
-            }
-
-            if (q1 == null || q2 == null || q3 == null || q4 == null) {
-                console.log("Error setting Quarters");
+                console.log("Failed to load current Plan");
                 return;
             }
 
@@ -140,33 +97,28 @@
                     const lastRiskInspection: Date = railOperation.ts_dateoflastriskbasedinspection;
                     const riskInterval = railOperation["risk.ts_interval"]; //Cycle Length Years
                     const riskFrequency = railOperation["risk.ts_frequency"]; //Inspections per Cycle
-                    let nextInspectionDate: Date = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
                     let inspectionIsDue = false;
+                    let inspectionCount = 0;
 
-                    let q1Count = 0;
-                    let q2Count = 0;
-                    let q3Count = 0;
-                    let q4Count = 0;
-
-                    for (let i = 1; i <= riskFrequency; i++) {
-                        //If Next Inspection occurs before fiscal year ends, an inspection is due/overdue
-                        if (nextInspectionDate <= plannedFiscalEndDate) {
-                            inspectionIsDue = true;
-                            //Determine which quarter the inspection falls in
-                            if (nextInspectionDate <= q1.tc_quarterend) {
-                                q1Count++;
-                            }
-                            else if (q2.tc_quarterstart <= nextInspectionDate && nextInspectionDate <= q2.tc_quarterend) {
-                                q2Count++;
-                            }
-                            else if (q3.tc_quarterstart <= nextInspectionDate && nextInspectionDate <= q3.tc_quarterend) {
-                                q3Count++;
-                            }
-                            else if (q4.tc_quarterstart <= nextInspectionDate && nextInspectionDate <= q4.tc_quarterend) {
-                                q4Count++;
-                            }
+                    //Handle Last Risk Inspection Date bieng Null. Suggest an inspection this fiscal year. Or multiple if multiple happen a year.
+                    if (lastRiskInspection == null) {
+                        inspectionIsDue = true;
+                        if (riskInterval > 1) {
+                            inspectionCount = 1;
+                        } else {
+                            inspectionCount = riskFrequency;
                         }
-                        nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+                    } else { // There is a previous date we need to start from
+                        let nextInspectionDate: Date = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+
+                        for (let i = 1; i <= riskFrequency; i++) {
+                            //If Next Inspection occurs before fiscal year ends, an inspection is due/overdue
+                            if (nextInspectionDate <= plannedFiscalEndDate) {
+                                inspectionCount++;
+                                inspectionIsDue = true;
+                            }
+                            nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+                        }
                     }
 
                     if (inspectionIsDue) {
@@ -179,16 +131,16 @@
                             "ts_operation@odata.bind": "/ovs_operations(" + railOperation["operation.ovs_operationid"] + ")",
                             "ts_riskthreshold@odata.bind": "/ts_riskcategories(" + railOperation["operation.ts_risk"] + ")",
                             "ts_estimatedduration": railOperation.msdyn_estimatedduration / 60,
-                            "ts_q1": q1Count,
-                            "ts_q2": q2Count,
-                            "ts_q3": q3Count,
-                            "ts_q4": q4Count,
+                            "ts_q1": inspectionCount,
+                            "ts_q2": 0,
+                            "ts_q3": 0,
+                            "ts_q4": 0,
                         }
 
                         if (railOperation.ts_typeofdangerousgoods == ts_typeofdangerousgoods.Schedule1DangerousGoods || railOperation.ts_typeofdangerousgoods == null) {
                             if (railOperation.ts_visualsecurityinspection == ts_visualsecurityinspection.Yes) {
                                 //Both TDG and VSI are suggested
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(34c59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(
                                     function success(result) {
                                     },
@@ -197,7 +149,7 @@
                                     }
                                 );
 
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(2bc59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection (TDG)
                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(
                                     function success(result) {
                                     },
@@ -207,7 +159,7 @@
                                 );
                             } else {
                                 //TDG Suggested
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(2bc59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection (TDG)
                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(
                                     function success(result) {
                                     },
@@ -220,7 +172,7 @@
                         else if (railOperation.ts_typeofdangerousgoods == ts_typeofdangerousgoods.NonSchedule1DangerousGoods) {
                             if (railOperation.ts_visualsecurityinspection == ts_visualsecurityinspection.Yes) {
                                 //Both Non-Schedule 1 and VSI are suggested
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(34c59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(
                                     function success(result) {
                                     },
@@ -229,7 +181,7 @@
                                     }
                                 );
 
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(3ac59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(
                                     function success(result) {
                                     },
@@ -239,7 +191,7 @@
                                 );
                             } else {
                                 //Non-Schedule 1
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(3ac59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(
                                     function success(result) {
                                     },

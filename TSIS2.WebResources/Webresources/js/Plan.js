@@ -48,9 +48,9 @@ var ROM;
         Plan.onLoad = onLoad;
         function generateSuggestedInspections(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, planfetchXml, planData, fiscalQuartersfetchXml, fiscalQuarters, q1, q2, q3, q4, _i, fiscalQuarters_1, fiscalQuarter, teamRegionId, plannedFiscalStartDate, plannedFiscalEndDate, railOperationsFetchXml, railOperations, _a, railOperations_1, railOperation, lastRiskInspection, riskInterval, riskFrequency, nextInspectionDate, inspectionIsDue, q1Count, q2Count, q3Count, q4Count, i, data, inspectorHoursfetchXml, teamInspectorHours, _b, teamInspectorHours_1, inspectorHours, data;
-                return __generator(this, function (_c) {
-                    switch (_c.label) {
+                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, planfetchXml, planData, teamRegionId, plannedFiscalStartDate, plannedFiscalEndDate, railOperationsFetchXml, railOperations, _i, railOperations_1, railOperation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
                         case 0:
                             formContext = eContext.getFormContext();
                             Xrm.Utility.showProgressIndicator("Please wait while the Suggested Inspection records are being created.");
@@ -66,7 +66,7 @@ var ROM;
                                 planFiscalYearName = planFiscalYearValue[0].name;
                                 planFiscalYearId = planFiscalYearValue[0].id.slice(1, -1);
                             }
-                            if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 5];
+                            if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 4];
                             formContext.getAttribute("ts_name").setValue(teamName + " " + planFiscalYearName);
                             planfetchXml = [
                                 "<fetch>",
@@ -87,52 +87,9 @@ var ROM;
                                     return result.entities;
                                 })];
                         case 1:
-                            planData = _c.sent();
+                            planData = _b.sent();
                             if (planData == null) {
-                                console.log("Failed to current Plan");
-                                return [2 /*return*/];
-                            }
-                            fiscalQuartersfetchXml = [
-                                "<fetch>",
-                                "  <entity name='tc_tcfiscalquarter'>",
-                                "    <attribute name='tc_fiscalquarternum'/>",
-                                "    <attribute name='tc_quarterend'/>",
-                                "    <attribute name='tc_quarterstart'/>",
-                                "    <link-entity name='tc_tcfiscalyear' from='tc_tcfiscalyearid' to='tc_tcfiscalyearid' alias='quarter'>",
-                                "      <filter>",
-                                "        <condition attribute='tc_tcfiscalyearid' operator='eq' value='", planData.tc_tcfiscalyearid, "' uiname='2024-2025' uitype='tc_tcfiscalyear'/>",
-                                "      </filter>",
-                                "    </link-entity>",
-                                "  </entity>",
-                                "</fetch>"
-                            ].join("");
-                            fiscalQuartersfetchXml = "?fetchXml=" + encodeURIComponent(fiscalQuartersfetchXml);
-                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_plan", planfetchXml).then(function success(result) {
-                                    return result.entities;
-                                })];
-                        case 2:
-                            fiscalQuarters = _c.sent();
-                            if (fiscalQuarters == null) {
-                                console.log("Failed to retrieve fiscal quarters");
-                            }
-                            q1 = void 0, q2 = void 0, q3 = void 0, q4 = void 0;
-                            for (_i = 0, fiscalQuarters_1 = fiscalQuarters; _i < fiscalQuarters_1.length; _i++) {
-                                fiscalQuarter = fiscalQuarters_1[_i];
-                                if (fiscalQuarter.tc_fiscalquarternum == 1) {
-                                    q1 = fiscalQuarter;
-                                }
-                                else if (fiscalQuarter.tc_fiscalquarternum == 2) {
-                                    q2 = fiscalQuarter;
-                                }
-                                else if (fiscalQuarter.tc_fiscalquarternum == 3) {
-                                    q3 = fiscalQuarter;
-                                }
-                                else if (fiscalQuarter.tc_fiscalquarternum == 4) {
-                                    q4 = fiscalQuarter;
-                                }
-                            }
-                            if (q1 == null || q2 == null || q3 == null || q4 == null) {
-                                console.log("Error setting Quarters");
+                                console.log("Failed to load current Plan");
                                 return [2 /*return*/];
                             }
                             teamRegionId = planData["team.ts_territory"];
@@ -165,41 +122,38 @@ var ROM;
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("msdyn_incidenttype", railOperationsFetchXml).then(function success(result) {
                                     return result.entities;
                                 })];
-                        case 3:
-                            railOperations = _c.sent();
+                        case 2:
+                            railOperations = _b.sent();
                             //Create a suggested inspection for each operation
-                            for (_a = 0, railOperations_1 = railOperations; _a < railOperations_1.length; _a++) {
-                                railOperation = railOperations_1[_a];
+                            for (_i = 0, railOperations_1 = railOperations; _i < railOperations_1.length; _i++) {
+                                railOperation = railOperations_1[_i];
                                 // If ts_typeofdangerousgoods does not equal No DG
                                 if (railOperation.ts_typeofdangerousgoods != 717750000 /* NoDangerousGoods */) {
                                     lastRiskInspection = railOperation.ts_dateoflastriskbasedinspection;
                                     riskInterval = railOperation["risk.ts_interval"];
                                     riskFrequency = railOperation["risk.ts_frequency"];
-                                    nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
                                     inspectionIsDue = false;
-                                    q1Count = 0;
-                                    q2Count = 0;
-                                    q3Count = 0;
-                                    q4Count = 0;
-                                    for (i = 1; i <= riskFrequency; i++) {
-                                        //If Next Inspection occurs before fiscal year ends, an inspection is due/overdue
-                                        if (nextInspectionDate <= plannedFiscalEndDate) {
-                                            inspectionIsDue = true;
-                                            //Determine which quarter the inspection falls in
-                                            if (nextInspectionDate <= q1.tc_quarterend) {
-                                                q1Count++;
-                                            }
-                                            else if (q2.tc_quarterstart <= nextInspectionDate && nextInspectionDate <= q2.tc_quarterend) {
-                                                q2Count++;
-                                            }
-                                            else if (q3.tc_quarterstart <= nextInspectionDate && nextInspectionDate <= q3.tc_quarterend) {
-                                                q3Count++;
-                                            }
-                                            else if (q4.tc_quarterstart <= nextInspectionDate && nextInspectionDate <= q4.tc_quarterend) {
-                                                q4Count++;
-                                            }
+                                    inspectionCount = 0;
+                                    //Handle Last Risk Inspection Date bieng Null. Suggest an inspection this fiscal year. Or multiple if multiple happen a year.
+                                    if (lastRiskInspection == null) {
+                                        inspectionIsDue = true;
+                                        if (riskInterval > 1) {
+                                            inspectionCount = 1;
                                         }
+                                        else {
+                                            inspectionCount = riskFrequency;
+                                        }
+                                    }
+                                    else { // There is a previous date we need to start from
                                         nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+                                        for (i = 1; i <= riskFrequency; i++) {
+                                            //If Next Inspection occurs before fiscal year ends, an inspection is due/overdue
+                                            if (nextInspectionDate <= plannedFiscalEndDate) {
+                                                inspectionCount++;
+                                                inspectionIsDue = true;
+                                            }
+                                            nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+                                        }
                                     }
                                     if (inspectionIsDue) {
                                         data = {
@@ -211,20 +165,20 @@ var ROM;
                                             "ts_operation@odata.bind": "/ovs_operations(" + railOperation["operation.ovs_operationid"] + ")",
                                             "ts_riskthreshold@odata.bind": "/ts_riskcategories(" + railOperation["operation.ts_risk"] + ")",
                                             "ts_estimatedduration": railOperation.msdyn_estimatedduration / 60,
-                                            "ts_q1": q1Count,
-                                            "ts_q2": q2Count,
-                                            "ts_q3": q3Count,
-                                            "ts_q4": q4Count,
+                                            "ts_q1": inspectionCount,
+                                            "ts_q2": 0,
+                                            "ts_q3": 0,
+                                            "ts_q4": 0,
                                         };
                                         if (railOperation.ts_typeofdangerousgoods == 717750001 /* Schedule1DangerousGoods */ || railOperation.ts_typeofdangerousgoods == null) {
                                             if (railOperation.ts_visualsecurityinspection == 717750001 /* Yes */) {
                                                 //Both TDG and VSI are suggested
-                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(34c59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
                                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
                                                 }, function (error) {
                                                     console.log(error.message);
                                                 });
-                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(2bc59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection (TDG)
                                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
                                                 }, function (error) {
                                                     console.log(error.message);
@@ -232,7 +186,7 @@ var ROM;
                                             }
                                             else {
                                                 //TDG Suggested
-                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(2bc59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection (TDG)
                                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
                                                 }, function (error) {
                                                     console.log(error.message);
@@ -242,12 +196,12 @@ var ROM;
                                         else if (railOperation.ts_typeofdangerousgoods == 717750002 /* NonSchedule1DangerousGoods */) {
                                             if (railOperation.ts_visualsecurityinspection == 717750001 /* Yes */) {
                                                 //Both Non-Schedule 1 and VSI are suggested
-                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(34c59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
                                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
                                                 }, function (error) {
                                                     console.log(error.message);
                                                 });
-                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(3ac59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
                                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
                                                 }, function (error) {
                                                     console.log(error.message);
@@ -255,7 +209,7 @@ var ROM;
                                             }
                                             else {
                                                 //Non-Schedule 1
-                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(3ac59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
                                                 Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
                                                 }, function (error) {
                                                     console.log(error.message);
@@ -288,12 +242,12 @@ var ROM;
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_inspectionhours", inspectorHoursfetchXml).then(function success(result) {
                                     return result.entities;
                                 })];
-                        case 4:
-                            teamInspectorHours = _c.sent();
+                        case 3:
+                            teamInspectorHours = _b.sent();
                             if (teamInspectorHours != null && teamInspectorHours.length > 0) {
                                 //For each inspector, create an Plan Inspector Hours record
-                                for (_b = 0, teamInspectorHours_1 = teamInspectorHours; _b < teamInspectorHours_1.length; _b++) {
-                                    inspectorHours = teamInspectorHours_1[_b];
+                                for (_a = 0, teamInspectorHours_1 = teamInspectorHours; _a < teamInspectorHours_1.length; _a++) {
+                                    inspectorHours = teamInspectorHours_1[_a];
                                     data = {
                                         "ts_name": inspectorHours["user.fullname"] + " | " + teamName + " | " + planFiscalYearName,
                                         "ts_inspectorhours@odata.bind": "/ts_inspectionhourses(" + inspectorHours.ts_inspectionhoursid + ")",
@@ -306,8 +260,8 @@ var ROM;
                                     Xrm.WebApi.createRecord("ts_planinspectorhours", data);
                                 }
                             }
-                            _c.label = 5;
-                        case 5:
+                            _b.label = 4;
+                        case 4:
                             formContext.data.entity.save();
                             Xrm.Utility.closeProgressIndicator();
                             return [2 /*return*/];
