@@ -10,7 +10,7 @@
         const formContext: any = eContext.getFormContext();
         Xrm.Utility.showProgressIndicator("Please wait while the Suggested Inspection records are being created.");
         formContext.data.entity.removeOnPostSave(generateSuggestedInspections);
-        const planId = formContext.data.entity.getId().slice(1, -1);
+        let planId = formContext.data.entity.getId();
         let teamValue = formContext.getAttribute("ts_team").getValue();
         let teamId;
         let teamName;
@@ -36,6 +36,9 @@
             let planfetchXml = [
                 "<fetch>",
                 "  <entity name='ts_plan'>",
+                "    <filter>",
+                "      <condition attribute='ts_planid' operator='eq' value='", planId, "' uitype='ts_plan'/>",
+                "    </filter>",
                 "    <link-entity name='tc_tcfiscalyear' from='tc_tcfiscalyearid' to='ts_fiscalyear' alias='fiscalyear'>",
                 "      <attribute name='tc_fiscalend'/>",
                 "      <attribute name='tc_fiscalstart'/>",
@@ -49,7 +52,7 @@
             ].join("");
             planfetchXml = "?fetchXml=" + encodeURIComponent(planfetchXml);
             let planData = await Xrm.WebApi.retrieveMultipleRecords("ts_plan", planfetchXml).then(function success(result) {
-                return result.entities;
+                return result.entities[0];
             });
             if (planData == null) {
                 console.log("Failed to load current Plan");
@@ -67,6 +70,10 @@
                 "    <attribute name='ts_typeofdangerousgoods'/>",
                 "    <attribute name='ovs_name'/>",
                 "    <attribute name='ovs_operationid'/>",
+                "    <attribute name='ovs_operationtypeid'/>",
+                "    <attribute name='ts_risk'/>",
+                "    <attribute name='ts_site'/>",
+                "    <attribute name='ts_stakeholder'/>",
                 "    <filter type='or'>",
                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='d883b39a-c751-eb11-a812-000d3af3ac0d' uiname='Railway Carrier' uitype='ovs_operationtype'/>",
                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='da56fea1-c751-eb11-a812-000d3af3ac0d' uiname='Railway Loader' uitype='ovs_operationtype'/>",
@@ -84,9 +91,10 @@
                 "</fetch>"
             ].join("");
             railOperationsFetchXml = "?fetchXml=" + encodeURIComponent(railOperationsFetchXml);
-            let railOperations = await Xrm.WebApi.retrieveMultipleRecords("msdyn_incidenttype", railOperationsFetchXml).then(function success(result) {
+            let railOperations = await Xrm.WebApi.retrieveMultipleRecords("ovs_operation", railOperationsFetchXml).then(function success(result) {
                 return result.entities;
             });
+            planId = planId.slice(1, -1);
 
             //Create a suggested inspection for each operation
             for (let railOperation of railOperations) {
@@ -123,14 +131,14 @@
 
                     if (inspectionIsDue) {
                         let data = {
-                            "ts_name": `${railOperation["operation.ts_operationnameenglish"]} | ${railOperation.msdyn_name} | ${planFiscalYearName}`,
+                            //"ts_name": `${railOperation["operation.ts_operationnameenglish"]} | ${railOperation.msdyn_name} | ${planFiscalYearName}`,
                             "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
-                            "ts_stakeholder@odata.bind": "/accounts(" + railOperation["operation.ts_stakeholder"] + ")",
-                            "ts_operationtype@odata.bind": "/ovs_operationtypes(" + railOperation["operation.ovs_operationtypeid"] + ")",
-                            "ts_site@odata.bind": "/msdyn_functionallocations(" + railOperation["operation.ts_site"] + ")",
-                            "ts_operation@odata.bind": "/ovs_operations(" + railOperation["operation.ovs_operationid"] + ")",
-                            "ts_riskthreshold@odata.bind": "/ts_riskcategories(" + railOperation["operation.ts_risk"] + ")",
-                            "ts_estimatedduration": railOperation.msdyn_estimatedduration / 60,
+                            "ts_stakeholder@odata.bind": "/accounts(" + railOperation._ts_stakeholder_value + ")",
+                            "ts_operationtype@odata.bind": "/ovs_operationtypes(" + railOperation._ovs_operationtypeid_value + ")",
+                            "ts_site@odata.bind": "/msdyn_functionallocations(" + railOperation._ts_site_value + ")",
+                            "ts_operation@odata.bind": "/ovs_operations(" + railOperation.ovs_operationid + ")",
+                            "ts_riskthreshold@odata.bind": "/ts_riskcategories(" + railOperation._ts_risk_value + ")",
+                            //"ts_estimatedduration": railOperation.msdyn_estimatedduration / 60,
                             "ts_q1": inspectionCount,
                             "ts_q2": 0,
                             "ts_q3": 0,
