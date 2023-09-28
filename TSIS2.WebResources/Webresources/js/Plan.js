@@ -48,9 +48,9 @@ var ROM;
         Plan.onLoad = onLoad;
         function generateSuggestedInspections(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, issoActivitiesFetchXml, issoActivities, _i, issoActivities_1, activity, data, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
+                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, planfetchXml, planData, fiscalQuartersfetchXml, fiscalQuarters, q1, q2, q3, q4, _i, fiscalQuarters_1, fiscalQuarter, teamRegionId, plannedFiscalStartDate, plannedFiscalEndDate, railOperationsFetchXml, railOperations, _a, railOperations_1, railOperation, lastRiskInspection, riskInterval, riskFrequency, nextInspectionDate, inspectionIsDue, q1Count, q2Count, q3Count, q4Count, i, data, inspectorHoursfetchXml, teamInspectorHours, _b, teamInspectorHours_1, inspectorHours, data;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
                         case 0:
                             formContext = eContext.getFormContext();
                             Xrm.Utility.showProgressIndicator("Please wait while the Suggested Inspection records are being created.");
@@ -66,69 +66,204 @@ var ROM;
                                 planFiscalYearName = planFiscalYearValue[0].name;
                                 planFiscalYearId = planFiscalYearValue[0].id.slice(1, -1);
                             }
-                            if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 3];
+                            if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 5];
                             formContext.getAttribute("ts_name").setValue(teamName + " " + planFiscalYearName);
-                            issoActivitiesFetchXml = [
-                                "<fetch top='20'>",
-                                "  <entity name='msdyn_incidenttype'>",
-                                "    <attribute name='msdyn_incidenttypeid'/>",
-                                "    <attribute name='msdyn_name'/>",
-                                "    <attribute name='msdyn_estimatedduration'/>",
-                                "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' intersect='true'>",
-                                "      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
-                                "        <link-entity name='ovs_operation' from='ovs_operationtypeid' to='ovs_operationtypeid' alias='operation'>",
-                                "          <attribute name='ovs_operationtypeid'/>",
-                                "          <attribute name='ts_site'/>",
-                                "          <attribute name='ts_stakeholder'/>",
-                                "          <attribute name='ovs_operationid'/>",
-                                "          <attribute name='ts_risk'/>",
-                                "          <attribute name='ts_operationnameenglish'/>",
-                                "          <attribute name='ts_operationnamefrench'/>",
-                                "          <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit' alias='businessunit'>",
-                                "             <filter>",
-                                "                 <condition attribute='name' operator='begins-with' value='Intermodal'/>",
-                                "             </filter>",
-                                "          </link-entity>",
-                                "          <filter type='and'>",
-                                "            <condition attribute='ts_stakeholder' operator='not-null'/>",
-                                "            <condition attribute='ovs_operationtypeid' operator='not-null'/>",
-                                "            <condition attribute='ts_site' operator='not-null'/>",
-                                "            <condition attribute='ts_risk' operator='not-null'/>",
-                                "          </filter>",
-                                "        </link-entity>",
-                                "      </link-entity>",
+                            planfetchXml = [
+                                "<fetch>",
+                                "  <entity name='ts_plan'>",
+                                "    <link-entity name='tc_tcfiscalyear' from='tc_tcfiscalyearid' to='ts_fiscalyear' alias='fiscalyear'>",
+                                "      <attribute name='tc_fiscalend'/>",
+                                "      <attribute name='tc_fiscalstart'/>",
+                                "      <attribute name='tc_tcfiscalyearid'/>",
+                                "    </link-entity>",
+                                "    <link-entity name='team' from='teamid' to='ts_team' alias='team'>",
+                                "      <attribute name='ts_territory'/>",
                                 "    </link-entity>",
                                 "  </entity>",
                                 "</fetch>"
                             ].join("");
-                            issoActivitiesFetchXml = "?fetchXml=" + encodeURIComponent(issoActivitiesFetchXml);
-                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("msdyn_incidenttype", issoActivitiesFetchXml).then(function success(result) {
+                            planfetchXml = "?fetchXml=" + encodeURIComponent(planfetchXml);
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_plan", planfetchXml).then(function success(result) {
                                     return result.entities;
                                 })];
                         case 1:
-                            issoActivities = _b.sent();
+                            planData = _c.sent();
+                            if (planData == null) {
+                                console.log("Failed to current Plan");
+                                return [2 /*return*/];
+                            }
+                            fiscalQuartersfetchXml = [
+                                "<fetch>",
+                                "  <entity name='tc_tcfiscalquarter'>",
+                                "    <attribute name='tc_fiscalquarternum'/>",
+                                "    <attribute name='tc_quarterend'/>",
+                                "    <attribute name='tc_quarterstart'/>",
+                                "    <link-entity name='tc_tcfiscalyear' from='tc_tcfiscalyearid' to='tc_tcfiscalyearid' alias='quarter'>",
+                                "      <filter>",
+                                "        <condition attribute='tc_tcfiscalyearid' operator='eq' value='", planData.tc_tcfiscalyearid, "' uiname='2024-2025' uitype='tc_tcfiscalyear'/>",
+                                "      </filter>",
+                                "    </link-entity>",
+                                "  </entity>",
+                                "</fetch>"
+                            ].join("");
+                            fiscalQuartersfetchXml = "?fetchXml=" + encodeURIComponent(fiscalQuartersfetchXml);
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_plan", planfetchXml).then(function success(result) {
+                                    return result.entities;
+                                })];
+                        case 2:
+                            fiscalQuarters = _c.sent();
+                            if (fiscalQuarters == null) {
+                                console.log("Failed to retrieve fiscal quarters");
+                            }
+                            q1 = void 0, q2 = void 0, q3 = void 0, q4 = void 0;
+                            for (_i = 0, fiscalQuarters_1 = fiscalQuarters; _i < fiscalQuarters_1.length; _i++) {
+                                fiscalQuarter = fiscalQuarters_1[_i];
+                                if (fiscalQuarter.tc_fiscalquarternum == 1) {
+                                    q1 = fiscalQuarter;
+                                }
+                                else if (fiscalQuarter.tc_fiscalquarternum == 2) {
+                                    q2 = fiscalQuarter;
+                                }
+                                else if (fiscalQuarter.tc_fiscalquarternum == 3) {
+                                    q3 = fiscalQuarter;
+                                }
+                                else if (fiscalQuarter.tc_fiscalquarternum == 4) {
+                                    q4 = fiscalQuarter;
+                                }
+                            }
+                            if (q1 == null || q2 == null || q3 == null || q4 == null) {
+                                console.log("Error setting Quarters");
+                                return [2 /*return*/];
+                            }
+                            teamRegionId = planData["team.ts_territory"];
+                            plannedFiscalStartDate = planData["fiscalyear.tc_fiscalstart"];
+                            plannedFiscalEndDate = planData["fiscalyear.tc_fiscalend"];
+                            railOperationsFetchXml = [
+                                "<fetch>",
+                                "  <entity name='ovs_operation'>",
+                                "    <attribute name='ts_dateoflastriskbasedinspection'/>",
+                                "    <attribute name='ts_typeofdangerousgoods'/>",
+                                "    <attribute name='ovs_name'/>",
+                                "    <attribute name='ovs_operationid'/>",
+                                "    <filter type='or'>",
+                                "      <condition attribute='ovs_operationtypeid' operator='eq' value='d883b39a-c751-eb11-a812-000d3af3ac0d' uiname='Railway Carrier' uitype='ovs_operationtype'/>",
+                                "      <condition attribute='ovs_operationtypeid' operator='eq' value='da56fea1-c751-eb11-a812-000d3af3ac0d' uiname='Railway Loader' uitype='ovs_operationtype'/>",
+                                "    </filter>",
+                                "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
+                                "      <filter>",
+                                "        <condition attribute='ts_region' operator='eq' value='", teamRegionId, "' uiname='Pacific Region' uitype='territory'/>",
+                                "      </filter>",
+                                "    </link-entity>",
+                                "    <link-entity name='ts_riskcategory' from='ts_riskcategoryid' to='ts_risk' alias='risk'>",
+                                "      <attribute name='ts_frequency'/>",
+                                "      <attribute name='ts_interval'/>",
+                                "    </link-entity>",
+                                "  </entity>",
+                                "</fetch>"
+                            ].join("");
+                            railOperationsFetchXml = "?fetchXml=" + encodeURIComponent(railOperationsFetchXml);
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("msdyn_incidenttype", railOperationsFetchXml).then(function success(result) {
+                                    return result.entities;
+                                })];
+                        case 3:
+                            railOperations = _c.sent();
                             //Create a suggested inspection for each operation
-                            for (_i = 0, issoActivities_1 = issoActivities; _i < issoActivities_1.length; _i++) {
-                                activity = issoActivities_1[_i];
-                                data = {
-                                    "ts_name": activity["operation.ts_operationnameenglish"] + " | " + activity.msdyn_name + " | " + planFiscalYearName,
-                                    "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
-                                    "ts_stakeholder@odata.bind": "/accounts(" + activity["operation.ts_stakeholder"] + ")",
-                                    "ts_operationtype@odata.bind": "/ovs_operationtypes(" + activity["operation.ovs_operationtypeid"] + ")",
-                                    "ts_site@odata.bind": "/msdyn_functionallocations(" + activity["operation.ts_site"] + ")",
-                                    "ts_activitytype@odata.bind": "/msdyn_incidenttypes(" + activity.msdyn_incidenttypeid + ")",
-                                    "ts_operation@odata.bind": "/ovs_operations(" + activity["operation.ovs_operationid"] + ")",
-                                    "ts_riskthreshold@odata.bind": "/ts_riskcategories(" + activity["operation.ts_risk"] + ")",
-                                    "ts_estimatedduration": activity.msdyn_estimatedduration / 60,
-                                    "ts_q1": 1,
-                                    "ts_q2": 0,
-                                    "ts_q3": 0,
-                                    "ts_q4": 0,
-                                };
-                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
-                                }, function (error) {
-                                    console.log(error.message);
-                                });
+                            for (_a = 0, railOperations_1 = railOperations; _a < railOperations_1.length; _a++) {
+                                railOperation = railOperations_1[_a];
+                                // If ts_typeofdangerousgoods does not equal No DG
+                                if (railOperation.ts_typeofdangerousgoods != 717750000 /* NoDangerousGoods */) {
+                                    lastRiskInspection = railOperation.ts_dateoflastriskbasedinspection;
+                                    riskInterval = railOperation["risk.ts_interval"];
+                                    riskFrequency = railOperation["risk.ts_frequency"];
+                                    nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+                                    inspectionIsDue = false;
+                                    q1Count = 0;
+                                    q2Count = 0;
+                                    q3Count = 0;
+                                    q4Count = 0;
+                                    for (i = 1; i <= riskFrequency; i++) {
+                                        //If Next Inspection occurs before fiscal year ends, an inspection is due/overdue
+                                        if (nextInspectionDate <= plannedFiscalEndDate) {
+                                            inspectionIsDue = true;
+                                            //Determine which quarter the inspection falls in
+                                            if (nextInspectionDate <= q1.tc_quarterend) {
+                                                q1Count++;
+                                            }
+                                            else if (q2.tc_quarterstart <= nextInspectionDate && nextInspectionDate <= q2.tc_quarterend) {
+                                                q2Count++;
+                                            }
+                                            else if (q3.tc_quarterstart <= nextInspectionDate && nextInspectionDate <= q3.tc_quarterend) {
+                                                q3Count++;
+                                            }
+                                            else if (q4.tc_quarterstart <= nextInspectionDate && nextInspectionDate <= q4.tc_quarterend) {
+                                                q4Count++;
+                                            }
+                                        }
+                                        nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+                                    }
+                                    if (inspectionIsDue) {
+                                        data = {
+                                            "ts_name": railOperation["operation.ts_operationnameenglish"] + " | " + railOperation.msdyn_name + " | " + planFiscalYearName,
+                                            "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
+                                            "ts_stakeholder@odata.bind": "/accounts(" + railOperation["operation.ts_stakeholder"] + ")",
+                                            "ts_operationtype@odata.bind": "/ovs_operationtypes(" + railOperation["operation.ovs_operationtypeid"] + ")",
+                                            "ts_site@odata.bind": "/msdyn_functionallocations(" + railOperation["operation.ts_site"] + ")",
+                                            "ts_operation@odata.bind": "/ovs_operations(" + railOperation["operation.ovs_operationid"] + ")",
+                                            "ts_riskthreshold@odata.bind": "/ts_riskcategories(" + railOperation["operation.ts_risk"] + ")",
+                                            "ts_estimatedduration": railOperation.msdyn_estimatedduration / 60,
+                                            "ts_q1": q1Count,
+                                            "ts_q2": q2Count,
+                                            "ts_q3": q3Count,
+                                            "ts_q4": q4Count,
+                                        };
+                                        if (railOperation.ts_typeofdangerousgoods == 717750001 /* Schedule1DangerousGoods */ || railOperation.ts_typeofdangerousgoods == null) {
+                                            if (railOperation.ts_visualsecurityinspection == 717750001 /* Yes */) {
+                                                //Both TDG and VSI are suggested
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
+                                                }, function (error) {
+                                                    console.log(error.message);
+                                                });
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
+                                                }, function (error) {
+                                                    console.log(error.message);
+                                                });
+                                            }
+                                            else {
+                                                //TDG Suggested
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
+                                                }, function (error) {
+                                                    console.log(error.message);
+                                                });
+                                            }
+                                        }
+                                        else if (railOperation.ts_typeofdangerousgoods == 717750002 /* NonSchedule1DangerousGoods */) {
+                                            if (railOperation.ts_visualsecurityinspection == 717750001 /* Yes */) {
+                                                //Both Non-Schedule 1 and VSI are suggested
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
+                                                }, function (error) {
+                                                    console.log(error.message);
+                                                });
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
+                                                }, function (error) {
+                                                    console.log(error.message);
+                                                });
+                                            }
+                                            else {
+                                                //Non-Schedule 1
+                                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes()";
+                                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {
+                                                }, function (error) {
+                                                    console.log(error.message);
+                                                });
+                                            }
+                                        }
+                                    }
+                                }
                             }
                             inspectorHoursfetchXml = [
                                 "<fetch>",
@@ -153,12 +288,12 @@ var ROM;
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_inspectionhours", inspectorHoursfetchXml).then(function success(result) {
                                     return result.entities;
                                 })];
-                        case 2:
-                            teamInspectorHours = _b.sent();
+                        case 4:
+                            teamInspectorHours = _c.sent();
                             if (teamInspectorHours != null && teamInspectorHours.length > 0) {
                                 //For each inspector, create an Plan Inspector Hours record
-                                for (_a = 0, teamInspectorHours_1 = teamInspectorHours; _a < teamInspectorHours_1.length; _a++) {
-                                    inspectorHours = teamInspectorHours_1[_a];
+                                for (_b = 0, teamInspectorHours_1 = teamInspectorHours; _b < teamInspectorHours_1.length; _b++) {
+                                    inspectorHours = teamInspectorHours_1[_b];
                                     data = {
                                         "ts_name": inspectorHours["user.fullname"] + " | " + teamName + " | " + planFiscalYearName,
                                         "ts_inspectorhours@odata.bind": "/ts_inspectionhourses(" + inspectorHours.ts_inspectionhoursid + ")",
@@ -171,8 +306,8 @@ var ROM;
                                     Xrm.WebApi.createRecord("ts_planinspectorhours", data);
                                 }
                             }
-                            _b.label = 3;
-                        case 3:
+                            _c.label = 5;
+                        case 5:
                             formContext.data.entity.save();
                             Xrm.Utility.closeProgressIndicator();
                             return [2 /*return*/];
@@ -194,17 +329,11 @@ var ROM;
             }
         }
         Plan.lockSuggestedInspectionEditableGridFields = lockSuggestedInspectionEditableGridFields;
-        function TDGComprehensiveSuggestedInspections(formContext) {
-            //Retrieve all Operations of Operation Type "Railway Carrier", "Railway Loader", and "HQ - TDG"
-            //Foreach Operation
-            // If Security Plan Type equals Corporate Security Plan
-            // If Operation Type does not equal HQ - TDG
-            // If Operation ts_typeofdangerousgoods equals null or Schedule 1 DG
-            // If Last SPR Inspection was over 4 years ago, add SPR to activities list
-            // If Last Comprehensive inspection was over 4 years ago, add comprehensive to activities list
-            // Elif Security Plan Type equals Site Security Plan
-            // If Operation ts_typeofdangerousgoods equals null or Schedule 1 DG
-            // If Last Inspection was over 4 years ago, add SPR to activities list
+        function getNextInspectionDate(startDate, frequency, interval) {
+            var nextInspectionDate = new Date(startDate);
+            var monthsToAdd = 12 * frequency / interval;
+            nextInspectionDate.setMonth(nextInspectionDate.getMonth() + monthsToAdd);
+            return nextInspectionDate;
         }
     })(Plan = ROM.Plan || (ROM.Plan = {}));
 })(ROM || (ROM = {}));
