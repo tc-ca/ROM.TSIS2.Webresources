@@ -60,8 +60,8 @@
             }
 
             const teamRegionId = planData["team.ts_territory"];
-            const plannedFiscalStartDate = planData["fiscalyear.tc_fiscalstart"];
-            const plannedFiscalEndDate = planData["fiscalyear.tc_fiscalend"];
+            const plannedFiscalStartDate = new Date(planData["fiscalyear.tc_fiscalstart"]);
+            const plannedFiscalEndDate = new Date(planData["fiscalyear.tc_fiscalend"]);
 
             var railOperationsFetchXml = [
                 "<fetch>",
@@ -76,6 +76,7 @@
                 "    <attribute name='ts_stakeholder'/>",
                 "    <attribute name='ts_operationnameenglish'/>",
                 "    <attribute name='ts_operationnamefrench'/>",
+                "    <attribute name='ts_visualsecurityinspection'/>",
                 "    <filter type='or'>",
                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='d883b39a-c751-eb11-a812-000d3af3ac0d' uiname='Railway Carrier' uitype='ovs_operationtype'/>",
                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='da56fea1-c751-eb11-a812-000d3af3ac0d' uiname='Railway Loader' uitype='ovs_operationtype'/>",
@@ -139,6 +140,7 @@
 
                     if (inspectionIsDue) {
                         let data = {
+                            //data["ts_name"] = `${railOperation.ts_operationnameenglish} | ${VSITDGIncidentType.ts_estimatedduration.msdyn_name} | ${planFiscalYearName}`;
                             "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
                             "ts_stakeholder@odata.bind": "/accounts(" + railOperation._ts_stakeholder_value + ")",
                             "ts_operationtype@odata.bind": "/ovs_operationtypes(" + railOperation._ovs_operationtypeid_value + ")",
@@ -153,37 +155,49 @@
 
                         if (railOperation.ts_typeofdangerousgoods == ts_typeofdangerousgoods.Schedule1DangerousGoods || railOperation.ts_typeofdangerousgoods == null) {
                             if (railOperation.ts_visualsecurityinspection == ts_visualsecurityinspection.Yes) {
-                                //Both TDG and VSI are suggested
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(34c59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
-                                //data["ts_name"] = `${railOperation.ts_operationnameenglish} | ${VSITDGIncidentType.ts_estimatedduration.msdyn_name} | ${planFiscalYearName}`;
-                                data["ts_estimatedduration"] = VSITDGIncidentType.ts_estimatedduration;
-                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) { }, function (error) { console.log(error.message); });
+                                //Both Site Inspection (TDG) and Oversight of the Railway Carrier Visual Security Inspection (TDG) are suggested
 
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(2bc59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection (TDG)
-                                data["ts_estimatedduration"] = siteInspectionTDGIncidentType.ts_estimatedduration;
-                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) { }, function (error) { console.log(error.message); });
+                                const VSIData = { ...data };
+                                const SiteInspectionData = { ...data };
+
+                                VSIData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(34c59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
+                                VSIData["ts_estimatedduration"] = VSITDGIncidentType.msdyn_estimatedduration / 60;
+                                Xrm.WebApi.createRecord("ts_suggestedinspection", VSIData).then(function success(result) { }, function (error) { console.log(error.message); });
+
+                                SiteInspectionData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(2bc59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection (TDG)
+                                SiteInspectionData["ts_estimatedduration"] = siteInspectionTDGIncidentType.msdyn_estimatedduration / 60;
+                                Xrm.WebApi.createRecord("ts_suggestedinspection", SiteInspectionData).then(function success(result) { }, function (error) { console.log(error.message); });
                             } else {
-                                //TDG Suggested
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(2bc59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection (TDG)
-                                data["ts_estimatedduration"] = siteInspectionTDGIncidentType.ts_estimatedduration;
-                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) { }, function (error) { console.log(error.message); });
+                                const SiteInspectionData = { ...data };
+
+                                //Site Inspection (TDG) Suggested
+                                SiteInspectionData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(2bc59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection (TDG)
+                                SiteInspectionData["ts_estimatedduration"] = siteInspectionTDGIncidentType.msdyn_estimatedduration / 60;
+                                Xrm.WebApi.createRecord("ts_suggestedinspection", SiteInspectionData).then(function success(result) { }, function (error) { console.log(error.message); });
                             }
                         }
                         else if (railOperation.ts_typeofdangerousgoods == ts_typeofdangerousgoods.NonSchedule1DangerousGoods) {
                             if (railOperation.ts_visualsecurityinspection == ts_visualsecurityinspection.Yes) {
-                                //Both Non-Schedule 1 and VSI are suggested
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(34c59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
-                                data["ts_estimatedduration"] = VSITDGIncidentType.ts_estimatedduration;
-                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) { }, function (error) { console.log(error.message); });
+                                //Both Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG) and Oversight of the Railway Carrier Visual Security Inspection (TDG) are suggested
 
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(3ac59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
-                                data["ts_estimatedduration"] = NonSchedule1TDGIncidentType.ts_estimatedduration;
-                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) { }, function (error) { console.log(error.message); });
+                                const VSIData = { ...data };
+                                const nonSchedule1Data = { ...data };
+
+                                VSIData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(34c59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
+                                VSIData["ts_estimatedduration"] = VSITDGIncidentType.msdyn_estimatedduration / 60;
+                                Xrm.WebApi.createRecord("ts_suggestedinspection", VSIData).then(function success(result) { }, function (error) { console.log(error.message); });
+
+                                nonSchedule1Data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(3ac59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
+                                nonSchedule1Data["ts_estimatedduration"] = NonSchedule1TDGIncidentType.msdyn_estimatedduration / 60;
+                                Xrm.WebApi.createRecord("ts_suggestedinspection", nonSchedule1Data).then(function success(result) { }, function (error) { console.log(error.message); });
                             } else {
-                                //Non-Schedule 1
-                                data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(3ac59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
-                                data["ts_estimatedduration"] = NonSchedule1TDGIncidentType.ts_estimatedduration;
-                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) {},function (error) {console.log(error.message);});
+                                //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
+
+                                const nonSchedule1Data = { ...data };
+
+                                nonSchedule1Data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(3ac59aa0-511a-ec11-b6e7-000d3a09ce95)"; //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
+                                nonSchedule1Data["ts_estimatedduration"] = NonSchedule1TDGIncidentType.msdyn_estimatedduration / 60;
+                                Xrm.WebApi.createRecord("ts_suggestedinspection", nonSchedule1Data).then(function success(result) {},function (error) {console.log(error.message);});
                             }
                         }
                     }
@@ -250,7 +264,7 @@
         }
     }
 
-    function getNextInspectionDate(startDate, frequency, interval): Date {
+    function getNextInspectionDate(startDate, interval, frequency): Date {
         let nextInspectionDate = new Date(startDate);
         const monthsToAdd = 12 * frequency / interval;
         nextInspectionDate.setMonth(nextInspectionDate.getMonth() + monthsToAdd);
