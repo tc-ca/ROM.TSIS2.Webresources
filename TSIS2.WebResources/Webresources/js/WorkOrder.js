@@ -79,12 +79,10 @@ var ROM;
                 else {
                     if (userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
                         form.getControl("ts_completedquarter").setDisabled(false);
-                        form.getControl("ovs_fiscalquarter").setDisabled(false);
                         form.getControl("ovs_revisedquarterid").setDisabled(false);
                     }
                     else {
                         form.getControl("ts_completedquarter").setDisabled(true);
-                        form.getControl("ovs_fiscalquarter").setDisabled(true);
                         form.getControl("ovs_revisedquarterid").setDisabled(true);
                     }
                 }
@@ -117,9 +115,6 @@ var ROM;
             if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == 741130000 /* Closed */) { //Closed ; Completed
                 form.getControl("ovs_revisedquarterid").setDisabled(true);
             }
-            if (currentStatus == 717750001) { //Committed
-                form.getControl("ovs_fiscalquarter").setDisabled(true);
-            }
             //Limit ownership of a Work Order to users associated with the same program
             if (form.ui.getFormType() == 1 || form.ui.getFormType() == 2) {
                 if (ownerControl != null) {
@@ -144,6 +139,8 @@ var ROM;
             else { //If the work order is active, show the active views
                 setWorkOrderServiceTasksView(form, true);
             }
+            if (form.getAttribute("ovs_fiscalquarter").getValue() != null)
+                form.getAttribute("ovs_revisedquarterid").setValue(form.getAttribute("ovs_fiscalquarter").getValue());
             switch (form.ui.getFormType()) {
                 case 1: //Create New Work Order
                     //If work order is New (case 1) and it already has a case on form load, the work order must be coming from a case
