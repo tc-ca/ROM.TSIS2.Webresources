@@ -178,6 +178,7 @@ var ROM;
             var fetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><attribute name="ts_mode"/><order attribute="msdyn_name" descending="false"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/>' + modeCondition + '</filter></entity></fetch>';
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+            form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
         function ShowHideFieldsOnMode(eContext, mode, isOnLoad) {
             var form = eContext.getFormContext();
@@ -198,6 +199,7 @@ var ROM;
                 form.getControl("ts_ruralorurban").setVisible(false);
                 var tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
                 tab_time_tracking.setVisible(true);
+                form.getControl("ts_subsite").setVisible(true);
                 form.getControl("ts_inflight").setVisible(true);
                 form.getControl("ts_estimatedarrivaltime").setVisible(true);
                 form.getControl("ts_policeresponse").setVisible(true);
@@ -277,6 +279,7 @@ var ROM;
                 form.getControl("ts_publicorprivatecrossing").setVisible(true);
                 form.getControl("ts_ruralorurban").setVisible(true);
                 form.getControl("ts_arrests").setVisible(true);
+                form.getControl("ts_subsite").setVisible(false);
                 form.getControl("ts_inflight").setVisible(false);
                 form.getControl("ts_estimatedarrivaltime").setVisible(false);
                 form.getControl("ts_policeresponse").setVisible(false);
