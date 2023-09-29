@@ -6,10 +6,27 @@
         }
     }
 
+    /*
+     * Generates the Suggested Inspection Records and the Plan Inspector Hours Records
+     * 
+     * Suggested Inspections:
+     * First retrieve all the required records
+     * Retrieve all the Operations related to the Plan and Loop through
+     * For each Operation, look at the last Risk Based Inspection Date, and the Risk's Interval and Frequency to determine if an inspection is due and how many are due
+     * If an inspection is due, look at the Operation's property values to determine what Incident Types should be Suggested
+     * Create Suggested Inspection records for all the Operations that are due
+     * 
+     * Plan Inspector Hours:
+     * Retrieve all Inspector Hours (ts_inspectionhours) records related to the Plan's team (Baseline Hours Lookup record has the same Team as the Plan)
+     * Create a Plan Inspector Hours record for each
+     */
     async function generateSuggestedInspections(eContext: Xrm.ExecutionContext<any, any>) {
         const formContext: any = eContext.getFormContext();
         Xrm.Utility.showProgressIndicator("Please wait while the Suggested Inspection records are being created.");
         formContext.data.entity.removeOnPostSave(generateSuggestedInspections);
+
+        //Grab ID's from the from
+
         let planId = formContext.data.entity.getId();
         let teamValue = formContext.getAttribute("ts_team").getValue();
         let teamId;
@@ -29,10 +46,10 @@
 
         if (teamId != null && planFiscalYearId != null) {
 
+            //Set the Plan name to a combination of the team and fiscal year
             formContext.getAttribute("ts_name").setValue(`${teamName} ${planFiscalYearName}`);
-            //Show Loading Wheel
 
-            //Current Plan linked with fiscalyear and region data
+            //Retrieves Current Plan linked with fiscalyear and region data
             let planfetchXml = [
                 "<fetch>",
                 "  <entity name='ts_plan'>",
@@ -51,18 +68,16 @@
                 "</fetch>"
             ].join("");
             planfetchXml = "?fetchXml=" + encodeURIComponent(planfetchXml);
-            let planData = await Xrm.WebApi.retrieveMultipleRecords("ts_plan", planfetchXml).then(function success(result) {
-                return result.entities[0];
-            });
+            let planData = await Xrm.WebApi.retrieveMultipleRecords("ts_plan", planfetchXml).then(function success(result) {return result.entities[0];});
             if (planData == null) {
                 console.log("Failed to load current Plan");
                 return;
             }
 
             const teamRegionId = planData["team.ts_territory"];
-            const plannedFiscalStartDate = new Date(planData["fiscalyear.tc_fiscalstart"]);
             const plannedFiscalEndDate = new Date(planData["fiscalyear.tc_fiscalend"]);
 
+            //Retrieves all Operations of the 5 relevant Operation Types that are in the same Region as the Team of this Plan
             var OperationsFetchXml = [
                 "<fetch>",
                 "  <entity name='ovs_operation'>",
@@ -98,16 +113,17 @@
                 "</fetch>"
             ].join("");
             OperationsFetchXml = "?fetchXml=" + encodeURIComponent(OperationsFetchXml);
-            let operations = await Xrm.WebApi.retrieveMultipleRecords("ovs_operation", OperationsFetchXml).then(function success(result) {
-                return result.entities;
-            });
+            let operations = await Xrm.WebApi.retrieveMultipleRecords("ovs_operation", OperationsFetchXml).then(function success(result) {return result.entities;});
             planId = planId.slice(1, -1);
+
+            //ID's of the Activity Types that will be be suggested
             const siteInspectionTDGIncidentTypeId = "2bc59aa0-511a-ec11-b6e7-000d3a09ce95";
             const VSITDGIncidentTypeId = "34c59aa0-511a-ec11-b6e7-000d3a09ce95";
             const NonSchedule1TDGIncidentTypeId = "3ac59aa0-511a-ec11-b6e7-000d3a09ce95";
             const OversightSIPAXIncidentTypeId = "c8c934c6-01b5-ec11-983e-000d3af4f373";
             const SIPAXIncidentTypeId = "45c59aa0-511a-ec11-b6e7-000d3a09ce95";
 
+            //Retrieve the Activity Type records to get their Estimated Durations
             const siteInspectionTDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", siteInspectionTDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) {return result;},function (error) {console.log(error.message);});
             const VSITDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", VSITDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) {return result;},function (error) {console.log(error.message);});
             const NonSchedule1TDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", NonSchedule1TDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) {return result;},function (error) {console.log(error.message);});
@@ -134,8 +150,17 @@
                         } else {
                             inspectionCount = riskFrequency;
                         }
-                    } else { // There is a previous date we need to start from
+                    // There is a previous date we need to start from
+                    } else { 
                         let nextInspectionDate: Date = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+
+                        /* 
+                         * Interval is the amount of years between each inspection
+                         * Frequency is the amount of inspections in the interval
+                         * Frequency is always 1 when Interval is greater than 1
+                         * Interval is always 1 when Frequency is greater than 1
+                         * So really Frequency only matters when Interval is 1, and it tells you how many inspections occur a year
+                        */
 
                         for (let i = 1; i <= riskFrequency; i++) {
                             //If Next Inspection occurs before fiscal year ends, an inspection is due/overdue
@@ -148,8 +173,9 @@
                     }
 
                     if (inspectionIsDue) {
+                        //Set the data that all Suggested Inspections for this Operation will have
                         let data = {
-                            //data["ts_name"] = `${railOperation.ts_operationnameenglish} | ${VSITDGIncidentType.ts_estimatedduration.msdyn_name} | ${planFiscalYearName}`;
+                            //"ts_name" : `${railOperation.ts_operationnameenglish} | ${VSITDGIncidentType.ts_estimatedduration.msdyn_name} | ${planFiscalYearName}`;
                             "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
                             "ts_stakeholder@odata.bind": "/accounts(" + operation._ts_stakeholder_value + ")",
                             "ts_operationtype@odata.bind": "/ovs_operationtypes(" + operation._ovs_operationtypeid_value + ")",
@@ -165,7 +191,7 @@
                         const railwayCarrierOperationTypeId = "d883b39a-c751-eb11-a812-000d3af3ac0d";
                         const railwayLoaderOperationTypeId = "da56fea1-c751-eb11-a812-000d3af3ac0d";
 
-                        //If the Operation Type is RailwayCarrier of RailwayLoader
+                        //If the Operation Type is RailwayCarrier of RailwayLoader (First bigger Flow Logic)
                         if (operation._ovs_operationtypeid_value == railwayCarrierOperationTypeId || operation._ovs_operationtypeid_value == railwayLoaderOperationTypeId) {
 
                             if (operation.ts_typeofdangerousgoods == ts_typeofdangerousgoods.Schedule1DangerousGoods || operation.ts_typeofdangerousgoods == null) {
@@ -216,7 +242,7 @@
                                 }
                             }
                         }
-                        //Operation Type is Passenger Company, Small Passenger Company, or Host Company
+                        //Operation Type is Passenger Company, Small Passenger Company, or Host Company (Smaller Flow Logic)
                         else {
                             if (operation.ts_issecurityinspectionsite == ts_issecurityinspectionsite.Yes) {
                                 //Both Site Inspection (PAX) and Oversight of Security Inspections (PAX) are suggested
@@ -305,7 +331,7 @@
 
     function getNextInspectionDate(startDate, interval, frequency): Date {
         let nextInspectionDate = new Date(startDate);
-        const monthsToAdd = 12 * frequency / interval;
+        const monthsToAdd = 12 * interval / frequency;
         nextInspectionDate.setMonth(nextInspectionDate.getMonth() + monthsToAdd);
         return nextInspectionDate;
     }
