@@ -63,7 +63,7 @@ var ROM;
          * Suggested Inspections:
          * First retrieve all the required records
          * Retrieve all the Operations related to the Plan and Loop through
-         * For each Operation, look at the last Risk Based Inspection Date, and the Risk's Interval and Frequency to determine if an inspection is due and how many are due
+         * For each Operation, look at the last Risk Based Inspection Date, and the Risk's Interval and Frequency to determine if an inspection is due in the Plan's Fiscal Year and how many are due
          * If an inspection is due, look at the Operation's property values to determine what Incident Types should be Suggested
          * Create Suggested Inspection records for all the Operations that are due
          *
