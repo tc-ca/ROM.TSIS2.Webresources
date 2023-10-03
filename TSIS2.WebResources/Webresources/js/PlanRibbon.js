@@ -44,17 +44,15 @@
     let suggestedInspectionsFetchXml = [
         "<fetch>",
         "  <entity name='ts_suggestedinspection'>",
+        "    <attribute name='ts_estimatedduration'/>",
+        "    <attribute name='ts_inspector'/>",
         "    <attribute name='ts_q1'/>",
         "    <attribute name='ts_q2'/>",
         "    <attribute name='ts_q3'/>",
         "    <attribute name='ts_q4'/>",
-        "    <attribute name='ts_inspector'/>",
         "    <filter>",
-        "      <condition attribute='ts_plan' operator='eq' value='", planId, "' uiname='Test Plan 1' uitype='ts_plan'/>",
+        "      <condition attribute='ts_plan' operator='eq' value='", planId, "' uitype='ts_plan'/>",
         "    </filter>",
-        "    <link-entity name='msdyn_incidenttype' from='msdyn_incidenttypeid' to='ts_activitytype' alias='activitytype'>",
-        "      <attribute name='msdyn_estimatedduration'/>",
-        "    </link-entity>",
         "  </entity>",
         "</fetch>"
     ].join("");
@@ -69,10 +67,10 @@
             const q2 = (suggestedInspection.ts_q2 != null) ? suggestedInspection.ts_q2 : 0;
             const q3 = (suggestedInspection.ts_q3 != null) ? suggestedInspection.ts_q3 : 0;
             const q4 = (suggestedInspection.ts_q4 != null) ? suggestedInspection.ts_q4 : 0;
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ1 -= q1 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ2 -= q2 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ3 -= q3 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ4 -= q4 * (suggestedInspection["activitytype.msdyn_estimatedduration"] / 60);
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ1 -= q1 * suggestedInspection.ts_estimatedduration;
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ2 -= q2 * suggestedInspection.ts_estimatedduration;
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ3 -= q3 * suggestedInspection.ts_estimatedduration;
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ4 -= q4 * suggestedInspection.ts_estimatedduration;
         }
     }
 
