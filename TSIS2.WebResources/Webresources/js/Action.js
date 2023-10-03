@@ -33,6 +33,7 @@ var ROM;
                 //setRelatedFindingsFetchXML(form);
             }
             actionStatusOnChange(eContext);
+            filterCategory(eContext);
         }
         Action.onLoad = onLoad;
         function setOptions(attribute, options) {
@@ -207,5 +208,44 @@ var ROM;
             actionCategoryOnChange(eContext);
         }
         Action.actionTypeOnChange = actionTypeOnChange;
+        function filterCategory(eContext) {
+            var form = eContext.getFormContext();
+            if (form.ui.getFormType() != 1) {
+                var actionId = form.data.entity.getId();
+                var operationTypeFetchXML = [
+                    "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\">\n                  <entity name=\"msdyn_workorder\">\n                    <attribute name=\"msdyn_name\" />\n                    <attribute name=\"msdyn_workorderid\" />\n                    <attribute name=\"ovs_operationtypeid\" />\n                    <link-entity name=\"ovs_finding\" from=\"ts_workorder\" to=\"msdyn_workorderid\" link-type=\"inner\" alias=\"ac\">\n                      <link-entity name=\"ts_actionfinding\" from=\"ts_ovs_finding\" to=\"ovs_findingid\" link-type=\"inner\" alias=\"ad\">\n                        <filter type=\"and\">\n                          <condition attribute=\"ts_action\" operator=\"eq\" uitype=\"ts_action\" value=\"" + actionId + "\" />\n                        </filter>\n                      </link-entity>\n                    </link-entity>\n                  </entity>\n                </fetch>"
+                ].join("");
+                operationTypeFetchXML = "?fetchXml=" + encodeURIComponent(operationTypeFetchXML);
+                Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", operationTypeFetchXML).then(function success(result) {
+                    var operationTypeOwningBusinessUnitFetchXML = [
+                        "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
+                        "  <entity name='businessunit'>",
+                        "    <attribute name='name'/>",
+                        "    <attribute name='businessunitid'/>",
+                        "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
+                        "      <filter>",
+                        "        <condition attribute='ovs_operationtypeid' operator='eq' value='", result.entities[0]._ovs_operationtypeid_value, "'/>",
+                        "      </filter>",
+                        "    </link-entity>",
+                        "  </entity>",
+                        "</fetch>"
+                    ].join("");
+                    operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+                    Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function success(resultBusinessUnit) {
+                        if (!resultBusinessUnit.entities[0].name.startsWith("Avia")) {
+                            var actionCategoryOptions = form.getControl("ts_actioncategory").getOptions();
+                            for (var i = 0; i < actionCategoryOptions.length; i++) {
+                                if (actionCategoryOptions[i].value != 741130002 /* EnforcementAction */ && actionCategoryOptions[i].value != 741130001 /* CorrectiveAction */) {
+                                    form.getControl("ts_actioncategory").removeOption(actionCategoryOptions[i].value);
+                                }
+                            }
+                        }
+                    }, function (error) {
+                    });
+                }, function (error) {
+                });
+            }
+        }
+        Action.filterCategory = filterCategory;
     })(Action = ROM.Action || (ROM.Action = {}));
 })(ROM || (ROM = {}));

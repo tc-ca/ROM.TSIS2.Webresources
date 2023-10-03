@@ -30,6 +30,7 @@ namespace ROM.Action {
             //setRelatedFindingsFetchXML(form);
         }
         actionStatusOnChange(eContext);
+        filterCategory(eContext);
     }
 
     function setOptions(attribute, options) {
@@ -235,5 +236,65 @@ namespace ROM.Action {
     export function actionTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         actionStatusOnChange(eContext);
         actionCategoryOnChange(eContext);
+    }
+
+    export function filterCategory(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_action.Main.ROMAction>eContext.getFormContext();
+        if (form.ui.getFormType() != 1) {
+            let actionId = form.data.entity.getId();
+            let operationTypeFetchXML = [
+                `<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
+                  <entity name="msdyn_workorder">
+                    <attribute name="msdyn_name" />
+                    <attribute name="msdyn_workorderid" />
+                    <attribute name="ovs_operationtypeid" />
+                    <link-entity name="ovs_finding" from="ts_workorder" to="msdyn_workorderid" link-type="inner" alias="ac">
+                      <link-entity name="ts_actionfinding" from="ts_ovs_finding" to="ovs_findingid" link-type="inner" alias="ad">
+                        <filter type="and">
+                          <condition attribute="ts_action" operator="eq" uitype="ts_action" value="` + actionId + `" />
+                        </filter>
+                      </link-entity>
+                    </link-entity>
+                  </entity>
+                </fetch>`
+            ].join("");
+
+            operationTypeFetchXML = "?fetchXml=" + encodeURIComponent(operationTypeFetchXML);
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", operationTypeFetchXML).then(
+                function success(result) {
+                    let operationTypeOwningBusinessUnitFetchXML = [
+                        "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
+                        "  <entity name='businessunit'>",
+                        "    <attribute name='name'/>",
+                        "    <attribute name='businessunitid'/>",
+                        "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
+                        "      <filter>",
+                        "        <condition attribute='ovs_operationtypeid' operator='eq' value='", result.entities[0]._ovs_operationtypeid_value, "'/>",
+                        "      </filter>",
+                        "    </link-entity>",
+                        "  </entity>",
+                        "</fetch>"
+                    ].join("");
+                    operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+                    Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(
+                        function success(resultBusinessUnit) {
+                            if (!resultBusinessUnit.entities[0].name.startsWith("Avia")) {
+                                var actionCategoryOptions = form.getControl("ts_actioncategory").getOptions();
+                                for (var i = 0; i < actionCategoryOptions.length; i++) {
+                                    if (actionCategoryOptions[i].value != ts_actioncategory.EnforcementAction && actionCategoryOptions[i].value != ts_actioncategory.CorrectiveAction) {
+                                        form.getControl("ts_actioncategory").removeOption(actionCategoryOptions[i].value);
+                                    }
+                                }
+                            }
+                        },
+                        function (error) {
+                        }
+                    );
+                },
+                function (error) {
+                }
+            );
+
+        }
     }
 }
