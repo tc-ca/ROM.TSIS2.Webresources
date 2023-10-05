@@ -202,7 +202,7 @@ var ROM;
                                         // There is a previous date we need to start from
                                     }
                                     else {
-                                        nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+                                        nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskInterval, riskFrequency);
                                         /*
                                          * Interval is the amount of years between each inspection
                                          * Frequency is the amount of inspections in the interval
@@ -216,7 +216,7 @@ var ROM;
                                                 inspectionCount++;
                                                 inspectionIsDue = true;
                                             }
-                                            nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+                                            nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskInterval, riskFrequency);
                                         }
                                     }
                                     if (inspectionIsDue) {
