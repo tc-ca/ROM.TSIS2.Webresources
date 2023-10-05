@@ -176,6 +176,7 @@ interface Contact_Base extends WebEntity {
   msdyn_isminorwithparentalconsent?: boolean | null;
   msdyn_orgchangestatus?: contact_msdyn_orgchangestatus | null;
   msdyn_portaltermsagreementdate?: Date | null;
+  msdyn_primarytimezone?: number | null;
   msft_datastate?: msft_datastate | null;
   mspp_userpreferredlcid?: powerpagelanguages | null;
   nickname?: string | null;
@@ -456,6 +457,7 @@ interface Contact_Select {
   msdyn_isminorwithparentalconsent: WebAttribute<Contact_Select, { msdyn_isminorwithparentalconsent: boolean | null }, {  }>;
   msdyn_orgchangestatus: WebAttribute<Contact_Select, { msdyn_orgchangestatus: contact_msdyn_orgchangestatus | null }, { msdyn_orgchangestatus_formatted?: string }>;
   msdyn_portaltermsagreementdate: WebAttribute<Contact_Select, { msdyn_portaltermsagreementdate: Date | null }, { msdyn_portaltermsagreementdate_formatted?: string }>;
+  msdyn_primarytimezone: WebAttribute<Contact_Select, { msdyn_primarytimezone: number | null }, {  }>;
   msdyn_segmentid_guid: WebAttribute<Contact_Select, { msdyn_segmentid_guid: string | null }, { msdyn_segmentid_formatted?: string }>;
   msft_datastate: WebAttribute<Contact_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   mspp_userpreferredlcid: WebAttribute<Contact_Select, { mspp_userpreferredlcid: powerpagelanguages | null }, { mspp_userpreferredlcid_formatted?: string }>;
@@ -693,6 +695,7 @@ interface Contact_Filter {
   msdyn_isminorwithparentalconsent: boolean;
   msdyn_orgchangestatus: contact_msdyn_orgchangestatus;
   msdyn_portaltermsagreementdate: Date;
+  msdyn_primarytimezone: number;
   msdyn_segmentid_guid: XQW.Guid;
   msft_datastate: msft_datastate;
   mspp_userpreferredlcid: powerpagelanguages;

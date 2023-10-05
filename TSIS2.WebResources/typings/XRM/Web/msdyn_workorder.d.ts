@@ -208,6 +208,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ts_TeamPlanningData_bind$ts_teamplanningdatas?: string | null;
   ts_WorkOrderCreationWizardId_bind$ts_workordercreationwizards?: string | null;
   ts_canceledinspectionjustification_bind$ts_canceledinspectionjustifications?: string | null;
+  ts_plan_bind$ts_plans?: string | null;
   ts_reason_bind$ts_planningreasons?: string | null;
   ts_riskthreshold_bind$ts_riskcategories?: string | null;
   ts_tradenameId_bind$ts_tradenames?: string | null;
@@ -365,6 +366,7 @@ interface msdyn_workorder_Select {
   ts_numberoffindings_state: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_state: number | null }, {  }>;
   ts_origin: WebAttribute<msdyn_workorder_Select, { ts_origin: string | null }, {  }>;
   ts_othercanceledjustification: WebAttribute<msdyn_workorder_Select, { ts_othercanceledjustification: string | null }, {  }>;
+  ts_plan_guid: WebAttribute<msdyn_workorder_Select, { ts_plan_guid: string | null }, { ts_plan_formatted?: string }>;
   ts_plannedcost: WebAttribute<msdyn_workorder_Select, { ts_plannedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_plannedcost_base: WebAttribute<msdyn_workorder_Select, { ts_plannedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_planningdata_guid: WebAttribute<msdyn_workorder_Select, { ts_planningdata_guid: string | null }, { ts_planningdata_formatted?: string }>;
@@ -539,6 +541,7 @@ interface msdyn_workorder_Filter {
   ts_numberoffindings_state: number;
   ts_origin: string;
   ts_othercanceledjustification: string;
+  ts_plan_guid: XQW.Guid;
   ts_plannedcost: number;
   ts_plannedcost_base: number;
   ts_planningdata_guid: XQW.Guid;
@@ -722,6 +725,7 @@ interface msdyn_workorder_FormattedResult {
   ts_incident_formatted?: string;
   ts_incompleteworkorderreason_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
+  ts_plan_formatted?: string;
   ts_plannedcost_base_formatted?: string;
   ts_plannedcost_formatted?: string;
   ts_planningdata_formatted?: string;
@@ -799,6 +803,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ts_contact_guid: string | null;
   ts_country_guid: string | null;
   ts_incompleteworkorderreason_guid: string | null;
+  ts_plan_guid: string | null;
   ts_planningdata_guid: string | null;
   ts_reason_guid: string | null;
   ts_region_guid: string | null;

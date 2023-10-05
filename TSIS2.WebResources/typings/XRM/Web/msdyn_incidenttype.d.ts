@@ -30,6 +30,7 @@ interface msdyn_incidenttype_Base extends WebEntity {
   ts_onestopsecurityoss?: boolean | null;
   ts_opi?: boolean | null;
   ts_remainovernightron?: boolean | null;
+  ts_reportingcategory?: ts_reportingcategory | null;
   ts_transborderflights?: boolean | null;
   ts_unattendedaircraft?: boolean | null;
   ts_vaccesscontrolsecurityservices?: boolean | null;
@@ -129,6 +130,7 @@ interface msdyn_incidenttype_Select {
   ts_opi: WebAttribute<msdyn_incidenttype_Select, { ts_opi: boolean | null }, {  }>;
   ts_ovs_operation_guid: WebAttribute<msdyn_incidenttype_Select, { ts_ovs_operation_guid: string | null }, { ts_ovs_operation_formatted?: string }>;
   ts_remainovernightron: WebAttribute<msdyn_incidenttype_Select, { ts_remainovernightron: boolean | null }, {  }>;
+  ts_reportingcategory: WebAttribute<msdyn_incidenttype_Select, { ts_reportingcategory: ts_reportingcategory | null }, { ts_reportingcategory_formatted?: string }>;
   ts_riskscore_guid: WebAttribute<msdyn_incidenttype_Select, { ts_riskscore_guid: string | null }, { ts_riskscore_formatted?: string }>;
   ts_transborderflights: WebAttribute<msdyn_incidenttype_Select, { ts_transborderflights: boolean | null }, {  }>;
   ts_unattendedaircraft: WebAttribute<msdyn_incidenttype_Select, { ts_unattendedaircraft: boolean | null }, {  }>;
@@ -207,6 +209,7 @@ interface msdyn_incidenttype_Filter {
   ts_opi: boolean;
   ts_ovs_operation_guid: XQW.Guid;
   ts_remainovernightron: boolean;
+  ts_reportingcategory: ts_reportingcategory;
   ts_riskscore_guid: XQW.Guid;
   ts_transborderflights: boolean;
   ts_unattendedaircraft: boolean;
@@ -278,6 +281,7 @@ interface msdyn_incidenttype_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_ovs_operation_formatted?: string;
+  ts_reportingcategory_formatted?: string;
   ts_riskscore_formatted?: string;
 }
 interface msdyn_incidenttype_Result extends msdyn_incidenttype_Base, msdyn_incidenttype_Relationships {

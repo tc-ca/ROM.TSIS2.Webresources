@@ -7,13 +7,18 @@ interface msdyn_FunctionalLocation_Base extends WebEntity {
   msdyn_address3?: string | null;
   msdyn_addressname?: string | null;
   msdyn_city?: string | null;
+  msdyn_costcenter?: string | null;
   msdyn_country?: string | null;
+  msdyn_emailaddress?: string | null;
   msdyn_functionallocationid?: string | null;
   msdyn_latitude?: number | null;
+  msdyn_locationopendate?: Date | null;
   msdyn_longitude?: number | null;
   msdyn_name?: string | null;
   msdyn_postalcode?: string | null;
+  msdyn_primarytimezone?: number | null;
   msdyn_sequence?: number | null;
+  msdyn_shortname?: string | null;
   msdyn_stateorprovince?: string | null;
   overriddencreatedon?: Date | null;
   statecode?: msdyn_functionallocation_statecode | null;
@@ -71,6 +76,7 @@ interface msdyn_FunctionalLocation_Relationships {
   ts_ts_securityincident_DiversionAerodrome_ms?: ts_securityincident_Result[] | null;
 }
 interface msdyn_FunctionalLocation extends msdyn_FunctionalLocation_Base, msdyn_FunctionalLocation_Relationships {
+  msdyn_FunctionalLocationType_bind$msdyn_functionallocationtypes?: string | null;
   msdyn_ParentFunctionalLocation_bind$msdyn_functionallocations?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
@@ -97,14 +103,20 @@ interface msdyn_FunctionalLocation_Select {
   msdyn_address3: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_address3: string | null }, {  }>;
   msdyn_addressname: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_addressname: string | null }, {  }>;
   msdyn_city: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_city: string | null }, {  }>;
+  msdyn_costcenter: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_costcenter: string | null }, {  }>;
   msdyn_country: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_country: string | null }, {  }>;
+  msdyn_emailaddress: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_emailaddress: string | null }, {  }>;
   msdyn_functionallocationid: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_functionallocationid: string | null }, {  }>;
+  msdyn_functionallocationtype_guid: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_functionallocationtype_guid: string | null }, { msdyn_functionallocationtype_formatted?: string }>;
   msdyn_latitude: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_latitude: number | null }, {  }>;
+  msdyn_locationopendate: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_locationopendate: Date | null }, { msdyn_locationopendate_formatted?: string }>;
   msdyn_longitude: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_longitude: number | null }, {  }>;
   msdyn_name: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_name: string | null }, {  }>;
   msdyn_parentfunctionallocation_guid: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_parentfunctionallocation_guid: string | null }, { msdyn_parentfunctionallocation_formatted?: string }>;
   msdyn_postalcode: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_postalcode: string | null }, {  }>;
+  msdyn_primarytimezone: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_primarytimezone: number | null }, {  }>;
   msdyn_sequence: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_sequence: number | null }, {  }>;
+  msdyn_shortname: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_shortname: string | null }, {  }>;
   msdyn_stateorprovince: WebAttribute<msdyn_FunctionalLocation_Select, { msdyn_stateorprovince: string | null }, {  }>;
   overriddencreatedon: WebAttribute<msdyn_FunctionalLocation_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
   ownerid_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ownerid_guid: string | null }, { ownerid_formatted?: string }>;
@@ -148,14 +160,20 @@ interface msdyn_FunctionalLocation_Filter {
   msdyn_address3: string;
   msdyn_addressname: string;
   msdyn_city: string;
+  msdyn_costcenter: string;
   msdyn_country: string;
+  msdyn_emailaddress: string;
   msdyn_functionallocationid: XQW.Guid;
+  msdyn_functionallocationtype_guid: XQW.Guid;
   msdyn_latitude: number;
+  msdyn_locationopendate: Date;
   msdyn_longitude: number;
   msdyn_name: string;
   msdyn_parentfunctionallocation_guid: XQW.Guid;
   msdyn_postalcode: string;
+  msdyn_primarytimezone: number;
   msdyn_sequence: number;
+  msdyn_shortname: string;
   msdyn_stateorprovince: string;
   overriddencreatedon: Date;
   ownerid_guid: XQW.Guid;
@@ -235,6 +253,8 @@ interface msdyn_FunctionalLocation_FormattedResult {
   modifiedby_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msdyn_functionallocationtype_formatted?: string;
+  msdyn_locationopendate_formatted?: string;
   msdyn_parentfunctionallocation_formatted?: string;
   overriddencreatedon_formatted?: string;
   ownerid_formatted?: string;
@@ -260,6 +280,7 @@ interface msdyn_FunctionalLocation_Result extends msdyn_FunctionalLocation_Base,
   createdonbehalfby_guid: string | null;
   modifiedby_guid: string | null;
   modifiedonbehalfby_guid: string | null;
+  msdyn_functionallocationtype_guid: string | null;
   msdyn_parentfunctionallocation_guid: string | null;
   ownerid_guid: string | null;
   owningbusinessunit_guid: string | null;
