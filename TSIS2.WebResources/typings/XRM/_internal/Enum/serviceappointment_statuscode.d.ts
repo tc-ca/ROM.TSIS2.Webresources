@@ -6,6 +6,6 @@ declare const enum serviceappointment_statuscode {
   InProgress = 6,
   Arrived = 7,
   Completed = 8,
-  Canceled = 9,
+  Cancelled = 9,
   NoShow = 10,
 }

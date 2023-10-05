@@ -96,6 +96,7 @@ interface Account_Base extends WebEntity {
   merged?: boolean | null;
   modifiedon?: Date | null;
   msdyn_gdproptout?: boolean | null;
+  msdyn_primarytimezone?: number | null;
   msdyn_taxexempt?: boolean | null;
   msdyn_taxexemptnumber?: string | null;
   msdyn_travelcharge?: number | null;
@@ -353,6 +354,7 @@ interface Account_Select {
   msdyn_billingaccount_guid: WebAttribute<Account_Select, { msdyn_billingaccount_guid: string | null }, { msdyn_billingaccount_formatted?: string }>;
   msdyn_gdproptout: WebAttribute<Account_Select, { msdyn_gdproptout: boolean | null }, {  }>;
   msdyn_preferredresource_guid: WebAttribute<Account_Select, { msdyn_preferredresource_guid: string | null }, { msdyn_preferredresource_formatted?: string }>;
+  msdyn_primarytimezone: WebAttribute<Account_Select, { msdyn_primarytimezone: number | null }, {  }>;
   msdyn_salesaccelerationinsightid_guid: WebAttribute<Account_Select, { msdyn_salesaccelerationinsightid_guid: string | null }, { msdyn_salesaccelerationinsightid_formatted?: string }>;
   msdyn_salestaxcode_guid: WebAttribute<Account_Select, { msdyn_salestaxcode_guid: string | null }, { msdyn_salestaxcode_formatted?: string }>;
   msdyn_segmentid_guid: WebAttribute<Account_Select, { msdyn_segmentid_guid: string | null }, { msdyn_segmentid_formatted?: string }>;
@@ -548,6 +550,7 @@ interface Account_Filter {
   msdyn_billingaccount_guid: XQW.Guid;
   msdyn_gdproptout: boolean;
   msdyn_preferredresource_guid: XQW.Guid;
+  msdyn_primarytimezone: number;
   msdyn_salesaccelerationinsightid_guid: XQW.Guid;
   msdyn_salestaxcode_guid: XQW.Guid;
   msdyn_segmentid_guid: XQW.Guid;

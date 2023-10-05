@@ -45,7 +45,7 @@ declare namespace Form.ts_action.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "notescontrol"): Xrm.BaseControl;
-      get(name: "subgrid_related_findings"): Xrm.SubGridControl<"ovs_finding">;
+      get(name: "subgrid_related_findings"): Xrm.SubGridControl<"ts_actionfinding">;
       get(name: "ts_actioncategory"): Xrm.OptionSetControl<ts_actioncategory>;
       get(name: "ts_actionstatus"): Xrm.OptionSetControl<ts_actionstatus>;
       get(name: "ts_actiontype"): Xrm.OptionSetControl<ts_actiontype>;
@@ -90,7 +90,7 @@ declare namespace Form.ts_action.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
-    getControl(controlName: "subgrid_related_findings"): Xrm.SubGridControl<"ovs_finding">;
+    getControl(controlName: "subgrid_related_findings"): Xrm.SubGridControl<"ts_actionfinding">;
     getControl(controlName: "ts_actioncategory"): Xrm.OptionSetControl<ts_actioncategory>;
     getControl(controlName: "ts_actionstatus"): Xrm.OptionSetControl<ts_actionstatus>;
     getControl(controlName: "ts_actiontype"): Xrm.OptionSetControl<ts_actiontype>;

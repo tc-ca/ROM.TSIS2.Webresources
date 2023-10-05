@@ -4,7 +4,7 @@ declare const enum msdyn_wosystemstatus {
   InProgressDoNotUseThis = 690970002,
   Completed = 690970003,
   ClosedInactive = 690970004,
-  Canceled = 690970005,
+  Cancelled = 690970005,
   Closed = 741130000,
   InProgress = 741130001,
 }
