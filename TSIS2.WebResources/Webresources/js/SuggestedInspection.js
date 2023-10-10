@@ -183,7 +183,7 @@ var ROM;
                         lookup[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? result.ts_RiskScore.ts_frenchname : result.ts_RiskScore.ts_englishname;
                         lookup[0].entityType = 'ts_riskcategory';
                         form.getAttribute('ts_riskthreshold').setValue(lookup);
-                        form.getAttribute('ts_estimatedduration').setValue(result.msdyn_estimatedduration);
+                        form.getAttribute('ts_estimatedduration').setValue(result.msdyn_estimatedduration / 60);
                     }
                 });
             }

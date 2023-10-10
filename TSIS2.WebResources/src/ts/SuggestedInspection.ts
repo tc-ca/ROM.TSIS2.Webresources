@@ -149,7 +149,7 @@
                         lookup[0].entityType = 'ts_riskcategory';
 
                         form.getAttribute('ts_riskthreshold').setValue(lookup);
-                        form.getAttribute('ts_estimatedduration').setValue(result.msdyn_estimatedduration);
+                        form.getAttribute('ts_estimatedduration').setValue(result.msdyn_estimatedduration / 60);
                     }
                 });
         } else {
