@@ -163,9 +163,9 @@
                         } else {
                             inspectionCount = riskFrequency;
                         }
-                        // There is a previous date we need to start from
-                    } else {
-                        let nextInspectionDate: Date = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+                    // There is a previous date we need to start from
+                    } else { 
+                        let nextInspectionDate: Date = getNextInspectionDate(lastRiskInspection, riskInterval, riskFrequency);
 
                         /* 
                          * Interval is the amount of years between each inspection
@@ -181,7 +181,7 @@
                                 inspectionCount++;
                                 inspectionIsDue = true;
                             }
-                            nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
+                            nextInspectionDate = getNextInspectionDate(lastRiskInspection, riskInterval, riskFrequency);
                         }
                     }
 

@@ -139,7 +139,7 @@
         if (activtyTypeValue != null) {
             activityypeId = activtyTypeValue[0].id;
 
-            Xrm.WebApi.retrieveRecord("msdyn_incidenttype", activityypeId, "?$select=msdyn_name,_ts_riskscore_value&$expand=ts_RiskScore($select=ts_englishname,ts_frenchname,ts_recurrencefrequenciesid)")
+            Xrm.WebApi.retrieveRecord("msdyn_incidenttype", activityypeId, "?$select=msdyn_name,_ts_riskscore_value,msdyn_estimatedduration&$expand=ts_RiskScore($select=ts_englishname,ts_frenchname,ts_recurrencefrequenciesid)")
                 .then(function success(result) {
                     if (result != null) {
                         const lookup = new Array();
@@ -149,10 +149,12 @@
                         lookup[0].entityType = 'ts_riskcategory';
 
                         form.getAttribute('ts_riskthreshold').setValue(lookup);
+                        form.getAttribute('ts_estimatedduration').setValue(result.msdyn_estimatedduration / 60);
                     }
                 });
         } else {
             form.getAttribute('ts_riskthreshold').setValue(null);
+            form.getAttribute('ts_estimatedduration').setValue(null);
         }
     }
 
