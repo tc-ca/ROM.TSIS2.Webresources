@@ -108,6 +108,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_onestopsecurityoss"): Xrm.Attribute<any>;
       get(name: "ts_opi"): Xrm.Attribute<any>;
       get(name: "ts_remainovernightron"): Xrm.Attribute<any>;
+      get(name: "ts_reportingcategory"): Xrm.OptionSetAttribute<ts_reportingcategory>;
       get(name: "ts_riskscore"): Xrm.LookupAttribute<"ts_recurrencefrequencies">;
       get(name: "ts_transborderflights"): Xrm.Attribute<any>;
       get(name: "ts_unattendedaircraft"): Xrm.Attribute<any>;
@@ -180,6 +181,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_onestopsecurityoss"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_opi"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_remainovernightron"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_reportingcategory"): Xrm.OptionSetControl<ts_reportingcategory>;
       get(name: "ts_riskscore"): Xrm.LookupControl<"ts_recurrencefrequencies">;
       get(name: "ts_transborderflights"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_unattendedaircraft"): Xrm.Control<Xrm.Attribute<any>>;
@@ -261,6 +263,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getAttribute(attributeName: "ts_onestopsecurityoss"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_opi"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_remainovernightron"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_reportingcategory"): Xrm.OptionSetAttribute<ts_reportingcategory>;
     getAttribute(attributeName: "ts_riskscore"): Xrm.LookupAttribute<"ts_recurrencefrequencies">;
     getAttribute(attributeName: "ts_transborderflights"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_unattendedaircraft"): Xrm.Attribute<any>;
@@ -328,6 +331,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "ts_onestopsecurityoss"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_opi"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_remainovernightron"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_reportingcategory"): Xrm.OptionSetControl<ts_reportingcategory>;
     getControl(controlName: "ts_riskscore"): Xrm.LookupControl<"ts_recurrencefrequencies">;
     getControl(controlName: "ts_transborderflights"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_unattendedaircraft"): Xrm.Control<Xrm.Attribute<any>>;

@@ -35,6 +35,7 @@ interface Email_Base extends WebEntity {
   isemailfollowed?: boolean | null;
   isemailreminderset?: boolean | null;
   isregularactivity?: boolean | null;
+  issafedescriptiontruncated?: number | null;
   isunsafe?: number | null;
   isworkflowcreated?: boolean | null;
   lastonholdtime?: Date | null;
@@ -272,6 +273,7 @@ interface Email_Select {
   isemailfollowed: WebAttribute<Email_Select, { isemailfollowed: boolean | null }, {  }>;
   isemailreminderset: WebAttribute<Email_Select, { isemailreminderset: boolean | null }, {  }>;
   isregularactivity: WebAttribute<Email_Select, { isregularactivity: boolean | null }, {  }>;
+  issafedescriptiontruncated: WebAttribute<Email_Select, { issafedescriptiontruncated: number | null }, {  }>;
   isunsafe: WebAttribute<Email_Select, { isunsafe: number | null }, {  }>;
   isworkflowcreated: WebAttribute<Email_Select, { isworkflowcreated: boolean | null }, {  }>;
   lastonholdtime: WebAttribute<Email_Select, { lastonholdtime: Date | null }, { lastonholdtime_formatted?: string }>;
@@ -377,6 +379,7 @@ interface Email_Filter {
   isemailfollowed: boolean;
   isemailreminderset: boolean;
   isregularactivity: boolean;
+  issafedescriptiontruncated: number;
   isunsafe: number;
   isworkflowcreated: boolean;
   lastonholdtime: Date;

@@ -6,6 +6,7 @@ interface msdyn_customerasset_Base extends WebEntity {
   msdyn_alertcount?: number | null;
   msdyn_alertcount_date?: Date | null;
   msdyn_alertcount_state?: number | null;
+  msdyn_assettag?: string | null;
   msdyn_customerassetid?: string | null;
   msdyn_deviceid?: string | null;
   msdyn_lastalerttime?: Date | null;
@@ -14,6 +15,7 @@ interface msdyn_customerasset_Base extends WebEntity {
   msdyn_lastcommandsenttime?: Date | null;
   msdyn_latitude?: number | null;
   msdyn_longitude?: number | null;
+  msdyn_manufacturingdate?: Date | null;
   msdyn_name?: string | null;
   msdyn_registrationstatus?: msdyn_customerasset_msdyn_registrationstatus | null;
   overriddencreatedon?: Date | null;
@@ -75,6 +77,7 @@ interface msdyn_customerasset_Select {
   msdyn_alertcount: WebAttribute<msdyn_customerasset_Select, { msdyn_alertcount: number | null }, {  }>;
   msdyn_alertcount_date: WebAttribute<msdyn_customerasset_Select, { msdyn_alertcount_date: Date | null }, { msdyn_alertcount_date_formatted?: string }>;
   msdyn_alertcount_state: WebAttribute<msdyn_customerasset_Select, { msdyn_alertcount_state: number | null }, {  }>;
+  msdyn_assettag: WebAttribute<msdyn_customerasset_Select, { msdyn_assettag: string | null }, {  }>;
   msdyn_customerassetcategory_guid: WebAttribute<msdyn_customerasset_Select, { msdyn_customerassetcategory_guid: string | null }, { msdyn_customerassetcategory_formatted?: string }>;
   msdyn_customerassetid: WebAttribute<msdyn_customerasset_Select, { msdyn_customerassetid: string | null }, {  }>;
   msdyn_deviceid: WebAttribute<msdyn_customerasset_Select, { msdyn_deviceid: string | null }, {  }>;
@@ -86,6 +89,7 @@ interface msdyn_customerasset_Select {
   msdyn_lastcommandsenttime: WebAttribute<msdyn_customerasset_Select, { msdyn_lastcommandsenttime: Date | null }, { msdyn_lastcommandsenttime_formatted?: string }>;
   msdyn_latitude: WebAttribute<msdyn_customerasset_Select, { msdyn_latitude: number | null }, {  }>;
   msdyn_longitude: WebAttribute<msdyn_customerasset_Select, { msdyn_longitude: number | null }, {  }>;
+  msdyn_manufacturingdate: WebAttribute<msdyn_customerasset_Select, { msdyn_manufacturingdate: Date | null }, { msdyn_manufacturingdate_formatted?: string }>;
   msdyn_masterasset_guid: WebAttribute<msdyn_customerasset_Select, { msdyn_masterasset_guid: string | null }, { msdyn_masterasset_formatted?: string }>;
   msdyn_name: WebAttribute<msdyn_customerasset_Select, { msdyn_name: string | null }, {  }>;
   msdyn_parentasset_guid: WebAttribute<msdyn_customerasset_Select, { msdyn_parentasset_guid: string | null }, { msdyn_parentasset_formatted?: string }>;
@@ -118,6 +122,7 @@ interface msdyn_customerasset_Filter {
   msdyn_alertcount: number;
   msdyn_alertcount_date: Date;
   msdyn_alertcount_state: number;
+  msdyn_assettag: string;
   msdyn_customerassetcategory_guid: XQW.Guid;
   msdyn_customerassetid: XQW.Guid;
   msdyn_deviceid: string;
@@ -129,6 +134,7 @@ interface msdyn_customerasset_Filter {
   msdyn_lastcommandsenttime: Date;
   msdyn_latitude: number;
   msdyn_longitude: number;
+  msdyn_manufacturingdate: Date;
   msdyn_masterasset_guid: XQW.Guid;
   msdyn_name: string;
   msdyn_parentasset_guid: XQW.Guid;
@@ -192,6 +198,7 @@ interface msdyn_customerasset_FormattedResult {
   msdyn_lastalerttime_formatted?: string;
   msdyn_lastcommandsent_formatted?: string;
   msdyn_lastcommandsenttime_formatted?: string;
+  msdyn_manufacturingdate_formatted?: string;
   msdyn_masterasset_formatted?: string;
   msdyn_parentasset_formatted?: string;
   msdyn_product_formatted?: string;

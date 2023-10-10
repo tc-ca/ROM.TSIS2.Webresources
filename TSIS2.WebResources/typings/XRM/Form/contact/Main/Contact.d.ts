@@ -83,6 +83,7 @@ declare namespace Form.contact.Main {
       get(name: "lastusedincampaign"): Xrm.DateAttribute;
       get(name: "middlename"): Xrm.Attribute<string> | null;
       get(name: "mobilephone"): Xrm.Attribute<string>;
+      get(name: "msdyn_primarytimezone"): Xrm.Attribute<any>;
       get(name: "name"): Xrm.Attribute<string> | null;
       get(name: "originatingleadid"): Xrm.LookupAttribute<"lead">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -157,6 +158,7 @@ declare namespace Form.contact.Main {
       get(name: "mapcontrol"): Xrm.BaseControl;
       get(name: "mobilephone"): Xrm.StringControl;
       get(name: "mobilephone1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "msdyn_primarytimezone"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "originatingleadid"): Xrm.LookupControl<"lead">;
       get(name: "parentcustomerid"): Xrm.LookupControl<"account" | "contact">;
@@ -223,6 +225,7 @@ declare namespace Form.contact.Main {
     getAttribute(attributeName: "lastusedincampaign"): Xrm.DateAttribute;
     getAttribute(attributeName: "middlename"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "mobilephone"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_primarytimezone"): Xrm.Attribute<any>;
     getAttribute(attributeName: "name"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "originatingleadid"): Xrm.LookupAttribute<"lead">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -292,6 +295,7 @@ declare namespace Form.contact.Main {
     getControl(controlName: "mapcontrol"): Xrm.BaseControl;
     getControl(controlName: "mobilephone"): Xrm.StringControl;
     getControl(controlName: "mobilephone1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "msdyn_primarytimezone"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "originatingleadid"): Xrm.LookupControl<"lead">;
     getControl(controlName: "parentcustomerid"): Xrm.LookupControl<"account" | "contact">;
