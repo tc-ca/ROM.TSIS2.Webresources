@@ -1,6 +1,19 @@
 ﻿async function recalculate(formContext) {
     const planId = formContext.data.entity.getId().slice(1, -1);
     Xrm.Utility.showProgressIndicator();
+
+    let teamPlanningDataPlannedQ1 = 0;
+    let teamPlanningDataPlannedQ2 = 0;
+    let teamPlanningDataPlannedQ3 = 0;
+    let teamPlanningDataPlannedQ4 = 0;
+    let teamPlanningDataPlannedTotal = 0;
+
+    let teamPlanningDataTeamEstimatedDurationQ1 = 0;
+    let teamPlanningDataTeamEstimatedDurationQ2 = 0;
+    let teamPlanningDataTeamEstimatedDurationQ3 = 0;
+    let teamPlanningDataTeamEstimatedDurationQ4 = 0;
+    let teamPlanningDataTeamEstimatedDurationTotal = 0;
+
     //Retrieve the Plan Inspector Hours records with the user id
     let planInspectorHoursFetchXml = [
         "<fetch>",
@@ -89,6 +102,33 @@
             updatePromises.push(Xrm.WebApi.updateRecord("ts_planinspectorhours", planInspectorHours[inspectorId].planInspectorHoursId, data));
         }
     }
+
+    suggestedInspections.forEach(function (inspection) {
+        teamPlanningDataPlannedQ1 += inspection.ts_q1;
+        teamPlanningDataPlannedQ2 += inspection.ts_q2;
+        teamPlanningDataPlannedQ3 += inspection.ts_q3;
+        teamPlanningDataPlannedQ4 += inspection.ts_q4;
+        teamPlanningDataPlannedTotal += inspection.ts_q1 + inspection.ts_q2 + inspection.ts_q3 + inspection.ts_q4;
+        teamPlanningDataTeamEstimatedDurationQ1 += inspection.ts_estimatedduration * inspection.ts_q1;
+        teamPlanningDataTeamEstimatedDurationQ2 += inspection.ts_estimatedduration * inspection.ts_q2;
+        teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
+        teamPlanningDataTeamEstimatedDurationQ4 += inspection.ts_estimatedduration * inspection.ts_q4;
+        teamPlanningDataTeamEstimatedDurationTotal += inspection.ts_estimatedduration;
+
+    });
+
+    formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
+    formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
+    formContext.getAttribute("ts_plannedactivityq3").setValue(teamPlanningDataPlannedQ3);
+    formContext.getAttribute("ts_plannedactivityq4").setValue(teamPlanningDataPlannedQ4);
+    formContext.getAttribute("ts_plannedactivityfiscalyear").setValue(teamPlanningDataPlannedTotal);
+
+    formContext.getAttribute("ts_estimateddurationq1").setValue(teamPlanningDataTeamEstimatedDurationQ1);
+    formContext.getAttribute("ts_estimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
+    formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
+    formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
+    formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal);
+
     //wait until all updates have finished
     await Promise.all(updatePromises);
     formContext.data.entity.save();
