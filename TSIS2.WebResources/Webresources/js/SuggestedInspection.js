@@ -174,7 +174,7 @@ var ROM;
             var activityypeId;
             if (activtyTypeValue != null) {
                 activityypeId = activtyTypeValue[0].id;
-                Xrm.WebApi.retrieveRecord("msdyn_incidenttype", activityypeId, "?$select=msdyn_name,_ts_riskscore_value&$expand=ts_RiskScore($select=ts_englishname,ts_frenchname,ts_recurrencefrequenciesid)")
+                Xrm.WebApi.retrieveRecord("msdyn_incidenttype", activityypeId, "?$select=msdyn_name,_ts_riskscore_value,msdyn_estimatedduration&$expand=ts_RiskScore($select=ts_englishname,ts_frenchname,ts_recurrencefrequenciesid)")
                     .then(function success(result) {
                     if (result != null) {
                         var lookup = new Array();
@@ -183,11 +183,13 @@ var ROM;
                         lookup[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? result.ts_RiskScore.ts_frenchname : result.ts_RiskScore.ts_englishname;
                         lookup[0].entityType = 'ts_riskcategory';
                         form.getAttribute('ts_riskthreshold').setValue(lookup);
+                        form.getAttribute('ts_estimatedduration').setValue(result.msdyn_estimatedduration);
                     }
                 });
             }
             else {
                 form.getAttribute('ts_riskthreshold').setValue(null);
+                form.getAttribute('ts_estimatedduration').setValue(null);
             }
         }
         SuggestedInspection.activityTypeOnChange = activityTypeOnChange;
