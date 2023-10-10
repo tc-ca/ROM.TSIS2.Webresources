@@ -126,6 +126,12 @@
   <data name="ErrorNotificationLabel" xml:space="preserve">
     <value>ERREUR</value>
   </data>
+  <data name="FileContextComboLabel" xml:space="preserve">
+    <value>Sélectionnez une catégorie du fichier</value>
+  </data>
+  <data name="FileContextLabel" xml:space="preserve">
+    <value>* Catégorie</value>
+  </data>
   <data name="FileThumbnailAccessibleLabel" xml:space="preserve">
     <value>Image miniature de</value>
   </data>
