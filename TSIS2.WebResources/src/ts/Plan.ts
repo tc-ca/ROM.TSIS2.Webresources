@@ -44,6 +44,18 @@
             planFiscalYearId = planFiscalYearValue[0].id.slice(1, -1);
         }
 
+        let teamPlanningDataPlannedQ1 = 0;
+        let teamPlanningDataPlannedQ2 = 0;
+        let teamPlanningDataPlannedQ3 = 0;
+        let teamPlanningDataPlannedQ4 = 0;
+        let teamPlanningDataPlannedTotal = 0;
+
+        let teamPlanningDataTeamEstimatedDurationQ1 = 0;
+        let teamPlanningDataTeamEstimatedDurationQ2 = 0;
+        let teamPlanningDataTeamEstimatedDurationQ3 = 0;
+        let teamPlanningDataTeamEstimatedDurationQ4 = 0;
+        let teamPlanningDataTeamEstimatedDurationTotal = 0;
+
         if (teamId != null && planFiscalYearId != null) {
 
             //Set the Plan name to a combination of the team and fiscal year
@@ -68,7 +80,7 @@
                 "</fetch>"
             ].join("");
             planfetchXml = "?fetchXml=" + encodeURIComponent(planfetchXml);
-            let planData = await Xrm.WebApi.retrieveMultipleRecords("ts_plan", planfetchXml).then(function success(result) {return result.entities[0];});
+            let planData = await Xrm.WebApi.retrieveMultipleRecords("ts_plan", planfetchXml).then(function success(result) { return result.entities[0]; });
             if (planData == null) {
                 console.log("Failed to load current Plan");
                 return;
@@ -93,6 +105,7 @@
                 "    <attribute name='ts_operationnamefrench'/>",
                 "    <attribute name='ts_visualsecurityinspection'/>",
                 "    <attribute name='ts_issecurityinspectionsite'/>",
+                "    <attribute name='ts_operationalstatus'/>",
                 "    <filter type='or'>",
                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='d883b39a-c751-eb11-a812-000d3af3ac0d' uiname='Railway Carrier' uitype='ovs_operationtype'/>",
                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='da56fea1-c751-eb11-a812-000d3af3ac0d' uiname='Railway Loader' uitype='ovs_operationtype'/>",
@@ -113,7 +126,7 @@
                 "</fetch>"
             ].join("");
             OperationsFetchXml = "?fetchXml=" + encodeURIComponent(OperationsFetchXml);
-            let operations = await Xrm.WebApi.retrieveMultipleRecords("ovs_operation", OperationsFetchXml).then(function success(result) {return result.entities;});
+            let operations = await Xrm.WebApi.retrieveMultipleRecords("ovs_operation", OperationsFetchXml).then(function success(result) { return result.entities; });
             planId = planId.slice(1, -1);
 
             //ID's of the Activity Types that will be be suggested
@@ -124,11 +137,11 @@
             const SIPAXIncidentTypeId = "45c59aa0-511a-ec11-b6e7-000d3a09ce95";
 
             //Retrieve the Activity Type records to get their Estimated Durations
-            const siteInspectionTDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", siteInspectionTDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) {return result;},function (error) {console.log(error.message);});
-            const VSITDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", VSITDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) {return result;},function (error) {console.log(error.message);});
-            const NonSchedule1TDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", NonSchedule1TDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) {return result;},function (error) {console.log(error.message);});
-            const OversightSIPAXIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", OversightSIPAXIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) {return result;},function (error) {console.log(error.message);});
-            const SIPAXIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", SIPAXIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) {return result;},function (error) {console.log(error.message);});
+            const siteInspectionTDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", siteInspectionTDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });
+            const VSITDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", VSITDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });
+            const NonSchedule1TDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", NonSchedule1TDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });
+            const OversightSIPAXIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", OversightSIPAXIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });
+            const SIPAXIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", SIPAXIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });
 
             //Create a suggested inspection for each operation
             for (let operation of operations) {
@@ -150,8 +163,8 @@
                         } else {
                             inspectionCount = riskFrequency;
                         }
-                    // There is a previous date we need to start from
-                    } else { 
+                        // There is a previous date we need to start from
+                    } else {
                         let nextInspectionDate: Date = getNextInspectionDate(lastRiskInspection, riskFrequency, riskInterval);
 
                         /* 
@@ -269,7 +282,7 @@
                     }
                 }
             }
-            
+
             //Retrieve all inspector hours records related to the Plan's team
             var inspectorHoursfetchXml = [
                 "<fetch>",
@@ -310,7 +323,56 @@
                     Xrm.WebApi.createRecord("ts_planinspectorhours", data);
                 }
             }
+
         }
+                
+        var suggestedInspectionsfetchXml = [
+            "<fetch>",
+            "   <entity name='ts_suggestedinspection'>",
+            "       <attribute name='ts_suggestedinspectionid'/>",
+            "       <attribute name='ts_estimatedduration'/>",
+            "       <attribute name='ts_q1'/>",
+            "       <attribute name='ts_q2'/>",
+            "       <attribute name='ts_q3'/>",
+            "       <attribute name='ts_q4'/>",
+            "       <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='ad'>",
+            "           <filter type='and'>",
+            "               <condition attribute='ts_planid' operator='eq' value='", formContext.data.entity.getId(), "'/>",
+                        "</filter>",
+            "       </link-entity>",
+            "   </entity>",
+            "</fetch>"
+        ].join("");
+        suggestedInspectionsfetchXml = "?fetchXml=" + encodeURIComponent(suggestedInspectionsfetchXml);
+        let suggestedInspections = await Xrm.WebApi.retrieveMultipleRecords("ts_suggestedinspection", suggestedInspectionsfetchXml).then(function success(result) {
+            return result.entities;
+        });
+        suggestedInspections.forEach(function (inspection) {
+            teamPlanningDataPlannedQ1 += inspection.ts_q1;
+            teamPlanningDataPlannedQ2 += inspection.ts_q2;
+            teamPlanningDataPlannedQ3 += inspection.ts_q3;
+            teamPlanningDataPlannedQ4 += inspection.ts_q4;
+            teamPlanningDataPlannedTotal += inspection.ts_q1 + inspection.ts_q2 + inspection.ts_q3 + inspection.ts_q4;
+            teamPlanningDataTeamEstimatedDurationQ1 += inspection.ts_estimatedduration * inspection.ts_q1;
+            teamPlanningDataTeamEstimatedDurationQ2 += inspection.ts_estimatedduration * inspection.ts_q2;
+            teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
+            teamPlanningDataTeamEstimatedDurationQ4 += inspection.ts_estimatedduration * inspection.ts_q4;
+            teamPlanningDataTeamEstimatedDurationTotal += inspection.ts_estimatedduration;
+
+        });
+
+        formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
+        formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
+        formContext.getAttribute("ts_plannedactivityq3").setValue(teamPlanningDataPlannedQ3);
+        formContext.getAttribute("ts_plannedactivityq4").setValue(teamPlanningDataPlannedQ4);
+        formContext.getAttribute("ts_plannedactivityfiscalyear").setValue(teamPlanningDataPlannedTotal);
+
+        formContext.getAttribute("ts_estimateddurationq1").setValue(teamPlanningDataTeamEstimatedDurationQ1);
+        formContext.getAttribute("ts_estimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
+        formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
+        formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
+        formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal);
+
         formContext.data.entity.save();
         Xrm.Utility.closeProgressIndicator();
     }

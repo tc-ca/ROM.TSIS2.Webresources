@@ -73,7 +73,7 @@ var ROM;
          */
         function generateSuggestedInspections(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, planfetchXml, planData, teamRegionId, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data;
+                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, planfetchXml, planData, teamRegionId, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data, suggestedInspectionsfetchXml, suggestedInspections;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
@@ -91,6 +91,16 @@ var ROM;
                                 planFiscalYearName = planFiscalYearValue[0].name;
                                 planFiscalYearId = planFiscalYearValue[0].id.slice(1, -1);
                             }
+                            teamPlanningDataPlannedQ1 = 0;
+                            teamPlanningDataPlannedQ2 = 0;
+                            teamPlanningDataPlannedQ3 = 0;
+                            teamPlanningDataPlannedQ4 = 0;
+                            teamPlanningDataPlannedTotal = 0;
+                            teamPlanningDataTeamEstimatedDurationQ1 = 0;
+                            teamPlanningDataTeamEstimatedDurationQ2 = 0;
+                            teamPlanningDataTeamEstimatedDurationQ3 = 0;
+                            teamPlanningDataTeamEstimatedDurationQ4 = 0;
+                            teamPlanningDataTeamEstimatedDurationTotal = 0;
                             if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 9];
                             //Set the Plan name to a combination of the team and fiscal year
                             formContext.getAttribute("ts_name").setValue(teamName + " " + planFiscalYearName);
@@ -136,6 +146,7 @@ var ROM;
                                 "    <attribute name='ts_operationnamefrench'/>",
                                 "    <attribute name='ts_visualsecurityinspection'/>",
                                 "    <attribute name='ts_issecurityinspectionsite'/>",
+                                "    <attribute name='ts_operationalstatus'/>",
                                 "    <filter type='or'>",
                                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='d883b39a-c751-eb11-a812-000d3af3ac0d' uiname='Railway Carrier' uitype='ovs_operationtype'/>",
                                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='da56fea1-c751-eb11-a812-000d3af3ac0d' uiname='Railway Loader' uitype='ovs_operationtype'/>",
@@ -341,6 +352,51 @@ var ROM;
                             }
                             _b.label = 9;
                         case 9:
+                            suggestedInspectionsfetchXml = [
+                                "<fetch>",
+                                "   <entity name='ts_suggestedinspection'>",
+                                "       <attribute name='ts_suggestedinspectionid'/>",
+                                "       <attribute name='ts_estimatedduration'/>",
+                                "       <attribute name='ts_q1'/>",
+                                "       <attribute name='ts_q2'/>",
+                                "       <attribute name='ts_q3'/>",
+                                "       <attribute name='ts_q4'/>",
+                                "       <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='ad'>",
+                                "           <filter type='and'>",
+                                "               <condition attribute='ts_planid' operator='eq' value='", formContext.data.entity.getId(), "'/>",
+                                "</filter>",
+                                "       </link-entity>",
+                                "   </entity>",
+                                "</fetch>"
+                            ].join("");
+                            suggestedInspectionsfetchXml = "?fetchXml=" + encodeURIComponent(suggestedInspectionsfetchXml);
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_suggestedinspection", suggestedInspectionsfetchXml).then(function success(result) {
+                                    return result.entities;
+                                })];
+                        case 10:
+                            suggestedInspections = _b.sent();
+                            suggestedInspections.forEach(function (inspection) {
+                                teamPlanningDataPlannedQ1 += inspection.ts_q1;
+                                teamPlanningDataPlannedQ2 += inspection.ts_q2;
+                                teamPlanningDataPlannedQ3 += inspection.ts_q3;
+                                teamPlanningDataPlannedQ4 += inspection.ts_q4;
+                                teamPlanningDataPlannedTotal += inspection.ts_q1 + inspection.ts_q2 + inspection.ts_q3 + inspection.ts_q4;
+                                teamPlanningDataTeamEstimatedDurationQ1 += inspection.ts_estimatedduration * inspection.ts_q1;
+                                teamPlanningDataTeamEstimatedDurationQ2 += inspection.ts_estimatedduration * inspection.ts_q2;
+                                teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
+                                teamPlanningDataTeamEstimatedDurationQ4 += inspection.ts_estimatedduration * inspection.ts_q4;
+                                teamPlanningDataTeamEstimatedDurationTotal += inspection.ts_estimatedduration;
+                            });
+                            formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
+                            formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
+                            formContext.getAttribute("ts_plannedactivityq3").setValue(teamPlanningDataPlannedQ3);
+                            formContext.getAttribute("ts_plannedactivityq4").setValue(teamPlanningDataPlannedQ4);
+                            formContext.getAttribute("ts_plannedactivityfiscalyear").setValue(teamPlanningDataPlannedTotal);
+                            formContext.getAttribute("ts_estimateddurationq1").setValue(teamPlanningDataTeamEstimatedDurationQ1);
+                            formContext.getAttribute("ts_estimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
+                            formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
+                            formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
+                            formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal);
                             formContext.data.entity.save();
                             Xrm.Utility.closeProgressIndicator();
                             return [2 /*return*/];
