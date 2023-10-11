@@ -869,10 +869,12 @@
     <EmbeddedResource Include="Webresources\resx\AttachFile.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AttachFile.1033.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\AttachFile.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AttachFile.1036.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\CanceledInspectionJustification.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>

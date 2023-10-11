@@ -43,6 +43,17 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                     recordOwner = result.entities[0].recordOwner;
                     recordName = result.entities[0].workOrderNumber;
 
+                    if (recordOwner !== null && recordOwner !== "") {
+                        if (recordOwner.includes('Aviation Security')) {
+                            recordOwner = avsecOwner;
+                        } else if (recordOwner.includes('Intermodal Surface Security Oversight')) {
+                            recordOwner = issoOwner;
+                        }
+                    }
+                    else {
+                        recordOwner = "";
+                    }
+
                     // navigate to the canvas app
                     navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName);
                 },
@@ -51,17 +62,6 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                     console.log("Error retrieving who the owner of the Work Order is by the Operation Type: " + error.message);
                 }
             );
-
-            if (recordOwner !== null && recordOwner !== "") {
-                if (recordOwner.includes('Aviation Security')) {
-                    recordOwner = avsecOwner;
-                } else if (recordOwner.includes('Intermodal Surface Security Oversight')) {
-                    recordOwner = issoOwner;
-                }
-            }
-            else {
-                recordOwner = "";
-            }
         }
 
         //Set the Table Name
