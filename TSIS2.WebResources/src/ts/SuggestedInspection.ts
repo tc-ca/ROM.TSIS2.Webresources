@@ -2,6 +2,9 @@
     export function onLoad(eContext) {
         const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
         setOperationTypeFilteredView(form);
+        setStakeholderFilteredView(form);
+        setSiteFilteredView(form);
+        setActivityTypeFilteredView(form);
 
         const operationTypeValue = form.getAttribute("ts_operationtype").getValue();
         const stakeholderValue = form.getAttribute("ts_stakeholder").getValue();

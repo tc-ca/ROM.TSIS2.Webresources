@@ -42,6 +42,9 @@ var ROM;
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             setOperationTypeFilteredView(form);
+            setStakeholderFilteredView(form);
+            setSiteFilteredView(form);
+            setActivityTypeFilteredView(form);
             var operationTypeValue = form.getAttribute("ts_operationtype").getValue();
             var stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
             var siteValue = form.getAttribute("ts_site").getValue();
