@@ -55,6 +55,7 @@ var ROM;
             if (formContext.ui.getFormType() == 1) { //Create
                 formContext.data.entity.addOnPostSave(generateSuggestedInspections);
             }
+            planStatusOnChange(eContext);
         }
         Plan.onLoad = onLoad;
         /*
@@ -407,7 +408,7 @@ var ROM;
         //Used to lock specific fields in editable grids
         function lockSuggestedInspectionEditableGridFields(executionContext) {
             var formContext = executionContext.getFormContext();
-            var planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
+            var planStatusValue = parent["Xrm"].Page.getAttribute("ts_planstatus").getValue();
             //Change which fields lock depending on the plan status
             var fields = (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_q1", "ts_q2", "ts_q3", "ts_q4"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
             if (formContext) {
