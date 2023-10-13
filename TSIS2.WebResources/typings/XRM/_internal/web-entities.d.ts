@@ -400,6 +400,29 @@ interface ovs_Questionnaire_Create extends ovs_Questionnaire {
 }
 interface ovs_Questionnaire_Update extends ovs_Questionnaire {
 }
+interface SystemUser_Base extends WebEntity {
+}
+interface SystemUser_Fixed extends WebEntity_Fixed {
+  systemuserid: string;
+}
+interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_Relationships {
+}
+interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_FormattedResult {
+}
+interface SystemUser_Select {
+}
+interface SystemUser_Expand {
+}
+interface SystemUser_Filter {
+}
+interface SystemUser_Create extends SystemUser {
+}
+interface SystemUser_Update extends SystemUser {
+}
 interface Team_Base extends WebEntity {
 }
 interface Team_Fixed extends WebEntity_Fixed {
@@ -422,6 +445,29 @@ interface Team_Filter {
 interface Team_Create extends Team {
 }
 interface Team_Update extends Team {
+}
+interface TeamMembership_Base extends WebEntity {
+}
+interface TeamMembership_Fixed extends WebEntity_Fixed {
+  teammembershipid: string;
+}
+interface TeamMembership extends TeamMembership_Base, TeamMembership_Relationships {
+}
+interface TeamMembership_Relationships {
+}
+interface TeamMembership_Result extends TeamMembership_Base, TeamMembership_Relationships {
+}
+interface TeamMembership_FormattedResult {
+}
+interface TeamMembership_Select {
+}
+interface TeamMembership_Expand {
+}
+interface TeamMembership_Filter {
+}
+interface TeamMembership_Create extends TeamMembership {
+}
+interface TeamMembership_Update extends TeamMembership {
 }
 interface ts_action_Base extends WebEntity {
 }
@@ -1090,6 +1136,29 @@ interface Connection_Create extends Connection {
 }
 interface Connection_Update extends Connection {
 }
+interface Post_Base extends WebEntity {
+}
+interface Post_Fixed extends WebEntity_Fixed {
+  postid: string;
+}
+interface Post extends Post_Base, Post_Relationships {
+}
+interface Post_Relationships {
+}
+interface Post_Result extends Post_Base, Post_Relationships {
+}
+interface Post_FormattedResult {
+}
+interface Post_Select {
+}
+interface Post_Expand {
+}
+interface Post_Filter {
+}
+interface Post_Create extends Post {
+}
+interface Post_Update extends Post {
+}
 interface Contact_Base extends WebEntity {
 }
 interface Contact_Fixed extends WebEntity_Fixed {
@@ -1112,29 +1181,6 @@ interface Contact_Filter {
 interface Contact_Create extends Contact {
 }
 interface Contact_Update extends Contact {
-}
-interface SystemUser_Base extends WebEntity {
-}
-interface SystemUser_Fixed extends WebEntity_Fixed {
-  systemuserid: string;
-}
-interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
-}
-interface SystemUser_Relationships {
-}
-interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
-}
-interface SystemUser_FormattedResult {
-}
-interface SystemUser_Select {
-}
-interface SystemUser_Expand {
-}
-interface SystemUser_Filter {
-}
-interface SystemUser_Create extends SystemUser {
-}
-interface SystemUser_Update extends SystemUser {
 }
 interface ServiceAppointment_Base extends WebEntity {
 }
@@ -1204,6 +1250,29 @@ interface ts_role_Filter {
 interface ts_role_Create extends ts_role {
 }
 interface ts_role_Update extends ts_role {
+}
+interface BusinessUnit_Base extends WebEntity {
+}
+interface BusinessUnit_Fixed extends WebEntity_Fixed {
+  businessunitid: string;
+}
+interface BusinessUnit extends BusinessUnit_Base, BusinessUnit_Relationships {
+}
+interface BusinessUnit_Relationships {
+}
+interface BusinessUnit_Result extends BusinessUnit_Base, BusinessUnit_Relationships {
+}
+interface BusinessUnit_FormattedResult {
+}
+interface BusinessUnit_Select {
+}
+interface BusinessUnit_Expand {
+}
+interface BusinessUnit_Filter {
+}
+interface BusinessUnit_Create extends BusinessUnit {
+}
+interface BusinessUnit_Update extends BusinessUnit {
 }
 interface qm_rclegislation_Base extends WebEntity {
 }
@@ -1366,6 +1435,29 @@ interface msdyn_customerassetcategory_Create extends msdyn_customerassetcategory
 }
 interface msdyn_customerassetcategory_Update extends msdyn_customerassetcategory {
 }
+interface SystemUserRoles_Base extends WebEntity {
+}
+interface SystemUserRoles_Fixed extends WebEntity_Fixed {
+  systemuserroleid: string;
+}
+interface SystemUserRoles extends SystemUserRoles_Base, SystemUserRoles_Relationships {
+}
+interface SystemUserRoles_Relationships {
+}
+interface SystemUserRoles_Result extends SystemUserRoles_Base, SystemUserRoles_Relationships {
+}
+interface SystemUserRoles_FormattedResult {
+}
+interface SystemUserRoles_Select {
+}
+interface SystemUserRoles_Expand {
+}
+interface SystemUserRoles_Filter {
+}
+interface SystemUserRoles_Create extends SystemUserRoles {
+}
+interface SystemUserRoles_Update extends SystemUserRoles {
+}
 interface BookingStatus_Base extends WebEntity {
 }
 interface BookingStatus_Fixed extends WebEntity_Fixed {
@@ -1388,27 +1480,4 @@ interface BookingStatus_Filter {
 interface BookingStatus_Create extends BookingStatus {
 }
 interface BookingStatus_Update extends BookingStatus {
-}
-interface TeamMembership_Base extends WebEntity {
-}
-interface TeamMembership_Fixed extends WebEntity_Fixed {
-  teammembershipid: string;
-}
-interface TeamMembership extends TeamMembership_Base, TeamMembership_Relationships {
-}
-interface TeamMembership_Relationships {
-}
-interface TeamMembership_Result extends TeamMembership_Base, TeamMembership_Relationships {
-}
-interface TeamMembership_FormattedResult {
-}
-interface TeamMembership_Select {
-}
-interface TeamMembership_Expand {
-}
-interface TeamMembership_Filter {
-}
-interface TeamMembership_Create extends TeamMembership {
-}
-interface TeamMembership_Update extends TeamMembership {
 }

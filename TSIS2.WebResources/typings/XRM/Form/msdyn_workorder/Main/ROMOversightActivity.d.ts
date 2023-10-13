@@ -20,6 +20,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "f1tab_mainsettings_section_5"): Xrm.PageSection;
         get(name: "general_section"): Xrm.PageSection;
         get(name: "related_to_section"): Xrm.PageSection;
+        get(name: "section_supporting_region"): Xrm.PageSection;
         get(name: "service_tasks_section"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
@@ -328,6 +329,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "subgrid_supportingregion"): Xrm.SubGridControl<"territory">;
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: "ts_accountableteam"): Xrm.LookupControl<"team">;
       get(name: "ts_actualcost"): Xrm.NumberControl;
@@ -364,6 +366,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_traveltime"): Xrm.NumberControl;
       get(name: "ts_trip"): Xrm.LookupControl<"ts_trip">;
       get(name: "ts_trip1"): Xrm.LookupControl<"ts_trip">;
+      get(name: "ts_trip2"): Xrm.LookupControl<"ts_trip">;
       get(name: "ts_woreportinganddocumentation"): Xrm.NumberControl;
       get(name: "ts_workorderenddate"): Xrm.DateControl;
       get(name: "ts_workorderstartdate"): Xrm.DateControl;
@@ -607,6 +610,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "subgrid_supportingregion"): Xrm.SubGridControl<"territory">;
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: "ts_accountableteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_actualcost"): Xrm.NumberControl;
@@ -643,6 +647,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_traveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_trip"): Xrm.LookupControl<"ts_trip">;
     getControl(controlName: "ts_trip1"): Xrm.LookupControl<"ts_trip">;
+    getControl(controlName: "ts_trip2"): Xrm.LookupControl<"ts_trip">;
     getControl(controlName: "ts_woreportinganddocumentation"): Xrm.NumberControl;
     getControl(controlName: "ts_workorderenddate"): Xrm.DateControl;
     getControl(controlName: "ts_workorderstartdate"): Xrm.DateControl;
