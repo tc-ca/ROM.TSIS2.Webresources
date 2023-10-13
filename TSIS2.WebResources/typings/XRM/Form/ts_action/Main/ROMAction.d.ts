@@ -29,6 +29,7 @@ declare namespace Form.ts_action.Main {
       get(name: "ts_actionstatus"): Xrm.OptionSetAttribute<ts_actionstatus>;
       get(name: "ts_actiontype"): Xrm.OptionSetAttribute<ts_actiontype>;
       get(name: "ts_amtamount"): Xrm.NumberAttribute;
+      get(name: "ts_case"): Xrm.LookupAttribute<"incident">;
       get(name: "ts_contact"): Xrm.LookupAttribute<"contact">;
       get(name: "ts_deliverymethod"): Xrm.OptionSetAttribute<ts_deliverymethod>;
       get(name: "ts_details"): Xrm.Attribute<any>;
@@ -44,6 +45,7 @@ declare namespace Form.ts_action.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "header_ts_case"): Xrm.LookupControl<"incident">;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "subgrid_related_findings"): Xrm.SubGridControl<"ts_actionfinding">;
       get(name: "ts_actioncategory"): Xrm.OptionSetControl<ts_actioncategory>;
@@ -79,6 +81,7 @@ declare namespace Form.ts_action.Main {
     getAttribute(attributeName: "ts_actionstatus"): Xrm.OptionSetAttribute<ts_actionstatus>;
     getAttribute(attributeName: "ts_actiontype"): Xrm.OptionSetAttribute<ts_actiontype>;
     getAttribute(attributeName: "ts_amtamount"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_case"): Xrm.LookupAttribute<"incident">;
     getAttribute(attributeName: "ts_contact"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "ts_deliverymethod"): Xrm.OptionSetAttribute<ts_deliverymethod>;
     getAttribute(attributeName: "ts_details"): Xrm.Attribute<any>;
@@ -89,6 +92,7 @@ declare namespace Form.ts_action.Main {
     getAttribute(attributeName: "ts_timedate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "header_ts_case"): Xrm.LookupControl<"incident">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "subgrid_related_findings"): Xrm.SubGridControl<"ts_actionfinding">;
     getControl(controlName: "ts_actioncategory"): Xrm.OptionSetControl<ts_actioncategory>;

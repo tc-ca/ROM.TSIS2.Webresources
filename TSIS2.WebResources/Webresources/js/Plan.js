@@ -405,8 +405,11 @@ var ROM;
             });
         }
         //Used to lock specific fields in editable grids
-        function lockSuggestedInspectionEditableGridFields(executionContext, fields) {
+        function lockSuggestedInspectionEditableGridFields(executionContext) {
             var formContext = executionContext.getFormContext();
+            var planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
+            //Change which fields lock depending on the plan status
+            var fields = (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_q1", "ts_q2", "ts_q3", "ts_q4"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
             if (formContext) {
                 var entity = formContext.data.entity;
                 entity.attributes.forEach(function (attribute, i) {
@@ -424,5 +427,42 @@ var ROM;
             nextInspectionDate.setMonth(nextInspectionDate.getMonth() + monthsToAdd);
             return nextInspectionDate;
         }
+        function userHasRole(rolesName) {
+            var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+            var hasRole = false;
+            var roles = rolesName.split("|");
+            roles.forEach(function (roleItem) {
+                userRoles.forEach(function (userRoleItem) {
+                    if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase())
+                        hasRole = true;
+                });
+            });
+            return hasRole;
+        }
+        function planStatusOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
+            if (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) {
+                formContext.getControl("ts_team").setDisabled(true);
+                formContext.getControl("ts_fiscalyear").setDisabled(true);
+                formContext.getControl("header_ownerid").setDisabled(true);
+                if (userHasRole("System Administrator|ROM - Business Admin")) {
+                    formContext.getControl("ts_planstatus").setDisabled(false);
+                }
+                else {
+                    formContext.getControl("ts_planstatus").setDisabled(true);
+                }
+            }
+            else {
+                formContext.getControl("ts_team").setDisabled(false);
+                formContext.getControl("ts_fiscalyear").setDisabled(false);
+                formContext.getControl("header_ownerid").setDisabled(false);
+                formContext.getControl("header_ownerid").setDisabled(false);
+                formContext.getControl("ts_planstatus").setDisabled(false);
+            }
+            formContext.ui.refreshRibbon();
+            formContext.data.entity.save();
+        }
+        Plan.planStatusOnChange = planStatusOnChange;
     })(Plan = ROM.Plan || (ROM.Plan = {}));
 })(ROM || (ROM = {}));
