@@ -1,6 +1,13 @@
 declare namespace Form.ts_suggestedinspection.Main {
   namespace Information {
     namespace Tabs {
+      interface tab_2 extends Xrm.SectionCollectionBase {
+        get(name: "tab_2_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -24,7 +31,8 @@ declare namespace Form.ts_suggestedinspection.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "grid_supportingregion"): Xrm.SubGridControl<"territory">;
+      get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_activitytype"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_category"): Xrm.OptionSetControl<ts_plancategory>;
       get(name: "ts_estimatedduration"): Xrm.NumberControl;
@@ -45,6 +53,7 @@ declare namespace Form.ts_suggestedinspection.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -68,7 +77,8 @@ declare namespace Form.ts_suggestedinspection.Main {
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "grid_supportingregion"): Xrm.SubGridControl<"territory">;
+    getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_activitytype"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_category"): Xrm.OptionSetControl<ts_plancategory>;
     getControl(controlName: "ts_estimatedduration"): Xrm.NumberControl;
