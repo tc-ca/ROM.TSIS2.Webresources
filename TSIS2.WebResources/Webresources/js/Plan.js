@@ -55,7 +55,25 @@ var ROM;
             if (formContext.ui.getFormType() == 1) { //Create
                 formContext.data.entity.addOnPostSave(generateSuggestedInspections);
             }
-            planStatusOnChange(eContext);
+            var planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
+            if (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) {
+                formContext.getControl("ts_team").setDisabled(true);
+                formContext.getControl("ts_fiscalyear").setDisabled(true);
+                formContext.getControl("header_ownerid").setDisabled(true);
+                if (userHasRole("System Administrator|ROM - Business Admin")) {
+                    formContext.getControl("ts_planstatus").setDisabled(false);
+                }
+                else {
+                    formContext.getControl("ts_planstatus").setDisabled(true);
+                }
+            }
+            else {
+                formContext.getControl("ts_team").setDisabled(false);
+                formContext.getControl("ts_fiscalyear").setDisabled(false);
+                formContext.getControl("header_ownerid").setDisabled(false);
+                formContext.getControl("header_ownerid").setDisabled(false);
+                formContext.getControl("ts_planstatus").setDisabled(false);
+            }
         }
         Plan.onLoad = onLoad;
         /*
