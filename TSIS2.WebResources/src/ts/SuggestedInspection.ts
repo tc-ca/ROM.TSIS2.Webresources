@@ -2,6 +2,36 @@
     export function onLoad(eContext) {
         const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
         setOperationTypeFilteredView(form);
+        setStakeholderFilteredView(form);
+        setSiteFilteredView(form);
+        setActivityTypeFilteredView(form);
+
+        const operationTypeValue = form.getAttribute("ts_operationtype").getValue();
+        const stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
+        const siteValue = form.getAttribute("ts_site").getValue();
+        const activityTypeValue = form.getAttribute("ts_activitytype").getValue();
+        const operationValue = form.getAttribute("ts_operation").getValue();
+
+        if (operationTypeValue != null) {
+            form.getControl("ts_stakeholder").setDisabled(false);
+        }
+
+        if (stakeholderValue != null) {
+            form.getControl("ts_stakeholder").setDisabled(false);
+            form.getControl("ts_site").setDisabled(false);
+        }
+
+        if (siteValue != null) {
+            form.getControl("ts_site").setDisabled(false);
+        }
+
+        if (operationValue != null) {
+            form.getControl("ts_activitytype").setDisabled(false);
+        }
+
+        if (activityTypeValue != null) {
+            form.getControl("ts_activitytype").setDisabled(false);
+        }
     }
 
     export function operationTypeOnChange(eContext) {

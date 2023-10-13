@@ -42,6 +42,30 @@ var ROM;
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             setOperationTypeFilteredView(form);
+            setStakeholderFilteredView(form);
+            setSiteFilteredView(form);
+            setActivityTypeFilteredView(form);
+            var operationTypeValue = form.getAttribute("ts_operationtype").getValue();
+            var stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
+            var siteValue = form.getAttribute("ts_site").getValue();
+            var activityTypeValue = form.getAttribute("ts_activitytype").getValue();
+            var operationValue = form.getAttribute("ts_operation").getValue();
+            if (operationTypeValue != null) {
+                form.getControl("ts_stakeholder").setDisabled(false);
+            }
+            if (stakeholderValue != null) {
+                form.getControl("ts_stakeholder").setDisabled(false);
+                form.getControl("ts_site").setDisabled(false);
+            }
+            if (siteValue != null) {
+                form.getControl("ts_site").setDisabled(false);
+            }
+            if (operationValue != null) {
+                form.getControl("ts_activitytype").setDisabled(false);
+            }
+            if (activityTypeValue != null) {
+                form.getControl("ts_activitytype").setDisabled(false);
+            }
         }
         SuggestedInspection.onLoad = onLoad;
         function operationTypeOnChange(eContext) {
