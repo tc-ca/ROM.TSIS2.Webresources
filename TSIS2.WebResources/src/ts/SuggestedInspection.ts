@@ -104,8 +104,6 @@
             setSiteFilteredView(form);
         } else {
             //Set Operation Field
-
-            //Get
             const operationTypeValue = form.getAttribute("ts_operationtype").getValue();
             const stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
             let operationTypeId;
@@ -144,12 +142,14 @@
                     return result.entities[0];
                 });
                 if (operation != null) {
+                    //Create Operation Lookup to set as Operation
                     const operationlookup = new Array();
                     operationlookup[0] = new Object();
                     operationlookup[0].id = operation.ovs_operationid;
                     operationlookup[0].name = operation.ovs_name;
                     operationlookup[0].entityType = 'ovs_operation';
 
+                    //Create Risk Lookup to set as Risk
                     const risklookup = new Array();
                     risklookup[0] = new Object();
                     risklookup[0].id = operation["risk.ts_riskcategoryid"];
