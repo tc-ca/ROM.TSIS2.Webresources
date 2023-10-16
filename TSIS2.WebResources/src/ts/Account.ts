@@ -7,7 +7,7 @@ namespace ROM.Account {
         if (addressControl != null && addressControl != undefined) {
             addressControl.setVisible(false);
         }
-         
+
         if (form.getAttribute("ts_statusstartdate").getValue() != null) {
             form.getControl("ts_statusenddate").setDisabled(false);
             form.getControl("ts_statusdescription").setDisabled(false);
@@ -17,16 +17,16 @@ namespace ROM.Account {
 
         //If owner is ISSO, replace operations view
         const ownerAttribute = form.getAttribute("ownerid")
-        if(ownerAttribute != null && ownerAttribute != undefined){
+        if (ownerAttribute != null && ownerAttribute != undefined) {
             const ownerAttributeValue = ownerAttribute.getValue();
-            if(ownerAttributeValue != null){
-                if(ownerAttributeValue[0].name == "Intermodal Surface Security Oversight (ISSO)"){
-                    let operationView = 
-                        {
-                            entityType: "savedquery",
-                            id: "{f3c99b02-591d-ed11-b83e-002248ae429c}",
-                            name: "Active Operations ISSO (Stakeholder)"
-                        }
+            if (ownerAttributeValue != null) {
+                if (ownerAttributeValue[0].name == "Intermodal Surface Security Oversight (ISSO)") {
+                    let operationView =
+                    {
+                        entityType: "savedquery",
+                        id: "{f3c99b02-591d-ed11-b83e-002248ae429c}",
+                        name: "Active Operations ISSO (Stakeholder)"
+                    }
                     form.getControl("Operations").getViewSelector().setCurrentView(operationView);
                 }
             }
@@ -35,7 +35,11 @@ namespace ROM.Account {
         //Lock for non Admin users
         if (!userHasRole("System Administrator|ROM - Business Admin")) {
             form.getControl("name").setDisabled(true);
-            form.getControl("ovs_legalname").setDisabled(true);         
+            form.getControl("ovs_legalname").setDisabled(true);
+        }
+        else {
+            form.getControl("ovs_accountnameenglish").setVisible(true);
+            form.getControl("ovs_accountnamefrench").setVisible(true);
         }
     }
 
@@ -43,7 +47,7 @@ namespace ROM.Account {
         const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
         const statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
         const statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
-        if (statusStartDateValue != null) {           
+        if (statusStartDateValue != null) {
             if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                 form.getAttribute("ts_stakeholderstatus").setValue(ts_stakeholderstatus.NonOperational);
             }
@@ -147,7 +151,7 @@ namespace ROM.Account {
         if (statusStartDateValue != null) {
             form.getControl("ts_statusenddate").setDisabled(false);
             form.getControl("ts_statusdescription").setDisabled(false);
-            form.getAttribute("ts_statusdescription").setRequiredLevel("required");           
+            form.getAttribute("ts_statusdescription").setRequiredLevel("required");
         }
         else {
             form.getAttribute("ts_statusdescription").setRequiredLevel("none");
@@ -156,7 +160,7 @@ namespace ROM.Account {
             form.getControl("ts_statusenddate").setDisabled(true);
             form.getControl("ts_statusdescription").setDisabled(true);
         }
-        
+
     }
 
     export function userHasRole(rolesName) {
