@@ -814,6 +814,29 @@ interface ts_ovs_operation_ovs_operation_Create extends ts_ovs_operation_ovs_ope
 }
 interface ts_ovs_operation_ovs_operation_Update extends ts_ovs_operation_ovs_operation {
 }
+interface ts_Plan_Base extends WebEntity {
+}
+interface ts_Plan_Fixed extends WebEntity_Fixed {
+  ts_planid: string;
+}
+interface ts_Plan extends ts_Plan_Base, ts_Plan_Relationships {
+}
+interface ts_Plan_Relationships {
+}
+interface ts_Plan_Result extends ts_Plan_Base, ts_Plan_Relationships {
+}
+interface ts_Plan_FormattedResult {
+}
+interface ts_Plan_Select {
+}
+interface ts_Plan_Expand {
+}
+interface ts_Plan_Filter {
+}
+interface ts_Plan_Create extends ts_Plan {
+}
+interface ts_Plan_Update extends ts_Plan {
+}
 interface ts_PlanningData_Base extends WebEntity {
 }
 interface ts_PlanningData_Fixed extends WebEntity_Fixed {

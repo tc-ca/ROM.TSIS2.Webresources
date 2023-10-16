@@ -2,6 +2,36 @@
     export function onLoad(eContext) {
         const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
         setOperationTypeFilteredView(form);
+        setStakeholderFilteredView(form);
+        setSiteFilteredView(form);
+        setActivityTypeFilteredView(form);
+
+        const operationTypeValue = form.getAttribute("ts_operationtype").getValue();
+        const stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
+        const siteValue = form.getAttribute("ts_site").getValue();
+        const activityTypeValue = form.getAttribute("ts_activitytype").getValue();
+        const operationValue = form.getAttribute("ts_operation").getValue();
+
+        if (operationTypeValue != null) {
+            form.getControl("ts_stakeholder").setDisabled(false);
+        }
+
+        if (stakeholderValue != null) {
+            form.getControl("ts_stakeholder").setDisabled(false);
+            form.getControl("ts_site").setDisabled(false);
+        }
+
+        if (siteValue != null) {
+            form.getControl("ts_site").setDisabled(false);
+        }
+
+        if (operationValue != null) {
+            form.getControl("ts_activitytype").setDisabled(false);
+        }
+
+        if (activityTypeValue != null) {
+            form.getControl("ts_activitytype").setDisabled(false);
+        }
     }
 
     export function operationTypeOnChange(eContext) {
@@ -64,6 +94,7 @@
             form.getAttribute("ts_operation").setValue(null);
             form.getAttribute("ts_activitytype").setValue(null);
             form.getAttribute("ts_riskthreshold").setValue(null);
+            form.getAttribute("ts_estimatedduration").setValue(null);
 
             form.getControl("ts_operation").setDisabled(true);
             form.getControl("ts_activitytype").setDisabled(true);
@@ -73,8 +104,6 @@
             setSiteFilteredView(form);
         } else {
             //Set Operation Field
-
-            //Get
             const operationTypeValue = form.getAttribute("ts_operationtype").getValue();
             const stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
             let operationTypeId;
@@ -100,6 +129,11 @@
                     "      <condition attribute='ts_site' operator='eq' value='", siteId, "' uitype='msdyn_functionallocation'/>",
                     "      <condition attribute='statecode' operator='eq' value='0'/>",
                     "    </filter>",
+                    "    <link-entity name='ts_riskcategory' from='ts_riskcategoryid' to='ts_risk' alias='risk'>",
+                    "      <attribute name='ts_riskcategoryid'/>",
+                    "      <attribute name='ts_riskcategoryen'/>",
+                    "      <attribute name='ts_riskcategoryfr'/>",
+                    "    </link-entity>",
                     "  </entity>",
                     "</fetch>"
                 ].join("");
@@ -108,11 +142,20 @@
                     return result.entities[0];
                 });
                 if (operation != null) {
-                    const lookup = new Array();
-                    lookup[0] = new Object();
-                    lookup[0].id = operation.ovs_operationid;
-                    lookup[0].name = operation.ovs_name;
-                    lookup[0].entityType = 'ovs_operation';
+                    //Create Operation Lookup to set as Operation
+                    const operationlookup = new Array();
+                    operationlookup[0] = new Object();
+                    operationlookup[0].id = operation.ovs_operationid;
+                    operationlookup[0].name = operation.ovs_name;
+                    operationlookup[0].entityType = 'ovs_operation';
+
+                    //Create Risk Lookup to set as Risk
+                    const risklookup = new Array();
+                    risklookup[0] = new Object();
+                    risklookup[0].id = operation["risk.ts_riskcategoryid"];
+                    risklookup[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? operation["risk.ts_riskcategoryfr"] : operation["risk.ts_riskcategoryen"];
+                    risklookup[0].entityType = 'ts_riskcategory';
+                    form.getAttribute('ts_riskthreshold').setValue(risklookup);
 
                     if (operation.ts_operationalstatus == 717750001) {
                         form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + operation.ovs_name + "\" is non-operational." : "L'opération \"" + operation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
@@ -120,8 +163,7 @@
                     }
                     else {
                         form.ui.clearFormNotification("non-operational-operation");
-                        form.getAttribute('ts_operation').setValue(lookup);
-                        const operationValue = form.getAttribute("ts_operation").getValue();
+                        form.getAttribute('ts_operation').setValue(operationlookup);
                         form.getControl("ts_activitytype").setDisabled(false);
                         setActivityTypeFilteredView(form);
                     }
@@ -133,27 +175,18 @@
 
     export function activityTypeOnChange(eContext) {
         const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
-
         const activtyTypeValue = form.getAttribute("ts_activitytype").getValue();
         let activityypeId;
         if (activtyTypeValue != null) {
             activityypeId = activtyTypeValue[0].id;
 
-            Xrm.WebApi.retrieveRecord("msdyn_incidenttype", activityypeId, "?$select=msdyn_name,_ts_riskscore_value,msdyn_estimatedduration&$expand=ts_RiskScore($select=ts_englishname,ts_frenchname,ts_recurrencefrequenciesid)")
+            Xrm.WebApi.retrieveRecord("msdyn_incidenttype", activityypeId, "?$select=msdyn_estimatedduration")
                 .then(function success(result) {
                     if (result != null) {
-                        const lookup = new Array();
-                        lookup[0] = new Object();
-                        lookup[0].id = result.ts_RiskScore.ts_recurrencefrequenciesid;
-                        lookup[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? result.ts_RiskScore.ts_frenchname : result.ts_RiskScore.ts_englishname;
-                        lookup[0].entityType = 'ts_riskcategory';
-
-                        form.getAttribute('ts_riskthreshold').setValue(lookup);
                         form.getAttribute('ts_estimatedduration').setValue(result.msdyn_estimatedduration / 60);
                     }
                 });
         } else {
-            form.getAttribute('ts_riskthreshold').setValue(null);
             form.getAttribute('ts_estimatedduration').setValue(null);
         }
     }

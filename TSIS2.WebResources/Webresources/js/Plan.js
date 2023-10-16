@@ -55,6 +55,25 @@ var ROM;
             if (formContext.ui.getFormType() == 1) { //Create
                 formContext.data.entity.addOnPostSave(generateSuggestedInspections);
             }
+            var planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
+            if (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) {
+                formContext.getControl("ts_team").setDisabled(true);
+                formContext.getControl("ts_fiscalyear").setDisabled(true);
+                formContext.getControl("header_ownerid").setDisabled(true);
+                if (userHasRole("System Administrator|ROM - Business Admin")) {
+                    formContext.getControl("ts_planstatus").setDisabled(false);
+                }
+                else {
+                    formContext.getControl("ts_planstatus").setDisabled(true);
+                }
+            }
+            else {
+                formContext.getControl("ts_team").setDisabled(false);
+                formContext.getControl("ts_fiscalyear").setDisabled(false);
+                formContext.getControl("header_ownerid").setDisabled(false);
+                formContext.getControl("header_ownerid").setDisabled(false);
+                formContext.getControl("ts_planstatus").setDisabled(false);
+            }
         }
         Plan.onLoad = onLoad;
         /*
@@ -252,12 +271,23 @@ var ROM;
                                                 if (operation.ts_visualsecurityinspection == 717750001 /* Yes */) {
                                                     VSIData = __assign({}, data);
                                                     SiteInspectionData = __assign({}, data);
-                                                    VSIData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + VSITDGIncidentTypeId + ")"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
-                                                    VSIData["ts_estimatedduration"] = VSITDGIncidentType.msdyn_estimatedduration / 60;
-                                                    Xrm.WebApi.createRecord("ts_suggestedinspection", VSIData).then(function success(result) { }, function (error) { console.log(error.message); });
-                                                    SiteInspectionData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + siteInspectionTDGIncidentTypeId + ")"; //Site Inspection (TDG)
-                                                    SiteInspectionData["ts_estimatedduration"] = siteInspectionTDGIncidentType.msdyn_estimatedduration / 60;
-                                                    Xrm.WebApi.createRecord("ts_suggestedinspection", SiteInspectionData).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                    //If more than one ispection is due this year, just do 1 VSI and 1 Site Inspection
+                                                    if (inspectionCount > 1) {
+                                                        VSIData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + VSITDGIncidentTypeId + ")"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
+                                                        VSIData["ts_estimatedduration"] = VSITDGIncidentType.msdyn_estimatedduration / 60;
+                                                        VSIData["ts_q1"] = 1;
+                                                        Xrm.WebApi.createRecord("ts_suggestedinspection", VSIData).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                        SiteInspectionData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + siteInspectionTDGIncidentTypeId + ")"; //Site Inspection (TDG)
+                                                        SiteInspectionData["ts_estimatedduration"] = siteInspectionTDGIncidentType.msdyn_estimatedduration / 60;
+                                                        SiteInspectionData["ts_q1"] = 1;
+                                                        Xrm.WebApi.createRecord("ts_suggestedinspection", SiteInspectionData).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                        //Else do a VSI's
+                                                    }
+                                                    else {
+                                                        VSIData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + VSITDGIncidentTypeId + ")"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
+                                                        VSIData["ts_estimatedduration"] = VSITDGIncidentType.msdyn_estimatedduration / 60;
+                                                        Xrm.WebApi.createRecord("ts_suggestedinspection", VSIData).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                    }
                                                 }
                                                 else {
                                                     SiteInspectionData = __assign({}, data);
@@ -271,12 +301,23 @@ var ROM;
                                                 if (operation.ts_visualsecurityinspection == 717750001 /* Yes */) {
                                                     VSIData = __assign({}, data);
                                                     nonSchedule1Data = __assign({}, data);
-                                                    VSIData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + VSITDGIncidentTypeId + ")"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
-                                                    VSIData["ts_estimatedduration"] = VSITDGIncidentType.msdyn_estimatedduration / 60;
-                                                    Xrm.WebApi.createRecord("ts_suggestedinspection", VSIData).then(function success(result) { }, function (error) { console.log(error.message); });
-                                                    nonSchedule1Data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + NonSchedule1TDGIncidentTypeId + ")"; //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
-                                                    nonSchedule1Data["ts_estimatedduration"] = NonSchedule1TDGIncidentType.msdyn_estimatedduration / 60;
-                                                    Xrm.WebApi.createRecord("ts_suggestedinspection", nonSchedule1Data).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                    //If more than one ispection is due this year, just do 1 VSI and 1 non-Schedule 1 Site Inspection
+                                                    if (inspectionCount > 1) {
+                                                        VSIData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + VSITDGIncidentTypeId + ")"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
+                                                        VSIData["ts_estimatedduration"] = VSITDGIncidentType.msdyn_estimatedduration / 60;
+                                                        VSIData["ts_q1"] = 1;
+                                                        Xrm.WebApi.createRecord("ts_suggestedinspection", VSIData).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                        nonSchedule1Data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + NonSchedule1TDGIncidentTypeId + ")"; //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
+                                                        nonSchedule1Data["ts_estimatedduration"] = NonSchedule1TDGIncidentType.msdyn_estimatedduration / 60;
+                                                        nonSchedule1Data["ts_q1"] = 1;
+                                                        Xrm.WebApi.createRecord("ts_suggestedinspection", nonSchedule1Data).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                        //Else do a VSI's
+                                                    }
+                                                    else {
+                                                        VSIData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + VSITDGIncidentTypeId + ")"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
+                                                        VSIData["ts_estimatedduration"] = VSITDGIncidentType.msdyn_estimatedduration / 60;
+                                                        Xrm.WebApi.createRecord("ts_suggestedinspection", VSIData).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                    }
                                                 }
                                                 else {
                                                     nonSchedule1Data = __assign({}, data);
@@ -291,12 +332,23 @@ var ROM;
                                             if (operation.ts_issecurityinspectionsite == 717750001 /* Yes */) {
                                                 OversightData = __assign({}, data);
                                                 SiteInspectionData = __assign({}, data);
-                                                OversightData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + OversightSIPAXIncidentTypeId + ")"; //Oversight of Security Inspections(PAX)
-                                                OversightData["ts_estimatedduration"] = OversightSIPAXIncidentType.msdyn_estimatedduration / 60;
-                                                Xrm.WebApi.createRecord("ts_suggestedinspection", OversightData).then(function success(result) { }, function (error) { console.log(error.message); });
-                                                SiteInspectionData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + SIPAXIncidentTypeId + ")"; //Site Inspection (PAX)
-                                                SiteInspectionData["ts_estimatedduration"] = SIPAXIncidentType.msdyn_estimatedduration / 60;
-                                                Xrm.WebApi.createRecord("ts_suggestedinspection", SiteInspectionData).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                //If more than 1 inspection is due, just do 1 Oversight and 1 Site inspection
+                                                if (inspectionCount > 1) {
+                                                    OversightData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + OversightSIPAXIncidentTypeId + ")"; //Oversight of Security Inspections(PAX)
+                                                    OversightData["ts_estimatedduration"] = OversightSIPAXIncidentType.msdyn_estimatedduration / 60;
+                                                    OversightData["ts_q1"] = 1;
+                                                    Xrm.WebApi.createRecord("ts_suggestedinspection", OversightData).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                    SiteInspectionData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + SIPAXIncidentTypeId + ")"; //Site Inspection (PAX)
+                                                    SiteInspectionData["ts_estimatedduration"] = SIPAXIncidentType.msdyn_estimatedduration / 60;
+                                                    SiteInspectionData["ts_q1"] = 1;
+                                                    Xrm.WebApi.createRecord("ts_suggestedinspection", SiteInspectionData).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                }
+                                                //Else just do 1 Oversight
+                                                else {
+                                                    OversightData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + OversightSIPAXIncidentTypeId + ")"; //Oversight of Security Inspections(PAX)
+                                                    OversightData["ts_estimatedduration"] = OversightSIPAXIncidentType.msdyn_estimatedduration / 60;
+                                                    Xrm.WebApi.createRecord("ts_suggestedinspection", OversightData).then(function success(result) { }, function (error) { console.log(error.message); });
+                                                }
                                             }
                                             else {
                                                 SiteInspectionData = __assign({}, data);
@@ -405,8 +457,11 @@ var ROM;
             });
         }
         //Used to lock specific fields in editable grids
-        function lockSuggestedInspectionEditableGridFields(executionContext, fields) {
+        function lockSuggestedInspectionEditableGridFields(executionContext) {
             var formContext = executionContext.getFormContext();
+            var planStatusValue = parent["Xrm"].Page.getAttribute("ts_planstatus").getValue();
+            //Change which fields lock depending on the plan status
+            var fields = (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_q1", "ts_q2", "ts_q3", "ts_q4"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
             if (formContext) {
                 var entity = formContext.data.entity;
                 entity.attributes.forEach(function (attribute, i) {
@@ -424,5 +479,42 @@ var ROM;
             nextInspectionDate.setMonth(nextInspectionDate.getMonth() + monthsToAdd);
             return nextInspectionDate;
         }
+        function userHasRole(rolesName) {
+            var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+            var hasRole = false;
+            var roles = rolesName.split("|");
+            roles.forEach(function (roleItem) {
+                userRoles.forEach(function (userRoleItem) {
+                    if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase())
+                        hasRole = true;
+                });
+            });
+            return hasRole;
+        }
+        function planStatusOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            var planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
+            if (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) {
+                formContext.getControl("ts_team").setDisabled(true);
+                formContext.getControl("ts_fiscalyear").setDisabled(true);
+                formContext.getControl("header_ownerid").setDisabled(true);
+                if (userHasRole("System Administrator|ROM - Business Admin")) {
+                    formContext.getControl("ts_planstatus").setDisabled(false);
+                }
+                else {
+                    formContext.getControl("ts_planstatus").setDisabled(true);
+                }
+            }
+            else {
+                formContext.getControl("ts_team").setDisabled(false);
+                formContext.getControl("ts_fiscalyear").setDisabled(false);
+                formContext.getControl("header_ownerid").setDisabled(false);
+                formContext.getControl("header_ownerid").setDisabled(false);
+                formContext.getControl("ts_planstatus").setDisabled(false);
+            }
+            formContext.ui.refreshRibbon();
+            formContext.data.entity.save();
+        }
+        Plan.planStatusOnChange = planStatusOnChange;
     })(Plan = ROM.Plan || (ROM.Plan = {}));
 })(ROM || (ROM = {}));

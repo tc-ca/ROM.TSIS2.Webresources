@@ -34,6 +34,10 @@ var ROM;
                 form.getControl("name").setDisabled(true);
                 form.getControl("ovs_legalname").setDisabled(true);
             }
+            else {
+                form.getControl("ovs_accountnameenglish").setVisible(true);
+                form.getControl("ovs_accountnamefrench").setVisible(true);
+            }
         }
         Account.onLoad = onLoad;
         function onSave(eContext) {
