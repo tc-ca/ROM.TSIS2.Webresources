@@ -94,6 +94,11 @@ namespace ROM.WorkOrderServiceTask {
             Form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "To unlock completed questionnaires please contact your manager." : "Pour déverrouiller un questionnaire complété, veuillez contacter votre gestionnaire."), "WARNING", "completed_questionnaire");
 
         }
+
+        //Lock for non Admin users
+        if (!userHasRole("System Administrator|ROM - Business Admin")) {
+            Form.getControl("ts_mandatory").setDisabled(true);
+        }
     }
 
     export function serviceTaskStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -772,6 +777,18 @@ namespace ROM.WorkOrderServiceTask {
             isInspectionType: isInspectionType
         };
     }
+}
+
+function userHasRole(rolesName) {
+    var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+    var hasRole = false;
+    var roles = rolesName.split("|");
+    roles.forEach(function (roleItem) {
+        userRoles.forEach(function (userRoleItem) {
+            if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
+        });
+    });
+    return hasRole;
 }
 
 function CompleteQuestionnaire(wrCtrl) {
