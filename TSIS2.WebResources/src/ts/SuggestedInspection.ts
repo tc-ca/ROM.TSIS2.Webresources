@@ -163,8 +163,8 @@
 
     export function activityTypeOnChange(eContext) {
         const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
-
         const activtyTypeValue = form.getAttribute("ts_activitytype").getValue();
+        const operationValue = form.getAttribute("ts_operation").getValue();
         let activityypeId;
         if (activtyTypeValue != null) {
             activityypeId = activtyTypeValue[0].id;
@@ -186,6 +186,23 @@
             form.getAttribute('ts_riskthreshold').setValue(null);
             form.getAttribute('ts_estimatedduration').setValue(null);
         }
+        let operationId;
+        if (operationValue != null) {
+            operationId = operationValue[0].id;
+
+            Xrm.WebApi.retrieveRecord("ovs_operation", operationId, "?$select=_ts_risk_value&$expand=ts_risk($select=ts_riskcategoryen,ts_riskcategoryfr)")
+                .then(function success(result) {
+                    if (result != null) {
+                        const lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = result._ts_risk_value;
+                        lookup[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? result.ts_risk.ts_riskcategoryfr : result.ts_risk.ts_riskcategoryen;
+                        lookup[0].entityType = 'ts_riskcategory';
+                        form.getAttribute('ts_riskthreshold').setValue(lookup);
+                    }
+                });
+        }
+        
     }
 
     function setOperationTypeFilteredView(form: Form.ts_suggestedinspection.Main.Information): void {

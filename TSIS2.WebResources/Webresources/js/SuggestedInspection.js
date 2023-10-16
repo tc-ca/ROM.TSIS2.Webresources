@@ -195,6 +195,7 @@ var ROM;
         function activityTypeOnChange(eContext) {
             var form = eContext.getFormContext();
             var activtyTypeValue = form.getAttribute("ts_activitytype").getValue();
+            var operationValue = form.getAttribute("ts_operation").getValue();
             var activityypeId;
             if (activtyTypeValue != null) {
                 activityypeId = activtyTypeValue[0].id;
@@ -214,6 +215,21 @@ var ROM;
             else {
                 form.getAttribute('ts_riskthreshold').setValue(null);
                 form.getAttribute('ts_estimatedduration').setValue(null);
+            }
+            var operationId;
+            if (operationValue != null) {
+                operationId = operationValue[0].id;
+                Xrm.WebApi.retrieveRecord("ovs_operation", operationId, "?$select=_ts_risk_value&$expand=ts_risk($select=ts_riskcategoryen,ts_riskcategoryfr)")
+                    .then(function success(result) {
+                    if (result != null) {
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = result._ts_risk_value;
+                        lookup[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? result.ts_risk.ts_riskcategoryfr : result.ts_risk.ts_riskcategoryen;
+                        lookup[0].entityType = 'ts_riskcategory';
+                        form.getAttribute('ts_riskthreshold').setValue(lookup);
+                    }
+                });
             }
         }
         SuggestedInspection.activityTypeOnChange = activityTypeOnChange;
