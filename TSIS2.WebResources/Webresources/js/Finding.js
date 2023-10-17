@@ -178,6 +178,9 @@ var ROM;
                             }
                             showHideNonComplianceTimeframe(formContext);
                         }
+                        else {
+                            formContext.getControl("ts_finalenforcementaction").setVisible(false);
+                        }
                         if (shouldShowISSOOnlyFields(isDualInspector, operationTypeOwningBusinessUnit, userBusinessUnitName)) {
                             formContext.getControl("ts_issueaddressedonsite").setVisible(true);
                             formContext.getControl("ts_notetostakeholder").setVisible(true);

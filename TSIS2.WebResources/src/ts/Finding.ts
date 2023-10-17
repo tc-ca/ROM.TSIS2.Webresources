@@ -97,13 +97,13 @@
                                 }
                             }
                             //Show RATE Sections and fields when the operation type owning business unit is Aviation Security or if the user business unit is Transport Canada
-                            else {                             
+                            else {
                                 const findingID = formContext.data.entity.getId();
                                 let findingFetchXml = [
                                     "<fetch>",
                                     "  <entity name='ovs_finding'>",
                                     "    <filter type='and'>",
-                                    "      <condition attribute='ovs_findingid' operator='eq' value='", findingID,"'/>",
+                                    "      <condition attribute='ovs_findingid' operator='eq' value='", findingID, "'/>",
                                     "    </filter>",
                                     "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_functionallocation' alias='site'>",
                                     "      <attribute name='ts_region'/>",
@@ -149,7 +149,7 @@
                                     }
                                 });
 
-                                
+
                             }
                         }
                         approvingNCATTeamsOnChange(eContext);
@@ -161,6 +161,9 @@
                         }
 
                         showHideNonComplianceTimeframe(formContext);
+                    }
+                    else {
+                        formContext.getControl("ts_finalenforcementaction").setVisible(false);
                     }
 
                     if (shouldShowISSOOnlyFields(isDualInspector, operationTypeOwningBusinessUnit, userBusinessUnitName)) {
