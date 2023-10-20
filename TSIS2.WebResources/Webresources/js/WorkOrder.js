@@ -54,6 +54,7 @@ var ROM;
             var ownerControl = form.getControl("ownerid");
             var headerOwnerControl = form.getControl("header_ownerid");
             //Set comment field visible if AvSec
+            //Set Overtime field visible for AvSec
             var userBusinessUnitName;
             var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
             var currentUserBusinessUnitFetchXML = [
@@ -74,6 +75,7 @@ var ROM;
                 userBusinessUnitName = businessunit.entities[0].name;
                 if (userBusinessUnitName.startsWith("Aviation")) {
                     form.getControl("ts_details").setVisible(true);
+                    form.getControl("ts_overtime").setVisible(true);
                 }
                 //Set disabled false for quarter fields if ISSO
                 else {

@@ -8,6 +8,29 @@ var ROM;
             if (form.ui.getFormType() == 1) {
                 setProgramToUserBusinessUnit(eContext);
             }
+            //Set Overtime field visible for AvSec
+            var userBusinessUnitName;
+            var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+            var currentUserBusinessUnitFetchXML = [
+                "<fetch top='50'>",
+                "  <entity name='businessunit'>",
+                "    <attribute name='name' />",
+                "    <attribute name='businessunitid' />",
+                "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
+                "      <filter>",
+                "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+                "      </filter>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+            Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
+                userBusinessUnitName = businessunit.entities[0].name;
+                if (userBusinessUnitName.startsWith("Aviation")) {
+                    form.getControl("ts_overtime").setVisible(true);
+                }
+            });
         }
         NonOversightActivity.onLoad = onLoad;
         function dateOfActivityOnChange(eContext) {

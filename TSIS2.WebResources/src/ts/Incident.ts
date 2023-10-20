@@ -59,6 +59,7 @@ namespace ROM.Incident {
         );
 
         //Hide Associate Evidence for AvSec users
+        //Set Overtime field visible for AvSec
         let userBusinessUnitName;
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
@@ -79,6 +80,7 @@ namespace ROM.Incident {
             userBusinessUnitName = businessunit.entities[0].name;
             if (userBusinessUnitName.startsWith("Aviation")) {
                 form.ui.tabs.get("tab_findings").sections.get("tab_findings_section_aef").setVisible(false);
+                form.getControl("ts_overtime").setVisible(true);
             }
         });
 
