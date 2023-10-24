@@ -123,6 +123,15 @@
   <data name="AttachedFilesGalleryAccessibleLabel" xml:space="preserve">
     <value>Liste de fichiers téléchargés</value>
   </data>
+  <data name="ClearAttachmentsText" xml:space="preserve">
+    <value>Effacer les pièces jointes</value>
+  </data>
+  <data name="DescriptionText" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DetailsHeaderText" xml:space="preserve">
+    <value>Détails</value>
+  </data>
   <data name="ErrorNotificationLabel" xml:space="preserve">
     <value>ERREUR</value>
   </data>
@@ -141,17 +150,32 @@
   <data name="NoAttachmentsText" xml:space="preserve">
     <value />
   </data>
+  <data name="NoFilesText" xml:space="preserve">
+    <value>Glisser le(s) fichier(s) ici ou cliquez sur le trombone pour joindre le(s) fichier(s)</value>
+  </data>
+  <data name="NumberOfFilesAttachedText" xml:space="preserve">
+    <value>fichiers joints.</value>
+  </data>
   <data name="ReturnButtonAccessibleLabel" xml:space="preserve">
     <value>Retourner à la section pour télécharger vos fichiers</value>
   </data>
   <data name="ReturnButtonText" xml:space="preserve">
     <value>Retourner</value>
   </data>
+  <data name="SubHeadingText" xml:space="preserve">
+    <value>Ajouter une pièce jointe</value>
+  </data>
+  <data name="SuccessfulUploadText" xml:space="preserve">
+    <value>Téléchargement de fichier réussi</value>
+  </data>
   <data name="SuccessNotificationLabel" xml:space="preserve">
     <value>SUCCÈS</value>
   </data>
   <data name="TagInputAccessibleLabel" xml:space="preserve">
     <value>Le fichier va être marqué avec</value>
+  </data>
+  <data name="UnsuccessfulUploadText" xml:space="preserve">
+    <value>Échec du téléchargement du fichier</value>
   </data>
   <data name="UploadButtonText" xml:space="preserve">
     <value>Télécharger</value>
@@ -161,5 +185,11 @@
   </data>
   <data name="UploadingProgressText" xml:space="preserve">
     <value>Vos fichiers ont été téléchargés</value>
+  </data>
+  <data name="UploadingText" xml:space="preserve">
+    <value>Téléchargement</value>
+  </data>
+  <data name="UploadWarningText" xml:space="preserve">
+    <value>Le(s) ficher(s) joints n'ont pas été téléchargés</value>
   </data>
 </root>

@@ -79,6 +79,33 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear Attachments.
+        /// </summary>
+        internal static string ClearAttachmentsText {
+            get {
+                return ResourceManager.GetString("ClearAttachmentsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string DescriptionText {
+            get {
+                return ResourceManager.GetString("DescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        internal static string DetailsHeaderText {
+            get {
+                return ResourceManager.GetString("DetailsHeaderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ERROR.
         /// </summary>
         internal static string ErrorNotificationLabel {
@@ -133,6 +160,24 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drag file(s) here or click the paper clip to attach file(s).
+        /// </summary>
+        internal static string NoFilesText {
+            get {
+                return ResourceManager.GetString("NoFilesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to files attached..
+        /// </summary>
+        internal static string NumberOfFilesAttachedText {
+            get {
+                return ResourceManager.GetString("NumberOfFilesAttachedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Return to upload file section.
         /// </summary>
         internal static string ReturnButtonAccessibleLabel {
@@ -151,6 +196,24 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add an attachment.
+        /// </summary>
+        internal static string SubHeadingText {
+            get {
+                return ResourceManager.GetString("SubHeadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File upload successful.
+        /// </summary>
+        internal static string SuccessfulUploadText {
+            get {
+                return ResourceManager.GetString("SuccessfulUploadText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SUCCESS.
         /// </summary>
         internal static string SuccessNotificationLabel {
@@ -165,6 +228,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static string TagInputAccessibleLabel {
             get {
                 return ResourceManager.GetString("TagInputAccessibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File upload unsuccessful.
+        /// </summary>
+        internal static string UnsuccessfulUploadText {
+            get {
+                return ResourceManager.GetString("UnsuccessfulUploadText", resourceCulture);
             }
         }
         
@@ -192,6 +264,24 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static string UploadingProgressText {
             get {
                 return ResourceManager.GetString("UploadingProgressText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploading.
+        /// </summary>
+        internal static string UploadingText {
+            get {
+                return ResourceManager.GetString("UploadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attached file(s) haven&apos;t been uploaded.
+        /// </summary>
+        internal static string UploadWarningText {
+            get {
+                return ResourceManager.GetString("UploadWarningText", resourceCulture);
             }
         }
     }
