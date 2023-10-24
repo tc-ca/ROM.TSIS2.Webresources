@@ -79,6 +79,33 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Effacer les pièces jointes.
+        /// </summary>
+        internal static string ClearAttachmentsText {
+            get {
+                return ResourceManager.GetString("ClearAttachmentsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string DescriptionText {
+            get {
+                return ResourceManager.GetString("DescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Détails.
+        /// </summary>
+        internal static string DetailsHeaderText {
+            get {
+                return ResourceManager.GetString("DetailsHeaderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ERREUR.
         /// </summary>
         internal static string ErrorNotificationLabel {
@@ -133,6 +160,24 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Glisser le(s) fichier(s) ici ou cliquez sur le trombone pour joindre le(s) fichier(s).
+        /// </summary>
+        internal static string NoFilesText {
+            get {
+                return ResourceManager.GetString("NoFilesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to fichiers joints..
+        /// </summary>
+        internal static string NumberOfFilesAttachedText {
+            get {
+                return ResourceManager.GetString("NumberOfFilesAttachedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retourner à la section pour télécharger vos fichiers.
         /// </summary>
         internal static string ReturnButtonAccessibleLabel {
@@ -151,6 +196,24 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ajouter une pièce jointe.
+        /// </summary>
+        internal static string SubHeadingText {
+            get {
+                return ResourceManager.GetString("SubHeadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Téléchargement de fichier réussi.
+        /// </summary>
+        internal static string SuccessfulUploadText {
+            get {
+                return ResourceManager.GetString("SuccessfulUploadText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SUCCÈS.
         /// </summary>
         internal static string SuccessNotificationLabel {
@@ -165,6 +228,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static string TagInputAccessibleLabel {
             get {
                 return ResourceManager.GetString("TagInputAccessibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Échec du téléchargement du fichier.
+        /// </summary>
+        internal static string UnsuccessfulUploadText {
+            get {
+                return ResourceManager.GetString("UnsuccessfulUploadText", resourceCulture);
             }
         }
         
@@ -192,6 +264,24 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static string UploadingProgressText {
             get {
                 return ResourceManager.GetString("UploadingProgressText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Téléchargement.
+        /// </summary>
+        internal static string UploadingText {
+            get {
+                return ResourceManager.GetString("UploadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Le(s) ficher(s) joints n&apos;ont pas été téléchargés.
+        /// </summary>
+        internal static string UploadWarningText {
+            get {
+                return ResourceManager.GetString("UploadWarningText", resourceCulture);
             }
         }
     }
