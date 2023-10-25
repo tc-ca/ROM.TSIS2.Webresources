@@ -13,6 +13,33 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
     let recordName = "";
 
+    let mainHeadingEnglish = "";
+    let mainHeadingFrench = "";
+
+    let caseHeaderEnglish = "Add File(s) to Case Documents";
+    let caseHeaderFrench = "Ajouter un/des fichier(s) aux documents du cas";
+
+    let workOrderHeaderEnglish = "Add File(s) to Work Order Documents";
+    let workOrderHeaderFrench = "Ajouter un/des fichier(s) aux documents d'ordre de travail";
+
+    let workOrderServiceTaskHeaderEnglish = "Add File(s) to Inspection Documents";
+    let workOrderServiceTaskHeaderFrench = "Ajouter un/des fichier(s) aux documents d'inspection";
+
+    let stakeholderHeaderEnglish = "Add File(s) to Stakeholder Documents";
+    let stakeholderHeaderFrench = "Ajouter un/des fichier(s) aux documents d'intervenant";
+
+    let siteHeaderEnglish = "Add File(s) to Site Documents";
+    let siteHeaderFrench = "Ajouter un/des fichier(s) aux documents du site";
+
+    let operationHeaderEnglish = "Add File(s) to Operation Documents";
+    let operationHeaderFrench = "Ajouter un/des fichier(s) aux documents d'opération";
+
+    let securityIncidentHeaderEnglish = "Add File(s) to Security Incident Documents";
+    let securityIncidentHeaderFrench = "Ajouter un/des fichier(s) aux documents de l'incident de sûreté";
+
+    let exemptionHeaderEnglish = "Add File(s) to Exemption Documents";
+    let exemptionHeaderFrench = "Ajouter un/des fichier(s) aux documents d'exemption";
+
     //Logic for getting tags when attaching files to Work Orders
     if (PrimaryTypeEntityName == "msdyn_workorder") {
         recordTagId = PrimaryControl.data.entity.getId().replace("{", "").replace("}", "");
@@ -54,8 +81,12 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                         recordOwner = "";
                     }
 
+                    //Set the header
+                    mainHeadingEnglish = workOrderHeaderEnglish;
+                    mainHeadingFrench = workOrderHeaderFrench;
+
                     // navigate to the canvas app
-                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName);
+                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName,mainHeadingFrench,mainHeadingEnglish);
                 },
                 function (error) {
                     // handle error conditions
@@ -73,7 +104,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 }
 
 // Separate method to navigate to the canvas app
-function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName) {
+function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName,mainHeadingFrench,mainHeadingEnglish) {
 
     var jsonData = {
         recordId: recordTagId,
@@ -98,7 +129,7 @@ function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEngl
         position: 1,
         width: { value: 1000, unit: "px" },
         height: { value: 1000, unit: "px" },
-        title: (lang == 1036) ? "Documents (FR)" : "Documents"
+        title: (lang == 1036) ? mainHeadingFrench : mainHeadingEnglish
     };
     Xrm.Navigation.navigateTo(pageInput, navigationOptions)
         .then(

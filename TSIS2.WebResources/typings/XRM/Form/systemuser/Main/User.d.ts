@@ -26,6 +26,16 @@ declare namespace Form.systemuser.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface Omnichannel_TAB extends Xrm.SectionCollectionBase {
+        get(name: "SECTION_Skills"): Xrm.PageSection;
+        get(name: "tab_6_section_2"): Xrm.PageSection;
+        get(name: "tab_6_section_4"): Xrm.PageSection;
+        get(name: "tab_6_section_5"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface SUMMARY_TAB extends Xrm.SectionCollectionBase {
         get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
         get(name: "SUMMARY_TAB_section_10"): Xrm.PageSection;
@@ -58,16 +68,6 @@ declare namespace Form.systemuser.Main {
       }
       interface tab_6 extends Xrm.SectionCollectionBase {
         get(name: "tab_6_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_6 extends Xrm.SectionCollectionBase {
-        get(name: "SECTION_Skills"): Xrm.PageSection;
-        get(name: "tab_6_section_2"): Xrm.PageSection;
-        get(name: "tab_6_section_4"): Xrm.PageSection;
-        get(name: "tab_6_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -214,10 +214,10 @@ declare namespace Form.systemuser.Main {
       get(name: "ADMINISTRATION_TAB"): Xrm.PageTab<Tabs.ADMINISTRATION_TAB>;
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
       get(name: "MobileOfflineProfile_TAB"): Xrm.PageTab<Tabs.MobileOfflineProfile_TAB>;
+      get(name: "Omnichannel_TAB"): Xrm.PageTab<Tabs.Omnichannel_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: "VirtualAgentDetailsTab"): Xrm.PageTab<Tabs.VirtualAgentDetailsTab>;
       get(name: "VirtualAgentSummaryTab"): Xrm.PageTab<Tabs.VirtualAgentSummaryTab>;
-      get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];

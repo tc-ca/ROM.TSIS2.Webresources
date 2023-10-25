@@ -11,13 +11,13 @@ interface ts_nonoversightactivity_Base extends WebEntity {
   ts_description?: string | null;
   ts_name?: string | null;
   ts_nonoversightactivityid?: string | null;
+  ts_overtime?: number | null;
   ts_quarter?: ts_quarter | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
 interface ts_nonoversightactivity_Relationships {
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
-  ts_Program?: BusinessUnit_Result | null;
 }
 interface ts_nonoversightactivity extends ts_nonoversightactivity_Base, ts_nonoversightactivity_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -53,6 +53,7 @@ interface ts_nonoversightactivity_Select {
   ts_fiscalyear_guid: WebAttribute<ts_nonoversightactivity_Select, { ts_fiscalyear_guid: string | null }, { ts_fiscalyear_formatted?: string }>;
   ts_name: WebAttribute<ts_nonoversightactivity_Select, { ts_name: string | null }, {  }>;
   ts_nonoversightactivityid: WebAttribute<ts_nonoversightactivity_Select, { ts_nonoversightactivityid: string | null }, {  }>;
+  ts_overtime: WebAttribute<ts_nonoversightactivity_Select, { ts_overtime: number | null }, {  }>;
   ts_program_guid: WebAttribute<ts_nonoversightactivity_Select, { ts_program_guid: string | null }, { ts_program_formatted?: string }>;
   ts_quarter: WebAttribute<ts_nonoversightactivity_Select, { ts_quarter: ts_quarter | null }, { ts_quarter_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_nonoversightactivity_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -81,6 +82,7 @@ interface ts_nonoversightactivity_Filter {
   ts_fiscalyear_guid: XQW.Guid;
   ts_name: string;
   ts_nonoversightactivityid: XQW.Guid;
+  ts_overtime: any;
   ts_program_guid: XQW.Guid;
   ts_quarter: ts_quarter;
   utcconversiontimezonecode: number;
@@ -92,11 +94,9 @@ interface ts_nonoversightactivity_Expand {
   modifiedby: WebExpand<ts_nonoversightactivity_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ts_nonoversightactivity_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ownerid: WebExpand<ts_nonoversightactivity_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
-  owningbusinessunit: WebExpand<ts_nonoversightactivity_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<ts_nonoversightactivity_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_nonoversightactivity_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_FiscalYear: WebExpand<ts_nonoversightactivity_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
-  ts_Program: WebExpand<ts_nonoversightactivity_Expand, BusinessUnit_Select, BusinessUnit_Filter, { ts_Program: BusinessUnit_Result }>;
 }
 interface ts_nonoversightactivity_FormattedResult {
   createdby_formatted?: string;
@@ -138,11 +138,9 @@ interface ts_nonoversightactivity_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
-  ts_Program: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
 }
 interface ts_nonoversightactivity_RelatedMany {
 }

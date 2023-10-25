@@ -10,6 +10,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
       get(name: "ts_description"): Xrm.Attribute<string>;
       get(name: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ts_name"): Xrm.Attribute<string>;
+      get(name: "ts_overtime"): Xrm.NumberAttribute;
       get(name: "ts_program"): Xrm.LookupAttribute<"businessunit">;
       get(name: "ts_quarter"): Xrm.OptionSetAttribute<ts_quarter>;
       get(name: string): undefined;
@@ -25,6 +26,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
       get(name: "ts_description"): Xrm.StringControl;
       get(name: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ts_name"): Xrm.StringControl;
+      get(name: "ts_overtime"): Xrm.NumberControl;
       get(name: "ts_program"): Xrm.LookupControl<"businessunit">;
       get(name: "ts_quarter"): Xrm.OptionSetControl<ts_quarter>;
       get(name: string): undefined;
@@ -47,6 +49,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
     getAttribute(attributeName: "ts_description"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_program"): Xrm.LookupAttribute<"businessunit">;
     getAttribute(attributeName: "ts_quarter"): Xrm.OptionSetAttribute<ts_quarter>;
     getAttribute(attributeName: string): undefined;
@@ -57,6 +60,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
     getControl(controlName: "ts_description"): Xrm.StringControl;
     getControl(controlName: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
+    getControl(controlName: "ts_overtime"): Xrm.NumberControl;
     getControl(controlName: "ts_program"): Xrm.LookupControl<"businessunit">;
     getControl(controlName: "ts_quarter"): Xrm.OptionSetControl<ts_quarter>;
     getControl(controlName: string): undefined;

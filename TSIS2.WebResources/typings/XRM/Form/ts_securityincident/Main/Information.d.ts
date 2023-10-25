@@ -94,6 +94,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_organization"): Xrm.Attribute<string>;
       get(name: "ts_origin"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_othercompany"): Xrm.Attribute<string>;
+      get(name: "ts_overtime"): Xrm.NumberAttribute;
       get(name: "ts_owneroftherailwaylinetrack"): Xrm.Attribute<string>;
       get(name: "ts_phone"): Xrm.Attribute<string>;
       get(name: "ts_policeresponse"): Xrm.Attribute<any>;
@@ -190,6 +191,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_organization"): Xrm.StringControl;
       get(name: "ts_origin"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_othercompany"): Xrm.StringControl;
+      get(name: "ts_overtime"): Xrm.NumberControl;
       get(name: "ts_owneroftherailwaylinetrack"): Xrm.StringControl;
       get(name: "ts_phone"): Xrm.StringControl;
       get(name: "ts_policeresponse"): Xrm.Control<Xrm.Attribute<any>>;
@@ -292,6 +294,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_organization"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_origin"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_othercompany"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_owneroftherailwaylinetrack"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_phone"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_policeresponse"): Xrm.Attribute<any>;
@@ -383,6 +386,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_organization"): Xrm.StringControl;
     getControl(controlName: "ts_origin"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_othercompany"): Xrm.StringControl;
+    getControl(controlName: "ts_overtime"): Xrm.NumberControl;
     getControl(controlName: "ts_owneroftherailwaylinetrack"): Xrm.StringControl;
     getControl(controlName: "ts_phone"): Xrm.StringControl;
     getControl(controlName: "ts_policeresponse"): Xrm.Control<Xrm.Attribute<any>>;

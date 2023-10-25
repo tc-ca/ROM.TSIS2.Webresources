@@ -5,4 +5,5 @@ declare const enum ts_reportingcategory {
   AirCargoAirCarrier = 741130003,
   ScreeningAuthority = 741130004,
   OtherRegulatedEntities = 741130005,
+  Custom = 741130006,
 }

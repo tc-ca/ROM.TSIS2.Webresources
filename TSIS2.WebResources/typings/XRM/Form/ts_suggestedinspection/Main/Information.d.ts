@@ -25,6 +25,7 @@ declare namespace Form.ts_suggestedinspection.Main {
       get(name: "ts_riskthreshold"): Xrm.LookupAttribute<"ts_riskcategory">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
+      get(name: "ts_trip"): Xrm.LookupAttribute<"ts_trip">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -47,6 +48,7 @@ declare namespace Form.ts_suggestedinspection.Main {
       get(name: "ts_riskthreshold"): Xrm.LookupControl<"ts_riskcategory">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
+      get(name: "ts_trip"): Xrm.LookupControl<"ts_trip">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -76,6 +78,7 @@ declare namespace Form.ts_suggestedinspection.Main {
     getAttribute(attributeName: "ts_riskthreshold"): Xrm.LookupAttribute<"ts_riskcategory">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "ts_trip"): Xrm.LookupAttribute<"ts_trip">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "grid_supportingregion"): Xrm.SubGridControl<"territory">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -93,6 +96,7 @@ declare namespace Form.ts_suggestedinspection.Main {
     getControl(controlName: "ts_riskthreshold"): Xrm.LookupControl<"ts_riskcategory">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
+    getControl(controlName: "ts_trip"): Xrm.LookupControl<"ts_trip">;
     getControl(controlName: string): undefined;
   }
 }
