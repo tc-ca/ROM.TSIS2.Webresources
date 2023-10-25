@@ -698,3 +698,7 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
         }); 
     } 
 }
+
+function copyEnforcementActionToolResults(primaryContorl, SelectedControlsSelectedItemReferences) {
+
+}
