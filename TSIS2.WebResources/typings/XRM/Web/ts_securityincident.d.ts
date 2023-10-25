@@ -38,6 +38,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_name?: string | null;
   ts_organization?: string | null;
   ts_othercompany?: string | null;
+  ts_overtime?: number | null;
   ts_owneroftherailwaylinetrack?: string | null;
   ts_phone?: string | null;
   ts_policeresponse?: boolean | null;
@@ -91,7 +92,6 @@ interface ts_securityincident_Relationships {
   ts_securityincident_Appointments?: Appointment_Result[] | null;
   ts_securityincident_Emails?: Email_Result[] | null;
   ts_securityincident_PostFollows?: PostFollow_Result[] | null;
-  ts_securityincident_Posts?: Post_Result[] | null;
   ts_securityincident_ServiceAppointments?: ServiceAppointment_Result[] | null;
   ts_securityincident_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   ts_ts_securityincident_msdyn_workorder_SecurityIncident?: msdyn_workorder_Result[] | null;
@@ -169,6 +169,7 @@ interface ts_securityincident_Select {
   ts_organization: WebAttribute<ts_securityincident_Select, { ts_organization: string | null }, {  }>;
   ts_origin_guid: WebAttribute<ts_securityincident_Select, { ts_origin_guid: string | null }, { ts_origin_formatted?: string }>;
   ts_othercompany: WebAttribute<ts_securityincident_Select, { ts_othercompany: string | null }, {  }>;
+  ts_overtime: WebAttribute<ts_securityincident_Select, { ts_overtime: number | null }, {  }>;
   ts_owneroftherailwaylinetrack: WebAttribute<ts_securityincident_Select, { ts_owneroftherailwaylinetrack: string | null }, {  }>;
   ts_phone: WebAttribute<ts_securityincident_Select, { ts_phone: string | null }, {  }>;
   ts_policeresponse: WebAttribute<ts_securityincident_Select, { ts_policeresponse: boolean | null }, {  }>;
@@ -268,6 +269,7 @@ interface ts_securityincident_Filter {
   ts_organization: string;
   ts_origin_guid: XQW.Guid;
   ts_othercompany: string;
+  ts_overtime: any;
   ts_owneroftherailwaylinetrack: string;
   ts_phone: string;
   ts_policeresponse: boolean;
@@ -320,7 +322,6 @@ interface ts_securityincident_Expand {
   modifiedby: WebExpand<ts_securityincident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ts_securityincident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ownerid: WebExpand<ts_securityincident_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
-  owningbusinessunit: WebExpand<ts_securityincident_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<ts_securityincident_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_securityincident_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_AirCarrier: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_AirCarrier: Account_Result }>;
@@ -337,7 +338,6 @@ interface ts_securityincident_Expand {
   ts_securityincident_Appointments: WebExpand<ts_securityincident_Expand, Appointment_Select, Appointment_Filter, { ts_securityincident_Appointments: Appointment_Result[] }>;
   ts_securityincident_Emails: WebExpand<ts_securityincident_Expand, Email_Select, Email_Filter, { ts_securityincident_Emails: Email_Result[] }>;
   ts_securityincident_PostFollows: WebExpand<ts_securityincident_Expand, PostFollow_Select, PostFollow_Filter, { ts_securityincident_PostFollows: PostFollow_Result[] }>;
-  ts_securityincident_Posts: WebExpand<ts_securityincident_Expand, Post_Select, Post_Filter, { ts_securityincident_Posts: Post_Result[] }>;
   ts_securityincident_ServiceAppointments: WebExpand<ts_securityincident_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ts_securityincident_ServiceAppointments: ServiceAppointment_Result[] }>;
   ts_securityincident_ts_enforcementactions: WebExpand<ts_securityincident_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_securityincident_ts_enforcementactions: ts_enforcementaction_Result[] }>;
   ts_ts_securityincident_msdyn_workorder_SecurityIncident: WebExpand<ts_securityincident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_ts_securityincident_msdyn_workorder_SecurityIncident: msdyn_workorder_Result[] }>;
@@ -420,7 +420,6 @@ interface ts_securityincident_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_AirCarrier: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
@@ -439,7 +438,6 @@ interface ts_securityincident_RelatedMany {
   ts_securityincident_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   ts_securityincident_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   ts_securityincident_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
-  ts_securityincident_Posts: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   ts_securityincident_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   ts_securityincident_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_ts_securityincident_msdyn_workorder_SecurityIncident: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;

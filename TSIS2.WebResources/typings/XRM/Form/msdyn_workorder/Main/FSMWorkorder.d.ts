@@ -13,6 +13,27 @@ declare namespace Form.msdyn_workorder.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tabProducts extends Xrm.SectionCollectionBase {
+        get(name: "sectionProducts"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tabServices extends Xrm.SectionCollectionBase {
+        get(name: "sectionServices"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tabTasks extends Xrm.SectionCollectionBase {
+        get(name: "sectionTasks"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_8 extends Xrm.SectionCollectionBase {
         get(name: "tab_8_section_2"): Xrm.PageSection;
         get(name: string): undefined;
@@ -108,9 +129,9 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_workhourtemplate"): Xrm.LookupControl<"msdyn_workhourtemplate">;
       get(name: "msdyn_workordersummary"): Xrm.StringControl;
       get(name: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
-      get(name: "productsSubGrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
-      get(name: "serviceTasksSubGrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
-      get(name: "servicesSubGrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
+      get(name: "subgridProdcuts"): Xrm.SubGridControl<"msdyn_workorderproduct">;
+      get(name: "subgridServices"): Xrm.SubGridControl<"msdyn_workorderservice">;
+      get(name: "subgridTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -118,6 +139,9 @@ declare namespace Form.msdyn_workorder.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}"): Xrm.PageTab<Tabs.b8e326ee5c214a18ba55e3b56966c249>;
+      get(name: "tabProducts"): Xrm.PageTab<Tabs.tabProducts>;
+      get(name: "tabServices"): Xrm.PageTab<Tabs.tabServices>;
+      get(name: "tabTasks"): Xrm.PageTab<Tabs.tabTasks>;
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -207,9 +231,9 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_workhourtemplate"): Xrm.LookupControl<"msdyn_workhourtemplate">;
     getControl(controlName: "msdyn_workordersummary"): Xrm.StringControl;
     getControl(controlName: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
-    getControl(controlName: "productsSubGrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
-    getControl(controlName: "serviceTasksSubGrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
-    getControl(controlName: "servicesSubGrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
+    getControl(controlName: "subgridProdcuts"): Xrm.SubGridControl<"msdyn_workorderproduct">;
+    getControl(controlName: "subgridServices"): Xrm.SubGridControl<"msdyn_workorderservice">;
+    getControl(controlName: "subgridTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
     getControl(controlName: string): undefined;
   }
 }

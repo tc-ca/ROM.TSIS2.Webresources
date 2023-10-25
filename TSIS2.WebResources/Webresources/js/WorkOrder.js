@@ -239,9 +239,9 @@ var ROM;
                         form.getControl("header_ownerid").setDisabled(true);
                         form.getControl("ownerid").setDisabled(true);
                     }
-                    if (form.getAttribute("ts_trip").getValue() != null) {
-                        form.getControl("ts_traveltime").setVisible(false);
-                    }
+                    //if (form.getAttribute("ts_trip").getValue() != null) {
+                    //    form.getControl("ts_traveltime").setVisible(false);
+                    //}
                     showHideContact(form);
                     break;
                 default:
@@ -280,32 +280,35 @@ var ROM;
             }, function (error) {
             });
             //Hide Quarters field for ISSO WO based on Operation Type owner
-            var operationType = form.getAttribute("ovs_operationtypeid").getValue();
-            if (operationType != null) {
-                var operationTypeOwningBusinessUnitFetchXML = [
-                    "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
-                    "  <entity name='businessunit'>",
-                    "    <attribute name='name'/>",
-                    "    <attribute name='businessunitid'/>",
-                    "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
-                    "      <filter>",
-                    "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationType[0].id, "'/>",
-                    "      </filter>",
-                    "    </link-entity>",
-                    "  </entity>",
-                    "</fetch>"
-                ].join("");
-                operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
-                Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function success(result) {
-                    if (!result.entities[0].name.startsWith("Avia")) {
-                        form.getControl("ts_quarterofpreparationtime").setVisible(false);
-                        form.getControl("ts_quarterofconductingoversight").setVisible(false);
-                        form.getControl("ts_quarterofreportinganddocumentation").setVisible(false);
-                        form.getControl("ts_quarteroftraveltime").setVisible(false);
-                    }
-                }, function (error) {
-                });
-            }
+            //const operationType = form.getAttribute("ovs_operationtypeid").getValue();
+            //if (operationType != null) {
+            //let operationTypeOwningBusinessUnitFetchXML = [
+            //    "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
+            //    "  <entity name='businessunit'>",
+            //    "    <attribute name='name'/>",
+            //    "    <attribute name='businessunitid'/>",
+            //    "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
+            //    "      <filter>",
+            //    "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationType[0].id, "'/>",
+            //    "      </filter>",
+            //    "    </link-entity>",
+            //    "  </entity>",
+            //    "</fetch>"
+            //].join("");
+            //    operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+            //    Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(
+            //        function success(result) {
+            //            if (!result.entities[0].name.startsWith("Avia")) {                        
+            //                form.getControl("ts_quarterofpreparationtime").setVisible(false);
+            //                form.getControl("ts_quarterofconductingoversight").setVisible(false);
+            //                form.getControl("ts_quarterofreportinganddocumentation").setVisible(false);
+            //                form.getControl("ts_quarteroftraveltime").setVisible(false);
+            //            }
+            //        },
+            //        function (error) {
+            //        }
+            //    );
+            //}
             //Check if the Work Order is past the Planned Fiscal Quarter
             setCantCompleteinspectionVisibility(form);
             setIncompleteWorkOrderReasonFilteredView(form);
@@ -862,9 +865,9 @@ var ROM;
         function systemStatusOnChange(eContext) {
             var form = eContext.getFormContext();
             var newSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
-            var preparationTime = form.getAttribute("ts_preparationtime").getValue();
-            var conductingOversight = form.getAttribute("ts_conductingoversight").getValue();
-            var woReportingAndDocumentation = form.getAttribute("ts_woreportinganddocumentation").getValue();
+            //var preparationTime = form.getAttribute("ts_preparationtime").getValue();
+            //var conductingOversight = form.getAttribute("ts_conductingoversight").getValue();
+            //var woReportingAndDocumentation = form.getAttribute("ts_woreportinganddocumentation").getValue();
             //If user try to cancel Complete WO
             if (currentSystemStatus == 690970003 && newSystemStatus == 690970005) {
                 var alertStrings = {
@@ -924,30 +927,30 @@ var ROM;
                             form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
                             form.getControl("ts_completedquarter").setVisible(true);
                         }
-                        if (preparationTime == null || woReportingAndDocumentation == null || conductingOversight == null) {
-                            var alertStrings = {
-                                text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithoutTimeTrackingFieldsText"),
-                                title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithoutTimeTrackingFieldsTitle")
-                            };
-                            var alertOptions = { height: 160, width: 340 };
-                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
-                                form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
-                                //All required time tracking fields must be input before the Work order can be closed.
-                                form.getAttribute("ts_preparationtime").setRequiredLevel("required");
-                                form.getAttribute("ts_conductingoversight").setRequiredLevel("required");
-                                form.getAttribute("ts_woreportinganddocumentation").setRequiredLevel("required");
-                            });
-                        }
-                        else {
-                            form.getControl("msdyn_workordertype").setDisabled(true);
-                            form.getControl("ts_region").setDisabled(true);
-                            form.getControl("ovs_operationtypeid").setDisabled(true);
-                            form.getControl("ts_tradenameid").setDisabled(true);
-                            form.getControl("ts_site").setDisabled(true);
-                            form.getControl("msdyn_worklocation").setDisabled(true);
-                            form.getControl("header_ownerid").setDisabled(true);
-                            form.getControl("ownerid").setDisabled(true);
-                        }
+                        //if (preparationTime == null || woReportingAndDocumentation == null || conductingOversight == null) {
+                        //    var alertStrings = {
+                        //        text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithoutTimeTrackingFieldsText"),
+                        //        title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithoutTimeTrackingFieldsTitle")
+                        //    };
+                        //    var alertOptions = { height: 160, width: 340 };
+                        //    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
+                        //        form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
+                        //        //All required time tracking fields must be input before the Work order can be closed.
+                        //        form.getAttribute("ts_preparationtime").setRequiredLevel("required");
+                        //        form.getAttribute("ts_conductingoversight").setRequiredLevel("required");
+                        //        form.getAttribute("ts_woreportinganddocumentation").setRequiredLevel("required");
+                        //    });
+                        //}
+                        //else {
+                        form.getControl("msdyn_workordertype").setDisabled(true);
+                        form.getControl("ts_region").setDisabled(true);
+                        form.getControl("ovs_operationtypeid").setDisabled(true);
+                        form.getControl("ts_tradenameid").setDisabled(true);
+                        form.getControl("ts_site").setDisabled(true);
+                        form.getControl("msdyn_worklocation").setDisabled(true);
+                        form.getControl("header_ownerid").setDisabled(true);
+                        form.getControl("ownerid").setDisabled(true);
+                        //       }
                     }
                 }, function (error) {
                     showErrorMessageAlert(error);
@@ -994,9 +997,9 @@ var ROM;
                 form.getControl("msdyn_worklocation").setDisabled(false);
                 form.getControl("header_ownerid").setDisabled(false);
                 form.getControl("ownerid").setDisabled(false);
-                form.getAttribute("ts_preparationtime").setRequiredLevel("none");
-                form.getAttribute("ts_conductingoversight").setRequiredLevel("none");
-                form.getAttribute("ts_woreportinganddocumentation").setRequiredLevel("none");
+                //form.getAttribute("ts_preparationtime").setRequiredLevel("none");
+                //form.getAttribute("ts_conductingoversight").setRequiredLevel("none");
+                //form.getAttribute("ts_woreportinganddocumentation").setRequiredLevel("none");
             }
         }
         WorkOrder.systemStatusOnChange = systemStatusOnChange;
