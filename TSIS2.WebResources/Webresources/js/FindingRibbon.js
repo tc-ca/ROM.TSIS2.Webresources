@@ -700,5 +700,18 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
 }
 
 function copyEnforcementActionToolResults(primaryContorl, SelectedControlsSelectedItemReferences) {
+    debugger;
 
+    //Iterate through each ID of selected items
+    //Find one with Final Enforcement Action
+
+    //Open confirmation message asking if they're sure and which result will be copied
+
+    //Spinning Wheel
+
+    //Split for ISSO and AVSEC
+
+    //Copy Tool answers and enforcement action for ISSO
+
+    //Copy Tool answers for Avsec
 }
