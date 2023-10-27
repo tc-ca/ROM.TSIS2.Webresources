@@ -4,6 +4,7 @@ namespace ROM.WorkOrder {
     let isFromSecurityIncident = false;
     var currentSystemStatus;
     var currentStatus;
+    var scheduledQuarterAttributeValueChanged = false;
     // EVENTS
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
@@ -115,7 +116,7 @@ namespace ROM.WorkOrder {
             setWorkOrderServiceTasksView(form, true);
         }
 
-        if (form.getAttribute("ovs_fiscalquarter").getValue() != null)
+        if (form.getAttribute("ovs_fiscalquarter").getValue() != null && form.getAttribute("ovs_revisedquarterid").getValue() == null)
             form.getAttribute("ovs_revisedquarterid").setValue(form.getAttribute("ovs_fiscalquarter").getValue());
 
         switch (form.ui.getFormType()) {
@@ -393,6 +394,9 @@ namespace ROM.WorkOrder {
 
         //Check if the Work Order is past the Planned Fiscal Quarter
         setCantCompleteinspectionVisibility(form);
+
+        //Post a note on ScheduledQuarter Change
+        postNoteOnScheduledQuarterChange(form);
     }
 
     export function workOrderTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -1191,7 +1195,49 @@ namespace ROM.WorkOrder {
         );
 
     }
+
+    export function scheduledQuarterOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+        const revisedQuarterAttributeValue = form.getAttribute("ovs_revisedquarterid").getValue();
+        scheduledQuarterAttributeValueChanged = true;
+        if (revisedQuarterAttributeValue != null) {
+            form.getControl("ts_scheduledquarterjustification").setVisible(true);
+            form.getControl("ts_justificationcomment").setVisible(true);
+        }
+        else {
+            form.getControl("ts_scheduledquarterjustification").setVisible(false);
+            form.getControl("ts_justificationcomment").setVisible(false);
+        }
+    }
     // FUNCTIONS
+    function postNoteOnScheduledQuarterChange(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
+
+        if (scheduledQuarterAttributeValueChanged) {
+            const revisedQuarterAttributeValue = form.getAttribute("ovs_revisedquarterid").getValue();
+            const justificationComment = form.getAttribute("ts_justificationcomment").getValue();
+
+            if (form.ui.getFormType() == 2) {
+                let recordId = form.data.entity.getId().replace(/[{}]/g, "");
+                var data = {};
+                data['objectid_msdyn_workorder@odata.bind'] = '/msdyn_workorders(' + recordId + ')';
+                if (revisedQuarterAttributeValue != null) {
+                    data['subject'] = "Scheduled Quarter Changed to: " + revisedQuarterAttributeValue[0].name;
+                }
+                else {
+                    data['subject'] = "Scheduled Quarter Changed to null ";
+                }
+                data['notetext'] = justificationComment;
+
+                Xrm.WebApi.createRecord('annotation', data).then(function success(result) {
+                    scheduledQuarterAttributeValueChanged = false;
+                },
+                    function (error) {
+                        console.log(error.message);
+                    });
+            }
+        }
+    }
+
     function showErrorMessageAlert(error) {
         var alertStrings = { text: error.message };
         var alertOptions = { height: 120, width: 260 };
