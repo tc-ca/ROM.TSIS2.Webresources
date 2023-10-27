@@ -44,6 +44,7 @@ var ROM;
         var isFromSecurityIncident = false;
         var currentSystemStatus;
         var currentStatus;
+        var scheduledQuarterAttributeValueChanged = false;
         // EVENTS
         function onLoad(eContext) {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
@@ -141,7 +142,7 @@ var ROM;
             else { //If the work order is active, show the active views
                 setWorkOrderServiceTasksView(form, true);
             }
-            if (form.getAttribute("ovs_fiscalquarter").getValue() != null)
+            if (form.getAttribute("ovs_fiscalquarter").getValue() != null && form.getAttribute("ovs_revisedquarterid").getValue() == null)
                 form.getAttribute("ovs_revisedquarterid").setValue(form.getAttribute("ovs_fiscalquarter").getValue());
             switch (form.ui.getFormType()) {
                 case 1: //Create New Work Order
@@ -375,6 +376,8 @@ var ROM;
             }
             //Check if the Work Order is past the Planned Fiscal Quarter
             setCantCompleteinspectionVisibility(form);
+            //Post a note on ScheduledQuarter Change
+            postNoteOnScheduledQuarterChange(form);
         }
         WorkOrder.onSave = onSave;
         function workOrderTypeOnChange(eContext) {
@@ -1121,7 +1124,44 @@ var ROM;
             });
         }
         WorkOrder.dateWindowEndOnChange = dateWindowEndOnChange;
+        function scheduledQuarterOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var revisedQuarterAttributeValue = form.getAttribute("ovs_revisedquarterid").getValue();
+            scheduledQuarterAttributeValueChanged = true;
+            if (revisedQuarterAttributeValue != null) {
+                form.getControl("ts_scheduledquarterjustification").setVisible(true);
+                form.getControl("ts_justificationcomment").setVisible(true);
+            }
+            else {
+                form.getControl("ts_scheduledquarterjustification").setVisible(false);
+                form.getControl("ts_justificationcomment").setVisible(false);
+            }
+        }
+        WorkOrder.scheduledQuarterOnChange = scheduledQuarterOnChange;
         // FUNCTIONS
+        function postNoteOnScheduledQuarterChange(form) {
+            if (scheduledQuarterAttributeValueChanged) {
+                var revisedQuarterAttributeValue = form.getAttribute("ovs_revisedquarterid").getValue();
+                var justificationComment = form.getAttribute("ts_justificationcomment").getValue();
+                if (form.ui.getFormType() == 2) {
+                    var recordId = form.data.entity.getId().replace(/[{}]/g, "");
+                    var data = {};
+                    data['objectid_msdyn_workorder@odata.bind'] = '/msdyn_workorders(' + recordId + ')';
+                    if (revisedQuarterAttributeValue != null) {
+                        data['subject'] = "Scheduled Quarter Changed to: " + revisedQuarterAttributeValue[0].name;
+                    }
+                    else {
+                        data['subject'] = "Scheduled Quarter Changed to null ";
+                    }
+                    data['notetext'] = justificationComment;
+                    Xrm.WebApi.createRecord('annotation', data).then(function success(result) {
+                        scheduledQuarterAttributeValueChanged = false;
+                    }, function (error) {
+                        console.log(error.message);
+                    });
+                }
+            }
+        }
         function showErrorMessageAlert(error) {
             var alertStrings = { text: error.message };
             var alertOptions = { height: 120, width: 260 };
