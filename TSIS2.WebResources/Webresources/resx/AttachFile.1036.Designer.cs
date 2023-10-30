@@ -79,6 +79,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Une ou plusieurs pièces jointes ne sont pas de type valide. Il ne peut pas être téléchargé..
+        /// </summary>
+        internal static string BlockedFileTypeText {
+            get {
+                return ResourceManager.GetString("BlockedFileTypeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Effacer les pièces jointes.
         /// </summary>
         internal static string ClearAttachmentsText {

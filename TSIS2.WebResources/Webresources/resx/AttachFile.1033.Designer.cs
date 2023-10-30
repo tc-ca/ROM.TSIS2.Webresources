@@ -79,6 +79,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more attachment(s) is not a valid type. It can&apos;t be uploaded..
+        /// </summary>
+        internal static string BlockedFileTypeText {
+            get {
+                return ResourceManager.GetString("BlockedFileTypeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear Attachments.
         /// </summary>
         internal static string ClearAttachmentsText {
