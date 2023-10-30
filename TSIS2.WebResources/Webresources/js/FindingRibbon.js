@@ -699,19 +699,67 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
     } 
 }
 
-function copyEnforcementActionToolResults(primaryContorl, SelectedControlsSelectedItemReferences) {
-    debugger;
+async function copyEnforcementActionToolResults(primaryContorl, SelectedControlsSelectedItemIds) {
+    const findingIdsFilterValues = SelectedControlsSelectedItemIds.map(item => "<value>" + item + "</value>");
+    let findingFetchXml = [
+        "<fetch>",
+        "  <entity name='ovs_finding'>",
+        "    <filter>",
+        "      <condition attribute='ovs_findingid' operator='in'>",
+                    findingIdsFilterValues.join(""),
+        "      </condition>",
+        "      <condition attribute='ts_finalenforcementaction' operator='not-null'/>",
+        "    </filter>",
+        "  </entity>",
+        "</fetch>"
+    ].join("");
+    findingFetchXml = "?fetchXml=" + encodeURIComponent(findingFetchXml);
+    //Retrieve the selected finding with a final enforcement action.
+    const completeFinding = await Xrm.WebApi.retrieveMultipleRecords("ovs_finding", findingFetchXml).then(
+        function success(result) {
+            return result.entities[0];
+        }
+    );
 
-    //Iterate through each ID of selected items
-    //Find one with Final Enforcement Action
+    if (completeFinding != null) {
+        //Open confirmation message asking if they're sure and which result will be copied
+        var confirmStrings = {
+            text: "Test confirm message. Change findings to " + completeFinding["ts_finalenforcementaction@OData.Community.Display.V1.FormattedValue"],
+            title: "Confirm Copy Values"
+        };
+        var confirmOptions = { height: 200, width: 450 };
+        Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(function (success) {
+            if (success.confirmed) {
+                //Spinning Wheel
 
-    //Open confirmation message asking if they're sure and which result will be copied
+                let data = {};
 
-    //Spinning Wheel
+                //Split for NCAT and RATE
+                if (completeFinding.ts_acceptncatrecommendation != null) {
+                    //NCAT
+                    data = {
+                        "ts_NCATActualorPotentialHarm@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatactualorpotentialharm_value + ")",
+                    };
+                }
+                else if (completeFinding.ts_acceptraterecommendation != null) {
+                    //RATE
+                }
 
-    //Split for ISSO and AVSEC
+                for (let selectedFindingId of SelectedControlsSelectedItemIds) {
+                    if (selectedFindingId != completeFinding.ovs_findingid) {
+                        Xrm.WebApi.updateRecord("ovs_finding", selectedFindingId, data);
+                    }
+                }
+                
 
-    //Copy Tool answers and enforcement action for ISSO
+                //Copy Tool answers for Avsec
+            }
+            else {
+                
+            }
+        });
+    }
+    
 
-    //Copy Tool answers for Avsec
+    
 }
