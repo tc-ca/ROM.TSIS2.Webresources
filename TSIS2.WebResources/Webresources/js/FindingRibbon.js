@@ -721,11 +721,13 @@ async function copyEnforcementActionToolResults(primaryContorl, SelectedControls
         }
     );
 
+    let toolName = (completeFinding.ts_acceptncatrecommendation) ? "NCAT" : "RATE";
+
     if (completeFinding != null) {
         //Open confirmation message asking if they're sure and which result will be copied
         var confirmStrings = {
-            text: "Test confirm message. Change findings to " + completeFinding["ts_finalenforcementaction@OData.Community.Display.V1.FormattedValue"],
-            title: "Confirm Copy Values"
+            text: toolName + " result from Finding " + completeFinding.ovs_finding + " will be applied to the selected Findings. Do you wish to proceed?",
+            title: "Apply " + toolName +  " Result"
         };
         var confirmOptions = { height: 200, width: 450 };
         Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(function (success) {
@@ -739,10 +741,52 @@ async function copyEnforcementActionToolResults(primaryContorl, SelectedControls
                     //NCAT
                     data = {
                         "ts_NCATActualorPotentialHarm@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatactualorpotentialharm_value + ")",
-                    };
+                        "ts_NCATIntentionality@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatintentionality_value + ")",
+                        "ts_NCATComplianceHistory@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatcompliancehistory_value + ")",
+                        "ts_NCATEconomicBenefit@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncateconomicbenefit_value + ")",
+                        "ts_NCATEconomicBenefit@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncateconomicbenefit_value + ")",
+                        "ts_NCATMitigationofNonCompliantBehaviors@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatmitigationofnoncompliantbehaviors_value + ")",
+                        "ts_NCATCooperationwithInspectionorInvestigat@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatcooperationwithinspectionorinvestigat_value + ")",
+                        "ts_NCATDetectionofNonCompliances@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatdetectionofnoncompliances_value + ")",
+                        "ts_ncatdetailstosupport": completeFinding.ts_ncatdetailstosupport,
+                        "ts_ncatenforcementrecommendation": completeFinding.ts_ncatenforcementrecommendation,
+                        "ts_ncatenforcementjustification": completeFinding.ts_ncatenforcementjustification,
+                        "ts_ncatinspectorrecommendation": completeFinding.ts_ncatinspectorrecommendation,
+                        "ts_ncatenforcementjustification": completeFinding.ts_ncatenforcementjustification,
+                        "ts_ncatmanagerdecision": completeFinding.ts_ncatmanagerdecision,
+                        "ts_ncatmanageralternativerecommendation": completeFinding.ts_ncatmanageralternativerecommendation,
+                        "ts_ncatmanagerenforcementjustification": completeFinding.ts_ncatmanagerenforcementjustification,
+                        "ts_issueaddressedonsite": completeFinding.ts_issueaddressedonsite,
+                        "ts_noncompliancetimeframe": completeFinding.ts_noncompliancetimeframe,
+                        "ovs_findingcomments": completeFinding.ovs_findingcomments,
+                        "ts_notetostakeholder": completeFinding.ts_notetostakeholder,
+                        "ts_sensitivitylevel": completeFinding.ts_sensitivitylevel,
+                        "ts_finalenforcementaction": completeFinding.ts_finalenforcementaction,
+                    }
+                    if (completeFinding._ts_ncatmanager_value != null) {
+                        data["ts_NCATManager@odata.bind"] = "/systemusers(" + completeFinding._ts_ncatmanager_value + ")";
+                    }
+                    if (completeFinding._ts_ncatapprovingteam_value != null) {
+                        data["ts_NCATApprovingTeam@odata.bind"] = "/teams(" + completeFinding._ts_ncatapprovingteam_value + ")";
+                    }
+                        
                 }
                 else if (completeFinding.ts_acceptraterecommendation != null) {
                     //RATE
+                    data = {
+                        "ts_ratespecificcompliancehistory": completeFinding.ts_ratespecificcompliancehistory,
+                        "ts_RATESpecificComplianceHistory@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rategeneralcompliancehistory_value + ")",
+                        "ts_RATEGeneralComplianceHistory@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rategeneralcompliancehistory_value + ")",
+                        "ts_RATEActualorPotentialHarm@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rateactualorpotentialharm_value + ")",
+                        "ts_RATEIntentionality@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rateintentionality_value + ")",
+                        "ts_RATEEconomicBenefit@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rateeconomicbenefit_value + ")",
+                        "ts_RATEResponsibility@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rateresponsibility_value + ")",
+                        "ts_RATEMitigationofNonCompliantBehaviors@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ratemitigationofnoncompliantbehaviors_value + ")",
+                        "ts_RATEPreventingRecurrence@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ratepreventingrecurrence_value + ")",
+                        "ts_RATECooperationwithInspectionorInvestigat@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ratecooperationwithinspectionorinvestigat_value + ")",
+                        "ts_ratespecificenforcementhistory": completeFinding.ts_ratespecificenforcementhistory,
+                        "ts_rateenforcementrecommendation": completeFinding.ts_rateenforcementrecommendation
+                    }
                 }
 
                 for (let selectedFindingId of SelectedControlsSelectedItemIds) {
