@@ -123,6 +123,9 @@
   <data name="AttachedFilesGalleryAccessibleLabel" xml:space="preserve">
     <value>Liste de fichiers téléchargés</value>
   </data>
+  <data name="BlockedFileTypeText" xml:space="preserve">
+    <value>Une ou plusieurs pièces jointes ne sont pas de type valide. Il ne peut pas être téléchargé.</value>
+  </data>
   <data name="ClearAttachmentsText" xml:space="preserve">
     <value>Effacer les pièces jointes</value>
   </data>

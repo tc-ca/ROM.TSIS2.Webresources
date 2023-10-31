@@ -123,6 +123,9 @@
   <data name="AttachedFilesGalleryAccessibleLabel" xml:space="preserve">
     <value>List of uploaded files</value>
   </data>
+  <data name="BlockedFileTypeText" xml:space="preserve">
+    <value>One or more attachment(s) is not a valid type. It can't be uploaded.</value>
+  </data>
   <data name="ClearAttachmentsText" xml:space="preserve">
     <value>Clear Attachments</value>
   </data>
