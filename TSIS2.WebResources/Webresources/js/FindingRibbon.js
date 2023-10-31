@@ -699,7 +699,8 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
     } 
 }
 
-async function copyEnforcementActionToolResults(primaryContorl, SelectedControlsSelectedItemIds) {
+//Takes selected Finding records from a subgrid, finds which one is complete, and applies its enforcement tool results to the remaining selected records
+async function copyEnforcementActionToolResults(primaryControl, SelectedControlsSelectedItemIds) {
     const findingIdsFilterValues = SelectedControlsSelectedItemIds.map(item => "<value>" + item + "</value>");
     let findingFetchXml = [
         "<fetch>",
@@ -721,23 +722,36 @@ async function copyEnforcementActionToolResults(primaryContorl, SelectedControls
         }
     );
 
-    let toolName = (completeFinding.ts_acceptncatrecommendation) ? "NCAT" : "RATE";
+    //Set Localized labels
+    let toolName;
+    let confirmStrings = {}
+    if (lang == 1033) {
+        toolName = (completeFinding._ts_ncatactualorpotentialharm_value) ? "NCAT" : "RATE";
+        confirmStrings = {
+            text: toolName + " result from Finding " + completeFinding.ovs_finding + " will be applied to the selected Findings. Do you wish to proceed?",
+            title: "Apply Result"
+        };
+    } else {
+        toolName = (completeFinding._ts_ncatactualorpotentialharm_value) ? "OENC" : "OERA";
+        confirmStrings = {
+            text: "Les résultats de l'" + toolName + " pour la constatation " + completeFinding.ovs_finding + " vont être appliqués aux constatations sélectionnées. Voulez-vous continuer?",
+            title: "Appliquez les résultats"
+        };
+    }
+    
 
     if (completeFinding != null) {
         //Open confirmation message asking if they're sure and which result will be copied
-        var confirmStrings = {
-            text: toolName + " result from Finding " + completeFinding.ovs_finding + " will be applied to the selected Findings. Do you wish to proceed?",
-            title: "Apply " + toolName +  " Result"
-        };
         var confirmOptions = { height: 200, width: 450 };
-        Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(function (success) {
+        Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(async function (success) {
             if (success.confirmed) {
                 //Spinning Wheel
+                Xrm.Utility.showProgressIndicator();
 
                 let data = {};
 
                 //Split for NCAT and RATE
-                if (completeFinding.ts_acceptncatrecommendation != null) {
+                if (completeFinding._ts_ncatactualorpotentialharm_value != null) {
                     //NCAT
                     data = {
                         "ts_NCATActualorPotentialHarm@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatactualorpotentialharm_value + ")",
@@ -749,6 +763,7 @@ async function copyEnforcementActionToolResults(primaryContorl, SelectedControls
                         "ts_NCATCooperationwithInspectionorInvestigat@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatcooperationwithinspectionorinvestigat_value + ")",
                         "ts_NCATDetectionofNonCompliances@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatdetectionofnoncompliances_value + ")",
                         "ts_ncatdetailstosupport": completeFinding.ts_ncatdetailstosupport,
+                        "ts_acceptncatrecommendation": completeFinding.ts_acceptncatrecommendation,
                         "ts_ncatenforcementrecommendation": completeFinding.ts_ncatenforcementrecommendation,
                         "ts_ncatenforcementjustification": completeFinding.ts_ncatenforcementjustification,
                         "ts_ncatinspectorrecommendation": completeFinding.ts_ncatinspectorrecommendation,
@@ -762,6 +777,8 @@ async function copyEnforcementActionToolResults(primaryContorl, SelectedControls
                         "ts_notetostakeholder": completeFinding.ts_notetostakeholder,
                         "ts_sensitivitylevel": completeFinding.ts_sensitivitylevel,
                         "ts_finalenforcementaction": completeFinding.ts_finalenforcementaction,
+                        "statecode": completeFinding.statecode,
+                        "statuscode": completeFinding.statuscode,
                     }
                     if (completeFinding._ts_ncatmanager_value != null) {
                         data["ts_NCATManager@odata.bind"] = "/systemusers(" + completeFinding._ts_ncatmanager_value + ")";
@@ -771,11 +788,10 @@ async function copyEnforcementActionToolResults(primaryContorl, SelectedControls
                     }
                         
                 }
-                else if (completeFinding.ts_acceptraterecommendation != null) {
+                else if (completeFinding._ts_rategeneralcompliancehistory_value != null) {
                     //RATE
                     data = {
                         "ts_ratespecificcompliancehistory": completeFinding.ts_ratespecificcompliancehistory,
-                        "ts_RATESpecificComplianceHistory@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rategeneralcompliancehistory_value + ")",
                         "ts_RATEGeneralComplianceHistory@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rategeneralcompliancehistory_value + ")",
                         "ts_RATEActualorPotentialHarm@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rateactualorpotentialharm_value + ")",
                         "ts_RATEIntentionality@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rateintentionality_value + ")",
@@ -789,21 +805,15 @@ async function copyEnforcementActionToolResults(primaryContorl, SelectedControls
                     }
                 }
 
+                //Update the selected findings with the completed finding's data. Skip the one that is complete
                 for (let selectedFindingId of SelectedControlsSelectedItemIds) {
                     if (selectedFindingId != completeFinding.ovs_findingid) {
-                        Xrm.WebApi.updateRecord("ovs_finding", selectedFindingId, data);
+                        await Xrm.WebApi.updateRecord("ovs_finding", selectedFindingId, data);
                     }
                 }
-                
-
-                //Copy Tool answers for Avsec
-            }
-            else {
-                
+                Xrm.Utility.closeProgressIndicator();
+                primaryControl.getControl("subgrid_findings").refresh();
             }
         });
     }
-    
-
-    
 }
