@@ -75,6 +75,7 @@
         let teamPlanningDataTeamEstimatedDurationQ3 = 0;
         let teamPlanningDataTeamEstimatedDurationQ4 = 0;
         let teamPlanningDataTeamEstimatedDurationTotal = 0;
+        let teamPlanningDataTeamEstimatedTravelTimeTotal = 0;
 
         if (teamId != null && planFiscalYearId != null) {
 
@@ -388,6 +389,7 @@
             "       <attribute name='ts_q2'/>",
             "       <attribute name='ts_q3'/>",
             "       <attribute name='ts_q4'/>",
+            "       <attribute name='ts_estimatedtraveltime'/>",
             "       <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='ad'>",
             "           <filter type='and'>",
             "               <condition attribute='ts_planid' operator='eq' value='", formContext.data.entity.getId(), "'/>",
@@ -411,7 +413,10 @@
             teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
             teamPlanningDataTeamEstimatedDurationQ4 += inspection.ts_estimatedduration * inspection.ts_q4;
             teamPlanningDataTeamEstimatedDurationTotal += inspection.ts_estimatedduration;
-
+            
+            if (inspection.ts_estimatedtraveltime != null) {
+                teamPlanningDataTeamEstimatedTravelTimeTotal += inspection.ts_estimatedtraveltime;
+            }
         });
 
         formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
@@ -424,7 +429,7 @@
         formContext.getAttribute("ts_estimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
         formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
         formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
-        formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal);
+        formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal - teamPlanningDataTeamEstimatedTravelTimeTotal);
 
         formContext.data.entity.save();
         Xrm.Utility.closeProgressIndicator();
@@ -435,15 +440,41 @@
         let formContext = executionContext.getFormContext();
         const planStatusValue = parent["Xrm"].Page.getAttribute("ts_planstatus").getValue();
         //Change which fields lock depending on the plan status
-        const fields = (planStatusValue == ts_planstatus.Complete || planStatusValue == ts_planstatus.HQreview) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold","ts_inspector","ts_estimatedduration","ts_q1","ts_q2","ts_q3","ts_q4"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
+        const fields = (planStatusValue == ts_planstatus.Complete || planStatusValue == ts_planstatus.HQreview) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration","ts_estimatedtraveltime", "ts_q1", "ts_q2", "ts_q3", "ts_q4", "ts_estimatedcost", "ts_trip"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
         if (formContext) {
             let entity = formContext.data.entity;
+
             entity.attributes.forEach(function (attribute, i) {
                 if (fields.indexOf(attribute.getName()) > -1) {
                     let attributeToDisable = attribute.controls.get(0);
                     attributeToDisable.setDisabled(true);
                 }
             });
+
+            var trip = entity.attributes.getByName("ts_trip").getValue();
+            if (trip != null) {
+                entity.attributes.getByName("ts_estimatedcost").controls.get(0).setDisabled(true);
+            }
+            else {
+                entity.attributes.getByName("ts_estimatedcost").controls.get(0).setDisabled(false);
+            }
+            //let entityId = entity._entityId.guid;
+            //let suggestedinspection = Xrm.WebApi.retrieveRecord("ts_suggestedinspection", entityId, "?$select=_ts_trip_value").then(
+            //    function success(result) {
+            //        debugger;
+            //        if (result._ts_trip_value != null) {
+            //            entity.attributes.forEach(function (attribute, i) {
+            //                if (attribute.getName() == "ts_estimatedcost") {
+            //                    let attributeToDisable = attribute.controls.get(0);
+            //                    attributeToDisable.setDisabled(true);
+            //                }
+            //            });
+            //        }
+            //    },
+            //    function (error) {
+            //        console.log(error.message);
+            //    }
+            //);
         }
     }
 
