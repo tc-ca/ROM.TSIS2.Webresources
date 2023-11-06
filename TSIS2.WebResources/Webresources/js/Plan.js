@@ -92,7 +92,7 @@ var ROM;
          */
         function generateSuggestedInspections(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, planfetchXml, planData, teamRegionId, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data, suggestedInspectionsfetchXml, suggestedInspections;
+                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataTeamEstimatedTravelTimeTotal, planfetchXml, planData, teamRegionId, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data, suggestedInspectionsfetchXml, suggestedInspections;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
@@ -120,6 +120,7 @@ var ROM;
                             teamPlanningDataTeamEstimatedDurationQ3 = 0;
                             teamPlanningDataTeamEstimatedDurationQ4 = 0;
                             teamPlanningDataTeamEstimatedDurationTotal = 0;
+                            teamPlanningDataTeamEstimatedTravelTimeTotal = 0;
                             if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 9];
                             //Set the Plan name to a combination of the team and fiscal year
                             formContext.getAttribute("ts_name").setValue(teamName + " " + planFiscalYearName);
@@ -413,6 +414,7 @@ var ROM;
                                 "       <attribute name='ts_q2'/>",
                                 "       <attribute name='ts_q3'/>",
                                 "       <attribute name='ts_q4'/>",
+                                "       <attribute name='ts_estimatedtraveltime'/>",
                                 "       <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='ad'>",
                                 "           <filter type='and'>",
                                 "               <condition attribute='ts_planid' operator='eq' value='", formContext.data.entity.getId(), "'/>",
@@ -438,6 +440,9 @@ var ROM;
                                 teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
                                 teamPlanningDataTeamEstimatedDurationQ4 += inspection.ts_estimatedduration * inspection.ts_q4;
                                 teamPlanningDataTeamEstimatedDurationTotal += inspection.ts_estimatedduration;
+                                if (inspection.ts_estimatedtraveltime != null) {
+                                    teamPlanningDataTeamEstimatedTravelTimeTotal += inspection.ts_estimatedtraveltime;
+                                }
                             });
                             formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
                             formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
@@ -448,7 +453,7 @@ var ROM;
                             formContext.getAttribute("ts_estimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
                             formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
                             formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
-                            formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal);
+                            formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal - teamPlanningDataTeamEstimatedTravelTimeTotal);
                             formContext.data.entity.save();
                             Xrm.Utility.closeProgressIndicator();
                             return [2 /*return*/];
@@ -461,7 +466,7 @@ var ROM;
             var formContext = executionContext.getFormContext();
             var planStatusValue = parent["Xrm"].Page.getAttribute("ts_planstatus").getValue();
             //Change which fields lock depending on the plan status
-            var fields = (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_q1", "ts_q2", "ts_q3", "ts_q4"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
+            var fields = (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_estimatedtraveltime", "ts_q1", "ts_q2", "ts_q3", "ts_q4", "ts_estimatedcost", "ts_trip"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
             if (formContext) {
                 var entity = formContext.data.entity;
                 entity.attributes.forEach(function (attribute, i) {
@@ -470,6 +475,30 @@ var ROM;
                         attributeToDisable.setDisabled(true);
                     }
                 });
+                var trip = entity.attributes.getByName("ts_trip").getValue();
+                if (trip != null) {
+                    entity.attributes.getByName("ts_estimatedcost").controls.get(0).setDisabled(true);
+                }
+                else {
+                    entity.attributes.getByName("ts_estimatedcost").controls.get(0).setDisabled(false);
+                }
+                //let entityId = entity._entityId.guid;
+                //let suggestedinspection = Xrm.WebApi.retrieveRecord("ts_suggestedinspection", entityId, "?$select=_ts_trip_value").then(
+                //    function success(result) {
+                //        debugger;
+                //        if (result._ts_trip_value != null) {
+                //            entity.attributes.forEach(function (attribute, i) {
+                //                if (attribute.getName() == "ts_estimatedcost") {
+                //                    let attributeToDisable = attribute.controls.get(0);
+                //                    attributeToDisable.setDisabled(true);
+                //                }
+                //            });
+                //        }
+                //    },
+                //    function (error) {
+                //        console.log(error.message);
+                //    }
+                //);
             }
         }
         Plan.lockSuggestedInspectionEditableGridFields = lockSuggestedInspectionEditableGridFields;
