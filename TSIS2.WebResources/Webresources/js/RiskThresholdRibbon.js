@@ -1,4 +1,4 @@
-﻿function updateOperationsFlow(primaryControl) {
+﻿async function updateOperationsFlow() {
     const lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
     let confirmStrings;
     if (lang == 1033) {
@@ -19,7 +19,7 @@
             var req = new XMLHttpRequest();
             req.open("POST", url, true);
             req.setRequestHeader('Content-Type', 'application/json');
-            req.send();
+            req.send(JSON.stringify({}));
         }
     });
 }
