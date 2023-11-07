@@ -364,6 +364,11 @@
             "file": "js\\AttachFile.js",
             "description": "Scripts to handle attaching files to records"
           },
+          {
+            "uniquename": "ts_/js/RiskThresholdRibbon.js",
+            "file": "js\\RiskThresholdRibbon.js",
+            "description": "Ribbon Functions for Risk Threshold Table"
+          },
           /* Styles */
           {
             "uniquename": "ovs_/css/bootstrap.min.css",
