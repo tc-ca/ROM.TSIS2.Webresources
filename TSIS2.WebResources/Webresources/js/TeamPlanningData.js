@@ -83,7 +83,7 @@ var ROM;
         TeamPlanningData.onSave = onSave;
         function generatePlanningData(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, teamPlanningDataId, teamPlanningDataTotalHoursQ1, teamPlanningDataTotalHoursQ2, teamPlanningDataTotalHoursQ3, teamPlanningDataTotalHoursQ4, teamPlanningDataTotalHoursFiscalYear, teamValue, teamId, teamName, planningDataFiscalYearValue, planningDataFiscalYearName, planningDataFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataAvailableInspectorHoursQ1, teamPlanningDataAvailableInspectorHoursQ2, teamPlanningDataAvailableInspectorHoursQ3, teamPlanningDataAvailableInspectorHoursQ4, teamPlanningDataAvailableInspectorHoursTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataResidualinspectorhoursQ1, teamPlanningDataResidualinspectorhoursQ2, teamPlanningDataResidualinspectorhoursQ3, teamPlanningDataResidualinspectorhoursQ4, teamPlanningDataResidualinspectorhoursTotal, userfetchXml, fetchXml;
+                var formContext, teamPlanningDataId, teamPlanningDataTotalHoursQ1, teamPlanningDataTotalHoursQ2, teamPlanningDataTotalHoursQ3, teamPlanningDataTotalHoursQ4, teamPlanningDataTotalHoursFiscalYear, teamValue, teamId, teamName, planningDataFiscalYearValue, planningDataFiscalYearName, planningDataFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataAvailableInspectorHoursQ1, teamPlanningDataAvailableInspectorHoursQ2, teamPlanningDataAvailableInspectorHoursQ3, teamPlanningDataAvailableInspectorHoursQ4, teamPlanningDataAvailableInspectorHoursTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataResidualinspectorhoursQ1, teamPlanningDataResidualinspectorhoursQ2, teamPlanningDataResidualinspectorhoursQ3, teamPlanningDataResidualinspectorhoursQ4, teamPlanningDataResidualinspectorhoursTotal, totalRequiredHours, userfetchXml, fetchXml;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -140,6 +140,7 @@ var ROM;
                             teamPlanningDataResidualinspectorhoursQ3 = 0;
                             teamPlanningDataResidualinspectorhoursQ4 = 0;
                             teamPlanningDataResidualinspectorhoursTotal = 0;
+                            totalRequiredHours = 0;
                             userfetchXml = [
                                 "<fetch>",
                                 "  <entity name='systemuser'>",
@@ -356,6 +357,7 @@ var ROM;
                                                             teamPlanningDataPlannedQ2 += planningDataQuarters[1];
                                                             teamPlanningDataPlannedQ3 += planningDataQuarters[2];
                                                             teamPlanningDataPlannedQ4 += planningDataQuarters[3];
+                                                            totalRequiredHours += planningDataTarget * planningDataEstimatedDuration;
                                                         }
                                                     }
                                                     data = {
@@ -429,6 +431,7 @@ var ROM;
                             formContext.getAttribute("ts_residualinspectorhoursq3").setValue(teamPlanningDataResidualinspectorhoursQ3);
                             formContext.getAttribute("ts_residualinspectorhoursq4").setValue(teamPlanningDataResidualinspectorhoursQ4);
                             formContext.getAttribute("ts_residualinspectorhoursfiscalyear").setValue(teamPlanningDataResidualinspectorhoursTotal);
+                            formContext.getAttribute("ts_totalrequiredhours").setValue(totalRequiredHours);
                             formContext.data.entity.save();
                             Xrm.Utility.closeProgressIndicator();
                             return [2 /*return*/];
