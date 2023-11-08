@@ -103,6 +103,8 @@
         let teamPlanningDataResidualinspectorhoursQ4 = 0;
         let teamPlanningDataResidualinspectorhoursTotal = 0;
 
+        let totalRequiredHours = 0;
+
         //Retrieve all users of Team with Inspector Role
         var userfetchXml = [
             "<fetch>",
@@ -202,7 +204,7 @@
                 let planningDataTarget = 0;
                 let planningDataEstimatedDuration = 0;
                 let planningDataQuarters = [0, 0, 0, 0];
-
+              
                 //Check if anything is missing from the FetchXML. Log it in the generationLog. Flag that there's missing data.
                 if (operationActivity["_ts_stakeholder_value"] == null) {
                     generationLog += "Missing Stakeholder \n";
@@ -317,6 +319,8 @@
                         teamPlanningDataPlannedQ2 += planningDataQuarters[1];
                         teamPlanningDataPlannedQ3 += planningDataQuarters[2];
                         teamPlanningDataPlannedQ4 += planningDataQuarters[3];
+
+                        totalRequiredHours += planningDataTarget * planningDataEstimatedDuration;
                     }
                 }
                 let data = {
@@ -387,6 +391,7 @@
         formContext.getAttribute("ts_residualinspectorhoursq3").setValue(teamPlanningDataResidualinspectorhoursQ3);
         formContext.getAttribute("ts_residualinspectorhoursq4").setValue(teamPlanningDataResidualinspectorhoursQ4);
         formContext.getAttribute("ts_residualinspectorhoursfiscalyear").setValue(teamPlanningDataResidualinspectorhoursTotal);
+        formContext.getAttribute("ts_totalrequiredhours").setValue(totalRequiredHours);
         formContext.data.entity.save();
         Xrm.Utility.closeProgressIndicator();
     }
