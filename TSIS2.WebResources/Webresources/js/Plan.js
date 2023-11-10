@@ -420,6 +420,10 @@ var ROM;
                                 "               <condition attribute='ts_planid' operator='eq' value='", formContext.data.entity.getId(), "'/>",
                                 "</filter>",
                                 "       </link-entity>",
+                                "       <link-entity name='ts_trip' from='ts_tripid' to='ts_trip' visible='false' link-type='outer' alias='plantrip'>",
+                                "       <attribute name='ts_estimatedtraveltime' />",
+                                "       <attribute name='ts_estimatedcost' />",
+                                "       </link-entity>",
                                 "   </entity>",
                                 "</fetch>"
                             ].join("");
@@ -440,7 +444,10 @@ var ROM;
                                 teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
                                 teamPlanningDataTeamEstimatedDurationQ4 += inspection.ts_estimatedduration * inspection.ts_q4;
                                 teamPlanningDataTeamEstimatedDurationTotal += inspection.ts_estimatedduration;
-                                if (inspection.ts_estimatedtraveltime != null) {
+                                if (inspection["plantrip.ts_estimatedtraveltime"] != null) {
+                                    teamPlanningDataTeamEstimatedTravelTimeTotal += inspection["plantrip.ts_estimatedtraveltime"];
+                                }
+                                else if (inspection.ts_estimatedtraveltime != null) {
                                     teamPlanningDataTeamEstimatedTravelTimeTotal += inspection.ts_estimatedtraveltime;
                                 }
                             });
@@ -478,9 +485,11 @@ var ROM;
                 var trip = entity.attributes.getByName("ts_trip").getValue();
                 if (trip != null) {
                     entity.attributes.getByName("ts_estimatedcost").controls.get(0).setDisabled(true);
+                    entity.attributes.getByName("ts_estimatedtraveltime").controls.get(0).setDisabled(true);
                 }
                 else {
                     entity.attributes.getByName("ts_estimatedcost").controls.get(0).setDisabled(false);
+                    entity.attributes.getByName("ts_estimatedtraveltime").controls.get(0).setDisabled(false);
                 }
                 //let entityId = entity._entityId.guid;
                 //let suggestedinspection = Xrm.WebApi.retrieveRecord("ts_suggestedinspection", entityId, "?$select=_ts_trip_value").then(

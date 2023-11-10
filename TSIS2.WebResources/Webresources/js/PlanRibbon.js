@@ -68,6 +68,10 @@
         "    <filter>",
         "      <condition attribute='ts_plan' operator='eq' value='", planId, "' uitype='ts_plan'/>",
         "    </filter>",
+        "    <link-entity name='ts_trip' from='ts_tripid' to='ts_trip' visible='false' link-type='outer' alias='plantrip'>",
+        "    <attribute name='ts_estimatedtraveltime' />",
+        "    <attribute name='ts_estimatedcost' />",
+        "    </link-entity>",
         "  </entity>",
         "</fetch>"
     ].join("");
@@ -116,7 +120,10 @@
         teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
         teamPlanningDataTeamEstimatedDurationQ4 += inspection.ts_estimatedduration * inspection.ts_q4;
         teamPlanningDataTeamEstimatedDurationTotal += inspection.ts_estimatedduration;
-        if (inspection.ts_estimatedtraveltime != null) {
+        if (inspection["plantrip.ts_estimatedtraveltime"] != null) {
+            teamPlanningDataTeamEstimatedTravelTimeTotal += inspection["plantrip.ts_estimatedtraveltime"];
+        }
+        else if (inspection.ts_estimatedtraveltime != null) {
             teamPlanningDataTeamEstimatedTravelTimeTotal += inspection.ts_estimatedtraveltime;
         }
     });
