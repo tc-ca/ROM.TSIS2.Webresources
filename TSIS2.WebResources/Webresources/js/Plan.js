@@ -92,7 +92,7 @@ var ROM;
          */
         function generateSuggestedInspections(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataTeamEstimatedTravelTimeTotal, planfetchXml, planData, teamRegionId, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data, suggestedInspectionsfetchXml, suggestedInspections;
+                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataTeamEstimatedTravelTimeTotal, teamPlanningDataTeamEstimatedCostTotal, planfetchXml, planData, teamRegionId, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data, suggestedInspectionsfetchXml, suggestedInspections;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
@@ -121,6 +121,7 @@ var ROM;
                             teamPlanningDataTeamEstimatedDurationQ4 = 0;
                             teamPlanningDataTeamEstimatedDurationTotal = 0;
                             teamPlanningDataTeamEstimatedTravelTimeTotal = 0;
+                            teamPlanningDataTeamEstimatedCostTotal = 0;
                             if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 9];
                             //Set the Plan name to a combination of the team and fiscal year
                             formContext.getAttribute("ts_name").setValue(teamName + " " + planFiscalYearName);
@@ -450,6 +451,12 @@ var ROM;
                                 else if (inspection.ts_estimatedtraveltime != null) {
                                     teamPlanningDataTeamEstimatedTravelTimeTotal += inspection.ts_estimatedtraveltime;
                                 }
+                                if (inspection["plantrip.ts_estimatedcost"] != null) {
+                                    teamPlanningDataTeamEstimatedCostTotal += inspection["plantrip.ts_estimatedcost"];
+                                }
+                                else if (inspection.ts_estimatedcost != null) {
+                                    teamPlanningDataTeamEstimatedCostTotal += inspection.ts_estimatedcost;
+                                }
                             });
                             formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
                             formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
@@ -461,6 +468,7 @@ var ROM;
                             formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
                             formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
                             formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal - teamPlanningDataTeamEstimatedTravelTimeTotal);
+                            formContext.getAttribute("ts_totalestimatedcost").setValue(teamPlanningDataTeamEstimatedCostTotal);
                             formContext.data.entity.save();
                             Xrm.Utility.closeProgressIndicator();
                             return [2 /*return*/];

@@ -76,6 +76,7 @@
         let teamPlanningDataTeamEstimatedDurationQ4 = 0;
         let teamPlanningDataTeamEstimatedDurationTotal = 0;
         let teamPlanningDataTeamEstimatedTravelTimeTotal = 0;
+        let teamPlanningDataTeamEstimatedCostTotal = 0;
 
         if (teamId != null && planFiscalYearId != null) {
 
@@ -424,6 +425,13 @@
             else if (inspection.ts_estimatedtraveltime != null) {
                 teamPlanningDataTeamEstimatedTravelTimeTotal += inspection.ts_estimatedtraveltime;
             }
+
+            if (inspection["plantrip.ts_estimatedcost"] != null) {
+                teamPlanningDataTeamEstimatedCostTotal += inspection["plantrip.ts_estimatedcost"];
+            }
+            else if (inspection.ts_estimatedcost != null) {
+                teamPlanningDataTeamEstimatedCostTotal += inspection.ts_estimatedcost;
+            }
         });
 
         formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
@@ -437,6 +445,8 @@
         formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
         formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
         formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal - teamPlanningDataTeamEstimatedTravelTimeTotal);
+
+        formContext.getAttribute("ts_totalestimatedcost").setValue(teamPlanningDataTeamEstimatedCostTotal);
 
         formContext.data.entity.save();
         Xrm.Utility.closeProgressIndicator();
