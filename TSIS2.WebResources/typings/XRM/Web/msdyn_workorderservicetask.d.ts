@@ -24,6 +24,7 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
   statecode?: msdyn_workorderservicetask_statecode | null;
   statuscode?: msdyn_workorderservicetask_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_accesscontrol?: boolean | null;
   ts_actualtime?: Date | null;
   ts_aircraftmanufacturer?: ts_aircraftmanufacturer | null;
   ts_aircraftmark?: string | null;
@@ -75,6 +76,7 @@ interface msdyn_workorderservicetask_Relationships {
   ts_SecuritySearchServices?: Account_Result | null;
   ts_incident_WorkOrderServiceTask1_msdyn_work?: Incident_Result[] | null;
   ts_incident_WorkOrderServiceTask2_msdyn_work?: Incident_Result[] | null;
+  ts_msdyn_workorderservicetask_systemuser?: SystemUser_Result[] | null;
   ts_workorderservicetask_qm_rclegislation?: qm_rclegislation_Result[] | null;
 }
 interface msdyn_workorderservicetask extends msdyn_workorderservicetask_Base, msdyn_workorderservicetask_Relationships {
@@ -160,6 +162,7 @@ interface msdyn_workorderservicetask_Select {
   statecode: WebAttribute<msdyn_workorderservicetask_Select, { statecode: msdyn_workorderservicetask_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<msdyn_workorderservicetask_Select, { statuscode: msdyn_workorderservicetask_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<msdyn_workorderservicetask_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_accesscontrol: WebAttribute<msdyn_workorderservicetask_Select, { ts_accesscontrol: boolean | null }, {  }>;
   ts_accesscontrolsecurityservices_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_accesscontrolsecurityservices_guid: string | null }, { ts_accesscontrolsecurityservices_formatted?: string }>;
   ts_actualtime: WebAttribute<msdyn_workorderservicetask_Select, { ts_actualtime: Date | null }, { ts_actualtime_formatted?: string }>;
   ts_aircraftmanufacturer: WebAttribute<msdyn_workorderservicetask_Select, { ts_aircraftmanufacturer: ts_aircraftmanufacturer | null }, { ts_aircraftmanufacturer_formatted?: string }>;
@@ -248,6 +251,7 @@ interface msdyn_workorderservicetask_Filter {
   statecode: msdyn_workorderservicetask_statecode;
   statuscode: msdyn_workorderservicetask_statuscode;
   timezoneruleversionnumber: number;
+  ts_accesscontrol: boolean;
   ts_accesscontrolsecurityservices_guid: XQW.Guid;
   ts_actualtime: Date;
   ts_aircraftmanufacturer: ts_aircraftmanufacturer;
@@ -329,6 +333,7 @@ interface msdyn_workorderservicetask_Expand {
   ts_SecuritySearchServices: WebExpand<msdyn_workorderservicetask_Expand, Account_Select, Account_Filter, { ts_SecuritySearchServices: Account_Result }>;
   ts_incident_WorkOrderServiceTask1_msdyn_work: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrderServiceTask1_msdyn_work: Incident_Result[] }>;
   ts_incident_WorkOrderServiceTask2_msdyn_work: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrderServiceTask2_msdyn_work: Incident_Result[] }>;
+  ts_msdyn_workorderservicetask_systemuser: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { ts_msdyn_workorderservicetask_systemuser: SystemUser_Result[] }>;
   ts_workorderservicetask_qm_rclegislation: WebExpand<msdyn_workorderservicetask_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_workorderservicetask_qm_rclegislation: qm_rclegislation_Result[] }>;
 }
 interface msdyn_workorderservicetask_FormattedResult {
@@ -470,6 +475,7 @@ interface msdyn_workorderservicetask_RelatedMany {
   ovs_msdyn_workorderservicetask_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_incident_WorkOrderServiceTask1_msdyn_work: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_WorkOrderServiceTask2_msdyn_work: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  ts_msdyn_workorderservicetask_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_workorderservicetask_qm_rclegislation: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

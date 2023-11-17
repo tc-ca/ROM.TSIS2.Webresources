@@ -133,6 +133,11 @@ var ROM;
                             if (!userHasRole("System Administrator|ROM - Business Admin")) {
                                 Form.getControl("ts_mandatory").setDisabled(true);
                             }
+                            //Hide Questionnaire Viewable Settings section for non-admin users
+                            if (!userHasRole("System Administrator")) {
+                                Form.ui.tabs.get('tab_summary').sections.get('tab_summary_section_accesscontrol').setVisible(false);
+                            }
+                            checkAccessControl(eContext);
                             return [2 /*return*/];
                     }
                 });
@@ -786,6 +791,34 @@ var ROM;
                                     isInspectionType: isInspectionType
                                 }];
                     }
+                });
+            });
+        }
+        function checkAccessControl(eContext) {
+            return __awaiter(this, void 0, void 0, function () {
+                var form, accesscontrol, accessUserFetchXml;
+                return __generator(this, function (_a) {
+                    form = eContext.getFormContext();
+                    accesscontrol = form.getAttribute("ts_accesscontrol").getValue();
+                    if (accesscontrol == 1) {
+                        accessUserFetchXml = [
+                            "<fetch>",
+                            "  <entity name='ts_msdyn_workorderservicetask_systemuser'>",
+                            "    <filter type='and'>",
+                            "      <condition attribute='msdyn_workorderservicetaskid' operator='eq' value='", eContext.getFormContext().data.entity.getId(), "'/>",
+                            "      <condition attribute='systemuserid' operator='eq' value='", Xrm.Utility.getGlobalContext().userSettings.userId, "'/>",
+                            "    </filter>",
+                            "  </entity>",
+                            "</fetch>"
+                        ].join("");
+                        accessUserFetchXml = "?fetchXml=" + encodeURIComponent(accessUserFetchXml);
+                        Xrm.WebApi.retrieveMultipleRecords("ts_msdyn_workorderservicetask_systemuser", accessUserFetchXml).then(function (result) {
+                            if (result.entities != null && result.entities.length == 0) {
+                                form.ui.tabs.get("tab_questionnaire").setVisible(false);
+                            }
+                        });
+                    }
+                    return [2 /*return*/];
                 });
             });
         }

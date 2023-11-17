@@ -102,6 +102,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_quarterofpreparationtime?: ts_quarter | null;
   ts_quarterofreportinganddocumentation?: ts_quarter | null;
   ts_quarteroftraveltime?: ts_quarter | null;
+  ts_reportdetails?: string | null;
   ts_riskscore?: number | null;
   ts_state?: ts_planningstate | null;
   ts_totalconductoversight?: number | null;
@@ -396,6 +397,7 @@ interface msdyn_workorder_Select {
   ts_quarteroftraveltime: WebAttribute<msdyn_workorder_Select, { ts_quarteroftraveltime: ts_quarter | null }, { ts_quarteroftraveltime_formatted?: string }>;
   ts_reason_guid: WebAttribute<msdyn_workorder_Select, { ts_reason_guid: string | null }, { ts_reason_formatted?: string }>;
   ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
+  ts_reportdetails: WebAttribute<msdyn_workorder_Select, { ts_reportdetails: string | null }, {  }>;
   ts_riskscore: WebAttribute<msdyn_workorder_Select, { ts_riskscore: number | null }, {  }>;
   ts_riskthreshold_guid: WebAttribute<msdyn_workorder_Select, { ts_riskthreshold_guid: string | null }, { ts_riskthreshold_formatted?: string }>;
   ts_scheduledquarterjustification_guid: WebAttribute<msdyn_workorder_Select, { ts_scheduledquarterjustification_guid: string | null }, { ts_scheduledquarterjustification_formatted?: string }>;
@@ -587,6 +589,7 @@ interface msdyn_workorder_Filter {
   ts_quarteroftraveltime: ts_quarter;
   ts_reason_guid: XQW.Guid;
   ts_region_guid: XQW.Guid;
+  ts_reportdetails: string;
   ts_riskscore: number;
   ts_riskthreshold_guid: XQW.Guid;
   ts_scheduledquarterjustification_guid: XQW.Guid;
@@ -675,7 +678,6 @@ interface msdyn_workorder_Expand {
   ts_msdyn_workorder_ts_operationcontact: WebExpand<msdyn_workorder_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_msdyn_workorder_ts_operationcontact: ts_operationcontact_Result[] }>;
   ts_operationcontact_workorder_msdyn_worko: WebExpand<msdyn_workorder_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operationcontact_workorder_msdyn_worko: ts_operationcontact_Result[] }>;
   ts_ovs_Finding_WorkOrder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_WorkOrder_msdyn_workorder: ovs_Finding_Result[] }>;
-  ts_plan: WebExpand<msdyn_workorder_Expand, ts_Plan_Select, ts_Plan_Filter, { ts_plan: ts_Plan_Result }>;
   ts_riskthreshold: WebExpand<msdyn_workorder_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { ts_riskthreshold: ts_RiskCategory_Result }>;
 }
 interface msdyn_workorder_FormattedResult {
@@ -909,7 +911,6 @@ interface msdyn_workorder_RelatedOne {
   ts_TeamPlanningData: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   ts_WorkOrderCreationWizardId: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
-  ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   ts_riskthreshold: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
 }
 interface msdyn_workorder_RelatedMany {
