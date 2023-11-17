@@ -36,6 +36,7 @@ interface ts_TeamPlanningData_Base extends WebEntity {
   ts_totalhoursq2?: number | null;
   ts_totalhoursq3?: number | null;
   ts_totalhoursq4?: number | null;
+  ts_totalrequiredhours?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -109,6 +110,7 @@ interface ts_TeamPlanningData_Select {
   ts_totalhoursq2: WebAttribute<ts_TeamPlanningData_Select, { ts_totalhoursq2: number | null }, {  }>;
   ts_totalhoursq3: WebAttribute<ts_TeamPlanningData_Select, { ts_totalhoursq3: number | null }, {  }>;
   ts_totalhoursq4: WebAttribute<ts_TeamPlanningData_Select, { ts_totalhoursq4: number | null }, {  }>;
+  ts_totalrequiredhours: WebAttribute<ts_TeamPlanningData_Select, { ts_totalrequiredhours: number | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_TeamPlanningData_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_TeamPlanningData_Select, { versionnumber: number | null }, {  }>;
 }
@@ -160,6 +162,7 @@ interface ts_TeamPlanningData_Filter {
   ts_totalhoursq2: any;
   ts_totalhoursq3: any;
   ts_totalhoursq4: any;
+  ts_totalrequiredhours: any;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }

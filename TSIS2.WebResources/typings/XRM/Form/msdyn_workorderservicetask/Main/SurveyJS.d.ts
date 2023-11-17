@@ -78,6 +78,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       }
       interface tab_summary extends Xrm.SectionCollectionBase {
         get(name: "tab_newsummary_section_1"): Xrm.PageSection;
+        get(name: "tab_summary_section_accesscontrol"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -106,6 +107,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
+      get(name: "ts_accesscontrol"): Xrm.Attribute<any>;
       get(name: "ts_accesscontrolsecurityservices"): Xrm.LookupAttribute<"account">;
       get(name: "ts_actualtime"): Xrm.DateAttribute;
       get(name: "ts_aircraftmanufacturer"): Xrm.OptionSetAttribute<ts_aircraftmanufacturer>;
@@ -148,6 +150,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Access_Users"): Xrm.SubGridControl<"systemuser">;
       get(name: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
@@ -183,6 +186,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
+      get(name: "ts_accesscontrol"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_accesscontrolsecurityservices"): Xrm.LookupControl<"account">;
       get(name: "ts_actualtime"): Xrm.DateControl;
       get(name: "ts_aircraftmanufacturer"): Xrm.OptionSetControl<ts_aircraftmanufacturer>;
@@ -263,6 +267,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
+    getAttribute(attributeName: "ts_accesscontrol"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_accesscontrolsecurityservices"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_actualtime"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_aircraftmanufacturer"): Xrm.OptionSetAttribute<ts_aircraftmanufacturer>;
@@ -300,6 +305,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ts_servicetaskenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_servicetaskstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Access_Users"): Xrm.SubGridControl<"systemuser">;
     getControl(controlName: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
@@ -335,6 +341,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
+    getControl(controlName: "ts_accesscontrol"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_accesscontrolsecurityservices"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_actualtime"): Xrm.DateControl;
     getControl(controlName: "ts_aircraftmanufacturer"): Xrm.OptionSetControl<ts_aircraftmanufacturer>;

@@ -23,6 +23,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "section_supporting_region"): Xrm.PageSection;
         get(name: "service_tasks_section"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
+        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_11"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_9"): Xrm.PageSection;
         get(name: string): undefined;
@@ -107,7 +108,8 @@ declare namespace Form.msdyn_workorder.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_TimeTracking extends Xrm.SectionCollectionBase {
-        get(name: "tab_TimeTracking_section"): Xrm.PageSection;
+        get(name: "SupportRegion_TimeTracking"): Xrm.PageSection;
+        get(name: "WO_TimeTracking"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -187,6 +189,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
       get(name: "ts_comments"): Xrm.Attribute<string>;
       get(name: "ts_completedquarter"): Xrm.OptionSetAttribute<ts_msdyn_workorder_ts_completedquarter>;
+      get(name: "ts_conductingoversight"): Xrm.NumberAttribute;
       get(name: "ts_contact"): Xrm.LookupAttribute<"contact">;
       get(name: "ts_costexplanation"): Xrm.Attribute<string>;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
@@ -201,8 +204,14 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_overtime"): Xrm.NumberAttribute;
       get(name: "ts_plannedcost"): Xrm.NumberAttribute;
       get(name: "ts_planningdata"): Xrm.LookupAttribute<"ts_planningdata">;
+      get(name: "ts_preparationtime"): Xrm.NumberAttribute;
+      get(name: "ts_quarterofconductingoversight"): Xrm.OptionSetAttribute<ts_quarter>;
+      get(name: "ts_quarterofpreparationtime"): Xrm.OptionSetAttribute<ts_quarter>;
+      get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
+      get(name: "ts_quarteroftraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
       get(name: "ts_reason"): Xrm.LookupAttribute<"ts_planningreason">;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
+      get(name: "ts_reportdetails"): Xrm.Attribute<any>;
       get(name: "ts_scheduledquarterjustification"): Xrm.LookupAttribute<"ts_justification">;
       get(name: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -213,7 +222,9 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_totalrepanddoctime"): Xrm.NumberAttribute;
       get(name: "ts_totaltraveltime"): Xrm.NumberAttribute;
       get(name: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
+      get(name: "ts_traveltime"): Xrm.NumberAttribute;
       get(name: "ts_trip"): Xrm.LookupAttribute<"ts_trip">;
+      get(name: "ts_woreportinganddocumentation"): Xrm.NumberAttribute;
       get(name: "ts_workorderenddate"): Xrm.DateAttribute;
       get(name: "ts_workorderstartdate"): Xrm.DateAttribute;
       get(name: string): undefined;
@@ -337,6 +348,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_comments"): Xrm.StringControl;
       get(name: "ts_completedquarter"): Xrm.OptionSetControl<ts_msdyn_workorder_ts_completedquarter>;
+      get(name: "ts_conductingoversight"): Xrm.NumberControl;
       get(name: "ts_contact"): Xrm.LookupControl<"contact">;
       get(name: "ts_costexplanation"): Xrm.StringControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
@@ -351,8 +363,14 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_overtime"): Xrm.NumberControl;
       get(name: "ts_plannedcost"): Xrm.NumberControl;
       get(name: "ts_planningdata"): Xrm.LookupControl<"ts_planningdata">;
+      get(name: "ts_preparationtime"): Xrm.NumberControl;
+      get(name: "ts_quarterofconductingoversight"): Xrm.OptionSetControl<ts_quarter>;
+      get(name: "ts_quarterofpreparationtime"): Xrm.OptionSetControl<ts_quarter>;
+      get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;
+      get(name: "ts_quarteroftraveltime"): Xrm.OptionSetControl<ts_quarter>;
       get(name: "ts_reason"): Xrm.LookupControl<"ts_planningreason">;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
+      get(name: "ts_reportdetails"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_scheduledquarterjustification"): Xrm.LookupControl<"ts_justification">;
       get(name: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
       get(name: "ts_securityincident1"): Xrm.LookupControl<"ts_securityincident">;
@@ -364,9 +382,11 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_totalrepanddoctime"): Xrm.NumberControl;
       get(name: "ts_totaltraveltime"): Xrm.NumberControl;
       get(name: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
+      get(name: "ts_traveltime"): Xrm.NumberControl;
       get(name: "ts_trip"): Xrm.LookupControl<"ts_trip">;
       get(name: "ts_trip1"): Xrm.LookupControl<"ts_trip">;
       get(name: "ts_trip2"): Xrm.LookupControl<"ts_trip">;
+      get(name: "ts_woreportinganddocumentation"): Xrm.NumberControl;
       get(name: "ts_workorderenddate"): Xrm.DateControl;
       get(name: "ts_workorderstartdate"): Xrm.DateControl;
       get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
@@ -472,6 +492,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_completedquarter"): Xrm.OptionSetAttribute<ts_msdyn_workorder_ts_completedquarter>;
+    getAttribute(attributeName: "ts_conductingoversight"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_contact"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "ts_costexplanation"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
@@ -486,8 +507,14 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedcost"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_planningdata"): Xrm.LookupAttribute<"ts_planningdata">;
+    getAttribute(attributeName: "ts_preparationtime"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_quarterofconductingoversight"): Xrm.OptionSetAttribute<ts_quarter>;
+    getAttribute(attributeName: "ts_quarterofpreparationtime"): Xrm.OptionSetAttribute<ts_quarter>;
+    getAttribute(attributeName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
+    getAttribute(attributeName: "ts_quarteroftraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
     getAttribute(attributeName: "ts_reason"): Xrm.LookupAttribute<"ts_planningreason">;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
+    getAttribute(attributeName: "ts_reportdetails"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_scheduledquarterjustification"): Xrm.LookupAttribute<"ts_justification">;
     getAttribute(attributeName: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -498,7 +525,9 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_totalrepanddoctime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_totaltraveltime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
+    getAttribute(attributeName: "ts_traveltime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_trip"): Xrm.LookupAttribute<"ts_trip">;
+    getAttribute(attributeName: "ts_woreportinganddocumentation"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_workorderenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_workorderstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
@@ -617,6 +646,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_comments"): Xrm.StringControl;
     getControl(controlName: "ts_completedquarter"): Xrm.OptionSetControl<ts_msdyn_workorder_ts_completedquarter>;
+    getControl(controlName: "ts_conductingoversight"): Xrm.NumberControl;
     getControl(controlName: "ts_contact"): Xrm.LookupControl<"contact">;
     getControl(controlName: "ts_costexplanation"): Xrm.StringControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
@@ -631,8 +661,14 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_overtime"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedcost"): Xrm.NumberControl;
     getControl(controlName: "ts_planningdata"): Xrm.LookupControl<"ts_planningdata">;
+    getControl(controlName: "ts_preparationtime"): Xrm.NumberControl;
+    getControl(controlName: "ts_quarterofconductingoversight"): Xrm.OptionSetControl<ts_quarter>;
+    getControl(controlName: "ts_quarterofpreparationtime"): Xrm.OptionSetControl<ts_quarter>;
+    getControl(controlName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;
+    getControl(controlName: "ts_quarteroftraveltime"): Xrm.OptionSetControl<ts_quarter>;
     getControl(controlName: "ts_reason"): Xrm.LookupControl<"ts_planningreason">;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
+    getControl(controlName: "ts_reportdetails"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_scheduledquarterjustification"): Xrm.LookupControl<"ts_justification">;
     getControl(controlName: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
     getControl(controlName: "ts_securityincident1"): Xrm.LookupControl<"ts_securityincident">;
@@ -644,9 +680,11 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_totalrepanddoctime"): Xrm.NumberControl;
     getControl(controlName: "ts_totaltraveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
+    getControl(controlName: "ts_traveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_trip"): Xrm.LookupControl<"ts_trip">;
     getControl(controlName: "ts_trip1"): Xrm.LookupControl<"ts_trip">;
     getControl(controlName: "ts_trip2"): Xrm.LookupControl<"ts_trip">;
+    getControl(controlName: "ts_woreportinganddocumentation"): Xrm.NumberControl;
     getControl(controlName: "ts_workorderenddate"): Xrm.DateControl;
     getControl(controlName: "ts_workorderstartdate"): Xrm.DateControl;
     getControl(controlName: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;

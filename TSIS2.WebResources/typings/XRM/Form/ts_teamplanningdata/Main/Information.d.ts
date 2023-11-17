@@ -71,6 +71,7 @@ declare namespace Form.ts_teamplanningdata.Main {
       get(name: "ts_totalhoursq2"): Xrm.NumberAttribute;
       get(name: "ts_totalhoursq3"): Xrm.NumberAttribute;
       get(name: "ts_totalhoursq4"): Xrm.NumberAttribute;
+      get(name: "ts_totalrequiredhours"): Xrm.NumberAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -111,6 +112,7 @@ declare namespace Form.ts_teamplanningdata.Main {
       get(name: "ts_totalhoursq2"): Xrm.NumberControl;
       get(name: "ts_totalhoursq3"): Xrm.NumberControl;
       get(name: "ts_totalhoursq4"): Xrm.NumberControl;
+      get(name: "ts_totalrequiredhours"): Xrm.NumberControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -159,6 +161,7 @@ declare namespace Form.ts_teamplanningdata.Main {
     getAttribute(attributeName: "ts_totalhoursq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_totalhoursq3"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_totalhoursq4"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_totalrequiredhours"): Xrm.NumberAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_new_2"): Xrm.BaseControl;
@@ -194,6 +197,7 @@ declare namespace Form.ts_teamplanningdata.Main {
     getControl(controlName: "ts_totalhoursq2"): Xrm.NumberControl;
     getControl(controlName: "ts_totalhoursq3"): Xrm.NumberControl;
     getControl(controlName: "ts_totalhoursq4"): Xrm.NumberControl;
+    getControl(controlName: "ts_totalrequiredhours"): Xrm.NumberControl;
     getControl(controlName: string): undefined;
   }
 }
