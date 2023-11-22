@@ -391,6 +391,7 @@
             "       <attribute name='ts_q3'/>",
             "       <attribute name='ts_q4'/>",
             "       <attribute name='ts_estimatedtraveltime'/>",
+            "       <attribute name='ts_estimatedcost' />",
             "       <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='ad'>",
             "           <filter type='and'>",
             "               <condition attribute='ts_planid' operator='eq' value='", formContext.data.entity.getId(), "'/>",

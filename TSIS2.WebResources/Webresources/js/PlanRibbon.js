@@ -67,6 +67,7 @@
         "    <attribute name='ts_q3'/>",
         "    <attribute name='ts_q4'/>",
         "    <attribute name='ts_estimatedtraveltime'/>",
+        "    <attribute name='ts_estimatedcost' />",
         "    <filter>",
         "      <condition attribute='ts_plan' operator='eq' value='", planId, "' uitype='ts_plan'/>",
         "    </filter>",
