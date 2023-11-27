@@ -1142,18 +1142,28 @@ var ROM;
         function postNoteOnScheduledQuarterChange(form) {
             if (scheduledQuarterAttributeValueChanged) {
                 var revisedQuarterAttributeValue = form.getAttribute("ovs_revisedquarterid").getValue();
+                var justification = form.getAttribute("ts_scheduledquarterjustification").getValue();
+                var justificationValue;
                 var justificationComment = form.getAttribute("ts_justificationcomment").getValue();
                 if (form.ui.getFormType() == 2) {
                     var recordId = form.data.entity.getId().replace(/[{}]/g, "");
                     var data = {};
                     data['objectid_msdyn_workorder@odata.bind'] = '/msdyn_workorders(' + recordId + ')';
                     if (revisedQuarterAttributeValue != null) {
-                        data['subject'] = "Scheduled Quarter Changed to: " + revisedQuarterAttributeValue[0].name;
+                        data['subject'] = "Scheduled Quarter changed to: " + revisedQuarterAttributeValue[0].name;
                     }
                     else {
-                        data['subject'] = "Scheduled Quarter Changed to null ";
+                        data['subject'] = "Scheduled Quarter changed to null ";
                     }
-                    data['notetext'] = justificationComment;
+                    if (justification != null) {
+                        justificationValue = justification[0].name;
+                    }
+                    else {
+                        justificationValue = "null";
+                    }
+                    data['notetext'] = "Justification changed to: " + justificationValue + " <br />Justification Comment: " + justificationComment;
+                    form.getAttribute("ts_scheduledquarterjustification").setValue(null);
+                    form.getAttribute("ts_justificationcomment").setValue(null);
                     Xrm.WebApi.createRecord('annotation', data).then(function success(result) {
                         scheduledQuarterAttributeValueChanged = false;
                     }, function (error) {
