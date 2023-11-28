@@ -205,6 +205,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aucun document disponible.
+        /// </summary>
+        internal static string NoDocuments {
+            get {
+                return ResourceManager.GetString("NoDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Glisser le(s) fichier(s) ici ou cliquez sur le trombone pour joindre le(s) fichier(s).
         /// </summary>
         internal static string NoFilesText {
