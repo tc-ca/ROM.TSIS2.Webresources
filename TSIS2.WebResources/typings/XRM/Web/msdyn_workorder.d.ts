@@ -678,6 +678,7 @@ interface msdyn_workorder_Expand {
   ts_msdyn_workorder_ts_operationcontact: WebExpand<msdyn_workorder_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_msdyn_workorder_ts_operationcontact: ts_operationcontact_Result[] }>;
   ts_operationcontact_workorder_msdyn_worko: WebExpand<msdyn_workorder_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operationcontact_workorder_msdyn_worko: ts_operationcontact_Result[] }>;
   ts_ovs_Finding_WorkOrder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_WorkOrder_msdyn_workorder: ovs_Finding_Result[] }>;
+  ts_plan: WebExpand<msdyn_workorder_Expand, ts_Plan_Select, ts_Plan_Filter, { ts_plan: ts_Plan_Result }>;
   ts_riskthreshold: WebExpand<msdyn_workorder_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { ts_riskthreshold: ts_RiskCategory_Result }>;
 }
 interface msdyn_workorder_FormattedResult {
@@ -911,6 +912,7 @@ interface msdyn_workorder_RelatedOne {
   ts_TeamPlanningData: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   ts_WorkOrderCreationWizardId: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
+  ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   ts_riskthreshold: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
 }
 interface msdyn_workorder_RelatedMany {

@@ -3,6 +3,7 @@ declare namespace Form.ts_suggestedinspection.Main {
     namespace Tabs {
       interface tab_2 extends Xrm.SectionCollectionBase {
         get(name: "tab_2_section_1"): Xrm.PageSection;
+        get(name: "tab_2_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -13,7 +14,9 @@ declare namespace Form.ts_suggestedinspection.Main {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "ts_activitytype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_category"): Xrm.OptionSetAttribute<ts_plancategory>;
+      get(name: "ts_estimatedcost"): Xrm.NumberAttribute;
       get(name: "ts_estimatedduration"): Xrm.NumberAttribute;
+      get(name: "ts_estimatedtraveltime"): Xrm.NumberAttribute;
       get(name: "ts_inspector"): Xrm.LookupAttribute<"systemuser">;
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
@@ -32,11 +35,14 @@ declare namespace Form.ts_suggestedinspection.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "grid_supportingregion"): Xrm.SubGridControl<"territory">;
+      get(name: "Additional_Inspectors"): Xrm.SubGridControl<"systemuser">;
+      get(name: "grid_supportingregion"): Xrm.SubGridControl<"ts_planinspectionsupportregion">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_activitytype"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_category"): Xrm.OptionSetControl<ts_plancategory>;
+      get(name: "ts_estimatedcost"): Xrm.NumberControl;
       get(name: "ts_estimatedduration"): Xrm.NumberControl;
+      get(name: "ts_estimatedtraveltime"): Xrm.NumberControl;
       get(name: "ts_inspector"): Xrm.LookupControl<"systemuser">;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
@@ -66,7 +72,9 @@ declare namespace Form.ts_suggestedinspection.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "ts_activitytype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_category"): Xrm.OptionSetAttribute<ts_plancategory>;
+    getAttribute(attributeName: "ts_estimatedcost"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_estimatedduration"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_estimatedtraveltime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_inspector"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
@@ -80,11 +88,14 @@ declare namespace Form.ts_suggestedinspection.Main {
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_trip"): Xrm.LookupAttribute<"ts_trip">;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "grid_supportingregion"): Xrm.SubGridControl<"territory">;
+    getControl(controlName: "Additional_Inspectors"): Xrm.SubGridControl<"systemuser">;
+    getControl(controlName: "grid_supportingregion"): Xrm.SubGridControl<"ts_planinspectionsupportregion">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_activitytype"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_category"): Xrm.OptionSetControl<ts_plancategory>;
+    getControl(controlName: "ts_estimatedcost"): Xrm.NumberControl;
     getControl(controlName: "ts_estimatedduration"): Xrm.NumberControl;
+    getControl(controlName: "ts_estimatedtraveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_inspector"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
