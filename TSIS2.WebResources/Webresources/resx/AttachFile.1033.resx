@@ -129,11 +129,23 @@
   <data name="ClearAttachmentsText" xml:space="preserve">
     <value>Clear Attachments</value>
   </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Unable to delete file - check log for [SharePoint] Delete File from Document Library</value>
+  </data>
+  <data name="DeleteFile" xml:space="preserve">
+    <value>Are you sure you want to delete this file?</value>
+  </data>
+  <data name="DeleteSuccessful" xml:space="preserve">
+    <value>Delete successful</value>
+  </data>
   <data name="DescriptionText" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="DetailsHeaderText" xml:space="preserve">
     <value>Details</value>
+  </data>
+  <data name="DocumentCount" xml:space="preserve">
+    <value>Number of files:</value>
   </data>
   <data name="ErrorNotificationLabel" xml:space="preserve">
     <value>ERROR</value>
@@ -155,6 +167,9 @@
   </data>
   <data name="NoFilesText" xml:space="preserve">
     <value>Drag file(s) here or click the paper clip to attach file(s)</value>
+  </data>
+  <data name="NoSharePointAccess" xml:space="preserve">
+    <value>Unable to load the Application. Your user account does not have permission to access this SharePoint page.</value>
   </data>
   <data name="NumberOfFilesAttachedText" xml:space="preserve">
     <value>files attached.</value>
@@ -194,5 +209,8 @@
   </data>
   <data name="UploadWarningText" xml:space="preserve">
     <value>Attached file(s) haven't been uploaded</value>
+  </data>
+  <data name="ViewFiles" xml:space="preserve">
+    <value>View Files</value>
   </data>
 </root>

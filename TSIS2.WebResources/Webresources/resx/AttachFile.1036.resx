@@ -129,11 +129,23 @@
   <data name="ClearAttachmentsText" xml:space="preserve">
     <value>Effacer les pièces jointes</value>
   </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Impossible de supprimer le fichier - vérifiez le journal pour [SharePoint] Delete File from Document Library</value>
+  </data>
+  <data name="DeleteFile" xml:space="preserve">
+    <value>Êtes-vous sûr(e) de vouloir supprimer ce fichier ?</value>
+  </data>
+  <data name="DeleteSuccessful" xml:space="preserve">
+    <value>Suppression réussie</value>
+  </data>
   <data name="DescriptionText" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="DetailsHeaderText" xml:space="preserve">
     <value>Détails</value>
+  </data>
+  <data name="DocumentCount" xml:space="preserve">
+    <value>Nombre de fichiers:</value>
   </data>
   <data name="ErrorNotificationLabel" xml:space="preserve">
     <value>ERREUR</value>
@@ -155,6 +167,9 @@
   </data>
   <data name="NoFilesText" xml:space="preserve">
     <value>Glisser le(s) fichier(s) ici ou cliquez sur le trombone pour joindre le(s) fichier(s)</value>
+  </data>
+  <data name="NoSharePointAccess" xml:space="preserve">
+    <value>Impossible de charger l’application. Votre compte utilisateur n’a pas la permission d’accéder à cette page SharePoint.</value>
   </data>
   <data name="NumberOfFilesAttachedText" xml:space="preserve">
     <value>fichiers joints.</value>
@@ -194,5 +209,8 @@
   </data>
   <data name="UploadWarningText" xml:space="preserve">
     <value>Le(s) ficher(s) joints n'ont pas été téléchargés</value>
+  </data>
+  <data name="ViewFiles" xml:space="preserve">
+    <value>Voir les fichiers</value>
   </data>
 </root>
