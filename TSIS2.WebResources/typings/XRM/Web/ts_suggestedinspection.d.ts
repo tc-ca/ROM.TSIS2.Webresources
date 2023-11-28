@@ -1,13 +1,18 @@
 interface ts_SuggestedInspection_Base extends WebEntity {
   createdon?: Date | null;
+  exchangerate?: number | null;
   importsequencenumber?: number | null;
   modifiedon?: Date | null;
   overriddencreatedon?: Date | null;
   statecode?: ts_suggestedinspection_statecode | null;
   statuscode?: ts_suggestedinspection_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  transactioncurrencyid_guid?: string | null;
   ts_category?: ts_plancategory | null;
+  ts_estimatedcost?: number | null;
+  ts_estimatedcost_base?: number | null;
   ts_estimatedduration?: number | null;
+  ts_estimatedtraveltime?: number | null;
   ts_name?: string | null;
   ts_q1?: number | null;
   ts_q2?: number | null;
@@ -18,10 +23,12 @@ interface ts_SuggestedInspection_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_SuggestedInspection_Relationships {
+  ts_ts_suggestedinspection_systemuser?: SystemUser_Result[] | null;
 }
 interface ts_SuggestedInspection extends ts_SuggestedInspection_Base, ts_SuggestedInspection_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_Trip_bind$ts_trips?: string | null;
   ts_activitytype_bind$msdyn_incidenttypes?: string | null;
   ts_inspector_bind$systemusers?: string | null;
@@ -40,6 +47,7 @@ interface ts_SuggestedInspection_Select {
   createdby_guid: WebAttribute<ts_SuggestedInspection_Select, { createdby_guid: string | null }, { createdby_formatted?: string }>;
   createdon: WebAttribute<ts_SuggestedInspection_Select, { createdon: Date | null }, { createdon_formatted?: string }>;
   createdonbehalfby_guid: WebAttribute<ts_SuggestedInspection_Select, { createdonbehalfby_guid: string | null }, { createdonbehalfby_formatted?: string }>;
+  exchangerate: WebAttribute<ts_SuggestedInspection_Select, { exchangerate: number | null }, {  }>;
   importsequencenumber: WebAttribute<ts_SuggestedInspection_Select, { importsequencenumber: number | null }, {  }>;
   modifiedby_guid: WebAttribute<ts_SuggestedInspection_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
   modifiedon: WebAttribute<ts_SuggestedInspection_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
@@ -52,9 +60,13 @@ interface ts_SuggestedInspection_Select {
   statecode: WebAttribute<ts_SuggestedInspection_Select, { statecode: ts_suggestedinspection_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ts_SuggestedInspection_Select, { statuscode: ts_suggestedinspection_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_SuggestedInspection_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  transactioncurrencyid_guid: WebAttribute<ts_SuggestedInspection_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   ts_activitytype_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_activitytype_guid: string | null }, { ts_activitytype_formatted?: string }>;
   ts_category: WebAttribute<ts_SuggestedInspection_Select, { ts_category: ts_plancategory | null }, { ts_category_formatted?: string }>;
+  ts_estimatedcost: WebAttribute<ts_SuggestedInspection_Select, { ts_estimatedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_estimatedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_estimatedcost_base: WebAttribute<ts_SuggestedInspection_Select, { ts_estimatedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_estimatedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_estimatedduration: WebAttribute<ts_SuggestedInspection_Select, { ts_estimatedduration: number | null }, {  }>;
+  ts_estimatedtraveltime: WebAttribute<ts_SuggestedInspection_Select, { ts_estimatedtraveltime: number | null }, {  }>;
   ts_inspector_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_inspector_guid: string | null }, { ts_inspector_formatted?: string }>;
   ts_name: WebAttribute<ts_SuggestedInspection_Select, { ts_name: string | null }, {  }>;
   ts_operation_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
@@ -76,6 +88,7 @@ interface ts_SuggestedInspection_Filter {
   createdby_guid: XQW.Guid;
   createdon: Date;
   createdonbehalfby_guid: XQW.Guid;
+  exchangerate: any;
   importsequencenumber: number;
   modifiedby_guid: XQW.Guid;
   modifiedon: Date;
@@ -88,9 +101,13 @@ interface ts_SuggestedInspection_Filter {
   statecode: ts_suggestedinspection_statecode;
   statuscode: ts_suggestedinspection_statuscode;
   timezoneruleversionnumber: number;
+  transactioncurrencyid_guid: XQW.Guid;
   ts_activitytype_guid: XQW.Guid;
   ts_category: ts_plancategory;
+  ts_estimatedcost: number;
+  ts_estimatedcost_base: number;
   ts_estimatedduration: any;
+  ts_estimatedtraveltime: any;
   ts_inspector_guid: XQW.Guid;
   ts_name: string;
   ts_operation_guid: XQW.Guid;
@@ -123,6 +140,7 @@ interface ts_SuggestedInspection_Expand {
   ts_riskthreshold: WebExpand<ts_SuggestedInspection_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { ts_riskthreshold: ts_RiskCategory_Result }>;
   ts_site: WebExpand<ts_SuggestedInspection_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_site: msdyn_FunctionalLocation_Result }>;
   ts_stakeholder: WebExpand<ts_SuggestedInspection_Expand, Account_Select, Account_Filter, { ts_stakeholder: Account_Result }>;
+  ts_ts_suggestedinspection_systemuser: WebExpand<ts_SuggestedInspection_Expand, SystemUser_Select, SystemUser_Filter, { ts_ts_suggestedinspection_systemuser: SystemUser_Result[] }>;
 }
 interface ts_SuggestedInspection_FormattedResult {
   createdby_formatted?: string;
@@ -138,8 +156,11 @@ interface ts_SuggestedInspection_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  transactioncurrencyid_formatted?: string;
   ts_activitytype_formatted?: string;
   ts_category_formatted?: string;
+  ts_estimatedcost_base_formatted?: string;
+  ts_estimatedcost_formatted?: string;
   ts_inspector_formatted?: string;
   ts_operation_formatted?: string;
   ts_operationtype_formatted?: string;
@@ -159,6 +180,7 @@ interface ts_SuggestedInspection_Result extends ts_SuggestedInspection_Base, ts_
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
   owninguser_guid: string | null;
+  transactioncurrencyid_guid: string | null;
   ts_activitytype_guid: string | null;
   ts_inspector_guid: string | null;
   ts_operation_guid: string | null;
@@ -186,6 +208,7 @@ interface ts_SuggestedInspection_RelatedOne {
   ts_stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface ts_SuggestedInspection_RelatedMany {
+  ts_ts_suggestedinspection_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_suggestedinspections: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;

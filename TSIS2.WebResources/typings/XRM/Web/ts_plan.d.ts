@@ -1,11 +1,13 @@
 interface ts_Plan_Base extends WebEntity {
   createdon?: Date | null;
+  exchangerate?: number | null;
   importsequencenumber?: number | null;
   modifiedon?: Date | null;
   overriddencreatedon?: Date | null;
   statecode?: ts_plan_statecode | null;
   statuscode?: ts_plan_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  transactioncurrencyid_guid?: string | null;
   ts_estimateddurationfiscalyear?: number | null;
   ts_estimateddurationq1?: number | null;
   ts_estimateddurationq2?: number | null;
@@ -19,6 +21,8 @@ interface ts_Plan_Base extends WebEntity {
   ts_plannedactivityq3?: number | null;
   ts_plannedactivityq4?: number | null;
   ts_planstatus?: ts_planstatus | null;
+  ts_totalestimatedcost?: number | null;
+  ts_totalestimatedcost_base?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -29,6 +33,7 @@ interface ts_Plan_Relationships {
 interface ts_Plan extends ts_Plan_Base, ts_Plan_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_fiscalyear_bind$tc_tcfiscalyears?: string | null;
   ts_team_bind$teams?: string | null;
 }
@@ -40,6 +45,7 @@ interface ts_Plan_Select {
   createdby_guid: WebAttribute<ts_Plan_Select, { createdby_guid: string | null }, { createdby_formatted?: string }>;
   createdon: WebAttribute<ts_Plan_Select, { createdon: Date | null }, { createdon_formatted?: string }>;
   createdonbehalfby_guid: WebAttribute<ts_Plan_Select, { createdonbehalfby_guid: string | null }, { createdonbehalfby_formatted?: string }>;
+  exchangerate: WebAttribute<ts_Plan_Select, { exchangerate: number | null }, {  }>;
   importsequencenumber: WebAttribute<ts_Plan_Select, { importsequencenumber: number | null }, {  }>;
   modifiedby_guid: WebAttribute<ts_Plan_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
   modifiedon: WebAttribute<ts_Plan_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
@@ -52,6 +58,7 @@ interface ts_Plan_Select {
   statecode: WebAttribute<ts_Plan_Select, { statecode: ts_plan_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ts_Plan_Select, { statuscode: ts_plan_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_Plan_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  transactioncurrencyid_guid: WebAttribute<ts_Plan_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   ts_estimateddurationfiscalyear: WebAttribute<ts_Plan_Select, { ts_estimateddurationfiscalyear: number | null }, {  }>;
   ts_estimateddurationq1: WebAttribute<ts_Plan_Select, { ts_estimateddurationq1: number | null }, {  }>;
   ts_estimateddurationq2: WebAttribute<ts_Plan_Select, { ts_estimateddurationq2: number | null }, {  }>;
@@ -67,6 +74,8 @@ interface ts_Plan_Select {
   ts_plannedactivityq4: WebAttribute<ts_Plan_Select, { ts_plannedactivityq4: number | null }, {  }>;
   ts_planstatus: WebAttribute<ts_Plan_Select, { ts_planstatus: ts_planstatus | null }, { ts_planstatus_formatted?: string }>;
   ts_team_guid: WebAttribute<ts_Plan_Select, { ts_team_guid: string | null }, { ts_team_formatted?: string }>;
+  ts_totalestimatedcost: WebAttribute<ts_Plan_Select, { ts_totalestimatedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_totalestimatedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_totalestimatedcost_base: WebAttribute<ts_Plan_Select, { ts_totalestimatedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_totalestimatedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_Plan_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_Plan_Select, { versionnumber: number | null }, {  }>;
 }
@@ -74,6 +83,7 @@ interface ts_Plan_Filter {
   createdby_guid: XQW.Guid;
   createdon: Date;
   createdonbehalfby_guid: XQW.Guid;
+  exchangerate: any;
   importsequencenumber: number;
   modifiedby_guid: XQW.Guid;
   modifiedon: Date;
@@ -86,6 +96,7 @@ interface ts_Plan_Filter {
   statecode: ts_plan_statecode;
   statuscode: ts_plan_statuscode;
   timezoneruleversionnumber: number;
+  transactioncurrencyid_guid: XQW.Guid;
   ts_estimateddurationfiscalyear: any;
   ts_estimateddurationq1: any;
   ts_estimateddurationq2: any;
@@ -101,6 +112,8 @@ interface ts_Plan_Filter {
   ts_plannedactivityq4: number;
   ts_planstatus: ts_planstatus;
   ts_team_guid: XQW.Guid;
+  ts_totalestimatedcost: number;
+  ts_totalestimatedcost_base: number;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -131,9 +144,12 @@ interface ts_Plan_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  transactioncurrencyid_formatted?: string;
   ts_fiscalyear_formatted?: string;
   ts_planstatus_formatted?: string;
   ts_team_formatted?: string;
+  ts_totalestimatedcost_base_formatted?: string;
+  ts_totalestimatedcost_formatted?: string;
 }
 interface ts_Plan_Result extends ts_Plan_Base, ts_Plan_Relationships {
   "@odata.etag": string;
@@ -145,6 +161,7 @@ interface ts_Plan_Result extends ts_Plan_Base, ts_Plan_Relationships {
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
   owninguser_guid: string | null;
+  transactioncurrencyid_guid: string | null;
   ts_fiscalyear_guid: string | null;
   ts_team_guid: string | null;
 }

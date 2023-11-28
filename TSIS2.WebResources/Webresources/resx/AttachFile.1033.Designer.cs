@@ -97,6 +97,33 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to delete file - check log for [SharePoint] Delete File from Document Library.
+        /// </summary>
+        internal static string DeleteError {
+            get {
+                return ResourceManager.GetString("DeleteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this file?.
+        /// </summary>
+        internal static string DeleteFile {
+            get {
+                return ResourceManager.GetString("DeleteFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete successful.
+        /// </summary>
+        internal static string DeleteSuccessful {
+            get {
+                return ResourceManager.GetString("DeleteSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         internal static string DescriptionText {
@@ -111,6 +138,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static string DetailsHeaderText {
             get {
                 return ResourceManager.GetString("DetailsHeaderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of files:.
+        /// </summary>
+        internal static string DocumentCount {
+            get {
+                return ResourceManager.GetString("DocumentCount", resourceCulture);
             }
         }
         
@@ -174,6 +210,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static string NoFilesText {
             get {
                 return ResourceManager.GetString("NoFilesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to load the Application. Your user account does not have permission to access this SharePoint page..
+        /// </summary>
+        internal static string NoSharePointAccess {
+            get {
+                return ResourceManager.GetString("NoSharePointAccess", resourceCulture);
             }
         }
         
@@ -291,6 +336,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         internal static string UploadWarningText {
             get {
                 return ResourceManager.GetString("UploadWarningText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Files.
+        /// </summary>
+        internal static string ViewFiles {
+            get {
+                return ResourceManager.GetString("ViewFiles", resourceCulture);
             }
         }
     }
