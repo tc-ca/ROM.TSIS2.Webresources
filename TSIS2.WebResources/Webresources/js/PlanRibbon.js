@@ -14,8 +14,43 @@
     let teamPlanningDataTeamEstimatedDurationQ4 = 0;
     let teamPlanningDataTeamEstimatedDurationTotal = 0;
     let teamPlanningDataTeamEstimatedTravelTimeTotal = 0;
-
+    let teamPlanningSupportRegionTimeTotal = 0;
     let teamPlanningDataTeamEstimatedCostTotal = 0;
+
+    const teamValue = formContext.data.entity.attributes.get("ts_team").getValue();
+    const fiscalyearValue = formContext.data.entity.attributes.get("ts_fiscalyear").getValue();
+    if (teamValue != null && fiscalyearValue != null) {
+        const teamRegion = await Xrm.WebApi.retrieveRecord('team', teamValue[0].id, '?$select=_ts_territory_value');
+
+        let supportRegionHoursFetchXml = `
+        <fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+          <entity name='ts_planinspectionsupportregion'>
+            <attribute name='ts_planinspectionsupportregionid' />
+            <attribute name='ts_suggestedinspection' />
+            <attribute name='ts_region' />
+            <attribute name='ts_hours' />
+            <filter type='and'>
+              <condition attribute='ts_region' operator='eq' uitype='territory' value='` + teamRegion["_ts_territory_value"] + `' />
+            </filter>
+            <link-entity name='ts_suggestedinspection' from='ts_suggestedinspectionid' to='ts_suggestedinspection' link-type='inner' alias='am'>
+              <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='an'>
+                <filter type='and'>
+                  <condition attribute='ts_fiscalyear' operator='eq' uitype='tc_tcfiscalyear' value='` + fiscalyearValue[0].id + `' />
+                </filter>
+              </link-entity>
+            </link-entity>
+          </entity>
+        </fetch>`;
+        supportRegionHoursFetchXml = "?fetchXml=" + encodeURIComponent(supportRegionHoursFetchXml);
+        let supportRegionHours = await Xrm.WebApi.retrieveMultipleRecords("ts_planinspectionsupportregion", supportRegionHoursFetchXml).then(function success(result) {
+            return result.entities;
+        });
+        for (let supportRegionHour of supportRegionHours) {
+            if (supportRegionHour["ts_hours"] != null) {
+                teamPlanningSupportRegionTimeTotal += supportRegionHour["ts_hours"];
+            }
+        }
+    }
 
     //Retrieve the Plan Inspector Hours records with the user id
     let planInspectorHoursFetchXml = [
@@ -89,10 +124,19 @@
             const q2 = (suggestedInspection.ts_q2 != null) ? suggestedInspection.ts_q2 : 0;
             const q3 = (suggestedInspection.ts_q3 != null) ? suggestedInspection.ts_q3 : 0;
             const q4 = (suggestedInspection.ts_q4 != null) ? suggestedInspection.ts_q4 : 0;
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ1 -= q1 * suggestedInspection.ts_estimatedduration;
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ2 -= q2 * suggestedInspection.ts_estimatedduration;
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ3 -= q3 * suggestedInspection.ts_estimatedduration;
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ4 -= q4 * suggestedInspection.ts_estimatedduration;
+
+            var estimatedTravelTime = 0;
+            if (suggestedInspection["plantrip.ts_estimatedtraveltime"] != null) {
+                estimatedTravelTime = Math.round(suggestedInspection["plantrip.ts_estimatedtraveltime"]);
+            }
+            else if (suggestedInspection["ts_estimatedtraveltime"] != null) {
+                estimatedTravelTime = Math.round(suggestedInspection["ts_estimatedtraveltime"]);
+            }
+
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ1 -= q1 * (suggestedInspection.ts_estimatedduration + estimatedTravelTime);
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ2 -= q2 * (suggestedInspection.ts_estimatedduration + estimatedTravelTime);
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ3 -= q3 * (suggestedInspection.ts_estimatedduration + estimatedTravelTime);
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ4 -= q4 * (suggestedInspection.ts_estimatedduration + estimatedTravelTime);
         }
     }
 
@@ -148,7 +192,7 @@
     formContext.getAttribute("ts_estimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
     formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
     formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
-    formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal - teamPlanningDataTeamEstimatedTravelTimeTotal);
+    formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal + teamPlanningDataTeamEstimatedTravelTimeTotal + teamPlanningSupportRegionTimeTotal);
 
     formContext.getAttribute("ts_totalestimatedcost").setValue(teamPlanningDataTeamEstimatedCostTotal);
 
