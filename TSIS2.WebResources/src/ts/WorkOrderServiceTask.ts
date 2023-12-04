@@ -787,24 +787,40 @@ namespace ROM.WorkOrderServiceTask {
     async function checkAccessControl(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
         const accesscontrol = form.getAttribute("ts_accesscontrol").getValue();
-        if (accesscontrol == 1) {
-            let accessUserFetchXml = [
-                "<fetch>",
-                "  <entity name='ts_msdyn_workorderservicetask_systemuser'>",
-                "    <filter type='and'>",
-                "      <condition attribute='msdyn_workorderservicetaskid' operator='eq' value='", eContext.getFormContext().data.entity.getId(), "'/>",
-                "      <condition attribute='systemuserid' operator='eq' value='", Xrm.Utility.getGlobalContext().userSettings.userId, "'/>",
-                "    </filter>",
-                "  </entity>",
-                "</fetch>"
-            ].join("");
-            accessUserFetchXml = "?fetchXml=" + encodeURIComponent(accessUserFetchXml);
-            Xrm.WebApi.retrieveMultipleRecords("ts_msdyn_workorderservicetask_systemuser", accessUserFetchXml).then(
-                function (result) {
-                    if (result.entities != null && result.entities.length == 0) {
-                        form.ui.tabs.get("tab_questionnaire").setVisible(false);
-                    }
-                });
+        const workOrderValue = form.getAttribute("msdyn_workorder").getValue();
+        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
+        const userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
+
+        if (!userHasRole("System Administrator")) {
+            if (accesscontrol == 1) {
+                let accessUserFetchXml = [
+                    "<fetch>",
+                    "  <entity name='ts_msdyn_workorderservicetask_systemuser'>",
+                    "    <filter type='and'>",
+                    "      <condition attribute='msdyn_workorderservicetaskid' operator='eq' value='", eContext.getFormContext().data.entity.getId(), "'/>",
+                    "      <condition attribute='systemuserid' operator='eq' value='", Xrm.Utility.getGlobalContext().userSettings.userId, "'/>",
+                    "    </filter>",
+                    "  </entity>",
+                    "</fetch>"
+                ].join("");
+                accessUserFetchXml = "?fetchXml=" + encodeURIComponent(accessUserFetchXml);
+                Xrm.WebApi.retrieveMultipleRecords("ts_msdyn_workorderservicetask_systemuser", accessUserFetchXml).then(
+                    function (result) {
+                        if (result.entities != null && result.entities.length == 0) {
+                            if (workOrderId != "") {
+                                Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ownerid_value ").then(
+                                    function success(result) {
+                                        if (result._ownerid_value != userId.toLowerCase()) {
+                                            form.ui.tabs.get("tab_questionnaire").setVisible(false);
+                                        }
+                                    });
+                            }
+                            else {
+                                form.ui.tabs.get("tab_questionnaire").setVisible(false);
+                            }
+                        }
+                    });
+            }
         }
     }
 }
