@@ -796,27 +796,41 @@ var ROM;
         }
         function checkAccessControl(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, accesscontrol, accessUserFetchXml;
+                var form, accesscontrol, workOrderValue, workOrderId, userId, accessUserFetchXml;
                 return __generator(this, function (_a) {
                     form = eContext.getFormContext();
                     accesscontrol = form.getAttribute("ts_accesscontrol").getValue();
-                    if (accesscontrol == 1) {
-                        accessUserFetchXml = [
-                            "<fetch>",
-                            "  <entity name='ts_msdyn_workorderservicetask_systemuser'>",
-                            "    <filter type='and'>",
-                            "      <condition attribute='msdyn_workorderservicetaskid' operator='eq' value='", eContext.getFormContext().data.entity.getId(), "'/>",
-                            "      <condition attribute='systemuserid' operator='eq' value='", Xrm.Utility.getGlobalContext().userSettings.userId, "'/>",
-                            "    </filter>",
-                            "  </entity>",
-                            "</fetch>"
-                        ].join("");
-                        accessUserFetchXml = "?fetchXml=" + encodeURIComponent(accessUserFetchXml);
-                        Xrm.WebApi.retrieveMultipleRecords("ts_msdyn_workorderservicetask_systemuser", accessUserFetchXml).then(function (result) {
-                            if (result.entities != null && result.entities.length == 0) {
-                                form.ui.tabs.get("tab_questionnaire").setVisible(false);
-                            }
-                        });
+                    workOrderValue = form.getAttribute("msdyn_workorder").getValue();
+                    workOrderId = workOrderValue ? workOrderValue[0].id : "";
+                    userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
+                    if (!userHasRole("System Administrator")) {
+                        if (accesscontrol == 1) {
+                            accessUserFetchXml = [
+                                "<fetch>",
+                                "  <entity name='ts_msdyn_workorderservicetask_systemuser'>",
+                                "    <filter type='and'>",
+                                "      <condition attribute='msdyn_workorderservicetaskid' operator='eq' value='", eContext.getFormContext().data.entity.getId(), "'/>",
+                                "      <condition attribute='systemuserid' operator='eq' value='", Xrm.Utility.getGlobalContext().userSettings.userId, "'/>",
+                                "    </filter>",
+                                "  </entity>",
+                                "</fetch>"
+                            ].join("");
+                            accessUserFetchXml = "?fetchXml=" + encodeURIComponent(accessUserFetchXml);
+                            Xrm.WebApi.retrieveMultipleRecords("ts_msdyn_workorderservicetask_systemuser", accessUserFetchXml).then(function (result) {
+                                if (result.entities != null && result.entities.length == 0) {
+                                    if (workOrderId != "") {
+                                        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ownerid_value ").then(function success(result) {
+                                            if (result._ownerid_value != userId.toLowerCase()) {
+                                                form.ui.tabs.get("tab_questionnaire").setVisible(false);
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        form.ui.tabs.get("tab_questionnaire").setVisible(false);
+                                    }
+                                }
+                            });
+                        }
                     }
                     return [2 /*return*/];
                 });
