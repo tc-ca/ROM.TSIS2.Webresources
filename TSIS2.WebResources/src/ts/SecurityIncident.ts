@@ -189,6 +189,56 @@ namespace ROM.SecurityIncident {
         }
     }
 
+    export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+        const siteValue = form.getAttribute("ts_site").getValue();
+
+        if (siteValue != null) {
+            Xrm.WebApi.retrieveRecord("msdyn_functionallocation", siteValue[0].id, "?$select=_ts_sitetype_value ").then(
+                function success(result) {
+                    if (result["_ts_sitetype_value"] != null) {
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = result["_ts_sitetype_value"];
+                        lookup[0].name = result["_ts_sitetype_value@OData.Community.Display.V1.FormattedValue"];
+                        lookup[0].entityType = result["_ts_sitetype_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                        form.getAttribute("ts_sitetype").setValue(lookup);
+                    }
+                },
+                function error(error) {
+                    Xrm.Navigation.openAlertDialog({ text: error.message });
+                });
+        }
+        else {
+            form.getAttribute("ts_sitetype").setValue(null);
+        }
+    }
+
+    export function subSiteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+        const subSiteValue = form.getAttribute("ts_subsite").getValue();
+
+        if (subSiteValue != null) {
+            Xrm.WebApi.retrieveRecord("msdyn_functionallocation", subSiteValue[0].id, "?$select=_ts_sitetype_value ").then(
+                function success(result) {
+                    if (result["_ts_sitetype_value"] != null) {
+                        var lookup = new Array();
+                        lookup[0] = new Object();
+                        lookup[0].id = result["_ts_sitetype_value"];
+                        lookup[0].name = result["_ts_sitetype_value@OData.Community.Display.V1.FormattedValue"];
+                        lookup[0].entityType = result["_ts_sitetype_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                        form.getAttribute("ts_subsitetype").setValue(lookup);
+                    }
+                },
+                function error(error) {
+                    Xrm.Navigation.openAlertDialog({ text: error.message });
+                });
+        }
+        else {
+            form.getAttribute("ts_subsitetype").setValue(null);
+        }
+    }
+
     function setSiteFilteredView(form: Form.ts_securityincident.Main.Information, mode): void {
         // Custom view
         const modeCondition = mode != null ? ('<condition attribute="ts_mode" operator="contain-values" value=""><value>' + mode + '</value></condition>') : null;
@@ -225,7 +275,9 @@ namespace ROM.SecurityIncident {
             let tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
             tab_time_tracking.setVisible(true);
 
+            form.getControl("ts_sitetype").setVisible(true);
             form.getControl("ts_subsite").setVisible(true);
+            form.getControl("ts_subsitetype").setVisible(true);
             form.getControl("ts_inflight").setVisible(true);
             form.getControl("ts_estimatedarrivaltime").setVisible(true);
             form.getControl("ts_policeresponse").setVisible(true);
@@ -313,7 +365,9 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_ruralorurban").setVisible(true);
             form.getControl("ts_arrests").setVisible(true);
 
+            form.getControl("ts_sitetype").setVisible(false);
             form.getControl("ts_subsite").setVisible(false);
+            form.getControl("ts_subsitetype").setVisible(false);
             form.getControl("ts_inflight").setVisible(false);
             form.getControl("ts_estimatedarrivaltime").setVisible(false);
             form.getControl("ts_policeresponse").setVisible(false);
@@ -345,6 +399,7 @@ namespace ROM.SecurityIncident {
 
                 if (!isOnLoad) {
                     form.getAttribute("ts_site").setValue(null);
+                    form.getAttribute("ts_sitetype").setValue(null);
                 }
             }
 
