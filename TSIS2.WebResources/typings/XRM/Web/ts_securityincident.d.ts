@@ -85,7 +85,6 @@ interface ts_securityincident_Relationships {
   ts_DiversionAerodrome?: msdyn_FunctionalLocation_Result | null;
   ts_Origin?: msdyn_FunctionalLocation_Result | null;
   ts_ReportingCompany?: Account_Result | null;
-  ts_SecurityIncidentType?: ts_securityincidenttype_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Stakeholder?: Account_Result | null;
   ts_Subsite?: msdyn_FunctionalLocation_Result | null;
@@ -106,8 +105,10 @@ interface ts_securityincident extends ts_securityincident_Base, ts_securityincid
   ts_Region_bind$territories?: string | null;
   ts_ReportingCompany_bind$accounts?: string | null;
   ts_SecurityIncidentType_bind$ts_securityincidenttypes?: string | null;
+  ts_SiteType_bind$ovs_sitetypes?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_Stakeholder_bind$accounts?: string | null;
+  ts_SubsiteType_bind$ovs_sitetypes?: string | null;
   ts_Subsite_bind$msdyn_functionallocations?: string | null;
   ts_TargetElement_bind$ts_targetelements?: string | null;
   ts_closedby_bind$systemusers?: string | null;
@@ -188,12 +189,14 @@ interface ts_securityincident_Select {
   ts_securityincidenttime: WebAttribute<ts_securityincident_Select, { ts_securityincidenttime: number | null }, {  }>;
   ts_securityincidenttype_guid: WebAttribute<ts_securityincident_Select, { ts_securityincidenttype_guid: string | null }, { ts_securityincidenttype_formatted?: string }>;
   ts_site_guid: WebAttribute<ts_securityincident_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
+  ts_sitetype_guid: WebAttribute<ts_securityincident_Select, { ts_sitetype_guid: string | null }, { ts_sitetype_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_securityincident_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   ts_stakeholder_name: WebAttribute<ts_securityincident_Select, { ts_stakeholder_name: string | null }, {  }>;
   ts_statusofrailwayowner: WebAttribute<ts_securityincident_Select, { ts_statusofrailwayowner: ts_statusofrailwayowner | null }, { ts_statusofrailwayowner_formatted?: string }>;
   ts_statusrationale: WebAttribute<ts_securityincident_Select, { ts_statusrationale: string | null }, {  }>;
   ts_subdivision: WebAttribute<ts_securityincident_Select, { ts_subdivision: string | null }, {  }>;
   ts_subsite_guid: WebAttribute<ts_securityincident_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
+  ts_subsitetype_guid: WebAttribute<ts_securityincident_Select, { ts_subsitetype_guid: string | null }, { ts_subsitetype_formatted?: string }>;
   ts_tamperingsubcategory: WebAttribute<ts_securityincident_Select, { ts_tamperingsubcategory: ts_tamperingsubcategory | null }, { ts_tamperingsubcategory_formatted?: string }>;
   ts_targetelement_guid: WebAttribute<ts_securityincident_Select, { ts_targetelement_guid: string | null }, { ts_targetelement_formatted?: string }>;
   ts_tcomscategoryenglish: WebAttribute<ts_securityincident_Select, { ts_tcomscategoryenglish: string | null }, {  }>;
@@ -288,12 +291,14 @@ interface ts_securityincident_Filter {
   ts_securityincidenttime: any;
   ts_securityincidenttype_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
+  ts_sitetype_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
   ts_stakeholder_name: string;
   ts_statusofrailwayowner: ts_statusofrailwayowner;
   ts_statusrationale: string;
   ts_subdivision: string;
   ts_subsite_guid: XQW.Guid;
+  ts_subsitetype_guid: XQW.Guid;
   ts_tamperingsubcategory: ts_tamperingsubcategory;
   ts_targetelement_guid: XQW.Guid;
   ts_tcomscategoryenglish: string;
@@ -330,7 +335,6 @@ interface ts_securityincident_Expand {
   ts_DiversionAerodrome: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_DiversionAerodrome: msdyn_FunctionalLocation_Result }>;
   ts_Origin: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Origin: msdyn_FunctionalLocation_Result }>;
   ts_ReportingCompany: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_ReportingCompany: Account_Result }>;
-  ts_SecurityIncidentType: WebExpand<ts_securityincident_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { ts_SecurityIncidentType: ts_securityincidenttype_Result }>;
   ts_Site: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Stakeholder: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
   ts_Subsite: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsite: msdyn_FunctionalLocation_Result }>;
@@ -384,9 +388,11 @@ interface ts_securityincident_FormattedResult {
   ts_ruralorurban_formatted?: string;
   ts_securityincidenttype_formatted?: string;
   ts_site_formatted?: string;
+  ts_sitetype_formatted?: string;
   ts_stakeholder_formatted?: string;
   ts_statusofrailwayowner_formatted?: string;
   ts_subsite_formatted?: string;
+  ts_subsitetype_formatted?: string;
   ts_tamperingsubcategory_formatted?: string;
   ts_targetelement_formatted?: string;
   ts_timezone_formatted?: string;
@@ -410,8 +416,10 @@ interface ts_securityincident_Result extends ts_securityincident_Base, ts_securi
   ts_reportingcompany_guid: string | null;
   ts_securityincidenttype_guid: string | null;
   ts_site_guid: string | null;
+  ts_sitetype_guid: string | null;
   ts_stakeholder_guid: string | null;
   ts_subsite_guid: string | null;
+  ts_subsitetype_guid: string | null;
   ts_targetelement_guid: string | null;
 }
 interface ts_securityincident_RelatedOne {
@@ -427,7 +435,6 @@ interface ts_securityincident_RelatedOne {
   ts_DiversionAerodrome: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Origin: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_ReportingCompany: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
-  ts_SecurityIncidentType: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_Subsite: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
