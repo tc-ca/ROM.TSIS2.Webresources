@@ -808,7 +808,11 @@ async function copyEnforcementActionToolResults(primaryControl, SelectedControls
                 //Update the selected findings with the completed finding's data. Skip the one that is complete
                 for (let selectedFindingId of SelectedControlsSelectedItemIds) {
                     if (selectedFindingId != completeFinding.ovs_findingid) {
-                        await Xrm.WebApi.updateRecord("ovs_finding", selectedFindingId, data);
+                        //Get Finding Type of Finding to make sure it's Non-Compliance
+                        const finding = await Xrm.WebApi.retrieveRecord("ovs_finding", selectedFindingId, "?$select=ts_findingtype");
+                        if (finding != null && finding.ts_findingtype == 717750002) {
+                            await Xrm.WebApi.updateRecord("ovs_finding", selectedFindingId, data);
+                        }
                     }
                 }
                 Xrm.Utility.closeProgressIndicator();
