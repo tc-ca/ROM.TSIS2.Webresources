@@ -1,4 +1,5 @@
 ﻿namespace ROM.Plan {
+    var teamRegionId = '';
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext: any = eContext.getFormContext();
         if (formContext.ui.getFormType() == 1) { //Create
@@ -23,6 +24,15 @@
             formContext.getControl("header_ownerid").setDisabled(false);
             formContext.getControl("header_ownerid").setDisabled(false);
             formContext.getControl("ts_planstatus").setDisabled(false);
+        }
+
+        var team = formContext.getAttribute("ts_team").getValue();
+        if (team !== null) {
+            Xrm.WebApi.retrieveRecord("team", team[0].id, "?$select=_ts_territory_value ").then(function success(result) {
+                if (result["_ts_territory_value"] != null) {
+                    teamRegionId = result["_ts_territory_value"];
+                }
+            });
         }
     }
 
@@ -541,5 +551,45 @@
         }
         formContext.ui.refreshRibbon();
         formContext.data.entity.save();
+    }
+
+    export function SubGridFilterExecution(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.ts_plan.Main.Information>eContext.getFormContext();
+
+        let gridControl: any = formContext.getControl("subgrid_supporting_inspections");
+        var fiscalyear = formContext.getAttribute("ts_fiscalyear").getValue();
+        var fiscalyearId = '';
+        if (fiscalyear !== null) {
+            fiscalyearId = fiscalyear[0].id;
+        }
+
+        if (gridControl === null) {
+            setTimeout(function () { ROM.Plan.SubGridFilterExecution(eContext); }, 1000);
+            return;
+        }
+        else {
+            var fetchXml = `<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                  <entity name='ts_planinspectionsupportregion'>
+                    <attribute name='ts_planinspectionsupportregionid' />
+                    <attribute name='ts_suggestedinspection' />
+                    <attribute name='ts_hours' />
+                    <order attribute='ts_name' descending='false' />
+                    <filter type='and'>
+                      <condition attribute='ts_suggestedinspection' operator='not-null' />
+                      <condition attribute='ts_region' operator='eq' uitype='territory' value='{` + teamRegionId + `}' />
+                    </filter>
+                    <link-entity name='ts_suggestedinspection' from='ts_suggestedinspectionid' to='ts_suggestedinspection' link-type='inner' alias='aq'>
+                      <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='ar'>
+                        <filter type='and'>
+                          <condition attribute='ts_fiscalyear' operator='eq' uitype='tc_tcfiscalyear' value='` + fiscalyearId + `' />
+                        </filter>
+                      </link-entity>
+                    </link-entity>
+                  </entity>
+                </fetch>`;
+
+            gridControl.setFilterXml(fetchXml);
+            gridControl.refresh();
+        }
     }
 }
