@@ -410,7 +410,7 @@ function appendDetailToQuestion(survey, options) {
     detailBox.className = "form-control";
     detailBox.rows = 3;
     detailBox.cols = 50;
-    detailBox.maxLength = 5000;
+    detailBox.maxLength = 10000;
     detailBox.style.resize = "vertical";
     characterCount.style.textAlign = "left";
     detailText.innerHTML = detailLabel;
