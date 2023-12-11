@@ -50,6 +50,7 @@ var ROM;
 (function (ROM) {
     var Plan;
     (function (Plan) {
+        var teamRegionId = '';
         function onLoad(eContext) {
             var formContext = eContext.getFormContext();
             if (formContext.ui.getFormType() == 1) { //Create
@@ -74,6 +75,14 @@ var ROM;
                 formContext.getControl("header_ownerid").setDisabled(false);
                 formContext.getControl("ts_planstatus").setDisabled(false);
             }
+            var team = formContext.getAttribute("ts_team").getValue();
+            if (team !== null) {
+                Xrm.WebApi.retrieveRecord("team", team[0].id, "?$select=_ts_territory_value ").then(function success(result) {
+                    if (result["_ts_territory_value"] != null) {
+                        teamRegionId = result["_ts_territory_value"];
+                    }
+                });
+            }
         }
         Plan.onLoad = onLoad;
         /*
@@ -92,7 +101,7 @@ var ROM;
          */
         function generateSuggestedInspections(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataTeamEstimatedTravelTimeTotal, teamPlanningDataTeamEstimatedCostTotal, planfetchXml, planData, teamRegionId, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data, suggestedInspectionsfetchXml, suggestedInspections;
+                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataTeamEstimatedTravelTimeTotal, teamPlanningDataTeamEstimatedCostTotal, planfetchXml, planData, teamRegionId_1, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data, suggestedInspectionsfetchXml, suggestedInspections;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
@@ -150,7 +159,7 @@ var ROM;
                                 console.log("Failed to load current Plan");
                                 return [2 /*return*/];
                             }
-                            teamRegionId = planData["team.ts_territory"];
+                            teamRegionId_1 = planData["team.ts_territory"];
                             plannedFiscalEndDate = new Date(planData["fiscalyear.tc_fiscalend"]);
                             OperationsFetchXml = [
                                 "<fetch>",
@@ -177,7 +186,7 @@ var ROM;
                                 "    </filter>",
                                 "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
                                 "      <filter>",
-                                "        <condition attribute='ts_region' operator='eq' value='", teamRegionId, "' uiname='Pacific Region' uitype='territory'/>",
+                                "        <condition attribute='ts_region' operator='eq' value='", teamRegionId_1, "' uiname='Pacific Region' uitype='territory'/>",
                                 "      </filter>",
                                 "    </link-entity>",
                                 "    <link-entity name='ts_riskcategory' from='ts_riskcategoryid' to='ts_risk' alias='risk'>",
@@ -563,5 +572,24 @@ var ROM;
             formContext.data.entity.save();
         }
         Plan.planStatusOnChange = planStatusOnChange;
+        function SubGridFilterExecution(eContext) {
+            var formContext = eContext.getFormContext();
+            var gridControl = formContext.getControl("subgrid_supporting_inspections");
+            var fiscalyear = formContext.getAttribute("ts_fiscalyear").getValue();
+            var fiscalyearId = '';
+            if (fiscalyear !== null) {
+                fiscalyearId = fiscalyear[0].id;
+            }
+            if (gridControl === null) {
+                setTimeout(function () { ROM.Plan.SubGridFilterExecution(eContext); }, 1000);
+                return;
+            }
+            else {
+                var fetchXml = "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>\n                  <entity name='ts_planinspectionsupportregion'>\n                    <attribute name='ts_planinspectionsupportregionid' />\n                    <attribute name='ts_suggestedinspection' />\n                    <attribute name='ts_hours' />\n                    <order attribute='ts_name' descending='false' />\n                    <filter type='and'>\n                      <condition attribute='ts_suggestedinspection' operator='not-null' />\n                      <condition attribute='ts_region' operator='eq' uitype='territory' value='{" + teamRegionId + "}' />\n                    </filter>\n                    <link-entity name='ts_suggestedinspection' from='ts_suggestedinspectionid' to='ts_suggestedinspection' link-type='inner' alias='aq'>\n                      <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='ar'>\n                        <filter type='and'>\n                          <condition attribute='ts_fiscalyear' operator='eq' uitype='tc_tcfiscalyear' value='" + fiscalyearId + "' />\n                        </filter>\n                      </link-entity>\n                    </link-entity>\n                  </entity>\n                </fetch>";
+                gridControl.setFilterXml(fetchXml);
+                gridControl.refresh();
+            }
+        }
+        Plan.SubGridFilterExecution = SubGridFilterExecution;
     })(Plan = ROM.Plan || (ROM.Plan = {}));
 })(ROM || (ROM = {}));
