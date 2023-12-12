@@ -269,6 +269,7 @@ async function createWorkOrders(formContext) {
                     "    <attribute name='ts_q1'/>",
                     "    <attribute name='ts_plan'/>",
                     "    <attribute name='ts_q2'/>",
+                    "    <attribute name='ts_trip'/>",
                     "    <filter type='and'>",
                     "      <condition attribute='ts_plan' operator='eq' value='", planId, "'/>",
                     "      <condition attribute='statecode' operator='eq' value='0'/>",
@@ -281,6 +282,9 @@ async function createWorkOrders(formContext) {
                     "        <condition attribute='ts_q4' operator='gt' value='0'/>",
                     "      </filter>",
                     "    </filter>",
+                    "    <link-entity name='ts_trip' from='ts_tripid' to='ts_trip' visible='false' link-type='outer' alias='plantrip'>",
+                    "      <attribute name='ts_name'/>",
+                    "    </link-entity>",
                     "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site' link-type='outer' alias='ts_site'>",
                     "      <attribute name='ts_region'/>",
                     "    </link-entity>",
@@ -312,6 +316,7 @@ async function createWorkOrders(formContext) {
                         if (suggestedInspection._ts_site_value != null) workOrderData["ts_Site@odata.bind"] = "/msdyn_functionallocations(" + suggestedInspection._ts_site_value + ")";
                         if (suggestedInspection._ts_activitytype_value != null) workOrderData["msdyn_primaryincidenttype@odata.bind"] = "/msdyn_incidenttypes(" + suggestedInspection._ts_activitytype_value + ")";
                         if (suggestedInspection._ts_operation_value != null) workOrderData["ovs_OperationId@odata.bind"] = "/ovs_operations(" + suggestedInspection._ts_operation_value + ")";
+                        if (suggestedInspection["plantrip.ts_name"] != null) workOrderData["ts_trip@odata.bind"] = "/ts_trips(" + suggestedInspection._ts_trip_value + ")";
  
                         /*
                          * For each ts_q field, determine how many Work Orders must be created, then create them.
