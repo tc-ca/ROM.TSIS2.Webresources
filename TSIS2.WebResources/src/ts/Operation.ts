@@ -53,6 +53,7 @@ namespace ROM.Operation {
             //Show ISSO Properties Tab if OperationType is ISSO, show Avsec if not 
             if (operationType != null) {
                 if (issoOperationTypeGuids.includes(operationType[0].id)) {
+                    form.ui.tabs.get("operation_activity_tab").setVisible(false);
                     form.ui.tabs.get("tab_properties_isso").setVisible(true);
                     //Show PPE questions
                     var ppeRequired = form.getAttribute("ts_pperequired").getValue();
@@ -143,6 +144,10 @@ namespace ROM.Operation {
                         form.getControl('ts_subsite').setDisabled(false);
                     }
                 }
+            }
+            else {
+                //Set operation_activity_tab visible to false by default
+                form.ui.tabs.get("operation_activity_tab").setVisible(false);
             }
         });
 
