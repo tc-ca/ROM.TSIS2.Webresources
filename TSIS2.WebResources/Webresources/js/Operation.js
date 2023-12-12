@@ -67,8 +67,6 @@ var ROM;
                     else if (form.ui.getFormType() == 1) {
                         setOwnerToUserBusinessUnit(form);
                     }
-                    //Set operation_activity_tab visible to false by default
-                    form.ui.tabs.get("operation_activity_tab").setVisible(false);
                     userId = Xrm.Utility.getGlobalContext().userSettings.userId;
                     currentUserBusinessUnitFetchXML = [
                         "<fetch top='50'>",
@@ -92,6 +90,7 @@ var ROM;
                         //Show ISSO Properties Tab if OperationType is ISSO, show Avsec if not 
                         if (operationType != null) {
                             if (issoOperationTypeGuids.includes(operationType[0].id)) {
+                                form.ui.tabs.get("operation_activity_tab").setVisible(false);
                                 form.ui.tabs.get("tab_properties_isso").setVisible(true);
                                 //Show PPE questions
                                 var ppeRequired = form.getAttribute("ts_pperequired").getValue();
@@ -175,6 +174,10 @@ var ROM;
                                     form.getControl('ts_subsite').setDisabled(false);
                                 }
                             }
+                        }
+                        else {
+                            //Set operation_activity_tab visible to false by default
+                            form.ui.tabs.get("operation_activity_tab").setVisible(false);
                         }
                     });
                     if (form.getAttribute("ts_statusstartdate").getValue() != null) {
