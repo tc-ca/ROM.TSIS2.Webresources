@@ -121,7 +121,7 @@
             const teamRegionId = planData["team.ts_territory"];
             const plannedFiscalEndDate = new Date(planData["fiscalyear.tc_fiscalend"]);
 
-            //Retrieves all Operations of the 5 relevant Operation Types that are in the same Region as the Team of this Plan
+            //Retrieves all Operational Operations of the 5 relevant Operation Types that are in the same Region as the Team of this Plan
             var OperationsFetchXml = [
                 "<fetch>",
                 "  <entity name='ovs_operation'>",
@@ -144,6 +144,9 @@
                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='3b261029-c751-eb11-a812-000d3af3ac0d' uitype='ovs_operationtype'/>",
                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='199e31ae-c751-eb11-a812-000d3af3ac0d' uitype='ovs_operationtype'/>",
                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='b27e5003-c751-eb11-a812-000d3af3ac0d' uitype='ovs_operationtype'/>",
+                "    </filter>",
+                "    <filter>",
+                "      <condition attribute='ts_operationalstatus' operator='eq' value='717750000'/>",
                 "    </filter>",
                 "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
                 "      <filter>",
