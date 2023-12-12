@@ -67,6 +67,8 @@ var ROM;
                     else if (form.ui.getFormType() == 1) {
                         setOwnerToUserBusinessUnit(form);
                     }
+                    //Set operation_activity_tab visible to false by default
+                    form.ui.tabs.get("operation_activity_tab").setVisible(false);
                     userId = Xrm.Utility.getGlobalContext().userSettings.userId;
                     currentUserBusinessUnitFetchXML = [
                         "<fetch top='50'>",

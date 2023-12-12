@@ -29,6 +29,9 @@ namespace ROM.Operation {
             setOwnerToUserBusinessUnit(form)
         }
 
+        //Set operation_activity_tab visible to false by default
+        form.ui.tabs.get("operation_activity_tab").setVisible(false);
+
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
             "<fetch top='50'>",
