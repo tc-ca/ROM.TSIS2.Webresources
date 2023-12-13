@@ -292,6 +292,9 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_arrests").setVisible(false);
             form.getControl("ts_arrestsdetails").setVisible(false);
 
+            form.getControl("ts_delaystooperation").setVisible(false);
+            form.getControl("ts_injuries").setVisible(false);
+
             if (!isOnLoad) {
                 form.getAttribute("ts_inflight").setValue(false);
                 form.getAttribute("ts_policeresponse").setValue(false);
@@ -383,6 +386,9 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_reportingcompany_name").setVisible(false);
             form.getControl("ts_stakeholder_name").setVisible(false);
             form.getControl("ts_organization").setVisible(false);
+
+            form.getControl("ts_delaystooperation").setVisible(true);
+            form.getControl("ts_injuries").setVisible(true);
 
             if (mode == ts_securityincidentmode.RailSecurity) {
                 form.getControl("ts_statusofrailwayowner").setVisible(true);
