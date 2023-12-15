@@ -381,6 +381,7 @@
     <TypeScriptCompile Include="src\ts\PlanningSettings.ts" />
     <TypeScriptCompile Include="src\ts\OperationContact.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
+    <TypeScriptCompile Include="src\ts\QuestionnaireOffline.ts" />
     <TypeScriptCompile Include="src\ts\QuestionnaireVersion.ts" />
     <TypeScriptCompile Include="src\ts\RiskThreshold.ts" />
     <TypeScriptCompile Include="src\ts\ScoreThresholds.ts" />

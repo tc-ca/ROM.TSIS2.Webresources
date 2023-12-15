@@ -8,6 +8,13 @@ declare namespace Form.ts_plan.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_supporting_inspections extends Xrm.SectionCollectionBase {
+        get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_work_orders extends Xrm.SectionCollectionBase {
         get(name: "tab_2_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -41,6 +48,7 @@ declare namespace Form.ts_plan.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_new_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "subgrid_supporting_inspections"): Xrm.SubGridControl<"ts_planinspectionsupportregion">;
       get(name: "suggested_inspections_grid"): Xrm.BaseControl;
       get(name: "suggested_inspectorhours_grid"): Xrm.SubGridControl<"ts_planinspectorhours">;
       get(name: "ts_estimateddurationfiscalyear"): Xrm.NumberControl;
@@ -65,6 +73,7 @@ declare namespace Form.ts_plan.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
+      get(name: "tab_supporting_inspections"): Xrm.PageTab<Tabs.tab_supporting_inspections>;
       get(name: "tab_work_orders"): Xrm.PageTab<Tabs.tab_work_orders>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -92,6 +101,7 @@ declare namespace Form.ts_plan.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "subgrid_supporting_inspections"): Xrm.SubGridControl<"ts_planinspectionsupportregion">;
     getControl(controlName: "suggested_inspections_grid"): Xrm.BaseControl;
     getControl(controlName: "suggested_inspectorhours_grid"): Xrm.SubGridControl<"ts_planinspectorhours">;
     getControl(controlName: "ts_estimateddurationfiscalyear"): Xrm.NumberControl;

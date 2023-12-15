@@ -228,6 +228,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ts_plan_bind$ts_plans?: string | null;
   ts_reason_bind$ts_planningreasons?: string | null;
   ts_riskthreshold_bind$ts_riskcategories?: string | null;
+  ts_suggestedinspection_bind$ts_suggestedinspections?: string | null;
   ts_tradenameId_bind$ts_tradenames?: string | null;
   ts_trip_bind$ts_trips?: string | null;
 }
@@ -404,6 +405,7 @@ interface msdyn_workorder_Select {
   ts_securityincident_guid: WebAttribute<msdyn_workorder_Select, { ts_securityincident_guid: string | null }, { ts_securityincident_formatted?: string }>;
   ts_site_guid: WebAttribute<msdyn_workorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_state: WebAttribute<msdyn_workorder_Select, { ts_state: ts_planningstate | null }, { ts_state_formatted?: string }>;
+  ts_suggestedinspection_guid: WebAttribute<msdyn_workorder_Select, { ts_suggestedinspection_guid: string | null }, { ts_suggestedinspection_formatted?: string }>;
   ts_teamplanningdata_guid: WebAttribute<msdyn_workorder_Select, { ts_teamplanningdata_guid: string | null }, { ts_teamplanningdata_formatted?: string }>;
   ts_totalconductoversight: WebAttribute<msdyn_workorder_Select, { ts_totalconductoversight: number | null }, {  }>;
   ts_totalconductoversight_date: WebAttribute<msdyn_workorder_Select, { ts_totalconductoversight_date: Date | null }, { ts_totalconductoversight_date_formatted?: string }>;
@@ -596,6 +598,7 @@ interface msdyn_workorder_Filter {
   ts_securityincident_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_state: ts_planningstate;
+  ts_suggestedinspection_guid: XQW.Guid;
   ts_teamplanningdata_guid: XQW.Guid;
   ts_totalconductoversight: any;
   ts_totalconductoversight_date: Date;
@@ -680,6 +683,7 @@ interface msdyn_workorder_Expand {
   ts_ovs_Finding_WorkOrder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_WorkOrder_msdyn_workorder: ovs_Finding_Result[] }>;
   ts_plan: WebExpand<msdyn_workorder_Expand, ts_Plan_Select, ts_Plan_Filter, { ts_plan: ts_Plan_Result }>;
   ts_riskthreshold: WebExpand<msdyn_workorder_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { ts_riskthreshold: ts_RiskCategory_Result }>;
+  ts_suggestedinspection: WebExpand<msdyn_workorder_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection: ts_SuggestedInspection_Result }>;
 }
 interface msdyn_workorder_FormattedResult {
   createdby_formatted?: string;
@@ -792,6 +796,7 @@ interface msdyn_workorder_FormattedResult {
   ts_securityincident_formatted?: string;
   ts_site_formatted?: string;
   ts_state_formatted?: string;
+  ts_suggestedinspection_formatted?: string;
   ts_teamplanningdata_formatted?: string;
   ts_totalconductoversight_date_formatted?: string;
   ts_totalpreparationtime_date_formatted?: string;
@@ -868,6 +873,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ts_scheduledquarterjustification_guid: string | null;
   ts_securityincident_guid: string | null;
   ts_site_guid: string | null;
+  ts_suggestedinspection_guid: string | null;
   ts_teamplanningdata_guid: string | null;
   ts_tradenameid_guid: string | null;
   ts_trip_guid: string | null;
@@ -914,6 +920,7 @@ interface msdyn_workorder_RelatedOne {
   ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   ts_riskthreshold: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
+  ts_suggestedinspection: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
 }
 interface msdyn_workorder_RelatedMany {
   msdyn_msdyn_workorder_bookableresourcebooking_WorkOrder: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;

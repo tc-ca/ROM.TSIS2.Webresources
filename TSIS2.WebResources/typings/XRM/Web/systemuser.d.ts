@@ -84,7 +84,7 @@ interface SystemUser_Base extends WebEntity {
   mobilealertemail?: string | null;
   mobilephone?: string | null;
   modifiedon?: Date | null;
-  msdyn_agentType?: msdyn_systemuser_msdyn_agenttype | null;
+  msdyn_agentType?: msdyn_systemuser_msdyn_agentType | null;
   msdyn_botapplicationid?: string | null;
   msdyn_botdescription?: string | null;
   msdyn_botendpoint?: string | null;
@@ -293,6 +293,10 @@ interface SystemUser_Relationships {
   lk_ts_planningsettings_createdonbehalfby?: ts_planningsettings_Result[] | null;
   lk_ts_planningsettings_modifiedby?: ts_planningsettings_Result[] | null;
   lk_ts_planningsettings_modifiedonbehalfby?: ts_planningsettings_Result[] | null;
+  lk_ts_questionnaireoffline_createdby?: ts_questionnaireoffline_Result[] | null;
+  lk_ts_questionnaireoffline_createdonbehalfby?: ts_questionnaireoffline_Result[] | null;
+  lk_ts_questionnaireoffline_modifiedby?: ts_questionnaireoffline_Result[] | null;
+  lk_ts_questionnaireoffline_modifiedonbehalfby?: ts_questionnaireoffline_Result[] | null;
   lk_ts_questionnaireversion_createdby?: ts_questionnaireversion_Result[] | null;
   lk_ts_questionnaireversion_createdonbehalfby?: ts_questionnaireversion_Result[] | null;
   lk_ts_questionnaireversion_modifiedby?: ts_questionnaireversion_Result[] | null;
@@ -393,6 +397,7 @@ interface SystemUser_Relationships {
   user_ts_plan?: ts_Plan_Result[] | null;
   user_ts_planningdata?: ts_PlanningData_Result[] | null;
   user_ts_planningsettings?: ts_planningsettings_Result[] | null;
+  user_ts_questionnaireoffline?: ts_questionnaireoffline_Result[] | null;
   user_ts_questionnaireversion?: ts_questionnaireversion_Result[] | null;
   user_ts_riskcategory?: ts_RiskCategory_Result[] | null;
   user_ts_role?: ts_role_Result[] | null;
@@ -516,7 +521,7 @@ interface SystemUser_Select {
   modifiedby_guid: WebAttribute<SystemUser_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
   modifiedon: WebAttribute<SystemUser_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<SystemUser_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
-  msdyn_agentType: WebAttribute<SystemUser_Select, { msdyn_agentType: msdyn_systemuser_msdyn_agenttype | null }, { msdyn_agentType_formatted?: string }>;
+  msdyn_agentType: WebAttribute<SystemUser_Select, { msdyn_agentType: msdyn_systemuser_msdyn_agentType | null }, { msdyn_agentType_formatted?: string }>;
   msdyn_botapplicationid: WebAttribute<SystemUser_Select, { msdyn_botapplicationid: string | null }, {  }>;
   msdyn_botdescription: WebAttribute<SystemUser_Select, { msdyn_botdescription: string | null }, {  }>;
   msdyn_botendpoint: WebAttribute<SystemUser_Select, { msdyn_botendpoint: string | null }, {  }>;
@@ -662,7 +667,7 @@ interface SystemUser_Filter {
   modifiedby_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
-  msdyn_agentType: msdyn_systemuser_msdyn_agenttype;
+  msdyn_agentType: msdyn_systemuser_msdyn_agentType;
   msdyn_botapplicationid: string;
   msdyn_botdescription: string;
   msdyn_botendpoint: string;
@@ -882,6 +887,10 @@ interface SystemUser_Expand {
   lk_ts_planningsettings_createdonbehalfby: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { lk_ts_planningsettings_createdonbehalfby: ts_planningsettings_Result[] }>;
   lk_ts_planningsettings_modifiedby: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { lk_ts_planningsettings_modifiedby: ts_planningsettings_Result[] }>;
   lk_ts_planningsettings_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { lk_ts_planningsettings_modifiedonbehalfby: ts_planningsettings_Result[] }>;
+  lk_ts_questionnaireoffline_createdby: WebExpand<SystemUser_Expand, ts_questionnaireoffline_Select, ts_questionnaireoffline_Filter, { lk_ts_questionnaireoffline_createdby: ts_questionnaireoffline_Result[] }>;
+  lk_ts_questionnaireoffline_createdonbehalfby: WebExpand<SystemUser_Expand, ts_questionnaireoffline_Select, ts_questionnaireoffline_Filter, { lk_ts_questionnaireoffline_createdonbehalfby: ts_questionnaireoffline_Result[] }>;
+  lk_ts_questionnaireoffline_modifiedby: WebExpand<SystemUser_Expand, ts_questionnaireoffline_Select, ts_questionnaireoffline_Filter, { lk_ts_questionnaireoffline_modifiedby: ts_questionnaireoffline_Result[] }>;
+  lk_ts_questionnaireoffline_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_questionnaireoffline_Select, ts_questionnaireoffline_Filter, { lk_ts_questionnaireoffline_modifiedonbehalfby: ts_questionnaireoffline_Result[] }>;
   lk_ts_questionnaireversion_createdby: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { lk_ts_questionnaireversion_createdby: ts_questionnaireversion_Result[] }>;
   lk_ts_questionnaireversion_createdonbehalfby: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { lk_ts_questionnaireversion_createdonbehalfby: ts_questionnaireversion_Result[] }>;
   lk_ts_questionnaireversion_modifiedby: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { lk_ts_questionnaireversion_modifiedby: ts_questionnaireversion_Result[] }>;
@@ -985,6 +994,7 @@ interface SystemUser_Expand {
   user_ts_plan: WebExpand<SystemUser_Expand, ts_Plan_Select, ts_Plan_Filter, { user_ts_plan: ts_Plan_Result[] }>;
   user_ts_planningdata: WebExpand<SystemUser_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { user_ts_planningdata: ts_PlanningData_Result[] }>;
   user_ts_planningsettings: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { user_ts_planningsettings: ts_planningsettings_Result[] }>;
+  user_ts_questionnaireoffline: WebExpand<SystemUser_Expand, ts_questionnaireoffline_Select, ts_questionnaireoffline_Filter, { user_ts_questionnaireoffline: ts_questionnaireoffline_Result[] }>;
   user_ts_questionnaireversion: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { user_ts_questionnaireversion: ts_questionnaireversion_Result[] }>;
   user_ts_riskcategory: WebExpand<SystemUser_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { user_ts_riskcategory: ts_RiskCategory_Result[] }>;
   user_ts_role: WebExpand<SystemUser_Expand, ts_role_Select, ts_role_Filter, { user_ts_role: ts_role_Result[] }>;
@@ -1231,6 +1241,10 @@ interface SystemUser_RelatedMany {
   lk_ts_planningsettings_createdonbehalfby: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
   lk_ts_planningsettings_modifiedby: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
   lk_ts_planningsettings_modifiedonbehalfby: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
+  lk_ts_questionnaireoffline_createdby: WebMappingRetrieve<ts_questionnaireoffline_Select,ts_questionnaireoffline_Expand,ts_questionnaireoffline_Filter,ts_questionnaireoffline_Fixed,ts_questionnaireoffline_Result,ts_questionnaireoffline_FormattedResult>;
+  lk_ts_questionnaireoffline_createdonbehalfby: WebMappingRetrieve<ts_questionnaireoffline_Select,ts_questionnaireoffline_Expand,ts_questionnaireoffline_Filter,ts_questionnaireoffline_Fixed,ts_questionnaireoffline_Result,ts_questionnaireoffline_FormattedResult>;
+  lk_ts_questionnaireoffline_modifiedby: WebMappingRetrieve<ts_questionnaireoffline_Select,ts_questionnaireoffline_Expand,ts_questionnaireoffline_Filter,ts_questionnaireoffline_Fixed,ts_questionnaireoffline_Result,ts_questionnaireoffline_FormattedResult>;
+  lk_ts_questionnaireoffline_modifiedonbehalfby: WebMappingRetrieve<ts_questionnaireoffline_Select,ts_questionnaireoffline_Expand,ts_questionnaireoffline_Filter,ts_questionnaireoffline_Fixed,ts_questionnaireoffline_Result,ts_questionnaireoffline_FormattedResult>;
   lk_ts_questionnaireversion_createdby: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   lk_ts_questionnaireversion_createdonbehalfby: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   lk_ts_questionnaireversion_modifiedby: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
@@ -1330,6 +1344,7 @@ interface SystemUser_RelatedMany {
   user_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   user_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   user_ts_planningsettings: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
+  user_ts_questionnaireoffline: WebMappingRetrieve<ts_questionnaireoffline_Select,ts_questionnaireoffline_Expand,ts_questionnaireoffline_Filter,ts_questionnaireoffline_Fixed,ts_questionnaireoffline_Result,ts_questionnaireoffline_FormattedResult>;
   user_ts_questionnaireversion: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   user_ts_riskcategory: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
   user_ts_role: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;

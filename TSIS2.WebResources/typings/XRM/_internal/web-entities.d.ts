@@ -837,6 +837,29 @@ interface ts_planningsettings_Create extends ts_planningsettings {
 }
 interface ts_planningsettings_Update extends ts_planningsettings {
 }
+interface ts_questionnaireoffline_Base extends WebEntity {
+}
+interface ts_questionnaireoffline_Fixed extends WebEntity_Fixed {
+  ts_questionnaireofflineid: string;
+}
+interface ts_questionnaireoffline extends ts_questionnaireoffline_Base, ts_questionnaireoffline_Relationships {
+}
+interface ts_questionnaireoffline_Relationships {
+}
+interface ts_questionnaireoffline_Result extends ts_questionnaireoffline_Base, ts_questionnaireoffline_Relationships {
+}
+interface ts_questionnaireoffline_FormattedResult {
+}
+interface ts_questionnaireoffline_Select {
+}
+interface ts_questionnaireoffline_Expand {
+}
+interface ts_questionnaireoffline_Filter {
+}
+interface ts_questionnaireoffline_Create extends ts_questionnaireoffline {
+}
+interface ts_questionnaireoffline_Update extends ts_questionnaireoffline {
+}
 interface ts_questionnaireversion_Base extends WebEntity {
 }
 interface ts_questionnaireversion_Fixed extends WebEntity_Fixed {

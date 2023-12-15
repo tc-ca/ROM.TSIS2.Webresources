@@ -16,6 +16,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface b8e326ee5c214a18ba55e3b56966c249 extends Xrm.SectionCollectionBase {
+        get(name: "SupportingRegion"): Xrm.PageSection;
         get(name: "activity_details_section"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_5"): Xrm.PageSection;
         get(name: "general_section"): Xrm.PageSection;
@@ -239,6 +240,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_operation_contacts"): Xrm.SubGridControl<"contact">;
+      get(name: "SupportingRegion"): Xrm.SubGridControl<"ts_workordertimetracking">;
       get(name: "TimeTrackings"): Xrm.SubGridControl<"ts_workordertimetracking">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
@@ -537,6 +539,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_operation_contacts"): Xrm.SubGridControl<"contact">;
+    getControl(controlName: "SupportingRegion"): Xrm.SubGridControl<"ts_workordertimetracking">;
     getControl(controlName: "TimeTrackings"): Xrm.SubGridControl<"ts_workordertimetracking">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;

@@ -24,6 +24,7 @@ interface ts_SuggestedInspection_Base extends WebEntity {
 }
 interface ts_SuggestedInspection_Relationships {
   ts_ts_suggestedinspection_systemuser?: SystemUser_Result[] | null;
+  ts_workorder_suggestedinspection?: msdyn_workorder_Result[] | null;
 }
 interface ts_SuggestedInspection extends ts_SuggestedInspection_Base, ts_SuggestedInspection_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -141,6 +142,7 @@ interface ts_SuggestedInspection_Expand {
   ts_site: WebExpand<ts_SuggestedInspection_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_site: msdyn_FunctionalLocation_Result }>;
   ts_stakeholder: WebExpand<ts_SuggestedInspection_Expand, Account_Select, Account_Filter, { ts_stakeholder: Account_Result }>;
   ts_ts_suggestedinspection_systemuser: WebExpand<ts_SuggestedInspection_Expand, SystemUser_Select, SystemUser_Filter, { ts_ts_suggestedinspection_systemuser: SystemUser_Result[] }>;
+  ts_workorder_suggestedinspection: WebExpand<ts_SuggestedInspection_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_workorder_suggestedinspection: msdyn_workorder_Result[] }>;
 }
 interface ts_SuggestedInspection_FormattedResult {
   createdby_formatted?: string;
@@ -209,6 +211,7 @@ interface ts_SuggestedInspection_RelatedOne {
 }
 interface ts_SuggestedInspection_RelatedMany {
   ts_ts_suggestedinspection_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_workorder_suggestedinspection: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_suggestedinspections: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;

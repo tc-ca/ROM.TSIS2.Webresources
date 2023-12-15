@@ -65,6 +65,7 @@ interface Team_Relationships {
   team_ts_plan?: ts_Plan_Result[] | null;
   team_ts_planningdata?: ts_PlanningData_Result[] | null;
   team_ts_planningsettings?: ts_planningsettings_Result[] | null;
+  team_ts_questionnaireoffline?: ts_questionnaireoffline_Result[] | null;
   team_ts_questionnaireversion?: ts_questionnaireversion_Result[] | null;
   team_ts_riskcategory?: ts_RiskCategory_Result[] | null;
   team_ts_role?: ts_role_Result[] | null;
@@ -223,6 +224,7 @@ interface Team_Expand {
   team_ts_plan: WebExpand<Team_Expand, ts_Plan_Select, ts_Plan_Filter, { team_ts_plan: ts_Plan_Result[] }>;
   team_ts_planningdata: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { team_ts_planningdata: ts_PlanningData_Result[] }>;
   team_ts_planningsettings: WebExpand<Team_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { team_ts_planningsettings: ts_planningsettings_Result[] }>;
+  team_ts_questionnaireoffline: WebExpand<Team_Expand, ts_questionnaireoffline_Select, ts_questionnaireoffline_Filter, { team_ts_questionnaireoffline: ts_questionnaireoffline_Result[] }>;
   team_ts_questionnaireversion: WebExpand<Team_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { team_ts_questionnaireversion: ts_questionnaireversion_Result[] }>;
   team_ts_riskcategory: WebExpand<Team_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { team_ts_riskcategory: ts_RiskCategory_Result[] }>;
   team_ts_role: WebExpand<Team_Expand, ts_role_Select, ts_role_Filter, { team_ts_role: ts_role_Result[] }>;
@@ -326,6 +328,7 @@ interface Team_RelatedMany {
   team_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   team_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   team_ts_planningsettings: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
+  team_ts_questionnaireoffline: WebMappingRetrieve<ts_questionnaireoffline_Select,ts_questionnaireoffline_Expand,ts_questionnaireoffline_Filter,ts_questionnaireoffline_Fixed,ts_questionnaireoffline_Result,ts_questionnaireoffline_FormattedResult>;
   team_ts_questionnaireversion: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   team_ts_riskcategory: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
   team_ts_role: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;

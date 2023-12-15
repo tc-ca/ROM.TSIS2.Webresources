@@ -18,7 +18,7 @@ declare namespace Form.systemuser.Main {
       get(name: "fullname"): Xrm.Attribute<string> | null;
       get(name: "internalemailaddress"): Xrm.Attribute<string>;
       get(name: "isdisabled"): Xrm.OptionSetAttribute<boolean>;
-      get(name: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agenttype>;
+      get(name: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agentType>;
       get(name: "msdyn_botapplicationid"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -33,7 +33,7 @@ declare namespace Form.systemuser.Main {
       get(name: "footer_isdisabled"): Xrm.OptionSetControl<boolean>;
       get(name: "fullname"): Xrm.StringControl | null;
       get(name: "internalemailaddress"): Xrm.StringControl;
-      get(name: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agenttype>;
+      get(name: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agentType>;
       get(name: "msdyn_botapplicationid"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -56,7 +56,7 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: "fullname"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "internalemailaddress"): Xrm.Attribute<string>;
     getAttribute(attributeName: "isdisabled"): Xrm.OptionSetAttribute<boolean>;
-    getAttribute(attributeName: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agenttype>;
+    getAttribute(attributeName: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agentType>;
     getAttribute(attributeName: "msdyn_botapplicationid"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "applicationid"): Xrm.StringControl;
@@ -66,7 +66,7 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "footer_isdisabled"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "fullname"): Xrm.StringControl | null;
     getControl(controlName: "internalemailaddress"): Xrm.StringControl;
-    getControl(controlName: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agenttype>;
+    getControl(controlName: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agentType>;
     getControl(controlName: "msdyn_botapplicationid"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
