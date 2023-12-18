@@ -113,6 +113,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_statusstartdate"): Xrm.DateAttribute;
       get(name: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_targetedinspectionneeded"): Xrm.Attribute<any>;
       get(name: "ts_transborderflights"): Xrm.Attribute<any>;
       get(name: "ts_typeofdangerousgoods"): Xrm.OptionSetAttribute<ts_typeofdangerousgoods>;
       get(name: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetAttribute<ts_typesofspecializedppe>;
@@ -178,6 +179,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_statusstartdate"): Xrm.DateControl;
       get(name: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_targetedinspectionneeded"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_transborderflights"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_typeofdangerousgoods"): Xrm.OptionSetControl<ts_typeofdangerousgoods>;
       get(name: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetControl<ts_typesofspecializedppe>;
@@ -246,6 +248,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_statusstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_targetedinspectionneeded"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_transborderflights"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_typeofdangerousgoods"): Xrm.OptionSetAttribute<ts_typeofdangerousgoods>;
     getAttribute(attributeName: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetAttribute<ts_typesofspecializedppe>;
@@ -306,6 +309,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_statusstartdate"): Xrm.DateControl;
     getControl(controlName: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_targetedinspectionneeded"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_transborderflights"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_typeofdangerousgoods"): Xrm.OptionSetControl<ts_typeofdangerousgoods>;
     getControl(controlName: "ts_typesofspecializedppe"): Xrm.MultiSelectOptionSetControl<ts_typesofspecializedppe>;

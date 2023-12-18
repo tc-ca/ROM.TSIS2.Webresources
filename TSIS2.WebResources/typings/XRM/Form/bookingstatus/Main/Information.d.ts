@@ -22,6 +22,7 @@ declare namespace Form.bookingstatus.Main {
       get(name: "msdyn_fieldservicestatus"): Xrm.OptionSetAttribute<msdyn_bookingsystemstatus>;
       get(name: "msdyn_imageurl"): Xrm.Attribute<string>;
       get(name: "msdyn_statuscolor"): Xrm.Attribute<string>;
+      get(name: "msdyn_statuscompletesworkorder"): Xrm.Attribute<any>;
       get(name: "name"): Xrm.Attribute<string>;
       get(name: "status"): Xrm.OptionSetAttribute<bookingstatus_status>;
       get(name: string): undefined;
@@ -35,6 +36,7 @@ declare namespace Form.bookingstatus.Main {
       get(name: "msdyn_fieldservicestatus"): Xrm.OptionSetControl<msdyn_bookingsystemstatus>;
       get(name: "msdyn_imageurl"): Xrm.StringControl;
       get(name: "msdyn_statuscolor"): Xrm.StringControl;
+      get(name: "msdyn_statuscompletesworkorder"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "name"): Xrm.StringControl;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "status"): Xrm.OptionSetControl<bookingstatus_status>;
@@ -57,6 +59,7 @@ declare namespace Form.bookingstatus.Main {
     getAttribute(attributeName: "msdyn_fieldservicestatus"): Xrm.OptionSetAttribute<msdyn_bookingsystemstatus>;
     getAttribute(attributeName: "msdyn_imageurl"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_statuscolor"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_statuscompletesworkorder"): Xrm.Attribute<any>;
     getAttribute(attributeName: "name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "status"): Xrm.OptionSetAttribute<bookingstatus_status>;
     getAttribute(attributeName: string): undefined;
@@ -65,6 +68,7 @@ declare namespace Form.bookingstatus.Main {
     getControl(controlName: "msdyn_fieldservicestatus"): Xrm.OptionSetControl<msdyn_bookingsystemstatus>;
     getControl(controlName: "msdyn_imageurl"): Xrm.StringControl;
     getControl(controlName: "msdyn_statuscolor"): Xrm.StringControl;
+    getControl(controlName: "msdyn_statuscompletesworkorder"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "name"): Xrm.StringControl;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "status"): Xrm.OptionSetControl<bookingstatus_status>;

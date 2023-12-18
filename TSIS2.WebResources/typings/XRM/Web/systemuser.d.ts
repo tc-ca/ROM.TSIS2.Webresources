@@ -84,7 +84,7 @@ interface SystemUser_Base extends WebEntity {
   mobilealertemail?: string | null;
   mobilephone?: string | null;
   modifiedon?: Date | null;
-  msdyn_agentType?: msdyn_systemuser_msdyn_agenttype | null;
+  msdyn_agentType?: msdyn_systemuser_msdyn_agentType | null;
   msdyn_botapplicationid?: string | null;
   msdyn_botdescription?: string | null;
   msdyn_botendpoint?: string | null;
@@ -516,7 +516,7 @@ interface SystemUser_Select {
   modifiedby_guid: WebAttribute<SystemUser_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
   modifiedon: WebAttribute<SystemUser_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<SystemUser_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
-  msdyn_agentType: WebAttribute<SystemUser_Select, { msdyn_agentType: msdyn_systemuser_msdyn_agenttype | null }, { msdyn_agentType_formatted?: string }>;
+  msdyn_agentType: WebAttribute<SystemUser_Select, { msdyn_agentType: msdyn_systemuser_msdyn_agentType | null }, { msdyn_agentType_formatted?: string }>;
   msdyn_botapplicationid: WebAttribute<SystemUser_Select, { msdyn_botapplicationid: string | null }, {  }>;
   msdyn_botdescription: WebAttribute<SystemUser_Select, { msdyn_botdescription: string | null }, {  }>;
   msdyn_botendpoint: WebAttribute<SystemUser_Select, { msdyn_botendpoint: string | null }, {  }>;
@@ -662,7 +662,7 @@ interface SystemUser_Filter {
   modifiedby_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
-  msdyn_agentType: msdyn_systemuser_msdyn_agenttype;
+  msdyn_agentType: msdyn_systemuser_msdyn_agentType;
   msdyn_botapplicationid: string;
   msdyn_botdescription: string;
   msdyn_botendpoint: string;
