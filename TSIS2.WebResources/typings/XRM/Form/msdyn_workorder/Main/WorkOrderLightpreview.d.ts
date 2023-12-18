@@ -29,7 +29,7 @@ declare namespace Form.msdyn_workorder.Main {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "createdon"): Xrm.DateAttribute;
-      get(name: "msdyn_address1"): Xrm.Attribute<string>;
+      get(name: "msdyn_address1"): Xrm.Attribute<any>;
       get(name: "msdyn_address2"): Xrm.Attribute<string>;
       get(name: "msdyn_address3"): Xrm.Attribute<string>;
       get(name: "msdyn_agreement"): Xrm.LookupAttribute<"msdyn_agreement">;
@@ -44,7 +44,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_instructions"): Xrm.Attribute<string>;
       get(name: "msdyn_latitude"): Xrm.NumberAttribute;
       get(name: "msdyn_longitude"): Xrm.NumberAttribute;
-      get(name: "msdyn_mapcontrol"): Xrm.Attribute<string>;
+      get(name: "msdyn_mapcontrol"): Xrm.Attribute<any>;
       get(name: "msdyn_name"): Xrm.Attribute<string>;
       get(name: "msdyn_nottoexceedcostamount"): Xrm.NumberAttribute;
       get(name: "msdyn_nottoexceedpriceamount"): Xrm.NumberAttribute;
@@ -104,7 +104,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "header_process_msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype"> | null;
       get(name: "header_process_msdyn_workordertype_1"): Xrm.LookupControl<"msdyn_workordertype"> | null;
       get(name: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
-      get(name: "msdyn_address1"): Xrm.StringControl;
+      get(name: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_address2"): Xrm.StringControl;
       get(name: "msdyn_address3"): Xrm.StringControl;
       get(name: "msdyn_agreement"): Xrm.LookupControl<"msdyn_agreement">;
@@ -119,7 +119,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_instructions"): Xrm.StringControl;
       get(name: "msdyn_latitude"): Xrm.NumberControl;
       get(name: "msdyn_longitude"): Xrm.NumberControl;
-      get(name: "msdyn_mapcontrol"): Xrm.StringControl;
+      get(name: "msdyn_mapcontrol"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_name"): Xrm.StringControl;
       get(name: "msdyn_nottoexceedcostamount"): Xrm.NumberControl;
       get(name: "msdyn_nottoexceedpriceamount"): Xrm.NumberControl;
@@ -162,7 +162,7 @@ declare namespace Form.msdyn_workorder.Main {
   }
   interface WorkOrderLightpreview extends Xrm.PageBase<WorkOrderLightpreview.Attributes,WorkOrderLightpreview.Tabs,WorkOrderLightpreview.Controls> {
     getAttribute(attributeName: "createdon"): Xrm.DateAttribute;
-    getAttribute(attributeName: "msdyn_address1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_address1"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_address2"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_address3"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_agreement"): Xrm.LookupAttribute<"msdyn_agreement">;
@@ -177,7 +177,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_instructions"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_latitude"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_longitude"): Xrm.NumberAttribute;
-    getAttribute(attributeName: "msdyn_mapcontrol"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_mapcontrol"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_nottoexceedcostamount"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_nottoexceedpriceamount"): Xrm.NumberAttribute;
@@ -232,7 +232,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "header_process_msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype"> | null;
     getControl(controlName: "header_process_msdyn_workordertype_1"): Xrm.LookupControl<"msdyn_workordertype"> | null;
     getControl(controlName: "header_process_msdyn_workordertype_2"): Xrm.LookupControl<"msdyn_workordertype"> | null;
-    getControl(controlName: "msdyn_address1"): Xrm.StringControl;
+    getControl(controlName: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_address2"): Xrm.StringControl;
     getControl(controlName: "msdyn_address3"): Xrm.StringControl;
     getControl(controlName: "msdyn_agreement"): Xrm.LookupControl<"msdyn_agreement">;
@@ -247,7 +247,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_instructions"): Xrm.StringControl;
     getControl(controlName: "msdyn_latitude"): Xrm.NumberControl;
     getControl(controlName: "msdyn_longitude"): Xrm.NumberControl;
-    getControl(controlName: "msdyn_mapcontrol"): Xrm.StringControl;
+    getControl(controlName: "msdyn_mapcontrol"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_name"): Xrm.StringControl;
     getControl(controlName: "msdyn_nottoexceedcostamount"): Xrm.NumberControl;
     getControl(controlName: "msdyn_nottoexceedpriceamount"): Xrm.NumberControl;

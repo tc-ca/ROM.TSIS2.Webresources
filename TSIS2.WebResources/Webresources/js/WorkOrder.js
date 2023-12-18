@@ -109,6 +109,7 @@ var ROM;
             setSecurityIncidentLookupClickNavigation(eContext);
             //Set Trip Lookup Navigation to open Time Tracking form when on Time Tracking Tab
             setTripLookupClickNavigation(eContext);
+            showHideAircraftclassification(eContext);
             if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* Closed */) {
                 form.getControl("ts_completedquarter").setVisible(true);
             }
@@ -662,6 +663,7 @@ var ROM;
                     }
                     populateOperationField(eContext);
                 }
+                showHideAircraftclassification(eContext);
             }
             catch (e) {
                 throw new Error(e.Message);
@@ -1863,6 +1865,24 @@ var ROM;
             if (userHasRole("System Administrator")) {
                 formContext.getControl("msdyn_timeclosed").setDisabled(false);
                 formContext.getControl("msdyn_closedby").setDisabled(false);
+            }
+        }
+        function showHideAircraftclassification(eContext) {
+            var form = eContext.getFormContext();
+            var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
+            if (operationTypeAttribute != null) {
+                var operationTypeAttributeValue = operationTypeAttribute.getValue();
+                if (operationTypeAttributeValue != null) {
+                    if (operationTypeAttributeValue[0].id.toLowerCase() == "{8b614ef0-c651-eb11-a812-000d3af3ac0d}") { //Air Carrier (Passenger)
+                        form.getControl("ts_aircraftclassification").setVisible(true);
+                        if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
+                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* PassengerPAX */);
+                        }
+                    }
+                    else {
+                        form.getControl("ts_aircraftclassification").setVisible(false);
+                    }
+                }
             }
         }
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));

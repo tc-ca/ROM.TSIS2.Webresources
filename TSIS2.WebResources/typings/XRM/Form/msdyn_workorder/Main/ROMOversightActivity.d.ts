@@ -16,6 +16,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface b8e326ee5c214a18ba55e3b56966c249 extends Xrm.SectionCollectionBase {
+        get(name: "SupportingRegion"): Xrm.PageSection;
         get(name: "activity_details_section"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_5"): Xrm.PageSection;
         get(name: "general_section"): Xrm.PageSection;
@@ -185,6 +186,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
       get(name: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
       get(name: "ts_actualcost"): Xrm.NumberAttribute;
+      get(name: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
       get(name: "ts_comments"): Xrm.Attribute<string>;
@@ -239,6 +241,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_operation_contacts"): Xrm.SubGridControl<"contact">;
+      get(name: "SupportingRegion"): Xrm.SubGridControl<"ts_workordertimetracking">;
       get(name: "TimeTrackings"): Xrm.SubGridControl<"ts_workordertimetracking">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
@@ -344,6 +347,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: "ts_accountableteam"): Xrm.LookupControl<"team">;
       get(name: "ts_actualcost"): Xrm.NumberControl;
+      get(name: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_comments"): Xrm.StringControl;
@@ -488,6 +492,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
     getAttribute(attributeName: "ts_actualcost"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
     getAttribute(attributeName: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
     getAttribute(attributeName: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
@@ -537,6 +542,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_operation_contacts"): Xrm.SubGridControl<"contact">;
+    getControl(controlName: "SupportingRegion"): Xrm.SubGridControl<"ts_workordertimetracking">;
     getControl(controlName: "TimeTrackings"): Xrm.SubGridControl<"ts_workordertimetracking">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
@@ -642,6 +648,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: "ts_accountableteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_actualcost"): Xrm.NumberControl;
+    getControl(controlName: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
     getControl(controlName: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
     getControl(controlName: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_comments"): Xrm.StringControl;
