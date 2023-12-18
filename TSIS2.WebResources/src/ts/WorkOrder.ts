@@ -78,6 +78,8 @@ namespace ROM.WorkOrder {
         //Set Trip Lookup Navigation to open Time Tracking form when on Time Tracking Tab
         setTripLookupClickNavigation(eContext);
 
+        showHideAircraftclassification(eContext);
+
         if (currentSystemStatus == 690970004 || currentSystemStatus == msdyn_wosystemstatus.Closed) {
             form.getControl("ts_completedquarter").setVisible(true);
         }
@@ -677,6 +679,9 @@ namespace ROM.WorkOrder {
                 }
                 populateOperationField(eContext);
             }
+
+            showHideAircraftclassification(eContext);
+
         } catch (e) {
             throw new Error((e as any).Message);
         }
@@ -2024,6 +2029,25 @@ namespace ROM.WorkOrder {
         if (userHasRole("System Administrator")) {
             formContext.getControl("msdyn_timeclosed").setDisabled(false);
             formContext.getControl("msdyn_closedby").setDisabled(false);
+        }
+    }
+
+    function showHideAircraftclassification(eContext: Xrm.ExecutionContext<any, any>) {
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+        const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
+        if (operationTypeAttribute != null) {
+            const operationTypeAttributeValue = operationTypeAttribute.getValue();
+            if (operationTypeAttributeValue != null) {
+                if (operationTypeAttributeValue[0].id.toLowerCase() == "{8b614ef0-c651-eb11-a812-000d3af3ac0d}") {  //Air Carrier (Passenger)
+                    form.getControl("ts_aircraftclassification").setVisible(true);
+                    if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
+                        form.getAttribute("ts_aircraftclassification").setValue(ts_aircraftclassification.PassengerPAX);
+                    }
+                }
+                else {
+                    form.getControl("ts_aircraftclassification").setVisible(false);
+                }
+            }
         }
     }
 }
