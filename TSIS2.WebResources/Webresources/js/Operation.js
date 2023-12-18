@@ -136,6 +136,7 @@ var ROM;
                             }
                             else {
                                 form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                                form.getControl("ts_targetedinspectionneeded").setVisible(false);
                                 //We need to keep this tab hidden for now. We may need it later though.
                                 //const avsecPropertiesTab = form.ui.tabs.get("tab_properties_avsec")
                                 //avsecPropertiesTab.setVisible(true);
