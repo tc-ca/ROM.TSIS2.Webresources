@@ -186,6 +186,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
       get(name: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
       get(name: "ts_actualcost"): Xrm.NumberAttribute;
+      get(name: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
       get(name: "ts_comments"): Xrm.Attribute<string>;
@@ -346,6 +347,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
       get(name: "ts_accountableteam"): Xrm.LookupControl<"team">;
       get(name: "ts_actualcost"): Xrm.NumberControl;
+      get(name: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_comments"): Xrm.StringControl;
@@ -490,6 +492,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "transactioncurrencyid"): Xrm.LookupAttribute<"transactioncurrency">;
     getAttribute(attributeName: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
     getAttribute(attributeName: "ts_actualcost"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
     getAttribute(attributeName: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
     getAttribute(attributeName: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
@@ -645,6 +648,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "transactioncurrencyid"): Xrm.LookupControl<"transactioncurrency">;
     getControl(controlName: "ts_accountableteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_actualcost"): Xrm.NumberControl;
+    getControl(controlName: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
     getControl(controlName: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
     getControl(controlName: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_comments"): Xrm.StringControl;

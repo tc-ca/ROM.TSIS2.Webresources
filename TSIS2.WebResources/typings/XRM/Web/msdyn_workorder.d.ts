@@ -77,6 +77,7 @@ interface msdyn_workorder_Base extends WebEntity {
   traversedpath?: string | null;
   ts_actualcost?: number | null;
   ts_actualcost_base?: number | null;
+  ts_aircraftclassification?: ts_aircraftclassification | null;
   ts_cantcompleteinspection?: boolean | null;
   ts_canvasappnumber?: string | null;
   ts_comments?: string | null;
@@ -364,6 +365,7 @@ interface msdyn_workorder_Select {
   ts_accountableteam_guid: WebAttribute<msdyn_workorder_Select, { ts_accountableteam_guid: string | null }, { ts_accountableteam_formatted?: string }>;
   ts_actualcost: WebAttribute<msdyn_workorder_Select, { ts_actualcost: number | null; transactioncurrencyid_guid: string | null }, { ts_actualcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_actualcost_base: WebAttribute<msdyn_workorder_Select, { ts_actualcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_actualcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_aircraftclassification: WebAttribute<msdyn_workorder_Select, { ts_aircraftclassification: ts_aircraftclassification | null }, { ts_aircraftclassification_formatted?: string }>;
   ts_canceledinspectionjustification_guid: WebAttribute<msdyn_workorder_Select, { ts_canceledinspectionjustification_guid: string | null }, { ts_canceledinspectionjustification_formatted?: string }>;
   ts_cantcompleteinspection: WebAttribute<msdyn_workorder_Select, { ts_cantcompleteinspection: boolean | null }, {  }>;
   ts_canvasappnumber: WebAttribute<msdyn_workorder_Select, { ts_canvasappnumber: string | null }, {  }>;
@@ -557,6 +559,7 @@ interface msdyn_workorder_Filter {
   ts_accountableteam_guid: XQW.Guid;
   ts_actualcost: number;
   ts_actualcost_base: number;
+  ts_aircraftclassification: ts_aircraftclassification;
   ts_canceledinspectionjustification_guid: XQW.Guid;
   ts_cantcompleteinspection: boolean;
   ts_canvasappnumber: string;
@@ -772,6 +775,7 @@ interface msdyn_workorder_FormattedResult {
   ts_accountableteam_formatted?: string;
   ts_actualcost_base_formatted?: string;
   ts_actualcost_formatted?: string;
+  ts_aircraftclassification_formatted?: string;
   ts_canceledinspectionjustification_formatted?: string;
   ts_casetimetracking_formatted?: string;
   ts_completedquarter_formatted?: string;

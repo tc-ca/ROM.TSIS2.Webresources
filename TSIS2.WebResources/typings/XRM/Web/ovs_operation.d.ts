@@ -41,6 +41,7 @@ interface ovs_operation_Base extends WebEntity {
   ts_stationtype?: ts_stationtype | null;
   ts_statusenddate?: Date | null;
   ts_statusstartdate?: Date | null;
+  ts_targetedinspectionneeded?: boolean | null;
   ts_transborderflights?: boolean | null;
   ts_typeofdangerousgoods?: ts_typeofdangerousgoods | null;
   ts_typesofspecializedppe?: ts_typesofspecializedppe | null;
@@ -149,6 +150,7 @@ interface ovs_operation_Select {
   ts_statusstartdate: WebAttribute<ovs_operation_Select, { ts_statusstartdate: Date | null }, { ts_statusstartdate_formatted?: string }>;
   ts_subsite_guid: WebAttribute<ovs_operation_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
   ts_subsubsite_guid: WebAttribute<ovs_operation_Select, { ts_subsubsite_guid: string | null }, { ts_subsubsite_formatted?: string }>;
+  ts_targetedinspectionneeded: WebAttribute<ovs_operation_Select, { ts_targetedinspectionneeded: boolean | null }, {  }>;
   ts_transborderflights: WebAttribute<ovs_operation_Select, { ts_transborderflights: boolean | null }, {  }>;
   ts_typeofdangerousgoods: WebAttribute<ovs_operation_Select, { ts_typeofdangerousgoods: ts_typeofdangerousgoods | null }, { ts_typeofdangerousgoods_formatted?: string }>;
   ts_typesofspecializedppe: WebAttribute<ovs_operation_Select, { ts_typesofspecializedppe: ts_typesofspecializedppe | null }, { ts_typesofspecializedppe_formatted?: string }>;
@@ -218,6 +220,7 @@ interface ovs_operation_Filter {
   ts_statusstartdate: Date;
   ts_subsite_guid: XQW.Guid;
   ts_subsubsite_guid: XQW.Guid;
+  ts_targetedinspectionneeded: boolean;
   ts_transborderflights: boolean;
   ts_typeofdangerousgoods: ts_typeofdangerousgoods;
   ts_typesofspecializedppe: ts_typesofspecializedppe;
