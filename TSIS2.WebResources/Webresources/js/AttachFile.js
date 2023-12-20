@@ -4,6 +4,8 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
     let recordTagId = "";
 
+    let usesGroupFiles = false;
+
     let avsecOwner = "Aviation Security";
     let issoOwner = "Intermodal Surface Security Oversight";
     let recordOwner = "";
@@ -87,7 +89,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                     mainHeadingFrench = workOrderHeaderFrench;
 
                     // navigate to the canvas app
-                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName,mainHeadingFrench,mainHeadingEnglish);
+                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName,mainHeadingFrench,mainHeadingEnglish,true);
                 },
                 function (error) {
                     // handle error conditions
@@ -150,7 +152,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                     mainHeadingFrench = workOrderServiceTaskHeaderFrench;
 
                     // navigate to the canvas app
-                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish);
+                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish,true);
                 },
                 function (error) {
                     // handle error conditions
@@ -215,7 +217,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                     mainHeadingFrench = caseHeaderFrench;
 
                     // navigate to the canvas app
-                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish);
+                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish,true);
                 },
                 function (error) {
                     // handle error conditions
@@ -234,7 +236,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 }
 
 // Separate method to navigate to the canvas app
-function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName,mainHeadingFrench,mainHeadingEnglish) {
+function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName,mainHeadingFrench,mainHeadingEnglish,usesGroupFiles) {
 
     var jsonData = {
         recordId: recordTagId,
@@ -243,7 +245,8 @@ function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEngl
         tableNameEnglish: recordTableNameEnglish,
         tableNameFrench: recordTableNameFrench,
         tableRecordName: recordName,
-        tableSchemaName: PrimaryTypeEntityName
+        tableSchemaName: PrimaryTypeEntityName,
+        useGroupFiles: usesGroupFiles
     };
 
     var jsonString = JSON.stringify(jsonData).toString();
