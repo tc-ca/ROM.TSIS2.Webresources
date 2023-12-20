@@ -188,7 +188,7 @@ var ROM;
                                 "      <condition attribute='ts_operationalstatus' operator='eq' value='717750000'/>",
                                 "    </filter>",
                                 "    <filter>",
-                                "      <condition attribute=''ts_targetedinspectionneeded' operator='eq' value='1'/>",
+                                "      <condition attribute='ts_targetedinspectionneeded' operator='eq' value='1'/>",
                                 "    </filter>",
                                 "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
                                 "      <filter>",
