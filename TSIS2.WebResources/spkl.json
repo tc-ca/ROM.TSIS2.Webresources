@@ -225,6 +225,11 @@
             "description": "ROM TSIS 2.0 Questionnaire Version Form Scripts"
           },
           {
+            "uniquename": "ts_/js/QuestionnaireVersionRibbon.js",
+            "file": "js\\QuestionnaireVersionRibbon.js",
+            "description": "ROM TSIS 2.0 Questionnaire Version Ribbon Scripts"
+          },
+          {
             "uniquename": "ovs_/js/ServiceTaskType.js",
             "file": "js\\ServiceTaskType.js",
             "description": "ROM TSIS 2.0 Service Task Type Form Scripts"

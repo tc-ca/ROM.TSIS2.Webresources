@@ -15,12 +15,11 @@ interface ts_questionnaireoffline_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_questionnaireoffline_Relationships {
-  ts_questionnaireoffline_questionnaire?: ts_questionnaireoffline_Result[] | null;
 }
 interface ts_questionnaireoffline extends ts_questionnaireoffline_Base, ts_questionnaireoffline_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
-  ts_questionnaire_bind$ts_questionnaireofflines?: string | null;
+  ts_questionnaire_bind$ovs_questionnaires?: string | null;
 }
 interface ts_questionnaireoffline_Create extends ts_questionnaireoffline {
 }
@@ -84,8 +83,7 @@ interface ts_questionnaireoffline_Expand {
   ownerid: WebExpand<ts_questionnaireoffline_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ts_questionnaireoffline_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_questionnaireoffline_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
-  ts_questionnaire: WebExpand<ts_questionnaireoffline_Expand, ts_questionnaireoffline_Select, ts_questionnaireoffline_Filter, { ts_questionnaire: ts_questionnaireoffline_Result }>;
-  ts_questionnaireoffline_questionnaire: WebExpand<ts_questionnaireoffline_Expand, ts_questionnaireoffline_Select, ts_questionnaireoffline_Filter, { ts_questionnaireoffline_questionnaire: ts_questionnaireoffline_Result[] }>;
+  ts_questionnaire: WebExpand<ts_questionnaireoffline_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { ts_questionnaire: ovs_Questionnaire_Result }>;
 }
 interface ts_questionnaireoffline_FormattedResult {
   createdby_formatted?: string;
@@ -124,10 +122,9 @@ interface ts_questionnaireoffline_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ts_questionnaire: WebMappingRetrieve<ts_questionnaireoffline_Select,ts_questionnaireoffline_Expand,ts_questionnaireoffline_Filter,ts_questionnaireoffline_Fixed,ts_questionnaireoffline_Result,ts_questionnaireoffline_FormattedResult>;
+  ts_questionnaire: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
 }
 interface ts_questionnaireoffline_RelatedMany {
-  ts_questionnaireoffline_questionnaire: WebMappingRetrieve<ts_questionnaireoffline_Select,ts_questionnaireoffline_Expand,ts_questionnaireoffline_Filter,ts_questionnaireoffline_Fixed,ts_questionnaireoffline_Result,ts_questionnaireoffline_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_questionnaireofflines: WebMappingRetrieve<ts_questionnaireoffline_Select,ts_questionnaireoffline_Expand,ts_questionnaireoffline_Filter,ts_questionnaireoffline_Fixed,ts_questionnaireoffline_Result,ts_questionnaireoffline_FormattedResult>;

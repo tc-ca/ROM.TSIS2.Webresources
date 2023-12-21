@@ -194,6 +194,7 @@
     <Content Include="Webresources\js\PlanRibbon.js" />
     <Content Include="Webresources\js\Questionnaire.js" />
     <Content Include="Webresources\js\QuestionnaireVersion.js" />
+    <Content Include="Webresources\js\QuestionnaireVersionRibbon.js" />
     <Content Include="Webresources\js\RiskThreshold.js" />
     <Content Include="Webresources\js\RiskThresholdRibbon.js" />
     <Content Include="Webresources\js\SecurityRolePrivilegeCompare.js" />
@@ -381,7 +382,6 @@
     <TypeScriptCompile Include="src\ts\PlanningSettings.ts" />
     <TypeScriptCompile Include="src\ts\OperationContact.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
-    <TypeScriptCompile Include="src\ts\QuestionnaireOffline.ts" />
     <TypeScriptCompile Include="src\ts\QuestionnaireVersion.ts" />
     <TypeScriptCompile Include="src\ts\RiskThreshold.ts" />
     <TypeScriptCompile Include="src\ts\ScoreThresholds.ts" />
