@@ -188,7 +188,7 @@ var ROM;
                                 "      <condition attribute='ts_operationalstatus' operator='eq' value='717750000'/>",
                                 "    </filter>",
                                 "    <filter>",
-                                "      <condition attribute=''ts_targetedinspectionneeded' operator='eq' value='1'/>",
+                                "      <condition attribute='ts_targetedinspectionneeded' operator='eq' value='1'/>",
                                 "    </filter>",
                                 "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
                                 "      <filter>",
@@ -451,6 +451,14 @@ var ROM;
                         case 10:
                             suggestedInspections = _b.sent();
                             suggestedInspections.forEach(function (inspection) {
+                                if (isNaN(inspection.ts_q1))
+                                    inspection.ts_q1 = 0;
+                                if (isNaN(inspection.ts_q2))
+                                    inspection.ts_q2 = 0;
+                                if (isNaN(inspection.ts_q3))
+                                    inspection.ts_q3 = 0;
+                                if (isNaN(inspection.ts_q4))
+                                    inspection.ts_q4 = 0;
                                 teamPlanningDataPlannedQ1 += inspection.ts_q1;
                                 teamPlanningDataPlannedQ2 += inspection.ts_q2;
                                 teamPlanningDataPlannedQ3 += inspection.ts_q3;
