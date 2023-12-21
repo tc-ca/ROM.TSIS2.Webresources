@@ -44,7 +44,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
     recordTagId = PrimaryControl.data.entity.getId().replace("{", "").replace("}", "");
 
-    //Logic for getting tags when attaching files to Work Orders
+    //Work Orders - Logic
     if (PrimaryTypeEntityName == "msdyn_workorder") {
         
         //Find out what business owns the Work Order and what the Work Order Number is
@@ -74,9 +74,9 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                     recordName = result.entities[0].workOrderNumber;
 
                     if (recordOwner !== null && recordOwner !== "") {
-                        if (recordOwner.includes('Aviation Security')) {
+                        if (recordOwner.includes(avsecOwner)) {
                             recordOwner = avsecOwner;
-                        } else if (recordOwner.includes('Intermodal Surface Security Oversight')) {
+                        } else if (recordOwner.includes(issoOwner)) {
                             recordOwner = issoOwner;
                         }
                     }
@@ -105,7 +105,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
         }
     }
 
-    //Logic for getting tags with attaching files to Work Order Service Tasks
+    //Work Order Service Tasks - Logic
     if (PrimaryTypeEntityName == "msdyn_workorderservicetask") {
 
         //Find out what business owns the Work Order Service Task is
@@ -137,9 +137,9 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                     recordName = result.entities[0].workOrderServiceTaskNumber;
 
                     if (recordOwner !== null && recordOwner !== "") {
-                        if (recordOwner.includes('Aviation Security')) {
+                        if (recordOwner.includes(avsecOwner)) {
                             recordOwner = avsecOwner;
-                        } else if (recordOwner.includes('Intermodal Surface Security Oversight')) {
+                        } else if (recordOwner.includes(issoOwner)) {
                             recordOwner = issoOwner;
                         }
                     }
@@ -169,7 +169,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
         }
     }
 
-    //Logic for getting tags with attaching files to Cases
+    //Cases - Logic
     if (PrimaryTypeEntityName == "incident") {
         //Find out what business owns the Case is
         {
@@ -202,9 +202,9 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                     recordName = result.entities[0].caseNumber;
 
                     if (recordOwner !== null && recordOwner !== "") {
-                        if (recordOwner.includes('Aviation Security')) {
+                        if (recordOwner.includes(avsecOwner)) {
                             recordOwner = avsecOwner;
-                        } else if (recordOwner.includes('Intermodal Surface Security Oversight')) {
+                        } else if (recordOwner.includes(issoOwner)) {
                             recordOwner = issoOwner;
                         }
                     }
@@ -231,6 +231,306 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
         {
             recordTableNameEnglish = "Case";
             recordTableNameFrench = "Cas";
+        }
+    }
+
+    //Stakeholders - Logic
+    if (PrimaryTypeEntityName == "account") {
+        //Find out what business owns the Stakeholder
+        {
+            let recordOwnerFetchXML = `        
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='account'>
+                    <attribute name='name' alias='stakeholderName' />
+                    <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
+                      <attribute name='name' alias='recordOwner' />
+                    </link-entity>
+                    <filter>
+                      <condition attribute='accountid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>`
+            ;
+
+            let encodedRecordOwnerFetchXML = encodeURIComponent(recordOwnerFetchXML);
+
+            parent.Xrm.WebApi.retrieveMultipleRecords("account", "?fetchXml=" + encodedRecordOwnerFetchXML).then(
+                function success(result) {
+                    // record the id of the owner
+                    recordOwner = result.entities[0].recordOwner;
+                    recordName = result.entities[0].stakeholderName;
+
+                    if (recordOwner !== null && recordOwner !== "") {
+                        if (recordOwner.includes(avsecOwner)) {
+                            recordOwner = avsecOwner;
+                        } else if (recordOwner.includes(issoOwner)) {
+                            recordOwner = issoOwner;
+                        }
+                    }
+                    else {
+                        recordOwner = "";
+                    }
+
+                    //Set the header
+                    mainHeadingEnglish = stakeholderHeaderEnglish;
+                    mainHeadingFrench = stakeholderHeaderFrench;
+
+                    // navigate to the canvas app
+                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish, false);
+                },
+                function (error) {
+                    // handle error conditions
+                    console.log("Error retrieving who the owner of the Stakeholder is: " + error.message);
+                }
+            );
+
+        }
+
+        //Set the table name
+        {
+            recordTableNameEnglish = "Stakeholder";
+            recordTableNameFrench = "Partie prenante";
+        }
+    }
+
+    //Sites - Logic
+    if (PrimaryTypeEntityName == "msdyn_functionallocation") {
+        //Find out what business owns the Site
+        {
+            let recordOwnerFetchXML = `        
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='msdyn_functionallocation'>
+                    <attribute name='msdyn_name' alias='siteName' />
+                    <attribute name='ts_functionallocationnameenglish' alias='siteNameEnglish' />
+                    <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
+                      <attribute name='name' alias='recordOwner' />
+                    </link-entity>
+                    <filter>
+                      <condition attribute='msdyn_functionallocationid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>`
+            ;
+
+            let encodedRecordOwnerFetchXML = encodeURIComponent(recordOwnerFetchXML);
+
+            parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_functionallocation", "?fetchXml=" + encodedRecordOwnerFetchXML).then(
+                function success(result) {
+                    // record the id of the owner
+                    recordOwner = result.entities[0].recordOwner;
+                    let siteNameEnglish = result.entities[0].siteNameEnglish;
+
+                    if (siteNameEnglish !== null && siteNameEnglish !== "") {
+                        recordName = siteNameEnglish;
+                    }
+                    else {
+                        recordName = result.entities[0].siteName;
+                    }
+
+
+                    if (recordOwner !== null && recordOwner !== "") {
+                        if (recordOwner.includes(avsecOwner)) {
+                            recordOwner = avsecOwner;
+                        } else if (recordOwner.includes(issoOwner)) {
+                            recordOwner = issoOwner;
+                        }
+                    }
+                    else {
+                        recordOwner = "";
+                    }
+
+                    //Set the header
+                    mainHeadingEnglish = siteHeaderEnglish;
+                    mainHeadingFrench = siteHeaderFrench;
+
+                    // navigate to the canvas app
+                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish, false);
+                },
+                function (error) {
+                    // handle error conditions
+                    console.log("Error retrieving who the owner of the Site is: " + error.message);
+                }
+            );
+
+        }
+
+        //Set the table name
+        {
+            recordTableNameEnglish = "Site";
+            recordTableNameFrench = "Site";
+        }
+    }
+
+    //Operations - Logic
+    if (PrimaryTypeEntityName == "ovs_operation") {
+        //Find out what business owns the Operation
+        {
+            let recordOwnerFetchXML = `        
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='ovs_operation'>
+                    <attribute name='ovs_name' alias='operationName' />
+                    <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
+                      <attribute name='name' alias='recordOwner' />
+                    </link-entity>
+                    <filter>
+                      <condition attribute='ovs_operationid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>`;
+
+            let encodedRecordOwnerFetchXML = encodeURIComponent(recordOwnerFetchXML);
+
+            parent.Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedRecordOwnerFetchXML).then(
+                function success(result) {
+                    // record the id of the owner
+                    recordOwner = result.entities[0].recordOwner;
+                    recordName = result.entities[0].operationName;
+
+                    if (recordOwner !== null && recordOwner !== "") {
+                        if (recordOwner.includes(avsecOwner)) {
+                            recordOwner = avsecOwner;
+                        } else if (recordOwner.includes(issoOwner)) {
+                            recordOwner = issoOwner;
+                        }
+                    }
+                    else {
+                        recordOwner = "";
+                    }
+
+                    //Set the header
+                    mainHeadingEnglish = siteHeaderEnglish;
+                    mainHeadingFrench = siteHeaderFrench;
+
+                    // navigate to the canvas app
+                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish, false);
+                },
+                function (error) {
+                    // handle error conditions
+                    console.log("Error retrieving who the owner of the Operation is: " + error.message);
+                }
+            );
+
+        }
+
+        //Set the table name
+        {
+            recordTableNameEnglish = "Operation";
+            recordTableNameFrench = "Opération";
+        }
+    }
+
+    //Security Incident - Logic
+    if (PrimaryTypeEntityName == "ts_securityincident") {
+        //Find out what business owns the Security Incident
+        {
+            let recordOwnerFetchXML = `        
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='ts_securityincident'>
+                    <attribute name='ts_name' alias='securityIncidentName' />
+                    <attribute name='ts_mode' alias='recordOwner' />
+                    <filter>
+                      <condition attribute='ts_securityincidentid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>
+            `;
+
+            let encodedRecordOwnerFetchXML = encodeURIComponent(recordOwnerFetchXML);
+
+            parent.Xrm.WebApi.retrieveMultipleRecords("ts_securityincident", "?fetchXml=" + encodedRecordOwnerFetchXML).then(
+                function success(result) {
+                    // record the id of the owner
+                    recordOwner = result.entities[0].recordOwner;
+                    recordName = result.entities[0].siteName;
+
+                    if (recordOwner !== null && recordOwner !== "") {
+
+                        if (recordOwner == 717750000 || recordOwner == 717750001) {
+                            recordOwner = issoOwner;
+                        }
+                        else if (recordOwner == 717750002) {
+                            recordOwner = avsecOwner;
+                        }
+                    }
+                    else {
+                        recordOwner = "";
+                    }
+
+                    //Set the header
+                    mainHeadingEnglish = siteHeaderEnglish;
+                    mainHeadingFrench = siteHeaderFrench;
+
+                    // navigate to the canvas app
+                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish, false);
+                },
+                function (error) {
+                    // handle error conditions
+                    console.log("Error retrieving who the owner of the Security Incident is: " + error.message);
+                }
+            );
+
+        }
+
+        //Set the table name
+        {
+            recordTableNameEnglish = "Security Incident";
+            recordTableNameFrench = "Incidents de sûreté";
+        }
+    }
+
+    //Exemption - Logic
+    if (PrimaryTypeEntityName == "ts_exemption") {
+        //Find out what business owns the Exemption
+        {
+            let recordOwnerFetchXML = `        
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='ts_exemption'>
+                    <attribute name='ts_name' alias='exemptionName' />
+                    <attribute name='ts_program' alias='recordOwner' />
+                    <filter>
+                      <condition attribute='ts_exemptionid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>
+            `;
+
+            let encodedRecordOwnerFetchXML = encodeURIComponent(recordOwnerFetchXML);
+
+            parent.Xrm.WebApi.retrieveMultipleRecords("ts_exemption", "?fetchXml=" + encodedRecordOwnerFetchXML).then(
+                function success(result) {
+                    // record the id of the owner
+                    recordOwner = result.entities[0].recordOwner;
+                    recordName = result.entities[0].siteName;
+
+                    if (recordOwner !== null && recordOwner !== "") {
+
+                        if (recordOwner == 741130000) {
+                            recordOwner = avsecOwner;
+                        }
+                    }
+                    else {
+                        recordOwner = "";
+                    }
+
+                    //Set the header
+                    mainHeadingEnglish = siteHeaderEnglish;
+                    mainHeadingFrench = siteHeaderFrench;
+
+                    // navigate to the canvas app
+                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish, false);
+                },
+                function (error) {
+                    // handle error conditions
+                    console.log("Error retrieving who the owner of the Exemption is: " + error.message);
+                }
+            );
+
+        }
+
+        //Set the table name
+        {
+            recordTableNameEnglish = "Exemption";
+            recordTableNameFrench = "Exemption";
         }
     }
 }
