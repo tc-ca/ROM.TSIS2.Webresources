@@ -425,6 +425,11 @@
             return result.entities;
         });
         suggestedInspections.forEach(function (inspection) {
+            if (isNaN(inspection.ts_q1)) inspection.ts_q1 = 0;
+            if (isNaN(inspection.ts_q2)) inspection.ts_q2 = 0;
+            if (isNaN(inspection.ts_q3)) inspection.ts_q3 = 0;
+            if (isNaN(inspection.ts_q4)) inspection.ts_q4 = 0;
+
             teamPlanningDataPlannedQ1 += inspection.ts_q1;
             teamPlanningDataPlannedQ2 += inspection.ts_q2;
             teamPlanningDataPlannedQ3 += inspection.ts_q3;
