@@ -187,6 +187,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inspection Documents.
+        /// </summary>
+        internal static string InspectionDocuments {
+            get {
+                return ResourceManager.GetString("InspectionDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string NameColumnText {

@@ -1,240 +1,55 @@
-﻿
+﻿function FileUploadData() {
+    this.recordTableNameEnglish = "";
+    this.recordTableNameFrench = "";
+    this.recordOwner = "";
+    this.recordName = "";
+    this.mainHeadingEnglish = "";
+    this.mainHeadingFrench = "";
+}
+
 function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryControlId) {
     const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
 
+    const fileUploadData = new FileUploadData();
+
     let recordTagId = "";
-
-    let avsecOwner = "Aviation Security";
-    let issoOwner = "Intermodal Surface Security Oversight";
-    let recordOwner = "";
-
-    let recordTableNameEnglish = "";
-    let recordTableNameFrench = "";
-
-    let recordName = "";
-
-    let mainHeadingEnglish = "";
-    let mainHeadingFrench = "";
-
-    let caseHeaderEnglish = "Add File(s) to Case Documents";
-    let caseHeaderFrench = "Ajouter un/des fichier(s) aux documents du cas";
-
-    let workOrderHeaderEnglish = "Add File(s) to Work Order Documents";
-    let workOrderHeaderFrench = "Ajouter un/des fichier(s) aux documents d'ordre de travail";
-
-    let workOrderServiceTaskHeaderEnglish = "Add File(s) to Inspection Documents";
-    let workOrderServiceTaskHeaderFrench = "Ajouter un/des fichier(s) aux documents d'inspection";
-
-    let stakeholderHeaderEnglish = "Add File(s) to Stakeholder Documents";
-    let stakeholderHeaderFrench = "Ajouter un/des fichier(s) aux documents d'intervenant";
-
-    let siteHeaderEnglish = "Add File(s) to Site Documents";
-    let siteHeaderFrench = "Ajouter un/des fichier(s) aux documents du site";
-
-    let operationHeaderEnglish = "Add File(s) to Operation Documents";
-    let operationHeaderFrench = "Ajouter un/des fichier(s) aux documents d'opération";
-
-    let securityIncidentHeaderEnglish = "Add File(s) to Security Incident Documents";
-    let securityIncidentHeaderFrench = "Ajouter un/des fichier(s) aux documents de l'incident de sûreté";
-
-    let exemptionHeaderEnglish = "Add File(s) to Exemption Documents";
-    let exemptionHeaderFrench = "Ajouter un/des fichier(s) aux documents d'exemption";
 
     recordTagId = PrimaryControl.data.entity.getId().replace("{", "").replace("}", "");
 
-    //Logic for getting tags when attaching files to Work Orders
-    if (PrimaryTypeEntityName == "msdyn_workorder") {
-        
-        //Find out what business owns the Work Order and what the Work Order Number is
-        {
-            let recordOwnerFetchXML = `
-            <fetch xmlns:generator='MarkMpn.SQL4CDS'>
-              <entity name='msdyn_workorder'>
-                <attribute name='msdyn_name' alias='workOrderNumber' />
-                <link-entity name='ovs_operationtype' to='ovs_operationtypeid' from='ovs_operationtypeid' alias='ovs_operationtype' link-type='inner'>
-                  <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
-                    <attribute name='name' alias='recordOwner' />
-                  </link-entity>
-                </link-entity>
-                <filter>
-                  <condition attribute='msdyn_workorderid' operator='eq' value="${recordTagId}" />
-                </filter>
-              </entity>
-            </fetch>
-            `;
+    //Get the FetchXml to use
+    let recordOwnerFetchXML = getFetchXmlForRecordOwner(PrimaryTypeEntityName, recordTagId);
 
-            let encodedRecordOwnerFetchXML = encodeURIComponent(recordOwnerFetchXML);
+    let encodedRecordOwnerFetchXML = encodeURIComponent(recordOwnerFetchXML);
 
-            parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", "?fetchXml=" + encodedRecordOwnerFetchXML).then(
-                function success(result) {
-                    // record the id of the owner
-                    recordOwner = result.entities[0].recordOwner;
-                    recordName = result.entities[0].workOrderNumber;
+    //Set the meta-data tags to be sent to the canvas page app
+    setEntitySpecificValues(PrimaryTypeEntityName,fileUploadData);
 
-                    if (recordOwner !== null && recordOwner !== "") {
-                        if (recordOwner.includes('Aviation Security')) {
-                            recordOwner = avsecOwner;
-                        } else if (recordOwner.includes('Intermodal Surface Security Oversight')) {
-                            recordOwner = issoOwner;
-                        }
-                    }
-                    else {
-                        recordOwner = "";
-                    }
+    parent.Xrm.WebApi.retrieveMultipleRecords(PrimaryTypeEntityName, "?fetchXml=" + encodedRecordOwnerFetchXML).then(
+        function success(result) {
 
-                    //Set the header
-                    mainHeadingEnglish = workOrderHeaderEnglish;
-                    mainHeadingFrench = workOrderHeaderFrench;
+            fileUploadData.recordOwner = result.entities[0].recordOwner;
+            fileUploadData.recordName = result.entities[0].recordName;
 
-                    // navigate to the canvas app
-                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName,mainHeadingFrench,mainHeadingEnglish);
-                },
-                function (error) {
-                    // handle error conditions
-                    console.log("Error retrieving who the owner of the Work Order is by the Operation Type: " + error.message);
-                }
-            );
+            let siteNameEnglish = "";
+
+            if (PrimaryTypeEntityName == "msdyn_functionallocation") {
+                siteNameEnglish = result.entities[0].siteNameEnglish;
+            }
+
+            modifyRecordOwner(PrimaryTypeEntityName, fileUploadData.recordOwner, fileUploadData.recordName, siteNameEnglish, fileUploadData);
+
+            // navigate to the canvas app
+            navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, true);
+        },
+        function (error) {
+            // handle error conditions
+            console.log(`Error retrieving who the owner of ${PrimaryTypeEntityName}: ` + error.message);
         }
-
-        //Set the Table Name
-        {
-            recordTableNameEnglish = "Work Order";
-            recordTableNameFrench = "Ordre de travail";
-        }
-    }
-
-    //Logic for getting tags with attaching files to Work Order Service Tasks
-    if (PrimaryTypeEntityName == "msdyn_workorderservicetask") {
-
-        //Find out what business owns the Work Order Service Task is
-        {
-            let recordOwnerFetchXML = `
-                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
-                  <entity name='msdyn_workorderservicetask'>
-                    <attribute name='msdyn_name' alias='workOrderServiceTaskNumber' />
-                    <link-entity name='msdyn_workorder' to='msdyn_workorder' from='msdyn_workorderid' alias='msdyn_workorder' link-type='inner'>
-                      <link-entity name='ovs_operationtype' to='ovs_operationtypeid' from='ovs_operationtypeid' alias='ovs_operationtype' link-type='inner'>
-                        <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
-                          <attribute name='name' alias='recordOwner' />
-                        </link-entity>
-                      </link-entity>
-                    </link-entity>
-                    <filter>
-                      <condition attribute='msdyn_workorderservicetaskid' operator='eq' value="${recordTagId}" />
-                    </filter>
-                  </entity>
-                </fetch>`
-            ;
-
-            let encodedRecordOwnerFetchXML = encodeURIComponent(recordOwnerFetchXML);
-
-            parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?fetchXml=" + encodedRecordOwnerFetchXML).then(
-                function success(result) {
-                    // record the id of the owner
-                    recordOwner = result.entities[0].recordOwner;
-                    recordName = result.entities[0].workOrderServiceTaskNumber;
-
-                    if (recordOwner !== null && recordOwner !== "") {
-                        if (recordOwner.includes('Aviation Security')) {
-                            recordOwner = avsecOwner;
-                        } else if (recordOwner.includes('Intermodal Surface Security Oversight')) {
-                            recordOwner = issoOwner;
-                        }
-                    }
-                    else {
-                        recordOwner = "";
-                    }
-
-                    //Set the header
-                    mainHeadingEnglish = workOrderServiceTaskHeaderEnglish;
-                    mainHeadingFrench = workOrderServiceTaskHeaderFrench;
-
-                    // navigate to the canvas app
-                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish);
-                },
-                function (error) {
-                    // handle error conditions
-                    console.log("Error retrieving who the owner of the Work Order Service Task is by the Operation Type: " + error.message);
-                }
-            );
-
-        }
-
-        //Set the table name
-        {
-            recordTableNameEnglish = "Work Order Service Task";
-            recordTableNameFrench = "Tâche de service de l'ordre de travail";
-        }
-    }
-
-    //Logic for getting tags with attaching files to Cases
-    if (PrimaryTypeEntityName == "incident") {
-        //Find out what business owns the Case is
-        {
-            let recordOwnerFetchXML = `        
-                <fetch xmlns:generator='MarkMpn.SQL4CDS' distinct='true'>
-                  <entity name='msdyn_workorder'>
-                    <link-entity name='incident' to='msdyn_servicerequest' from='incidentid' alias='incident' link-type='inner'>
-                      <attribute name='title' alias='caseNumber' />
-                      <filter>
-                        <condition attribute='incidentid' operator='eq' value="${recordTagId}" />
-                      </filter>
-                      <order attribute='title' />
-                    </link-entity>
-                    <link-entity name='ovs_operationtype' to='ovs_operationtypeid' from='ovs_operationtypeid' alias='ovs_operationtype' link-type='inner'>
-                      <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
-                        <attribute name='name' alias='recordOwner' />
-                        <order attribute='name' />
-                      </link-entity>
-                    </link-entity>
-                  </entity>
-                </fetch>`
-            ;
-
-            let encodedRecordOwnerFetchXML = encodeURIComponent(recordOwnerFetchXML);
-
-            parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", "?fetchXml=" + encodedRecordOwnerFetchXML).then(
-                function success(result) {
-                    // record the id of the owner
-                    recordOwner = result.entities[0].recordOwner;
-                    recordName = result.entities[0].caseNumber;
-
-                    if (recordOwner !== null && recordOwner !== "") {
-                        if (recordOwner.includes('Aviation Security')) {
-                            recordOwner = avsecOwner;
-                        } else if (recordOwner.includes('Intermodal Surface Security Oversight')) {
-                            recordOwner = issoOwner;
-                        }
-                    }
-                    else {
-                        recordOwner = "";
-                    }
-
-                    //Set the header
-                    mainHeadingEnglish = caseHeaderEnglish;
-                    mainHeadingFrench = caseHeaderFrench;
-
-                    // navigate to the canvas app
-                    navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish);
-                },
-                function (error) {
-                    // handle error conditions
-                    console.log("Error retrieving who the owner of the Case is by the Operation Type: " + error.message);
-                }
-            );
-
-        }
-
-        //Set the table name
-        {
-            recordTableNameEnglish = "Case";
-            recordTableNameFrench = "Cas";
-        }
-    }
+    );
 }
 
 // Separate method to navigate to the canvas app
-function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName,mainHeadingFrench,mainHeadingEnglish) {
+function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName,mainHeadingFrench,mainHeadingEnglish,usesGroupFiles) {
 
     var jsonData = {
         recordId: recordTagId,
@@ -243,7 +58,8 @@ function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEngl
         tableNameEnglish: recordTableNameEnglish,
         tableNameFrench: recordTableNameFrench,
         tableRecordName: recordName,
-        tableSchemaName: PrimaryTypeEntityName
+        tableSchemaName: PrimaryTypeEntityName,
+        useGroupFiles: usesGroupFiles
     };
 
     var jsonString = JSON.stringify(jsonData).toString();
@@ -272,4 +88,254 @@ function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEngl
                 // Handle error
             }
         );
+}
+
+// FetchXml to use for each table
+function getFetchXmlForRecordOwner(tableName, recordTagId) {
+    switch (tableName) {
+        case "incident":
+            return `
+                <fetch xmlns:generator='MarkMpn.SQL4CDS' distinct='true'>
+                  <entity name='incident'>
+                    <attribute name='title' alias='recordName' />
+                    <filter>
+                      <condition attribute='incidentid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                    <link-entity name='msdyn_workorder' from='msdyn_servicerequest' to='incidentid' alias='workorder'>
+                      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid' alias='operationtype'>
+                        <link-entity name='team' from='teamid' to='ownerid' alias='teamrelationship'>
+                          <attribute name='name' alias='recordOwner' />
+                        </link-entity>
+                      </link-entity>
+                    </link-entity>
+                  </entity>
+                </fetch>
+            `;
+        case "msdyn_workorder":
+            return `
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='msdyn_workorder'>
+                    <attribute name='msdyn_name' alias='recordName' />
+                    <link-entity name='ovs_operationtype' to='ovs_operationtypeid' from='ovs_operationtypeid' alias='ovs_operationtype' link-type='inner'>
+                      <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
+                        <attribute name='name' alias='recordOwner' />
+                      </link-entity>
+                    </link-entity>
+                    <filter>
+                      <condition attribute='msdyn_workorderid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>
+            `;
+        case "msdyn_workorderservicetask":
+            return `
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='msdyn_workorderservicetask'>
+                    <attribute name='msdyn_name' alias='recordName' />
+                    <link-entity name='msdyn_workorder' to='msdyn_workorder' from='msdyn_workorderid' alias='msdyn_workorder' link-type='inner'>
+                      <link-entity name='ovs_operationtype' to='ovs_operationtypeid' from='ovs_operationtypeid' alias='ovs_operationtype' link-type='inner'>
+                        <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
+                          <attribute name='name' alias='recordOwner' />
+                        </link-entity>
+                      </link-entity>
+                    </link-entity>
+                    <filter>
+                      <condition attribute='msdyn_workorderservicetaskid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>
+            `;
+        case "account":
+            return `
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='account'>
+                    <attribute name='name' alias='recordName' />
+                    <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
+                      <attribute name='name' alias='recordOwner' />
+                    </link-entity>
+                    <filter>
+                      <condition attribute='accountid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>
+            `;
+        case "ovs_operation":
+            return `
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='ovs_operation'>
+                    <attribute name='ovs_name' alias='recordName' />
+                    <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
+                      <attribute name='name' alias='recordOwner' />
+                    </link-entity>
+                    <filter>
+                      <condition attribute='ovs_operationid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>
+            `;
+        case "msdyn_functionallocation":
+            return `
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='msdyn_functionallocation'>
+                    <attribute name='msdyn_name' alias='siteName' />
+                    <attribute name='ts_functionallocationnameenglish' alias='recordName' />
+                    <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
+                      <attribute name='name' alias='recordOwner' />
+                    </link-entity>
+                    <filter>
+                      <condition attribute='msdyn_functionallocationid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>
+            `;
+        case "ts_securityincident":
+            return `
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='ts_securityincident'>
+                    <attribute name='ts_name' alias='recordName' />
+                    <attribute name='ts_mode' alias='recordOwner' />
+                    <filter>
+                      <condition attribute='ts_securityincidentid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>
+            `;
+        case "ts_exemption":
+            return `
+                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                  <entity name='ts_exemption'>
+                    <attribute name='ts_name' alias='recordName' />
+                    <attribute name='ts_program' alias='recordOwner' />
+                    <filter>
+                      <condition attribute='ts_exemptionid' operator='eq' value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>
+            `;
+
+        // Add more cases for other entity types as needed
+    }
+}
+
+function setEntitySpecificValues(entityName, fileUploadData) {
+    // Set headers and table names based on entity type
+    switch (entityName) {
+        case "msdyn_workorder":
+            fileUploadData.recordTableNameEnglish = "Work Order";
+            fileUploadData.recordTableNameFrench = "Ordre de travail";
+            fileUploadData.mainHeadingEnglish = "Add File(s) to Work Order Documents";
+            fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'ordre de travail";
+            break;
+        case "msdyn_workorderservicetask":
+            fileUploadData.recordTableNameEnglish = "Work Order Service Task";
+            fileUploadData.recordTableNameFrench = "Tâche de service de l'ordre de travail";
+            fileUploadData.mainHeadingEnglish = "Add File(s) to Inspection Documents";
+            fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'inspection";
+            break;
+        case "incident":
+            fileUploadData.recordTableNameEnglish = "Case";
+            fileUploadData.recordTableNameFrench = "Cas";
+            fileUploadData.mainHeadingEnglish = "Add File(s) to Case Documents";
+            fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents du cas";
+            break;
+        case "account":
+            fileUploadData.recordTableNameEnglish = "Stakeholder";
+            fileUploadData.recordTableNameFrench = "Partie prenante";
+            fileUploadData.mainHeadingEnglish = "Add File(s) to Stakeholder Documents";
+            fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'intervenant";
+            break;
+        case "ovs_operation":
+            fileUploadData.recordTableNameEnglish = "Operation";
+            fileUploadData.recordTableNameFrench = "Opération";
+            fileUploadData.mainHeadingEnglish = "Add File(s) to Operation Documents";
+            fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'opération";
+            break;
+        case "msdyn_functionallocation":
+            fileUploadData.recordTableNameEnglish = "Site";
+            fileUploadData.recordTableNameFrench = "Site";
+            fileUploadData.mainHeadingEnglish = "Add File(s) to Site Documents";
+            fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents du site";
+            break;
+        case "ts_securityincident":
+            fileUploadData.recordTableNameEnglish = "Security Incident";
+            fileUploadData.recordTableNameFrench = "Incidents de sûreté";
+            fileUploadData.mainHeadingEnglish = "Add File(s) to Security Incident Documents";
+            fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents de l'incident de sûreté";
+            break;
+        case "ts_exemption":
+            fileUploadData.recordTableNameEnglish = "Exemption";
+            fileUploadData.recordTableNameFrench = "Exemption";
+            fileUploadData.mainHeadingEnglish = "Add File(s) to Exemption Documents";
+            fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'exemption";
+            break;
+    }
+}
+
+function modifyRecordOwner(entityName, myRecordOwner, myRecordName, mySiteNameEnglish, fileUploadData) {
+    // Modify recordOwner based on specific conditions
+
+    let avsecOwner = "Aviation Security";
+    let issoOwner = "Intermodal Surface Security Oversight";
+
+    // Set headers and table names based on entity type
+    switch (entityName) {
+        case "msdyn_workorder":
+        case "msdyn_workorderservicetask":
+        case "incident":
+        case "account":
+        case "ovs_operation":
+            if (myRecordOwner.includes(avsecOwner)) {
+                fileUploadData.recordOwner = avsecOwner;
+            } else if (myRecordOwner.includes(issoOwner)) {
+                fileUploadData.recordOwner = issoOwner;
+            }
+            break;
+
+        case "msdyn_functionallocation":
+            if (mySiteNameEnglish !== null && mySiteNameEnglish !== "") {
+                fileUploadData.recordName = mySiteNameEnglish;
+            }
+            else {
+                fileUploadData.recordName = myRecordName;
+            }
+
+
+            if (myRecordOwner !== null && myRecordOwner !== "") {
+                if (myRecordOwner.includes(avsecOwner)) {
+                    fileUploadData.recordOwner = avsecOwner;
+                } else if (myRecordOwner.includes(issoOwner)) {
+                    fileUploadData.recordOwner = issoOwner;
+                }
+            }
+            else {
+                fileUploadData.recordOwner = "";
+            }
+
+            break;
+        case "ts_securityincident":
+            if (myRecordOwner !== null && myRecordOwner !== "") {
+
+                if (myRecordOwner == 717750000 || myRecordOwner == 717750001) {
+                    fileUploadData.recordOwner = issoOwner;
+                }
+                else if (myRecordOwner == 717750002) {
+                    fileUploadData.recordOwner = avsecOwner;
+                }
+            }
+            else {
+                fileUploadData.recordOwner = "";
+            }
+            break;
+        case "ts_exemption":
+            if (myRecordOwner !== null && myRecordOwner !== "") {
+
+                if (myRecordOwner == 741130000) {
+                    fileUploadData.recordOwner = avsecOwner;
+                }
+            }
+            else {
+                fileUploadData.recordOwner = "";
+            }
+            break;
+    }
 }

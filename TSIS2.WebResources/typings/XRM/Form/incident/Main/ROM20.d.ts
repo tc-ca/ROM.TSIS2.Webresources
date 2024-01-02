@@ -95,8 +95,8 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_13 extends Xrm.SectionCollectionBase {
-        get(name: "_section_349"): Xrm.PageSection;
         get(name: "tab_13_section_1"): Xrm.PageSection;
+        get(name: "tab_13_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -127,6 +127,7 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_workspace extends Xrm.SectionCollectionBase {
+        get(name: "_section_349"): Xrm.PageSection;
         get(name: "tab_16_section_1"): Xrm.PageSection;
         get(name: "tab_workspace_section_2"): Xrm.PageSection;
         get(name: string): undefined;

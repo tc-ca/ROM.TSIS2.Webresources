@@ -153,17 +153,13 @@ var ROM;
                                 "    <attribute name='ovs_operationid'/>",
                                 "    <attribute name='ts_operationalstatus'/>",
                                 "    <attribute name='ovs_name'/>",
+                                "    <attribute name='ts_risk'/>",
                                 "    <filter>",
                                 "      <condition attribute='ts_stakeholder' operator='eq' value='", stakeholderId, "' uitype='account'/>",
                                 "      <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeId, "' uitype='ovs_operationtype'/>",
                                 "      <condition attribute='ts_site' operator='eq' value='", siteId, "' uitype='msdyn_functionallocation'/>",
                                 "      <condition attribute='statecode' operator='eq' value='0'/>",
                                 "    </filter>",
-                                "    <link-entity name='ts_riskcategory' from='ts_riskcategoryid' to='ts_risk' alias='risk'>",
-                                "      <attribute name='ts_riskcategoryid'/>",
-                                "      <attribute name='ts_riskcategoryen'/>",
-                                "      <attribute name='ts_riskcategoryfr'/>",
-                                "    </link-entity>",
                                 "  </entity>",
                                 "</fetch>"
                             ].join("");
@@ -179,12 +175,15 @@ var ROM;
                                 operationlookup[0].id = operation.ovs_operationid;
                                 operationlookup[0].name = operation.ovs_name;
                                 operationlookup[0].entityType = 'ovs_operation';
-                                risklookup = new Array();
-                                risklookup[0] = new Object();
-                                risklookup[0].id = operation["risk.ts_riskcategoryid"];
-                                risklookup[0].name = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? operation["risk.ts_riskcategoryfr"] : operation["risk.ts_riskcategoryen"];
-                                risklookup[0].entityType = 'ts_riskcategory';
-                                form.getAttribute('ts_riskthreshold').setValue(risklookup);
+                                //Set Risk if it exists
+                                if (operation._ts_risk_value != null) {
+                                    risklookup = new Array();
+                                    risklookup[0] = new Object();
+                                    risklookup[0].id = operation._ts_risk_value;
+                                    risklookup[0].name = operation["_ts_risk_value@OData.Community.Display.V1.FormattedValue"];
+                                    risklookup[0].entityType = 'ts_riskcategory';
+                                    form.getAttribute('ts_riskthreshold').setValue(risklookup);
+                                }
                                 if (operation.ts_operationalstatus == 717750001) {
                                     form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + operation.ovs_name + "\" is non-operational." : "L'opération \"" + operation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
                                     form.getAttribute('ts_site').setValue(null);
