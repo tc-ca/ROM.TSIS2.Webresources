@@ -6,6 +6,7 @@
     this.mainHeadingEnglish = "";
     this.mainHeadingFrench = "";
     this.usesGroupFiles = false;
+    this.validOwner = false;
 }
 
 function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryControlId) {
@@ -39,8 +40,19 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
             modifyRecordOwner(PrimaryTypeEntityName, fileUploadData.recordOwner, fileUploadData.recordName, siteNameEnglish, fileUploadData);
 
-            // navigate to the canvas app
-            navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, true);
+            if (fileUploadData.validOwner == true) {
+                // navigate to the canvas app
+                navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, true);
+            }
+            else {
+                // display the error message
+                if (lang == 1033) {
+                    alert("The record has an invalid owner.  It must belong to Aviation Security or Intermodal Surface Security Oversight.");
+                }
+                else {
+                    alert("L'enregistrement a un propriétaire invalide. Il doit appartenir à Aviation Security ou Intermodal Surface Security Oversight.");
+                }
+            }
         },
         function (error) {
             // handle error conditions
@@ -178,8 +190,8 @@ function getFetchXmlForRecordOwner(tableName, recordTagId) {
             return `
                 <fetch xmlns:generator='MarkMpn.SQL4CDS'>
                   <entity name='msdyn_functionallocation'>
-                    <attribute name='msdyn_name' alias='siteName' />
-                    <attribute name='ts_functionallocationnameenglish' alias='recordName' />
+                    <attribute name='msdyn_name' alias='recordName' />
+                    <attribute name='ts_functionallocationnameenglish' alias='siteNameEnglish' />
                     <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
                       <attribute name='name' alias='recordOwner' />
                     </link-entity>
@@ -346,5 +358,9 @@ function modifyRecordOwner(entityName, myRecordOwner, myRecordName, mySiteNameEn
                 fileUploadData.recordOwner = "";
             }
             break;
+    }
+
+    if (fileUploadData.recordOwner == avsecOwner || fileUploadData.recordOwner == issoOwner) {
+        fileUploadData.validOwner = true;
     }
 }
