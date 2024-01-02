@@ -37,31 +37,31 @@ namespace ROM.Action {
     let allActionTypes = [
         { text: "AMP", value: ts_actiontype.AMP },
         { text: "Administrative monetary penalty", value: ts_actiontype.Administrativemonetarypenalty },
-        { text: "Affidavit Of Service | AMP", value: ts_actiontype.AffidavitOfServiceAMP },
+        { text: "Affidavit of Service | Sworn", value: ts_actiontype.AffidavitofServiceSworn },
         { text: "Affidavit Of Service | Cancellation/Suspension of CAD", value: ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD },
         { text: "Affidavit of Service", value: ts_actiontype.AffidavitofService },
-        { text: "AMP - Payment", value: ts_actiontype.AMPPayment },
-        { text: "Corrective Action Plan", value: ts_actiontype.CorrectiveActionPlan },
+        { text: "AMP Payment | Received", value: ts_actiontype.AMPPaymentReceived },
+        { text: "Corrective Action Plan | Requested", value: ts_actiontype.CorrectiveActionPlanRequested },
         { text: "Correspondence", value: ts_actiontype.Correspondence },
         { text: "Detention of Aircraft", value: ts_actiontype.DetentionofAircraft },
-        { text: "Informal Meeting", value: ts_actiontype.InformalMeeting },
-        { text: "Legal Counsel", value: ts_actiontype.LegalCounsel },
-        { text: "Letter - Commitment", value: ts_actiontype.LetterCommitment },
-        { text: "Letter - Non-compliance", value: ts_actiontype.LetterNoncompliance },
-        { text: "Letter - SSC OSA Further Action", value: ts_actiontype.LetterSSCOSAFurtherAction },
+        { text: "Informal Meeting | Offered", value: ts_actiontype.InformalMeetingOffered },
+        { text: "Legal Counsel | Consulted", value: ts_actiontype.LegalCounselConsulted },
+        { text: "Letter - Commitment | Received", value: ts_actiontype.LetterCommitmentReceived },
+        { text: "Letter - Non-Compliance | Sent", value: ts_actiontype.LetterNonComplianceSent },
+        { text: "Letter - SSC OSA Further Action | Sent", value: ts_actiontype.LetterSSCOSAFurtherActionSent },
         { text: "Notification | Non-compliance", value: ts_actiontype.NotificationNoncompliance },
         { text: "Notice of Assessment of Monetary Penalty", value: ts_actiontype.NoticeofAssessmentofMonetaryPenalty },
         { text: "Other", value: ts_actiontype.Other },
         { text: "Prosecution", value: ts_actiontype.Prosecution },
         { text: "Punitive Suspension of CAD", value: ts_actiontype.PunitiveSuspensionofCAD },
-        { text: "Regional Enforcement Unit (REU)", value: ts_actiontype.RegionalEnforcementUnitREU },
+        { text: "Regional Enforcement Unit (REU) | Consulted", value: ts_actiontype.RegionalEnforcementUnitREUConsulted },
         { text: "TATC | Appeal Application", value: ts_actiontype.TATCAppealApplication },
         { text: "TATC | Appeal Determination", value: ts_actiontype.TATCAppealDetermination },
         { text: "TATC | Appeal Hearing", value: ts_actiontype.TATCAppealHearing },
         { text: "TATC | Certificate for unpaid AMP", value: ts_actiontype.TATCCertificateforunpaidAMP },
         { text: "TATC | Determination", value: ts_actiontype.TATCDetermination },
         { text: "TATC | Review Application", value: ts_actiontype.TATCReviewApplication },
-        { text: "TATC | Review Hearing", value: ts_actiontype.TATCReviewHearing },
+        { text: "TATC - Hearing | Convened", value: ts_actiontype.TATCHearingConvened },
         { text: "Verbal Warning", value: ts_actiontype.VerbalWarning },
         { text: "Written Notice", value: ts_actiontype.WrittenNotice },
         { text: "Written Warning", value: ts_actiontype.WrittenWarning }
@@ -162,12 +162,12 @@ namespace ROM.Action {
         if (isISSO) {
             switch (actionCategoryAttributeValue) {
                 case ts_actioncategory.CorrectiveAction:
-                    filteredActionTypeOptions = createFilteredOptions([ts_actiontype.CorrectiveActionPlan], allActionTypes);
+                    filteredActionTypeOptions = createFilteredOptions([ts_actiontype.CorrectiveActionPlanRequested], allActionTypes);
                     break;
                 case ts_actioncategory.EnforcementAction:
                     filteredActionTypeOptions = createFilteredOptions([
                         ts_actiontype.VerbalWarning,
-                        ts_actiontype.RegionalEnforcementUnitREU,
+                        ts_actiontype.RegionalEnforcementUnitREUConsulted,
                         ts_actiontype.WrittenWarning,
                     ], allActionTypes);
                     break;
@@ -177,20 +177,20 @@ namespace ROM.Action {
             switch (actionCategoryAttributeValue) {
                 case ts_actioncategory.AdministrativeAction:
                     filteredActionTypeOptions = createFilteredOptions([
-                        ts_actiontype.AffidavitOfServiceAMP,
+                        ts_actiontype.AffidavitofServiceSworn,
                         ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD,
-                        ts_actiontype.InformalMeeting,
+                        ts_actiontype.InformalMeetingOffered,
                         ts_actiontype.Correspondence,
-                        ts_actiontype.LetterSSCOSAFurtherAction,
-                        ts_actiontype.LetterNoncompliance,
-                        ts_actiontype.LetterCommitment,
-                        ts_actiontype.AMPPayment,
+                        ts_actiontype.LetterSSCOSAFurtherActionSent,
+                        ts_actiontype.LetterNonComplianceSent,
+                        ts_actiontype.LetterCommitmentReceived,
+                        ts_actiontype.AMPPaymentReceived,
                         ts_actiontype.NotificationNoncompliance,
                         ts_actiontype.WrittenNotice,
                     ], allActionTypes);
                     break;
                 case ts_actioncategory.CorrectiveAction:
-                    filteredActionTypeOptions = createFilteredOptions([ts_actiontype.CorrectiveActionPlan], allActionTypes);
+                    filteredActionTypeOptions = createFilteredOptions([ts_actiontype.CorrectiveActionPlanRequested], allActionTypes);
                     break;
                 case ts_actioncategory.EnforcementAction:
                     filteredActionTypeOptions = createFilteredOptions([
@@ -208,7 +208,7 @@ namespace ROM.Action {
                     ], allActionTypes);
                     break;
                 case ts_actioncategory.LegalAction:
-                    filteredActionTypeOptions = createFilteredOptions([ts_actiontype.RegionalEnforcementUnitREU, ts_actiontype.LegalCounsel], allActionTypes);
+                    filteredActionTypeOptions = createFilteredOptions([ts_actiontype.RegionalEnforcementUnitREUConsulted, ts_actiontype.LegalCounselConsulted], allActionTypes);
                     break;
                 case ts_actioncategory.REUEnforcementAction:
                     filteredActionTypeOptions = createFilteredOptions([
@@ -226,7 +226,7 @@ namespace ROM.Action {
                         ts_actiontype.TATCAppealDetermination,
                         ts_actiontype.TATCDetermination,
                         ts_actiontype.TATCReviewApplication,
-                        ts_actiontype.TATCReviewHearing,
+                        ts_actiontype.TATCHearingConvened,
                         ts_actiontype.TATCAppealHearing,
                     ], allActionTypes);
                     break;
@@ -296,7 +296,7 @@ namespace ROM.Action {
                         ], allDeliveryMethodOptions);
                         filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
                         break;
-                    case ts_actiontype.RegionalEnforcementUnitREU:
+                    case ts_actiontype.RegionalEnforcementUnitREUConsulted:
                         form.getControl("ts_stakeholder").setVisible(false);
                         form.getControl("ts_contact").setVisible(false);
                         form.getControl("ts_deliverymethod").setVisible(false);
@@ -314,7 +314,7 @@ namespace ROM.Action {
                 break;
             case ts_actioncategory.CorrectiveAction:
                 switch (actionTypeAttributeValue) {
-                    case ts_actiontype.CorrectiveActionPlan:
+                    case ts_actiontype.CorrectiveActionPlanRequested:
                         form.getControl("ts_stakeholder").setVisible(true);
                         form.getControl("ts_contact").setVisible(true);
                         form.getControl("ts_duedate").setVisible(true);
@@ -361,20 +361,20 @@ namespace ROM.Action {
         switch (actionCategoryAttributeValue) {
             case ts_actioncategory.AdministrativeAction:
                 switch (actionTypeAttributeValue) {
-                    case ts_actiontype.AffidavitOfServiceAMP:
+                    case ts_actiontype.AffidavitofServiceSworn:
                     case ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD:
                         filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Sworn], allActionStatus);
                         break;
-                    case ts_actiontype.InformalMeeting:
+                    case ts_actiontype.InformalMeetingOffered:
                         filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered, ts_actionstatus.Convened], allActionStatus);
                         break;
                     case ts_actiontype.Correspondence:
-                    case ts_actiontype.LetterCommitment:
-                    case ts_actiontype.LetterNoncompliance:
-                    case ts_actiontype.LetterSSCOSAFurtherAction:
+                    case ts_actiontype.LetterCommitmentReceived:
+                    case ts_actiontype.LetterNonComplianceSent:
+                    case ts_actiontype.LetterSSCOSAFurtherActionSent:
                         filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered, ts_actionstatus.Received], allActionStatus);
                         break;
-                    case ts_actiontype.AMPPayment:
+                    case ts_actiontype.AMPPaymentReceived:
                         filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
                         break;
                     case ts_actiontype.NotificationNoncompliance:
@@ -387,7 +387,7 @@ namespace ROM.Action {
                 break;
             case ts_actioncategory.CorrectiveAction:
                 switch (actionTypeAttributeValue) {
-                    case ts_actiontype.CorrectiveActionPlan:
+                    case ts_actiontype.CorrectiveActionPlanRequested:
                         filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Requested, ts_actionstatus.Received], allActionStatus);
                         break;
                     default:
@@ -419,10 +419,10 @@ namespace ROM.Action {
                 break;
             case ts_actioncategory.LegalAction:
                 switch (actionTypeAttributeValue) {
-                    case ts_actiontype.RegionalEnforcementUnitREU:
+                    case ts_actiontype.RegionalEnforcementUnitREUConsulted:
                         filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Consulted, ts_actionstatus.Referred], allActionStatus);
                         break;
-                    case ts_actiontype.LegalCounsel:
+                    case ts_actiontype.LegalCounselConsulted:
                         filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Consulted], allActionStatus);
                         break;
                     default:
@@ -452,7 +452,7 @@ namespace ROM.Action {
                         filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
                         break;
                     case ts_actiontype.TATCAppealHearing:
-                    case ts_actiontype.TATCReviewHearing:
+                    case ts_actiontype.TATCHearingConvened:
                         filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Convened], allActionStatus);
                         break;
                     case ts_actiontype.TATCCertificateforunpaidAMP:
@@ -494,7 +494,7 @@ namespace ROM.Action {
             form.getControl("ts_duedate").setVisible(true);
 
             let actionType = form.getAttribute("ts_actiontype").getValue();
-            if (actionType != null && actionType == ts_actiontype.AMPPayment) {
+            if (actionType != null && actionType == ts_actiontype.AMPPaymentReceived) {
                 form.getControl("ts_amtamount").setVisible(true);
                 if (actionStatus != null && actionStatus == ts_actionstatus.Requested) {
                     form.getControl("ts_duedate").setVisible(true);
