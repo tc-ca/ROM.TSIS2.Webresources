@@ -1,7 +1,10 @@
-﻿namespace ROM.QuestionnaireResponse {
+﻿let debugLog = "test";
+
+namespace ROM.QuestionnaireResponse {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_questionnaireresponse.Main.Information>eContext.getFormContext();
         ToggleQuestionnaire(eContext);
+        form.getAttribute("ts_debug").setValue("test2");
     }
 
     function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {

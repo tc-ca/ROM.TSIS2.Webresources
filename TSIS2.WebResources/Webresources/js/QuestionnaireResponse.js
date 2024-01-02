@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var debugLog = "test";
 var ROM;
 (function (ROM) {
     var QuestionnaireResponse;
@@ -42,6 +43,7 @@ var ROM;
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             ToggleQuestionnaire(eContext);
+            form.getAttribute("ts_debug").setValue("test2");
         }
         QuestionnaireResponse.onLoad = onLoad;
         function ToggleQuestionnaire(eContext) {

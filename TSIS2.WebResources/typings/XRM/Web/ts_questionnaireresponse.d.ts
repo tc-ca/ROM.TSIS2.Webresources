@@ -6,6 +6,7 @@ interface ts_questionnaireresponse_Base extends WebEntity {
   statecode?: ts_questionnaireresponse_statecode | null;
   statuscode?: ts_questionnaireresponse_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_debug?: string | null;
   ts_name?: string | null;
   ts_questionnaireanswers?: string | null;
   ts_questionnairedefinition?: string | null;
@@ -39,6 +40,7 @@ interface ts_questionnaireresponse_Select {
   statecode: WebAttribute<ts_questionnaireresponse_Select, { statecode: ts_questionnaireresponse_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ts_questionnaireresponse_Select, { statuscode: ts_questionnaireresponse_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_questionnaireresponse_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_debug: WebAttribute<ts_questionnaireresponse_Select, { ts_debug: string | null }, {  }>;
   ts_name: WebAttribute<ts_questionnaireresponse_Select, { ts_name: string | null }, {  }>;
   ts_questionnaireanswers: WebAttribute<ts_questionnaireresponse_Select, { ts_questionnaireanswers: string | null }, {  }>;
   ts_questionnairedefinition: WebAttribute<ts_questionnaireresponse_Select, { ts_questionnairedefinition: string | null }, {  }>;
@@ -62,6 +64,7 @@ interface ts_questionnaireresponse_Filter {
   statecode: ts_questionnaireresponse_statecode;
   statuscode: ts_questionnaireresponse_statuscode;
   timezoneruleversionnumber: number;
+  ts_debug: string;
   ts_name: string;
   ts_questionnaireanswers: string;
   ts_questionnairedefinition: string;
