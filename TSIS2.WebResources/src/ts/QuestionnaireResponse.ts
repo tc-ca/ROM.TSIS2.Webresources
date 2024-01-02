@@ -3,13 +3,13 @@
 namespace ROM.QuestionnaireResponse {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_questionnaireresponse.Main.Information>eContext.getFormContext();
+        form.getAttribute("ts_debug").setValue(form.getAttribute("ts_debug").getValue() + "onLoad\n");
         ToggleQuestionnaire(eContext);
-        form.getAttribute("ts_debug").setValue("test2");
     }
 
     function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
         const Form = <Form.ts_questionnaireresponse.Main.Information>eContext.getFormContext();
-
+        Form.getAttribute("ts_debug").setValue(Form.getAttribute("ts_debug").getValue() + "ToggleQuestionnaire\n");
         // Get the web resource control on the form
         const wrCtrl = Form.getControl('WebResource_surveyrender');
         const questionnaireDefinition = Form.getAttribute('ts_questionnairedefinition').getValue();
@@ -27,11 +27,13 @@ namespace ROM.QuestionnaireResponse {
         InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireAnswers, mode);
     }
 
-    function InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
+    async function InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
         const Form = <Form.ts_questionnaireresponse.Main.Information>eContext.getFormContext();
+        Form.getAttribute("ts_debug").setValue(Form.getAttribute("ts_debug").getValue() + wrCtrl.getContentWindow());
         wrCtrl.setVisible(true);
         wrCtrl.getContentWindow().then(async function (win) {
             const surveyLocale = getSurveyLocal();
+            Form.getAttribute("ts_debug").setValue(Form.getAttribute("ts_debug").getValue() + surveyLocale);
             win.InitialContext(eContext);
             win.isComplete = false;
             win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);

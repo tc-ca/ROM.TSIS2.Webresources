@@ -574,7 +574,7 @@ function InitialFormContext(formContext) {
 }
 
 function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, mode, eContext) {
-
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "InitializeSurveyRender\n");
     if (surveyDefinition == null) {
         return;
     }
@@ -585,17 +585,17 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             responseAttributeLogicalName = "ts_questionnaireanswers";
         }
     }
-
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "InitializeSurveyRender Line 588\n");
     var questionnaireDefinition = JSON.parse(surveyDefinition);
     window.survey = new Survey.Model(questionnaireDefinition);
     survey.locale = surveyLocale;
     survey.showCompletedPage = false;
     survey.mode = mode;
-
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "InitializeSurveyRender Line 594\n");
     if (surveyResponse != null) {
         survey.data = JSON.parse(surveyResponse);
     }
-
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "InitializeSurveyRender Line 598\n");
     survey.onComplete.add(function (survey, options) {
         // When survey is completed, parse the resulting JSON and save it to ovs_questionnaireresponse
         var data = JSON.stringify(survey.data, null, 3);
@@ -609,18 +609,18 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         //When the survey is saved, reset the notification timer.
         timeSinceLastNotification = null;
     });
-
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "InitializeSurveyRender Line 612\n");
     survey.onAfterRenderSurvey.add(function (survey, options) {
         // Hide complete button after survey renders.
         $('.sv_complete_btn').remove();
     });
-
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "InitializeSurveyRender Line 617\n");
     survey.onValueChanged.add(function (survey, options) {
         //Adding a space to the questionnaireresponse to make the form dirty. The space gets trimmed off in survey.onComplete.
         var data = JSON.stringify(survey.data, null, 3) + " ";
         if (window.parentFormContext != null) window.parentFormContext.getAttribute(responseAttributeLogicalName).setValue(data);
     });
-
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "InitializeSurveyRender Line 623\n");
     //Show an unsaved changes notification after 10 minutes when a value is changed.
     survey.onValueChanged.add(function (survey, options) {
 
@@ -647,7 +647,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             el.value = options.value;
         }
     });
-
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "InitializeSurveyRender Line 650\n");
     //Create showdown markdown converter
     var converter = new showdown.Converter();
     survey.onTextMarkdown.add(function (survey, options) {
@@ -661,7 +661,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         //set html
         options.html = str;
     });
-
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "InitializeSurveyRender Line 664\n");
 
     // Add a character count and limit to Comment questions.
     // If the maxLength is the default value of -1, set maxLength to 5000.
@@ -686,7 +686,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             comment.onkeyup = changingHandler;
         }
     });
-    
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "InitializeSurveyRender Line 689\n");
     survey.onValidateQuestion.add(function (sender, options) {
         if (options.question.getType() == "finding") {
             //Add error if any findingTypes are Undecided
@@ -713,7 +713,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         }
     });
     
-
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "InitializeSurveyRender Line 716\n");
     function appendDetailToQuestion(survey, options) {
         var detailSurveyId = options.question.name + "-Detail";
         var detailLabel = "";
@@ -845,7 +845,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     $('#surveyElement').Survey({
         model: survey
     });
-
+    window.parentFormContext.getAttribute("ts_debug").setValue(window.parentFormContext.getAttribute("ts_debug").getValue() + "End InitializeSurveyRender\n");
 }
 
 function DoComplete() {

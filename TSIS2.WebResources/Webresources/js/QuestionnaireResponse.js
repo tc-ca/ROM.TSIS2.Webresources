@@ -42,12 +42,13 @@ var ROM;
     (function (QuestionnaireResponse) {
         function onLoad(eContext) {
             var form = eContext.getFormContext();
+            form.getAttribute("ts_debug").setValue(form.getAttribute("ts_debug").getValue() + "onLoad\n");
             ToggleQuestionnaire(eContext);
-            form.getAttribute("ts_debug").setValue("test2");
         }
         QuestionnaireResponse.onLoad = onLoad;
         function ToggleQuestionnaire(eContext) {
             var Form = eContext.getFormContext();
+            Form.getAttribute("ts_debug").setValue(Form.getAttribute("ts_debug").getValue() + "ToggleQuestionnaire\n");
             // Get the web resource control on the form
             var wrCtrl = Form.getControl('WebResource_surveyrender');
             var questionnaireDefinition = Form.getAttribute('ts_questionnairedefinition').getValue();
@@ -63,18 +64,26 @@ var ROM;
             InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireAnswers, mode);
         }
         function InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
-            var Form = eContext.getFormContext();
-            wrCtrl.setVisible(true);
-            wrCtrl.getContentWindow().then(function (win) {
-                return __awaiter(this, void 0, void 0, function () {
-                    var surveyLocale;
-                    return __generator(this, function (_a) {
-                        surveyLocale = getSurveyLocal();
-                        win.InitialContext(eContext);
-                        win.isComplete = false;
-                        win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
-                        return [2 /*return*/];
+            return __awaiter(this, void 0, void 0, function () {
+                var Form;
+                return __generator(this, function (_a) {
+                    Form = eContext.getFormContext();
+                    Form.getAttribute("ts_debug").setValue(Form.getAttribute("ts_debug").getValue() + wrCtrl.getContentWindow());
+                    wrCtrl.setVisible(true);
+                    wrCtrl.getContentWindow().then(function (win) {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var surveyLocale;
+                            return __generator(this, function (_a) {
+                                surveyLocale = getSurveyLocal();
+                                Form.getAttribute("ts_debug").setValue(Form.getAttribute("ts_debug").getValue() + surveyLocale);
+                                win.InitialContext(eContext);
+                                win.isComplete = false;
+                                win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
+                                return [2 /*return*/];
+                            });
+                        });
                     });
+                    return [2 /*return*/];
                 });
             });
         }
