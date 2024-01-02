@@ -5,6 +5,8 @@
     this.recordName = "";
     this.mainHeadingEnglish = "";
     this.mainHeadingFrench = "";
+    this.usesGroupFiles = false;
+    this.validOwner = false;
 }
 
 function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryControlId) {
@@ -38,8 +40,19 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
             modifyRecordOwner(PrimaryTypeEntityName, fileUploadData.recordOwner, fileUploadData.recordName, siteNameEnglish, fileUploadData);
 
-            // navigate to the canvas app
-            navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, true);
+            if (fileUploadData.validOwner == true) {
+                // navigate to the canvas app
+                navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, true);
+            }
+            else {
+                // display the error message
+                if (lang == 1033) {
+                    alert("The record has an invalid owner.  It must belong to Aviation Security or Intermodal Surface Security Oversight.");
+                }
+                else {
+                    alert("L'enregistrement a un propriétaire invalide. Il doit appartenir à Aviation Security ou Intermodal Surface Security Oversight.");
+                }
+            }
         },
         function (error) {
             // handle error conditions
@@ -177,8 +190,8 @@ function getFetchXmlForRecordOwner(tableName, recordTagId) {
             return `
                 <fetch xmlns:generator='MarkMpn.SQL4CDS'>
                   <entity name='msdyn_functionallocation'>
-                    <attribute name='msdyn_name' alias='siteName' />
-                    <attribute name='ts_functionallocationnameenglish' alias='recordName' />
+                    <attribute name='msdyn_name' alias='recordName' />
+                    <attribute name='ts_functionallocationnameenglish' alias='siteNameEnglish' />
                     <link-entity name='team' to='owningteam' from='teamid' alias='team' link-type='inner'>
                       <attribute name='name' alias='recordOwner' />
                     </link-entity>
@@ -225,48 +238,56 @@ function setEntitySpecificValues(entityName, fileUploadData) {
             fileUploadData.recordTableNameFrench = "Ordre de travail";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Work Order Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'ordre de travail";
+            fileUploadData.useGroupFiles = true;
             break;
         case "msdyn_workorderservicetask":
             fileUploadData.recordTableNameEnglish = "Work Order Service Task";
             fileUploadData.recordTableNameFrench = "Tâche de service de l'ordre de travail";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Inspection Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'inspection";
+            fileUploadData.useGroupFiles = true;
             break;
         case "incident":
             fileUploadData.recordTableNameEnglish = "Case";
             fileUploadData.recordTableNameFrench = "Cas";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Case Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents du cas";
+            fileUploadData.useGroupFiles = true;
             break;
         case "account":
             fileUploadData.recordTableNameEnglish = "Stakeholder";
             fileUploadData.recordTableNameFrench = "Partie prenante";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Stakeholder Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'intervenant";
+            fileUploadData.useGroupFiles = false;
             break;
         case "ovs_operation":
             fileUploadData.recordTableNameEnglish = "Operation";
             fileUploadData.recordTableNameFrench = "Opération";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Operation Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'opération";
+            fileUploadData.useGroupFiles = false;
             break;
         case "msdyn_functionallocation":
             fileUploadData.recordTableNameEnglish = "Site";
             fileUploadData.recordTableNameFrench = "Site";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Site Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents du site";
+            fileUploadData.useGroupFiles = false;
             break;
         case "ts_securityincident":
             fileUploadData.recordTableNameEnglish = "Security Incident";
             fileUploadData.recordTableNameFrench = "Incidents de sûreté";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Security Incident Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents de l'incident de sûreté";
+            fileUploadData.useGroupFiles = false;
             break;
         case "ts_exemption":
             fileUploadData.recordTableNameEnglish = "Exemption";
             fileUploadData.recordTableNameFrench = "Exemption";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Exemption Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'exemption";
+            fileUploadData.useGroupFiles = false;
             break;
     }
 }
@@ -337,5 +358,9 @@ function modifyRecordOwner(entityName, myRecordOwner, myRecordName, mySiteNameEn
                 fileUploadData.recordOwner = "";
             }
             break;
+    }
+
+    if (fileUploadData.recordOwner == avsecOwner || fileUploadData.recordOwner == issoOwner) {
+        fileUploadData.validOwner = true;
     }
 }
