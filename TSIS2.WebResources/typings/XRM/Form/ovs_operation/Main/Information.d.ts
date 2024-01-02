@@ -25,6 +25,13 @@ declare namespace Form.ovs_operation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface plan_track extends Xrm.SectionCollectionBase {
+        get(name: "tab_10_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_5 extends Xrm.SectionCollectionBase {
         get(name: "tab_5_section_1"): Xrm.PageSection;
         get(name: "tab_5_section_2"): Xrm.PageSection;
@@ -130,6 +137,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
       get(name: "WebResource_PPEGuide"): Xrm.WebResourceControl;
       get(name: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
+      get(name: "cc_1703701323281"): Xrm.BaseControl;
       get(name: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "header_ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "header_ts_stakeholder"): Xrm.LookupControl<"account">;
@@ -195,6 +203,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "WorkOrders"): Xrm.PageTab<Tabs.WorkOrders>;
       get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}"): Xrm.PageTab<Tabs.bb4b118ea1c94e04ae4d8c6a177ee56c>;
       get(name: "operation_activity_tab"): Xrm.PageTab<Tabs.operation_activity_tab>;
+      get(name: "plan_track"): Xrm.PageTab<Tabs.plan_track>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
@@ -260,6 +269,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
     getControl(controlName: "WebResource_PPEGuide"): Xrm.WebResourceControl;
     getControl(controlName: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
+    getControl(controlName: "cc_1703701323281"): Xrm.BaseControl;
     getControl(controlName: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "header_ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "header_ts_stakeholder"): Xrm.LookupControl<"account">;

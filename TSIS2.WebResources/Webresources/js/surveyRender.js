@@ -578,6 +578,13 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     if (surveyDefinition == null) {
         return;
     }
+    let responseAttributeLogicalName = "ovs_questionnaireresponse";
+    //If we're on the questionnaireresponse table, the field to save the value in is different from the WOST form
+    if (window.parentFormContext != null) {
+        if (window.parentFormContext._entityName == "ts_questionnaireresponse") {
+            responseAttributeLogicalName = "ts_questionnaireanswers";
+        }
+    }
 
     var questionnaireDefinition = JSON.parse(surveyDefinition);
     window.survey = new Survey.Model(questionnaireDefinition);
@@ -592,7 +599,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     survey.onComplete.add(function (survey, options) {
         // When survey is completed, parse the resulting JSON and save it to ovs_questionnaireresponse
         var data = JSON.stringify(survey.data, null, 3);
-        window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data.trim());
+        window.parentFormContext.getAttribute(responseAttributeLogicalName).setValue(data.trim());
 
         // In order to keep the survey in place without showing a thank you or blank page
         // Set the state to running, keep the data and go to the first page
@@ -611,7 +618,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     survey.onValueChanged.add(function (survey, options) {
         //Adding a space to the questionnaireresponse to make the form dirty. The space gets trimmed off in survey.onComplete.
         var data = JSON.stringify(survey.data, null, 3) + " ";
-        if (window.parentFormContext != null) window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data);
+        if (window.parentFormContext != null) window.parentFormContext.getAttribute(responseAttributeLogicalName).setValue(data);
     });
 
     //Show an unsaved changes notification after 10 minutes when a value is changed.
@@ -882,3 +889,6 @@ function PrintSurveyPage() {
     // Create the actual PDF
     html2pdf().set(opt).from(document.getElementById('surveyElement')).saveAs();
 }
+
+
+

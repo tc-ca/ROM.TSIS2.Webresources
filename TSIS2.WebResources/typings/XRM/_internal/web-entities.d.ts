@@ -837,28 +837,28 @@ interface ts_planningsettings_Create extends ts_planningsettings {
 }
 interface ts_planningsettings_Update extends ts_planningsettings {
 }
-interface ts_questionnaireoffline_Base extends WebEntity {
+interface ts_questionnaireresponse_Base extends WebEntity {
 }
-interface ts_questionnaireoffline_Fixed extends WebEntity_Fixed {
-  ts_questionnaireofflineid: string;
+interface ts_questionnaireresponse_Fixed extends WebEntity_Fixed {
+  ts_questionnaireresponseid: string;
 }
-interface ts_questionnaireoffline extends ts_questionnaireoffline_Base, ts_questionnaireoffline_Relationships {
+interface ts_questionnaireresponse extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
 }
-interface ts_questionnaireoffline_Relationships {
+interface ts_questionnaireresponse_Relationships {
 }
-interface ts_questionnaireoffline_Result extends ts_questionnaireoffline_Base, ts_questionnaireoffline_Relationships {
+interface ts_questionnaireresponse_Result extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
 }
-interface ts_questionnaireoffline_FormattedResult {
+interface ts_questionnaireresponse_FormattedResult {
 }
-interface ts_questionnaireoffline_Select {
+interface ts_questionnaireresponse_Select {
 }
-interface ts_questionnaireoffline_Expand {
+interface ts_questionnaireresponse_Expand {
 }
-interface ts_questionnaireoffline_Filter {
+interface ts_questionnaireresponse_Filter {
 }
-interface ts_questionnaireoffline_Create extends ts_questionnaireoffline {
+interface ts_questionnaireresponse_Create extends ts_questionnaireresponse {
 }
-interface ts_questionnaireoffline_Update extends ts_questionnaireoffline {
+interface ts_questionnaireresponse_Update extends ts_questionnaireresponse {
 }
 interface ts_questionnaireversion_Base extends WebEntity {
 }

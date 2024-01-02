@@ -79,6 +79,7 @@ declare namespace Form.incident.Main {
         get(name: "Applicable SLA(STANDARD)"): Xrm.PageSection;
         get(name: "Details"): Xrm.PageSection;
         get(name: "general_section_7"): Xrm.PageSection;
+        get(name: "general_section_Notes"): Xrm.PageSection;
         get(name: "tab_13_section_4"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -119,14 +120,15 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_timetracking extends Xrm.SectionCollectionBase {
-        get(name: "tab_16_section_1"): Xrm.PageSection;
+        get(name: "tab_timetracking_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_workspace extends Xrm.SectionCollectionBase {
-        get(name: "tab_17_section_1"): Xrm.PageSection;
+        get(name: "tab_16_section_1"): Xrm.PageSection;
+        get(name: "tab_workspace_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -190,6 +192,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_incident"): Xrm.OptionSetAttribute<ts_yesno>;
       get(name: "ts_inspectiontype1"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
+      get(name: "ts_notes"): Xrm.Attribute<string>;
       get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
       get(name: "ts_overtime"): Xrm.NumberAttribute;
       get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
@@ -289,6 +292,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_incident"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_inspectiontype1"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
+      get(name: "ts_notes"): Xrm.StringControl;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
       get(name: "ts_overtime"): Xrm.NumberControl;
       get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;
@@ -378,6 +382,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "ts_incident"): Xrm.OptionSetAttribute<ts_yesno>;
     getAttribute(attributeName: "ts_inspectiontype1"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
+    getAttribute(attributeName: "ts_notes"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
@@ -472,6 +477,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "ts_incident"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_inspectiontype1"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
+    getControl(controlName: "ts_notes"): Xrm.StringControl;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
     getControl(controlName: "ts_overtime"): Xrm.NumberControl;
     getControl(controlName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;

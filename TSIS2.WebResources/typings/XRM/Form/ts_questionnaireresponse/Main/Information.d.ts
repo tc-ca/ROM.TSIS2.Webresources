@@ -1,18 +1,23 @@
-declare namespace Form.ts_questionnaireoffline.Quick {
+declare namespace Form.ts_questionnaireresponse.Main {
   namespace Information {
     namespace Tabs {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "ts_name"): Xrm.Attribute<string>;
+      get(name: "ts_questionnaireanswers"): Xrm.Attribute<string>;
+      get(name: "ts_questionnairedefinition"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "WebResource_surveyrender"): Xrm.WebResourceControl;
+      get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_name"): Xrm.StringControl;
+      get(name: "ts_questionnaireanswers"): Xrm.StringControl;
+      get(name: "ts_questionnairedefinition"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -28,9 +33,14 @@ declare namespace Form.ts_questionnaireoffline.Quick {
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_questionnaireanswers"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_questionnairedefinition"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "WebResource_surveyrender"): Xrm.WebResourceControl;
+    getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
+    getControl(controlName: "ts_questionnaireanswers"): Xrm.StringControl;
+    getControl(controlName: "ts_questionnairedefinition"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
 }
