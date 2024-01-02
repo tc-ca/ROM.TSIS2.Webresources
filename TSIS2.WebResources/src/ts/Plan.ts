@@ -580,14 +580,8 @@
                     <filter type='and'>
                       <condition attribute='ts_suggestedinspection' operator='not-null' />
                       <condition attribute='ts_region' operator='eq' uitype='territory' value='{` + teamRegionId + `}' />
+                      <condition attribute='ts_fiscalyear' operator='eq' uitype='tc_tcfiscalyear' value='` + fiscalyearId + `' />
                     </filter>
-                    <link-entity name='ts_suggestedinspection' from='ts_suggestedinspectionid' to='ts_suggestedinspection' link-type='inner' alias='aq'>
-                      <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='ar'>
-                        <filter type='and'>
-                          <condition attribute='ts_fiscalyear' operator='eq' uitype='tc_tcfiscalyear' value='` + fiscalyearId + `' />
-                        </filter>
-                      </link-entity>
-                    </link-entity>
                   </entity>
                 </fetch>`;
 
