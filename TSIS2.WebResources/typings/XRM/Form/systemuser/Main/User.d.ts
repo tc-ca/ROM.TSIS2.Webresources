@@ -112,7 +112,7 @@ declare namespace Form.systemuser.Main {
       get(name: "mobilealertemail"): Xrm.Attribute<string>;
       get(name: "mobileofflineprofileid"): Xrm.LookupAttribute<"mobileofflineprofile">;
       get(name: "mobilephone"): Xrm.Attribute<string>;
-      get(name: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agenttype>;
+      get(name: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agentType>;
       get(name: "msdyn_botapplicationid"): Xrm.Attribute<string>;
       get(name: "msdyn_botdescription"): Xrm.Attribute<string>;
       get(name: "msdyn_botprovider"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_botprovider>;
@@ -186,7 +186,7 @@ declare namespace Form.systemuser.Main {
       get(name: "mobilealertemail"): Xrm.StringControl;
       get(name: "mobileofflineprofileid"): Xrm.LookupControl<"mobileofflineprofile">;
       get(name: "mobilephone"): Xrm.StringControl;
-      get(name: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agenttype>;
+      get(name: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agentType>;
       get(name: "msdyn_botapplicationid"): Xrm.StringControl;
       get(name: "msdyn_botdescription"): Xrm.StringControl;
       get(name: "msdyn_botprovider"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_botprovider>;
@@ -263,7 +263,7 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: "mobilealertemail"): Xrm.Attribute<string>;
     getAttribute(attributeName: "mobileofflineprofileid"): Xrm.LookupAttribute<"mobileofflineprofile">;
     getAttribute(attributeName: "mobilephone"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agenttype>;
+    getAttribute(attributeName: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agentType>;
     getAttribute(attributeName: "msdyn_botapplicationid"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_botdescription"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_botprovider"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_botprovider>;
@@ -332,7 +332,7 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "mobilealertemail"): Xrm.StringControl;
     getControl(controlName: "mobileofflineprofileid"): Xrm.LookupControl<"mobileofflineprofile">;
     getControl(controlName: "mobilephone"): Xrm.StringControl;
-    getControl(controlName: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agenttype>;
+    getControl(controlName: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agentType>;
     getControl(controlName: "msdyn_botapplicationid"): Xrm.StringControl;
     getControl(controlName: "msdyn_botdescription"): Xrm.StringControl;
     getControl(controlName: "msdyn_botprovider"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_botprovider>;

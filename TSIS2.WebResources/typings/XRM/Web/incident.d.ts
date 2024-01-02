@@ -64,6 +64,7 @@ interface Incident_Base extends WebEntity {
   ts_dateofinspection1?: Date | null;
   ts_dateofinspection2?: Date | null;
   ts_incident?: ts_yesno | null;
+  ts_notes?: string | null;
   ts_numberoffindings?: number | null;
   ts_numberoffindings_date?: Date | null;
   ts_numberoffindings_state?: number | null;
@@ -257,6 +258,7 @@ interface Incident_Select {
   ts_incident: WebAttribute<Incident_Select, { ts_incident: ts_yesno | null }, { ts_incident_formatted?: string }>;
   ts_inspectiontype1_guid: WebAttribute<Incident_Select, { ts_inspectiontype1_guid: string | null }, { ts_inspectiontype1_formatted?: string }>;
   ts_inspectiontype2_guid: WebAttribute<Incident_Select, { ts_inspectiontype2_guid: string | null }, { ts_inspectiontype2_formatted?: string }>;
+  ts_notes: WebAttribute<Incident_Select, { ts_notes: string | null }, {  }>;
   ts_numberoffindings: WebAttribute<Incident_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<Incident_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<Incident_Select, { ts_numberoffindings_state: number | null }, {  }>;
@@ -377,6 +379,7 @@ interface Incident_Filter {
   ts_incident: ts_yesno;
   ts_inspectiontype1_guid: XQW.Guid;
   ts_inspectiontype2_guid: XQW.Guid;
+  ts_notes: string;
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;

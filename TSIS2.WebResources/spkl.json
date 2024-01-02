@@ -225,6 +225,16 @@
             "description": "ROM TSIS 2.0 Questionnaire Version Form Scripts"
           },
           {
+            "uniquename": "ts_/js/QuestionnaireResponse.js",
+            "file": "js\\QuestionnaireResponse.js",
+            "description": "ROM TSIS 2.0 Questionnaire Response Form Scripts"
+          },
+          {
+            "uniquename": "ts_/js/QuestionnaireVersionRibbon.js",
+            "file": "js\\QuestionnaireVersionRibbon.js",
+            "description": "ROM TSIS 2.0 Questionnaire Version Ribbon Scripts"
+          },
+          {
             "uniquename": "ovs_/js/ServiceTaskType.js",
             "file": "js\\ServiceTaskType.js",
             "description": "ROM TSIS 2.0 Service Task Type Form Scripts"
@@ -571,6 +581,16 @@
           {
             "uniquename": "ovs_/js/knockout-min.js",
             "file": "js\\knockout-min.js",
+            "description": "ROM TSIS 2.0 SurveyJS Dependency"
+          },
+          {
+            "uniquename": "ts_/js/ajax.js",
+            "file": "js\\ajax.js",
+            "description": "ROM TSIS 2.0 SurveyJS Dependency"
+          },
+          {
+            "uniquename": "ts_/js/bootstrap.js",
+            "file": "js\\bootstrap.js",
             "description": "ROM TSIS 2.0 SurveyJS Dependency"
           },
           {

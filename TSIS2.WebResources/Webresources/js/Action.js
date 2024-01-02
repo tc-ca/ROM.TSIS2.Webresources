@@ -72,31 +72,31 @@ var ROM;
         var allActionTypes = [
             { text: "AMP", value: 741130029 /* AMP */ },
             { text: "Administrative monetary penalty", value: 741130001 /* Administrativemonetarypenalty */ },
-            { text: "Affidavit Of Service | AMP", value: 741130025 /* AffidavitOfServiceAMP */ },
+            { text: "Affidavit of Service | Sworn", value: 741130025 /* AffidavitofServiceSworn */ },
             { text: "Affidavit Of Service | Cancellation/Suspension of CAD", value: 741130026 /* AffidavitOfServiceCancellationSuspensionofCAD */ },
             { text: "Affidavit of Service", value: 741130000 /* AffidavitofService */ },
-            { text: "AMP - Payment", value: 741130007 /* AMPPayment */ },
-            { text: "Corrective Action Plan", value: 741130008 /* CorrectiveActionPlan */ },
+            { text: "AMP Payment | Received", value: 741130007 /* AMPPaymentReceived */ },
+            { text: "Corrective Action Plan | Requested", value: 741130008 /* CorrectiveActionPlanRequested */ },
             { text: "Correspondence", value: 741130003 /* Correspondence */ },
             { text: "Detention of Aircraft", value: 741130014 /* DetentionofAircraft */ },
-            { text: "Informal Meeting", value: 741130002 /* InformalMeeting */ },
-            { text: "Legal Counsel", value: 741130016 /* LegalCounsel */ },
-            { text: "Letter - Commitment", value: 741130004 /* LetterCommitment */ },
-            { text: "Letter - Non-compliance", value: 741130005 /* LetterNoncompliance */ },
-            { text: "Letter - SSC OSA Further Action", value: 741130006 /* LetterSSCOSAFurtherAction */ },
+            { text: "Informal Meeting | Offered", value: 741130002 /* InformalMeetingOffered */ },
+            { text: "Legal Counsel | Consulted", value: 741130016 /* LegalCounselConsulted */ },
+            { text: "Letter - Commitment | Received", value: 741130004 /* LetterCommitmentReceived */ },
+            { text: "Letter - Non-Compliance | Sent", value: 741130005 /* LetterNonComplianceSent */ },
+            { text: "Letter - SSC OSA Further Action | Sent", value: 741130006 /* LetterSSCOSAFurtherActionSent */ },
             { text: "Notification | Non-compliance", value: 741130027 /* NotificationNoncompliance */ },
             { text: "Notice of Assessment of Monetary Penalty", value: 741130009 /* NoticeofAssessmentofMonetaryPenalty */ },
             { text: "Other", value: 741130015 /* Other */ },
             { text: "Prosecution", value: 741130010 /* Prosecution */ },
             { text: "Punitive Suspension of CAD", value: 741130011 /* PunitiveSuspensionofCAD */ },
-            { text: "Regional Enforcement Unit (REU)", value: 741130017 /* RegionalEnforcementUnitREU */ },
+            { text: "Regional Enforcement Unit (REU) | Consulted", value: 741130017 /* RegionalEnforcementUnitREUConsulted */ },
             { text: "TATC | Appeal Application", value: 741130018 /* TATCAppealApplication */ },
             { text: "TATC | Appeal Determination", value: 741130019 /* TATCAppealDetermination */ },
             { text: "TATC | Appeal Hearing", value: 741130020 /* TATCAppealHearing */ },
             { text: "TATC | Certificate for unpaid AMP", value: 741130021 /* TATCCertificateforunpaidAMP */ },
             { text: "TATC | Determination", value: 741130022 /* TATCDetermination */ },
             { text: "TATC | Review Application", value: 741130023 /* TATCReviewApplication */ },
-            { text: "TATC | Review Hearing", value: 741130024 /* TATCReviewHearing */ },
+            { text: "TATC - Hearing | Convened", value: 741130024 /* TATCHearingConvened */ },
             { text: "Verbal Warning", value: 741130012 /* VerbalWarning */ },
             { text: "Written Notice", value: 741130028 /* WrittenNotice */ },
             { text: "Written Warning", value: 741130013 /* WrittenWarning */ }
@@ -210,12 +210,12 @@ var ROM;
             if (isISSO) {
                 switch (actionCategoryAttributeValue) {
                     case 741130001 /* CorrectiveAction */:
-                        filteredActionTypeOptions = createFilteredOptions([741130008 /* CorrectiveActionPlan */], allActionTypes);
+                        filteredActionTypeOptions = createFilteredOptions([741130008 /* CorrectiveActionPlanRequested */], allActionTypes);
                         break;
                     case 741130002 /* EnforcementAction */:
                         filteredActionTypeOptions = createFilteredOptions([
                             741130012 /* VerbalWarning */,
-                            741130017 /* RegionalEnforcementUnitREU */,
+                            741130017 /* RegionalEnforcementUnitREUConsulted */,
                             741130013 /* WrittenWarning */,
                         ], allActionTypes);
                         break;
@@ -225,20 +225,20 @@ var ROM;
                 switch (actionCategoryAttributeValue) {
                     case 741130000 /* AdministrativeAction */:
                         filteredActionTypeOptions = createFilteredOptions([
-                            741130025 /* AffidavitOfServiceAMP */,
+                            741130025 /* AffidavitofServiceSworn */,
                             741130026 /* AffidavitOfServiceCancellationSuspensionofCAD */,
-                            741130002 /* InformalMeeting */,
+                            741130002 /* InformalMeetingOffered */,
                             741130003 /* Correspondence */,
-                            741130006 /* LetterSSCOSAFurtherAction */,
-                            741130005 /* LetterNoncompliance */,
-                            741130004 /* LetterCommitment */,
-                            741130007 /* AMPPayment */,
+                            741130006 /* LetterSSCOSAFurtherActionSent */,
+                            741130005 /* LetterNonComplianceSent */,
+                            741130004 /* LetterCommitmentReceived */,
+                            741130007 /* AMPPaymentReceived */,
                             741130027 /* NotificationNoncompliance */,
                             741130028 /* WrittenNotice */,
                         ], allActionTypes);
                         break;
                     case 741130001 /* CorrectiveAction */:
-                        filteredActionTypeOptions = createFilteredOptions([741130008 /* CorrectiveActionPlan */], allActionTypes);
+                        filteredActionTypeOptions = createFilteredOptions([741130008 /* CorrectiveActionPlanRequested */], allActionTypes);
                         break;
                     case 741130002 /* EnforcementAction */:
                         filteredActionTypeOptions = createFilteredOptions([
@@ -256,7 +256,7 @@ var ROM;
                         ], allActionTypes);
                         break;
                     case 741130004 /* LegalAction */:
-                        filteredActionTypeOptions = createFilteredOptions([741130017 /* RegionalEnforcementUnitREU */, 741130016 /* LegalCounsel */], allActionTypes);
+                        filteredActionTypeOptions = createFilteredOptions([741130017 /* RegionalEnforcementUnitREUConsulted */, 741130016 /* LegalCounselConsulted */], allActionTypes);
                         break;
                     case 741130006 /* REUEnforcementAction */:
                         filteredActionTypeOptions = createFilteredOptions([
@@ -274,7 +274,7 @@ var ROM;
                             741130019 /* TATCAppealDetermination */,
                             741130022 /* TATCDetermination */,
                             741130023 /* TATCReviewApplication */,
-                            741130024 /* TATCReviewHearing */,
+                            741130024 /* TATCHearingConvened */,
                             741130020 /* TATCAppealHearing */,
                         ], allActionTypes);
                         break;
@@ -337,7 +337,7 @@ var ROM;
                             ], allDeliveryMethodOptions);
                             filteredActionStatusOptions = createFilteredOptions([741130002 /* Delivered */], allActionStatus);
                             break;
-                        case 741130017 /* RegionalEnforcementUnitREU */:
+                        case 741130017 /* RegionalEnforcementUnitREUConsulted */:
                             form.getControl("ts_stakeholder").setVisible(false);
                             form.getControl("ts_contact").setVisible(false);
                             form.getControl("ts_deliverymethod").setVisible(false);
@@ -353,7 +353,7 @@ var ROM;
                     break;
                 case 741130001 /* CorrectiveAction */:
                     switch (actionTypeAttributeValue) {
-                        case 741130008 /* CorrectiveActionPlan */:
+                        case 741130008 /* CorrectiveActionPlanRequested */:
                             form.getControl("ts_stakeholder").setVisible(true);
                             form.getControl("ts_contact").setVisible(true);
                             form.getControl("ts_duedate").setVisible(true);
@@ -390,20 +390,20 @@ var ROM;
             switch (actionCategoryAttributeValue) {
                 case 741130000 /* AdministrativeAction */:
                     switch (actionTypeAttributeValue) {
-                        case 741130025 /* AffidavitOfServiceAMP */:
+                        case 741130025 /* AffidavitofServiceSworn */:
                         case 741130026 /* AffidavitOfServiceCancellationSuspensionofCAD */:
                             filteredActionStatusOptions = createFilteredOptions([741130005 /* Sworn */], allActionStatus);
                             break;
-                        case 741130002 /* InformalMeeting */:
+                        case 741130002 /* InformalMeetingOffered */:
                             filteredActionStatusOptions = createFilteredOptions([741130002 /* Delivered */, 741130001 /* Convened */], allActionStatus);
                             break;
                         case 741130003 /* Correspondence */:
-                        case 741130004 /* LetterCommitment */:
-                        case 741130005 /* LetterNoncompliance */:
-                        case 741130006 /* LetterSSCOSAFurtherAction */:
+                        case 741130004 /* LetterCommitmentReceived */:
+                        case 741130005 /* LetterNonComplianceSent */:
+                        case 741130006 /* LetterSSCOSAFurtherActionSent */:
                             filteredActionStatusOptions = createFilteredOptions([741130002 /* Delivered */, 741130003 /* Received */], allActionStatus);
                             break;
-                        case 741130007 /* AMPPayment */:
+                        case 741130007 /* AMPPaymentReceived */:
                             filteredActionStatusOptions = createFilteredOptions([741130003 /* Received */], allActionStatus);
                             break;
                         case 741130027 /* NotificationNoncompliance */:
@@ -416,7 +416,7 @@ var ROM;
                     break;
                 case 741130001 /* CorrectiveAction */:
                     switch (actionTypeAttributeValue) {
-                        case 741130008 /* CorrectiveActionPlan */:
+                        case 741130008 /* CorrectiveActionPlanRequested */:
                             filteredActionStatusOptions = createFilteredOptions([741130004 /* Requested */, 741130003 /* Received */], allActionStatus);
                             break;
                         default:
@@ -448,10 +448,10 @@ var ROM;
                     break;
                 case 741130004 /* LegalAction */:
                     switch (actionTypeAttributeValue) {
-                        case 741130017 /* RegionalEnforcementUnitREU */:
+                        case 741130017 /* RegionalEnforcementUnitREUConsulted */:
                             filteredActionStatusOptions = createFilteredOptions([741130000 /* Consulted */, 741130006 /* Referred */], allActionStatus);
                             break;
-                        case 741130016 /* LegalCounsel */:
+                        case 741130016 /* LegalCounselConsulted */:
                             filteredActionStatusOptions = createFilteredOptions([741130000 /* Consulted */], allActionStatus);
                             break;
                         default:
@@ -481,7 +481,7 @@ var ROM;
                             filteredActionStatusOptions = createFilteredOptions([741130003 /* Received */], allActionStatus);
                             break;
                         case 741130020 /* TATCAppealHearing */:
-                        case 741130024 /* TATCReviewHearing */:
+                        case 741130024 /* TATCHearingConvened */:
                             filteredActionStatusOptions = createFilteredOptions([741130001 /* Convened */], allActionStatus);
                             break;
                         case 741130021 /* TATCCertificateforunpaidAMP */:
@@ -517,7 +517,7 @@ var ROM;
                 form.getControl("ts_amtamount").setVisible(true);
                 form.getControl("ts_duedate").setVisible(true);
                 var actionType = form.getAttribute("ts_actiontype").getValue();
-                if (actionType != null && actionType == 741130007 /* AMPPayment */) {
+                if (actionType != null && actionType == 741130007 /* AMPPaymentReceived */) {
                     form.getControl("ts_amtamount").setVisible(true);
                     if (actionStatus != null && actionStatus == 741130004 /* Requested */) {
                         form.getControl("ts_duedate").setVisible(true);

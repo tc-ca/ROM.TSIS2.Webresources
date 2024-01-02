@@ -159,6 +159,9 @@
   <data name="FileThumbnailAccessibleLabel" xml:space="preserve">
     <value>Thumbnail image of </value>
   </data>
+  <data name="InspectionDocuments" xml:space="preserve">
+    <value>Inspection Documents</value>
+  </data>
   <data name="NameColumnText" xml:space="preserve">
     <value>Name</value>
   </data>
