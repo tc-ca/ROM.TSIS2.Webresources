@@ -35,20 +35,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var debugLog = "test";
 var ROM;
 (function (ROM) {
     var QuestionnaireResponse;
     (function (QuestionnaireResponse) {
         function onLoad(eContext) {
             var form = eContext.getFormContext();
-            form.getAttribute("ts_debug").setValue(form.getAttribute("ts_debug").getValue() + "onLoad\n");
             ToggleQuestionnaire(eContext);
         }
         QuestionnaireResponse.onLoad = onLoad;
         function ToggleQuestionnaire(eContext) {
             var Form = eContext.getFormContext();
-            Form.getAttribute("ts_debug").setValue(Form.getAttribute("ts_debug").getValue() + "ToggleQuestionnaire\n");
             // Get the web resource control on the form
             var wrCtrl = Form.getControl('WebResource_surveyrender');
             var questionnaireDefinition = Form.getAttribute('ts_questionnairedefinition').getValue();
@@ -65,17 +62,13 @@ var ROM;
         }
         function InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
             return __awaiter(this, void 0, void 0, function () {
-                var Form;
                 return __generator(this, function (_a) {
-                    Form = eContext.getFormContext();
-                    Form.getAttribute("ts_debug").setValue(Form.getAttribute("ts_debug").getValue() + wrCtrl.getContentWindow());
                     wrCtrl.setVisible(true);
                     wrCtrl.getContentWindow().then(function (win) {
                         return __awaiter(this, void 0, void 0, function () {
                             var surveyLocale;
                             return __generator(this, function (_a) {
                                 surveyLocale = getSurveyLocal();
-                                Form.getAttribute("ts_debug").setValue(Form.getAttribute("ts_debug").getValue() + surveyLocale);
                                 win.InitialContext(eContext);
                                 win.isComplete = false;
                                 win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
