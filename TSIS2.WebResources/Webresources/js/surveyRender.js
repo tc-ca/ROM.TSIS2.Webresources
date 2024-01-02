@@ -574,25 +574,28 @@ function InitialFormContext(formContext) {
 }
 
 function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, mode, eContext) {
-
     if (surveyDefinition == null) {
         return;
     }
-
+    let responseAttributeLogicalName = "ovs_questionnaireresponse";
+    //If we're on the questionnaireresponse table, the field to save the value in is different from the WOST form
+    if (window.parentFormContext != null) {
+        if (window.parentFormContext._entityName == "ts_questionnaireresponse") {
+            responseAttributeLogicalName = "ts_questionnaireanswers";
+        }
+    }
     var questionnaireDefinition = JSON.parse(surveyDefinition);
     window.survey = new Survey.Model(questionnaireDefinition);
     survey.locale = surveyLocale;
     survey.showCompletedPage = false;
     survey.mode = mode;
-
     if (surveyResponse != null) {
         survey.data = JSON.parse(surveyResponse);
     }
-
     survey.onComplete.add(function (survey, options) {
         // When survey is completed, parse the resulting JSON and save it to ovs_questionnaireresponse
         var data = JSON.stringify(survey.data, null, 3);
-        window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data.trim());
+        window.parentFormContext.getAttribute(responseAttributeLogicalName).setValue(data.trim());
 
         // In order to keep the survey in place without showing a thank you or blank page
         // Set the state to running, keep the data and go to the first page
@@ -602,18 +605,15 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         //When the survey is saved, reset the notification timer.
         timeSinceLastNotification = null;
     });
-
     survey.onAfterRenderSurvey.add(function (survey, options) {
         // Hide complete button after survey renders.
         $('.sv_complete_btn').remove();
     });
-
     survey.onValueChanged.add(function (survey, options) {
         //Adding a space to the questionnaireresponse to make the form dirty. The space gets trimmed off in survey.onComplete.
         var data = JSON.stringify(survey.data, null, 3) + " ";
-        if (window.parentFormContext != null) window.parentFormContext.getAttribute('ovs_questionnaireresponse').setValue(data);
+        if (window.parentFormContext != null) window.parentFormContext.getAttribute(responseAttributeLogicalName).setValue(data);
     });
-
     //Show an unsaved changes notification after 10 minutes when a value is changed.
     survey.onValueChanged.add(function (survey, options) {
 
@@ -640,7 +640,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             el.value = options.value;
         }
     });
-
     //Create showdown markdown converter
     var converter = new showdown.Converter();
     survey.onTextMarkdown.add(function (survey, options) {
@@ -654,7 +653,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         //set html
         options.html = str;
     });
-
 
     // Add a character count and limit to Comment questions.
     // If the maxLength is the default value of -1, set maxLength to 5000.
@@ -679,7 +677,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             comment.onkeyup = changingHandler;
         }
     });
-    
     survey.onValidateQuestion.add(function (sender, options) {
         if (options.question.getType() == "finding") {
             //Add error if any findingTypes are Undecided
@@ -706,7 +703,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
         }
     });
     
-
     function appendDetailToQuestion(survey, options) {
         var detailSurveyId = options.question.name + "-Detail";
         var detailLabel = "";
@@ -838,7 +834,6 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
     $('#surveyElement').Survey({
         model: survey
     });
-
 }
 
 function DoComplete() {
@@ -882,3 +877,6 @@ function PrintSurveyPage() {
     // Create the actual PDF
     html2pdf().set(opt).from(document.getElementById('surveyElement')).saveAs();
 }
+
+
+

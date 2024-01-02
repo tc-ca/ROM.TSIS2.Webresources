@@ -837,6 +837,29 @@ interface ts_planningsettings_Create extends ts_planningsettings {
 }
 interface ts_planningsettings_Update extends ts_planningsettings {
 }
+interface ts_questionnaireresponse_Base extends WebEntity {
+}
+interface ts_questionnaireresponse_Fixed extends WebEntity_Fixed {
+  ts_questionnaireresponseid: string;
+}
+interface ts_questionnaireresponse extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
+}
+interface ts_questionnaireresponse_Relationships {
+}
+interface ts_questionnaireresponse_Result extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
+}
+interface ts_questionnaireresponse_FormattedResult {
+}
+interface ts_questionnaireresponse_Select {
+}
+interface ts_questionnaireresponse_Expand {
+}
+interface ts_questionnaireresponse_Filter {
+}
+interface ts_questionnaireresponse_Create extends ts_questionnaireresponse {
+}
+interface ts_questionnaireresponse_Update extends ts_questionnaireresponse {
+}
 interface ts_questionnaireversion_Base extends WebEntity {
 }
 interface ts_questionnaireversion_Fixed extends WebEntity_Fixed {
