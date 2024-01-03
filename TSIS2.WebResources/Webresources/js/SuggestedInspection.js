@@ -327,6 +327,11 @@ var ROM;
             var entityName = "msdyn_incidenttype";
             //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
             var viewDisplayName = "Activity Types";
+            var operationTypeValue = form.getAttribute("ts_operationtype").getValue();
+            var operationTypeId;
+            if (operationTypeValue != null) {
+                operationTypeId = operationTypeValue[0].id;
+            }
             //All Active Inspection ActivityTypes/IncidentTypes related to the selected Operation Type  
             var fetchXml = [
                 "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>",
@@ -340,7 +345,7 @@ var ROM;
                 "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' intersect='true'>",
                 "      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
                 "        <filter>",
-                "          <condition attribute='ovs_operationtypeid' operator='eq' value='d883b39a-c751-eb11-a812-000d3af3ac0d'/>",
+                "          <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeId, "'/>",
                 "          <condition attribute='statecode' operator='eq' value='0'/>",
                 "        </filter>",
                 "      </link-entity>",
