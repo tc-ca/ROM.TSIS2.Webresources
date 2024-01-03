@@ -153,6 +153,7 @@ namespace ROM.Action {
         }
 
         filterTypes(form);
+        form.getControl("ts_amtamount").setVisible(false);
     }
 
     function filterTypes(form: Form.ts_action.Main.ROMAction) {
@@ -475,6 +476,13 @@ namespace ROM.Action {
         const valueExists = filteredActionStatusOptions.some(option => option.value === currentActionStatusValue);
         if (!valueExists) {
             form.getAttribute("ts_actionstatus").setValue(null);
+        }
+
+        if (actionTypeAttributeValue == ts_actiontype.AMP || actionTypeAttributeValue == ts_actiontype.AMPPaymentReceived) {
+            form.getControl("ts_amtamount").setVisible(true);
+        }
+        else {
+            form.getControl("ts_amtamount").setVisible(false);
         }
     }
 
