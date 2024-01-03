@@ -42,7 +42,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
             if (fileUploadData.validOwner == true) {
                 // navigate to the canvas app
-                navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, true);
+                navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles);
             }
             else {
                 // display the error message
@@ -238,56 +238,56 @@ function setEntitySpecificValues(entityName, fileUploadData) {
             fileUploadData.recordTableNameFrench = "Ordre de travail";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Work Order Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'ordre de travail";
-            fileUploadData.useGroupFiles = true;
+            fileUploadData.usesGroupFiles = true;
             break;
         case "msdyn_workorderservicetask":
             fileUploadData.recordTableNameEnglish = "Work Order Service Task";
             fileUploadData.recordTableNameFrench = "Tâche de service de l'ordre de travail";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Inspection Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'inspection";
-            fileUploadData.useGroupFiles = true;
+            fileUploadData.usesGroupFiles = true;
             break;
         case "incident":
             fileUploadData.recordTableNameEnglish = "Case";
             fileUploadData.recordTableNameFrench = "Cas";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Case Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents du cas";
-            fileUploadData.useGroupFiles = true;
+            fileUploadData.usesGroupFiles = true;
             break;
         case "account":
             fileUploadData.recordTableNameEnglish = "Stakeholder";
             fileUploadData.recordTableNameFrench = "Partie prenante";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Stakeholder Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'intervenant";
-            fileUploadData.useGroupFiles = false;
+            fileUploadData.usesGroupFiles = false;
             break;
         case "ovs_operation":
             fileUploadData.recordTableNameEnglish = "Operation";
             fileUploadData.recordTableNameFrench = "Opération";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Operation Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'opération";
-            fileUploadData.useGroupFiles = false;
+            fileUploadData.usesGroupFiles = false;
             break;
         case "msdyn_functionallocation":
             fileUploadData.recordTableNameEnglish = "Site";
             fileUploadData.recordTableNameFrench = "Site";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Site Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents du site";
-            fileUploadData.useGroupFiles = false;
+            fileUploadData.usesGroupFiles = false;
             break;
         case "ts_securityincident":
             fileUploadData.recordTableNameEnglish = "Security Incident";
             fileUploadData.recordTableNameFrench = "Incidents de sûreté";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Security Incident Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents de l'incident de sûreté";
-            fileUploadData.useGroupFiles = false;
+            fileUploadData.usesGroupFiles = false;
             break;
         case "ts_exemption":
             fileUploadData.recordTableNameEnglish = "Exemption";
             fileUploadData.recordTableNameFrench = "Exemption";
             fileUploadData.mainHeadingEnglish = "Add File(s) to Exemption Documents";
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'exemption";
-            fileUploadData.useGroupFiles = false;
+            fileUploadData.usesGroupFiles = false;
             break;
     }
 }
