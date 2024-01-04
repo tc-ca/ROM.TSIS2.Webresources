@@ -652,7 +652,7 @@ var ROM;
         //Retrieves parent Work Order's Operations and parent Work Order's ActivityType's OperationTypes
         function retrieveWorkOrderOperationData(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var workOrderAttribute, workOrderId, operations, activityTypeOperationTypeIds, isInspectionType, parentWorkOrderOperationFetchXml, operationPromise1, workOrderServiceTaskId, AOCOperationFetchXml, operationPromise2, activityTypeOperationTypesFetchXML, activityTypeOperationTypesPromise;
+                var workOrderAttribute, workOrderId, operations, activityTypeOperationTypeIds, isInspectionType, parentWorkOrderOperationFetchXml, operationPromise1, parentWorkOrderRelatedOperationFetchXml, operationPromise2, activityTypeOperationTypesFetchXML, activityTypeOperationTypesPromise;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -693,37 +693,35 @@ var ROM;
                             ].join("");
                             parentWorkOrderOperationFetchXml = "?fetchXml=" + encodeURIComponent(parentWorkOrderOperationFetchXml);
                             operationPromise1 = Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", parentWorkOrderOperationFetchXml);
-                            workOrderServiceTaskId = eContext.getFormContext().data.entity.getId();
-                            AOCOperationFetchXml = [
-                                "<fetch>",
-                                "<entity name='ovs_operation'>",
-                                "<attribute name='ovs_name'/>",
-                                "<attribute name='ovs_operationtypeid'/>",
-                                "<attribute name='ovs_operationid'/>",
-                                "<order attribute='ovs_name'/>",
-                                "<link-entity name = 'msdyn_workorderservicetask' from='ts_aocoperation' to='ovs_operationid'>",
-                                "<filter type='and'>",
-                                "<condition attribute='msdyn_workorderservicetaskid' operator='eq' value='", workOrderServiceTaskId, "'/>",
-                                "</filter>",
-                                "</link-entity>",
-                                "<link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
-                                "<attribute name='ts_regulated'/>",
-                                "<attribute name='ovs_operationtypeid'/>",
-                                "<attribute name='ovs_operationtypenameenglish'/>",
-                                "<attribute name='ovs_operationtypenamefrench'/>",
-                                "</link-entity>",
-                                "<link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
-                                "<attribute name='ts_functionallocationnamefrench'/>",
-                                "<attribute name='ts_functionallocationnameenglish'/>",
-                                "</link-entity>",
+                            parentWorkOrderRelatedOperationFetchXml = [
+                                "<fetch top='50'>",
+                                "  <entity name='ovs_operation'>",
+                                "    <attribute name='ts_stakeholder' />",
+                                "    <attribute name='ovs_operationid' />",
+                                "    <attribute name='ovs_name' />",
+                                "    <link-entity name='ts_msdyn_workorder_ovs_operation' from='ovs_operationid' to='ovs_operationid' intersect='true'>",
+                                "      <filter>",
+                                "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+                                "      </filter>",
+                                "    </link-entity>",
                                 "    <link-entity name='account' from='accountid' to='ts_stakeholder'>",
                                 "      <attribute name='name' />",
                                 "    </link-entity>",
-                                "</entity>",
-                                "</fetch>"
+                                "    <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
+                                "      <attribute name='ts_regulated' />",
+                                "      <attribute name='ovs_operationtypeid' /> ",
+                                "      <attribute name='ovs_operationtypenameenglish' />",
+                                "      <attribute name='ovs_operationtypenamefrench' />",
+                                "    </link-entity>",
+                                "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
+                                "      <attribute name='ts_functionallocationnamefrench' />",
+                                "      <attribute name='ts_functionallocationnameenglish' />",
+                                "    </link-entity>",
+                                "  </entity>",
+                                "</fetch>",
                             ].join("");
-                            AOCOperationFetchXml = "?fetchXml=" + encodeURIComponent(AOCOperationFetchXml);
-                            operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("ovs_operation", AOCOperationFetchXml);
+                            parentWorkOrderRelatedOperationFetchXml = "?fetchXml=" + encodeURIComponent(parentWorkOrderRelatedOperationFetchXml);
+                            operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("ovs_operation", parentWorkOrderRelatedOperationFetchXml);
                             activityTypeOperationTypesFetchXML = [
                                 "<fetch top='50'>",
                                 "  <entity name='ovs_operationtype'>",
@@ -761,20 +759,18 @@ var ROM;
                                             isInspectionType = true;
                                         }
                                     }
-                                    //Add the operationid, name, operationTypeId, and regulated boolean of the AOC operation
+                                    //Add the operationid, name, operationTypeId, and regulated boolean of the work order's N:N operations to the operations array
                                     operationRetrievalPromises[1].entities.forEach(function (operation) {
-                                        var stakeholderName = operation["account4.name"];
-                                        var operationTypeName = (lang == 1036) ? operation["ovs_operationtype2.ovs_operationtypenamefrench"] : operation["ovs_operationtype2.ovs_operationtypenameenglish"];
-                                        var siteName = (lang == 1036) ? operation["msdyn_functionallocation3.ts_functionallocationnamefrench"] : operation["msdyn_functionallocation3.ts_functionallocationnameenglish"];
-                                        if (operation.ovs_operationid != null && operation["account4.name"] != null && operation["ovs_operationtype2.ts_regulated"] != null) {
-                                            if ((operations[0]["id"] != operation.ovs_operationid)) {
-                                                operations.push({
-                                                    id: operation["ovs_operationid"],
-                                                    name: stakeholderName + " | " + operationTypeName + " | " + siteName,
-                                                    operationTypeId: operation["ovs_operationtype2.ovs_operationtypeid"],
-                                                    isRegulated: operation["ovs_operationtype2.ts_regulated"]
-                                                });
-                                            }
+                                        var stakeholderName = operation["account2.name"];
+                                        var operationTypeName = (lang == 1036) ? operation["ovs_operationtype3.ovs_operationtypenamefrench"] : operation["ovs_operationtype3.ovs_operationtypenameenglish"];
+                                        var siteName = (lang == 1036) ? operation["msdyn_functionallocation4.ts_functionallocationnamefrench"] : operation["msdyn_functionallocation4.ts_functionallocationnameenglish"];
+                                        if (operation.ovs_operationid != null && operation["account2.name"] != null && operation["ovs_operationtype3.ts_regulated"] != null) {
+                                            operations.push({
+                                                id: operation["ovs_operationid"],
+                                                name: stakeholderName + " | " + operationTypeName + " | " + siteName,
+                                                operationTypeId: operation["ovs_operationtype3.ovs_operationtypeid"],
+                                                isRegulated: operation["ovs_operationtype3.ts_regulated"]
+                                            });
                                         }
                                     });
                                     //collect each operationType Id
