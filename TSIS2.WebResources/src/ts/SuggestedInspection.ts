@@ -23,9 +23,6 @@
 
         if (siteValue != null) {
             form.getControl("ts_site").setDisabled(false);
-        }
-
-        if (operationValue != null) {
             form.getControl("ts_activitytype").setDisabled(false);
         }
 
