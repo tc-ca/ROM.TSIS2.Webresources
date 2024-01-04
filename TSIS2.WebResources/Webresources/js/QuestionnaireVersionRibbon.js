@@ -37,7 +37,7 @@ function createResponseSelected(FirstSelectedItemId) {
 
             var data =
             {
-                "ts_questionnairedefinition": result.ts_questionnairedefinition.slice(1, -1)
+                "ts_questionnairedefinition": result.ts_questionnairedefinition
             }
             // create account record
             Xrm.WebApi.createRecord("ts_questionnaireresponse", data).then(
