@@ -201,6 +201,7 @@ var ROM;
                 form.getAttribute("ts_actionstatus").setValue(null);
             }
             filterTypes(form);
+            form.getControl("ts_amtamount").setVisible(false);
         }
         Action.actionCategoryOnChange = actionCategoryOnChange;
         function filterTypes(form) {
@@ -502,6 +503,12 @@ var ROM;
             var valueExists = filteredActionStatusOptions.some(function (option) { return option.value === currentActionStatusValue; });
             if (!valueExists) {
                 form.getAttribute("ts_actionstatus").setValue(null);
+            }
+            if (actionTypeAttributeValue == 741130029 /* AMP */ || actionTypeAttributeValue == 741130007 /* AMPPaymentReceived */) {
+                form.getControl("ts_amtamount").setVisible(true);
+            }
+            else {
+                form.getControl("ts_amtamount").setVisible(false);
             }
         }
         function actionStatusOnChange(eContext) {
