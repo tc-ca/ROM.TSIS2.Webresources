@@ -161,6 +161,7 @@
         }
     }
     let tripIds = "";
+    let costAppliedTripIds = "";
     suggestedInspections.forEach(function (inspection) {
         if (isNaN(inspection.ts_q1)) inspection.ts_q1 = 0;
         if (isNaN(inspection.ts_q2)) inspection.ts_q2 = 0;
@@ -187,8 +188,9 @@
             teamPlanningDataTeamEstimatedTravelTimeTotal += inspection.ts_estimatedtraveltime;
         }
 
-        if (inspection["plantrip.ts_estimatedcost"] != null) {
+        if (inspection["plantrip.ts_estimatedcost"] != null && inspection["_ts_trip_value"] != null && costAppliedTripIds.indexOf(inspection["_ts_trip_value"]) == -1) {
             teamPlanningDataTeamEstimatedCostTotal += inspection["plantrip.ts_estimatedcost"];
+            costAppliedTripIds += inspection["_ts_trip_value"] + "|";
         }
         else if (inspection.ts_estimatedcost != null) {
             teamPlanningDataTeamEstimatedCostTotal += inspection.ts_estimatedcost;
