@@ -192,6 +192,7 @@
             teamPlanningDataTeamEstimatedCostTotal += inspection["plantrip.ts_estimatedcost"];
             costAppliedTripIds += inspection["_ts_trip_value"] + "|";
         }
+        //Only add cost if it is not in a trip that has been accounted for
         else if (inspection.ts_estimatedcost != null && !(inspection["_ts_trip_value"] != null && costAppliedTripIds.indexOf(inspection["_ts_trip_value"]) != -1)) {
             teamPlanningDataTeamEstimatedCostTotal += inspection.ts_estimatedcost;
         }
