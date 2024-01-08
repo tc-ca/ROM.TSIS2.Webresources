@@ -64,6 +64,18 @@ var ROM;
             if (activityTypeValue != null) {
                 form.getControl("ts_activitytype").setDisabled(false);
             }
+            if (form.getAttribute("ts_q1").getValue() == null) {
+                form.getAttribute("ts_q1").setValue(0);
+            }
+            if (form.getAttribute("ts_q2").getValue() == null) {
+                form.getAttribute("ts_q2").setValue(0);
+            }
+            if (form.getAttribute("ts_q3").getValue() == null) {
+                form.getAttribute("ts_q3").setValue(0);
+            }
+            if (form.getAttribute("ts_q4").getValue() == null) {
+                form.getAttribute("ts_q4").setValue(0);
+            }
         }
         SuggestedInspection.onLoad = onLoad;
         function operationTypeOnChange(eContext) {
@@ -354,5 +366,33 @@ var ROM;
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_activitytype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
+        function q1OnChange(eContext) {
+            var form = eContext.getFormContext();
+            if (form.getAttribute("ts_q1").getValue() == null) {
+                form.getAttribute("ts_q1").setValue(0);
+            }
+        }
+        SuggestedInspection.q1OnChange = q1OnChange;
+        function q2OnChange(eContext) {
+            var form = eContext.getFormContext();
+            if (form.getAttribute("ts_q2").getValue() == null) {
+                form.getAttribute("ts_q2").setValue(0);
+            }
+        }
+        SuggestedInspection.q2OnChange = q2OnChange;
+        function q3OnChange(eContext) {
+            var form = eContext.getFormContext();
+            if (form.getAttribute("ts_q3").getValue() == null) {
+                form.getAttribute("ts_q3").setValue(0);
+            }
+        }
+        SuggestedInspection.q3OnChange = q3OnChange;
+        function q4OnChange(eContext) {
+            var form = eContext.getFormContext();
+            if (form.getAttribute("ts_q4").getValue() == null) {
+                form.getAttribute("ts_q4").setValue(0);
+            }
+        }
+        SuggestedInspection.q4OnChange = q4OnChange;
     })(SuggestedInspection = ROM.SuggestedInspection || (ROM.SuggestedInspection = {}));
 })(ROM || (ROM = {}));
