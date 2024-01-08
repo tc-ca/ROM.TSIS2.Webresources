@@ -741,12 +741,21 @@ var ROM;
                             activityTypeOperationTypesFetchXML = "?fetchXml=" + encodeURIComponent(activityTypeOperationTypesFetchXML);
                             activityTypeOperationTypesPromise = Xrm.WebApi.retrieveMultipleRecords("ovs_operationtype", activityTypeOperationTypesFetchXML);
                             return [4 /*yield*/, Promise.all([operationPromise1, operationPromise2, activityTypeOperationTypesPromise]).then(function (operationRetrievalPromises) {
+                                    //collect each operationType Id
+                                    operationRetrievalPromises[2].entities.forEach(function (operationType) {
+                                        activityTypeOperationTypeIds.push(operationType["ovs_operationtypeid"]);
+                                    });
                                     //Add the work order operation operationid, name, operationTypeId, and regulated boolean to the operations array
                                     var workOrderOperation = operationRetrievalPromises[0].entities[0];
                                     var stakeholderName = workOrderOperation["account4.name"];
                                     var operationTypeName = (lang == 1036) ? workOrderOperation["ovs_operationtype2.ovs_operationtypenamefrench"] : workOrderOperation["ovs_operationtype2.ovs_operationtypenameenglish"];
                                     var siteName = (lang == 1036) ? workOrderOperation["msdyn_functionallocation3.ts_functionallocationnamefrench"] : workOrderOperation["msdyn_functionallocation3.ts_functionallocationnameenglish"];
-                                    if (workOrderOperation["ovs_operation1.ovs_operationid"] != null && workOrderOperation["account4.name"] != null && workOrderOperation["ovs_operationtype2.ts_regulated"] != null) {
+                                    if (workOrderOperation["ovs_operation1.ovs_operationid"] != null &&
+                                        workOrderOperation["account4.name"] != null &&
+                                        workOrderOperation["ovs_operationtype2.ts_regulated"] != null &&
+                                        workOrderOperation["ovs_operationtype2.ovs_operationtypeid"] != null &&
+                                        workOrderOperation["ovs_operationtype2.ts_regulated"] == true &&
+                                        activityTypeOperationTypeIds.includes(workOrderOperation["ovs_operationtype2.ovs_operationtypeid"])) {
                                         operations.push({
                                             id: workOrderOperation["ovs_operation1.ovs_operationid"],
                                             name: stakeholderName + " | " + operationTypeName + " | " + siteName,
@@ -754,10 +763,6 @@ var ROM;
                                             isRegulated: workOrderOperation["ovs_operationtype2.ts_regulated"]
                                         });
                                     }
-                                    //collect each operationType Id
-                                    operationRetrievalPromises[2].entities.forEach(function (operationType) {
-                                        activityTypeOperationTypeIds.push(operationType["ovs_operationtypeid"]);
-                                    });
                                     if (workOrderOperation["_msdyn_workordertype_value"] != null) {
                                         if (workOrderOperation["_msdyn_workordertype_value"].toUpperCase() == "B1EE680A-7CF7-EA11-A815-000D3AF3A7A7") {
                                             isInspectionType = true;
