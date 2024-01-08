@@ -192,7 +192,7 @@
             teamPlanningDataTeamEstimatedCostTotal += inspection["plantrip.ts_estimatedcost"];
             costAppliedTripIds += inspection["_ts_trip_value"] + "|";
         }
-        else if (inspection.ts_estimatedcost != null) {
+        else if (inspection.ts_estimatedcost != null && !(inspection["_ts_trip_value"] != null && costAppliedTripIds.indexOf(inspection["_ts_trip_value"]) != -1)) {
             teamPlanningDataTeamEstimatedCostTotal += inspection.ts_estimatedcost;
         }
     });

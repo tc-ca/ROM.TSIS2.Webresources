@@ -29,6 +29,22 @@
         if (activityTypeValue != null) {
             form.getControl("ts_activitytype").setDisabled(false);
         }
+
+        if (form.getAttribute("ts_q1").getValue() == null) {
+            form.getAttribute("ts_q1").setValue(0)
+        }
+
+        if (form.getAttribute("ts_q2").getValue() == null) {
+            form.getAttribute("ts_q2").setValue(0)
+        }
+
+        if (form.getAttribute("ts_q3").getValue() == null) {
+            form.getAttribute("ts_q3").setValue(0)
+        }
+
+        if (form.getAttribute("ts_q4").getValue() == null) {
+            form.getAttribute("ts_q4").setValue(0)
+        }
     }
 
     export function operationTypeOnChange(eContext) {
@@ -332,5 +348,31 @@
         form.getControl("ts_activitytype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 
+    export function q1OnChange(eContext) {
+        const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
+        if (form.getAttribute("ts_q1").getValue() == null) {
+            form.getAttribute("ts_q1").setValue(0)
+        }
+    }
 
+    export function q2OnChange(eContext) {
+        const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
+        if (form.getAttribute("ts_q2").getValue() == null) {
+            form.getAttribute("ts_q2").setValue(0)
+        }
+    }
+
+    export function q3OnChange(eContext) {
+        const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
+        if (form.getAttribute("ts_q3").getValue() == null) {
+            form.getAttribute("ts_q3").setValue(0)
+        }
+    }
+
+    export function q4OnChange(eContext) {
+        const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
+        if (form.getAttribute("ts_q4").getValue() == null) {
+            form.getAttribute("ts_q4").setValue(0)
+        }
+    }
 }
