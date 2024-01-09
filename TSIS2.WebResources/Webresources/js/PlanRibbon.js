@@ -278,6 +278,7 @@ async function createWorkOrders(formContext) {
                     "    <attribute name='ts_plan'/>",
                     "    <attribute name='ts_q2'/>",
                     "    <attribute name='ts_trip'/>",
+                    "    <attribute name='ts_estimatedcost'/>",
                     "    <filter type='and'>",
                     "      <condition attribute='ts_plan' operator='eq' value='", planId, "'/>",
                     "      <condition attribute='statecode' operator='eq' value='0'/>",
@@ -325,7 +326,8 @@ async function createWorkOrders(formContext) {
                         if (suggestedInspection._ts_activitytype_value != null) workOrderData["msdyn_primaryincidenttype@odata.bind"] = "/msdyn_incidenttypes(" + suggestedInspection._ts_activitytype_value + ")";
                         if (suggestedInspection._ts_operation_value != null) workOrderData["ovs_OperationId@odata.bind"] = "/ovs_operations(" + suggestedInspection._ts_operation_value + ")";
                         if (suggestedInspection["plantrip.ts_name"] != null) workOrderData["ts_trip@odata.bind"] = "/ts_trips(" + suggestedInspection._ts_trip_value + ")";
- 
+                        if (suggestedInspection.ts_estimatedcost != null) workOrderData["ts_plannedcost"] = suggestedInspection.ts_estimatedcost;
+
                         /*
                          * For each ts_q field, determine how many Work Orders must be created, then create them.
                          * Subtract the current number of work orders related to the current Suggested Inspection record to prevent duplicates.
