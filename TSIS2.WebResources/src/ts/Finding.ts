@@ -21,6 +21,7 @@
     //Sets field Controls parameters (required, hidden, disabled, etc) depending on current form state
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let formROM2Context = <Form.ovs_finding.Main.ROM20>eContext.getFormContext();
         let complianceFindingType = formContext.getAttribute("ts_findingtype").getValue() == ts_findingtype.Noncompliance;
 
         let isDualInspector = false;
@@ -104,7 +105,7 @@
                                 //If they did not accept the ncat recommendation, show proposal sections and fields
                                 if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == ts_yesno.No) {
                                     if (isROM20Form) {
-                                        formContext.ui.tabs.get("tab_workspace").sections.get("NCAT_proposed_section").setVisible(true);
+                                        formROM2Context.ui.tabs.get("tab_workspace").sections.get("NCAT_proposed_section").setVisible(true);
                                     }
                                     else {
                                         formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
@@ -171,7 +172,7 @@
                                     //If they did not accept the rate recommendation, show proposal sections and fields
                                     if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == ts_yesno.No) {
                                         if (isROM20Form) {
-                                            formContext.ui.tabs.get("tab_workspace").sections.get("RATE_proposed_section").setVisible(true);
+                                            formROM2Context.ui.tabs.get("tab_workspace").sections.get("RATE_proposed_section").setVisible(true);
                                         }
                                         else {
                                             formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
@@ -959,7 +960,8 @@
 
                 if (isAdminOrManager) {
                     if (isROM20Form) {
-                        formContext.ui.tabs.get("tab_workspace").sections.get("NCAT_manager_review").setVisible(true);
+                        let formROM2Context = <Form.ovs_finding.Main.ROM20>eContext.getFormContext();
+                        formROM2Context.ui.tabs.get("tab_workspace").sections.get("NCAT_manager_review").setVisible(true);
                     }
                     else {
                         formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
@@ -1041,7 +1043,8 @@
 
                 if (isAdminOrManager) {
                     if (isROM20Form) {
-                        formContext.ui.tabs.get("tab_workspace").sections.get("RATE_manager_review").setVisible(true);
+                        let formROM2Context = <Form.ovs_finding.Main.ROM20>eContext.getFormContext();
+                        formROM2Context.ui.tabs.get("tab_workspace").sections.get("RATE_manager_review").setVisible(true);
                     }
                     else {
                         formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
@@ -1166,7 +1169,7 @@
 
     //ROM2.0 Form
     function ShowHideWorkspaceSections(eContext: Xrm.ExecutionContext<any, any>, Sections: string) {
-        let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
+        let formContext = <Form.ovs_finding.Main.ROM20>eContext.getFormContext();
         if (Sections == "NCAT") {
             formContext.ui.tabs.get("tab_workspace").sections.get("NCAT_main_section").setVisible(true);
             formContext.ui.tabs.get("tab_workspace").sections.get("tab_NCAT_section_5").setVisible(true);

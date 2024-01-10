@@ -54,6 +54,7 @@ var ROM;
         //Sets field Controls parameters (required, hidden, disabled, etc) depending on current form state
         function onLoad(eContext) {
             var formContext = eContext.getFormContext();
+            var formROM2Context = eContext.getFormContext();
             var complianceFindingType = formContext.getAttribute("ts_findingtype").getValue() == 717750002 /* Noncompliance */;
             var isDualInspector = false;
             var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
@@ -128,7 +129,7 @@ var ROM;
                                     //If they did not accept the ncat recommendation, show proposal sections and fields
                                     if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == 717750001 /* No */) {
                                         if (isROM20Form) {
-                                            formContext.ui.tabs.get("tab_workspace").sections.get("NCAT_proposed_section").setVisible(true);
+                                            formROM2Context.ui.tabs.get("tab_workspace").sections.get("NCAT_proposed_section").setVisible(true);
                                         }
                                         else {
                                             formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
@@ -190,7 +191,7 @@ var ROM;
                                         //If they did not accept the rate recommendation, show proposal sections and fields
                                         if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == 717750001 /* No */) {
                                             if (isROM20Form) {
-                                                formContext.ui.tabs.get("tab_workspace").sections.get("RATE_proposed_section").setVisible(true);
+                                                formROM2Context.ui.tabs.get("tab_workspace").sections.get("RATE_proposed_section").setVisible(true);
                                             }
                                             else {
                                                 formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
@@ -926,7 +927,8 @@ var ROM;
                     }
                     if (isAdminOrManager_1) {
                         if (isROM20Form) {
-                            formContext.ui.tabs.get("tab_workspace").sections.get("NCAT_manager_review").setVisible(true);
+                            var formROM2Context = eContext.getFormContext();
+                            formROM2Context.ui.tabs.get("tab_workspace").sections.get("NCAT_manager_review").setVisible(true);
                         }
                         else {
                             formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
@@ -1001,7 +1003,8 @@ var ROM;
                     }
                     if (isAdminOrManager_2) {
                         if (isROM20Form) {
-                            formContext.ui.tabs.get("tab_workspace").sections.get("RATE_manager_review").setVisible(true);
+                            var formROM2Context = eContext.getFormContext();
+                            formROM2Context.ui.tabs.get("tab_workspace").sections.get("RATE_manager_review").setVisible(true);
                         }
                         else {
                             formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
