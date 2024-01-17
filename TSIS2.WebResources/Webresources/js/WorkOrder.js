@@ -45,6 +45,7 @@ var ROM;
         var currentSystemStatus;
         var currentStatus;
         var scheduledQuarterAttributeValueChanged = false;
+        var isROM20Form = false;
         // EVENTS
         function onLoad(eContext) {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
@@ -54,6 +55,8 @@ var ROM;
             var regionAttributeValue = regionAttribute.getValue();
             var ownerControl = form.getControl("ownerid");
             var headerOwnerControl = form.getControl("header_ownerid");
+            var formItem = form.ui.formSelector.getCurrentItem().getId();
+            isROM20Form = formItem.toLowerCase() == "a629bb8a-da93-4e58-b777-3f338a46d4d8";
             //Set comment field visible if AvSec
             //Set Overtime field visible for AvSec
             var userBusinessUnitName;
@@ -1794,7 +1797,14 @@ var ROM;
             formContext.getControl("msdyn_servicerequest").addOnLookupTagClick(function (eContext) {
                 var formContext = eContext.getFormContext();
                 //Check if the Time Tracking Tab is Expanded
-                if (formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded') {
+                var timeTrackingExpanded = false;
+                if (isROM20Form) {
+                    timeTrackingExpanded = formContext.ui.tabs.get("tab_workspace").getDisplayState() == 'expanded';
+                }
+                else {
+                    timeTrackingExpanded = formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded';
+                }
+                if (timeTrackingExpanded) {
                     eContext.getEventArgs().preventDefault(); //Prevent default navigation to normal Case form
                     var record = eContext.getEventArgs().getTagValue();
                     Xrm.Navigation.navigateTo({
@@ -1818,7 +1828,14 @@ var ROM;
             formContext.getControl("ts_securityincident").addOnLookupTagClick(function (eContext) {
                 var formContext = eContext.getFormContext();
                 //Check if the Time Tracking Tab is Expanded
-                if (formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded') {
+                var timeTrackingExpanded = false;
+                if (isROM20Form) {
+                    timeTrackingExpanded = formContext.ui.tabs.get("tab_workspace").getDisplayState() == 'expanded';
+                }
+                else {
+                    timeTrackingExpanded = formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded';
+                }
+                if (timeTrackingExpanded) {
                     eContext.getEventArgs().preventDefault(); //Prevent default navigation to normal Case form
                     var record = eContext.getEventArgs().getTagValue();
                     Xrm.Navigation.navigateTo({
@@ -1842,7 +1859,14 @@ var ROM;
             formContext.getControl("ts_trip").addOnLookupTagClick(function (eContext) {
                 var formContext = eContext.getFormContext();
                 //Check if the Time Tracking Tab is Expanded
-                if (formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded') {
+                var timeTrackingExpanded = false;
+                if (isROM20Form) {
+                    timeTrackingExpanded = formContext.ui.tabs.get("tab_workspace").getDisplayState() == 'expanded';
+                }
+                else {
+                    timeTrackingExpanded = formContext.ui.tabs.get("tab_TimeTracking").getDisplayState() == 'expanded';
+                }
+                if (timeTrackingExpanded) {
                     eContext.getEventArgs().preventDefault(); //Prevent default navigation to normal Case form
                     var record = eContext.getEventArgs().getTagValue();
                     Xrm.Navigation.navigateTo({
