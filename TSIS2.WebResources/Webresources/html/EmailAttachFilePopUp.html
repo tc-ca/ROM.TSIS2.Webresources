@@ -478,12 +478,24 @@
                             if (data[i].sensitivityLevel == protectedBSensitivityLevel) {
 
                                 var selectedRowGuid = data[i].id;
-                                var selectedRowIndex = table.getRowPosition(selectedRowGuid);
 
                                 // deselect the selected file
                                 table.deselectRow(selectedRowGuid);
 
                                 protectedBFileFound = true;
+                            }
+
+                            // for handling SharePoint Files with Protected B
+                            if (parent.Xrm.Utility.getGlobalContext().getClientUrl() != "https://romts-gsrst-tcd365.crm3.dynamics.com") {
+                                if (data[i].sensitivityLevel == "PROTECTED B") {
+
+                                    var selectedRowGuid = data[i].id;
+
+                                    // deselect the selected file
+                                    table.deselectRow(selectedRowGuid);
+
+                                    protectedBFileFound = true;
+                                }
                             }
                         }
 
