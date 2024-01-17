@@ -90,6 +90,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_incompleteworkorderreasonforother?: string | null;
   ts_isisso?: number | null;
   ts_justificationcomment?: string | null;
+  ts_notes?: string | null;
   ts_numberoffindings?: number | null;
   ts_numberoffindings_date?: Date | null;
   ts_numberoffindings_state?: number | null;
@@ -383,6 +384,7 @@ interface msdyn_workorder_Select {
   ts_incompleteworkorderreasonforother: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreasonforother: string | null }, {  }>;
   ts_isisso: WebAttribute<msdyn_workorder_Select, { ts_isisso: number | null }, {  }>;
   ts_justificationcomment: WebAttribute<msdyn_workorder_Select, { ts_justificationcomment: string | null }, {  }>;
+  ts_notes: WebAttribute<msdyn_workorder_Select, { ts_notes: string | null }, {  }>;
   ts_numberoffindings: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_state: number | null }, {  }>;
@@ -577,6 +579,7 @@ interface msdyn_workorder_Filter {
   ts_incompleteworkorderreasonforother: string;
   ts_isisso: number;
   ts_justificationcomment: string;
+  ts_notes: string;
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;
