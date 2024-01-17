@@ -2,7 +2,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
   namespace SurveyJS {
     namespace Tabs {
       interface risk_scoring extends Xrm.SectionCollectionBase {
-        get(name: "tab_12_section_1"): Xrm.PageSection;
+        get(name: "tab_Risk"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -162,9 +162,9 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
       get(name: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
+      get(name: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
       get(name: "WebResource_Provisions"): Xrm.WebResourceControl;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
-      get(name: "cc_1703867528752"): Xrm.BaseControl;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
       get(name: "msdyn_agreementbookingservicetask"): Xrm.LookupControl<"msdyn_agreementbookingservicetask">;
       get(name: "msdyn_agreementbookingservicetask1"): Xrm.LookupControl<"msdyn_agreementbookingservicetask">;
@@ -319,9 +319,9 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
     getControl(controlName: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
+    getControl(controlName: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
     getControl(controlName: "WebResource_Provisions"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
-    getControl(controlName: "cc_1703867528752"): Xrm.BaseControl;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
     getControl(controlName: "msdyn_agreementbookingservicetask"): Xrm.LookupControl<"msdyn_agreementbookingservicetask">;
     getControl(controlName: "msdyn_agreementbookingservicetask1"): Xrm.LookupControl<"msdyn_agreementbookingservicetask">;
