@@ -134,10 +134,10 @@ declare namespace Form.ovs_operation.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
+      get(name: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
       get(name: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
       get(name: "WebResource_PPEGuide"): Xrm.WebResourceControl;
       get(name: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
-      get(name: "cc_1703701323281"): Xrm.BaseControl;
       get(name: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "header_ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "header_ts_stakeholder"): Xrm.LookupControl<"account">;
@@ -266,10 +266,10 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetAttribute<ts_visualsecurityinspectiondetails>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
+    getControl(controlName: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
     getControl(controlName: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
     getControl(controlName: "WebResource_PPEGuide"): Xrm.WebResourceControl;
     getControl(controlName: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
-    getControl(controlName: "cc_1703701323281"): Xrm.BaseControl;
     getControl(controlName: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "header_ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "header_ts_stakeholder"): Xrm.LookupControl<"account">;
