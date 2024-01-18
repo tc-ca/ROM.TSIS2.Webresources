@@ -410,8 +410,7 @@ async function createWorkOrders(formContext) {
                 workOrderCreatedFetchXml = "?fetchXml=" + encodeURIComponent(workOrderCreatedFetchXml);
                 //Array of Work Order creation promises. When all promises return, the Progress Indicator is closed.
                 const tripInspectionCreationPromises = [];
-             
-               // let currentWorkOrders = 0
+
                 //Iterate through each WO
                 await Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", workOrderCreatedFetchXml).then(async function (result) {
                     const workOrders = result.entities;
