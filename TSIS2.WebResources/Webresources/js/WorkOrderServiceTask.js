@@ -855,8 +855,8 @@ var ROM;
                             if (workOrder != null) {
                                 workOrderId = workOrder[0].id;
                             }
-                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operation").then(function success(result) {
-                                    return result.ovs_operation;
+                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationid_value").then(function success(result) {
+                                    return result._ovs_operationid_value;
                                 })];
                         case 1:
                             operationId = _a.sent();

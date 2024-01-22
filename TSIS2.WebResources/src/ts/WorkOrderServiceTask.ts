@@ -841,9 +841,9 @@ namespace ROM.WorkOrderServiceTask {
             workOrderId = workOrder[0].id;
         }
 
-        const operationId = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operation").then(
+        const operationId = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationid_value").then(
             function success(result) {
-                return result.ovs_operation
+                return result._ovs_operationid_value
             }
         );
 
