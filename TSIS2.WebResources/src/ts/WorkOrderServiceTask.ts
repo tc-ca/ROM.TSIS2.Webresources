@@ -829,6 +829,45 @@ namespace ROM.WorkOrderServiceTask {
             }
         }
     }
+
+    export async function SubGridFilterExecution(eContext: Xrm.ExecutionContext<any, any>): Promise<any> {
+        const formContext = <Form.msdyn_workorderservicetask.Main.Information>eContext.getFormContext();
+
+        let gridControl: any = formContext.getControl("Subgrid_OperationRiskAssessments");
+
+        const workOrder = formContext.getAttribute("msdyn_workorder").getValue();
+        let workOrderId;
+        if (workOrder != null) {
+            workOrderId = workOrder[0].id;
+        }
+
+        const operationId = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operation").then(
+            function success(result) {
+                return result.ovs_operation
+            }
+        );
+
+        if (operationId == null) return;
+
+        if (gridControl === null) {
+            setTimeout(function () { ROM.WorkOrderServiceTask.SubGridFilterExecution(eContext); }, 1000);
+            return;
+        }
+        else {
+            var fetchXml = [
+                "<fetch>",
+                "  <entity name='ts_operationriskassessment'>",
+                "    <filter>",
+                "      <condition attribute='ts_operation' operator='eq' value='", operationId , "'/>",
+                "    </filter>",
+                "  </entity>",
+                "</fetch>"
+            ].join("");
+
+            gridControl.setFilterXml(fetchXml);
+            gridControl.refresh();
+        }
+    }
 }
 
 function userHasRole(rolesName) {
@@ -859,3 +898,5 @@ function setAllFieldsDisabled(eContext) {
         }
     });
 }
+
+

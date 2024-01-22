@@ -843,6 +843,48 @@ var ROM;
                 });
             });
         }
+        function SubGridFilterExecution(eContext) {
+            return __awaiter(this, void 0, void 0, function () {
+                var formContext, gridControl, workOrder, workOrderId, operationId, fetchXml;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            formContext = eContext.getFormContext();
+                            gridControl = formContext.getControl("Subgrid_OperationRiskAssessments");
+                            workOrder = formContext.getAttribute("msdyn_workorder").getValue();
+                            if (workOrder != null) {
+                                workOrderId = workOrder[0].id;
+                            }
+                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operation").then(function success(result) {
+                                    return result.ovs_operation;
+                                })];
+                        case 1:
+                            operationId = _a.sent();
+                            if (operationId == null)
+                                return [2 /*return*/];
+                            if (gridControl === null) {
+                                setTimeout(function () { ROM.WorkOrderServiceTask.SubGridFilterExecution(eContext); }, 1000);
+                                return [2 /*return*/];
+                            }
+                            else {
+                                fetchXml = [
+                                    "<fetch>",
+                                    "  <entity name='ts_operationriskassessment'>",
+                                    "    <filter>",
+                                    "      <condition attribute='ts_operation' operator='eq' value='", operationId, "'/>",
+                                    "    </filter>",
+                                    "  </entity>",
+                                    "</fetch>"
+                                ].join("");
+                                gridControl.setFilterXml(fetchXml);
+                                gridControl.refresh();
+                            }
+                            return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        WorkOrderServiceTask.SubGridFilterExecution = SubGridFilterExecution;
     })(WorkOrderServiceTask = ROM.WorkOrderServiceTask || (ROM.WorkOrderServiceTask = {}));
 })(ROM || (ROM = {}));
 function userHasRole(rolesName) {
