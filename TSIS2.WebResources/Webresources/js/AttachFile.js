@@ -26,31 +26,54 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
     //Set the meta-data tags to be sent to the canvas page app
     setEntitySpecificValues(PrimaryTypeEntityName,fileUploadData);
 
+    //Default Invalid owner message
+    let invalidOwnerMessageEnglish = "The record has an invalid owner.  It must belong to Aviation Security or Intermodal Surface Security Oversight.";
+
+    let invalidOwnerMessageFrench = "L'enregistrement a un propriétaire invalide. Il doit appartenir à Aviation Security ou Intermodal Surface Security Oversight.";
+
     parent.Xrm.WebApi.retrieveMultipleRecords(PrimaryTypeEntityName, "?fetchXml=" + encodedRecordOwnerFetchXML).then(
         function success(result) {
 
-            fileUploadData.recordOwner = result.entities[0].recordOwner;
-            fileUploadData.recordName = result.entities[0].recordName;
+            // make sure Owner is not null
+            if (result.entities[0] != undefined) {
+                fileUploadData.recordOwner = result.entities[0].recordOwner;
+                fileUploadData.recordName = result.entities[0].recordName;
 
-            let siteNameEnglish = "";
+                let siteNameEnglish = "";
 
-            if (PrimaryTypeEntityName == "msdyn_functionallocation") {
-                siteNameEnglish = result.entities[0].siteNameEnglish;
-            }
+                if (PrimaryTypeEntityName == "msdyn_functionallocation") {
+                    siteNameEnglish = result.entities[0].siteNameEnglish;
+                }
 
-            modifyRecordOwner(PrimaryTypeEntityName, fileUploadData.recordOwner, fileUploadData.recordName, siteNameEnglish, fileUploadData);
+                modifyRecordOwner(PrimaryTypeEntityName, fileUploadData.recordOwner, fileUploadData.recordName, siteNameEnglish, fileUploadData);
 
-            if (fileUploadData.validOwner == true) {
-                // navigate to the canvas app
-                navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles);
-            }
-            else {
-                // display the error message
-                if (lang == 1033) {
-                    alert("The record has an invalid owner.  It must belong to Aviation Security or Intermodal Surface Security Oversight.");
+                if (fileUploadData.validOwner == true) {
+                    // navigate to the canvas app
+                    navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles);
                 }
                 else {
-                    alert("L'enregistrement a un propriétaire invalide. Il doit appartenir à Aviation Security ou Intermodal Surface Security Oversight.");
+                    // display the error message
+                    if (lang == 1033) {
+                        alert(invalidOwnerMessageEnglish);
+                    }
+                    else {
+                        alert(invalidOwnerMessageFrench);
+                    }
+                }
+            } else {
+
+                // if we are working with an Action record - show a customized message
+                if (PrimaryTypeEntityName == "ts_action") {
+                    invalidOwnerMessageEnglish = "The record has an invalid owner.  It must belong to Aviation Security or Intermodal Surface Security Oversight. Make sure the Action record has a Case.";
+                    invalidOwnerMessageFrench = "L’enregistrement a un propriétaire invalide. Il doit appartenir à Aviation Security ou Intermodal Surface Security Oversight. Assurez-vous que l’enregistrement d’action a un cas.";
+                }
+
+                // display the error message
+                if (lang == 1033) {
+                    alert(invalidOwnerMessageEnglish);
+                }
+                else {
+                    alert(invalidOwnerMessageFrench);
                 }
             }
         },
@@ -342,6 +365,7 @@ function modifyRecordOwner(entityName, myRecordOwner, myRecordName, mySiteNameEn
         case "incident":
         case "account":
         case "ovs_operation":
+        case "ts_action":
             if (myRecordOwner.includes(avsecOwner)) {
                 fileUploadData.recordOwner = avsecOwner;
             } else if (myRecordOwner.includes(issoOwner)) {
