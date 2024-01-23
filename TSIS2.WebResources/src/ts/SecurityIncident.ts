@@ -1,8 +1,12 @@
 namespace ROM.SecurityIncident {
+    var isROM20Form = false;
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
 
         const delaysToOperations = formContext.getAttribute("ts_delaystooperation");
+
+        var formItem = formContext.ui.formSelector.getCurrentItem().getId();
+        isROM20Form = formItem.toLowerCase() == "66fddf7a-2b5e-4239-8059-cda85838b5b2";
 
         if (delaysToOperations.getValue() == ts_delaystooperation.Unknown || delaysToOperations.getValue() == null) {
             formContext.getControl("ts_delayduration").setVisible(false);
@@ -272,8 +276,10 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_publicorprivatecrossing").setVisible(false);
             form.getControl("ts_ruralorurban").setVisible(false);
 
-            let tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
-            tab_time_tracking.setVisible(true);
+            if (!isROM20Form) {
+                let tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
+                tab_time_tracking.setVisible(true);
+            }
 
             form.getControl("ts_sitetype").setVisible(true);
             form.getControl("ts_subsite").setVisible(true);
@@ -397,8 +403,10 @@ namespace ROM.SecurityIncident {
                 form.getControl("ts_markerpost").setVisible(true);
                 form.getControl("ts_yardorstationname").setVisible(true);
 
-                let tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
-                tab_time_tracking.setVisible(false);
+                if (!isROM20Form) {
+                    let tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
+                    tab_time_tracking.setVisible(false);
+                }
 
                 form.getControl("ts_bridgeclosure").setVisible(false);
                 form.getControl("ts_damagestoibtproperty").setVisible(false);
@@ -425,8 +433,10 @@ namespace ROM.SecurityIncident {
                 form.getControl("ts_markerpost").setVisible(false);
                 form.getControl("ts_yardorstationname").setVisible(false);
 
-                let tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
-                tab_time_tracking.setVisible(false);
+                if (!isROM20Form) {
+                    let tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
+                    tab_time_tracking.setVisible(false);
+                }
 
                 form.getControl("ts_bridgeclosure").setVisible(true);
                 form.getControl("ts_damagestoibtproperty").setVisible(true);
