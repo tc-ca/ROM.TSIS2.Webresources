@@ -19,9 +19,9 @@ namespace ROM.Action {
         { text: "Corrective Action", value: ts_actioncategory.CorrectiveAction },
         { text: "Enforcement Action", value: ts_actioncategory.EnforcementAction },
         { text: "Immediate Harm Reduction Measure", value: ts_actioncategory.ImmediateHarmReductionMeasure },
-        { text: "Legal Action", value: ts_actioncategory.LegalAction },
+        // { text: "Legal Action", value: ts_actioncategory.LegalAction },
         { text: "REU Enforcement Action", value: ts_actioncategory.REUEnforcementAction },
-        { text: "TATC Action", value: ts_actioncategory.TATCAction },
+        // { text: "TATC Action", value: ts_actioncategory.TATCAction },
     ];
 
     let allActionStatus = [
@@ -37,34 +37,40 @@ namespace ROM.Action {
     let allActionTypes = [
         { text: "AMP", value: ts_actiontype.AMP },
         { text: "Administrative monetary penalty", value: ts_actiontype.Administrativemonetarypenalty },
-        { text: "Affidavit Of Service | AMP", value: ts_actiontype.AffidavitOfServiceAMP },
-        { text: "Affidavit Of Service | Cancellation/Suspension of CAD", value: ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD },
+        { text: "Affidavit Of Service | Sworn", value: ts_actiontype.AffidavitOfServiceAMP },
+        //{ text: "Affidavit Of Service | Cancellation/Suspension of CAD", value: ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD },
         { text: "Affidavit of Service", value: ts_actiontype.AffidavitofService },
-        { text: "AMP - Payment", value: ts_actiontype.AMPPayment },
-        { text: "Corrective Action Plan", value: ts_actiontype.CorrectiveActionPlan },
-        { text: "Correspondence", value: ts_actiontype.Correspondence },
+        { text: "AMP Payment | Received", value: ts_actiontype.AMPPayment },
+        { text: "Corrective Action Plan | Requested", value: ts_actiontype.CorrectiveActionPlan },
+        //{ text: "Correspondence", value: ts_actiontype.Correspondence },
         { text: "Detention of Aircraft", value: ts_actiontype.DetentionofAircraft },
-        { text: "Informal Meeting", value: ts_actiontype.InformalMeeting },
-        { text: "Legal Counsel", value: ts_actiontype.LegalCounsel },
-        { text: "Letter - Commitment", value: ts_actiontype.LetterCommitment },
-        { text: "Letter - Non-compliance", value: ts_actiontype.LetterNoncompliance },
-        { text: "Letter - SSC OSA Further Action", value: ts_actiontype.LetterSSCOSAFurtherAction },
-        { text: "Notification | Non-compliance", value: ts_actiontype.NotificationNoncompliance },
+        { text: "Informal Meeting | Offered", value: ts_actiontype.InformalMeeting },
+        { text: "Legal Counsel | Consulted", value: ts_actiontype.LegalCounsel },
+        { text: "Letter – Commitment | Received", value: ts_actiontype.LetterCommitment },
+        { text: "Letter – Non-Compliance | Sent", value: ts_actiontype.LetterNoncompliance },
+        { text: "Letter - SSC OSA Further Action | Sent", value: ts_actiontype.LetterSSCOSAFurtherAction },
+        // { text: "Notification | Non-compliance", value: ts_actiontype.NotificationNoncompliance },
         { text: "Notice of Assessment of Monetary Penalty", value: ts_actiontype.NoticeofAssessmentofMonetaryPenalty },
         { text: "Other", value: ts_actiontype.Other },
         { text: "Prosecution", value: ts_actiontype.Prosecution },
         { text: "Punitive Suspension of CAD", value: ts_actiontype.PunitiveSuspensionofCAD },
-        { text: "Regional Enforcement Unit (REU)", value: ts_actiontype.RegionalEnforcementUnitREU },
-        { text: "TATC | Appeal Application", value: ts_actiontype.TATCAppealApplication },
-        { text: "TATC | Appeal Determination", value: ts_actiontype.TATCAppealDetermination },
-        { text: "TATC | Appeal Hearing", value: ts_actiontype.TATCAppealHearing },
-        { text: "TATC | Certificate for unpaid AMP", value: ts_actiontype.TATCCertificateforunpaidAMP },
-        { text: "TATC | Determination", value: ts_actiontype.TATCDetermination },
-        { text: "TATC | Review Application", value: ts_actiontype.TATCReviewApplication },
-        { text: "TATC | Review Hearing", value: ts_actiontype.TATCReviewHearing },
+        { text: "Regional Enforcement Unit (REU) | Consulted", value: ts_actiontype.RegionalEnforcementUnitREU },
+        // { text: "TATC | Appeal Application", value: ts_actiontype.TATCAppealApplication },
+        // { text: "TATC | Appeal Determination", value: ts_actiontype.TATCAppealDetermination },
+        // { text: "TATC | Appeal Hearing", value: ts_actiontype.TATCAppealHearing },
+        // { text: "TATC | Certificate for unpaid AMP", value: ts_actiontype.TATCCertificateforunpaidAMP },
+        // { text: "TATC | Determination", value: ts_actiontype.TATCDetermination },
+        // { text: "TATC | Review Application", value: ts_actiontype.TATCReviewApplication },
+        { text: "TATC - Hearing | Convened", value: ts_actiontype.TATCReviewHearing },
         { text: "Verbal Warning", value: ts_actiontype.VerbalWarning },
-        { text: "Written Notice", value: ts_actiontype.WrittenNotice },
-        { text: "Written Warning", value: ts_actiontype.WrittenWarning }
+        // { text: "Written Notice", value: ts_actiontype.WrittenNotice },
+        { text: "Written Warning", value: ts_actiontype.WrittenWarning },
+        { text: "Corrective Action Plan | Received", value: ts_actiontype.CorrectiveActionPlanReceived },
+        { text: "Informal Meeting | Convened", value: ts_actiontype.InformalMeetingConvened },
+        { text: "Letter - Non-Compliance | Response received", value: ts_actiontype.LetterNonComplianceResponseReceived },
+        { text: "Regional Enforcement Unit (REU) | Referral", value: ts_actiontype.RegionalEnforcementUnitReferral },
+        { text: "TATC - Correspondence | Sent", value: ts_actiontype.TATCCorrespondenceSent },
+        { text: "TATC - Correspondence | Received", value: ts_actiontype.TATCCorrespondenceReceived }
     ];
 
     export async function onLoad(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
@@ -141,16 +147,16 @@ namespace ROM.Action {
 
         if (!actionCategoryAttributeValue) {
             form.getAttribute("ts_actiontype").setValue(null)
-            form.getAttribute("ts_actionstatus").setValue(null)
+            //form.getAttribute("ts_actionstatus").setValue(null)
             clearNonActionFields(form);
         }
         else {
             resetFieldsVisibility(form);
         }
 
-        if (!onLoad) {
-            form.getAttribute("ts_actionstatus").setValue(null)
-        }
+        //if (!onLoad) {
+        //    form.getAttribute("ts_actionstatus").setValue(null)
+        //}
 
         filterTypes(form);
     }
@@ -178,19 +184,30 @@ namespace ROM.Action {
                 case ts_actioncategory.AdministrativeAction:
                     filteredActionTypeOptions = createFilteredOptions([
                         ts_actiontype.AffidavitOfServiceAMP,
-                        ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD,
+                        //ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD,
+                        ts_actiontype.AMPPayment,
                         ts_actiontype.InformalMeeting,
-                        ts_actiontype.Correspondence,
+                        ts_actiontype.InformalMeetingConvened,
+                        //ts_actiontype.Correspondence,
                         ts_actiontype.LetterSSCOSAFurtherAction,
                         ts_actiontype.LetterNoncompliance,
+                        ts_actiontype.LetterNonComplianceResponseReceived,
                         ts_actiontype.LetterCommitment,
-                        ts_actiontype.AMPPayment,
-                        ts_actiontype.NotificationNoncompliance,
-                        ts_actiontype.WrittenNotice,
+                        ts_actiontype.LegalCounsel,
+                        ts_actiontype.RegionalEnforcementUnitREU,
+                        ts_actiontype.RegionalEnforcementUnitReferral,
+                        ts_actiontype.TATCReviewHearing,
+                        ts_actiontype.TATCCorrespondenceSent,
+                        ts_actiontype.TATCCorrespondenceReceived,
+                        //ts_actiontype.NotificationNoncompliance,
+                        //ts_actiontype.WrittenNotice,
                     ], allActionTypes);
                     break;
                 case ts_actioncategory.CorrectiveAction:
-                    filteredActionTypeOptions = createFilteredOptions([ts_actiontype.CorrectiveActionPlan], allActionTypes);
+                    filteredActionTypeOptions = createFilteredOptions([
+                        ts_actiontype.CorrectiveActionPlan,
+                        ts_actiontype.CorrectiveActionPlanReceived,
+                    ], allActionTypes);
                     break;
                 case ts_actioncategory.EnforcementAction:
                     filteredActionTypeOptions = createFilteredOptions([
@@ -207,9 +224,9 @@ namespace ROM.Action {
                         ts_actiontype.Other
                     ], allActionTypes);
                     break;
-                case ts_actioncategory.LegalAction:
-                    filteredActionTypeOptions = createFilteredOptions([ts_actiontype.RegionalEnforcementUnitREU, ts_actiontype.LegalCounsel], allActionTypes);
-                    break;
+                //case ts_actioncategory.LegalAction:
+                //    filteredActionTypeOptions = createFilteredOptions([ts_actiontype.RegionalEnforcementUnitREU, ts_actiontype.LegalCounsel], allActionTypes);
+                //    break;
                 case ts_actioncategory.REUEnforcementAction:
                     filteredActionTypeOptions = createFilteredOptions([
                         ts_actiontype.AMP,
@@ -219,17 +236,17 @@ namespace ROM.Action {
                         ts_actiontype.WrittenWarning,
                     ], allActionTypes);
                     break;
-                case ts_actioncategory.TATCAction:
-                    filteredActionTypeOptions = createFilteredOptions([
-                        ts_actiontype.TATCCertificateforunpaidAMP,
-                        ts_actiontype.TATCAppealApplication,
-                        ts_actiontype.TATCAppealDetermination,
-                        ts_actiontype.TATCDetermination,
-                        ts_actiontype.TATCReviewApplication,
-                        ts_actiontype.TATCReviewHearing,
-                        ts_actiontype.TATCAppealHearing,
-                    ], allActionTypes);
-                    break;
+                //case ts_actioncategory.TATCAction:
+                //    filteredActionTypeOptions = createFilteredOptions([
+                //        ts_actiontype.TATCCertificateforunpaidAMP,
+                //        ts_actiontype.TATCAppealApplication,
+                //        ts_actiontype.TATCAppealDetermination,
+                //        ts_actiontype.TATCDetermination,
+                //        ts_actiontype.TATCReviewApplication,
+                //        ts_actiontype.TATCReviewHearing,
+                //        ts_actiontype.TATCAppealHearing,
+                //    ], allActionTypes);
+                //    break;
             }
         }
         setOptions(actionTypeAttribute, filteredActionTypeOptions);
@@ -251,7 +268,7 @@ namespace ROM.Action {
 
     function handleISSOTypeChange(form: Form.ts_action.Main.ROMAction, actionCategoryAttributeValue: any, actionTypeAttributeValue: any, deliveryMethodAttribute: Xrm.OptionSetControl<any>, actionStatusAttribute: Xrm.OptionSetControl<any>): void {
         if (!actionTypeAttributeValue) {
-            form.getAttribute("ts_actionstatus").setValue(null);
+            //form.getAttribute("ts_actionstatus").setValue(null);
             clearNonActionFields(form);
             return;
         }
@@ -340,132 +357,132 @@ namespace ROM.Action {
 
         const currentActionStatusValue = form.getAttribute("ts_actionstatus").getValue();
         const valueExists = filteredActionStatusOptions.some(option => option.value === currentActionStatusValue);
-        if (!valueExists) {
-            form.getAttribute("ts_actionstatus").setValue(null);
-        }
+        //if (!valueExists) {
+        //    form.getAttribute("ts_actionstatus").setValue(null);
+        //}
     }
 
 
     function handleAvSecTypeChange(
         form: Form.ts_action.Main.ROMAction, actionCategoryAttributeValue: any, actionTypeAttributeValue: any, deliveryMethodAttribute: Xrm.OptionSetControl<any>, actionStatusAttribute: Xrm.OptionSetControl<any>): void {
-        if (!actionTypeAttributeValue) {
-            form.getAttribute("ts_actionstatus").setValue(null);
-            return;
-        }
+        //if (!actionTypeAttributeValue) {
+        //    form.getAttribute("ts_actionstatus").setValue(null);
+        //    return;
+        //}
 
         clearNonActionFields(form);
 
         let filteredDeliveryOptions = allDeliveryMethodOptions;
         let filteredActionStatusOptions = allActionStatus;
 
-        switch (actionCategoryAttributeValue) {
-            case ts_actioncategory.AdministrativeAction:
-                switch (actionTypeAttributeValue) {
-                    case ts_actiontype.AffidavitOfServiceAMP:
-                    case ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Sworn], allActionStatus);
-                        break;
-                    case ts_actiontype.InformalMeeting:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered, ts_actionstatus.Convened], allActionStatus);
-                        break;
-                    case ts_actiontype.Correspondence:
-                    case ts_actiontype.LetterCommitment:
-                    case ts_actiontype.LetterNoncompliance:
-                    case ts_actiontype.LetterSSCOSAFurtherAction:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered, ts_actionstatus.Received], allActionStatus);
-                        break;
-                    case ts_actiontype.AMPPayment:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
-                        break;
-                    case ts_actiontype.NotificationNoncompliance:
-                    case ts_actiontype.WrittenNotice:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
-                        break;
-                    default:
-                        resetFieldsVisibility(form)
-                }
-                break;
-            case ts_actioncategory.CorrectiveAction:
-                switch (actionTypeAttributeValue) {
-                    case ts_actiontype.CorrectiveActionPlan:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Requested, ts_actionstatus.Received], allActionStatus);
-                        break;
-                    default:
-                        resetFieldsVisibility(form)
-                }
-                break;
-            case ts_actioncategory.EnforcementAction:
-                switch (actionTypeAttributeValue) {
-                    case ts_actiontype.AMP:
-                    case ts_actiontype.Prosecution:
-                    case ts_actiontype.PunitiveSuspensionofCAD:
-                    case ts_actiontype.VerbalWarning:
-                    case ts_actiontype.WrittenWarning:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
-                        break;
-                    default:
-                        resetFieldsVisibility(form)
-                }
-                break;
-            case ts_actioncategory.ImmediateHarmReductionMeasure:
-                switch (actionTypeAttributeValue) {
-                    case ts_actiontype.DetentionofAircraft:
-                    case ts_actiontype.Other:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
-                        break;
-                    default:
-                        resetFieldsVisibility(form)
-                }
-                break;
-            case ts_actioncategory.LegalAction:
-                switch (actionTypeAttributeValue) {
-                    case ts_actiontype.RegionalEnforcementUnitREU:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Consulted, ts_actionstatus.Referred], allActionStatus);
-                        break;
-                    case ts_actiontype.LegalCounsel:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Consulted], allActionStatus);
-                        break;
-                    default:
-                        resetFieldsVisibility(form)
-                }
-                break;
-            case ts_actioncategory.REUEnforcementAction:
-                switch (actionTypeAttributeValue) {
-                    case ts_actiontype.AMP:
-                    case ts_actiontype.Prosecution:
-                    case ts_actiontype.PunitiveSuspensionofCAD:
-                    case ts_actiontype.VerbalWarning:
-                    case ts_actiontype.WrittenWarning:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
-                        break;
-                    default:
-                        resetFieldsVisibility(form)
-                }
-                break;
-            case ts_actioncategory.TATCAction:
-                switch (actionTypeAttributeValue) {
-                    case ts_actiontype.TATCAppealApplication:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered, ts_actionstatus.Received], allActionStatus);
-                        break;
-                    case ts_actiontype.TATCAppealDetermination:
-                    case ts_actiontype.TATCDetermination:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
-                        break;
-                    case ts_actiontype.TATCAppealHearing:
-                    case ts_actiontype.TATCReviewHearing:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Convened], allActionStatus);
-                        break;
-                    case ts_actiontype.TATCCertificateforunpaidAMP:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Requested, ts_actionstatus.Received], allActionStatus);
-                        break;
-                    case ts_actiontype.TATCReviewApplication:
-                        filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
-                        break;
-                    default:
-                        resetFieldsVisibility(form)
-                }
-                break;
-        }
+        //switch (actionCategoryAttributeValue) {
+        //    case ts_actioncategory.AdministrativeAction:
+        //        switch (actionTypeAttributeValue) {
+        //            case ts_actiontype.AffidavitOfServiceAMP:
+        //            //case ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD:
+        //            //    filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Sworn], allActionStatus);
+        //            //    break;
+        //            case ts_actiontype.InformalMeeting:
+        //                //filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered, ts_actionstatus.Convened], allActionStatus);
+        //                //break;
+        //            //case ts_actiontype.Correspondence:
+        //            case ts_actiontype.LetterCommitment:
+        //            case ts_actiontype.LetterNoncompliance:
+        //            case ts_actiontype.LetterSSCOSAFurtherAction:
+        //                //filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered, ts_actionstatus.Received], allActionStatus);
+        //                //break;
+        //            case ts_actiontype.AMPPayment:
+        //                filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
+        //                break;
+        //            //case ts_actiontype.NotificationNoncompliance:
+        //            //case ts_actiontype.WrittenNotice:
+        //            //    filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
+        //            //    break;
+        //            default:
+        //                resetFieldsVisibility(form)
+        //        }
+        //        break;
+        //    case ts_actioncategory.CorrectiveAction:
+        //        switch (actionTypeAttributeValue) {
+        //            case ts_actiontype.CorrectiveActionPlan:
+        //                filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Requested, ts_actionstatus.Received], allActionStatus);
+        //                break;
+        //            default:
+        //                resetFieldsVisibility(form)
+        //        }
+        //        break;
+        //    case ts_actioncategory.EnforcementAction:
+        //        switch (actionTypeAttributeValue) {
+        //            case ts_actiontype.AMP:
+        //            case ts_actiontype.Prosecution:
+        //            case ts_actiontype.PunitiveSuspensionofCAD:
+        //            case ts_actiontype.VerbalWarning:
+        //            case ts_actiontype.WrittenWarning:
+        //                filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
+        //                break;
+        //            default:
+        //                resetFieldsVisibility(form)
+        //        }
+        //        break;
+        //    case ts_actioncategory.ImmediateHarmReductionMeasure:
+        //        switch (actionTypeAttributeValue) {
+        //            case ts_actiontype.DetentionofAircraft:
+        //            case ts_actiontype.Other:
+        //                filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
+        //                break;
+        //            default:
+        //                resetFieldsVisibility(form)
+        //        }
+        //        break;
+        //    //case ts_actioncategory.LegalAction:
+        //    //    switch (actionTypeAttributeValue) {
+        //    //        case ts_actiontype.RegionalEnforcementUnitREU:
+        //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Consulted, ts_actionstatus.Referred], allActionStatus);
+        //    //            break;
+        //    //        case ts_actiontype.LegalCounsel:
+        //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Consulted], allActionStatus);
+        //    //            break;
+        //    //        default:
+        //    //            resetFieldsVisibility(form)
+        //    //    }
+        //    //    break;
+        //    //case ts_actioncategory.REUEnforcementAction:
+        //    //    switch (actionTypeAttributeValue) {
+        //    //        case ts_actiontype.AMP:
+        //    //        case ts_actiontype.Prosecution:
+        //    //        case ts_actiontype.PunitiveSuspensionofCAD:
+        //    //        case ts_actiontype.VerbalWarning:
+        //    //        case ts_actiontype.WrittenWarning:
+        //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
+        //    //            break;
+        //    //        default:
+        //    //            resetFieldsVisibility(form)
+        //    //    }
+        //    //    break;
+        //    //case ts_actioncategory.TATCAction:
+        //    //    switch (actionTypeAttributeValue) {
+        //    //        case ts_actiontype.TATCAppealApplication:
+        //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered, ts_actionstatus.Received], allActionStatus);
+        //    //            break;
+        //    //        case ts_actiontype.TATCAppealDetermination:
+        //    //        case ts_actiontype.TATCDetermination:
+        //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
+        //    //            break;
+        //    //        case ts_actiontype.TATCAppealHearing:
+        //    //        case ts_actiontype.TATCReviewHearing:
+        //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Convened], allActionStatus);
+        //    //            break;
+        //    //        case ts_actiontype.TATCCertificateforunpaidAMP:
+        //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Requested, ts_actionstatus.Received], allActionStatus);
+        //    //            break;
+        //    //        case ts_actiontype.TATCReviewApplication:
+        //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
+        //    //            break;
+        //    //        default:
+        //    //            resetFieldsVisibility(form)
+        //    //    }
+        //    //    break;
+        //}
 
         setOptions(deliveryMethodAttribute, filteredDeliveryOptions);
         form.getAttribute("ts_deliverymethod").setValue(null);
@@ -473,9 +490,9 @@ namespace ROM.Action {
 
         const currentActionStatusValue = form.getAttribute("ts_actionstatus").getValue();
         const valueExists = filteredActionStatusOptions.some(option => option.value === currentActionStatusValue);
-        if (!valueExists) {
-            form.getAttribute("ts_actionstatus").setValue(null);
-        }
+        //if (!valueExists) {
+        //    form.getAttribute("ts_actionstatus").setValue(null);
+        //}
     }
 
 
@@ -527,8 +544,9 @@ namespace ROM.Action {
                 ts_actioncategory.EnforcementAction,
             ], allActionCategoryOptions));
         }
-
-        if (form.getAttribute("ts_actioncategory").getValue() != null && form.getAttribute("ts_actiontype").getValue() == null && form.getAttribute("ts_actionstatus").getValue() == null) {
+        //if (form.getAttribute("ts_actioncategory").getValue() != null && form.getAttribute("ts_actiontype").getValue() == null && form.getAttribute("ts_actionstatus").getValue() == null)
+        if (form.getAttribute("ts_actioncategory").getValue() != null && form.getAttribute("ts_actiontype").getValue() == null)
+        {
             form.getAttribute("ts_actioncategory").setValue(null);
         }
     }

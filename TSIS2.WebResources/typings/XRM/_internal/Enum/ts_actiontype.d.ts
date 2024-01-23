@@ -29,4 +29,10 @@ declare const enum ts_actiontype {
   NotificationNoncompliance = 741130027,
   WrittenNotice = 741130028,
   AMP = 741130029,
+  CorrectiveActionPlanReceived = 741130030,
+  InformalMeetingConvened = 741130031,
+  LetterNonComplianceResponseReceived = 741130032,
+  RegionalEnforcementUnitReferral = 741130033,
+  TATCCorrespondenceSent = 741130034,
+  TATCCorrespondenceReceived = 741130035,
 }
