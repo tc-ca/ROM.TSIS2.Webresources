@@ -151,7 +151,9 @@
                                             function success(result) {
                                                 recordOwner = result.entities[0].recordOwner;
 
-                                                if (recordOwner === "Intermodal Surface Security Oversight (ISSO) (dev)") {
+                                                if (recordOwner.includes("Aviation Security")) {
+                                                    recordOwner = "Aviation Security";
+                                                } else if (recordOwner.includes("Intermodal Surface Security Oversight")) {
                                                     recordOwner = "Intermodal Surface Security Oversight";
                                                 }
 
