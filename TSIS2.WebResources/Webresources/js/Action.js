@@ -56,9 +56,9 @@ var ROM;
             { text: "Corrective Action", value: 741130001 /* CorrectiveAction */ },
             { text: "Enforcement Action", value: 741130002 /* EnforcementAction */ },
             { text: "Immediate Harm Reduction Measure", value: 741130003 /* ImmediateHarmReductionMeasure */ },
-            { text: "Legal Action", value: 741130004 /* LegalAction */ },
+            // { text: "Legal Action", value: ts_actioncategory.LegalAction },
             { text: "REU Enforcement Action", value: 741130006 /* REUEnforcementAction */ },
-            { text: "TATC Action", value: 741130005 /* TATCAction */ },
+            // { text: "TATC Action", value: ts_actioncategory.TATCAction },
         ];
         var allActionStatus = [
             { text: "Consulted", value: 741130000 /* Consulted */ },
@@ -72,34 +72,43 @@ var ROM;
         var allActionTypes = [
             { text: "AMP", value: 741130029 /* AMP */ },
             { text: "Administrative monetary penalty", value: 741130001 /* Administrativemonetarypenalty */ },
-            { text: "Affidavit of Service | Sworn", value: 741130025 /* AffidavitofServiceSworn */ },
-            { text: "Affidavit Of Service | Cancellation/Suspension of CAD", value: 741130026 /* AffidavitOfServiceCancellationSuspensionofCAD */ },
+            { text: "Affidavit Of Service | Sworn", value: 741130025 /* AffidavitofServiceSworn */ },
+            //{ text: "Affidavit Of Service | Cancellation/Suspension of CAD", value: ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD },
             { text: "Affidavit of Service", value: 741130000 /* AffidavitofService */ },
             { text: "AMP Payment | Received", value: 741130007 /* AMPPaymentReceived */ },
-            { text: "Corrective Action Plan | Requested", value: 741130008 /* CorrectiveActionPlanRequested */ },
-            { text: "Correspondence", value: 741130003 /* Correspondence */ },
+            //{ text: "Corrective Action Plan | Requested", value: ts_actiontype.CorrectiveActionPlan },
+            //{ text: "Correspondence", value: ts_actiontype.Correspondence },
             { text: "Detention of Aircraft", value: 741130014 /* DetentionofAircraft */ },
             { text: "Informal Meeting | Offered", value: 741130002 /* InformalMeetingOffered */ },
+            { text: "Informal Meeting | Convened", value: 741130031 /* InformalMeetingConvened */ },
             { text: "Legal Counsel | Consulted", value: 741130016 /* LegalCounselConsulted */ },
-            { text: "Letter - Commitment | Received", value: 741130004 /* LetterCommitmentReceived */ },
-            { text: "Letter - Non-Compliance | Sent", value: 741130005 /* LetterNonComplianceSent */ },
+            { text: "Letter � Commitment | Received", value: 741130004 /* LetterCommitmentReceived */ },
+            { text: "Letter � Non-Compliance | Sent", value: 741130005 /* LetterNonComplianceSent */ },
             { text: "Letter - SSC OSA Further Action | Sent", value: 741130006 /* LetterSSCOSAFurtherActionSent */ },
-            { text: "Notification | Non-compliance", value: 741130027 /* NotificationNoncompliance */ },
+            { text: "Letter - Non-Compliance | Response received", value: 741130032 /* LetterNonComplianceResponsereceived */ },
+            // { text: "Notification | Non-compliance", value: ts_actiontype.NotificationNoncompliance },
             { text: "Notice of Assessment of Monetary Penalty", value: 741130009 /* NoticeofAssessmentofMonetaryPenalty */ },
             { text: "Other", value: 741130015 /* Other */ },
             { text: "Prosecution", value: 741130010 /* Prosecution */ },
             { text: "Punitive Suspension of CAD", value: 741130011 /* PunitiveSuspensionofCAD */ },
             { text: "Regional Enforcement Unit (REU) | Consulted", value: 741130017 /* RegionalEnforcementUnitREUConsulted */ },
-            { text: "TATC | Appeal Application", value: 741130018 /* TATCAppealApplication */ },
-            { text: "TATC | Appeal Determination", value: 741130019 /* TATCAppealDetermination */ },
-            { text: "TATC | Appeal Hearing", value: 741130020 /* TATCAppealHearing */ },
-            { text: "TATC | Certificate for unpaid AMP", value: 741130021 /* TATCCertificateforunpaidAMP */ },
-            { text: "TATC | Determination", value: 741130022 /* TATCDetermination */ },
-            { text: "TATC | Review Application", value: 741130023 /* TATCReviewApplication */ },
+            // { text: "TATC | Appeal Application", value: ts_actiontype.TATCAppealApplication },
+            // { text: "TATC | Appeal Determination", value: ts_actiontype.TATCAppealDetermination },
+            // { text: "TATC | Appeal Hearing", value: ts_actiontype.TATCAppealHearing },
+            // { text: "TATC | Certificate for unpaid AMP", value: ts_actiontype.TATCCertificateforunpaidAMP },
+            // { text: "TATC | Determination", value: ts_actiontype.TATCDetermination },
+            // { text: "TATC | Review Application", value: ts_actiontype.TATCReviewApplication },
             { text: "TATC - Hearing | Convened", value: 741130024 /* TATCHearingConvened */ },
             { text: "Verbal Warning", value: 741130012 /* VerbalWarning */ },
-            { text: "Written Notice", value: 741130028 /* WrittenNotice */ },
-            { text: "Written Warning", value: 741130013 /* WrittenWarning */ }
+            // { text: "Written Notice", value: ts_actiontype.WrittenNotice },
+            { text: "Written Warning", value: 741130013 /* WrittenWarning */ },
+            { text: "Corrective Action Plan | Received", value: 741130030 /* CorrectiveActionPlanReceived */ },
+            { text: "Corrective Action Plan | Requested", value: 741130008 /* CorrectiveActionPlanRequested */ },
+            { text: "Informal Meeting | Convened", value: 741130031 /* InformalMeetingConvened */ },
+            //{ text: "Letter - Non-Compliance | Response received", value: ts_actiontype.LetterNonComplianceResponseReceived },
+            { text: "Regional Enforcement Unit (REU) | Referral", value: 741130033 /* RegionalEnforcementUnitREUReferral */ },
+            { text: "TATC - Correspondence | Sent", value: 741130034 /* TATCCorrespondenceSent */ },
+            { text: "TATC - Correspondence | Received", value: 741130035 /* TATCCorrespondenceReceived */ }
         ];
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
@@ -191,17 +200,16 @@ var ROM;
             var actionCategoryAttributeValue = form.getAttribute("ts_actioncategory").getValue();
             if (!actionCategoryAttributeValue) {
                 form.getAttribute("ts_actiontype").setValue(null);
-                form.getAttribute("ts_actionstatus").setValue(null);
+                //form.getAttribute("ts_actionstatus").setValue(null)
                 clearNonActionFields(form);
             }
             else {
                 resetFieldsVisibility(form);
             }
-            if (!onLoad) {
-                form.getAttribute("ts_actionstatus").setValue(null);
-            }
+            //if (!onLoad) {
+            //    form.getAttribute("ts_actionstatus").setValue(null)
+            //}
             filterTypes(form);
-            form.getControl("ts_amtamount").setVisible(false);
         }
         Action.actionCategoryOnChange = actionCategoryOnChange;
         function filterTypes(form) {
@@ -227,19 +235,44 @@ var ROM;
                     case 741130000 /* AdministrativeAction */:
                         filteredActionTypeOptions = createFilteredOptions([
                             741130025 /* AffidavitofServiceSworn */,
-                            741130026 /* AffidavitOfServiceCancellationSuspensionofCAD */,
+                            741130007 /* AMPPaymentReceived */,
                             741130002 /* InformalMeetingOffered */,
-                            741130003 /* Correspondence */,
+                            741130031 /* InformalMeetingConvened */,
                             741130006 /* LetterSSCOSAFurtherActionSent */,
                             741130005 /* LetterNonComplianceSent */,
+                            741130032 /* LetterNonComplianceResponsereceived */,
                             741130004 /* LetterCommitmentReceived */,
-                            741130007 /* AMPPaymentReceived */,
-                            741130027 /* NotificationNoncompliance */,
-                            741130028 /* WrittenNotice */,
+                            741130016 /* LegalCounselConsulted */,
+                            741130017 /* RegionalEnforcementUnitREUConsulted */,
+                            741130033 /* RegionalEnforcementUnitREUReferral */,
+                            741130024 /* TATCHearingConvened */,
+                            741130034 /* TATCCorrespondenceSent */,
+                            741130035 /* TATCCorrespondenceReceived */,
+                            //ts_actiontype.AffidavitOfServiceAMP,
+                            //ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD,
+                            //ts_actiontype.AMPPayment,
+                            //ts_actiontype.InformalMeeting,
+                            //ts_actiontype.InformalMeetingConvened,
+                            //ts_actiontype.Correspondence,
+                            //ts_actiontype.LetterSSCOSAFurtherAction,
+                            //ts_actiontype.LetterNoncompliance,
+                            //ts_actiontype.LetterNonComplianceResponseReceived,
+                            //ts_actiontype.LetterCommitment,
+                            //ts_actiontype.LegalCounsel,
+                            //ts_actiontype.RegionalEnforcementUnitREU,
+                            //ts_actiontype.RegionalEnforcementUnitReferral,
+                            //ts_actiontype.TATCReviewHearing,
+                            //ts_actiontype.TATCCorrespondenceSent,
+                            //ts_actiontype.TATCCorrespondenceReceived,
+                            //ts_actiontype.NotificationNoncompliance,
+                            //ts_actiontype.WrittenNotice,
                         ], allActionTypes);
                         break;
                     case 741130001 /* CorrectiveAction */:
-                        filteredActionTypeOptions = createFilteredOptions([741130008 /* CorrectiveActionPlanRequested */], allActionTypes);
+                        filteredActionTypeOptions = createFilteredOptions([
+                            741130008 /* CorrectiveActionPlanRequested */,
+                            741130030 /* CorrectiveActionPlanReceived */,
+                        ], allActionTypes);
                         break;
                     case 741130002 /* EnforcementAction */:
                         filteredActionTypeOptions = createFilteredOptions([
@@ -256,9 +289,9 @@ var ROM;
                             741130015 /* Other */
                         ], allActionTypes);
                         break;
-                    case 741130004 /* LegalAction */:
-                        filteredActionTypeOptions = createFilteredOptions([741130017 /* RegionalEnforcementUnitREUConsulted */, 741130016 /* LegalCounselConsulted */], allActionTypes);
-                        break;
+                    //case ts_actioncategory.LegalAction:
+                    //    filteredActionTypeOptions = createFilteredOptions([ts_actiontype.RegionalEnforcementUnitREU, ts_actiontype.LegalCounsel], allActionTypes);
+                    //    break;
                     case 741130006 /* REUEnforcementAction */:
                         filteredActionTypeOptions = createFilteredOptions([
                             741130029 /* AMP */,
@@ -268,17 +301,17 @@ var ROM;
                             741130013 /* WrittenWarning */,
                         ], allActionTypes);
                         break;
-                    case 741130005 /* TATCAction */:
-                        filteredActionTypeOptions = createFilteredOptions([
-                            741130021 /* TATCCertificateforunpaidAMP */,
-                            741130018 /* TATCAppealApplication */,
-                            741130019 /* TATCAppealDetermination */,
-                            741130022 /* TATCDetermination */,
-                            741130023 /* TATCReviewApplication */,
-                            741130024 /* TATCHearingConvened */,
-                            741130020 /* TATCAppealHearing */,
-                        ], allActionTypes);
-                        break;
+                    //case ts_actioncategory.TATCAction:
+                    //    filteredActionTypeOptions = createFilteredOptions([
+                    //        ts_actiontype.TATCCertificateforunpaidAMP,
+                    //        ts_actiontype.TATCAppealApplication,
+                    //        ts_actiontype.TATCAppealDetermination,
+                    //        ts_actiontype.TATCDetermination,
+                    //        ts_actiontype.TATCReviewApplication,
+                    //        ts_actiontype.TATCReviewHearing,
+                    //        ts_actiontype.TATCAppealHearing,
+                    //    ], allActionTypes);
+                    //    break;
                 }
             }
             setOptions(actionTypeAttribute, filteredActionTypeOptions);
@@ -299,7 +332,7 @@ var ROM;
         Action.actionTypeOnChange = actionTypeOnChange;
         function handleISSOTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute) {
             if (!actionTypeAttributeValue) {
-                form.getAttribute("ts_actionstatus").setValue(null);
+                //form.getAttribute("ts_actionstatus").setValue(null);
                 clearNonActionFields(form);
                 return;
             }
@@ -354,7 +387,7 @@ var ROM;
                     break;
                 case 741130001 /* CorrectiveAction */:
                     switch (actionTypeAttributeValue) {
-                        case 741130008 /* CorrectiveActionPlanRequested */:
+                        case 741130030 /* CorrectiveActionPlanReceived */:
                             form.getControl("ts_stakeholder").setVisible(true);
                             form.getControl("ts_contact").setVisible(true);
                             form.getControl("ts_duedate").setVisible(true);
@@ -376,134 +409,134 @@ var ROM;
             setOptions(actionStatusAttribute, filteredActionStatusOptions);
             var currentActionStatusValue = form.getAttribute("ts_actionstatus").getValue();
             var valueExists = filteredActionStatusOptions.some(function (option) { return option.value === currentActionStatusValue; });
-            if (!valueExists) {
-                form.getAttribute("ts_actionstatus").setValue(null);
-            }
+            //if (!valueExists) {
+            //    form.getAttribute("ts_actionstatus").setValue(null);
+            //}
         }
         function handleAvSecTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute) {
-            if (!actionTypeAttributeValue) {
-                form.getAttribute("ts_actionstatus").setValue(null);
-                return;
-            }
+            //if (!actionTypeAttributeValue) {
+            //    form.getAttribute("ts_actionstatus").setValue(null);
+            //    return;
+            //}
             clearNonActionFields(form);
             var filteredDeliveryOptions = allDeliveryMethodOptions;
             var filteredActionStatusOptions = allActionStatus;
-            switch (actionCategoryAttributeValue) {
-                case 741130000 /* AdministrativeAction */:
-                    switch (actionTypeAttributeValue) {
-                        case 741130025 /* AffidavitofServiceSworn */:
-                        case 741130026 /* AffidavitOfServiceCancellationSuspensionofCAD */:
-                            filteredActionStatusOptions = createFilteredOptions([741130005 /* Sworn */], allActionStatus);
-                            break;
-                        case 741130002 /* InformalMeetingOffered */:
-                            filteredActionStatusOptions = createFilteredOptions([741130002 /* Delivered */, 741130001 /* Convened */], allActionStatus);
-                            break;
-                        case 741130003 /* Correspondence */:
-                        case 741130004 /* LetterCommitmentReceived */:
-                        case 741130005 /* LetterNonComplianceSent */:
-                        case 741130006 /* LetterSSCOSAFurtherActionSent */:
-                            filteredActionStatusOptions = createFilteredOptions([741130002 /* Delivered */, 741130003 /* Received */], allActionStatus);
-                            break;
-                        case 741130007 /* AMPPaymentReceived */:
-                            filteredActionStatusOptions = createFilteredOptions([741130003 /* Received */], allActionStatus);
-                            break;
-                        case 741130027 /* NotificationNoncompliance */:
-                        case 741130028 /* WrittenNotice */:
-                            filteredActionStatusOptions = createFilteredOptions([741130002 /* Delivered */], allActionStatus);
-                            break;
-                        default:
-                            resetFieldsVisibility(form);
-                    }
-                    break;
-                case 741130001 /* CorrectiveAction */:
-                    switch (actionTypeAttributeValue) {
-                        case 741130008 /* CorrectiveActionPlanRequested */:
-                            filteredActionStatusOptions = createFilteredOptions([741130004 /* Requested */, 741130003 /* Received */], allActionStatus);
-                            break;
-                        default:
-                            resetFieldsVisibility(form);
-                    }
-                    break;
-                case 741130002 /* EnforcementAction */:
-                    switch (actionTypeAttributeValue) {
-                        case 741130029 /* AMP */:
-                        case 741130010 /* Prosecution */:
-                        case 741130011 /* PunitiveSuspensionofCAD */:
-                        case 741130012 /* VerbalWarning */:
-                        case 741130013 /* WrittenWarning */:
-                            filteredActionStatusOptions = createFilteredOptions([741130002 /* Delivered */], allActionStatus);
-                            break;
-                        default:
-                            resetFieldsVisibility(form);
-                    }
-                    break;
-                case 741130003 /* ImmediateHarmReductionMeasure */:
-                    switch (actionTypeAttributeValue) {
-                        case 741130014 /* DetentionofAircraft */:
-                        case 741130015 /* Other */:
-                            filteredActionStatusOptions = createFilteredOptions([741130002 /* Delivered */], allActionStatus);
-                            break;
-                        default:
-                            resetFieldsVisibility(form);
-                    }
-                    break;
-                case 741130004 /* LegalAction */:
-                    switch (actionTypeAttributeValue) {
-                        case 741130017 /* RegionalEnforcementUnitREUConsulted */:
-                            filteredActionStatusOptions = createFilteredOptions([741130000 /* Consulted */, 741130006 /* Referred */], allActionStatus);
-                            break;
-                        case 741130016 /* LegalCounselConsulted */:
-                            filteredActionStatusOptions = createFilteredOptions([741130000 /* Consulted */], allActionStatus);
-                            break;
-                        default:
-                            resetFieldsVisibility(form);
-                    }
-                    break;
-                case 741130006 /* REUEnforcementAction */:
-                    switch (actionTypeAttributeValue) {
-                        case 741130029 /* AMP */:
-                        case 741130010 /* Prosecution */:
-                        case 741130011 /* PunitiveSuspensionofCAD */:
-                        case 741130012 /* VerbalWarning */:
-                        case 741130013 /* WrittenWarning */:
-                            filteredActionStatusOptions = createFilteredOptions([741130003 /* Received */], allActionStatus);
-                            break;
-                        default:
-                            resetFieldsVisibility(form);
-                    }
-                    break;
-                case 741130005 /* TATCAction */:
-                    switch (actionTypeAttributeValue) {
-                        case 741130018 /* TATCAppealApplication */:
-                            filteredActionStatusOptions = createFilteredOptions([741130002 /* Delivered */, 741130003 /* Received */], allActionStatus);
-                            break;
-                        case 741130019 /* TATCAppealDetermination */:
-                        case 741130022 /* TATCDetermination */:
-                            filteredActionStatusOptions = createFilteredOptions([741130003 /* Received */], allActionStatus);
-                            break;
-                        case 741130020 /* TATCAppealHearing */:
-                        case 741130024 /* TATCHearingConvened */:
-                            filteredActionStatusOptions = createFilteredOptions([741130001 /* Convened */], allActionStatus);
-                            break;
-                        case 741130021 /* TATCCertificateforunpaidAMP */:
-                            filteredActionStatusOptions = createFilteredOptions([741130004 /* Requested */, 741130003 /* Received */], allActionStatus);
-                            break;
-                        case 741130023 /* TATCReviewApplication */:
-                            filteredActionStatusOptions = createFilteredOptions([741130003 /* Received */], allActionStatus);
-                            break;
-                        default:
-                            resetFieldsVisibility(form);
-                    }
-                    break;
-            }
+            //switch (actionCategoryAttributeValue) {
+            //    case ts_actioncategory.AdministrativeAction:
+            //        switch (actionTypeAttributeValue) {
+            //            case ts_actiontype.AffidavitOfServiceAMP:
+            //            //case ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD:
+            //            //    filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Sworn], allActionStatus);
+            //            //    break;
+            //            case ts_actiontype.InformalMeeting:
+            //                //filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered, ts_actionstatus.Convened], allActionStatus);
+            //                //break;
+            //            //case ts_actiontype.Correspondence:
+            //            case ts_actiontype.LetterCommitment:
+            //            case ts_actiontype.LetterNoncompliance:
+            //            case ts_actiontype.LetterSSCOSAFurtherAction:
+            //                //filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered, ts_actionstatus.Received], allActionStatus);
+            //                //break;
+            //            case ts_actiontype.AMPPayment:
+            //                filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
+            //                break;
+            //            //case ts_actiontype.NotificationNoncompliance:
+            //            //case ts_actiontype.WrittenNotice:
+            //            //    filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
+            //            //    break;
+            //            default:
+            //                resetFieldsVisibility(form)
+            //        }
+            //        break;
+            //    case ts_actioncategory.CorrectiveAction:
+            //        switch (actionTypeAttributeValue) {
+            //            case ts_actiontype.CorrectiveActionPlan:
+            //                filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Requested, ts_actionstatus.Received], allActionStatus);
+            //                break;
+            //            default:
+            //                resetFieldsVisibility(form)
+            //        }
+            //        break;
+            //    case ts_actioncategory.EnforcementAction:
+            //        switch (actionTypeAttributeValue) {
+            //            case ts_actiontype.AMP:
+            //            case ts_actiontype.Prosecution:
+            //            case ts_actiontype.PunitiveSuspensionofCAD:
+            //            case ts_actiontype.VerbalWarning:
+            //            case ts_actiontype.WrittenWarning:
+            //                filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
+            //                break;
+            //            default:
+            //                resetFieldsVisibility(form)
+            //        }
+            //        break;
+            //    case ts_actioncategory.ImmediateHarmReductionMeasure:
+            //        switch (actionTypeAttributeValue) {
+            //            case ts_actiontype.DetentionofAircraft:
+            //            case ts_actiontype.Other:
+            //                filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
+            //                break;
+            //            default:
+            //                resetFieldsVisibility(form)
+            //        }
+            //        break;
+            //    //case ts_actioncategory.LegalAction:
+            //    //    switch (actionTypeAttributeValue) {
+            //    //        case ts_actiontype.RegionalEnforcementUnitREU:
+            //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Consulted, ts_actionstatus.Referred], allActionStatus);
+            //    //            break;
+            //    //        case ts_actiontype.LegalCounsel:
+            //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Consulted], allActionStatus);
+            //    //            break;
+            //    //        default:
+            //    //            resetFieldsVisibility(form)
+            //    //    }
+            //    //    break;
+            //    //case ts_actioncategory.REUEnforcementAction:
+            //    //    switch (actionTypeAttributeValue) {
+            //    //        case ts_actiontype.AMP:
+            //    //        case ts_actiontype.Prosecution:
+            //    //        case ts_actiontype.PunitiveSuspensionofCAD:
+            //    //        case ts_actiontype.VerbalWarning:
+            //    //        case ts_actiontype.WrittenWarning:
+            //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
+            //    //            break;
+            //    //        default:
+            //    //            resetFieldsVisibility(form)
+            //    //    }
+            //    //    break;
+            //    //case ts_actioncategory.TATCAction:
+            //    //    switch (actionTypeAttributeValue) {
+            //    //        case ts_actiontype.TATCAppealApplication:
+            //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered, ts_actionstatus.Received], allActionStatus);
+            //    //            break;
+            //    //        case ts_actiontype.TATCAppealDetermination:
+            //    //        case ts_actiontype.TATCDetermination:
+            //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
+            //    //            break;
+            //    //        case ts_actiontype.TATCAppealHearing:
+            //    //        case ts_actiontype.TATCReviewHearing:
+            //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Convened], allActionStatus);
+            //    //            break;
+            //    //        case ts_actiontype.TATCCertificateforunpaidAMP:
+            //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Requested, ts_actionstatus.Received], allActionStatus);
+            //    //            break;
+            //    //        case ts_actiontype.TATCReviewApplication:
+            //    //            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Received], allActionStatus);
+            //    //            break;
+            //    //        default:
+            //    //            resetFieldsVisibility(form)
+            //    //    }
+            //    //    break;
+            //}
             setOptions(deliveryMethodAttribute, filteredDeliveryOptions);
             form.getAttribute("ts_deliverymethod").setValue(null);
             setOptions(actionStatusAttribute, filteredActionStatusOptions);
             var currentActionStatusValue = form.getAttribute("ts_actionstatus").getValue();
             var valueExists = filteredActionStatusOptions.some(function (option) { return option.value === currentActionStatusValue; });
-            if (!valueExists) {
-                form.getAttribute("ts_actionstatus").setValue(null);
-            }
+            //if (!valueExists) {
+            //    form.getAttribute("ts_actionstatus").setValue(null);
+            //}
             if (actionTypeAttributeValue == 741130029 /* AMP */ || actionTypeAttributeValue == 741130007 /* AMPPaymentReceived */) {
                 form.getControl("ts_amtamount").setVisible(true);
             }
@@ -554,7 +587,8 @@ var ROM;
                     741130002 /* EnforcementAction */,
                 ], allActionCategoryOptions));
             }
-            if (form.getAttribute("ts_actioncategory").getValue() != null && form.getAttribute("ts_actiontype").getValue() == null && form.getAttribute("ts_actionstatus").getValue() == null) {
+            //if (form.getAttribute("ts_actioncategory").getValue() != null && form.getAttribute("ts_actiontype").getValue() == null && form.getAttribute("ts_actionstatus").getValue() == null)
+            if (form.getAttribute("ts_actioncategory").getValue() != null && form.getAttribute("ts_actiontype").getValue() == null) {
                 form.getAttribute("ts_actioncategory").setValue(null);
             }
         }
