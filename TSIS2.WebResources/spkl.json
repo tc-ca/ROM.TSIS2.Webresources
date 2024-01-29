@@ -345,6 +345,11 @@
             "description": "ROM TSIS 2.0 Team Planning Data Ribbon Scripts"
           },
           {
+            "uniquename": "ts_/js/OperationRiskAssessmentRibbon.js",
+            "file": "js\\OperationRiskAssessmentRibbon.js",
+            "description": "ROM TSIS 2.0 Operation Risk Assessment Ribbon Scripts"
+          },
+          {
             "uniquename": "ts_/js/OperationActivityRibbon.js",
             "file": "js\\OperationActivityRibbon.js",
             "description": "ROM TSIS 2.0 Operation Activity Ribbon Scripts"
