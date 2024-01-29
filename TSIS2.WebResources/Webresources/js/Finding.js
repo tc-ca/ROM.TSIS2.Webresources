@@ -49,10 +49,12 @@ var ROM;
         var issoOperationTypeGuids = ["{B27E5003-C751-EB11-A812-000D3AF3AC0D}", "{C97A1A12-D8EB-EB11-BACB-000D3AF4FBEC}", "{21CA416A-431A-EC11-B6E7-000D3A09D067}", "{3B261029-C751-EB11-A812-000D3AF3AC0D}", "{D883B39A-C751-EB11-A812-000D3AF3AC0D}", "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}", "{199E31AE-C751-EB11-A812-000D3AF3AC0D}"];
         //Air Carrier (Passenger), Air Carrier(All Cargo), Operator of an Aerodrome
         var avSecOperationTypeGuides = ["{8B614EF0-C651-EB11-A812-000D3AF3AC0D}", "{E03381D0-C751-EB11-A812-000D3AF3AC0D}", "{E3238EDD-C651-EB11-A812-000D3AF3AC0D}"];
+        var isROM20Form = false;
         //Toggle visibility of NCAT and RATE sections depending user business unit and rolls
         //Sets field Controls parameters (required, hidden, disabled, etc) depending on current form state
         function onLoad(eContext) {
             var formContext = eContext.getFormContext();
+            var formROM2Context = eContext.getFormContext();
             var complianceFindingType = formContext.getAttribute("ts_findingtype").getValue() == 717750002 /* Noncompliance */;
             var isDualInspector = false;
             var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
@@ -61,6 +63,11 @@ var ROM;
                     isDualInspector = true;
                 }
             });
+            var formItem = formContext.ui.formSelector.getCurrentItem().getId();
+            isROM20Form = formItem.toLowerCase() == "c01347bc-d346-447d-b902-4f411a0e9706";
+            if (isROM20Form) {
+                ShowHideWorkspaceSections(eContext, "");
+            }
             formContext.getAttribute("ts_ncatfactorguide").setValue(false);
             var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
             var currentUserBusinessUnitFetchXML = [
@@ -102,7 +109,12 @@ var ROM;
                             if (operationTypeAttributeValue != null) {
                                 //Show NCAT Sections and fields if Operation Type is ISSO specific, else show RATE
                                 if (issoOperationTypeGuids.includes(operationTypeAttributeValue[0].id)) {
-                                    formContext.ui.tabs.get("tab_NCAT").setVisible(true);
+                                    if (isROM20Form) {
+                                        ShowHideWorkspaceSections(eContext, "NCAT");
+                                    }
+                                    else {
+                                        formContext.ui.tabs.get("tab_NCAT").setVisible(true);
+                                    }
                                     //If there's a recommended enforcement action and the finding is not complete yet, then the accept ncat recommendation field should be unlocked
                                     var enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
                                     var recordStatus = formContext.getAttribute("statuscode").getValue();
@@ -116,7 +128,12 @@ var ROM;
                                     }
                                     //If they did not accept the ncat recommendation, show proposal sections and fields
                                     if (formContext.getAttribute("ts_acceptncatrecommendation").getValue() == 717750001 /* No */) {
-                                        formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
+                                        if (isROM20Form) {
+                                            formROM2Context.ui.tabs.get("tab_workspace").sections.get("NCAT_proposed_section").setVisible(true);
+                                        }
+                                        else {
+                                            formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
+                                        }
                                         setPostNCATRecommendationSelectionFieldsVisibility(eContext);
                                         NCATManagerDecisionOnChange(eContext);
                                     }
@@ -142,12 +159,22 @@ var ROM;
                                         var regionId = currentFinding["site.ts_region"];
                                         //If Operation Type is Air Carrier (Passenger) or Air Carrier(All Cargo) or Operator of an Aerodrome and not international
                                         if (avSecOperationTypeGuides.includes(operationTypeAttributeValue[0].id) && regionId != "3bf0fa88-150f-eb11-a813-000d3af3a7a7") { //GUID for International region
-                                            formContext.ui.tabs.get("tab_RATE").setVisible(true);
+                                            if (isROM20Form) {
+                                                ShowHideWorkspaceSections(eContext, "RATE");
+                                            }
+                                            else {
+                                                formContext.ui.tabs.get("tab_RATE").setVisible(true);
+                                            }
                                             formContext.getControl("ts_finalenforcementaction").setDisabled(true);
                                         }
                                         else {
                                             formContext.getControl("ts_finalenforcementaction").setDisabled(false);
-                                            formContext.ui.tabs.get("tab_RATE").setVisible(false);
+                                            if (isROM20Form) {
+                                                //ShowHideWorkspaceSections(eContext, "");
+                                            }
+                                            else {
+                                                formContext.ui.tabs.get("tab_RATE").setVisible(false);
+                                            }
                                         }
                                         formContext.getControl("header_ts_rateenforcementrecommendation").setVisible(true);
                                         //If there's a recommended enforcement action and the finding is not complete yet, then the accept rate recommendation field should be unlocked
@@ -163,7 +190,12 @@ var ROM;
                                         }
                                         //If they did not accept the rate recommendation, show proposal sections and fields
                                         if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == 717750001 /* No */) {
-                                            formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
+                                            if (isROM20Form) {
+                                                formROM2Context.ui.tabs.get("tab_workspace").sections.get("RATE_proposed_section").setVisible(true);
+                                            }
+                                            else {
+                                                formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
+                                            }
                                             setPostRATERecommendationSelectionFieldsVisibility(eContext);
                                             RATEManagerDecisionOnChange(eContext);
                                         }
@@ -893,8 +925,15 @@ var ROM;
                             isAdminOrManager_1 = true;
                         }
                     }
-                    if (isAdminOrManager_1)
-                        formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
+                    if (isAdminOrManager_1) {
+                        if (isROM20Form) {
+                            var formROM2Context = eContext.getFormContext();
+                            formROM2Context.ui.tabs.get("tab_workspace").sections.get("NCAT_manager_review").setVisible(true);
+                        }
+                        else {
+                            formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
+                        }
+                    }
                 }
             }
             else {
@@ -962,8 +1001,15 @@ var ROM;
                             isAdminOrManager_2 = true;
                         }
                     }
-                    if (isAdminOrManager_2)
-                        formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
+                    if (isAdminOrManager_2) {
+                        if (isROM20Form) {
+                            var formROM2Context = eContext.getFormContext();
+                            formROM2Context.ui.tabs.get("tab_workspace").sections.get("RATE_manager_review").setVisible(true);
+                        }
+                        else {
+                            formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
+                        }
+                    }
                 }
             }
             else {
@@ -1053,5 +1099,29 @@ var ROM;
             }
         }
         Finding.SubGridFilterExecution = SubGridFilterExecution;
+        //ROM2.0 Form
+        function ShowHideWorkspaceSections(eContext, Sections) {
+            var formContext = eContext.getFormContext();
+            if (Sections == "NCAT") {
+                formContext.ui.tabs.get("tab_workspace").sections.get("NCAT_main_section").setVisible(true);
+                formContext.ui.tabs.get("tab_workspace").sections.get("tab_NCAT_section_5").setVisible(true);
+                formContext.ui.tabs.get("tab_workspace").sections.get("tab_NCAT_section_6").setVisible(true);
+                formContext.ui.tabs.get("tab_workspace").sections.get("summary_ncatfactorguide").setVisible(true);
+            }
+            else if (Sections == "RATE") {
+                formContext.ui.tabs.get("tab_workspace").sections.get("tab_RATE_section_1").setVisible(true);
+                formContext.ui.tabs.get("tab_workspace").sections.get("tab_RATE_section_5").setVisible(true);
+                formContext.ui.tabs.get("tab_workspace").sections.get("tab_RATE_section_7").setVisible(true);
+            }
+            else {
+                formContext.ui.tabs.get("tab_workspace").sections.get("tab_RATE_section_1").setVisible(false);
+                formContext.ui.tabs.get("tab_workspace").sections.get("tab_RATE_section_5").setVisible(false);
+                formContext.ui.tabs.get("tab_workspace").sections.get("tab_RATE_section_7").setVisible(false);
+                formContext.ui.tabs.get("tab_workspace").sections.get("NCAT_main_section").setVisible(false);
+                formContext.ui.tabs.get("tab_workspace").sections.get("tab_NCAT_section_5").setVisible(false);
+                formContext.ui.tabs.get("tab_workspace").sections.get("tab_NCAT_section_6").setVisible(false);
+                formContext.ui.tabs.get("tab_workspace").sections.get("summary_ncatfactorguide").setVisible(false);
+            }
+        }
     })(Finding = ROM.Finding || (ROM.Finding = {}));
 })(ROM || (ROM = {}));

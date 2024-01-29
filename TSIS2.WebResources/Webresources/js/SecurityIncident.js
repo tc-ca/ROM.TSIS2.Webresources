@@ -3,9 +3,12 @@ var ROM;
 (function (ROM) {
     var SecurityIncident;
     (function (SecurityIncident) {
+        var isROM20Form = false;
         function onLoad(eContext) {
             var formContext = eContext.getFormContext();
             var delaysToOperations = formContext.getAttribute("ts_delaystooperation");
+            var formItem = formContext.ui.formSelector.getCurrentItem().getId();
+            isROM20Form = formItem.toLowerCase() == "66fddf7a-2b5e-4239-8059-cda85838b5b2";
             if (delaysToOperations.getValue() == 717750001 /* Unknown */ || delaysToOperations.getValue() == null) {
                 formContext.getControl("ts_delayduration").setVisible(false);
             }
@@ -242,8 +245,10 @@ var ROM;
                 form.getControl("ts_yardorstationname").setVisible(false);
                 form.getControl("ts_publicorprivatecrossing").setVisible(false);
                 form.getControl("ts_ruralorurban").setVisible(false);
-                var tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
-                tab_time_tracking.setVisible(true);
+                if (!isROM20Form) {
+                    var tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
+                    tab_time_tracking.setVisible(true);
+                }
                 form.getControl("ts_sitetype").setVisible(true);
                 form.getControl("ts_subsite").setVisible(true);
                 form.getControl("ts_subsitetype").setVisible(true);
@@ -354,8 +359,10 @@ var ROM;
                     form.getControl("ts_milemarker").setVisible(true);
                     form.getControl("ts_markerpost").setVisible(true);
                     form.getControl("ts_yardorstationname").setVisible(true);
-                    var tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
-                    tab_time_tracking.setVisible(false);
+                    if (!isROM20Form) {
+                        var tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
+                        tab_time_tracking.setVisible(false);
+                    }
                     form.getControl("ts_bridgeclosure").setVisible(false);
                     form.getControl("ts_damagestoibtproperty").setVisible(false);
                     if (!isOnLoad) {
@@ -376,8 +383,10 @@ var ROM;
                     form.getControl("ts_milemarker").setVisible(false);
                     form.getControl("ts_markerpost").setVisible(false);
                     form.getControl("ts_yardorstationname").setVisible(false);
-                    var tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
-                    tab_time_tracking.setVisible(false);
+                    if (!isROM20Form) {
+                        var tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
+                        tab_time_tracking.setVisible(false);
+                    }
                     form.getControl("ts_bridgeclosure").setVisible(true);
                     form.getControl("ts_damagestoibtproperty").setVisible(true);
                     form.getControl("ts_ruralorurban").setVisible(false);

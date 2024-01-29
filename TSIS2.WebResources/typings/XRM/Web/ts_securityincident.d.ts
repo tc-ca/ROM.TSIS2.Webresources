@@ -36,6 +36,7 @@ interface ts_securityincident_Base extends WebEntity {
   ts_milemarker?: string | null;
   ts_mode?: ts_securityincidentmode | null;
   ts_name?: string | null;
+  ts_notes?: string | null;
   ts_organization?: string | null;
   ts_othercompany?: string | null;
   ts_overtime?: number | null;
@@ -168,6 +169,7 @@ interface ts_securityincident_Select {
   ts_milemarker: WebAttribute<ts_securityincident_Select, { ts_milemarker: string | null }, {  }>;
   ts_mode: WebAttribute<ts_securityincident_Select, { ts_mode: ts_securityincidentmode | null }, { ts_mode_formatted?: string }>;
   ts_name: WebAttribute<ts_securityincident_Select, { ts_name: string | null }, {  }>;
+  ts_notes: WebAttribute<ts_securityincident_Select, { ts_notes: string | null }, {  }>;
   ts_organization: WebAttribute<ts_securityincident_Select, { ts_organization: string | null }, {  }>;
   ts_origin_guid: WebAttribute<ts_securityincident_Select, { ts_origin_guid: string | null }, { ts_origin_formatted?: string }>;
   ts_othercompany: WebAttribute<ts_securityincident_Select, { ts_othercompany: string | null }, {  }>;
@@ -270,6 +272,7 @@ interface ts_securityincident_Filter {
   ts_milemarker: string;
   ts_mode: ts_securityincidentmode;
   ts_name: string;
+  ts_notes: string;
   ts_organization: string;
   ts_origin_guid: XQW.Guid;
   ts_othercompany: string;

@@ -393,6 +393,37 @@ async function createWorkOrders(formContext) {
                 });
                 //After all Work Orders have been created, close the Progress indicator.
                 await Promise.all(workOrderCreationPromises)
+
+                //Create Trip Inspections for WO created
+                var workOrderCreatedFetchXml = [
+                    "<fetch>",
+                    "<entity name='msdyn_workorder'>",
+                    "<attribute name='msdyn_name'/>",
+                    "<attribute name='msdyn_workorderid'/>",
+                    "<attribute name='ts_trip'/>",
+                    "<filter type='and'>",
+                        "<condition attribute='ts_plan' operator='eq' value='", planId, "'/>",
+                        "<condition attribute='ts_trip' operator='not-null'/>",
+                    "</filter>",
+                    "</entity>",
+                    "</fetch>"
+                ].join("");
+                workOrderCreatedFetchXml = "?fetchXml=" + encodeURIComponent(workOrderCreatedFetchXml);
+                //Array of Work Order creation promises. When all promises return, the Progress Indicator is closed.
+                const tripInspectionCreationPromises = [];
+
+                //Iterate through each WO
+                await Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", workOrderCreatedFetchXml).then(async function (result) {
+                    const workOrders = result.entities;
+                    for (const workOrder of workOrders) {
+                        let tripInspectionData = {}
+                        tripInspectionData["ts_inspection@odata.bind"] = "/msdyn_workorders(" + workOrder.msdyn_workorderid + ")";
+                        tripInspectionData["ts_trip@odata.bind"] = "/ts_trips(" + workOrder._ts_trip_value + ")";
+                        tripInspectionCreationPromises.push(Xrm.WebApi.createRecord("ts_tripinspection", tripInspectionData));
+                    }
+                });
+
+                await Promise.all(tripInspectionCreationPromises);
                 Xrm.Utility.closeProgressIndicator();
             }
         }
