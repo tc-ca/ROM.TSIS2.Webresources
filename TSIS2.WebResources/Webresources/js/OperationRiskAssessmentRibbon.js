@@ -1,6 +1,8 @@
 ﻿//For this to work offline, RetrieveMultiple must be avoided
 //To get around this, we can get the guids of the related Response records through the subgrid and retrieve each specifically
 function recalculateRiskScore(formContext) {
+    let RiskScoreSet = false;
+    let DiscretionaryScoreSet = false;
 
     //Calculate and set Risk Score
     const RiskResponseGrid = formContext.getControl("Subgrid_Risk_Criteria_Responses");
@@ -19,6 +21,10 @@ function recalculateRiskScore(formContext) {
     Promise.all(RiskCriteriaRetrievals).then((weights) => {
         let totalWeight = weights.reduce((sum, ele) => sum + ele);
         formContext.getAttribute("ts_riskcriteriascore").setValue(totalWeight);
+        RiskScoreSet = true;
+        if (RiskScoreSet && DiscretionaryScoreSet) {
+            formContext.getAttribute("ts_riskscore").setValue(formContext.getAttribute("ts_discretionaryscore").getValue() + formContext.getAttribute("ts_riskcriteriascore").getValue());
+        }
     });
 
     //Calculate and set Discretionary Score
@@ -55,6 +61,7 @@ function recalculateRiskScore(formContext) {
             }
         }
 
+        //The score added for a group cannot be outside the min and max values
         for (let groupingId in groupingScores) {
             if (groupingScores[groupingId].score < groupingScores[groupingId].min) {
                 totalScore += groupingScores[groupingId].min;
@@ -65,5 +72,9 @@ function recalculateRiskScore(formContext) {
             }
         }
         formContext.getAttribute("ts_discretionaryscore").setValue(totalScore);
+        DiscretionaryScoreSet = true;
+        if (RiskScoreSet && DiscretionaryScoreSet) {
+            formContext.getAttribute("ts_riskscore").setValue(formContext.getAttribute("ts_discretionaryscore").getValue() + formContext.getAttribute("ts_riskcriteriascore").getValue());
+        }
     });
 }
