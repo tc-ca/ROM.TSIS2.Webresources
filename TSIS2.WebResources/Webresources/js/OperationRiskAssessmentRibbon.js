@@ -1,5 +1,5 @@
 ﻿//For this to work offline, RetrieveMultiple must be avoided
-//To get around this, we can get the guids of the related Response records through the subgrid and retrieve each specifically
+//To get around this, we can get the guids of the related Response records through the subgrid and retrieve each individually
 function recalculateRiskScore(formContext) {
     Xrm.Utility.showProgressIndicator();
     let RiskScoreSet = false;
@@ -82,4 +82,30 @@ function recalculateRiskScore(formContext) {
             formContext.data.entity.save();
         }
     });
+}
+
+function submitRiskScore(formContext) {
+    const riskScore = formContext.getAttribute("ts_riskscore").getValue();
+    const operationId = formContext.getAttribute("ts_operation").getValue()[0].id;
+
+    if (riskScore == null || operationId == null) return;
+
+    Xrm.Utility.showProgressIndicator();
+
+    // define the data to update a record
+    var data =
+    {
+        "ts_riskscore": riskScore
+    }
+    // update the record
+    Xrm.WebApi.updateRecord("ovs_operation", operationId, data).then(
+        function success(result) {
+            console.log("Operation updated");
+            Xrm.Utility.closeProgressIndicator();
+        },
+        function (error) {
+            console.log(error.message);
+            Xrm.Utility.closeProgressIndicator();
+        }
+    );
 }
