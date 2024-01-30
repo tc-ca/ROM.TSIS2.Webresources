@@ -1,6 +1,7 @@
 ﻿//For this to work offline, RetrieveMultiple must be avoided
 //To get around this, we can get the guids of the related Response records through the subgrid and retrieve each specifically
 function recalculateRiskScore(formContext) {
+    Xrm.Utility.showProgressIndicator();
     let RiskScoreSet = false;
     let DiscretionaryScoreSet = false;
 
@@ -24,6 +25,8 @@ function recalculateRiskScore(formContext) {
         RiskScoreSet = true;
         if (RiskScoreSet && DiscretionaryScoreSet) {
             formContext.getAttribute("ts_riskscore").setValue(formContext.getAttribute("ts_discretionaryscore").getValue() + formContext.getAttribute("ts_riskcriteriascore").getValue());
+            Xrm.Utility.closeProgressIndicator();
+            formContext.data.entity.save();
         }
     });
 
@@ -75,6 +78,8 @@ function recalculateRiskScore(formContext) {
         DiscretionaryScoreSet = true;
         if (RiskScoreSet && DiscretionaryScoreSet) {
             formContext.getAttribute("ts_riskscore").setValue(formContext.getAttribute("ts_discretionaryscore").getValue() + formContext.getAttribute("ts_riskcriteriascore").getValue());
+            Xrm.Utility.closeProgressIndicator();
+            formContext.data.entity.save();
         }
     });
 }
