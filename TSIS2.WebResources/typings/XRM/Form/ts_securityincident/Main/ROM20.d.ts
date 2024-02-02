@@ -3,6 +3,7 @@ declare namespace Form.ts_securityincident.Main {
     namespace Tabs {
       interface _99b378964f52417982963cc0e6722411 extends Xrm.SectionCollectionBase {
         get(name: "IncidentDetails"): Xrm.PageSection;
+        get(name: "tab_2_section_1"): Xrm.PageSection;
         get(name: "{99b37896-4f52-4179-8296-3cc0e6722411}_column_2_section_1"): Xrm.PageSection;
         get(name: "{99b37896-4f52-4179-8296-3cc0e6722411}_section_4"): Xrm.PageSection;
         get(name: "{99b37896-4f52-4179-8296-3cc0e6722411}_section_5"): Xrm.PageSection;
@@ -15,8 +16,8 @@ declare namespace Form.ts_securityincident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_2 extends Xrm.SectionCollectionBase {
-        get(name: "tab_2_section_1"): Xrm.PageSection;
         get(name: "tab_2_section_2"): Xrm.PageSection;
+        get(name: "tab_2_section_3"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
