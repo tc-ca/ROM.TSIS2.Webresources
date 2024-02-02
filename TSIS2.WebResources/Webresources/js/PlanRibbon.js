@@ -280,6 +280,7 @@ async function createWorkOrders(formContext) {
                     "    <attribute name='ts_q2'/>",
                     "    <attribute name='ts_trip'/>",
                     "    <attribute name='ts_estimatedcost'/>",
+                    "    <attribute name='ts_inspector'/>",
                     "    <filter type='and'>",
                     "      <condition attribute='ts_plan' operator='eq' value='", planId, "'/>",
                     "      <condition attribute='statecode' operator='eq' value='0'/>",
@@ -328,6 +329,7 @@ async function createWorkOrders(formContext) {
                         if (suggestedInspection._ts_operation_value != null) workOrderData["ovs_OperationId@odata.bind"] = "/ovs_operations(" + suggestedInspection._ts_operation_value + ")";
                         if (suggestedInspection["plantrip.ts_name"] != null) workOrderData["ts_trip@odata.bind"] = "/ts_trips(" + suggestedInspection._ts_trip_value + ")";
                         if (suggestedInspection.ts_estimatedcost != null) workOrderData["ts_plannedcost"] = suggestedInspection.ts_estimatedcost;
+                        if (suggestedInspection._ts_inspector_value != null) workOrderData["ownerid@odata.bind"] = "/systemusers(" + suggestedInspection._ts_inspector_value + ")";
 
                         /*
                          * For each ts_q field, determine how many Work Orders must be created, then create them.
