@@ -1657,43 +1657,56 @@ var ROM;
                     stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
                     operationTypeAttributeValue_2 != null && operationTypeAttributeValue_2 != undefined &&
                     workOrderTypeAttribute != null && workOrderTypeAttributeValue_2 != null) {
-                    // Populate operation asset
-                    var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue_2[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
-                    var encodedFetchXml = encodeURIComponent(fetchXml);
-                    Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXml).then(function success(result) {
-                        if (result.entities.length == 1) {
-                            var targetOperation = result.entities[0];
-                            var lookup = new Array();
-                            lookup[0] = new Object();
-                            lookup[0].id = targetOperation.ovs_operationid;
-                            lookup[0].name = targetOperation.ovs_name;
-                            lookup[0].entityType = 'ovs_operation';
-                            if (targetOperation.ts_operationalstatus == 717750001) {
-                                form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
-                                form.getAttribute('ts_site').setValue(null);
+                    if (isFromSecurityIncident && siteAttributeValue[0].id.toLowerCase() == "{bfff30ab-31c3-ed11-b597-000d3af4f43d}") { //Security Incident Site. Bug 322427 fixes
+                        var placeHolderOperation = [
+                            {
+                                id: "e9fa69ee-85ea-ed11-a7c6-0022483c5061",
+                                name: "Security Incident Operation",
+                                entityType: "ovs_operation"
                             }
-                            else {
-                                form.ui.clearFormNotification("non-operational-operation");
-                                form.getAttribute('ovs_operationid').setValue(lookup);
+                        ];
+                        form.getAttribute('ovs_operationid').setValue(placeHolderOperation);
+                        setActivityTypeFilteredView(form, placeHolderOperation[0].id, workOrderTypeAttributeValue_2[0].id, operationTypeAttributeValue_2[0].id);
+                    }
+                    else {
+                        // Populate operation asset
+                        var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue_2[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
+                        var encodedFetchXml = encodeURIComponent(fetchXml);
+                        Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXml).then(function success(result) {
+                            if (result.entities.length == 1) {
+                                var targetOperation = result.entities[0];
+                                var lookup = new Array();
+                                lookup[0] = new Object();
+                                lookup[0].id = targetOperation.ovs_operationid;
+                                lookup[0].name = targetOperation.ovs_name;
+                                lookup[0].entityType = 'ovs_operation';
+                                if (targetOperation.ts_operationalstatus == 717750001) {
+                                    form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
+                                    form.getAttribute('ts_site').setValue(null);
+                                }
+                                else {
+                                    form.ui.clearFormNotification("non-operational-operation");
+                                    form.getAttribute('ovs_operationid').setValue(lookup);
+                                }
+                                setActivityTypeFilteredView(form, lookup[0].id, workOrderTypeAttributeValue_2[0].id, operationTypeAttributeValue_2[0].id);
                             }
-                            setActivityTypeFilteredView(form, lookup[0].id, workOrderTypeAttributeValue_2[0].id, operationTypeAttributeValue_2[0].id);
-                        }
-                        else {
-                            if (isFromSecurityIncident) {
-                                var placeHolderOperation = [
-                                    {
-                                        id: "e9fa69ee-85ea-ed11-a7c6-0022483c5061",
-                                        name: "Security Incident Operation",
-                                        entityType: "ovs_operation"
-                                    }
-                                ];
-                                form.getAttribute('ovs_operationid').setValue(placeHolderOperation);
-                                setActivityTypeFilteredView(form, placeHolderOperation[0].id, workOrderTypeAttributeValue_2[0].id, operationTypeAttributeValue_2[0].id);
-                            }
-                        }
-                    }, function (error) {
-                        showErrorMessageAlert(error);
-                    });
+                            //else {
+                            //    if (isFromSecurityIncident) {
+                            //        const placeHolderOperation: { id: string; name: string; entityType: "ovs_operation" }[] = [
+                            //            {
+                            //                id: "e9fa69ee-85ea-ed11-a7c6-0022483c5061",
+                            //                name: "Security Incident Operation",
+                            //                entityType: "ovs_operation"
+                            //            }
+                            //        ]
+                            //        form.getAttribute('ovs_operationid').setValue(placeHolderOperation);
+                            //        setActivityTypeFilteredView(form, placeHolderOperation[0].id, workOrderTypeAttributeValue[0].id, operationTypeAttributeValue[0].id);
+                            //    }
+                            //}
+                        }, function (error) {
+                            showErrorMessageAlert(error);
+                        });
+                    }
                 }
             }
         }
