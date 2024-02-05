@@ -173,6 +173,8 @@
             const NonSchedule1TDGIncidentTypeId = "3ac59aa0-511a-ec11-b6e7-000d3a09ce95";
             const OversightSIPAXIncidentTypeId = "c8c934c6-01b5-ec11-983e-000d3af4f373";
             const SIPAXIncidentTypeId = "45c59aa0-511a-ec11-b6e7-000d3a09ce95";
+            const targetedInspectionPAXIncidentTypeId = "4819e8a6-c91f-ec11-b6e6-000d3af473b7";
+            const targetedInspectionTDGIncidentTypeId = "3dc59aa0-511a-ec11-b6e7-000d3a09ce95";
 
             //Retrieve the Activity Type records to get their Estimated Durations
             const siteInspectionTDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", siteInspectionTDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });
@@ -180,6 +182,8 @@
             const NonSchedule1TDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", NonSchedule1TDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });
             const OversightSIPAXIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", OversightSIPAXIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });
             const SIPAXIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", SIPAXIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });
+            const targetedInspectionPAXIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", targetedInspectionPAXIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });
+            const targetedInspectionTDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", targetedInspectionTDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });
 
             //Create a suggested inspection for each operation
             for (let operation of operations) {
@@ -201,8 +205,8 @@
                         } else {
                             inspectionCount = riskFrequency;
                         }
-                    // There is a previous date we need to start from
-                    } else { 
+                        // There is a previous date we need to start from
+                    } else {
                         let nextInspectionDate: Date = getNextInspectionDate(lastRiskInspection, riskInterval, riskFrequency);
 
                         /* 
@@ -263,7 +267,7 @@
                                         SiteInspectionData["ts_estimatedduration"] = siteInspectionTDGIncidentType.msdyn_estimatedduration / 60;
                                         SiteInspectionData["ts_q1"] = 1;
                                         Xrm.WebApi.createRecord("ts_suggestedinspection", SiteInspectionData).then(function success(result) { }, function (error) { console.log(error.message); });
-                                    //Else do a VSI's
+                                        //Else do a VSI's
                                     } else {
                                         VSIData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + VSITDGIncidentTypeId + ")"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
                                         VSIData["ts_estimatedduration"] = VSITDGIncidentType.msdyn_estimatedduration / 60;
@@ -296,13 +300,13 @@
                                         nonSchedule1Data["ts_estimatedduration"] = NonSchedule1TDGIncidentType.msdyn_estimatedduration / 60;
                                         nonSchedule1Data["ts_q1"] = 1;
                                         Xrm.WebApi.createRecord("ts_suggestedinspection", nonSchedule1Data).then(function success(result) { }, function (error) { console.log(error.message); });
-                                    //Else do a VSI's
+                                        //Else do a VSI's
                                     } else {
                                         VSIData["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + VSITDGIncidentTypeId + ")"; //Oversight of the Railway Carrier Visual Security Inspection (TDG)
                                         VSIData["ts_estimatedduration"] = VSITDGIncidentType.msdyn_estimatedduration / 60;
                                         Xrm.WebApi.createRecord("ts_suggestedinspection", VSIData).then(function success(result) { }, function (error) { console.log(error.message); });
                                     }
-                                    
+
                                 } else {
                                     //Site Inspection for Non-Schedule 1 DG Railway Carriers/Loaders (TDG)
 
@@ -340,7 +344,7 @@
                                     OversightData["ts_estimatedduration"] = OversightSIPAXIncidentType.msdyn_estimatedduration / 60;
                                     Xrm.WebApi.createRecord("ts_suggestedinspection", OversightData).then(function success(result) { }, function (error) { console.log(error.message); });
                                 }
-                                
+
                             } else {
                                 const SiteInspectionData = { ...data };
 
@@ -352,6 +356,65 @@
                         }
                     }
                 }
+            }
+
+            //Retrieves all Operational Operations Targeted Inspection Needed that are in the same Region as the Team of this Plan
+            var operationsTargetedInspectionNeededFetchXml = [
+                "<fetch>",
+                "  <entity name='ovs_operation'>",
+                "    <attribute name='ts_dateoflastriskbasedinspection'/>",
+                "    <attribute name='ts_typeofdangerousgoods'/>",
+                "    <attribute name='ovs_name'/>",
+                "    <attribute name='ovs_operationid'/>",
+                "    <attribute name='ovs_operationtypeid'/>",
+                "    <attribute name='ts_risk'/>",
+                "    <attribute name='ts_site'/>",
+                "    <attribute name='ts_stakeholder'/>",
+                "    <attribute name='ts_operationnameenglish'/>",
+                "    <attribute name='ts_operationnamefrench'/>",
+                "    <attribute name='ts_visualsecurityinspection'/>",
+                "    <attribute name='ts_issecurityinspectionsite'/>",
+                "    <attribute name='ts_operationalstatus'/>",
+                "    <filter type='and'>",
+                "      <condition attribute='ts_operationalstatus' operator='eq' value='717750000'/>",
+                "      <condition attribute='ts_targetedinspectionneeded' operator='eq' value='1'/>",
+                "    </filter>",
+                "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
+                "      <filter>",
+                "        <condition attribute='ts_region' operator='eq' value='", teamRegionId, "'/>",
+                "      </filter>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>"
+            ].join("");
+            operationsTargetedInspectionNeededFetchXml = "?fetchXml=" + encodeURIComponent(operationsTargetedInspectionNeededFetchXml);
+            let operationsTargetedInspectionNeeded = await Xrm.WebApi.retrieveMultipleRecords("ovs_operation", operationsTargetedInspectionNeededFetchXml).then(function success(result) { return result.entities; });
+
+            const railwayCarrierOperationTypeId = "d883b39a-c751-eb11-a812-000d3af3ac0d";
+            const railwayLoaderOperationTypeId = "da56fea1-c751-eb11-a812-000d3af3ac0d";
+
+            for (let operation of operationsTargetedInspectionNeeded) {
+                let data = {
+                    "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
+                    "ts_stakeholder@odata.bind": "/accounts(" + operation._ts_stakeholder_value + ")",
+                    "ts_operationtype@odata.bind": "/ovs_operationtypes(" + operation._ovs_operationtypeid_value + ")",
+                    "ts_site@odata.bind": "/msdyn_functionallocations(" + operation._ts_site_value + ")",
+                    "ts_operation@odata.bind": "/ovs_operations(" + operation.ovs_operationid + ")",
+                    "ts_q1": 0,
+                    "ts_q2": 0,
+                    "ts_q3": 0,
+                    "ts_q4": 0
+                }
+
+                if (operation._ovs_operationtypeid_value == railwayCarrierOperationTypeId || operation._ovs_operationtypeid_value == railwayLoaderOperationTypeId) {
+                    data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + targetedInspectionTDGIncidentTypeId + ")"; 
+                    data["ts_estimatedduration"] = targetedInspectionTDGIncidentType.msdyn_estimatedduration / 60;
+                }
+                else {
+                    data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + targetedInspectionPAXIncidentTypeId + ")"; 
+                    data["ts_estimatedduration"] = targetedInspectionPAXIncidentType.msdyn_estimatedduration / 60;
+                }
+                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) { }, function (error) { console.log(error.message); });
             }
 
             //Retrieve all inspector hours records related to the Plan's team
@@ -396,7 +459,7 @@
             }
 
         }
-                
+
         var suggestedInspectionsfetchXml = [
             "<fetch>",
             "   <entity name='ts_suggestedinspection'>",
@@ -411,7 +474,7 @@
             "       <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='ad'>",
             "           <filter type='and'>",
             "               <condition attribute='ts_planid' operator='eq' value='", formContext.data.entity.getId(), "'/>",
-                        "</filter>",
+            "</filter>",
             "       </link-entity>",
             "       <link-entity name='ts_trip' from='ts_tripid' to='ts_trip' visible='false' link-type='outer' alias='plantrip'>",
             "       <attribute name='ts_estimatedtraveltime' />",
@@ -435,6 +498,8 @@
             teamPlanningDataPlannedQ3 += inspection.ts_q3;
             teamPlanningDataPlannedQ4 += inspection.ts_q4;
             teamPlanningDataPlannedTotal += inspection.ts_q1 + inspection.ts_q2 + inspection.ts_q3 + inspection.ts_q4;
+
+            if (isNaN(inspection.ts_estimatedduration)) inspection.ts_estimatedduration = 0;
             teamPlanningDataTeamEstimatedDurationQ1 += inspection.ts_estimatedduration * inspection.ts_q1;
             teamPlanningDataTeamEstimatedDurationQ2 += inspection.ts_estimatedduration * inspection.ts_q2;
             teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
@@ -479,7 +544,7 @@
         let formContext = executionContext.getFormContext();
         const planStatusValue = parent["Xrm"].Page.getAttribute("ts_planstatus").getValue();
         //Change which fields lock depending on the plan status
-        const fields = (planStatusValue == ts_planstatus.Complete || planStatusValue == ts_planstatus.HQreview) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration","ts_estimatedtraveltime", "ts_q1", "ts_q2", "ts_q3", "ts_q4", "ts_estimatedcost", "ts_trip"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
+        const fields = (planStatusValue == ts_planstatus.Complete || planStatusValue == ts_planstatus.HQreview) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_estimatedtraveltime", "ts_q1", "ts_q2", "ts_q3", "ts_q4", "ts_estimatedcost", "ts_trip"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
         if (formContext) {
             let entity = formContext.data.entity;
 
