@@ -101,9 +101,9 @@ var ROM;
          */
         function generateSuggestedInspections(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataTeamEstimatedTravelTimeTotal, teamPlanningDataTeamEstimatedCostTotal, planfetchXml, planData, teamRegionId_1, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, inspectorHoursfetchXml, teamInspectorHours, _a, teamInspectorHours_1, inspectorHours, data, suggestedInspectionsfetchXml, suggestedInspections;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
+                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataTeamEstimatedTravelTimeTotal, teamPlanningDataTeamEstimatedCostTotal, planfetchXml, planData, teamRegionId_1, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, targetedInspectionPAXIncidentTypeId, targetedInspectionTDGIncidentTypeId, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, targetedInspectionPAXIncidentType, targetedInspectionTDGIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId_1, railwayLoaderOperationTypeId_1, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, operationsTargetedInspectionNeededFetchXml, operationsTargetedInspectionNeeded, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, _a, operationsTargetedInspectionNeeded_1, operation, data, inspectorHoursfetchXml, teamInspectorHours, _b, teamInspectorHours_1, inspectorHours, data, suggestedInspectionsfetchXml, suggestedInspections;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
                         case 0:
                             formContext = eContext.getFormContext();
                             Xrm.Utility.showProgressIndicator("Please wait while the Suggested Inspection records are being created.");
@@ -131,7 +131,7 @@ var ROM;
                             teamPlanningDataTeamEstimatedDurationTotal = 0;
                             teamPlanningDataTeamEstimatedTravelTimeTotal = 0;
                             teamPlanningDataTeamEstimatedCostTotal = 0;
-                            if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 9];
+                            if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 12];
                             //Set the Plan name to a combination of the team and fiscal year
                             formContext.getAttribute("ts_name").setValue(teamName + " " + planFiscalYearName);
                             planfetchXml = [
@@ -154,7 +154,7 @@ var ROM;
                             planfetchXml = "?fetchXml=" + encodeURIComponent(planfetchXml);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_plan", planfetchXml).then(function success(result) { return result.entities[0]; })];
                         case 1:
-                            planData = _b.sent();
+                            planData = _c.sent();
                             if (planData == null) {
                                 console.log("Failed to load current Plan");
                                 return [2 /*return*/];
@@ -205,28 +205,36 @@ var ROM;
                             OperationsFetchXml = "?fetchXml=" + encodeURIComponent(OperationsFetchXml);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ovs_operation", OperationsFetchXml).then(function success(result) { return result.entities; })];
                         case 2:
-                            operations = _b.sent();
+                            operations = _c.sent();
                             planId = planId.slice(1, -1);
                             siteInspectionTDGIncidentTypeId = "2bc59aa0-511a-ec11-b6e7-000d3a09ce95";
                             VSITDGIncidentTypeId = "34c59aa0-511a-ec11-b6e7-000d3a09ce95";
                             NonSchedule1TDGIncidentTypeId = "3ac59aa0-511a-ec11-b6e7-000d3a09ce95";
                             OversightSIPAXIncidentTypeId = "c8c934c6-01b5-ec11-983e-000d3af4f373";
                             SIPAXIncidentTypeId = "45c59aa0-511a-ec11-b6e7-000d3a09ce95";
+                            targetedInspectionPAXIncidentTypeId = "4819e8a6-c91f-ec11-b6e6-000d3af473b7";
+                            targetedInspectionTDGIncidentTypeId = "3dc59aa0-511a-ec11-b6e7-000d3a09ce95";
                             return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_incidenttype", siteInspectionTDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); })];
                         case 3:
-                            siteInspectionTDGIncidentType = _b.sent();
+                            siteInspectionTDGIncidentType = _c.sent();
                             return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_incidenttype", VSITDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); })];
                         case 4:
-                            VSITDGIncidentType = _b.sent();
+                            VSITDGIncidentType = _c.sent();
                             return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_incidenttype", NonSchedule1TDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); })];
                         case 5:
-                            NonSchedule1TDGIncidentType = _b.sent();
+                            NonSchedule1TDGIncidentType = _c.sent();
                             return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_incidenttype", OversightSIPAXIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); })];
                         case 6:
-                            OversightSIPAXIncidentType = _b.sent();
+                            OversightSIPAXIncidentType = _c.sent();
                             return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_incidenttype", SIPAXIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); })];
                         case 7:
-                            SIPAXIncidentType = _b.sent();
+                            SIPAXIncidentType = _c.sent();
+                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_incidenttype", targetedInspectionPAXIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); })];
+                        case 8:
+                            targetedInspectionPAXIncidentType = _c.sent();
+                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_incidenttype", targetedInspectionTDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); })];
+                        case 9:
+                            targetedInspectionTDGIncidentType = _c.sent();
                             //Create a suggested inspection for each operation
                             for (_i = 0, operations_1 = operations; _i < operations_1.length; _i++) {
                                 operation = operations_1[_i];
@@ -280,10 +288,10 @@ var ROM;
                                             "ts_q3": 0,
                                             "ts_q4": 0,
                                         };
-                                        railwayCarrierOperationTypeId = "d883b39a-c751-eb11-a812-000d3af3ac0d";
-                                        railwayLoaderOperationTypeId = "da56fea1-c751-eb11-a812-000d3af3ac0d";
+                                        railwayCarrierOperationTypeId_1 = "d883b39a-c751-eb11-a812-000d3af3ac0d";
+                                        railwayLoaderOperationTypeId_1 = "da56fea1-c751-eb11-a812-000d3af3ac0d";
                                         //If the Operation Type is RailwayCarrier of RailwayLoader (First bigger Flow Logic)
-                                        if (operation._ovs_operationtypeid_value == railwayCarrierOperationTypeId || operation._ovs_operationtypeid_value == railwayLoaderOperationTypeId) {
+                                        if (operation._ovs_operationtypeid_value == railwayCarrierOperationTypeId_1 || operation._ovs_operationtypeid_value == railwayLoaderOperationTypeId_1) {
                                             if (operation.ts_typeofdangerousgoods == 717750001 /* Schedule1DangerousGoods */ || operation.ts_typeofdangerousgoods == null) {
                                                 if (operation.ts_visualsecurityinspection == 717750001 /* Yes */) {
                                                     VSIData = __assign({}, data);
@@ -378,6 +386,63 @@ var ROM;
                                     }
                                 }
                             }
+                            operationsTargetedInspectionNeededFetchXml = [
+                                "<fetch>",
+                                "  <entity name='ovs_operation'>",
+                                "    <attribute name='ts_dateoflastriskbasedinspection'/>",
+                                "    <attribute name='ts_typeofdangerousgoods'/>",
+                                "    <attribute name='ovs_name'/>",
+                                "    <attribute name='ovs_operationid'/>",
+                                "    <attribute name='ovs_operationtypeid'/>",
+                                "    <attribute name='ts_risk'/>",
+                                "    <attribute name='ts_site'/>",
+                                "    <attribute name='ts_stakeholder'/>",
+                                "    <attribute name='ts_operationnameenglish'/>",
+                                "    <attribute name='ts_operationnamefrench'/>",
+                                "    <attribute name='ts_visualsecurityinspection'/>",
+                                "    <attribute name='ts_issecurityinspectionsite'/>",
+                                "    <attribute name='ts_operationalstatus'/>",
+                                "    <filter type='and'>",
+                                "      <condition attribute='ts_operationalstatus' operator='eq' value='717750000'/>",
+                                "      <condition attribute='ts_targetedinspectionneeded' operator='eq' value='1'/>",
+                                "    </filter>",
+                                "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
+                                "      <filter>",
+                                "        <condition attribute='ts_region' operator='eq' value='", teamRegionId_1, "'/>",
+                                "      </filter>",
+                                "    </link-entity>",
+                                "  </entity>",
+                                "</fetch>"
+                            ].join("");
+                            operationsTargetedInspectionNeededFetchXml = "?fetchXml=" + encodeURIComponent(operationsTargetedInspectionNeededFetchXml);
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ovs_operation", operationsTargetedInspectionNeededFetchXml).then(function success(result) { return result.entities; })];
+                        case 10:
+                            operationsTargetedInspectionNeeded = _c.sent();
+                            railwayCarrierOperationTypeId = "d883b39a-c751-eb11-a812-000d3af3ac0d";
+                            railwayLoaderOperationTypeId = "da56fea1-c751-eb11-a812-000d3af3ac0d";
+                            for (_a = 0, operationsTargetedInspectionNeeded_1 = operationsTargetedInspectionNeeded; _a < operationsTargetedInspectionNeeded_1.length; _a++) {
+                                operation = operationsTargetedInspectionNeeded_1[_a];
+                                data = {
+                                    "ts_plan@odata.bind": "/ts_plans(" + planId + ")",
+                                    "ts_stakeholder@odata.bind": "/accounts(" + operation._ts_stakeholder_value + ")",
+                                    "ts_operationtype@odata.bind": "/ovs_operationtypes(" + operation._ovs_operationtypeid_value + ")",
+                                    "ts_site@odata.bind": "/msdyn_functionallocations(" + operation._ts_site_value + ")",
+                                    "ts_operation@odata.bind": "/ovs_operations(" + operation.ovs_operationid + ")",
+                                    "ts_q1": 0,
+                                    "ts_q2": 0,
+                                    "ts_q3": 0,
+                                    "ts_q4": 0
+                                };
+                                if (operation._ovs_operationtypeid_value == railwayCarrierOperationTypeId || operation._ovs_operationtypeid_value == railwayLoaderOperationTypeId) {
+                                    data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + targetedInspectionTDGIncidentTypeId + ")";
+                                    data["ts_estimatedduration"] = targetedInspectionTDGIncidentType.msdyn_estimatedduration / 60;
+                                }
+                                else {
+                                    data["ts_activitytype@odata.bind"] = "/msdyn_incidenttypes(" + targetedInspectionPAXIncidentTypeId + ")";
+                                    data["ts_estimatedduration"] = targetedInspectionPAXIncidentType.msdyn_estimatedduration / 60;
+                                }
+                                Xrm.WebApi.createRecord("ts_suggestedinspection", data).then(function success(result) { }, function (error) { console.log(error.message); });
+                            }
                             inspectorHoursfetchXml = [
                                 "<fetch>",
                                 "  <entity name='ts_inspectionhours'>",
@@ -401,12 +466,12 @@ var ROM;
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_inspectionhours", inspectorHoursfetchXml).then(function success(result) {
                                     return result.entities;
                                 })];
-                        case 8:
-                            teamInspectorHours = _b.sent();
+                        case 11:
+                            teamInspectorHours = _c.sent();
                             if (teamInspectorHours != null && teamInspectorHours.length > 0) {
                                 //For each inspector, create an Plan Inspector Hours record
-                                for (_a = 0, teamInspectorHours_1 = teamInspectorHours; _a < teamInspectorHours_1.length; _a++) {
-                                    inspectorHours = teamInspectorHours_1[_a];
+                                for (_b = 0, teamInspectorHours_1 = teamInspectorHours; _b < teamInspectorHours_1.length; _b++) {
+                                    inspectorHours = teamInspectorHours_1[_b];
                                     data = {
                                         "ts_name": inspectorHours["user.fullname"] + " | " + teamName + " | " + planFiscalYearName,
                                         "ts_inspectorhours@odata.bind": "/ts_inspectionhourses(" + inspectorHours.ts_inspectionhoursid + ")",
@@ -419,8 +484,8 @@ var ROM;
                                     Xrm.WebApi.createRecord("ts_planinspectorhours", data);
                                 }
                             }
-                            _b.label = 9;
-                        case 9:
+                            _c.label = 12;
+                        case 12:
                             suggestedInspectionsfetchXml = [
                                 "<fetch>",
                                 "   <entity name='ts_suggestedinspection'>",
@@ -448,8 +513,8 @@ var ROM;
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_suggestedinspection", suggestedInspectionsfetchXml).then(function success(result) {
                                     return result.entities;
                                 })];
-                        case 10:
-                            suggestedInspections = _b.sent();
+                        case 13:
+                            suggestedInspections = _c.sent();
                             suggestedInspections.forEach(function (inspection) {
                                 if (isNaN(inspection.ts_q1))
                                     inspection.ts_q1 = 0;
@@ -464,6 +529,8 @@ var ROM;
                                 teamPlanningDataPlannedQ3 += inspection.ts_q3;
                                 teamPlanningDataPlannedQ4 += inspection.ts_q4;
                                 teamPlanningDataPlannedTotal += inspection.ts_q1 + inspection.ts_q2 + inspection.ts_q3 + inspection.ts_q4;
+                                if (isNaN(inspection.ts_estimatedduration))
+                                    inspection.ts_estimatedduration = 0;
                                 teamPlanningDataTeamEstimatedDurationQ1 += inspection.ts_estimatedduration * inspection.ts_q1;
                                 teamPlanningDataTeamEstimatedDurationQ2 += inspection.ts_estimatedduration * inspection.ts_q2;
                                 teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
