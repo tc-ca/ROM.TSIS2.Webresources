@@ -14,7 +14,12 @@ function recalculateRiskScore(formContext) {
         let RiskResponseRow = RiskResponseRows.get(i).getData();
         RiskCriteriaRetrievals.push(Xrm.WebApi.retrieveRecord("ts_riskcriteriaresponse", RiskResponseRow._entity._entityId.guid, "?$select=ts_riskcriteriaoption,ts_name&$expand=ts_riskcriteriaoption($select=ts_weight,ts_name)").then(
             function success(result) {
-                calculationLog += `Risk Criteria "${result.ts_name}" with option "${result.ts_riskcriteriaoption.ts_name}" has a weight of ${result.ts_riskcriteriaoption.ts_weight} \n`;
+                if (result.ts_riskcriteriaoption != null) {
+                    calculationLog += `Risk Criteria "${result.ts_name}" with option "${result.ts_riskcriteriaoption.ts_name}" has a weight of ${result.ts_riskcriteriaoption.ts_weight} \n`;
+                } else {
+                    calculationLog += `Risk Criteria "${result.ts_name}" has no option selected \n`;
+                }
+                
                 if (result.ts_riskcriteriaoption.ts_weight != isNaN) {
                     return result.ts_riskcriteriaoption.ts_weight
                 }
@@ -44,13 +49,17 @@ function recalculateRiskScore(formContext) {
         let DiscretionaryResponseRow = DiscretionaryRows.get(i).getData();
         DiscretionaryRetrievals.push(Xrm.WebApi.retrieveRecord("ts_discretionaryfactorresponse", DiscretionaryResponseRow._entity._entityId.guid, "?$select=ts_discretionaryfactoroption,ts_name&$expand=ts_discretionaryfactoroption($select=ts_weight,ts_name),ts_discretionaryfactorgrouping($select=ts_scorerangeminimum,ts_scorerangemaximum, ts_name)").then(
             function success(result) {
-                calculationLog += `Discretionary Factor "${result.ts_name}" with option "${result.ts_discretionaryfactoroption.ts_name}" in group of "${result.ts_discretionaryfactorgrouping.ts_name}" (Min: ${result.ts_discretionaryfactorgrouping.ts_scorerangeminimum}, Max ${result.ts_discretionaryfactorgrouping.ts_scorerangemaximum}) has a weight of ${result.ts_discretionaryfactoroption.ts_weight} \n`;
-                return {
-                    groupingName: result.ts_discretionaryfactorgrouping.ts_name,
-                    groupingId: result.ts_discretionaryfactorgrouping.ts_discretionaryfactorgroupingid,
-                    groupingMin: result.ts_discretionaryfactorgrouping.ts_scorerangeminimum,
-                    groupingMax: result.ts_discretionaryfactorgrouping.ts_scorerangemaximum,
-                    weight: result.ts_discretionaryfactoroption.ts_weight
+                if (result.ts_discretionaryfactoroption != null && result.ts_discretionaryfactoroption != null) {
+                    calculationLog += `Discretionary Factor "${result.ts_name}" with option "${result.ts_discretionaryfactoroption.ts_name}" in group of "${result.ts_discretionaryfactorgrouping.ts_name}" (Min: ${result.ts_discretionaryfactorgrouping.ts_scorerangeminimum}, Max ${result.ts_discretionaryfactorgrouping.ts_scorerangemaximum}) has a weight of ${result.ts_discretionaryfactoroption.ts_weight} \n`;
+                    return {
+                        groupingName: result.ts_discretionaryfactorgrouping.ts_name,
+                        groupingId: result.ts_discretionaryfactorgrouping.ts_discretionaryfactorgroupingid,
+                        groupingMin: result.ts_discretionaryfactorgrouping.ts_scorerangeminimum,
+                        groupingMax: result.ts_discretionaryfactorgrouping.ts_scorerangemaximum,
+                        weight: result.ts_discretionaryfactoroption.ts_weight
+                    }
+                } else {
+                    calculationLog += `Discretionary Factor "${result.ts_name}" has no option selected \n`;
                 }
             }
         ));
@@ -59,7 +68,7 @@ function recalculateRiskScore(formContext) {
         let totalScore = 0;
         let groupingScores = [];
         for (let discretionaryResponse of discretionaryResponses) {
-            if (groupingScores[discretionaryResponse.groupingId] == null) {
+            if (discretionaryResponse.groupingId != null && groupingScores[discretionaryResponse.groupingId] == null) {
                 groupingScores[discretionaryResponse.groupingId] = {
                     min: discretionaryResponse.groupingMin,
                     max: discretionaryResponse.groupingMax,
