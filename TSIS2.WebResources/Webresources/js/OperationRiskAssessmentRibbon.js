@@ -15,14 +15,16 @@ function recalculateRiskScore(formContext) {
         RiskCriteriaRetrievals.push(Xrm.WebApi.retrieveRecord("ts_riskcriteriaresponse", RiskResponseRow._entity._entityId.guid, "?$select=ts_riskcriteriaoption,ts_name&$expand=ts_riskcriteriaoption($select=ts_weight,ts_name)").then(
             function success(result) {
                 if (result.ts_riskcriteriaoption != null) {
-                    calculationLog += `Risk Criteria "${result.ts_name}" with option "${result.ts_riskcriteriaoption.ts_name}" has a weight of ${result.ts_riskcriteriaoption.ts_weight} \n`;
+                    if (result.ts_riskcriteriaoption.ts_weight != isNaN) {
+                        calculationLog += `Risk Criteria "${result.ts_name}" with option "${result.ts_riskcriteriaoption.ts_name}" has a weight of ${result.ts_riskcriteriaoption.ts_weight} \n`;
+                        return result.ts_riskcriteriaoption.ts_weight
+                    }
                 } else {
                     calculationLog += `Risk Criteria "${result.ts_name}" has no option selected \n`;
+                    return 0;
                 }
                 
-                if (result.ts_riskcriteriaoption.ts_weight != isNaN) {
-                    return result.ts_riskcriteriaoption.ts_weight
-                }
+                
             }
         ));
     }
@@ -68,6 +70,7 @@ function recalculateRiskScore(formContext) {
         let totalScore = 0;
         let groupingScores = [];
         for (let discretionaryResponse of discretionaryResponses) {
+            if (discretionaryResponse == null) continue;
             if (discretionaryResponse.groupingId != null && groupingScores[discretionaryResponse.groupingId] == null) {
                 groupingScores[discretionaryResponse.groupingId] = {
                     min: discretionaryResponse.groupingMin,
@@ -100,7 +103,14 @@ function recalculateRiskScore(formContext) {
         calculationLog += `Set Discretionary Score to ${totalScore} \n`;
         DiscretionaryScoreSet = true;
         if (RiskScoreSet && DiscretionaryScoreSet) {
-            const riskScore = formContext.getAttribute("ts_discretionaryscore").getValue() + formContext.getAttribute("ts_riskcriteriascore").getValue();
+
+            let discretionaryScore = formContext.getAttribute("ts_discretionaryscore").getValue();
+            let riskCriteriaScore = formContext.getAttribute("ts_riskcriteriascore").getValue();
+
+            if (isNaN(discretionaryScore)) discretionaryScore = 0;
+            if (isNaN(riskCriteriaScore)) riskCriteriaScore = 0;
+
+            const riskScore = discretionaryScore + riskCriteriaScore;
             formContext.getAttribute("ts_riskscore").setValue(riskScore);
             calculationLog += `Set Risk Score to ${riskScore} \n`;
             Xrm.Utility.closeProgressIndicator();
