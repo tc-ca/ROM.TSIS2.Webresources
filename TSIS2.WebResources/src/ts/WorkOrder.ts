@@ -1618,58 +1618,69 @@ namespace ROM.WorkOrder {
     export function activityTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
         if (formContext.ui.getFormType() == 1) {
-            return;
+            var activityTypeValue = formContext.getAttribute("msdyn_primaryincidenttype").getValue();
+            if (activityTypeValue != null) {
+                Xrm.WebApi.retrieveRecord('msdyn_incidenttype', activityTypeValue[0].id, '?$select=ts_preparationtime,ts_conductingoversight,ts_reportinganddocumentation').then(
+                    function success(result) {
+                        formContext.getAttribute("ts_preparationtime").setValue(result.ts_preparationtime);
+                        formContext.getAttribute("ts_conductingoversight").setValue(result.ts_conductingoversight);
+                        formContext.getAttribute("ts_woreportinganddocumentation").setValue(result.ts_reportinganddocumentation);
+                    }
+                );
+            }
         }
+        else {
 
-        const workOrderId = formContext.data.entity.getId();
-        const activityTypeControl = formContext.getControl("msdyn_primaryincidenttype");
-        //Retrieve all related Service Tasks
-        let fetchXml = [
-            "<fetch top='50'>",
-            "  <entity name='msdyn_workorderservicetask'>",
-            "    <attribute name='statuscode' />",
-            "    <attribute name='statecode' />",
-            "    <filter>",
-            "      <condition attribute='msdyn_workorder' operator='eq' value='", workOrderId, "'/>",
-            "    </filter>",
-            "  </entity>",
-            "</fetch>",
-        ].join("");
-        fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
-        Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchXml).then(function (result) {
-            if (result.entities.length == 0) {
-                activityTypeControl.setDisabled(false);
-            } else {
-                let workOrderHasActiveWost = false;
-                let workOrderHasNewWost = false;
-                for (let wost of result.entities) {
-                    if (wost.statecode == 0) {
-                        workOrderHasActiveWost = true;
-                        if (wost.statuscode == msdyn_workorderservicetask_statuscode.New) workOrderHasNewWost = true;
+            const workOrderId = formContext.data.entity.getId();
+            const activityTypeControl = formContext.getControl("msdyn_primaryincidenttype");
+            //Retrieve all related Service Tasks
+            let fetchXml = [
+                "<fetch top='50'>",
+                "  <entity name='msdyn_workorderservicetask'>",
+                "    <attribute name='statuscode' />",
+                "    <attribute name='statecode' />",
+                "    <filter>",
+                "      <condition attribute='msdyn_workorder' operator='eq' value='", workOrderId, "'/>",
+                "    </filter>",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchXml).then(function (result) {
+                if (result.entities.length == 0) {
+                    activityTypeControl.setDisabled(false);
+                } else {
+                    let workOrderHasActiveWost = false;
+                    let workOrderHasNewWost = false;
+                    for (let wost of result.entities) {
+                        if (wost.statecode == 0) {
+                            workOrderHasActiveWost = true;
+                            if (wost.statuscode == msdyn_workorderservicetask_statuscode.New) workOrderHasNewWost = true;
+                        }
+                    }
+                    if (!(workOrderHasNewWost || !workOrderHasActiveWost)) {
+                        //The Activity type should not have been able to change. Set it to the old value and lock the field.
+                        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value&$expand=msdyn_primaryincidenttype($select=ovs_incidenttypenameenglish,ovs_incidenttypenamefrench)").then(function (result) {
+                            const incidentTypeName = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? result.msdyn_primaryincidenttype.ovs_incidenttypenamefrench : result.msdyn_primaryincidenttype.ovs_incidenttypenameenglish
+                            formContext.getAttribute("msdyn_primaryincidenttype").setValue([{
+                                id: result._msdyn_primaryincidenttype_value,
+                                name: incidentTypeName,
+                                entityType: "msdyn_incidenttype"
+                            }]);
+                            activityTypeControl.setDisabled(true);
+                        });
+                    } else {
+                        formContext.data.save();
                     }
                 }
-                if (!(workOrderHasNewWost || !workOrderHasActiveWost)) {
-                    //The Activity type should not have been able to change. Set it to the old value and lock the field.
-                    Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value&$expand=msdyn_primaryincidenttype($select=ovs_incidenttypenameenglish,ovs_incidenttypenamefrench)").then(function (result) {
-                        const incidentTypeName = (Xrm.Utility.getGlobalContext().userSettings.languageId == 1036) ? result.msdyn_primaryincidenttype.ovs_incidenttypenamefrench : result.msdyn_primaryincidenttype.ovs_incidenttypenameenglish
-                        formContext.getAttribute("msdyn_primaryincidenttype").setValue([{
-                            id: result._msdyn_primaryincidenttype_value,
-                            name: incidentTypeName,
-                            entityType: "msdyn_incidenttype"
-                        }]);
-                        activityTypeControl.setDisabled(true);
-                    });
-                } else {
-                    formContext.data.save();
-                }
-            }
-        });
+            });
 
-        const operation = formContext.getAttribute("ovs_operationid").getValue();
-        const operationType = formContext.getAttribute("ovs_operationtypeid").getValue();
-        const workOrderType = formContext.getAttribute("msdyn_workordertype").getValue();
-        if (operation != null && operationType != null && workOrderType != null) {
-            setActivityTypeFilteredView(formContext, operation[0].id, workOrderType[0].id, operationType[0].id);
+            const operation = formContext.getAttribute("ovs_operationid").getValue();
+            const operationType = formContext.getAttribute("ovs_operationtypeid").getValue();
+            const workOrderType = formContext.getAttribute("msdyn_workordertype").getValue();
+            if (operation != null && operationType != null && workOrderType != null) {
+                setActivityTypeFilteredView(formContext, operation[0].id, workOrderType[0].id, operationType[0].id);
+            }
         }
     }
 
