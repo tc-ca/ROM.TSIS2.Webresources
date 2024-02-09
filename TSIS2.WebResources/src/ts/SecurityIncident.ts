@@ -275,6 +275,7 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_yardorstationname").setVisible(false);
             form.getControl("ts_publicorprivatecrossing").setVisible(false);
             form.getControl("ts_ruralorurban").setVisible(false);
+            form.getControl("ts_tcomsofficer").setVisible(false);
 
             if (!isROM20Form) {
                 let tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
@@ -395,6 +396,7 @@ namespace ROM.SecurityIncident {
 
             form.getControl("ts_delaystooperation").setVisible(true);
             form.getControl("ts_injuries").setVisible(true);
+            form.getControl("ts_tcomsofficer").setVisible(true);
 
             if (mode == ts_securityincidentmode.RailSecurity) {
                 form.getControl("ts_statusofrailwayowner").setVisible(true);
