@@ -245,6 +245,7 @@ var ROM;
                 form.getControl("ts_yardorstationname").setVisible(false);
                 form.getControl("ts_publicorprivatecrossing").setVisible(false);
                 form.getControl("ts_ruralorurban").setVisible(false);
+                form.getControl("ts_tcomsofficer").setVisible(false);
                 if (!isROM20Form) {
                     var tab_time_tracking = form.ui.tabs.get("tab_time_tracking");
                     tab_time_tracking.setVisible(true);
@@ -353,6 +354,7 @@ var ROM;
                 form.getControl("ts_organization").setVisible(false);
                 form.getControl("ts_delaystooperation").setVisible(true);
                 form.getControl("ts_injuries").setVisible(true);
+                form.getControl("ts_tcomsofficer").setVisible(true);
                 if (mode == 717750000 /* RailSecurity */) {
                     form.getControl("ts_statusofrailwayowner").setVisible(true);
                     form.getControl("ts_owneroftherailwaylinetrack").setVisible(true);
