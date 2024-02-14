@@ -106,11 +106,13 @@ function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEngl
         name: "ts_fileupload_2bf02", //Unique name of Custom page
         recordId: jsonString
     };
+    
+    // Note: remember for height take into consideration the size of the heading of the dialog pop up
     var navigationOptions = {
         target: 2,
         position: 1,
-        width: { value: 1000, unit: "px" },
-        height: { value: 1000, unit: "px" },
+        width: { value: 600, unit: "px" },
+        height: { value: 770, unit: "px" },
         title: (lang == 1036) ? mainHeadingFrench : mainHeadingEnglish
     };
     Xrm.Navigation.navigateTo(pageInput, navigationOptions)
