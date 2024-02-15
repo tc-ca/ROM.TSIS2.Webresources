@@ -78,6 +78,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_actualcost?: number | null;
   ts_actualcost_base?: number | null;
   ts_aircraftclassification?: ts_aircraftclassification | null;
+  ts_alternateoperatingcarrier?: ts_yesno | null;
   ts_cantcompleteinspection?: boolean | null;
   ts_canvasappnumber?: string | null;
   ts_comments?: string | null;
@@ -227,6 +228,8 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ts_TeamPlanningData_bind$ts_teamplanningdatas?: string | null;
   ts_WorkOrderCreationWizardId_bind$ts_workordercreationwizards?: string | null;
   ts_canceledinspectionjustification_bind$ts_canceledinspectionjustifications?: string | null;
+  ts_operatingcarrier_bind$accounts?: string | null;
+  ts_operatingname_bind$accounts?: string | null;
   ts_plan_bind$ts_plans?: string | null;
   ts_reason_bind$ts_planningreasons?: string | null;
   ts_riskthreshold_bind$ts_riskcategories?: string | null;
@@ -367,6 +370,7 @@ interface msdyn_workorder_Select {
   ts_actualcost: WebAttribute<msdyn_workorder_Select, { ts_actualcost: number | null; transactioncurrencyid_guid: string | null }, { ts_actualcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_actualcost_base: WebAttribute<msdyn_workorder_Select, { ts_actualcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_actualcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_aircraftclassification: WebAttribute<msdyn_workorder_Select, { ts_aircraftclassification: ts_aircraftclassification | null }, { ts_aircraftclassification_formatted?: string }>;
+  ts_alternateoperatingcarrier: WebAttribute<msdyn_workorder_Select, { ts_alternateoperatingcarrier: ts_yesno | null }, { ts_alternateoperatingcarrier_formatted?: string }>;
   ts_canceledinspectionjustification_guid: WebAttribute<msdyn_workorder_Select, { ts_canceledinspectionjustification_guid: string | null }, { ts_canceledinspectionjustification_formatted?: string }>;
   ts_cantcompleteinspection: WebAttribute<msdyn_workorder_Select, { ts_cantcompleteinspection: boolean | null }, {  }>;
   ts_canvasappnumber: WebAttribute<msdyn_workorder_Select, { ts_canvasappnumber: string | null }, {  }>;
@@ -388,6 +392,8 @@ interface msdyn_workorder_Select {
   ts_numberoffindings: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_state: number | null }, {  }>;
+  ts_operatingcarrier_guid: WebAttribute<msdyn_workorder_Select, { ts_operatingcarrier_guid: string | null }, { ts_operatingcarrier_formatted?: string }>;
+  ts_operatingname_guid: WebAttribute<msdyn_workorder_Select, { ts_operatingname_guid: string | null }, { ts_operatingname_formatted?: string }>;
   ts_origin: WebAttribute<msdyn_workorder_Select, { ts_origin: string | null }, {  }>;
   ts_othercanceledjustification: WebAttribute<msdyn_workorder_Select, { ts_othercanceledjustification: string | null }, {  }>;
   ts_overtime: WebAttribute<msdyn_workorder_Select, { ts_overtime: number | null }, {  }>;
@@ -562,6 +568,7 @@ interface msdyn_workorder_Filter {
   ts_actualcost: number;
   ts_actualcost_base: number;
   ts_aircraftclassification: ts_aircraftclassification;
+  ts_alternateoperatingcarrier: ts_yesno;
   ts_canceledinspectionjustification_guid: XQW.Guid;
   ts_cantcompleteinspection: boolean;
   ts_canvasappnumber: string;
@@ -583,6 +590,8 @@ interface msdyn_workorder_Filter {
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;
+  ts_operatingcarrier_guid: XQW.Guid;
+  ts_operatingname_guid: XQW.Guid;
   ts_origin: string;
   ts_othercanceledjustification: string;
   ts_overtime: any;
@@ -685,6 +694,8 @@ interface msdyn_workorder_Expand {
   ts_msdyn_workorder_msdyn_workorder_Account: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ts_msdyn_workorder_msdyn_workorder_Account: Account_Result[] }>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<msdyn_workorder_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: ovs_operation_Result[] }>;
   ts_msdyn_workorder_ts_operationcontact: WebExpand<msdyn_workorder_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_msdyn_workorder_ts_operationcontact: ts_operationcontact_Result[] }>;
+  ts_operatingcarrier: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ts_operatingcarrier: Account_Result }>;
+  ts_operatingname: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ts_operatingname: Account_Result }>;
   ts_operationcontact_workorder_msdyn_worko: WebExpand<msdyn_workorder_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operationcontact_workorder_msdyn_worko: ts_operationcontact_Result[] }>;
   ts_ovs_Finding_WorkOrder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_WorkOrder_msdyn_workorder: ovs_Finding_Result[] }>;
   ts_plan: WebExpand<msdyn_workorder_Expand, ts_Plan_Select, ts_Plan_Filter, { ts_plan: ts_Plan_Result }>;
@@ -779,6 +790,7 @@ interface msdyn_workorder_FormattedResult {
   ts_actualcost_base_formatted?: string;
   ts_actualcost_formatted?: string;
   ts_aircraftclassification_formatted?: string;
+  ts_alternateoperatingcarrier_formatted?: string;
   ts_canceledinspectionjustification_formatted?: string;
   ts_casetimetracking_formatted?: string;
   ts_completedquarter_formatted?: string;
@@ -788,6 +800,8 @@ interface msdyn_workorder_FormattedResult {
   ts_incident_formatted?: string;
   ts_incompleteworkorderreason_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
+  ts_operatingcarrier_formatted?: string;
+  ts_operatingname_formatted?: string;
   ts_plan_formatted?: string;
   ts_plannedcost_base_formatted?: string;
   ts_plannedcost_formatted?: string;
@@ -872,6 +886,8 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ts_contact_guid: string | null;
   ts_country_guid: string | null;
   ts_incompleteworkorderreason_guid: string | null;
+  ts_operatingcarrier_guid: string | null;
+  ts_operatingname_guid: string | null;
   ts_plan_guid: string | null;
   ts_planningdata_guid: string | null;
   ts_reason_guid: string | null;
@@ -925,6 +941,8 @@ interface msdyn_workorder_RelatedOne {
   ts_TeamPlanningData: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   ts_WorkOrderCreationWizardId: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
+  ts_operatingcarrier: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_operatingname: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   ts_riskthreshold: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
   ts_suggestedinspection: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;

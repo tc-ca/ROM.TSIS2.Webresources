@@ -65,6 +65,7 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(name: "tab_3_section_2"): Xrm.PageSection;
         get(name: "tab_3_section_3"): Xrm.PageSection;
         get(name: "tab_3_section_7"): Xrm.PageSection;
+        get(name: "tab_3_section_8"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -106,6 +107,11 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_shortname"): Xrm.Attribute<string>;
       get(name: "msdyn_stateorprovince"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+      get(name: "ts_alias1"): Xrm.Attribute<string>;
+      get(name: "ts_alias2"): Xrm.Attribute<string>;
+      get(name: "ts_alias3"): Xrm.Attribute<string>;
+      get(name: "ts_alias4"): Xrm.Attribute<string>;
+      get(name: "ts_alias5"): Xrm.Attribute<string>;
       get(name: "ts_businessunit"): Xrm.Attribute<string>;
       get(name: "ts_class"): Xrm.OptionSetAttribute<ts_msdyn_functionallocation_ts_class>;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
@@ -165,6 +171,11 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_stateorprovince"): Xrm.StringControl;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "notescontrol1"): Xrm.BaseControl;
+      get(name: "ts_alias1"): Xrm.StringControl;
+      get(name: "ts_alias2"): Xrm.StringControl;
+      get(name: "ts_alias3"): Xrm.StringControl;
+      get(name: "ts_alias4"): Xrm.StringControl;
+      get(name: "ts_alias5"): Xrm.StringControl;
       get(name: "ts_businessunit"): Xrm.StringControl;
       get(name: "ts_class"): Xrm.OptionSetControl<ts_msdyn_functionallocation_ts_class>;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
@@ -226,6 +237,11 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "msdyn_shortname"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_stateorprovince"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+    getAttribute(attributeName: "ts_alias1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_alias2"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_alias3"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_alias4"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_alias5"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_businessunit"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_class"): Xrm.OptionSetAttribute<ts_msdyn_functionallocation_ts_class>;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
@@ -280,6 +296,11 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "msdyn_stateorprovince"): Xrm.StringControl;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "notescontrol1"): Xrm.BaseControl;
+    getControl(controlName: "ts_alias1"): Xrm.StringControl;
+    getControl(controlName: "ts_alias2"): Xrm.StringControl;
+    getControl(controlName: "ts_alias3"): Xrm.StringControl;
+    getControl(controlName: "ts_alias4"): Xrm.StringControl;
+    getControl(controlName: "ts_alias5"): Xrm.StringControl;
     getControl(controlName: "ts_businessunit"): Xrm.StringControl;
     getControl(controlName: "ts_class"): Xrm.OptionSetControl<ts_msdyn_functionallocation_ts_class>;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;

@@ -27,6 +27,8 @@ interface ts_action_Relationships {
   ts_ActionFinding_ts_action_ts_action?: ts_ActionFinding_Result[] | null;
   ts_Case?: Incident_Result | null;
   ts_action_PostFollows?: PostFollow_Result[] | null;
+  ts_action_connections1?: Connection_Result[] | null;
+  ts_action_connections2?: Connection_Result[] | null;
   ts_ts_action_ovs_finding?: ovs_Finding_Result[] | null;
 }
 interface ts_action extends ts_action_Base, ts_action_Relationships {
@@ -127,6 +129,8 @@ interface ts_action_Expand {
   ts_ActionFinding_ts_action_ts_action: WebExpand<ts_action_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { ts_ActionFinding_ts_action_ts_action: ts_ActionFinding_Result[] }>;
   ts_Case: WebExpand<ts_action_Expand, Incident_Select, Incident_Filter, { ts_Case: Incident_Result }>;
   ts_action_PostFollows: WebExpand<ts_action_Expand, PostFollow_Select, PostFollow_Filter, { ts_action_PostFollows: PostFollow_Result[] }>;
+  ts_action_connections1: WebExpand<ts_action_Expand, Connection_Select, Connection_Filter, { ts_action_connections1: Connection_Result[] }>;
+  ts_action_connections2: WebExpand<ts_action_Expand, Connection_Select, Connection_Filter, { ts_action_connections2: Connection_Result[] }>;
   ts_contact: WebExpand<ts_action_Expand, Contact_Select, Contact_Filter, { ts_contact: Contact_Result }>;
   ts_finding: WebExpand<ts_action_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_finding: ovs_Finding_Result }>;
   ts_stakeholder: WebExpand<ts_action_Expand, Account_Select, Account_Filter, { ts_stakeholder: Account_Result }>;
@@ -192,6 +196,8 @@ interface ts_action_RelatedOne {
 interface ts_action_RelatedMany {
   ts_ActionFinding_ts_action_ts_action: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;
   ts_action_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
+  ts_action_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  ts_action_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ts_ts_action_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
