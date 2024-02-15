@@ -32,6 +32,8 @@ interface qm_rclegislation_Relationships {
   ovs_msdyn_servicetasktype_qm_rclegislation?: msdyn_servicetasktype_Result[] | null;
   qm_qm_rclegislation_qm_rclegislation?: qm_rclegislation_Result[] | null;
   qm_rcParentLegislationId?: qm_rclegislation_Result | null;
+  qm_rclegislation_connections1?: Connection_Result[] | null;
+  qm_rclegislation_connections2?: Connection_Result[] | null;
   qm_rclegislation_enablingprovision?: qm_rclegislation_Result[] | null;
   ts_ovs_operation_qm_rclegislation_qm_rclegis?: ovs_operation_Result[] | null;
   ts_qm_rclegislation_qm_rclegislation_ovs_Fin?: ovs_Finding_Result[] | null;
@@ -142,6 +144,8 @@ interface qm_rclegislation_Expand {
   qm_enablingprovision: WebExpand<qm_rclegislation_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { qm_enablingprovision: qm_rclegislation_Result }>;
   qm_qm_rclegislation_qm_rclegislation: WebExpand<qm_rclegislation_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { qm_qm_rclegislation_qm_rclegislation: qm_rclegislation_Result[] }>;
   qm_rcParentLegislationId: WebExpand<qm_rclegislation_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { qm_rcParentLegislationId: qm_rclegislation_Result }>;
+  qm_rclegislation_connections1: WebExpand<qm_rclegislation_Expand, Connection_Select, Connection_Filter, { qm_rclegislation_connections1: Connection_Result[] }>;
+  qm_rclegislation_connections2: WebExpand<qm_rclegislation_Expand, Connection_Select, Connection_Filter, { qm_rclegislation_connections2: Connection_Result[] }>;
   qm_rclegislation_enablingprovision: WebExpand<qm_rclegislation_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { qm_rclegislation_enablingprovision: qm_rclegislation_Result[] }>;
   ts_ovs_operation_qm_rclegislation_qm_rclegis: WebExpand<qm_rclegislation_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_qm_rclegislation_qm_rclegis: ovs_operation_Result[] }>;
   ts_qm_rclegislation_qm_rclegislation_ovs_Fin: WebExpand<qm_rclegislation_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_qm_rclegislation_qm_rclegislation_ovs_Fin: ovs_Finding_Result[] }>;
@@ -194,6 +198,8 @@ interface qm_rclegislation_RelatedOne {
 interface qm_rclegislation_RelatedMany {
   ovs_msdyn_servicetasktype_qm_rclegislation: WebMappingRetrieve<msdyn_servicetasktype_Select,msdyn_servicetasktype_Expand,msdyn_servicetasktype_Filter,msdyn_servicetasktype_Fixed,msdyn_servicetasktype_Result,msdyn_servicetasktype_FormattedResult>;
   qm_qm_rclegislation_qm_rclegislation: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
+  qm_rclegislation_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  qm_rclegislation_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   qm_rclegislation_enablingprovision: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
   ts_ovs_operation_qm_rclegislation_qm_rclegis: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_qm_rclegislation_qm_rclegislation_ovs_Fin: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;

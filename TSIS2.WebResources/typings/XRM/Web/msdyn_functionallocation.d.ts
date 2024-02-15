@@ -24,6 +24,11 @@ interface msdyn_FunctionalLocation_Base extends WebEntity {
   statecode?: msdyn_functionallocation_statecode | null;
   statuscode?: msdyn_functionallocation_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_alias1?: string | null;
+  ts_alias2?: string | null;
+  ts_alias3?: string | null;
+  ts_alias4?: string | null;
+  ts_alias5?: string | null;
   ts_businessunit?: string | null;
   ts_class?: ts_msdyn_functionallocation_ts_class | null;
   ts_description?: string | null;
@@ -126,6 +131,11 @@ interface msdyn_FunctionalLocation_Select {
   statecode: WebAttribute<msdyn_FunctionalLocation_Select, { statecode: msdyn_functionallocation_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<msdyn_FunctionalLocation_Select, { statuscode: msdyn_functionallocation_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<msdyn_FunctionalLocation_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_alias1: WebAttribute<msdyn_FunctionalLocation_Select, { ts_alias1: string | null }, {  }>;
+  ts_alias2: WebAttribute<msdyn_FunctionalLocation_Select, { ts_alias2: string | null }, {  }>;
+  ts_alias3: WebAttribute<msdyn_FunctionalLocation_Select, { ts_alias3: string | null }, {  }>;
+  ts_alias4: WebAttribute<msdyn_FunctionalLocation_Select, { ts_alias4: string | null }, {  }>;
+  ts_alias5: WebAttribute<msdyn_FunctionalLocation_Select, { ts_alias5: string | null }, {  }>;
   ts_businessunit: WebAttribute<msdyn_FunctionalLocation_Select, { ts_businessunit: string | null }, {  }>;
   ts_class: WebAttribute<msdyn_FunctionalLocation_Select, { ts_class: ts_msdyn_functionallocation_ts_class | null }, { ts_class_formatted?: string }>;
   ts_country_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
@@ -183,6 +193,11 @@ interface msdyn_FunctionalLocation_Filter {
   statecode: msdyn_functionallocation_statecode;
   statuscode: msdyn_functionallocation_statuscode;
   timezoneruleversionnumber: number;
+  ts_alias1: string;
+  ts_alias2: string;
+  ts_alias3: string;
+  ts_alias4: string;
+  ts_alias5: string;
   ts_businessunit: string;
   ts_class: ts_msdyn_functionallocation_ts_class;
   ts_country_guid: XQW.Guid;

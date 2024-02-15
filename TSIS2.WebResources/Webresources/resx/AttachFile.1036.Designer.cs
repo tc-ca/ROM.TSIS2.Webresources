@@ -250,6 +250,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Récupération de fichiers.
+        /// </summary>
+        internal static string RetrievingFilesText {
+            get {
+                return ResourceManager.GetString("RetrievingFilesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retourner à la section pour télécharger vos fichiers.
         /// </summary>
         internal static string ReturnButtonAccessibleLabel {

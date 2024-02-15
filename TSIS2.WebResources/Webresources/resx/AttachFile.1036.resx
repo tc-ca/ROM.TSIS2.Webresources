@@ -180,6 +180,9 @@
   <data name="NumberOfFilesAttachedText" xml:space="preserve">
     <value>fichiers joints.</value>
   </data>
+  <data name="RetrievingFilesText" xml:space="preserve">
+    <value>Récupération de fichiers</value>
+  </data>
   <data name="ReturnButtonAccessibleLabel" xml:space="preserve">
     <value>Retourner à la section pour télécharger vos fichiers</value>
   </data>

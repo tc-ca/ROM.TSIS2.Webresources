@@ -98,6 +98,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_aircargo"): Xrm.Attribute<any>;
       get(name: "ts_aviationsecuritytraining"): Xrm.Attribute<any>;
       get(name: "ts_cateringandstores"): Xrm.Attribute<any>;
+      get(name: "ts_conductingoversight"): Xrm.NumberAttribute;
       get(name: "ts_domestic"): Xrm.Attribute<any>;
       get(name: "ts_domesticflights"): Xrm.Attribute<any>;
       get(name: "ts_includeinplanning"): Xrm.OptionSetAttribute<boolean>;
@@ -107,7 +108,9 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_mail"): Xrm.Attribute<any>;
       get(name: "ts_onestopsecurityoss"): Xrm.Attribute<any>;
       get(name: "ts_opi"): Xrm.Attribute<any>;
+      get(name: "ts_preparationtime"): Xrm.NumberAttribute;
       get(name: "ts_remainovernightron"): Xrm.Attribute<any>;
+      get(name: "ts_reportinganddocumentation"): Xrm.NumberAttribute;
       get(name: "ts_reportingcategory"): Xrm.OptionSetAttribute<ts_reportingcategory>;
       get(name: "ts_riskscore"): Xrm.LookupAttribute<"ts_recurrencefrequencies">;
       get(name: "ts_transborderflights"): Xrm.Attribute<any>;
@@ -171,6 +174,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_aircargo"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_aviationsecuritytraining"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_cateringandstores"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_conductingoversight"): Xrm.NumberControl;
       get(name: "ts_domestic"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_domesticflights"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_includeinplanning"): Xrm.OptionSetControl<boolean>;
@@ -180,7 +184,9 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_mail"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_onestopsecurityoss"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_opi"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_preparationtime"): Xrm.NumberControl;
       get(name: "ts_remainovernightron"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_reportinganddocumentation"): Xrm.NumberControl;
       get(name: "ts_reportingcategory"): Xrm.OptionSetControl<ts_reportingcategory>;
       get(name: "ts_riskscore"): Xrm.LookupControl<"ts_recurrencefrequencies">;
       get(name: "ts_transborderflights"): Xrm.Control<Xrm.Attribute<any>>;
@@ -253,6 +259,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getAttribute(attributeName: "ts_aircargo"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_aviationsecuritytraining"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_cateringandstores"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_conductingoversight"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_domestic"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_domesticflights"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_includeinplanning"): Xrm.OptionSetAttribute<boolean>;
@@ -262,7 +269,9 @@ declare namespace Form.msdyn_incidenttype.Main {
     getAttribute(attributeName: "ts_mail"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_onestopsecurityoss"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_opi"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_preparationtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_remainovernightron"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_reportinganddocumentation"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_reportingcategory"): Xrm.OptionSetAttribute<ts_reportingcategory>;
     getAttribute(attributeName: "ts_riskscore"): Xrm.LookupAttribute<"ts_recurrencefrequencies">;
     getAttribute(attributeName: "ts_transborderflights"): Xrm.Attribute<any>;
@@ -321,6 +330,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "ts_aircargo"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_aviationsecuritytraining"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_cateringandstores"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_conductingoversight"): Xrm.NumberControl;
     getControl(controlName: "ts_domestic"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_domesticflights"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_includeinplanning"): Xrm.OptionSetControl<boolean>;
@@ -330,7 +340,9 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "ts_mail"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_onestopsecurityoss"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_opi"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_preparationtime"): Xrm.NumberControl;
     getControl(controlName: "ts_remainovernightron"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_reportinganddocumentation"): Xrm.NumberControl;
     getControl(controlName: "ts_reportingcategory"): Xrm.OptionSetControl<ts_reportingcategory>;
     getControl(controlName: "ts_riskscore"): Xrm.LookupControl<"ts_recurrencefrequencies">;
     getControl(controlName: "ts_transborderflights"): Xrm.Control<Xrm.Attribute<any>>;

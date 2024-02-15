@@ -180,6 +180,9 @@
   <data name="NumberOfFilesAttachedText" xml:space="preserve">
     <value>files attached.</value>
   </data>
+  <data name="RetrievingFilesText" xml:space="preserve">
+    <value>Retrieving Files</value>
+  </data>
   <data name="ReturnButtonAccessibleLabel" xml:space="preserve">
     <value>Return to upload file section</value>
   </data>

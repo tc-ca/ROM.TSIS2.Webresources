@@ -187,6 +187,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
       get(name: "ts_actualcost"): Xrm.NumberAttribute;
       get(name: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
+      get(name: "ts_alternateoperatingcarrier"): Xrm.OptionSetAttribute<ts_yesno>;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
       get(name: "ts_comments"): Xrm.Attribute<string>;
@@ -201,6 +202,8 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_incompleteworkorderreasonforother"): Xrm.Attribute<string>;
       get(name: "ts_justificationcomment"): Xrm.Attribute<string>;
       get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
+      get(name: "ts_operatingcarrier"): Xrm.LookupAttribute<"account">;
+      get(name: "ts_operatingname"): Xrm.LookupAttribute<"account">;
       get(name: "ts_origin"): Xrm.Attribute<string>;
       get(name: "ts_othercanceledjustification"): Xrm.Attribute<string>;
       get(name: "ts_overtime"): Xrm.NumberAttribute;
@@ -348,6 +351,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_accountableteam"): Xrm.LookupControl<"team">;
       get(name: "ts_actualcost"): Xrm.NumberControl;
       get(name: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
+      get(name: "ts_alternateoperatingcarrier"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_comments"): Xrm.StringControl;
@@ -362,6 +366,8 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_incompleteworkorderreasonforother"): Xrm.StringControl;
       get(name: "ts_justificationcomment"): Xrm.StringControl;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
+      get(name: "ts_operatingcarrier"): Xrm.LookupControl<"account">;
+      get(name: "ts_operatingname"): Xrm.LookupControl<"account">;
       get(name: "ts_origin"): Xrm.StringControl;
       get(name: "ts_othercanceledjustification"): Xrm.StringControl;
       get(name: "ts_overtime"): Xrm.NumberControl;
@@ -493,6 +499,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
     getAttribute(attributeName: "ts_actualcost"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
+    getAttribute(attributeName: "ts_alternateoperatingcarrier"): Xrm.OptionSetAttribute<ts_yesno>;
     getAttribute(attributeName: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
     getAttribute(attributeName: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
@@ -507,6 +514,8 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_incompleteworkorderreasonforother"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_justificationcomment"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_operatingcarrier"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "ts_operatingname"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_origin"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_othercanceledjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
@@ -649,6 +658,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_accountableteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_actualcost"): Xrm.NumberControl;
     getControl(controlName: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
+    getControl(controlName: "ts_alternateoperatingcarrier"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
     getControl(controlName: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_comments"): Xrm.StringControl;
@@ -663,6 +673,8 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_incompleteworkorderreasonforother"): Xrm.StringControl;
     getControl(controlName: "ts_justificationcomment"): Xrm.StringControl;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
+    getControl(controlName: "ts_operatingcarrier"): Xrm.LookupControl<"account">;
+    getControl(controlName: "ts_operatingname"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_origin"): Xrm.StringControl;
     getControl(controlName: "ts_othercanceledjustification"): Xrm.StringControl;
     getControl(controlName: "ts_overtime"): Xrm.NumberControl;
