@@ -57,6 +57,15 @@ function recalculateTeamPlanningDataValues(formContext) {
     fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
     Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", fetchXml).then(async function success(result) {
         for (let planningData of result.entities) {
+            if (isNaN(planningData.ts_plannedq1)) planningData.ts_plannedq1 = 0;
+            if (isNaN(planningData.ts_plannedq2)) planningData.ts_plannedq2 = 0;
+            if (isNaN(planningData.ts_plannedq3)) planningData.ts_plannedq3 = 0;
+            if (isNaN(planningData.ts_plannedq4)) planningData.ts_plannedq4 = 0;
+            if (isNaN(planningData.ts_plannedq4)) planningData.ts_plannedq4 = 0;
+            if (isNaN(planningData.ts_teamestimatedduration)) planningData.ts_teamestimatedduration = 0;
+            if (isNaN(planningData.ts_target)) planningData.ts_target = 0;
+
+
             teamPlanningDataPlannedQ1 += planningData.ts_plannedq1;
             teamPlanningDataPlannedQ2 += planningData.ts_plannedq2;
             teamPlanningDataPlannedQ3 += planningData.ts_plannedq3;
