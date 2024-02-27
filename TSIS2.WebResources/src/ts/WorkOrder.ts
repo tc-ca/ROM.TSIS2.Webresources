@@ -82,7 +82,7 @@ namespace ROM.WorkOrder {
         //Set Trip Lookup Navigation to open Time Tracking form when on Time Tracking Tab
         setTripLookupClickNavigation(eContext);
 
-        showHideAircraftclassification(eContext);
+        showHideFiedsByOperationType(eContext);
 
         if (currentSystemStatus == 690970004 || currentSystemStatus == msdyn_wosystemstatus.Closed) {
             form.getControl("ts_completedquarter").setVisible(true);
@@ -685,7 +685,7 @@ namespace ROM.WorkOrder {
                 populateOperationField(eContext);
             }
 
-            showHideAircraftclassification(eContext);
+            showHideFiedsByOperationType(eContext);
 
         } catch (e) {
             throw new Error((e as any).Message);
@@ -2083,8 +2083,9 @@ namespace ROM.WorkOrder {
         }
     }
 
-    function showHideAircraftclassification(eContext: Xrm.ExecutionContext<any, any>) {
+    function showHideFiedsByOperationType(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+        const formROM2 = <Form.msdyn_workorder.Main.ROM20>eContext.getFormContext();
         const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
         if (operationTypeAttribute != null) {
             const operationTypeAttributeValue = operationTypeAttribute.getValue();
@@ -2094,12 +2095,41 @@ namespace ROM.WorkOrder {
                     if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
                         form.getAttribute("ts_aircraftclassification").setValue(ts_aircraftclassification.PassengerPAX);
                     }
+
+                    if (isROM20Form) {
+                        formROM2.ui.tabs.get("tab_workspace").sections.get("contacts_section").setVisible(true);
+                    }
                 }
                 else {
                     form.getControl("ts_aircraftclassification").setVisible(false);
+                    if (isROM20Form) {
+                        formROM2.ui.tabs.get("tab_workspace").sections.get("contacts_section").setVisible(false);
+                    }
                 }
             }
         }
     }
+
+    export function RunOnRowSelected(eContext) {
+        debugger;
+        var selected = eContext.getFormContext().data.entity;
+        var Id = selected.getId();
+        var entityName = selected.getEntityName();
+
+        Xrm.Navigation.navigateTo({
+            pageType: "entityrecord",
+            entityName: entityName,
+            entityId: Id
+        }, {
+            target: 2,
+            position: 2,
+            width:
+            {
+                value: 30,
+                unit: "%"
+            }
+        });
+    }
+
 }
 
