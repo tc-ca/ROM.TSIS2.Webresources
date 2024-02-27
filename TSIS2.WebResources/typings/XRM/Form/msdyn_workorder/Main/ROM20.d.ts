@@ -116,9 +116,9 @@ declare namespace Form.msdyn_workorder.Main {
       }
       interface tab_workspace extends Xrm.SectionCollectionBase {
         get(name: "WO_TimeTracking"): Xrm.PageSection;
+        get(name: "contacts_section"): Xrm.PageSection;
         get(name: "service_tasks_section"): Xrm.PageSection;
         get(name: "tab_10_section_1"): Xrm.PageSection;
-        get(name: "tab_10_section_2"): Xrm.PageSection;
         get(name: "tab_15_section_1"): Xrm.PageSection;
         get(name: "tab_workspace_section_4"): Xrm.PageSection;
         get(name: "workspace_section_plandetails"): Xrm.PageSection;
@@ -252,7 +252,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
-      get(name: "Subgrid_operation_contacts"): Xrm.SubGridControl<"contact">;
+      get(name: "Subgrid_operation_contacts"): Xrm.BaseControl;
       get(name: "SupportingRegion"): Xrm.SubGridControl<"ts_workordertimetracking">;
       get(name: "TimeTrackings"): Xrm.SubGridControl<"ts_workordertimetracking">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
@@ -408,7 +408,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_workorderstartdate"): Xrm.DateControl;
       get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
       get(name: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
-      get(name: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
+      get(name: "workorderservicetasksgrid"): Xrm.BaseControl;
       get(name: "workorderservicetasksgrid2"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -556,7 +556,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
-    getControl(controlName: "Subgrid_operation_contacts"): Xrm.SubGridControl<"contact">;
+    getControl(controlName: "Subgrid_operation_contacts"): Xrm.BaseControl;
     getControl(controlName: "SupportingRegion"): Xrm.SubGridControl<"ts_workordertimetracking">;
     getControl(controlName: "TimeTrackings"): Xrm.SubGridControl<"ts_workordertimetracking">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
@@ -712,7 +712,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_workorderstartdate"): Xrm.DateControl;
     getControl(controlName: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
     getControl(controlName: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
-    getControl(controlName: "workorderservicetasksgrid"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
+    getControl(controlName: "workorderservicetasksgrid"): Xrm.BaseControl;
     getControl(controlName: "workorderservicetasksgrid2"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
     getControl(controlName: string): undefined;
   }

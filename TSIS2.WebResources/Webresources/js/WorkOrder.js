@@ -112,7 +112,7 @@ var ROM;
             setSecurityIncidentLookupClickNavigation(eContext);
             //Set Trip Lookup Navigation to open Time Tracking form when on Time Tracking Tab
             setTripLookupClickNavigation(eContext);
-            showHideAircraftclassification(eContext);
+            showHideFiedsByOperationType(eContext);
             if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* Closed */) {
                 form.getControl("ts_completedquarter").setVisible(true);
             }
@@ -663,7 +663,7 @@ var ROM;
                     //form.getControl("ts_site").setDisabled(false);
                     populateOperationField(eContext);
                 }
-                showHideAircraftclassification(eContext);
+                showHideFiedsByOperationType(eContext);
             }
             catch (e) {
                 throw new Error(e.Message);
@@ -1912,8 +1912,9 @@ var ROM;
                 formContext.getControl("msdyn_closedby").setDisabled(false);
             }
         }
-        function showHideAircraftclassification(eContext) {
+        function showHideFiedsByOperationType(eContext) {
             var form = eContext.getFormContext();
+            var formROM2 = eContext.getFormContext();
             var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
             if (operationTypeAttribute != null) {
                 var operationTypeAttributeValue = operationTypeAttribute.getValue();
@@ -1923,12 +1924,37 @@ var ROM;
                         if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
                             form.getAttribute("ts_aircraftclassification").setValue(741130000 /* PassengerPAX */);
                         }
+                        if (isROM20Form) {
+                            formROM2.ui.tabs.get("tab_workspace").sections.get("contacts_section").setVisible(true);
+                        }
                     }
                     else {
                         form.getControl("ts_aircraftclassification").setVisible(false);
+                        if (isROM20Form) {
+                            formROM2.ui.tabs.get("tab_workspace").sections.get("contacts_section").setVisible(false);
+                        }
                     }
                 }
             }
         }
+        function RunOnRowSelected(eContext) {
+            debugger;
+            var selected = eContext.getFormContext().data.entity;
+            var Id = selected.getId();
+            var entityName = selected.getEntityName();
+            Xrm.Navigation.navigateTo({
+                pageType: "entityrecord",
+                entityName: entityName,
+                entityId: Id
+            }, {
+                target: 2,
+                position: 2,
+                width: {
+                    value: 30,
+                    unit: "%"
+                }
+            });
+        }
+        WorkOrder.RunOnRowSelected = RunOnRowSelected;
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));
