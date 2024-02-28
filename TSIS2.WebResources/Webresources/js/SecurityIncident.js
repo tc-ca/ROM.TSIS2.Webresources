@@ -32,83 +32,10 @@ var ROM;
                 formContext.ui.tabs.get("{99b37896-4f52-4179-8296-3cc0e6722411}").sections.get("IncidentDetails").setVisible(false);
             }
             unlockRecordLogFieldsIfUserIsSystemAdmin(formContext);
-            adjustIncidentDateTime(formContext);
             lockAllSummaryFieldsWhenStatusClosed(eContext);
             restrictStatusFieldWhenStatusClosed(eContext);
         }
         SecurityIncident.onLoad = onLoad;
-        function adjustIncidentDateTime(formContext) {
-            if (formContext.ui.getFormType() != 1) {
-                if (formContext.getAttribute("ts_incidentdatetime").getValue() != null && formContext.getAttribute("ts_incidentdatetimeadjust").getValue() != null) {
-                    formContext.getControl("ts_incidentdatetime").setVisible(false);
-                    formContext.getControl("ts_incidentdatetimeadjust").setVisible(true);
-                }
-                if (formContext.getAttribute("ts_reporteddatetime").getValue() != null && formContext.getAttribute("ts_reporteddatetimeadjust").getValue() != null) {
-                    formContext.getControl("ts_reporteddatetime").setVisible(false);
-                    formContext.getControl("ts_reporteddatetimeadjust").setVisible(true);
-                }
-            }
-            /*
-            var incidentDatetime = formContext.getAttribute("ts_incidentdatetime").getValue();
-            var reportedDatetime = formContext.getAttribute("ts_reporteddatetime").getValue();
-            var timezone = formContext.getAttribute("ts_timezone").getValue();
-            
-            if (timezone != null) {
-                var timeZoneHoursAdjust = 0;
-                if (timezone == ts_timezone.AtlanticTime) {
-                    timeZoneHoursAdjust = -4;
-                }
-                else if (timezone == ts_timezone.CentralTime) {
-                    timeZoneHoursAdjust = -6;
-                }
-                else if (timezone == ts_timezone.EasternTime) {
-                    timeZoneHoursAdjust = -5;
-                }
-                else if (timezone == ts_timezone.MountainTime) {
-                    timeZoneHoursAdjust = -7;
-                }
-                else if (timezone == ts_timezone.PacificTime) {
-                    timeZoneHoursAdjust = -8;
-                }
-    
-                if (incidentDatetime != null) {
-                    var timezoneOffset = incidentDatetime.getTimezoneOffset();
-                    var stTimezoneOffset = new Date(incidentDatetime.getFullYear(), 0, 1).getTimezoneOffset();
-                    var isDayLightSaving = stTimezoneOffset > timezoneOffset;
-                    if (isDayLightSaving) {
-                        incidentDatetime.setHours(incidentDatetime.getHours() + timeZoneHoursAdjust + timezoneOffset / 60 + 1);
-                    }
-                    else {
-                        incidentDatetime.setHours(incidentDatetime.getHours() + timeZoneHoursAdjust + timezoneOffset / 60);
-                    }
-                    
-                    formContext.getAttribute("ts_incidentdatetimeadjust").setValue(incidentDatetime);
-                }
-    
-                if (reportedDatetime != null) {
-                    var timezoneOffset = reportedDatetime.getTimezoneOffset();
-                    var stTimezoneOffset = new Date(reportedDatetime.getFullYear(), 0, 1).getTimezoneOffset();
-                    var isDayLightSaving = stTimezoneOffset > timezoneOffset;
-                    if (isDayLightSaving) {
-                        reportedDatetime.setHours(reportedDatetime.getHours() + timeZoneHoursAdjust + timezoneOffset / 60 + 1);
-                    }
-                    else {
-                        reportedDatetime.setHours(reportedDatetime.getHours() + timeZoneHoursAdjust + timezoneOffset / 60);
-                    }
-    
-                    formContext.getAttribute("ts_reporteddatetimeadjust").setValue(reportedDatetime);
-                }
-            }
-            */
-        }
-        function TimeZoneOnChange(eContext) {
-            var formContext = eContext.getFormContext();
-            formContext.getControl("ts_incidentdatetime").setVisible(true);
-            formContext.getControl("ts_incidentdatetimeadjust").setVisible(false);
-            formContext.getControl("ts_reporteddatetime").setVisible(true);
-            formContext.getControl("ts_reporteddatetimeadjust").setVisible(false);
-        }
-        SecurityIncident.TimeZoneOnChange = TimeZoneOnChange;
         function StatusOfRailwayOwnerOnChange(eContext) {
             var form = eContext.getFormContext();
             var arrests = form.getAttribute("ts_arrests");
