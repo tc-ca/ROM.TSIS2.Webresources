@@ -2,15 +2,18 @@ declare namespace Form.ovs_finding.Main {
   namespace ROM20 {
     namespace Tabs {
       interface Action_tab extends Xrm.SectionCollectionBase {
-        get(name: "tab_7_section_1"): Xrm.PageSection;
+        get(name: "Action_tab_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface summary extends Xrm.SectionCollectionBase {
+        get(name: "Related_section"): Xrm.PageSection;
         get(name: "summary_section_3"): Xrm.PageSection;
         get(name: "summary_section_4"): Xrm.PageSection;
+        get(name: "tab_6_section_1"): Xrm.PageSection;
+        get(name: "tab_7_section_1"): Xrm.PageSection;
         get(name: "{11f8492e-818a-454b-8f1a-bb33f878159b}"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -18,14 +21,7 @@ declare namespace Form.ovs_finding.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_6 extends Xrm.SectionCollectionBase {
-        get(name: "tab_6_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_9 extends Xrm.SectionCollectionBase {
-        get(name: "tab_9_section_1"): Xrm.PageSection;
+        get(name: "tab_6_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -39,34 +35,27 @@ declare namespace Form.ovs_finding.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_NCAT extends Xrm.SectionCollectionBase {
+        get(name: "NCAT_main_section"): Xrm.PageSection;
+        get(name: "NCAT_manager_review"): Xrm.PageSection;
+        get(name: "NCAT_proposed_section"): Xrm.PageSection;
+        get(name: "summary_ncatfactorguide"): Xrm.PageSection;
         get(name: "tab_NCAT_section_2"): Xrm.PageSection;
         get(name: "tab_NCAT_section_3"): Xrm.PageSection;
+        get(name: "tab_NCAT_section_5"): Xrm.PageSection;
+        get(name: "tab_NCAT_section_6"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_RATE extends Xrm.SectionCollectionBase {
-        get(name: "tab_RATE_column_5_section_1"): Xrm.PageSection;
-        get(name: "tab_RATE_section_2"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_workspace extends Xrm.SectionCollectionBase {
-        get(name: "NCAT_main_section"): Xrm.PageSection;
-        get(name: "NCAT_manager_review"): Xrm.PageSection;
-        get(name: "NCAT_proposed_section"): Xrm.PageSection;
         get(name: "RATE_manager_review"): Xrm.PageSection;
         get(name: "RATE_proposed_section"): Xrm.PageSection;
-        get(name: "summary_ncatfactorguide"): Xrm.PageSection;
-        get(name: "tab_NCAT_section_5"): Xrm.PageSection;
-        get(name: "tab_NCAT_section_6"): Xrm.PageSection;
+        get(name: "tab_RATE_column_5_section_1"): Xrm.PageSection;
         get(name: "tab_RATE_section_1"): Xrm.PageSection;
+        get(name: "tab_RATE_section_2"): Xrm.PageSection;
         get(name: "tab_RATE_section_5"): Xrm.PageSection;
         get(name: "tab_RATE_section_7"): Xrm.PageSection;
-        get(name: "tab_workspace_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -74,7 +63,6 @@ declare namespace Form.ovs_finding.Main {
       }
       interface wo_details extends Xrm.SectionCollectionBase {
         get(name: "WOSection"): Xrm.PageSection;
-        get(name: "null_section_4"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -143,7 +131,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ratespecificenforcementhistory"): Xrm.OptionSetAttribute<ts_ratespecificenforcementhistory>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_sensitivitylevel"): Xrm.OptionSetAttribute<ts_sensitivitylevel>;
-      get(name: "ts_workorder"): Xrm.Attribute<any>;
+      get(name: "ts_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -227,6 +215,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ratespecificenforcementhistory"): Xrm.OptionSetControl<ts_ratespecificenforcementhistory>;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_sensitivitylevel"): Xrm.OptionSetControl<ts_sensitivitylevel>;
+      get(name: "ts_workorder"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -236,11 +225,9 @@ declare namespace Form.ovs_finding.Main {
       get(name: "Action_tab"): Xrm.PageTab<Tabs.Action_tab>;
       get(name: "summary"): Xrm.PageTab<Tabs.summary>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
-      get(name: "tab_9"): Xrm.PageTab<Tabs.tab_9>;
       get(name: "tab_Files"): Xrm.PageTab<Tabs.tab_Files>;
       get(name: "tab_NCAT"): Xrm.PageTab<Tabs.tab_NCAT>;
       get(name: "tab_RATE"): Xrm.PageTab<Tabs.tab_RATE>;
-      get(name: "tab_workspace"): Xrm.PageTab<Tabs.tab_workspace>;
       get(name: "wo_details"): Xrm.PageTab<Tabs.wo_details>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -310,7 +297,7 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_ratespecificenforcementhistory"): Xrm.OptionSetAttribute<ts_ratespecificenforcementhistory>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_sensitivitylevel"): Xrm.OptionSetAttribute<ts_sensitivitylevel>;
-    getAttribute(attributeName: "ts_workorder"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Actions"): Xrm.SubGridControl<"ts_actionfinding">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
@@ -389,6 +376,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_ratespecificenforcementhistory"): Xrm.OptionSetControl<ts_ratespecificenforcementhistory>;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_sensitivitylevel"): Xrm.OptionSetControl<ts_sensitivitylevel>;
+    getControl(controlName: "ts_workorder"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: string): undefined;
   }
 }

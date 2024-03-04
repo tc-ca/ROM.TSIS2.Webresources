@@ -81,6 +81,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_alternateoperatingcarrier?: ts_yesno | null;
   ts_cantcompleteinspection?: boolean | null;
   ts_canvasappnumber?: string | null;
+  ts_cargoonlyflight?: boolean | null;
   ts_comments?: string | null;
   ts_completedquarter?: ts_msdyn_workorder_ts_completedquarter | null;
   ts_conductingoversight?: number | null;
@@ -98,6 +99,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_origin?: string | null;
   ts_othercanceledjustification?: string | null;
   ts_overtime?: number | null;
+  ts_overtimerequired?: boolean | null;
   ts_plannedcost?: number | null;
   ts_plannedcost_base?: number | null;
   ts_preparationtime?: number | null;
@@ -105,6 +107,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_quarterofpreparationtime?: ts_quarter | null;
   ts_quarterofreportinganddocumentation?: ts_quarter | null;
   ts_quarteroftraveltime?: ts_quarter | null;
+  ts_reasontext?: string | null;
   ts_reportdetails?: string | null;
   ts_riskscore?: number | null;
   ts_state?: ts_planningstate | null;
@@ -374,6 +377,7 @@ interface msdyn_workorder_Select {
   ts_canceledinspectionjustification_guid: WebAttribute<msdyn_workorder_Select, { ts_canceledinspectionjustification_guid: string | null }, { ts_canceledinspectionjustification_formatted?: string }>;
   ts_cantcompleteinspection: WebAttribute<msdyn_workorder_Select, { ts_cantcompleteinspection: boolean | null }, {  }>;
   ts_canvasappnumber: WebAttribute<msdyn_workorder_Select, { ts_canvasappnumber: string | null }, {  }>;
+  ts_cargoonlyflight: WebAttribute<msdyn_workorder_Select, { ts_cargoonlyflight: boolean | null }, {  }>;
   ts_casetimetracking_guid: WebAttribute<msdyn_workorder_Select, { ts_casetimetracking_guid: string | null }, { ts_casetimetracking_formatted?: string }>;
   ts_comments: WebAttribute<msdyn_workorder_Select, { ts_comments: string | null }, {  }>;
   ts_completedquarter: WebAttribute<msdyn_workorder_Select, { ts_completedquarter: ts_msdyn_workorder_ts_completedquarter | null }, { ts_completedquarter_formatted?: string }>;
@@ -397,6 +401,7 @@ interface msdyn_workorder_Select {
   ts_origin: WebAttribute<msdyn_workorder_Select, { ts_origin: string | null }, {  }>;
   ts_othercanceledjustification: WebAttribute<msdyn_workorder_Select, { ts_othercanceledjustification: string | null }, {  }>;
   ts_overtime: WebAttribute<msdyn_workorder_Select, { ts_overtime: number | null }, {  }>;
+  ts_overtimerequired: WebAttribute<msdyn_workorder_Select, { ts_overtimerequired: boolean | null }, {  }>;
   ts_plan_guid: WebAttribute<msdyn_workorder_Select, { ts_plan_guid: string | null }, { ts_plan_formatted?: string }>;
   ts_plannedcost: WebAttribute<msdyn_workorder_Select, { ts_plannedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_plannedcost_base: WebAttribute<msdyn_workorder_Select, { ts_plannedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
@@ -407,6 +412,7 @@ interface msdyn_workorder_Select {
   ts_quarterofreportinganddocumentation: WebAttribute<msdyn_workorder_Select, { ts_quarterofreportinganddocumentation: ts_quarter | null }, { ts_quarterofreportinganddocumentation_formatted?: string }>;
   ts_quarteroftraveltime: WebAttribute<msdyn_workorder_Select, { ts_quarteroftraveltime: ts_quarter | null }, { ts_quarteroftraveltime_formatted?: string }>;
   ts_reason_guid: WebAttribute<msdyn_workorder_Select, { ts_reason_guid: string | null }, { ts_reason_formatted?: string }>;
+  ts_reasontext: WebAttribute<msdyn_workorder_Select, { ts_reasontext: string | null }, {  }>;
   ts_region_guid: WebAttribute<msdyn_workorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_reportdetails: WebAttribute<msdyn_workorder_Select, { ts_reportdetails: string | null }, {  }>;
   ts_riskscore: WebAttribute<msdyn_workorder_Select, { ts_riskscore: number | null }, {  }>;
@@ -572,6 +578,7 @@ interface msdyn_workorder_Filter {
   ts_canceledinspectionjustification_guid: XQW.Guid;
   ts_cantcompleteinspection: boolean;
   ts_canvasappnumber: string;
+  ts_cargoonlyflight: boolean;
   ts_casetimetracking_guid: XQW.Guid;
   ts_comments: string;
   ts_completedquarter: ts_msdyn_workorder_ts_completedquarter;
@@ -595,6 +602,7 @@ interface msdyn_workorder_Filter {
   ts_origin: string;
   ts_othercanceledjustification: string;
   ts_overtime: any;
+  ts_overtimerequired: boolean;
   ts_plan_guid: XQW.Guid;
   ts_plannedcost: number;
   ts_plannedcost_base: number;
@@ -605,6 +613,7 @@ interface msdyn_workorder_Filter {
   ts_quarterofreportinganddocumentation: ts_quarter;
   ts_quarteroftraveltime: ts_quarter;
   ts_reason_guid: XQW.Guid;
+  ts_reasontext: string;
   ts_region_guid: XQW.Guid;
   ts_reportdetails: string;
   ts_riskscore: number;

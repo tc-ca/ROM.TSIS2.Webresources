@@ -137,6 +137,11 @@ function submitRiskScore(formContext) {
     Xrm.WebApi.updateRecord("ovs_operation", operationId, data).then(
         function success(result) {
             console.log("Operation updated");
+
+            //Set Last Submission Date to today
+            formContext.getAttribute("ts_lastsubmissiondate").setValue(new Date());
+            formContext.data.entity.save();
+
             Xrm.Utility.closeProgressIndicator();
         },
         function (error) {

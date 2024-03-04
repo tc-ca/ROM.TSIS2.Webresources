@@ -32,6 +32,7 @@ interface Email_Base extends WebEntity {
   inreplyto?: string | null;
   internetmessageheaders?: string | null;
   isbilled?: boolean | null;
+  isduplicatesenderunresolved?: boolean | null;
   isemailfollowed?: boolean | null;
   isemailreminderset?: boolean | null;
   isregularactivity?: boolean | null;
@@ -270,6 +271,7 @@ interface Email_Select {
   inreplyto: WebAttribute<Email_Select, { inreplyto: string | null }, {  }>;
   internetmessageheaders: WebAttribute<Email_Select, { internetmessageheaders: string | null }, {  }>;
   isbilled: WebAttribute<Email_Select, { isbilled: boolean | null }, {  }>;
+  isduplicatesenderunresolved: WebAttribute<Email_Select, { isduplicatesenderunresolved: boolean | null }, {  }>;
   isemailfollowed: WebAttribute<Email_Select, { isemailfollowed: boolean | null }, {  }>;
   isemailreminderset: WebAttribute<Email_Select, { isemailreminderset: boolean | null }, {  }>;
   isregularactivity: WebAttribute<Email_Select, { isregularactivity: boolean | null }, {  }>;
@@ -376,6 +378,7 @@ interface Email_Filter {
   inreplyto: string;
   internetmessageheaders: string;
   isbilled: boolean;
+  isduplicatesenderunresolved: boolean;
   isemailfollowed: boolean;
   isemailreminderset: boolean;
   isregularactivity: boolean;

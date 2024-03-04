@@ -187,6 +187,7 @@
     <Content Include="Webresources\js\OperationActivity.js" />
     <Content Include="Webresources\js\OperationActivityQuickCreate.js" />
     <Content Include="Webresources\js\OperationActivityRibbon.js" />
+    <Content Include="Webresources\js\OperationRiskAssessmentRibbon.js" />
     <Content Include="Webresources\js\Plan.js" />
     <Content Include="Webresources\js\PlanningData.js" />
     <Content Include="Webresources\js\planningDataRibbon.js" />
@@ -195,16 +196,19 @@
     <Content Include="Webresources\js\OperationRibbon.js" />
     <Content Include="Webresources\js\PlanRibbon.js" />
     <Content Include="Webresources\js\Questionnaire.js" />
+    <Content Include="Webresources\js\QuestionnaireResponse.js" />
     <Content Include="Webresources\js\QuestionnaireVersion.js" />
     <Content Include="Webresources\js\QuestionnaireVersionRibbon.js" />
     <Content Include="Webresources\js\RiskThreshold.js" />
     <Content Include="Webresources\js\RiskThresholdRibbon.js" />
+    <Content Include="Webresources\js\SecurityIncidentType.js" />
     <Content Include="Webresources\js\SecurityRolePrivilegeCompare.js" />
     <Content Include="Webresources\js\ScoreThresholds.js" />
     <Content Include="Webresources\js\SecurityIncident.js" />
     <Content Include="Webresources\js\SecurityIncidentRibbon.js" />
     <Content Include="Webresources\js\ServiceTaskType.js" />
     <Content Include="Webresources\js\showdown.min.js" />
+    <Content Include="Webresources\js\SuggestedInspection.js" />
     <Content Include="Webresources\js\survey-creator.min.js" />
     <Content Include="Webresources\js\survey.jquery.min.js" />
     <Content Include="Webresources\js\survey.ko.min.js" />
@@ -215,6 +219,7 @@
     <Content Include="Webresources\js\Team.js" />
     <Content Include="Webresources\js\TeamPlanningData.js" />
     <Content Include="Webresources\js\TeamPlanningDataRibbon.js" />
+    <Content Include="Webresources\js\TeamPlanningInspectorHours.js" />
     <Content Include="Webresources\js\tsis2findingwidget.js" />
     <Content Include="Webresources\js\WorkOrder.js" />
     <Content Include="Webresources\js\WorkOrderCreationWizard.js" />

@@ -141,6 +141,7 @@ interface Incident extends Incident_Base, Incident_Relationships {
   ts_Country_bind$tc_countries?: string | null;
   ts_InspectionType1_bind$msdyn_incidenttypes?: string | null;
   ts_InspectionType2_bind$msdyn_incidenttypes?: string | null;
+  ts_OperationType_bind$ovs_operationtypes?: string | null;
   ts_TradeNameId_bind$ts_tradenames?: string | null;
   ts_WorkOrder1_bind$msdyn_workorders?: string | null;
   ts_WorkOrder2_bind$msdyn_workorders?: string | null;
@@ -262,6 +263,7 @@ interface Incident_Select {
   ts_numberoffindings: WebAttribute<Incident_Select, { ts_numberoffindings: number | null }, {  }>;
   ts_numberoffindings_date: WebAttribute<Incident_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<Incident_Select, { ts_numberoffindings_state: number | null }, {  }>;
+  ts_operationtype_guid: WebAttribute<Incident_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
   ts_overtime: WebAttribute<Incident_Select, { ts_overtime: number | null }, {  }>;
   ts_quarterofreportinganddocumentation: WebAttribute<Incident_Select, { ts_quarterofreportinganddocumentation: ts_quarter | null }, { ts_quarterofreportinganddocumentation_formatted?: string }>;
   ts_quarteroftraveltime: WebAttribute<Incident_Select, { ts_quarteroftraveltime: ts_quarter | null }, { ts_quarteroftraveltime_formatted?: string }>;
@@ -383,6 +385,7 @@ interface Incident_Filter {
   ts_numberoffindings: number;
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;
+  ts_operationtype_guid: XQW.Guid;
   ts_overtime: any;
   ts_quarterofreportinganddocumentation: ts_quarter;
   ts_quarteroftraveltime: ts_quarter;
@@ -511,6 +514,7 @@ interface Incident_FormattedResult {
   ts_inspectiontype1_formatted?: string;
   ts_inspectiontype2_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
+  ts_operationtype_formatted?: string;
   ts_quarterofreportinganddocumentation_formatted?: string;
   ts_quarteroftraveltime_formatted?: string;
   ts_tradenameid_formatted?: string;
@@ -560,6 +564,7 @@ interface Incident_Result extends Incident_Base, Incident_Relationships {
   ts_country_guid: string | null;
   ts_inspectiontype1_guid: string | null;
   ts_inspectiontype2_guid: string | null;
+  ts_operationtype_guid: string | null;
   ts_tradenameid_guid: string | null;
   ts_workorder1_guid: string | null;
   ts_workorder2_guid: string | null;

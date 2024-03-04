@@ -200,6 +200,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
+      get(name: "ts_cargoonlyflight"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_comments"): Xrm.Attribute<string>;
       get(name: "ts_completedquarter"): Xrm.OptionSetAttribute<ts_msdyn_workorder_ts_completedquarter>;
       get(name: "ts_conductingoversight"): Xrm.NumberAttribute;
@@ -216,6 +217,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_origin"): Xrm.Attribute<string>;
       get(name: "ts_othercanceledjustification"): Xrm.Attribute<string>;
       get(name: "ts_overtime"): Xrm.NumberAttribute;
+      get(name: "ts_overtimerequired"): Xrm.Attribute<any>;
       get(name: "ts_plannedcost"): Xrm.NumberAttribute;
       get(name: "ts_planningdata"): Xrm.LookupAttribute<"ts_planningdata">;
       get(name: "ts_preparationtime"): Xrm.NumberAttribute;
@@ -224,6 +226,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
       get(name: "ts_quarteroftraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
       get(name: "ts_reason"): Xrm.LookupAttribute<"ts_planningreason">;
+      get(name: "ts_reasontext"): Xrm.Attribute<string>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_reportdetails"): Xrm.Attribute<any>;
       get(name: "ts_scheduledquarterjustification"): Xrm.LookupAttribute<"ts_justification">;
@@ -362,6 +365,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_cargoonlyflight"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_comments"): Xrm.StringControl;
       get(name: "ts_completedquarter"): Xrm.OptionSetControl<ts_msdyn_workorder_ts_completedquarter>;
       get(name: "ts_conductingoversight"): Xrm.NumberControl;
@@ -378,6 +382,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_origin"): Xrm.StringControl;
       get(name: "ts_othercanceledjustification"): Xrm.StringControl;
       get(name: "ts_overtime"): Xrm.NumberControl;
+      get(name: "ts_overtimerequired"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_plannedcost"): Xrm.NumberControl;
       get(name: "ts_planningdata"): Xrm.LookupControl<"ts_planningdata">;
       get(name: "ts_preparationtime"): Xrm.NumberControl;
@@ -386,6 +391,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;
       get(name: "ts_quarteroftraveltime"): Xrm.OptionSetControl<ts_quarter>;
       get(name: "ts_reason"): Xrm.LookupControl<"ts_planningreason">;
+      get(name: "ts_reasontext"): Xrm.StringControl;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_reportdetails"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_scheduledquarterjustification"): Xrm.LookupControl<"ts_justification">;
@@ -509,6 +515,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
     getAttribute(attributeName: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
     getAttribute(attributeName: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_cargoonlyflight"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_completedquarter"): Xrm.OptionSetAttribute<ts_msdyn_workorder_ts_completedquarter>;
     getAttribute(attributeName: "ts_conductingoversight"): Xrm.NumberAttribute;
@@ -525,6 +532,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_origin"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_othercanceledjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_overtimerequired"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_plannedcost"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_planningdata"): Xrm.LookupAttribute<"ts_planningdata">;
     getAttribute(attributeName: "ts_preparationtime"): Xrm.NumberAttribute;
@@ -533,6 +541,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
     getAttribute(attributeName: "ts_quarteroftraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
     getAttribute(attributeName: "ts_reason"): Xrm.LookupAttribute<"ts_planningreason">;
+    getAttribute(attributeName: "ts_reasontext"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_reportdetails"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_scheduledquarterjustification"): Xrm.LookupAttribute<"ts_justification">;
@@ -666,6 +675,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
     getControl(controlName: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
     getControl(controlName: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_cargoonlyflight"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_comments"): Xrm.StringControl;
     getControl(controlName: "ts_completedquarter"): Xrm.OptionSetControl<ts_msdyn_workorder_ts_completedquarter>;
     getControl(controlName: "ts_conductingoversight"): Xrm.NumberControl;
@@ -682,6 +692,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_origin"): Xrm.StringControl;
     getControl(controlName: "ts_othercanceledjustification"): Xrm.StringControl;
     getControl(controlName: "ts_overtime"): Xrm.NumberControl;
+    getControl(controlName: "ts_overtimerequired"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_plannedcost"): Xrm.NumberControl;
     getControl(controlName: "ts_planningdata"): Xrm.LookupControl<"ts_planningdata">;
     getControl(controlName: "ts_preparationtime"): Xrm.NumberControl;
@@ -690,6 +701,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;
     getControl(controlName: "ts_quarteroftraveltime"): Xrm.OptionSetControl<ts_quarter>;
     getControl(controlName: "ts_reason"): Xrm.LookupControl<"ts_planningreason">;
+    getControl(controlName: "ts_reasontext"): Xrm.StringControl;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_reportdetails"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_scheduledquarterjustification"): Xrm.LookupControl<"ts_justification">;
