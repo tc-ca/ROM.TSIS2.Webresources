@@ -63,7 +63,7 @@ function isSystemAdministrator() {
     return enable;
 }
 
-//Returns true if the associated Task Type is for dCustom Questionnaires
+//Returns true if the associated Task Type is for Custom Questionnaires
 async function isTaskTypeCustomQuestionnaire(primaryControl) {
     var taskTypeAttribute = primaryControl.getAttribute("msdyn_tasktype").getValue();
     let taskTypeRecord = await Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeAttribute[0].id);
