@@ -426,7 +426,7 @@ async function checkOperationRiskAssessment(formContext, survey) {
         if (!activeRiskAssessmentSubmittedAfterStartDate) {
             //Open Dialog Message Notifying User that the Active Operation Risk Assessment has not been submitted
             var alertStrings = {
-                text: "The Active Operation Risk Assessment has not been submitted after the Work Order Service Task Start Date.",
+                text: "The Operation Risk Assessment must be submitted before the Work Order Service Task can be Marked Complete.",
                 title: "Operation Risk Assessment Not Submitted"
             };
             var alertOptions = { height: 200, width: 450 };
