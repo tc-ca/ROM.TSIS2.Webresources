@@ -430,7 +430,7 @@ async function checkOperationRiskAssessment(formContext, survey) {
                 text: "The Operation Risk Assessment must be submitted before the Work Order Service Task can be Marked Complete.",
                 title: "Operation Risk Assessment Not Submitted"
             };
-            var alertOptions = { height: 200, width: 450 };
+            var alertOptions = { height: 200, width: 550 };
             Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
         } else {
             completeConfirmation(formContext, survey);
