@@ -418,7 +418,8 @@ async function checkOperationRiskAssessment(formContext, survey) {
                         let riskAssessment = result.entities[0];
                         return (riskAssessment.ts_lastsubmissiondate != null && new Date(riskAssessment.ts_lastsubmissiondate) > new Date(formContext.getAttribute("ts_servicetaskstartdate").getValue()))
                     } else {
-                        return false;
+                        //If no Risk Assessment can be found, ignore
+                        return true;
                     }
                 }
             );
