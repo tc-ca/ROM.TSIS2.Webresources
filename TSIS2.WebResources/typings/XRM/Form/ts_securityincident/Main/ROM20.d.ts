@@ -45,32 +45,8 @@ declare namespace Form.ts_securityincident.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_site extends Xrm.SectionCollectionBase {
-        get(name: "tab_9_section_1"): Xrm.PageSection;
-        get(name: "tab_9_section_2"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_stakeholders extends Xrm.SectionCollectionBase {
-        get(name: "tab_10_section_1"): Xrm.PageSection;
-        get(name: "tab_10_section_2"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
       interface tab_time_tracking extends Xrm.SectionCollectionBase {
         get(name: "tab_5_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_users extends Xrm.SectionCollectionBase {
-        get(name: "tab_8_section_1"): Xrm.PageSection;
-        get(name: "tab_8_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -114,7 +90,6 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_flightnumber"): Xrm.Attribute<string>;
       get(name: "ts_furtheractionrequired"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_incidentdatetime"): Xrm.DateAttribute;
-      get(name: "ts_incidentdatetimeadjust"): Xrm.DateAttribute;
       get(name: "ts_incidentdetailsattachment"): Xrm.Attribute<any>;
       get(name: "ts_inflight"): Xrm.Attribute<any>;
       get(name: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
@@ -141,7 +116,6 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_recordstatus"): Xrm.OptionSetAttribute<ts_securityincidentstatus>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_reporteddatetime"): Xrm.DateAttribute;
-      get(name: "ts_reporteddatetimeadjust"): Xrm.DateAttribute;
       get(name: "ts_reportingcompany"): Xrm.LookupAttribute<"account">;
       get(name: "ts_reportingcompany_name"): Xrm.Attribute<string>;
       get(name: "ts_ruralorurban"): Xrm.OptionSetAttribute<ts_ruralorurban>;
@@ -214,7 +188,6 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_flightnumber"): Xrm.StringControl;
       get(name: "ts_furtheractionrequired"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_incidentdatetime"): Xrm.DateControl;
-      get(name: "ts_incidentdatetimeadjust"): Xrm.DateControl;
       get(name: "ts_incidentdetailsattachment"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_inflight"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
@@ -240,7 +213,6 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_quarterofsitraveltime"): Xrm.OptionSetControl<ts_quarter>;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_reporteddatetime"): Xrm.DateControl;
-      get(name: "ts_reporteddatetimeadjust"): Xrm.DateControl;
       get(name: "ts_reportingcompany"): Xrm.LookupControl<"account">;
       get(name: "ts_reportingcompany_name"): Xrm.StringControl;
       get(name: "ts_ruralorurban"): Xrm.OptionSetControl<ts_ruralorurban>;
@@ -285,10 +257,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: "tab_4"): Xrm.PageTab<Tabs.tab_4>;
       get(name: "tab_recordlog"): Xrm.PageTab<Tabs.tab_recordlog>;
-      get(name: "tab_site"): Xrm.PageTab<Tabs.tab_site>;
-      get(name: "tab_stakeholders"): Xrm.PageTab<Tabs.tab_stakeholders>;
       get(name: "tab_time_tracking"): Xrm.PageTab<Tabs.tab_time_tracking>;
-      get(name: "tab_users"): Xrm.PageTab<Tabs.tab_users>;
       get(name: "tab_workspace"): Xrm.PageTab<Tabs.tab_workspace>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -324,7 +293,6 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_flightnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_furtheractionrequired"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_incidentdatetime"): Xrm.DateAttribute;
-    getAttribute(attributeName: "ts_incidentdatetimeadjust"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_incidentdetailsattachment"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_inflight"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_injuries"): Xrm.OptionSetAttribute<ts_injuries>;
@@ -351,7 +319,6 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_recordstatus"): Xrm.OptionSetAttribute<ts_securityincidentstatus>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_reporteddatetime"): Xrm.DateAttribute;
-    getAttribute(attributeName: "ts_reporteddatetimeadjust"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_reportingcompany"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_reportingcompany_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_ruralorurban"): Xrm.OptionSetAttribute<ts_ruralorurban>;
@@ -419,7 +386,6 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
     getControl(controlName: "ts_furtheractionrequired"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_incidentdatetime"): Xrm.DateControl;
-    getControl(controlName: "ts_incidentdatetimeadjust"): Xrm.DateControl;
     getControl(controlName: "ts_incidentdetailsattachment"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_inflight"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_injuries"): Xrm.OptionSetControl<ts_injuries>;
@@ -445,7 +411,6 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_quarterofsitraveltime"): Xrm.OptionSetControl<ts_quarter>;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_reporteddatetime"): Xrm.DateControl;
-    getControl(controlName: "ts_reporteddatetimeadjust"): Xrm.DateControl;
     getControl(controlName: "ts_reportingcompany"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_reportingcompany_name"): Xrm.StringControl;
     getControl(controlName: "ts_ruralorurban"): Xrm.OptionSetControl<ts_ruralorurban>;

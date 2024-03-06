@@ -36,7 +36,7 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface Enforcement_Action_tab extends Xrm.SectionCollectionBase {
-        get(name: "Enforcement_Action_section"): Xrm.PageSection;
+        get(name: "Enforcement_Action_tab_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -80,6 +80,7 @@ declare namespace Form.incident.Main {
         get(name: "Details"): Xrm.PageSection;
         get(name: "general_section_7"): Xrm.PageSection;
         get(name: "general_section_Notes"): Xrm.PageSection;
+        get(name: "tab_10_section_1"): Xrm.PageSection;
         get(name: "tab_13_section_4"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -88,7 +89,7 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_10 extends Xrm.SectionCollectionBase {
-        get(name: "tab_10_section_1"): Xrm.PageSection;
+        get(name: "tab_10_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -111,7 +112,6 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_findings extends Xrm.SectionCollectionBase {
-        get(name: "tab_11_section_1"): Xrm.PageSection;
         get(name: "tab_findings_section_5"): Xrm.PageSection;
         get(name: "tab_findings_section_aef"): Xrm.PageSection;
         get(name: string): undefined;
@@ -127,7 +127,9 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_workspace extends Xrm.SectionCollectionBase {
+        get(name: "Enforcement_Action_section"): Xrm.PageSection;
         get(name: "_section_349"): Xrm.PageSection;
+        get(name: "section_findings"): Xrm.PageSection;
         get(name: "tab_16_section_1"): Xrm.PageSection;
         get(name: "tab_workspace_section_2"): Xrm.PageSection;
         get(name: string): undefined;
@@ -195,6 +197,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_notes"): Xrm.Attribute<string>;
       get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
+      get(name: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_overtime"): Xrm.NumberAttribute;
       get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
       get(name: "ts_quarteroftraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
@@ -268,6 +271,8 @@ declare namespace Form.incident.Main {
       get(name: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "notescontrol1"): Xrm.BaseControl;
+      get(name: "overview_subgrid_actions"): Xrm.SubGridControl<"ts_action">;
+      get(name: "overview_subgrid_findings"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "ovs_region"): Xrm.LookupControl<"territory">;
       get(name: "parentcaseid"): Xrm.LookupControl<"incident">;
       get(name: "primarycontactid"): Xrm.LookupControl<"contact">;
@@ -295,6 +300,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_notes"): Xrm.StringControl;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
+      get(name: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_overtime"): Xrm.NumberControl;
       get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;
       get(name: "ts_quarteroftraveltime"): Xrm.OptionSetControl<ts_quarter>;
@@ -385,6 +391,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_notes"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
     getAttribute(attributeName: "ts_quarteroftraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
@@ -453,6 +460,8 @@ declare namespace Form.incident.Main {
     getControl(controlName: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "notescontrol1"): Xrm.BaseControl;
+    getControl(controlName: "overview_subgrid_actions"): Xrm.SubGridControl<"ts_action">;
+    getControl(controlName: "overview_subgrid_findings"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "ovs_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "parentcaseid"): Xrm.LookupControl<"incident">;
     getControl(controlName: "primarycontactid"): Xrm.LookupControl<"contact">;
@@ -480,6 +489,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_notes"): Xrm.StringControl;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
+    getControl(controlName: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_overtime"): Xrm.NumberControl;
     getControl(controlName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;
     getControl(controlName: "ts_quarteroftraveltime"): Xrm.OptionSetControl<ts_quarter>;

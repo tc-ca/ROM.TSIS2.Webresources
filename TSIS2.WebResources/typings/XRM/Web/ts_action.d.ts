@@ -19,6 +19,7 @@ interface ts_action_Base extends WebEntity {
   ts_duedate?: Date | null;
   ts_location?: string | null;
   ts_name?: string | null;
+  ts_priority?: msdyn_playbookactivity_priority | null;
   ts_timedate?: Date | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
@@ -76,6 +77,7 @@ interface ts_action_Select {
   ts_finding_guid: WebAttribute<ts_action_Select, { ts_finding_guid: string | null }, { ts_finding_formatted?: string }>;
   ts_location: WebAttribute<ts_action_Select, { ts_location: string | null }, {  }>;
   ts_name: WebAttribute<ts_action_Select, { ts_name: string | null }, {  }>;
+  ts_priority: WebAttribute<ts_action_Select, { ts_priority: msdyn_playbookactivity_priority | null }, { ts_priority_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_action_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   ts_timedate: WebAttribute<ts_action_Select, { ts_timedate: Date | null }, { ts_timedate_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_action_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -113,6 +115,7 @@ interface ts_action_Filter {
   ts_finding_guid: XQW.Guid;
   ts_location: string;
   ts_name: string;
+  ts_priority: msdyn_playbookactivity_priority;
   ts_stakeholder_guid: XQW.Guid;
   ts_timedate: Date;
   utcconversiontimezonecode: number;
@@ -161,6 +164,7 @@ interface ts_action_FormattedResult {
   ts_deliverymethod_formatted?: string;
   ts_duedate_formatted?: string;
   ts_finding_formatted?: string;
+  ts_priority_formatted?: string;
   ts_stakeholder_formatted?: string;
   ts_timedate_formatted?: string;
 }
