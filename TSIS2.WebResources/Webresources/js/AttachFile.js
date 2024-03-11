@@ -7,6 +7,8 @@
     this.mainHeadingFrench = "";
     this.usesGroupFiles = false;
     this.validOwner = false;
+    this.sharePointFileID = "";
+    this.sharePointQuery = "";
 }
 
 function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryControlId) {
@@ -48,8 +50,13 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                 modifyRecordOwner(PrimaryTypeEntityName, fileUploadData.recordOwner, fileUploadData.recordName, siteNameEnglish, fileUploadData);
 
                 if (fileUploadData.validOwner == true) {
-                    // navigate to the canvas app
-                    navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles);
+
+                    // get the SharePoint File ID for the record
+                    getSharePointFileId(PrimaryTypeEntityName, fileUploadData, recordTagId)
+                        .then(() => {
+                            // navigate to the canvas app
+                            navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles,fileUploadData.sharePointFileID);
+                    });
                 }
                 else {
                     // display the error message
@@ -85,7 +92,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 }
 
 // Separate method to navigate to the canvas app
-function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName,mainHeadingFrench,mainHeadingEnglish,usesGroupFiles) {
+function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish, usesGroupFiles, relatedSharePointFileID) {
 
     var jsonData = {
         recordId: recordTagId,
@@ -95,7 +102,8 @@ function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEngl
         tableNameFrench: recordTableNameFrench,
         tableRecordName: recordName,
         tableSchemaName: PrimaryTypeEntityName,
-        useGroupFiles: usesGroupFiles
+        useGroupFiles: usesGroupFiles,
+        sharePointFileID: relatedSharePointFileID
     };
 
     var jsonString = JSON.stringify(jsonData).toString();
@@ -426,4 +434,61 @@ function modifyRecordOwner(entityName, myRecordOwner, myRecordName, mySiteNameEn
     if (fileUploadData.recordOwner == avsecOwner || fileUploadData.recordOwner == issoOwner) {
         fileUploadData.validOwner = true;
     }
+}
+
+function getSharePointFileId(PrimaryTypeEntityName, fileUploadData, recordTagId) {
+
+    let sharePointFileFetchXML = `
+                <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+                  <entity name="ts_sharepointfile">
+                    <attribute name="ts_sharepointfileid" />
+                    <filter>
+                      <condition attribute="ts_tablerecordid" operator="eq" value="${recordTagId}" />
+                    </filter>
+                  </entity>
+                </fetch>
+    `;
+
+    let encodedSharePointFetchXML = encodeURIComponent(sharePointFileFetchXML);
+
+    // Get the SharePoint File ID for the record
+    return parent.Xrm.WebApi.retrieveMultipleRecords("ts_sharepointfile", "?fetchXml=" + encodedSharePointFetchXML).then(
+        function success(result) {
+            if (result.entities[0] != undefined) {
+                // if a ts_sharepointfile record exists for the record, get the ID
+                fileUploadData.sharePointFileID = result.entities[0].ts_sharepointfileid;
+            }
+            else {
+                // if no ts_sharepointfile record exists for the record, create one
+                return createSharePointFileRecord(fileUploadData, recordTagId);
+            }
+        },
+        function (error) {
+            // handle error conditions
+            console.log(`Error retrieving the ts_sharepointfile of ${PrimaryTypeEntityName}: ` + error.message);
+        }
+    );
+}
+
+function createSharePointFileRecord(fileUploadData, recordTagId) {
+    let entity = {};
+
+    entity.ts_name = fileUploadData.recordName;
+    entity.ts_tablename = fileUploadData.recordTableNameEnglish;
+    entity.ts_tablenamefrench = fileUploadData.recordTableNameFrench;
+    entity.ts_tablerecordid = recordTagId;
+    entity.ts_tablerecordname = fileUploadData.recordName;
+    entity.ts_tablerecordowner = fileUploadData.recordOwner;
+
+    return parent.Xrm.WebApi.createRecord("ts_sharepointfile", entity).then(
+        function success(result) {
+            fileUploadData.sharePointFileID = result.id;
+            return result;
+        },
+        function (error) {
+            // handle error conditions
+            console.log(`Error creating the ts_sharepointfile record for ${entity.ts_tablename}: ` + error.message);
+            throw error;
+        }
+    );
 }
