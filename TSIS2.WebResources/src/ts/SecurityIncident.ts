@@ -218,6 +218,7 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_phone").setVisible(true);
             form.getControl("ts_additionaldetails").setVisible(true);
             form.getControl("ts_organization").setVisible(true);
+            form.getControl("ts_operationtype").setVisible(true);
 
             form.getControl("ts_bridgeclosure").setVisible(false);
             form.getControl("ts_damagestoibtproperty").setVisible(false);
@@ -251,9 +252,11 @@ namespace ROM.SecurityIncident {
             const policeResponseAttributeValue = form.getAttribute("ts_policeresponse").getValue();
             if (policeResponseAttributeValue) {
                 form.getControl("ts_arrests").setVisible(true);
+                form.getControl("ts_additionaldetails").setVisible(true);
             }
             else {
                 form.getControl("ts_arrests").setVisible(false);
+                form.getControl("ts_additionaldetails").setVisible(false);
             }
 
             if (lang == 1036) {
@@ -402,12 +405,7 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_diversionaerodrome").setVisible(true);
             form.getControl("ts_aircarrier").setVisible(true);
             form.getControl("ts_flightnumber").setVisible(true);
-
-            form.getAttribute("ts_origin").setValue(null);
-            form.getAttribute("ts_destination").setValue(null);
-            form.getAttribute("ts_diversionaerodrome").setValue(null);
-            form.getAttribute("ts_aircarrier").setValue(null);
-            form.getAttribute("ts_flightnumber").setValue(null);
+            form.getControl("ts_estimatedarrivaltime").setVisible(true);
         }
         else {
             form.getControl("ts_origin").setVisible(false);
@@ -415,6 +413,13 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_diversionaerodrome").setVisible(false);
             form.getControl("ts_aircarrier").setVisible(false);
             form.getControl("ts_flightnumber").setVisible(false);
+            form.getControl("ts_estimatedarrivaltime").setVisible(false);
+            form.getAttribute("ts_origin").setValue(null);
+            form.getAttribute("ts_destination").setValue(null);
+            form.getAttribute("ts_diversionaerodrome").setValue(null);
+            form.getAttribute("ts_aircarrier").setValue(null);
+            form.getAttribute("ts_flightnumber").setValue(null);
+            form.getAttribute("ts_estimatedarrivaltime").setValue(null);
         }
     }
 
@@ -424,10 +429,13 @@ namespace ROM.SecurityIncident {
 
         if (policeResponseAttributeValue) {
             form.getControl("ts_arrests").setVisible(true);
-            form.getAttribute("ts_arrests").setValue(null);
+            form.getControl("ts_additionaldetails").setVisible(true);
         }
         else {
             form.getControl("ts_arrests").setVisible(false);
+            form.getAttribute("ts_arrests").setValue(null);
+            form.getControl("ts_additionaldetails").setVisible(false);
+            form.getAttribute("ts_additionaldetails").setValue(null);
         }
     }
 
