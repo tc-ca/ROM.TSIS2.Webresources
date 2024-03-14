@@ -101,6 +101,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_conductingoversight"): Xrm.NumberAttribute;
       get(name: "ts_domestic"): Xrm.Attribute<any>;
       get(name: "ts_domesticflights"): Xrm.Attribute<any>;
+      get(name: "ts_estimateddurationinhours"): Xrm.NumberAttribute;
       get(name: "ts_includeinplanning"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_international"): Xrm.Attribute<any>;
       get(name: "ts_internationalflights"): Xrm.Attribute<any>;
@@ -177,6 +178,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_conductingoversight"): Xrm.NumberControl;
       get(name: "ts_domestic"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_domesticflights"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_estimateddurationinhours"): Xrm.NumberControl;
       get(name: "ts_includeinplanning"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_international"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_internationalflights"): Xrm.Control<Xrm.Attribute<any>>;
@@ -262,6 +264,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getAttribute(attributeName: "ts_conductingoversight"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_domestic"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_domesticflights"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_estimateddurationinhours"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_includeinplanning"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_international"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_internationalflights"): Xrm.Attribute<any>;
@@ -333,6 +336,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "ts_conductingoversight"): Xrm.NumberControl;
     getControl(controlName: "ts_domestic"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_domesticflights"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_estimateddurationinhours"): Xrm.NumberControl;
     getControl(controlName: "ts_includeinplanning"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_international"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_internationalflights"): Xrm.Control<Xrm.Attribute<any>>;

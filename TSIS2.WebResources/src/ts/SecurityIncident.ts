@@ -318,6 +318,7 @@ namespace ROM.SecurityIncident {
             form.getControl("ts_reportingcompany_name").setVisible(false);
             form.getControl("ts_stakeholder_name").setVisible(false);
             form.getControl("ts_organization").setVisible(false);
+            form.getControl("ts_operationtype").setVisible(false);
 
             form.getControl("ts_delaystooperation").setVisible(true);
             form.getControl("ts_injuries").setVisible(true);
