@@ -24,6 +24,7 @@ interface ovs_operation_Base extends WebEntity {
   ts_interval?: number | null;
   ts_issecurityinspectionsite?: ts_issecurityinspectionsite | null;
   ts_mail?: boolean | null;
+  ts_notes?: string | null;
   ts_operationalstatus?: ts_operationalstatus | null;
   ts_operationnameenglish?: string | null;
   ts_operationnamefrench?: string | null;
@@ -126,6 +127,7 @@ interface ovs_operation_Select {
   ts_interval: WebAttribute<ovs_operation_Select, { ts_interval: number | null }, {  }>;
   ts_issecurityinspectionsite: WebAttribute<ovs_operation_Select, { ts_issecurityinspectionsite: ts_issecurityinspectionsite | null }, { ts_issecurityinspectionsite_formatted?: string }>;
   ts_mail: WebAttribute<ovs_operation_Select, { ts_mail: boolean | null }, {  }>;
+  ts_notes: WebAttribute<ovs_operation_Select, { ts_notes: string | null }, {  }>;
   ts_operationalstatus: WebAttribute<ovs_operation_Select, { ts_operationalstatus: ts_operationalstatus | null }, { ts_operationalstatus_formatted?: string }>;
   ts_operationfrequency_guid: WebAttribute<ovs_operation_Select, { ts_operationfrequency_guid: string | null }, { ts_operationfrequency_formatted?: string }>;
   ts_operationnameenglish: WebAttribute<ovs_operation_Select, { ts_operationnameenglish: string | null }, {  }>;
@@ -196,6 +198,7 @@ interface ovs_operation_Filter {
   ts_interval: number;
   ts_issecurityinspectionsite: ts_issecurityinspectionsite;
   ts_mail: boolean;
+  ts_notes: string;
   ts_operationalstatus: ts_operationalstatus;
   ts_operationfrequency_guid: XQW.Guid;
   ts_operationnameenglish: string;

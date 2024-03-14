@@ -22,6 +22,7 @@ interface msdyn_incidenttype_Base extends WebEntity {
   ts_conductingoversight?: number | null;
   ts_domestic?: boolean | null;
   ts_domesticflights?: boolean | null;
+  ts_estimateddurationinhours?: number | null;
   ts_excludefromplanning?: boolean | null;
   ts_includeinplanning?: boolean | null;
   ts_international?: boolean | null;
@@ -126,6 +127,7 @@ interface msdyn_incidenttype_Select {
   ts_conductingoversight: WebAttribute<msdyn_incidenttype_Select, { ts_conductingoversight: number | null }, {  }>;
   ts_domestic: WebAttribute<msdyn_incidenttype_Select, { ts_domestic: boolean | null }, {  }>;
   ts_domesticflights: WebAttribute<msdyn_incidenttype_Select, { ts_domesticflights: boolean | null }, {  }>;
+  ts_estimateddurationinhours: WebAttribute<msdyn_incidenttype_Select, { ts_estimateddurationinhours: number | null }, {  }>;
   ts_excludefromplanning: WebAttribute<msdyn_incidenttype_Select, { ts_excludefromplanning: boolean | null }, {  }>;
   ts_includeinplanning: WebAttribute<msdyn_incidenttype_Select, { ts_includeinplanning: boolean | null }, {  }>;
   ts_international: WebAttribute<msdyn_incidenttype_Select, { ts_international: boolean | null }, {  }>;
@@ -208,6 +210,7 @@ interface msdyn_incidenttype_Filter {
   ts_conductingoversight: any;
   ts_domestic: boolean;
   ts_domesticflights: boolean;
+  ts_estimateddurationinhours: any;
   ts_excludefromplanning: boolean;
   ts_includeinplanning: boolean;
   ts_international: boolean;

@@ -90,6 +90,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_milemarker"): Xrm.Attribute<string>;
       get(name: "ts_mode"): Xrm.OptionSetAttribute<ts_securityincidentmode>;
       get(name: "ts_name"): Xrm.Attribute<string>;
+      get(name: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_organization"): Xrm.Attribute<string>;
       get(name: "ts_origin"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_othercompany"): Xrm.Attribute<string>;
@@ -187,6 +188,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_milemarker"): Xrm.StringControl;
       get(name: "ts_mode"): Xrm.OptionSetControl<ts_securityincidentmode>;
       get(name: "ts_name"): Xrm.StringControl;
+      get(name: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_organization"): Xrm.StringControl;
       get(name: "ts_origin"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_othercompany"): Xrm.StringControl;
@@ -290,6 +292,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_milemarker"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_mode"): Xrm.OptionSetAttribute<ts_securityincidentmode>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_organization"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_origin"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_othercompany"): Xrm.Attribute<string>;
@@ -382,6 +385,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_milemarker"): Xrm.StringControl;
     getControl(controlName: "ts_mode"): Xrm.OptionSetControl<ts_securityincidentmode>;
     getControl(controlName: "ts_name"): Xrm.StringControl;
+    getControl(controlName: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_organization"): Xrm.StringControl;
     getControl(controlName: "ts_origin"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_othercompany"): Xrm.StringControl;
