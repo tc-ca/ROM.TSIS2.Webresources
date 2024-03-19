@@ -10,6 +10,7 @@
     this.sharePointFileID = "";
     this.sharePointFileGroupID = "";
     this.sharePointQuery = "";
+    this.usersManagerEmail = "";
 }
 
 function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryControlId) {
@@ -65,15 +66,20 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                                         getSharePointQuery(PrimaryTypeEntityName, fileUploadData, recordTagId)
                                             .then(() => { 
 
-                                                // navigate to the canvas app
-                                                navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery);
+                                                // get the users Manager email address
+                                                getUsersManager(fileUploadData)
+                                                    .then(() => {
+
+                                                        // navigate to the canvas app
+                                                        navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery, fileUploadData.usersManagerEmail);
+                                                });
                                             });
                                     });
                             }
                             else {
 
                                 // For everything else, navigate to the canvas app
-                                navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery);
+                                navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery, fileUploadData.usersManagerEmail);
                             }
                     });
                 }
@@ -111,7 +117,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 }
 
 // Separate method to navigate to the canvas app
-function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish, usesGroupFiles, relatedSharePointFileID, relatedSharePointFileGroupID, relatedSharePointQuery) {
+function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish, usesGroupFiles, relatedSharePointFileID, relatedSharePointFileGroupID, relatedSharePointQuery, relatedManagerEmail) {
 
     var jsonData = {
         recordId: recordTagId,
@@ -124,7 +130,8 @@ function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEngl
         useGroupFiles: usesGroupFiles,
         sharePointFileID: relatedSharePointFileID,
         sharePointFileGroupID: relatedSharePointFileGroupID,
-        sharePointQuery: relatedSharePointQuery
+        sharePointQuery: relatedSharePointQuery,
+        usersManagerEmail: relatedManagerEmail
     };
 
     var jsonString = JSON.stringify(jsonData).toString();
@@ -581,6 +588,72 @@ function getSharePointQuery(PrimaryTypeEntityName, fileUploadData, recordTagId) 
     );
 }
 
+function getUsersManager(fileUploadData) {
+
+    return new Promise((resolve, reject) => {
+        let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+
+        userId = userId.replace(/[{}]/g, '');
+
+        let managerFetchXML = `
+        <fetch xmlns:generator="MarkMpn.SQL4CDS" distinct="true">
+          <entity name="systemuser">
+            <attribute name="internalemailaddress" />
+            <filter>
+              <condition attribute="systemuserid" operator="ne" value="c5cbed71-2e26-ec11-b6e6-000d3af4f643"  />
+              <condition attribute="internalemailaddress" operator="not-null" />
+            </filter>
+            <link-entity name="team" from="administratorid" to="systemuserid">
+              <filter>
+                <condition attribute="name" operator="ne" value="Transport Canada" />
+                <condition attribute="name" operator="not-like" value="%msdyn_workorder%" />
+                <condition attribute="name" operator="not-like" value="%ROMTS-GSRST-USERLIST%" />
+                <condition attribute="name" operator="not-like" value="%POWER BI SERVICE%" />
+                <condition attribute="name" operator="not-like" value="%Aviation Security%" />
+                <condition attribute="name" operator="not-like" value="%Intermodal Surface Security Oversight (ISSO)%" />
+                <condition attribute="name" operator="not-like" value="%PPP Analyst%" />
+                <condition attribute="name" operator="not-like" value="%TCOMS%" />
+                <condition attribute="name" operator="not-like" value="%ISSO Business Admins%" />
+                <condition attribute="name" operator="not-like" value="%ISSO Inspectors%" />
+                <condition attribute="name" operator="not-like" value="%ISSO Managers%" />
+                <condition attribute="name" operator="not-like" value="%ISSO Planners%" />
+                <condition attribute="name" operator="not-like" value="%ISSO Questionnaire Admins%" />
+                <condition attribute="name" operator="not-like" value="%ISSO Questionnaire Admins%" />
+              </filter>
+              <link-entity name="teammembership" from="teamid" to="teamid">
+                <link-entity name="systemuser" alias="systemuser_childuser" from="systemuserid" to="systemuserid">
+                  <filter>
+                    <condition attribute="systemuserid" operator="eq" value="${userId}" />
+                  </filter>
+                </link-entity>
+              </link-entity>
+            </link-entity>
+          </entity>
+        </fetch>
+    `;
+
+        let encodedSharePointFetchXML = encodeURIComponent(managerFetchXML);
+
+        // Get the manager
+        return parent.Xrm.WebApi.retrieveMultipleRecords("systemuser", "?fetchXml=" + encodedSharePointFetchXML).then(
+            function success(result) {
+                if (result.entities[0] != undefined) {
+
+                    // get the Manager
+                    if (result.entities[0].internalemailaddress != null) {
+                        fileUploadData.usersManagerEmail = result.entities[0].internalemailaddress;
+                    }
+                }
+                resolve(); // resolve the promise
+            },
+            function (error) {
+                // handle error conditions
+                console.log(`Error retrieving the users Manager: ${PrimaryTypeEntityName}: ` + error.message);
+                reject(error); // reject the promise
+            }
+        );
+    });
+}
 
 function createSharePointFileRecord(fileUploadData, recordTagId) {
     let entity = {};
