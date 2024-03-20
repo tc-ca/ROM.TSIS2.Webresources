@@ -831,3 +831,27 @@ async function getWorkOrderOperationTypeBusinessUnitName(workOrderId) {
     let operationType = await Xrm.WebApi.retrieveRecord("ovs_operationtype", operationTypeId, "?$select=owningbusinessunit&$expand=owningbusinessunit($select=name)");
     return operationType.owningbusinessunit.name;
 }
+
+function createQualityControlServiceTask(primaryControl) {
+    //Get ID of current Work Order
+    const workOrderId = primaryControl.data.entity.getId();
+
+    //Create Work Order Service Task with Quality Control Task Type, related to current Work Order
+    var data =
+    {
+        "msdyn_tasktype@odata.bind": `/servicetasktypes(931b334c-c55b-ee11-8df0-000d3af4f52a)`,
+        "msdyn_workorder@odata.bind": `/workorders(${workOrderId})`
+    }
+
+    // create account record
+    Xrm.WebApi.createRecord("account", data).then(
+        function success(result) {
+            console.log("Account created with ID: " + result.id);
+            // perform operations on record creation
+        },
+        function (error) {
+            console.log(error.message);
+            // handle error conditions
+        }
+    );
+}

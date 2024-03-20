@@ -240,6 +240,7 @@ namespace ROM.SecurityIncident {
                 form.getControl("ts_diversionaerodrome").setVisible(true);
                 form.getControl("ts_aircarrier").setVisible(true);
                 form.getControl("ts_flightnumber").setVisible(true);
+                form.getControl("ts_estimatedarrivaltime").setVisible(true);
             }
             else {
                 form.getControl("ts_origin").setVisible(false);
@@ -247,6 +248,7 @@ namespace ROM.SecurityIncident {
                 form.getControl("ts_diversionaerodrome").setVisible(false);
                 form.getControl("ts_aircarrier").setVisible(false);
                 form.getControl("ts_flightnumber").setVisible(false);
+                form.getControl("ts_estimatedarrivaltime").setVisible(false);
             }
 
             const policeResponseAttributeValue = form.getAttribute("ts_policeresponse").getValue();
