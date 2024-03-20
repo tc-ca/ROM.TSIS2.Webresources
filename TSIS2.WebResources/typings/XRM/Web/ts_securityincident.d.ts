@@ -116,6 +116,7 @@ interface ts_securityincident extends ts_securityincident_Base, ts_securityincid
   ts_Subsite_bind$msdyn_functionallocations?: string | null;
   ts_TargetElement_bind$ts_targetelements?: string | null;
   ts_closedby_bind$systemusers?: string | null;
+  ts_operationtype_bind$ovs_operationtypes?: string | null;
 }
 interface ts_securityincident_Create extends ts_securityincident {
 }
@@ -172,6 +173,7 @@ interface ts_securityincident_Select {
   ts_mode: WebAttribute<ts_securityincident_Select, { ts_mode: ts_securityincidentmode | null }, { ts_mode_formatted?: string }>;
   ts_name: WebAttribute<ts_securityincident_Select, { ts_name: string | null }, {  }>;
   ts_notes: WebAttribute<ts_securityincident_Select, { ts_notes: string | null }, {  }>;
+  ts_operationtype_guid: WebAttribute<ts_securityincident_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
   ts_organization: WebAttribute<ts_securityincident_Select, { ts_organization: string | null }, {  }>;
   ts_origin_guid: WebAttribute<ts_securityincident_Select, { ts_origin_guid: string | null }, { ts_origin_formatted?: string }>;
   ts_othercompany: WebAttribute<ts_securityincident_Select, { ts_othercompany: string | null }, {  }>;
@@ -275,6 +277,7 @@ interface ts_securityincident_Filter {
   ts_mode: ts_securityincidentmode;
   ts_name: string;
   ts_notes: string;
+  ts_operationtype_guid: XQW.Guid;
   ts_organization: string;
   ts_origin_guid: XQW.Guid;
   ts_othercompany: string;
@@ -384,6 +387,7 @@ interface ts_securityincident_FormattedResult {
   ts_injuries_formatted?: string;
   ts_locationtype_formatted?: string;
   ts_mode_formatted?: string;
+  ts_operationtype_formatted?: string;
   ts_origin_formatted?: string;
   ts_province_formatted?: string;
   ts_publicorprivatecrossing_formatted?: string;
@@ -420,6 +424,7 @@ interface ts_securityincident_Result extends ts_securityincident_Base, ts_securi
   ts_closedby_guid: string | null;
   ts_destination_guid: string | null;
   ts_diversionaerodrome_guid: string | null;
+  ts_operationtype_guid: string | null;
   ts_origin_guid: string | null;
   ts_region_guid: string | null;
   ts_reportingcompany_guid: string | null;
