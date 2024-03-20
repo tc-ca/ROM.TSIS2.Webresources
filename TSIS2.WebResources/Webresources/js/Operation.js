@@ -46,9 +46,10 @@ var ROM;
         //Condition to filter fields based on current user BU
         var businessUnitCondition;
         var issoOperationTypeGuids = ["{B27E5003-C751-EB11-A812-000D3AF3AC0D}", "{C97A1A12-D8EB-EB11-BACB-000D3AF4FBEC}", "{21CA416A-431A-EC11-B6E7-000D3A09D067}", "{3B261029-C751-EB11-A812-000D3AF3AC0D}", "{D883B39A-C751-EB11-A812-000D3AF3AC0D}", "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}", "{199E31AE-C751-EB11-A812-000D3AF3AC0D}"];
+        var isROM20Form = false;
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, userRoles, userId, currentUserBusinessUnitFetchXML;
+                var form, userRoles, formItem, userId, currentUserBusinessUnitFetchXML;
                 return __generator(this, function (_a) {
                     form = eContext.getFormContext();
                     userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
@@ -61,6 +62,8 @@ var ROM;
                             form.getControl("ts_dateoflastriskbasedinspection").setDisabled(false);
                         }
                     });
+                    formItem = form.ui.formSelector.getCurrentItem().getId();
+                    isROM20Form = formItem.toLowerCase() == "30d3ecf6-cd5d-4f1b-a186-ac13e6c9418f";
                     if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
                         setRelatedActionsFetchXML(form);
                     }
@@ -90,8 +93,10 @@ var ROM;
                         //Show ISSO Properties Tab if OperationType is ISSO, show Avsec if not 
                         if (operationType != null) {
                             if (issoOperationTypeGuids.includes(operationType[0].id)) {
-                                form.ui.tabs.get("operation_activity_tab").setVisible(false);
-                                form.ui.tabs.get("tab_properties_isso").setVisible(true);
+                                if (!isROM20Form) {
+                                    form.ui.tabs.get("operation_activity_tab").setVisible(false);
+                                    form.ui.tabs.get("tab_properties_isso").setVisible(true);
+                                }
                                 //Show PPE questions
                                 var ppeRequired = form.getAttribute("ts_pperequired").getValue();
                                 var specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
@@ -135,7 +140,9 @@ var ROM;
                                 }
                             }
                             else {
-                                form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                                if (!isROM20Form) {
+                                    form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                                }
                                 form.getControl("ts_targetedinspectionneeded").setVisible(false);
                                 //We need to keep this tab hidden for now. We may need it later though.
                                 //const avsecPropertiesTab = form.ui.tabs.get("tab_properties_avsec")
@@ -178,7 +185,9 @@ var ROM;
                         }
                         else {
                             //Set operation_activity_tab visible to false by default
-                            form.ui.tabs.get("operation_activity_tab").setVisible(false);
+                            if (!isROM20Form) {
+                                form.ui.tabs.get("operation_activity_tab").setVisible(false);
+                            }
                         }
                     });
                     if (form.getAttribute("ts_statusstartdate").getValue() != null) {
