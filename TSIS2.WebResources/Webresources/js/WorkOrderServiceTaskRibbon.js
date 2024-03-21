@@ -833,25 +833,19 @@ async function getWorkOrderOperationTypeBusinessUnitName(workOrderId) {
 }
 
 function createQualityControlServiceTask(primaryControl) {
+    Xrm.Utility.showProgressIndicator();
     //Get ID of current Work Order
-    const workOrderId = primaryControl.data.entity.getId();
-
+    const workOrderId = primaryControl.data.entity.getId().replace("{", "").replace("}", "");
     //Create Work Order Service Task with Quality Control Task Type, related to current Work Order
     var data =
     {
-        "msdyn_tasktype@odata.bind": `/servicetasktypes(931b334c-c55b-ee11-8df0-000d3af4f52a)`,
-        "msdyn_workorder@odata.bind": `/workorders(${workOrderId})`
+        "msdyn_workorder@odata.bind": `/msdyn_workorders(${workOrderId})`,
+        "msdyn_tasktype@odata.bind": "/msdyn_servicetasktypes(931b334c-c55b-ee11-8df0-000d3af4f52a)"
     }
 
     // create account record
-    Xrm.WebApi.createRecord("account", data).then(
-        function success(result) {
-            console.log("Account created with ID: " + result.id);
-            // perform operations on record creation
-        },
-        function (error) {
-            console.log(error.message);
-            // handle error conditions
-        }
-    );
+    Xrm.WebApi.createRecord("msdyn_workorderservicetask", data).then(() => {
+        Xrm.Utility.closeProgressIndicator();
+        primaryControl.getControl("workorderservicetasksgrid").refresh();
+    });
 }
