@@ -148,6 +148,7 @@ var ROM;
             }
             if (form.getAttribute("ovs_fiscalquarter").getValue() != null && form.getAttribute("ovs_revisedquarterid").getValue() == null)
                 form.getAttribute("ovs_revisedquarterid").setValue(form.getAttribute("ovs_fiscalquarter").getValue());
+            setScheduledQuarterFilter(form);
             switch (form.ui.getFormType()) {
                 case 1: //Create New Work Order
                     //If work order is New (case 1) and it already has a case on form load, the work order must be coming from a case
@@ -1140,6 +1141,40 @@ var ROM;
             }
         }
         WorkOrder.scheduledQuarterOnChange = scheduledQuarterOnChange;
+        //Sets the Scheduled Quarter filter to show quarters in the planned fiscal year and the year after
+        function setScheduledQuarterFilter(form) {
+            //Get name of planned fiscal year
+            var fiscalYearValue = form.getAttribute("ovs_fiscalyear").getValue();
+            if (fiscalYearValue != null) {
+                var fiscalYearName = fiscalYearValue[0].name;
+                if (fiscalYearName != null) {
+                    var nextFiscalYearName = fiscalYearName.split("-")[1] + "-" + (Number(fiscalYearName.split("-")[1]) + 1);
+                    var viewId = '{8982C38D-8BB4-4C95-BD05-493398F' + Date.now().toString().slice(-5) + '}';
+                    var entityName = "tc_tcfiscalquarter";
+                    var viewDisplayName = "Fiscal Quarters";
+                    //All Active Stakeholders/Accounts that have an Operation with a matching Operation Type
+                    var fetchXml = [
+                        "<fetch>",
+                        "  <entity name='tc_tcfiscalquarter'>",
+                        "    <attribute name='tc_name'/>",
+                        "    <attribute name='tc_tcfiscalyearid'/>",
+                        "    <order attribute='tc_tcfiscalyearid'/>",
+                        "    <link-entity name='tc_tcfiscalyear' from='tc_tcfiscalyearid' to='tc_tcfiscalyearid' alias='fiscalyear'>",
+                        "      <attribute name='tc_fiscalyearlonglbl'/>",
+                        "      <filter type='or'>",
+                        "        <condition attribute='tc_name' operator='eq' value='", fiscalYearName, "'/>",
+                        "        <condition attribute='tc_name' operator='eq' value='", nextFiscalYearName, "'/>",
+                        "      </filter>",
+                        "    </link-entity>",
+                        "  </entity>",
+                        "</fetch>"
+                    ].join("");
+                    var layoutXml = '<grid name="resultset" jump="tc_name" select="1" icon="1" preview="1"> <row name="result" id="fiscalquarterid"> <cell name="tc_name" width="100" />< cell name = "fiscalyear.tc_fiscalyearlonglbl" width = "167" /></row> </grid>';
+                    form.getControl("ovs_revisedquarterid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                }
+            }
+        }
+        WorkOrder.setScheduledQuarterFilter = setScheduledQuarterFilter;
         // FUNCTIONS
         function postNoteOnScheduledQuarterChange(form) {
             if (scheduledQuarterAttributeValueChanged) {
@@ -1629,6 +1664,7 @@ var ROM;
             var form = eContext.getFormContext();
             //Check if the Work Order is past the Planned Fiscal Quarter
             setCantCompleteinspectionVisibility(form);
+            setScheduledQuarterFilter(form);
         }
         WorkOrder.fiscalQuarterOnChange = fiscalQuarterOnChange;
         function canceledWorkOrderReasonOnChange(eContext) {
