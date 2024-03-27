@@ -1131,14 +1131,14 @@ var ROM;
             var form = eContext.getFormContext();
             var revisedQuarterAttributeValue = form.getAttribute("ovs_revisedquarterid").getValue();
             scheduledQuarterAttributeValueChanged = true;
-            if (revisedQuarterAttributeValue != null) {
-                form.getControl("ts_scheduledquarterjustification").setVisible(true);
-                form.getControl("ts_justificationcomment").setVisible(true);
-            }
-            else {
-                form.getControl("ts_scheduledquarterjustification").setVisible(false);
-                form.getControl("ts_justificationcomment").setVisible(false);
-            }
+            //if (revisedQuarterAttributeValue != null) {
+            //    form.getControl("ts_scheduledquarterjustification").setVisible(true);
+            //    form.getControl("ts_justificationcomment").setVisible(true);
+            //}
+            //else {
+            //    form.getControl("ts_scheduledquarterjustification").setVisible(false);
+            //    form.getControl("ts_justificationcomment").setVisible(false);
+            //}
         }
         WorkOrder.scheduledQuarterOnChange = scheduledQuarterOnChange;
         //Sets the Scheduled Quarter filter to show quarters in the planned fiscal year and the year after
@@ -1199,8 +1199,8 @@ var ROM;
                         justificationValue = "null";
                     }
                     data['notetext'] = "Justification changed to: " + justificationValue + " <br />Justification Comment: " + justificationComment;
-                    form.getAttribute("ts_scheduledquarterjustification").setValue(null);
-                    form.getAttribute("ts_justificationcomment").setValue(null);
+                    //form.getAttribute("ts_scheduledquarterjustification").setValue(null);
+                    //form.getAttribute("ts_justificationcomment").setValue(null);
                     Xrm.WebApi.createRecord('annotation', data).then(function success(result) {
                         scheduledQuarterAttributeValueChanged = false;
                     }, function (error) {

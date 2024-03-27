@@ -1212,14 +1212,14 @@ namespace ROM.WorkOrder {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
         const revisedQuarterAttributeValue = form.getAttribute("ovs_revisedquarterid").getValue();
         scheduledQuarterAttributeValueChanged = true;
-        if (revisedQuarterAttributeValue != null) {
-            form.getControl("ts_scheduledquarterjustification").setVisible(true);
-            form.getControl("ts_justificationcomment").setVisible(true);
-        }
-        else {
-            form.getControl("ts_scheduledquarterjustification").setVisible(false);
-            form.getControl("ts_justificationcomment").setVisible(false);
-        }
+        //if (revisedQuarterAttributeValue != null) {
+        //    form.getControl("ts_scheduledquarterjustification").setVisible(true);
+        //    form.getControl("ts_justificationcomment").setVisible(true);
+        //}
+        //else {
+        //    form.getControl("ts_scheduledquarterjustification").setVisible(false);
+        //    form.getControl("ts_justificationcomment").setVisible(false);
+        //}
     }
 
     //Sets the Scheduled Quarter filter to show quarters in the planned fiscal year and the year after
@@ -1284,8 +1284,8 @@ namespace ROM.WorkOrder {
                 }
                 data['notetext'] = "Justification changed to: " + justificationValue + " <br />Justification Comment: "+ justificationComment;
 
-                form.getAttribute("ts_scheduledquarterjustification").setValue(null);
-                form.getAttribute("ts_justificationcomment").setValue(null);
+                //form.getAttribute("ts_scheduledquarterjustification").setValue(null);
+                //form.getAttribute("ts_justificationcomment").setValue(null);
 
                 Xrm.WebApi.createRecord('annotation', data).then(function success(result) {
                     scheduledQuarterAttributeValueChanged = false;
