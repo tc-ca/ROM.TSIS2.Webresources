@@ -1149,7 +1149,7 @@ var ROM;
                 var fiscalYearName = fiscalYearValue[0].name;
                 if (fiscalYearName != null) {
                     var nextFiscalYearName = fiscalYearName.split("-")[1] + "-" + (Number(fiscalYearName.split("-")[1]) + 1);
-                    var viewId = '{8982C38D-8BB4-4C95-BD05-493398F' + Date.now().toString().slice(-5) + '}';
+                    var viewId = '{8982C38D-8BB4-4C95-BD05-493398F' + Date.now().toString().slice(-5) + '}'; //If this function is called again, this guid needs to be unique
                     var entityName = "tc_tcfiscalquarter";
                     var viewDisplayName = "Fiscal Quarters";
                     //All Active Stakeholders/Accounts that have an Operation with a matching Operation Type
