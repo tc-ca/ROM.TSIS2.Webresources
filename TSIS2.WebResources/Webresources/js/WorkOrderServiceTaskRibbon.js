@@ -823,13 +823,21 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences){
 }
 
 async function getWorkOrderOperationTypeBusinessUnitName(workOrderId) {
-    //retrive Work Order with workOrderId
+    //retrieve Work Order with workOrderId
     let workOrder = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationid_value");
     const OperationId = workOrder._ovs_operationid_value;
     let operation = await Xrm.WebApi.retrieveRecord("ovs_operation", OperationId, "?$select=_ovs_operationtypeid_value");
     const operationTypeId = operation._ovs_operationtypeid_value;
     let operationType = await Xrm.WebApi.retrieveRecord("ovs_operationtype", operationTypeId, "?$select=owningbusinessunit&$expand=owningbusinessunit($select=name)");
     return operationType.owningbusinessunit.name;
+}
+
+async function isAvSecWorkOrder(primaryControl) {
+    const workOrderId = primaryControl.data.entity.getId();
+    if (workOrderId != null) {
+        let workOrderBusinessUnitName = await getWorkOrderOperationTypeBusinessUnitName(workOrderId);
+        return workOrderBusinessUnitName.includes("Aviation");
+    }
 }
 
 function createQualityControlServiceTask(primaryControl) {
