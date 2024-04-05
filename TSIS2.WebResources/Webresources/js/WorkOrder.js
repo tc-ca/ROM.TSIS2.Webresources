@@ -1992,5 +1992,38 @@ var ROM;
             });
         }
         WorkOrder.RunOnRowSelected = RunOnRowSelected;
+        function populateFlightCategory(eContext) {
+            var form = eContext.getFormContext();
+            var originValue = form.getAttribute("ts_departureaerodrome").getValue();
+            var destinationValue = form.getAttribute("ts_arrivalaerodrome").getValue();
+            var originCountry;
+            var distinationCountry;
+            if (originValue != null && destinationValue != null) {
+                Xrm.WebApi.retrieveRecord("msdyn_functionallocation", originValue[0].id, "?$select=_ts_country_value ").then(function success(result1) {
+                    originCountry = result1._ts_country_value;
+                    Xrm.WebApi.retrieveRecord("msdyn_functionallocation", destinationValue[0].id, "?$select=_ts_country_value ").then(function success(result2) {
+                        distinationCountry = result2._ts_country_value;
+                        if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
+                            // Domestic
+                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* Domestic */);
+                        }
+                        else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
+                            || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
+                            //International
+                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* International */);
+                        }
+                        else {
+                            //Transborder
+                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* Transborder */);
+                        }
+                    }, function error(error) {
+                        Xrm.Navigation.openAlertDialog({ text: error.message });
+                    });
+                }, function error(error) {
+                    Xrm.Navigation.openAlertDialog({ text: error.message });
+                });
+            }
+        }
+        WorkOrder.populateFlightCategory = populateFlightCategory;
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));
