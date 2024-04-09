@@ -198,6 +198,9 @@ var ROM;
                     }
                 }
             });
+            if (isROM20Form) {
+                SubGridFilterExecution(eContext);
+            }
         }
         Finding.onLoad = onLoad;
         function shouldShowISSOOnlyFields(isDualInspector, operationTypeOwningBusinessUnit, userBusinessUnitName) {
