@@ -185,6 +185,11 @@
                 }
             }
         });
+
+        if (isROM20Form) {
+            SubGridFilterExecution(eContext);
+        }
+
     }
 
     function shouldShowISSOOnlyFields(isDualInspector: any, operationTypeOwningBusinessUnit: any, userBusinessUnitName: any): boolean {
