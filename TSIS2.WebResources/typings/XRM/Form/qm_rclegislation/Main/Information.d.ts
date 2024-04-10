@@ -58,6 +58,7 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "qm_violationdisplaytextfr"): Xrm.Attribute<string>;
       get(name: "statecode"): Xrm.OptionSetAttribute<qm_rclegislation_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<qm_rclegislation_statuscode>;
+      get(name: "ts_classification"): Xrm.OptionSetAttribute<ts_classification>;
       get(name: "ts_nameenglish"): Xrm.Attribute<string>;
       get(name: "ts_namefrench"): Xrm.Attribute<string>;
       get(name: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
@@ -97,6 +98,7 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "references_sub_grid"): Xrm.SubGridControl<"qm_rclegislation">;
       get(name: "statecode"): Xrm.OptionSetControl<qm_rclegislation_statecode>;
       get(name: "statuscode"): Xrm.OptionSetControl<qm_rclegislation_statuscode>;
+      get(name: "ts_classification"): Xrm.OptionSetControl<ts_classification>;
       get(name: "ts_nameenglish"): Xrm.StringControl;
       get(name: "ts_namefrench"): Xrm.StringControl;
       get(name: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;
@@ -142,6 +144,7 @@ declare namespace Form.qm_rclegislation.Main {
     getAttribute(attributeName: "qm_violationdisplaytextfr"): Xrm.Attribute<string>;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<qm_rclegislation_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<qm_rclegislation_statuscode>;
+    getAttribute(attributeName: "ts_classification"): Xrm.OptionSetAttribute<ts_classification>;
     getAttribute(attributeName: "ts_nameenglish"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_namefrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
@@ -176,6 +179,7 @@ declare namespace Form.qm_rclegislation.Main {
     getControl(controlName: "references_sub_grid"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<qm_rclegislation_statecode>;
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<qm_rclegislation_statuscode>;
+    getControl(controlName: "ts_classification"): Xrm.OptionSetControl<ts_classification>;
     getControl(controlName: "ts_nameenglish"): Xrm.StringControl;
     getControl(controlName: "ts_namefrench"): Xrm.StringControl;
     getControl(controlName: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;

@@ -1,9 +1,12 @@
 ﻿
 function createResponse(primaryControl) {
     const questionnairedefinition = primaryControl.getAttribute("ts_questionnairedefinition").getValue();
+    const questionnaire = primaryControl.getAttribute("ts_ovs_questionnaire").getValue();
+    const questionnaireId = questionnaire[0].id.slice(1, -1).toLowerCase();
     var data =
     {
-        "ts_questionnairedefinition": questionnairedefinition
+        "ts_questionnairedefinition": questionnairedefinition,
+        "ts_questionnaire@odata.bind": "/ovs_questionnaires(" + questionnaireId + ")"
     }
     // create account record
     Xrm.WebApi.createRecord("ts_questionnaireresponse", data).then(

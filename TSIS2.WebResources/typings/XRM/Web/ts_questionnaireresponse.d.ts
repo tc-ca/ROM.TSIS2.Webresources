@@ -19,6 +19,7 @@ interface ts_questionnaireresponse_Relationships {
 interface ts_questionnaireresponse extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  ts_questionnaire_bind$ovs_questionnaires?: string | null;
 }
 interface ts_questionnaireresponse_Create extends ts_questionnaireresponse {
 }
@@ -42,6 +43,7 @@ interface ts_questionnaireresponse_Select {
   timezoneruleversionnumber: WebAttribute<ts_questionnaireresponse_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_debug: WebAttribute<ts_questionnaireresponse_Select, { ts_debug: string | null }, {  }>;
   ts_name: WebAttribute<ts_questionnaireresponse_Select, { ts_name: string | null }, {  }>;
+  ts_questionnaire_guid: WebAttribute<ts_questionnaireresponse_Select, { ts_questionnaire_guid: string | null }, { ts_questionnaire_formatted?: string }>;
   ts_questionnaireanswers: WebAttribute<ts_questionnaireresponse_Select, { ts_questionnaireanswers: string | null }, {  }>;
   ts_questionnairedefinition: WebAttribute<ts_questionnaireresponse_Select, { ts_questionnairedefinition: string | null }, {  }>;
   ts_questionnaireresponseid: WebAttribute<ts_questionnaireresponse_Select, { ts_questionnaireresponseid: string | null }, {  }>;
@@ -66,6 +68,7 @@ interface ts_questionnaireresponse_Filter {
   timezoneruleversionnumber: number;
   ts_debug: string;
   ts_name: string;
+  ts_questionnaire_guid: XQW.Guid;
   ts_questionnaireanswers: string;
   ts_questionnairedefinition: string;
   ts_questionnaireresponseid: XQW.Guid;
@@ -80,6 +83,7 @@ interface ts_questionnaireresponse_Expand {
   ownerid: WebExpand<ts_questionnaireresponse_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ts_questionnaireresponse_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_questionnaireresponse_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_questionnaire: WebExpand<ts_questionnaireresponse_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { ts_questionnaire: ovs_Questionnaire_Result }>;
 }
 interface ts_questionnaireresponse_FormattedResult {
   createdby_formatted?: string;
@@ -95,6 +99,7 @@ interface ts_questionnaireresponse_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  ts_questionnaire_formatted?: string;
 }
 interface ts_questionnaireresponse_Result extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
   "@odata.etag": string;
@@ -106,6 +111,7 @@ interface ts_questionnaireresponse_Result extends ts_questionnaireresponse_Base,
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
   owninguser_guid: string | null;
+  ts_questionnaire_guid: string | null;
 }
 interface ts_questionnaireresponse_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -115,6 +121,7 @@ interface ts_questionnaireresponse_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_questionnaire: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
 }
 interface ts_questionnaireresponse_RelatedMany {
 }

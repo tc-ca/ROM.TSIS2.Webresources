@@ -22,6 +22,7 @@ interface qm_rclegislation_Base extends WebEntity {
   statecode?: qm_rclegislation_statecode | null;
   statuscode?: qm_rclegislation_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_classification?: ts_classification | null;
   ts_importkey?: string | null;
   ts_nameenglish?: string | null;
   ts_namefrench?: string | null;
@@ -86,6 +87,7 @@ interface qm_rclegislation_Select {
   statecode: WebAttribute<qm_rclegislation_Select, { statecode: qm_rclegislation_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<qm_rclegislation_Select, { statuscode: qm_rclegislation_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<qm_rclegislation_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_classification: WebAttribute<qm_rclegislation_Select, { ts_classification: ts_classification | null }, { ts_classification_formatted?: string }>;
   ts_importkey: WebAttribute<qm_rclegislation_Select, { ts_importkey: string | null }, {  }>;
   ts_msdyn_requirementcharacteristic_guid: WebAttribute<qm_rclegislation_Select, { ts_msdyn_requirementcharacteristic_guid: string | null }, { ts_msdyn_requirementcharacteristic_formatted?: string }>;
   ts_nameenglish: WebAttribute<qm_rclegislation_Select, { ts_nameenglish: string | null }, {  }>;
@@ -127,6 +129,7 @@ interface qm_rclegislation_Filter {
   statecode: qm_rclegislation_statecode;
   statuscode: qm_rclegislation_statuscode;
   timezoneruleversionnumber: number;
+  ts_classification: ts_classification;
   ts_importkey: string;
   ts_msdyn_requirementcharacteristic_guid: XQW.Guid;
   ts_nameenglish: string;
@@ -170,6 +173,7 @@ interface qm_rclegislation_FormattedResult {
   qm_tylegislationtypeid_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  ts_classification_formatted?: string;
   ts_msdyn_requirementcharacteristic_formatted?: string;
   ts_provisioncategory_formatted?: string;
 }

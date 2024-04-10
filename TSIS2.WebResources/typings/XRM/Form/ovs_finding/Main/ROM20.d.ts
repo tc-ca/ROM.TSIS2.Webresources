@@ -12,8 +12,6 @@ declare namespace Form.ovs_finding.Main {
         get(name: "Related_section"): Xrm.PageSection;
         get(name: "summary_section_3"): Xrm.PageSection;
         get(name: "summary_section_4"): Xrm.PageSection;
-        get(name: "tab_6_section_1"): Xrm.PageSection;
-        get(name: "tab_7_section_1"): Xrm.PageSection;
         get(name: "{11f8492e-818a-454b-8f1a-bb33f878159b}"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
