@@ -197,6 +197,7 @@
     <Content Include="Webresources\js\PlanRibbon.js" />
     <Content Include="Webresources\js\Questionnaire.js" />
     <Content Include="Webresources\js\QuestionnaireResponse.js" />
+    <Content Include="Webresources\js\QuestionnaireResponseRibbon.js" />
     <Content Include="Webresources\js\QuestionnaireVersion.js" />
     <Content Include="Webresources\js\QuestionnaireVersionRibbon.js" />
     <Content Include="Webresources\js\RiskThreshold.js" />
