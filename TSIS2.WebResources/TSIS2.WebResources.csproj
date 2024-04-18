@@ -129,6 +129,8 @@
     <Content Include="Webresources\css\survey-creator.min.css" />
     <Content Include="Webresources\css\survey.min.css" />
     <Content Include="Webresources\css\WorkOrderExport.css" />
+    <Content Include="Webresources\html\Dashboard_AvSec.html" />
+    <Content Include="Webresources\html\Dashboard_ISSO.html" />
     <Content Include="Webresources\html\EmailAttachFile.html" />
     <Content Include="Webresources\html\EmailAttachFilePopUp.html" />
     <Content Include="Webresources\html\FindingProvisionText.html" />
