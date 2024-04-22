@@ -488,6 +488,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_datewindowstart"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "msdyn_instructions"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
     getAttribute(attributeName: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -762,6 +763,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
     getControl(controlName: "ts_securityincident1"): Xrm.LookupControl<"ts_securityincident">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_state"): Xrm.OptionSetControl<ts_planningstate>;
     getControl(controlName: "ts_teamplanningdata"): Xrm.LookupControl<"ts_teamplanningdata">;
     getControl(controlName: "ts_totalconductoversight"): Xrm.NumberControl;

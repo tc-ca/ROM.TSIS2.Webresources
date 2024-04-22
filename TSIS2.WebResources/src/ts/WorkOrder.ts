@@ -106,10 +106,13 @@ namespace ROM.WorkOrder {
             }
         }
 
-        // Show subsite field if it has value on Edit or Readonly mode etc
+        // Show "subsite" & "Sub subsite" fields if it has value on Edit or Readonly mode etc
         if (form.ui.getFormType() !== 1) {
             if (form.getAttribute("msdyn_functionallocation").getValue() != null) {
                 form.getControl('msdyn_functionallocation').setVisible(true);
+            }
+            if (form.getAttribute("ts_subsubsite").getValue() != null) {
+                form.getControl('ts_subsubsite').setVisible(true);
             }
         }
 
@@ -739,6 +742,197 @@ namespace ROM.WorkOrder {
         }
     }
 
+    export function subSubSiteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+            const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
+            const stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
+            const siteAttribute = form.getAttribute("ts_site");
+            const subSiteAttribute = form.getAttribute("msdyn_functionallocation");//ts_subsite on Operation entity
+            const subSubSiteAttribute = form.getAttribute("ts_subsubsite");//ts_subsubsite on Operation entity
+
+            const workOrderTypeAttribute = form.getAttribute("msdyn_workordertype");
+            if (siteAttribute != null && siteAttribute != undefined && subSiteAttribute != null && subSiteAttribute != undefined && subSubSiteAttribute != null && subSubSiteAttribute != undefined) {
+                // Clear out operation and subsite value if not already empty
+                if (form.getAttribute("ovs_operationid").getValue() != null) form.getAttribute("ovs_operationid").setValue(null);
+
+                // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                const stakeholderAttributeValue = stakeholderAttribute.getValue();
+                const siteAttributeValue = siteAttribute.getValue();
+                const subSiteAttributeValue = subSiteAttribute.getValue();
+                const subSubSiteAttributeValue = subSubSiteAttribute.getValue();
+                const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
+
+                if (siteAttributeValue != null && siteAttributeValue != undefined &&
+                    subSiteAttributeValue != null && subSiteAttributeValue != undefined &&
+                    subSubSiteAttributeValue != null && subSubSiteAttributeValue != undefined &&
+                    stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
+                    operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
+                    workOrderTypeAttribute != null && workOrderTypeAttributeValue != null) {
+
+                    // Populate operation asset
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/><condition attribute="ts_subsite" operator="eq" value="' + subSiteAttributeValue[0].id + '"/><condition attribute="ts_subsubsite" operator="eq" value="' + subSubSiteAttributeValue[0].id + '"/></filter></entity></fetch>';
+                    var encodedFetchXml = encodeURIComponent(fetchXml);
+                    Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXml).then(
+                        function success(result) {
+                            if (result.entities.length == 1) {
+                                const targetOperation = result.entities[0];
+                                const lookup = new Array();
+                                lookup[0] = new Object();
+                                lookup[0].id = targetOperation.ovs_operationid;
+                                lookup[0].name = targetOperation.ovs_name;
+                                lookup[0].entityType = 'ovs_operation';
+
+                                if (targetOperation.ts_operationalstatus == 717750001) {
+                                    form.ui.clearFormNotification("sub-non-operational-operation");
+
+                                    form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "sub-non-operational-operation");
+                                    form.getAttribute('ts_site').setValue(null);
+                                }
+                                else {
+                                    form.ui.clearFormNotification("sub-non-operational-operation");
+                                    form.getAttribute('ovs_operationid').setValue(lookup);
+                                }
+
+                                setActivityTypeFilteredView(form, lookup[0].id, workOrderTypeAttributeValue[0].id, operationTypeAttributeValue[0].id);
+                            } else {
+                                form.ui.clearFormNotification("closedSubSubProject")
+                                // do not set a default if multiple records are found, error.
+                                form.ui.setFormNotification("No operations found matching the selected Sub subsite, Operation Type and Stakeholder!.", "WARNING", "closedSubSubProject");//ERROR
+                            }
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
+                }
+            }
+        } catch (e) {
+            throw new Error((e as any).Message);
+        }
+    }
+    export function subSiteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+
+            const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+            const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
+            const stakeholderAttribute = form.getAttribute("msdyn_serviceaccount");
+            const siteAttribute = form.getAttribute("ts_site");
+            const subSiteAttribute = form.getAttribute("msdyn_functionallocation");//ts_subsite on Operation entity
+
+            const workOrderTypeAttribute = form.getAttribute("msdyn_workordertype");
+            if (siteAttribute != null && siteAttribute != undefined && subSiteAttribute != null && subSiteAttribute != undefined) {
+                // Clear out operation and subsite value if not already empty
+                if (form.getAttribute("ovs_operationid").getValue() != null) form.getAttribute("ovs_operationid").setValue(null);
+
+                // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
+                const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                const stakeholderAttributeValue = stakeholderAttribute.getValue();
+                const siteAttributeValue = siteAttribute.getValue();
+                const subSiteAttributeValue = subSiteAttribute.getValue();
+                const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
+
+                if (siteAttributeValue != null && siteAttributeValue != undefined &&
+                    subSiteAttributeValue != null && subSiteAttributeValue != undefined &&
+                    stakeholderAttributeValue != null && stakeholderAttributeValue != undefined &&
+                    operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
+                    workOrderTypeAttribute != null && workOrderTypeAttributeValue != null) {
+
+                    // Populate operation asset
+                    const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/><condition attribute="ts_subsite" operator="eq" value="' + subSiteAttributeValue[0].id + '"/></filter></entity></fetch>';
+                    var encodedFetchXml = encodeURIComponent(fetchXml);
+                    Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXml).then(
+                        function success(result) {
+                            if (result.entities.length == 1) {
+                                const targetOperation = result.entities[0];
+                                const lookup = new Array();
+                                lookup[0] = new Object();
+                                lookup[0].id = targetOperation.ovs_operationid;
+                                lookup[0].name = targetOperation.ovs_name;
+                                lookup[0].entityType = 'ovs_operation';
+
+                                if (targetOperation.ts_operationalstatus == 717750001) {
+                                    form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
+                                    form.getAttribute('ts_site').setValue(null);
+                                }
+                                else {
+                                    form.ui.clearFormNotification("non-operational-operation");
+                                    form.getAttribute('ovs_operationid').setValue(lookup);
+                                }
+
+                                setActivityTypeFilteredView(form, lookup[0].id, workOrderTypeAttributeValue[0].id, operationTypeAttributeValue[0].id);
+                            } else {
+                                // do not set a default if multiple records are found, error.
+                            }
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
+                    //Check if any Sub-subsites exists and only show the field if it's the case
+                    const fetchXmlToCheckForSubSites = '<fetch no-lock="false" returntotalrecordcount="true" page="1" count="25"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_parentfunctionallocation" alias="bb"><filter type="and"><condition attribute="msdyn_functionallocationid" operator="eq" uitype="msdyn_functionallocation" value="' + siteAttributeValue[0].id + '"/></filter></link-entity></entity></fetch>';
+                    encodedFetchXml = encodeURIComponent(fetchXmlToCheckForSubSites);
+
+                    //only retrieve SubSites with Operations under Stakeholders
+                    var targetSubSiteIds = "";
+                    var checkOtherSubSites = true;
+                    const fetchOperationsWithSiteAndStakeholder = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name" /><attribute name="ts_subsite"/><attribute name="ts_subsubsite"/><attribute name="createdon" /><attribute name="ovs_operationtypeid" /><attribute name="ovs_operationid" />     <order attribute="ovs_name" descending="false" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /><condition attribute="ts_stakeholder" operator="eq" uitype="account" value="' + stakeholderAttributeValue[0].id + '" /> <condition attribute="ts_site" operator="eq"  uitype="msdyn_functionallocation" value="' + siteAttributeValue[0].id + '" /><condition attribute="ts_subsite" operator="eq"  uitype="msdyn_functionallocation" value="' + subSiteAttributeValue[0].id + '" /><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/></filter></entity></fetch>';
+                    var encodedFetchXmlOperationsWithSiteAndStakeholder = encodeURIComponent(fetchOperationsWithSiteAndStakeholder);
+                    Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXmlOperationsWithSiteAndStakeholder).then(
+                        function success(result) {
+                            if (result.entities.length > 0) {
+                                var subCounter = 0;
+                                result.entities.forEach(function (item) {
+                                    var subSiteId = item["_ts_subsubsite_value"];
+                                    if (subSiteId != undefined) {
+                                        targetSubSiteIds += "<value>" + subSiteId + "</value>";
+                                        subCounter++;
+                                    }
+                                });
+                                if (targetSubSiteIds != "") {
+                                    checkOtherSubSites = false;
+                                    form.getControl('ts_subsubsite').setDisabled(false);
+                                    form.getControl('ts_subsubsite').setVisible(true);
+                                    form.getAttribute("ts_subsubsite").setRequiredLevel("required");//none
+                                    var viewId = '{1B59589F-F122-5428-4771-79BC925240C3}';
+                                    var entityName = "msdyn_functionallocation";
+                                    var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
+                                    var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="in">' + targetSubSiteIds + '</condition></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+                                    debugger;
+                                    var msgTxt = subCounter + " operations found for the selected site and stakeholder!.";
+                                    form.ui.clearFormNotification("hasOperation");
+                                    form.ui.setFormNotification(msgTxt, "INFO", "hasOperation"); //INFO
+
+                                    var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                                    form.getControl("ts_subsubsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                                }
+                            }
+
+                            if (checkOtherSubSites) {
+                                //No operation found for Sub-subsite
+                                form.ui.clearFormNotification("closedSubProject");
+                                form.ui.setFormNotification("No operations found matching the selected Subsite, Operation Type and Stakeholder!.", "WARNING", "closedSubProject");//ERROR
+                                form.getAttribute("ts_subsubsite").setValue(null);
+                                form.getControl('ts_subsubsite').setVisible(false);
+                                form.getAttribute("ts_subsubsite").setRequiredLevel("none");//none,required
+                            }
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
+                }
+                else {
+                    form.getAttribute("ts_subsubsite").setValue(null);
+                    form.getControl('ts_subsubsite').setVisible(false);
+                }
+            }
+        } catch (e) {
+            throw new Error((e as any).Message);
+        }
+    }
     export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
@@ -798,21 +992,49 @@ namespace ROM.WorkOrder {
                     //Check if any subsites exists and only show the field if it's the case
                     const fetchXmlToCheckForSubSites = '<fetch no-lock="false" returntotalrecordcount="true" page="1" count="25"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/><link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="msdyn_parentfunctionallocation" alias="bb"><filter type="and"><condition attribute="msdyn_functionallocationid" operator="eq" uitype="msdyn_functionallocation" value="' + siteAttributeValue[0].id + '"/></filter></link-entity></entity></fetch>';
                     encodedFetchXml = encodeURIComponent(fetchXmlToCheckForSubSites);
-                    Xrm.WebApi.retrieveMultipleRecords("msdyn_functionallocation", "?fetchXml=" + encodedFetchXml).then(
+
+                    //only retrieve SubSites with Operations under Stakeholders
+                    var targetSubSiteIds = "";
+                    var checkOtherSubSites = true;
+                    const fetchOperationsWithSiteAndStakeholder = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name" /><attribute name="ts_subsite"/><attribute name="ts_subsubsite"/><attribute name="createdon" /><attribute name="ovs_operationtypeid" /><attribute name="ovs_operationid" />     <order attribute="ovs_name" descending="false" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /><condition attribute="ts_stakeholder" operator="eq" uitype="account" value="' + stakeholderAttributeValue[0].id + '" /> <condition attribute="ts_site" operator="eq"  uitype="msdyn_functionallocation" value="' + siteAttributeValue[0].id + '" /><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/></filter></entity></fetch>';
+                    var encodedFetchXmlOperationsWithSiteAndStakeholder = encodeURIComponent(fetchOperationsWithSiteAndStakeholder);
+                    Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXmlOperationsWithSiteAndStakeholder).then(
                         function success(result) {
                             if (result.entities.length > 0) {
-                                form.getControl('msdyn_functionallocation').setDisabled(false);
-                                form.getControl('msdyn_functionallocation').setVisible(true);
-                                const viewId = '{1B59589F-F122-5428-4771-79BC925240C3}';
-                                const entityName = "msdyn_functionallocation";
-                                const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
-                                const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
-                                const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-                                form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                                var counter = 0;
+                                result.entities.forEach(function (item) {
+                                    var subSiteId = item["_ts_subsite_value"];
+                                    if (subSiteId != undefined) {
+                                        targetSubSiteIds += "<value>" + subSiteId + "</value>";
+                                        counter++;
+                                    }
+                                });
+
+                                if (targetSubSiteIds != "") {
+                                    checkOtherSubSites = false;
+                                    form.getControl('msdyn_functionallocation').setDisabled(false);
+                                    form.getControl('msdyn_functionallocation').setVisible(true);
+                                    form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");//none,required
+                                    var viewId = '{1B59589F-F122-5428-4771-79BC925240C3}';
+                                    var entityName = "msdyn_functionallocation";
+                                    var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
+                                    var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="in">' + targetSubSiteIds + '</condition></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+                                    debugger;
+                                    var msgTxt = counter + " operations found for the selected site, operation type and stakeholder!.";
+                                    form.ui.clearFormNotification("hasOperation");
+                                    form.ui.setFormNotification(msgTxt, "INFO", "hasOperation"); //INFO
+
+                                    var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                                    form.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                                }
                             }
-                            else {
+                            if (checkOtherSubSites) {
+                                //No operation found
+                                form.ui.clearFormNotification("closedProject");
+                                form.ui.setFormNotification("No operations found matching the selected site, operation type and stakeholder!.", "WARNING", "closedProject");//ERROR
                                 form.getAttribute("msdyn_functionallocation").setValue(null);
                                 form.getControl('msdyn_functionallocation').setVisible(false);
+                                form.getAttribute("msdyn_functionallocation").setRequiredLevel("none");//none,required                                
                             }
                         },
                         function (error) {
@@ -823,6 +1045,7 @@ namespace ROM.WorkOrder {
                 else {
                     form.getAttribute("msdyn_functionallocation").setValue(null);
                     form.getControl('msdyn_functionallocation').setVisible(false);
+                    form.getAttribute("msdyn_functionallocation").setRequiredLevel("none");//none,required                                
                 }
             }
         } catch (e) {
@@ -1001,15 +1224,15 @@ namespace ROM.WorkOrder {
                         //    });
                         //}
                         //else {
-                            form.getControl("msdyn_workordertype").setDisabled(true);
-                            form.getControl("ts_region").setDisabled(true);
-                            form.getControl("ovs_operationtypeid").setDisabled(true);
-                            //form.getControl("ts_tradenameid").setDisabled(true);
-                            form.getControl("ts_site").setDisabled(true);
-                            form.getControl("msdyn_worklocation").setDisabled(true);
-                            form.getControl("header_ownerid").setDisabled(true);
-                            form.getControl("ownerid").setDisabled(true);
-                 //       }
+                        form.getControl("msdyn_workordertype").setDisabled(true);
+                        form.getControl("ts_region").setDisabled(true);
+                        form.getControl("ovs_operationtypeid").setDisabled(true);
+                        //form.getControl("ts_tradenameid").setDisabled(true);
+                        form.getControl("ts_site").setDisabled(true);
+                        form.getControl("msdyn_worklocation").setDisabled(true);
+                        form.getControl("header_ownerid").setDisabled(true);
+                        form.getControl("ownerid").setDisabled(true);
+                        //       }
 
                     }
 
@@ -1262,7 +1485,7 @@ namespace ROM.WorkOrder {
         if (scheduledQuarterAttributeValueChanged) {
             const revisedQuarterAttributeValue = form.getAttribute("ovs_revisedquarterid").getValue();
             const justification = form.getAttribute("ts_scheduledquarterjustification").getValue();
-            var justificationValue ;
+            var justificationValue;
             const justificationComment = form.getAttribute("ts_justificationcomment").getValue();
 
             if (form.ui.getFormType() == 2) {
@@ -1282,7 +1505,7 @@ namespace ROM.WorkOrder {
                 else {
                     justificationValue = "null";
                 }
-                data['notetext'] = "Justification changed to: " + justificationValue + " <br />Justification Comment: "+ justificationComment;
+                data['notetext'] = "Justification changed to: " + justificationValue + " <br />Justification Comment: " + justificationComment;
 
                 //form.getAttribute("ts_scheduledquarterjustification").setValue(null);
                 //form.getAttribute("ts_justificationcomment").setValue(null);
@@ -1425,7 +1648,7 @@ namespace ROM.WorkOrder {
                 form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(false);
             }
-        ,);
+            ,);
     }
 
     function setCountryFilteredView(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
@@ -2176,7 +2399,7 @@ namespace ROM.WorkOrder {
         const destinationValue = form.getAttribute("ts_arrivalaerodrome").getValue();
         var originCountry;
         var distinationCountry;
-        
+
         if (originValue != null && destinationValue != null) {
             Xrm.WebApi.retrieveRecord("msdyn_functionallocation", originValue[0].id, "?$select=_ts_country_value ").then(
                 function success(result1) {
