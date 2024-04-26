@@ -35,6 +35,8 @@ function recalculateTeamPlanningDataValues(formContext) {
     let ts_teamPlanningDataResidualinspectorhoursQ4 = 0;
     let teamPlanningDataResidualinspectorhoursTotal = 0;
 
+    let totalRequiredHours = 0;
+
     var fetchXml = [
         "<fetch>",
         "  <entity name='ts_planningdata'>",
@@ -55,6 +57,15 @@ function recalculateTeamPlanningDataValues(formContext) {
     fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
     Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", fetchXml).then(async function success(result) {
         for (let planningData of result.entities) {
+            if (isNaN(planningData.ts_plannedq1)) planningData.ts_plannedq1 = 0;
+            if (isNaN(planningData.ts_plannedq2)) planningData.ts_plannedq2 = 0;
+            if (isNaN(planningData.ts_plannedq3)) planningData.ts_plannedq3 = 0;
+            if (isNaN(planningData.ts_plannedq4)) planningData.ts_plannedq4 = 0;
+            if (isNaN(planningData.ts_plannedq4)) planningData.ts_plannedq4 = 0;
+            if (isNaN(planningData.ts_teamestimatedduration)) planningData.ts_teamestimatedduration = 0;
+            if (isNaN(planningData.ts_target)) planningData.ts_target = 0;
+
+
             teamPlanningDataPlannedQ1 += planningData.ts_plannedq1;
             teamPlanningDataPlannedQ2 += planningData.ts_plannedq2;
             teamPlanningDataPlannedQ3 += planningData.ts_plannedq3;
@@ -64,6 +75,8 @@ function recalculateTeamPlanningDataValues(formContext) {
             teamPlanningDataTeamEstimatedDurationQ2 += planningData.ts_plannedq2 * planningData.ts_teamestimatedduration;
             teamPlanningDataTeamEstimatedDurationQ3 += planningData.ts_plannedq3 * planningData.ts_teamestimatedduration;
             teamPlanningDataTeamEstimatedDurationQ4 += planningData.ts_plannedq4 * planningData.ts_teamestimatedduration;
+
+            totalRequiredHours += planningData.ts_target * planningData.ts_teamestimatedduration;
         }
 
         var teamPlanningDataInspectorHoursFetchXml = [
@@ -119,6 +132,7 @@ function recalculateTeamPlanningDataValues(formContext) {
         formContext.getAttribute("ts_residualinspectorhoursq3").setValue(ts_teamPlanningDataResidualinspectorhoursQ3);
         formContext.getAttribute("ts_residualinspectorhoursq4").setValue(ts_teamPlanningDataResidualinspectorhoursQ4);
         formContext.getAttribute("ts_residualinspectorhoursfiscalyear").setValue(teamPlanningDataResidualinspectorhoursTotal);
+        formContext.getAttribute("ts_totalrequiredhours").setValue(totalRequiredHours);
         formContext.data.entity.save();
         Xrm.Utility.closeProgressIndicator();
     });

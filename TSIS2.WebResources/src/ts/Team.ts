@@ -5,9 +5,25 @@ namespace ROM.Team {
         globalContext.getCurrentAppName().then(function (appName) {
             if (appName == "Oversight Planning Module" || appName == "Module de planification de la surveillance") {
                 const formContext = <Form.team.Main.Team>eContext.getFormContext();
-                const planningTab = formContext.ui.tabs.get("tab_planning");
-                if (planningTab != null) {
-                    planningTab.setVisible(true);
+                const businessUnitAttribute = formContext.getAttribute("businessunitid");
+                let businessUnitName;
+                if (businessUnitAttribute != null) {
+                    const businessUnitValue = businessUnitAttribute.getValue();
+                    if (businessUnitValue != null) {
+                        businessUnitName = businessUnitValue[0].name;
+                        if (businessUnitName.startsWith("Intermodal")) {
+                            const planningTab = formContext.ui.tabs.get("tab_planning_isso");
+                            if (planningTab != null) {
+                                planningTab.setVisible(true);
+                            }
+                        } else if (businessUnitName.startsWith("Aviation")) {
+                            const planningTab = formContext.ui.tabs.get("tab_planning_avsec");
+                            if (planningTab != null) {
+                                planningTab.setVisible(true);
+                            }
+                        }
+                        
+                    }
                 }
             }
         });

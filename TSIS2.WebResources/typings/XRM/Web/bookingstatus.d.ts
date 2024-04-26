@@ -6,10 +6,12 @@ interface BookingStatus_Base extends WebEntity {
   importsequencenumber?: number | null;
   modifiedon?: Date | null;
   msdyn_fieldservicestatus?: msdyn_bookingsystemstatus | null;
+  msdyn_iconname?: string | null;
   msdyn_imageurl?: string | null;
   msdyn_internalflags?: string | null;
   msdyn_serviceappointmentstatus?: msdyn_serviceappointmentstatus | null;
   msdyn_statuscolor?: string | null;
+  msdyn_statuscompletesworkorder?: boolean | null;
   name?: string | null;
   overriddencreatedon?: Date | null;
   statecode?: bookingstatus_statecode | null;
@@ -47,10 +49,12 @@ interface BookingStatus_Select {
   modifiedon: WebAttribute<BookingStatus_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<BookingStatus_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
   msdyn_fieldservicestatus: WebAttribute<BookingStatus_Select, { msdyn_fieldservicestatus: msdyn_bookingsystemstatus | null }, { msdyn_fieldservicestatus_formatted?: string }>;
+  msdyn_iconname: WebAttribute<BookingStatus_Select, { msdyn_iconname: string | null }, {  }>;
   msdyn_imageurl: WebAttribute<BookingStatus_Select, { msdyn_imageurl: string | null }, {  }>;
   msdyn_internalflags: WebAttribute<BookingStatus_Select, { msdyn_internalflags: string | null }, {  }>;
   msdyn_serviceappointmentstatus: WebAttribute<BookingStatus_Select, { msdyn_serviceappointmentstatus: msdyn_serviceappointmentstatus | null }, { msdyn_serviceappointmentstatus_formatted?: string }>;
   msdyn_statuscolor: WebAttribute<BookingStatus_Select, { msdyn_statuscolor: string | null }, {  }>;
+  msdyn_statuscompletesworkorder: WebAttribute<BookingStatus_Select, { msdyn_statuscompletesworkorder: boolean | null }, {  }>;
   name: WebAttribute<BookingStatus_Select, { name: string | null }, {  }>;
   overriddencreatedon: WebAttribute<BookingStatus_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
   ownerid_guid: WebAttribute<BookingStatus_Select, { ownerid_guid: string | null }, { ownerid_formatted?: string }>;
@@ -77,10 +81,12 @@ interface BookingStatus_Filter {
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
   msdyn_fieldservicestatus: msdyn_bookingsystemstatus;
+  msdyn_iconname: string;
   msdyn_imageurl: string;
   msdyn_internalflags: string;
   msdyn_serviceappointmentstatus: msdyn_serviceappointmentstatus;
   msdyn_statuscolor: string;
+  msdyn_statuscompletesworkorder: boolean;
   name: string;
   overriddencreatedon: Date;
   ownerid_guid: XQW.Guid;

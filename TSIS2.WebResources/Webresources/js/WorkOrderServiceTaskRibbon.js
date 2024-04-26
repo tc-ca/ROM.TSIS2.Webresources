@@ -312,7 +312,7 @@ async function retrieveWorkOrderOperationData(primaryControl) {
     };
 }
 
-function surveyHasErrors(primaryControl) {
+async function surveyHasErrors(primaryControl) {
     const formContext = primaryControl;
     var serviceTaskStartDate = primaryControl.getAttribute("ts_servicetaskstartdate").getValue();
     if (serviceTaskStartDate === null || serviceTaskStartDate > new Date()) {
@@ -336,7 +336,7 @@ function surveyHasErrors(primaryControl) {
     }
 }
 
-function checkSurveyHasErrors(primaryControl) {
+async function checkSurveyHasErrors(primaryControl) {
     const formContext = primaryControl;
 
     // Get the web resource control on the form
@@ -368,10 +368,75 @@ function checkSurveyHasErrors(primaryControl) {
                     var alertOptions = { height: 200, width: 450 };
                     Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
                 } else {
-                    completeConfirmation(formContext, win.survey);
+                    checkOperationRiskAssessment(formContext, win.survey)
                 }
             }
         });
+    }
+}
+
+async function checkOperationRiskAssessment(formContext, survey) {
+
+    const workOrderAttribute = formContext.getAttribute('msdyn_workorder').getValue();
+    const workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
+
+    let businessUnitName = await getWorkOrderOperationTypeBusinessUnitName(workOrderId);
+    let isISSO = businessUnitName.includes("Intermodal");
+
+    isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
+
+    if (isISSO && !isOffline) {
+        //Determine if Operation Risk Assessment has been submitted after the Work Order Service Task Start Date
+        let operationId = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationid_value").then(
+            function success(result) {
+                if (result._ovs_operationid_value != null) {
+                    return result._ovs_operationid_value;
+                }
+            }
+        );
+
+        //Show alert if this remains false
+        let activeRiskAssessmentSubmittedAfterStartDate = false;
+
+        if (operationId != null) {
+            //Retrieve Active Operation Risk Assessment submitted after the Work Order Service Task Start Date
+            let fetchXml = [
+                "<fetch>",
+                "  <entity name='ts_operationriskassessment'>",
+                "    <attribute name='ts_lastsubmissiondate' />",
+                "    <filter>",
+                "      <condition attribute='ts_operation' operator='eq' value='", operationId, "'/>",
+                "      <condition attribute='statecode' operator='eq' value='0'/>",
+                "    </filter>",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+            activeRiskAssessmentSubmittedAfterStartDate = await Xrm.WebApi.retrieveMultipleRecords("ts_operationriskassessment", fetchXml).then(
+                function success(result) {
+                    if (result.entities.length > 0) {
+                        let riskAssessment = result.entities[0];
+                        return (riskAssessment.ts_lastsubmissiondate != null && new Date(riskAssessment.ts_lastsubmissiondate) > new Date(formContext.getAttribute("ts_servicetaskstartdate").getValue()))
+                    } else {
+                        //If no Risk Assessment can be found, ignore
+                        return true;
+                    }
+                }
+            );
+        }
+        if (!activeRiskAssessmentSubmittedAfterStartDate) {
+            //Open Dialog Message Notifying User that the Active Operation Risk Assessment has not been submitted
+            var alertStrings = {
+                text: "The Operation Risk Assessment must be submitted before the Work Order Service Task can be Marked Complete.",
+                title: "Operation Risk Assessment Not Submitted"
+            };
+            var alertOptions = { height: 200, width: 550 };
+            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+        } else {
+            completeConfirmation(formContext, survey);
+        }
+    } else {
+        completeConfirmation(formContext, survey);
     }
 }
 
@@ -755,4 +820,40 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences){
         }
     );
     return false;
+}
+
+async function getWorkOrderOperationTypeBusinessUnitName(workOrderId) {
+    //retrieve Work Order with workOrderId
+    let workOrder = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationid_value");
+    const OperationId = workOrder._ovs_operationid_value;
+    let operation = await Xrm.WebApi.retrieveRecord("ovs_operation", OperationId, "?$select=_ovs_operationtypeid_value");
+    const operationTypeId = operation._ovs_operationtypeid_value;
+    let operationType = await Xrm.WebApi.retrieveRecord("ovs_operationtype", operationTypeId, "?$select=owningbusinessunit&$expand=owningbusinessunit($select=name)");
+    return operationType.owningbusinessunit.name;
+}
+
+async function isAvSecWorkOrder(primaryControl) {
+    const workOrderId = primaryControl.data.entity.getId();
+    if (workOrderId != null) {
+        let workOrderBusinessUnitName = await getWorkOrderOperationTypeBusinessUnitName(workOrderId);
+        return workOrderBusinessUnitName.includes("Aviation");
+    }
+}
+
+function createQualityControlServiceTask(primaryControl) {
+    Xrm.Utility.showProgressIndicator();
+    //Get ID of current Work Order
+    const workOrderId = primaryControl.data.entity.getId().replace("{", "").replace("}", "");
+    //Create Work Order Service Task with Quality Control Task Type, related to current Work Order
+    var data =
+    {
+        "msdyn_workorder@odata.bind": `/msdyn_workorders(${workOrderId})`,
+        "msdyn_tasktype@odata.bind": "/msdyn_servicetasktypes(931b334c-c55b-ee11-8df0-000d3af4f52a)"
+    }
+
+    // create account record
+    Xrm.WebApi.createRecord("msdyn_workorderservicetask", data).then(() => {
+        Xrm.Utility.closeProgressIndicator();
+        primaryControl.getControl("workorderservicetasksgrid").refresh();
+    });
 }

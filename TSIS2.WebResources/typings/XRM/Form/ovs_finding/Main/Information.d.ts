@@ -35,6 +35,7 @@ declare namespace Form.ovs_finding.Main {
         get(name: "NCAT_proposed_section"): Xrm.PageSection;
         get(name: "summary_ncatfactorguide"): Xrm.PageSection;
         get(name: "tab_NCAT_section_5"): Xrm.PageSection;
+        get(name: "tab_NCAT_section_6"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -46,6 +47,7 @@ declare namespace Form.ovs_finding.Main {
         get(name: "tab_4_section_1"): Xrm.PageSection;
         get(name: "tab_RATE_column_5_section_1"): Xrm.PageSection;
         get(name: "tab_RATE_section_5"): Xrm.PageSection;
+        get(name: "tab_RATE_section_7"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -82,6 +84,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncatapprovingteam"): Xrm.LookupAttribute<"team">;
       get(name: "ts_ncatcompliancehistory"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_ncatcooperationwithinspectionorinvestigat"): Xrm.LookupAttribute<"ts_assessmentrating">;
+      get(name: "ts_ncatdetailstosupport"): Xrm.Attribute<string>;
       get(name: "ts_ncatdetectionofnoncompliances"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_ncateconomicbenefit"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_ncatenforcementjustification"): Xrm.Attribute<string>;
@@ -130,10 +133,15 @@ declare namespace Form.ovs_finding.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
       get(name: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
       get(name: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
-      get(name: "WebResource_RATEFactor1Guide"): Xrm.WebResourceControl;
-      get(name: "WebResource_RATEFactor2Guide"): Xrm.WebResourceControl;
-      get(name: "WebResource_RATEFactor3Guide"): Xrm.WebResourceControl;
-      get(name: "WebResource_RATEFactor4Guide"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactorGuide_AcceptanceOfResponsibility"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactorGuide_ActualPotentialHarmVulnerability"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactorGuide_Cooperation"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactorGuide_EconomicBenefit"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactorGuide_GeneralNonComplianceHistory"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactorGuide_Intentionality"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactorGuide_MitigationOfHarm"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactorGuide_PreventionOfRecurrence"): Xrm.WebResourceControl;
+      get(name: "WebResource_RATEFactorGuide_SpecificNonComplianceHistory"): Xrm.WebResourceControl;
       get(name: "createdon"): Xrm.DateControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_statuscode"): Xrm.OptionSetControl<ovs_finding_statuscode>;
@@ -158,6 +166,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_ncatapprovingteam"): Xrm.LookupControl<"team">;
       get(name: "ts_ncatcompliancehistory"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_ncatcooperationwithinspectionorinvestigat"): Xrm.LookupControl<"ts_assessmentrating">;
+      get(name: "ts_ncatdetailstosupport"): Xrm.StringControl;
       get(name: "ts_ncatdetectionofnoncompliances"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_ncateconomicbenefit"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_ncatenforcementjustification"): Xrm.StringControl;
@@ -236,6 +245,7 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_ncatapprovingteam"): Xrm.LookupAttribute<"team">;
     getAttribute(attributeName: "ts_ncatcompliancehistory"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_ncatcooperationwithinspectionorinvestigat"): Xrm.LookupAttribute<"ts_assessmentrating">;
+    getAttribute(attributeName: "ts_ncatdetailstosupport"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_ncatdetectionofnoncompliances"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_ncateconomicbenefit"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_ncatenforcementjustification"): Xrm.Attribute<string>;
@@ -279,10 +289,15 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
-    getControl(controlName: "WebResource_RATEFactor1Guide"): Xrm.WebResourceControl;
-    getControl(controlName: "WebResource_RATEFactor2Guide"): Xrm.WebResourceControl;
-    getControl(controlName: "WebResource_RATEFactor3Guide"): Xrm.WebResourceControl;
-    getControl(controlName: "WebResource_RATEFactor4Guide"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactorGuide_AcceptanceOfResponsibility"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactorGuide_ActualPotentialHarmVulnerability"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactorGuide_Cooperation"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactorGuide_EconomicBenefit"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactorGuide_GeneralNonComplianceHistory"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactorGuide_Intentionality"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactorGuide_MitigationOfHarm"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactorGuide_PreventionOfRecurrence"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_RATEFactorGuide_SpecificNonComplianceHistory"): Xrm.WebResourceControl;
     getControl(controlName: "createdon"): Xrm.DateControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_statuscode"): Xrm.OptionSetControl<ovs_finding_statuscode>;
@@ -307,6 +322,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_ncatapprovingteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_ncatcompliancehistory"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_ncatcooperationwithinspectionorinvestigat"): Xrm.LookupControl<"ts_assessmentrating">;
+    getControl(controlName: "ts_ncatdetailstosupport"): Xrm.StringControl;
     getControl(controlName: "ts_ncatdetectionofnoncompliances"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_ncateconomicbenefit"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_ncatenforcementjustification"): Xrm.StringControl;

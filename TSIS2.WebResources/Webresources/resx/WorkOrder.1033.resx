@@ -177,4 +177,10 @@
   <data name="CantCancelText" xml:space="preserve">
     <value>A Complete Work Order can't be canceled.</value>
   </data>
+  <data name="CloseWOWithoutTimeTrackingFieldsText" xml:space="preserve">
+    <value>All required time tracking fields must be input before the Work order can be closed.</value>
+  </data>
+  <data name="CloseWOWithoutTimeTrackingFieldsTitle" xml:space="preserve">
+    <value>Required time tracking fields</value>
+  </data>
 </root>

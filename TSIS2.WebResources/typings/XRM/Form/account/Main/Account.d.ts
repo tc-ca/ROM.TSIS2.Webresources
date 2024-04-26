@@ -30,11 +30,20 @@ declare namespace Form.account.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface InsuranceTab extends Xrm.SectionCollectionBase {
+        get(name: "InsuranceHeldSection"): Xrm.PageSection;
+        get(name: "InsuranceProvidedSection"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface SUMMARY_TAB extends Xrm.SectionCollectionBase {
         get(name: "ACCOUNT_INFORMATION"): Xrm.PageSection;
         get(name: "ADDRESS"): Xrm.PageSection;
         get(name: "MapSection"): Xrm.PageSection;
         get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
+        get(name: "SUMMARY_TAB_ADDRESSINPUT_SECTION"): Xrm.PageSection;
         get(name: "SUMMARY_TAB_section_6"): Xrm.PageSection;
         get(name: "Summary_section_6"): Xrm.PageSection;
         get(name: string): undefined;
@@ -44,6 +53,15 @@ declare namespace Form.account.Main {
       }
       interface TradeCoveragesTab extends Xrm.SectionCollectionBase {
         get(name: "TradeCoveragesSection"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface WarrantiesTab extends Xrm.SectionCollectionBase {
+        get(name: "WarrantiesProvidedSection"): Xrm.PageSection;
+        get(name: "WarrantyCoveredBySection"): Xrm.PageSection;
+        get(name: "WarrantyHeldSection"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -81,6 +99,7 @@ declare namespace Form.account.Main {
       get(name: "address1_stateorprovince"): Xrm.Attribute<string> | null;
       get(name: "creditlimit"): Xrm.NumberAttribute;
       get(name: "creditonhold"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "customertypecode"): Xrm.OptionSetAttribute<account_customertypecode>;
       get(name: "defaultpricelevelid"): Xrm.LookupAttribute<"pricelevel">;
       get(name: "description"): Xrm.Attribute<string>;
       get(name: "donotbulkemail"): Xrm.OptionSetAttribute<boolean>;
@@ -91,6 +110,7 @@ declare namespace Form.account.Main {
       get(name: "fax"): Xrm.Attribute<string>;
       get(name: "industrycode"): Xrm.OptionSetAttribute<account_industrycode>;
       get(name: "msdyn_billingaccount"): Xrm.LookupAttribute<"account">;
+      get(name: "msdyn_primarytimezone"): Xrm.Attribute<any>;
       get(name: "msdyn_salestaxcode"): Xrm.LookupAttribute<"msdyn_taxcode">;
       get(name: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
       get(name: "msdyn_taxexempt"): Xrm.OptionSetAttribute<boolean>;
@@ -125,6 +145,11 @@ declare namespace Form.account.Main {
       get(name: "ChildAccounts"): Xrm.SubGridControl<"account">;
       get(name: "Contacts"): Xrm.SubGridControl<"contact">;
       get(name: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
+      get(name: "InsuranceEntitlementsSubgridControl"): Xrm.SubGridControl<"msdyn_insurance">;
+      get(name: "InsuranceProvidedSubgridControl"): Xrm.SubGridControl<"msdyn_insurance">;
+      get(name: "WarrantiesProvidedGrid"): Xrm.SubGridControl<"msdyn_warranty">;
+      get(name: "WarrantyCoveredBySubgrid"): Xrm.SubGridControl<"msdyn_warranty">;
+      get(name: "WarrantyHeldGrid"): Xrm.SubGridControl<"msdyn_warranty">;
       get(name: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
@@ -138,11 +163,13 @@ declare namespace Form.account.Main {
       get(name: "address1_latitude"): Xrm.NumberControl;
       get(name: "address1_latitude1"): Xrm.NumberControl;
       get(name: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "address1_line11"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "address1_longitude"): Xrm.NumberControl;
       get(name: "address1_longitude1"): Xrm.NumberControl;
       get(name: "address1_shippingmethodcode"): Xrm.OptionSetControl<account_address1_shippingmethodcode>;
       get(name: "creditlimit"): Xrm.NumberControl;
       get(name: "creditonhold"): Xrm.OptionSetControl<boolean>;
+      get(name: "customertypecode"): Xrm.OptionSetControl<account_customertypecode>;
       get(name: "defaultpricelevelid"): Xrm.LookupControl<"pricelevel">;
       get(name: "description"): Xrm.StringControl;
       get(name: "donotbulkemail"): Xrm.OptionSetControl<boolean>;
@@ -157,6 +184,7 @@ declare namespace Form.account.Main {
       get(name: "industrycode"): Xrm.OptionSetControl<account_industrycode>;
       get(name: "mapcontrol"): Xrm.BaseControl;
       get(name: "msdyn_billingaccount"): Xrm.LookupControl<"account">;
+      get(name: "msdyn_primarytimezone"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_salestaxcode"): Xrm.LookupControl<"msdyn_taxcode">;
       get(name: "msdyn_serviceterritory"): Xrm.LookupControl<"territory">;
       get(name: "msdyn_taxexempt"): Xrm.OptionSetControl<boolean>;
@@ -191,8 +219,10 @@ declare namespace Form.account.Main {
       get(name: "AssetsAndLocationsTab"): Xrm.PageTab<Tabs.AssetsAndLocationsTab>;
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
       get(name: "FieldService"): Xrm.PageTab<Tabs.FieldService>;
+      get(name: "InsuranceTab"): Xrm.PageTab<Tabs.InsuranceTab>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: "TradeCoveragesTab"): Xrm.PageTab<Tabs.TradeCoveragesTab>;
+      get(name: "WarrantiesTab"): Xrm.PageTab<Tabs.WarrantiesTab>;
       get(name: "documents_sharepoint"): Xrm.PageTab<Tabs.documents_sharepoint>;
       get(name: "urstab"): Xrm.PageTab<Tabs.urstab>;
       get(name: string): undefined;
@@ -216,6 +246,7 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "address1_stateorprovince"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "creditlimit"): Xrm.NumberAttribute;
     getAttribute(attributeName: "creditonhold"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "customertypecode"): Xrm.OptionSetAttribute<account_customertypecode>;
     getAttribute(attributeName: "defaultpricelevelid"): Xrm.LookupAttribute<"pricelevel">;
     getAttribute(attributeName: "description"): Xrm.Attribute<string>;
     getAttribute(attributeName: "donotbulkemail"): Xrm.OptionSetAttribute<boolean>;
@@ -226,6 +257,7 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "fax"): Xrm.Attribute<string>;
     getAttribute(attributeName: "industrycode"): Xrm.OptionSetAttribute<account_industrycode>;
     getAttribute(attributeName: "msdyn_billingaccount"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "msdyn_primarytimezone"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_salestaxcode"): Xrm.LookupAttribute<"msdyn_taxcode">;
     getAttribute(attributeName: "msdyn_serviceterritory"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "msdyn_taxexempt"): Xrm.OptionSetAttribute<boolean>;
@@ -255,6 +287,11 @@ declare namespace Form.account.Main {
     getControl(controlName: "ChildAccounts"): Xrm.SubGridControl<"account">;
     getControl(controlName: "Contacts"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
+    getControl(controlName: "InsuranceEntitlementsSubgridControl"): Xrm.SubGridControl<"msdyn_insurance">;
+    getControl(controlName: "InsuranceProvidedSubgridControl"): Xrm.SubGridControl<"msdyn_insurance">;
+    getControl(controlName: "WarrantiesProvidedGrid"): Xrm.SubGridControl<"msdyn_warranty">;
+    getControl(controlName: "WarrantyCoveredBySubgrid"): Xrm.SubGridControl<"msdyn_warranty">;
+    getControl(controlName: "WarrantyHeldGrid"): Xrm.SubGridControl<"msdyn_warranty">;
     getControl(controlName: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
@@ -268,11 +305,13 @@ declare namespace Form.account.Main {
     getControl(controlName: "address1_latitude"): Xrm.NumberControl;
     getControl(controlName: "address1_latitude1"): Xrm.NumberControl;
     getControl(controlName: "address1_line1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "address1_line11"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "address1_longitude"): Xrm.NumberControl;
     getControl(controlName: "address1_longitude1"): Xrm.NumberControl;
     getControl(controlName: "address1_shippingmethodcode"): Xrm.OptionSetControl<account_address1_shippingmethodcode>;
     getControl(controlName: "creditlimit"): Xrm.NumberControl;
     getControl(controlName: "creditonhold"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "customertypecode"): Xrm.OptionSetControl<account_customertypecode>;
     getControl(controlName: "defaultpricelevelid"): Xrm.LookupControl<"pricelevel">;
     getControl(controlName: "description"): Xrm.StringControl;
     getControl(controlName: "donotbulkemail"): Xrm.OptionSetControl<boolean>;
@@ -287,6 +326,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "industrycode"): Xrm.OptionSetControl<account_industrycode>;
     getControl(controlName: "mapcontrol"): Xrm.BaseControl;
     getControl(controlName: "msdyn_billingaccount"): Xrm.LookupControl<"account">;
+    getControl(controlName: "msdyn_primarytimezone"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_salestaxcode"): Xrm.LookupControl<"msdyn_taxcode">;
     getControl(controlName: "msdyn_serviceterritory"): Xrm.LookupControl<"territory">;
     getControl(controlName: "msdyn_taxexempt"): Xrm.OptionSetControl<boolean>;

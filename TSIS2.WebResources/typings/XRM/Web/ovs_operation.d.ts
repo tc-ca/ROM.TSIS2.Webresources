@@ -24,6 +24,7 @@ interface ovs_operation_Base extends WebEntity {
   ts_interval?: number | null;
   ts_issecurityinspectionsite?: ts_issecurityinspectionsite | null;
   ts_mail?: boolean | null;
+  ts_notes?: string | null;
   ts_operationalstatus?: ts_operationalstatus | null;
   ts_operationnameenglish?: string | null;
   ts_operationnamefrench?: string | null;
@@ -41,6 +42,7 @@ interface ovs_operation_Base extends WebEntity {
   ts_stationtype?: ts_stationtype | null;
   ts_statusenddate?: Date | null;
   ts_statusstartdate?: Date | null;
+  ts_targetedinspectionneeded?: boolean | null;
   ts_transborderflights?: boolean | null;
   ts_typeofdangerousgoods?: ts_typeofdangerousgoods | null;
   ts_typesofspecializedppe?: ts_typesofspecializedppe | null;
@@ -68,6 +70,7 @@ interface ovs_operation_Relationships {
   ts_ovs_operation_ovs_operation_msdyn_inciden?: msdyn_incidenttype_Result[] | null;
   ts_ovs_operation_ovs_operation_ovs_operation?: ovs_operation_Result[] | null;
   ts_ovs_operation_qm_rclegislation_qm_rclegis?: qm_rclegislation_Result[] | null;
+  ts_suggestedinspection_operation?: ts_SuggestedInspection_Result[] | null;
   ts_ts_operationactivity_Operation_ovs_operat?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_Operation_ovs_operation?: ts_PlanningData_Result[] | null;
 }
@@ -124,6 +127,7 @@ interface ovs_operation_Select {
   ts_interval: WebAttribute<ovs_operation_Select, { ts_interval: number | null }, {  }>;
   ts_issecurityinspectionsite: WebAttribute<ovs_operation_Select, { ts_issecurityinspectionsite: ts_issecurityinspectionsite | null }, { ts_issecurityinspectionsite_formatted?: string }>;
   ts_mail: WebAttribute<ovs_operation_Select, { ts_mail: boolean | null }, {  }>;
+  ts_notes: WebAttribute<ovs_operation_Select, { ts_notes: string | null }, {  }>;
   ts_operationalstatus: WebAttribute<ovs_operation_Select, { ts_operationalstatus: ts_operationalstatus | null }, { ts_operationalstatus_formatted?: string }>;
   ts_operationfrequency_guid: WebAttribute<ovs_operation_Select, { ts_operationfrequency_guid: string | null }, { ts_operationfrequency_formatted?: string }>;
   ts_operationnameenglish: WebAttribute<ovs_operation_Select, { ts_operationnameenglish: string | null }, {  }>;
@@ -148,6 +152,7 @@ interface ovs_operation_Select {
   ts_statusstartdate: WebAttribute<ovs_operation_Select, { ts_statusstartdate: Date | null }, { ts_statusstartdate_formatted?: string }>;
   ts_subsite_guid: WebAttribute<ovs_operation_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
   ts_subsubsite_guid: WebAttribute<ovs_operation_Select, { ts_subsubsite_guid: string | null }, { ts_subsubsite_formatted?: string }>;
+  ts_targetedinspectionneeded: WebAttribute<ovs_operation_Select, { ts_targetedinspectionneeded: boolean | null }, {  }>;
   ts_transborderflights: WebAttribute<ovs_operation_Select, { ts_transborderflights: boolean | null }, {  }>;
   ts_typeofdangerousgoods: WebAttribute<ovs_operation_Select, { ts_typeofdangerousgoods: ts_typeofdangerousgoods | null }, { ts_typeofdangerousgoods_formatted?: string }>;
   ts_typesofspecializedppe: WebAttribute<ovs_operation_Select, { ts_typesofspecializedppe: ts_typesofspecializedppe | null }, { ts_typesofspecializedppe_formatted?: string }>;
@@ -193,6 +198,7 @@ interface ovs_operation_Filter {
   ts_interval: number;
   ts_issecurityinspectionsite: ts_issecurityinspectionsite;
   ts_mail: boolean;
+  ts_notes: string;
   ts_operationalstatus: ts_operationalstatus;
   ts_operationfrequency_guid: XQW.Guid;
   ts_operationnameenglish: string;
@@ -217,6 +223,7 @@ interface ovs_operation_Filter {
   ts_statusstartdate: Date;
   ts_subsite_guid: XQW.Guid;
   ts_subsubsite_guid: XQW.Guid;
+  ts_targetedinspectionneeded: boolean;
   ts_transborderflights: boolean;
   ts_typeofdangerousgoods: ts_typeofdangerousgoods;
   ts_typesofspecializedppe: ts_typesofspecializedppe;
@@ -255,6 +262,7 @@ interface ovs_operation_Expand {
   ts_site: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_site: msdyn_FunctionalLocation_Result }>;
   ts_stakeholder: WebExpand<ovs_operation_Expand, Account_Select, Account_Filter, { ts_stakeholder: Account_Result }>;
   ts_subsite: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_subsite: msdyn_FunctionalLocation_Result }>;
+  ts_suggestedinspection_operation: WebExpand<ovs_operation_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection_operation: ts_SuggestedInspection_Result[] }>;
   ts_ts_operationactivity_Operation_ovs_operat: WebExpand<ovs_operation_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Operation_ovs_operat: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_Operation_ovs_operation: WebExpand<ovs_operation_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Operation_ovs_operation: ts_PlanningData_Result[] }>;
 }
@@ -348,6 +356,7 @@ interface ovs_operation_RelatedMany {
   ts_ovs_operation_ovs_operation_msdyn_inciden: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_ovs_operation_ovs_operation_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_ovs_operation_qm_rclegislation_qm_rclegis: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
+  ts_suggestedinspection_operation: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   ts_ts_operationactivity_Operation_ovs_operat: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_Operation_ovs_operation: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
 }

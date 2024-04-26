@@ -14,13 +14,16 @@ if (lang == 1036) {
     missingFinalEnforcementActionTitleLocalized = "Mesure d'application finale manquante";
     missingFinalEnforcementActionTextLocalized = "Un ou plusieurs enregistrements de constatations sélectionnés n'ont pas de mesure d'application finale. Toutes les constatations sélectionnées doivent avoir une mesure d'application finale pour créer un rapport de constatations."
     missingFinalEnforcementActionForActionCreateTextLocalized = "Un ou plusieurs enregistrements de constatations sélectionnés n'ont pas de mesure d'application finale. Toutes les constatations sélectionnées doivent avoir une mesure d'application finale."
-
+    createAcionFromObservationTitleLocalized = "Erreur de validation";
+    createAcionFromObservationTextLocalized = "Il n'est pas possible de créer des mesures d'exécution pour les observations.";
 } else {
     markCompleteValidationTextLocalized = "All fields denoted by blue '+' must be completed in order to Mark Complete.";
     markCompleteValidationTitleLocalized = "Form Incomplete";
     missingFinalEnforcementActionTitleLocalized = "Missing Final Enforcement Action"
     missingFinalEnforcementActionTextLocalized = "One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action to create a Findings Report.";
     missingFinalEnforcementActionForActionCreateTextLocalized = "One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action.";
+    createAcionFromObservationTitleLocalized = "Validation Error";
+    createAcionFromObservationTextLocalized = "Enforcement actions cannot be created for observations.";
 }
 
 let issoOperationTypeGuids = ["b27e5003-c751-eb11-a812-000d3af3ac0d", "c97a1a12-d8eb-eb11-bacb-000d3af4fbec", "21ca416a-431a-ec11-b6e7-000d3a09d067", "3b261029-c751-eb11-a812-000d3af3ac0d", "d883b39a-c751-eb11-a812-000d3af3ac0d", "da56fea1-c751-eb11-a812-000d3af3ac0d", "199e31ae-c751-eb11-a812-000d3af3ac0d"]
@@ -120,6 +123,7 @@ function unlockNCAT(primaryControl) {
     primaryControl.getControl("ts_issueaddressedonsite").setDisabled(false);
     primaryControl.getControl("ts_noncompliancetimeframe").setDisabled(false);
     primaryControl.getControl("ts_notetostakeholder").setDisabled(false);
+    primaryControl.getControl("ts_ncatdetailstosupport").setDisabled(false);
 
     primaryControl.getAttribute("ts_acceptncatrecommendation").setValue(null);
     primaryControl.getAttribute("ts_finalenforcementaction").setValue(null);
@@ -316,7 +320,7 @@ function FindingsReport(findingGUIDs, primaryControl) {
     const findingRows = gridContext.getGrid().getSelectedRows();
 
     //Confirm all selected findings have a final enforcement action
-    let { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB } = checkIfAllFindingsHaveEnforcementAction(findingRows);
+    let { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB, aFindingIsObservation } = checkIfAllFindingsHaveEnforcementAction(findingRows);
 
     //If a finding does not have a final enforcement action, open an alert dialog
     if (!allFindingsHaveFinalEnforcementAction) {
@@ -407,17 +411,23 @@ function FindingsReport(findingGUIDs, primaryControl) {
 function checkIfAllFindingsHaveEnforcementAction(findingRows) {
     let allFindingsHaveFinalEnforcementAction = true;
     let aFindingIsProtectedB = false;
+    let aFindingIsObservation = false;
     findingRows.forEach(function (findingRow) {
         const findingFinalEnforcementAction = findingRow.getAttribute("ts_finalenforcementaction").getValue();
         const findingSensitivityLevel = findingRow.getAttribute("ts_sensitivitylevel").getValue();
+        const findingType = findingRow.getAttribute("ts_findingtype").getValue();
+
         if (findingFinalEnforcementAction == null) {
             allFindingsHaveFinalEnforcementAction = false;
         }
         if (findingSensitivityLevel == 717750001) { //Protected B
             aFindingIsProtectedB = true;
         }
+        if (findingType == 717750001) { // Observation 
+            aFindingIsObservation  = true;
+        }
     });
-    return { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB };
+    return { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB, aFindingIsObservation };
 }
 
 function getHighestEnforcementActionFromFindings(findingRows) {
@@ -549,14 +559,17 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
     const findingRows = gridContext.getGrid().getSelectedRows();
 
     //Confirm all selected findings have a final enforcement action
-    let { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB } = checkIfAllFindingsHaveEnforcementAction(findingRows);
+    let { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB, aFindingIsObservation } = checkIfAllFindingsHaveEnforcementAction(findingRows);
 
     //If a finding does not have a final enforcement action, open an alert dialog
     if (!allFindingsHaveFinalEnforcementAction) {
         showAlertDialog(missingFinalEnforcementActionForActionCreateTextLocalized, missingFinalEnforcementActionTitleLocalized);
         return;
     }
-
+    if (aFindingIsObservation) {
+        showAlertDialog(createAcionFromObservationTextLocalized, createAcionFromObservationTitleLocalized);
+        return;
+    }
     const caseId = primaryControl.data.entity.getId().slice(1, -1);
    
     if (await isNCAT(findingGUIDs[0])) {
@@ -684,4 +697,127 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
             } 
         }); 
     } 
+}
+
+//Takes selected Finding records from a subgrid, finds which one is complete, and applies its enforcement tool results to the remaining selected records
+async function copyEnforcementActionToolResults(primaryControl, SelectedControlsSelectedItemIds) {
+    const findingIdsFilterValues = SelectedControlsSelectedItemIds.map(item => "<value>" + item + "</value>");
+    let findingFetchXml = [
+        "<fetch>",
+        "  <entity name='ovs_finding'>",
+        "    <filter>",
+        "      <condition attribute='ovs_findingid' operator='in'>",
+                    findingIdsFilterValues.join(""),
+        "      </condition>",
+        "      <condition attribute='ts_finalenforcementaction' operator='not-null'/>",
+        "    </filter>",
+        "  </entity>",
+        "</fetch>"
+    ].join("");
+    findingFetchXml = "?fetchXml=" + encodeURIComponent(findingFetchXml);
+    //Retrieve the selected finding with a final enforcement action.
+    const completeFinding = await Xrm.WebApi.retrieveMultipleRecords("ovs_finding", findingFetchXml).then(
+        function success(result) {
+            return result.entities[0];
+        }
+    );
+
+    //Set Localized labels
+    let toolName;
+    let confirmStrings = {}
+    if (lang == 1033) {
+        toolName = (completeFinding._ts_ncatactualorpotentialharm_value) ? "NCAT" : "RATE";
+        confirmStrings = {
+            text: toolName + " result from Finding " + completeFinding.ovs_finding + " will be applied to the selected Findings. Do you wish to proceed?",
+            title: "Apply Result"
+        };
+    } else {
+        toolName = (completeFinding._ts_ncatactualorpotentialharm_value) ? "OENC" : "OERA";
+        confirmStrings = {
+            text: "Les résultats de l'" + toolName + " pour la constatation " + completeFinding.ovs_finding + " vont être appliqués aux constatations sélectionnées. Voulez-vous continuer?",
+            title: "Appliquez les résultats"
+        };
+    }
+    
+
+    if (completeFinding != null) {
+        //Open confirmation message asking if they're sure and which result will be copied
+        var confirmOptions = { height: 200, width: 450 };
+        Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(async function (success) {
+            if (success.confirmed) {
+                //Spinning Wheel
+                Xrm.Utility.showProgressIndicator();
+
+                let data = {};
+
+                //Split for NCAT and RATE
+                if (completeFinding._ts_ncatactualorpotentialharm_value != null) {
+                    //NCAT
+                    data = {
+                        "ts_NCATActualorPotentialHarm@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatactualorpotentialharm_value + ")",
+                        "ts_NCATIntentionality@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatintentionality_value + ")",
+                        "ts_NCATComplianceHistory@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatcompliancehistory_value + ")",
+                        "ts_NCATEconomicBenefit@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncateconomicbenefit_value + ")",
+                        "ts_NCATEconomicBenefit@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncateconomicbenefit_value + ")",
+                        "ts_NCATMitigationofNonCompliantBehaviors@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatmitigationofnoncompliantbehaviors_value + ")",
+                        "ts_NCATCooperationwithInspectionorInvestigat@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatcooperationwithinspectionorinvestigat_value + ")",
+                        "ts_NCATDetectionofNonCompliances@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ncatdetectionofnoncompliances_value + ")",
+                        "ts_ncatdetailstosupport": completeFinding.ts_ncatdetailstosupport,
+                        "ts_acceptncatrecommendation": completeFinding.ts_acceptncatrecommendation,
+                        "ts_ncatenforcementrecommendation": completeFinding.ts_ncatenforcementrecommendation,
+                        "ts_ncatenforcementjustification": completeFinding.ts_ncatenforcementjustification,
+                        "ts_ncatinspectorrecommendation": completeFinding.ts_ncatinspectorrecommendation,
+                        "ts_ncatenforcementjustification": completeFinding.ts_ncatenforcementjustification,
+                        "ts_ncatmanagerdecision": completeFinding.ts_ncatmanagerdecision,
+                        "ts_ncatmanageralternativerecommendation": completeFinding.ts_ncatmanageralternativerecommendation,
+                        "ts_ncatmanagerenforcementjustification": completeFinding.ts_ncatmanagerenforcementjustification,
+                        "ts_issueaddressedonsite": completeFinding.ts_issueaddressedonsite,
+                        "ts_noncompliancetimeframe": completeFinding.ts_noncompliancetimeframe,
+                        "ovs_findingcomments": completeFinding.ovs_findingcomments,
+                        "ts_notetostakeholder": completeFinding.ts_notetostakeholder,
+                        "ts_sensitivitylevel": completeFinding.ts_sensitivitylevel,
+                        "ts_finalenforcementaction": completeFinding.ts_finalenforcementaction,
+                        "statecode": completeFinding.statecode,
+                        "statuscode": completeFinding.statuscode,
+                    }
+                    if (completeFinding._ts_ncatmanager_value != null) {
+                        data["ts_NCATManager@odata.bind"] = "/systemusers(" + completeFinding._ts_ncatmanager_value + ")";
+                    }
+                    if (completeFinding._ts_ncatapprovingteam_value != null) {
+                        data["ts_NCATApprovingTeam@odata.bind"] = "/teams(" + completeFinding._ts_ncatapprovingteam_value + ")";
+                    }
+                        
+                }
+                else if (completeFinding._ts_rategeneralcompliancehistory_value != null) {
+                    //RATE
+                    data = {
+                        "ts_ratespecificcompliancehistory": completeFinding.ts_ratespecificcompliancehistory,
+                        "ts_RATEGeneralComplianceHistory@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rategeneralcompliancehistory_value + ")",
+                        "ts_RATEActualorPotentialHarm@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rateactualorpotentialharm_value + ")",
+                        "ts_RATEIntentionality@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rateintentionality_value + ")",
+                        "ts_RATEEconomicBenefit@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rateeconomicbenefit_value + ")",
+                        "ts_RATEResponsibility@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_rateresponsibility_value + ")",
+                        "ts_RATEMitigationofNonCompliantBehaviors@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ratemitigationofnoncompliantbehaviors_value + ")",
+                        "ts_RATEPreventingRecurrence@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ratepreventingrecurrence_value + ")",
+                        "ts_RATECooperationwithInspectionorInvestigat@odata.bind": "/ts_assessmentratings(" + completeFinding._ts_ratecooperationwithinspectionorinvestigat_value + ")",
+                        "ts_ratespecificenforcementhistory": completeFinding.ts_ratespecificenforcementhistory,
+                        "ts_rateenforcementrecommendation": completeFinding.ts_rateenforcementrecommendation
+                    }
+                }
+
+                //Update the selected findings with the completed finding's data. Skip the one that is complete
+                for (let selectedFindingId of SelectedControlsSelectedItemIds) {
+                    if (selectedFindingId != completeFinding.ovs_findingid) {
+                        //Get Finding Type of Finding to make sure it's Non-Compliance
+                        const finding = await Xrm.WebApi.retrieveRecord("ovs_finding", selectedFindingId, "?$select=ts_findingtype");
+                        if (finding != null && finding.ts_findingtype == 717750002) {
+                            await Xrm.WebApi.updateRecord("ovs_finding", selectedFindingId, data);
+                        }
+                    }
+                }
+                Xrm.Utility.closeProgressIndicator();
+                primaryControl.getControl("subgrid_findings").refresh();
+            }
+        });
+    }
 }

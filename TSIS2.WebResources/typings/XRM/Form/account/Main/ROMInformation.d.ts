@@ -52,8 +52,9 @@ declare namespace Form.account.Main {
         get(name: "ADDRESS"): Xrm.PageSection;
         get(name: "MapSection"): Xrm.PageSection;
         get(name: "SUMMARY_TAB_section_9"): Xrm.PageSection;
-        get(name: "SUMMARY_TAB_section_9"): Xrm.PageSection;
+        get(name: "SUMMARY_TAB_section_Aliases"): Xrm.PageSection;
         get(name: "SUMMARY_TAB_section_timeframe"): Xrm.PageSection;
+        get(name: "SUMMARY_TAB_section_tradename"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -114,6 +115,11 @@ declare namespace Form.account.Main {
       get(name: "preferredcontactmethodcode"): Xrm.OptionSetAttribute<account_preferredcontactmethodcode>;
       get(name: "primarycontactid"): Xrm.LookupAttribute<"contact">;
       get(name: "telephone1"): Xrm.Attribute<string>;
+      get(name: "ts_alias1"): Xrm.Attribute<string>;
+      get(name: "ts_alias2"): Xrm.Attribute<string>;
+      get(name: "ts_alias3"): Xrm.Attribute<string>;
+      get(name: "ts_alias4"): Xrm.Attribute<string>;
+      get(name: "ts_alias5"): Xrm.Attribute<string>;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_iatacode"): Xrm.Attribute<string>;
       get(name: "ts_icaocode"): Xrm.Attribute<string>;
@@ -175,6 +181,11 @@ declare namespace Form.account.Main {
       get(name: "preferredcontactmethodcode"): Xrm.OptionSetControl<account_preferredcontactmethodcode>;
       get(name: "primarycontactid"): Xrm.LookupControl<"contact">;
       get(name: "telephone1"): Xrm.StringControl;
+      get(name: "ts_alias1"): Xrm.StringControl;
+      get(name: "ts_alias2"): Xrm.StringControl;
+      get(name: "ts_alias3"): Xrm.StringControl;
+      get(name: "ts_alias4"): Xrm.StringControl;
+      get(name: "ts_alias5"): Xrm.StringControl;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_iatacode"): Xrm.StringControl;
       get(name: "ts_icaocode"): Xrm.StringControl;
@@ -239,6 +250,11 @@ declare namespace Form.account.Main {
     getAttribute(attributeName: "preferredcontactmethodcode"): Xrm.OptionSetAttribute<account_preferredcontactmethodcode>;
     getAttribute(attributeName: "primarycontactid"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "telephone1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_alias1"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_alias2"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_alias3"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_alias4"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_alias5"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_iatacode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_icaocode"): Xrm.Attribute<string>;
@@ -295,6 +311,11 @@ declare namespace Form.account.Main {
     getControl(controlName: "preferredcontactmethodcode"): Xrm.OptionSetControl<account_preferredcontactmethodcode>;
     getControl(controlName: "primarycontactid"): Xrm.LookupControl<"contact">;
     getControl(controlName: "telephone1"): Xrm.StringControl;
+    getControl(controlName: "ts_alias1"): Xrm.StringControl;
+    getControl(controlName: "ts_alias2"): Xrm.StringControl;
+    getControl(controlName: "ts_alias3"): Xrm.StringControl;
+    getControl(controlName: "ts_alias4"): Xrm.StringControl;
+    getControl(controlName: "ts_alias5"): Xrm.StringControl;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_iatacode"): Xrm.StringControl;
     getControl(controlName: "ts_icaocode"): Xrm.StringControl;

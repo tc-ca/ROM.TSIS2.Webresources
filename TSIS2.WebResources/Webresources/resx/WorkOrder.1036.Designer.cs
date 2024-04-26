@@ -106,6 +106,24 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tous les champs obligatoires de suivi du temps doivent être renseignés avant que l&apos;ordre de travail ne puisse être fermé..
+        /// </summary>
+        internal static string CloseWOWithoutTimeTrackingFieldsText {
+            get {
+                return ResourceManager.GetString("CloseWOWithoutTimeTrackingFieldsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les champs obligatoires de suivi du temps.
+        /// </summary>
+        internal static string CloseWOWithoutTimeTrackingFieldsTitle {
+            get {
+                return ResourceManager.GetString("CloseWOWithoutTimeTrackingFieldsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to La tâche de service obligatoire doit être complété avant que l&apos;ordre de travail puisse être fermé..
         /// </summary>
         internal static string CloseWOWithUnCompletedSTText {

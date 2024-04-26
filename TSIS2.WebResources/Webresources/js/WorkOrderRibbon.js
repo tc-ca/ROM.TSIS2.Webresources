@@ -1,4 +1,4 @@
-var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+var workorderRibbon_lang = parent.Xrm.Utility.getGlobalContext().userSettings.workorderRibbon_languageId;
 
 var workOrderLocalized = "Work Order";
 var workOrderDetailsLocalized = "Work Order Details";
@@ -17,7 +17,7 @@ var inspectorCommentLocalized = "Inspector Comment";
 var workOrderCommitMessageText = "The selected Work Order(s) have been set to a Committed State";
 var workOrderCommitMessageTitle = "Work Orders Committed";
 
-if (lang == 1036) {
+if (workorderRibbon_lang == 1036) {
     workOrderLocalized = "Ordre de travail";
     workOrderDetailsLocalized = "Détails de l'ordre de travail";
     WorkOrderServiceTaskDetailsLocalized = "Détails de la tâche du service d'ordre de travail";
@@ -26,7 +26,7 @@ if (lang == 1036) {
     statusReasonLocalized = "Raison du statut";
     totalFindingsLocalized = "Nombre de constatations";
     overallInspectionCommentLocalized = "Commentaires généraux sur l'inspection";
-    findingsLocalized = "Constatations"; 
+    findingsLocalized = "Constatations";
     provisionReferenceLocalized = "Référence de la disposition";
     findingTypeLocalized = "Finding Type FR";
     stakeholderLocalized = "Intervenant";
@@ -52,7 +52,7 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
         defaultEntityType: "msdyn_workorder",
         entityTypes: ["msdyn_workorder"],
         allowMultiSelect: true,
-        defaultViewId:"fce37246-eba1-4e92-bb9d-f8cb3ec38e3f",
+        defaultViewId: "fce37246-eba1-4e92-bb9d-f8cb3ec38e3f",
         disableMru: true,
         filters: [
             {
@@ -67,42 +67,42 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
     };
 
     Xrm.Utility.lookupObjects(lookupOptions).then(
-    function(result){
-        console.log(result);
-        for (var i = 0; i < result.length; i++) {
-            var req = new XMLHttpRequest();
+        function (result) {
+            console.log(result);
+            for (var i = 0; i < result.length; i++) {
+                var req = new XMLHttpRequest();
 
-            req.open("PATCH", formContext.context.getClientUrl() + "/api/data/v9.0/" + "msdyn_workorders" + "(" + result[i].id.replace(/({|})/g,'') + ")");
-            req.setRequestHeader("Content-Type", "application/json");
-            req.setRequestHeader("Accept", "application/json");
-            req.setRequestHeader("OData-MaxVersion", "4.0");
-            req.setRequestHeader("OData-Version", "4.0");
+                req.open("PATCH", formContext.context.getClientUrl() + "/api/data/v9.0/" + "msdyn_workorders" + "(" + result[i].id.replace(/({|})/g, '') + ")");
+                req.setRequestHeader("Content-Type", "application/json");
+                req.setRequestHeader("Accept", "application/json");
+                req.setRequestHeader("OData-MaxVersion", "4.0");
+                req.setRequestHeader("OData-Version", "4.0");
 
-            var payload =
+                var payload =
                 {
-                    "msdyn_servicerequest@odata.bind" : formContext.context.getClientUrl() + "/api/data/v9.0/" + "incidents" + "(" + caseId + ")"
+                    "msdyn_servicerequest@odata.bind": formContext.context.getClientUrl() + "/api/data/v9.0/" + "incidents" + "(" + caseId + ")"
                 };
 
-            req.onreadystatechange = function() {
-                if (this.readyState === 4) {
-                    req.onreadystatechange = null;
-                    if (this.status === 204) {
-                        selectedControl.refresh();
-                    } else {
-                        showErrorMessageAlert(this.statusText);
+                req.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        req.onreadystatechange = null;
+                        if (this.status === 204) {
+                            selectedControl.refresh();
+                        } else {
+                            showErrorMessageAlert(this.statusText);
+                        }
                     }
-                }
-            };
+                };
 
-            req.send(JSON.stringify(payload));
-        }
-    },
-    function (error){
-        showErrorMessageAlert(error);
-    });
+                req.send(JSON.stringify(payload));
+            }
+        },
+        function (error) {
+            showErrorMessageAlert(error);
+        });
 }
 
-function ActivateWorkOrder(primaryControl){
+function ActivateWorkOrder(primaryControl) {
     const formContext = primaryControl;
     $.ajaxSetup({ cache: true });
     $.getScript("../WebResources/ts_/js/Common.js", function () {
@@ -133,32 +133,32 @@ function ActivateWorkOrder(primaryControl){
     });
 }
 
-function openWorkOrderServiceTasks(formContext){
+function openWorkOrderServiceTasks(formContext) {
     workOrderServiceTaskData =
     {
-        "statecode" :  0,           //closed -> 1
-        "statuscode" : 918640002    //closed -> 918640003
+        "statecode": 0,           //closed -> 1
+        "statuscode": 918640002    //closed -> 918640003
     };
 
     Xrm.WebApi.online.retrieveMultipleRecords("msdyn_workorderservicetask", `?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ${formContext.data.entity.getId()}`).then(
-        function success(result){
+        function success(result) {
             for (var i = 0; i < result.entities.length; i++) {
                 Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(
                     function success(result) {
                     },
-                    function (error){
+                    function (error) {
                         showErrorMessageAlert(error);
                     }
                 );
             }
         },
-        function (error){
+        function (error) {
             showErrorMessageAlert(error);
         }
     );
 }
 
-function setWorkOrderServiceTasksView(formContext){
+function setWorkOrderServiceTasksView(formContext) {
     var activeWorkOrderServiceTasksView =
     {
         entityType: "savedquery",
@@ -169,7 +169,7 @@ function setWorkOrderServiceTasksView(formContext){
     formContext.getControl("workorderservicetasksgrid").getViewSelector().setCurrentView(activeWorkOrderServiceTasksView);
 }
 
-function showErrorMessageAlert(error){
+function showErrorMessageAlert(error) {
     var alertStrings = { text: error.message };
     var alertOptions = { height: 120, width: 260 };
     Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
@@ -217,7 +217,7 @@ function exportWorkOrder(primaryControl) {
     workOrderDetailsList.innerHTML += '<li><strong>' + siteLabel + ':</strong> ' + siteText + '</li>';
     workOrderDetailsList.innerHTML += '<li><strong>' + activityTypeLabel + ':</strong> ' + activityTypeText + '</li>';
 
-    
+
 
     //Append Headers and details list to exportWindow's document body
     var exportWindowBody = exportWindow.document.body;
@@ -290,7 +290,7 @@ function exportWorkOrder(primaryControl) {
                             container: WOSTContainer
                         });
                         return;
-                    } 
+                    }
                     var responseKeys = Object.keys(WOSTResponse);
                     var inspectionCommentText = "";
 
@@ -327,7 +327,7 @@ function exportWorkOrder(primaryControl) {
                                     var accountableOperation = finding["_ts_operationid_value@OData.Community.Display.V1.FormattedValue"] || "";
                                     var accountableStakeholder = finding["_ts_accountid_value@OData.Community.Display.V1.FormattedValue"] || "";
                                     var findingComments = finding.ovs_findingcomments || "";
-                                    if (lang == 1036 && finding.ts_findingprovisiontextfr != undefined) provisiontText = finding.ts_findingprovisiontextfr;
+                                    if (workorderRibbon_lang == 1036 && finding.ts_findingprovisiontextfr != undefined) provisiontText = finding.ts_findingprovisiontextfr;
                                     findingsData.innerHTML += "<strong>" + provisionReferenceLocalized + ":</strong> " + provisionReference + "<br>";
                                     findingsData.innerHTML += provisiontText + "<br>";
                                     findingsData.innerHTML += "<strong>" + findingTypeLocalized + ":</strong> " + findingType + "<br>";
@@ -376,27 +376,27 @@ function exportWorkOrder(primaryControl) {
     );
 }
 
-function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, selectedControl){
+function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, selectedControl) {
     const formContext = primaryControl;
 
     const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
     const currentWorkOrderRecordOwnerId = Xrm.Page.ui.formContext.getAttribute("ownerid").getValue()[0].id;
-    const currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g,'');
+    const currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, '');
     const teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa";
     const incidentTypeId = Xrm.Page.ui.formContext.getAttribute("msdyn_primaryincidenttype").getValue()[0].id;
 
     //Identify WO (ISSO or AvSec) with the activity type field
     var incidentTypeOwnerFetchXML = [
-    "<fetch top='1'>",
-    "  <entity name='msdyn_incidenttype'>",
-    "    <filter>",
-    "      <condition attribute='msdyn_incidenttypeid' operator='eq' value='", incidentTypeId ,"'/>",
-    "    </filter>",
-    "    <link-entity name='team' from='teamid' to='ownerid' alias='team'>",
-    "      <attribute name='name'/>",
-    "    </link-entity>",
-    "  </entity>",
-    "</fetch>"
+        "<fetch top='1'>",
+        "  <entity name='msdyn_incidenttype'>",
+        "    <filter>",
+        "      <condition attribute='msdyn_incidenttypeid' operator='eq' value='", incidentTypeId, "'/>",
+        "    </filter>",
+        "    <link-entity name='team' from='teamid' to='ownerid' alias='team'>",
+        "      <attribute name='name'/>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>"
     ].join("");
     incidentTypeOwnerFetchXML = "?fetchXml=" + encodeURIComponent(incidentTypeOwnerFetchXML);
 
@@ -405,10 +405,10 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
 
 
         let inspectorTeamConditions = "";
-        if(incidentTypeOwnerName.startsWith("Aviation")){ 
+        if (incidentTypeOwnerName.startsWith("Aviation")) {
             inspectorTeamConditions = '<condition entityname="aa" attribute="name" operator="like" value="Aviation%Inspectors" />';
         }
-        else if(incidentTypeOwnerName.startsWith("Intermodal")){
+        else if (incidentTypeOwnerName.startsWith("Intermodal")) {
             inspectorTeamConditions = '<condition entityname="aa" attribute="name" operator="eq" value="ISSO%Inspectors" />';
         }
 
@@ -419,22 +419,22 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
             function success(result) {
                 for (var i = 0; i < result.entities.length; i++) {
                     alreadyExistingUsersInAccessTeamCondition += `<condition attribute="systemuserid" operator="neq" value="${result.entities[i].systemuserid}" />`;
-                }   
-                
-                const defaultViewId  = "d651eb0f-3ea9-ec11-983e-0022483e6bb0";
+                }
+
+                const defaultViewId = "d651eb0f-3ea9-ec11-983e-0022483e6bb0";
                 const viewIds = ["d651eb0f-3ea9-ec11-983e-0022483e6bb0"];
                 var lookupOptions =
                 {
                     defaultEntityType: "sytemuser",
-                    entityTypes: ["systemuser"], 
+                    entityTypes: ["systemuser"],
                     allowMultiSelect: true,
                     defaultViewId: `${defaultViewId}`,
                     disableMru: true,
-                    viewIds : viewIds,
+                    viewIds: viewIds,
                     filters:
                         [
                             {
-                                filterXml: `<filter type="and">` + 
+                                filterXml: `<filter type="and">` +
                                     `${alreadyExistingUsersInAccessTeamCondition}` + //filter out users already in the WO team
                                     `<condition attribute="systemuserid" operator="neq" value="${currentWorkOrderRecordOwnerId}" />` + //filter out current user
                                     `</filter>`,
@@ -446,51 +446,51 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
                             }
                         ]
                 };
-                
+
                 //Add selected user(s) to the WO team
                 Xrm.Utility.lookupObjects(lookupOptions).then(
-                    function(result){
+                    function (result) {
                         for (var i = 0; i < result.length; i++) {
                             var req = new XMLHttpRequest();
-                            req.open("POST", formContext.context.getClientUrl() + "/api/data/v9.0/" + "systemusers" + "(" + result[i].id.replace(/({|})/g,'') + ")" + "/Microsoft.Dynamics.CRM.AddUserToRecordTeam", (i != 0));
+                            req.open("POST", formContext.context.getClientUrl() + "/api/data/v9.0/" + "systemusers" + "(" + result[i].id.replace(/({|})/g, '') + ")" + "/Microsoft.Dynamics.CRM.AddUserToRecordTeam", (i != 0));
 
-                                req.setRequestHeader("Content-Type", "application/json");
-                                req.setRequestHeader("Accept", "application/json");
-                                req.setRequestHeader("OData-MaxVersion", "4.0");
-                                req.setRequestHeader("OData-Version", "4.0");
-    
-                                let payload = 
-                                {
-                                    "entity": {
-                                        "@odata.type": "Microsoft.Dynamics.CRM.systemuser",
-                                        "systemuserid": result[i].id.replace(/({|})/g,'')
-                                    },
-                                    "Record": {
-                                        "@odata.type": "Microsoft.Dynamics.CRM.msdyn_workorder",
-                                        "msdyn_workorderid": currentWorkOrderRecordId
-                                    },
-                                    "TeamTemplate": {
-                                        "@odata.type": "Microsoft.Dynamics.CRM.teamtemplate",
-                                        "teamtemplateid": "bddf1d45-706d-ec11-8f8e-0022483da5aa"
+                            req.setRequestHeader("Content-Type", "application/json");
+                            req.setRequestHeader("Accept", "application/json");
+                            req.setRequestHeader("OData-MaxVersion", "4.0");
+                            req.setRequestHeader("OData-Version", "4.0");
+
+                            let payload =
+                            {
+                                "entity": {
+                                    "@odata.type": "Microsoft.Dynamics.CRM.systemuser",
+                                    "systemuserid": result[i].id.replace(/({|})/g, '')
+                                },
+                                "Record": {
+                                    "@odata.type": "Microsoft.Dynamics.CRM.msdyn_workorder",
+                                    "msdyn_workorderid": currentWorkOrderRecordId
+                                },
+                                "TeamTemplate": {
+                                    "@odata.type": "Microsoft.Dynamics.CRM.teamtemplate",
+                                    "teamtemplateid": "bddf1d45-706d-ec11-8f8e-0022483da5aa"
+                                }
+                            }
+
+                            req.onreadystatechange = function () {
+                                if (this.readyState === 4) {
+                                    req.onreadystatechange = null;
+                                    if (this.status === 200) {
+                                    } else {
+                                        var alertStrings = { text: req.status + " " + req.responseText };
+                                        var alertOptions = { height: 120, width: 260 };
+                                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
                                     }
                                 }
-    
-                                req.onreadystatechange = function() {
-                                    if (this.readyState === 4) {
-                                        req.onreadystatechange = null;
-                                        if (this.status === 200) {    
-                                        } else {
-                                            var alertStrings = { text: req.status + " " + req.responseText };
-                                            var alertOptions = { height: 120, width: 260 };
-                                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
-                                        }
-                                    }
-                                };
-                                req.send(JSON.stringify(payload));
+                            };
+                            req.send(JSON.stringify(payload));
                         }
                         selectedControl.refresh();
                     },
-                    function(error){
+                    function (error) {
                         showErrorMessageAlert(error);
                     }
                 );
@@ -498,7 +498,7 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
             function (error) {
                 console.log(error.message);
             }
-        );  
+        );
     });
 }
 
@@ -617,7 +617,7 @@ function bulkAddAdditionalInspectors(formContext, selectedWorkOrdersGuids) {
         position: 1,
         width: { value: 450, unit: "px" },
         height: { value: 550, unit: "px" },
-        title: (lang == 1036) ? "Ajouter des inspecteurs supplémentaires" : "Add Additional Inspectors"
+        title: (workorderRibbon_lang == 1036) ? "Ajouter des inspecteurs supplémentaires" : "Add Additional Inspectors"
     };
     Xrm.Navigation.navigateTo(pageInput, navigationOptions)
         .then(
@@ -631,3 +631,32 @@ function bulkAddAdditionalInspectors(formContext, selectedWorkOrdersGuids) {
             }
         );
 }
+
+function copyServiceTask(formContext) {
+    const workOrdersGuid = formContext.data.entity.getId().replace(/({|})/g, '').toLowerCase();
+    // Centered Dialog
+    var pageInput = {
+        pageType: "custom",
+        name: "ts_copyservicetask_50612", //Unique name of Custom page
+        recordId: workOrdersGuid
+    };
+    var navigationOptions = {
+        target: 2,
+        position: 1,
+        width: { value: 450, unit: "px" },
+        height: { value: 550, unit: "px" },
+        title: (workorderRibbon_lang == 1036) ? "Copier la tâche de service" : "Copy Service Task"
+    };
+    Xrm.Navigation.navigateTo(pageInput, navigationOptions)
+        .then(
+            //function () {
+            //    // Called when the dialog closes
+            //    formContext.data.refresh();
+            //}
+        ).catch(
+            function (error) {
+                // Handle error
+            }
+        );
+}
+

@@ -50,6 +50,7 @@ namespace ROM.WorkOrderServiceTask {
         //If Status Reason is New user is able to change Work Order Start Date
         const statusReason = Form.getAttribute("statuscode").getValue();
         const workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
+        const workOrderStartDateValue = Form.getAttribute("ts_servicetaskstartdate").getValue();
         const workOrderEndDateCtl = Form.getControl("ts_servicetaskenddate");
         const workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
 
@@ -61,17 +62,49 @@ namespace ROM.WorkOrderServiceTask {
             workOrderStartDateCtl.setDisabled(false);
 
             // Also, add a message that work order service task start date should be filled in to proceed.
-            workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
+            if (workOrderStartDateValue == null) {
+                workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
+                Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
+            }
+            //If work order service task is in new status but has start date and questionnaire (it was copied from anothe WO)
+            else
+            {
+                workOrderStartDateCtl.setDisabled(true);
+                ToggleQuestionnaire(eContext);
+            }
 
             // Also, add a message that task type start date should be filled in to proceed.
             if (taskType == null) {
                 workOrderTaskTypeCtl.setNotification(enterTaskTypeToProccedText, "ts_tasktype_entertoproceed");
+                Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
             }
-            Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
+
         } else {
-            workOrderStartDateCtl.setDisabled(true);
+            //Make sure that if for whatever reason the start date does not have a value, that it remains unlocked.
+            if (workOrderStartDateValue == null) {
+                workOrderStartDateCtl.setDisabled(false);
+            } else {
+                workOrderStartDateCtl.setDisabled(true);
+            }
+            
             ToggleQuestionnaire(eContext);
         }
+
+        if (statusReason == 918640002) {
+            Form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "To unlock completed questionnaires please contact your manager." : "Pour déverrouiller un questionnaire complété, veuillez contacter votre gestionnaire."), "WARNING", "completed_questionnaire");
+
+        }
+
+        //Lock for non Admin users
+        if (!userHasRole("System Administrator|ROM - Business Admin")) {
+            Form.getControl("ts_mandatory").setDisabled(true);
+        }
+
+        //Hide Questionnaire Viewable Settings section for non-admin users
+        if (!userHasRole("System Administrator")) {
+            Form.ui.tabs.get('tab_summary').sections.get('tab_summary_section_accesscontrol').setVisible(false);
+        }
+        checkAccessControl(eContext);
     }
 
     export function serviceTaskStartDateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -79,7 +112,7 @@ namespace ROM.WorkOrderServiceTask {
     }
 
     export function taskTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-       UpdateQuestionnaireDefinition(eContext);
+        UpdateQuestionnaireDefinition(eContext);
     }
 
     function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -107,7 +140,7 @@ namespace ROM.WorkOrderServiceTask {
         const serviceTaskStartDate = Form.getAttribute("ts_servicetaskstartdate").getValue();
         const taskType = Form.getAttribute("msdyn_tasktype").getValue();
         const workOrderStartDateCtl = Form.getControl("ts_servicetaskstartdate");
-        const workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");       
+        const workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
         if (taskType != null) {
             workOrderTaskTypeCtl.clearNotification("ts_tasktype_entertoproceed");
             workOrderStartDateCtl.setDisabled(false);
@@ -227,15 +260,15 @@ namespace ROM.WorkOrderServiceTask {
         }
         else {
             // Task Type is empty so display message to enter it before proceeding
-            if (serviceTaskStartDate != null)              
-                workOrderStartDateCtl.clearNotification("ts_servicetaskstartdate_entertoproceed");           
-            else   
+            if (serviceTaskStartDate != null)
+                workOrderStartDateCtl.clearNotification("ts_servicetaskstartdate_entertoproceed");
+            else
                 workOrderStartDateCtl.setNotification(enterStartDateToProceedText, "ts_servicetaskstartdate_entertoproceed");
-           
+
             const workOrderTaskTypeCtl = Form.getControl("msdyn_tasktype");
             workOrderTaskTypeCtl.setNotification(enterTaskTypeToProccedText, "ts_tasktype_entertoproceed");
-            Form.getControl('WebResource_QuestionnaireRender').setVisible(false);           
-        }            
+            Form.getControl('WebResource_QuestionnaireRender').setVisible(false);
+        }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -243,7 +276,7 @@ namespace ROM.WorkOrderServiceTask {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
 
         const percentComplete = Form.getAttribute("msdyn_percentcomplete").getValue();
-        if (percentComplete != 100.00) {
+        if (percentComplete != 100.00 && Form.getAttribute("statecode").getValue() == msdyn_workorderservicetask_statecode.Active) {
             //Set percentComplete to 50.00
             Form.getAttribute("msdyn_percentcomplete").setValue(50.00);
             //Set Status Reason to In-Progress
@@ -275,10 +308,10 @@ namespace ROM.WorkOrderServiceTask {
                 const fetchXml = `<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true"> <entity name="msdyn_servicetasktype"> <attribute name="msdyn_name" /> <attribute name="createdon" /> <attribute name="msdyn_estimatedduration" /> <attribute name="msdyn_description" /> <attribute name="msdyn_servicetasktypeid" /> <order attribute="msdyn_name" descending="false" /> <link-entity name="msdyn_incidenttypeservicetask" from="msdyn_tasktype" to="msdyn_servicetasktypeid" link-type="inner" alias="ae"> <link-entity name="msdyn_incidenttype" from="msdyn_incidenttypeid" to="msdyn_incidenttype" link-type="inner" alias="af"> <filter type="and"> <condition attribute="msdyn_defaultworkordertype" operator="eq" value="${result._msdyn_workordertype_value}" /> </filter> <link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"> <link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ag"> <filter type="and"> <condition attribute="ovs_operationtypeid" operator="eq" value="${result._ovs_operationtypeid_value}" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>`;
                 const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_servicetasktype"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("msdyn_tasktype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
-                
+
                 showHideFieldsByOperationType(form, result._ovs_operationtypeid_value, result.ovs_operationtypeid._ownerid_value);
                 aocRegion = result._ts_region_value;
-               
+
                 if (form.getAttribute("ts_aocoperation").getValue() == null && result._ovs_operationtypeid_value == "8b614ef0-c651-eb11-a812-000d3af3ac0d") {  //Air Carrier (Passenger)
                     var lookup = new Array();
                     lookup[0] = new Object();
@@ -333,23 +366,23 @@ namespace ROM.WorkOrderServiceTask {
             Xrm.WebApi.retrieveRecord("msdyn_functionallocation", originValue[0].id, "?$select=_ts_country_value ").then(
                 function success(result1) {
                     originCountry = result1._ts_country_value;
-                        Xrm.WebApi.retrieveRecord("msdyn_functionallocation", destinationValue[0].id, "?$select=_ts_country_value ").then(
+                    Xrm.WebApi.retrieveRecord("msdyn_functionallocation", destinationValue[0].id, "?$select=_ts_country_value ").then(
                         function success(result2) {
-                                distinationCountry = result2._ts_country_value;
+                            distinationCountry = result2._ts_country_value;
 
-                                if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
-                                    // Domestic
-                                    form.getAttribute("ts_flightcategory").setValue(ts_flightcategory.Domestic);
-                                }
-                                else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
-                                    || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
-                                    //International
-                                    form.getAttribute("ts_flightcategory").setValue(ts_flightcategory.International);
-                                }
-                                else {
-                                    //Transborder
-                                    form.getAttribute("ts_flightcategory").setValue(ts_flightcategory.Transborder);
-                                }
+                            if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
+                                // Domestic
+                                form.getAttribute("ts_flightcategory").setValue(ts_flightcategory.Domestic);
+                            }
+                            else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
+                                || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
+                                //International
+                                form.getAttribute("ts_flightcategory").setValue(ts_flightcategory.International);
+                            }
+                            else {
+                                //Transborder
+                                form.getAttribute("ts_flightcategory").setValue(ts_flightcategory.Transborder);
+                            }
                         },
                         function error(error) {
                             Xrm.Navigation.openAlertDialog({ text: error.message });
@@ -365,7 +398,7 @@ namespace ROM.WorkOrderServiceTask {
         const workOrderValue = form.getAttribute("msdyn_workorder").getValue();
         const workOrderId = workOrderValue ? workOrderValue[0].id : "";
         const fieldsMap = [
-            ['ts_vlocation','ts_location'],
+            ['ts_vlocation', 'ts_location'],
             ['ts_vflightnumber', 'ts_flightnumber'],
             ['ts_vorigin', 'ts_origin'],
             ['ts_vdestination', 'ts_destination'],
@@ -496,7 +529,7 @@ namespace ROM.WorkOrderServiceTask {
 
     export function aircraftManufacturerOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
-        
+
         const aircraftmanufacturer = form.getAttribute("ts_aircraftmanufacturer").getValue();
         var options = form.getControl("ts_aircraftmodel").getOptions();
         for (var i = 0; i < options.length; i++)
@@ -549,7 +582,7 @@ namespace ROM.WorkOrderServiceTask {
                         "  <entity name='qm_tylegislationsource'>",
                         "    <link-entity name='ts_tylegislationsource_ovs_operationtype' from='qm_tylegislationsourceid' to='qm_tylegislationsourceid' intersect='true'>",
                         "      <filter>",
-                        "        <condition attribute='ovs_operationtypeid' operator='eq' value='", workOrder.ovs_operationtypeid.ovs_operationtypeid , "' uitype='ts_tylegislationsource_ovs_operationtype'/>",
+                        "        <condition attribute='ovs_operationtypeid' operator='eq' value='", workOrder.ovs_operationtypeid.ovs_operationtypeid, "' uitype='ts_tylegislationsource_ovs_operationtype'/>",
                         "      </filter>",
                         "    </link-entity>",
                         "  </entity>",
@@ -644,40 +677,36 @@ namespace ROM.WorkOrderServiceTask {
         parentWorkOrderOperationFetchXml = "?fetchXml=" + encodeURIComponent(parentWorkOrderOperationFetchXml);
         //Retrieve the operation in the ovs_operationid field of the parent work order
         let operationPromise1 = Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", parentWorkOrderOperationFetchXml);
-
-        var workOrderServiceTaskId = eContext.getFormContext().data.entity.getId();
-
-        var AOCOperationFetchXml = [
-            "<fetch>",
-            "<entity name='ovs_operation'>",
-            "<attribute name='ovs_name'/>",
-            "<attribute name='ovs_operationtypeid'/>",
-            "<attribute name='ovs_operationid'/>",
-            "<order attribute='ovs_name'/>",
-            "<link-entity name = 'msdyn_workorderservicetask' from='ts_aocoperation' to='ovs_operationid'>",
-            "<filter type='and'>",
-            "<condition attribute='msdyn_workorderservicetaskid' operator='eq' value='", workOrderServiceTaskId, "'/>",
-            "</filter>",
-            "</link-entity>",
-            "<link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
-            "<attribute name='ts_regulated'/>",
-            "<attribute name='ovs_operationtypeid'/>",
-            "<attribute name='ovs_operationtypenameenglish'/>",
-            "<attribute name='ovs_operationtypenamefrench'/>",
-            "</link-entity>",
-            "<link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
-            "<attribute name='ts_functionallocationnamefrench'/>",
-            "<attribute name='ts_functionallocationnameenglish'/>",
-            "</link-entity>",
+        let parentWorkOrderRelatedOperationFetchXml = [
+            "<fetch top='50'>",
+            "  <entity name='ovs_operation'>",
+            "    <attribute name='ts_stakeholder' />",
+            "    <attribute name='ovs_operationid' />",
+            "    <attribute name='ovs_name' />",
+            "    <link-entity name='ts_msdyn_workorder_ovs_operation' from='ovs_operationid' to='ovs_operationid' intersect='true'>",
+            "      <filter>",
+            "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+            "      </filter>",
+            "    </link-entity>",
             "    <link-entity name='account' from='accountid' to='ts_stakeholder'>",
             "      <attribute name='name' />",
             "    </link-entity>",
-            "</entity>",
-            "</fetch>"
+            "    <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
+            "      <attribute name='ts_regulated' />",
+            "      <attribute name='ovs_operationtypeid' /> ",
+            "      <attribute name='ovs_operationtypenameenglish' />",
+            "      <attribute name='ovs_operationtypenamefrench' />",
+            "    </link-entity>",
+            "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
+            "      <attribute name='ts_functionallocationnamefrench' />",
+            "      <attribute name='ts_functionallocationnameenglish' />",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
         ].join("");
-        AOCOperationFetchXml = "?fetchXml=" + encodeURIComponent(AOCOperationFetchXml);
-        //Retrieve AOC operation
-        let operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("ovs_operation", AOCOperationFetchXml);
+        parentWorkOrderRelatedOperationFetchXml = "?fetchXml=" + encodeURIComponent(parentWorkOrderRelatedOperationFetchXml);
+        //Retrieve N:N Operations
+        let operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("ovs_operation", parentWorkOrderRelatedOperationFetchXml);
 
         var activityTypeOperationTypesFetchXML = [
             "<fetch top='50'>",
@@ -700,12 +729,23 @@ namespace ROM.WorkOrderServiceTask {
         let activityTypeOperationTypesPromise = Xrm.WebApi.retrieveMultipleRecords("ovs_operationtype", activityTypeOperationTypesFetchXML);
 
         await Promise.all([operationPromise1, operationPromise2, activityTypeOperationTypesPromise]).then((operationRetrievalPromises) => {
+            //collect each operationType Id
+            operationRetrievalPromises[2].entities.forEach(function (operationType) {
+                activityTypeOperationTypeIds.push(operationType["ovs_operationtypeid"]);
+            });
             //Add the work order operation operationid, name, operationTypeId, and regulated boolean to the operations array
             var workOrderOperation = operationRetrievalPromises[0].entities[0];
             let stakeholderName = workOrderOperation["account4.name"];
             let operationTypeName = (lang == 1036) ? workOrderOperation["ovs_operationtype2.ovs_operationtypenamefrench"] : workOrderOperation["ovs_operationtype2.ovs_operationtypenameenglish"];
             let siteName = (lang == 1036) ? workOrderOperation["msdyn_functionallocation3.ts_functionallocationnamefrench"] : workOrderOperation["msdyn_functionallocation3.ts_functionallocationnameenglish"];
-            if (workOrderOperation["ovs_operation1.ovs_operationid"] != null && workOrderOperation["account4.name"] != null && workOrderOperation["ovs_operationtype2.ts_regulated"] != null) {
+            if (
+                workOrderOperation["ovs_operation1.ovs_operationid"] != null &&
+                workOrderOperation["account4.name"] != null &&
+                workOrderOperation["ovs_operationtype2.ts_regulated"] != null &&
+                workOrderOperation["ovs_operationtype2.ovs_operationtypeid"] != null &&
+                workOrderOperation["ovs_operationtype2.ts_regulated"] == true &&
+                activityTypeOperationTypeIds.includes(workOrderOperation["ovs_operationtype2.ovs_operationtypeid"])
+            ) {
                 operations.push({
                     id: workOrderOperation["ovs_operation1.ovs_operationid"],
                     name: stakeholderName + " | " + operationTypeName + " | " + siteName,
@@ -713,34 +753,33 @@ namespace ROM.WorkOrderServiceTask {
                     isRegulated: workOrderOperation["ovs_operationtype2.ts_regulated"]
                 });
             }
-
             if (workOrderOperation["_msdyn_workordertype_value"] != null) {
                 if (workOrderOperation["_msdyn_workordertype_value"].toUpperCase() == "B1EE680A-7CF7-EA11-A815-000D3AF3A7A7") {
                     isInspectionType = true;
                 }
             }
-            //Add the operationid, name, operationTypeId, and regulated boolean of the AOC operation
+            //Add the operationid, name, operationTypeId, and regulated boolean of the work order's N:N operations to the operations array
+            // The Operation must be regulated, and the Operation Type of the Operation must be one of the Work Order's Activity Type's Operation Types
             operationRetrievalPromises[1].entities.forEach(function (operation) {
-                let stakeholderName = operation["account4.name"];
-                let operationTypeName = (lang == 1036) ? operation["ovs_operationtype2.ovs_operationtypenamefrench"] : operation["ovs_operationtype2.ovs_operationtypenameenglish"];
-                let siteName = (lang == 1036) ? operation["msdyn_functionallocation3.ts_functionallocationnamefrench"] : operation["msdyn_functionallocation3.ts_functionallocationnameenglish"];
-                if (operation.ovs_operationid != null && operation["account4.name"] != null && operation["ovs_operationtype2.ts_regulated"] != null) {
-                    if ((operations[0]["id"] != operation.ovs_operationid)) {
+                let stakeholderName = operation["account2.name"];
+                let operationTypeName = (lang == 1036) ? operation["ovs_operationtype3.ovs_operationtypenamefrench"] : operation["ovs_operationtype3.ovs_operationtypenameenglish"];
+                let siteName = (lang == 1036) ? operation["msdyn_functionallocation4.ts_functionallocationnamefrench"] : operation["msdyn_functionallocation4.ts_functionallocationnameenglish"];
+                if (
+                        operation.ovs_operationid != null &&
+                        operation["account2.name"] != null &&
+                        operation["ovs_operationtype3.ts_regulated"] != null &&
+                        operation["ovs_operationtype3.ovs_operationtypeid"] != null &&
+                        operation["ovs_operationtype3.ts_regulated"] == true &&
+                        activityTypeOperationTypeIds.includes(operation["ovs_operationtype3.ovs_operationtypeid"])
+                    ) {
                         operations.push({
                             id: operation["ovs_operationid"],
                             name: stakeholderName + " | " + operationTypeName + " | " + siteName,
-                            operationTypeId: operation["ovs_operationtype2.ovs_operationtypeid"],
-                            isRegulated: operation["ovs_operationtype2.ts_regulated"]
+                            operationTypeId: operation["ovs_operationtype3.ovs_operationtypeid"],
+                            isRegulated: operation["ovs_operationtype3.ts_regulated"]
                         });
                     }
-                }
             });
-
-            //collect each operationType Id
-            operationRetrievalPromises[2].entities.forEach(function (operationType) {
-                activityTypeOperationTypeIds.push(operationType["ovs_operationtypeid"]);
-            });
-
         });
 
         //Return object containing retrieved operation data
@@ -750,6 +789,97 @@ namespace ROM.WorkOrderServiceTask {
             isInspectionType: isInspectionType
         };
     }
+
+    async function checkAccessControl(eContext: Xrm.ExecutionContext<any, any>) {
+        const form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
+        const accesscontrol = form.getAttribute("ts_accesscontrol").getValue();
+        const workOrderValue = form.getAttribute("msdyn_workorder").getValue();
+        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
+        const userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
+
+        if (!userHasRole("System Administrator")) {
+            if (accesscontrol == 1) {
+                let accessUserFetchXml = [
+                    "<fetch>",
+                    "  <entity name='ts_msdyn_workorderservicetask_systemuser'>",
+                    "    <filter type='and'>",
+                    "      <condition attribute='msdyn_workorderservicetaskid' operator='eq' value='", eContext.getFormContext().data.entity.getId(), "'/>",
+                    "      <condition attribute='systemuserid' operator='eq' value='", Xrm.Utility.getGlobalContext().userSettings.userId, "'/>",
+                    "    </filter>",
+                    "  </entity>",
+                    "</fetch>"
+                ].join("");
+                accessUserFetchXml = "?fetchXml=" + encodeURIComponent(accessUserFetchXml);
+                Xrm.WebApi.retrieveMultipleRecords("ts_msdyn_workorderservicetask_systemuser", accessUserFetchXml).then(
+                    function (result) {
+                        if (result.entities != null && result.entities.length == 0) {
+                            if (workOrderId != "") {
+                                Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ownerid_value ").then(
+                                    function success(result) {
+                                        if (result._ownerid_value != userId.toLowerCase()) {
+                                            form.ui.tabs.get("tab_questionnaire").setVisible(false);
+                                        }
+                                    });
+                            }
+                            else {
+                                form.ui.tabs.get("tab_questionnaire").setVisible(false);
+                            }
+                        }
+                    });
+            }
+        }
+    }
+
+    export async function SubGridFilterExecution(eContext: Xrm.ExecutionContext<any, any>): Promise<any> {
+        const formContext = <Form.msdyn_workorderservicetask.Main.Information>eContext.getFormContext();
+
+        let gridControl: any = formContext.getControl("Subgrid_OperationRiskAssessments");
+
+        const workOrder = formContext.getAttribute("msdyn_workorder").getValue();
+        let workOrderId;
+        if (workOrder != null) {
+            workOrderId = workOrder[0].id;
+        }
+
+        const operationId = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationid_value").then(
+            function success(result) {
+                return result._ovs_operationid_value
+            }
+        );
+
+        if (operationId == null) return;
+
+        if (gridControl === null) {
+            setTimeout(function () { ROM.WorkOrderServiceTask.SubGridFilterExecution(eContext); }, 1000);
+            return;
+        }
+        else {
+            var fetchXml = [
+                "<fetch>",
+                "  <entity name='ts_operationriskassessment'>",
+                "    <filter>",
+                "      <condition attribute='ts_operation' operator='eq' value='", operationId , "'/>",
+                "    </filter>",
+                "  </entity>",
+                "</fetch>"
+            ].join("");
+
+            gridControl.setFilterXml(fetchXml);
+            gridControl.refresh();
+        }
+    }
+}
+
+function userHasRole(rolesName) {
+    var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+    var hasRole = false;
+    var roles = rolesName.split("|");
+    roles.forEach(function (roleItem) {
+        userRoles.forEach(function (userRoleItem) {
+            if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
+        });
+    });
+    return hasRole;
 }
 
 function CompleteQuestionnaire(wrCtrl) {
@@ -768,3 +898,5 @@ function setAllFieldsDisabled(eContext) {
         }
     });
 }
+
+

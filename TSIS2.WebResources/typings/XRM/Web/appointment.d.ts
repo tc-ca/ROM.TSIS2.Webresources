@@ -85,6 +85,7 @@ interface Appointment extends Appointment_Base, Appointment_Relationships {
   ownerid_appointment_bind$systemusers?: string | null;
   ownerid_appointment_bind$teams?: string | null;
   regardingobjectid_account_appointment_bind$accounts?: string | null;
+  regardingobjectid_adx_invitation_appointment_bind$adx_invitations?: string | null;
   regardingobjectid_bookableresourcebooking_appointment_bind$bookableresourcebookings?: string | null;
   regardingobjectid_bookableresourcebookingheader_appointment_bind$bookableresourcebookingheaders?: string | null;
   regardingobjectid_bulkoperation_appointment_bind$bulkoperations?: string | null;
@@ -168,6 +169,12 @@ interface Appointment extends Appointment_Base, Appointment_Relationships {
   regardingobjectid_msdyn_workorderresourcerestriction_appointment_bind$msdyn_workorderresourcerestrictions?: string | null;
   regardingobjectid_msdyn_workorderservice_appointment_bind$msdyn_workorderservices?: string | null;
   regardingobjectid_msdyn_workorderservicetask_appointment_bind$msdyn_workorderservicetasks?: string | null;
+  regardingobjectid_mspp_adplacement_appointment_bind$mspp_adplacements?: string | null;
+  regardingobjectid_mspp_pollplacement_appointment_bind$mspp_pollplacements?: string | null;
+  regardingobjectid_mspp_publishingstatetransitionrule_appointment_bind$mspp_publishingstatetransitionrules?: string | null;
+  regardingobjectid_mspp_redirect_appointment_bind$mspp_redirects?: string | null;
+  regardingobjectid_mspp_shortcut_appointment_bind$mspp_shortcuts?: string | null;
+  regardingobjectid_mspp_website_appointment_bind$mspp_websites?: string | null;
   regardingobjectid_opportunity_appointment_bind$opportunities?: string | null;
   regardingobjectid_ovs_operation_appointment_bind$ovs_operations?: string | null;
   regardingobjectid_ppp_traveller_appointment_bind$ppp_travellers?: string | null;

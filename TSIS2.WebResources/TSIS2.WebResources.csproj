@@ -129,6 +129,8 @@
     <Content Include="Webresources\css\survey-creator.min.css" />
     <Content Include="Webresources\css\survey.min.css" />
     <Content Include="Webresources\css\WorkOrderExport.css" />
+    <Content Include="Webresources\html\Dashboard_AvSec.html" />
+    <Content Include="Webresources\html\Dashboard_ISSO.html" />
     <Content Include="Webresources\html\EmailAttachFile.html" />
     <Content Include="Webresources\html\EmailAttachFilePopUp.html" />
     <Content Include="Webresources\html\FindingProvisionText.html" />
@@ -152,10 +154,12 @@
     <Content Include="Webresources\js\Account.js" />
     <Content Include="Webresources\js\ace.min.js" />
     <Content Include="Webresources\js\Action.js" />
+    <Content Include="Webresources\js\ajax.js" />
     <Content Include="Webresources\js\AppLevelFunctions.js" />
     <Content Include="Webresources\js\autocomplete.js" />
     <Content Include="Webresources\js\BookableResourceBooking.js" />
     <Content Include="Webresources\js\bootstrap-datepicker.min.js" />
+    <Content Include="Webresources\js\bootstrap.js" />
     <Content Include="Webresources\js\buildprovisiontext.js" />
     <Content Include="Webresources\js\CanceledInspectionJustification.js" />
     <Content Include="Webresources\js\ckeditor.js" />
@@ -166,6 +170,7 @@
     <Content Include="Webresources\js\Email.js" />
     <Content Include="Webresources\js\EnforcementAction.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
+    <Content Include="Webresources\js\AttachFile.js" />
     <Content Include="Webresources\js\Finding.js" />
     <Content Include="Webresources\js\FindingRibbon.js" />
     <Content Include="Webresources\js\FindingsReportRibbon.js" />
@@ -180,24 +185,34 @@
     <Content Include="Webresources\js\jquery.js" />
     <Content Include="Webresources\js\knockout-min.js" />
     <Content Include="Webresources\js\LegislationRibbon.js" />
+    <Content Include="Webresources\js\NonOversightActivity.js" />
     <Content Include="Webresources\js\Operation.js" />
     <Content Include="Webresources\js\OperationActivity.js" />
     <Content Include="Webresources\js\OperationActivityQuickCreate.js" />
     <Content Include="Webresources\js\OperationActivityRibbon.js" />
+    <Content Include="Webresources\js\OperationRiskAssessmentRibbon.js" />
+    <Content Include="Webresources\js\Plan.js" />
     <Content Include="Webresources\js\PlanningData.js" />
     <Content Include="Webresources\js\planningDataRibbon.js" />
     <Content Include="Webresources\js\PlanningSettings.js" />
     <Content Include="Webresources\js\OperationContact.js" />
     <Content Include="Webresources\js\OperationRibbon.js" />
+    <Content Include="Webresources\js\PlanRibbon.js" />
     <Content Include="Webresources\js\Questionnaire.js" />
+    <Content Include="Webresources\js\QuestionnaireResponse.js" />
+    <Content Include="Webresources\js\QuestionnaireResponseRibbon.js" />
     <Content Include="Webresources\js\QuestionnaireVersion.js" />
+    <Content Include="Webresources\js\QuestionnaireVersionRibbon.js" />
     <Content Include="Webresources\js\RiskThreshold.js" />
+    <Content Include="Webresources\js\RiskThresholdRibbon.js" />
+    <Content Include="Webresources\js\SecurityIncidentType.js" />
     <Content Include="Webresources\js\SecurityRolePrivilegeCompare.js" />
     <Content Include="Webresources\js\ScoreThresholds.js" />
     <Content Include="Webresources\js\SecurityIncident.js" />
     <Content Include="Webresources\js\SecurityIncidentRibbon.js" />
     <Content Include="Webresources\js\ServiceTaskType.js" />
     <Content Include="Webresources\js\showdown.min.js" />
+    <Content Include="Webresources\js\SuggestedInspection.js" />
     <Content Include="Webresources\js\survey-creator.min.js" />
     <Content Include="Webresources\js\survey.jquery.min.js" />
     <Content Include="Webresources\js\survey.ko.min.js" />
@@ -208,6 +223,7 @@
     <Content Include="Webresources\js\Team.js" />
     <Content Include="Webresources\js\TeamPlanningData.js" />
     <Content Include="Webresources\js\TeamPlanningDataRibbon.js" />
+    <Content Include="Webresources\js\TeamPlanningInspectorHours.js" />
     <Content Include="Webresources\js\tsis2findingwidget.js" />
     <Content Include="Webresources\js\WorkOrder.js" />
     <Content Include="Webresources\js\WorkOrderCreationWizard.js" />
@@ -246,6 +262,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AddAdditionalInspectors.1033.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Webresources\resx\AttachFile.1033.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AttachFile.1033.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Webresources\resx\AttachFile.1036.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AttachFile.1036.resx</DependentUpon>
     </Compile>
     <Compile Include="Webresources\resx\CanceledInspectionJustification.1033.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -342,6 +368,7 @@
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\ts\Plan.ts" />
     <TypeScriptCompile Include="src\ts\Account.ts" />
     <TypeScriptCompile Include="src\ts\Action.ts" />
     <TypeScriptCompile Include="src\ts\BookableResourceBooking.ts" />
@@ -362,14 +389,17 @@
     <TypeScriptCompile Include="src\ts\OperationActivity.ts" />
     <TypeScriptCompile Include="src\ts\OperationActivityQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\PlanningData.ts" />
+    <TypeScriptCompile Include="src\ts\NonOversightActivity.ts" />
     <TypeScriptCompile Include="src\ts\PlanningSettings.ts" />
     <TypeScriptCompile Include="src\ts\OperationContact.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
+    <TypeScriptCompile Include="src\ts\QuestionnaireResponse.ts" />
     <TypeScriptCompile Include="src\ts\QuestionnaireVersion.ts" />
     <TypeScriptCompile Include="src\ts\RiskThreshold.ts" />
     <TypeScriptCompile Include="src\ts\ScoreThresholds.ts" />
     <TypeScriptCompile Include="src\ts\SecurityIncident.ts" />
     <TypeScriptCompile Include="src\ts\ServiceTaskType.ts" />
+    <TypeScriptCompile Include="src\ts\SuggestedInspection.ts" />
     <TypeScriptCompile Include="src\ts\Team.ts" />
     <TypeScriptCompile Include="src\ts\TeamPlanningData.ts" />
     <TypeScriptCompile Include="src\ts\TeamPlanningInspectorHours.ts" />
@@ -849,6 +879,16 @@
     <EmbeddedResource Include="Webresources\resx\AddAdditionalInspectors.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AddAdditionalInspectors.1033.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\AttachFile.1033.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AttachFile.1033.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\AttachFile.1036.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AttachFile.1036.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\CanceledInspectionJustification.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -9,9 +9,25 @@ var ROM;
             globalContext.getCurrentAppName().then(function (appName) {
                 if (appName == "Oversight Planning Module" || appName == "Module de planification de la surveillance") {
                     var formContext = eContext.getFormContext();
-                    var planningTab = formContext.ui.tabs.get("tab_planning");
-                    if (planningTab != null) {
-                        planningTab.setVisible(true);
+                    var businessUnitAttribute = formContext.getAttribute("businessunitid");
+                    var businessUnitName = void 0;
+                    if (businessUnitAttribute != null) {
+                        var businessUnitValue = businessUnitAttribute.getValue();
+                        if (businessUnitValue != null) {
+                            businessUnitName = businessUnitValue[0].name;
+                            if (businessUnitName.startsWith("Intermodal")) {
+                                var planningTab = formContext.ui.tabs.get("tab_planning_isso");
+                                if (planningTab != null) {
+                                    planningTab.setVisible(true);
+                                }
+                            }
+                            else if (businessUnitName.startsWith("Aviation")) {
+                                var planningTab = formContext.ui.tabs.get("tab_planning_avsec");
+                                if (planningTab != null) {
+                                    planningTab.setVisible(true);
+                                }
+                            }
+                        }
                     }
                 }
             });

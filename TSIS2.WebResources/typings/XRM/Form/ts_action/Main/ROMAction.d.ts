@@ -29,9 +29,10 @@ declare namespace Form.ts_action.Main {
       get(name: "ts_actionstatus"): Xrm.OptionSetAttribute<ts_actionstatus>;
       get(name: "ts_actiontype"): Xrm.OptionSetAttribute<ts_actiontype>;
       get(name: "ts_amtamount"): Xrm.NumberAttribute;
+      get(name: "ts_case"): Xrm.LookupAttribute<"incident">;
       get(name: "ts_contact"): Xrm.LookupAttribute<"contact">;
       get(name: "ts_deliverymethod"): Xrm.OptionSetAttribute<ts_deliverymethod>;
-      get(name: "ts_details"): Xrm.Attribute<string>;
+      get(name: "ts_details"): Xrm.Attribute<any>;
       get(name: "ts_duedate"): Xrm.DateAttribute;
       get(name: "ts_location"): Xrm.Attribute<string>;
       get(name: "ts_name"): Xrm.Attribute<string>;
@@ -44,15 +45,16 @@ declare namespace Form.ts_action.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "header_ts_case"): Xrm.LookupControl<"incident">;
       get(name: "notescontrol"): Xrm.BaseControl;
-      get(name: "subgrid_related_findings"): Xrm.SubGridControl<"ovs_finding">;
+      get(name: "subgrid_related_findings"): Xrm.SubGridControl<"ts_actionfinding">;
       get(name: "ts_actioncategory"): Xrm.OptionSetControl<ts_actioncategory>;
       get(name: "ts_actionstatus"): Xrm.OptionSetControl<ts_actionstatus>;
       get(name: "ts_actiontype"): Xrm.OptionSetControl<ts_actiontype>;
       get(name: "ts_amtamount"): Xrm.NumberControl;
       get(name: "ts_contact"): Xrm.LookupControl<"contact">;
       get(name: "ts_deliverymethod"): Xrm.OptionSetControl<ts_deliverymethod>;
-      get(name: "ts_details"): Xrm.StringControl;
+      get(name: "ts_details"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_duedate"): Xrm.DateControl;
       get(name: "ts_location"): Xrm.StringControl;
       get(name: "ts_name"): Xrm.StringControl;
@@ -79,9 +81,10 @@ declare namespace Form.ts_action.Main {
     getAttribute(attributeName: "ts_actionstatus"): Xrm.OptionSetAttribute<ts_actionstatus>;
     getAttribute(attributeName: "ts_actiontype"): Xrm.OptionSetAttribute<ts_actiontype>;
     getAttribute(attributeName: "ts_amtamount"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_case"): Xrm.LookupAttribute<"incident">;
     getAttribute(attributeName: "ts_contact"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "ts_deliverymethod"): Xrm.OptionSetAttribute<ts_deliverymethod>;
-    getAttribute(attributeName: "ts_details"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_details"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_duedate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_location"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
@@ -89,15 +92,16 @@ declare namespace Form.ts_action.Main {
     getAttribute(attributeName: "ts_timedate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "header_ts_case"): Xrm.LookupControl<"incident">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
-    getControl(controlName: "subgrid_related_findings"): Xrm.SubGridControl<"ovs_finding">;
+    getControl(controlName: "subgrid_related_findings"): Xrm.SubGridControl<"ts_actionfinding">;
     getControl(controlName: "ts_actioncategory"): Xrm.OptionSetControl<ts_actioncategory>;
     getControl(controlName: "ts_actionstatus"): Xrm.OptionSetControl<ts_actionstatus>;
     getControl(controlName: "ts_actiontype"): Xrm.OptionSetControl<ts_actiontype>;
     getControl(controlName: "ts_amtamount"): Xrm.NumberControl;
     getControl(controlName: "ts_contact"): Xrm.LookupControl<"contact">;
     getControl(controlName: "ts_deliverymethod"): Xrm.OptionSetControl<ts_deliverymethod>;
-    getControl(controlName: "ts_details"): Xrm.StringControl;
+    getControl(controlName: "ts_details"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_duedate"): Xrm.DateControl;
     getControl(controlName: "ts_location"): Xrm.StringControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;

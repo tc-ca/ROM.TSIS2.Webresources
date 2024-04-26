@@ -676,6 +676,29 @@ interface ts_msdyn_workorder_ts_operationcontact_Create extends ts_msdyn_workord
 }
 interface ts_msdyn_workorder_ts_operationcontact_Update extends ts_msdyn_workorder_ts_operationcontact {
 }
+interface ts_nonoversightactivity_Base extends WebEntity {
+}
+interface ts_nonoversightactivity_Fixed extends WebEntity_Fixed {
+  ts_nonoversightactivityid: string;
+}
+interface ts_nonoversightactivity extends ts_nonoversightactivity_Base, ts_nonoversightactivity_Relationships {
+}
+interface ts_nonoversightactivity_Relationships {
+}
+interface ts_nonoversightactivity_Result extends ts_nonoversightactivity_Base, ts_nonoversightactivity_Relationships {
+}
+interface ts_nonoversightactivity_FormattedResult {
+}
+interface ts_nonoversightactivity_Select {
+}
+interface ts_nonoversightactivity_Expand {
+}
+interface ts_nonoversightactivity_Filter {
+}
+interface ts_nonoversightactivity_Create extends ts_nonoversightactivity {
+}
+interface ts_nonoversightactivity_Update extends ts_nonoversightactivity {
+}
 interface ts_OperationActivity_Base extends WebEntity {
 }
 interface ts_OperationActivity_Fixed extends WebEntity_Fixed {
@@ -745,6 +768,29 @@ interface ts_ovs_operation_ovs_operation_Create extends ts_ovs_operation_ovs_ope
 }
 interface ts_ovs_operation_ovs_operation_Update extends ts_ovs_operation_ovs_operation {
 }
+interface ts_Plan_Base extends WebEntity {
+}
+interface ts_Plan_Fixed extends WebEntity_Fixed {
+  ts_planid: string;
+}
+interface ts_Plan extends ts_Plan_Base, ts_Plan_Relationships {
+}
+interface ts_Plan_Relationships {
+}
+interface ts_Plan_Result extends ts_Plan_Base, ts_Plan_Relationships {
+}
+interface ts_Plan_FormattedResult {
+}
+interface ts_Plan_Select {
+}
+interface ts_Plan_Expand {
+}
+interface ts_Plan_Filter {
+}
+interface ts_Plan_Create extends ts_Plan {
+}
+interface ts_Plan_Update extends ts_Plan {
+}
 interface ts_PlanningData_Base extends WebEntity {
 }
 interface ts_PlanningData_Fixed extends WebEntity_Fixed {
@@ -790,6 +836,29 @@ interface ts_planningsettings_Filter {
 interface ts_planningsettings_Create extends ts_planningsettings {
 }
 interface ts_planningsettings_Update extends ts_planningsettings {
+}
+interface ts_questionnaireresponse_Base extends WebEntity {
+}
+interface ts_questionnaireresponse_Fixed extends WebEntity_Fixed {
+  ts_questionnaireresponseid: string;
+}
+interface ts_questionnaireresponse extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
+}
+interface ts_questionnaireresponse_Relationships {
+}
+interface ts_questionnaireresponse_Result extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
+}
+interface ts_questionnaireresponse_FormattedResult {
+}
+interface ts_questionnaireresponse_Select {
+}
+interface ts_questionnaireresponse_Expand {
+}
+interface ts_questionnaireresponse_Filter {
+}
+interface ts_questionnaireresponse_Create extends ts_questionnaireresponse {
+}
+interface ts_questionnaireresponse_Update extends ts_questionnaireresponse {
 }
 interface ts_questionnaireversion_Base extends WebEntity {
 }
@@ -882,6 +951,29 @@ interface ts_securityincidenttype_Filter {
 interface ts_securityincidenttype_Create extends ts_securityincidenttype {
 }
 interface ts_securityincidenttype_Update extends ts_securityincidenttype {
+}
+interface ts_SuggestedInspection_Base extends WebEntity {
+}
+interface ts_SuggestedInspection_Fixed extends WebEntity_Fixed {
+  ts_suggestedinspectionid: string;
+}
+interface ts_SuggestedInspection extends ts_SuggestedInspection_Base, ts_SuggestedInspection_Relationships {
+}
+interface ts_SuggestedInspection_Relationships {
+}
+interface ts_SuggestedInspection_Result extends ts_SuggestedInspection_Base, ts_SuggestedInspection_Relationships {
+}
+interface ts_SuggestedInspection_FormattedResult {
+}
+interface ts_SuggestedInspection_Select {
+}
+interface ts_SuggestedInspection_Expand {
+}
+interface ts_SuggestedInspection_Filter {
+}
+interface ts_SuggestedInspection_Create extends ts_SuggestedInspection {
+}
+interface ts_SuggestedInspection_Update extends ts_SuggestedInspection {
 }
 interface ts_TeamPlanningData_Base extends WebEntity {
 }

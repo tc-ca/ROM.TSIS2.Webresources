@@ -12,6 +12,7 @@ interface Email_Base extends WebEntity {
   compressed?: boolean | null;
   conversationindex?: string | null;
   conversationtrackingid?: string | null;
+  correlatedsubjectchanged?: boolean | null;
   correlationmethod?: email_correlationmethod | null;
   createdon?: Date | null;
   delayedemailsendtime?: Date | null;
@@ -29,10 +30,13 @@ interface Email_Base extends WebEntity {
   followemailuserpreference?: boolean | null;
   importsequencenumber?: number | null;
   inreplyto?: string | null;
+  internetmessageheaders?: string | null;
   isbilled?: boolean | null;
+  isduplicatesenderunresolved?: boolean | null;
   isemailfollowed?: boolean | null;
   isemailreminderset?: boolean | null;
   isregularactivity?: boolean | null;
+  issafedescriptiontruncated?: number | null;
   isunsafe?: number | null;
   isworkflowcreated?: boolean | null;
   lastonholdtime?: Date | null;
@@ -109,6 +113,7 @@ interface Email extends Email_Base, Email_Relationships {
   ownerid_email_bind$systemusers?: string | null;
   ownerid_email_bind$teams?: string | null;
   regardingobjectid_account_email_bind$accounts?: string | null;
+  regardingobjectid_adx_invitation_email_bind$adx_invitations?: string | null;
   regardingobjectid_asyncoperation_bind$asyncoperations?: string | null;
   regardingobjectid_bookableresourcebooking_email_bind$bookableresourcebookings?: string | null;
   regardingobjectid_bookableresourcebookingheader_email_bind$bookableresourcebookingheaders?: string | null;
@@ -193,6 +198,12 @@ interface Email extends Email_Base, Email_Relationships {
   regardingobjectid_msdyn_workorderresourcerestriction_email_bind$msdyn_workorderresourcerestrictions?: string | null;
   regardingobjectid_msdyn_workorderservice_email_bind$msdyn_workorderservices?: string | null;
   regardingobjectid_msdyn_workorderservicetask_email_bind$msdyn_workorderservicetasks?: string | null;
+  regardingobjectid_mspp_adplacement_email_bind$mspp_adplacements?: string | null;
+  regardingobjectid_mspp_pollplacement_email_bind$mspp_pollplacements?: string | null;
+  regardingobjectid_mspp_publishingstatetransitionrule_email_bind$mspp_publishingstatetransitionrules?: string | null;
+  regardingobjectid_mspp_redirect_email_bind$mspp_redirects?: string | null;
+  regardingobjectid_mspp_shortcut_email_bind$mspp_shortcuts?: string | null;
+  regardingobjectid_mspp_website_email_bind$mspp_websites?: string | null;
   regardingobjectid_opportunity_email_bind$opportunities?: string | null;
   regardingobjectid_ovs_operation_email_bind$ovs_operations?: string | null;
   regardingobjectid_ppp_traveller_email_bind$ppp_travellers?: string | null;
@@ -236,6 +247,7 @@ interface Email_Select {
   conversationindex: WebAttribute<Email_Select, { conversationindex: string | null }, {  }>;
   conversationtrackingid: WebAttribute<Email_Select, { conversationtrackingid: string | null }, {  }>;
   correlatedactivityid_guid: WebAttribute<Email_Select, { correlatedactivityid_guid: string | null }, { correlatedactivityid_formatted?: string }>;
+  correlatedsubjectchanged: WebAttribute<Email_Select, { correlatedsubjectchanged: boolean | null }, {  }>;
   correlationmethod: WebAttribute<Email_Select, { correlationmethod: email_correlationmethod | null }, { correlationmethod_formatted?: string }>;
   createdby_guid: WebAttribute<Email_Select, { createdby_guid: string | null }, { createdby_formatted?: string }>;
   createdon: WebAttribute<Email_Select, { createdon: Date | null }, { createdon_formatted?: string }>;
@@ -257,10 +269,13 @@ interface Email_Select {
   from_guid: WebAttribute<Email_Select, { from_guid: string | null }, { from_formatted?: string }>;
   importsequencenumber: WebAttribute<Email_Select, { importsequencenumber: number | null }, {  }>;
   inreplyto: WebAttribute<Email_Select, { inreplyto: string | null }, {  }>;
+  internetmessageheaders: WebAttribute<Email_Select, { internetmessageheaders: string | null }, {  }>;
   isbilled: WebAttribute<Email_Select, { isbilled: boolean | null }, {  }>;
+  isduplicatesenderunresolved: WebAttribute<Email_Select, { isduplicatesenderunresolved: boolean | null }, {  }>;
   isemailfollowed: WebAttribute<Email_Select, { isemailfollowed: boolean | null }, {  }>;
   isemailreminderset: WebAttribute<Email_Select, { isemailreminderset: boolean | null }, {  }>;
   isregularactivity: WebAttribute<Email_Select, { isregularactivity: boolean | null }, {  }>;
+  issafedescriptiontruncated: WebAttribute<Email_Select, { issafedescriptiontruncated: number | null }, {  }>;
   isunsafe: WebAttribute<Email_Select, { isunsafe: number | null }, {  }>;
   isworkflowcreated: WebAttribute<Email_Select, { isworkflowcreated: boolean | null }, {  }>;
   lastonholdtime: WebAttribute<Email_Select, { lastonholdtime: Date | null }, { lastonholdtime_formatted?: string }>;
@@ -290,6 +305,7 @@ interface Email_Select {
   readreceiptrequested: WebAttribute<Email_Select, { readreceiptrequested: boolean | null }, {  }>;
   receivingmailboxid_guid: WebAttribute<Email_Select, { receivingmailboxid_guid: string | null }, { receivingmailboxid_formatted?: string }>;
   regardingobjectid_guid: WebAttribute<Email_Select, { regardingobjectid_guid: string | null }, { regardingobjectid_formatted?: string }>;
+  related_guid: WebAttribute<Email_Select, { related_guid: string | null }, { related_formatted?: string }>;
   reminderactioncardid: WebAttribute<Email_Select, { reminderactioncardid: string | null }, {  }>;
   replycount: WebAttribute<Email_Select, { replycount: number | null }, {  }>;
   reservedforinternaluse: WebAttribute<Email_Select, { reservedforinternaluse: string | null }, {  }>;
@@ -338,6 +354,7 @@ interface Email_Filter {
   conversationindex: string;
   conversationtrackingid: XQW.Guid;
   correlatedactivityid_guid: XQW.Guid;
+  correlatedsubjectchanged: boolean;
   correlationmethod: email_correlationmethod;
   createdby_guid: XQW.Guid;
   createdon: Date;
@@ -359,10 +376,13 @@ interface Email_Filter {
   from_guid: XQW.Guid;
   importsequencenumber: number;
   inreplyto: string;
+  internetmessageheaders: string;
   isbilled: boolean;
+  isduplicatesenderunresolved: boolean;
   isemailfollowed: boolean;
   isemailreminderset: boolean;
   isregularactivity: boolean;
+  issafedescriptiontruncated: number;
   isunsafe: number;
   isworkflowcreated: boolean;
   lastonholdtime: Date;
@@ -392,6 +412,7 @@ interface Email_Filter {
   readreceiptrequested: boolean;
   receivingmailboxid_guid: XQW.Guid;
   regardingobjectid_guid: XQW.Guid;
+  related_guid: XQW.Guid;
   reminderactioncardid: XQW.Guid;
   replycount: number;
   reservedforinternaluse: string;
@@ -489,6 +510,7 @@ interface Email_FormattedResult {
   prioritycode_formatted?: string;
   receivingmailboxid_formatted?: string;
   regardingobjectid_formatted?: string;
+  related_formatted?: string;
   scheduledend_formatted?: string;
   scheduledstart_formatted?: string;
   sendermailboxid_formatted?: string;
@@ -523,6 +545,7 @@ interface Email_Result extends Email_Base, Email_Relationships {
   parentactivityid_guid: string | null;
   receivingmailboxid_guid: string | null;
   regardingobjectid_guid: string | null;
+  related_guid: string | null;
   sendermailboxid_guid: string | null;
   sendersaccount_guid: string | null;
   serviceid_guid: string | null;

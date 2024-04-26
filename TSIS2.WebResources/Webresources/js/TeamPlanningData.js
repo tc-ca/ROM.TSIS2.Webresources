@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -46,7 +46,7 @@ var ROM;
                 formContext.getControl("ts_team").setDisabled(true);
                 formContext.getControl("ts_fiscalyear").setDisabled(true);
                 var planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
-                if (planStatusValue == 741130001 /* ts_planstatus.Complete */ || planStatusValue == 447390001 /* ts_planstatus.HQreview */) {
+                if (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) {
                     if (userHasRole("System Administrator|ROM - Business Admin")) {
                         formContext.getControl("ts_planstatus").setDisabled(false);
                     }
@@ -83,7 +83,7 @@ var ROM;
         TeamPlanningData.onSave = onSave;
         function generatePlanningData(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, teamPlanningDataId, teamPlanningDataTotalHoursQ1, teamPlanningDataTotalHoursQ2, teamPlanningDataTotalHoursQ3, teamPlanningDataTotalHoursQ4, teamPlanningDataTotalHoursFiscalYear, teamValue, teamId, teamName, planningDataFiscalYearValue, planningDataFiscalYearName, planningDataFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataAvailableInspectorHoursQ1, teamPlanningDataAvailableInspectorHoursQ2, teamPlanningDataAvailableInspectorHoursQ3, teamPlanningDataAvailableInspectorHoursQ4, teamPlanningDataAvailableInspectorHoursTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataResidualinspectorhoursQ1, teamPlanningDataResidualinspectorhoursQ2, teamPlanningDataResidualinspectorhoursQ3, teamPlanningDataResidualinspectorhoursQ4, teamPlanningDataResidualinspectorhoursTotal, userfetchXml, fetchXml;
+                var formContext, teamPlanningDataId, teamPlanningDataTotalHoursQ1, teamPlanningDataTotalHoursQ2, teamPlanningDataTotalHoursQ3, teamPlanningDataTotalHoursQ4, teamPlanningDataTotalHoursFiscalYear, teamValue, teamId, teamName, planningDataFiscalYearValue, planningDataFiscalYearName, planningDataFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataAvailableInspectorHoursQ1, teamPlanningDataAvailableInspectorHoursQ2, teamPlanningDataAvailableInspectorHoursQ3, teamPlanningDataAvailableInspectorHoursQ4, teamPlanningDataAvailableInspectorHoursTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataResidualinspectorhoursQ1, teamPlanningDataResidualinspectorhoursQ2, teamPlanningDataResidualinspectorhoursQ3, teamPlanningDataResidualinspectorhoursQ4, teamPlanningDataResidualinspectorhoursTotal, totalRequiredHours, userfetchXml, fetchXml;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -140,6 +140,7 @@ var ROM;
                             teamPlanningDataResidualinspectorhoursQ3 = 0;
                             teamPlanningDataResidualinspectorhoursQ4 = 0;
                             teamPlanningDataResidualinspectorhoursTotal = 0;
+                            totalRequiredHours = 0;
                             userfetchXml = [
                                 "<fetch>",
                                 "  <entity name='systemuser'>",
@@ -356,6 +357,7 @@ var ROM;
                                                             teamPlanningDataPlannedQ2 += planningDataQuarters[1];
                                                             teamPlanningDataPlannedQ3 += planningDataQuarters[2];
                                                             teamPlanningDataPlannedQ4 += planningDataQuarters[3];
+                                                            totalRequiredHours += planningDataTarget * planningDataEstimatedDuration;
                                                         }
                                                     }
                                                     data = {
@@ -429,6 +431,7 @@ var ROM;
                             formContext.getAttribute("ts_residualinspectorhoursq3").setValue(teamPlanningDataResidualinspectorhoursQ3);
                             formContext.getAttribute("ts_residualinspectorhoursq4").setValue(teamPlanningDataResidualinspectorhoursQ4);
                             formContext.getAttribute("ts_residualinspectorhoursfiscalyear").setValue(teamPlanningDataResidualinspectorhoursTotal);
+                            formContext.getAttribute("ts_totalrequiredhours").setValue(totalRequiredHours);
                             formContext.data.entity.save();
                             Xrm.Utility.closeProgressIndicator();
                             return [2 /*return*/];
@@ -517,7 +520,7 @@ var ROM;
         function planStatusOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
-            if (planStatusValue == 741130001 /* ts_planstatus.Complete */ || planStatusValue == 447390001 /* ts_planstatus.HQreview */) {
+            if (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) {
                 formContext.getControl("ts_totalhoursq1").setDisabled(true);
                 formContext.getControl("ts_totalhoursq2").setDisabled(true);
                 formContext.getControl("ts_totalhoursq3").setDisabled(true);

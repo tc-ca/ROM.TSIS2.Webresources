@@ -52,6 +52,10 @@ interface Account_Base extends WebEntity {
   address2_telephone3?: string | null;
   address2_upszone?: string | null;
   address2_utcoffset?: number | null;
+  adx_createdbyipaddress?: string | null;
+  adx_createdbyusername?: string | null;
+  adx_modifiedbyipaddress?: string | null;
+  adx_modifiedbyusername?: string | null;
   aging30?: number | null;
   aging30_base?: number | null;
   aging60?: number | null;
@@ -92,6 +96,7 @@ interface Account_Base extends WebEntity {
   merged?: boolean | null;
   modifiedon?: Date | null;
   msdyn_gdproptout?: boolean | null;
+  msdyn_primarytimezone?: number | null;
   msdyn_taxexempt?: boolean | null;
   msdyn_taxexemptnumber?: string | null;
   msdyn_travelcharge?: number | null;
@@ -144,6 +149,11 @@ interface Account_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   transactioncurrencyid_guid?: string | null;
   traversedpath?: string | null;
+  ts_alias1?: string | null;
+  ts_alias2?: string | null;
+  ts_alias3?: string | null;
+  ts_alias4?: string | null;
+  ts_alias5?: string | null;
   ts_iatacode?: string | null;
   ts_icaocode?: string | null;
   ts_securityplantype?: ts_securityplantype | null;
@@ -175,6 +185,8 @@ interface Account_Relationships {
   account_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   contact_customer_accounts?: Contact_Result[] | null;
   incident_customer_accounts?: Incident_Result[] | null;
+  msa_account_managingpartner?: Account_Result[] | null;
+  msa_contact_managingpartner?: Contact_Result[] | null;
   msdyn_PreferredResource?: BookableResource_Result | null;
   msdyn_account_account_BillingAccount?: Account_Result[] | null;
   msdyn_account_msdyn_accountkpiitem_accountid?: msdyn_accountkpiitem_Result[] | null;
@@ -197,8 +209,11 @@ interface Account_Relationships {
   ts_account_ts_securityincident_ReportingCompany?: ts_securityincident_Result[] | null;
   ts_account_ts_securityincident_Stakeholder?: ts_securityincident_Result[] | null;
   ts_account_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
+  ts_account_workorder_operatingcarrier?: msdyn_workorder_Result[] | null;
+  ts_account_workorder_operatingname?: msdyn_workorder_Result[] | null;
   ts_ovs_Finding_accountid_Account?: ovs_Finding_Result[] | null;
   ts_ovs_operation_stakeholder_account?: ovs_operation_Result[] | null;
+  ts_suggestedinspection_stakeholder?: ts_SuggestedInspection_Result[] | null;
   ts_ts_enforcementaction_Individualcompany_ac?: ts_enforcementaction_Result[] | null;
   ts_ts_operationactivity_Stakeholder_account?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_Stakeholder_account?: ts_PlanningData_Result[] | null;
@@ -206,6 +221,7 @@ interface Account_Relationships {
 }
 interface Account extends Account_Base, Account_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
+  msa_managingpartnerid_bind$accounts?: string | null;
   msdyn_PreferredResource_bind$bookableresources?: string | null;
   msdyn_accountkpiid_bind$msdyn_accountkpiitems?: string | null;
   msdyn_billingaccount_account_bind$accounts?: string | null;
@@ -289,6 +305,10 @@ interface Account_Select {
   address2_telephone3: WebAttribute<Account_Select, { address2_telephone3: string | null }, {  }>;
   address2_upszone: WebAttribute<Account_Select, { address2_upszone: string | null }, {  }>;
   address2_utcoffset: WebAttribute<Account_Select, { address2_utcoffset: number | null }, {  }>;
+  adx_createdbyipaddress: WebAttribute<Account_Select, { adx_createdbyipaddress: string | null }, {  }>;
+  adx_createdbyusername: WebAttribute<Account_Select, { adx_createdbyusername: string | null }, {  }>;
+  adx_modifiedbyipaddress: WebAttribute<Account_Select, { adx_modifiedbyipaddress: string | null }, {  }>;
+  adx_modifiedbyusername: WebAttribute<Account_Select, { adx_modifiedbyusername: string | null }, {  }>;
   aging30: WebAttribute<Account_Select, { aging30: number | null; transactioncurrencyid_guid: string | null }, { aging30_formatted?: string; transactioncurrencyid_formatted?: string }>;
   aging30_base: WebAttribute<Account_Select, { aging30_base: number | null; transactioncurrencyid_guid: string | null }, { aging30_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   aging60: WebAttribute<Account_Select, { aging60: number | null; transactioncurrencyid_guid: string | null }, { aging60_formatted?: string; transactioncurrencyid_formatted?: string }>;
@@ -336,10 +356,12 @@ interface Account_Select {
   modifiedbyexternalparty_guid: WebAttribute<Account_Select, { modifiedbyexternalparty_guid: string | null }, { modifiedbyexternalparty_formatted?: string }>;
   modifiedon: WebAttribute<Account_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Account_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msa_managingpartnerid_guid: WebAttribute<Account_Select, { msa_managingpartnerid_guid: string | null }, { msa_managingpartnerid_formatted?: string }>;
   msdyn_accountkpiid_guid: WebAttribute<Account_Select, { msdyn_accountkpiid_guid: string | null }, { msdyn_accountkpiid_formatted?: string }>;
   msdyn_billingaccount_guid: WebAttribute<Account_Select, { msdyn_billingaccount_guid: string | null }, { msdyn_billingaccount_formatted?: string }>;
   msdyn_gdproptout: WebAttribute<Account_Select, { msdyn_gdproptout: boolean | null }, {  }>;
   msdyn_preferredresource_guid: WebAttribute<Account_Select, { msdyn_preferredresource_guid: string | null }, { msdyn_preferredresource_formatted?: string }>;
+  msdyn_primarytimezone: WebAttribute<Account_Select, { msdyn_primarytimezone: number | null }, {  }>;
   msdyn_salesaccelerationinsightid_guid: WebAttribute<Account_Select, { msdyn_salesaccelerationinsightid_guid: string | null }, { msdyn_salesaccelerationinsightid_formatted?: string }>;
   msdyn_salestaxcode_guid: WebAttribute<Account_Select, { msdyn_salestaxcode_guid: string | null }, { msdyn_salestaxcode_formatted?: string }>;
   msdyn_segmentid_guid: WebAttribute<Account_Select, { msdyn_segmentid_guid: string | null }, { msdyn_segmentid_formatted?: string }>;
@@ -411,6 +433,11 @@ interface Account_Select {
   timezoneruleversionnumber: WebAttribute<Account_Select, { timezoneruleversionnumber: number | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<Account_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Account_Select, { traversedpath: string | null }, {  }>;
+  ts_alias1: WebAttribute<Account_Select, { ts_alias1: string | null }, {  }>;
+  ts_alias2: WebAttribute<Account_Select, { ts_alias2: string | null }, {  }>;
+  ts_alias3: WebAttribute<Account_Select, { ts_alias3: string | null }, {  }>;
+  ts_alias4: WebAttribute<Account_Select, { ts_alias4: string | null }, {  }>;
+  ts_alias5: WebAttribute<Account_Select, { ts_alias5: string | null }, {  }>;
   ts_country_guid: WebAttribute<Account_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_iatacode: WebAttribute<Account_Select, { ts_iatacode: string | null }, {  }>;
   ts_icaocode: WebAttribute<Account_Select, { ts_icaocode: string | null }, {  }>;
@@ -479,6 +506,10 @@ interface Account_Filter {
   address2_telephone3: string;
   address2_upszone: string;
   address2_utcoffset: number;
+  adx_createdbyipaddress: string;
+  adx_createdbyusername: string;
+  adx_modifiedbyipaddress: string;
+  adx_modifiedbyusername: string;
   aging30: number;
   aging30_base: number;
   aging60: number;
@@ -526,10 +557,12 @@ interface Account_Filter {
   modifiedbyexternalparty_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msa_managingpartnerid_guid: XQW.Guid;
   msdyn_accountkpiid_guid: XQW.Guid;
   msdyn_billingaccount_guid: XQW.Guid;
   msdyn_gdproptout: boolean;
   msdyn_preferredresource_guid: XQW.Guid;
+  msdyn_primarytimezone: number;
   msdyn_salesaccelerationinsightid_guid: XQW.Guid;
   msdyn_salestaxcode_guid: XQW.Guid;
   msdyn_segmentid_guid: XQW.Guid;
@@ -601,6 +634,11 @@ interface Account_Filter {
   timezoneruleversionnumber: number;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_alias1: string;
+  ts_alias2: string;
+  ts_alias3: string;
+  ts_alias4: string;
+  ts_alias5: string;
   ts_country_guid: XQW.Guid;
   ts_iatacode: string;
   ts_icaocode: string;
@@ -640,6 +678,9 @@ interface Account_Expand {
   masterid: WebExpand<Account_Expand, Account_Select, Account_Filter, { masterid: Account_Result }>;
   modifiedby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
+  msa_account_managingpartner: WebExpand<Account_Expand, Account_Select, Account_Filter, { msa_account_managingpartner: Account_Result[] }>;
+  msa_contact_managingpartner: WebExpand<Account_Expand, Contact_Select, Contact_Filter, { msa_contact_managingpartner: Contact_Result[] }>;
+  msa_managingpartnerid: WebExpand<Account_Expand, Account_Select, Account_Filter, { msa_managingpartnerid: Account_Result }>;
   msdyn_PreferredResource: WebExpand<Account_Expand, BookableResource_Select, BookableResource_Filter, { msdyn_PreferredResource: BookableResource_Result }>;
   msdyn_account_account_BillingAccount: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_account_account_BillingAccount: Account_Result[] }>;
   msdyn_account_msdyn_accountkpiitem_accountid: WebExpand<Account_Expand, msdyn_accountkpiitem_Select, msdyn_accountkpiitem_Filter, { msdyn_account_msdyn_accountkpiitem_accountid: msdyn_accountkpiitem_Result[] }>;
@@ -669,9 +710,12 @@ interface Account_Expand {
   ts_account_ts_securityincident_ReportingCompany: WebExpand<Account_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_account_ts_securityincident_ReportingCompany: ts_securityincident_Result[] }>;
   ts_account_ts_securityincident_Stakeholder: WebExpand<Account_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_account_ts_securityincident_Stakeholder: ts_securityincident_Result[] }>;
   ts_account_ts_workordercreationwizard: WebExpand<Account_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_account_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
+  ts_account_workorder_operatingcarrier: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_account_workorder_operatingcarrier: msdyn_workorder_Result[] }>;
+  ts_account_workorder_operatingname: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_account_workorder_operatingname: msdyn_workorder_Result[] }>;
   ts_msdyn_workorder: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder: msdyn_workorder_Result }>;
   ts_ovs_Finding_accountid_Account: WebExpand<Account_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_accountid_Account: ovs_Finding_Result[] }>;
   ts_ovs_operation_stakeholder_account: WebExpand<Account_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_stakeholder_account: ovs_operation_Result[] }>;
+  ts_suggestedinspection_stakeholder: WebExpand<Account_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection_stakeholder: ts_SuggestedInspection_Result[] }>;
   ts_ts_enforcementaction_Individualcompany_ac: WebExpand<Account_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Individualcompany_ac: ts_enforcementaction_Result[] }>;
   ts_ts_operationactivity_Stakeholder_account: WebExpand<Account_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Stakeholder_account: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_Stakeholder_account: WebExpand<Account_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Stakeholder_account: ts_PlanningData_Result[] }>;
@@ -713,6 +757,7 @@ interface Account_FormattedResult {
   modifiedbyexternalparty_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msa_managingpartnerid_formatted?: string;
   msdyn_accountkpiid_formatted?: string;
   msdyn_billingaccount_formatted?: string;
   msdyn_preferredresource_formatted?: string;
@@ -774,6 +819,7 @@ interface Account_Result extends Account_Base, Account_Relationships {
   modifiedby_guid: string | null;
   modifiedbyexternalparty_guid: string | null;
   modifiedonbehalfby_guid: string | null;
+  msa_managingpartnerid_guid: string | null;
   msdyn_accountkpiid_guid: string | null;
   msdyn_billingaccount_guid: string | null;
   msdyn_preferredresource_guid: string | null;
@@ -807,6 +853,7 @@ interface Account_RelatedOne {
   masterid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  msa_managingpartnerid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_PreferredResource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   msdyn_accountkpiid: WebMappingRetrieve<msdyn_accountkpiitem_Select,msdyn_accountkpiitem_Expand,msdyn_accountkpiitem_Filter,msdyn_accountkpiitem_Fixed,msdyn_accountkpiitem_Result,msdyn_accountkpiitem_FormattedResult>;
   msdyn_billingaccount_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
@@ -838,6 +885,8 @@ interface Account_RelatedMany {
   account_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   contact_customer_accounts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   incident_customer_accounts: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  msa_account_managingpartner: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  msa_contact_managingpartner: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   msdyn_account_account_BillingAccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   msdyn_account_msdyn_accountkpiitem_accountid: WebMappingRetrieve<msdyn_accountkpiitem_Select,msdyn_accountkpiitem_Expand,msdyn_accountkpiitem_Filter,msdyn_accountkpiitem_Fixed,msdyn_accountkpiitem_Result,msdyn_accountkpiitem_FormattedResult>;
   msdyn_account_msdyn_customerasset_Account: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
@@ -858,8 +907,11 @@ interface Account_RelatedMany {
   ts_account_ts_securityincident_ReportingCompany: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   ts_account_ts_securityincident_Stakeholder: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   ts_account_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
+  ts_account_workorder_operatingcarrier: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_account_workorder_operatingname: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ovs_Finding_accountid_Account: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_stakeholder_account: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_suggestedinspection_stakeholder: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   ts_ts_enforcementaction_Individualcompany_ac: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_ts_operationactivity_Stakeholder_account: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_Stakeholder_account: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;

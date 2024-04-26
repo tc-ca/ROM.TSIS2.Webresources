@@ -55,11 +55,13 @@ declare namespace Form.msdyn_customerasset.Main {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "msdyn_account"): Xrm.LookupAttribute<"account">;
+      get(name: "msdyn_assettag"): Xrm.Attribute<string>;
       get(name: "msdyn_customerassetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
       get(name: "msdyn_deviceid"): Xrm.Attribute<string>;
       get(name: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "msdyn_latitude"): Xrm.NumberAttribute;
       get(name: "msdyn_longitude"): Xrm.NumberAttribute;
+      get(name: "msdyn_manufacturingdate"): Xrm.DateAttribute;
       get(name: "msdyn_masterasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
       get(name: "msdyn_name"): Xrm.Attribute<string>;
       get(name: "msdyn_parentasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
@@ -86,6 +88,7 @@ declare namespace Form.msdyn_customerasset.Main {
       get(name: "WebResource_PowerBIConnectedDevices"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "msdyn_account"): Xrm.LookupControl<"account">;
+      get(name: "msdyn_assettag"): Xrm.StringControl;
       get(name: "msdyn_customerassetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
       get(name: "msdyn_deviceid"): Xrm.StringControl;
       get(name: "msdyn_deviceid1"): Xrm.Control<Xrm.Attribute<any>>;
@@ -93,6 +96,7 @@ declare namespace Form.msdyn_customerasset.Main {
       get(name: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "msdyn_latitude"): Xrm.NumberControl;
       get(name: "msdyn_longitude"): Xrm.NumberControl;
+      get(name: "msdyn_manufacturingdate"): Xrm.DateControl;
       get(name: "msdyn_masterasset"): Xrm.LookupControl<"msdyn_customerasset">;
       get(name: "msdyn_name"): Xrm.StringControl;
       get(name: "msdyn_name1"): Xrm.Control<Xrm.Attribute<any>>;
@@ -123,11 +127,13 @@ declare namespace Form.msdyn_customerasset.Main {
   }
   interface CustomerAsset extends Xrm.PageBase<CustomerAsset.Attributes,CustomerAsset.Tabs,CustomerAsset.Controls> {
     getAttribute(attributeName: "msdyn_account"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "msdyn_assettag"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_customerassetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
     getAttribute(attributeName: "msdyn_deviceid"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "msdyn_latitude"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_longitude"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_manufacturingdate"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_masterasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
     getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_parentasset"): Xrm.LookupAttribute<"msdyn_customerasset">;
@@ -149,6 +155,7 @@ declare namespace Form.msdyn_customerasset.Main {
     getControl(controlName: "WebResource_PowerBIConnectedDevices"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "msdyn_account"): Xrm.LookupControl<"account">;
+    getControl(controlName: "msdyn_assettag"): Xrm.StringControl;
     getControl(controlName: "msdyn_customerassetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
     getControl(controlName: "msdyn_deviceid"): Xrm.StringControl;
     getControl(controlName: "msdyn_deviceid1"): Xrm.Control<Xrm.Attribute<any>>;
@@ -156,6 +163,7 @@ declare namespace Form.msdyn_customerasset.Main {
     getControl(controlName: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "msdyn_latitude"): Xrm.NumberControl;
     getControl(controlName: "msdyn_longitude"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_manufacturingdate"): Xrm.DateControl;
     getControl(controlName: "msdyn_masterasset"): Xrm.LookupControl<"msdyn_customerasset">;
     getControl(controlName: "msdyn_name"): Xrm.StringControl;
     getControl(controlName: "msdyn_name1"): Xrm.Control<Xrm.Attribute<any>>;

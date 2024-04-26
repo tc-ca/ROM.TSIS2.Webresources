@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1033
+          ? $("[lang=fr]").hide()
+          : $("[lang=en]").hide();
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="container-fluid" lang="en">
+      <h1>General Non-Compliance History</h1>
+      <div class="row">
+        <div class="col-sm-12">
+          The TSI must evaluate the non-compliance history of the Stakeholder in general and in relation to all
+          non-compliances/ findings associated with the Stakeholder resulting from previous oversight activities (e.g.,
+          the Stakeholder has three non-compliances from and inspection in 2020, 4 non-compliances from an inspection in
+          2021 and 2 non-compliances found during an inspection in 2022). Local and national factors should also be
+          considered when applicable (e.g., an air carrier that has operations at multiple aerodromes). The TSI should
+          also consider similar provisions while reviewing this section.
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" lang="fr">
+      <h1>Historique général des cas de non-conformité</h1>
+      <div class="row">
+        <div class="col-sm-12">
+          L’IST doit évaluer l’historique des cas de non-conformité de l’intervenant, en général et en relation avec
+          tous les cas de non-conformité ou toutes les constatations associées à l’intervenant découlant d’activités de
+          surveillance précédentes (p. ex. une inspection a décelé 3 cas de non-conformité pour l’intervenant en 2020, 4
+          cas de non-conformité en 2021 et 2 cas de non-conformité en 2022). Des facteurs locaux et nationaux devraient
+          être pris en considération, au besoin (p. ex. un transporteur aérien qui mène des opérations à plusieurs
+          aérodromes). L’IST devrait aussi prendre en considération des dispositions similaires quand il passe en revue
+          cette section.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

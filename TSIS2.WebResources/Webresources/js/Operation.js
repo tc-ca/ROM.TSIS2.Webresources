@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -46,12 +46,10 @@ var ROM;
         //Condition to filter fields based on current user BU
         var businessUnitCondition;
         var issoOperationTypeGuids = ["{B27E5003-C751-EB11-A812-000D3AF3AC0D}", "{C97A1A12-D8EB-EB11-BACB-000D3AF4FBEC}", "{21CA416A-431A-EC11-B6E7-000D3A09D067}", "{3B261029-C751-EB11-A812-000D3AF3AC0D}", "{D883B39A-C751-EB11-A812-000D3AF3AC0D}", "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}", "{199E31AE-C751-EB11-A812-000D3AF3AC0D}"];
-        var generatedName;
-        var ISSOOperation = false;
-        var altLang;
+        var isROM20Form = false;
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, userRoles, userId, currentUserBusinessUnitFetchXML;
+                var form, userRoles, formItem, userId, currentUserBusinessUnitFetchXML;
                 return __generator(this, function (_a) {
                     form = eContext.getFormContext();
                     userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
@@ -64,8 +62,13 @@ var ROM;
                             form.getControl("ts_dateoflastriskbasedinspection").setDisabled(false);
                         }
                     });
+                    formItem = form.ui.formSelector.getCurrentItem().getId();
+                    isROM20Form = formItem.toLowerCase() == "30d3ecf6-cd5d-4f1b-a186-ac13e6c9418f";
                     if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
                         setRelatedActionsFetchXML(form);
+                    }
+                    else if (form.ui.getFormType() == 1) {
+                        setOwnerToUserBusinessUnit(form);
                     }
                     userId = Xrm.Utility.getGlobalContext().userSettings.userId;
                     currentUserBusinessUnitFetchXML = [
@@ -90,7 +93,10 @@ var ROM;
                         //Show ISSO Properties Tab if OperationType is ISSO, show Avsec if not 
                         if (operationType != null) {
                             if (issoOperationTypeGuids.includes(operationType[0].id)) {
-                                form.ui.tabs.get("tab_properties_isso").setVisible(true);
+                                if (!isROM20Form) {
+                                    form.ui.tabs.get("operation_activity_tab").setVisible(false);
+                                    form.ui.tabs.get("tab_properties_isso").setVisible(true);
+                                }
                                 //Show PPE questions
                                 var ppeRequired = form.getAttribute("ts_pperequired").getValue();
                                 var specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
@@ -105,14 +111,14 @@ var ROM;
                                 if (operationType != null) {
                                     if (operationType[0].id == "{D883B39A-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}") {
                                         form.getControl("ts_typeofdangerousgoods").setVisible(true);
-                                        if (form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750002 /* ts_typeofdangerousgoods.NonSchedule1DangerousGoods */ || form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750001 /* ts_typeofdangerousgoods.Schedule1DangerousGoods */) {
+                                        if (form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750002 /* NonSchedule1DangerousGoods */ || form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750001 /* Schedule1DangerousGoods */) {
                                             form.getControl("ts_visualsecurityinspection").setVisible(true);
                                             //Set default value for existing operations
                                             if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
-                                                form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* ts_visualsecurityinspection.Unconfirmed */);
+                                                form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* Unconfirmed */);
                                             }
                                             else {
-                                                if (form.getAttribute("ts_visualsecurityinspection").getValue() == 717750001 /* ts_visualsecurityinspection.Yes */) {
+                                                if (form.getAttribute("ts_visualsecurityinspection").getValue() == 717750001 /* Yes */) {
                                                     form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
                                                 }
                                             }
@@ -123,10 +129,10 @@ var ROM;
                                         form.getControl("ts_issecurityinspectionsite").setVisible(true);
                                         //Set default value for existing operations
                                         if (form.getAttribute("ts_issecurityinspectionsite").getValue() == null) {
-                                            form.getAttribute("ts_issecurityinspectionsite").setValue(717750000 /* ts_issecurityinspectionsite.Unconfirmed */);
+                                            form.getAttribute("ts_issecurityinspectionsite").setValue(717750000 /* Unconfirmed */);
                                         }
                                         else {
-                                            if (form.getAttribute("ts_issecurityinspectionsite").getValue() == 717750001 /* ts_issecurityinspectionsite.Yes */) {
+                                            if (form.getAttribute("ts_issecurityinspectionsite").getValue() == 717750001 /* Yes */) {
                                                 form.getControl("ts_securityinspectiondetails").setVisible(true);
                                             }
                                         }
@@ -134,7 +140,10 @@ var ROM;
                                 }
                             }
                             else {
-                                form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                                if (!isROM20Form) {
+                                    form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                                }
+                                form.getControl("ts_targetedinspectionneeded").setVisible(false);
                                 //We need to keep this tab hidden for now. We may need it later though.
                                 //const avsecPropertiesTab = form.ui.tabs.get("tab_properties_avsec")
                                 //avsecPropertiesTab.setVisible(true);
@@ -174,58 +183,11 @@ var ROM;
                                 }
                             }
                         }
-                        //Name generation only for ISSO records
-                        if (userBusinessUnitName.startsWith("Intermodal")) {
-                            ISSOOperation = true;
-                            //Get alternate language (either eng or fre)
-                            altLang = Xrm.Utility.getGlobalContext().userSettings.languageId === 1033 ? "french" : "english";
-                            generatedName = {
-                                stakeHolder: '',
-                                operationType: '',
-                                site: '',
-                                stakeHolderAlt: '',
-                                operationTypeAlt: '',
-                                siteAlt: '',
-                                loadAlternateName: function (attributeName, attributeKey, altNameKey, entityName, altNameAttr, nameAttr) {
-                                    return __awaiter(this, void 0, void 0, function () {
-                                        var attribute, attributeValue, result_1;
-                                        return __generator(this, function (_a) {
-                                            switch (_a.label) {
-                                                case 0:
-                                                    attribute = form.getAttribute(attributeName);
-                                                    if (!attribute) return [3 /*break*/, 2];
-                                                    attributeValue = attribute.getValue();
-                                                    if (!(attributeValue !== null && attributeValue !== undefined)) return [3 /*break*/, 2];
-                                                    return [4 /*yield*/, Xrm.WebApi.retrieveRecord(entityName, attributeValue[0].id.replace(/[{}]/g, ""), "?$select=".concat(nameAttr, ", ").concat(altNameAttr))];
-                                                case 1:
-                                                    result_1 = _a.sent();
-                                                    this[attributeKey] = result_1[nameAttr];
-                                                    this[altNameKey] = result_1[altNameAttr];
-                                                    this.updateNameFields();
-                                                    _a.label = 2;
-                                                case 2: return [2 /*return*/];
-                                            }
-                                        });
-                                    });
-                                },
-                                updateNameFields: function () {
-                                    var name = "".concat(this.stakeHolder, " | ").concat(this.operationType, " | ").concat(this.site);
-                                    var altLangName = "".concat(this.stakeHolderAlt, " | ").concat(this.operationTypeAlt, " | ").concat(this.siteAlt);
-                                    var nameAttribute = form.getAttribute("ovs_name");
-                                    var nameAttributeEnglish = form.getAttribute("ts_operationnameenglish");
-                                    var nameAttributeFrench = form.getAttribute("ts_operationnamefrench");
-                                    if (altLang === "french") {
-                                        nameAttributeEnglish.setValue(name);
-                                        nameAttributeFrench.setValue(altLangName);
-                                        nameAttribute.setValue(altLangName);
-                                    }
-                                    else {
-                                        nameAttributeFrench.setValue(name);
-                                        nameAttributeEnglish.setValue(altLangName);
-                                        nameAttribute.setValue(name);
-                                    }
-                                }
-                            };
+                        else {
+                            //Set operation_activity_tab visible to false by default
+                            if (!isROM20Form) {
+                                form.ui.tabs.get("operation_activity_tab").setVisible(false);
+                            }
                         }
                     });
                     if (form.getAttribute("ts_statusstartdate").getValue() != null) {
@@ -244,12 +206,12 @@ var ROM;
             var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
             if (statusStartDateValue != null) {
                 if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_operationalstatus").setValue(717750001 /* ts_operationalstatus.NonOperational */);
+                    form.getAttribute("ts_operationalstatus").setValue(717750001 /* NonOperational */);
                 }
             }
             if (statusEndDateValue != null) {
                 if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_operationalstatus").setValue(717750000 /* ts_operationalstatus.Operational */);
+                    form.getAttribute("ts_operationalstatus").setValue(717750000 /* Operational */);
                 }
             }
         }
@@ -299,10 +261,6 @@ var ROM;
                     getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
                 }
             }
-            if (ISSOOperation) {
-                var altNameAttr = altLang === "french" ? "ovs_accountnamefrench" : "ovs_accountnameenglish";
-                generatedName.loadAlternateName("ts_stakeholder", "stakeHolder", "stakeHolderAlt", "account", altNameAttr, "name");
-            }
         }
         Operation.stakeholderOnChange = stakeholderOnChange;
         function setSiteFilteredView(form) {
@@ -341,19 +299,11 @@ var ROM;
                     form.getControl('ts_site').setDisabled(true);
                 }
             }
-            if (ISSOOperation) {
-                var altNameAttr = altLang === "french" ? "ovs_operationtypenamefrench" : "ovs_operationtypenameenglish";
-                generatedName.loadAlternateName("ovs_operationtypeid", "operationType", "operationTypeAlt", "ovs_operationtype", altNameAttr, "ovs_name");
-            }
         }
         Operation.operationTypeOnChange = operationTypeOnChange;
         function siteOnChange(eContext) {
             var form = eContext.getFormContext();
             setSubSiteFilteredView(form);
-            if (ISSOOperation) {
-                var altNameAttr = altLang === "french" ? "ts_functionallocationnamefrench" : "ts_functionallocationnameenglish";
-                generatedName.loadAlternateName("ts_site", "site", "siteAlt", "msdyn_functionallocation", altNameAttr, "msdyn_name");
-            }
         }
         Operation.siteOnChange = siteOnChange;
         function setSubSiteFilteredView(form) {
@@ -447,7 +397,7 @@ var ROM;
             var form = eContext.getFormContext();
             var VSIConducted = form.getAttribute("ts_visualsecurityinspection").getValue();
             var VSIDetails = form.getControl("ts_visualsecurityinspectiondetails");
-            if (VSIConducted == 717750001 /* ts_visualsecurityinspection.Yes */) {
+            if (VSIConducted == 717750001 /* Yes */) {
                 VSIDetails.setVisible(true);
             }
             else {
@@ -460,7 +410,7 @@ var ROM;
             var form = eContext.getFormContext();
             var SIConducted = form.getAttribute("ts_issecurityinspectionsite").getValue();
             var SIDetails = form.getControl("ts_securityinspectiondetails");
-            if (SIConducted == 717750001 /* ts_issecurityinspectionsite.Yes */) {
+            if (SIConducted == 717750001 /* Yes */) {
                 SIDetails.setVisible(true);
             }
             else {
@@ -472,7 +422,7 @@ var ROM;
         function typeOfDangerousGoodsOnChange(eContext) {
             var form = eContext.getFormContext();
             var typeOfDangerousGoods = form.getAttribute("ts_typeofdangerousgoods").getValue();
-            if (typeOfDangerousGoods == 717750002 /* ts_typeofdangerousgoods.NonSchedule1DangerousGoods */ || typeOfDangerousGoods == 717750001 /* ts_typeofdangerousgoods.Schedule1DangerousGoods */) {
+            if (typeOfDangerousGoods == 717750002 /* NonSchedule1DangerousGoods */ || typeOfDangerousGoods == 717750001 /* Schedule1DangerousGoods */) {
                 form.getControl("ts_visualsecurityinspection").setVisible(true);
             }
             else {
@@ -507,7 +457,7 @@ var ROM;
             }
             else {
                 var operationId = form.data.entity.getId();
-                var fetchXml = "<link-entity name=\"ts_actionfinding\" from=\"ts_action\" to=\"ts_actionid\" link-type=\"inner\" alias=\"af\"><attribute name=\"ts_ovs_finding\"/><order attribute=\"ts_ovs_finding\"/><link-entity name=\"ovs_finding\" from=\"ovs_findingid\" to=\"ts_ovs_finding\" link-type=\"inner\" alias=\"f\"><link-entity name=\"ovs_operation\" from=\"ovs_operationid\" to=\"ts_operationid\" link-type=\"inner\" alias=\"op\"><filter><condition attribute=\"ovs_operationid\" operator=\"eq\" value=\"".concat(operationId, "\"/></filter></link-entity></link-entity></link-entity>");
+                var fetchXml = "<link-entity name=\"ts_actionfinding\" from=\"ts_action\" to=\"ts_actionid\" link-type=\"inner\" alias=\"af\"><attribute name=\"ts_ovs_finding\"/><order attribute=\"ts_ovs_finding\"/><link-entity name=\"ovs_finding\" from=\"ovs_findingid\" to=\"ts_ovs_finding\" link-type=\"inner\" alias=\"f\"><link-entity name=\"ovs_operation\" from=\"ovs_operationid\" to=\"ts_operationid\" link-type=\"inner\" alias=\"op\"><filter><condition attribute=\"ovs_operationid\" operator=\"eq\" value=\"" + operationId + "\"/></filter></link-entity></link-entity></link-entity>";
                 ROM.Utils.setSubgridFilterXml(form, "subgrid_related_actions", fetchXml);
             }
         }

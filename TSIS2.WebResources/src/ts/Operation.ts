@@ -7,13 +7,7 @@ namespace ROM.Operation {
     let businessUnitCondition;
 
     let issoOperationTypeGuids = ["{B27E5003-C751-EB11-A812-000D3AF3AC0D}", "{C97A1A12-D8EB-EB11-BACB-000D3AF4FBEC}", "{21CA416A-431A-EC11-B6E7-000D3A09D067}", "{3B261029-C751-EB11-A812-000D3AF3AC0D}", "{D883B39A-C751-EB11-A812-000D3AF3AC0D}", "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}", "{199E31AE-C751-EB11-A812-000D3AF3AC0D}"]
-
-    let generatedName;
-
-    let ISSOOperation = false;
-
-    let altLang;
-
+    var isROM20Form = false;
     export async function onLoad(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
 
@@ -28,8 +22,14 @@ namespace ROM.Operation {
             }
         });
 
+        var formItem = form.ui.formSelector.getCurrentItem().getId();
+        isROM20Form = formItem.toLowerCase() == "30d3ecf6-cd5d-4f1b-a186-ac13e6c9418f";
+
         if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
             setRelatedActionsFetchXML(form)
+        }
+        else if (form.ui.getFormType() == 1) {
+            setOwnerToUserBusinessUnit(form)
         }
 
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
@@ -56,7 +56,10 @@ namespace ROM.Operation {
             //Show ISSO Properties Tab if OperationType is ISSO, show Avsec if not 
             if (operationType != null) {
                 if (issoOperationTypeGuids.includes(operationType[0].id)) {
-                    form.ui.tabs.get("tab_properties_isso").setVisible(true);
+                    if (!isROM20Form) {
+                        form.ui.tabs.get("operation_activity_tab").setVisible(false);
+                        form.ui.tabs.get("tab_properties_isso").setVisible(true);
+                    }
                     //Show PPE questions
                     var ppeRequired = form.getAttribute("ts_pperequired").getValue();
                     var specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
@@ -100,7 +103,10 @@ namespace ROM.Operation {
                         }
                     }
                 } else {
-                    form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                    if (!isROM20Form) {
+                        form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                    }
+                    form.getControl("ts_targetedinspectionneeded").setVisible(false);
 
                     //We need to keep this tab hidden for now. We may need it later though.
                     //const avsecPropertiesTab = form.ui.tabs.get("tab_properties_avsec")
@@ -147,53 +153,11 @@ namespace ROM.Operation {
                     }
                 }
             }
-            //Name generation only for ISSO records
-            if (userBusinessUnitName.startsWith("Intermodal")) {
-                ISSOOperation = true;
-
-                //Get alternate language (either eng or fre)
-                altLang = Xrm.Utility.getGlobalContext().userSettings.languageId === 1033 ? "french" : "english";
-
-                generatedName = {
-                    stakeHolder: '',
-                    operationType: '',
-                    site: '',
-                    stakeHolderAlt: '',
-                    operationTypeAlt: '',
-                    siteAlt: '',
-                    loadAlternateName: async function (attributeName, attributeKey, altNameKey, entityName, altNameAttr, nameAttr) {
-                        const attribute = form.getAttribute(attributeName) as Xrm.LookupAttribute<any>;
-                        if (attribute) {
-                            const attributeValue = attribute.getValue();
-                            if (attributeValue !== null && attributeValue !== undefined) {
-                                //Retrieve other language name (altNameAttr) for entityName
-                                const result = await Xrm.WebApi.retrieveRecord(entityName, attributeValue[0].id.replace(/[{}]/g, ""), `?$select=${nameAttr}, ${altNameAttr}`);
-                                this[attributeKey] = result[nameAttr];
-                                this[altNameKey] = result[altNameAttr];
-
-                                this.updateNameFields();
-                            }
-                        }
-                    },
-                    updateNameFields: function () {
-                        const name = `${this.stakeHolder} | ${this.operationType} | ${this.site}`;
-                        const altLangName = `${this.stakeHolderAlt} | ${this.operationTypeAlt} | ${this.siteAlt}`;
-
-                        const nameAttribute = form.getAttribute("ovs_name");
-                        const nameAttributeEnglish = form.getAttribute("ts_operationnameenglish");
-                        const nameAttributeFrench = form.getAttribute("ts_operationnamefrench");
-
-                        if (altLang === "french") {
-                            nameAttributeEnglish.setValue(name);
-                            nameAttributeFrench.setValue(altLangName);
-                            nameAttribute.setValue(altLangName);
-                        } else {
-                            nameAttributeFrench.setValue(name);
-                            nameAttributeEnglish.setValue(altLangName);
-                            nameAttribute.setValue(name);
-                        }
-                    }
-                };
+            else {
+                //Set operation_activity_tab visible to false by default
+                if (!isROM20Form) {
+                    form.ui.tabs.get("operation_activity_tab").setVisible(false);
+                }
             }
         });
 
@@ -273,11 +237,6 @@ namespace ROM.Operation {
                 getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
             }
         }
-
-        if (ISSOOperation) {
-            const altNameAttr = altLang === "french" ? "ovs_accountnamefrench" : "ovs_accountnameenglish";
-            generatedName.loadAlternateName("ts_stakeholder", "stakeHolder", "stakeHolderAlt", "account", altNameAttr, "name");
-        }
     }
 
     function setSiteFilteredView(form: Form.ovs_operation.Main.Information): void {
@@ -325,20 +284,11 @@ namespace ROM.Operation {
             }
         }
 
-        if (ISSOOperation) {
-            const altNameAttr = altLang === "french" ? "ovs_operationtypenamefrench" : "ovs_operationtypenameenglish";
-            generatedName.loadAlternateName("ovs_operationtypeid", "operationType", "operationTypeAlt", "ovs_operationtype", altNameAttr, "ovs_name");
-        }
     }
 
     export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
         setSubSiteFilteredView(form);
-        
-        if (ISSOOperation) {
-            const altNameAttr = altLang === "french" ? "ts_functionallocationnamefrench" : "ts_functionallocationnameenglish";
-            generatedName.loadAlternateName("ts_site", "site", "siteAlt", "msdyn_functionallocation", altNameAttr, "msdyn_name");
-        }
     }
 
     function setSubSiteFilteredView(form: Form.ovs_operation.Main.Information): void {
@@ -505,3 +455,5 @@ namespace ROM.Operation {
         }
     }
 }
+
+declare function setOwnerToUserBusinessUnit(formContext: any): void;

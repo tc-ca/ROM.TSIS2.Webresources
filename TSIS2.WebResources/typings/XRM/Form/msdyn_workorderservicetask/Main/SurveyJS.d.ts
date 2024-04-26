@@ -1,6 +1,13 @@
 declare namespace Form.msdyn_workorderservicetask.Main {
   namespace SurveyJS {
     namespace Tabs {
+      interface risk_scoring extends Xrm.SectionCollectionBase {
+        get(name: "tab_Risk"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_10 extends Xrm.SectionCollectionBase {
         get(name: "tab_10_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -78,6 +85,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       }
       interface tab_summary extends Xrm.SectionCollectionBase {
         get(name: "tab_newsummary_section_1"): Xrm.PageSection;
+        get(name: "tab_summary_section_accesscontrol"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -106,6 +114,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
+      get(name: "ts_accesscontrol"): Xrm.Attribute<any>;
       get(name: "ts_accesscontrolsecurityservices"): Xrm.LookupAttribute<"account">;
       get(name: "ts_actualtime"): Xrm.DateAttribute;
       get(name: "ts_aircraftmanufacturer"): Xrm.OptionSetAttribute<ts_aircraftmanufacturer>;
@@ -122,6 +131,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_cbloaded"): Xrm.Attribute<string>;
       get(name: "ts_cbonboard"): Xrm.Attribute<string>;
       get(name: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_documenteddate"): Xrm.DateAttribute;
       get(name: "ts_flightcategory"): Xrm.OptionSetAttribute<ts_flightcategory>;
       get(name: "ts_flightnumber"): Xrm.Attribute<string>;
       get(name: "ts_flighttype"): Xrm.OptionSetAttribute<ts_flighttype>;
@@ -147,10 +157,12 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Access_Users"): Xrm.SubGridControl<"systemuser">;
       get(name: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
       get(name: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
+      get(name: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
       get(name: "WebResource_Provisions"): Xrm.WebResourceControl;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
@@ -182,6 +194,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
       get(name: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
+      get(name: "ts_accesscontrol"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_accesscontrolsecurityservices"): Xrm.LookupControl<"account">;
       get(name: "ts_actualtime"): Xrm.DateControl;
       get(name: "ts_aircraftmanufacturer"): Xrm.OptionSetControl<ts_aircraftmanufacturer>;
@@ -198,6 +211,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_cbloaded"): Xrm.StringControl;
       get(name: "ts_cbonboard"): Xrm.StringControl;
       get(name: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_documenteddate"): Xrm.DateControl;
       get(name: "ts_flightcategory"): Xrm.OptionSetControl<ts_flightcategory>;
       get(name: "ts_flightnumber"): Xrm.StringControl;
       get(name: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
@@ -223,6 +237,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "risk_scoring"): Xrm.PageTab<Tabs.risk_scoring>;
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
@@ -261,6 +276,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<msdyn_workorderservicetask_statuscode>;
+    getAttribute(attributeName: "ts_accesscontrol"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_accesscontrolsecurityservices"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_actualtime"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_aircraftmanufacturer"): Xrm.OptionSetAttribute<ts_aircraftmanufacturer>;
@@ -277,6 +293,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ts_cbloaded"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_cbonboard"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_documenteddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_flightcategory"): Xrm.OptionSetAttribute<ts_flightcategory>;
     getAttribute(attributeName: "ts_flightnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_flighttype"): Xrm.OptionSetAttribute<ts_flighttype>;
@@ -297,10 +314,12 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ts_servicetaskenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_servicetaskstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Access_Users"): Xrm.SubGridControl<"systemuser">;
     getControl(controlName: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
     getControl(controlName: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
+    getControl(controlName: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
     getControl(controlName: "WebResource_Provisions"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
@@ -332,6 +351,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statuscode>;
+    getControl(controlName: "ts_accesscontrol"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_accesscontrolsecurityservices"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_actualtime"): Xrm.DateControl;
     getControl(controlName: "ts_aircraftmanufacturer"): Xrm.OptionSetControl<ts_aircraftmanufacturer>;
@@ -348,6 +368,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "ts_cbloaded"): Xrm.StringControl;
     getControl(controlName: "ts_cbonboard"): Xrm.StringControl;
     getControl(controlName: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_documenteddate"): Xrm.DateControl;
     getControl(controlName: "ts_flightcategory"): Xrm.OptionSetControl<ts_flightcategory>;
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
     getControl(controlName: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;

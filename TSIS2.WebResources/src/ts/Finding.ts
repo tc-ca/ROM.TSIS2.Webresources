@@ -15,6 +15,8 @@
     //Air Carrier (Passenger), Air Carrier(All Cargo), Operator of an Aerodrome
     let avSecOperationTypeGuides = ["{8B614EF0-C651-EB11-A812-000D3AF3AC0D}", "{E03381D0-C751-EB11-A812-000D3AF3AC0D}", "{E3238EDD-C651-EB11-A812-000D3AF3AC0D}"];
 
+    var isROM20Form = false;
+
     //Toggle visibility of NCAT and RATE sections depending user business unit and rolls
     //Sets field Controls parameters (required, hidden, disabled, etc) depending on current form state
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -28,6 +30,9 @@
                 isDualInspector = true;
             }
         });
+
+        var formItem = formContext.ui.formSelector.getCurrentItem().getId();
+        isROM20Form = formItem.toLowerCase() == "c01347bc-d346-447d-b902-4f411a0e9706";
 
         formContext.getAttribute("ts_ncatfactorguide").setValue(false);
 
@@ -75,7 +80,6 @@
                             //Show NCAT Sections and fields if Operation Type is ISSO specific, else show RATE
                             if (issoOperationTypeGuids.includes(operationTypeAttributeValue[0].id)) {
                                 formContext.ui.tabs.get("tab_NCAT").setVisible(true);
-
                                 //If there's a recommended enforcement action and the finding is not complete yet, then the accept ncat recommendation field should be unlocked
                                 const enforcementRecommendation = formContext.getAttribute("ts_ncatenforcementrecommendation").getValue();
                                 const recordStatus = formContext.getAttribute("statuscode").getValue();
@@ -97,13 +101,13 @@
                                 }
                             }
                             //Show RATE Sections and fields when the operation type owning business unit is Aviation Security or if the user business unit is Transport Canada
-                            else {                             
+                            else {
                                 const findingID = formContext.data.entity.getId();
                                 let findingFetchXml = [
                                     "<fetch>",
                                     "  <entity name='ovs_finding'>",
                                     "    <filter type='and'>",
-                                    "      <condition attribute='ovs_findingid' operator='eq' value='", findingID,"'/>",
+                                    "      <condition attribute='ovs_findingid' operator='eq' value='", findingID, "'/>",
                                     "    </filter>",
                                     "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_functionallocation' alias='site'>",
                                     "      <attribute name='ts_region'/>",
@@ -149,7 +153,7 @@
                                     }
                                 });
 
-                                
+
                             }
                         }
                         approvingNCATTeamsOnChange(eContext);
@@ -161,6 +165,9 @@
                         }
 
                         showHideNonComplianceTimeframe(formContext);
+                    }
+                    else {
+                        formContext.getControl("ts_finalenforcementaction").setVisible(false);
                     }
 
                     if (shouldShowISSOOnlyFields(isDualInspector, operationTypeOwningBusinessUnit, userBusinessUnitName)) {
@@ -178,6 +185,11 @@
                 }
             }
         });
+
+        if (isROM20Form) {
+            SubGridFilterExecution(eContext);
+        }
+
     }
 
     function shouldShowISSOOnlyFields(isDualInspector: any, operationTypeOwningBusinessUnit: any, userBusinessUnitName: any): boolean {
@@ -922,7 +934,9 @@
                     }
                 }
 
-                if (isAdminOrManager) formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
+                if (isAdminOrManager) {
+                    formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_manager_review").setVisible(true);
+                }
             }
         } else {
 
@@ -939,6 +953,7 @@
         formContext.getControl("ts_ncatmitigationofnoncompliantbehaviors").setDisabled(true);
         formContext.getControl("ts_ncatcooperationwithinspectionorinvestigat").setDisabled(true);
         formContext.getControl("ts_ncatdetectionofnoncompliances").setDisabled(true);
+        formContext.getControl("ts_ncatdetailstosupport").setDisabled(true);
     }
 
     function setPostRATERecommendationSelectionFieldsVisibility(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -996,7 +1011,9 @@
                     }
                 }
 
-                if (isAdminOrManager) formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
+                if (isAdminOrManager) {
+                    formContext.ui.tabs.get("tab_RATE").sections.get("RATE_manager_review").setVisible(true);
+                }
             }
         } else {
             RATEHideProposedSection(eContext);

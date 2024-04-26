@@ -26,6 +26,16 @@ declare namespace Form.systemuser.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface Omnichannel_TAB extends Xrm.SectionCollectionBase {
+        get(name: "SECTION_Skills"): Xrm.PageSection;
+        get(name: "tab_6_section_2"): Xrm.PageSection;
+        get(name: "tab_6_section_4"): Xrm.PageSection;
+        get(name: "tab_6_section_5"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface SUMMARY_TAB extends Xrm.SectionCollectionBase {
         get(name: "SOCIAL_PANE_TAB"): Xrm.PageSection;
         get(name: "SUMMARY_TAB_section_10"): Xrm.PageSection;
@@ -58,16 +68,6 @@ declare namespace Form.systemuser.Main {
       }
       interface tab_6 extends Xrm.SectionCollectionBase {
         get(name: "tab_6_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_6 extends Xrm.SectionCollectionBase {
-        get(name: "SECTION_Skills"): Xrm.PageSection;
-        get(name: "tab_6_section_2"): Xrm.PageSection;
-        get(name: "tab_6_section_4"): Xrm.PageSection;
-        get(name: "tab_6_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -112,7 +112,7 @@ declare namespace Form.systemuser.Main {
       get(name: "mobilealertemail"): Xrm.Attribute<string>;
       get(name: "mobileofflineprofileid"): Xrm.LookupAttribute<"mobileofflineprofile">;
       get(name: "mobilephone"): Xrm.Attribute<string>;
-      get(name: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agenttype>;
+      get(name: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agentType>;
       get(name: "msdyn_botapplicationid"): Xrm.Attribute<string>;
       get(name: "msdyn_botdescription"): Xrm.Attribute<string>;
       get(name: "msdyn_botprovider"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_botprovider>;
@@ -186,7 +186,7 @@ declare namespace Form.systemuser.Main {
       get(name: "mobilealertemail"): Xrm.StringControl;
       get(name: "mobileofflineprofileid"): Xrm.LookupControl<"mobileofflineprofile">;
       get(name: "mobilephone"): Xrm.StringControl;
-      get(name: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agenttype>;
+      get(name: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agentType>;
       get(name: "msdyn_botapplicationid"): Xrm.StringControl;
       get(name: "msdyn_botdescription"): Xrm.StringControl;
       get(name: "msdyn_botprovider"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_botprovider>;
@@ -214,10 +214,10 @@ declare namespace Form.systemuser.Main {
       get(name: "ADMINISTRATION_TAB"): Xrm.PageTab<Tabs.ADMINISTRATION_TAB>;
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
       get(name: "MobileOfflineProfile_TAB"): Xrm.PageTab<Tabs.MobileOfflineProfile_TAB>;
+      get(name: "Omnichannel_TAB"): Xrm.PageTab<Tabs.Omnichannel_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: "VirtualAgentDetailsTab"): Xrm.PageTab<Tabs.VirtualAgentDetailsTab>;
       get(name: "VirtualAgentSummaryTab"): Xrm.PageTab<Tabs.VirtualAgentSummaryTab>;
-      get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -263,7 +263,7 @@ declare namespace Form.systemuser.Main {
     getAttribute(attributeName: "mobilealertemail"): Xrm.Attribute<string>;
     getAttribute(attributeName: "mobileofflineprofileid"): Xrm.LookupAttribute<"mobileofflineprofile">;
     getAttribute(attributeName: "mobilephone"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agenttype>;
+    getAttribute(attributeName: "msdyn_agentType"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_agentType>;
     getAttribute(attributeName: "msdyn_botapplicationid"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_botdescription"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_botprovider"): Xrm.OptionSetAttribute<msdyn_systemuser_msdyn_botprovider>;
@@ -332,7 +332,7 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "mobilealertemail"): Xrm.StringControl;
     getControl(controlName: "mobileofflineprofileid"): Xrm.LookupControl<"mobileofflineprofile">;
     getControl(controlName: "mobilephone"): Xrm.StringControl;
-    getControl(controlName: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agenttype>;
+    getControl(controlName: "msdyn_agentType"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_agentType>;
     getControl(controlName: "msdyn_botapplicationid"): Xrm.StringControl;
     getControl(controlName: "msdyn_botdescription"): Xrm.StringControl;
     getControl(controlName: "msdyn_botprovider"): Xrm.OptionSetControl<msdyn_systemuser_msdyn_botprovider>;

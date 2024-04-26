@@ -59,15 +59,19 @@ interface Team_Relationships {
   team_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
   team_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
   team_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
+  team_ts_nonoversightactivity?: ts_nonoversightactivity_Result[] | null;
   team_ts_operationactivity?: ts_OperationActivity_Result[] | null;
   team_ts_operationcontact?: ts_operationcontact_Result[] | null;
+  team_ts_plan?: ts_Plan_Result[] | null;
   team_ts_planningdata?: ts_PlanningData_Result[] | null;
   team_ts_planningsettings?: ts_planningsettings_Result[] | null;
+  team_ts_questionnaireresponse?: ts_questionnaireresponse_Result[] | null;
   team_ts_questionnaireversion?: ts_questionnaireversion_Result[] | null;
   team_ts_riskcategory?: ts_RiskCategory_Result[] | null;
   team_ts_role?: ts_role_Result[] | null;
   team_ts_securityincident?: ts_securityincident_Result[] | null;
   team_ts_securityincidenttype?: ts_securityincidenttype_Result[] | null;
+  team_ts_suggestedinspection?: ts_SuggestedInspection_Result[] | null;
   team_ts_teamplanningdata?: ts_TeamPlanningData_Result[] | null;
   team_ts_teamplanninginspectorhours?: ts_TeamPlanningInspectorHours_Result[] | null;
   team_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
@@ -76,6 +80,8 @@ interface Team_Relationships {
   ts_ovs_Finding_NCATApprovingTeam_Team?: ovs_Finding_Result[] | null;
   ts_ovs_Finding_RATEApprovingTeam_Team?: ovs_Finding_Result[] | null;
   ts_ovs_operation_OPITeam_team?: ovs_operation_Result[] | null;
+  ts_plan_team?: ts_Plan_Result[] | null;
+  ts_team_msdyn_workorder_AccountableTeam?: msdyn_workorder_Result[] | null;
   ts_ts_planningdata_Team_team?: ts_PlanningData_Result[] | null;
   ts_ts_teamplanningdata_Team_team?: ts_TeamPlanningData_Result[] | null;
 }
@@ -212,15 +218,19 @@ interface Team_Expand {
   team_ts_canceledinspectionjustification: WebExpand<Team_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { team_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
   team_ts_incompleteworkorderreason: WebExpand<Team_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { team_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
   team_ts_inspectionhours: WebExpand<Team_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { team_ts_inspectionhours: ts_InspectionHours_Result[] }>;
+  team_ts_nonoversightactivity: WebExpand<Team_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { team_ts_nonoversightactivity: ts_nonoversightactivity_Result[] }>;
   team_ts_operationactivity: WebExpand<Team_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { team_ts_operationactivity: ts_OperationActivity_Result[] }>;
   team_ts_operationcontact: WebExpand<Team_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { team_ts_operationcontact: ts_operationcontact_Result[] }>;
+  team_ts_plan: WebExpand<Team_Expand, ts_Plan_Select, ts_Plan_Filter, { team_ts_plan: ts_Plan_Result[] }>;
   team_ts_planningdata: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { team_ts_planningdata: ts_PlanningData_Result[] }>;
   team_ts_planningsettings: WebExpand<Team_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { team_ts_planningsettings: ts_planningsettings_Result[] }>;
+  team_ts_questionnaireresponse: WebExpand<Team_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { team_ts_questionnaireresponse: ts_questionnaireresponse_Result[] }>;
   team_ts_questionnaireversion: WebExpand<Team_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { team_ts_questionnaireversion: ts_questionnaireversion_Result[] }>;
   team_ts_riskcategory: WebExpand<Team_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { team_ts_riskcategory: ts_RiskCategory_Result[] }>;
   team_ts_role: WebExpand<Team_Expand, ts_role_Select, ts_role_Filter, { team_ts_role: ts_role_Result[] }>;
   team_ts_securityincident: WebExpand<Team_Expand, ts_securityincident_Select, ts_securityincident_Filter, { team_ts_securityincident: ts_securityincident_Result[] }>;
   team_ts_securityincidenttype: WebExpand<Team_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { team_ts_securityincidenttype: ts_securityincidenttype_Result[] }>;
+  team_ts_suggestedinspection: WebExpand<Team_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { team_ts_suggestedinspection: ts_SuggestedInspection_Result[] }>;
   team_ts_teamplanningdata: WebExpand<Team_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { team_ts_teamplanningdata: ts_TeamPlanningData_Result[] }>;
   team_ts_teamplanninginspectorhours: WebExpand<Team_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { team_ts_teamplanninginspectorhours: ts_TeamPlanningInspectorHours_Result[] }>;
   team_ts_workordercreationwizard: WebExpand<Team_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { team_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
@@ -229,6 +239,8 @@ interface Team_Expand {
   ts_ovs_Finding_NCATApprovingTeam_Team: WebExpand<Team_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_NCATApprovingTeam_Team: ovs_Finding_Result[] }>;
   ts_ovs_Finding_RATEApprovingTeam_Team: WebExpand<Team_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_RATEApprovingTeam_Team: ovs_Finding_Result[] }>;
   ts_ovs_operation_OPITeam_team: WebExpand<Team_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_OPITeam_team: ovs_operation_Result[] }>;
+  ts_plan_team: WebExpand<Team_Expand, ts_Plan_Select, ts_Plan_Filter, { ts_plan_team: ts_Plan_Result[] }>;
+  ts_team_msdyn_workorder_AccountableTeam: WebExpand<Team_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_team_msdyn_workorder_AccountableTeam: msdyn_workorder_Result[] }>;
   ts_ts_planningdata_Team_team: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Team_team: ts_PlanningData_Result[] }>;
   ts_ts_teamplanningdata_Team_team: WebExpand<Team_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { ts_ts_teamplanningdata_Team_team: ts_TeamPlanningData_Result[] }>;
 }
@@ -310,15 +322,19 @@ interface Team_RelatedMany {
   team_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   team_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   team_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
+  team_ts_nonoversightactivity: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
   team_ts_operationactivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   team_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
+  team_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   team_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   team_ts_planningsettings: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
+  team_ts_questionnaireresponse: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
   team_ts_questionnaireversion: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   team_ts_riskcategory: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
   team_ts_role: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
   team_ts_securityincident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   team_ts_securityincidenttype: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
+  team_ts_suggestedinspection: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   team_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   team_ts_teamplanninginspectorhours: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
   team_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
@@ -327,6 +343,8 @@ interface Team_RelatedMany {
   ts_ovs_Finding_NCATApprovingTeam_Team: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_Finding_RATEApprovingTeam_Team: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_OPITeam_team: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_plan_team: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
+  ts_team_msdyn_workorder_AccountableTeam: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ts_planningdata_Team_team: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_ts_teamplanningdata_Team_team: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
 }

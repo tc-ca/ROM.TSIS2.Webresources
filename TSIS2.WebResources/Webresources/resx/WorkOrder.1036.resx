@@ -177,4 +177,10 @@
   <data name="CantCancelText" xml:space="preserve">
     <value>A Complete Work Order can't be canceled. (FR)</value>
   </data>
+  <data name="CloseWOWithoutTimeTrackingFieldsText" xml:space="preserve">
+    <value>Tous les champs obligatoires de suivi du temps doivent être renseignés avant que l'ordre de travail ne puisse être fermé.</value>
+  </data>
+  <data name="CloseWOWithoutTimeTrackingFieldsTitle" xml:space="preserve">
+    <value>Les champs obligatoires de suivi du temps</value>
+  </data>
 </root>
