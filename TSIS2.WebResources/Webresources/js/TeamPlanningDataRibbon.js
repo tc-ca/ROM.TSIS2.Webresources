@@ -51,6 +51,10 @@ function recalculateTeamPlanningDataValues(formContext) {
         "    <filter>",
         "      <condition attribute='ts_operationactivityisactive' operator='eq' value='1'/>",
         "    </filter>",
+        "    <filter type='or'>",
+        "      <condition attribute='ts_keephidden' operator='eq' value='0'/>",
+        "      <condition attribute='ts_keephidden' operator='not-null'/>",
+        "    </filter>",
         "  </entity>",
         "</fetch>"
     ].join("");
@@ -224,6 +228,10 @@ async function createWorkOrders(formContext) {
                     "    <filter>",
                     "      <condition attribute='ts_operationactivityisactive' operator='eq' value='1'/>",
                     "    </filter>",
+                    "    </filter>",
+                    "    <filter type='or'>",
+                    "      <condition attribute='ts_keephidden' operator='eq' value='0'/>",
+                    "      <condition attribute='ts_keephidden' operator='not-null'/>",
                     "    </filter>",
                     "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site' link-type='outer' alias='ts_site'>",
                     "      <attribute name='ts_region'/>",
