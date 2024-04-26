@@ -68,6 +68,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_name"): Xrm.Attribute<string>;
       get(name: "msdyn_nottoexceedcostamount"): Xrm.NumberAttribute;
       get(name: "msdyn_nottoexceedpriceamount"): Xrm.NumberAttribute;
+      get(name: "msdyn_phoneNumber"): Xrm.Attribute<string>;
       get(name: "msdyn_postalcode"): Xrm.Attribute<string>;
       get(name: "msdyn_pricelist"): Xrm.LookupAttribute<"pricelevel">;
       get(name: "msdyn_pricentepercent"): Xrm.Attribute<any>;
@@ -152,6 +153,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_name"): Xrm.StringControl;
       get(name: "msdyn_nottoexceedcostamount"): Xrm.NumberControl;
       get(name: "msdyn_nottoexceedpriceamount"): Xrm.NumberControl;
+      get(name: "msdyn_phoneNumber"): Xrm.StringControl;
       get(name: "msdyn_postalcode"): Xrm.StringControl;
       get(name: "msdyn_pricelist"): Xrm.LookupControl<"pricelevel">;
       get(name: "msdyn_pricentepercent"): Xrm.Control<Xrm.Attribute<any>>;
@@ -216,6 +218,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_nottoexceedcostamount"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_nottoexceedpriceamount"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_phoneNumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_postalcode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_pricelist"): Xrm.LookupAttribute<"pricelevel">;
     getAttribute(attributeName: "msdyn_pricentepercent"): Xrm.Attribute<any>;
@@ -295,6 +298,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_name"): Xrm.StringControl;
     getControl(controlName: "msdyn_nottoexceedcostamount"): Xrm.NumberControl;
     getControl(controlName: "msdyn_nottoexceedpriceamount"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_phoneNumber"): Xrm.StringControl;
     getControl(controlName: "msdyn_postalcode"): Xrm.StringControl;
     getControl(controlName: "msdyn_pricelist"): Xrm.LookupControl<"pricelevel">;
     getControl(controlName: "msdyn_pricentepercent"): Xrm.Control<Xrm.Attribute<any>>;

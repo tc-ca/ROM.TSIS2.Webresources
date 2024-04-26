@@ -174,6 +174,7 @@ interface msdyn_workorder_Relationships {
   ts_PlanningData?: ts_PlanningData_Result | null;
   ts_SecurityIncident?: ts_securityincident_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
+  ts_Subsubsite?: msdyn_FunctionalLocation_Result | null;
   ts_TeamPlanningData?: ts_TeamPlanningData_Result | null;
   ts_WorkOrderCreationWizardId?: ts_workordercreationwizard_Result | null;
   ts_incident_WorkOrder1_msdyn_workorder?: Incident_Result[] | null;
@@ -240,6 +241,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ts_ScheduledQuarterJustification_bind$ts_justifications?: string | null;
   ts_SecurityIncident_bind$ts_securityincidents?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
+  ts_Subsubsite_bind$msdyn_functionallocations?: string | null;
   ts_TeamPlanningData_bind$ts_teamplanningdatas?: string | null;
   ts_WorkOrderCreationWizardId_bind$ts_workordercreationwizards?: string | null;
   ts_arrivalaerodrome_bind$msdyn_functionallocations?: string | null;
@@ -451,6 +453,7 @@ interface msdyn_workorder_Select {
   ts_securityincident_guid: WebAttribute<msdyn_workorder_Select, { ts_securityincident_guid: string | null }, { ts_securityincident_formatted?: string }>;
   ts_site_guid: WebAttribute<msdyn_workorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_state: WebAttribute<msdyn_workorder_Select, { ts_state: ts_planningstate | null }, { ts_state_formatted?: string }>;
+  ts_subsubsite_guid: WebAttribute<msdyn_workorder_Select, { ts_subsubsite_guid: string | null }, { ts_subsubsite_formatted?: string }>;
   ts_suggestedinspection_guid: WebAttribute<msdyn_workorder_Select, { ts_suggestedinspection_guid: string | null }, { ts_suggestedinspection_formatted?: string }>;
   ts_teamplanningdata_guid: WebAttribute<msdyn_workorder_Select, { ts_teamplanningdata_guid: string | null }, { ts_teamplanningdata_formatted?: string }>;
   ts_totalconductoversight: WebAttribute<msdyn_workorder_Select, { ts_totalconductoversight: number | null }, {  }>;
@@ -667,6 +670,7 @@ interface msdyn_workorder_Filter {
   ts_securityincident_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_state: ts_planningstate;
+  ts_subsubsite_guid: XQW.Guid;
   ts_suggestedinspection_guid: XQW.Guid;
   ts_teamplanningdata_guid: XQW.Guid;
   ts_totalconductoversight: any;
@@ -739,6 +743,7 @@ interface msdyn_workorder_Expand {
   ts_PlanningData: WebExpand<msdyn_workorder_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_PlanningData: ts_PlanningData_Result }>;
   ts_SecurityIncident: WebExpand<msdyn_workorder_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_SecurityIncident: ts_securityincident_Result }>;
   ts_Site: WebExpand<msdyn_workorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
+  ts_Subsubsite: WebExpand<msdyn_workorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsubsite: msdyn_FunctionalLocation_Result }>;
   ts_TeamPlanningData: WebExpand<msdyn_workorder_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { ts_TeamPlanningData: ts_TeamPlanningData_Result }>;
   ts_WorkOrderCreationWizardId: WebExpand<msdyn_workorder_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_WorkOrderCreationWizardId: ts_workordercreationwizard_Result }>;
   ts_arrivalaerodrome: WebExpand<msdyn_workorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_arrivalaerodrome: msdyn_FunctionalLocation_Result }>;
@@ -882,6 +887,7 @@ interface msdyn_workorder_FormattedResult {
   ts_securityincident_formatted?: string;
   ts_site_formatted?: string;
   ts_state_formatted?: string;
+  ts_subsubsite_formatted?: string;
   ts_suggestedinspection_formatted?: string;
   ts_teamplanningdata_formatted?: string;
   ts_totalconductoversight_date_formatted?: string;
@@ -964,6 +970,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ts_scheduledquarterjustification_guid: string | null;
   ts_securityincident_guid: string | null;
   ts_site_guid: string | null;
+  ts_subsubsite_guid: string | null;
   ts_suggestedinspection_guid: string | null;
   ts_teamplanningdata_guid: string | null;
   ts_tradenameid_guid: string | null;
@@ -1006,6 +1013,7 @@ interface msdyn_workorder_RelatedOne {
   ts_PlanningData: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_SecurityIncident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_Subsubsite: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_TeamPlanningData: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   ts_WorkOrderCreationWizardId: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_arrivalaerodrome: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
