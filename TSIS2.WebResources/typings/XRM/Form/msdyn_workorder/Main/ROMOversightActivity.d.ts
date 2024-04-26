@@ -226,6 +226,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_origin"): Xrm.Attribute<string>;
       get(name: "ts_othercanceledjustification"): Xrm.Attribute<string>;
       get(name: "ts_overtime"): Xrm.NumberAttribute;
+      get(name: "ts_overtimerequired"): Xrm.Attribute<any>;
       get(name: "ts_paxboarded"): Xrm.NumberAttribute;
       get(name: "ts_paxcheckedin"): Xrm.NumberAttribute;
       get(name: "ts_plannedcost"): Xrm.NumberAttribute;
@@ -245,6 +246,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_state"): Xrm.OptionSetAttribute<ts_planningstate>;
+      get(name: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_teamplanningdata"): Xrm.LookupAttribute<"ts_teamplanningdata">;
       get(name: "ts_totalconductoversight"): Xrm.NumberAttribute;
       get(name: "ts_totalpreparationtime"): Xrm.NumberAttribute;
@@ -405,6 +407,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_origin"): Xrm.StringControl;
       get(name: "ts_othercanceledjustification"): Xrm.StringControl;
       get(name: "ts_overtime"): Xrm.NumberControl;
+      get(name: "ts_overtimerequired"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_paxboarded"): Xrm.NumberControl;
       get(name: "ts_paxcheckedin"): Xrm.NumberControl;
       get(name: "ts_plannedcost"): Xrm.NumberControl;
@@ -425,6 +428,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_securityincident1"): Xrm.LookupControl<"ts_securityincident">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_state"): Xrm.OptionSetControl<ts_planningstate>;
+      get(name: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_teamplanningdata"): Xrm.LookupControl<"ts_teamplanningdata">;
       get(name: "ts_totalconductoversight"): Xrm.NumberControl;
       get(name: "ts_totalpreparationtime"): Xrm.NumberControl;
@@ -488,7 +492,6 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_datewindowstart"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
-    getAttribute(attributeName: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "msdyn_instructions"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
     getAttribute(attributeName: "msdyn_latitude"): Xrm.NumberAttribute;
@@ -570,6 +573,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_origin"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_othercanceledjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_overtimerequired"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_paxboarded"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_paxcheckedin"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedcost"): Xrm.NumberAttribute;
@@ -589,6 +593,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_state"): Xrm.OptionSetAttribute<ts_planningstate>;
+    getAttribute(attributeName: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_teamplanningdata"): Xrm.LookupAttribute<"ts_teamplanningdata">;
     getAttribute(attributeName: "ts_totalconductoversight"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_totalpreparationtime"): Xrm.NumberAttribute;
@@ -744,6 +749,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_origin"): Xrm.StringControl;
     getControl(controlName: "ts_othercanceledjustification"): Xrm.StringControl;
     getControl(controlName: "ts_overtime"): Xrm.NumberControl;
+    getControl(controlName: "ts_overtimerequired"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_paxboarded"): Xrm.NumberControl;
     getControl(controlName: "ts_paxcheckedin"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedcost"): Xrm.NumberControl;
@@ -763,8 +769,8 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
     getControl(controlName: "ts_securityincident1"): Xrm.LookupControl<"ts_securityincident">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
-    getControl(controlName: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_state"): Xrm.OptionSetControl<ts_planningstate>;
+    getControl(controlName: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_teamplanningdata"): Xrm.LookupControl<"ts_teamplanningdata">;
     getControl(controlName: "ts_totalconductoversight"): Xrm.NumberControl;
     getControl(controlName: "ts_totalpreparationtime"): Xrm.NumberControl;

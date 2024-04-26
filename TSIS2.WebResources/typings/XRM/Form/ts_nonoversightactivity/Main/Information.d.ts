@@ -13,6 +13,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
       get(name: "ts_overtime"): Xrm.NumberAttribute;
       get(name: "ts_program"): Xrm.LookupAttribute<"businessunit">;
       get(name: "ts_quarter"): Xrm.OptionSetAttribute<ts_quarter>;
+      get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -29,6 +30,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
       get(name: "ts_overtime"): Xrm.NumberControl;
       get(name: "ts_program"): Xrm.LookupControl<"businessunit">;
       get(name: "ts_quarter"): Xrm.OptionSetControl<ts_quarter>;
+      get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -52,6 +54,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
     getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_program"): Xrm.LookupAttribute<"businessunit">;
     getAttribute(attributeName: "ts_quarter"): Xrm.OptionSetAttribute<ts_quarter>;
+    getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_activitytime"): Xrm.NumberControl;
@@ -63,6 +66,7 @@ declare namespace Form.ts_nonoversightactivity.Main {
     getControl(controlName: "ts_overtime"): Xrm.NumberControl;
     getControl(controlName: "ts_program"): Xrm.LookupControl<"businessunit">;
     getControl(controlName: "ts_quarter"): Xrm.OptionSetControl<ts_quarter>;
+    getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
     getControl(controlName: string): undefined;
   }
 }

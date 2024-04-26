@@ -23,6 +23,7 @@ interface IncidentResolution_Base extends WebEntity {
   lastonholdtime?: Date | null;
   leftvoicemail?: boolean | null;
   modifiedon?: Date | null;
+  msdyn_proposeknowledge?: boolean | null;
   msft_datastate?: msft_datastate | null;
   onholdtime?: number | null;
   overriddencreatedon?: Date | null;
@@ -122,6 +123,7 @@ interface IncidentResolution_Select {
   modifiedbyexternalparty_guid: WebAttribute<IncidentResolution_Select, { modifiedbyexternalparty_guid: string | null }, { modifiedbyexternalparty_formatted?: string }>;
   modifiedon: WebAttribute<IncidentResolution_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<IncidentResolution_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msdyn_proposeknowledge: WebAttribute<IncidentResolution_Select, { msdyn_proposeknowledge: boolean | null }, {  }>;
   msft_datastate: WebAttribute<IncidentResolution_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   onholdtime: WebAttribute<IncidentResolution_Select, { onholdtime: number | null }, {  }>;
   optionalattendees_guid: WebAttribute<IncidentResolution_Select, { optionalattendees_guid: string | null }, { optionalattendees_formatted?: string }>;
@@ -199,6 +201,7 @@ interface IncidentResolution_Filter {
   modifiedbyexternalparty_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msdyn_proposeknowledge: boolean;
   msft_datastate: msft_datastate;
   onholdtime: number;
   optionalattendees_guid: XQW.Guid;
