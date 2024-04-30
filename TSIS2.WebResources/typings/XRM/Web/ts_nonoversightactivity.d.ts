@@ -18,6 +18,7 @@ interface ts_nonoversightactivity_Base extends WebEntity {
 }
 interface ts_nonoversightactivity_Relationships {
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
+  ts_Stakeholder?: Account_Result | null;
 }
 interface ts_nonoversightactivity extends ts_nonoversightactivity_Base, ts_nonoversightactivity_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -25,6 +26,7 @@ interface ts_nonoversightactivity extends ts_nonoversightactivity_Base, ts_nonov
   ts_Category_bind$ts_timetrackingcategories?: string | null;
   ts_FiscalYear_bind$tc_tcfiscalyears?: string | null;
   ts_Program_bind$businessunits?: string | null;
+  ts_Stakeholder_bind$accounts?: string | null;
 }
 interface ts_nonoversightactivity_Create extends ts_nonoversightactivity {
 }
@@ -56,6 +58,7 @@ interface ts_nonoversightactivity_Select {
   ts_overtime: WebAttribute<ts_nonoversightactivity_Select, { ts_overtime: number | null }, {  }>;
   ts_program_guid: WebAttribute<ts_nonoversightactivity_Select, { ts_program_guid: string | null }, { ts_program_formatted?: string }>;
   ts_quarter: WebAttribute<ts_nonoversightactivity_Select, { ts_quarter: ts_quarter | null }, { ts_quarter_formatted?: string }>;
+  ts_stakeholder_guid: WebAttribute<ts_nonoversightactivity_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_nonoversightactivity_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_nonoversightactivity_Select, { versionnumber: number | null }, {  }>;
 }
@@ -85,6 +88,7 @@ interface ts_nonoversightactivity_Filter {
   ts_overtime: any;
   ts_program_guid: XQW.Guid;
   ts_quarter: ts_quarter;
+  ts_stakeholder_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -97,6 +101,7 @@ interface ts_nonoversightactivity_Expand {
   owningteam: WebExpand<ts_nonoversightactivity_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_nonoversightactivity_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_FiscalYear: WebExpand<ts_nonoversightactivity_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
+  ts_Stakeholder: WebExpand<ts_nonoversightactivity_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
 }
 interface ts_nonoversightactivity_FormattedResult {
   createdby_formatted?: string;
@@ -117,6 +122,7 @@ interface ts_nonoversightactivity_FormattedResult {
   ts_fiscalyear_formatted?: string;
   ts_program_formatted?: string;
   ts_quarter_formatted?: string;
+  ts_stakeholder_formatted?: string;
 }
 interface ts_nonoversightactivity_Result extends ts_nonoversightactivity_Base, ts_nonoversightactivity_Relationships {
   "@odata.etag": string;
@@ -131,6 +137,7 @@ interface ts_nonoversightactivity_Result extends ts_nonoversightactivity_Base, t
   ts_category_guid: string | null;
   ts_fiscalyear_guid: string | null;
   ts_program_guid: string | null;
+  ts_stakeholder_guid: string | null;
 }
 interface ts_nonoversightactivity_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -141,6 +148,7 @@ interface ts_nonoversightactivity_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface ts_nonoversightactivity_RelatedMany {
 }

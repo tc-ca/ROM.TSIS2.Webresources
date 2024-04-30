@@ -176,6 +176,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_plannedcost"): Xrm.NumberAttribute;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
       get(name: "ts_workorderenddate"): Xrm.DateAttribute;
       get(name: "ts_workorderstartdate"): Xrm.DateAttribute;
@@ -292,6 +293,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_plannedcost"): Xrm.NumberControl;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
       get(name: "ts_workorderenddate"): Xrm.DateControl;
       get(name: "ts_workorderstartdate"): Xrm.DateControl;
@@ -393,6 +395,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_plannedcost"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
     getAttribute(attributeName: "ts_workorderenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_workorderstartdate"): Xrm.DateAttribute;
@@ -504,6 +507,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_plannedcost"): Xrm.NumberControl;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
     getControl(controlName: "ts_workorderenddate"): Xrm.DateControl;
     getControl(controlName: "ts_workorderstartdate"): Xrm.DateControl;

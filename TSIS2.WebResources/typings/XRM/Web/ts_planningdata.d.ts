@@ -19,11 +19,13 @@ interface ts_PlanningData_Base extends WebEntity {
   ts_englishname?: string | null;
   ts_frenchname?: string | null;
   ts_generationlog?: string | null;
+  ts_keephidden?: boolean | null;
   ts_name?: string | null;
   ts_nullnumber?: number | null;
   ts_operationactivityisactive?: number | null;
   ts_operationactivityisoperational?: number | null;
   ts_originalteamestimatedduration?: number | null;
+  ts_overtimerequired?: boolean | null;
   ts_plannedq1?: number | null;
   ts_plannedq2?: number | null;
   ts_plannedq3?: number | null;
@@ -98,6 +100,7 @@ interface ts_PlanningData_Select {
   ts_fiscalyear_guid: WebAttribute<ts_PlanningData_Select, { ts_fiscalyear_guid: string | null }, { ts_fiscalyear_formatted?: string }>;
   ts_frenchname: WebAttribute<ts_PlanningData_Select, { ts_frenchname: string | null }, {  }>;
   ts_generationlog: WebAttribute<ts_PlanningData_Select, { ts_generationlog: string | null }, {  }>;
+  ts_keephidden: WebAttribute<ts_PlanningData_Select, { ts_keephidden: boolean | null }, {  }>;
   ts_name: WebAttribute<ts_PlanningData_Select, { ts_name: string | null }, {  }>;
   ts_nullnumber: WebAttribute<ts_PlanningData_Select, { ts_nullnumber: number | null }, {  }>;
   ts_operation_guid: WebAttribute<ts_PlanningData_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
@@ -106,6 +109,7 @@ interface ts_PlanningData_Select {
   ts_operationactivityisoperational: WebAttribute<ts_PlanningData_Select, { ts_operationactivityisoperational: number | null }, {  }>;
   ts_operationtype_guid: WebAttribute<ts_PlanningData_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
   ts_originalteamestimatedduration: WebAttribute<ts_PlanningData_Select, { ts_originalteamestimatedduration: number | null }, {  }>;
+  ts_overtimerequired: WebAttribute<ts_PlanningData_Select, { ts_overtimerequired: boolean | null }, {  }>;
   ts_plannedq1: WebAttribute<ts_PlanningData_Select, { ts_plannedq1: number | null }, {  }>;
   ts_plannedq2: WebAttribute<ts_PlanningData_Select, { ts_plannedq2: number | null }, {  }>;
   ts_plannedq3: WebAttribute<ts_PlanningData_Select, { ts_plannedq3: number | null }, {  }>;
@@ -156,6 +160,7 @@ interface ts_PlanningData_Filter {
   ts_fiscalyear_guid: XQW.Guid;
   ts_frenchname: string;
   ts_generationlog: string;
+  ts_keephidden: boolean;
   ts_name: string;
   ts_nullnumber: number;
   ts_operation_guid: XQW.Guid;
@@ -164,6 +169,7 @@ interface ts_PlanningData_Filter {
   ts_operationactivityisoperational: number;
   ts_operationtype_guid: XQW.Guid;
   ts_originalteamestimatedduration: any;
+  ts_overtimerequired: boolean;
   ts_plannedq1: number;
   ts_plannedq2: number;
   ts_plannedq3: number;

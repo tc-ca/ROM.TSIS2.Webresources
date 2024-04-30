@@ -252,6 +252,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_state"): Xrm.OptionSetAttribute<ts_planningstate>;
+      get(name: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_teamplanningdata"): Xrm.LookupAttribute<"ts_teamplanningdata">;
       get(name: "ts_totalconductoversight"): Xrm.NumberAttribute;
       get(name: "ts_totalpreparationtime"): Xrm.NumberAttribute;
@@ -436,6 +437,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_securityincident1"): Xrm.LookupControl<"ts_securityincident">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_state"): Xrm.OptionSetControl<ts_planningstate>;
+      get(name: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_teamplanningdata"): Xrm.LookupControl<"ts_teamplanningdata">;
       get(name: "ts_totalconductoversight"): Xrm.NumberControl;
       get(name: "ts_totalpreparationtime"): Xrm.NumberControl;
@@ -603,6 +605,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_state"): Xrm.OptionSetAttribute<ts_planningstate>;
+    getAttribute(attributeName: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_teamplanningdata"): Xrm.LookupAttribute<"ts_teamplanningdata">;
     getAttribute(attributeName: "ts_totalconductoversight"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_totalpreparationtime"): Xrm.NumberAttribute;
@@ -782,6 +785,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_securityincident1"): Xrm.LookupControl<"ts_securityincident">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_state"): Xrm.OptionSetControl<ts_planningstate>;
+    getControl(controlName: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_teamplanningdata"): Xrm.LookupControl<"ts_teamplanningdata">;
     getControl(controlName: "ts_totalconductoversight"): Xrm.NumberControl;
     getControl(controlName: "ts_totalpreparationtime"): Xrm.NumberControl;

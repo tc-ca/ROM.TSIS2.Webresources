@@ -206,6 +206,7 @@ async function createWorkOrders(formContext) {
                     "    <attribute name='ts_planningdataid'/>",
                     "    <attribute name='ts_plannedq2'/>",
                     "    <attribute name='ts_details'/>",
+                    "    <attribute name='ts_overtimerequired'/>",
                     "    <filter type='and'>",
                     "      <condition attribute='ts_teamplanningdata' operator='eq' value='", teamPlanningDataId, "'/>",
                     "      <condition attribute='statecode' operator='eq' value='0'/>",
@@ -258,6 +259,7 @@ async function createWorkOrders(formContext) {
                         if (planningData._ts_activitytype_value != null) workOrderData["msdyn_primaryincidenttype@odata.bind"] = "/msdyn_incidenttypes(" + planningData._ts_activitytype_value + ")";
                         if (planningData._ts_operation_value != null) workOrderData["ovs_OperationId@odata.bind"] = "/ovs_operations(" + planningData._ts_operation_value + ")";
                         if (planningData.ts_details != null) workOrderData["ts_details"] = planningData.ts_details;
+                        if (planningData.ts_overtimerequired != null) workOrderData["ts_overtimerequired"] = planningData.ts_overtimerequired;
 
                         /*
                          * For each ts_plannedq field, determine how many Work Orders must be created, then create them.
