@@ -64,13 +64,13 @@ interface ovs_operation_Relationships {
   ts_OPITeam?: Team_Result | null;
   ts_Subsubsite?: msdyn_FunctionalLocation_Result | null;
   ts_msdyn_workorder_ovs_operation_ovs_operati?: msdyn_workorder_Result[] | null;
+  ts_operation_msdyn_workorder_OperatingCarrierOperation?: msdyn_workorder_Result[] | null;
   ts_operation_ts_operationcontact_operation?: ts_operationcontact_Result[] | null;
   ts_ovs_Finding_operationid_ovs_operation?: ovs_Finding_Result[] | null;
   ts_ovs_operation_msdyn_workorderservicetask_AOCOperation?: msdyn_workorderservicetask_Result[] | null;
   ts_ovs_operation_ovs_operation_msdyn_inciden?: msdyn_incidenttype_Result[] | null;
   ts_ovs_operation_ovs_operation_ovs_operation?: ovs_operation_Result[] | null;
   ts_ovs_operation_qm_rclegislation_qm_rclegis?: qm_rclegislation_Result[] | null;
-  ts_suggestedinspection_operation?: ts_SuggestedInspection_Result[] | null;
   ts_ts_operationactivity_Operation_ovs_operat?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_Operation_ovs_operation?: ts_PlanningData_Result[] | null;
 }
@@ -252,6 +252,7 @@ interface ovs_operation_Expand {
   ts_OPITeam: WebExpand<ovs_operation_Expand, Team_Select, Team_Filter, { ts_OPITeam: Team_Result }>;
   ts_Subsubsite: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsubsite: msdyn_FunctionalLocation_Result }>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: msdyn_workorder_Result[] }>;
+  ts_operation_msdyn_workorder_OperatingCarrierOperation: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_operation_msdyn_workorder_OperatingCarrierOperation: msdyn_workorder_Result[] }>;
   ts_operation_ts_operationcontact_operation: WebExpand<ovs_operation_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operation_ts_operationcontact_operation: ts_operationcontact_Result[] }>;
   ts_ovs_Finding_operationid_ovs_operation: WebExpand<ovs_operation_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_operationid_ovs_operation: ovs_Finding_Result[] }>;
   ts_ovs_operation_msdyn_workorderservicetask_AOCOperation: WebExpand<ovs_operation_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_ovs_operation_msdyn_workorderservicetask_AOCOperation: msdyn_workorderservicetask_Result[] }>;
@@ -262,7 +263,6 @@ interface ovs_operation_Expand {
   ts_site: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_site: msdyn_FunctionalLocation_Result }>;
   ts_stakeholder: WebExpand<ovs_operation_Expand, Account_Select, Account_Filter, { ts_stakeholder: Account_Result }>;
   ts_subsite: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_subsite: msdyn_FunctionalLocation_Result }>;
-  ts_suggestedinspection_operation: WebExpand<ovs_operation_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection_operation: ts_SuggestedInspection_Result[] }>;
   ts_ts_operationactivity_Operation_ovs_operat: WebExpand<ovs_operation_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Operation_ovs_operat: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_Operation_ovs_operation: WebExpand<ovs_operation_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Operation_ovs_operation: ts_PlanningData_Result[] }>;
 }
@@ -350,13 +350,13 @@ interface ovs_operation_RelatedMany {
   ovs_operation_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ovs_ovs_operation_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_operation_msdyn_workorder_OperatingCarrierOperation: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_operation_ts_operationcontact_operation: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_ovs_Finding_operationid_ovs_operation: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_msdyn_workorderservicetask_AOCOperation: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ts_ovs_operation_ovs_operation_msdyn_inciden: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_ovs_operation_ovs_operation_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_ovs_operation_qm_rclegislation_qm_rclegis: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
-  ts_suggestedinspection_operation: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   ts_ts_operationactivity_Operation_ovs_operat: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_Operation_ovs_operation: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
 }

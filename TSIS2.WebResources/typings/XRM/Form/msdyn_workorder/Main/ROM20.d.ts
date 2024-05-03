@@ -227,6 +227,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_notes"): Xrm.Attribute<string>;
       get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
       get(name: "ts_operatingcarrier"): Xrm.LookupAttribute<"account">;
+      get(name: "ts_operatingcarrieroperation"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ts_operatingname"): Xrm.LookupAttribute<"account">;
       get(name: "ts_origin"): Xrm.Attribute<string>;
       get(name: "ts_othercanceledjustification"): Xrm.Attribute<string>;
@@ -411,6 +412,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_notes"): Xrm.StringControl;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
       get(name: "ts_operatingcarrier"): Xrm.LookupControl<"account">;
+      get(name: "ts_operatingcarrieroperation"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ts_operatingname"): Xrm.LookupControl<"account">;
       get(name: "ts_origin"): Xrm.StringControl;
       get(name: "ts_othercanceledjustification"): Xrm.StringControl;
@@ -580,6 +582,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_notes"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_operatingcarrier"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "ts_operatingcarrieroperation"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ts_operatingname"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_origin"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_othercanceledjustification"): Xrm.Attribute<string>;
@@ -759,6 +762,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_notes"): Xrm.StringControl;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
     getControl(controlName: "ts_operatingcarrier"): Xrm.LookupControl<"account">;
+    getControl(controlName: "ts_operatingcarrieroperation"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ts_operatingname"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_origin"): Xrm.StringControl;
     getControl(controlName: "ts_othercanceledjustification"): Xrm.StringControl;

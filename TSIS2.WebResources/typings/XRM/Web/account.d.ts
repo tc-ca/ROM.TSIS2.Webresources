@@ -205,6 +205,7 @@ interface Account_Relationships {
   ts_account_msdyn_workorderservicetask_RampServices?: msdyn_workorderservicetask_Result[] | null;
   ts_account_msdyn_workorderservicetask_SecuritySearchServices?: msdyn_workorderservicetask_Result[] | null;
   ts_account_ts_action_stakeholder?: ts_action_Result[] | null;
+  ts_account_ts_aircraft_RegisteredOwner?: ts_aircraft_Result[] | null;
   ts_account_ts_nonoversightactivity_Stakeholder?: ts_nonoversightactivity_Result[] | null;
   ts_account_ts_planningsettings_stakeholder?: ts_planningsettings_Result[] | null;
   ts_account_ts_securityincident_ReportingCompany?: ts_securityincident_Result[] | null;
@@ -214,7 +215,6 @@ interface Account_Relationships {
   ts_account_workorder_operatingname?: msdyn_workorder_Result[] | null;
   ts_ovs_Finding_accountid_Account?: ovs_Finding_Result[] | null;
   ts_ovs_operation_stakeholder_account?: ovs_operation_Result[] | null;
-  ts_suggestedinspection_stakeholder?: ts_SuggestedInspection_Result[] | null;
   ts_ts_enforcementaction_Individualcompany_ac?: ts_enforcementaction_Result[] | null;
   ts_ts_operationactivity_Stakeholder_account?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_Stakeholder_account?: ts_PlanningData_Result[] | null;
@@ -707,6 +707,7 @@ interface Account_Expand {
   ts_account_msdyn_workorderservicetask_RampServices: WebExpand<Account_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_account_msdyn_workorderservicetask_RampServices: msdyn_workorderservicetask_Result[] }>;
   ts_account_msdyn_workorderservicetask_SecuritySearchServices: WebExpand<Account_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_account_msdyn_workorderservicetask_SecuritySearchServices: msdyn_workorderservicetask_Result[] }>;
   ts_account_ts_action_stakeholder: WebExpand<Account_Expand, ts_action_Select, ts_action_Filter, { ts_account_ts_action_stakeholder: ts_action_Result[] }>;
+  ts_account_ts_aircraft_RegisteredOwner: WebExpand<Account_Expand, ts_aircraft_Select, ts_aircraft_Filter, { ts_account_ts_aircraft_RegisteredOwner: ts_aircraft_Result[] }>;
   ts_account_ts_nonoversightactivity_Stakeholder: WebExpand<Account_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { ts_account_ts_nonoversightactivity_Stakeholder: ts_nonoversightactivity_Result[] }>;
   ts_account_ts_planningsettings_stakeholder: WebExpand<Account_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { ts_account_ts_planningsettings_stakeholder: ts_planningsettings_Result[] }>;
   ts_account_ts_securityincident_ReportingCompany: WebExpand<Account_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_account_ts_securityincident_ReportingCompany: ts_securityincident_Result[] }>;
@@ -717,7 +718,6 @@ interface Account_Expand {
   ts_msdyn_workorder: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder: msdyn_workorder_Result }>;
   ts_ovs_Finding_accountid_Account: WebExpand<Account_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_accountid_Account: ovs_Finding_Result[] }>;
   ts_ovs_operation_stakeholder_account: WebExpand<Account_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_stakeholder_account: ovs_operation_Result[] }>;
-  ts_suggestedinspection_stakeholder: WebExpand<Account_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection_stakeholder: ts_SuggestedInspection_Result[] }>;
   ts_ts_enforcementaction_Individualcompany_ac: WebExpand<Account_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Individualcompany_ac: ts_enforcementaction_Result[] }>;
   ts_ts_operationactivity_Stakeholder_account: WebExpand<Account_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Stakeholder_account: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_Stakeholder_account: WebExpand<Account_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Stakeholder_account: ts_PlanningData_Result[] }>;
@@ -905,6 +905,7 @@ interface Account_RelatedMany {
   ts_account_msdyn_workorderservicetask_RampServices: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ts_account_msdyn_workorderservicetask_SecuritySearchServices: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ts_account_ts_action_stakeholder: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
+  ts_account_ts_aircraft_RegisteredOwner: WebMappingRetrieve<ts_aircraft_Select,ts_aircraft_Expand,ts_aircraft_Filter,ts_aircraft_Fixed,ts_aircraft_Result,ts_aircraft_FormattedResult>;
   ts_account_ts_nonoversightactivity_Stakeholder: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
   ts_account_ts_planningsettings_stakeholder: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
   ts_account_ts_securityincident_ReportingCompany: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
@@ -914,7 +915,6 @@ interface Account_RelatedMany {
   ts_account_workorder_operatingname: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ovs_Finding_accountid_Account: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_stakeholder_account: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
-  ts_suggestedinspection_stakeholder: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   ts_ts_enforcementaction_Individualcompany_ac: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_ts_operationactivity_Stakeholder_account: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_Stakeholder_account: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
