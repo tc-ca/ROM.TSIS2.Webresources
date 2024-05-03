@@ -728,7 +728,40 @@ namespace ROM.WorkOrderServiceTask {
         //Retrieve operationTypes of parent Work Order's ActivityType
         let activityTypeOperationTypesPromise = Xrm.WebApi.retrieveMultipleRecords("ovs_operationtype", activityTypeOperationTypesFetchXML);
 
-        await Promise.all([operationPromise1, operationPromise2, activityTypeOperationTypesPromise]).then((operationRetrievalPromises) => {
+        var parentWorkOrderOperatingcarrierOperationFetchXml = [
+            "<fetch top='50'>",
+            "  <entity name='msdyn_workorder'>",
+            "    <attribute name='ts_operatingcarrieroperation' />",
+            "    <attribute name='ts_operatingcarrier' />",
+            "    <attribute name='msdyn_workordertype' />",
+            "    <filter>",
+            "      <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+            "    </filter>",
+            "    <link-entity name='ovs_operation' from='ovs_operationid' to='ts_operatingcarrieroperation' link-type='inner'>",
+            "      <attribute name='ovs_operationtypeid' />",
+            "      <attribute name='ovs_operationid' />",
+            "      <attribute name='ovs_name' />",
+            "      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
+            "        <attribute name='ts_regulated' />",
+            "        <attribute name='ovs_operationtypeid' /> ",
+            "        <attribute name='ovs_operationtypenameenglish' />",
+            "        <attribute name='ovs_operationtypenamefrench' />",
+            "      </link-entity>",
+            "      <link-entity name = 'msdyn_functionallocation' from = 'msdyn_functionallocationid' to = 'ts_site' > ",
+            "        <attribute name='ts_functionallocationnamefrench' />",
+            "        <attribute name='ts_functionallocationnameenglish' />",
+            "      </link-entity>",
+            "    </link-entity>",
+            "    <link-entity name='account' from='accountid' to='ts_operatingcarrier'>",
+            "      <attribute name='name' />",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+        parentWorkOrderOperatingcarrierOperationFetchXml = "?fetchXml=" + encodeURIComponent(parentWorkOrderOperatingcarrierOperationFetchXml);
+        let operationPromise4 = Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", parentWorkOrderOperatingcarrierOperationFetchXml);
+
+        await Promise.all([operationPromise1, operationPromise2, activityTypeOperationTypesPromise, operationPromise4]).then((operationRetrievalPromises) => {
             //collect each operationType Id
             operationRetrievalPromises[2].entities.forEach(function (operationType) {
                 activityTypeOperationTypeIds.push(operationType["ovs_operationtypeid"]);
@@ -758,6 +791,29 @@ namespace ROM.WorkOrderServiceTask {
                     isInspectionType = true;
                 }
             }
+
+            //OperatingcarrierOperation
+            var workOrderOperatingcarrierOperation = operationRetrievalPromises[3].entities[0];
+            stakeholderName = workOrderOperatingcarrierOperation["account4.name"];
+            operationTypeName = (lang == 1036) ? workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypenamefrench"] : workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypenameenglish"];
+            siteName = (lang == 1036) ? workOrderOperatingcarrierOperation["msdyn_functionallocation3.ts_functionallocationnamefrench"] : workOrderOperatingcarrierOperation["msdyn_functionallocation3.ts_functionallocationnameenglish"];
+            if (
+                workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"] != null &&
+                workOrderOperatingcarrierOperation["account4.name"] != null &&
+                workOrderOperatingcarrierOperation["ovs_operationtype2.ts_regulated"] != null &&
+                workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypeid"] != null &&
+                workOrderOperatingcarrierOperation["ovs_operationtype2.ts_regulated"] == true &&
+                activityTypeOperationTypeIds.includes(workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypeid"]) &&
+                workOrderOperation["ovs_operation1.ovs_operationid"] != workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"] 
+            ) {
+                operations.push({
+                    id: workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"],
+                    name: stakeholderName + " | " + operationTypeName + " | " + siteName,
+                    operationTypeId: workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationtypeid"],
+                    isRegulated: workOrderOperatingcarrierOperation["ovs_operationtype2.ts_regulated"]
+                });
+            }
+
             //Add the operationid, name, operationTypeId, and regulated boolean of the work order's N:N operations to the operations array
             // The Operation must be regulated, and the Operation Type of the Operation must be one of the Work Order's Activity Type's Operation Types
             operationRetrievalPromises[1].entities.forEach(function (operation) {
