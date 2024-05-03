@@ -171,6 +171,7 @@ interface msdyn_workorder_Relationships {
   ts_Contact?: Contact_Result | null;
   ts_Contact_msdyn_workorder_msdyn_workorder?: Contact_Result[] | null;
   ts_IncompleteWorkOrderReason?: ts_IncompleteWorkOrderReason_Result | null;
+  ts_OperatingCarrierOperation?: ovs_operation_Result | null;
   ts_PlanningData?: ts_PlanningData_Result | null;
   ts_SecurityIncident?: ts_securityincident_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
@@ -236,6 +237,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ts_Contact_bind$contacts?: string | null;
   ts_Country_bind$tc_countries?: string | null;
   ts_IncompleteWorkOrderReason_bind$ts_incompleteworkorderreasons?: string | null;
+  ts_OperatingCarrierOperation_bind$ovs_operations?: string | null;
   ts_PlanningData_bind$ts_planningdatas?: string | null;
   ts_Region_bind$territories?: string | null;
   ts_ScheduledQuarterJustification_bind$ts_justifications?: string | null;
@@ -424,6 +426,7 @@ interface msdyn_workorder_Select {
   ts_numberoffindings_date: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_date: Date | null }, { ts_numberoffindings_date_formatted?: string }>;
   ts_numberoffindings_state: WebAttribute<msdyn_workorder_Select, { ts_numberoffindings_state: number | null }, {  }>;
   ts_operatingcarrier_guid: WebAttribute<msdyn_workorder_Select, { ts_operatingcarrier_guid: string | null }, { ts_operatingcarrier_formatted?: string }>;
+  ts_operatingcarrieroperation_guid: WebAttribute<msdyn_workorder_Select, { ts_operatingcarrieroperation_guid: string | null }, { ts_operatingcarrieroperation_formatted?: string }>;
   ts_operatingname_guid: WebAttribute<msdyn_workorder_Select, { ts_operatingname_guid: string | null }, { ts_operatingname_formatted?: string }>;
   ts_origin: WebAttribute<msdyn_workorder_Select, { ts_origin: string | null }, {  }>;
   ts_othercanceledjustification: WebAttribute<msdyn_workorder_Select, { ts_othercanceledjustification: string | null }, {  }>;
@@ -641,6 +644,7 @@ interface msdyn_workorder_Filter {
   ts_numberoffindings_date: Date;
   ts_numberoffindings_state: number;
   ts_operatingcarrier_guid: XQW.Guid;
+  ts_operatingcarrieroperation_guid: XQW.Guid;
   ts_operatingname_guid: XQW.Guid;
   ts_origin: string;
   ts_othercanceledjustification: string;
@@ -740,6 +744,7 @@ interface msdyn_workorder_Expand {
   ts_Contact: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { ts_Contact: Contact_Result }>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: Contact_Result[] }>;
   ts_IncompleteWorkOrderReason: WebExpand<msdyn_workorder_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { ts_IncompleteWorkOrderReason: ts_IncompleteWorkOrderReason_Result }>;
+  ts_OperatingCarrierOperation: WebExpand<msdyn_workorder_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_OperatingCarrierOperation: ovs_operation_Result }>;
   ts_PlanningData: WebExpand<msdyn_workorder_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_PlanningData: ts_PlanningData_Result }>;
   ts_SecurityIncident: WebExpand<msdyn_workorder_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_SecurityIncident: ts_securityincident_Result }>;
   ts_Site: WebExpand<msdyn_workorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
@@ -759,9 +764,8 @@ interface msdyn_workorder_Expand {
   ts_operatingname: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ts_operatingname: Account_Result }>;
   ts_operationcontact_workorder_msdyn_worko: WebExpand<msdyn_workorder_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operationcontact_workorder_msdyn_worko: ts_operationcontact_Result[] }>;
   ts_ovs_Finding_WorkOrder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_WorkOrder_msdyn_workorder: ovs_Finding_Result[] }>;
-  ts_plan: WebExpand<msdyn_workorder_Expand, ts_Plan_Select, ts_Plan_Filter, { ts_plan: ts_Plan_Result }>;
+  ts_registration: WebExpand<msdyn_workorder_Expand, ts_aircraft_Select, ts_aircraft_Filter, { ts_registration: ts_aircraft_Result }>;
   ts_riskthreshold: WebExpand<msdyn_workorder_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { ts_riskthreshold: ts_RiskCategory_Result }>;
-  ts_suggestedinspection: WebExpand<msdyn_workorder_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection: ts_SuggestedInspection_Result }>;
 }
 interface msdyn_workorder_FormattedResult {
   createdby_formatted?: string;
@@ -868,6 +872,7 @@ interface msdyn_workorder_FormattedResult {
   ts_incompleteworkorderreason_formatted?: string;
   ts_numberoffindings_date_formatted?: string;
   ts_operatingcarrier_formatted?: string;
+  ts_operatingcarrieroperation_formatted?: string;
   ts_operatingname_formatted?: string;
   ts_plan_formatted?: string;
   ts_plannedcost_base_formatted?: string;
@@ -960,6 +965,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ts_departureaerodrome_guid: string | null;
   ts_incompleteworkorderreason_guid: string | null;
   ts_operatingcarrier_guid: string | null;
+  ts_operatingcarrieroperation_guid: string | null;
   ts_operatingname_guid: string | null;
   ts_plan_guid: string | null;
   ts_planningdata_guid: string | null;
@@ -1010,6 +1016,7 @@ interface msdyn_workorder_RelatedOne {
   ts_CaseTimeTracking: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_Contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_IncompleteWorkOrderReason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
+  ts_OperatingCarrierOperation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_PlanningData: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_SecurityIncident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
@@ -1021,9 +1028,8 @@ interface msdyn_workorder_RelatedOne {
   ts_departureaerodrome: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_operatingcarrier: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_operatingname: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
-  ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
+  ts_registration: WebMappingRetrieve<ts_aircraft_Select,ts_aircraft_Expand,ts_aircraft_Filter,ts_aircraft_Fixed,ts_aircraft_Result,ts_aircraft_FormattedResult>;
   ts_riskthreshold: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
-  ts_suggestedinspection: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
 }
 interface msdyn_workorder_RelatedMany {
   msdyn_msdyn_workorder_bookableresourcebooking_WorkOrder: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
