@@ -801,23 +801,25 @@ var ROM;
                                         }
                                     }
                                     //OperatingcarrierOperation
-                                    var workOrderOperatingcarrierOperation = operationRetrievalPromises[3].entities[0];
-                                    stakeholderName = workOrderOperatingcarrierOperation["account4.name"];
-                                    operationTypeName = (lang == 1036) ? workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypenamefrench"] : workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypenameenglish"];
-                                    siteName = (lang == 1036) ? workOrderOperatingcarrierOperation["msdyn_functionallocation3.ts_functionallocationnamefrench"] : workOrderOperatingcarrierOperation["msdyn_functionallocation3.ts_functionallocationnameenglish"];
-                                    if (workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"] != null &&
-                                        workOrderOperatingcarrierOperation["account4.name"] != null &&
-                                        workOrderOperatingcarrierOperation["ovs_operationtype2.ts_regulated"] != null &&
-                                        workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypeid"] != null &&
-                                        workOrderOperatingcarrierOperation["ovs_operationtype2.ts_regulated"] == true &&
-                                        activityTypeOperationTypeIds.includes(workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypeid"]) &&
-                                        workOrderOperation["ovs_operation1.ovs_operationid"] != workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"]) {
-                                        operations.push({
-                                            id: workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"],
-                                            name: stakeholderName + " | " + operationTypeName + " | " + siteName,
-                                            operationTypeId: workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationtypeid"],
-                                            isRegulated: workOrderOperatingcarrierOperation["ovs_operationtype2.ts_regulated"]
-                                        });
+                                    if (operationRetrievalPromises[3].entities.length > 0) {
+                                        var workOrderOperatingcarrierOperation = operationRetrievalPromises[3].entities[0];
+                                        stakeholderName = workOrderOperatingcarrierOperation["account4.name"];
+                                        operationTypeName = (lang == 1036) ? workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypenamefrench"] : workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypenameenglish"];
+                                        siteName = (lang == 1036) ? workOrderOperatingcarrierOperation["msdyn_functionallocation3.ts_functionallocationnamefrench"] : workOrderOperatingcarrierOperation["msdyn_functionallocation3.ts_functionallocationnameenglish"];
+                                        if (workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"] != null &&
+                                            workOrderOperatingcarrierOperation["account4.name"] != null &&
+                                            workOrderOperatingcarrierOperation["ovs_operationtype2.ts_regulated"] != null &&
+                                            workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypeid"] != null &&
+                                            workOrderOperatingcarrierOperation["ovs_operationtype2.ts_regulated"] == true &&
+                                            activityTypeOperationTypeIds.includes(workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypeid"]) &&
+                                            workOrderOperation["ovs_operation1.ovs_operationid"] != workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"]) {
+                                            operations.push({
+                                                id: workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"],
+                                                name: stakeholderName + " | " + operationTypeName + " | " + siteName,
+                                                operationTypeId: workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationtypeid"],
+                                                isRegulated: workOrderOperatingcarrierOperation["ovs_operationtype2.ts_regulated"]
+                                            });
+                                        }
                                     }
                                     //Add the operationid, name, operationTypeId, and regulated boolean of the work order's N:N operations to the operations array
                                     // The Operation must be regulated, and the Operation Type of the Operation must be one of the Work Order's Activity Type's Operation Types
@@ -830,7 +832,8 @@ var ROM;
                                             operation["ovs_operationtype3.ts_regulated"] != null &&
                                             operation["ovs_operationtype3.ovs_operationtypeid"] != null &&
                                             operation["ovs_operationtype3.ts_regulated"] == true &&
-                                            activityTypeOperationTypeIds.includes(operation["ovs_operationtype3.ovs_operationtypeid"])) {
+                                            activityTypeOperationTypeIds.includes(operation["ovs_operationtype3.ovs_operationtypeid"]) &&
+                                            operation["ovs_operationid"] != workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"]) {
                                             operations.push({
                                                 id: operation["ovs_operationid"],
                                                 name: stakeholderName + " | " + operationTypeName + " | " + siteName,
