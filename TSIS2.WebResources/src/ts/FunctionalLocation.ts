@@ -6,22 +6,47 @@ namespace ROM.FunctionalLocation {
         if (ownerAttribute != null && ownerAttribute != undefined) {
 
             const ownerAttributeValue = ownerAttribute.getValue();
-
-            if (ownerAttributeValue != null && ownerAttributeValue != undefined) {
-
-                Xrm.WebApi.retrieveRecord("systemuser", ownerAttributeValue[0].id.replace(/[{}]/g, ""), "?$select=_businessunitid_value").then(
-                    function success(result) {
-                        Xrm.WebApi.retrieveRecord("businessunit", result._businessunitid_value, "?$select=name").then(
-                            function success(result) {
-                                form.getAttribute("ts_businessunit").setValue(result.name);
-                            },
-                            function (error) {
-                            }
-                        );
-                    },
-                    function (error) {
-                    }
-                );
+            
+            if (ownerAttributeValue != null && ownerAttributeValue != undefined && ownerAttributeValue[0].entityType=="systemuser") {
+                var targetId = ownerAttributeValue[0].id.replace(/[{}]/g, "");
+                console.log("Type: " + ownerAttributeValue[0].entityType);
+                var isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
+                if (isOffline) {
+                    form.ui.setFormNotification( "Offline: get system user ", "INFO", "offline-operation");
+                    Xrm.WebApi.offline.retrieveRecord("systemuser", targetId, "?$select=_businessunitid_value").then(
+                        function success(result) {
+                            Xrm.WebApi.offline.retrieveRecord("businessunit", result._businessunitid_value, "?$select=name").then(
+                                function success(result) {
+                                    form.getAttribute("ts_businessunit").setValue(result.name);
+                                    form.ui.setFormNotification( "Offline: get BU ", "INFO", "offline-operation");
+                                },
+                                function (error) {                                    
+                                    form.ui.setFormNotification( "Offline: ERROR  "+ JSON.stringify(error), "ERROR", "offline-error");   
+                                }
+                            );
+                        },
+                        function (error) {
+                            form.ui.setFormNotification( "Offline: ERROR  "+ JSON.stringify(error), "ERROR", "offline-error");                            
+                        }
+                    );
+                }
+                else {
+                    Xrm.WebApi.retrieveRecord("systemuser", targetId, "?$select=_businessunitid_value").then(
+                        function success(result) {
+                            Xrm.WebApi.retrieveRecord("businessunit", result._businessunitid_value, "?$select=name").then(
+                                function success(result) {
+                                    form.getAttribute("ts_businessunit").setValue(result.name);
+                                },
+                                function (error) {
+                                    form.ui.setFormNotification( "Online: ERROR get BU - "+ JSON.stringify(error), "ERROR", "online-error");   
+                                }
+                            );
+                        },
+                        function (error) {
+                            form.ui.setFormNotification( "Online: ERROR  get user - "+ JSON.stringify(error), "ERROR", "online-error");  
+                        }
+                    );
+                }
             }
 
             //If site type is aerodrome, show ICAO and IATA fields
@@ -213,7 +238,7 @@ namespace ROM.FunctionalLocation {
             form.getControl("ts_sitetype3").setVisible(false);
         }
     }
-    
+
     export function classOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
         riskScoreVisibility(form);
