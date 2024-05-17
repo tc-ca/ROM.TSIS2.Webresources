@@ -99,6 +99,10 @@
                                     setPostNCATRecommendationSelectionFieldsVisibility(eContext);
                                     NCATManagerDecisionOnChange(eContext);
                                 }
+                                else {
+                                    formContext.ui.tabs.get("tab_NCAT").sections.get("NCAT_proposed_section").setVisible(true);
+                                    setPostNCATRecommendationSelectionFieldsVisibility(eContext);
+                                }
                             }
                             //Show RATE Sections and fields when the operation type owning business unit is Aviation Security or if the user business unit is Transport Canada
                             else {
@@ -781,13 +785,13 @@
     function NCATHideProposedSection(eContext: Xrm.ExecutionContext<any, any>) {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
 
-        formContext.getAttribute("ts_ncatapprovingteam").setValue(null);
-        formContext.getAttribute("ts_ncatapprovingteam").setRequiredLevel("none");
-        formContext.getControl("ts_ncatapprovingteam").setVisible(false);
+        //formContext.getAttribute("ts_ncatapprovingteam").setValue(null);
+        //formContext.getAttribute("ts_ncatapprovingteam").setRequiredLevel("none");
+        //formContext.getControl("ts_ncatapprovingteam").setVisible(false);
 
-        formContext.getAttribute("ts_ncatmanager").setValue(null);
-        formContext.getAttribute("ts_ncatmanager").setRequiredLevel("none");
-        formContext.getControl("ts_ncatmanager").setVisible(false);
+        //formContext.getAttribute("ts_ncatmanager").setValue(null);
+        //formContext.getAttribute("ts_ncatmanager").setRequiredLevel("none");
+        //formContext.getControl("ts_ncatmanager").setVisible(false);
 
         formContext.getAttribute("ts_ncatinspectorrecommendation").setValue(null);
         formContext.getAttribute("ts_ncatinspectorrecommendation").setRequiredLevel("none");
@@ -939,7 +943,14 @@
                 }
             }
         } else {
-
+            //Show NCAT Approving Team
+            formContext.getControl("ts_ncatapprovingteam").setVisible(true);
+            formContext.getControl("ts_ncatapprovingteam").setDisabled(false);
+            formContext.getAttribute("ts_ncatapprovingteam").setRequiredLevel("required");
+            //Show NCAT Approving Manager
+            formContext.getControl("ts_ncatmanager").setVisible(true);
+            formContext.getControl("ts_ncatmanager").setDisabled(false);
+            formContext.getAttribute("ts_ncatmanager").setRequiredLevel("required");
             NCATHideProposedSection(eContext);
         }
     }
