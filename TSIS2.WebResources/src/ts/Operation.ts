@@ -383,6 +383,7 @@ namespace ROM.Operation {
             const entityName = "msdyn_functionallocation";
             const viewDisplayName = "Filtered Sites";
             const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><filter type = "or"><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter></entity></fetch>';
+            console.log("setSiteFilteredView:  " + activityTypeFetchXml);
             const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
         }
@@ -433,14 +434,23 @@ namespace ROM.Operation {
     }
 
     export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        console.log("siteOnChange");
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
-        setSubSiteFilteredView(form);
+
+        var opValue = form.getAttribute("ovs_operationtypeid").getValue();
+        var siteValue = form.getAttribute("ts_site").getValue();
+        if (opValue != null && opValue != undefined && siteValue == null) {
+            setSiteFilteredView(form);
+        }
+        else {
+            setSubSiteFilteredView(form);
+        }
     }
 
     function setSubSiteFilteredView(form: Form.ovs_operation.Main.Information): void {
         const siteAttribute = form.getAttribute("ts_site");
         const siteAttributeValue = siteAttribute.getValue();
-
+        console.log("setSubSiteFilteredView");
         // Enable subsite field with appropriate filtered view if site selected
         if (siteAttributeValue != null && siteAttributeValue != undefined) {
             form.getControl('ts_subsite').setDisabled(false);
@@ -449,13 +459,25 @@ namespace ROM.Operation {
             const viewDisplayName = "Filtered Sites";
             const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
             const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+            console.log("setSubSiteFilteredView: " + activityTypeFetchXml);
+
+            //Non-Operational -> 717,750,001  ts_sitestatus
             form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
         }
     }
 
     export function subsiteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        console.log("subsiteOnChange");
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
-        setSubSubSiteFilteredView(form);
+
+        var siteValue = form.getAttribute("ts_site").getValue();
+        var subSiteValue = form.getAttribute("ts_subsite").getValue();
+        if (siteValue != null && siteValue != undefined && subSiteValue == null) {
+            setSubSiteFilteredView(form);
+        }
+        else {
+            setSubSubSiteFilteredView(form);
+        }
     }
 
     function setSubSubSiteFilteredView(form: Form.ovs_operation.Main.Information): void {
