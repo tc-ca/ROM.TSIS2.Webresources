@@ -113,8 +113,25 @@ namespace ROM.WorkOrderServiceTask {
 
     export function taskTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         UpdateQuestionnaireDefinition(eContext);
+        applyMandatoryFieldFromTaskType(eContext);
     }
-
+    function applyMandatoryFieldFromTaskType(eContext) {
+        var fc = eContext.getFormContext();                    
+        var taskTypeValue = fc.getAttribute("msdyn_tasktype").getValue();
+        if (taskTypeValue != null && taskTypeValue != undefined && taskTypeValue[0].entityType == "msdyn_servicetasktype") {
+           
+            Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeValue[0].id, "?$select=ts_mandatory").then(
+                function success(result) {
+                    
+                    console.log("Retrieved values: ts_mandatory: " + result.ts_mandatory);
+                    fc.getAttribute("ts_mandatory").setValue(result.ts_mandatory);
+                },
+                function (error) {
+                    console.log(error.message);
+                }
+            );
+        }
+    }
     function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
         const Form = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
 
