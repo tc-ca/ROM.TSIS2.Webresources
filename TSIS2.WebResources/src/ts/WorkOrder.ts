@@ -813,6 +813,48 @@ namespace ROM.WorkOrder {
             throw new Error((e as any).Message);
         }
     }
+    export function filterCanceledJustificationField(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+            let form = <Form.msdyn_workorder.Main.WOJustifyCancellation>eContext.getFormContext();
+            console.log("filterCanceledJustificationField");
+            if (form.getAttribute("ovs_operationtypeid") != null) {
+                var type = form.getAttribute("ovs_operationtypeid").getValue();
+                if (type != null) {
+                    var operationTypeOwningBusinessUnitFetchXML = [
+                        "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
+                        "  <entity name='businessunit'>",
+                        "    <attribute name='name'/>",
+                        "    <attribute name='businessunitid'/>",
+                        "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
+                        "      <filter>",
+                        "        <condition attribute='ovs_operationtypeid' operator='eq' value='", type[0].id, "'/>",
+                        "      </filter>",
+                        "    </link-entity>",
+                        "  </entity>",
+                        "</fetch>"
+                    ].join("");
+                    operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+                    Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function success(resultBusinessUnit) {
+                        var targetFilter = "<filter type='and'><condition attribute='owneridname' operator='like' value='Avia%'/></filter>";
+                        if (resultBusinessUnit.entities[0].name.startsWith("Inte")) {
+                            targetFilter = "<filter type='and'> <condition attribute='owneridname' operator='like' value='Inte%'/> </filter> ";
+                        }
+                        form.getControl("ts_canceledinspectionjustification").addPreSearch(function () {
+                            console.log("inside Filter: " + targetFilter);
+                            form.getControl("ts_canceledinspectionjustification").addCustomFilter(targetFilter, "ts_canceledinspectionjustification");
+                        });
+                        
+                    }, function (error) {
+                        showErrorMessageAlert(error);
+                    });
+                }
+            }
+        }
+        catch (e) {
+            throw new Error((e as any).Message);
+        }
+    }
+    
     export function subSiteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 
