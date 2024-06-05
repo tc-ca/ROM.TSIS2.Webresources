@@ -2359,13 +2359,15 @@ namespace ROM.WorkOrder {
                     }
 
                     if (isROM20Form) {
-                        formROM2.ui.tabs.get("tab_workspace").sections.get("contacts_section").setVisible(true);
+                        formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_flightdetails").setVisible(true);
+                        formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_aircraftdetails").setVisible(true);
                     }
                 }
                 else {
                     form.getControl("ts_aircraftclassification").setVisible(false);
                     if (isROM20Form) {
-                        formROM2.ui.tabs.get("tab_workspace").sections.get("contacts_section").setVisible(false);
+                        formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_flightdetails").setVisible(false);
+                        formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_aircraftdetails").setVisible(false);
                     }
                 }
             }
