@@ -144,9 +144,12 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_datewindowend"): Xrm.DateAttribute;
       get(name: "msdyn_datewindowstart"): Xrm.DateAttribute;
       get(name: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
+      get(name: "msdyn_followupnote"): Xrm.Attribute<string>;
+      get(name: "msdyn_followuprequired"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "msdyn_instructions"): Xrm.Attribute<string>;
       get(name: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
+      get(name: "msdyn_isfollowup"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_latitude"): Xrm.NumberAttribute;
       get(name: "msdyn_longitude"): Xrm.NumberAttribute;
       get(name: "msdyn_mapcontrol"): Xrm.Attribute<any>;
@@ -154,6 +157,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_opportunityid"): Xrm.LookupAttribute<"opportunity">;
       get(name: "msdyn_parentworkorder"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: "msdyn_postalcode"): Xrm.Attribute<string>;
+      get(name: "msdyn_preferredresource"): Xrm.LookupAttribute<"bookableresource">;
       get(name: "msdyn_primaryincidentdescription"): Xrm.Attribute<string>;
       get(name: "msdyn_primaryincidentestimatedduration"): Xrm.NumberAttribute;
       get(name: "msdyn_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
@@ -172,6 +176,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_timeclosed"): Xrm.DateAttribute;
       get(name: "msdyn_timefrompromised"): Xrm.DateAttribute;
       get(name: "msdyn_timegroup"): Xrm.LookupAttribute<"msdyn_timegroup">;
+      get(name: "msdyn_timegroupdetailselected"): Xrm.LookupAttribute<"msdyn_timegroupdetail">;
       get(name: "msdyn_timetopromised"): Xrm.DateAttribute;
       get(name: "msdyn_timewindowend"): Xrm.Attribute<any>;
       get(name: "msdyn_timewindowstart"): Xrm.Attribute<any>;
@@ -181,6 +186,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_worklocation"): Xrm.OptionSetAttribute<msdyn_worklocation>;
       get(name: "msdyn_workordersummary"): Xrm.Attribute<string>;
       get(name: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
+      get(name: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
       get(name: "ovs_currentfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
@@ -188,6 +194,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
+      get(name: "ovs_tyrational"): Xrm.LookupAttribute<"ovs_tyrational">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "qm_remote"): Xrm.Attribute<any>;
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
@@ -319,10 +326,14 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_datewindowend"): Xrm.DateControl;
       get(name: "msdyn_datewindowstart"): Xrm.DateControl;
       get(name: "msdyn_estimatesubtotalamount"): Xrm.NumberControl;
+      get(name: "msdyn_followupnote"): Xrm.StringControl;
+      get(name: "msdyn_followupnote1"): Xrm.StringControl;
+      get(name: "msdyn_followuprequired"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "msdyn_instructions"): Xrm.StringControl;
       get(name: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
       get(name: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "msdyn_isfollowup"): Xrm.OptionSetControl<boolean>;
       get(name: "msdyn_latitude"): Xrm.NumberControl;
       get(name: "msdyn_latitude1"): Xrm.NumberControl;
       get(name: "msdyn_longitude"): Xrm.NumberControl;
@@ -332,6 +343,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_opportunityid"): Xrm.LookupControl<"opportunity">;
       get(name: "msdyn_parentworkorder"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: "msdyn_postalcode"): Xrm.StringControl;
+      get(name: "msdyn_preferredresource"): Xrm.LookupControl<"bookableresource">;
       get(name: "msdyn_primaryincidentdescription"): Xrm.StringControl;
       get(name: "msdyn_primaryincidentestimatedduration"): Xrm.NumberControl;
       get(name: "msdyn_primaryincidentestimatedduration1"): Xrm.NumberControl;
@@ -352,6 +364,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_timeclosed"): Xrm.DateControl;
       get(name: "msdyn_timefrompromised"): Xrm.DateControl;
       get(name: "msdyn_timegroup"): Xrm.LookupControl<"msdyn_timegroup">;
+      get(name: "msdyn_timegroupdetailselected"): Xrm.LookupControl<"msdyn_timegroupdetail">;
       get(name: "msdyn_timetopromised"): Xrm.DateControl;
       get(name: "msdyn_timewindowend"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_timewindowstart"): Xrm.Control<Xrm.Attribute<any>>;
@@ -362,6 +375,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_workordersummary"): Xrm.StringControl;
       get(name: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
       get(name: "notescontrol"): Xrm.BaseControl;
+      get(name: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
       get(name: "ovs_currentfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
@@ -369,7 +383,9 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_operationid1"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
+      get(name: "ovs_rational1"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
+      get(name: "ovs_tyrational"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "subgrid_supportingregion"): Xrm.SubGridControl<"territory">;
@@ -396,6 +412,10 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_departureaerodrome"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_details"): Xrm.StringControl;
       get(name: "ts_documenteddate"): Xrm.DateControl;
+      get(name: "ts_documenteddate1"): Xrm.DateControl;
+      get(name: "ts_documenteddate2"): Xrm.DateControl;
+      get(name: "ts_documenteddate3"): Xrm.DateControl;
+      get(name: "ts_documenteddate4"): Xrm.DateControl;
       get(name: "ts_flightnumber"): Xrm.StringControl;
       get(name: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
       get(name: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;
@@ -491,9 +511,12 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_datewindowend"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_datewindowstart"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_estimatesubtotalamount"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_followupnote"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_followuprequired"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "msdyn_instructions"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_iotalert"): Xrm.LookupAttribute<"msdyn_iotalert">;
+    getAttribute(attributeName: "msdyn_isfollowup"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_latitude"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_longitude"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_mapcontrol"): Xrm.Attribute<any>;
@@ -501,6 +524,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_opportunityid"): Xrm.LookupAttribute<"opportunity">;
     getAttribute(attributeName: "msdyn_parentworkorder"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: "msdyn_postalcode"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_preferredresource"): Xrm.LookupAttribute<"bookableresource">;
     getAttribute(attributeName: "msdyn_primaryincidentdescription"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_primaryincidentestimatedduration"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
@@ -519,6 +543,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_timeclosed"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_timefrompromised"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_timegroup"): Xrm.LookupAttribute<"msdyn_timegroup">;
+    getAttribute(attributeName: "msdyn_timegroupdetailselected"): Xrm.LookupAttribute<"msdyn_timegroupdetail">;
     getAttribute(attributeName: "msdyn_timetopromised"): Xrm.DateAttribute;
     getAttribute(attributeName: "msdyn_timewindowend"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_timewindowstart"): Xrm.Attribute<any>;
@@ -528,6 +553,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_worklocation"): Xrm.OptionSetAttribute<msdyn_worklocation>;
     getAttribute(attributeName: "msdyn_workordersummary"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
+    getAttribute(attributeName: "ovs_assetcategory"): Xrm.LookupAttribute<"msdyn_customerassetcategory">;
     getAttribute(attributeName: "ovs_currentfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ovs_fiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ovs_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
@@ -535,6 +561,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
     getAttribute(attributeName: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
+    getAttribute(attributeName: "ovs_tyrational"): Xrm.LookupAttribute<"ovs_tyrational">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "qm_remote"): Xrm.Attribute<any>;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
@@ -661,10 +688,14 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_datewindowend"): Xrm.DateControl;
     getControl(controlName: "msdyn_datewindowstart"): Xrm.DateControl;
     getControl(controlName: "msdyn_estimatesubtotalamount"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_followupnote"): Xrm.StringControl;
+    getControl(controlName: "msdyn_followupnote1"): Xrm.StringControl;
+    getControl(controlName: "msdyn_followuprequired"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "msdyn_instructions"): Xrm.StringControl;
     getControl(controlName: "msdyn_iotalert"): Xrm.LookupControl<"msdyn_iotalert">;
     getControl(controlName: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "msdyn_isfollowup"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "msdyn_latitude"): Xrm.NumberControl;
     getControl(controlName: "msdyn_latitude1"): Xrm.NumberControl;
     getControl(controlName: "msdyn_longitude"): Xrm.NumberControl;
@@ -674,6 +705,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_opportunityid"): Xrm.LookupControl<"opportunity">;
     getControl(controlName: "msdyn_parentworkorder"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: "msdyn_postalcode"): Xrm.StringControl;
+    getControl(controlName: "msdyn_preferredresource"): Xrm.LookupControl<"bookableresource">;
     getControl(controlName: "msdyn_primaryincidentdescription"): Xrm.StringControl;
     getControl(controlName: "msdyn_primaryincidentestimatedduration"): Xrm.NumberControl;
     getControl(controlName: "msdyn_primaryincidentestimatedduration1"): Xrm.NumberControl;
@@ -694,6 +726,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_timeclosed"): Xrm.DateControl;
     getControl(controlName: "msdyn_timefrompromised"): Xrm.DateControl;
     getControl(controlName: "msdyn_timegroup"): Xrm.LookupControl<"msdyn_timegroup">;
+    getControl(controlName: "msdyn_timegroupdetailselected"): Xrm.LookupControl<"msdyn_timegroupdetail">;
     getControl(controlName: "msdyn_timetopromised"): Xrm.DateControl;
     getControl(controlName: "msdyn_timewindowend"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_timewindowstart"): Xrm.Control<Xrm.Attribute<any>>;
@@ -704,6 +737,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_workordersummary"): Xrm.StringControl;
     getControl(controlName: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
+    getControl(controlName: "ovs_assetcategory"): Xrm.LookupControl<"msdyn_customerassetcategory">;
     getControl(controlName: "ovs_currentfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
@@ -711,7 +745,9 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_operationid1"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
+    getControl(controlName: "ovs_rational1"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
+    getControl(controlName: "ovs_tyrational"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "subgrid_supportingregion"): Xrm.SubGridControl<"territory">;
@@ -738,6 +774,10 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_departureaerodrome"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_details"): Xrm.StringControl;
     getControl(controlName: "ts_documenteddate"): Xrm.DateControl;
+    getControl(controlName: "ts_documenteddate1"): Xrm.DateControl;
+    getControl(controlName: "ts_documenteddate2"): Xrm.DateControl;
+    getControl(controlName: "ts_documenteddate3"): Xrm.DateControl;
+    getControl(controlName: "ts_documenteddate4"): Xrm.DateControl;
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
     getControl(controlName: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
     getControl(controlName: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;

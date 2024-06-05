@@ -24,6 +24,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "related_to_section"): Xrm.PageSection;
         get(name: "section_supporting_region"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
+        get(name: "workspace_section_plandetails"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_11"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_13"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
@@ -114,15 +115,21 @@ declare namespace Form.msdyn_workorder.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_relationships extends Xrm.SectionCollectionBase {
+        get(name: "tab_16_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_workspace extends Xrm.SectionCollectionBase {
         get(name: "WO_TimeTracking"): Xrm.PageSection;
         get(name: "contacts_section"): Xrm.PageSection;
         get(name: "service_tasks_section"): Xrm.PageSection;
         get(name: "tab_10_section_1"): Xrm.PageSection;
         get(name: "tab_workspace_aircraftdetails"): Xrm.PageSection;
-        get(name: "tab_workspace_flight details"): Xrm.PageSection;
+        get(name: "tab_workspace_flightdetails"): Xrm.PageSection;
         get(name: "tab_workspace_section_4"): Xrm.PageSection;
-        get(name: "workspace_section_plandetails"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -376,6 +383,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_operationid1"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
+      get(name: "ovs_rational1"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
@@ -386,6 +394,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_actualtimeofarrival"): Xrm.DateControl;
       get(name: "ts_actualtimeofdeparture"): Xrm.DateControl;
       get(name: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
+      get(name: "ts_aircraftclassification1"): Xrm.OptionSetControl<ts_aircraftclassification>;
       get(name: "ts_aircraftregistration"): Xrm.StringControl;
       get(name: "ts_airserviceclassification"): Xrm.OptionSetControl<ts_airserviceclassification>;
       get(name: "ts_alternateoperatingcarrier"): Xrm.OptionSetControl<ts_yesno>;
@@ -477,6 +486,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
       get(name: "tab_TimeTracking"): Xrm.PageTab<Tabs.tab_TimeTracking>;
+      get(name: "tab_relationships"): Xrm.PageTab<Tabs.tab_relationships>;
       get(name: "tab_workspace"): Xrm.PageTab<Tabs.tab_workspace>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -726,6 +736,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_operationid1"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
+    getControl(controlName: "ovs_rational1"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
@@ -736,6 +747,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_actualtimeofarrival"): Xrm.DateControl;
     getControl(controlName: "ts_actualtimeofdeparture"): Xrm.DateControl;
     getControl(controlName: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
+    getControl(controlName: "ts_aircraftclassification1"): Xrm.OptionSetControl<ts_aircraftclassification>;
     getControl(controlName: "ts_aircraftregistration"): Xrm.StringControl;
     getControl(controlName: "ts_airserviceclassification"): Xrm.OptionSetControl<ts_airserviceclassification>;
     getControl(controlName: "ts_alternateoperatingcarrier"): Xrm.OptionSetControl<ts_yesno>;
