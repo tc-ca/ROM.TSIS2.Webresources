@@ -764,8 +764,10 @@ interface msdyn_workorder_Expand {
   ts_operatingname: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ts_operatingname: Account_Result }>;
   ts_operationcontact_workorder_msdyn_worko: WebExpand<msdyn_workorder_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operationcontact_workorder_msdyn_worko: ts_operationcontact_Result[] }>;
   ts_ovs_Finding_WorkOrder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_WorkOrder_msdyn_workorder: ovs_Finding_Result[] }>;
+  ts_plan: WebExpand<msdyn_workorder_Expand, ts_Plan_Select, ts_Plan_Filter, { ts_plan: ts_Plan_Result }>;
   ts_registration: WebExpand<msdyn_workorder_Expand, ts_aircraft_Select, ts_aircraft_Filter, { ts_registration: ts_aircraft_Result }>;
   ts_riskthreshold: WebExpand<msdyn_workorder_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { ts_riskthreshold: ts_RiskCategory_Result }>;
+  ts_suggestedinspection: WebExpand<msdyn_workorder_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection: ts_SuggestedInspection_Result }>;
 }
 interface msdyn_workorder_FormattedResult {
   createdby_formatted?: string;
@@ -1028,8 +1030,10 @@ interface msdyn_workorder_RelatedOne {
   ts_departureaerodrome: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_operatingcarrier: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_operatingname: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   ts_registration: WebMappingRetrieve<ts_aircraft_Select,ts_aircraft_Expand,ts_aircraft_Filter,ts_aircraft_Fixed,ts_aircraft_Result,ts_aircraft_FormattedResult>;
   ts_riskthreshold: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
+  ts_suggestedinspection: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
 }
 interface msdyn_workorder_RelatedMany {
   msdyn_msdyn_workorder_bookableresourcebooking_WorkOrder: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;

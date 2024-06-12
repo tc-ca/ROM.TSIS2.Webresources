@@ -1,5 +1,5 @@
 declare namespace Form.ovs_operation.Quick {
-  namespace Operationquickviewform {
+  namespace Nom {
     namespace Tabs {
       interface tab_1 extends Xrm.SectionCollectionBase {
         get(name: "tab_1_column_1_section_1"): Xrm.PageSection;
@@ -10,13 +10,20 @@ declare namespace Form.ovs_operation.Quick {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
+      get(name: "ovs_name"): Xrm.Attribute<string>;
+      get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+      get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_operationcontact">;
+      get(name: "ovs_name"): Xrm.StringControl;
+      get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+      get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -30,9 +37,16 @@ declare namespace Form.ovs_operation.Quick {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface Operationquickviewform extends Xrm.PageBase<Operationquickviewform.Attributes,Operationquickviewform.Tabs,Operationquickviewform.Controls> {
+  interface Nom extends Xrm.PageBase<Nom.Attributes,Nom.Tabs,Nom.Controls> {
+    getAttribute(attributeName: "ovs_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+    getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_operationcontact">;
+    getControl(controlName: "ovs_name"): Xrm.StringControl;
+    getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+    getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
     getControl(controlName: string): undefined;
   }
 }

@@ -55,6 +55,7 @@ interface Team_Relationships {
   team_tc_tcfiscalyear?: tc_TCFiscalYear_Result[] | null;
   team_ts_action?: ts_action_Result[] | null;
   team_ts_actionfinding?: ts_ActionFinding_Result[] | null;
+  team_ts_aircraft?: ts_aircraft_Result[] | null;
   team_ts_assessmentscorethredshots?: ts_assessmentscorethredshots_Result[] | null;
   team_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
   team_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
@@ -214,6 +215,7 @@ interface Team_Expand {
   team_tc_tcfiscalyear: WebExpand<Team_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { team_tc_tcfiscalyear: tc_TCFiscalYear_Result[] }>;
   team_ts_action: WebExpand<Team_Expand, ts_action_Select, ts_action_Filter, { team_ts_action: ts_action_Result[] }>;
   team_ts_actionfinding: WebExpand<Team_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { team_ts_actionfinding: ts_ActionFinding_Result[] }>;
+  team_ts_aircraft: WebExpand<Team_Expand, ts_aircraft_Select, ts_aircraft_Filter, { team_ts_aircraft: ts_aircraft_Result[] }>;
   team_ts_assessmentscorethredshots: WebExpand<Team_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { team_ts_assessmentscorethredshots: ts_assessmentscorethredshots_Result[] }>;
   team_ts_canceledinspectionjustification: WebExpand<Team_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { team_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
   team_ts_incompleteworkorderreason: WebExpand<Team_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { team_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
@@ -318,6 +320,7 @@ interface Team_RelatedMany {
   team_tc_tcfiscalyear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   team_ts_action: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   team_ts_actionfinding: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;
+  team_ts_aircraft: WebMappingRetrieve<ts_aircraft_Select,ts_aircraft_Expand,ts_aircraft_Filter,ts_aircraft_Fixed,ts_aircraft_Result,ts_aircraft_FormattedResult>;
   team_ts_assessmentscorethredshots: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   team_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   team_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;

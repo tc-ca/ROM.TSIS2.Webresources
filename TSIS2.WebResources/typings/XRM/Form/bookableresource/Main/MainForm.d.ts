@@ -62,6 +62,7 @@ declare namespace Form.bookableresource.Main {
       get(name: "msdyn_facilityequipmentid"): Xrm.LookupAttribute<"equipment">;
       get(name: "msdyn_generictype"): Xrm.OptionSetAttribute<msdyn_generictype>;
       get(name: "msdyn_hourlyrate"): Xrm.NumberAttribute;
+      get(name: "msdyn_optimalcrewsize"): Xrm.NumberAttribute;
       get(name: "msdyn_organizationalunit"): Xrm.LookupAttribute<"msdyn_organizationalunit">;
       get(name: "msdyn_pooltype"): Xrm.MultiSelectOptionSetAttribute<msdyn_pooltype>;
       get(name: "msdyn_startlocation"): Xrm.OptionSetAttribute<msdyn_workstartlocationtype>;
@@ -98,6 +99,7 @@ declare namespace Form.bookableresource.Main {
       get(name: "msdyn_facilityequipmentid"): Xrm.LookupControl<"equipment">;
       get(name: "msdyn_generictype"): Xrm.OptionSetControl<msdyn_generictype>;
       get(name: "msdyn_hourlyrate"): Xrm.NumberControl;
+      get(name: "msdyn_optimalcrewsize"): Xrm.NumberControl;
       get(name: "msdyn_organizationalunit"): Xrm.LookupControl<"msdyn_organizationalunit">;
       get(name: "msdyn_pooltype"): Xrm.MultiSelectOptionSetControl<msdyn_pooltype>;
       get(name: "msdyn_startlocation"): Xrm.OptionSetControl<msdyn_workstartlocationtype>;
@@ -143,6 +145,7 @@ declare namespace Form.bookableresource.Main {
     getAttribute(attributeName: "msdyn_facilityequipmentid"): Xrm.LookupAttribute<"equipment">;
     getAttribute(attributeName: "msdyn_generictype"): Xrm.OptionSetAttribute<msdyn_generictype>;
     getAttribute(attributeName: "msdyn_hourlyrate"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "msdyn_optimalcrewsize"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_organizationalunit"): Xrm.LookupAttribute<"msdyn_organizationalunit">;
     getAttribute(attributeName: "msdyn_pooltype"): Xrm.MultiSelectOptionSetAttribute<msdyn_pooltype>;
     getAttribute(attributeName: "msdyn_startlocation"): Xrm.OptionSetAttribute<msdyn_workstartlocationtype>;
@@ -174,6 +177,7 @@ declare namespace Form.bookableresource.Main {
     getControl(controlName: "msdyn_facilityequipmentid"): Xrm.LookupControl<"equipment">;
     getControl(controlName: "msdyn_generictype"): Xrm.OptionSetControl<msdyn_generictype>;
     getControl(controlName: "msdyn_hourlyrate"): Xrm.NumberControl;
+    getControl(controlName: "msdyn_optimalcrewsize"): Xrm.NumberControl;
     getControl(controlName: "msdyn_organizationalunit"): Xrm.LookupControl<"msdyn_organizationalunit">;
     getControl(controlName: "msdyn_pooltype"): Xrm.MultiSelectOptionSetControl<msdyn_pooltype>;
     getControl(controlName: "msdyn_startlocation"): Xrm.OptionSetControl<msdyn_workstartlocationtype>;
