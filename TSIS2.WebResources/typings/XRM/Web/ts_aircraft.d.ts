@@ -7,7 +7,6 @@ interface ts_aircraft_Base extends WebEntity {
   statuscode?: ts_aircraft_statuscode | null;
   timezoneruleversionnumber?: number | null;
   ts_aircraftid?: string | null;
-  ts_fieldname?: string | null;
   ts_manufacturer?: ts_aircraftmanufacturer | null;
   ts_mark?: string | null;
   ts_model?: ts_aircraftmodel | null;
@@ -45,7 +44,6 @@ interface ts_aircraft_Select {
   statuscode: WebAttribute<ts_aircraft_Select, { statuscode: ts_aircraft_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_aircraft_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_aircraftid: WebAttribute<ts_aircraft_Select, { ts_aircraftid: string | null }, {  }>;
-  ts_fieldname: WebAttribute<ts_aircraft_Select, { ts_fieldname: string | null }, {  }>;
   ts_manufacturer: WebAttribute<ts_aircraft_Select, { ts_manufacturer: ts_aircraftmanufacturer | null }, { ts_manufacturer_formatted?: string }>;
   ts_mark: WebAttribute<ts_aircraft_Select, { ts_mark: string | null }, {  }>;
   ts_model: WebAttribute<ts_aircraft_Select, { ts_model: ts_aircraftmodel | null }, { ts_model_formatted?: string }>;
@@ -71,7 +69,6 @@ interface ts_aircraft_Filter {
   statuscode: ts_aircraft_statuscode;
   timezoneruleversionnumber: number;
   ts_aircraftid: XQW.Guid;
-  ts_fieldname: string;
   ts_manufacturer: ts_aircraftmanufacturer;
   ts_mark: string;
   ts_model: ts_aircraftmodel;

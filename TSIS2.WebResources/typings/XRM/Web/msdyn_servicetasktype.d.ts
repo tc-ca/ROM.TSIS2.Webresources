@@ -16,6 +16,7 @@ interface msdyn_servicetasktype_Base extends WebEntity {
   statuscode?: msdyn_servicetasktype_statuscode | null;
   timezoneruleversionnumber?: number | null;
   ts_hascustomquestionnaire?: boolean | null;
+  ts_mandatory?: boolean | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -63,6 +64,7 @@ interface msdyn_servicetasktype_Select {
   statuscode: WebAttribute<msdyn_servicetasktype_Select, { statuscode: msdyn_servicetasktype_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<msdyn_servicetasktype_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_hascustomquestionnaire: WebAttribute<msdyn_servicetasktype_Select, { ts_hascustomquestionnaire: boolean | null }, {  }>;
+  ts_mandatory: WebAttribute<msdyn_servicetasktype_Select, { ts_mandatory: boolean | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<msdyn_servicetasktype_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_servicetasktype_Select, { versionnumber: number | null }, {  }>;
 }
@@ -94,6 +96,7 @@ interface msdyn_servicetasktype_Filter {
   statuscode: msdyn_servicetasktype_statuscode;
   timezoneruleversionnumber: number;
   ts_hascustomquestionnaire: boolean;
+  ts_mandatory: boolean;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }

@@ -21,7 +21,6 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "f1tab_mainsettings_section_5"): Xrm.PageSection;
         get(name: "f1tab_settings_section_address"): Xrm.PageSection;
         get(name: "general_section"): Xrm.PageSection;
-        get(name: "related_to_section"): Xrm.PageSection;
         get(name: "section_supporting_region"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: "workspace_section_plandetails"): Xrm.PageSection;
@@ -116,7 +115,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_relationships extends Xrm.SectionCollectionBase {
-        get(name: "tab_16_section_1"): Xrm.PageSection;
+        get(name: "related_to_section"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -145,7 +144,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_address2"): Xrm.Attribute<string>;
       get(name: "msdyn_address3"): Xrm.Attribute<string>;
       get(name: "msdyn_addressname"): Xrm.Attribute<string>;
-      get(name: "msdyn_agreement"): Xrm.LookupAttribute<"msdyn_agreement">;
       get(name: "msdyn_billingaccount"): Xrm.LookupAttribute<"account"> | null;
       get(name: "msdyn_city"): Xrm.Attribute<string>;
       get(name: "msdyn_closedby"): Xrm.LookupAttribute<"systemuser">;
@@ -161,7 +159,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_longitude"): Xrm.NumberAttribute;
       get(name: "msdyn_mapcontrol"): Xrm.Attribute<any>;
       get(name: "msdyn_name"): Xrm.Attribute<string>;
-      get(name: "msdyn_opportunityid"): Xrm.LookupAttribute<"opportunity">;
       get(name: "msdyn_parentworkorder"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: "msdyn_postalcode"): Xrm.Attribute<string>;
       get(name: "msdyn_primaryincidentdescription"): Xrm.Attribute<string>;
@@ -279,6 +276,8 @@ declare namespace Form.msdyn_workorder.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "AdditionalInspectors"): Xrm.SubGridControl<"systemuser">;
+      get(name: "Cases"): Xrm.SubGridControl<"incident">;
+      get(name: "Findings"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
@@ -286,6 +285,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "Subgrid_operation_contacts"): Xrm.BaseControl;
       get(name: "SupportingRegion"): Xrm.SubGridControl<"ts_workordertimetracking">;
       get(name: "TimeTrackings"): Xrm.SubGridControl<"ts_workordertimetracking">;
+      get(name: "TripInspections"): Xrm.SubGridControl<"ts_tripinspection">;
       get(name: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
       get(name: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
@@ -325,7 +325,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_address2"): Xrm.StringControl;
       get(name: "msdyn_address3"): Xrm.StringControl;
       get(name: "msdyn_addressname"): Xrm.StringControl;
-      get(name: "msdyn_agreement"): Xrm.LookupControl<"msdyn_agreement">;
       get(name: "msdyn_city"): Xrm.StringControl;
       get(name: "msdyn_closedby"): Xrm.LookupControl<"systemuser">;
       get(name: "msdyn_country"): Xrm.StringControl;
@@ -343,7 +342,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_longitude1"): Xrm.NumberControl;
       get(name: "msdyn_mapcontrol"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_name"): Xrm.StringControl;
-      get(name: "msdyn_opportunityid"): Xrm.LookupControl<"opportunity">;
       get(name: "msdyn_parentworkorder"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: "msdyn_postalcode"): Xrm.StringControl;
       get(name: "msdyn_primaryincidentdescription"): Xrm.StringControl;
@@ -380,7 +378,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ovs_operationid"): Xrm.LookupControl<"ovs_operation">;
-      get(name: "ovs_operationid1"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ovs_rational1"): Xrm.LookupControl<"ovs_tyrational">;
@@ -503,7 +500,6 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_address2"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_address3"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_addressname"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "msdyn_agreement"): Xrm.LookupAttribute<"msdyn_agreement">;
     getAttribute(attributeName: "msdyn_billingaccount"): Xrm.LookupAttribute<"account"> | null;
     getAttribute(attributeName: "msdyn_city"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_closedby"): Xrm.LookupAttribute<"systemuser">;
@@ -519,7 +515,6 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_longitude"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_mapcontrol"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "msdyn_opportunityid"): Xrm.LookupAttribute<"opportunity">;
     getAttribute(attributeName: "msdyn_parentworkorder"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: "msdyn_postalcode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_primaryincidentdescription"): Xrm.Attribute<string>;
@@ -632,6 +627,8 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_workorderstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "AdditionalInspectors"): Xrm.SubGridControl<"systemuser">;
+    getControl(controlName: "Cases"): Xrm.SubGridControl<"incident">;
+    getControl(controlName: "Findings"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "Physical_Assets"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"ts_file">;
@@ -639,6 +636,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "Subgrid_operation_contacts"): Xrm.BaseControl;
     getControl(controlName: "SupportingRegion"): Xrm.SubGridControl<"ts_workordertimetracking">;
     getControl(controlName: "TimeTrackings"): Xrm.SubGridControl<"ts_workordertimetracking">;
+    getControl(controlName: "TripInspections"): Xrm.SubGridControl<"ts_tripinspection">;
     getControl(controlName: "WebResource_msdyn_timewindowend"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_msdyn_timewindowstart"): Xrm.WebResourceControl;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;
@@ -678,7 +676,6 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_address2"): Xrm.StringControl;
     getControl(controlName: "msdyn_address3"): Xrm.StringControl;
     getControl(controlName: "msdyn_addressname"): Xrm.StringControl;
-    getControl(controlName: "msdyn_agreement"): Xrm.LookupControl<"msdyn_agreement">;
     getControl(controlName: "msdyn_city"): Xrm.StringControl;
     getControl(controlName: "msdyn_closedby"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "msdyn_country"): Xrm.StringControl;
@@ -696,7 +693,6 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_longitude1"): Xrm.NumberControl;
     getControl(controlName: "msdyn_mapcontrol"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_name"): Xrm.StringControl;
-    getControl(controlName: "msdyn_opportunityid"): Xrm.LookupControl<"opportunity">;
     getControl(controlName: "msdyn_parentworkorder"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: "msdyn_postalcode"): Xrm.StringControl;
     getControl(controlName: "msdyn_primaryincidentdescription"): Xrm.StringControl;
@@ -733,7 +729,6 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ovs_operationid"): Xrm.LookupControl<"ovs_operation">;
-    getControl(controlName: "ovs_operationid1"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ovs_rational1"): Xrm.LookupControl<"ovs_tyrational">;

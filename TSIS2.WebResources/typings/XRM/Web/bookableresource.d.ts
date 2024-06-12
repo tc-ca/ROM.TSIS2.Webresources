@@ -21,6 +21,7 @@ interface BookableResource_Base extends WebEntity {
   msdyn_latitude?: number | null;
   msdyn_locationtimestamp?: Date | null;
   msdyn_longitude?: number | null;
+  msdyn_optimalcrewsize?: number | null;
   msdyn_pooltype?: msdyn_pooltype | null;
   msdyn_primaryemail?: string | null;
   msdyn_startlocation?: msdyn_workstartlocationtype | null;
@@ -107,6 +108,7 @@ interface BookableResource_Select {
   msdyn_latitude: WebAttribute<BookableResource_Select, { msdyn_latitude: number | null }, {  }>;
   msdyn_locationtimestamp: WebAttribute<BookableResource_Select, { msdyn_locationtimestamp: Date | null }, { msdyn_locationtimestamp_formatted?: string }>;
   msdyn_longitude: WebAttribute<BookableResource_Select, { msdyn_longitude: number | null }, {  }>;
+  msdyn_optimalcrewsize: WebAttribute<BookableResource_Select, { msdyn_optimalcrewsize: number | null }, {  }>;
   msdyn_organizationalunit_guid: WebAttribute<BookableResource_Select, { msdyn_organizationalunit_guid: string | null }, { msdyn_organizationalunit_formatted?: string }>;
   msdyn_pooltype: WebAttribute<BookableResource_Select, { msdyn_pooltype: msdyn_pooltype | null }, { msdyn_pooltype_formatted?: string }>;
   msdyn_primaryemail: WebAttribute<BookableResource_Select, { msdyn_primaryemail: string | null }, {  }>;
@@ -166,6 +168,7 @@ interface BookableResource_Filter {
   msdyn_latitude: number;
   msdyn_locationtimestamp: Date;
   msdyn_longitude: number;
+  msdyn_optimalcrewsize: number;
   msdyn_organizationalunit_guid: XQW.Guid;
   msdyn_pooltype: msdyn_pooltype;
   msdyn_primaryemail: string;

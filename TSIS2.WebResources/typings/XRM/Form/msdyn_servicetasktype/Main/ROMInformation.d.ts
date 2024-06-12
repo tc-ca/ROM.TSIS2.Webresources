@@ -21,6 +21,7 @@ declare namespace Form.msdyn_servicetasktype.Main {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_servicetasktype_statecode>;
       get(name: "ts_hascustomquestionnaire"): Xrm.Attribute<any>;
+      get(name: "ts_mandatory"): Xrm.Attribute<any>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -41,6 +42,7 @@ declare namespace Form.msdyn_servicetasktype.Main {
       get(name: "ovs_servicetasktypenamefrench"): Xrm.StringControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_hascustomquestionnaire"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_mandatory"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -66,6 +68,7 @@ declare namespace Form.msdyn_servicetasktype.Main {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_servicetasktype_statecode>;
     getAttribute(attributeName: "ts_hascustomquestionnaire"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_mandatory"): Xrm.Attribute<any>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
@@ -81,6 +84,7 @@ declare namespace Form.msdyn_servicetasktype.Main {
     getControl(controlName: "ovs_servicetasktypenamefrench"): Xrm.StringControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_hascustomquestionnaire"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_mandatory"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: string): undefined;
   }
 }
