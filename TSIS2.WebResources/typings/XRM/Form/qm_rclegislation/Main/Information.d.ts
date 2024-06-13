@@ -24,6 +24,13 @@ declare namespace Form.qm_rclegislation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_5 extends Xrm.SectionCollectionBase {
+        get(name: "tab_5_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_6 extends Xrm.SectionCollectionBase {
         get(name: "tab_6_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -71,6 +78,7 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"qm_rclegislation">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"qm_tylegislationcharacteristic">;
       get(name: "Subgrid_new_3"): Xrm.SubGridControl<"ovs_finding">;
+      get(name: "Subgrid_new_4"): Xrm.SubGridControl<"ovs_operationtype">;
       get(name: "causes_sub_grid"): Xrm.SubGridControl<"qm_rclegislation">;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
       get(name: "createdon"): Xrm.DateControl;
@@ -111,6 +119,7 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "tab_1"): Xrm.PageTab<Tabs.tab_1>;
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
+      get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -152,6 +161,7 @@ declare namespace Form.qm_rclegislation.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"qm_tylegislationcharacteristic">;
     getControl(controlName: "Subgrid_new_3"): Xrm.SubGridControl<"ovs_finding">;
+    getControl(controlName: "Subgrid_new_4"): Xrm.SubGridControl<"ovs_operationtype">;
     getControl(controlName: "causes_sub_grid"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "createdon"): Xrm.DateControl;

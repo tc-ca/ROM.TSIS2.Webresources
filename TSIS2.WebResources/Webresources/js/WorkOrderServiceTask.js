@@ -133,8 +133,8 @@ var ROM;
                             if (!userHasRole("System Administrator|ROM - Business Admin")) {
                                 Form.getControl("ts_mandatory").setDisabled(true);
                             }
-                            //Hide Questionnaire Viewable Settings section for non-admin users
-                            if (!userHasRole("System Administrator")) {
+                            //Hide Questionnaire Viewable Settings section for non-admin users with the exception of ROM - Manager
+                            if (!userHasRole("System Administrator|ROM - Manager")) {
                                 Form.ui.tabs.get('tab_summary').sections.get('tab_summary_section_accesscontrol').setVisible(false);
                             }
                             checkAccessControl(eContext);

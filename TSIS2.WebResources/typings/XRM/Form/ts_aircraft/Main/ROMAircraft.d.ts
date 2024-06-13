@@ -12,9 +12,7 @@ declare namespace Form.ts_aircraft.Main {
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<ts_aircraft_statecode>;
-      get(name: "ts_fieldname"): Xrm.Attribute<string>;
       get(name: "ts_manufacturer"): Xrm.OptionSetAttribute<ts_aircraftmanufacturer>;
-      get(name: "ts_mark"): Xrm.Attribute<string>;
       get(name: "ts_model"): Xrm.OptionSetAttribute<ts_aircraftmodel>;
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_registeredowner"): Xrm.LookupAttribute<"account">;
@@ -26,9 +24,7 @@ declare namespace Form.ts_aircraft.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_statecode"): Xrm.OptionSetControl<ts_aircraft_statecode>;
-      get(name: "ts_fieldname"): Xrm.StringControl;
       get(name: "ts_manufacturer"): Xrm.OptionSetControl<ts_aircraftmanufacturer>;
-      get(name: "ts_mark"): Xrm.StringControl;
       get(name: "ts_model"): Xrm.OptionSetControl<ts_aircraftmodel>;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_registeredowner"): Xrm.LookupControl<"account">;
@@ -48,18 +44,14 @@ declare namespace Form.ts_aircraft.Main {
   interface ROMAircraft extends Xrm.PageBase<ROMAircraft.Attributes,ROMAircraft.Tabs,ROMAircraft.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ts_aircraft_statecode>;
-    getAttribute(attributeName: "ts_fieldname"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_manufacturer"): Xrm.OptionSetAttribute<ts_aircraftmanufacturer>;
-    getAttribute(attributeName: "ts_mark"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_model"): Xrm.OptionSetAttribute<ts_aircraftmodel>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_registeredowner"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_statecode"): Xrm.OptionSetControl<ts_aircraft_statecode>;
-    getControl(controlName: "ts_fieldname"): Xrm.StringControl;
     getControl(controlName: "ts_manufacturer"): Xrm.OptionSetControl<ts_aircraftmanufacturer>;
-    getControl(controlName: "ts_mark"): Xrm.StringControl;
     getControl(controlName: "ts_model"): Xrm.OptionSetControl<ts_aircraftmodel>;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_registeredowner"): Xrm.LookupControl<"account">;
