@@ -819,6 +819,7 @@ var ROM;
                                         }
                                     }
                                     //OperatingcarrierOperation
+                                    var workOrderOperatingcarrierOperationId = "";
                                     if (operationRetrievalPromises[3].entities.length > 0) {
                                         var workOrderOperatingcarrierOperation = operationRetrievalPromises[3].entities[0];
                                         stakeholderName = workOrderOperatingcarrierOperation["account4.name"];
@@ -831,6 +832,7 @@ var ROM;
                                             workOrderOperatingcarrierOperation["ovs_operationtype2.ts_regulated"] == true &&
                                             activityTypeOperationTypeIds.includes(workOrderOperatingcarrierOperation["ovs_operationtype2.ovs_operationtypeid"]) &&
                                             workOrderOperation["ovs_operation1.ovs_operationid"] != workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"]) {
+                                            workOrderOperatingcarrierOperationId = workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"];
                                             operations.push({
                                                 id: workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"],
                                                 name: stakeholderName + " | " + operationTypeName + " | " + siteName,
@@ -851,7 +853,7 @@ var ROM;
                                             operation["ovs_operationtype3.ovs_operationtypeid"] != null &&
                                             operation["ovs_operationtype3.ts_regulated"] == true &&
                                             activityTypeOperationTypeIds.includes(operation["ovs_operationtype3.ovs_operationtypeid"]) &&
-                                            operation["ovs_operationid"] != workOrderOperatingcarrierOperation["ovs_operation1.ovs_operationid"]) {
+                                            operation["ovs_operationid"] != workOrderOperatingcarrierOperationId) {
                                             operations.push({
                                                 id: operation["ovs_operationid"],
                                                 name: stakeholderName + " | " + operationTypeName + " | " + siteName,
