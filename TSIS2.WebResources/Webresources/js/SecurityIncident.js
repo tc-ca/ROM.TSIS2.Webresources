@@ -98,6 +98,41 @@ var ROM;
             else {
                 form.getControl("ts_tamperingsubcategory").setVisible(false);
             }
+            //Filter Target Element by selected Security Incident Type - for ISSO
+            {
+                //Make sure we have something selected for Program (ts_mode) that doesn't belong to AvSec
+                var selectedProgram = form.getAttribute("ts_mode").getValue();
+                if (selectedProgram != null && selectedProgram != 717750002) {
+                    //Filter the Target Elements
+                    //SQL to convert to FetchXML
+                    /*
+                    SELECT
+                        ts_securityincidenttype.ts_securityincidenttypeid,
+                        ts_securityincidenttype.ts_name
+                    FROM
+                        ts_securityincidenttype
+                    INNER JOIN
+                        ts_targetelement_ts_securityincidenttyp
+                    ON ts_securityincidenttype.ts_securityincidenttypeid = ts_targetelement_ts_securityincidenttyp.ts_securityincidenttypeid
+                    INNER JOIN
+                        ts_targetelement
+                    ON ts_targetelement.ts_targetelementid = ts_targetelement_ts_securityincidenttyp.ts_targetelementid
+                    WHERE    ts_targetelement.ts_targetelementid = 'fb1ab19d-f065-ed11-9569-0022483c0cc5'
+                    ORDER BY ts_securityincidenttype.ts_name;
+                    **/
+                    // the view ID can be anything unique
+                    //const viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F770}';
+                    //const entityName = "contact";
+                    //const viewDisplayName = "Filtered Contacts";
+                    //const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" no-lock="false" returntotalrecordcount="true" page="1" count="25"><entity name="contact"><attribute name="statecode"/><attribute name="contactid"/><attribute name="fullname"/><link-entity name="ts_operationcontact" from="ts_contact" to="contactid"><link-entity name="ovs_operation" from="ovs_operationid" to="ts_operation"><link-entity name="msdyn_workorder" from="ovs_operationid" to="ovs_operationid"><link-entity name="incident" from="incidentid" to="msdyn_servicerequest" link-type="inner"><link-entity name="ts_enforcementaction" from="regardingobjectid" to="incidentid" link-type="inner"><filter><condition attribute="activityid" operator="eq" value="' + formContext.data.entity.getId() + '"/></filter></link-entity></link-entity></link-entity></link-entity><link-entity name="ts_role" from="ts_roleid" to="ts_connectionrole" link-type="inner"><attribute name="ts_name" alias="role"/></link-entity></link-entity><order attribute="fullname" descending="false"/></entity></fetch>';
+                    //const layoutXml = '<grid name="resultset" object="2" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="contactid"><cell name="fullname" width="200" /><cell name="role.ts_name" width="200" /></row></grid>';
+                    //formContext.getControl("ts_verbalwarninggivento").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    //formContext.getControl("ts_writtenwarningsentto").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                }
+            }
+            if (securityincidentTypeValue != null && securityincidentTypeValue != undefined && securityincidentTypeValue[0].id.toLowerCase() == "{d5ff32e6-4a6b-ed11-81ae-0022483c536f}") {
+                form.getControl("ts_tamperingsubcategory").setVisible(true);
+            }
         }
         SecurityIncident.securityIncidentTypeOnChange = securityIncidentTypeOnChange;
         function siteOnChange(eContext) {
