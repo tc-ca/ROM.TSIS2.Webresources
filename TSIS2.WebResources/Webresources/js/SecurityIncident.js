@@ -106,19 +106,17 @@ var ROM;
                     //Filter the Target Elements
                     //SQL to convert to FetchXML
                     /*
-                    SELECT
-                        ts_securityincidenttype.ts_securityincidenttypeid,
-                        ts_securityincidenttype.ts_name
-                    FROM
-                        ts_securityincidenttype
-                    INNER JOIN
-                        ts_targetelement_ts_securityincidenttyp
-                    ON ts_securityincidenttype.ts_securityincidenttypeid = ts_targetelement_ts_securityincidenttyp.ts_securityincidenttypeid
-                    INNER JOIN
-                        ts_targetelement
-                    ON ts_targetelement.ts_targetelementid = ts_targetelement_ts_securityincidenttyp.ts_targetelementid
-                    WHERE    ts_targetelement.ts_targetelementid = 'fb1ab19d-f065-ed11-9569-0022483c0cc5'
-                    ORDER BY ts_securityincidenttype.ts_name;
+                        SELECT   ts_targetelement.ts_targetelementid,
+                                 ts_targetelement.ts_name
+                        FROM     ts_securityincidenttype
+                                 INNER JOIN
+                                 ts_targetelement_ts_securityincidenttyp
+                                 ON ts_securityincidenttype.ts_securityincidenttypeid = ts_targetelement_ts_securityincidenttyp.ts_securityincidenttypeid
+                                 INNER JOIN
+                                 ts_targetelement
+                                 ON ts_targetelement.ts_targetelementid = ts_targetelement_ts_securityincidenttyp.ts_targetelementid
+                        WHERE    ts_securityincidenttype.ts_securityincidenttypeid = '97ff32e6-4a6b-ed11-81ae-0022483c536f'
+                        ORDER BY ts_targetelement.ts_name;
                     **/
                     // the view ID can be anything unique
                     //const viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F770}';
