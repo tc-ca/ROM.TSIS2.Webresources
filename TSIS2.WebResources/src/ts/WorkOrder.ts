@@ -43,6 +43,7 @@ namespace ROM.WorkOrder {
             if (userBusinessUnitName.startsWith("Aviation")) {
                 form.getControl("ts_details").setVisible(true);
                 form.getControl("ts_overtime").setVisible(true);
+                form.getControl("ts_overtimerequired").setVisible(true);
             }
             //Set disabled false for quarter fields if ISSO
             else {
@@ -2412,6 +2413,9 @@ namespace ROM.WorkOrder {
                         formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_aircraftdetails").setVisible(false);
                     }
                 }
+            }
+            else {
+                form.getControl("ts_aircraftclassification").setVisible(false);
             }
         }
     }
