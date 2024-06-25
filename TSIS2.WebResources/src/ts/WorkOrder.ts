@@ -1074,7 +1074,7 @@ namespace ROM.WorkOrder {
                             if (checkOtherSubSites) {
                                 //No operation found
                                 form.ui.clearFormNotification("closedProject");
-                                form.ui.setFormNotification("No operations found matching the selected site, operation type and stakeholder!.", "WARNING", "closedProject");//ERROR
+                                //form.ui.setFormNotification("No operations found matching the selected site, operation type and stakeholder!.", "WARNING", "closedProject");//ERROR
                                 form.getAttribute("msdyn_functionallocation").setValue(null);
                                 form.getControl('msdyn_functionallocation').setVisible(false);
                                 form.getAttribute("msdyn_functionallocation").setRequiredLevel("none");//none,required                                
