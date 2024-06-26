@@ -161,6 +161,7 @@ var ROM;
             if (mode == 717750002 /* AviationSecurity */) {
                 form.getControl("ts_securityincidenttype").setDefaultView("f88f3bcb-6a76-ed11-81ac-0022483d5ee0");
                 form.getControl("ts_targetelement").setVisible(false);
+                form.getControl("ts_subcategory").setVisible(false);
                 form.getControl("ts_statusofrailwayowner").setVisible(false);
                 form.getControl("ts_owneroftherailwaylinetrack").setVisible(false);
                 form.getControl("ts_locationtype").setVisible(false);
@@ -259,6 +260,7 @@ var ROM;
             else {
                 form.getControl("ts_securityincidenttype").setDefaultView("b8d91bb4-6776-ed11-81ac-0022483d5ee0");
                 form.getControl("ts_targetelement").setVisible(true);
+                form.getControl("ts_subcategory").setVisible(true);
                 form.getControl("ts_locationtype").setVisible(true);
                 form.getControl("new_location").setVisible(true);
                 form.getControl("ts_subdivision").setVisible(true);

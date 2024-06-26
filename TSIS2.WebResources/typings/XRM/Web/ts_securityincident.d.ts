@@ -86,7 +86,6 @@ interface ts_securityincident_Relationships {
   ts_DiversionAerodrome?: msdyn_FunctionalLocation_Result | null;
   ts_Origin?: msdyn_FunctionalLocation_Result | null;
   ts_ReportingCompany?: Account_Result | null;
-  ts_SecurityIncidentType?: ts_securityincidenttype_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Stakeholder?: Account_Result | null;
   ts_Subsite?: msdyn_FunctionalLocation_Result | null;
@@ -106,12 +105,14 @@ interface ts_securityincident extends ts_securityincident_Base, ts_securityincid
   ts_Destination_bind$msdyn_functionallocations?: string | null;
   ts_DiversionAerodrome_bind$msdyn_functionallocations?: string | null;
   ts_Origin_bind$msdyn_functionallocations?: string | null;
+  ts_RegionNew_bind$ts_regions?: string | null;
   ts_Region_bind$territories?: string | null;
   ts_ReportingCompany_bind$accounts?: string | null;
   ts_SecurityIncidentType_bind$ts_securityincidenttypes?: string | null;
   ts_SiteType_bind$ovs_sitetypes?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_Stakeholder_bind$accounts?: string | null;
+  ts_Subcategory_bind$ts_securityincidentsubcategories?: string | null;
   ts_SubsiteType_bind$ovs_sitetypes?: string | null;
   ts_Subsite_bind$msdyn_functionallocations?: string | null;
   ts_TargetElement_bind$ts_targetelements?: string | null;
@@ -187,6 +188,7 @@ interface ts_securityincident_Select {
   ts_quarterofsitraveltime: WebAttribute<ts_securityincident_Select, { ts_quarterofsitraveltime: ts_quarter | null }, { ts_quarterofsitraveltime_formatted?: string }>;
   ts_recordstatus: WebAttribute<ts_securityincident_Select, { ts_recordstatus: ts_securityincidentstatus | null }, { ts_recordstatus_formatted?: string }>;
   ts_region_guid: WebAttribute<ts_securityincident_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
+  ts_regionnew_guid: WebAttribute<ts_securityincident_Select, { ts_regionnew_guid: string | null }, { ts_regionnew_formatted?: string }>;
   ts_reporteddatetime: WebAttribute<ts_securityincident_Select, { ts_reporteddatetime: Date | null }, { ts_reporteddatetime_formatted?: string }>;
   ts_reporteddatetimeadjust: WebAttribute<ts_securityincident_Select, { ts_reporteddatetimeadjust: Date | null }, { ts_reporteddatetimeadjust_formatted?: string }>;
   ts_reportingcompany_guid: WebAttribute<ts_securityincident_Select, { ts_reportingcompany_guid: string | null }, { ts_reportingcompany_formatted?: string }>;
@@ -201,6 +203,7 @@ interface ts_securityincident_Select {
   ts_stakeholder_name: WebAttribute<ts_securityincident_Select, { ts_stakeholder_name: string | null }, {  }>;
   ts_statusofrailwayowner: WebAttribute<ts_securityincident_Select, { ts_statusofrailwayowner: ts_statusofrailwayowner | null }, { ts_statusofrailwayowner_formatted?: string }>;
   ts_statusrationale: WebAttribute<ts_securityincident_Select, { ts_statusrationale: string | null }, {  }>;
+  ts_subcategory_guid: WebAttribute<ts_securityincident_Select, { ts_subcategory_guid: string | null }, { ts_subcategory_formatted?: string }>;
   ts_subdivision: WebAttribute<ts_securityincident_Select, { ts_subdivision: string | null }, {  }>;
   ts_subsite_guid: WebAttribute<ts_securityincident_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
   ts_subsitetype_guid: WebAttribute<ts_securityincident_Select, { ts_subsitetype_guid: string | null }, { ts_subsitetype_formatted?: string }>;
@@ -291,6 +294,7 @@ interface ts_securityincident_Filter {
   ts_quarterofsitraveltime: ts_quarter;
   ts_recordstatus: ts_securityincidentstatus;
   ts_region_guid: XQW.Guid;
+  ts_regionnew_guid: XQW.Guid;
   ts_reporteddatetime: Date;
   ts_reporteddatetimeadjust: Date;
   ts_reportingcompany_guid: XQW.Guid;
@@ -305,6 +309,7 @@ interface ts_securityincident_Filter {
   ts_stakeholder_name: string;
   ts_statusofrailwayowner: ts_statusofrailwayowner;
   ts_statusrationale: string;
+  ts_subcategory_guid: XQW.Guid;
   ts_subdivision: string;
   ts_subsite_guid: XQW.Guid;
   ts_subsitetype_guid: XQW.Guid;
@@ -344,7 +349,6 @@ interface ts_securityincident_Expand {
   ts_DiversionAerodrome: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_DiversionAerodrome: msdyn_FunctionalLocation_Result }>;
   ts_Origin: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Origin: msdyn_FunctionalLocation_Result }>;
   ts_ReportingCompany: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_ReportingCompany: Account_Result }>;
-  ts_SecurityIncidentType: WebExpand<ts_securityincident_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { ts_SecurityIncidentType: ts_securityincidenttype_Result }>;
   ts_Site: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Stakeholder: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
   ts_Subsite: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsite: msdyn_FunctionalLocation_Result }>;
@@ -395,6 +399,7 @@ interface ts_securityincident_FormattedResult {
   ts_quarterofsitraveltime_formatted?: string;
   ts_recordstatus_formatted?: string;
   ts_region_formatted?: string;
+  ts_regionnew_formatted?: string;
   ts_reporteddatetime_formatted?: string;
   ts_reporteddatetimeadjust_formatted?: string;
   ts_reportingcompany_formatted?: string;
@@ -404,6 +409,7 @@ interface ts_securityincident_FormattedResult {
   ts_sitetype_formatted?: string;
   ts_stakeholder_formatted?: string;
   ts_statusofrailwayowner_formatted?: string;
+  ts_subcategory_formatted?: string;
   ts_subsite_formatted?: string;
   ts_subsitetype_formatted?: string;
   ts_tamperingsubcategory_formatted?: string;
@@ -427,11 +433,13 @@ interface ts_securityincident_Result extends ts_securityincident_Base, ts_securi
   ts_operationtype_guid: string | null;
   ts_origin_guid: string | null;
   ts_region_guid: string | null;
+  ts_regionnew_guid: string | null;
   ts_reportingcompany_guid: string | null;
   ts_securityincidenttype_guid: string | null;
   ts_site_guid: string | null;
   ts_sitetype_guid: string | null;
   ts_stakeholder_guid: string | null;
+  ts_subcategory_guid: string | null;
   ts_subsite_guid: string | null;
   ts_subsitetype_guid: string | null;
   ts_targetelement_guid: string | null;
@@ -449,7 +457,6 @@ interface ts_securityincident_RelatedOne {
   ts_DiversionAerodrome: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Origin: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_ReportingCompany: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
-  ts_SecurityIncidentType: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_Subsite: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
