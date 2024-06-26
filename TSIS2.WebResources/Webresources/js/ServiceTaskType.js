@@ -3,6 +3,17 @@ var ROM;
 (function (ROM) {
     var ServiceTaskType;
     (function (ServiceTaskType) {
+        function onLoad(eContext) {
+            var _a;
+            var form = eContext.getFormContext();
+            console.log("ServiceTaskType onLoad");
+            var isMandatory = (_a = form.getAttribute("ts_mandatory").getValue()) !== null && _a !== void 0 ? _a : null;
+            if (isMandatory === null) {
+                form.getAttribute('ts_mandatory').setValue(true);
+                console.log("ServiceTaskType set true");
+            }
+        }
+        ServiceTaskType.onLoad = onLoad;
         // EVENTS
         function ToggleQuestionnaire(eContext) {
             var Form = eContext.getFormContext();

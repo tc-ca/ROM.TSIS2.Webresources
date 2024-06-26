@@ -1,4 +1,13 @@
 namespace ROM.ServiceTaskType {
+    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_servicetasktype.Main.ROMInformation>eContext.getFormContext();
+        console.log("ServiceTaskType onLoad");
+        let isMandatory = form.getAttribute("ts_mandatory").getValue() ?? null;
+        if (isMandatory === null ) {
+            form.getAttribute('ts_mandatory').setValue(true);
+            console.log("ServiceTaskType set true");
+        }
+    }
     // EVENTS
     export function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
         const Form = <Form.msdyn_servicetasktype.Main.ROMInformation>eContext.getFormContext();

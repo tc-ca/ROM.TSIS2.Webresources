@@ -149,13 +149,14 @@ var ROM;
         }
         WorkOrderServiceTask.serviceTaskStartDateOnChange = serviceTaskStartDateOnChange;
         function taskTypeOnChange(eContext) {
-            UpdateQuestionnaireDefinition(eContext);
             applyMandatoryFieldFromTaskType(eContext);
+            UpdateQuestionnaireDefinition(eContext);
         }
         WorkOrderServiceTask.taskTypeOnChange = taskTypeOnChange;
         function applyMandatoryFieldFromTaskType(eContext) {
             var fc = eContext.getFormContext();
             var taskTypeValue = fc.getAttribute("msdyn_tasktype").getValue();
+            console.log("Retrieved values: check type ");
             if (taskTypeValue != null && taskTypeValue != undefined && taskTypeValue[0].entityType == "msdyn_servicetasktype") {
                 Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeValue[0].id, "?$select=ts_mandatory").then(function success(result) {
                     console.log("Retrieved values: ts_mandatory: " + result.ts_mandatory);
