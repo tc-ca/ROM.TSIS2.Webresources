@@ -128,6 +128,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_stakeholder_name"): Xrm.Attribute<string>;
       get(name: "ts_statusofrailwayowner"): Xrm.OptionSetAttribute<ts_statusofrailwayowner>;
       get(name: "ts_statusrationale"): Xrm.Attribute<string>;
+      get(name: "ts_subcategory"): Xrm.LookupAttribute<"ts_securityincidentsubcategory">;
       get(name: "ts_subdivision"): Xrm.Attribute<string>;
       get(name: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_subsitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
@@ -226,6 +227,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_stakeholder_name"): Xrm.StringControl;
       get(name: "ts_statusofrailwayowner"): Xrm.OptionSetControl<ts_statusofrailwayowner>;
       get(name: "ts_statusrationale"): Xrm.StringControl;
+      get(name: "ts_subcategory"): Xrm.LookupControl<"ts_securityincidentsubcategory">;
       get(name: "ts_subdivision"): Xrm.StringControl;
       get(name: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_subsitetype"): Xrm.LookupControl<"ovs_sitetype">;
@@ -333,6 +335,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_stakeholder_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_statusofrailwayowner"): Xrm.OptionSetAttribute<ts_statusofrailwayowner>;
     getAttribute(attributeName: "ts_statusrationale"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_subcategory"): Xrm.LookupAttribute<"ts_securityincidentsubcategory">;
     getAttribute(attributeName: "ts_subdivision"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_subsitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
@@ -426,6 +429,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_stakeholder_name"): Xrm.StringControl;
     getControl(controlName: "ts_statusofrailwayowner"): Xrm.OptionSetControl<ts_statusofrailwayowner>;
     getControl(controlName: "ts_statusrationale"): Xrm.StringControl;
+    getControl(controlName: "ts_subcategory"): Xrm.LookupControl<"ts_securityincidentsubcategory">;
     getControl(controlName: "ts_subdivision"): Xrm.StringControl;
     getControl(controlName: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_subsitetype"): Xrm.LookupControl<"ovs_sitetype">;
