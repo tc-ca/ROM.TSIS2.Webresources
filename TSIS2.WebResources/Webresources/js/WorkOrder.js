@@ -1012,7 +1012,7 @@ var ROM;
                             if (checkOtherSubSites) {
                                 //No operation found
                                 form_4.ui.clearFormNotification("closedProject");
-                                form_4.ui.setFormNotification("No operations found matching the selected site, operation type and stakeholder!.", "WARNING", "closedProject"); //ERROR
+                                //form.ui.setFormNotification("No operations found matching the selected site, operation type and stakeholder!.", "WARNING", "closedProject");//ERROR
                                 form_4.getAttribute("msdyn_functionallocation").setValue(null);
                                 form_4.getControl('msdyn_functionallocation').setVisible(false);
                                 form_4.getAttribute("msdyn_functionallocation").setRequiredLevel("none"); //none,required                                
