@@ -840,15 +840,21 @@ async function isAvSecWorkOrder(primaryControl) {
     }
 }
 
-function createQualityControlServiceTask(primaryControl) {
+async function createQualityControlServiceTask(primaryControl) {
     Xrm.Utility.showProgressIndicator();
+    var isAvSec = await isAvSecWorkOrder(primaryControl);
+
     //Get ID of current Work Order
     const workOrderId = primaryControl.data.entity.getId().replace("{", "").replace("}", "");
+    var servicetaskTypeId = "931b334c-c55b-ee11-8df0-000d3af4f52a";
+    if (!isAvSec) {
+        servicetaskTypeId = "765fcc32-7339-ef11-a316-6045bd5f6387";
+    }
     //Create Work Order Service Task with Quality Control Task Type, related to current Work Order
     var data =
     {
         "msdyn_workorder@odata.bind": `/msdyn_workorders(${workOrderId})`,
-        "msdyn_tasktype@odata.bind": "/msdyn_servicetasktypes(931b334c-c55b-ee11-8df0-000d3af4f52a)"
+        "msdyn_tasktype@odata.bind": `/msdyn_servicetasktypes(${servicetaskTypeId})`
     }
 
     // create account record
