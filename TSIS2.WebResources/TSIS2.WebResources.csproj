@@ -380,6 +380,7 @@
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\ts\CauseFinding.ts" />
     <TypeScriptCompile Include="src\ts\Site.ts" />
     <TypeScriptCompile Include="src\ts\Plan.ts" />
     <TypeScriptCompile Include="src\ts\Account.ts" />
