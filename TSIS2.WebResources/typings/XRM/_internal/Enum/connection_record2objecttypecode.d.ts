@@ -145,4 +145,5 @@ declare const enum connection_record2objecttypecode {
   PublishingStateTransitionRule = 11511,
   Shortcut = 11513,
   Website = 11525,
+  CaseNew = 11775,
 }

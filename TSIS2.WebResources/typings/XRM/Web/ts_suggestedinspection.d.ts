@@ -23,6 +23,7 @@ interface ts_SuggestedInspection_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_SuggestedInspection_Relationships {
+  ts_Site_Site?: ts_site_Result | null;
   ts_ts_suggestedinspection_systemuser?: SystemUser_Result[] | null;
   ts_workorder_suggestedinspection?: msdyn_workorder_Result[] | null;
 }
@@ -30,6 +31,7 @@ interface ts_SuggestedInspection extends ts_SuggestedInspection_Base, ts_Suggest
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
+  ts_Site_Site_bind$ts_sites?: string | null;
   ts_Trip_bind$ts_trips?: string | null;
   ts_activitytype_bind$msdyn_incidenttypes?: string | null;
   ts_inspector_bind$systemusers?: string | null;
@@ -79,6 +81,7 @@ interface ts_SuggestedInspection_Select {
   ts_q4: WebAttribute<ts_SuggestedInspection_Select, { ts_q4: number | null }, {  }>;
   ts_riskthreshold_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_riskthreshold_guid: string | null }, { ts_riskthreshold_formatted?: string }>;
   ts_site_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
+  ts_site_site_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_site_site_guid: string | null }, { ts_site_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   ts_suggestedinspectionid: WebAttribute<ts_SuggestedInspection_Select, { ts_suggestedinspectionid: string | null }, {  }>;
   ts_trip_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_trip_guid: string | null }, { ts_trip_formatted?: string }>;
@@ -120,6 +123,7 @@ interface ts_SuggestedInspection_Filter {
   ts_q4: number;
   ts_riskthreshold_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
+  ts_site_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
   ts_suggestedinspectionid: XQW.Guid;
   ts_trip_guid: XQW.Guid;
@@ -134,6 +138,7 @@ interface ts_SuggestedInspection_Expand {
   ownerid: WebExpand<ts_SuggestedInspection_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ts_SuggestedInspection_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_SuggestedInspection_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_Site_Site: WebExpand<ts_SuggestedInspection_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
   ts_activitytype: WebExpand<ts_SuggestedInspection_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_activitytype: msdyn_incidenttype_Result }>;
   ts_inspector: WebExpand<ts_SuggestedInspection_Expand, SystemUser_Select, SystemUser_Filter, { ts_inspector: SystemUser_Result }>;
   ts_operation: WebExpand<ts_SuggestedInspection_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operation: ovs_operation_Result }>;
@@ -169,6 +174,7 @@ interface ts_SuggestedInspection_FormattedResult {
   ts_plan_formatted?: string;
   ts_riskthreshold_formatted?: string;
   ts_site_formatted?: string;
+  ts_site_site_formatted?: string;
   ts_stakeholder_formatted?: string;
   ts_trip_formatted?: string;
 }
@@ -190,6 +196,7 @@ interface ts_SuggestedInspection_Result extends ts_SuggestedInspection_Base, ts_
   ts_plan_guid: string | null;
   ts_riskthreshold_guid: string | null;
   ts_site_guid: string | null;
+  ts_site_site_guid: string | null;
   ts_stakeholder_guid: string | null;
   ts_trip_guid: string | null;
 }
@@ -201,6 +208,7 @@ interface ts_SuggestedInspection_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_Site_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_activitytype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_inspector: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
