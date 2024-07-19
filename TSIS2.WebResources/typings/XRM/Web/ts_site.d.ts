@@ -74,6 +74,7 @@ interface ts_site_Relationships {
   ts_ts_site_ts_securityincident_Site_Site?: ts_securityincident_Result[] | null;
   ts_ts_site_ts_securityincident_Subsite_Site?: ts_securityincident_Result[] | null;
   ts_ts_site_ts_site_ParentFunctionalLocation?: ts_site_Result[] | null;
+  ts_ts_site_ts_suggestedinspection_Site_Site?: ts_SuggestedInspection_Result[] | null;
 }
 interface ts_site extends ts_site_Base, ts_site_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -247,6 +248,7 @@ interface ts_site_Expand {
   ts_ts_site_ts_securityincident_Site_Site: WebExpand<ts_site_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_ts_site_ts_securityincident_Site_Site: ts_securityincident_Result[] }>;
   ts_ts_site_ts_securityincident_Subsite_Site: WebExpand<ts_site_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_ts_site_ts_securityincident_Subsite_Site: ts_securityincident_Result[] }>;
   ts_ts_site_ts_site_ParentFunctionalLocation: WebExpand<ts_site_Expand, ts_site_Select, ts_site_Filter, { ts_ts_site_ts_site_ParentFunctionalLocation: ts_site_Result[] }>;
+  ts_ts_site_ts_suggestedinspection_Site_Site: WebExpand<ts_site_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_ts_site_ts_suggestedinspection_Site_Site: ts_SuggestedInspection_Result[] }>;
 }
 interface ts_site_FormattedResult {
   createdby_formatted?: string;
@@ -330,6 +332,7 @@ interface ts_site_RelatedMany {
   ts_ts_site_ts_securityincident_Site_Site: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   ts_ts_site_ts_securityincident_Subsite_Site: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   ts_ts_site_ts_site_ParentFunctionalLocation: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
+  ts_ts_site_ts_suggestedinspection_Site_Site: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_sites: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;

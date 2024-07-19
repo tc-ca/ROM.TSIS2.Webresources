@@ -202,6 +202,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_team_bind$teams?: string | null;
   record1id_territory_bind$territories?: string | null;
   record1id_ts_action_bind$ts_actions?: string | null;
+  record1id_ts_case_bind$ts_cases?: string | null;
   record1id_ts_enforcementaction_bind$ts_enforcementactions?: string | null;
   record1id_ts_exemption_bind$ts_exemptions?: string | null;
   record1id_ts_file_bind$ts_files?: string | null;
@@ -348,6 +349,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_team_bind$teams?: string | null;
   record2id_territory_bind$territories?: string | null;
   record2id_ts_action_bind$ts_actions?: string | null;
+  record2id_ts_case_bind$ts_cases?: string | null;
   record2id_ts_enforcementaction_bind$ts_enforcementactions?: string | null;
   record2id_ts_exemption_bind$ts_exemptions?: string | null;
   record2id_ts_file_bind$ts_files?: string | null;

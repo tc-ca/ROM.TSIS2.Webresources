@@ -15,6 +15,7 @@ declare namespace Form.incident.Main {
         get(name: "caseassociation"): Xrm.PageSection;
         get(name: "copilot_summary_section"): Xrm.PageSection;
         get(name: "description"): Xrm.PageSection;
+        get(name: "general_section_10"): Xrm.PageSection;
         get(name: "notes"): Xrm.PageSection;
         get(name: "queueitemdetails"): Xrm.PageSection;
         get(name: "slaTimer"): Xrm.PageSection;

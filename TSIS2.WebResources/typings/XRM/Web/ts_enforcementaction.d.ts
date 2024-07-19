@@ -72,6 +72,7 @@ interface ts_enforcementaction_Relationships {
   regardingobjectid_msdyn_workorderservicetask_ts_enforcementaction?: msdyn_workorderservicetask_Result | null;
   regardingobjectid_ovs_operation_ts_enforcementaction?: ovs_operation_Result | null;
   regardingobjectid_ts_securityincident_ts_enforcementaction?: ts_securityincident_Result | null;
+  regardingobjectid_ts_site_ts_enforcementaction?: ts_site_Result | null;
   regardingobjectid_ts_teamplanningdata_ts_enforcementaction?: ts_TeamPlanningData_Result | null;
   ts_Incident_ts_enforcementaction?: Incident_Result | null;
   ts_Individualcompany_ts_enforcementaction?: Account_Result | null;
@@ -183,8 +184,10 @@ interface ts_enforcementaction extends ts_enforcementaction_Base, ts_enforcement
   regardingobjectid_quote_ts_enforcementaction_bind$quotes?: string | null;
   regardingobjectid_salesorder_ts_enforcementaction_bind$salesorders?: string | null;
   regardingobjectid_site_ts_enforcementaction_bind$sites?: string | null;
+  regardingobjectid_ts_case_ts_enforcementaction_bind$ts_cases?: string | null;
   regardingobjectid_ts_request_ts_enforcementaction_bind$ts_requests?: string | null;
   regardingobjectid_ts_securityincident_ts_enforcementaction_bind$ts_securityincidents?: string | null;
+  regardingobjectid_ts_site_ts_enforcementaction_bind$ts_sites?: string | null;
   regardingobjectid_ts_teamplanningdata_ts_enforcementaction_bind$ts_teamplanningdatas?: string | null;
   serviceid_ts_enforcementaction_bind$services?: string | null;
   sla_activitypointer_sla_ts_enforcementaction_bind$slas?: string | null;
@@ -383,6 +386,7 @@ interface ts_enforcementaction_Expand {
   regardingobjectid_msdyn_workorderservicetask_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { regardingobjectid_msdyn_workorderservicetask_ts_enforcementaction: msdyn_workorderservicetask_Result }>;
   regardingobjectid_ovs_operation_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, ovs_operation_Select, ovs_operation_Filter, { regardingobjectid_ovs_operation_ts_enforcementaction: ovs_operation_Result }>;
   regardingobjectid_ts_securityincident_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, ts_securityincident_Select, ts_securityincident_Filter, { regardingobjectid_ts_securityincident_ts_enforcementaction: ts_securityincident_Result }>;
+  regardingobjectid_ts_site_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, ts_site_Select, ts_site_Filter, { regardingobjectid_ts_site_ts_enforcementaction: ts_site_Result }>;
   regardingobjectid_ts_teamplanningdata_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata_ts_enforcementaction: ts_TeamPlanningData_Result }>;
   ts_Incident_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, Incident_Select, Incident_Filter, { ts_Incident_ts_enforcementaction: Incident_Result }>;
   ts_Individualcompany_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, Account_Select, Account_Filter, { ts_Individualcompany_ts_enforcementaction: Account_Result }>;
@@ -497,6 +501,7 @@ interface ts_enforcementaction_RelatedOne {
   regardingobjectid_msdyn_workorderservicetask_ts_enforcementaction: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   regardingobjectid_ovs_operation_ts_enforcementaction: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   regardingobjectid_ts_securityincident_ts_enforcementaction: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
+  regardingobjectid_ts_site_ts_enforcementaction: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   regardingobjectid_ts_teamplanningdata_ts_enforcementaction: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   ts_Incident_ts_enforcementaction: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_Individualcompany_ts_enforcementaction: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

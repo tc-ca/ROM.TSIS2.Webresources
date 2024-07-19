@@ -22,6 +22,7 @@ interface ts_OperationActivity_Relationships {
   ts_NextPlannedWO?: tc_TCFiscalQuarter_Result | null;
   ts_Operation?: ovs_operation_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
+  ts_Site_Site?: ts_site_Result | null;
   ts_Stakeholder?: Account_Result | null;
   ts_ts_planningdata_OperationActivity_ts_oper?: ts_PlanningData_Result[] | null;
 }
@@ -35,6 +36,7 @@ interface ts_OperationActivity extends ts_OperationActivity_Base, ts_OperationAc
   ts_OperationType_bind$ovs_operationtypes?: string | null;
   ts_Operation_bind$ovs_operations?: string | null;
   ts_RecurrenceFrequency_bind$ts_recurrencefrequencieses?: string | null;
+  ts_Site_Site_bind$ts_sites?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_Stakeholder_bind$accounts?: string | null;
 }
@@ -72,6 +74,7 @@ interface ts_OperationActivity_Select {
   ts_plannedstatus: WebAttribute<ts_OperationActivity_Select, { ts_plannedstatus: ts_planningstatus | null }, { ts_plannedstatus_formatted?: string }>;
   ts_recurrencefrequency_guid: WebAttribute<ts_OperationActivity_Select, { ts_recurrencefrequency_guid: string | null }, { ts_recurrencefrequency_formatted?: string }>;
   ts_site_guid: WebAttribute<ts_OperationActivity_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
+  ts_site_site_guid: WebAttribute<ts_OperationActivity_Select, { ts_site_site_guid: string | null }, { ts_site_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_OperationActivity_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_OperationActivity_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_OperationActivity_Select, { versionnumber: number | null }, {  }>;
@@ -106,6 +109,7 @@ interface ts_OperationActivity_Filter {
   ts_plannedstatus: ts_planningstatus;
   ts_recurrencefrequency_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
+  ts_site_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
@@ -124,6 +128,7 @@ interface ts_OperationActivity_Expand {
   ts_NextPlannedWO: WebExpand<ts_OperationActivity_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ts_NextPlannedWO: tc_TCFiscalQuarter_Result }>;
   ts_Operation: WebExpand<ts_OperationActivity_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_Operation: ovs_operation_Result }>;
   ts_Site: WebExpand<ts_OperationActivity_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
+  ts_Site_Site: WebExpand<ts_OperationActivity_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
   ts_Stakeholder: WebExpand<ts_OperationActivity_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
   ts_ts_planningdata_OperationActivity_ts_oper: WebExpand<ts_OperationActivity_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_OperationActivity_ts_oper: ts_PlanningData_Result[] }>;
 }
@@ -151,6 +156,7 @@ interface ts_OperationActivity_FormattedResult {
   ts_plannedstatus_formatted?: string;
   ts_recurrencefrequency_formatted?: string;
   ts_site_formatted?: string;
+  ts_site_site_formatted?: string;
   ts_stakeholder_formatted?: string;
 }
 interface ts_OperationActivity_Result extends ts_OperationActivity_Base, ts_OperationActivity_Relationships {
@@ -171,6 +177,7 @@ interface ts_OperationActivity_Result extends ts_OperationActivity_Base, ts_Oper
   ts_operationtype_guid: string | null;
   ts_recurrencefrequency_guid: string | null;
   ts_site_guid: string | null;
+  ts_site_site_guid: string | null;
   ts_stakeholder_guid: string | null;
 }
 interface ts_OperationActivity_RelatedOne {
@@ -187,6 +194,7 @@ interface ts_OperationActivity_RelatedOne {
   ts_NextPlannedWO: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ts_Operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_Site_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface ts_OperationActivity_RelatedMany {

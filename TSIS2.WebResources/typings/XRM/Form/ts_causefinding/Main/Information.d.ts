@@ -9,6 +9,7 @@ declare namespace Form.ts_causefinding.Main {
       get(name: "ts_comments"): Xrm.Attribute<string>;
       get(name: "ts_finding"): Xrm.LookupAttribute<"ovs_finding">;
       get(name: "ts_name"): Xrm.Attribute<string>;
+      get(name: "ts_provision"): Xrm.LookupAttribute<"qm_rclegislation">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -21,6 +22,7 @@ declare namespace Form.ts_causefinding.Main {
       get(name: "ts_comments"): Xrm.StringControl;
       get(name: "ts_finding"): Xrm.LookupControl<"ovs_finding">;
       get(name: "ts_name"): Xrm.StringControl;
+      get(name: "ts_provision"): Xrm.LookupControl<"qm_rclegislation">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -40,6 +42,7 @@ declare namespace Form.ts_causefinding.Main {
     getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_finding"): Xrm.LookupAttribute<"ovs_finding">;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_provision"): Xrm.LookupAttribute<"qm_rclegislation">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_cause"): Xrm.LookupControl<"qm_rclegislation">;
@@ -47,6 +50,7 @@ declare namespace Form.ts_causefinding.Main {
     getControl(controlName: "ts_comments"): Xrm.StringControl;
     getControl(controlName: "ts_finding"): Xrm.LookupControl<"ovs_finding">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
+    getControl(controlName: "ts_provision"): Xrm.LookupControl<"qm_rclegislation">;
     getControl(controlName: string): undefined;
   }
 }

@@ -62,7 +62,10 @@ interface ovs_operation_Relationships {
   ovs_operation_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   ovs_ovs_operation_msdyn_workorder?: msdyn_workorder_Result[] | null;
   ts_OPITeam?: Team_Result | null;
+  ts_Site_Site?: ts_site_Result | null;
+  ts_Subsite_Site?: ts_site_Result | null;
   ts_Subsubsite?: msdyn_FunctionalLocation_Result | null;
+  ts_Subsubsite_Site?: ts_site_Result | null;
   ts_msdyn_workorder_ovs_operation_ovs_operati?: msdyn_workorder_Result[] | null;
   ts_operation_msdyn_workorder_OperatingCarrierOperation?: msdyn_workorder_Result[] | null;
   ts_operation_ts_operationcontact_operation?: ts_operationcontact_Result[] | null;
@@ -81,6 +84,9 @@ interface ovs_operation extends ovs_operation_Base, ovs_operation_Relationships 
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   ts_OPITeam_bind$teams?: string | null;
+  ts_Site_Site_bind$ts_sites?: string | null;
+  ts_Subsite_Site_bind$ts_sites?: string | null;
+  ts_Subsubsite_Site_bind$ts_sites?: string | null;
   ts_Subsubsite_bind$msdyn_functionallocations?: string | null;
   ts_operationfrequency_bind$ts_operationfrequencies?: string | null;
   ts_risk_bind$ts_riskcategories?: string | null;
@@ -146,13 +152,16 @@ interface ovs_operation_Select {
   ts_ron: WebAttribute<ovs_operation_Select, { ts_ron: boolean | null }, {  }>;
   ts_securityinspectiondetails: WebAttribute<ovs_operation_Select, { ts_securityinspectiondetails: ts_securityinspectiondetails | null }, { ts_securityinspectiondetails_formatted?: string }>;
   ts_site_guid: WebAttribute<ovs_operation_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
+  ts_site_site_guid: WebAttribute<ovs_operation_Select, { ts_site_site_guid: string | null }, { ts_site_site_formatted?: string }>;
   ts_specializedpperequired: WebAttribute<ovs_operation_Select, { ts_specializedpperequired: boolean | null }, {  }>;
   ts_stakeholder_guid: WebAttribute<ovs_operation_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   ts_stationtype: WebAttribute<ovs_operation_Select, { ts_stationtype: ts_stationtype | null }, { ts_stationtype_formatted?: string }>;
   ts_statusenddate: WebAttribute<ovs_operation_Select, { ts_statusenddate: Date | null }, { ts_statusenddate_formatted?: string }>;
   ts_statusstartdate: WebAttribute<ovs_operation_Select, { ts_statusstartdate: Date | null }, { ts_statusstartdate_formatted?: string }>;
   ts_subsite_guid: WebAttribute<ovs_operation_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
+  ts_subsite_site_guid: WebAttribute<ovs_operation_Select, { ts_subsite_site_guid: string | null }, { ts_subsite_site_formatted?: string }>;
   ts_subsubsite_guid: WebAttribute<ovs_operation_Select, { ts_subsubsite_guid: string | null }, { ts_subsubsite_formatted?: string }>;
+  ts_subsubsite_site_guid: WebAttribute<ovs_operation_Select, { ts_subsubsite_site_guid: string | null }, { ts_subsubsite_site_formatted?: string }>;
   ts_targetedinspectionneeded: WebAttribute<ovs_operation_Select, { ts_targetedinspectionneeded: boolean | null }, {  }>;
   ts_transborderflights: WebAttribute<ovs_operation_Select, { ts_transborderflights: boolean | null }, {  }>;
   ts_typeofdangerousgoods: WebAttribute<ovs_operation_Select, { ts_typeofdangerousgoods: ts_typeofdangerousgoods | null }, { ts_typeofdangerousgoods_formatted?: string }>;
@@ -217,13 +226,16 @@ interface ovs_operation_Filter {
   ts_ron: boolean;
   ts_securityinspectiondetails: ts_securityinspectiondetails;
   ts_site_guid: XQW.Guid;
+  ts_site_site_guid: XQW.Guid;
   ts_specializedpperequired: boolean;
   ts_stakeholder_guid: XQW.Guid;
   ts_stationtype: ts_stationtype;
   ts_statusenddate: Date;
   ts_statusstartdate: Date;
   ts_subsite_guid: XQW.Guid;
+  ts_subsite_site_guid: XQW.Guid;
   ts_subsubsite_guid: XQW.Guid;
+  ts_subsubsite_site_guid: XQW.Guid;
   ts_targetedinspectionneeded: boolean;
   ts_transborderflights: boolean;
   ts_typeofdangerousgoods: ts_typeofdangerousgoods;
@@ -251,7 +263,10 @@ interface ovs_operation_Expand {
   owningteam: WebExpand<ovs_operation_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_OPITeam: WebExpand<ovs_operation_Expand, Team_Select, Team_Filter, { ts_OPITeam: Team_Result }>;
+  ts_Site_Site: WebExpand<ovs_operation_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
+  ts_Subsite_Site: WebExpand<ovs_operation_Expand, ts_site_Select, ts_site_Filter, { ts_Subsite_Site: ts_site_Result }>;
   ts_Subsubsite: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsubsite: msdyn_FunctionalLocation_Result }>;
+  ts_Subsubsite_Site: WebExpand<ovs_operation_Expand, ts_site_Select, ts_site_Filter, { ts_Subsubsite_Site: ts_site_Result }>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: msdyn_workorder_Result[] }>;
   ts_operation_msdyn_workorder_OperatingCarrierOperation: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_operation_msdyn_workorder_OperatingCarrierOperation: msdyn_workorder_Result[] }>;
   ts_operation_ts_operationcontact_operation: WebExpand<ovs_operation_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operation_ts_operationcontact_operation: ts_operationcontact_Result[] }>;
@@ -296,12 +311,15 @@ interface ovs_operation_FormattedResult {
   ts_risk_formatted?: string;
   ts_securityinspectiondetails_formatted?: string;
   ts_site_formatted?: string;
+  ts_site_site_formatted?: string;
   ts_stakeholder_formatted?: string;
   ts_stationtype_formatted?: string;
   ts_statusenddate_formatted?: string;
   ts_statusstartdate_formatted?: string;
   ts_subsite_formatted?: string;
+  ts_subsite_site_formatted?: string;
   ts_subsubsite_formatted?: string;
+  ts_subsubsite_site_formatted?: string;
   ts_typeofdangerousgoods_formatted?: string;
   ts_typesofspecializedppe_formatted?: string;
   ts_visualsecurityinspection_formatted?: string;
@@ -323,9 +341,12 @@ interface ovs_operation_Result extends ovs_operation_Base, ovs_operation_Relatio
   ts_opiteam_guid: string | null;
   ts_risk_guid: string | null;
   ts_site_guid: string | null;
+  ts_site_site_guid: string | null;
   ts_stakeholder_guid: string | null;
   ts_subsite_guid: string | null;
+  ts_subsite_site_guid: string | null;
   ts_subsubsite_guid: string | null;
+  ts_subsubsite_site_guid: string | null;
 }
 interface ovs_operation_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -336,7 +357,10 @@ interface ovs_operation_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_OPITeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  ts_Site_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
+  ts_Subsite_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_Subsubsite: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_Subsubsite_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_risk: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
   ts_site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

@@ -194,7 +194,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
-      get(name: "ovs_tyrational"): Xrm.LookupAttribute<"ovs_tyrational">;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "qm_remote"): Xrm.Attribute<any>;
       get(name: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
@@ -209,6 +208,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_airserviceclassification"): Xrm.OptionSetAttribute<ts_airserviceclassification>;
       get(name: "ts_alternateoperatingcarrier"): Xrm.OptionSetAttribute<ts_yesno>;
       get(name: "ts_arrivalaerodrome"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_businessowner"): Xrm.Attribute<string>;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
       get(name: "ts_checkedbagsboarded"): Xrm.NumberAttribute;
@@ -385,7 +385,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ovs_rational1"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
-      get(name: "ovs_tyrational"): Xrm.LookupControl<"ovs_tyrational">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "subgrid_supportingregion"): Xrm.SubGridControl<"territory">;
@@ -399,6 +398,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_airserviceclassification"): Xrm.OptionSetControl<ts_airserviceclassification>;
       get(name: "ts_alternateoperatingcarrier"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_arrivalaerodrome"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_businessowner"): Xrm.StringControl;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_checkedbagsboarded"): Xrm.NumberControl;
@@ -413,9 +413,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_details"): Xrm.StringControl;
       get(name: "ts_documenteddate"): Xrm.DateControl;
       get(name: "ts_documenteddate1"): Xrm.DateControl;
-      get(name: "ts_documenteddate2"): Xrm.DateControl;
-      get(name: "ts_documenteddate3"): Xrm.DateControl;
-      get(name: "ts_documenteddate4"): Xrm.DateControl;
       get(name: "ts_flightnumber"): Xrm.StringControl;
       get(name: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
       get(name: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;
@@ -561,7 +558,6 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ovs_rational"): Xrm.LookupAttribute<"ovs_tyrational">;
     getAttribute(attributeName: "ovs_revisedquarterid"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
-    getAttribute(attributeName: "ovs_tyrational"): Xrm.LookupAttribute<"ovs_tyrational">;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "qm_remote"): Xrm.Attribute<any>;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<msdyn_workorder_statecode>;
@@ -576,6 +572,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_airserviceclassification"): Xrm.OptionSetAttribute<ts_airserviceclassification>;
     getAttribute(attributeName: "ts_alternateoperatingcarrier"): Xrm.OptionSetAttribute<ts_yesno>;
     getAttribute(attributeName: "ts_arrivalaerodrome"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_businessowner"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_canceledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
     getAttribute(attributeName: "ts_cantcompleteinspection"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_checkedbagsboarded"): Xrm.NumberAttribute;
@@ -747,7 +744,6 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ovs_rational"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ovs_rational1"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ovs_revisedquarterid"): Xrm.LookupControl<"tc_tcfiscalquarter">;
-    getControl(controlName: "ovs_tyrational"): Xrm.LookupControl<"ovs_tyrational">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "qm_remote"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "subgrid_supportingregion"): Xrm.SubGridControl<"territory">;
@@ -761,6 +757,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_airserviceclassification"): Xrm.OptionSetControl<ts_airserviceclassification>;
     getControl(controlName: "ts_alternateoperatingcarrier"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_arrivalaerodrome"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_businessowner"): Xrm.StringControl;
     getControl(controlName: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
     getControl(controlName: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_checkedbagsboarded"): Xrm.NumberControl;
@@ -775,9 +772,6 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_details"): Xrm.StringControl;
     getControl(controlName: "ts_documenteddate"): Xrm.DateControl;
     getControl(controlName: "ts_documenteddate1"): Xrm.DateControl;
-    getControl(controlName: "ts_documenteddate2"): Xrm.DateControl;
-    getControl(controlName: "ts_documenteddate3"): Xrm.DateControl;
-    getControl(controlName: "ts_documenteddate4"): Xrm.DateControl;
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
     getControl(controlName: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
     getControl(controlName: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;
