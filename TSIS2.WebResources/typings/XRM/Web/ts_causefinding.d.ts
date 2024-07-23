@@ -14,14 +14,14 @@ interface ts_causefinding_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_causefinding_Relationships {
-  ts_Cause?: qm_rclegislation_Result | null;
   ts_Finding?: ovs_Finding_Result | null;
+  ts_Provision?: qm_rclegislation_Result | null;
 }
 interface ts_causefinding extends ts_causefinding_Base, ts_causefinding_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
-  ts_Cause_bind$qm_rclegislations?: string | null;
   ts_Finding_bind$ovs_findings?: string | null;
+  ts_Provision_bind$qm_rclegislations?: string | null;
 }
 interface ts_causefinding_Create extends ts_causefinding {
 }
@@ -43,12 +43,12 @@ interface ts_causefinding_Select {
   statecode: WebAttribute<ts_causefinding_Select, { statecode: ts_causefinding_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ts_causefinding_Select, { statuscode: ts_causefinding_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_causefinding_Select, { timezoneruleversionnumber: number | null }, {  }>;
-  ts_cause_guid: WebAttribute<ts_causefinding_Select, { ts_cause_guid: string | null }, { ts_cause_formatted?: string }>;
   ts_causefindingid: WebAttribute<ts_causefinding_Select, { ts_causefindingid: string | null }, {  }>;
   ts_causetype: WebAttribute<ts_causefinding_Select, { ts_causetype: ts_findingtype | null }, { ts_causetype_formatted?: string }>;
   ts_comments: WebAttribute<ts_causefinding_Select, { ts_comments: string | null }, {  }>;
   ts_finding_guid: WebAttribute<ts_causefinding_Select, { ts_finding_guid: string | null }, { ts_finding_formatted?: string }>;
   ts_name: WebAttribute<ts_causefinding_Select, { ts_name: string | null }, {  }>;
+  ts_provision_guid: WebAttribute<ts_causefinding_Select, { ts_provision_guid: string | null }, { ts_provision_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_causefinding_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_causefinding_Select, { versionnumber: number | null }, {  }>;
 }
@@ -68,12 +68,12 @@ interface ts_causefinding_Filter {
   statecode: ts_causefinding_statecode;
   statuscode: ts_causefinding_statuscode;
   timezoneruleversionnumber: number;
-  ts_cause_guid: XQW.Guid;
   ts_causefindingid: XQW.Guid;
   ts_causetype: ts_findingtype;
   ts_comments: string;
   ts_finding_guid: XQW.Guid;
   ts_name: string;
+  ts_provision_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -85,8 +85,8 @@ interface ts_causefinding_Expand {
   ownerid: WebExpand<ts_causefinding_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ts_causefinding_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_causefinding_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
-  ts_Cause: WebExpand<ts_causefinding_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_Cause: qm_rclegislation_Result }>;
   ts_Finding: WebExpand<ts_causefinding_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_Finding: ovs_Finding_Result }>;
+  ts_Provision: WebExpand<ts_causefinding_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_Provision: qm_rclegislation_Result }>;
 }
 interface ts_causefinding_FormattedResult {
   createdby_formatted?: string;
@@ -102,9 +102,9 @@ interface ts_causefinding_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
-  ts_cause_formatted?: string;
   ts_causetype_formatted?: string;
   ts_finding_formatted?: string;
+  ts_provision_formatted?: string;
 }
 interface ts_causefinding_Result extends ts_causefinding_Base, ts_causefinding_Relationships {
   "@odata.etag": string;
@@ -116,8 +116,8 @@ interface ts_causefinding_Result extends ts_causefinding_Base, ts_causefinding_R
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
   owninguser_guid: string | null;
-  ts_cause_guid: string | null;
   ts_finding_guid: string | null;
+  ts_provision_guid: string | null;
 }
 interface ts_causefinding_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -127,8 +127,8 @@ interface ts_causefinding_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  ts_Cause: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
   ts_Finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_Provision: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
 }
 interface ts_causefinding_RelatedMany {
 }

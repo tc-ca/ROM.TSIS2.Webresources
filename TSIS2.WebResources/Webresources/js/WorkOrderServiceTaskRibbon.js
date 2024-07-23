@@ -19,6 +19,7 @@ if (lang == 1036) {
     workOrderServiceTaskResultNotPassedText = "La tâche de service selectionné doit avoir « Passé » comme résultat";
     markCompleteServiceDateValidationTextLocalized = "Impossible de marquer la tâche de service de l'ordre de travail comme terminée car la date de début de la tâche de service est postérieure à la date d'aujourd'hui ou la date de début de la tâche de service est vide.";
     markCompleteServiceDateValidationTitleLocalized = "Impossible de marquer comme terminé";
+    updateRiskAssessmentMessage = "Rappel : Veuillez mettre à jour l'évaluation des risques avant de fermer la tâches de service.";
     
 } else {
     markCompleteValidationTextLocalized = "All required questions in the questionnaire must be answered before the questionnaire can be Marked Complete.";
@@ -32,6 +33,7 @@ if (lang == 1036) {
     workOrderServiceTaskResultNotPassedText = "The selected work order service task must have a result of \"Pass\" ";
     markCompleteServiceDateValidationTextLocalized = "Cannot mark Work Order Service Task to complete because Service Task Start Date is later than today's date, or Service Task Start Date is empty.";
     markCompleteServiceDateValidationTitleLocalized = "Cannot Mark Complete";
+    updateRiskAssessmentMessage = "Reminder: Please update the risk assessment before closing the service task.";
 }
 
 //Used to hide buttons for ROM - Inspectors unless they're an admin as well
@@ -445,22 +447,29 @@ function completeConfirmation(formContext, survey) {
         text: markCompleteConfirmationTextLocalized,
         title: markCompleteConfirmationTitleLocalized
     };
-      
     var confirmOptions = { height: 200, width: 450 };
-    Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
-      function (success) {
-        if (success.confirmed) {
-            formContext.getAttribute("msdyn_percentcomplete").setValue(100.00);
-            //Set Status Reason to Complete
-            formContext.getAttribute("statuscode").setValue(918640002);
-            //Set Service Task End Date to current date
-            formContext.getAttribute("ts_servicetaskenddate").setValue(new Date());
-            formContext.data.save().then(
-                function success(result) {
-                    formContext.ui.close();
-                });
-        }
-      });
+
+    var alertStrings = {
+        text: updateRiskAssessmentMessage,
+        title: workOrderServiceTaskLocalized
+    };
+    var alertOptions = { height: 200, width: 450 };
+    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { 
+        Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
+          function (success) {
+            if (success.confirmed) {
+                formContext.getAttribute("msdyn_percentcomplete").setValue(100.00);
+                //Set Status Reason to Complete
+                formContext.getAttribute("statuscode").setValue(918640002);
+                //Set Service Task End Date to current date
+                formContext.getAttribute("ts_servicetaskenddate").setValue(new Date());
+                formContext.data.save().then(
+                    function success(result) {
+                        formContext.ui.close();
+                    });
+            }
+            });
+    });
 }
 
 function ActivateWorkOrderServiceTask(primaryControl) {
