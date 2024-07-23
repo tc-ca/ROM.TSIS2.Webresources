@@ -31,7 +31,7 @@ namespace ROM.CauseFinding {
 
                 const layoutXml = '<grid name="resultset" object="2" jump="qm_name" select="1" icon="1" preview="1"><row name="result" id="qm_rclegislationid"><cell name="qm_name" width="300" /></row></grid>';
 
-                form.getControl("ts_cause").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                form.getControl("ts_provision").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
             }
         }
     }
