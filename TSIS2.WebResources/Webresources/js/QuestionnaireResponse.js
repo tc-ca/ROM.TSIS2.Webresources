@@ -42,15 +42,18 @@ var ROM;
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             ToggleQuestionnaire(eContext);
-            //Put your code here
-            //1. write code to show the banner message to make sure it appears
+            //Banner warning message displayed if Questionnaire Response has already been appended to a work order
             var warningMessage = Xrm.Utility.getResourceString("ovs_/resx/QuestionnaireResponse", "WorkOrderBannerMessage");
-            form.ui.setFormNotification(warningMessage, "WARNING", "WorkOrderBannerMessage");
-            //2. put in the logic to check the work order
-            //3. if the work order is not null, display the message, otherwise don't show it
-            //if (true) {
-            // code to show banner message
-            //}
+            //if the work order is not null, display the message, otherwise don't show it
+            var tsworkorder = form.getAttribute("ts_workorder").getValue();
+            if (tsworkorder != null) {
+                //Show banner message
+                form.ui.setFormNotification(warningMessage, "WARNING", "WorkOrderBannerMessage");
+            }
+            else {
+                //clear banner if the field is null
+                form.ui.clearFormNotification("1");
+            }
         }
         QuestionnaireResponse.onLoad = onLoad;
         function ToggleQuestionnaire(eContext) {
