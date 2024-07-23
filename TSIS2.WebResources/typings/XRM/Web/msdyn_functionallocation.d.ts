@@ -89,6 +89,7 @@ interface msdyn_FunctionalLocation extends msdyn_FunctionalLocation_Base, msdyn_
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   ts_Country_bind$tc_countries?: string | null;
+  ts_RegionDoNotUse_bind$ts_regions?: string | null;
   ts_Region_bind$territories?: string | null;
   ts_SiteType2_bind$ovs_sitetypes?: string | null;
   ts_SiteType3_bind$ovs_sitetypes?: string | null;
@@ -150,6 +151,7 @@ interface msdyn_FunctionalLocation_Select {
   ts_lpdtounitedstates: WebAttribute<msdyn_FunctionalLocation_Select, { ts_lpdtounitedstates: boolean | null }, {  }>;
   ts_mode: WebAttribute<msdyn_FunctionalLocation_Select, { ts_mode: ts_securityincidentmode | null }, { ts_mode_formatted?: string }>;
   ts_region_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
+  ts_regiondonotuse_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_regiondonotuse_guid: string | null }, { ts_regiondonotuse_formatted?: string }>;
   ts_riskscore: WebAttribute<msdyn_FunctionalLocation_Select, { ts_riskscore: number | null }, {  }>;
   ts_sitestatus: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitestatus: ts_sitestatus | null }, { ts_sitestatus_formatted?: string }>;
   ts_sitetype2_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_sitetype2_guid: string | null }, { ts_sitetype2_formatted?: string }>;
@@ -212,6 +214,7 @@ interface msdyn_FunctionalLocation_Filter {
   ts_lpdtounitedstates: boolean;
   ts_mode: ts_securityincidentmode;
   ts_region_guid: XQW.Guid;
+  ts_regiondonotuse_guid: XQW.Guid;
   ts_riskscore: number;
   ts_sitestatus: ts_sitestatus;
   ts_sitetype2_guid: XQW.Guid;
@@ -288,6 +291,7 @@ interface msdyn_FunctionalLocation_FormattedResult {
   ts_country_formatted?: string;
   ts_mode_formatted?: string;
   ts_region_formatted?: string;
+  ts_regiondonotuse_formatted?: string;
   ts_sitestatus_formatted?: string;
   ts_sitetype2_formatted?: string;
   ts_sitetype3_formatted?: string;
@@ -309,6 +313,7 @@ interface msdyn_FunctionalLocation_Result extends msdyn_FunctionalLocation_Base,
   owninguser_guid: string | null;
   ts_country_guid: string | null;
   ts_region_guid: string | null;
+  ts_regiondonotuse_guid: string | null;
   ts_sitetype2_guid: string | null;
   ts_sitetype3_guid: string | null;
   ts_sitetype_guid: string | null;

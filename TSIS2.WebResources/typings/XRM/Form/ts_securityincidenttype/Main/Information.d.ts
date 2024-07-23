@@ -13,6 +13,7 @@ declare namespace Form.ts_securityincidenttype.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Subgrid_new_1"): Xrm.SubGridControl<"ts_targetelement">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_securityincidenttypenameenglish"): Xrm.StringControl;
@@ -35,6 +36,7 @@ declare namespace Form.ts_securityincidenttype.Main {
     getAttribute(attributeName: "ts_securityincidenttypenameenglish"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_securityincidenttypenamefrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"ts_targetelement">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_securityincidenttypenameenglish"): Xrm.StringControl;

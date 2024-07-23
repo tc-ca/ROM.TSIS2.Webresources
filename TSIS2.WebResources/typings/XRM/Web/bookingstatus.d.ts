@@ -9,6 +9,7 @@ interface BookingStatus_Base extends WebEntity {
   msdyn_iconname?: string | null;
   msdyn_imageurl?: string | null;
   msdyn_internalflags?: string | null;
+  msdyn_optimizationmethod?: msdyn_bookingstatusoptimizationmethod | null;
   msdyn_serviceappointmentstatus?: msdyn_serviceappointmentstatus | null;
   msdyn_statuscolor?: string | null;
   msdyn_statuscompletesworkorder?: boolean | null;
@@ -52,6 +53,7 @@ interface BookingStatus_Select {
   msdyn_iconname: WebAttribute<BookingStatus_Select, { msdyn_iconname: string | null }, {  }>;
   msdyn_imageurl: WebAttribute<BookingStatus_Select, { msdyn_imageurl: string | null }, {  }>;
   msdyn_internalflags: WebAttribute<BookingStatus_Select, { msdyn_internalflags: string | null }, {  }>;
+  msdyn_optimizationmethod: WebAttribute<BookingStatus_Select, { msdyn_optimizationmethod: msdyn_bookingstatusoptimizationmethod | null }, { msdyn_optimizationmethod_formatted?: string }>;
   msdyn_serviceappointmentstatus: WebAttribute<BookingStatus_Select, { msdyn_serviceappointmentstatus: msdyn_serviceappointmentstatus | null }, { msdyn_serviceappointmentstatus_formatted?: string }>;
   msdyn_statuscolor: WebAttribute<BookingStatus_Select, { msdyn_statuscolor: string | null }, {  }>;
   msdyn_statuscompletesworkorder: WebAttribute<BookingStatus_Select, { msdyn_statuscompletesworkorder: boolean | null }, {  }>;
@@ -84,6 +86,7 @@ interface BookingStatus_Filter {
   msdyn_iconname: string;
   msdyn_imageurl: string;
   msdyn_internalflags: string;
+  msdyn_optimizationmethod: msdyn_bookingstatusoptimizationmethod;
   msdyn_serviceappointmentstatus: msdyn_serviceappointmentstatus;
   msdyn_statuscolor: string;
   msdyn_statuscompletesworkorder: boolean;
@@ -119,6 +122,7 @@ interface BookingStatus_FormattedResult {
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
   msdyn_fieldservicestatus_formatted?: string;
+  msdyn_optimizationmethod_formatted?: string;
   msdyn_serviceappointmentstatus_formatted?: string;
   overriddencreatedon_formatted?: string;
   ownerid_formatted?: string;

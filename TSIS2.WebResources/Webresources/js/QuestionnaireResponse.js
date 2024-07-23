@@ -42,6 +42,15 @@ var ROM;
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             ToggleQuestionnaire(eContext);
+            //Put your code here
+            //1. write code to show the banner message to make sure it appears
+            var warningMessage = Xrm.Utility.getResourceString("ovs_/resx/QuestionnaireResponse", "WorkOrderBannerMessage");
+            form.ui.setFormNotification(warningMessage, "WARNING", "WorkOrderBannerMessage");
+            //2. put in the logic to check the work order
+            //3. if the work order is not null, display the message, otherwise don't show it
+            //if (true) {
+            // code to show banner message
+            //}
         }
         QuestionnaireResponse.onLoad = onLoad;
         function ToggleQuestionnaire(eContext) {

@@ -58,6 +58,7 @@ interface Team_Relationships {
   team_ts_aircraft?: ts_aircraft_Result[] | null;
   team_ts_assessmentscorethredshots?: ts_assessmentscorethredshots_Result[] | null;
   team_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
+  team_ts_causefinding?: ts_causefinding_Result[] | null;
   team_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
   team_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
   team_ts_nonoversightactivity?: ts_nonoversightactivity_Result[] | null;
@@ -72,6 +73,7 @@ interface Team_Relationships {
   team_ts_role?: ts_role_Result[] | null;
   team_ts_securityincident?: ts_securityincident_Result[] | null;
   team_ts_securityincidenttype?: ts_securityincidenttype_Result[] | null;
+  team_ts_site?: ts_site_Result[] | null;
   team_ts_suggestedinspection?: ts_SuggestedInspection_Result[] | null;
   team_ts_teamplanningdata?: ts_TeamPlanningData_Result[] | null;
   team_ts_teamplanninginspectorhours?: ts_TeamPlanningInspectorHours_Result[] | null;
@@ -92,6 +94,7 @@ interface Team extends Team_Base, Team_Relationships {
   queueid_bind$queues?: string | null;
   stageid_processstage_bind$processstages?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
+  ts_RegionDoNoUse_bind$ts_regions?: string | null;
   ts_Territory_bind$territories?: string | null;
 }
 interface Team_Create extends Team {
@@ -138,6 +141,7 @@ interface Team_Select {
   teamtype: WebAttribute<Team_Select, { teamtype: team_type | null }, { teamtype_formatted?: string }>;
   transactioncurrencyid_guid: WebAttribute<Team_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Team_Select, { traversedpath: string | null }, {  }>;
+  ts_regiondonouse_guid: WebAttribute<Team_Select, { ts_regiondonouse_guid: string | null }, { ts_regiondonouse_formatted?: string }>;
   ts_territory_guid: WebAttribute<Team_Select, { ts_territory_guid: string | null }, { ts_territory_formatted?: string }>;
   versionnumber: WebAttribute<Team_Select, { versionnumber: number | null }, {  }>;
 }
@@ -175,6 +179,7 @@ interface Team_Filter {
   teamtype: team_type;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_regiondonouse_guid: XQW.Guid;
   ts_territory_guid: XQW.Guid;
   versionnumber: number;
 }
@@ -218,6 +223,7 @@ interface Team_Expand {
   team_ts_aircraft: WebExpand<Team_Expand, ts_aircraft_Select, ts_aircraft_Filter, { team_ts_aircraft: ts_aircraft_Result[] }>;
   team_ts_assessmentscorethredshots: WebExpand<Team_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { team_ts_assessmentscorethredshots: ts_assessmentscorethredshots_Result[] }>;
   team_ts_canceledinspectionjustification: WebExpand<Team_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { team_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
+  team_ts_causefinding: WebExpand<Team_Expand, ts_causefinding_Select, ts_causefinding_Filter, { team_ts_causefinding: ts_causefinding_Result[] }>;
   team_ts_incompleteworkorderreason: WebExpand<Team_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { team_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
   team_ts_inspectionhours: WebExpand<Team_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { team_ts_inspectionhours: ts_InspectionHours_Result[] }>;
   team_ts_nonoversightactivity: WebExpand<Team_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { team_ts_nonoversightactivity: ts_nonoversightactivity_Result[] }>;
@@ -232,6 +238,7 @@ interface Team_Expand {
   team_ts_role: WebExpand<Team_Expand, ts_role_Select, ts_role_Filter, { team_ts_role: ts_role_Result[] }>;
   team_ts_securityincident: WebExpand<Team_Expand, ts_securityincident_Select, ts_securityincident_Filter, { team_ts_securityincident: ts_securityincident_Result[] }>;
   team_ts_securityincidenttype: WebExpand<Team_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { team_ts_securityincidenttype: ts_securityincidenttype_Result[] }>;
+  team_ts_site: WebExpand<Team_Expand, ts_site_Select, ts_site_Filter, { team_ts_site: ts_site_Result[] }>;
   team_ts_suggestedinspection: WebExpand<Team_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { team_ts_suggestedinspection: ts_SuggestedInspection_Result[] }>;
   team_ts_teamplanningdata: WebExpand<Team_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { team_ts_teamplanningdata: ts_TeamPlanningData_Result[] }>;
   team_ts_teamplanninginspectorhours: WebExpand<Team_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { team_ts_teamplanninginspectorhours: ts_TeamPlanningInspectorHours_Result[] }>;
@@ -264,6 +271,7 @@ interface Team_FormattedResult {
   teamtemplateid_formatted?: string;
   teamtype_formatted?: string;
   transactioncurrencyid_formatted?: string;
+  ts_regiondonouse_formatted?: string;
   ts_territory_formatted?: string;
 }
 interface Team_Result extends Team_Base, Team_Relationships {
@@ -279,6 +287,7 @@ interface Team_Result extends Team_Base, Team_Relationships {
   regardingobjectid_guid: string | null;
   teamtemplateid_guid: string | null;
   transactioncurrencyid_guid: string | null;
+  ts_regiondonouse_guid: string | null;
   ts_territory_guid: string | null;
 }
 interface Team_RelatedOne {
@@ -323,6 +332,7 @@ interface Team_RelatedMany {
   team_ts_aircraft: WebMappingRetrieve<ts_aircraft_Select,ts_aircraft_Expand,ts_aircraft_Filter,ts_aircraft_Fixed,ts_aircraft_Result,ts_aircraft_FormattedResult>;
   team_ts_assessmentscorethredshots: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   team_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
+  team_ts_causefinding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   team_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   team_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   team_ts_nonoversightactivity: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
@@ -337,6 +347,7 @@ interface Team_RelatedMany {
   team_ts_role: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
   team_ts_securityincident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   team_ts_securityincidenttype: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
+  team_ts_site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   team_ts_suggestedinspection: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   team_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   team_ts_teamplanninginspectorhours: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;

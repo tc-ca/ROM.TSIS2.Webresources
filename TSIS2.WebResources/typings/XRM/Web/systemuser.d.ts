@@ -265,6 +265,10 @@ interface SystemUser_Relationships {
   lk_ts_canceledinspectionjustification_createdonbehalfby?: ts_canceledinspectionjustification_Result[] | null;
   lk_ts_canceledinspectionjustification_modifiedby?: ts_canceledinspectionjustification_Result[] | null;
   lk_ts_canceledinspectionjustification_modifiedonbehalfby?: ts_canceledinspectionjustification_Result[] | null;
+  lk_ts_causefinding_createdby?: ts_causefinding_Result[] | null;
+  lk_ts_causefinding_createdonbehalfby?: ts_causefinding_Result[] | null;
+  lk_ts_causefinding_modifiedby?: ts_causefinding_Result[] | null;
+  lk_ts_causefinding_modifiedonbehalfby?: ts_causefinding_Result[] | null;
   lk_ts_incompleteworkorderreason_createdby?: ts_IncompleteWorkOrderReason_Result[] | null;
   lk_ts_incompleteworkorderreason_createdonbehalfby?: ts_IncompleteWorkOrderReason_Result[] | null;
   lk_ts_incompleteworkorderreason_modifiedby?: ts_IncompleteWorkOrderReason_Result[] | null;
@@ -321,6 +325,10 @@ interface SystemUser_Relationships {
   lk_ts_securityincidenttype_createdonbehalfby?: ts_securityincidenttype_Result[] | null;
   lk_ts_securityincidenttype_modifiedby?: ts_securityincidenttype_Result[] | null;
   lk_ts_securityincidenttype_modifiedonbehalfby?: ts_securityincidenttype_Result[] | null;
+  lk_ts_site_createdby?: ts_site_Result[] | null;
+  lk_ts_site_createdonbehalfby?: ts_site_Result[] | null;
+  lk_ts_site_modifiedby?: ts_site_Result[] | null;
+  lk_ts_site_modifiedonbehalfby?: ts_site_Result[] | null;
   lk_ts_suggestedinspection_createdby?: ts_SuggestedInspection_Result[] | null;
   lk_ts_suggestedinspection_createdonbehalfby?: ts_SuggestedInspection_Result[] | null;
   lk_ts_suggestedinspection_modifiedby?: ts_SuggestedInspection_Result[] | null;
@@ -394,6 +402,7 @@ interface SystemUser_Relationships {
   user_ts_aircraft?: ts_aircraft_Result[] | null;
   user_ts_assessmentscorethredshots?: ts_assessmentscorethredshots_Result[] | null;
   user_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
+  user_ts_causefinding?: ts_causefinding_Result[] | null;
   user_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
   user_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
   user_ts_nonoversightactivity?: ts_nonoversightactivity_Result[] | null;
@@ -408,6 +417,7 @@ interface SystemUser_Relationships {
   user_ts_role?: ts_role_Result[] | null;
   user_ts_securityincident?: ts_securityincident_Result[] | null;
   user_ts_securityincidenttype?: ts_securityincidenttype_Result[] | null;
+  user_ts_site?: ts_site_Result[] | null;
   user_ts_suggestedinspection?: ts_SuggestedInspection_Result[] | null;
   user_ts_teamplanningdata?: ts_TeamPlanningData_Result[] | null;
   user_ts_teamplanninginspectorhours?: ts_TeamPlanningInspectorHours_Result[] | null;
@@ -426,6 +436,7 @@ interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
   territoryid_bind$territories?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_InspectionHours_bind$ts_inspectionhourses?: string | null;
+  ts_RegionNew_bind$ts_regions?: string | null;
   ts_Territory_bind$territories?: string | null;
 }
 interface SystemUser_Create extends SystemUser {
@@ -569,6 +580,7 @@ interface SystemUser_Select {
   traversedpath: WebAttribute<SystemUser_Select, { traversedpath: string | null }, {  }>;
   ts_dualinspector: WebAttribute<SystemUser_Select, { ts_dualinspector: boolean | null }, {  }>;
   ts_inspectionhours_guid: WebAttribute<SystemUser_Select, { ts_inspectionhours_guid: string | null }, { ts_inspectionhours_formatted?: string }>;
+  ts_regionnew_guid: WebAttribute<SystemUser_Select, { ts_regionnew_guid: string | null }, { ts_regionnew_formatted?: string }>;
   ts_territory_guid: WebAttribute<SystemUser_Select, { ts_territory_guid: string | null }, { ts_territory_formatted?: string }>;
   userlicensetype: WebAttribute<SystemUser_Select, { userlicensetype: number | null }, {  }>;
   userpuid: WebAttribute<SystemUser_Select, { userpuid: string | null }, {  }>;
@@ -715,6 +727,7 @@ interface SystemUser_Filter {
   traversedpath: string;
   ts_dualinspector: boolean;
   ts_inspectionhours_guid: XQW.Guid;
+  ts_regionnew_guid: XQW.Guid;
   ts_territory_guid: XQW.Guid;
   userlicensetype: number;
   userpuid: string;
@@ -864,6 +877,10 @@ interface SystemUser_Expand {
   lk_ts_canceledinspectionjustification_createdonbehalfby: WebExpand<SystemUser_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { lk_ts_canceledinspectionjustification_createdonbehalfby: ts_canceledinspectionjustification_Result[] }>;
   lk_ts_canceledinspectionjustification_modifiedby: WebExpand<SystemUser_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { lk_ts_canceledinspectionjustification_modifiedby: ts_canceledinspectionjustification_Result[] }>;
   lk_ts_canceledinspectionjustification_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { lk_ts_canceledinspectionjustification_modifiedonbehalfby: ts_canceledinspectionjustification_Result[] }>;
+  lk_ts_causefinding_createdby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_createdby: ts_causefinding_Result[] }>;
+  lk_ts_causefinding_createdonbehalfby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_createdonbehalfby: ts_causefinding_Result[] }>;
+  lk_ts_causefinding_modifiedby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_modifiedby: ts_causefinding_Result[] }>;
+  lk_ts_causefinding_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_modifiedonbehalfby: ts_causefinding_Result[] }>;
   lk_ts_incompleteworkorderreason_createdby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_createdby: ts_IncompleteWorkOrderReason_Result[] }>;
   lk_ts_incompleteworkorderreason_createdonbehalfby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_createdonbehalfby: ts_IncompleteWorkOrderReason_Result[] }>;
   lk_ts_incompleteworkorderreason_modifiedby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_modifiedby: ts_IncompleteWorkOrderReason_Result[] }>;
@@ -920,6 +937,10 @@ interface SystemUser_Expand {
   lk_ts_securityincidenttype_createdonbehalfby: WebExpand<SystemUser_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { lk_ts_securityincidenttype_createdonbehalfby: ts_securityincidenttype_Result[] }>;
   lk_ts_securityincidenttype_modifiedby: WebExpand<SystemUser_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { lk_ts_securityincidenttype_modifiedby: ts_securityincidenttype_Result[] }>;
   lk_ts_securityincidenttype_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { lk_ts_securityincidenttype_modifiedonbehalfby: ts_securityincidenttype_Result[] }>;
+  lk_ts_site_createdby: WebExpand<SystemUser_Expand, ts_site_Select, ts_site_Filter, { lk_ts_site_createdby: ts_site_Result[] }>;
+  lk_ts_site_createdonbehalfby: WebExpand<SystemUser_Expand, ts_site_Select, ts_site_Filter, { lk_ts_site_createdonbehalfby: ts_site_Result[] }>;
+  lk_ts_site_modifiedby: WebExpand<SystemUser_Expand, ts_site_Select, ts_site_Filter, { lk_ts_site_modifiedby: ts_site_Result[] }>;
+  lk_ts_site_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_site_Select, ts_site_Filter, { lk_ts_site_modifiedonbehalfby: ts_site_Result[] }>;
   lk_ts_suggestedinspection_createdby: WebExpand<SystemUser_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { lk_ts_suggestedinspection_createdby: ts_SuggestedInspection_Result[] }>;
   lk_ts_suggestedinspection_createdonbehalfby: WebExpand<SystemUser_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { lk_ts_suggestedinspection_createdonbehalfby: ts_SuggestedInspection_Result[] }>;
   lk_ts_suggestedinspection_modifiedby: WebExpand<SystemUser_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { lk_ts_suggestedinspection_modifiedby: ts_SuggestedInspection_Result[] }>;
@@ -996,6 +1017,7 @@ interface SystemUser_Expand {
   user_ts_aircraft: WebExpand<SystemUser_Expand, ts_aircraft_Select, ts_aircraft_Filter, { user_ts_aircraft: ts_aircraft_Result[] }>;
   user_ts_assessmentscorethredshots: WebExpand<SystemUser_Expand, ts_assessmentscorethredshots_Select, ts_assessmentscorethredshots_Filter, { user_ts_assessmentscorethredshots: ts_assessmentscorethredshots_Result[] }>;
   user_ts_canceledinspectionjustification: WebExpand<SystemUser_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { user_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
+  user_ts_causefinding: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { user_ts_causefinding: ts_causefinding_Result[] }>;
   user_ts_incompleteworkorderreason: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { user_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
   user_ts_inspectionhours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { user_ts_inspectionhours: ts_InspectionHours_Result[] }>;
   user_ts_nonoversightactivity: WebExpand<SystemUser_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { user_ts_nonoversightactivity: ts_nonoversightactivity_Result[] }>;
@@ -1010,6 +1032,7 @@ interface SystemUser_Expand {
   user_ts_role: WebExpand<SystemUser_Expand, ts_role_Select, ts_role_Filter, { user_ts_role: ts_role_Result[] }>;
   user_ts_securityincident: WebExpand<SystemUser_Expand, ts_securityincident_Select, ts_securityincident_Filter, { user_ts_securityincident: ts_securityincident_Result[] }>;
   user_ts_securityincidenttype: WebExpand<SystemUser_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { user_ts_securityincidenttype: ts_securityincidenttype_Result[] }>;
+  user_ts_site: WebExpand<SystemUser_Expand, ts_site_Select, ts_site_Filter, { user_ts_site: ts_site_Result[] }>;
   user_ts_suggestedinspection: WebExpand<SystemUser_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { user_ts_suggestedinspection: ts_SuggestedInspection_Result[] }>;
   user_ts_teamplanningdata: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { user_ts_teamplanningdata: ts_TeamPlanningData_Result[] }>;
   user_ts_teamplanninginspectorhours: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { user_ts_teamplanninginspectorhours: ts_TeamPlanningInspectorHours_Result[] }>;
@@ -1055,6 +1078,7 @@ interface SystemUser_FormattedResult {
   territoryid_formatted?: string;
   transactioncurrencyid_formatted?: string;
   ts_inspectionhours_formatted?: string;
+  ts_regionnew_formatted?: string;
   ts_territory_formatted?: string;
 }
 interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
@@ -1075,6 +1099,7 @@ interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
   territoryid_guid: string | null;
   transactioncurrencyid_guid: string | null;
   ts_inspectionhours_guid: string | null;
+  ts_regionnew_guid: string | null;
   ts_territory_guid: string | null;
 }
 interface SystemUser_RelatedOne {
@@ -1223,6 +1248,10 @@ interface SystemUser_RelatedMany {
   lk_ts_canceledinspectionjustification_createdonbehalfby: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   lk_ts_canceledinspectionjustification_modifiedby: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   lk_ts_canceledinspectionjustification_modifiedonbehalfby: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
+  lk_ts_causefinding_createdby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
+  lk_ts_causefinding_createdonbehalfby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
+  lk_ts_causefinding_modifiedby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
+  lk_ts_causefinding_modifiedonbehalfby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   lk_ts_incompleteworkorderreason_createdby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   lk_ts_incompleteworkorderreason_createdonbehalfby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   lk_ts_incompleteworkorderreason_modifiedby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
@@ -1279,6 +1308,10 @@ interface SystemUser_RelatedMany {
   lk_ts_securityincidenttype_createdonbehalfby: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
   lk_ts_securityincidenttype_modifiedby: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
   lk_ts_securityincidenttype_modifiedonbehalfby: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
+  lk_ts_site_createdby: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
+  lk_ts_site_createdonbehalfby: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
+  lk_ts_site_modifiedby: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
+  lk_ts_site_modifiedonbehalfby: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   lk_ts_suggestedinspection_createdby: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   lk_ts_suggestedinspection_createdonbehalfby: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   lk_ts_suggestedinspection_modifiedby: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
@@ -1351,6 +1384,7 @@ interface SystemUser_RelatedMany {
   user_ts_aircraft: WebMappingRetrieve<ts_aircraft_Select,ts_aircraft_Expand,ts_aircraft_Filter,ts_aircraft_Fixed,ts_aircraft_Result,ts_aircraft_FormattedResult>;
   user_ts_assessmentscorethredshots: WebMappingRetrieve<ts_assessmentscorethredshots_Select,ts_assessmentscorethredshots_Expand,ts_assessmentscorethredshots_Filter,ts_assessmentscorethredshots_Fixed,ts_assessmentscorethredshots_Result,ts_assessmentscorethredshots_FormattedResult>;
   user_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
+  user_ts_causefinding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   user_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   user_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   user_ts_nonoversightactivity: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
@@ -1365,6 +1399,7 @@ interface SystemUser_RelatedMany {
   user_ts_role: WebMappingRetrieve<ts_role_Select,ts_role_Expand,ts_role_Filter,ts_role_Fixed,ts_role_Result,ts_role_FormattedResult>;
   user_ts_securityincident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   user_ts_securityincidenttype: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
+  user_ts_site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   user_ts_suggestedinspection: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   user_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   user_ts_teamplanninginspectorhours: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;

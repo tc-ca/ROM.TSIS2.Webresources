@@ -53,6 +53,13 @@ declare namespace Form.ovs_finding.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_causes extends Xrm.SectionCollectionBase {
+        get(name: "tab_8_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface wo_details extends Xrm.SectionCollectionBase {
         get(name: "WOSection"): Xrm.PageSection;
         get(name: "null_section_4"): Xrm.PageSection;
@@ -130,6 +137,7 @@ declare namespace Form.ovs_finding.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Actions"): Xrm.SubGridControl<"ts_actionfinding">;
+      get(name: "Causes"): Xrm.SubGridControl<"ts_causefinding">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
       get(name: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
       get(name: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;
@@ -216,6 +224,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "tab_Files"): Xrm.PageTab<Tabs.tab_Files>;
       get(name: "tab_NCAT"): Xrm.PageTab<Tabs.tab_NCAT>;
       get(name: "tab_RATE"): Xrm.PageTab<Tabs.tab_RATE>;
+      get(name: "tab_causes"): Xrm.PageTab<Tabs.tab_causes>;
       get(name: "wo_details"): Xrm.PageTab<Tabs.wo_details>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -286,6 +295,7 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_workorder"): Xrm.Attribute<any>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Actions"): Xrm.SubGridControl<"ts_actionfinding">;
+    getControl(controlName: "Causes"): Xrm.SubGridControl<"ts_causefinding">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "WebResource_FindingProvisionText"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_NCATFactorGuide"): Xrm.WebResourceControl;

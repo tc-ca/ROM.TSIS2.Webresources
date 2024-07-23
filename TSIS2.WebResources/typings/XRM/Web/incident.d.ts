@@ -103,6 +103,7 @@ interface Incident_Relationships {
   ts_Incident_ts_operationcontact_ts_operation?: ts_operationcontact_Result[] | null;
   ts_InspectionType1?: msdyn_incidenttype_Result | null;
   ts_InspectionType2?: msdyn_incidenttype_Result | null;
+  ts_Site?: ts_site_Result | null;
   ts_WorkOrder1?: msdyn_workorder_Result | null;
   ts_WorkOrder2?: msdyn_workorder_Result | null;
   ts_WorkOrderServiceTask1?: msdyn_workorderservicetask_Result | null;
@@ -143,6 +144,8 @@ interface Incident extends Incident_Base, Incident_Relationships {
   ts_InspectionType1_bind$msdyn_incidenttypes?: string | null;
   ts_InspectionType2_bind$msdyn_incidenttypes?: string | null;
   ts_OperationType_bind$ovs_operationtypes?: string | null;
+  ts_Region_bind$ts_regions?: string | null;
+  ts_Site_bind$ts_sites?: string | null;
   ts_TradeNameId_bind$ts_tradenames?: string | null;
   ts_WorkOrder1_bind$msdyn_workorders?: string | null;
   ts_WorkOrder2_bind$msdyn_workorders?: string | null;
@@ -269,6 +272,8 @@ interface Incident_Select {
   ts_overtime: WebAttribute<Incident_Select, { ts_overtime: number | null }, {  }>;
   ts_quarterofreportinganddocumentation: WebAttribute<Incident_Select, { ts_quarterofreportinganddocumentation: ts_quarter | null }, { ts_quarterofreportinganddocumentation_formatted?: string }>;
   ts_quarteroftraveltime: WebAttribute<Incident_Select, { ts_quarteroftraveltime: ts_quarter | null }, { ts_quarteroftraveltime_formatted?: string }>;
+  ts_region_guid: WebAttribute<Incident_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
+  ts_site_guid: WebAttribute<Incident_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_tradenameid_guid: WebAttribute<Incident_Select, { ts_tradenameid_guid: string | null }, { ts_tradenameid_formatted?: string }>;
   ts_traveltime: WebAttribute<Incident_Select, { ts_traveltime: number | null }, {  }>;
   ts_workorder1_guid: WebAttribute<Incident_Select, { ts_workorder1_guid: string | null }, { ts_workorder1_formatted?: string }>;
@@ -392,6 +397,8 @@ interface Incident_Filter {
   ts_overtime: any;
   ts_quarterofreportinganddocumentation: ts_quarter;
   ts_quarteroftraveltime: ts_quarter;
+  ts_region_guid: XQW.Guid;
+  ts_site_guid: XQW.Guid;
   ts_tradenameid_guid: XQW.Guid;
   ts_traveltime: any;
   ts_workorder1_guid: XQW.Guid;
@@ -441,6 +448,7 @@ interface Incident_Expand {
   ts_Incident_ts_operationcontact_ts_operation: WebExpand<Incident_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_Incident_ts_operationcontact_ts_operation: ts_operationcontact_Result[] }>;
   ts_InspectionType1: WebExpand<Incident_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_InspectionType1: msdyn_incidenttype_Result }>;
   ts_InspectionType2: WebExpand<Incident_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_InspectionType2: msdyn_incidenttype_Result }>;
+  ts_Site: WebExpand<Incident_Expand, ts_site_Select, ts_site_Filter, { ts_Site: ts_site_Result }>;
   ts_WorkOrder1: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder1: msdyn_workorder_Result }>;
   ts_WorkOrder2: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder2: msdyn_workorder_Result }>;
   ts_WorkOrderServiceTask1: WebExpand<Incident_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_WorkOrderServiceTask1: msdyn_workorderservicetask_Result }>;
@@ -520,6 +528,8 @@ interface Incident_FormattedResult {
   ts_operationtype_formatted?: string;
   ts_quarterofreportinganddocumentation_formatted?: string;
   ts_quarteroftraveltime_formatted?: string;
+  ts_region_formatted?: string;
+  ts_site_formatted?: string;
   ts_tradenameid_formatted?: string;
   ts_workorder1_formatted?: string;
   ts_workorder2_formatted?: string;
@@ -568,6 +578,8 @@ interface Incident_Result extends Incident_Base, Incident_Relationships {
   ts_inspectiontype1_guid: string | null;
   ts_inspectiontype2_guid: string | null;
   ts_operationtype_guid: string | null;
+  ts_region_guid: string | null;
+  ts_site_guid: string | null;
   ts_tradenameid_guid: string | null;
   ts_workorder1_guid: string | null;
   ts_workorder2_guid: string | null;
@@ -595,6 +607,7 @@ interface Incident_RelatedOne {
   ts_AdditionalInspectors2: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_InspectionType1: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_InspectionType2: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
+  ts_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_WorkOrder1: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_WorkOrder2: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_WorkOrderServiceTask1: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;

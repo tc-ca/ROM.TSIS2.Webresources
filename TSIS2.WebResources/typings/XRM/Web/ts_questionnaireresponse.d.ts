@@ -15,10 +15,12 @@ interface ts_questionnaireresponse_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_questionnaireresponse_Relationships {
+  ts_WorkOrder?: msdyn_workorder_Result | null;
 }
 interface ts_questionnaireresponse extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  ts_WorkOrder_bind$msdyn_workorders?: string | null;
   ts_questionnaire_bind$ovs_questionnaires?: string | null;
 }
 interface ts_questionnaireresponse_Create extends ts_questionnaireresponse {
@@ -47,6 +49,7 @@ interface ts_questionnaireresponse_Select {
   ts_questionnaireanswers: WebAttribute<ts_questionnaireresponse_Select, { ts_questionnaireanswers: string | null }, {  }>;
   ts_questionnairedefinition: WebAttribute<ts_questionnaireresponse_Select, { ts_questionnairedefinition: string | null }, {  }>;
   ts_questionnaireresponseid: WebAttribute<ts_questionnaireresponse_Select, { ts_questionnaireresponseid: string | null }, {  }>;
+  ts_workorder_guid: WebAttribute<ts_questionnaireresponse_Select, { ts_workorder_guid: string | null }, { ts_workorder_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_questionnaireresponse_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_questionnaireresponse_Select, { versionnumber: number | null }, {  }>;
 }
@@ -72,6 +75,7 @@ interface ts_questionnaireresponse_Filter {
   ts_questionnaireanswers: string;
   ts_questionnairedefinition: string;
   ts_questionnaireresponseid: XQW.Guid;
+  ts_workorder_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -83,6 +87,7 @@ interface ts_questionnaireresponse_Expand {
   ownerid: WebExpand<ts_questionnaireresponse_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ts_questionnaireresponse_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_questionnaireresponse_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_WorkOrder: WebExpand<ts_questionnaireresponse_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder: msdyn_workorder_Result }>;
   ts_questionnaire: WebExpand<ts_questionnaireresponse_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { ts_questionnaire: ovs_Questionnaire_Result }>;
 }
 interface ts_questionnaireresponse_FormattedResult {
@@ -100,6 +105,7 @@ interface ts_questionnaireresponse_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_questionnaire_formatted?: string;
+  ts_workorder_formatted?: string;
 }
 interface ts_questionnaireresponse_Result extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
   "@odata.etag": string;
@@ -112,6 +118,7 @@ interface ts_questionnaireresponse_Result extends ts_questionnaireresponse_Base,
   owningteam_guid: string | null;
   owninguser_guid: string | null;
   ts_questionnaire_guid: string | null;
+  ts_workorder_guid: string | null;
 }
 interface ts_questionnaireresponse_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -121,6 +128,7 @@ interface ts_questionnaireresponse_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_questionnaire: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
 }
 interface ts_questionnaireresponse_RelatedMany {

@@ -21,6 +21,7 @@ declare namespace Form.bookingstatus.Main {
       get(name: "description"): Xrm.Attribute<string>;
       get(name: "msdyn_fieldservicestatus"): Xrm.OptionSetAttribute<msdyn_bookingsystemstatus>;
       get(name: "msdyn_imageurl"): Xrm.Attribute<string>;
+      get(name: "msdyn_optimizationmethod"): Xrm.OptionSetAttribute<msdyn_bookingstatusoptimizationmethod>;
       get(name: "msdyn_statuscolor"): Xrm.Attribute<string>;
       get(name: "msdyn_statuscompletesworkorder"): Xrm.Attribute<any>;
       get(name: "name"): Xrm.Attribute<string>;
@@ -35,6 +36,7 @@ declare namespace Form.bookingstatus.Main {
       get(name: "description"): Xrm.StringControl;
       get(name: "msdyn_fieldservicestatus"): Xrm.OptionSetControl<msdyn_bookingsystemstatus>;
       get(name: "msdyn_imageurl"): Xrm.StringControl;
+      get(name: "msdyn_optimizationmethod"): Xrm.OptionSetControl<msdyn_bookingstatusoptimizationmethod>;
       get(name: "msdyn_statuscolor"): Xrm.StringControl;
       get(name: "msdyn_statuscompletesworkorder"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "name"): Xrm.StringControl;
@@ -58,6 +60,7 @@ declare namespace Form.bookingstatus.Main {
     getAttribute(attributeName: "description"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_fieldservicestatus"): Xrm.OptionSetAttribute<msdyn_bookingsystemstatus>;
     getAttribute(attributeName: "msdyn_imageurl"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "msdyn_optimizationmethod"): Xrm.OptionSetAttribute<msdyn_bookingstatusoptimizationmethod>;
     getAttribute(attributeName: "msdyn_statuscolor"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_statuscompletesworkorder"): Xrm.Attribute<any>;
     getAttribute(attributeName: "name"): Xrm.Attribute<string>;
@@ -67,6 +70,7 @@ declare namespace Form.bookingstatus.Main {
     getControl(controlName: "description"): Xrm.StringControl;
     getControl(controlName: "msdyn_fieldservicestatus"): Xrm.OptionSetControl<msdyn_bookingsystemstatus>;
     getControl(controlName: "msdyn_imageurl"): Xrm.StringControl;
+    getControl(controlName: "msdyn_optimizationmethod"): Xrm.OptionSetControl<msdyn_bookingstatusoptimizationmethod>;
     getControl(controlName: "msdyn_statuscolor"): Xrm.StringControl;
     getControl(controlName: "msdyn_statuscompletesworkorder"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "name"): Xrm.StringControl;

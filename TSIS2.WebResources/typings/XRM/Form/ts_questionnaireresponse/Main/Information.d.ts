@@ -9,6 +9,7 @@ declare namespace Form.ts_questionnaireresponse.Main {
       get(name: "ts_questionnaire"): Xrm.LookupAttribute<"ovs_questionnaire">;
       get(name: "ts_questionnaireanswers"): Xrm.Attribute<string>;
       get(name: "ts_questionnairedefinition"): Xrm.Attribute<string>;
+      get(name: "ts_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -22,6 +23,7 @@ declare namespace Form.ts_questionnaireresponse.Main {
       get(name: "ts_questionnaire"): Xrm.LookupControl<"ovs_questionnaire">;
       get(name: "ts_questionnaireanswers"): Xrm.StringControl;
       get(name: "ts_questionnairedefinition"): Xrm.StringControl;
+      get(name: "ts_workorder"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -41,6 +43,7 @@ declare namespace Form.ts_questionnaireresponse.Main {
     getAttribute(attributeName: "ts_questionnaire"): Xrm.LookupAttribute<"ovs_questionnaire">;
     getAttribute(attributeName: "ts_questionnaireanswers"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_questionnairedefinition"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "WebResource_surveyrender"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -49,6 +52,7 @@ declare namespace Form.ts_questionnaireresponse.Main {
     getControl(controlName: "ts_questionnaire"): Xrm.LookupControl<"ovs_questionnaire">;
     getControl(controlName: "ts_questionnaireanswers"): Xrm.StringControl;
     getControl(controlName: "ts_questionnairedefinition"): Xrm.StringControl;
+    getControl(controlName: "ts_workorder"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: string): undefined;
   }
 }
