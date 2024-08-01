@@ -41,14 +41,14 @@ hasDetailQuestions.forEach(function (questionName) {
         name: "hasDetail:boolean",
         default: true
     }),
-    Survey.JsonObject.metaData.addProperty(questionName, {
-        name: "detailEnglishText:string",
-        default: "Detail"
-    }),
-    Survey.JsonObject.metaData.addProperty(questionName, {
-        name: "detailFrenchText:string",
-        default: "Détail"
-    })
+        Survey.JsonObject.metaData.addProperty(questionName, {
+            name: "detailEnglishText:string",
+            default: "Detail"
+        }),
+        Survey.JsonObject.metaData.addProperty(questionName, {
+            name: "detailFrenchText:string",
+            default: "Détail"
+        })
 });
 
 //add applicableProvisions and applicableProvisionsData property to all questions in hasApplicableProvisions array
@@ -132,7 +132,7 @@ async function appendExemptions(survey, options) {
     const content = document.createElement("div");
     const ExemptionHeaderText = document.createElement("span");
     const ExemptionExpandSymbol = document.createElement("span");
-    
+
     const exemptionResponseId = options.question.name + "-Exemptions"
 
     header.appendChild(ExemptionExpandSymbol);
@@ -148,7 +148,7 @@ async function appendExemptions(survey, options) {
     header.style.padding = "2px";
     header.style.cursor = "pointer";
     header.style.fontWeight = "bold";
-    
+
     ExemptionHeaderText.innerHTML = "Exemptions";
     content.style.display = "block";
     content.style.border = "1px solid";
@@ -214,8 +214,7 @@ async function appendExemptions(survey, options) {
         //Populate Exemption Name Cell
         let exemptionAnchor = document.createElement("a");
         //Open Exemption record in a modal form
-        exemptionAnchor.onclick = function ()
-        {
+        exemptionAnchor.onclick = function () {
             const pageInput = {
                 pageType: "entityrecord",
                 entityName: "ts_exemption",
@@ -541,7 +540,7 @@ async function exemptionIsApplicableToWorkOrder(exemption, workOrderFilterFields
         const exemptionFlightTypes = exemption.ts_flighttype.split(",");
         flightTypeMatch = exemptionFlightTypes.includes(workOrderFilterFields.flightType.toString());
     }
-    
+
 
     //Flight Category
     if (exemption.ts_flightcategory == null) {
@@ -702,7 +701,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             }
         }
     });
-    
+
     function appendDetailToQuestion(survey, options) {
         var detailSurveyId = options.question.name + "-Detail";
         var detailLabel = "";
@@ -853,7 +852,7 @@ function PrintSurveyPage() {
         // Set the Questionnaire name as the pdf file name
         var surveyTitleElementText = surveyTitleElement[0].querySelector('span').textContent;
         questionnairePrintPageFileName = surveyTitleElementText.replace(/ /g, '_');
-    } 
+    }
 
     // If there is no Questionnaire name available, give the pdf a default file name
     if (questionnairePrintPageFileName === "") {
@@ -863,19 +862,48 @@ function PrintSurveyPage() {
         } else {
             questionnairePrintPageFileName = "Questionnaire_Page_Printout";
         }
-    } 
+    }
 
     // https://ekoopmans.github.io/html2pdf.js/
     // Set the options for creating the PDF
     var opt = {
         jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' },
-        pagebreak: { after: '.sv_row' },
         pagebreak: { mode: 'avoid-all', before: '.sv_nav' },
         filename: questionnairePrintPageFileName
     };
 
+    // Clone the survey element
+    var surveyElement = document.getElementById('surveyElement');
+    var surveyClone = surveyElement.cloneNode(true);
+
+    // Convert textareas to editable divs
+    function convertTextareaToDiv(textarea) {
+        var editableDiv = document.createElement('div');
+        editableDiv.style.cssText = textarea.style.cssText; // Copy the style
+        editableDiv.setAttribute('contenteditable', 'false'); // Make it read-only
+        editableDiv.textContent = textarea.value; // Copy the text content
+        editableDiv.style.overflowWrap = 'break-word'; // Ensure long words wrap
+        editableDiv.style.wordBreak = 'break-word'; // Break words to prevent overflow
+        editableDiv.style.whiteSpace = 'pre-wrap'; // Maintain whitespace formatting
+        editableDiv.style.display = 'inline-block'; // Set display to inline-block
+        editableDiv.style.marginTop = '10px';
+        editableDiv.style.breakInside = 'avoid'; // Prevents the div from being split across pages
+
+        // Replace the textarea with the editable div
+        textarea.parentNode.replaceChild(editableDiv, textarea);
+    }
+
+    // Get all textareas and convert them before creating the PDF
+    var textareas = surveyClone.querySelectorAll('textarea');
+    textareas.forEach(convertTextareaToDiv);
+
     // Create the actual PDF
-    html2pdf().set(opt).from(document.getElementById('surveyElement')).saveAs();
+    html2pdf().set(opt).from(surveyClone).saveAs();
+
+    // Clean up: Remove the clone from the DOM if it was added for conversion
+    if (surveyClone.parentNode) {
+        surveyClone.parentNode.removeChild(surveyClone);
+    }
 }
 
 
