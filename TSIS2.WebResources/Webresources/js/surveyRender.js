@@ -876,6 +876,19 @@ function PrintSurveyPage() {
     var surveyElement = document.getElementById('surveyElement');
     var surveyClone = surveyElement.cloneNode(true);
 
+    // Function to hide elements with the text '##### characters remain'
+    function hideCharacterCountElements(clone) {
+        var characterCountElements = clone.querySelectorAll('span');
+        characterCountElements.forEach(function (span) {
+            if (span.textContent.match(/\d+ characters remain/)) {
+                span.style.display = 'none'; // Hide the element
+            }
+        });
+    }
+
+    // Hide character count elements in the clone
+    hideCharacterCountElements(surveyClone);
+
     // Convert textareas to editable divs
     function convertTextareaToDiv(textarea) {
         var editableDiv = document.createElement('div');
