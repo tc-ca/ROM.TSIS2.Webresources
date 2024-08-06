@@ -81,30 +81,8 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                                                         let isSpecificUser = Xrm.Utility.getGlobalContext().userSettings.userId;
 
                                                         if (isSpecificUser == '{7DFAC6D6-994B-EC11-8F8E-000D3AE9A369}') {
-
-                                                            var pageInput = {
-                                                                pageType: "webresource",
-                                                                webresourceName: "ts_/html/SharePointAttachFilePopUp.html",
-                                                                data: urlParams.get('id')
-                                                            };
-
-                                                            var navigationOptions = {
-                                                                target: 2,
-                                                                width: 900,
-                                                                height: 550,
-                                                                position: 1,
-                                                                title: "The New SharePoint App"
-                                                            };
-
-                                                            parent.Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
-                                                                function (returnValue) {
-                                                                    if (returnValue) {
-                                                                        // Once the pop-up is closed, refresh the attachment sub grid
-                                                                        //parent.Xrm.Page.getControl("attachmentsGrid").refresh();
-                                                                    }
-                                                                }
-                                                            );
-
+                                                            // navigate to SharePointAttachFilePopUp.html
+                                                            navigateToSharePointAttachFilePopUp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery, fileUploadData.usersManagerEmail);
                                                         }
                                                         else {
                                                             // navigate to the canvas app
@@ -200,6 +178,52 @@ function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEngl
                 // Handle error
             }
         );
+}
+
+// Separate method to navigate to SharePointAttachFilePopUp.html
+function navigateToSharePointAttachFilePopUp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish, usesGroupFiles, relatedSharePointFileID, relatedSharePointFileGroupID, relatedSharePointQuery, relatedManagerEmail) {
+
+    var jsonData = {
+        recordId: recordTagId,
+        recordOwnerName: recordOwner,
+        userLanguage: lang,
+        tableNameEnglish: recordTableNameEnglish,
+        tableNameFrench: recordTableNameFrench,
+        tableRecordName: recordName,
+        tableSchemaName: PrimaryTypeEntityName,
+        useGroupFiles: usesGroupFiles,
+        sharePointFileID: relatedSharePointFileID,
+        sharePointFileGroupID: relatedSharePointFileGroupID,
+        sharePointQuery: relatedSharePointQuery,
+        usersManagerEmail: relatedManagerEmail
+    };
+
+    var jsonString = JSON.stringify(jsonData).toString();
+
+    // Centered Dialog
+    var pageInput = {
+        pageType: "webresource",
+        webresourceName: "ts_/html/SharePointAttachFilePopUp.html",
+        data: jsonString
+    };
+
+    // Note: remember for height take into consideration the size of the heading of the dialog pop up
+    var navigationOptions = {
+        target: 2,
+        position: 1,
+        width: { value: 600, unit: "px" },
+        height: { value: 770, unit: "px" },
+        title: (lang == 1036) ? mainHeadingFrench : mainHeadingEnglish
+    };
+
+    parent.Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+        function (returnValue) {
+            if (returnValue) {
+                // Once the pop-up is closed, refresh the attachment sub grid
+                //parent.Xrm.Page.getControl("attachmentsGrid").refresh();
+            }
+        }
+    );
 }
 
 // FetchXml to use for each table
