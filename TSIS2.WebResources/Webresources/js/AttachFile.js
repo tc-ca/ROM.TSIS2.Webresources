@@ -70,8 +70,46 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                                                 getUsersManager(fileUploadData)
                                                     .then(() => {
 
-                                                        // navigate to the canvas app
-                                                        navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery, fileUploadData.usersManagerEmail);
+                                                        // Check if there is an ID
+                                                        const queryString = window.location.search;
+
+                                                        console.log('The queryString is ' + queryString);
+
+                                                        const urlParams = new URLSearchParams(queryString);
+
+                                                        // check if it's a specific user
+                                                        let isSpecificUser = Xrm.Utility.getGlobalContext().userSettings.userId;
+
+                                                        if (isSpecificUser == '{7DFAC6D6-994B-EC11-8F8E-000D3AE9A369}') {
+
+                                                            var pageInput = {
+                                                                pageType: "webresource",
+                                                                webresourceName: "ts_/html/SharePointAttachFilePopUp.html",
+                                                                data: urlParams.get('id')
+                                                            };
+
+                                                            var navigationOptions = {
+                                                                target: 2,
+                                                                width: 900,
+                                                                height: 550,
+                                                                position: 1,
+                                                                title: "The New SharePoint App"
+                                                            };
+
+                                                            parent.Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                                                                function (returnValue) {
+                                                                    if (returnValue) {
+                                                                        // Once the pop-up is closed, refresh the attachment sub grid
+                                                                        //parent.Xrm.Page.getControl("attachmentsGrid").refresh();
+                                                                    }
+                                                                }
+                                                            );
+
+                                                        }
+                                                        else {
+                                                            // navigate to the canvas app
+                                                            navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery, fileUploadData.usersManagerEmail);
+                                                        }
                                                 });
                                             });
                                     });
