@@ -435,7 +435,14 @@ async function checkOperationRiskAssessment(formContext, survey) {
             var alertOptions = { height: 200, width: 550 };
             Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
         } else {
-            completeConfirmation(formContext, survey);
+            var alertStrings = {
+                text: updateRiskAssessmentMessage,
+                title: workOrderServiceTaskLocalized
+            };
+            var alertOptions = { height: 200, width: 450 };
+            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
+                completeConfirmation(formContext, survey);
+            });
         }
     } else {
         completeConfirmation(formContext, survey);
@@ -449,14 +456,8 @@ function completeConfirmation(formContext, survey) {
     };
     var confirmOptions = { height: 200, width: 450 };
 
-    var alertStrings = {
-        text: updateRiskAssessmentMessage,
-        title: workOrderServiceTaskLocalized
-    };
-    var alertOptions = { height: 200, width: 450 };
-    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { 
-        Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
-          function (success) {
+    Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
+        function (success) {
             if (success.confirmed) {
                 formContext.getAttribute("msdyn_percentcomplete").setValue(100.00);
                 //Set Status Reason to Complete
@@ -468,8 +469,7 @@ function completeConfirmation(formContext, survey) {
                         formContext.ui.close();
                     });
             }
-            });
-    });
+        });
 }
 
 function ActivateWorkOrderServiceTask(primaryControl) {
