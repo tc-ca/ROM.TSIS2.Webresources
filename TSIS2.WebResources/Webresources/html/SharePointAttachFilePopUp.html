@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>The New SharePoint App</title>
+</head>
+<body onload="loadTable()">
+    <h1>The New SharePoint App</h1>
+    <script type="text/javascript">
+        let recordId = "";
+        let recordOwnerName = "";
+        let sharePointFileGroupID = "";
+        let sharePointFileID = "";
+        let sharePointQuery = "";
+        let tableNameEnglish = "";
+        let tableNameFrench = "";
+        let tableRecordName = "";
+        let tableSchemaName = "";
+        let useGroupFiles = false;
+        let userLanguage = 1033;
+        let usersManagerEmail = "";
+
+        function loadTable() {
+            // Parse the query string
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+
+            // Access the 'data' parameter
+            const jsonString = urlParams.get('data');
+
+            if (jsonString) {
+                try {
+                    // Parse the JSON string to an object
+                    const jsonData = JSON.parse(jsonString);
+
+                    // Populate the variables
+                    recordId = jsonData.recordId;
+                    recordOwnerName = jsonData.recordOwnerName;
+                    sharePointFileGroupID = jsonData.sharePointFileGroupID;
+                    sharePointFileID = jsonData.sharePointFileID;
+                    sharePointQuery = jsonData.sharePointQuery;
+                    tableNameEnglish = jsonData.tableNameEnglish;
+                    tableNameFrench = jsonData.tableNameFrench;
+                    tableRecordName = jsonData.tableRecordName;
+                    tableSchemaName = jsonData.tableSchemaName;
+                    useGroupFiles = jsonData.useGroupFiles;
+                    userLanguage = jsonData.userLanguage;
+                    usersManagerEmail = jsonData.usersManagerEmail;
+                } catch (error) {
+                    console.error("Error parsing JSON data:", error);
+                }
+            } else {
+                console.error("Data parameter is undefined");
+            }
+        }
+    </script>
+</body>
+</html>
