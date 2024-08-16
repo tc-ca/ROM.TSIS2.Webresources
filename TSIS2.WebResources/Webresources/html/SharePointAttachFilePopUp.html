@@ -11,7 +11,17 @@
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     <style>
+        /* the border radius of the drop area */
+        .filepond--panel-root {
+            border: 2px solid black;
+            border-radius: 0.5em;
+            padding: 5em;
+            /* margin-top: 10em; */
+        }
 
+        .filepond--item {
+            width: calc(50% - 0.5em);
+        }
     </style>
 
     <!-- Package used for the table - Tabulator -->
@@ -30,12 +40,12 @@
                 <button id="uploadAttachments" class="btn btn-default" style="margin-left: 10px; margin-top:10px" onclick="uploadAttachments()">Upload files</button>
             </div>
         </div>
-        <div class="row mb-5 mt-5">
+        <div class="row">
             <div class="col-sm-12 ">
                 <input id="my-filepond" type="file" class="filepond" name="filepond" multiple>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:120px">
             <div class="col-sm-12">
                 <div class="form-group">
                     <label for="fileDescription">Description:</label>
@@ -69,7 +79,7 @@
         let useGroupFiles = false;
         let userLanguage = 1033;
         let usersManagerEmail = "";
-        let userEmail = parent.Xrm.Utility.getGlobalContext().userSettings.emailAddress;
+        let usersEmail = "";
 
         // Label Text
         let noFilesText = "";
@@ -114,6 +124,7 @@
                     useGroupFiles = jsonData.useGroupFiles;
                     userLanguage = jsonData.userLanguage;
                     usersManagerEmail = jsonData.usersManagerEmail;
+                    usersEmail = jsonData.usersEmail
 
                     // Set the language for all the labels
                     setLanguage();
@@ -329,6 +340,8 @@
                     // Clear existing options
                     dropdown.innerHTML = ''; 
 
+                    var firstLoop = true;
+
                     // populate the drop down
                     sortedCategoriesList.forEach(category => {
                         const option = document.createElement('option');
@@ -346,7 +359,15 @@
                         }
 
                         dropdown.appendChild(option);
+
+                        // select the first item
+                        if (firstLoop) {
+                            selectedFileCategory = category.ID;
+                        }
+
+                        firstLoop = false;
                     });
+
 
                     return true;
                 } else {
@@ -373,10 +394,10 @@
                 FileContentJSON: jsonFileContent,
                 TableNameEnglish: tableNameEnglish,
                 TableNameFrench: tableNameFrench,
-                CategoryID: selectedFileCategory,
+                CategoryID: selectedFileCategory.toString(),
                 SharePointFileID: sharePointFileID,
                 ManagerEmail: usersManagerEmail,
-                UserEmail: userEmail
+                UserEmail: usersEmail
             };
 
             try {
@@ -385,8 +406,8 @@
                     headers: {
                         "Content-Type": "application/json",
                         "FlowKey": flowKey
-                    },
-                    body: JSON.stringify(data)
+                    }
+                    ,body: JSON.stringify(data)
                 });
 
                 if (response.ok) {
