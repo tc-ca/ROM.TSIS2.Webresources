@@ -11,6 +11,7 @@
     this.sharePointFileGroupID = "";
     this.sharePointQuery = "";
     this.usersManagerEmail = "";
+    this.usersEmail = "";
 }
 
 function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryControlId) {
@@ -81,8 +82,16 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                                                         let isSpecificUser = Xrm.Utility.getGlobalContext().userSettings.userId;
 
                                                         if (isSpecificUser == '{7DFAC6D6-994B-EC11-8F8E-000D3AE9A369}') {
-                                                            // navigate to SharePointAttachFilePopUp.html
-                                                            navigateToSharePointAttachFilePopUp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery, fileUploadData.usersManagerEmail);
+
+                                                            // get the users Email address
+                                                            getUsersEmail(fileUploadData)
+                                                                .then(() => {
+
+                                                                    // navigate to SharePointAttachFilePopUp.html
+                                                                    navigateToSharePointAttachFilePopUp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery, fileUploadData.usersManagerEmail, fileUploadData.usersEmail);
+
+                                                                });
+
                                                         }
                                                         else {
                                                             // navigate to the canvas app
@@ -181,7 +190,7 @@ function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEngl
 }
 
 // Separate method to navigate to SharePointAttachFilePopUp.html
-function navigateToSharePointAttachFilePopUp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish, usesGroupFiles, relatedSharePointFileID, relatedSharePointFileGroupID, relatedSharePointQuery, relatedManagerEmail) {
+function navigateToSharePointAttachFilePopUp(recordTagId, recordOwner, lang, recordTableNameEnglish, recordTableNameFrench, recordName, PrimaryTypeEntityName, mainHeadingFrench, mainHeadingEnglish, usesGroupFiles, relatedSharePointFileID, relatedSharePointFileGroupID, relatedSharePointQuery, relatedManagerEmail, relatedUserEmail) {
 
     var jsonData = {
         recordId: recordTagId,
@@ -195,7 +204,8 @@ function navigateToSharePointAttachFilePopUp(recordTagId, recordOwner, lang, rec
         sharePointFileID: relatedSharePointFileID,
         sharePointFileGroupID: relatedSharePointFileGroupID,
         sharePointQuery: relatedSharePointQuery,
-        usersManagerEmail: relatedManagerEmail
+        usersManagerEmail: relatedManagerEmail,
+        usersEmail: relatedUserEmail
     };
 
     var jsonString = JSON.stringify(jsonData).toString();
@@ -711,6 +721,47 @@ function getUsersManager(fileUploadData) {
             function (error) {
                 // handle error conditions
                 console.log(`Error retrieving the users Manager: ${PrimaryTypeEntityName}: ` + error.message);
+                reject(error); // reject the promise
+            }
+        );
+    });
+}
+
+function getUsersEmail(fileUploadData) {
+
+    return new Promise((resolve, reject) => {
+        let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+
+        userId = userId.replace(/[{}]/g, '');
+
+        let managerFetchXML = `
+        <fetch xmlns:generator="MarkMpn.SQL4CDS">
+          <entity name="systemuser">
+            <attribute name="internalemailaddress" />
+            <filter>
+              <condition attribute="systemuserid" operator="eq" value="${userId}" />
+            </filter>
+          </entity>
+        </fetch>
+    `;
+
+        let encodedSharePointFetchXML = encodeURIComponent(managerFetchXML);
+
+        // Get the email
+        return parent.Xrm.WebApi.retrieveMultipleRecords("systemuser", "?fetchXml=" + encodedSharePointFetchXML).then(
+            function success(result) {
+                if (result.entities[0] != undefined) {
+
+                    // get the Manager
+                    if (result.entities[0].internalemailaddress != null) {
+                        fileUploadData.usersEmail = result.entities[0].internalemailaddress;
+                    }
+                }
+                resolve(); // resolve the promise
+            },
+            function (error) {
+                // handle error conditions
+                console.log(`Error retrieving the users Email: ${PrimaryTypeEntityName}: ` + error.message);
                 reject(error); // reject the promise
             }
         );
