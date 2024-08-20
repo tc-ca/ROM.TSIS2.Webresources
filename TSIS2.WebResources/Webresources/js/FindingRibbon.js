@@ -16,6 +16,8 @@ if (lang == 1036) {
     missingFinalEnforcementActionForActionCreateTextLocalized = "Un ou plusieurs enregistrements de constatations sélectionnés n'ont pas de mesure d'application finale. Toutes les constatations sélectionnées doivent avoir une mesure d'application finale."
     createAcionFromObservationTitleLocalized = "Erreur de validation";
     createAcionFromObservationTextLocalized = "Il n'est pas possible de créer des mesures d'exécution pour les observations.";
+    createActionValidationTextLocalized = "Veuillez sélectionner une ou plusieurs constatations pour créer une action.";
+    createActionValidationTitleLocalized = "Sélection d'une ou plusieurs Constatations Requise";
 } else {
     markCompleteValidationTextLocalized = "All fields denoted by blue '+' must be completed in order to Mark Complete.";
     markCompleteValidationTitleLocalized = "Form Incomplete";
@@ -24,6 +26,9 @@ if (lang == 1036) {
     missingFinalEnforcementActionForActionCreateTextLocalized = "One of more selected Finding records do not have a Final Enforcement Action. All selected findings must have a Final Enforcement Action.";
     createAcionFromObservationTitleLocalized = "Validation Error";
     createAcionFromObservationTextLocalized = "Enforcement actions cannot be created for observations.";
+    createActionValidationTextLocalized = "Please select one or more findings to create an action.";
+    createActionValidationTitleLocalized = "Findings Selection Required";
+
 }
 
 let issoOperationTypeGuids = ["b27e5003-c751-eb11-a812-000d3af3ac0d", "c97a1a12-d8eb-eb11-bacb-000d3af4fbec", "21ca416a-431a-ec11-b6e7-000d3a09d067", "3b261029-c751-eb11-a812-000d3af3ac0d", "d883b39a-c751-eb11-a812-000d3af3ac0d", "da56fea1-c751-eb11-a812-000d3af3ac0d", "199e31ae-c751-eb11-a812-000d3af3ac0d"]
@@ -568,6 +573,12 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
     }
     if (aFindingIsObservation) {
         showAlertDialog(createAcionFromObservationTextLocalized, createAcionFromObservationTitleLocalized);
+        return;
+    }
+
+    //If findings are not selected open alert dialog
+    if (findingGUIDs.length == 0) {
+        showAlertDialog(createActionValidationTextLocalized, createActionValidationTitleLocalized);
         return;
     }
     const caseId = primaryControl.data.entity.getId().slice(1, -1);
