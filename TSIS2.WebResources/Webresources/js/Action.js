@@ -82,8 +82,8 @@ var ROM;
             { text: "Informal Meeting | Offered", value: 741130002 /* InformalMeetingOffered */ },
             { text: "Informal Meeting | Convened", value: 741130031 /* InformalMeetingConvened */ },
             { text: "Legal Counsel | Consulted", value: 741130016 /* LegalCounselConsulted */ },
-            { text: "Letter � Commitment | Received", value: 741130004 /* LetterCommitmentReceived */ },
-            { text: "Letter � Non-Compliance | Sent", value: 741130005 /* LetterNonComplianceSent */ },
+            { text: "Letter – Commitment | Received", value: 741130004 /* LetterCommitmentReceived */ },
+            { text: "Letter – Non-Compliance | Sent", value: 741130005 /* LetterNonComplianceSent */ },
             { text: "Letter - SSC OSA Further Action | Sent", value: 741130006 /* LetterSSCOSAFurtherActionSent */ },
             { text: "Letter - Non-Compliance | Response received", value: 741130032 /* LetterNonComplianceResponsereceived */ },
             // { text: "Notification | Non-compliance", value: ts_actiontype.NotificationNoncompliance },
@@ -179,7 +179,7 @@ var ROM;
             }
         }
         function clearNonActionFields(form) {
-            form.getAttribute("ts_stakeholder").setValue(null);
+            //form.getAttribute("ts_stakeholder").setValue(null);
             form.getAttribute("ts_contact").setValue(null);
             form.getAttribute("ts_deliverymethod").setValue(null);
             form.getAttribute("ts_location").setValue(null);
