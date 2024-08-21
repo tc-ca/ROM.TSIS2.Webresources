@@ -12,6 +12,7 @@ declare namespace Form.ts_operationactivity.Main {
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "ts_activity"): Xrm.LookupAttribute<"msdyn_incidenttype">;
+      get(name: "ts_closedondateoflastworkorder"): Xrm.DateAttribute;
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
@@ -30,6 +31,7 @@ declare namespace Form.ts_operationactivity.Main {
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "related_wos"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "ts_activity"): Xrm.LookupControl<"msdyn_incidenttype">;
+      get(name: "ts_closedondateoflastworkorder"): Xrm.DateControl;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
@@ -50,6 +52,7 @@ declare namespace Form.ts_operationactivity.Main {
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "ts_activity"): Xrm.LookupAttribute<"msdyn_incidenttype">;
+    getAttribute(attributeName: "ts_closedondateoflastworkorder"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
@@ -63,6 +66,7 @@ declare namespace Form.ts_operationactivity.Main {
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "related_wos"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "ts_activity"): Xrm.LookupControl<"msdyn_incidenttype">;
+    getControl(controlName: "ts_closedondateoflastworkorder"): Xrm.DateControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
