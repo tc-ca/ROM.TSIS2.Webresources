@@ -61,6 +61,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filtered Activity Types.
+        /// </summary>
+        internal static string FilteredActivityTypes {
+            get {
+                return ResourceManager.GetString("FilteredActivityTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This questionnaire response has already been appended to a work order.
         /// </summary>
         internal static string WorkOrderBannerMessage {
