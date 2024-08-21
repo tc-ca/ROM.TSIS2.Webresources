@@ -6,6 +6,7 @@ interface ts_OperationActivity_Base extends WebEntity {
   statecode?: ts_operationactivity_statecode | null;
   statuscode?: ts_operationactivity_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_closedondateoflastworkorder?: Date | null;
   ts_englishname?: string | null;
   ts_frenchname?: string | null;
   ts_name?: string | null;
@@ -61,6 +62,7 @@ interface ts_OperationActivity_Select {
   statuscode: WebAttribute<ts_OperationActivity_Select, { statuscode: ts_operationactivity_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_OperationActivity_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_activity_guid: WebAttribute<ts_OperationActivity_Select, { ts_activity_guid: string | null }, { ts_activity_formatted?: string }>;
+  ts_closedondateoflastworkorder: WebAttribute<ts_OperationActivity_Select, { ts_closedondateoflastworkorder: Date | null }, { ts_closedondateoflastworkorder_formatted?: string }>;
   ts_duedate_guid: WebAttribute<ts_OperationActivity_Select, { ts_duedate_guid: string | null }, { ts_duedate_formatted?: string }>;
   ts_englishname: WebAttribute<ts_OperationActivity_Select, { ts_englishname: string | null }, {  }>;
   ts_frenchname: WebAttribute<ts_OperationActivity_Select, { ts_frenchname: string | null }, {  }>;
@@ -96,6 +98,7 @@ interface ts_OperationActivity_Filter {
   statuscode: ts_operationactivity_statuscode;
   timezoneruleversionnumber: number;
   ts_activity_guid: XQW.Guid;
+  ts_closedondateoflastworkorder: Date;
   ts_duedate_guid: XQW.Guid;
   ts_englishname: string;
   ts_frenchname: string;
@@ -147,6 +150,7 @@ interface ts_OperationActivity_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_activity_formatted?: string;
+  ts_closedondateoflastworkorder_formatted?: string;
   ts_duedate_formatted?: string;
   ts_lastcompletedwo_formatted?: string;
   ts_nextplannedwo_formatted?: string;

@@ -84,6 +84,7 @@ interface ovs_operation extends ovs_operation_Base, ovs_operation_Relationships 
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   ts_OPITeam_bind$teams?: string | null;
+  ts_RegulatedEntityRiskRating_bind$ts_riskratings?: string | null;
   ts_Site_Site_bind$ts_sites?: string | null;
   ts_Subsite_Site_bind$ts_sites?: string | null;
   ts_Subsubsite_Site_bind$ts_sites?: string | null;
@@ -146,6 +147,7 @@ interface ovs_operation_Select {
   ts_ppecategories: WebAttribute<ovs_operation_Select, { ts_ppecategories: ts_ppecategories | null }, { ts_ppecategories_formatted?: string }>;
   ts_ppeguide: WebAttribute<ovs_operation_Select, { ts_ppeguide: boolean | null }, {  }>;
   ts_pperequired: WebAttribute<ovs_operation_Select, { ts_pperequired: boolean | null }, {  }>;
+  ts_regulatedentityriskrating_guid: WebAttribute<ovs_operation_Select, { ts_regulatedentityriskrating_guid: string | null }, { ts_regulatedentityriskrating_formatted?: string }>;
   ts_risk_guid: WebAttribute<ovs_operation_Select, { ts_risk_guid: string | null }, { ts_risk_formatted?: string }>;
   ts_riskscore: WebAttribute<ovs_operation_Select, { ts_riskscore: number | null }, {  }>;
   ts_riskthreshold: WebAttribute<ovs_operation_Select, { ts_riskthreshold: string | null }, {  }>;
@@ -220,6 +222,7 @@ interface ovs_operation_Filter {
   ts_ppecategories: ts_ppecategories;
   ts_ppeguide: boolean;
   ts_pperequired: boolean;
+  ts_regulatedentityriskrating_guid: XQW.Guid;
   ts_risk_guid: XQW.Guid;
   ts_riskscore: number;
   ts_riskthreshold: string;
@@ -308,6 +311,7 @@ interface ovs_operation_FormattedResult {
   ts_opiteam_formatted?: string;
   ts_planningstatus_formatted?: string;
   ts_ppecategories_formatted?: string;
+  ts_regulatedentityriskrating_formatted?: string;
   ts_risk_formatted?: string;
   ts_securityinspectiondetails_formatted?: string;
   ts_site_formatted?: string;
@@ -339,6 +343,7 @@ interface ovs_operation_Result extends ovs_operation_Base, ovs_operation_Relatio
   owninguser_guid: string | null;
   ts_operationfrequency_guid: string | null;
   ts_opiteam_guid: string | null;
+  ts_regulatedentityriskrating_guid: string | null;
   ts_risk_guid: string | null;
   ts_site_guid: string | null;
   ts_site_site_guid: string | null;
