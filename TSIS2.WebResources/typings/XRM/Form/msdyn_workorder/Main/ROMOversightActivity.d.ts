@@ -399,6 +399,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_alternateoperatingcarrier"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_arrivalaerodrome"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_businessowner"): Xrm.StringControl;
+      get(name: "ts_businessowner1"): Xrm.StringControl;
       get(name: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
       get(name: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_checkedbagsboarded"): Xrm.NumberControl;
@@ -758,6 +759,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_alternateoperatingcarrier"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_arrivalaerodrome"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_businessowner"): Xrm.StringControl;
+    getControl(controlName: "ts_businessowner1"): Xrm.StringControl;
     getControl(controlName: "ts_canceledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
     getControl(controlName: "ts_cantcompleteinspection"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_checkedbagsboarded"): Xrm.NumberControl;

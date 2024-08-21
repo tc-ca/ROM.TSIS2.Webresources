@@ -4,6 +4,7 @@ declare namespace Form.ts_questionnaireresponse.Main {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+      get(name: "ts_activitytype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_debug"): Xrm.Attribute<string>;
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_questionnaire"): Xrm.LookupAttribute<"ovs_questionnaire">;
@@ -18,6 +19,7 @@ declare namespace Form.ts_questionnaireresponse.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "WebResource_surveyrender"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "ts_activitytype"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_debug"): Xrm.StringControl;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_questionnaire"): Xrm.LookupControl<"ovs_questionnaire">;
@@ -38,6 +40,7 @@ declare namespace Form.ts_questionnaireresponse.Main {
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+    getAttribute(attributeName: "ts_activitytype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_debug"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_questionnaire"): Xrm.LookupAttribute<"ovs_questionnaire">;
@@ -47,6 +50,7 @@ declare namespace Form.ts_questionnaireresponse.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "WebResource_surveyrender"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "ts_activitytype"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_debug"): Xrm.StringControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_questionnaire"): Xrm.LookupControl<"ovs_questionnaire">;

@@ -108,6 +108,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
       get(name: "ts_ppeguide"): Xrm.Attribute<any>;
       get(name: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "ts_regulatedentityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
       get(name: "ts_risk"): Xrm.LookupAttribute<"ts_riskcategory">;
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_ron"): Xrm.Attribute<any>;
@@ -175,6 +176,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
       get(name: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_pperequired"): Xrm.OptionSetControl<boolean>;
+      get(name: "ts_regulatedentityriskrating"): Xrm.LookupControl<"ts_riskrating">;
       get(name: "ts_risk"): Xrm.LookupControl<"ts_riskcategory">;
       get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_ron"): Xrm.Control<Xrm.Attribute<any>>;
@@ -245,6 +247,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_ppecategories"): Xrm.MultiSelectOptionSetAttribute<ts_ppecategories>;
     getAttribute(attributeName: "ts_ppeguide"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_pperequired"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "ts_regulatedentityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
     getAttribute(attributeName: "ts_risk"): Xrm.LookupAttribute<"ts_riskcategory">;
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_ron"): Xrm.Attribute<any>;
@@ -307,6 +310,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_ppecategories"): Xrm.MultiSelectOptionSetControl<ts_ppecategories>;
     getControl(controlName: "ts_ppeguide"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_pperequired"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "ts_regulatedentityriskrating"): Xrm.LookupControl<"ts_riskrating">;
     getControl(controlName: "ts_risk"): Xrm.LookupControl<"ts_riskcategory">;
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_ron"): Xrm.Control<Xrm.Attribute<any>>;

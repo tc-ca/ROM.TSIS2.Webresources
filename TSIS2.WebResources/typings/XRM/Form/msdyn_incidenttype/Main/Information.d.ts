@@ -110,6 +110,8 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_onestopsecurityoss"): Xrm.Attribute<any>;
       get(name: "ts_opi"): Xrm.Attribute<any>;
       get(name: "ts_preparationtime"): Xrm.NumberAttribute;
+      get(name: "ts_programactivityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
+      get(name: "ts_programarea"): Xrm.LookupAttribute<"ts_programarea">;
       get(name: "ts_remainovernightron"): Xrm.Attribute<any>;
       get(name: "ts_reportinganddocumentation"): Xrm.NumberAttribute;
       get(name: "ts_reportingcategory"): Xrm.OptionSetAttribute<ts_reportingcategory>;
@@ -187,6 +189,8 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "ts_onestopsecurityoss"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_opi"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_preparationtime"): Xrm.NumberControl;
+      get(name: "ts_programactivityriskrating"): Xrm.LookupControl<"ts_riskrating">;
+      get(name: "ts_programarea"): Xrm.LookupControl<"ts_programarea">;
       get(name: "ts_remainovernightron"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_reportinganddocumentation"): Xrm.NumberControl;
       get(name: "ts_reportingcategory"): Xrm.OptionSetControl<ts_reportingcategory>;
@@ -273,6 +277,8 @@ declare namespace Form.msdyn_incidenttype.Main {
     getAttribute(attributeName: "ts_onestopsecurityoss"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_opi"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_preparationtime"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_programactivityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
+    getAttribute(attributeName: "ts_programarea"): Xrm.LookupAttribute<"ts_programarea">;
     getAttribute(attributeName: "ts_remainovernightron"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_reportinganddocumentation"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_reportingcategory"): Xrm.OptionSetAttribute<ts_reportingcategory>;
@@ -345,6 +351,8 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "ts_onestopsecurityoss"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_opi"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_preparationtime"): Xrm.NumberControl;
+    getControl(controlName: "ts_programactivityriskrating"): Xrm.LookupControl<"ts_riskrating">;
+    getControl(controlName: "ts_programarea"): Xrm.LookupControl<"ts_programarea">;
     getControl(controlName: "ts_remainovernightron"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_reportinganddocumentation"): Xrm.NumberControl;
     getControl(controlName: "ts_reportingcategory"): Xrm.OptionSetControl<ts_reportingcategory>;
