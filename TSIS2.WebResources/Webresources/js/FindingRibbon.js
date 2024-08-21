@@ -582,6 +582,11 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
         return;
     }
     const caseId = primaryControl.data.entity.getId().slice(1, -1);
+    var stakeholderId="";
+    const caseRecord = await Xrm.WebApi.retrieveRecord("incident", caseId, "?$select=_customerid_value");
+    if (caseRecord != null && caseRecord._customerid_value != null) {
+        stakeholderId = caseRecord._customerid_value;
+    }
    
     if (await isNCAT(findingGUIDs[0])) {
         //Retrieve highest enforcement action of findings
@@ -591,9 +596,18 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
         {
             "ts_Case@odata.bind": `/incidents(${caseId})`,
             "ts_actiontype": getTypeOfActionValueInEntity(highestEnforcementAction),
-            "ts_actioncategory": 741130002
+            "ts_actioncategory": 741130002,
+            "ts_stakeholder@odata.bind": `/accounts(${stakeholderId})`
         }
 
+        if (stakeholderId == "") {
+            data =
+            {
+                "ts_Case@odata.bind": `/incidents(${caseId})`,
+                "ts_actiontype": getTypeOfActionValueInEntity(highestEnforcementAction),
+                "ts_actioncategory": 741130002
+            }
+        }
         Xrm.WebApi.createRecord("ts_action", data).then(
             function (newEnforcementAction) {
                 console.log("Successfully created action.");
@@ -650,9 +664,17 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
             {
                 "ts_Case@odata.bind": `/incidents(${caseId})`,
                 "ts_actiontype": getTypeOfActionValueInEntity(findingRow.getAttribute("ts_finalenforcementaction").getValue()),
-                "ts_actioncategory": 741130002
+                "ts_actioncategory": 741130002,
+                "ts_stakeholder@odata.bind": `/accounts(${stakeholderId})`
             }
-
+            if (stakeholderId == "") {
+                data =
+                {
+                    "ts_Case@odata.bind": `/incidents(${caseId})`,
+                    "ts_actiontype": getTypeOfActionValueInEntity(findingRow.getAttribute("ts_finalenforcementaction").getValue()),
+                    "ts_actioncategory": 741130002
+                }
+            }
             if (!enforcementActionType.includes(getTypeOfActionValueInEntity(findingRow.getAttribute("ts_finalenforcementaction").getValue()))) {
                 enforcementActionType.push(getTypeOfActionValueInEntity(findingRow.getAttribute("ts_finalenforcementaction").getValue()));
 
