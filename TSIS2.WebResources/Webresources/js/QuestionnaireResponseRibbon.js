@@ -24,17 +24,25 @@ function appendToWOST(formContext) {
         height: { value: 550, unit: "px" },
         title: (lang == 1036) ? "Ajouter à la tâche de service" : "Append Questionnaire to Work Order Service Task"
     };
-    Xrm.Navigation.navigateTo(pageInput, navigationOptions)
-        .then(
-        //function () {
-        //    // Called when the dialog closes
-        //    formContext.data.refresh();
-        //}
-    ).catch(
-        function (error) {
-            // Handle error
-        }
-    );
+
+    var selectedActivityType = formContext.getAttribute("ts_activitytype").getValue()
+
+    if (selectedActivityType) {
+        Xrm.Navigation.navigateTo(pageInput, navigationOptions)
+            .then(
+            function () {
+                // Called when the dialog closes
+                formContext.data.refresh();
+            }
+        ).catch(
+            function (error) {
+                // Handle error
+            }
+        );
+    }
+    else {
+
+    }
 }
 
 function isAdminOrManager(){
