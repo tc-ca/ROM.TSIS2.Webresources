@@ -117,7 +117,6 @@ var ROM;
                 var viewId = '{5D6A532B-172B-469E-993F-F6C6CF8C2E9F}';
                 var entityName = "msdyn_incidenttype";
                 var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/QuestionnaireResponse", "FilteredActivityTypes");
-                //const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ts_incompleteworkorderreason"><attribute name="ts_incompleteworkorderreasonid" /><attribute name="ts_name" /><filter type="or"><condition attribute="ownerid" operator="eq" value="' + ownerId + '" /><condition attribute="ts_incompleteworkorderreasonid" operator="eq" value="' + otherId + '" /></filter><order attribute="ts_name" /></entity></fetch>';
                 var layoutXml = "\n                <grid name=\"resultset\" object=\"10010\" jump=\"msdyn_name\" select=\"1\" icon=\"1\" preview=\"1\">\n\t                <row name=\"result\" id=\"msdyn_incidenttypeid\">\n\t\t                <cell name=\"msdyn_name\" width=\"200\" />\n\t                </row>\n                </grid>\n            ";
                 form.getControl("ts_activitytype").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXML, layoutXml, true);
             }
