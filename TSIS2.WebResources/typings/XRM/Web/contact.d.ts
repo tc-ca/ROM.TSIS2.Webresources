@@ -242,6 +242,7 @@ interface Contact_Relationships {
   ts_contact_msdyn_workorder_Contact?: msdyn_workorder_Result[] | null;
   ts_contact_ovs_finding_Contact?: ovs_Finding_Result[] | null;
   ts_contact_ts_action_contact?: ts_action_Result[] | null;
+  ts_contact_ts_case_primarycontactid?: ts_case_Result[] | null;
   ts_contact_ts_operationcontact_contact?: ts_operationcontact_Result[] | null;
   ts_ts_enforcementaction_Verbalwarninggivento?: ts_enforcementaction_Result[] | null;
   ts_ts_enforcementaction_Writtenwarningsentto?: ts_enforcementaction_Result[] | null;
@@ -786,6 +787,7 @@ interface Contact_Expand {
   ts_contact_msdyn_workorder_Contact: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_contact_msdyn_workorder_Contact: msdyn_workorder_Result[] }>;
   ts_contact_ovs_finding_Contact: WebExpand<Contact_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_contact_ovs_finding_Contact: ovs_Finding_Result[] }>;
   ts_contact_ts_action_contact: WebExpand<Contact_Expand, ts_action_Select, ts_action_Filter, { ts_contact_ts_action_contact: ts_action_Result[] }>;
+  ts_contact_ts_case_primarycontactid: WebExpand<Contact_Expand, ts_case_Select, ts_case_Filter, { ts_contact_ts_case_primarycontactid: ts_case_Result[] }>;
   ts_contact_ts_operationcontact_contact: WebExpand<Contact_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_contact_ts_operationcontact_contact: ts_operationcontact_Result[] }>;
   ts_ts_enforcementaction_Verbalwarninggivento: WebExpand<Contact_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Verbalwarninggivento: ts_enforcementaction_Result[] }>;
   ts_ts_enforcementaction_Writtenwarningsentto: WebExpand<Contact_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Writtenwarningsentto: ts_enforcementaction_Result[] }>;
@@ -943,6 +945,7 @@ interface Contact_RelatedMany {
   ts_contact_msdyn_workorder_Contact: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_contact_ovs_finding_Contact: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_contact_ts_action_contact: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
+  ts_contact_ts_case_primarycontactid: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   ts_contact_ts_operationcontact_contact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_ts_enforcementaction_Verbalwarninggivento: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_ts_enforcementaction_Writtenwarningsentto: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
