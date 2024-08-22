@@ -429,7 +429,7 @@ function checkIfAllFindingsHaveEnforcementAction(findingRows) {
             aFindingIsProtectedB = true;
         }
         if (findingType == 717750001) { // Observation 
-            aFindingIsObservation  = true;
+            aFindingIsObservation = true;
         }
     });
     return { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB, aFindingIsObservation };
@@ -566,10 +566,13 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
     //Confirm all selected findings have a final enforcement action
     let { allFindingsHaveFinalEnforcementAction, aFindingIsProtectedB, aFindingIsObservation } = checkIfAllFindingsHaveEnforcementAction(findingRows);
 
+    //If AvSec we don't need a final enforcement action
     //If a finding does not have a final enforcement action, open an alert dialog
-    if (!allFindingsHaveFinalEnforcementAction) {
-        showAlertDialog(missingFinalEnforcementActionForActionCreateTextLocalized, missingFinalEnforcementActionTitleLocalized);
-        return;
+    if (!isAvSecBusinessUnit()) {
+        if (!allFindingsHaveFinalEnforcementAction) {
+            showAlertDialog(missingFinalEnforcementActionForActionCreateTextLocalized, missingFinalEnforcementActionTitleLocalized);
+            return;
+        }
     }
     if (aFindingIsObservation) {
         showAlertDialog(createAcionFromObservationTextLocalized, createAcionFromObservationTitleLocalized);
@@ -582,7 +585,12 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
         return;
     }
     const caseId = primaryControl.data.entity.getId().slice(1, -1);
-   
+    var stakeholderId = "";
+    const caseRecord = await Xrm.WebApi.retrieveRecord("incident", caseId, "?$select=_customerid_value");
+    if (caseRecord != null && caseRecord._customerid_value != null) {
+        stakeholderId = caseRecord._customerid_value;
+    }
+
     if (await isNCAT(findingGUIDs[0])) {
         //Retrieve highest enforcement action of findings
         let highestEnforcementAction = getHighestEnforcementActionFromFindings(findingRows);
@@ -591,9 +599,18 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
         {
             "ts_Case@odata.bind": `/incidents(${caseId})`,
             "ts_actiontype": getTypeOfActionValueInEntity(highestEnforcementAction),
-            "ts_actioncategory": 741130002
+            "ts_actioncategory": 741130002,
+            "ts_stakeholder@odata.bind": `/accounts(${stakeholderId})`
         }
 
+        if (stakeholderId == "") {
+            data =
+            {
+                "ts_Case@odata.bind": `/incidents(${caseId})`,
+                "ts_actiontype": getTypeOfActionValueInEntity(highestEnforcementAction),
+                "ts_actioncategory": 741130002
+            }
+        }
         Xrm.WebApi.createRecord("ts_action", data).then(
             function (newEnforcementAction) {
                 console.log("Successfully created action.");
@@ -650,9 +667,17 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
             {
                 "ts_Case@odata.bind": `/incidents(${caseId})`,
                 "ts_actiontype": getTypeOfActionValueInEntity(findingRow.getAttribute("ts_finalenforcementaction").getValue()),
-                "ts_actioncategory": 741130002
+                "ts_actioncategory": 741130002,
+                "ts_stakeholder@odata.bind": `/accounts(${stakeholderId})`
             }
-
+            if (stakeholderId == "") {
+                data =
+                {
+                    "ts_Case@odata.bind": `/incidents(${caseId})`,
+                    "ts_actiontype": getTypeOfActionValueInEntity(findingRow.getAttribute("ts_finalenforcementaction").getValue()),
+                    "ts_actioncategory": 741130002
+                }
+            }
             if (!enforcementActionType.includes(getTypeOfActionValueInEntity(findingRow.getAttribute("ts_finalenforcementaction").getValue()))) {
                 enforcementActionType.push(getTypeOfActionValueInEntity(findingRow.getAttribute("ts_finalenforcementaction").getValue()));
 
@@ -704,10 +729,10 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
                     },
                     function (error) {
                         console.log(error.message);
-                    }); 
-            } 
-        }); 
-    } 
+                    });
+            }
+        });
+    }
 }
 
 //Takes selected Finding records from a subgrid, finds which one is complete, and applies its enforcement tool results to the remaining selected records
@@ -718,7 +743,7 @@ async function copyEnforcementActionToolResults(primaryControl, SelectedControls
         "  <entity name='ovs_finding'>",
         "    <filter>",
         "      <condition attribute='ovs_findingid' operator='in'>",
-                    findingIdsFilterValues.join(""),
+        findingIdsFilterValues.join(""),
         "      </condition>",
         "      <condition attribute='ts_finalenforcementaction' operator='not-null'/>",
         "    </filter>",
@@ -749,7 +774,7 @@ async function copyEnforcementActionToolResults(primaryControl, SelectedControls
             title: "Appliquez les résultats"
         };
     }
-    
+
 
     if (completeFinding != null) {
         //Open confirmation message asking if they're sure and which result will be copied
@@ -797,7 +822,7 @@ async function copyEnforcementActionToolResults(primaryControl, SelectedControls
                     if (completeFinding._ts_ncatapprovingteam_value != null) {
                         data["ts_NCATApprovingTeam@odata.bind"] = "/teams(" + completeFinding._ts_ncatapprovingteam_value + ")";
                     }
-                        
+
                 }
                 else if (completeFinding._ts_rategeneralcompliancehistory_value != null) {
                     //RATE
