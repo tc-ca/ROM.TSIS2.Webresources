@@ -18,6 +18,7 @@ declare namespace Form.ts_suggestedinspection.Main {
       get(name: "ts_estimatedduration"): Xrm.NumberAttribute;
       get(name: "ts_estimatedtraveltime"): Xrm.NumberAttribute;
       get(name: "ts_inspector"): Xrm.LookupAttribute<"systemuser">;
+      get(name: "ts_justification"): Xrm.Attribute<string>;
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
@@ -44,6 +45,7 @@ declare namespace Form.ts_suggestedinspection.Main {
       get(name: "ts_estimatedduration"): Xrm.NumberControl;
       get(name: "ts_estimatedtraveltime"): Xrm.NumberControl;
       get(name: "ts_inspector"): Xrm.LookupControl<"systemuser">;
+      get(name: "ts_justification"): Xrm.StringControl;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
@@ -76,6 +78,7 @@ declare namespace Form.ts_suggestedinspection.Main {
     getAttribute(attributeName: "ts_estimatedduration"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_estimatedtraveltime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_inspector"): Xrm.LookupAttribute<"systemuser">;
+    getAttribute(attributeName: "ts_justification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
@@ -97,6 +100,7 @@ declare namespace Form.ts_suggestedinspection.Main {
     getControl(controlName: "ts_estimatedduration"): Xrm.NumberControl;
     getControl(controlName: "ts_estimatedtraveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_inspector"): Xrm.LookupControl<"systemuser">;
+    getControl(controlName: "ts_justification"): Xrm.StringControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;

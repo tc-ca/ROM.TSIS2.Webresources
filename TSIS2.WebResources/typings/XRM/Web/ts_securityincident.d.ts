@@ -28,7 +28,6 @@ interface ts_securityincident_Base extends WebEntity {
   ts_incidentdatetimeadjust?: Date | null;
   ts_inflight?: boolean | null;
   ts_injuries?: ts_injuries | null;
-  ts_justification?: string | null;
   ts_latitude?: number | null;
   ts_locationcontext?: string | null;
   ts_locationtype?: ts_locationtype | null;
@@ -179,7 +178,6 @@ interface ts_securityincident_Select {
   ts_incidentdatetimeadjust: WebAttribute<ts_securityincident_Select, { ts_incidentdatetimeadjust: Date | null }, { ts_incidentdatetimeadjust_formatted?: string }>;
   ts_inflight: WebAttribute<ts_securityincident_Select, { ts_inflight: boolean | null }, {  }>;
   ts_injuries: WebAttribute<ts_securityincident_Select, { ts_injuries: ts_injuries | null }, { ts_injuries_formatted?: string }>;
-  ts_justification: WebAttribute<ts_securityincident_Select, { ts_justification: string | null }, {  }>;
   ts_latitude: WebAttribute<ts_securityincident_Select, { ts_latitude: number | null }, {  }>;
   ts_locationcontext: WebAttribute<ts_securityincident_Select, { ts_locationcontext: string | null }, {  }>;
   ts_locationtype: WebAttribute<ts_securityincident_Select, { ts_locationtype: ts_locationtype | null }, { ts_locationtype_formatted?: string }>;
@@ -291,7 +289,6 @@ interface ts_securityincident_Filter {
   ts_incidentdatetimeadjust: Date;
   ts_inflight: boolean;
   ts_injuries: ts_injuries;
-  ts_justification: string;
   ts_latitude: number;
   ts_locationcontext: string;
   ts_locationtype: ts_locationtype;

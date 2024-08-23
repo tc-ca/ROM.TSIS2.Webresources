@@ -11,6 +11,7 @@ declare namespace Form.ovs_operation.Quick {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+      get(name: "ts_regulatedentityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -18,6 +19,7 @@ declare namespace Form.ovs_operation.Quick {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+      get(name: "ts_regulatedentityriskrating"): Xrm.LookupControl<"ts_riskrating">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -33,8 +35,10 @@ declare namespace Form.ovs_operation.Quick {
   }
   interface OperationquickviewformforOperationActivity extends Xrm.PageBase<OperationquickviewformforOperationActivity.Attributes,OperationquickviewformforOperationActivity.Tabs,OperationquickviewformforOperationActivity.Controls> {
     getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+    getAttribute(attributeName: "ts_regulatedentityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+    getControl(controlName: "ts_regulatedentityriskrating"): Xrm.LookupControl<"ts_riskrating">;
     getControl(controlName: string): undefined;
   }
 }
