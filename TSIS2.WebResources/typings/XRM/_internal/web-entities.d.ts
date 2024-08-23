@@ -515,6 +515,29 @@ interface ts_canceledinspectionjustification_Create extends ts_canceledinspectio
 }
 interface ts_canceledinspectionjustification_Update extends ts_canceledinspectionjustification {
 }
+interface ts_case_Base extends WebEntity {
+}
+interface ts_case_Fixed extends WebEntity_Fixed {
+  ts_caseid: string;
+}
+interface ts_case extends ts_case_Base, ts_case_Relationships {
+}
+interface ts_case_Relationships {
+}
+interface ts_case_Result extends ts_case_Base, ts_case_Relationships {
+}
+interface ts_case_FormattedResult {
+}
+interface ts_case_Select {
+}
+interface ts_case_Expand {
+}
+interface ts_case_Filter {
+}
+interface ts_case_Create extends ts_case {
+}
+interface ts_case_Update extends ts_case {
+}
 interface ts_causefinding_Base extends WebEntity {
 }
 interface ts_causefinding_Fixed extends WebEntity_Fixed {
