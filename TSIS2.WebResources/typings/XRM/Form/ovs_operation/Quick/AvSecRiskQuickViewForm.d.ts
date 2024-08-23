@@ -1,5 +1,5 @@
-declare namespace Form.msdyn_incidenttype.Quick {
-  namespace IncidentTypequickviewforOperationActivity {
+declare namespace Form.ovs_operation.Quick {
+  namespace AvSecRiskQuickViewForm {
     namespace Tabs {
       interface tab_1 extends Xrm.SectionCollectionBase {
         get(name: "tab_1_column_1_section_1"): Xrm.PageSection;
@@ -10,18 +10,14 @@ declare namespace Form.msdyn_incidenttype.Quick {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "ts_programactivityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
-      get(name: "ts_programarea"): Xrm.LookupAttribute<"ts_programarea">;
-      get(name: "ts_riskscore"): Xrm.LookupAttribute<"ts_recurrencefrequencies">;
+      get(name: "ts_regulatedentityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "ts_programactivityriskrating"): Xrm.LookupControl<"ts_riskrating">;
-      get(name: "ts_programarea"): Xrm.LookupControl<"ts_programarea">;
-      get(name: "ts_riskscore"): Xrm.LookupControl<"ts_recurrencefrequencies">;
+      get(name: "ts_regulatedentityriskrating"): Xrm.LookupControl<"ts_riskrating">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -35,14 +31,10 @@ declare namespace Form.msdyn_incidenttype.Quick {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface IncidentTypequickviewforOperationActivity extends Xrm.PageBase<IncidentTypequickviewforOperationActivity.Attributes,IncidentTypequickviewforOperationActivity.Tabs,IncidentTypequickviewforOperationActivity.Controls> {
-    getAttribute(attributeName: "ts_programactivityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
-    getAttribute(attributeName: "ts_programarea"): Xrm.LookupAttribute<"ts_programarea">;
-    getAttribute(attributeName: "ts_riskscore"): Xrm.LookupAttribute<"ts_recurrencefrequencies">;
+  interface AvSecRiskQuickViewForm extends Xrm.PageBase<AvSecRiskQuickViewForm.Attributes,AvSecRiskQuickViewForm.Tabs,AvSecRiskQuickViewForm.Controls> {
+    getAttribute(attributeName: "ts_regulatedentityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "ts_programactivityriskrating"): Xrm.LookupControl<"ts_riskrating">;
-    getControl(controlName: "ts_programarea"): Xrm.LookupControl<"ts_programarea">;
-    getControl(controlName: "ts_riskscore"): Xrm.LookupControl<"ts_recurrencefrequencies">;
+    getControl(controlName: "ts_regulatedentityriskrating"): Xrm.LookupControl<"ts_riskrating">;
     getControl(controlName: string): undefined;
   }
 }

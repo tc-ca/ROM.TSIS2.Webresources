@@ -206,6 +206,7 @@ interface Account_Relationships {
   ts_account_msdyn_workorderservicetask_SecuritySearchServices?: msdyn_workorderservicetask_Result[] | null;
   ts_account_ts_action_stakeholder?: ts_action_Result[] | null;
   ts_account_ts_aircraft_RegisteredOwner?: ts_aircraft_Result[] | null;
+  ts_account_ts_case_Customer?: ts_case_Result[] | null;
   ts_account_ts_nonoversightactivity_Stakeholder?: ts_nonoversightactivity_Result[] | null;
   ts_account_ts_planningsettings_stakeholder?: ts_planningsettings_Result[] | null;
   ts_account_ts_securityincident_ReportingCompany?: ts_securityincident_Result[] | null;
@@ -712,6 +713,7 @@ interface Account_Expand {
   ts_account_msdyn_workorderservicetask_SecuritySearchServices: WebExpand<Account_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_account_msdyn_workorderservicetask_SecuritySearchServices: msdyn_workorderservicetask_Result[] }>;
   ts_account_ts_action_stakeholder: WebExpand<Account_Expand, ts_action_Select, ts_action_Filter, { ts_account_ts_action_stakeholder: ts_action_Result[] }>;
   ts_account_ts_aircraft_RegisteredOwner: WebExpand<Account_Expand, ts_aircraft_Select, ts_aircraft_Filter, { ts_account_ts_aircraft_RegisteredOwner: ts_aircraft_Result[] }>;
+  ts_account_ts_case_Customer: WebExpand<Account_Expand, ts_case_Select, ts_case_Filter, { ts_account_ts_case_Customer: ts_case_Result[] }>;
   ts_account_ts_nonoversightactivity_Stakeholder: WebExpand<Account_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { ts_account_ts_nonoversightactivity_Stakeholder: ts_nonoversightactivity_Result[] }>;
   ts_account_ts_planningsettings_stakeholder: WebExpand<Account_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { ts_account_ts_planningsettings_stakeholder: ts_planningsettings_Result[] }>;
   ts_account_ts_securityincident_ReportingCompany: WebExpand<Account_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_account_ts_securityincident_ReportingCompany: ts_securityincident_Result[] }>;
@@ -913,6 +915,7 @@ interface Account_RelatedMany {
   ts_account_msdyn_workorderservicetask_SecuritySearchServices: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ts_account_ts_action_stakeholder: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_account_ts_aircraft_RegisteredOwner: WebMappingRetrieve<ts_aircraft_Select,ts_aircraft_Expand,ts_aircraft_Filter,ts_aircraft_Fixed,ts_aircraft_Result,ts_aircraft_FormattedResult>;
+  ts_account_ts_case_Customer: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   ts_account_ts_nonoversightactivity_Stakeholder: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
   ts_account_ts_planningsettings_stakeholder: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
   ts_account_ts_securityincident_ReportingCompany: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
