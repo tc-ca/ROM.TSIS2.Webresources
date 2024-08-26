@@ -1,0 +1,312 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.3.1023/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.3.1023/styles/kendo.rtl.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.3.1023/styles/kendo.silver.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.3.1023/styles/kendo.mobile.all.min.css" />
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2019.3.1023/js/kendo.all.min.js"></script>
+    <script src="ClientGlobalContext.js.aspx" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/uclient/resources/styles/styles.css" />
+    <style>
+        table {
+            //width: 80%;
+            border: none;
+            font-size: 1rem;
+        }
+
+
+        tr {
+            height: 52px;
+            border-right: 0;
+            padding: 10px 10px;
+            vertical-align: middle;
+            font: normal normal normal 15px/20px SegoeUI,Segoe UI;
+            color: #000000;
+            white-space: nowrap;
+        }
+
+        td, caption {
+            vertical-align: middle;
+            padding-left: 10px;
+            padding-right: 10px;
+            /*text-align: right;*/
+        }
+
+        #dvTable table {
+            width: 100%;
+        }
+
+            #dvTable table tbody tr {
+                border-bottom: 2px solid #f4f4f4;
+                height: 48px;
+                vertical-align: middle;
+                padding: 12.5px 10px;
+            }
+
+                #dvTable table tbody tr td {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+
+        th {
+            vertical-align: middle;
+            color: #045999;
+            background-color: white;
+            font: normal normal normal 15px/20px SegoeUI,Segoe UI;
+        }
+
+        #dvTable table tbody tr:nth-child(even) {
+            background-color: #efefef;
+        }
+
+        #dvTable table tbody tr:hover {
+            background-color: #b2b0b0;
+            font: bold,bold,bold;
+        }
+
+            #dvTable table tbody tr:hover td {
+                background-color: transparent; /* or #000 */
+                font: bold,bold,bold;
+            }
+
+        /*
+        .columnSeparator {
+            top: 0px;
+            right: 0px;
+        }
+
+
+        .columnSeparator {
+            border-right: 2px solid #000 !important;
+            opacity: 0.2;
+            height: 30px;
+            vertical-align: top;
+            width: 0px;
+        }
+                */
+
+        input {
+            height: 30px;
+            vertical-align: middle;
+        }
+
+        .grid-header-text {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            float: left;
+            width: calc(5px + 100%);
+            text-align: left;
+            /*padding-left: 10px;*/
+            /*padding-right: 10px;*/
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        hr {
+            display: block;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            margin-left: auto;
+            margin-right: auto;
+            border-style: inset;
+            border-width: 1px;
+        }
+        .k-grid-header th.k-header {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body onload="getWOSearchResults()" style="overflow-wrap: break-word;">
+    <script type="text/javascript">
+        function getWOSearchResults() {
+            var opValue = parent.Xrm.Page.getAttribute("ts_operation").getValue();
+            var opActivityId = parent.Xrm.Page.data.entity.getId();
+            var dvInfoBox = document.getElementById("dvTripInfo");
+            dvInfoBox.innerHTML = "Query related Work Orders ...";
+
+            try {
+                var parameters = {};
+                parameters.actionName = "GetOperationActivityWO";
+                parameters.recordId = opActivityId;// opValue[0].id.replace("{", "").replace("}", "");
+
+
+                var req = new XMLHttpRequest();
+                req.open("POST", parent.Xrm.Utility.getGlobalContext().getClientUrl() + "/api/data/v9.1/ts_TSGlobalAction", true);
+                req.setRequestHeader("OData-MaxVersion", "4.0");
+                req.setRequestHeader("OData-Version", "4.0");
+                req.setRequestHeader("Accept", "application/json");
+                req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                req.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        req.onreadystatechange = null;
+
+                        if (this.status === 200) {
+                            var results = JSON.parse(this.response);
+                            //debugger;
+                            var tableHtml = results.result;
+
+                            var dvInfo = document.getElementById("dvTripInfo");
+                            dvInfo.innerHTML = results.result2;
+
+                            var table = document.createElement("TABLE");
+                            table.setAttribute("id", "findTripUITable");
+                            table.innerHTML = tableHtml;
+
+                            var dvTable = document.getElementById("dvTable");
+                            dvTable.innerHTML = "";
+                            dvTable.appendChild(table);
+
+                            document.getElementById("countSelectInputs").value = CountRows("dvTable");
+
+                            //KendoUI
+                            var isDateField = ["msdyn_timeclosed"];  //isDateField[property] = true;
+                            var theColumns = [];
+                            var model = {};
+                            var fields = {};
+
+
+                            //debugger;
+                            for (var i = 1; i < $("table tr th div.grid-header-text").length; i++) {
+                                var dataField = $("table tr th div.grid-header-text")[i].innerHTML;
+                                //var dataField = "";
+
+                                //for (var j = 0; j < innerHTML.split(" ").length; j++) {
+                                //    if (Number.isInteger(parseInt(innerHTML.split(" ")[j]))) {
+                                //        dataField += numberToEnglish(innerHTML.split(" ")[j], " ");
+                                //    }
+                                //    else {
+                                //        dataField += innerHTML.split(" ")[j];
+                                //    }
+                                //}
+
+                                var FieldName = dataField.toLowerCase().replace(/ /g, "").replace(/#/g, "").replace(/[.]/g, "");
+                                $($("table tr th")[i]).attr("data-field", FieldName);
+
+                                if (FieldName == "tripname") {
+                                    theColumns.push({ field: FieldName, filterable: false, sortable: false, });
+                                }
+                                else {
+                                    theColumns.push({ field: FieldName, filterable: true, format: (isDateField.includes(FieldName) ? "{0:M/d/yyyy}" : ""), });
+                                }
+                                if (FieldName == "pax" || FieldName == "grouptrip") {
+                                    fields[FieldName] = {
+                                        type: "number",
+                                    };
+                                }
+                                else if (isDateField.includes(FieldName)) {
+                                    fields[FieldName] = {
+                                        type: "date",
+                                    };
+                                }
+                                else {
+                                    fields[FieldName] = {
+                                        type: "string",
+                                    };
+                                }
+                            }
+
+                            model.fields = fields;
+                            
+                            $("#findTripUITable").kendoGrid({
+                                //https://docs.telerik.com/kendo-ui/knowledge-base/create-with-dynamic-columns-and-data-types
+                                dataSource: {
+                                    schema: {
+                                        model: model
+                                    }
+                                },
+                                columns: theColumns,
+                                dataBound: function () {
+                                    //debugger;
+                                    for (var i = 0; i < this.columns.length; i++) {
+                                        if (i >= 0) {
+                                            this.autoFitColumn(i);
+                                        }
+                                    }
+                                },                                
+                                pageable: {
+                                    pageSize: 10
+                                },
+                            });
+
+                        } else {
+                            Xrm.Navigation.openAlertDialog(this.statusText);
+                        }
+                    }
+                };
+                req.send(JSON.stringify(parameters));
+            } catch (e) {
+                alert(e.message);
+            }
+        }
+        function CountRows(tableElement) {
+            var totalRowCount = 0;
+            var rowCount = 0;
+            var table = document.getElementById(tableElement);
+            var rows = table.getElementsByTagName("tr")
+            for (var i = 0; i < rows.length; i++) {
+                totalRowCount++;
+                if (rows[i].getElementsByTagName("td").length > 0) {
+                    rowCount++;
+                }
+            }
+            return rowCount;
+        }
+        function loadDetailsHTML() {
+
+            var opValue = parent.Xrm.Page.getAttribute("ts_operation").getValue();
+
+            // Make sure we have an attachment
+            if (opValue ?? null) {
+
+                if (opValue) {
+                    let opId = opValue[0].id.replace("{", "").replace("}", "");
+                    //opId = "F8F2054F-F33D-ED11-BBA2-0022483C5061";
+                    var fileUrl = parent.Xrm.Utility.getGlobalContext().getClientUrl() + "/api/data/v9.1/msdyn_workorders?$select=_ovs_operationid_value&$filter=_ovs_operationid_value%20eq%20" + opId;
+                    console.log("fileUrl - " + fileUrl);
+                    fetch(fileUrl)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.text();
+                            } else {
+                                throw new Error("Can't retrieve WO");
+                            }
+                        })
+                        .then(fileContents => {
+                            // Get the file contents and put it in the body.  TCOMs always sends html code that you can simply append to the body
+
+                            var div = document.createElement("div");
+                            div.innerHTML = fileContents;
+
+                            // Append the div to the page
+                            document.body.appendChild(div);
+                        })
+                        .catch(error => {
+                            console.error("Error fetching WO:", error);
+                        });
+                }
+            }
+        }
+
+    </script>
+
+
+
+    
+    <div id="dvTripInfo" style="margin-left:20px;">
+
+    </div>
+    <div id="dvTable" style="margin-left:20px;">
+
+    </div>
+    <input type="hidden" id="countSelectInputs" name="countSelectInputs" value="0">
+</body>
+</html>
