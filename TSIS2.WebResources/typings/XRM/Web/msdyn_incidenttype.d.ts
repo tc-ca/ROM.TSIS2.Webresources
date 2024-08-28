@@ -77,10 +77,6 @@ interface msdyn_incidenttype_Relationships {
   msdyn_msdyn_incidenttype_msdyn_workorder_PrimaryIncidentType?: msdyn_workorder_Result[] | null;
   ts_incident_InspectionType1_msdyn_incidentty?: Incident_Result[] | null;
   ts_incident_InspectionType2_msdyn_incidentty?: Incident_Result[] | null;
-  ts_questionnaireresponse_ActivityType_msdyn_incidenttype?: ts_questionnaireresponse_Result[] | null;
-  ts_suggestedinspection_activitytype?: ts_SuggestedInspection_Result[] | null;
-  ts_ts_case_InspectionType1_msdyn_incidentty?: ts_case_Result[] | null;
-  ts_ts_case_InspectionType2_msdyn_incidentty?: ts_case_Result[] | null;
   ts_ts_operationactivity_Activity_msdyn_incid?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_ActivityType_msdyn_incide?: ts_PlanningData_Result[] | null;
 }
@@ -284,10 +280,6 @@ interface msdyn_incidenttype_Expand {
   ts_incident_InspectionType1_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { ts_incident_InspectionType1_msdyn_incidentty: Incident_Result[] }>;
   ts_incident_InspectionType2_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { ts_incident_InspectionType2_msdyn_incidentty: Incident_Result[] }>;
   ts_ovs_operation: WebExpand<msdyn_incidenttype_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation: ovs_operation_Result }>;
-  ts_questionnaireresponse_ActivityType_msdyn_incidenttype: WebExpand<msdyn_incidenttype_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { ts_questionnaireresponse_ActivityType_msdyn_incidenttype: ts_questionnaireresponse_Result[] }>;
-  ts_suggestedinspection_activitytype: WebExpand<msdyn_incidenttype_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection_activitytype: ts_SuggestedInspection_Result[] }>;
-  ts_ts_case_InspectionType1_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, ts_case_Select, ts_case_Filter, { ts_ts_case_InspectionType1_msdyn_incidentty: ts_case_Result[] }>;
-  ts_ts_case_InspectionType2_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, ts_case_Select, ts_case_Filter, { ts_ts_case_InspectionType2_msdyn_incidentty: ts_case_Result[] }>;
   ts_ts_operationactivity_Activity_msdyn_incid: WebExpand<msdyn_incidenttype_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Activity_msdyn_incid: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_ActivityType_msdyn_incide: WebExpand<msdyn_incidenttype_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_ActivityType_msdyn_incide: ts_PlanningData_Result[] }>;
 }
@@ -349,10 +341,6 @@ interface msdyn_incidenttype_RelatedMany {
   msdyn_msdyn_incidenttype_msdyn_workorder_PrimaryIncidentType: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_incident_InspectionType1_msdyn_incidentty: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_InspectionType2_msdyn_incidentty: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
-  ts_questionnaireresponse_ActivityType_msdyn_incidenttype: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
-  ts_suggestedinspection_activitytype: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
-  ts_ts_case_InspectionType1_msdyn_incidentty: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
-  ts_ts_case_InspectionType2_msdyn_incidentty: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   ts_ts_operationactivity_Activity_msdyn_incid: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_ActivityType_msdyn_incide: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
 }
