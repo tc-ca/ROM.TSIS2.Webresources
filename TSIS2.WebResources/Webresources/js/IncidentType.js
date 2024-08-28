@@ -81,6 +81,12 @@ var ROM;
                             form.ui.tabs.get("operation_activity_tab").setVisible(true);
                             form.getControl("ts_programarea").setVisible(true);
                             form.getControl("ts_programactivityriskrating").setVisible(true);
+                            var formUI = form.ui;
+                            formUI.quickForms.get("ProgramAreaRiskRatingQV").setVisible(true);
+                        }
+                        else {
+                            var formUI = form.ui;
+                            formUI.quickForms.get("ProgramAreaRiskRatingQV").setVisible(false);
                         }
                     });
                 });
