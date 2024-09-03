@@ -572,7 +572,7 @@ var ROM;
             var formContext = executionContext.getFormContext();
             var planStatusValue = parent["Xrm"].Page.getAttribute("ts_planstatus").getValue();
             //Change which fields lock depending on the plan status
-            var fields = (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_estimatedtraveltime", "ts_q1", "ts_q2", "ts_q3", "ts_q4", "ts_estimatedcost", "ts_trip", "ts_justification"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
+            var fields = (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_estimatedtraveltime", "ts_q1", "ts_q2", "ts_q3", "ts_q4", "ts_estimatedcost", "ts_trip", "ts_notes"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
             if (formContext) {
                 var entity = formContext.data.entity;
                 entity.attributes.forEach(function (attribute, i) {

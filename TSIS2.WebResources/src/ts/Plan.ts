@@ -544,7 +544,7 @@
         let formContext = executionContext.getFormContext();
         const planStatusValue = parent["Xrm"].Page.getAttribute("ts_planstatus").getValue();
         //Change which fields lock depending on the plan status
-        const fields = (planStatusValue == ts_planstatus.Complete || planStatusValue == ts_planstatus.HQreview) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_estimatedtraveltime", "ts_q1", "ts_q2", "ts_q3", "ts_q4", "ts_estimatedcost", "ts_trip", "ts_justification"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
+        const fields = (planStatusValue == ts_planstatus.Complete || planStatusValue == ts_planstatus.HQreview) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_estimatedtraveltime", "ts_q1", "ts_q2", "ts_q3", "ts_q4", "ts_estimatedcost", "ts_trip", "ts_notes"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
         if (formContext) {
             let entity = formContext.data.entity;
 
