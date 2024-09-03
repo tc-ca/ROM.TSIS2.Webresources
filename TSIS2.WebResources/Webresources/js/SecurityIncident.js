@@ -116,6 +116,7 @@ var ROM;
                 }, function error(error) {
                     Xrm.Navigation.openAlertDialog({ text: error.message });
                 });
+                setSubSiteFilteredView(form);
             }
             else {
                 form.getAttribute("ts_sitetype").setValue(null);
@@ -145,7 +146,7 @@ var ROM;
         }
         SecurityIncident.subSiteOnChange = subSiteOnChange;
         function setSiteFilteredView(form, mode) {
-            // Custom view
+            // Custom view 
             var modeCondition = mode != null ? ('<condition attribute="ts_mode" operator="contain-values" value=""><value>' + mode + '</value></condition>') : null;
             var viewId = '{6E57251F-F695-4076-9498-49AB892154B2}';
             var entityName = "msdyn_functionallocation";
@@ -154,6 +155,19 @@ var ROM;
             var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
             form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+            setSubSiteFilteredView(form);
+        }
+        function setSubSiteFilteredView(form) {
+            var siteAttribute = form.getAttribute("ts_site");
+            var siteAttributeValue = siteAttribute.getValue();
+            if (siteAttributeValue != null && siteAttributeValue != undefined) {
+                var viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
+                var entityName = "msdyn_functionallocation";
+                var viewDisplayName = "Filtered Sub-Sites";
+                var fetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><attribute name="ts_mode"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+                var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+            }
         }
         function ShowHideFieldsOnMode(eContext, mode, isOnLoad) {
             var form = eContext.getFormContext();

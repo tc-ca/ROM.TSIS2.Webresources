@@ -137,6 +137,7 @@ namespace ROM.SecurityIncident {
                 function error(error) {
                     Xrm.Navigation.openAlertDialog({ text: error.message });
                 });
+            setSubSiteFilteredView(form);
         }
         else {
             form.getAttribute("ts_sitetype").setValue(null);
@@ -169,7 +170,7 @@ namespace ROM.SecurityIncident {
     }
 
     function setSiteFilteredView(form: Form.ts_securityincident.Main.Information, mode): void {
-        // Custom view
+        // Custom view 
         const modeCondition = mode != null ? ('<condition attribute="ts_mode" operator="contain-values" value=""><value>' + mode + '</value></condition>') : null;
 
         const viewId = '{6E57251F-F695-4076-9498-49AB892154B2}';
@@ -179,6 +180,21 @@ namespace ROM.SecurityIncident {
         const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
         form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+        setSubSiteFilteredView(form);
+    }
+
+    function setSubSiteFilteredView(form: Form.ts_securityincident.Main.Information): void {
+        const siteAttribute = form.getAttribute("ts_site");
+        const siteAttributeValue = siteAttribute.getValue();
+
+        if (siteAttributeValue != null && siteAttributeValue != undefined) {
+            const viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
+            const entityName = "msdyn_functionallocation";
+            const viewDisplayName = "Filtered Sub-Sites";
+            const fetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><attribute name="ts_mode"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+            const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+            form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+        }
     }
 
     function ShowHideFieldsOnMode(eContext: Xrm.ExecutionContext<any, any>, mode, isOnLoad): void {
