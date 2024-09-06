@@ -82,8 +82,8 @@ var ROM;
             { text: "Informal Meeting | Offered", value: 741130002 /* InformalMeetingOffered */ },
             { text: "Informal Meeting | Convened", value: 741130031 /* InformalMeetingConvened */ },
             { text: "Legal Counsel | Consulted", value: 741130016 /* LegalCounselConsulted */ },
-            { text: "Letter � Commitment | Received", value: 741130004 /* LetterCommitmentReceived */ },
-            { text: "Letter � Non-Compliance | Sent", value: 741130005 /* LetterNonComplianceSent */ },
+            { text: "Letter – Commitment | Received", value: 741130004 /* LetterCommitmentReceived */ },
+            { text: "Letter – Non-Compliance | Sent", value: 741130005 /* LetterNonComplianceSent */ },
             { text: "Letter - SSC OSA Further Action | Sent", value: 741130006 /* LetterSSCOSAFurtherActionSent */ },
             { text: "Letter - Non-Compliance | Response received", value: 741130032 /* LetterNonComplianceResponsereceived */ },
             // { text: "Notification | Non-compliance", value: ts_actiontype.NotificationNoncompliance },
@@ -127,10 +127,10 @@ var ROM;
                         case 2:
                             if (formType === 2) {
                                 //setRelatedFindingsFetchXML(form);
-                                filterCategory(form);
+                                filterCategory(form, true);
                                 actionCategoryOnChange(eContext, true);
                                 if (form.getAttribute("ts_actiontype").getValue() != null) {
-                                    actionTypeOnChange(eContext);
+                                    actionTypeOnChange(eContext, true);
                                 }
                             }
                             return [2 /*return*/];
@@ -199,9 +199,11 @@ var ROM;
             var form = eContext.getFormContext();
             var actionCategoryAttributeValue = form.getAttribute("ts_actioncategory").getValue();
             if (!actionCategoryAttributeValue) {
-                form.getAttribute("ts_actiontype").setValue(null);
-                //form.getAttribute("ts_actionstatus").setValue(null)
-                clearNonActionFields(form);
+                if (!onLoad) {
+                    form.getAttribute("ts_actiontype").setValue(null);
+                    //form.getAttribute("ts_actionstatus").setValue(null)
+                    clearNonActionFields(form);
+                }
             }
             else {
                 resetFieldsVisibility(form);
@@ -316,24 +318,28 @@ var ROM;
             }
             setOptions(actionTypeAttribute, filteredActionTypeOptions);
         }
-        function actionTypeOnChange(eContext) {
+        function actionTypeOnChange(eContext, onLoad) {
+            if (onLoad === void 0) { onLoad = false; }
             var form = eContext.getFormContext();
             var actionCategoryAttributeValue = form.getAttribute("ts_actioncategory").getValue();
             var actionTypeAttributeValue = form.getAttribute("ts_actiontype").getValue();
             var deliveryMethodAttribute = form.getControl("ts_deliverymethod");
             var actionStatusAttribute = form.getControl("ts_actionstatus");
             if (isISSO) {
-                handleISSOTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute);
+                handleISSOTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute, onLoad);
             }
             else {
-                handleAvSecTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute);
+                handleAvSecTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute, onLoad);
             }
         }
         Action.actionTypeOnChange = actionTypeOnChange;
-        function handleISSOTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute) {
+        function handleISSOTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute, onLoad) {
+            if (onLoad === void 0) { onLoad = false; }
             if (!actionTypeAttributeValue) {
                 //form.getAttribute("ts_actionstatus").setValue(null);
-                clearNonActionFields(form);
+                if (!onLoad) {
+                    clearNonActionFields(form);
+                }
                 return;
             }
             var filteredDeliveryOptions = allDeliveryMethodOptions;
@@ -413,12 +419,15 @@ var ROM;
             //    form.getAttribute("ts_actionstatus").setValue(null);
             //}
         }
-        function handleAvSecTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute) {
+        function handleAvSecTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute, onLoad) {
             //if (!actionTypeAttributeValue) {
             //    form.getAttribute("ts_actionstatus").setValue(null);
             //    return;
             //}
-            clearNonActionFields(form);
+            if (onLoad === void 0) { onLoad = false; }
+            if (!onLoad) {
+                clearNonActionFields(form);
+            }
             var filteredDeliveryOptions = allDeliveryMethodOptions;
             var filteredActionStatusOptions = allActionStatus;
             //switch (actionCategoryAttributeValue) {
@@ -530,7 +539,9 @@ var ROM;
             //    //    break;
             //}
             setOptions(deliveryMethodAttribute, filteredDeliveryOptions);
-            form.getAttribute("ts_deliverymethod").setValue(null);
+            if (!onLoad) {
+                form.getAttribute("ts_deliverymethod").setValue(null);
+            }
             setOptions(actionStatusAttribute, filteredActionStatusOptions);
             var currentActionStatusValue = form.getAttribute("ts_actionstatus").getValue();
             var valueExists = filteredActionStatusOptions.some(function (option) { return option.value === currentActionStatusValue; });
@@ -580,7 +591,8 @@ var ROM;
                 value: option
             }); });
         }
-        function filterCategory(form) {
+        function filterCategory(form, onLoad) {
+            if (onLoad === void 0) { onLoad = false; }
             if (isISSO) {
                 setOptions(form.getControl("ts_actioncategory"), createFilteredOptions([
                     741130001 /* CorrectiveAction */,
@@ -589,7 +601,9 @@ var ROM;
             }
             //if (form.getAttribute("ts_actioncategory").getValue() != null && form.getAttribute("ts_actiontype").getValue() == null && form.getAttribute("ts_actionstatus").getValue() == null)
             if (form.getAttribute("ts_actioncategory").getValue() != null && form.getAttribute("ts_actiontype").getValue() == null) {
-                form.getAttribute("ts_actioncategory").setValue(null);
+                if (!onLoad) {
+                    form.getAttribute("ts_actioncategory").setValue(null);
+                }
             }
         }
         function getOptionSets() {

@@ -86,10 +86,10 @@ namespace ROM.Action {
         }
         if (formType === 2) {
             //setRelatedFindingsFetchXML(form);
-            filterCategory(form);
+            filterCategory(form, true);
             actionCategoryOnChange(eContext, true);
             if (form.getAttribute("ts_actiontype").getValue() != null) {
-                actionTypeOnChange(eContext)
+                actionTypeOnChange(eContext, true)
             }
         }
     }
@@ -149,9 +149,11 @@ namespace ROM.Action {
         const actionCategoryAttributeValue = form.getAttribute("ts_actioncategory").getValue();
 
         if (!actionCategoryAttributeValue) {
-            form.getAttribute("ts_actiontype").setValue(null)
-            //form.getAttribute("ts_actionstatus").setValue(null)
-            clearNonActionFields(form);
+            if (!onLoad) {
+                form.getAttribute("ts_actiontype").setValue(null)
+                //form.getAttribute("ts_actionstatus").setValue(null)
+                clearNonActionFields(form);
+            }
         }
         else {
             resetFieldsVisibility(form);
@@ -269,7 +271,7 @@ namespace ROM.Action {
         setOptions(actionTypeAttribute, filteredActionTypeOptions);
     }
 
-    export function actionTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export function actionTypeOnChange(eContext: Xrm.ExecutionContext<any, any>, onLoad: boolean = false): void {
         const form = <Form.ts_action.Main.ROMAction>eContext.getFormContext();
         const actionCategoryAttributeValue = form.getAttribute("ts_actioncategory").getValue();
         const actionTypeAttributeValue = form.getAttribute("ts_actiontype").getValue();
@@ -277,16 +279,18 @@ namespace ROM.Action {
         const actionStatusAttribute = form.getControl("ts_actionstatus");
 
         if (isISSO) {
-            handleISSOTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute);
+            handleISSOTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute, onLoad);
         } else {
-            handleAvSecTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute);
+            handleAvSecTypeChange(form, actionCategoryAttributeValue, actionTypeAttributeValue, deliveryMethodAttribute, actionStatusAttribute, onLoad);
         }
     }
 
-    function handleISSOTypeChange(form: Form.ts_action.Main.ROMAction, actionCategoryAttributeValue: any, actionTypeAttributeValue: any, deliveryMethodAttribute: Xrm.OptionSetControl<any>, actionStatusAttribute: Xrm.OptionSetControl<any>): void {
+    function handleISSOTypeChange(form: Form.ts_action.Main.ROMAction, actionCategoryAttributeValue: any, actionTypeAttributeValue: any, deliveryMethodAttribute: Xrm.OptionSetControl<any>, actionStatusAttribute: Xrm.OptionSetControl<any>, onLoad: boolean = false): void {
         if (!actionTypeAttributeValue) {
             //form.getAttribute("ts_actionstatus").setValue(null);
-            clearNonActionFields(form);
+            if (!onLoad) {
+                clearNonActionFields(form);
+            }
             return;
         }
 
@@ -381,13 +385,15 @@ namespace ROM.Action {
 
 
     function handleAvSecTypeChange(
-        form: Form.ts_action.Main.ROMAction, actionCategoryAttributeValue: any, actionTypeAttributeValue: any, deliveryMethodAttribute: Xrm.OptionSetControl<any>, actionStatusAttribute: Xrm.OptionSetControl<any>): void {
+        form: Form.ts_action.Main.ROMAction, actionCategoryAttributeValue: any, actionTypeAttributeValue: any, deliveryMethodAttribute: Xrm.OptionSetControl<any>, actionStatusAttribute: Xrm.OptionSetControl<any>, onLoad: boolean = false): void {
         //if (!actionTypeAttributeValue) {
         //    form.getAttribute("ts_actionstatus").setValue(null);
         //    return;
         //}
 
-        clearNonActionFields(form);
+        if (!onLoad) {
+            clearNonActionFields(form);
+        }
 
         let filteredDeliveryOptions = allDeliveryMethodOptions;
         let filteredActionStatusOptions = allActionStatus;
@@ -502,7 +508,9 @@ namespace ROM.Action {
         //}
 
         setOptions(deliveryMethodAttribute, filteredDeliveryOptions);
-        form.getAttribute("ts_deliverymethod").setValue(null);
+        if (!onLoad) {
+            form.getAttribute("ts_deliverymethod").setValue(null);
+        }
         setOptions(actionStatusAttribute, filteredActionStatusOptions);
 
         const currentActionStatusValue = form.getAttribute("ts_actionstatus").getValue();
@@ -560,7 +568,7 @@ namespace ROM.Action {
         }));
     }
 
-    function filterCategory(form: Form.ts_action.Main.ROMAction) {
+    function filterCategory(form: Form.ts_action.Main.ROMAction, onLoad: boolean = false) {
         if (isISSO) {
             setOptions(form.getControl("ts_actioncategory"), createFilteredOptions([
                 ts_actioncategory.CorrectiveAction,
@@ -569,7 +577,9 @@ namespace ROM.Action {
         }
         //if (form.getAttribute("ts_actioncategory").getValue() != null && form.getAttribute("ts_actiontype").getValue() == null && form.getAttribute("ts_actionstatus").getValue() == null)
         if (form.getAttribute("ts_actioncategory").getValue() != null && form.getAttribute("ts_actiontype").getValue() == null) {
-            form.getAttribute("ts_actioncategory").setValue(null);
+            if (!onLoad) {
+                form.getAttribute("ts_actioncategory").setValue(null);
+            }
         }
     }
 
