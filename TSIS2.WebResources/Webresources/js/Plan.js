@@ -610,6 +610,33 @@ var ROM;
             }
         }
         Plan.lockSuggestedInspectionEditableGridFields = lockSuggestedInspectionEditableGridFields;
+        function validateTripOnChange(executionContext) {
+            return __awaiter(this, void 0, void 0, function () {
+                var tripValue, trip, tripRegionId, alertStrings, alertOptions;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            tripValue = executionContext.getEventSource().getValue();
+                            if (!(tripValue != null)) return [3 /*break*/, 2];
+                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("ts_trip", tripValue[0].id, "?$select=_ts_region_value ")];
+                        case 1:
+                            trip = _a.sent();
+                            if (trip["_ts_region_value"] != null) {
+                                tripRegionId = trip["_ts_region_value"];
+                                if (tripRegionId != teamRegionId) {
+                                    executionContext.getEventSource().setValue(null);
+                                    alertStrings = { confirmButtonLabel: "OK", text: "Selected trip's region does not match team's region.", title: "Validation Error" };
+                                    alertOptions = { height: 120, width: 260 };
+                                    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+                                }
+                            }
+                            _a.label = 2;
+                        case 2: return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        Plan.validateTripOnChange = validateTripOnChange;
         function getNextInspectionDate(startDate, interval, frequency) {
             var nextInspectionDate = new Date(startDate);
             var monthsToAdd = 12 * interval / frequency;

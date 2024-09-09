@@ -13,8 +13,8 @@ interface ts_SuggestedInspection_Base extends WebEntity {
   ts_estimatedcost_base?: number | null;
   ts_estimatedduration?: number | null;
   ts_estimatedtraveltime?: number | null;
-  ts_justification?: string | null;
   ts_name?: string | null;
+  ts_notes?: string | null;
   ts_q1?: number | null;
   ts_q2?: number | null;
   ts_q3?: number | null;
@@ -72,8 +72,8 @@ interface ts_SuggestedInspection_Select {
   ts_estimatedduration: WebAttribute<ts_SuggestedInspection_Select, { ts_estimatedduration: number | null }, {  }>;
   ts_estimatedtraveltime: WebAttribute<ts_SuggestedInspection_Select, { ts_estimatedtraveltime: number | null }, {  }>;
   ts_inspector_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_inspector_guid: string | null }, { ts_inspector_formatted?: string }>;
-  ts_justification: WebAttribute<ts_SuggestedInspection_Select, { ts_justification: string | null }, {  }>;
   ts_name: WebAttribute<ts_SuggestedInspection_Select, { ts_name: string | null }, {  }>;
+  ts_notes: WebAttribute<ts_SuggestedInspection_Select, { ts_notes: string | null }, {  }>;
   ts_operation_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
   ts_operationtype_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
   ts_plan_guid: WebAttribute<ts_SuggestedInspection_Select, { ts_plan_guid: string | null }, { ts_plan_formatted?: string }>;
@@ -115,8 +115,8 @@ interface ts_SuggestedInspection_Filter {
   ts_estimatedduration: any;
   ts_estimatedtraveltime: any;
   ts_inspector_guid: XQW.Guid;
-  ts_justification: string;
   ts_name: string;
+  ts_notes: string;
   ts_operation_guid: XQW.Guid;
   ts_operationtype_guid: XQW.Guid;
   ts_plan_guid: XQW.Guid;
