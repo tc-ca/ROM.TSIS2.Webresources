@@ -584,6 +584,24 @@
         }
     }
 
+    export async function validateTripOnChange(executionContext) {
+        var tripValue = executionContext.getEventSource().getValue();
+        
+        if (tripValue != null) {
+            var trip = await Xrm.WebApi.retrieveRecord("ts_trip", tripValue[0].id, "?$select=_ts_region_value ");
+            if (trip["_ts_region_value"] != null) {
+                var tripRegionId = trip["_ts_region_value"];
+                if (tripRegionId != teamRegionId) {
+                    executionContext.getEventSource().setValue(null);
+                    var alertStrings = { confirmButtonLabel: "OK", text: "Selected trip's region does not match team's region.", title: "Validation Error" };
+                    var alertOptions = { height: 120, width: 260 };
+
+                    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+                }
+            }
+        }
+    }
+
     function getNextInspectionDate(startDate, interval, frequency): Date {
         let nextInspectionDate = new Date(startDate);
         const monthsToAdd = 12 * interval / frequency;
