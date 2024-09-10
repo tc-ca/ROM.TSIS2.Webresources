@@ -353,9 +353,11 @@
     function filterTrips(form: Form.ts_suggestedinspection.Main.Information) {
         var plan = form.getAttribute("ts_plan").getValue();
         if (plan !== null) {
-            Xrm.WebApi.retrieveRecord("ts_plan", plan[0].id, "?$select=ts_name&$expand=ts_team($select=_ts_territory_value)").then(function success(result) {
+            Xrm.WebApi.retrieveRecord("ts_plan", plan[0].id, "?$select=_ts_fiscalyear_value,ts_name&$expand=ts_team($select=_ts_territory_value)").then(function success(result) {
                 if (result["ts_team"] != null && result["ts_team"]["_ts_territory_value"] != null) {
-                    var tripFilter = "<filter type='and'><condition attribute='statecode' operator='eq' value='0'/><filter type='or'>" +
+                    console.log("Retrieved _ts_fiscalyear_value: " + result._ts_fiscalyear_value + "  Region: " + result["ts_team"]["_ts_territory_value"]);
+                    let yearId = result._ts_fiscalyear_value;
+                    var tripFilter = "<filter type='and'><condition attribute='statecode' operator='eq' value='0'/><condition attribute='ts_fiscalyear' operator='eq'  value='" + yearId + "' /><filter type='or'>" +
                         "<condition attribute='ts_region' operator='eq' value='{" + result["ts_team"]["_ts_territory_value"] + "}' /><condition attribute='ts_region' operator='null' /></filter></filter>";
                     form.getControl("ts_trip").addPreSearch(function () {
                         form.getControl("ts_trip").addCustomFilter(tripFilter, "ts_trip");
