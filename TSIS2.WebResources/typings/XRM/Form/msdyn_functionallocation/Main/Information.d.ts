@@ -124,6 +124,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_mode"): Xrm.MultiSelectOptionSetAttribute<ts_securityincidentmode>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
+      get(name: "ts_siteriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
       get(name: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
       get(name: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
       get(name: "ts_sitetype2"): Xrm.LookupAttribute<"ovs_sitetype">;
@@ -188,6 +189,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "ts_mode"): Xrm.MultiSelectOptionSetControl<ts_securityincidentmode>;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_riskscore"): Xrm.NumberControl;
+      get(name: "ts_siteriskrating"): Xrm.LookupControl<"ts_riskrating">;
       get(name: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;
       get(name: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
       get(name: "ts_sitetype2"): Xrm.LookupControl<"ovs_sitetype">;
@@ -254,6 +256,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "ts_mode"): Xrm.MultiSelectOptionSetAttribute<ts_securityincidentmode>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_siteriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
     getAttribute(attributeName: "ts_sitestatus"): Xrm.OptionSetAttribute<ts_sitestatus>;
     getAttribute(attributeName: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
     getAttribute(attributeName: "ts_sitetype2"): Xrm.LookupAttribute<"ovs_sitetype">;
@@ -313,6 +316,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "ts_mode"): Xrm.MultiSelectOptionSetControl<ts_securityincidentmode>;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
+    getControl(controlName: "ts_siteriskrating"): Xrm.LookupControl<"ts_riskrating">;
     getControl(controlName: "ts_sitestatus"): Xrm.OptionSetControl<ts_sitestatus>;
     getControl(controlName: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
     getControl(controlName: "ts_sitetype2"): Xrm.LookupControl<"ovs_sitetype">;

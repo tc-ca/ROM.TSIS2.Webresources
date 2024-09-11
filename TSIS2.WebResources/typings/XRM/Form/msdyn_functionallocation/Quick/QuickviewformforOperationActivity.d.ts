@@ -12,7 +12,6 @@ declare namespace Form.msdyn_functionallocation.Quick {
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ts_class"): Xrm.OptionSetAttribute<ts_msdyn_functionallocation_ts_class>;
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
-      get(name: "ts_siteriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
       get(name: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -22,7 +21,6 @@ declare namespace Form.msdyn_functionallocation.Quick {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "ts_class"): Xrm.OptionSetControl<ts_msdyn_functionallocation_ts_class>;
       get(name: "ts_riskscore"): Xrm.NumberControl;
-      get(name: "ts_siteriskrating"): Xrm.LookupControl<"ts_riskrating">;
       get(name: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -40,12 +38,10 @@ declare namespace Form.msdyn_functionallocation.Quick {
   interface QuickviewformforOperationActivity extends Xrm.PageBase<QuickviewformforOperationActivity.Attributes,QuickviewformforOperationActivity.Tabs,QuickviewformforOperationActivity.Controls> {
     getAttribute(attributeName: "ts_class"): Xrm.OptionSetAttribute<ts_msdyn_functionallocation_ts_class>;
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
-    getAttribute(attributeName: "ts_siteriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
     getAttribute(attributeName: "ts_sitetype"): Xrm.LookupAttribute<"ovs_sitetype">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ts_class"): Xrm.OptionSetControl<ts_msdyn_functionallocation_ts_class>;
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
-    getControl(controlName: "ts_siteriskrating"): Xrm.LookupControl<"ts_riskrating">;
     getControl(controlName: "ts_sitetype"): Xrm.LookupControl<"ovs_sitetype">;
     getControl(controlName: string): undefined;
   }

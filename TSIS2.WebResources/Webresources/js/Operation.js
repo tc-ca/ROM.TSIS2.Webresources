@@ -247,6 +247,9 @@ var ROM;
                                             }
                                         }
                                     }
+                                    if (!isROM20Form) {
+                                        form.ui.tabs.get("tab_general").sections.get("section_riskrating").setVisible(false);
+                                    }
                                 }
                                 else {
                                     if (!isROM20Form) {

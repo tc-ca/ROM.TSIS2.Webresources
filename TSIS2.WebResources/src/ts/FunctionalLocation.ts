@@ -77,6 +77,8 @@ namespace ROM.FunctionalLocation {
                         name: "Active Operations ISSO (Site)"
                     }
                     form.getControl("Operations").getViewSelector().setCurrentView(operationView);
+
+                    form.getControl("ts_siteriskrating").setVisible(false);
                 }
             }
 
