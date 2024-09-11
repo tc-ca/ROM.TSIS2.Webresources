@@ -40,6 +40,11 @@ declare namespace Form.ts_plan.Main {
       get(name: "ts_planstatus"): Xrm.OptionSetAttribute<ts_planstatus>;
       get(name: "ts_team"): Xrm.LookupAttribute<"team">;
       get(name: "ts_totalestimatedcost"): Xrm.NumberAttribute;
+      get(name: "ts_unplannedactivityfiscalyear"): Xrm.NumberAttribute;
+      get(name: "ts_unplannedactivityq1"): Xrm.NumberAttribute;
+      get(name: "ts_unplannedactivityq2"): Xrm.NumberAttribute;
+      get(name: "ts_unplannedactivityq3"): Xrm.NumberAttribute;
+      get(name: "ts_unplannedactivityq4"): Xrm.NumberAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -66,6 +71,11 @@ declare namespace Form.ts_plan.Main {
       get(name: "ts_planstatus"): Xrm.OptionSetControl<ts_planstatus>;
       get(name: "ts_team"): Xrm.LookupControl<"team">;
       get(name: "ts_totalestimatedcost"): Xrm.NumberControl;
+      get(name: "ts_unplannedactivityfiscalyear"): Xrm.NumberControl;
+      get(name: "ts_unplannedactivityq1"): Xrm.NumberControl;
+      get(name: "ts_unplannedactivityq2"): Xrm.NumberControl;
+      get(name: "ts_unplannedactivityq3"): Xrm.NumberControl;
+      get(name: "ts_unplannedactivityq4"): Xrm.NumberControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -98,6 +108,11 @@ declare namespace Form.ts_plan.Main {
     getAttribute(attributeName: "ts_planstatus"): Xrm.OptionSetAttribute<ts_planstatus>;
     getAttribute(attributeName: "ts_team"): Xrm.LookupAttribute<"team">;
     getAttribute(attributeName: "ts_totalestimatedcost"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_unplannedactivityfiscalyear"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_unplannedactivityq1"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_unplannedactivityq2"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_unplannedactivityq3"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_unplannedactivityq4"): Xrm.NumberAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -119,6 +134,11 @@ declare namespace Form.ts_plan.Main {
     getControl(controlName: "ts_planstatus"): Xrm.OptionSetControl<ts_planstatus>;
     getControl(controlName: "ts_team"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_totalestimatedcost"): Xrm.NumberControl;
+    getControl(controlName: "ts_unplannedactivityfiscalyear"): Xrm.NumberControl;
+    getControl(controlName: "ts_unplannedactivityq1"): Xrm.NumberControl;
+    getControl(controlName: "ts_unplannedactivityq2"): Xrm.NumberControl;
+    getControl(controlName: "ts_unplannedactivityq3"): Xrm.NumberControl;
+    getControl(controlName: "ts_unplannedactivityq4"): Xrm.NumberControl;
     getControl(controlName: string): undefined;
   }
 }

@@ -8,15 +8,6 @@ declare namespace Form.ovs_operation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface bb4b118ea1c94e04ae4d8c6a177ee56c extends Xrm.SectionCollectionBase {
-        get(name: "Risk"): Xrm.PageSection;
-        get(name: "_section_156"): Xrm.PageSection;
-        get(name: "section_8"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
       interface operation_activity_tab extends Xrm.SectionCollectionBase {
         get(name: "operation_activity_tab_section_3"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
@@ -56,6 +47,16 @@ declare namespace Form.ovs_operation.Main {
       }
       interface tab_9 extends Xrm.SectionCollectionBase {
         get(name: "tab_9_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_general extends Xrm.SectionCollectionBase {
+        get(name: "Risk"): Xrm.PageSection;
+        get(name: "_section_156"): Xrm.PageSection;
+        get(name: "section_8"): Xrm.PageSection;
+        get(name: "section_riskrating"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -203,13 +204,13 @@ declare namespace Form.ovs_operation.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "WorkOrders"): Xrm.PageTab<Tabs.WorkOrders>;
-      get(name: "{bb4b118e-a1c9-4e04-ae4d-8c6a177ee56c}"): Xrm.PageTab<Tabs.bb4b118ea1c94e04ae4d8c6a177ee56c>;
       get(name: "operation_activity_tab"): Xrm.PageTab<Tabs.operation_activity_tab>;
       get(name: "plan_track"): Xrm.PageTab<Tabs.plan_track>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
       get(name: "tab_9"): Xrm.PageTab<Tabs.tab_9>;
+      get(name: "tab_general"): Xrm.PageTab<Tabs.tab_general>;
       get(name: "tab_properties_avsec"): Xrm.PageTab<Tabs.tab_properties_avsec>;
       get(name: "tab_properties_isso"): Xrm.PageTab<Tabs.tab_properties_isso>;
       get(name: string): undefined;

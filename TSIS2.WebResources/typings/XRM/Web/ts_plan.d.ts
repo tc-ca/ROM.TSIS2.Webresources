@@ -23,6 +23,11 @@ interface ts_Plan_Base extends WebEntity {
   ts_planstatus?: ts_planstatus | null;
   ts_totalestimatedcost?: number | null;
   ts_totalestimatedcost_base?: number | null;
+  ts_unplannedactivityfiscalyear?: number | null;
+  ts_unplannedactivityq1?: number | null;
+  ts_unplannedactivityq2?: number | null;
+  ts_unplannedactivityq3?: number | null;
+  ts_unplannedactivityq4?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -76,6 +81,11 @@ interface ts_Plan_Select {
   ts_team_guid: WebAttribute<ts_Plan_Select, { ts_team_guid: string | null }, { ts_team_formatted?: string }>;
   ts_totalestimatedcost: WebAttribute<ts_Plan_Select, { ts_totalestimatedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_totalestimatedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_totalestimatedcost_base: WebAttribute<ts_Plan_Select, { ts_totalestimatedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_totalestimatedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_unplannedactivityfiscalyear: WebAttribute<ts_Plan_Select, { ts_unplannedactivityfiscalyear: number | null }, {  }>;
+  ts_unplannedactivityq1: WebAttribute<ts_Plan_Select, { ts_unplannedactivityq1: number | null }, {  }>;
+  ts_unplannedactivityq2: WebAttribute<ts_Plan_Select, { ts_unplannedactivityq2: number | null }, {  }>;
+  ts_unplannedactivityq3: WebAttribute<ts_Plan_Select, { ts_unplannedactivityq3: number | null }, {  }>;
+  ts_unplannedactivityq4: WebAttribute<ts_Plan_Select, { ts_unplannedactivityq4: number | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_Plan_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_Plan_Select, { versionnumber: number | null }, {  }>;
 }
@@ -114,6 +124,11 @@ interface ts_Plan_Filter {
   ts_team_guid: XQW.Guid;
   ts_totalestimatedcost: number;
   ts_totalestimatedcost_base: number;
+  ts_unplannedactivityfiscalyear: any;
+  ts_unplannedactivityq1: any;
+  ts_unplannedactivityq2: any;
+  ts_unplannedactivityq3: any;
+  ts_unplannedactivityq4: any;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }

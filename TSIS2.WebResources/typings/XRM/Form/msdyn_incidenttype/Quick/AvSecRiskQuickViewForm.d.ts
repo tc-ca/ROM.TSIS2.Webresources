@@ -1,5 +1,5 @@
-declare namespace Form.ovs_operation.Quick {
-  namespace OperationquickviewformforOperationActivity {
+declare namespace Form.msdyn_incidenttype.Quick {
+  namespace AvSecRiskQuickViewForm {
     namespace Tabs {
       interface tab_1 extends Xrm.SectionCollectionBase {
         get(name: "tab_1_column_1_section_1"): Xrm.PageSection;
@@ -10,14 +10,16 @@ declare namespace Form.ovs_operation.Quick {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+      get(name: "ts_programactivityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
+      get(name: "ts_programarea"): Xrm.LookupAttribute<"ts_programarea">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+      get(name: "ts_programactivityriskrating"): Xrm.LookupControl<"ts_riskrating">;
+      get(name: "ts_programarea"): Xrm.LookupControl<"ts_programarea">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -31,10 +33,12 @@ declare namespace Form.ovs_operation.Quick {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface OperationquickviewformforOperationActivity extends Xrm.PageBase<OperationquickviewformforOperationActivity.Attributes,OperationquickviewformforOperationActivity.Tabs,OperationquickviewformforOperationActivity.Controls> {
-    getAttribute(attributeName: "ovs_operationtypeid"): Xrm.LookupAttribute<"ovs_operationtype">;
+  interface AvSecRiskQuickViewForm extends Xrm.PageBase<AvSecRiskQuickViewForm.Attributes,AvSecRiskQuickViewForm.Tabs,AvSecRiskQuickViewForm.Controls> {
+    getAttribute(attributeName: "ts_programactivityriskrating"): Xrm.LookupAttribute<"ts_riskrating">;
+    getAttribute(attributeName: "ts_programarea"): Xrm.LookupAttribute<"ts_programarea">;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
+    getControl(controlName: "ts_programactivityriskrating"): Xrm.LookupControl<"ts_riskrating">;
+    getControl(controlName: "ts_programarea"): Xrm.LookupControl<"ts_programarea">;
     getControl(controlName: string): undefined;
   }
 }
