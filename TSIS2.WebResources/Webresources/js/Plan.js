@@ -80,6 +80,10 @@ var ROM;
                 Xrm.WebApi.retrieveRecord("team", team[0].id, "?$select=_ts_territory_value ").then(function success(result) {
                     if (result["_ts_territory_value"] != null) {
                         teamRegionId = result["_ts_territory_value"];
+                        var supportingInspectionsExpanded = formContext.ui.tabs.get("tab_supporting_inspections").getDisplayState() == 'expanded';
+                        if (supportingInspectionsExpanded) {
+                            SubGridFilterExecution(eContext);
+                        }
                     }
                 });
             }
