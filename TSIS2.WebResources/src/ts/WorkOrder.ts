@@ -47,7 +47,7 @@ namespace ROM.WorkOrder {
             }
             //Set disabled false for quarter fields if ISSO
             else {
-                if (userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
+                if (userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager|ROM - Inspector")) {
                     form.getControl("ts_completedquarter").setDisabled(false);
                     form.getControl("ovs_revisedquarterid").setDisabled(false);
                 } else {

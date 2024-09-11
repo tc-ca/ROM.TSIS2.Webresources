@@ -1044,6 +1044,29 @@ interface ts_TeamPlanningInspectorHours_Create extends ts_TeamPlanningInspectorH
 }
 interface ts_TeamPlanningInspectorHours_Update extends ts_TeamPlanningInspectorHours {
 }
+interface ts_trip_Base extends WebEntity {
+}
+interface ts_trip_Fixed extends WebEntity_Fixed {
+  ts_tripid: string;
+}
+interface ts_trip extends ts_trip_Base, ts_trip_Relationships {
+}
+interface ts_trip_Relationships {
+}
+interface ts_trip_Result extends ts_trip_Base, ts_trip_Relationships {
+}
+interface ts_trip_FormattedResult {
+}
+interface ts_trip_Select {
+}
+interface ts_trip_Expand {
+}
+interface ts_trip_Filter {
+}
+interface ts_trip_Create extends ts_trip {
+}
+interface ts_trip_Update extends ts_trip {
+}
 interface ts_workordercreationwizard_Base extends WebEntity {
 }
 interface ts_workordercreationwizard_Fixed extends WebEntity_Fixed {
