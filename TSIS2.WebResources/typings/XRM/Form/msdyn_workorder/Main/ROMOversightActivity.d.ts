@@ -34,6 +34,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "service_tasks_section"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_11"): Xrm.PageSection;
+        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_12"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_9"): Xrm.PageSection;
         get(name: string): undefined;
@@ -227,6 +228,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_incompleteworkorderreason"): Xrm.LookupAttribute<"ts_incompleteworkorderreason">;
       get(name: "ts_incompleteworkorderreasonforother"): Xrm.Attribute<string>;
       get(name: "ts_justificationcomment"): Xrm.Attribute<string>;
+      get(name: "ts_notes"): Xrm.Attribute<string>;
       get(name: "ts_numberoffindings"): Xrm.NumberAttribute;
       get(name: "ts_operatingcarrier"): Xrm.LookupAttribute<"account">;
       get(name: "ts_operatingname"): Xrm.LookupAttribute<"account">;
@@ -419,6 +421,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;
       get(name: "ts_incompleteworkorderreasonforother"): Xrm.StringControl;
       get(name: "ts_justificationcomment"): Xrm.StringControl;
+      get(name: "ts_notes"): Xrm.StringControl;
       get(name: "ts_numberoffindings"): Xrm.NumberControl;
       get(name: "ts_operatingcarrier"): Xrm.LookupControl<"account">;
       get(name: "ts_operatingname"): Xrm.LookupControl<"account">;
@@ -592,6 +595,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_incompleteworkorderreason"): Xrm.LookupAttribute<"ts_incompleteworkorderreason">;
     getAttribute(attributeName: "ts_incompleteworkorderreasonforother"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_justificationcomment"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_notes"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_numberoffindings"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_operatingcarrier"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_operatingname"): Xrm.LookupAttribute<"account">;
@@ -779,6 +783,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;
     getControl(controlName: "ts_incompleteworkorderreasonforother"): Xrm.StringControl;
     getControl(controlName: "ts_justificationcomment"): Xrm.StringControl;
+    getControl(controlName: "ts_notes"): Xrm.StringControl;
     getControl(controlName: "ts_numberoffindings"): Xrm.NumberControl;
     getControl(controlName: "ts_operatingcarrier"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_operatingname"): Xrm.LookupControl<"account">;

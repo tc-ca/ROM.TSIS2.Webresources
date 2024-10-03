@@ -37,6 +37,7 @@ interface msdyn_workorderservicetask_Base extends WebEntity {
   ts_flightcategory?: ts_flightcategory | null;
   ts_flightnumber?: string | null;
   ts_flighttype?: ts_flighttype | null;
+  ts_fromoffline?: boolean | null;
   ts_location?: string | null;
   ts_mandatory?: boolean | null;
   ts_paxboarded?: string | null;
@@ -198,6 +199,7 @@ interface msdyn_workorderservicetask_Select {
   ts_flightcategory: WebAttribute<msdyn_workorderservicetask_Select, { ts_flightcategory: ts_flightcategory | null }, { ts_flightcategory_formatted?: string }>;
   ts_flightnumber: WebAttribute<msdyn_workorderservicetask_Select, { ts_flightnumber: string | null }, {  }>;
   ts_flighttype: WebAttribute<msdyn_workorderservicetask_Select, { ts_flighttype: ts_flighttype | null }, { ts_flighttype_formatted?: string }>;
+  ts_fromoffline: WebAttribute<msdyn_workorderservicetask_Select, { ts_fromoffline: boolean | null }, {  }>;
   ts_gate_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_gate_guid: string | null }, { ts_gate_formatted?: string }>;
   ts_gate_site_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_gate_site_guid: string | null }, { ts_gate_site_formatted?: string }>;
   ts_groomingservices_guid: WebAttribute<msdyn_workorderservicetask_Select, { ts_groomingservices_guid: string | null }, { ts_groomingservices_formatted?: string }>;
@@ -292,6 +294,7 @@ interface msdyn_workorderservicetask_Filter {
   ts_flightcategory: ts_flightcategory;
   ts_flightnumber: string;
   ts_flighttype: ts_flighttype;
+  ts_fromoffline: boolean;
   ts_gate_guid: XQW.Guid;
   ts_gate_site_guid: XQW.Guid;
   ts_groomingservices_guid: XQW.Guid;

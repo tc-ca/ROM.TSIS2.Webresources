@@ -25,6 +25,7 @@ interface ts_SuggestedInspection_Base extends WebEntity {
 }
 interface ts_SuggestedInspection_Relationships {
   ts_Site_Site?: ts_site_Result | null;
+  ts_Trip?: ts_trip_Result | null;
   ts_ts_suggestedinspection_systemuser?: SystemUser_Result[] | null;
   ts_workorder_suggestedinspection?: msdyn_workorder_Result[] | null;
 }
@@ -142,6 +143,7 @@ interface ts_SuggestedInspection_Expand {
   owningteam: WebExpand<ts_SuggestedInspection_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_SuggestedInspection_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_Site_Site: WebExpand<ts_SuggestedInspection_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
+  ts_Trip: WebExpand<ts_SuggestedInspection_Expand, ts_trip_Select, ts_trip_Filter, { ts_Trip: ts_trip_Result }>;
   ts_activitytype: WebExpand<ts_SuggestedInspection_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_activitytype: msdyn_incidenttype_Result }>;
   ts_inspector: WebExpand<ts_SuggestedInspection_Expand, SystemUser_Select, SystemUser_Filter, { ts_inspector: SystemUser_Result }>;
   ts_operation: WebExpand<ts_SuggestedInspection_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operation: ovs_operation_Result }>;
@@ -212,6 +214,7 @@ interface ts_SuggestedInspection_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_Site_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
+  ts_Trip: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   ts_activitytype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_inspector: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
