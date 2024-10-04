@@ -25,6 +25,7 @@ interface tc_TCFiscalQuarter_Relationships {
   ovs_msdyn_workorder_FiscalQuarter_tc_TCFiscal?: msdyn_workorder_Result[] | null;
   ovs_tc_tcfiscalquarter_msdyn_workorder?: msdyn_workorder_Result[] | null;
   tc_TCFiscalYearId?: tc_TCFiscalYear_Result | null;
+  ts_tc_tcfiscalquarter_ts_trip_plannedfiscalquarter?: ts_trip_Result[] | null;
   ts_ts_operationactivity_DueDate_tc_tcfiscalq?: ts_OperationActivity_Result[] | null;
   ts_ts_operationactivity_LastCompletedWO_tc_t?: ts_OperationActivity_Result[] | null;
   ts_ts_operationactivity_NextPlannedWO_tc_tcf?: ts_OperationActivity_Result[] | null;
@@ -110,6 +111,7 @@ interface tc_TCFiscalQuarter_Expand {
   owningteam: WebExpand<tc_TCFiscalQuarter_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<tc_TCFiscalQuarter_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   tc_TCFiscalYearId: WebExpand<tc_TCFiscalQuarter_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { tc_TCFiscalYearId: tc_TCFiscalYear_Result }>;
+  ts_tc_tcfiscalquarter_ts_trip_plannedfiscalquarter: WebExpand<tc_TCFiscalQuarter_Expand, ts_trip_Select, ts_trip_Filter, { ts_tc_tcfiscalquarter_ts_trip_plannedfiscalquarter: ts_trip_Result[] }>;
   ts_ts_operationactivity_DueDate_tc_tcfiscalq: WebExpand<tc_TCFiscalQuarter_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_DueDate_tc_tcfiscalq: ts_OperationActivity_Result[] }>;
   ts_ts_operationactivity_LastCompletedWO_tc_t: WebExpand<tc_TCFiscalQuarter_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_LastCompletedWO_tc_t: ts_OperationActivity_Result[] }>;
   ts_ts_operationactivity_NextPlannedWO_tc_tcf: WebExpand<tc_TCFiscalQuarter_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_NextPlannedWO_tc_tcf: ts_OperationActivity_Result[] }>;
@@ -160,6 +162,7 @@ interface tc_TCFiscalQuarter_RelatedMany {
   ovs_msdyn_workorder_CurrentFiscalQuarter_tc_T: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_msdyn_workorder_FiscalQuarter_tc_TCFiscal: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_tc_tcfiscalquarter_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_tc_tcfiscalquarter_ts_trip_plannedfiscalquarter: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   ts_ts_operationactivity_DueDate_tc_tcfiscalq: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_operationactivity_LastCompletedWO_tc_t: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_operationactivity_NextPlannedWO_tc_tcf: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;

@@ -59,6 +59,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "new_location"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<ts_securityincident_statecode>;
+      get(name: "ts_activedutytsi"): Xrm.Attribute<string>;
       get(name: "ts_additionaldetails"): Xrm.Attribute<string>;
       get(name: "ts_aircarrier"): Xrm.LookupAttribute<"account">;
       get(name: "ts_arrests"): Xrm.OptionSetAttribute<ts_arrestsknownorunknown>;
@@ -158,6 +159,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "new_location"): Xrm.StringControl;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
+      get(name: "ts_activedutytsi"): Xrm.StringControl;
       get(name: "ts_additionaldetails"): Xrm.StringControl;
       get(name: "ts_aircarrier"): Xrm.LookupControl<"account">;
       get(name: "ts_arrests"): Xrm.OptionSetControl<ts_arrestsknownorunknown>;
@@ -263,6 +265,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "new_location"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ts_securityincident_statecode>;
+    getAttribute(attributeName: "ts_activedutytsi"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_additionaldetails"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_aircarrier"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_arrests"): Xrm.OptionSetAttribute<ts_arrestsknownorunknown>;
@@ -357,6 +360,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "new_location"): Xrm.StringControl;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ts_securityincident_statecode>;
+    getControl(controlName: "ts_activedutytsi"): Xrm.StringControl;
     getControl(controlName: "ts_additionaldetails"): Xrm.StringControl;
     getControl(controlName: "ts_aircarrier"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_arrests"): Xrm.OptionSetControl<ts_arrestsknownorunknown>;

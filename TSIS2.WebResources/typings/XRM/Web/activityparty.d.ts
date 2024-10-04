@@ -8,6 +8,8 @@ interface ActivityParty_Base extends WebEntity {
   donotpostalmail?: boolean | null;
   effort?: number | null;
   exchangeentryid?: string | null;
+  externalid?: string | null;
+  externalidtype?: string | null;
   instancetypecode?: activityparty_instancetypecode | null;
   ispartydeleted?: boolean | null;
   msft_datastate?: msft_datastate | null;
@@ -96,6 +98,8 @@ interface ActivityParty_Select {
   donotpostalmail: WebAttribute<ActivityParty_Select, { donotpostalmail: boolean | null }, {  }>;
   effort: WebAttribute<ActivityParty_Select, { effort: number | null }, {  }>;
   exchangeentryid: WebAttribute<ActivityParty_Select, { exchangeentryid: string | null }, {  }>;
+  externalid: WebAttribute<ActivityParty_Select, { externalid: string | null }, {  }>;
+  externalidtype: WebAttribute<ActivityParty_Select, { externalidtype: string | null }, {  }>;
   instancetypecode: WebAttribute<ActivityParty_Select, { instancetypecode: activityparty_instancetypecode | null }, { instancetypecode_formatted?: string }>;
   ispartydeleted: WebAttribute<ActivityParty_Select, { ispartydeleted: boolean | null }, {  }>;
   msft_datastate: WebAttribute<ActivityParty_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
@@ -121,6 +125,8 @@ interface ActivityParty_Filter {
   donotpostalmail: boolean;
   effort: number;
   exchangeentryid: string;
+  externalid: string;
+  externalidtype: string;
   instancetypecode: activityparty_instancetypecode;
   ispartydeleted: boolean;
   msft_datastate: msft_datastate;

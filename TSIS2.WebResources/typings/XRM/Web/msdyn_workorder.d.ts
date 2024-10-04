@@ -97,6 +97,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_documenteddate?: Date | null;
   ts_flightnumber?: string | null;
   ts_flighttype?: ts_flighttype | null;
+  ts_ignoreupdate?: boolean | null;
   ts_incident?: ts_yesno | null;
   ts_incompleteworkorderreasonforother?: string | null;
   ts_isisso?: number | null;
@@ -434,6 +435,7 @@ interface msdyn_workorder_Select {
   ts_flightnumber: WebAttribute<msdyn_workorder_Select, { ts_flightnumber: string | null }, {  }>;
   ts_flighttype: WebAttribute<msdyn_workorder_Select, { ts_flighttype: ts_flighttype | null }, { ts_flighttype_formatted?: string }>;
   ts_functionallocation_guid: WebAttribute<msdyn_workorder_Select, { ts_functionallocation_guid: string | null }, { ts_functionallocation_formatted?: string }>;
+  ts_ignoreupdate: WebAttribute<msdyn_workorder_Select, { ts_ignoreupdate: boolean | null }, {  }>;
   ts_incident: WebAttribute<msdyn_workorder_Select, { ts_incident: ts_yesno | null }, { ts_incident_formatted?: string }>;
   ts_incompleteworkorderreason_guid: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreason_guid: string | null }, { ts_incompleteworkorderreason_formatted?: string }>;
   ts_incompleteworkorderreasonforother: WebAttribute<msdyn_workorder_Select, { ts_incompleteworkorderreasonforother: string | null }, {  }>;
@@ -660,6 +662,7 @@ interface msdyn_workorder_Filter {
   ts_flightnumber: string;
   ts_flighttype: ts_flighttype;
   ts_functionallocation_guid: XQW.Guid;
+  ts_ignoreupdate: boolean;
   ts_incident: ts_yesno;
   ts_incompleteworkorderreason_guid: XQW.Guid;
   ts_incompleteworkorderreasonforother: string;
@@ -804,6 +807,7 @@ interface msdyn_workorder_Expand {
   ts_registration: WebExpand<msdyn_workorder_Expand, ts_aircraft_Select, ts_aircraft_Filter, { ts_registration: ts_aircraft_Result }>;
   ts_riskthreshold: WebExpand<msdyn_workorder_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { ts_riskthreshold: ts_RiskCategory_Result }>;
   ts_suggestedinspection: WebExpand<msdyn_workorder_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection: ts_SuggestedInspection_Result }>;
+  ts_trip: WebExpand<msdyn_workorder_Expand, ts_trip_Select, ts_trip_Filter, { ts_trip: ts_trip_Result }>;
 }
 interface msdyn_workorder_FormattedResult {
   createdby_formatted?: string;
@@ -1089,6 +1093,7 @@ interface msdyn_workorder_RelatedOne {
   ts_registration: WebMappingRetrieve<ts_aircraft_Select,ts_aircraft_Expand,ts_aircraft_Filter,ts_aircraft_Fixed,ts_aircraft_Result,ts_aircraft_FormattedResult>;
   ts_riskthreshold: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
   ts_suggestedinspection: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
+  ts_trip: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
 }
 interface msdyn_workorder_RelatedMany {
   msdyn_msdyn_workorder_bookableresourcebooking_WorkOrder: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
