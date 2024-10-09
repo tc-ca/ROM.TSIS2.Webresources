@@ -33,6 +33,8 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_planningdetail"): Xrm.LookupAttribute<"ts_planningdetail">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
+      get(name: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_target"): Xrm.NumberAttribute;
       get(name: "ts_teamestimatedduration"): Xrm.NumberAttribute;
       get(name: "ts_teamplanningdata"): Xrm.LookupAttribute<"ts_teamplanningdata">;
@@ -74,6 +76,8 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_planningdetail"): Xrm.LookupControl<"ts_planningdetail">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
+      get(name: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_target"): Xrm.NumberControl;
       get(name: "ts_teamestimatedduration"): Xrm.NumberControl;
       get(name: "ts_teamplanningdata"): Xrm.LookupControl<"ts_teamplanningdata">;
@@ -123,6 +127,8 @@ declare namespace Form.ts_planningdata.Main {
     getAttribute(attributeName: "ts_planningdetail"): Xrm.LookupAttribute<"ts_planningdetail">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "ts_subsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_target"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_teamestimatedduration"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_teamplanningdata"): Xrm.LookupAttribute<"ts_teamplanningdata">;
@@ -159,6 +165,8 @@ declare namespace Form.ts_planningdata.Main {
     getControl(controlName: "ts_planningdetail"): Xrm.LookupControl<"ts_planningdetail">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
+    getControl(controlName: "ts_subsite"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_target"): Xrm.NumberControl;
     getControl(controlName: "ts_teamestimatedduration"): Xrm.NumberControl;
     getControl(controlName: "ts_teamplanningdata"): Xrm.LookupControl<"ts_teamplanningdata">;
