@@ -78,6 +78,7 @@ interface Team_Relationships {
   team_ts_suggestedinspection?: ts_SuggestedInspection_Result[] | null;
   team_ts_teamplanningdata?: ts_TeamPlanningData_Result[] | null;
   team_ts_teamplanninginspectorhours?: ts_TeamPlanningInspectorHours_Result[] | null;
+  team_ts_trip?: ts_trip_Result[] | null;
   team_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
   teammembership_association?: SystemUser_Result[] | null;
   ts_enforcementaction_team_owningteam?: ts_enforcementaction_Result[] | null;
@@ -244,6 +245,7 @@ interface Team_Expand {
   team_ts_suggestedinspection: WebExpand<Team_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { team_ts_suggestedinspection: ts_SuggestedInspection_Result[] }>;
   team_ts_teamplanningdata: WebExpand<Team_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { team_ts_teamplanningdata: ts_TeamPlanningData_Result[] }>;
   team_ts_teamplanninginspectorhours: WebExpand<Team_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { team_ts_teamplanninginspectorhours: ts_TeamPlanningInspectorHours_Result[] }>;
+  team_ts_trip: WebExpand<Team_Expand, ts_trip_Select, ts_trip_Filter, { team_ts_trip: ts_trip_Result[] }>;
   team_ts_workordercreationwizard: WebExpand<Team_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { team_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
   teammembership_association: WebExpand<Team_Expand, SystemUser_Select, SystemUser_Filter, { teammembership_association: SystemUser_Result[] }>;
   ts_enforcementaction_team_owningteam: WebExpand<Team_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_team_owningteam: ts_enforcementaction_Result[] }>;
@@ -354,6 +356,7 @@ interface Team_RelatedMany {
   team_ts_suggestedinspection: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   team_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   team_ts_teamplanninginspectorhours: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
+  team_ts_trip: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   team_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   teammembership_association: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_enforcementaction_team_owningteam: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;

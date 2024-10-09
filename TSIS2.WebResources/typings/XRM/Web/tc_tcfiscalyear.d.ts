@@ -23,6 +23,7 @@ interface tc_TCFiscalYear_Relationships {
   tc_TCFiscalQuarter_TCFiscalYear?: tc_TCFiscalQuarter_Result[] | null;
   ts_plan_fiscalyear?: ts_Plan_Result[] | null;
   ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear?: ts_nonoversightactivity_Result[] | null;
+  ts_tc_tcfiscalyear_ts_trip_FiscalYear?: ts_trip_Result[] | null;
   ts_ts_planningdata_FiscalYear_tc_tcfiscalyea?: ts_PlanningData_Result[] | null;
   ts_ts_teamplanningdata_FiscalYear_tc_tcfisca?: ts_TeamPlanningData_Result[] | null;
 }
@@ -101,6 +102,7 @@ interface tc_TCFiscalYear_Expand {
   tc_TCFiscalQuarter_TCFiscalYear: WebExpand<tc_TCFiscalYear_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { tc_TCFiscalQuarter_TCFiscalYear: tc_TCFiscalQuarter_Result[] }>;
   ts_plan_fiscalyear: WebExpand<tc_TCFiscalYear_Expand, ts_Plan_Select, ts_Plan_Filter, { ts_plan_fiscalyear: ts_Plan_Result[] }>;
   ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear: WebExpand<tc_TCFiscalYear_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear: ts_nonoversightactivity_Result[] }>;
+  ts_tc_tcfiscalyear_ts_trip_FiscalYear: WebExpand<tc_TCFiscalYear_Expand, ts_trip_Select, ts_trip_Filter, { ts_tc_tcfiscalyear_ts_trip_FiscalYear: ts_trip_Result[] }>;
   ts_ts_planningdata_FiscalYear_tc_tcfiscalyea: WebExpand<tc_TCFiscalYear_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_FiscalYear_tc_tcfiscalyea: ts_PlanningData_Result[] }>;
   ts_ts_teamplanningdata_FiscalYear_tc_tcfisca: WebExpand<tc_TCFiscalYear_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { ts_ts_teamplanningdata_FiscalYear_tc_tcfisca: ts_TeamPlanningData_Result[] }>;
 }
@@ -148,6 +150,7 @@ interface tc_TCFiscalYear_RelatedMany {
   tc_TCFiscalQuarter_TCFiscalYear: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ts_plan_fiscalyear: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
+  ts_tc_tcfiscalyear_ts_trip_FiscalYear: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   ts_ts_planningdata_FiscalYear_tc_tcfiscalyea: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_ts_teamplanningdata_FiscalYear_tc_tcfisca: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
 }

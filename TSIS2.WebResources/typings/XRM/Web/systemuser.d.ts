@@ -345,6 +345,10 @@ interface SystemUser_Relationships {
   lk_ts_teamplanninginspectorhours_createdonbehalfby?: ts_TeamPlanningInspectorHours_Result[] | null;
   lk_ts_teamplanninginspectorhours_modifiedby?: ts_TeamPlanningInspectorHours_Result[] | null;
   lk_ts_teamplanninginspectorhours_modifiedonbehalfby?: ts_TeamPlanningInspectorHours_Result[] | null;
+  lk_ts_trip_createdby?: ts_trip_Result[] | null;
+  lk_ts_trip_createdonbehalfby?: ts_trip_Result[] | null;
+  lk_ts_trip_modifiedby?: ts_trip_Result[] | null;
+  lk_ts_trip_modifiedonbehalfby?: ts_trip_Result[] | null;
   lk_ts_workordercreationwizard_createdby?: ts_workordercreationwizard_Result[] | null;
   lk_ts_workordercreationwizard_createdonbehalfby?: ts_workordercreationwizard_Result[] | null;
   lk_ts_workordercreationwizard_modifiedby?: ts_workordercreationwizard_Result[] | null;
@@ -426,6 +430,7 @@ interface SystemUser_Relationships {
   user_ts_suggestedinspection?: ts_SuggestedInspection_Result[] | null;
   user_ts_teamplanningdata?: ts_TeamPlanningData_Result[] | null;
   user_ts_teamplanninginspectorhours?: ts_TeamPlanningInspectorHours_Result[] | null;
+  user_ts_trip?: ts_trip_Result[] | null;
   user_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
 }
 interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
@@ -962,6 +967,10 @@ interface SystemUser_Expand {
   lk_ts_teamplanninginspectorhours_createdonbehalfby: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { lk_ts_teamplanninginspectorhours_createdonbehalfby: ts_TeamPlanningInspectorHours_Result[] }>;
   lk_ts_teamplanninginspectorhours_modifiedby: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { lk_ts_teamplanninginspectorhours_modifiedby: ts_TeamPlanningInspectorHours_Result[] }>;
   lk_ts_teamplanninginspectorhours_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { lk_ts_teamplanninginspectorhours_modifiedonbehalfby: ts_TeamPlanningInspectorHours_Result[] }>;
+  lk_ts_trip_createdby: WebExpand<SystemUser_Expand, ts_trip_Select, ts_trip_Filter, { lk_ts_trip_createdby: ts_trip_Result[] }>;
+  lk_ts_trip_createdonbehalfby: WebExpand<SystemUser_Expand, ts_trip_Select, ts_trip_Filter, { lk_ts_trip_createdonbehalfby: ts_trip_Result[] }>;
+  lk_ts_trip_modifiedby: WebExpand<SystemUser_Expand, ts_trip_Select, ts_trip_Filter, { lk_ts_trip_modifiedby: ts_trip_Result[] }>;
+  lk_ts_trip_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_trip_Select, ts_trip_Filter, { lk_ts_trip_modifiedonbehalfby: ts_trip_Result[] }>;
   lk_ts_workordercreationwizard_createdby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_createdby: ts_workordercreationwizard_Result[] }>;
   lk_ts_workordercreationwizard_createdonbehalfby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_createdonbehalfby: ts_workordercreationwizard_Result[] }>;
   lk_ts_workordercreationwizard_modifiedby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_modifiedby: ts_workordercreationwizard_Result[] }>;
@@ -1046,6 +1055,7 @@ interface SystemUser_Expand {
   user_ts_suggestedinspection: WebExpand<SystemUser_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { user_ts_suggestedinspection: ts_SuggestedInspection_Result[] }>;
   user_ts_teamplanningdata: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { user_ts_teamplanningdata: ts_TeamPlanningData_Result[] }>;
   user_ts_teamplanninginspectorhours: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { user_ts_teamplanninginspectorhours: ts_TeamPlanningInspectorHours_Result[] }>;
+  user_ts_trip: WebExpand<SystemUser_Expand, ts_trip_Select, ts_trip_Filter, { user_ts_trip: ts_trip_Result[] }>;
   user_ts_workordercreationwizard: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { user_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
 }
 interface SystemUser_FormattedResult {
@@ -1338,6 +1348,10 @@ interface SystemUser_RelatedMany {
   lk_ts_teamplanninginspectorhours_createdonbehalfby: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
   lk_ts_teamplanninginspectorhours_modifiedby: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
   lk_ts_teamplanninginspectorhours_modifiedonbehalfby: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
+  lk_ts_trip_createdby: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
+  lk_ts_trip_createdonbehalfby: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
+  lk_ts_trip_modifiedby: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
+  lk_ts_trip_modifiedonbehalfby: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   lk_ts_workordercreationwizard_createdby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   lk_ts_workordercreationwizard_createdonbehalfby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   lk_ts_workordercreationwizard_modifiedby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
@@ -1418,6 +1432,7 @@ interface SystemUser_RelatedMany {
   user_ts_suggestedinspection: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   user_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   user_ts_teamplanninginspectorhours: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
+  user_ts_trip: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   user_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

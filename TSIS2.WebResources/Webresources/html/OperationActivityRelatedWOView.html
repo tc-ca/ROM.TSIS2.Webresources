@@ -120,6 +120,7 @@
             border-style: inset;
             border-width: 1px;
         }
+
         .k-grid-header th.k-header {
             vertical-align: middle;
         }
@@ -133,11 +134,14 @@
             var dvInfoBox = document.getElementById("dvTripInfo");
             dvInfoBox.innerHTML = "Query related Work Orders ...";
 
+            let lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
             try {
                 var parameters = {};
                 parameters.actionName = "GetOperationActivityWO";
-                parameters.recordId = opActivityId;// opValue[0].id.replace("{", "").replace("}", "");
+                parameters.recordId = opActivityId + "|" + lang;// opValue[0].id.replace("{", "").replace("}", "");
 
+
+                console.log("param: " + JSON.stringify(parameters));
 
                 var req = new XMLHttpRequest();
                 req.open("POST", parent.Xrm.Utility.getGlobalContext().getClientUrl() + "/api/data/v9.1/ts_TSGlobalAction", true);
@@ -153,7 +157,7 @@
                             var results = JSON.parse(this.response);
                             //debugger;
                             var tableHtml = results.result;
-
+                            console.log("tableHtml: " + tableHtml);
                             var dvInfo = document.getElementById("dvTripInfo");
                             dvInfo.innerHTML = results.result2;
 
@@ -215,7 +219,7 @@
                             }
 
                             model.fields = fields;
-                            
+
                             $("#findTripUITable").kendoGrid({
                                 //https://docs.telerik.com/kendo-ui/knowledge-base/create-with-dynamic-columns-and-data-types
                                 dataSource: {
@@ -231,7 +235,7 @@
                                             this.autoFitColumn(i);
                                         }
                                     }
-                                },                                
+                                },
                                 pageable: {
                                     pageSize: 10
                                 },
@@ -300,7 +304,7 @@
 
 
 
-    
+
     <div id="dvTripInfo" style="margin-left:20px;">
 
     </div>

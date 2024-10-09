@@ -7,6 +7,7 @@ interface ts_securityincident_Base extends WebEntity {
   statecode?: ts_securityincident_statecode | null;
   statuscode?: ts_securityincident_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_activedutytsi?: string | null;
   ts_additionaldetails?: string | null;
   ts_arrests?: ts_arrestsknownorunknown | null;
   ts_arrestsdetails?: string | null;
@@ -89,6 +90,7 @@ interface ts_securityincident_Relationships {
   ts_Origin?: msdyn_FunctionalLocation_Result | null;
   ts_Origin_Site?: ts_site_Result | null;
   ts_ReportingCompany?: Account_Result | null;
+  ts_SecurityIncidentType?: ts_securityincidenttype_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Site_Site?: ts_site_Result | null;
   ts_Stakeholder?: Account_Result | null;
@@ -150,6 +152,7 @@ interface ts_securityincident_Select {
   statecode: WebAttribute<ts_securityincident_Select, { statecode: ts_securityincident_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ts_securityincident_Select, { statuscode: ts_securityincident_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_securityincident_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_activedutytsi: WebAttribute<ts_securityincident_Select, { ts_activedutytsi: string | null }, {  }>;
   ts_additionaldetails: WebAttribute<ts_securityincident_Select, { ts_additionaldetails: string | null }, {  }>;
   ts_aircarrier_guid: WebAttribute<ts_securityincident_Select, { ts_aircarrier_guid: string | null }, { ts_aircarrier_formatted?: string }>;
   ts_arrests: WebAttribute<ts_securityincident_Select, { ts_arrests: ts_arrestsknownorunknown | null }, { ts_arrests_formatted?: string }>;
@@ -261,6 +264,7 @@ interface ts_securityincident_Filter {
   statecode: ts_securityincident_statecode;
   statuscode: ts_securityincident_statuscode;
   timezoneruleversionnumber: number;
+  ts_activedutytsi: string;
   ts_additionaldetails: string;
   ts_aircarrier_guid: XQW.Guid;
   ts_arrests: ts_arrestsknownorunknown;
@@ -372,6 +376,7 @@ interface ts_securityincident_Expand {
   ts_Origin: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Origin: msdyn_FunctionalLocation_Result }>;
   ts_Origin_Site: WebExpand<ts_securityincident_Expand, ts_site_Select, ts_site_Filter, { ts_Origin_Site: ts_site_Result }>;
   ts_ReportingCompany: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_ReportingCompany: Account_Result }>;
+  ts_SecurityIncidentType: WebExpand<ts_securityincident_Expand, ts_securityincidenttype_Select, ts_securityincidenttype_Filter, { ts_SecurityIncidentType: ts_securityincidenttype_Result }>;
   ts_Site: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Site_Site: WebExpand<ts_securityincident_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
   ts_Stakeholder: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
@@ -495,6 +500,7 @@ interface ts_securityincident_RelatedOne {
   ts_Origin: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Origin_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_ReportingCompany: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_SecurityIncidentType: WebMappingRetrieve<ts_securityincidenttype_Select,ts_securityincidenttype_Expand,ts_securityincidenttype_Filter,ts_securityincidenttype_Fixed,ts_securityincidenttype_Result,ts_securityincidenttype_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Site_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

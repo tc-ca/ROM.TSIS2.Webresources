@@ -40,10 +40,10 @@ namespace ROM.WorkOrder {
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
         Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
             userBusinessUnitName = businessunit.entities[0].name;
-            if (userBusinessUnitName.startsWith("Aviation")) {
-                form.getControl("ts_details").setVisible(true);
-                form.getControl("ts_overtime").setVisible(true);
-                form.getControl("ts_overtimerequired").setVisible(true);
+            if (!userBusinessUnitName.startsWith("Aviation")) {
+                form.getControl("ts_details").setVisible(false);
+                form.getControl("ts_overtime").setVisible(false);
+                form.getControl("ts_overtimerequired").setVisible(false);
             }
             //Set disabled false for quarter fields if ISSO
             else {

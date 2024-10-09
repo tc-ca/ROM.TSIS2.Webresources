@@ -515,6 +515,29 @@ interface ts_canceledinspectionjustification_Create extends ts_canceledinspectio
 }
 interface ts_canceledinspectionjustification_Update extends ts_canceledinspectionjustification {
 }
+interface ts_case_Base extends WebEntity {
+}
+interface ts_case_Fixed extends WebEntity_Fixed {
+  ts_caseid: string;
+}
+interface ts_case extends ts_case_Base, ts_case_Relationships {
+}
+interface ts_case_Relationships {
+}
+interface ts_case_Result extends ts_case_Base, ts_case_Relationships {
+}
+interface ts_case_FormattedResult {
+}
+interface ts_case_Select {
+}
+interface ts_case_Expand {
+}
+interface ts_case_Filter {
+}
+interface ts_case_Create extends ts_case {
+}
+interface ts_case_Update extends ts_case {
+}
 interface ts_causefinding_Base extends WebEntity {
 }
 interface ts_causefinding_Fixed extends WebEntity_Fixed {
@@ -883,6 +906,29 @@ interface ts_planningsettings_Create extends ts_planningsettings {
 }
 interface ts_planningsettings_Update extends ts_planningsettings {
 }
+interface ts_questionnaireresponse_Base extends WebEntity {
+}
+interface ts_questionnaireresponse_Fixed extends WebEntity_Fixed {
+  ts_questionnaireresponseid: string;
+}
+interface ts_questionnaireresponse extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
+}
+interface ts_questionnaireresponse_Relationships {
+}
+interface ts_questionnaireresponse_Result extends ts_questionnaireresponse_Base, ts_questionnaireresponse_Relationships {
+}
+interface ts_questionnaireresponse_FormattedResult {
+}
+interface ts_questionnaireresponse_Select {
+}
+interface ts_questionnaireresponse_Expand {
+}
+interface ts_questionnaireresponse_Filter {
+}
+interface ts_questionnaireresponse_Create extends ts_questionnaireresponse {
+}
+interface ts_questionnaireresponse_Update extends ts_questionnaireresponse {
+}
 interface ts_questionnaireversion_Base extends WebEntity {
 }
 interface ts_questionnaireversion_Fixed extends WebEntity_Fixed {
@@ -951,6 +997,29 @@ interface ts_securityincident_Filter {
 interface ts_securityincident_Create extends ts_securityincident {
 }
 interface ts_securityincident_Update extends ts_securityincident {
+}
+interface ts_securityincidenttype_Base extends WebEntity {
+}
+interface ts_securityincidenttype_Fixed extends WebEntity_Fixed {
+  ts_securityincidenttypeid: string;
+}
+interface ts_securityincidenttype extends ts_securityincidenttype_Base, ts_securityincidenttype_Relationships {
+}
+interface ts_securityincidenttype_Relationships {
+}
+interface ts_securityincidenttype_Result extends ts_securityincidenttype_Base, ts_securityincidenttype_Relationships {
+}
+interface ts_securityincidenttype_FormattedResult {
+}
+interface ts_securityincidenttype_Select {
+}
+interface ts_securityincidenttype_Expand {
+}
+interface ts_securityincidenttype_Filter {
+}
+interface ts_securityincidenttype_Create extends ts_securityincidenttype {
+}
+interface ts_securityincidenttype_Update extends ts_securityincidenttype {
 }
 interface ts_site_Base extends WebEntity {
 }
