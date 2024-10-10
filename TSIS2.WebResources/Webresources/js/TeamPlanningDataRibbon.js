@@ -199,6 +199,8 @@ async function createWorkOrders(formContext) {
                     "    <attribute name='ts_stakeholder'/>",
                     "    <attribute name='ts_fiscalyear'/>",
                     "    <attribute name='ts_site'/>",
+                    "    <attribute name='ts_subsite'/>",
+                    "    <attribute name='ts_subsubsite'/>",
                     "    <attribute name='ts_activitytype'/>",
                     "    <attribute name='ts_operationtype'/>",
                     "    <attribute name='ts_plannedq4'/>",
@@ -256,6 +258,8 @@ async function createWorkOrders(formContext) {
                         if (tradeNameId != null) workOrderData["ts_tradenameId@odata.bind"] = "/ts_tradenames(" + tradeNameId + ")";
                         if (planningData._ts_operationtype_value != null) workOrderData["ovs_operationtypeid@odata.bind"] = "/ovs_operationtypes(" + planningData._ts_operationtype_value + ")";
                         if (planningData._ts_site_value != null) workOrderData["ts_Site@odata.bind"] = "/msdyn_functionallocations(" + planningData._ts_site_value + ")";
+                        if (planningData._ts_subsite_value != null) workOrderData["msdyn_FunctionalLocation@odata.bind"] = "/msdyn_functionallocations(" + planningData._ts_subsite_value + ")";
+                        if (planningData._ts_subsubsite_value != null) workOrderData["ts_Subsubsite@odata.bind"] = "/msdyn_functionallocations(" + planningData._ts_subsubsite_value + ")";
                         if (planningData._ts_activitytype_value != null) workOrderData["msdyn_primaryincidenttype@odata.bind"] = "/msdyn_incidenttypes(" + planningData._ts_activitytype_value + ")";
                         if (planningData._ts_operation_value != null) workOrderData["ovs_OperationId@odata.bind"] = "/ovs_operations(" + planningData._ts_operation_value + ")";
                         if (planningData.ts_details != null) workOrderData["ts_details"] = planningData.ts_details;

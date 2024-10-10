@@ -48,6 +48,8 @@ interface ts_PlanningData_Relationships {
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Site_Site?: ts_site_Result | null;
   ts_Stakeholder?: Account_Result | null;
+  ts_Subsite?: msdyn_FunctionalLocation_Result | null;
+  ts_Subsubsite?: msdyn_FunctionalLocation_Result | null;
   ts_Team?: Team_Result | null;
   ts_TeamPlanningData?: ts_TeamPlanningData_Result | null;
   ts_workorder_planningdata?: msdyn_workorder_Result[] | null;
@@ -63,6 +65,8 @@ interface ts_PlanningData extends ts_PlanningData_Base, ts_PlanningData_Relation
   ts_Site_Site_bind$ts_sites?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_Stakeholder_bind$accounts?: string | null;
+  ts_Subsite_bind$msdyn_functionallocations?: string | null;
+  ts_Subsubsite_bind$msdyn_functionallocations?: string | null;
   ts_TeamPlanningData_bind$ts_teamplanningdatas?: string | null;
   ts_Team_bind$teams?: string | null;
   ts_planningdetail_bind$ts_planningdetails?: string | null;
@@ -123,6 +127,8 @@ interface ts_PlanningData_Select {
   ts_site_guid: WebAttribute<ts_PlanningData_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_site_site_guid: WebAttribute<ts_PlanningData_Select, { ts_site_site_guid: string | null }, { ts_site_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_PlanningData_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
+  ts_subsite_guid: WebAttribute<ts_PlanningData_Select, { ts_subsite_guid: string | null }, { ts_subsite_formatted?: string }>;
+  ts_subsubsite_guid: WebAttribute<ts_PlanningData_Select, { ts_subsubsite_guid: string | null }, { ts_subsubsite_formatted?: string }>;
   ts_target: WebAttribute<ts_PlanningData_Select, { ts_target: number | null }, {  }>;
   ts_team_guid: WebAttribute<ts_PlanningData_Select, { ts_team_guid: string | null }, { ts_team_formatted?: string }>;
   ts_teamestimatedduration: WebAttribute<ts_PlanningData_Select, { ts_teamestimatedduration: number | null }, {  }>;
@@ -184,6 +190,8 @@ interface ts_PlanningData_Filter {
   ts_site_guid: XQW.Guid;
   ts_site_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
+  ts_subsite_guid: XQW.Guid;
+  ts_subsubsite_guid: XQW.Guid;
   ts_target: number;
   ts_team_guid: XQW.Guid;
   ts_teamestimatedduration: any;
@@ -208,6 +216,8 @@ interface ts_PlanningData_Expand {
   ts_Site: WebExpand<ts_PlanningData_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Site_Site: WebExpand<ts_PlanningData_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
   ts_Stakeholder: WebExpand<ts_PlanningData_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
+  ts_Subsite: WebExpand<ts_PlanningData_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsite: msdyn_FunctionalLocation_Result }>;
+  ts_Subsubsite: WebExpand<ts_PlanningData_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsubsite: msdyn_FunctionalLocation_Result }>;
   ts_Team: WebExpand<ts_PlanningData_Expand, Team_Select, Team_Filter, { ts_Team: Team_Result }>;
   ts_TeamPlanningData: WebExpand<ts_PlanningData_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { ts_TeamPlanningData: ts_TeamPlanningData_Result }>;
   ts_workorder_planningdata: WebExpand<ts_PlanningData_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_workorder_planningdata: msdyn_workorder_Result[] }>;
@@ -235,6 +245,8 @@ interface ts_PlanningData_FormattedResult {
   ts_site_formatted?: string;
   ts_site_site_formatted?: string;
   ts_stakeholder_formatted?: string;
+  ts_subsite_formatted?: string;
+  ts_subsubsite_formatted?: string;
   ts_team_formatted?: string;
   ts_teamplanningdata_formatted?: string;
 }
@@ -257,6 +269,8 @@ interface ts_PlanningData_Result extends ts_PlanningData_Base, ts_PlanningData_R
   ts_site_guid: string | null;
   ts_site_site_guid: string | null;
   ts_stakeholder_guid: string | null;
+  ts_subsite_guid: string | null;
+  ts_subsubsite_guid: string | null;
   ts_team_guid: string | null;
   ts_teamplanningdata_guid: string | null;
 }
@@ -275,6 +289,8 @@ interface ts_PlanningData_RelatedOne {
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Site_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_Subsite: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_Subsubsite: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Team: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_TeamPlanningData: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
 }
