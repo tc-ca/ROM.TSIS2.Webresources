@@ -157,6 +157,7 @@
     <Content Include="Webresources\html\RATEFactor3GuidePopUp.html" />
     <Content Include="Webresources\html\RATEFactor4Guide.html" />
     <Content Include="Webresources\html\RATEFactor4GuidePopUp.html" />
+    <Content Include="Webresources\html\SecurityIncidentAdditionalDetailsDisplay.html" />
     <Content Include="Webresources\html\SecurityIncidentDetailsDisplay.html" />
     <Content Include="Webresources\html\SecurityRolePrivilegeCompare.html" />
     <Content Include="Webresources\html\SharePointAttachFilePopUp.html" />
