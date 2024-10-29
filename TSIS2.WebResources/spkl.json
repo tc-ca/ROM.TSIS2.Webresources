@@ -572,6 +572,11 @@
             "file": "html\\SecurityIncidentDetailsDisplay.html",
             "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincident"
           },
+          {
+            "uniquename": "ts_/html/SecurityIncidentAdditionalDetailsDisplay.html",
+            "file": "html\\SecurityIncidentAdditionalDetailsDisplay.html",
+            "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincidentadditionaldetails"
+          },
           /* SurveyJS dependencies */
           {
             "uniquename": "ovs_/js/ace.min.js",
