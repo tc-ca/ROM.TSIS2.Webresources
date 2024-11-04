@@ -194,6 +194,7 @@ interface msdyn_workorder_Relationships {
   ts_operationcontact_workorder_msdyn_worko?: ts_operationcontact_Result[] | null;
   ts_ovs_Finding_WorkOrder_msdyn_workorder?: ovs_Finding_Result[] | null;
   ts_questionnaireresponse_WorkOrder_msdyn_workorder?: ts_questionnaireresponse_Result[] | null;
+  ts_workorder_ts_workordertimetracking_WorkOrder?: ts_workordertimetracking_Result[] | null;
 }
 interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relationships {
   msdyn_FunctionalLocation_bind$msdyn_functionallocations?: string | null;
@@ -808,6 +809,7 @@ interface msdyn_workorder_Expand {
   ts_riskthreshold: WebExpand<msdyn_workorder_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { ts_riskthreshold: ts_RiskCategory_Result }>;
   ts_suggestedinspection: WebExpand<msdyn_workorder_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection: ts_SuggestedInspection_Result }>;
   ts_trip: WebExpand<msdyn_workorder_Expand, ts_trip_Select, ts_trip_Filter, { ts_trip: ts_trip_Result }>;
+  ts_workorder_ts_workordertimetracking_WorkOrder: WebExpand<msdyn_workorder_Expand, ts_workordertimetracking_Select, ts_workordertimetracking_Filter, { ts_workorder_ts_workordertimetracking_WorkOrder: ts_workordertimetracking_Result[] }>;
 }
 interface msdyn_workorder_FormattedResult {
   createdby_formatted?: string;
@@ -1117,6 +1119,7 @@ interface msdyn_workorder_RelatedMany {
   ts_operationcontact_workorder_msdyn_worko: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_ovs_Finding_WorkOrder_msdyn_workorder: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_questionnaireresponse_WorkOrder_msdyn_workorder: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
+  ts_workorder_ts_workordertimetracking_WorkOrder: WebMappingRetrieve<ts_workordertimetracking_Select,ts_workordertimetracking_Expand,ts_workordertimetracking_Filter,ts_workordertimetracking_Fixed,ts_workordertimetracking_Result,ts_workordertimetracking_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_workorders: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;

@@ -17,6 +17,7 @@ declare namespace Form.ts_operationactivity.Main {
       get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
       get(name: "ts_plannedstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
+      get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
       get(name: string): undefined;
@@ -34,6 +35,7 @@ declare namespace Form.ts_operationactivity.Main {
       get(name: "ts_closedondateoflastworkorder"): Xrm.DateControl;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
+      get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
       get(name: string): undefined;
@@ -57,6 +59,7 @@ declare namespace Form.ts_operationactivity.Main {
     getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
     getAttribute(attributeName: "ts_plannedstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
+    getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: string): undefined;
@@ -69,6 +72,7 @@ declare namespace Form.ts_operationactivity.Main {
     getControl(controlName: "ts_closedondateoflastworkorder"): Xrm.DateControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
+    getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
     getControl(controlName: string): undefined;

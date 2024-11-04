@@ -13,6 +13,7 @@ interface ts_OperationActivity_Base extends WebEntity {
   ts_operationactivityid?: string | null;
   ts_operationalstatus?: ts_operationalstatus | null;
   ts_plannedstatus?: ts_planningstatus | null;
+  ts_riskscore?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -36,6 +37,7 @@ interface ts_OperationActivity extends ts_OperationActivity_Base, ts_OperationAc
   ts_NextPlannedWO_bind$tc_tcfiscalquarters?: string | null;
   ts_OperationType_bind$ovs_operationtypes?: string | null;
   ts_Operation_bind$ovs_operations?: string | null;
+  ts_ProgramArea_bind$ts_programareas?: string | null;
   ts_RecurrenceFrequency_bind$ts_recurrencefrequencieses?: string | null;
   ts_Site_Site_bind$ts_sites?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
@@ -74,7 +76,9 @@ interface ts_OperationActivity_Select {
   ts_operationalstatus: WebAttribute<ts_OperationActivity_Select, { ts_operationalstatus: ts_operationalstatus | null }, { ts_operationalstatus_formatted?: string }>;
   ts_operationtype_guid: WebAttribute<ts_OperationActivity_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
   ts_plannedstatus: WebAttribute<ts_OperationActivity_Select, { ts_plannedstatus: ts_planningstatus | null }, { ts_plannedstatus_formatted?: string }>;
+  ts_programarea_guid: WebAttribute<ts_OperationActivity_Select, { ts_programarea_guid: string | null }, { ts_programarea_formatted?: string }>;
   ts_recurrencefrequency_guid: WebAttribute<ts_OperationActivity_Select, { ts_recurrencefrequency_guid: string | null }, { ts_recurrencefrequency_formatted?: string }>;
+  ts_riskscore: WebAttribute<ts_OperationActivity_Select, { ts_riskscore: number | null }, {  }>;
   ts_site_guid: WebAttribute<ts_OperationActivity_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_site_site_guid: WebAttribute<ts_OperationActivity_Select, { ts_site_site_guid: string | null }, { ts_site_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_OperationActivity_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
@@ -110,7 +114,9 @@ interface ts_OperationActivity_Filter {
   ts_operationalstatus: ts_operationalstatus;
   ts_operationtype_guid: XQW.Guid;
   ts_plannedstatus: ts_planningstatus;
+  ts_programarea_guid: XQW.Guid;
   ts_recurrencefrequency_guid: XQW.Guid;
+  ts_riskscore: any;
   ts_site_guid: XQW.Guid;
   ts_site_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
@@ -158,6 +164,7 @@ interface ts_OperationActivity_FormattedResult {
   ts_operationalstatus_formatted?: string;
   ts_operationtype_formatted?: string;
   ts_plannedstatus_formatted?: string;
+  ts_programarea_formatted?: string;
   ts_recurrencefrequency_formatted?: string;
   ts_site_formatted?: string;
   ts_site_site_formatted?: string;
@@ -179,6 +186,7 @@ interface ts_OperationActivity_Result extends ts_OperationActivity_Base, ts_Oper
   ts_nextplannedwo_guid: string | null;
   ts_operation_guid: string | null;
   ts_operationtype_guid: string | null;
+  ts_programarea_guid: string | null;
   ts_recurrencefrequency_guid: string | null;
   ts_site_guid: string | null;
   ts_site_site_guid: string | null;

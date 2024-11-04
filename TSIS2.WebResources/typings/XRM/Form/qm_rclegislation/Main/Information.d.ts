@@ -79,6 +79,7 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "Subgrid_2"): Xrm.SubGridControl<"qm_tylegislationcharacteristic">;
       get(name: "Subgrid_new_3"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "Subgrid_new_4"): Xrm.SubGridControl<"ovs_operationtype">;
+      get(name: "WebResource_new_1"): Xrm.WebResourceControl;
       get(name: "causes_sub_grid"): Xrm.SubGridControl<"qm_rclegislation">;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
       get(name: "createdon"): Xrm.DateControl;
@@ -162,6 +163,7 @@ declare namespace Form.qm_rclegislation.Main {
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"qm_tylegislationcharacteristic">;
     getControl(controlName: "Subgrid_new_3"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "Subgrid_new_4"): Xrm.SubGridControl<"ovs_operationtype">;
+    getControl(controlName: "WebResource_new_1"): Xrm.WebResourceControl;
     getControl(controlName: "causes_sub_grid"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "createdon"): Xrm.DateControl;
