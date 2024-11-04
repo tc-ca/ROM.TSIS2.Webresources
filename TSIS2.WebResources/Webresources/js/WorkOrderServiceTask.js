@@ -58,7 +58,7 @@ var ROM;
         var aocRegion;
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var Form, taskType, statusReason, workOrderStartDateCtl, workOrderStartDateValue, workOrderEndDateCtl, workOrderTaskTypeCtl;
+                var Form, taskType, statusReason, workOrderStartDateCtl, workOrderStartDateValue, workOrderEndDateCtl, workOrderTaskTypeCtl, fromOffline;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -125,6 +125,10 @@ var ROM;
                                     workOrderStartDateCtl.setDisabled(true);
                                 }
                                 ToggleQuestionnaire(eContext);
+                            }
+                            fromOffline = Form.getAttribute("ts_fromoffline").getValue();
+                            if (fromOffline) {
+                                UpdateQuestionnaireDefinition(eContext);
                             }
                             if (statusReason == 918640002) {
                                 Form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "To unlock completed questionnaires please contact your manager." : "Pour déverrouiller un questionnaire complété, veuillez contacter votre gestionnaire."), "WARNING", "completed_questionnaire");

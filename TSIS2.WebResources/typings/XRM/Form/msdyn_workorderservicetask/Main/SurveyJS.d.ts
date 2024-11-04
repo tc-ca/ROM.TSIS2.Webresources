@@ -135,6 +135,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_flightcategory"): Xrm.OptionSetAttribute<ts_flightcategory>;
       get(name: "ts_flightnumber"): Xrm.Attribute<string>;
       get(name: "ts_flighttype"): Xrm.OptionSetAttribute<ts_flighttype>;
+      get(name: "ts_fromoffline"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_groomingservices"): Xrm.LookupAttribute<"account">;
       get(name: "ts_legislationsourcefilter"): Xrm.LookupAttribute<"qm_tylegislationsource">;
       get(name: "ts_legislationtypefilter"): Xrm.LookupAttribute<"qm_tylegislationtype">;
@@ -215,6 +216,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "ts_flightcategory"): Xrm.OptionSetControl<ts_flightcategory>;
       get(name: "ts_flightnumber"): Xrm.StringControl;
       get(name: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
+      get(name: "ts_fromoffline"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_groomingservices"): Xrm.LookupControl<"account">;
       get(name: "ts_legislationsourcefilter"): Xrm.LookupControl<"qm_tylegislationsource">;
       get(name: "ts_legislationtypefilter"): Xrm.LookupControl<"qm_tylegislationtype">;
@@ -297,6 +299,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getAttribute(attributeName: "ts_flightcategory"): Xrm.OptionSetAttribute<ts_flightcategory>;
     getAttribute(attributeName: "ts_flightnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_flighttype"): Xrm.OptionSetAttribute<ts_flighttype>;
+    getAttribute(attributeName: "ts_fromoffline"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_groomingservices"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_legislationsourcefilter"): Xrm.LookupAttribute<"qm_tylegislationsource">;
     getAttribute(attributeName: "ts_legislationtypefilter"): Xrm.LookupAttribute<"qm_tylegislationtype">;
@@ -372,6 +375,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "ts_flightcategory"): Xrm.OptionSetControl<ts_flightcategory>;
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
     getControl(controlName: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
+    getControl(controlName: "ts_fromoffline"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_groomingservices"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_legislationsourcefilter"): Xrm.LookupControl<"qm_tylegislationsource">;
     getControl(controlName: "ts_legislationtypefilter"): Xrm.LookupControl<"qm_tylegislationtype">;

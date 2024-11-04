@@ -89,6 +89,14 @@ namespace ROM.WorkOrderServiceTask {
             ToggleQuestionnaire(eContext);
         }
 
+        //If Questionnaire was created in offline mode and was appended to WOST
+        var fromOffline = Form.getAttribute("ts_fromoffline").getValue();
+
+        if (fromOffline) {
+          UpdateQuestionnaireDefinition(eContext);
+        }
+
+
         if (statusReason == 918640002) {
             Form.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "To unlock completed questionnaires please contact your manager." : "Pour déverrouiller un questionnaire complété, veuillez contacter votre gestionnaire."), "WARNING", "completed_questionnaire");
 

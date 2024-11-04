@@ -1274,6 +1274,29 @@ interface Contact_Create extends Contact {
 }
 interface Contact_Update extends Contact {
 }
+interface ts_workordertimetracking_Base extends WebEntity {
+}
+interface ts_workordertimetracking_Fixed extends WebEntity_Fixed {
+  ts_workordertimetrackingid: string;
+}
+interface ts_workordertimetracking extends ts_workordertimetracking_Base, ts_workordertimetracking_Relationships {
+}
+interface ts_workordertimetracking_Relationships {
+}
+interface ts_workordertimetracking_Result extends ts_workordertimetracking_Base, ts_workordertimetracking_Relationships {
+}
+interface ts_workordertimetracking_FormattedResult {
+}
+interface ts_workordertimetracking_Select {
+}
+interface ts_workordertimetracking_Expand {
+}
+interface ts_workordertimetracking_Filter {
+}
+interface ts_workordertimetracking_Create extends ts_workordertimetracking {
+}
+interface ts_workordertimetracking_Update extends ts_workordertimetracking {
+}
 interface SystemUser_Base extends WebEntity {
 }
 interface SystemUser_Fixed extends WebEntity_Fixed {

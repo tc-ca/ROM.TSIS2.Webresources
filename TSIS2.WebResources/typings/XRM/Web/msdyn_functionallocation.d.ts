@@ -78,6 +78,8 @@ interface msdyn_FunctionalLocation_Relationships {
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca?: msdyn_workorder_Result[] | null;
   ts_ovs_operation_site_msdyn_functionallocati?: ovs_operation_Result[] | null;
   ts_ovs_operation_subsite_msdyn_functionalloc?: ovs_operation_Result[] | null;
+  ts_planningdata_Subsite_msdyn_functionallocation?: ts_PlanningData_Result[] | null;
+  ts_planningdata_Subsubsite_msdyn_functionallocation?: ts_PlanningData_Result[] | null;
   ts_suggestedinspection_site?: ts_SuggestedInspection_Result[] | null;
   ts_ts_operationactivity_Site_msdyn_functiona?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_Site_msdyn_functionalloca?: ts_PlanningData_Result[] | null;
@@ -268,6 +270,8 @@ interface msdyn_FunctionalLocation_Expand {
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_Site_msdyn_FunctionalLoca: msdyn_workorder_Result[] }>;
   ts_ovs_operation_site_msdyn_functionallocati: WebExpand<msdyn_FunctionalLocation_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_site_msdyn_functionallocati: ovs_operation_Result[] }>;
   ts_ovs_operation_subsite_msdyn_functionalloc: WebExpand<msdyn_FunctionalLocation_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_subsite_msdyn_functionalloc: ovs_operation_Result[] }>;
+  ts_planningdata_Subsite_msdyn_functionallocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_planningdata_Subsite_msdyn_functionallocation: ts_PlanningData_Result[] }>;
+  ts_planningdata_Subsubsite_msdyn_functionallocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_planningdata_Subsubsite_msdyn_functionallocation: ts_PlanningData_Result[] }>;
   ts_suggestedinspection_site: WebExpand<msdyn_FunctionalLocation_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection_site: ts_SuggestedInspection_Result[] }>;
   ts_ts_operationactivity_Site_msdyn_functiona: WebExpand<msdyn_FunctionalLocation_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Site_msdyn_functiona: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_Site_msdyn_functionalloca: WebExpand<msdyn_FunctionalLocation_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Site_msdyn_functionalloca: ts_PlanningData_Result[] }>;
@@ -365,6 +369,8 @@ interface msdyn_FunctionalLocation_RelatedMany {
   ts_msdyn_workorder_Site_msdyn_FunctionalLoca: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ovs_operation_site_msdyn_functionallocati: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_ovs_operation_subsite_msdyn_functionalloc: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_planningdata_Subsite_msdyn_functionallocation: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
+  ts_planningdata_Subsubsite_msdyn_functionallocation: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_suggestedinspection_site: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   ts_ts_operationactivity_Site_msdyn_functiona: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_Site_msdyn_functionalloca: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;

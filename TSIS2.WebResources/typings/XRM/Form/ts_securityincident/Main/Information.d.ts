@@ -50,6 +50,13 @@ declare namespace Form.ts_securityincident.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_ts_securityincidentadditionaldetails extends Xrm.SectionCollectionBase {
+        get(name: "tab_7_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "createdby"): Xrm.LookupAttribute<"systemuser">;
@@ -147,6 +154,7 @@ declare namespace Form.ts_securityincident.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
+      get(name: "Subgrid_ts_securityincidentadditionaldetails"): Xrm.SubGridControl<"ts_securityincidentadditionaldetails">;
       get(name: "WebResource_SecurityIncidentDetailsDisplay"): Xrm.WebResourceControl;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
       get(name: "createdon"): Xrm.DateControl;
@@ -251,6 +259,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "tab_4"): Xrm.PageTab<Tabs.tab_4>;
       get(name: "tab_recordlog"): Xrm.PageTab<Tabs.tab_recordlog>;
       get(name: "tab_time_tracking"): Xrm.PageTab<Tabs.tab_time_tracking>;
+      get(name: "tab_ts_securityincidentadditionaldetails"): Xrm.PageTab<Tabs.tab_ts_securityincidentadditionaldetails>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -348,6 +357,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_yardorstationname"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
+    getControl(controlName: "Subgrid_ts_securityincidentadditionaldetails"): Xrm.SubGridControl<"ts_securityincidentadditionaldetails">;
     getControl(controlName: "WebResource_SecurityIncidentDetailsDisplay"): Xrm.WebResourceControl;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "createdon"): Xrm.DateControl;

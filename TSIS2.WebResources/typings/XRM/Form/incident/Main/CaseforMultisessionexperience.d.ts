@@ -9,6 +9,7 @@ declare namespace Form.incident.Main {
         get(name: "MergedCases"): Xrm.PageSection;
         get(name: "RelatedCases"): Xrm.PageSection;
         get(name: "SwarmSection"): Xrm.PageSection;
+        get(name: "queueitemdetails"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -18,6 +19,14 @@ declare namespace Form.incident.Main {
         get(name: "Case Details Summary"): Xrm.PageSection;
         get(name: "TabsControl"): Xrm.PageSection;
         get(name: "copilot_summary_section"): Xrm.PageSection;
+        get(name: "dueActivitySection"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface Tab_Attachment extends Xrm.SectionCollectionBase {
+        get(name: "attachmentSection"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -37,14 +46,16 @@ declare namespace Form.incident.Main {
       get(name: "followupby"): Xrm.DateAttribute;
       get(name: "isescalated"): Xrm.OptionSetAttribute<boolean>;
       get(name: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype"> | null;
+      get(name: "msdyn_precreateattachmentsid"): Xrm.Attribute<any>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "parentcaseid"): Xrm.LookupAttribute<"incident">;
       get(name: "primarycontactid"): Xrm.LookupAttribute<"contact"> | null;
-      get(name: "prioritycode"): Xrm.OptionSetAttribute<incident_prioritycode>;
+      get(name: "prioritycode"): Xrm.Attribute<any>;
       get(name: "productid"): Xrm.LookupAttribute<"product">;
+      get(name: "productserialnumber"): Xrm.Attribute<any>;
       get(name: "resolveby"): Xrm.DateAttribute;
       get(name: "responseby"): Xrm.DateAttribute;
-      get(name: "statuscode"): Xrm.OptionSetAttribute<incident_statuscode>;
+      get(name: "statuscode"): Xrm.Attribute<any>;
       get(name: "subjectid"): Xrm.Attribute<any>;
       get(name: "ticketnumber"): Xrm.Attribute<string>;
       get(name: "title"): Xrm.Attribute<string>;
@@ -55,6 +66,7 @@ declare namespace Form.incident.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Activities"): Xrm.BaseControl;
       get(name: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
       get(name: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
       get(name: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
@@ -87,14 +99,16 @@ declare namespace Form.incident.Main {
       get(name: "header_process_title_1"): Xrm.StringControl | null;
       get(name: "header_ticketnumber"): Xrm.StringControl;
       get(name: "isescalated"): Xrm.OptionSetControl<boolean>;
+      get(name: "msdyn_precreateattachmentsid"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "parentcaseid"): Xrm.LookupControl<"incident">;
-      get(name: "prioritycode"): Xrm.OptionSetControl<incident_prioritycode>;
+      get(name: "prioritycode"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "productid"): Xrm.LookupControl<"product">;
+      get(name: "productserialnumber"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "relatedCases"): Xrm.SubGridControl<"connection">;
       get(name: "resolveby"): Xrm.DateControl;
       get(name: "responseby"): Xrm.DateControl;
-      get(name: "statuscode"): Xrm.OptionSetControl<incident_statuscode>;
+      get(name: "statuscode"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "subjectid"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "title"): Xrm.StringControl;
       get(name: "traversedpath"): Xrm.Control<Xrm.Attribute<any>>;
@@ -106,6 +120,7 @@ declare namespace Form.incident.Main {
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "CASERELATIONSHIP_TAB"): Xrm.PageTab<Tabs.CASERELATIONSHIP_TAB>;
       get(name: "Summary"): Xrm.PageTab<Tabs.Summary>;
+      get(name: "Tab_Attachment"): Xrm.PageTab<Tabs.Tab_Attachment>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -125,19 +140,22 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "followupby"): Xrm.DateAttribute;
     getAttribute(attributeName: "isescalated"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "msdyn_incidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype"> | null;
+    getAttribute(attributeName: "msdyn_precreateattachmentsid"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "parentcaseid"): Xrm.LookupAttribute<"incident">;
     getAttribute(attributeName: "primarycontactid"): Xrm.LookupAttribute<"contact"> | null;
-    getAttribute(attributeName: "prioritycode"): Xrm.OptionSetAttribute<incident_prioritycode>;
+    getAttribute(attributeName: "prioritycode"): Xrm.Attribute<any>;
     getAttribute(attributeName: "productid"): Xrm.LookupAttribute<"product">;
+    getAttribute(attributeName: "productserialnumber"): Xrm.Attribute<any>;
     getAttribute(attributeName: "resolveby"): Xrm.DateAttribute;
     getAttribute(attributeName: "responseby"): Xrm.DateAttribute;
-    getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<incident_statuscode>;
+    getAttribute(attributeName: "statuscode"): Xrm.Attribute<any>;
     getAttribute(attributeName: "subjectid"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ticketnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
     getAttribute(attributeName: "traversedpath"): Xrm.Attribute<any>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Activities"): Xrm.BaseControl;
     getControl(controlName: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
     getControl(controlName: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
     getControl(controlName: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
@@ -170,14 +188,16 @@ declare namespace Form.incident.Main {
     getControl(controlName: "header_process_title_1"): Xrm.StringControl | null;
     getControl(controlName: "header_ticketnumber"): Xrm.StringControl;
     getControl(controlName: "isescalated"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "msdyn_precreateattachmentsid"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "parentcaseid"): Xrm.LookupControl<"incident">;
-    getControl(controlName: "prioritycode"): Xrm.OptionSetControl<incident_prioritycode>;
+    getControl(controlName: "prioritycode"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "productid"): Xrm.LookupControl<"product">;
+    getControl(controlName: "productserialnumber"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "relatedCases"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "resolveby"): Xrm.DateControl;
     getControl(controlName: "responseby"): Xrm.DateControl;
-    getControl(controlName: "statuscode"): Xrm.OptionSetControl<incident_statuscode>;
+    getControl(controlName: "statuscode"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "subjectid"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "title"): Xrm.StringControl;
     getControl(controlName: "traversedpath"): Xrm.Control<Xrm.Attribute<any>>;
