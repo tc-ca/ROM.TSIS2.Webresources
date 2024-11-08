@@ -1,0 +1,61 @@
+﻿<html>
+<head>
+    <title>Provision Render</title>
+    <script src="../js/buildprovisiontext.js"></script>
+</head>
+<body style="overflow-wrap: break-word;">
+    <div id="div1"></div>
+    <script language="javascript">
+        var globalContext = parent.Xrm.Utility.getGlobalContext();
+        var langId = globalContext.userSettings.languageId;
+        var _ParentRecordId = parent.Xrm.Page.data.entity.getId().replace("{", "").replace("}", "");
+        var provisionText = "";
+
+        // Retrieve parent record to get the qm_tylegislationsourceid_value
+        parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation", "?$select=_qm_tylegislationsourceid_value&$filter=qm_rclegislationid eq " + _ParentRecordId).then(
+            async function success(parentResults) {
+                if (parentResults.entities.length > 0) {
+                    var _qm_tylegislationsourceid_value = parentResults.entities[0]["_qm_tylegislationsourceid_value"];
+
+                    // Use the qm_tylegislationsourceid_value to retrieve child records
+                    parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation", "?$select=qm_rclegislationid&$filter=_qm_tylegislationsourceid_value eq " + _qm_tylegislationsourceid_value + "&$orderby=qm_ordernbr").then(
+                        async function success(childResults) {
+                            if (childResults.entities.length > 0) {
+                                // Retrieve details for each child record
+                                for (var i = 0; i < childResults.entities.length; i++) {
+                                    var childId = childResults.entities[i]["qm_rclegislationid"];
+
+                                    // Retrieve detailed information for each child record
+                                    parent.Xrm.WebApi.online.retrieveRecord("qm_rclegislation", childId, "?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value").then(
+                                        async function success(childRecord) {
+                                            provisionText += await buildProvisionText(childRecord, langId);
+
+                                            // Append the provision text to the page
+                                            var span = document.createElement("Span");
+                                            span.innerHTML = provisionText + "<br><br>";
+                                            document.getElementById("div1").appendChild(span);
+                                        },
+                                        function (error) {
+                                            parent.Xrm.Utility.alertDialog(error.message);
+                                        }
+                                    );
+                                }
+                            } else {
+                                parent.Xrm.Utility.alertDialog("No child records found.");
+                            }
+                        },
+                        function (error) {
+                            parent.Xrm.Utility.alertDialog("Error retrieving child records: " + error.message);
+                        }
+                    );
+                } else {
+                    parent.Xrm.Utility.alertDialog("No parent record found with the given ID.");
+                }
+            },
+            function (error) {
+                parent.Xrm.Utility.alertDialog("Error retrieving parent record: " + error.message);
+            }
+        );
+    </script>
+</body>
+</html>
