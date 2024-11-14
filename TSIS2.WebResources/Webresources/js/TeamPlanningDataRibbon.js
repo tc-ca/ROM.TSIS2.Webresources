@@ -234,6 +234,10 @@ async function createWorkOrders(formContext) {
                     "    <link-entity name='account' from='accountid' to='ts_stakeholder' link-type='outer' alias='ts_stakeholder'>",
                     "      <attribute name='name'/>",
                     "    </link-entity>",
+                    "    <link-entity name='ovs_operation' from='ovs_operationid' to='ts_operation' link-type='outer' alias='ts_operation'>",
+                    "      <attribute name='ts_subsite'/>",
+                    "      <attribute name='ts_subsubsite'/>",
+                    "    </link-entity>",
                     "  </entity>",
                     "</fetch>"
                 ].join("");
@@ -258,8 +262,10 @@ async function createWorkOrders(formContext) {
                         if (tradeNameId != null) workOrderData["ts_tradenameId@odata.bind"] = "/ts_tradenames(" + tradeNameId + ")";
                         if (planningData._ts_operationtype_value != null) workOrderData["ovs_operationtypeid@odata.bind"] = "/ovs_operationtypes(" + planningData._ts_operationtype_value + ")";
                         if (planningData._ts_site_value != null) workOrderData["ts_Site@odata.bind"] = "/msdyn_functionallocations(" + planningData._ts_site_value + ")";
-                        if (planningData._ts_subsite_value != null) workOrderData["msdyn_FunctionalLocation@odata.bind"] = "/msdyn_functionallocations(" + planningData._ts_subsite_value + ")";
-                        if (planningData._ts_subsubsite_value != null) workOrderData["ts_Subsubsite@odata.bind"] = "/msdyn_functionallocations(" + planningData._ts_subsubsite_value + ")";
+                        if (planningData["ts_operation.ts_subsite"] != null) workOrderData["msdyn_FunctionalLocation@odata.bind"] = "/msdyn_functionallocations(" + planningData["ts_operation.ts_subsite"] + ")";
+                        if (planningData["ts_operation.ts_subsubsite"] != null) workOrderData["ts_Subsubsite@odata.bind"] = "/msdyn_functionallocations(" + planningData["ts_operation.ts_subsubsite"] + ")";
+//                        if (planningData._ts_subsite_value != null) workOrderData["msdyn_FunctionalLocation@odata.bind"] = "/msdyn_functionallocations(" + planningData._ts_subsite_value + ")";
+//                        if (planningData._ts_subsubsite_value != null) workOrderData["ts_Subsubsite@odata.bind"] = "/msdyn_functionallocations(" + planningData._ts_subsubsite_value + ")";
                         if (planningData._ts_activitytype_value != null) workOrderData["msdyn_primaryincidenttype@odata.bind"] = "/msdyn_incidenttypes(" + planningData._ts_activitytype_value + ")";
                         if (planningData._ts_operation_value != null) workOrderData["ovs_OperationId@odata.bind"] = "/ovs_operations(" + planningData._ts_operation_value + ")";
                         if (planningData.ts_details != null) workOrderData["ts_details"] = planningData.ts_details;
