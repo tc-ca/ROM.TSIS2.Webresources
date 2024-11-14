@@ -72,7 +72,7 @@
                 operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
 
                 // Populate operation asset
-                const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
+                const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name"/><attribute name="ts_stakeholder"/><attribute name="ts_site"/><attribute name="ovs_operationid"/><attribute name="ts_operationalstatus"/><attribute name="ts_subsite"/><attribute name="ts_subsubsite"/><order attribute="ovs_name" descending="true"/><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/><condition attribute="ts_site" operator="eq" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderAttributeValue[0].id + '"/></filter></entity></fetch>';
                 var encodedFetchXml = encodeURIComponent(fetchXml);
                 Xrm.WebApi.retrieveMultipleRecords("ovs_operation", "?fetchXml=" + encodedFetchXml).then(
                     function success(result) {
@@ -91,6 +91,24 @@
                             else {
                                 form.ui.clearFormNotification("non-operational-operation");
                                 form.getAttribute('ts_operation').setValue(lookup);
+
+                                //if (targetOperation._ts_subsite_value) {
+                                //    var lookupSubsite = new Array();
+                                //    lookupSubsite[0] = new Object();
+                                //    lookupSubsite[0].id = targetOperation._ts_subsite_value;
+                                //    lookupSubsite[0].name = targetOperation["_ts_subsite_value@OData.Community.Display.V1.FormattedValue"];
+                                //    lookupSubsite[0].entityType = 'msdyn_functionallocation';
+                                //    form.getAttribute('ts_subsite').setValue(lookupSubsite);
+                                //}
+
+                                //if (targetOperation._ts_subsubsite_value) {
+                                //    var lookupSubsubsite = new Array();
+                                //    lookupSubsubsite[0] = new Object();
+                                //    lookupSubsubsite[0].id = targetOperation._ts_subsubsite_value;
+                                //    lookupSubsubsite[0].name = targetOperation["_ts_subsubsite_value@OData.Community.Display.V1.FormattedValue"];
+                                //    lookupSubsubsite[0].entityType = 'msdyn_functionallocation';
+                                //    form.getAttribute('ts_subsubsite').setValue(lookupSubsubsite);
+                                //}
                             }
                         } else {
                             // do not set a default if multiple records are found
@@ -105,6 +123,7 @@
                 //encodedFetchXml = encodeURIComponent(fetchXmlToCheckForSubSites);
 
                 //only retrieve SubSites with Operations under Stakeholders
+                /*
                 var targetSubSiteIds = "";
                 var checkOtherSubSites = true;
                 const fetchOperationsWithSiteAndStakeholder = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="ovs_operation"><attribute name="ovs_name" /><attribute name="ts_subsite"/><attribute name="ts_subsubsite"/><attribute name="createdon" /><attribute name="ovs_operationtypeid" /><attribute name="ovs_operationid" />     <order attribute="ovs_name" descending="false" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /><condition attribute="ts_stakeholder" operator="eq" uitype="account" value="' + stakeholderAttributeValue[0].id + '" /> <condition attribute="ts_site" operator="eq"  uitype="msdyn_functionallocation" value="' + siteAttributeValue[0].id + '" /><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeValue[0].id + '"/></filter></entity></fetch>';
@@ -146,14 +165,15 @@
                         console.log(error.message);
                     }
                 );
+                */
             }
-            else {
-                form.getAttribute("ts_subsite").setValue(null);
+            else { 
+                //form.getAttribute("ts_subsite").setValue(null);
                 //form.getControl('ts_subsite').setVisible(false);
-                form.getAttribute("ts_subsite").setRequiredLevel("none");
-                form.getAttribute("ts_subsubsite").setValue(null);
+                //form.getAttribute("ts_subsite").setRequiredLevel("none");
+                //form.getAttribute("ts_subsubsite").setValue(null);
                 //form.getControl('ts_subsubsite').setVisible(false);
-                form.getAttribute("ts_subsubsite").setRequiredLevel("none");
+                //form.getAttribute("ts_subsubsite").setRequiredLevel("none");
             }
         }
     }
