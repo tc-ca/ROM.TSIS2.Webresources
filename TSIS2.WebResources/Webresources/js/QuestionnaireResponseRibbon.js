@@ -42,32 +42,22 @@ function appendToWOST(formContext) {
             title: (lang == 1036) ? "Ajouter à la tâche de service" : "Append Questionnaire to Work Order Service Task"
         };
         //Open Custom Page to select WO
-        Xrm.Navigation.navigateTo(pageInput, navigationOptions);
+        Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+            function () {
+                // Called when the dialog closes
+                formContext.data.refresh();
+
+            }
+        ).catch(
+            function (error) {
+                // Handle error
+            }
+        );
     }
     //show pop-up message
     else {
         showAlertDialog(missingActivityTypeTextLocalized, missingActivityTypeTitleLocalized);
     }
-
-    //var selectedActivityType = formContext.getAttribute("ts_activitytype").getValue()
-
-    //if (selectedActivityType == null) {
-    //    Xrm.Navigation.navigateTo(pageInput, navigationOptions)
-    //        .then(
-    //            function () {
-    //                // Called when the dialog closes
-    //                // formContext.data.refresh();
-
-    //            }
-    //        ).catch(
-    //            function (error) {
-    //                // Handle error
-    //            }
-    //        );
-    //}
-    //else {
-
-    //}
 }
 
 function isAdminOrManager() {
