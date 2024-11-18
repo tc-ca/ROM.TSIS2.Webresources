@@ -25,6 +25,15 @@
                             buildProvisionText(childRecord, langId).then(function (provisionText) {
                                 var span = document.createElement("span");
                                 span.innerHTML = provisionText + "<br><br>";
+
+                                // determine if it is the legislation that we have selected
+                                if (childRecord.qm_rclegislationid.toUpperCase() === _ParentRecordId.toUpperCase()) {
+                                    // Do nothing to make it highlight
+                                } else {
+                                    // Remove the <mark> tag which highlights the text
+                                    span.innerHTML = span.innerHTML.replace(/<mark>(.*?)<\/mark>/g, '$1');
+                                }
+
                                 document.getElementById("div1").appendChild(span);
                             }).catch(function (error) {
                                 console.error("Error building provision text:", error);
