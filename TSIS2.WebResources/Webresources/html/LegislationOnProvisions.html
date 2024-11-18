@@ -10,6 +10,7 @@
         var langId = globalContext.userSettings.languageId;
         var _ParentRecordId = globalContext.getQueryStringParameters().id.replace("{", "").replace("}", "");
         var provisionText = "";
+        var highlightedElement = null; // Variable to hold the reference to the highlighted element
 
         // Retrieve parent record to get the qm_tylegislationsourceid_value
         parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation", "?$select=_qm_tylegislationsourceid_value&$filter=qm_rclegislationid eq " + _ParentRecordId).then(function (parentResults) {
@@ -29,6 +30,7 @@
                                 // determine if it is the legislation that we have selected
                                 if (childRecord.qm_rclegislationid.toUpperCase() === _ParentRecordId.toUpperCase()) {
                                     // Do nothing to make it highlight
+                                    highlightedElement = span; // Store the reference to the highlighted element
                                 } else {
                                     // Remove the <mark> tag which highlights the text
                                     span.innerHTML = span.innerHTML.replace(/<mark>(.*?)<\/mark>/g, '$1');
@@ -42,6 +44,20 @@
                     }
                 }).catch(function (error) {
                     console.error("Error retrieving child records:", error);
+                });
+
+                // Wait for all promises to resolve
+                Promise.all(promises).then(function () {
+                    // Code to execute after all child records have been processed
+                    console.log("All child records processed.");
+                    if (highlightedElement) {
+                        const rect = highlightedElement.getBoundingClientRect();
+                        const elementTop = rect.top + window.scrollY; // Get the absolute position
+                        window.scrollTo({
+                            top: elementTop - (window.innerHeight / 2) + (highlightedElement.offsetHeight / 2), // Center the element
+                            behavior: 'smooth'
+                        });
+                    }
                 });
             }
         }).catch(function (error) {
