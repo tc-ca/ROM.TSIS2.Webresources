@@ -577,6 +577,11 @@
             "file": "html\\SecurityIncidentAdditionalDetailsDisplay.html",
             "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincidentadditionaldetails"
           },
+                    {
+            "uniquename": "ts_/html/LegislationOnProvisions.html",
+            "file": "html\\LegislationOnProvisions.html",
+            "description": "Display the related provisions of qm_rclegislation in the default form for qm_rclegislation"
+          },
           /* SurveyJS dependencies */
           {
             "uniquename": "ovs_/js/ace.min.js",
