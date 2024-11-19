@@ -1,0 +1,68 @@
+﻿<html>
+<head>
+    <title>Provision Render</title>
+    <script src="../js/buildprovisiontext.js"></script>
+</head>
+<body style="overflow-wrap: break-word;">
+    <div id="div1"></div>
+    <script language="javascript">
+        var globalContext = parent.Xrm.Utility.getGlobalContext();
+        var langId = globalContext.userSettings.languageId;
+        var _ParentRecordId = globalContext.getQueryStringParameters().id.replace("{", "").replace("}", "");
+        var provisionText = "";
+        var highlightedElement = null; // Variable to hold the reference to the highlighted element
+
+        // Retrieve parent record to get the qm_tylegislationsourceid_value
+        parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation", "?$select=_qm_tylegislationsourceid_value&$filter=qm_rclegislationid eq " + _ParentRecordId).then(function (parentResults) {
+            if (parentResults.entities.length > 0) {
+                var _qm_tylegislationsourceid_value = parentResults.entities[0]["_qm_tylegislationsourceid_value"];
+
+                // Use the qm_tylegislationsourceid_value to retrieve child records
+                parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation", "?$select=qm_rclegislationid,qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=_qm_tylegislationsourceid_value eq " + _qm_tylegislationsourceid_value + "&$orderby=qm_ordernbr").then(function (results) {
+                    if (results.entities.length > 0) {
+                        // Loop through the child records
+                        results.entities.forEach(function (childRecord) {
+                            // Call buildProvisionText for each child record
+                            buildProvisionText(childRecord, langId).then(function (provisionText) {
+                                var span = document.createElement("span");
+                                span.innerHTML = provisionText + "<br><br>";
+
+                                // determine if it is the legislation that we have selected
+                                if (childRecord.qm_rclegislationid.toUpperCase() === _ParentRecordId.toUpperCase()) {
+                                    // Do nothing to make it highlight
+                                    highlightedElement = span; // Store the reference to the highlighted element
+                                } else {
+                                    // Remove the <mark> tag which highlights the text
+                                    span.innerHTML = span.innerHTML.replace(/<mark>(.*?)<\/mark>/g, '$1');
+                                }
+
+                                document.getElementById("div1").appendChild(span);
+                            }).catch(function (error) {
+                                console.error("Error building provision text:", error);
+                            });
+                        });
+                    }
+                }).catch(function (error) {
+                    console.error("Error retrieving child records:", error);
+                });
+
+                // Wait for all promises to resolve
+                Promise.all(promises).then(function () {
+                    // Code to execute after all child records have been processed
+                    console.log("All child records processed.");
+                    if (highlightedElement) {
+                        const rect = highlightedElement.getBoundingClientRect();
+                        const elementTop = rect.top + window.scrollY; // Get the absolute position
+                        window.scrollTo({
+                            top: elementTop - (window.innerHeight / 2) + (highlightedElement.offsetHeight / 2), // Center the element
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+        }).catch(function (error) {
+            console.error("Error retrieving parent record:", error);
+        });
+    </script>
+</body>
+</html>
