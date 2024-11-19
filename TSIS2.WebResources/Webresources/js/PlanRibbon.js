@@ -199,6 +199,19 @@
         }
     });
 
+    var teamUnplannedHours = 0;
+    if (formContext.getAttribute("ts_unplannedhoursq1").getValue() != null) {
+        teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq1").getValue();
+    }
+    if (formContext.getAttribute("ts_unplannedhoursq2").getValue() != null) {
+        teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq2").getValue();
+    }
+    if (formContext.getAttribute("ts_unplannedhoursq3").getValue() != null) {
+        teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq3").getValue();
+    }
+    if (formContext.getAttribute("ts_unplannedhoursq4").getValue() != null) {
+        teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq4").getValue();
+    }
     formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
     formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
     formContext.getAttribute("ts_plannedactivityq3").setValue(teamPlanningDataPlannedQ3);
@@ -209,7 +222,7 @@
     formContext.getAttribute("ts_estimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
     formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
     formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
-    formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal + teamPlanningDataTeamEstimatedTravelTimeTotal + teamPlanningSupportRegionTimeTotal);
+    formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal + teamPlanningDataTeamEstimatedTravelTimeTotal + teamPlanningSupportRegionTimeTotal + teamUnplannedHours);
 
     formContext.getAttribute("ts_totalestimatedcost").setValue(teamPlanningDataTeamEstimatedCostTotal);
 
