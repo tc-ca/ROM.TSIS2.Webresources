@@ -17,6 +17,9 @@ function appOnLoad() {
     }
 
     showBanner(appUrl, message2, true);
+
+    // Hide specific navigation groups
+    hideNavigationGroups();
 }
 
 function getAppURL(){
@@ -37,4 +40,24 @@ function showBanner(appId, display_message, allow_close) {
         console.log(error.message);
     });
 
+}
+
+function hideNavigationGroups() {
+    // Hide the Dashboard group
+    const dashboardGroup = document.querySelector('li[aria-label="Dashboard"]');
+    if (dashboardGroup) {
+        dashboardGroup.style.display = 'none'; // Hides the Dashboard group
+    }
+
+    // Hide Rail Security
+    const railSecurity = document.querySelector('li[aria-label="Rail Security"]');
+    if (railSecurity) {
+        railSecurity.style.display = 'none'; // Hides Rail Security
+    }
+
+    // Hide Aviation Security
+    const aviationSecurity = document.querySelector('li[aria-label="Aviation Security"]');
+    if (aviationSecurity) {
+        aviationSecurity.style.display = 'none'; // Hides Aviation Security
+    }
 }
