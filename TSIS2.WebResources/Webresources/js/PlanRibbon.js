@@ -13,7 +13,7 @@
     let teamPlanningDataTeamEstimatedDurationQ3 = 0;
     let teamPlanningDataTeamEstimatedDurationQ4 = 0;
     let teamPlanningDataTeamEstimatedDurationTotal = 0;
-    let teamPlanningDataTeamEstimatedTravelTimeTotal = 0;
+    //let teamPlanningDataTeamEstimatedTravelTimeTotal = 0;
     let teamPlanningSupportRegionTimeTotal = 0;
     let teamPlanningDataTeamEstimatedCostTotal = 0;
 
@@ -119,7 +119,7 @@
     let suggestedInspections = await Xrm.WebApi.retrieveMultipleRecords("ts_suggestedinspection", suggestedInspectionsFetchXml).then(function success(result) {
         return result.entities;
     });
-    let tripInspectorIds = "";
+    //let tripInspectorIds = "";
     //For each suggested inspection, if the assigned inspector has a matching inspector hours object, subtract from the total hours of each quarter 
     for (let suggestedInspection of suggestedInspections) {
         if (planInspectorHours[suggestedInspection._ts_inspector_value] != null) {
@@ -128,21 +128,21 @@
             const q3 = (suggestedInspection.ts_q3 != null) ? suggestedInspection.ts_q3 : 0;
             const q4 = (suggestedInspection.ts_q4 != null) ? suggestedInspection.ts_q4 : 0;
 
-            var estimatedTravelTime = 0;
-            if (suggestedInspection["plantrip.ts_estimatedtraveltime"] != null && suggestedInspection["_ts_trip_value"] != null) {
-                if (tripInspectorIds.indexOf(suggestedInspection["_ts_trip_value"] + ";" + suggestedInspection["_ts_inspector_value"]) == -1) {
-                    estimatedTravelTime = Math.round(suggestedInspection["plantrip.ts_estimatedtraveltime"]);
-                    tripInspectorIds += suggestedInspection["_ts_trip_value"] + ";" + suggestedInspection["_ts_inspector_value"] + "|";
-                }
-            }
-            else if (suggestedInspection["ts_estimatedtraveltime"] != null) {
-                estimatedTravelTime = Math.round(suggestedInspection["ts_estimatedtraveltime"]);
-            }
+            //var estimatedTravelTime = 0;
+            //if (suggestedInspection["plantrip.ts_estimatedtraveltime"] != null && suggestedInspection["_ts_trip_value"] != null) {
+            //    if (tripInspectorIds.indexOf(suggestedInspection["_ts_trip_value"] + ";" + suggestedInspection["_ts_inspector_value"]) == -1) {
+            //        estimatedTravelTime = Math.round(suggestedInspection["plantrip.ts_estimatedtraveltime"]);
+            //        tripInspectorIds += suggestedInspection["_ts_trip_value"] + ";" + suggestedInspection["_ts_inspector_value"] + "|";
+            //    }
+            //}
+            //else if (suggestedInspection["ts_estimatedtraveltime"] != null) {
+            //    estimatedTravelTime = Math.round(suggestedInspection["ts_estimatedtraveltime"]);
+            //}
 
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ1 -= q1 * (suggestedInspection.ts_estimatedduration + estimatedTravelTime);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ2 -= q2 * (suggestedInspection.ts_estimatedduration + estimatedTravelTime);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ3 -= q3 * (suggestedInspection.ts_estimatedduration + estimatedTravelTime);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ4 -= q4 * (suggestedInspection.ts_estimatedduration + estimatedTravelTime);
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ1 -= q1 * (suggestedInspection.ts_estimatedduration);
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ2 -= q2 * (suggestedInspection.ts_estimatedduration);
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ3 -= q3 * (suggestedInspection.ts_estimatedduration);
+            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ4 -= q4 * (suggestedInspection.ts_estimatedduration);
         }
     }
 
@@ -161,7 +161,7 @@
             updatePromises.push(Xrm.WebApi.updateRecord("ts_planinspectorhours", planInspectorHours[inspectorId].planInspectorHoursId, data));
         }
     }
-    let tripIds = "";
+    //let tripIds = "";
     let costAppliedTripIds = "";
     suggestedInspections.forEach(function (inspection) {
         if (isNaN(inspection.ts_q1)) inspection.ts_q1 = 0;
@@ -179,15 +179,15 @@
         teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
         teamPlanningDataTeamEstimatedDurationQ4 += inspection.ts_estimatedduration * inspection.ts_q4;
         teamPlanningDataTeamEstimatedDurationTotal += inspection.ts_estimatedduration;
-        if (inspection["plantrip.ts_estimatedtraveltime"] != null && inspection["_ts_trip_value"]  != null) {
-            if (tripIds.indexOf(inspection["_ts_trip_value"] ) == -1) {
-                teamPlanningDataTeamEstimatedTravelTimeTotal += inspection["plantrip.ts_estimatedtraveltime"];
-                tripIds += inspection["_ts_trip_value"] + "|";
-            }
-        }
-        else if (inspection.ts_estimatedtraveltime != null) {
-            teamPlanningDataTeamEstimatedTravelTimeTotal += inspection.ts_estimatedtraveltime;
-        }
+        //if (inspection["plantrip.ts_estimatedtraveltime"] != null && inspection["_ts_trip_value"]  != null) {
+        //    if (tripIds.indexOf(inspection["_ts_trip_value"] ) == -1) {
+        //        teamPlanningDataTeamEstimatedTravelTimeTotal += inspection["plantrip.ts_estimatedtraveltime"];
+        //        tripIds += inspection["_ts_trip_value"] + "|";
+        //    }
+        //}
+        //else if (inspection.ts_estimatedtraveltime != null) {
+        //    teamPlanningDataTeamEstimatedTravelTimeTotal += inspection.ts_estimatedtraveltime;
+        //}
 
         if (inspection["plantrip.ts_estimatedcost"] != null && inspection["_ts_trip_value"] != null && costAppliedTripIds.indexOf(inspection["_ts_trip_value"]) == -1) {
             teamPlanningDataTeamEstimatedCostTotal += inspection["plantrip.ts_estimatedcost"];
@@ -222,7 +222,7 @@
     formContext.getAttribute("ts_estimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
     formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
     formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
-    formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal + teamPlanningDataTeamEstimatedTravelTimeTotal + teamPlanningSupportRegionTimeTotal + teamUnplannedHours);
+    formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal + teamPlanningSupportRegionTimeTotal + teamUnplannedHours);
 
     formContext.getAttribute("ts_totalestimatedcost").setValue(teamPlanningDataTeamEstimatedCostTotal);
 
