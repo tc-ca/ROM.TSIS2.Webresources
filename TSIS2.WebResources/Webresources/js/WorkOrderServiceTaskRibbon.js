@@ -440,9 +440,9 @@ async function checkOperationRiskAssessment(formContext, survey) {
                 title: workOrderServiceTaskLocalized
             };
             var alertOptions = { height: 200, width: 450 };
-            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
+            //Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
                 completeConfirmation(formContext, survey);
-            });
+            //});
         }
     } else {
         completeConfirmation(formContext, survey);
