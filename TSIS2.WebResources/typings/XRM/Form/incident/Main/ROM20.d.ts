@@ -80,7 +80,6 @@ declare namespace Form.incident.Main {
         get(name: "Details"): Xrm.PageSection;
         get(name: "general_section_7"): Xrm.PageSection;
         get(name: "general_section_Notes"): Xrm.PageSection;
-        get(name: "tab_10_section_1"): Xrm.PageSection;
         get(name: "tab_13_section_4"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -106,6 +105,21 @@ declare namespace Form.incident.Main {
       interface tab_14 extends Xrm.SectionCollectionBase {
         get(name: "tab_14_section_1"): Xrm.PageSection;
         get(name: "tab_14_section_2"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_18 extends Xrm.SectionCollectionBase {
+        get(name: "tab_18_section_1"): Xrm.PageSection;
+        get(name: "tab_18_section_3"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_19 extends Xrm.SectionCollectionBase {
+        get(name: "tab_19_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -185,6 +199,7 @@ declare namespace Form.incident.Main {
       get(name: "subjectid"): Xrm.LookupAttribute<"subject">;
       get(name: "ticketnumber"): Xrm.Attribute<string>;
       get(name: "title"): Xrm.Attribute<string>;
+      get(name: "ts_addemailtemplate"): Xrm.Attribute<any>;
       get(name: "ts_additionalinspectors1"): Xrm.LookupAttribute<"systemuser">;
       get(name: "ts_additionalinspectors2"): Xrm.LookupAttribute<"systemuser">;
       get(name: "ts_casereportinganddocumentation"): Xrm.NumberAttribute;
@@ -192,7 +207,6 @@ declare namespace Form.incident.Main {
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_dateofinspection1"): Xrm.DateAttribute;
       get(name: "ts_dateofinspection2"): Xrm.DateAttribute;
-      get(name: "ts_incident"): Xrm.OptionSetAttribute<ts_yesno>;
       get(name: "ts_inspectiontype1"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_notes"): Xrm.Attribute<string>;
@@ -217,15 +231,15 @@ declare namespace Form.incident.Main {
       get(name: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
       get(name: "CaseResearch_LinkControl"): Xrm.BaseControl;
       get(name: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
-      get(name: "FailedServiceTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
       get(name: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
       get(name: "RelatedSolutionGrid"): Xrm.SubGridControl<"connection">;
       get(name: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
-      get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_4"): Xrm.SubGridControl<"contact">;
       get(name: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
+      get(name: "Subgrid_new_4"): Xrm.SubGridControl<"msdyn_workorder">;
+      get(name: "Subgrid_new_5"): Xrm.SubGridControl<"ts_securityincident">;
       get(name: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -271,8 +285,6 @@ declare namespace Form.incident.Main {
       get(name: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "notescontrol1"): Xrm.BaseControl;
-      get(name: "overview_subgrid_actions"): Xrm.SubGridControl<"ts_action">;
-      get(name: "overview_subgrid_findings"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "ovs_region"): Xrm.LookupControl<"territory">;
       get(name: "parentcaseid"): Xrm.LookupControl<"incident">;
       get(name: "primarycontactid"): Xrm.LookupControl<"contact">;
@@ -288,6 +300,7 @@ declare namespace Form.incident.Main {
       get(name: "title"): Xrm.StringControl;
       get(name: "title1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "title2"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_addemailtemplate"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_additionalinspectors1"): Xrm.LookupControl<"systemuser">;
       get(name: "ts_additionalinspectors2"): Xrm.LookupControl<"systemuser">;
       get(name: "ts_casereportinganddocumentation"): Xrm.NumberControl;
@@ -295,7 +308,6 @@ declare namespace Form.incident.Main {
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_dateofinspection1"): Xrm.DateControl;
       get(name: "ts_dateofinspection2"): Xrm.DateControl;
-      get(name: "ts_incident"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_inspectiontype1"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_notes"): Xrm.StringControl;
@@ -329,6 +341,8 @@ declare namespace Form.incident.Main {
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
       get(name: "tab_13"): Xrm.PageTab<Tabs.tab_13>;
       get(name: "tab_14"): Xrm.PageTab<Tabs.tab_14>;
+      get(name: "tab_18"): Xrm.PageTab<Tabs.tab_18>;
+      get(name: "tab_19"): Xrm.PageTab<Tabs.tab_19>;
       get(name: "tab_findings"): Xrm.PageTab<Tabs.tab_findings>;
       get(name: "tab_timetracking"): Xrm.PageTab<Tabs.tab_timetracking>;
       get(name: "tab_workspace"): Xrm.PageTab<Tabs.tab_workspace>;
@@ -379,6 +393,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "subjectid"): Xrm.LookupAttribute<"subject">;
     getAttribute(attributeName: "ticketnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "title"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_addemailtemplate"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_additionalinspectors1"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "ts_additionalinspectors2"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "ts_casereportinganddocumentation"): Xrm.NumberAttribute;
@@ -386,7 +401,6 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_dateofinspection1"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_dateofinspection2"): Xrm.DateAttribute;
-    getAttribute(attributeName: "ts_incident"): Xrm.OptionSetAttribute<ts_yesno>;
     getAttribute(attributeName: "ts_inspectiontype1"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_inspectiontype2"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_notes"): Xrm.Attribute<string>;
@@ -406,15 +420,15 @@ declare namespace Form.incident.Main {
     getControl(controlName: "Associated_KnowledgeArticles"): Xrm.SubGridControl<"knowledgearticleincident">;
     getControl(controlName: "CaseResearch_LinkControl"): Xrm.BaseControl;
     getControl(controlName: "ChildCasesGrid"): Xrm.SubGridControl<"incident">;
-    getControl(controlName: "FailedServiceTasks"): Xrm.SubGridControl<"msdyn_workorderservicetask">;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "MergedCasesGrid"): Xrm.SubGridControl<"incident">;
     getControl(controlName: "RelatedSolutionGrid"): Xrm.SubGridControl<"connection">;
     getControl(controlName: "SLA_KPI_Instances_List"): Xrm.SubGridControl<"slakpiinstance">;
-    getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_4"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
+    getControl(controlName: "Subgrid_new_4"): Xrm.SubGridControl<"msdyn_workorder">;
+    getControl(controlName: "Subgrid_new_5"): Xrm.SubGridControl<"ts_securityincident">;
     getControl(controlName: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -460,8 +474,6 @@ declare namespace Form.incident.Main {
     getControl(controlName: "msdyn_iotalert1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "notescontrol1"): Xrm.BaseControl;
-    getControl(controlName: "overview_subgrid_actions"): Xrm.SubGridControl<"ts_action">;
-    getControl(controlName: "overview_subgrid_findings"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "ovs_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "parentcaseid"): Xrm.LookupControl<"incident">;
     getControl(controlName: "primarycontactid"): Xrm.LookupControl<"contact">;
@@ -477,6 +489,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "title"): Xrm.StringControl;
     getControl(controlName: "title1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "title2"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_addemailtemplate"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_additionalinspectors1"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "ts_additionalinspectors2"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "ts_casereportinganddocumentation"): Xrm.NumberControl;
@@ -484,7 +497,6 @@ declare namespace Form.incident.Main {
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_dateofinspection1"): Xrm.DateControl;
     getControl(controlName: "ts_dateofinspection2"): Xrm.DateControl;
-    getControl(controlName: "ts_incident"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_inspectiontype1"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_inspectiontype2"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_notes"): Xrm.StringControl;

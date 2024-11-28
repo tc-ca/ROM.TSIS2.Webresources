@@ -74,6 +74,13 @@ declare namespace Form.msdyn_incidenttype.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_risk extends Xrm.SectionCollectionBase {
+        get(name: "tab_risk_section_4"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_visibilitycontrol extends Xrm.SectionCollectionBase {
         get(name: "tab_11_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -157,6 +164,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "Incident_Type_Resolutions"): Xrm.SubGridControl<"msdyn_incidenttyperesolution">;
       get(name: "KnowledgeArticle_IncidentType"): Xrm.SubGridControl<"knowledgearticle">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operationtype">;
+      get(name: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_incidenttype_statecode>;
       get(name: "incidentproductssubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeproduct">;
       get(name: "incidentservicessubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeservice">;
@@ -242,6 +250,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: "tab_ControlVisibility"): Xrm.PageTab<Tabs.tab_ControlVisibility>;
       get(name: "tab_properties"): Xrm.PageTab<Tabs.tab_properties>;
+      get(name: "tab_risk"): Xrm.PageTab<Tabs.tab_risk>;
       get(name: "tab_visibilitycontrol"): Xrm.PageTab<Tabs.tab_visibilitycontrol>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -319,6 +328,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "Incident_Type_Resolutions"): Xrm.SubGridControl<"msdyn_incidenttyperesolution">;
     getControl(controlName: "KnowledgeArticle_IncidentType"): Xrm.SubGridControl<"knowledgearticle">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operationtype">;
+    getControl(controlName: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_incidenttype_statecode>;
     getControl(controlName: "incidentproductssubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeproduct">;
     getControl(controlName: "incidentservicessubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeservice">;

@@ -2,6 +2,7 @@ declare namespace Form.ts_action.Main {
   namespace ROM20 {
     namespace Tabs {
       interface Overview extends Xrm.SectionCollectionBase {
+        get(name: "Overview_section_5"): Xrm.PageSection;
         get(name: "RelatedTo"): Xrm.PageSection;
         get(name: "Timeline"): Xrm.PageSection;
         get(name: "{f4242373-e883-4dd1-bdfd-aa3a4f78c523}"): Xrm.PageSection;
@@ -11,7 +12,23 @@ declare namespace Form.ts_action.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface Workspace extends Xrm.SectionCollectionBase {
-        get(name: "RelatedFindings"): Xrm.PageSection;
+        get(name: "Workspace_section_4"): Xrm.PageSection;
+        get(name: "Workspace_section_contacts"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_3 extends Xrm.SectionCollectionBase {
+        get(name: "tab_3_section_1"): Xrm.PageSection;
+        get(name: "tab_3_section_3"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_4 extends Xrm.SectionCollectionBase {
+        get(name: "tab_4_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -43,13 +60,15 @@ declare namespace Form.ts_action.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
+      get(name: "Subgrid_new_2"): Xrm.SubGridControl<"ovs_finding">;
+      get(name: "Subgrid_new_3"): Xrm.SubGridControl<"incident">;
       get(name: "header_createdon"): Xrm.DateControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_statecode"): Xrm.OptionSetControl<ts_action_statecode>;
       get(name: "header_ts_priority"): Xrm.OptionSetControl<msdyn_playbookactivity_priority>;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-      get(name: "subgrid_related_findings"): Xrm.SubGridControl<"ts_actionfinding">;
       get(name: "ts_actioncategory"): Xrm.OptionSetControl<ts_actioncategory>;
       get(name: "ts_actionstatus"): Xrm.OptionSetControl<ts_actionstatus>;
       get(name: "ts_actiontype"): Xrm.OptionSetControl<ts_actiontype>;
@@ -72,6 +91,8 @@ declare namespace Form.ts_action.Main {
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "Overview"): Xrm.PageTab<Tabs.Overview>;
       get(name: "Workspace"): Xrm.PageTab<Tabs.Workspace>;
+      get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
+      get(name: "tab_4"): Xrm.PageTab<Tabs.tab_4>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -98,13 +119,15 @@ declare namespace Form.ts_action.Main {
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_timedate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
+    getControl(controlName: "Subgrid_new_2"): Xrm.SubGridControl<"ovs_finding">;
+    getControl(controlName: "Subgrid_new_3"): Xrm.SubGridControl<"incident">;
     getControl(controlName: "header_createdon"): Xrm.DateControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_statecode"): Xrm.OptionSetControl<ts_action_statecode>;
     getControl(controlName: "header_ts_priority"): Xrm.OptionSetControl<msdyn_playbookactivity_priority>;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-    getControl(controlName: "subgrid_related_findings"): Xrm.SubGridControl<"ts_actionfinding">;
     getControl(controlName: "ts_actioncategory"): Xrm.OptionSetControl<ts_actioncategory>;
     getControl(controlName: "ts_actionstatus"): Xrm.OptionSetControl<ts_actionstatus>;
     getControl(controlName: "ts_actiontype"): Xrm.OptionSetControl<ts_actiontype>;

@@ -11,6 +11,7 @@ var ROM;
             var ownerControl = form.getControl("header_ownerid");
             //Set required fields
             form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
+            addEmailTemplateOnChange(eContext);
             switch (form.ui.getFormType()) {
                 case 1:
                     setRegion(eContext);
@@ -588,5 +589,29 @@ var ROM;
             var layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="fullname" width="200" /><cell name="title" width="200" /></row></grid>';
             form.getControl("ts_additionalinspectors2").addCustomView(viewIdAdditionalInspectors, entityNameAdditionalInspectors, viewDisplayNameAdditionalInspectors, fetchXmlAdditionalInspectors, layoutXmlAdditionalInspectors, true);
         }
+        //Make another template fields visible if toggle is on
+        function addEmailTemplateOnChange(eContext) {
+            var form = eContext.getFormContext();
+            if (form.getAttribute("ts_addemailtemplate").getValue() == 1) {
+                form.getControl("ts_workorder2").setVisible(true);
+                form.getControl("ts_workorderservicetask2").setVisible(true);
+                form.getControl("ts_additionalinspectors2").setVisible(true);
+                form.getControl("ts_inspectiontype2").setVisible(true);
+                form.getControl("ts_dateofinspection2").setVisible(true);
+            }
+            else {
+                form.getControl("ts_workorder2").setVisible(false);
+                form.getControl("ts_workorderservicetask2").setVisible(false);
+                form.getControl("ts_additionalinspectors2").setVisible(false);
+                form.getControl("ts_inspectiontype2").setVisible(false);
+                form.getControl("ts_dateofinspection2").setVisible(false);
+                form.getAttribute("ts_workorder2").setValue(null);
+                form.getAttribute("ts_workorderservicetask2").setValue(null);
+                form.getAttribute("ts_additionalinspectors2").setValue(null);
+                form.getAttribute("ts_inspectiontype2").setValue(null);
+                form.getAttribute("ts_dateofinspection2").setValue(null);
+            }
+        }
+        Incident.addEmailTemplateOnChange = addEmailTemplateOnChange;
     })(Incident = ROM.Incident || (ROM.Incident = {}));
 })(ROM || (ROM = {}));
