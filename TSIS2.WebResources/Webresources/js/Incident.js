@@ -592,24 +592,27 @@ var ROM;
         //Make another template fields visible if toggle is on
         function addEmailTemplateOnChange(eContext) {
             var form = eContext.getFormContext();
-            if (form.getAttribute("ts_addemailtemplate").getValue() == 1) {
-                form.getControl("ts_workorder2").setVisible(true);
-                form.getControl("ts_workorderservicetask2").setVisible(true);
-                form.getControl("ts_additionalinspectors2").setVisible(true);
-                form.getControl("ts_inspectiontype2").setVisible(true);
-                form.getControl("ts_dateofinspection2").setVisible(true);
-            }
-            else {
-                form.getControl("ts_workorder2").setVisible(false);
-                form.getControl("ts_workorderservicetask2").setVisible(false);
-                form.getControl("ts_additionalinspectors2").setVisible(false);
-                form.getControl("ts_inspectiontype2").setVisible(false);
-                form.getControl("ts_dateofinspection2").setVisible(false);
-                form.getAttribute("ts_workorder2").setValue(null);
-                form.getAttribute("ts_workorderservicetask2").setValue(null);
-                form.getAttribute("ts_additionalinspectors2").setValue(null);
-                form.getAttribute("ts_inspectiontype2").setValue(null);
-                form.getAttribute("ts_dateofinspection2").setValue(null);
+            var addEmailTemplateAttribute = form.getAttribute("ts_addemailtemplate");
+            if (addEmailTemplateAttribute != null) {
+                if (form.getAttribute("ts_addemailtemplate").getValue() == 1) {
+                    form.getControl("ts_workorder2").setVisible(true);
+                    form.getControl("ts_workorderservicetask2").setVisible(true);
+                    form.getControl("ts_additionalinspectors2").setVisible(true);
+                    form.getControl("ts_inspectiontype2").setVisible(true);
+                    form.getControl("ts_dateofinspection2").setVisible(true);
+                }
+                else {
+                    form.getControl("ts_workorder2").setVisible(false);
+                    form.getControl("ts_workorderservicetask2").setVisible(false);
+                    form.getControl("ts_additionalinspectors2").setVisible(false);
+                    form.getControl("ts_inspectiontype2").setVisible(false);
+                    form.getControl("ts_dateofinspection2").setVisible(false);
+                    form.getAttribute("ts_workorder2").setValue(null);
+                    form.getAttribute("ts_workorderservicetask2").setValue(null);
+                    form.getAttribute("ts_additionalinspectors2").setValue(null);
+                    form.getAttribute("ts_inspectiontype2").setValue(null);
+                    form.getAttribute("ts_dateofinspection2").setValue(null);
+                }
             }
         }
         Incident.addEmailTemplateOnChange = addEmailTemplateOnChange;
