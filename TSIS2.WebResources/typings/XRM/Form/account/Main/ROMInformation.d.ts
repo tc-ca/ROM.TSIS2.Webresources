@@ -67,6 +67,13 @@ declare namespace Form.account.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_11 extends Xrm.SectionCollectionBase {
+        get(name: "tab_Risk"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_8 extends Xrm.SectionCollectionBase {
         get(name: "_section_477"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
@@ -145,6 +152,7 @@ declare namespace Form.account.Main {
       get(name: "Operations"): Xrm.SubGridControl<"ovs_operation">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
+      get(name: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;
@@ -210,6 +218,7 @@ declare namespace Form.account.Main {
       get(name: "Operations"): Xrm.PageTab<Tabs.Operations>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: "Work Orders"): Xrm.PageTab<Tabs.WorkOrders>;
+      get(name: "tab_11"): Xrm.PageTab<Tabs.tab_11>;
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
       get(name: "tab_contacts"): Xrm.PageTab<Tabs.tab_contacts>;
       get(name: string): undefined;
@@ -275,6 +284,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "Operations"): Xrm.SubGridControl<"ovs_operation">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
+    getControl(controlName: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;

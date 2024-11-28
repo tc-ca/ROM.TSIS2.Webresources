@@ -1,5 +1,5 @@
 declare namespace Form.msdyn_workorder.Main {
-  namespace WorkOrderforM365 {
+  namespace WorkOrderM365 {
     namespace Tabs {
       interface b8e326ee5c214a18ba55e3b56966c249 extends Xrm.SectionCollectionBase {
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_10"): Xrm.PageSection;
@@ -116,7 +116,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface WorkOrderforM365 extends Xrm.PageBase<WorkOrderforM365.Attributes,WorkOrderforM365.Tabs,WorkOrderforM365.Controls> {
+  interface WorkOrderM365 extends Xrm.PageBase<WorkOrderM365.Attributes,WorkOrderM365.Tabs,WorkOrderM365.Controls> {
     getAttribute(attributeName: "msdyn_address1"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_address2"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_address3"): Xrm.Attribute<string>;

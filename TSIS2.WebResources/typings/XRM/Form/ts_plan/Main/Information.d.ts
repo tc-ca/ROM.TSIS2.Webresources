@@ -45,6 +45,10 @@ declare namespace Form.ts_plan.Main {
       get(name: "ts_unplannedactivityq2"): Xrm.NumberAttribute;
       get(name: "ts_unplannedactivityq3"): Xrm.NumberAttribute;
       get(name: "ts_unplannedactivityq4"): Xrm.NumberAttribute;
+      get(name: "ts_unplannedhoursq1"): Xrm.NumberAttribute;
+      get(name: "ts_unplannedhoursq2"): Xrm.NumberAttribute;
+      get(name: "ts_unplannedhoursq3"): Xrm.NumberAttribute;
+      get(name: "ts_unplannedhoursq4"): Xrm.NumberAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -76,6 +80,10 @@ declare namespace Form.ts_plan.Main {
       get(name: "ts_unplannedactivityq2"): Xrm.NumberControl;
       get(name: "ts_unplannedactivityq3"): Xrm.NumberControl;
       get(name: "ts_unplannedactivityq4"): Xrm.NumberControl;
+      get(name: "ts_unplannedhoursq1"): Xrm.NumberControl;
+      get(name: "ts_unplannedhoursq2"): Xrm.NumberControl;
+      get(name: "ts_unplannedhoursq3"): Xrm.NumberControl;
+      get(name: "ts_unplannedhoursq4"): Xrm.NumberControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -113,6 +121,10 @@ declare namespace Form.ts_plan.Main {
     getAttribute(attributeName: "ts_unplannedactivityq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_unplannedactivityq3"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_unplannedactivityq4"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_unplannedhoursq1"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_unplannedhoursq2"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_unplannedhoursq3"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_unplannedhoursq4"): Xrm.NumberAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -139,6 +151,10 @@ declare namespace Form.ts_plan.Main {
     getControl(controlName: "ts_unplannedactivityq2"): Xrm.NumberControl;
     getControl(controlName: "ts_unplannedactivityq3"): Xrm.NumberControl;
     getControl(controlName: "ts_unplannedactivityq4"): Xrm.NumberControl;
+    getControl(controlName: "ts_unplannedhoursq1"): Xrm.NumberControl;
+    getControl(controlName: "ts_unplannedhoursq2"): Xrm.NumberControl;
+    getControl(controlName: "ts_unplannedhoursq3"): Xrm.NumberControl;
+    getControl(controlName: "ts_unplannedhoursq4"): Xrm.NumberControl;
     getControl(controlName: string): undefined;
   }
 }

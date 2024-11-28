@@ -17,6 +17,7 @@ declare namespace Form.ovs_operation.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface plan_track extends Xrm.SectionCollectionBase {
+        get(name: "entity_risk_section"): Xrm.PageSection;
         get(name: "tab_10_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -136,6 +137,7 @@ declare namespace Form.ovs_operation.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Files"): Xrm.SubGridControl<"ts_file">;
+      get(name: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
       get(name: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
       get(name: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
       get(name: "WebResource_PPEGuide"): Xrm.WebResourceControl;
@@ -270,6 +272,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_visualsecurityinspectiondetails"): Xrm.OptionSetAttribute<ts_visualsecurityinspectiondetails>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Files"): Xrm.SubGridControl<"ts_file">;
+    getControl(controlName: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
     getControl(controlName: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
     getControl(controlName: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
     getControl(controlName: "WebResource_PPEGuide"): Xrm.WebResourceControl;

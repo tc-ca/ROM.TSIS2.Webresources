@@ -1,5 +1,5 @@
 declare namespace Form.bookableresourcebooking.Main {
-  namespace BookingforM365 {
+  namespace BookingM365 {
     namespace Tabs {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
@@ -35,7 +35,7 @@ declare namespace Form.bookableresourcebooking.Main {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface BookingforM365 extends Xrm.PageBase<BookingforM365.Attributes,BookingforM365.Tabs,BookingforM365.Controls> {
+  interface BookingM365 extends Xrm.PageBase<BookingM365.Attributes,BookingM365.Tabs,BookingM365.Controls> {
     getAttribute(attributeName: "bookingstatus"): Xrm.LookupAttribute<"bookingstatus">;
     getAttribute(attributeName: "bookingtype"): Xrm.OptionSetAttribute<bookableresourcebooking_bookingtype>;
     getAttribute(attributeName: "duration"): Xrm.NumberAttribute;

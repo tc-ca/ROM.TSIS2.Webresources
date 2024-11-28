@@ -59,6 +59,7 @@ interface Incident_Base extends WebEntity {
   timezoneruleversionnumber?: number | null;
   title?: string | null;
   traversedpath?: string | null;
+  ts_addemailtemplate?: boolean | null;
   ts_canvasappnumber?: string | null;
   ts_casereportinganddocumentation?: number | null;
   ts_comments?: string | null;
@@ -253,6 +254,7 @@ interface Incident_Select {
   title: WebAttribute<Incident_Select, { title: string | null }, {  }>;
   transactioncurrencyid_guid: WebAttribute<Incident_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Incident_Select, { traversedpath: string | null }, {  }>;
+  ts_addemailtemplate: WebAttribute<Incident_Select, { ts_addemailtemplate: boolean | null }, {  }>;
   ts_additionalinspectors1_guid: WebAttribute<Incident_Select, { ts_additionalinspectors1_guid: string | null }, { ts_additionalinspectors1_formatted?: string }>;
   ts_additionalinspectors2_guid: WebAttribute<Incident_Select, { ts_additionalinspectors2_guid: string | null }, { ts_additionalinspectors2_formatted?: string }>;
   ts_canvasappnumber: WebAttribute<Incident_Select, { ts_canvasappnumber: string | null }, {  }>;
@@ -378,6 +380,7 @@ interface Incident_Filter {
   title: string;
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
+  ts_addemailtemplate: boolean;
   ts_additionalinspectors1_guid: XQW.Guid;
   ts_additionalinspectors2_guid: XQW.Guid;
   ts_canvasappnumber: string;

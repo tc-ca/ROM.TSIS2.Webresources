@@ -7,7 +7,7 @@ namespace ROM.Incident {
         const ownerControl = form.getControl("header_ownerid");
         //Set required fields
         form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
-
+        addEmailTemplateOnChange(eContext);
         switch (form.ui.getFormType()) {
             case 1:
                 setRegion(eContext);
@@ -101,17 +101,17 @@ namespace ROM.Incident {
 
         //Hide quarter fields for ISSO
         let operationTypeFetchXML = [
-        "<fetch top='50'>",
+            "<fetch top='50'>",
             "<entity name='msdyn_workorder'>",
-                "<attribute name='msdyn_name'/>",
-                "<attribute name='ovs_operationtypeid'/>",
-                     "<link-entity name='incident' from='incidentid' to='msdyn_servicerequest'>",
-                         "<filter>",
-                             "<condition attribute='incidentid' operator='eq' value='",form.data.entity.getId(),"'/>",
-                         "</filter>",
-                     "</link-entity>",
+            "<attribute name='msdyn_name'/>",
+            "<attribute name='ovs_operationtypeid'/>",
+            "<link-entity name='incident' from='incidentid' to='msdyn_servicerequest'>",
+            "<filter>",
+            "<condition attribute='incidentid' operator='eq' value='", form.data.entity.getId(), "'/>",
+            "</filter>",
+            "</link-entity>",
             "</entity>",
-        "</fetch>"
+            "</fetch>"
         ].join("");
 
         operationTypeFetchXML = "?fetchXml=" + operationTypeFetchXML;
@@ -140,7 +140,7 @@ namespace ROM.Incident {
                     },
                     function (error) {
                     }
-                );               
+                );
             },
             function (error) {
             }
@@ -149,7 +149,7 @@ namespace ROM.Incident {
 
     export function systemStatusCodeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
-        if(form.getAttribute("statuscode").getValue() == 7){
+        if (form.getAttribute("statuscode").getValue() == 7) {
         }
     }
 
@@ -437,7 +437,7 @@ namespace ROM.Incident {
                     "  <attribute name='msdyn_name' />",
                     "  <attribute name = 'msdyn_workorderservicetaskid' />",
                     "    <filter type='and'>",
-                    "      <condition attribute='msdyn_workorder' operator='eq' value='",workOrderId,"'/>",
+                    "      <condition attribute='msdyn_workorder' operator='eq' value='", workOrderId, "'/>",
                     "      <condition attribute='ts_mandatory' operator='eq' value='1'/>",
                     "    </filter>",
                     "  </entity>",
@@ -615,7 +615,7 @@ namespace ROM.Incident {
         const viewIdWOST = '{1c259fee-0541-4cac-8d20-7b30ee391113}';
         const entityNameWOST = "msdyn_workorderservicetask";
         const viewDisplayNameWOST = "RelatedWorkOrderServiceTasks1";
-        const fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"><attribute name="msdyn_name" /> <attribute name="msdyn_tasktype" /> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + workOrderId +'" /> </filter> </entity> </fetch>';
+        const fetchXmlWOST = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="msdyn_workorderservicetask"><attribute name="msdyn_name" /> <attribute name="msdyn_tasktype" /> <order attribute="msdyn_lineorder" descending="false" /> <filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + workOrderId + '" /> </filter> </entity> </fetch>';
         const layoutXmlWOST = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workorderservicetask"><cell name="msdyn_name" width="200" /><cell name="msdyn_tasktype" width="200" /></row></grid>';
         form.getControl("ts_workorderservicetask1").addCustomView(viewIdWOST, entityNameWOST, viewDisplayNameWOST, fetchXmlWOST, layoutXmlWOST, true);
     }
@@ -637,7 +637,7 @@ namespace ROM.Incident {
         const viewIdAdditionalInspectors = '{1c259fee-0541-4cac-8d20-7b30ee391115}';
         const entityNameAdditionalInspectors = "systemuser";
         const viewDisplayNameAdditionalInspectors = "RelatedAdditionalInspectors1";
-        const fetchXmlAdditionalInspectors = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="systemuser" ><attribute name="fullname" /> <attribute name="title" /> <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + workOrderId +'" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
+        const fetchXmlAdditionalInspectors = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="systemuser" ><attribute name="fullname" /> <attribute name="title" /> <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + workOrderId + '" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
         const layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="fullname" width="200" /><cell name="title" width="200" /></row></grid>';
         form.getControl("ts_additionalinspectors1").addCustomView(viewIdAdditionalInspectors, entityNameAdditionalInspectors, viewDisplayNameAdditionalInspectors, fetchXmlAdditionalInspectors, layoutXmlAdditionalInspectors, true);
     }
@@ -651,5 +651,32 @@ namespace ROM.Incident {
         const fetchXmlAdditionalInspectors = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="systemuser" ><attribute name="fullname" /> <attribute name="title" /> <link-entity name="teammembership" from="systemuserid" to="systemuserid" intersect="true" > <link-entity name="team" from="teamid" to="teamid" intersect="true" > <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="regardingobjectid" > <filter> <condition attribute="msdyn_workorderid" operator="eq" value="' + workOrderId + '" /> </filter> </link-entity> </link-entity> </link-entity> </entity> </fetch>';
         const layoutXmlAdditionalInspectors = '<grid name="resultset" object="10010" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuser"><cell name="fullname" width="200" /><cell name="title" width="200" /></row></grid>';
         form.getControl("ts_additionalinspectors2").addCustomView(viewIdAdditionalInspectors, entityNameAdditionalInspectors, viewDisplayNameAdditionalInspectors, fetchXmlAdditionalInspectors, layoutXmlAdditionalInspectors, true);
+    }
+
+    //Make another template fields visible if toggle is on
+    export function addEmailTemplateOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.incident.Main.ROM20>eContext.getFormContext();
+        if (form.getAttribute("ts_addemailtemplate").getValue() == 1) {
+            form.getControl("ts_workorder2").setVisible(true);
+            form.getControl("ts_workorderservicetask2").setVisible(true);
+            form.getControl("ts_additionalinspectors2").setVisible(true);
+            form.getControl("ts_inspectiontype2").setVisible(true);
+            form.getControl("ts_dateofinspection2").setVisible(true);
+
+        } else {
+            form.getControl("ts_workorder2").setVisible(false);
+            form.getControl("ts_workorderservicetask2").setVisible(false);
+            form.getControl("ts_additionalinspectors2").setVisible(false);
+            form.getControl("ts_inspectiontype2").setVisible(false);
+            form.getControl("ts_dateofinspection2").setVisible(false);
+
+            form.getAttribute("ts_workorder2").setValue(null);
+            form.getAttribute("ts_workorderservicetask2").setValue(null);
+            form.getAttribute("ts_additionalinspectors2").setValue(null);
+            form.getAttribute("ts_inspectiontype2").setValue(null);
+            form.getAttribute("ts_dateofinspection2").setValue(null);
+
+
+        }
     }
 }

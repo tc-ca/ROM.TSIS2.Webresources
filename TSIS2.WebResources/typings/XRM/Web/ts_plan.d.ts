@@ -28,6 +28,10 @@ interface ts_Plan_Base extends WebEntity {
   ts_unplannedactivityq2?: number | null;
   ts_unplannedactivityq3?: number | null;
   ts_unplannedactivityq4?: number | null;
+  ts_unplannedhoursq1?: number | null;
+  ts_unplannedhoursq2?: number | null;
+  ts_unplannedhoursq3?: number | null;
+  ts_unplannedhoursq4?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -86,6 +90,10 @@ interface ts_Plan_Select {
   ts_unplannedactivityq2: WebAttribute<ts_Plan_Select, { ts_unplannedactivityq2: number | null }, {  }>;
   ts_unplannedactivityq3: WebAttribute<ts_Plan_Select, { ts_unplannedactivityq3: number | null }, {  }>;
   ts_unplannedactivityq4: WebAttribute<ts_Plan_Select, { ts_unplannedactivityq4: number | null }, {  }>;
+  ts_unplannedhoursq1: WebAttribute<ts_Plan_Select, { ts_unplannedhoursq1: number | null }, {  }>;
+  ts_unplannedhoursq2: WebAttribute<ts_Plan_Select, { ts_unplannedhoursq2: number | null }, {  }>;
+  ts_unplannedhoursq3: WebAttribute<ts_Plan_Select, { ts_unplannedhoursq3: number | null }, {  }>;
+  ts_unplannedhoursq4: WebAttribute<ts_Plan_Select, { ts_unplannedhoursq4: number | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_Plan_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_Plan_Select, { versionnumber: number | null }, {  }>;
 }
@@ -129,6 +137,10 @@ interface ts_Plan_Filter {
   ts_unplannedactivityq2: any;
   ts_unplannedactivityq3: any;
   ts_unplannedactivityq4: any;
+  ts_unplannedhoursq1: any;
+  ts_unplannedhoursq2: any;
+  ts_unplannedhoursq3: any;
+  ts_unplannedhoursq4: any;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
