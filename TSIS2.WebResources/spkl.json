@@ -425,6 +425,11 @@
             "file": "css\\WorkOrderExport.css",
             "description": "ROM TSIS 2.0 Work Order Export Stylesheet"
           },
+          {
+            "uniquename": "ovs_/css/prod_custom.css",
+            "file": "css\\prod_custom.css",
+            "description": "ROM TSIS 2.0 Custom Stylesheet For Production Env"
+          },
           /* HTML */
           {
             "uniquename": "ts_/html/NCATFactorGuide.html",

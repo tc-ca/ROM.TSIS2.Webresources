@@ -1,0 +1,5 @@
+li[aria-label="Dashboard"],
+li[aria-label="Tableau de bord"] {
+    display: none !important;
+  }
+  
