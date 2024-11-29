@@ -3,6 +3,7 @@ function appOnLoad() {
 
   const appUrl = getAppURL();
 
+  // Banner messages
   if (Xrm.Utility.getGlobalContext().userSettings.languageId == 1033) {
     message1 = "All changes made in this environment will not appear in the Production Environment";
     message2 =
@@ -14,7 +15,8 @@ function appOnLoad() {
       "Vous pouvez maintenant fournir vos commentaires à l'équipe en utilisant le formulaire disponible dans la section Support du menu de gauche!";
   }
 
-  if (appUrl != PROD_URL) {
+    // Hide unwanted Tables in the Site map for Production - the table entries can be located here: \Webresources\css\prod_custom.css
+  if (appUrl === PROD_URL) {
     showBanner(appUrl, message1, false);
     loadProdCustomCSS();
   }
