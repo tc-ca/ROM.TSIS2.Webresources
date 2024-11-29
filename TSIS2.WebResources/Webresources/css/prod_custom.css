@@ -1,0 +1,6 @@
+/* Add Table display names here to hide them in the Site Map when in Production, remember to include the French name */
+li[aria-label="Dashboard"],
+li[aria-label="Tableau de bord"] {
+    display: none !important;
+  }
+  
