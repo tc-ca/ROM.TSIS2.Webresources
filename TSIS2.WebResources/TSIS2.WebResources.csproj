@@ -184,6 +184,7 @@
     <Content Include="Webresources\js\CustomerAssetRibbon.js" />
     <Content Include="Webresources\js\Email.js" />
     <Content Include="Webresources\js\EnforcementAction.js" />
+    <Content Include="Webresources\js\EntityRisk.js" />
     <Content Include="Webresources\js\ext-language_tools.js" />
     <Content Include="Webresources\js\AttachFile.js" />
     <Content Include="Webresources\js\Finding.js" />
@@ -393,6 +394,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\CauseFinding.ts" />
+    <TypeScriptCompile Include="src\ts\EntityRisk.ts" />
     <TypeScriptCompile Include="src\ts\Site.ts" />
     <TypeScriptCompile Include="src\ts\Plan.ts" />
     <TypeScriptCompile Include="src\ts\Account.ts" />

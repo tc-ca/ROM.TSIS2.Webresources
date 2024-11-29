@@ -61,6 +61,7 @@ interface ovs_operation_Relationships {
   ovs_operation_connections2?: Connection_Result[] | null;
   ovs_operation_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   ovs_ovs_operation_msdyn_workorder?: msdyn_workorder_Result[] | null;
+  ts_EntityRisk_ovs_operation_ovs_operation?: ts_EntityRisk_Result[] | null;
   ts_OPITeam?: Team_Result | null;
   ts_Site_Site?: ts_site_Result | null;
   ts_Subsite_Site?: ts_site_Result | null;
@@ -265,6 +266,7 @@ interface ovs_operation_Expand {
   ownerid: WebExpand<ovs_operation_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ovs_operation_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_EntityRisk_ovs_operation_ovs_operation: WebExpand<ovs_operation_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_EntityRisk_ovs_operation_ovs_operation: ts_EntityRisk_Result[] }>;
   ts_OPITeam: WebExpand<ovs_operation_Expand, Team_Select, Team_Filter, { ts_OPITeam: Team_Result }>;
   ts_Site_Site: WebExpand<ovs_operation_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
   ts_Subsite_Site: WebExpand<ovs_operation_Expand, ts_site_Select, ts_site_Filter, { ts_Subsite_Site: ts_site_Result }>;
@@ -380,6 +382,7 @@ interface ovs_operation_RelatedMany {
   ovs_operation_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ovs_operation_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ovs_ovs_operation_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_EntityRisk_ovs_operation_ovs_operation: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_operation_msdyn_workorder_OperatingCarrierOperation: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_operation_ts_operationcontact_operation: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;

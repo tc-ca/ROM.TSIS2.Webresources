@@ -273,6 +273,10 @@ interface SystemUser_Relationships {
   lk_ts_causefinding_createdonbehalfby?: ts_causefinding_Result[] | null;
   lk_ts_causefinding_modifiedby?: ts_causefinding_Result[] | null;
   lk_ts_causefinding_modifiedonbehalfby?: ts_causefinding_Result[] | null;
+  lk_ts_entityrisk_createdby?: ts_EntityRisk_Result[] | null;
+  lk_ts_entityrisk_createdonbehalfby?: ts_EntityRisk_Result[] | null;
+  lk_ts_entityrisk_modifiedby?: ts_EntityRisk_Result[] | null;
+  lk_ts_entityrisk_modifiedonbehalfby?: ts_EntityRisk_Result[] | null;
   lk_ts_incompleteworkorderreason_createdby?: ts_IncompleteWorkOrderReason_Result[] | null;
   lk_ts_incompleteworkorderreason_createdonbehalfby?: ts_IncompleteWorkOrderReason_Result[] | null;
   lk_ts_incompleteworkorderreason_modifiedby?: ts_IncompleteWorkOrderReason_Result[] | null;
@@ -416,6 +420,7 @@ interface SystemUser_Relationships {
   user_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
   user_ts_case?: ts_case_Result[] | null;
   user_ts_causefinding?: ts_causefinding_Result[] | null;
+  user_ts_entityrisk?: ts_EntityRisk_Result[] | null;
   user_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
   user_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
   user_ts_nonoversightactivity?: ts_nonoversightactivity_Result[] | null;
@@ -900,6 +905,10 @@ interface SystemUser_Expand {
   lk_ts_causefinding_createdonbehalfby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_createdonbehalfby: ts_causefinding_Result[] }>;
   lk_ts_causefinding_modifiedby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_modifiedby: ts_causefinding_Result[] }>;
   lk_ts_causefinding_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_modifiedonbehalfby: ts_causefinding_Result[] }>;
+  lk_ts_entityrisk_createdby: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { lk_ts_entityrisk_createdby: ts_EntityRisk_Result[] }>;
+  lk_ts_entityrisk_createdonbehalfby: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { lk_ts_entityrisk_createdonbehalfby: ts_EntityRisk_Result[] }>;
+  lk_ts_entityrisk_modifiedby: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { lk_ts_entityrisk_modifiedby: ts_EntityRisk_Result[] }>;
+  lk_ts_entityrisk_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { lk_ts_entityrisk_modifiedonbehalfby: ts_EntityRisk_Result[] }>;
   lk_ts_incompleteworkorderreason_createdby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_createdby: ts_IncompleteWorkOrderReason_Result[] }>;
   lk_ts_incompleteworkorderreason_createdonbehalfby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_createdonbehalfby: ts_IncompleteWorkOrderReason_Result[] }>;
   lk_ts_incompleteworkorderreason_modifiedby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_modifiedby: ts_IncompleteWorkOrderReason_Result[] }>;
@@ -1046,6 +1055,7 @@ interface SystemUser_Expand {
   user_ts_canceledinspectionjustification: WebExpand<SystemUser_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { user_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
   user_ts_case: WebExpand<SystemUser_Expand, ts_case_Select, ts_case_Filter, { user_ts_case: ts_case_Result[] }>;
   user_ts_causefinding: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { user_ts_causefinding: ts_causefinding_Result[] }>;
+  user_ts_entityrisk: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { user_ts_entityrisk: ts_EntityRisk_Result[] }>;
   user_ts_incompleteworkorderreason: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { user_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
   user_ts_inspectionhours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { user_ts_inspectionhours: ts_InspectionHours_Result[] }>;
   user_ts_nonoversightactivity: WebExpand<SystemUser_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { user_ts_nonoversightactivity: ts_nonoversightactivity_Result[] }>;
@@ -1286,6 +1296,10 @@ interface SystemUser_RelatedMany {
   lk_ts_causefinding_createdonbehalfby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   lk_ts_causefinding_modifiedby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   lk_ts_causefinding_modifiedonbehalfby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
+  lk_ts_entityrisk_createdby: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  lk_ts_entityrisk_createdonbehalfby: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  lk_ts_entityrisk_modifiedby: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  lk_ts_entityrisk_modifiedonbehalfby: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   lk_ts_incompleteworkorderreason_createdby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   lk_ts_incompleteworkorderreason_createdonbehalfby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   lk_ts_incompleteworkorderreason_modifiedby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
@@ -1428,6 +1442,7 @@ interface SystemUser_RelatedMany {
   user_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   user_ts_case: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   user_ts_causefinding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
+  user_ts_entityrisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   user_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   user_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   user_ts_nonoversightactivity: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
