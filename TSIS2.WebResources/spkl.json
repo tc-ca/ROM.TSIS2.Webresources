@@ -185,6 +185,11 @@
             "description": "ROM TSIS 2.0 Enforcement Action Scripts"
           },
           {
+            "uniquename": "ts_/js/EntityRisk.js",
+            "file": "js\\EntityRisk.js",
+            "description": "ROM TSIS 2.0 EntityRisk Form Scripts"
+          },
+          {
             "uniquename": "ts_/js/FunctionalLocation.js",
             "file": "js\\FunctionalLocation.js",
             "description": "ROM TSIS 2.0 Functional Location Scripts"
@@ -582,7 +587,7 @@
             "file": "html\\SecurityIncidentAdditionalDetailsDisplay.html",
             "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincidentadditionaldetails"
           },
-                    {
+          {
             "uniquename": "ts_/html/LegislationOnProvisions.html",
             "file": "html\\LegislationOnProvisions.html",
             "description": "Display the related provisions of qm_rclegislation in the default form for qm_rclegislation"
