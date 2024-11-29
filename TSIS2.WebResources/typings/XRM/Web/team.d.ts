@@ -60,6 +60,7 @@ interface Team_Relationships {
   team_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
   team_ts_case?: ts_case_Result[] | null;
   team_ts_causefinding?: ts_causefinding_Result[] | null;
+  team_ts_entityrisk?: ts_EntityRisk_Result[] | null;
   team_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
   team_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
   team_ts_nonoversightactivity?: ts_nonoversightactivity_Result[] | null;
@@ -228,6 +229,7 @@ interface Team_Expand {
   team_ts_canceledinspectionjustification: WebExpand<Team_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { team_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
   team_ts_case: WebExpand<Team_Expand, ts_case_Select, ts_case_Filter, { team_ts_case: ts_case_Result[] }>;
   team_ts_causefinding: WebExpand<Team_Expand, ts_causefinding_Select, ts_causefinding_Filter, { team_ts_causefinding: ts_causefinding_Result[] }>;
+  team_ts_entityrisk: WebExpand<Team_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { team_ts_entityrisk: ts_EntityRisk_Result[] }>;
   team_ts_incompleteworkorderreason: WebExpand<Team_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { team_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
   team_ts_inspectionhours: WebExpand<Team_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { team_ts_inspectionhours: ts_InspectionHours_Result[] }>;
   team_ts_nonoversightactivity: WebExpand<Team_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { team_ts_nonoversightactivity: ts_nonoversightactivity_Result[] }>;
@@ -340,6 +342,7 @@ interface Team_RelatedMany {
   team_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   team_ts_case: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   team_ts_causefinding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
+  team_ts_entityrisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   team_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   team_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   team_ts_nonoversightactivity: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;

@@ -584,6 +584,121 @@ interface ts_enforcementaction_Create extends ts_enforcementaction {
 }
 interface ts_enforcementaction_Update extends ts_enforcementaction {
 }
+interface ts_EntityRisk_Base extends WebEntity {
+}
+interface ts_EntityRisk_Fixed extends WebEntity_Fixed {
+  ts_entityriskid: string;
+}
+interface ts_EntityRisk extends ts_EntityRisk_Base, ts_EntityRisk_Relationships {
+}
+interface ts_EntityRisk_Relationships {
+}
+interface ts_EntityRisk_Result extends ts_EntityRisk_Base, ts_EntityRisk_Relationships {
+}
+interface ts_EntityRisk_FormattedResult {
+}
+interface ts_EntityRisk_Select {
+}
+interface ts_EntityRisk_Expand {
+}
+interface ts_EntityRisk_Filter {
+}
+interface ts_EntityRisk_Create extends ts_EntityRisk {
+}
+interface ts_EntityRisk_Update extends ts_EntityRisk {
+}
+interface ts_EntityRisk_Account_Base extends WebEntity {
+}
+interface ts_EntityRisk_Account_Fixed extends WebEntity_Fixed {
+  ts_entityrisk_accountid: string;
+}
+interface ts_EntityRisk_Account extends ts_EntityRisk_Account_Base, ts_EntityRisk_Account_Relationships {
+}
+interface ts_EntityRisk_Account_Relationships {
+}
+interface ts_EntityRisk_Account_Result extends ts_EntityRisk_Account_Base, ts_EntityRisk_Account_Relationships {
+}
+interface ts_EntityRisk_Account_FormattedResult {
+}
+interface ts_EntityRisk_Account_Select {
+}
+interface ts_EntityRisk_Account_Expand {
+}
+interface ts_EntityRisk_Account_Filter {
+}
+interface ts_EntityRisk_Account_Create extends ts_EntityRisk_Account {
+}
+interface ts_EntityRisk_Account_Update extends ts_EntityRisk_Account {
+}
+interface ts_EntityRisk_msdyn_FunctionalLocation_Base extends WebEntity {
+}
+interface ts_EntityRisk_msdyn_FunctionalLocation_Fixed extends WebEntity_Fixed {
+  ts_entityrisk_msdyn_functionallocationid: string;
+}
+interface ts_EntityRisk_msdyn_FunctionalLocation extends ts_EntityRisk_msdyn_FunctionalLocation_Base, ts_EntityRisk_msdyn_FunctionalLocation_Relationships {
+}
+interface ts_EntityRisk_msdyn_FunctionalLocation_Relationships {
+}
+interface ts_EntityRisk_msdyn_FunctionalLocation_Result extends ts_EntityRisk_msdyn_FunctionalLocation_Base, ts_EntityRisk_msdyn_FunctionalLocation_Relationships {
+}
+interface ts_EntityRisk_msdyn_FunctionalLocation_FormattedResult {
+}
+interface ts_EntityRisk_msdyn_FunctionalLocation_Select {
+}
+interface ts_EntityRisk_msdyn_FunctionalLocation_Expand {
+}
+interface ts_EntityRisk_msdyn_FunctionalLocation_Filter {
+}
+interface ts_EntityRisk_msdyn_FunctionalLocation_Create extends ts_EntityRisk_msdyn_FunctionalLocation {
+}
+interface ts_EntityRisk_msdyn_FunctionalLocation_Update extends ts_EntityRisk_msdyn_FunctionalLocation {
+}
+interface ts_EntityRisk_msdyn_incidenttype_Base extends WebEntity {
+}
+interface ts_EntityRisk_msdyn_incidenttype_Fixed extends WebEntity_Fixed {
+  ts_entityrisk_msdyn_incidenttypeid: string;
+}
+interface ts_EntityRisk_msdyn_incidenttype extends ts_EntityRisk_msdyn_incidenttype_Base, ts_EntityRisk_msdyn_incidenttype_Relationships {
+}
+interface ts_EntityRisk_msdyn_incidenttype_Relationships {
+}
+interface ts_EntityRisk_msdyn_incidenttype_Result extends ts_EntityRisk_msdyn_incidenttype_Base, ts_EntityRisk_msdyn_incidenttype_Relationships {
+}
+interface ts_EntityRisk_msdyn_incidenttype_FormattedResult {
+}
+interface ts_EntityRisk_msdyn_incidenttype_Select {
+}
+interface ts_EntityRisk_msdyn_incidenttype_Expand {
+}
+interface ts_EntityRisk_msdyn_incidenttype_Filter {
+}
+interface ts_EntityRisk_msdyn_incidenttype_Create extends ts_EntityRisk_msdyn_incidenttype {
+}
+interface ts_EntityRisk_msdyn_incidenttype_Update extends ts_EntityRisk_msdyn_incidenttype {
+}
+interface ts_EntityRisk_ovs_operation_Base extends WebEntity {
+}
+interface ts_EntityRisk_ovs_operation_Fixed extends WebEntity_Fixed {
+  ts_entityrisk_ovs_operationid: string;
+}
+interface ts_EntityRisk_ovs_operation extends ts_EntityRisk_ovs_operation_Base, ts_EntityRisk_ovs_operation_Relationships {
+}
+interface ts_EntityRisk_ovs_operation_Relationships {
+}
+interface ts_EntityRisk_ovs_operation_Result extends ts_EntityRisk_ovs_operation_Base, ts_EntityRisk_ovs_operation_Relationships {
+}
+interface ts_EntityRisk_ovs_operation_FormattedResult {
+}
+interface ts_EntityRisk_ovs_operation_Select {
+}
+interface ts_EntityRisk_ovs_operation_Expand {
+}
+interface ts_EntityRisk_ovs_operation_Filter {
+}
+interface ts_EntityRisk_ovs_operation_Create extends ts_EntityRisk_ovs_operation {
+}
+interface ts_EntityRisk_ovs_operation_Update extends ts_EntityRisk_ovs_operation {
+}
 interface ts_Incident_ts_operationcontact_Base extends WebEntity {
 }
 interface ts_Incident_ts_operationcontact_Fixed extends WebEntity_Fixed {

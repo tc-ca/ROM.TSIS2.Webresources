@@ -60,6 +60,7 @@ interface msdyn_FunctionalLocation_Relationships {
   msdyn_msdyn_functionallocation_incident_FunctionalLocation?: Incident_Result[] | null;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation?: msdyn_workorder_Result[] | null;
   ovs_Finding_functionallocation_msdyn_Func?: ovs_Finding_Result[] | null;
+  ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation?: ts_EntityRisk_Result[] | null;
   ts_functionallocation_workorder_arrivalaerodrome?: msdyn_workorder_Result[] | null;
   ts_functionallocation_workorder_departureaerodrome?: msdyn_workorder_Result[] | null;
   ts_msdyn_functionallocation_msdyn_workorder_Subsubsite?: msdyn_workorder_Result[] | null;
@@ -252,6 +253,7 @@ interface msdyn_FunctionalLocation_Expand {
   ownerid: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<msdyn_FunctionalLocation_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: ts_EntityRisk_Result[] }>;
   ts_functionallocation_workorder_arrivalaerodrome: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_functionallocation_workorder_arrivalaerodrome: msdyn_workorder_Result[] }>;
   ts_functionallocation_workorder_departureaerodrome: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_functionallocation_workorder_departureaerodrome: msdyn_workorder_Result[] }>;
   ts_msdyn_functionallocation_msdyn_workorder_Subsubsite: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_functionallocation_msdyn_workorder_Subsubsite: msdyn_workorder_Result[] }>;
@@ -351,6 +353,7 @@ interface msdyn_FunctionalLocation_RelatedMany {
   msdyn_msdyn_functionallocation_incident_FunctionalLocation: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_Finding_functionallocation_msdyn_Func: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   ts_functionallocation_workorder_arrivalaerodrome: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_functionallocation_workorder_departureaerodrome: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_msdyn_functionallocation_msdyn_workorder_Subsubsite: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;

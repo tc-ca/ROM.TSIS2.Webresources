@@ -75,6 +75,7 @@ interface msdyn_incidenttype_Relationships {
   msdyn_msdyn_incidenttype_incident_IncidentType?: Incident_Result[] | null;
   msdyn_msdyn_incidenttype_msdyn_incidenttypeservicetask_IncidentType?: msdyn_incidenttypeservicetask_Result[] | null;
   msdyn_msdyn_incidenttype_msdyn_workorder_PrimaryIncidentType?: msdyn_workorder_Result[] | null;
+  ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype?: ts_EntityRisk_Result[] | null;
   ts_incident_InspectionType1_msdyn_incidentty?: Incident_Result[] | null;
   ts_incident_InspectionType2_msdyn_incidentty?: Incident_Result[] | null;
   ts_questionnaireresponse_ActivityType_msdyn_incidenttype?: ts_questionnaireresponse_Result[] | null;
@@ -281,6 +282,7 @@ interface msdyn_incidenttype_Expand {
   ownerid: WebExpand<msdyn_incidenttype_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<msdyn_incidenttype_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_incidenttype_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype: WebExpand<msdyn_incidenttype_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype: ts_EntityRisk_Result[] }>;
   ts_incident_InspectionType1_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { ts_incident_InspectionType1_msdyn_incidentty: Incident_Result[] }>;
   ts_incident_InspectionType2_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { ts_incident_InspectionType2_msdyn_incidentty: Incident_Result[] }>;
   ts_ovs_operation: WebExpand<msdyn_incidenttype_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation: ovs_operation_Result }>;
@@ -347,6 +349,7 @@ interface msdyn_incidenttype_RelatedMany {
   msdyn_msdyn_incidenttype_incident_IncidentType: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   msdyn_msdyn_incidenttype_msdyn_incidenttypeservicetask_IncidentType: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
   msdyn_msdyn_incidenttype_msdyn_workorder_PrimaryIncidentType: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   ts_incident_InspectionType1_msdyn_incidentty: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_InspectionType2_msdyn_incidentty: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_questionnaireresponse_ActivityType_msdyn_incidenttype: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
