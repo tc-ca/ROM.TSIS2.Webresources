@@ -649,25 +649,38 @@ var ROM;
             wrCtrl.setVisible(true);
             wrCtrl.getContentWindow().then(function (win) {
                 return __awaiter(this, void 0, void 0, function () {
-                    var surveyLocale;
+                    var surveyLocale, isOffline, operationData, statusReason;
                     return __generator(this, function (_a) {
-                        surveyLocale = getSurveyLocal();
-                        win.InitialContext(eContext);
-                        console.log("Online: retrieveWorkOrderOperationData");
-                        //let operationData = await retrieveWorkOrderOperationData(eContext);        
-                        win.isComplete = (Form.getAttribute("msdyn_percentcomplete").getValue() == 100.00);
-                        //win.operationList = operationData.operations;
-                        win.operationList = [];
-                        win.activityTypeOperationTypeIdsList = [];
-                        fetchXMLCallStep3(eContext, win); //sequence: 3,1,4,2
-                        //win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
-                        //const statusReason = Form.getAttribute("statuscode").getValue();
-                        // if (statusReason == 918640002 && operationData.isInspectionType) {
-                        //     mode = "display";
-                        //     setAllFieldsDisabled(eContext);
-                        // }
-                        win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
-                        return [2 /*return*/];
+                        switch (_a.label) {
+                            case 0:
+                                surveyLocale = getSurveyLocal();
+                                win.InitialContext(eContext);
+                                console.log("Online: retrieveWorkOrderOperationData");
+                                isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
+                                if (!isOffline) return [3 /*break*/, 1];
+                                //let operationData = await retrieveWorkOrderOperationData(eContext);        
+                                win.isComplete = (Form.getAttribute("msdyn_percentcomplete").getValue() == 100.00);
+                                //win.operationList = operationData.operations;
+                                win.operationList = [];
+                                win.activityTypeOperationTypeIdsList = [];
+                                fetchXMLCallStep3(eContext, win); //sequence: 3,1,4,2
+                                return [3 /*break*/, 3];
+                            case 1: return [4 /*yield*/, retrieveWorkOrderOperationData(eContext)];
+                            case 2:
+                                operationData = _a.sent();
+                                win.isComplete = (Form.getAttribute("msdyn_percentcomplete").getValue() == 100.00);
+                                win.operationList = operationData.operations;
+                                win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
+                                statusReason = Form.getAttribute("statuscode").getValue();
+                                if (statusReason == 918640002 && operationData.isInspectionType) {
+                                    mode = "display";
+                                    setAllFieldsDisabled(eContext);
+                                }
+                                _a.label = 3;
+                            case 3:
+                                win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
+                                return [2 /*return*/];
+                        }
                     });
                 });
             });
