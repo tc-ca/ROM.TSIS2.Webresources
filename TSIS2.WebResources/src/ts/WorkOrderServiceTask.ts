@@ -652,20 +652,34 @@ namespace ROM.WorkOrderServiceTask {
 
             console.log("Online: retrieveWorkOrderOperationData");
 
-            //let operationData = await retrieveWorkOrderOperationData(eContext);        
-            win.isComplete = (Form.getAttribute("msdyn_percentcomplete").getValue() == 100.00);
-            //win.operationList = operationData.operations;
-            win.operationList = [];
-            win.activityTypeOperationTypeIdsList = [];
+            let isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
+            if (isOffline) {
+                //let operationData = await retrieveWorkOrderOperationData(eContext);        
+                win.isComplete = (Form.getAttribute("msdyn_percentcomplete").getValue() == 100.00);
+                //win.operationList = operationData.operations;
+                win.operationList = [];
+                win.activityTypeOperationTypeIdsList = [];
 
-            fetchXMLCallStep3(eContext, win); //sequence: 3,1,4,2
-            //win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
-            //const statusReason = Form.getAttribute("statuscode").getValue();
-            // if (statusReason == 918640002 && operationData.isInspectionType) {
-            //     mode = "display";
-            //     setAllFieldsDisabled(eContext);
-            // }
+                fetchXMLCallStep3(eContext, win); //sequence: 3,1,4,2
+                //win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
+                //const statusReason = Form.getAttribute("statuscode").getValue();
+                // if (statusReason == 918640002 && operationData.isInspectionType) {
+                //     mode = "display";
+                //     setAllFieldsDisabled(eContext);
+                // }
+            }
+            else {
+                let operationData = await retrieveWorkOrderOperationData(eContext);
+                win.isComplete = (Form.getAttribute("msdyn_percentcomplete").getValue() == 100.00);
+                win.operationList = operationData.operations;
+                win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
 
+                const statusReason = Form.getAttribute("statuscode").getValue();
+                if (statusReason == 918640002 && operationData.isInspectionType) {
+                    mode = "display";
+                    setAllFieldsDisabled(eContext);
+                }
+            }
 
             win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode)
         });
