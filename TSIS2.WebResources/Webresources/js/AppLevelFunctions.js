@@ -15,13 +15,14 @@ function appOnLoad() {
       "Vous pouvez maintenant fournir vos commentaires à l'équipe en utilisant le formulaire disponible dans la section Support du menu de gauche!";
   }
 
-    // Hide unwanted Tables in the Site map for Production - the table entries can be located here: \Webresources\css\prod_custom.css
+  // Hide unwanted Tables in the Site map for Production - the table entries can be located here: \Webresources\css\prod_custom.css
   if (appUrl === PROD_URL) {
     showBanner(appUrl, message1, false);
     loadProdCustomCSS();
   }
 
   showBanner(appUrl, message2, true);
+  loadDynamicNotifications(appUrl);
 }
 
 function getAppURL() {
@@ -57,4 +58,89 @@ function loadProdCustomCSS() {
   link.media = "all";
 
   window.parent.document.head.appendChild(link);
+}
+
+function loadDynamicNotifications(currentEnvUrl) {
+  const now = new Date().toISOString();
+
+  // Map environment URLs to names
+  const envMap = {
+    "https://romts-gsrst-tcd365.crm3.dynamics.com": "PROD",
+    "https://romts-gsrst-dev-tcd365.crm3.dynamics.com": "DEV",
+    "https://romts-gsrst-qa-tcd365.crm3.dynamics.com": "QA",
+    "https://romts-gsrst-integration-tcd365.crm3.dynamics.com": "INTEGRATION",
+    "https://romts-gsrst-data-tcd365.crm3.dynamics.com": "DATA",
+    "https://romts-gsrst-acctcd365.crm3.dynamics.com": "ACC",
+  };
+
+  const currentEnv = envMap[currentEnvUrl] || "ALL";
+
+  const environmentChoiceMap = {
+    741130000: "ALL",
+    741130001: "DEV",
+    741130002: "QA",
+    741130003: "ACC",
+    741130004: "DATA",
+    741130005: "INTEGRATION",
+    741130006: "PROD",
+  };
+
+  const fetchXml = `
+    <fetch>
+      <entity name="ts_notification">
+        <filter type="and">
+          <condition attribute="ts_active" operator="eq" value="1" />
+          <filter type="or">
+            <condition attribute="ts_startdate" operator="null" />
+            <condition attribute="ts_startdate" operator="on-or-before" value="${now}" />
+          </filter>
+          <filter type="or">
+            <condition attribute="ts_enddate" operator="null" />
+            <condition attribute="ts_enddate" operator="on-or-after" value="${now}" />
+          </filter>
+        </filter>
+      </entity>
+    </fetch>
+  `;
+
+  Xrm.WebApi.retrieveMultipleRecords("ts_notification", `?fetchXml=${encodeURIComponent(fetchXml)}`).then(
+    function success(result) {
+      result.entities.forEach(function (notification) {
+        const notifEnv = environmentChoiceMap[notification.ts_environment] || "ALL";
+
+        if (notifEnv !== "ALL" && notifEnv !== currentEnv) {
+          return;
+        }
+
+        const closeButtonMap = { 0: false, 1: true };
+
+        const NotificationObj = {
+          type: 2,
+          level: notification.ts_level,
+          message: notification.ts_message,
+          showCloseButton: closeButtonMap[notification.ts_closebutton] || false,
+        };
+
+        Xrm.App.addGlobalNotification(NotificationObj).then(
+          function success(notificationId) {
+            if (notification.ts_enddate) {
+              const endTime = new Date(notification.ts_enddate);
+              const msUntilEnd = endTime - new Date();
+              if (msUntilEnd > 0) {
+                setTimeout(function () {
+                  Xrm.App.clearGlobalNotification(notificationId);
+                }, msUntilEnd);
+              }
+            }
+          },
+          function error(err) {
+            console.log(err);
+          }
+        );
+      });
+    },
+    function error(err) {
+      console.log(err);
+    }
+  );
 }
