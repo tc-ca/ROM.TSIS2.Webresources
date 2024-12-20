@@ -809,8 +809,6 @@ async function copyEnforcementActionToolResults(primaryControl, SelectedControls
                         "ts_ncatmanagerenforcementjustification": completeFinding.ts_ncatmanagerenforcementjustification,
                         "ts_issueaddressedonsite": completeFinding.ts_issueaddressedonsite,
                         "ts_noncompliancetimeframe": completeFinding.ts_noncompliancetimeframe,
-                        "ovs_findingcomments": completeFinding.ovs_findingcomments,
-                        "ts_notetostakeholder": completeFinding.ts_notetostakeholder,
                         "ts_sensitivitylevel": completeFinding.ts_sensitivitylevel,
                         "ts_finalenforcementaction": completeFinding.ts_finalenforcementaction,
                         "statecode": completeFinding.statecode,
