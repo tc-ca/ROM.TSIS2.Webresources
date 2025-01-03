@@ -374,6 +374,7 @@
             "file": "js\\planningDataRibbon.js",
             "description": "ROM TSIS 2.0 Planning Data Ribbon Scripts"
           },
+
           {
             "uniquename": "ts_/js/SecurityRolePrivilegeCompare.js",
             "file": "js\\SecurityRolePrivilegeCompare.js",
@@ -393,6 +394,11 @@
             "uniquename": "ts_/js/AttachFile.js",
             "file": "js\\AttachFile.js",
             "description": "Scripts to handle attaching files to records"
+          },
+          {
+            "uniquename": "ts_/js/EntityRiskRibbon.js",
+            "file": "js\\EntityRiskRibbon.js",
+            "description": "Ribbon Functions for Entity Risk Table"
           },
           {
             "uniquename": "ts_/js/RiskThresholdRibbon.js",
