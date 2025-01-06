@@ -30,17 +30,17 @@ async function gatherAncestorProvisionText(provision, lang) {
     }
     //Base case. Headings are bold, and show the provision text.
     if (provisionType == "1829d66a-962b-eb11-a813-000d3af3fc19") {
-        return `<strong>${provisionText}</strong></br>`;
+        return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')">${provisionText}</a></strong></br>`;
     }
 
     let parent = await getParentProvision(provision);
 
     //Marginal notes display the legislation text. No name or label.
     if (provisionType == "8726bb2a-497c-eb11-a812-000d3af31ad8") {
-        return await gatherAncestorProvisionText(parent, lang) + `<strong>${provisionText}</strong></br>`;
+        return await gatherAncestorProvisionText(parent, lang) + `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')">${provisionText}</a></strong></br>`;
     }
     
-    return await gatherAncestorProvisionText(parent, lang) + `<strong>${provision.qm_name}</strong>: ${provisionText}</br>`;
+    return await gatherAncestorProvisionText(parent, lang) + `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')">${provision.qm_name}</a></strong>: ${provisionText}</br>`;
 }
 
 async function gatherDescendentProvisionText(provision, lang) {
@@ -67,13 +67,25 @@ async function gatherDescendentProvisionText(provision, lang) {
 
         //Special case for marginal notes. Show the legislation text with no label.
         if (provisionType == "8726bb2a-497c-eb11-a812-000d3af31ad8" || children[i].qm_legislationlbl==null) {
-            provisionText += `<li><strong>${childText}</strong></li>` + await gatherDescendentProvisionText(children[i], lang);
+            provisionText += `<li><strong><a href='#' onclick="navigateToProvision('${children[i].qm_rclegislationid}')">${childText}</a></strong></li>` +
+                await gatherDescendentProvisionText(children[i], lang);
         } else {
-            provisionText += `<li><strong>${children[i].qm_legislationlbl}</strong> ${childText}</li>` + await gatherDescendentProvisionText(children[i], lang);
+            provisionText += `<li><strong><a href='#' onclick="navigateToProvision('${children[i].qm_rclegislationid}')">${children[i].qm_legislationlbl}</a></strong> ${childText}</li>` +
+                await gatherDescendentProvisionText(children[i], lang);
         }
     }
     provisionText += "</ul>";
     return provisionText;
+}
+
+// Navigation function to handle link clicks
+function navigateToProvision(provisionId) {
+    // Logic to navigate to the specific provision
+    // For example, using Dynamics 365 navigation or other logic:
+    parent.Xrm.Navigation.openForm({
+        entityName: "qm_rclegislation",
+        entityId: provisionId
+    });
 }
 
 async function getParentProvision(provision) {
