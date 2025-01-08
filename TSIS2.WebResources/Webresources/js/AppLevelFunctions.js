@@ -61,86 +61,165 @@ function loadProdCustomCSS() {
 }
 
 function loadDynamicNotifications(currentEnvUrl) {
-  const now = new Date().toISOString();
+  let allowNotificationsWithNoDates = false;
 
-  // Map environment URLs to names
-  const envMap = {
-    "https://romts-gsrst-tcd365.crm3.dynamics.com": "PROD",
-    "https://romts-gsrst-dev-tcd365.crm3.dynamics.com": "DEV",
-    "https://romts-gsrst-qa-tcd365.crm3.dynamics.com": "QA",
-    "https://romts-gsrst-integration-tcd365.crm3.dynamics.com": "INTEGRATION",
-    "https://romts-gsrst-data-tcd365.crm3.dynamics.com": "DATA",
-    "https://romts-gsrst-acctcd365.crm3.dynamics.com": "ACC",
+  // Current UTC time used in FetchXML and comparisons
+  const now = new Date();
+
+  // Determine language-specific message field
+  const userLanguageId = Xrm.Utility.getGlobalContext().userSettings.languageId;
+  const messageField = userLanguageId === 1033 ? "ts_messageenglish" : "ts_messagefrench";
+
+  const currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId;
+
+  const environmentMap = {
+    "https://romts-gsrst-tcd365.crm3.dynamics.com": "741130005",
+    "https://romts-gsrst-dev-tcd365.crm3.dynamics.com": "741130000",
+    "https://romts-gsrst-qa-tcd365.crm3.dynamics.com": "741130001",
+    "https://romts-gsrst-integration-tcd365.crm3.dynamics.com": "741130004",
+    "https://romts-gsrst-data-tcd365.crm3.dynamics.com": "741130003",
+    "https://romts-gsrst-acctcd365.crm3.dynamics.com": "741130002",
   };
 
-  const currentEnv = envMap[currentEnvUrl] || "ALL";
-
-  const environmentChoiceMap = {
-    741130000: "ALL",
-    741130001: "DEV",
-    741130002: "QA",
-    741130003: "ACC",
-    741130004: "DATA",
-    741130005: "INTEGRATION",
-    741130006: "PROD",
-  };
+  const currentEnvValue = environmentMap[currentEnvUrl];
 
   const fetchXml = `
     <fetch>
       <entity name="ts_notification">
+        <attribute name="ts_environment" />
+        <attribute name="ts_level" />
+        <attribute name="${messageField}" />
+        <attribute name="ts_closebutton" />
+        <attribute name="ts_enddate" />
+        <attribute name="ts_startdate" />
+        <attribute name="ts_scopeteam" />
         <filter type="and">
           <condition attribute="ts_active" operator="eq" value="1" />
-          <filter type="or">
-            <condition attribute="ts_startdate" operator="null" />
-            <condition attribute="ts_startdate" operator="on-or-before" value="${now}" />
-          </filter>
-          <filter type="or">
-            <condition attribute="ts_enddate" operator="null" />
-            <condition attribute="ts_enddate" operator="on-or-after" value="${now}" />
+          <filter type="and">
+            <filter type="or">
+              <condition attribute="ts_startdate" operator="null" />
+              <condition attribute="ts_startdate" operator="on-or-before" value="${now.toISOString()}" />
+            </filter>
+            <filter type="or">
+              <condition attribute="ts_enddate" operator="null" />
+              <condition attribute="ts_enddate" operator="on-or-after" value="${now.toISOString()}" />
+            </filter>
           </filter>
         </filter>
       </entity>
     </fetch>
   `;
 
-  Xrm.WebApi.retrieveMultipleRecords("ts_notification", `?fetchXml=${encodeURIComponent(fetchXml)}`).then(
-    function success(result) {
-      result.entities.forEach(function (notification) {
-        const notifEnv = environmentChoiceMap[notification.ts_environment] || "ALL";
+  // Fetch notifications
+  Xrm.WebApi.retrieveMultipleRecords("ts_notification", `?fetchXml=${encodeURIComponent(fetchXml)}`)
+    .then(async function success(result) {
+      for (const notification of result.entities) {
+        // Extract and parse dates
+        const startDateRaw = notification.ts_startdate;
+        const endDateRaw = notification.ts_enddate;
+        const startDate = startDateRaw ? new Date(startDateRaw) : null;
+        const endDate = endDateRaw ? new Date(endDateRaw) : null;
 
-        if (notifEnv !== "ALL" && notifEnv !== currentEnv) {
-          return;
+        //If no start or end date, and allowNotificationsWithNoDates is false, skip notification
+        if (!startDate && !endDate && !allowNotificationsWithNoDates) {
+          continue;
         }
 
-        const closeButtonMap = { 0: false, 1: true };
+        // Evaluate start and end date conditions
+        const isAfterStart = startDate ? now >= startDate : true;
+        const isBeforeEnd = endDate ? now <= endDate : true;
 
+        // Final decision based on dates
+        if (isAfterStart && isBeforeEnd) {
+          // Notification will be shown
+        } else if (!isAfterStart || !isBeforeEnd) {
+          continue;
+        }
+
+        // Check environment mapping
+        const selectedEnvs = (notification.ts_environment || "").split(",");
+
+        //If current dev is targetted by the notification, show it
+        if (!selectedEnvs.includes(currentEnvValue)) {
+          continue;
+        }
+
+        // Check team scope if specified
+        if (notification._ts_scopeteam_value) {
+          try {
+            const isInTeam = await isUserInTeam(currentUserId, notification._ts_scopeteam_value);
+            if (!isInTeam) {
+              continue;
+            }
+          } catch (error) {
+            console.error("Error checking team membership:", error);
+            continue;
+          }
+        }
+
+        // Show notification
         const NotificationObj = {
           type: 2,
           level: notification.ts_level,
-          message: notification.ts_message,
-          showCloseButton: closeButtonMap[notification.ts_closebutton] || false,
+          message: notification[messageField],
+          showCloseButton: notification.ts_closebutton,
         };
 
-        Xrm.App.addGlobalNotification(NotificationObj).then(
-          function success(notificationId) {
-            if (notification.ts_enddate) {
-              const endTime = new Date(notification.ts_enddate);
-              const msUntilEnd = endTime - new Date();
+        Xrm.App.addGlobalNotification(NotificationObj)
+          .then(function onShowSuccess(notificationId) {
+            if (endDate) {
+              const msUntilEnd = endDate.getTime() - now.getTime();
               if (msUntilEnd > 0) {
-                setTimeout(function () {
+                setTimeout(() => {
                   Xrm.App.clearGlobalNotification(notificationId);
                 }, msUntilEnd);
               }
             }
-          },
-          function error(err) {
-            console.log(err);
-          }
-        );
+          })
+          .catch(function onShowError(err) {
+            console.error("Error displaying notification:", err);
+          });
+      }
+    })
+    .catch(function error(err) {
+      console.error("Error retrieving notifications:", err);
+    });
+}
+
+//Check if user is in a team
+function isUserInTeam(userId, teamId) {
+  const fetchXml = [
+    "<fetch distinct='false' mapping='logical'>",
+    "  <entity name='team'>",
+    "    <attribute name='name' />",
+    "    <attribute name='teamid' />",
+    "    <filter type='and'>",
+    "      <condition attribute='teamtype' operator='ne' value='1' />",
+    "      <condition attribute='teamid' operator='eq' value='",
+    teamId,
+    "' />",
+    "    </filter>",
+    "    <link-entity name='teammembership' intersect='true' visible='false' to='teamid' from='teamid'>",
+    "      <link-entity name='systemuser' from='systemuserid' to='systemuserid' alias='bb'>",
+    "        <filter type='and'>",
+    "          <condition attribute='systemuserid' operator='eq' value='",
+    userId,
+    "' />",
+    "        </filter>",
+    "      </link-entity>",
+    "    </link-entity>",
+    "  </entity>",
+    "</fetch>",
+  ].join("");
+
+  return new Promise((resolve, reject) => {
+    Xrm.WebApi.retrieveMultipleRecords("team", "?fetchXml=" + encodeURIComponent(fetchXml))
+      .then(function success(result) {
+        resolve(result.entities.length > 0);
+      })
+      .catch(function error(err) {
+        console.error("Error checking team membership:", err);
+        reject(err);
       });
-    },
-    function error(err) {
-      console.log(err);
-    }
-  );
+  });
 }

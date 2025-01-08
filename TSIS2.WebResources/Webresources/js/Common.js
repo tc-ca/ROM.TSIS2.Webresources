@@ -229,3 +229,40 @@ function showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext) {
   }
   return false;
 }
+
+function isUserInTeam(userId, teamId) {
+  const fetchXml = [
+    "<fetch distinct='false' mapping='logical'>",
+    "  <entity name='team'>",
+    "    <attribute name='name' />",
+    "    <attribute name='teamid' />",
+    "    <filter type='and'>",
+    "      <condition attribute='teamtype' operator='ne' value='1' />",
+    "      <condition attribute='teamid' operator='eq' value='",
+    teamId,
+    "' />",
+    "    </filter>",
+    "    <link-entity name='teammembership' intersect='true' visible='false' to='teamid' from='teamid'>",
+    "      <link-entity name='systemuser' from='systemuserid' to='systemuserid' alias='bb'>",
+    "        <filter type='and'>",
+    "          <condition attribute='systemuserid' operator='eq' value='",
+    userId,
+    "' />",
+    "        </filter>",
+    "      </link-entity>",
+    "    </link-entity>",
+    "  </entity>",
+    "</fetch>",
+  ].join("");
+
+  return new Promise((resolve, reject) => {
+    Xrm.WebApi.retrieveMultipleRecords("team", "?fetchXml=" + encodeURIComponent(fetchXml))
+      .then(function success(result) {
+        resolve(result.entities.length > 0);
+      })
+      .catch(function error(err) {
+        console.error("Error checking team membership:", err);
+        reject(err);
+      });
+  });
+}
