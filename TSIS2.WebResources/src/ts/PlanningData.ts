@@ -20,8 +20,11 @@
             if (formContext.getAttribute("ts_operationactivity").getValue() != null) {
                 formContext.getControl("ts_operationactivity").setDisabled(true);
             }
-            if (formContext.getAttribute("ts_target").getValue() != null) {
-                formContext.getControl("ts_target").setDisabled(true);
+            if (formContext.getAttribute("ts_target").getValue() == null) {
+                formContext.getControl("ts_target").setDisabled(false);
+            }
+            else if (userHasRole("System Administrator|ROM - Business Admin")) {
+                formContext.getControl("ts_target").setDisabled(false);
             }
             let planningDataId = formContext.data.entity.getId();
             let teamPlanningDataFetchXML = [
@@ -41,6 +44,9 @@
                     disableFormFields(eContext);
                 };
             });
+        }
+        else if (formContext.ui.getFormType() == 1) {
+            formContext.getControl("ts_target").setDisabled(false);
         }
         if (formContext.getAttribute("ts_generationlog").getValue() == null) {
             formContext.getControl("ts_generationlog").setVisible(false);
@@ -374,5 +380,17 @@
                 control.setDisabled!(true);
             }
         });
+    }
+
+    function userHasRole(rolesName) {
+        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+        var hasRole = false;
+        var roles = rolesName.split("|");
+        roles.forEach(function (roleItem) {
+            userRoles.forEach(function (userRoleItem) {
+                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
+            });
+        });
+        return hasRole;
     }
 }
