@@ -81,7 +81,6 @@ async function gatherDescendentProvisionText(provision, lang) {
 // Navigation function to handle link clicks
 function navigateToProvision(provisionId) {
     // Logic to navigate to the specific provision
-    // For example, using Dynamics 365 navigation or other logic:
     parent.Xrm.Navigation.openForm({
         entityName: "qm_rclegislation",
         entityId: provisionId
