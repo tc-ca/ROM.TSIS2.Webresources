@@ -82,6 +82,10 @@ function loadDynamicNotifications(currentEnvUrl) {
   };
 
   const currentEnvValue = environmentMap[currentEnvUrl];
+  if (!currentEnvValue) {
+    console.error(`Unknown environment URL: ${currentEnvUrl}`);
+    return;
+  }
 
   const fetchXml = `
     <fetch>
@@ -129,10 +133,7 @@ function loadDynamicNotifications(currentEnvUrl) {
         const isAfterStart = startDate ? now >= startDate : true;
         const isBeforeEnd = endDate ? now <= endDate : true;
 
-        // Final decision based on dates
-        if (isAfterStart && isBeforeEnd) {
-          // Notification will be shown
-        } else if (!isAfterStart || !isBeforeEnd) {
+        if (!isAfterStart || !isBeforeEnd) {
           continue;
         }
 
