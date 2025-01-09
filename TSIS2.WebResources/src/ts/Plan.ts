@@ -175,10 +175,16 @@
             const siteInspectionTDGIncidentTypeId = "2bc59aa0-511a-ec11-b6e7-000d3a09ce95";
             const VSITDGIncidentTypeId = "34c59aa0-511a-ec11-b6e7-000d3a09ce95";
             const NonSchedule1TDGIncidentTypeId = "3ac59aa0-511a-ec11-b6e7-000d3a09ce95";
-            const OversightSIPAXIncidentTypeId = "c8c934c6-01b5-ec11-983e-000d3af4f373";
+            let OversightSIPAXIncidentTypeId = "c8c934c6-01b5-ec11-983e-000d3af4f373";
             const SIPAXIncidentTypeId = "45c59aa0-511a-ec11-b6e7-000d3a09ce95";
             const targetedInspectionPAXIncidentTypeId = "4819e8a6-c91f-ec11-b6e6-000d3af473b7";
             const targetedInspectionTDGIncidentTypeId = "3dc59aa0-511a-ec11-b6e7-000d3a09ce95";
+            var globalContextUrl = Xrm.Utility.getGlobalContext().getClientUrl();
+            console.log("url: " + globalContextUrl);
+            if (globalContextUrl.indexOf("romts-gsrst-training") != -1 || globalContextUrl.indexOf("romts-gsrst-tcd365") != -1 ) {
+                console.log("training or prod url ");                
+                OversightSIPAXIncidentTypeId = "ef0ec777-5bca-ed11-b596-000d3af4f2f8";
+            }
 
             //Retrieve the Activity Type records to get their Estimated Durations
             const siteInspectionTDGIncidentType = await Xrm.WebApi.retrieveRecord("msdyn_incidenttype", siteInspectionTDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); });

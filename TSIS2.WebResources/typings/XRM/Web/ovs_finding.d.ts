@@ -103,6 +103,7 @@ interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ts_actioncreated_bind$ts_actions?: string | null;
   ts_enforcementactioncreated_bind$ts_enforcementactions?: string | null;
   ts_functionallocation_bind$msdyn_functionallocations?: string | null;
+  ts_infraction_bind$ts_infractions?: string | null;
   ts_operationid_bind$ovs_operations?: string | null;
   ts_ovs_operationtype_bind$ovs_operationtypes?: string | null;
   ts_qm_rclegislation_bind$qm_rclegislations?: string | null;
@@ -149,6 +150,7 @@ interface ovs_Finding_Select {
   ts_findingprovisiontextfr: WebAttribute<ovs_Finding_Select, { ts_findingprovisiontextfr: string | null }, {  }>;
   ts_findingtype: WebAttribute<ovs_Finding_Select, { ts_findingtype: ts_findingtype | null }, { ts_findingtype_formatted?: string }>;
   ts_functionallocation_guid: WebAttribute<ovs_Finding_Select, { ts_functionallocation_guid: string | null }, { ts_functionallocation_formatted?: string }>;
+  ts_infraction_guid: WebAttribute<ovs_Finding_Select, { ts_infraction_guid: string | null }, { ts_infraction_formatted?: string }>;
   ts_issueaddressedonsite: WebAttribute<ovs_Finding_Select, { ts_issueaddressedonsite: ts_yesno | null }, { ts_issueaddressedonsite_formatted?: string }>;
   ts_justificationof: WebAttribute<ovs_Finding_Select, { ts_justificationof: string | null }, {  }>;
   ts_ncatactualorpotentialharm_guid: WebAttribute<ovs_Finding_Select, { ts_ncatactualorpotentialharm_guid: string | null }, { ts_ncatactualorpotentialharm_formatted?: string }>;
@@ -244,6 +246,7 @@ interface ovs_Finding_Filter {
   ts_findingprovisiontextfr: string;
   ts_findingtype: ts_findingtype;
   ts_functionallocation_guid: XQW.Guid;
+  ts_infraction_guid: XQW.Guid;
   ts_issueaddressedonsite: ts_yesno;
   ts_justificationof: string;
   ts_ncatactualorpotentialharm_guid: XQW.Guid;
@@ -359,6 +362,7 @@ interface ovs_Finding_FormattedResult {
   ts_finalenforcementaction_formatted?: string;
   ts_findingtype_formatted?: string;
   ts_functionallocation_formatted?: string;
+  ts_infraction_formatted?: string;
   ts_issueaddressedonsite_formatted?: string;
   ts_ncatactualorpotentialharm_formatted?: string;
   ts_ncatapprovingteam_formatted?: string;
@@ -422,6 +426,7 @@ interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships
   ts_enforcementactioncreated_guid: string | null;
   ts_file_guid: string | null;
   ts_functionallocation_guid: string | null;
+  ts_infraction_guid: string | null;
   ts_ncatactualorpotentialharm_guid: string | null;
   ts_ncatapprovingteam_guid: string | null;
   ts_ncatcompliancehistory_guid: string | null;
