@@ -20,9 +20,9 @@
                 // Use the qm_tylegislationsourceid_value to retrieve child records
                 parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation", "?$select=qm_rclegislationid,qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=_qm_tylegislationsourceid_value eq " + _qm_tylegislationsourceid_value + "&$orderby=qm_ordernbr").then(function (results) {
                     if (results.entities.length > 0) {
-                        // Loop through the child records
+                        // Loop through each records
                         results.entities.forEach(function (childRecord) {
-                            // Call buildProvisionText for each child record
+                            // Call buildLegislationText for each record
                             buildLegislationText(childRecord, langId).then(function (provisionText) {
                                 var span = document.createElement("span");
                                 span.innerHTML = provisionText + "<br><br>";
