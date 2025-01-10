@@ -13,9 +13,9 @@
         var highlightedElement = null; // Variable to hold the reference to the highlighted element
 
         // Retrieve parent record to get the qm_tylegislationsourceid_value
-        parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation", "?$select=_qm_tylegislationsourceid_value&$filter=qm_rclegislationid eq " + _ParentRecordId).then(function (parentResults) {
-            if (parentResults.entities.length > 0) {
-                var _qm_tylegislationsourceid_value = parentResults.entities[0]["_qm_tylegislationsourceid_value"];
+        parent.Xrm.WebApi.online.retrieveRecord("qm_rclegislation", _ParentRecordId, "?$select=_qm_tylegislationsourceid_value").then(function (parentResult) {
+            if (parentResult) {
+                var _qm_tylegislationsourceid_value = parentResult["_qm_tylegislationsourceid_value"];
 
                 // Use the qm_tylegislationsourceid_value to retrieve child records
                 parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation", "?$select=qm_rclegislationid,qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=_qm_tylegislationsourceid_value eq " + _qm_tylegislationsourceid_value + "&$orderby=qm_ordernbr").then(function (results) {
