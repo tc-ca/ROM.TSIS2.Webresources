@@ -31,674 +31,679 @@
         Optional when autodetect=yes
         */
         "files": [
-          /* Resource Files */
-          {
-            "uniquename": "ovs_/resx/BookableResourceBooking.1033.resx",
-            "file": "resx\\BookableResourceBooking.1033.resx",
-            "description": "ROM TSIS 2.0 BookableResourceBooking.js English Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/BookableResourceBooking.1036.resx",
-            "file": "resx\\BookableResourceBooking.1036.resx",
-            "description": "ROM TSIS 2.0 BookableResourceBooking.js French Resource Strings"
-          },
-          {
-            "uniquename": "ts_/resx/Common.1033.resx",
-            "file": "resx\\Common.1033.resx",
-            "description": "ROM TSIS 2.0 Common.js English Resource Strings"
-          },
-          {
-            "uniquename": "ts_/resx/Common.1036.resx",
-            "file": "resx\\Common.1036.resx",
-            "description": "ROM TSIS 2.0 Common.js French Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/Incident.1033.resx",
-            "file": "resx\\Incident.1033.resx",
-            "description": "ROM TSIS 2.0 Incident.js English Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/Incident.1036.resx",
-            "file": "resx\\Incident.1036.resx",
-            "description": "ROM TSIS 2.0 Incident.js French Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/QuestionnaireResponse.1033.resx",
-            "file": "resx\\QuestionnaireResponse.1033.resx",
-            "description": "ROM TSIS 2.0 QuestionnaireResponse.js English Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/QuestionnaireResponse.1036.resx",
-            "file": "resx\\QuestionnaireResponse.1036.resx",
-            "description": "ROM TSIS 2.0 QuestionnaireResponse.js French Resource Strings"
-          },
-          {
-            "uniquename": "ts_/resx/SecurityIncidentType.1033.resx",
-            "file": "resx\\SecurityIncidentType.1033.resx",
-            "description": "ROM TSIS 2.0 SecurityIncidentType.js English Resource Strings"
-          },
-          {
-            "uniquename": "ts_/resx/SecurityIncidentType.1036.resx",
-            "file": "resx\\SecurityIncidentType.1036.resx",
-            "description": "ROM TSIS 2.0 SecurityIncidentType.js French Resource Strings"
-          },
-          {
-            "uniquename": "ts_/resx/QuestionnaireVersion.1033.resx",
-            "file": "resx\\QuestionnaireVersion.1033.resx",
-            "description": "ROM TSIS 2.0 QuestionnaireVersion.js English Resource Strings"
-          },
-          {
-            "uniquename": "ts_/resx/QuestionnaireVersion.1036.resx",
-            "file": "resx\\QuestionnaireVersion.1036.resx",
-            "description": "ROM TSIS 2.0 QuestionnaireVersion.js French Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/WorkOrder.1033.resx",
-            "file": "resx\\WorkOrder.1033.resx",
-            "description": "ROM TSIS 2.0 WorkOrder.js English Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/WorkOrder.1036.resx",
-            "file": "resx\\WorkOrder.1036.resx",
-            "description": "ROM TSIS 2.0 WorkOrder.js French Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/IncompleteInspectionJustification.1033.resx",
-            "file": "resx\\IncompleteInspectionJustification.1033.resx",
-            "description": "ROM TSIS 2.0 IncompleteInspectionJustification.js English Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/IncompleteInspectionJustification.1036.resx",
-            "file": "resx\\IncompleteInspectionJustification.1036.resx",
-            "description": "ROM TSIS 2.0 IncompleteInspectionJustification.js French Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/AddAdditionalInspectors.1036.resx",
-            "file": "resx\\AddAdditionalInspectors.1036.resx",
-            "description": "ROM TSIS 2.0 Add Additional Inspectors Custom Page Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/AddAdditionalInspectors.1033.resx",
-            "file": "resx\\AddAdditionalInspectors.1033.resx",
-            "description": "ROM TSIS 2.0 Add Additional Inspectors Custom Page Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/AttachFile.1033.resx",
-            "file": "resx\\AttachFile.1033.resx",
-            "description": "ROM TSIS 2.0 Attach File Custom Page Resource Strings"
-          },
-          {
-            "uniquename": "ovs_/resx/AttachFile.1036.resx",
-            "file": "resx\\AttachFile.1036.resx",
-            "description": "ROM TSIS 2.0 Attach File Custom Page Resource Strings"
-          },
-          /* Libraries */
-          {
-            "uniquename": "ovs_/lib/dg.xrmquery.web.min.js",
-            "file": "lib\\dg.xrmquery.web.min.js",
-            "description": "ROM TSIS 2.0 XrmQuery Library"
-          },
-          /* Form Scripts */
-          {
-            "uniquename": "ovs_/js/Account.js",
-            "file": "js\\Account.js",
-            "description": "ROM TSIS 2.0 Account Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/Action.js",
-            "file": "js\\Action.js",
-            "description": "ROM TSIS 2.0 Action Form Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/BookableResourceBooking.js",
-            "file": "js\\BookableResourceBooking.js",
-            "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/CustomerAsset.js",
-            "file": "js\\CustomerAsset.js",
-            "description": "ROM TSIS 2.0 Customer Asset Scripts"
-          },
-          {
-            "uniquename": "ts_/js/CustomerAssetQuickCreate.js",
-            "file": "js\\CustomerAssetQuickCreate.js",
-            "description": "ROM TSIS 2.0 Customer Asset Quick Create Scripts"
-          },
-          {
-            "uniquename": "ts_/js/CustomerAssetRibbon.js",
-            "file": "js\\CustomerAssetRibbon.js",
-            "description": "ROM TSIS 2.0 Customer Asset Ribbon Scripts"
-          },
-          {
-            "uniquename": "ts_/js/Common.js",
-            "file": "js\\Common.js",
-            "description": "ROM TSIS 2.0 Common Scripts"
-          },
-          {
-            "uniquename": "ts_/js/OperationRibbon.js",
-            "file": "js\\OperationRibbon.js",
-            "description": "ROM TSIS 2.0 Operation Ribbon Scripts"
-          },
-          {
-            "uniquename": "ts_/js/EnforcementAction.js",
-            "file": "js\\EnforcementAction.js",
-            "description": "ROM TSIS 2.0 Enforcement Action Scripts"
-          },
-          {
-            "uniquename": "ts_/js/EntityRisk.js",
-            "file": "js\\EntityRisk.js",
-            "description": "ROM TSIS 2.0 EntityRisk Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/FunctionalLocation.js",
-            "file": "js\\FunctionalLocation.js",
-            "description": "ROM TSIS 2.0 Functional Location Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/Incident.js",
-            "file": "js\\Incident.js",
-            "description": "ROM TSIS 2.0 Incident Form Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/IncidentType.js",
-            "file": "js\\IncidentType.js",
-            "description": "ROM TSIS 2.0 Incident Type Form Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/IncidentTypeServiceTask.js",
-            "file": "js\\IncidentTypeServiceTask.js",
-            "description": "ROM TSIS 2.0 Incident Type Service Task Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/Operation.js",
-            "file": "js\\Operation.js",
-            "description": "ROM TSIS 2.0 Operation Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/OperationActivity.js",
-            "file": "js\\OperationActivity.js",
-            "description": "ROM TSIS 2.0 Operation Activity Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/OperationActivityQuickCreate.js",
-            "file": "js\\OperationActivityQuickCreate.js",
-            "description": "ROM TSIS 2.0 Operation Activity Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/OperationContact.js",
-            "file": "js\\OperationContact.js",
-            "description": "ROM TSIS 2.0 Operation Contact Form Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/Questionnaire.js",
-            "file": "js\\Questionnaire.js",
-            "description": "ROM TSIS 2.0 Questionnaire Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/QuestionnaireVersion.js",
-            "file": "js\\QuestionnaireVersion.js",
-            "description": "ROM TSIS 2.0 Questionnaire Version Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/QuestionnaireResponse.js",
-            "file": "js\\QuestionnaireResponse.js",
-            "description": "ROM TSIS 2.0 Questionnaire Response Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/QuestionnaireVersionRibbon.js",
-            "file": "js\\QuestionnaireVersionRibbon.js",
-            "description": "ROM TSIS 2.0 Questionnaire Version Ribbon Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/ServiceTaskType.js",
-            "file": "js\\ServiceTaskType.js",
-            "description": "ROM TSIS 2.0 Service Task Type Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/SecurityIncident.js",
-            "file": "js\\SecurityIncident.js",
-            "description": "ROM TSIS 2.0 Security Incident Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/SecurityIncidentType.js",
-            "file": "js\\SecurityIncidentType.js",
-            "description": "ROM TSIS 2.0 Security Incident Type Form Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/WorkOrder.js",
-            "file": "js\\WorkOrder.js",
-            "description": "ROM TSIS 2.0 Work Order Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/WorkOrderCreationWizard.js",
-            "file": "js\\WorkOrderCreationWizard.js",
-            "description": "ROM TSIS 2.0 Work Order Creation Wizard Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/WorkOrderRibbon.js",
-            "file": "js\\WorkOrderRibbon.js",
-            "description": "ROM TSIS 2.0 Work Order Ribbon Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/WorkOrderServiceTask.js",
-            "file": "js\\WorkOrderServiceTask.js",
-            "description": "ROM TSIS 2.0 Work Order Service Task Form Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/WorkOrderServiceTaskRibbon.js",
-            "file": "js\\WorkOrderServiceTaskRibbon.js",
-            "description": "ROM TSIS 2.0 Work Order Service Task Ribbon Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/ScoreThresholds.js",
-            "file": "js\\ScoreThresholds.js",
-            "description": "ROM TSIS 2.0 Assessment Score Threshold Scripts"
-          },
-          {
-            "uniquename": "ts_/js/Email.js",
-            "file": "js\\Email.js",
-            "description": "ROM TSIS 2.0 Email Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/Finding.js",
-            "file": "js\\Finding.js",
-            "description": "ROM TSIS 2.0 Finding Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/FindingRibbon.js",
-            "file": "js\\FindingRibbon.js",
-            "description": "ROM TSIS 2.0 Finding Ribbon Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/FindingsReportRibbon.js",
-            "file": "js\\FindingsReportRibbon.js",
-            "description": "ROM TSIS 2.0 Findings Report Ribbon Scripts"
-          },
-          {
-            "uniquename": "ovs_/js/IncompleteInspectionJustification.js",
-            "file": "js\\IncompleteInspectionJustification.js",
-            "description": "ROM TSIS 2.0 Incomplete Inspection Justification Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/RiskThreshold.js",
-            "file": "js\\RiskThreshold.js",
-            "description": "ROM TSIS 2.0 Risk Threshold Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/InspectionHours.js",
-            "file": "js\\InspectionHours.js",
-            "description": "ROM TSIS 2.0 Inspection Hours Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/TeamPlanningData.js",
-            "file": "js\\TeamPlanningData.js",
-            "description": "ROM TSIS 2.0 Team Planning Data Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/PlanningData.js",
-            "file": "js\\PlanningData.js",
-            "description": "ROM TSIS 2.0 Planning Data Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/Plan.js",
-            "file": "js\\Plan.js",
-            "description": "ROM TSIS 2.0 Plan Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/SuggestedInspection.js",
-            "file": "js\\SuggestedInspection.js",
-            "description": "ROM TSIS 2.0 SuggestedInspection Form Scripts"
-          },
-          {
-            "uniquename": "ts_/js/PlanRibbon.js",
-            "file": "js\\PlanRibbon.js",
-            "description": "ROM TSIS 2.0 Plan Ribbon Scripts"
-          },
-          {
-            "uniquename": "ts_/js/TeamPlanningDataRibbon.js",
-            "file": "js\\TeamPlanningDataRibbon.js",
-            "description": "ROM TSIS 2.0 Team Planning Data Ribbon Scripts"
-          },
-          {
-            "uniquename": "ts_/js/OperationRiskAssessmentRibbon.js",
-            "file": "js\\OperationRiskAssessmentRibbon.js",
-            "description": "ROM TSIS 2.0 Operation Risk Assessment Ribbon Scripts"
-          },
-          {
-            "uniquename": "ts_/js/OperationActivityRibbon.js",
-            "file": "js\\OperationActivityRibbon.js",
-            "description": "ROM TSIS 2.0 Operation Activity Ribbon Scripts"
-          },
-          {
-            "uniquename": "ts_/js/planningDataRibbon.js",
-            "file": "js\\planningDataRibbon.js",
-            "description": "ROM TSIS 2.0 Planning Data Ribbon Scripts"
-          },
+            /* Resource Files */
+            {
+                "uniquename": "ovs_/resx/BookableResourceBooking.1033.resx",
+                "file": "resx\\BookableResourceBooking.1033.resx",
+                "description": "ROM TSIS 2.0 BookableResourceBooking.js English Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/BookableResourceBooking.1036.resx",
+                "file": "resx\\BookableResourceBooking.1036.resx",
+                "description": "ROM TSIS 2.0 BookableResourceBooking.js French Resource Strings"
+            },
+            {
+                "uniquename": "ts_/resx/Common.1033.resx",
+                "file": "resx\\Common.1033.resx",
+                "description": "ROM TSIS 2.0 Common.js English Resource Strings"
+            },
+            {
+                "uniquename": "ts_/resx/Common.1036.resx",
+                "file": "resx\\Common.1036.resx",
+                "description": "ROM TSIS 2.0 Common.js French Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/Incident.1033.resx",
+                "file": "resx\\Incident.1033.resx",
+                "description": "ROM TSIS 2.0 Incident.js English Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/Incident.1036.resx",
+                "file": "resx\\Incident.1036.resx",
+                "description": "ROM TSIS 2.0 Incident.js French Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/QuestionnaireResponse.1033.resx",
+                "file": "resx\\QuestionnaireResponse.1033.resx",
+                "description": "ROM TSIS 2.0 QuestionnaireResponse.js English Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/QuestionnaireResponse.1036.resx",
+                "file": "resx\\QuestionnaireResponse.1036.resx",
+                "description": "ROM TSIS 2.0 QuestionnaireResponse.js French Resource Strings"
+            },
+            {
+                "uniquename": "ts_/resx/SecurityIncidentType.1033.resx",
+                "file": "resx\\SecurityIncidentType.1033.resx",
+                "description": "ROM TSIS 2.0 SecurityIncidentType.js English Resource Strings"
+            },
+            {
+                "uniquename": "ts_/resx/SecurityIncidentType.1036.resx",
+                "file": "resx\\SecurityIncidentType.1036.resx",
+                "description": "ROM TSIS 2.0 SecurityIncidentType.js French Resource Strings"
+            },
+            {
+                "uniquename": "ts_/resx/QuestionnaireVersion.1033.resx",
+                "file": "resx\\QuestionnaireVersion.1033.resx",
+                "description": "ROM TSIS 2.0 QuestionnaireVersion.js English Resource Strings"
+            },
+            {
+                "uniquename": "ts_/resx/QuestionnaireVersion.1036.resx",
+                "file": "resx\\QuestionnaireVersion.1036.resx",
+                "description": "ROM TSIS 2.0 QuestionnaireVersion.js French Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/WorkOrder.1033.resx",
+                "file": "resx\\WorkOrder.1033.resx",
+                "description": "ROM TSIS 2.0 WorkOrder.js English Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/WorkOrder.1036.resx",
+                "file": "resx\\WorkOrder.1036.resx",
+                "description": "ROM TSIS 2.0 WorkOrder.js French Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/IncompleteInspectionJustification.1033.resx",
+                "file": "resx\\IncompleteInspectionJustification.1033.resx",
+                "description": "ROM TSIS 2.0 IncompleteInspectionJustification.js English Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/IncompleteInspectionJustification.1036.resx",
+                "file": "resx\\IncompleteInspectionJustification.1036.resx",
+                "description": "ROM TSIS 2.0 IncompleteInspectionJustification.js French Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/AddAdditionalInspectors.1036.resx",
+                "file": "resx\\AddAdditionalInspectors.1036.resx",
+                "description": "ROM TSIS 2.0 Add Additional Inspectors Custom Page Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/AddAdditionalInspectors.1033.resx",
+                "file": "resx\\AddAdditionalInspectors.1033.resx",
+                "description": "ROM TSIS 2.0 Add Additional Inspectors Custom Page Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/AttachFile.1033.resx",
+                "file": "resx\\AttachFile.1033.resx",
+                "description": "ROM TSIS 2.0 Attach File Custom Page Resource Strings"
+            },
+            {
+                "uniquename": "ovs_/resx/AttachFile.1036.resx",
+                "file": "resx\\AttachFile.1036.resx",
+                "description": "ROM TSIS 2.0 Attach File Custom Page Resource Strings"
+            },
+            /* Libraries */
+            {
+                "uniquename": "ovs_/lib/dg.xrmquery.web.min.js",
+                "file": "lib\\dg.xrmquery.web.min.js",
+                "description": "ROM TSIS 2.0 XrmQuery Library"
+            },
+            /* Form Scripts */
+            {
+                "uniquename": "ovs_/js/Account.js",
+                "file": "js\\Account.js",
+                "description": "ROM TSIS 2.0 Account Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/Action.js",
+                "file": "js\\Action.js",
+                "description": "ROM TSIS 2.0 Action Form Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/BookableResourceBooking.js",
+                "file": "js\\BookableResourceBooking.js",
+                "description": "ROM TSIS 2.0 Bookable Resource Booking Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/CustomerAsset.js",
+                "file": "js\\CustomerAsset.js",
+                "description": "ROM TSIS 2.0 Customer Asset Scripts"
+            },
+            {
+                "uniquename": "ts_/js/CustomerAssetQuickCreate.js",
+                "file": "js\\CustomerAssetQuickCreate.js",
+                "description": "ROM TSIS 2.0 Customer Asset Quick Create Scripts"
+            },
+            {
+                "uniquename": "ts_/js/CustomerAssetRibbon.js",
+                "file": "js\\CustomerAssetRibbon.js",
+                "description": "ROM TSIS 2.0 Customer Asset Ribbon Scripts"
+            },
+            {
+                "uniquename": "ts_/js/Common.js",
+                "file": "js\\Common.js",
+                "description": "ROM TSIS 2.0 Common Scripts"
+            },
+            {
+                "uniquename": "ts_/js/OperationRibbon.js",
+                "file": "js\\OperationRibbon.js",
+                "description": "ROM TSIS 2.0 Operation Ribbon Scripts"
+            },
+            {
+                "uniquename": "ts_/js/EnforcementAction.js",
+                "file": "js\\EnforcementAction.js",
+                "description": "ROM TSIS 2.0 Enforcement Action Scripts"
+            },
+            {
+                "uniquename": "ts_/js/EntityRisk.js",
+                "file": "js\\EntityRisk.js",
+                "description": "ROM TSIS 2.0 EntityRisk Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/FunctionalLocation.js",
+                "file": "js\\FunctionalLocation.js",
+                "description": "ROM TSIS 2.0 Functional Location Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/Incident.js",
+                "file": "js\\Incident.js",
+                "description": "ROM TSIS 2.0 Incident Form Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/IncidentType.js",
+                "file": "js\\IncidentType.js",
+                "description": "ROM TSIS 2.0 Incident Type Form Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/IncidentTypeServiceTask.js",
+                "file": "js\\IncidentTypeServiceTask.js",
+                "description": "ROM TSIS 2.0 Incident Type Service Task Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/Operation.js",
+                "file": "js\\Operation.js",
+                "description": "ROM TSIS 2.0 Operation Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/OperationActivity.js",
+                "file": "js\\OperationActivity.js",
+                "description": "ROM TSIS 2.0 Operation Activity Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/OperationActivityQuickCreate.js",
+                "file": "js\\OperationActivityQuickCreate.js",
+                "description": "ROM TSIS 2.0 Operation Activity Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/OperationContact.js",
+                "file": "js\\OperationContact.js",
+                "description": "ROM TSIS 2.0 Operation Contact Form Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/Questionnaire.js",
+                "file": "js\\Questionnaire.js",
+                "description": "ROM TSIS 2.0 Questionnaire Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/QuestionnaireVersion.js",
+                "file": "js\\QuestionnaireVersion.js",
+                "description": "ROM TSIS 2.0 Questionnaire Version Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/QuestionnaireResponse.js",
+                "file": "js\\QuestionnaireResponse.js",
+                "description": "ROM TSIS 2.0 Questionnaire Response Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/QuestionnaireVersionRibbon.js",
+                "file": "js\\QuestionnaireVersionRibbon.js",
+                "description": "ROM TSIS 2.0 Questionnaire Version Ribbon Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/ServiceTaskType.js",
+                "file": "js\\ServiceTaskType.js",
+                "description": "ROM TSIS 2.0 Service Task Type Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/SecurityIncident.js",
+                "file": "js\\SecurityIncident.js",
+                "description": "ROM TSIS 2.0 Security Incident Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/SecurityIncidentType.js",
+                "file": "js\\SecurityIncidentType.js",
+                "description": "ROM TSIS 2.0 Security Incident Type Form Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/WorkOrder.js",
+                "file": "js\\WorkOrder.js",
+                "description": "ROM TSIS 2.0 Work Order Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/WorkOrderCreationWizard.js",
+                "file": "js\\WorkOrderCreationWizard.js",
+                "description": "ROM TSIS 2.0 Work Order Creation Wizard Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/WorkOrderRibbon.js",
+                "file": "js\\WorkOrderRibbon.js",
+                "description": "ROM TSIS 2.0 Work Order Ribbon Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/WorkOrderServiceTask.js",
+                "file": "js\\WorkOrderServiceTask.js",
+                "description": "ROM TSIS 2.0 Work Order Service Task Form Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/WorkOrderServiceTaskRibbon.js",
+                "file": "js\\WorkOrderServiceTaskRibbon.js",
+                "description": "ROM TSIS 2.0 Work Order Service Task Ribbon Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/ScoreThresholds.js",
+                "file": "js\\ScoreThresholds.js",
+                "description": "ROM TSIS 2.0 Assessment Score Threshold Scripts"
+            },
+            {
+                "uniquename": "ts_/js/Email.js",
+                "file": "js\\Email.js",
+                "description": "ROM TSIS 2.0 Email Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/Finding.js",
+                "file": "js\\Finding.js",
+                "description": "ROM TSIS 2.0 Finding Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/FindingRibbon.js",
+                "file": "js\\FindingRibbon.js",
+                "description": "ROM TSIS 2.0 Finding Ribbon Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/FindingsReportRibbon.js",
+                "file": "js\\FindingsReportRibbon.js",
+                "description": "ROM TSIS 2.0 Findings Report Ribbon Scripts"
+            },
+            {
+                "uniquename": "ovs_/js/IncompleteInspectionJustification.js",
+                "file": "js\\IncompleteInspectionJustification.js",
+                "description": "ROM TSIS 2.0 Incomplete Inspection Justification Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/RiskThreshold.js",
+                "file": "js\\RiskThreshold.js",
+                "description": "ROM TSIS 2.0 Risk Threshold Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/InspectionHours.js",
+                "file": "js\\InspectionHours.js",
+                "description": "ROM TSIS 2.0 Inspection Hours Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/TeamPlanningData.js",
+                "file": "js\\TeamPlanningData.js",
+                "description": "ROM TSIS 2.0 Team Planning Data Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/PlanningData.js",
+                "file": "js\\PlanningData.js",
+                "description": "ROM TSIS 2.0 Planning Data Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/Plan.js",
+                "file": "js\\Plan.js",
+                "description": "ROM TSIS 2.0 Plan Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/SuggestedInspection.js",
+                "file": "js\\SuggestedInspection.js",
+                "description": "ROM TSIS 2.0 SuggestedInspection Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/PlanRibbon.js",
+                "file": "js\\PlanRibbon.js",
+                "description": "ROM TSIS 2.0 Plan Ribbon Scripts"
+            },
+            {
+                "uniquename": "ts_/js/TeamPlanningDataRibbon.js",
+                "file": "js\\TeamPlanningDataRibbon.js",
+                "description": "ROM TSIS 2.0 Team Planning Data Ribbon Scripts"
+            },
+            {
+                "uniquename": "ts_/js/OperationRiskAssessmentRibbon.js",
+                "file": "js\\OperationRiskAssessmentRibbon.js",
+                "description": "ROM TSIS 2.0 Operation Risk Assessment Ribbon Scripts"
+            },
+            {
+                "uniquename": "ts_/js/OperationActivityRibbon.js",
+                "file": "js\\OperationActivityRibbon.js",
+                "description": "ROM TSIS 2.0 Operation Activity Ribbon Scripts"
+            },
+            {
+                "uniquename": "ts_/js/planningDataRibbon.js",
+                "file": "js\\planningDataRibbon.js",
+                "description": "ROM TSIS 2.0 Planning Data Ribbon Scripts"
+            },
 
-          {
-            "uniquename": "ts_/js/SecurityRolePrivilegeCompare.js",
-            "file": "js\\SecurityRolePrivilegeCompare.js",
-            "description": "Scripts for Security Role Privilege Compare Sheet"
-          },
-          {
-            "uniquename": "ts_/js/Team.js",
-            "file": "js\\Team.js",
-            "description": "Scripts for Team Form"
-          },
-          {
-            "uniquename": "ts_/js/utils/SubGridFetchXmlModifier.js",
-            "file": "js\\utils\\SubGridFetchXmlModifier.js",
-            "description": "Scripts to modify a subgrid fetchxml"
-          },
-          {
-            "uniquename": "ts_/js/AttachFile.js",
-            "file": "js\\AttachFile.js",
-            "description": "Scripts to handle attaching files to records"
-          },
-          {
-            "uniquename": "ts_/js/EntityRiskRibbon.js",
-            "file": "js\\EntityRiskRibbon.js",
-            "description": "Ribbon Functions for Entity Risk Table"
-          },
-          {
-            "uniquename": "ts_/js/RiskThresholdRibbon.js",
-            "file": "js\\RiskThresholdRibbon.js",
-            "description": "Ribbon Functions for Risk Threshold Table"
-          },
-          /* Styles */
-          {
-            "uniquename": "ovs_/css/bootstrap.min.css",
-            "file": "css\\bootstrap.min.css",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/css/autocomplete.css",
-            "file": "css\\autocomplete.css",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/css/modern.css",
-            "file": "css\\modern.css",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/css/survey-creator.min.css",
-            "file": "css\\survey-creator.min.css",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/css/survey.min.css",
-            "file": "css\\survey.min.css",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/css/WorkOrderExport.css",
-            "file": "css\\WorkOrderExport.css",
-            "description": "ROM TSIS 2.0 Work Order Export Stylesheet"
-          },
-          {
-            "uniquename": "ovs_/css/prod_custom.css",
-            "file": "css\\prod_custom.css",
-            "description": "ROM TSIS 2.0 Custom Stylesheet For Production Env"
-          },
-          /* HTML */
-          {
-            "uniquename": "ts_/html/NCATFactorGuide.html",
-            "file": "html\\NCATFactorGuide.html",
-            "description": "ROM TSIS 2.0 NCAT Factor Guide"
-          },
-          {
-            "uniquename": "ovs_/html/SurveyCreator.html",
-            "file": "html\\SurveyCreator.html",
-            "description": "ROM TSIS 2.0 SurveyJS Creator"
-          },
-          {
-            "uniquename": "ovs_/html/SurveyRender.html",
-            "file": "html\\SurveyRender.html",
-            "description": "ROM TSIS 2.0 SurveyJS Renderer"
-          },
-          {
-            "uniquename": "ts_/html/FindingProvisionText.html",
-            "file": "html\\FindingProvisionText.html",
-            "description": "ROM TSIS 2.0 Web Resource to display full Provision Text on Finding records"
-          },
-          {
-            "uniquename": "ts_/html/SurveyRenderPrint.html",
-            "file": "html\\SurveyRenderPrint.html",
-            "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
-          },
-          {
-            "uniquename": "ts_/html/SurveyRenderPrint.html",
-            "file": "html\\SurveyRenderPrint.html",
-            "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
-          },
-          /* RATE Factor Guides */
-          {
-            "uniquename": "ts_/html/RATEFactorGuide_AcceptanceOfResponsibility.html",
-            "file": "html\\RATEFactorGuide_AcceptanceOfResponsibility.html",
-            "description": "Guide for RATE Factor (AcceptanceOfResponsibility)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuidePopUp_AcceptanceOfResponsibility.html",
-            "file": "html\\RATEFactorGuidePopUp_AcceptanceOfResponsibility.html",
-            "description": "Popup for RATE Factor (AcceptanceOfResponsibility)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuide_ActualPotentialHarmVulnerability.html",
-            "file": "html\\RATEFactorGuide_ActualPotentialHarmVulnerability.html",
-            "description": "Guide for RATE Factor (ActualPotentialHarmVulnerability)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuidePopUp_ActualPotentialHarmVulnerability.html",
-            "file": "html\\RATEFactorGuidePopUp_ActualPotentialHarmVulnerability.html",
-            "description": "Popup for RATE Factor (ActualPotentialHarmVulnerability)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuide_Cooperation.html",
-            "file": "html\\RATEFactorGuide_Cooperation.html",
-            "description": "Guide for RATE Factor (Cooperation)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuidePopUp_Cooperation.html",
-            "file": "html\\RATEFactorGuidePopUp_Cooperation.html",
-            "description": "Popup for RATE Factor (Cooperation)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuide_EconomicBenefit.html",
-            "file": "html\\RATEFactorGuide_EconomicBenefit.html",
-            "description": "Guide for RATE Factor (EconomicBenefit)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuidePopUp_EconomicBenefit.html",
-            "file": "html\\RATEFactorGuidePopUp_EconomicBenefit.html",
-            "description": "Popup for RATE Factor (EconomicBenefit)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuide_GeneralNonComplianceHistory.html",
-            "file": "html\\RATEFactorGuide_GeneralNonComplianceHistory.html",
-            "description": "Guide for RATE Factor (GeneralNonComplianceHistory)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuidePopUp_GeneralNonComplianceHistory.html",
-            "file": "html\\RATEFactorGuidePopUp_GeneralNonComplianceHistory.html",
-            "description": "Popup for RATE Factor (GeneralNonComplianceHistory)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuide_Intentionality.html",
-            "file": "html\\RATEFactorGuide_Intentionality.html",
-            "description": "Guide for RATE Factor (Intentionality)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuidePopUp_Intentionality.html",
-            "file": "html\\RATEFactorGuidePopUp_Intentionality.html",
-            "description": "Popup for RATE Factor (Intentionality)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuide_MitigationOfHarm.html",
-            "file": "html\\RATEFactorGuide_MitigationOfHarm.html",
-            "description": "Guide for RATE Factor (MitigationOfHarm)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuidePopUp_MitigationOfHarm.html",
-            "file": "html\\RATEFactorGuidePopUp_MitigationOfHarm.html",
-            "description": "Popup for RATE Factor (MitigationOfHarm)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuide_PreventionOfRecurrence.html",
-            "file": "html\\RATEFactorGuide_PreventionOfRecurrence.html",
-            "description": "Guide for RATE Factor (PreventionOfRecurrence)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuidePopUp_PreventionOfRecurrence.html",
-            "file": "html\\RATEFactorGuidePopUp_PreventionOfRecurrence.html",
-            "description": "Popup for RATE Factor (PreventionOfRecurrence)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuide_SpecificNonComplianceHistory.html",
-            "file": "html\\RATEFactorGuide_SpecificNonComplianceHistory.html",
-            "description": "Guide for RATE Factor (SpecificNonComplianceHistory)"
-          },
-          {
-            "uniquename": "ts_/html/RATEFactorGuidePopUp_SpecificNonComplianceHistory.html",
-            "file": "html\\RATEFactorGuidePopUp_SpecificNonComplianceHistory.html",
-            "description": "Popup for RATE Factor (SpecificNonComplianceHistory)"
-          },
-          {
-            "uniquename": "ts_/html/EmailAttachFile.html",
-            "file": "html\\EmailAttachFile.html",
-            "description": "Attach Document Centre File to Email button"
-          },
-          {
-            "uniquename": "ts_/html/EmailAttachFilePopUp.html",
-            "file": "html\\EmailAttachFilePopUp.html",
-            "description": "Popup for Email Attach File"
-          },
-          {
-            "uniquename": "ts_/html/SharePointAttachFilePopUp.html",
-            "file": "html\\SharePointAttachFilePopUp.html",
-            "description": "Popup for SharePoint Attach File"
-          },
-          {
-            "uniquename": "ts_/html/SecurityRolePrivilegeCompare.html",
-            "file": "html\\SecurityRolePrivilegeCompare.html",
-            "description": "Security Role Privilege Compare Sheet"
-          },
-          {
-            "uniquename": "ts_/html/SecurityIncidentDetailsDisplay.html",
-            "file": "html\\SecurityIncidentDetailsDisplay.html",
-            "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincident"
-          },
-          {
-            "uniquename": "ts_/html/SecurityIncidentAdditionalDetailsDisplay.html",
-            "file": "html\\SecurityIncidentAdditionalDetailsDisplay.html",
-            "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincidentadditionaldetails"
-          },
-          {
-            "uniquename": "ts_/html/LegislationOnProvisions.html",
-            "file": "html\\LegislationOnProvisions.html",
-            "description": "Display the related provisions of qm_rclegislation in the default form for qm_rclegislation"
-          },
-          /* SurveyJS dependencies */
-          {
-            "uniquename": "ovs_/js/ace.min.js",
-            "file": "js\\ace.min.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/js/autocomplete.js",
-            "file": "js\\autocomplete.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/js/ckeditor.js",
-            "file": "js\\ckeditor.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/js/ext-language_tools.js",
-            "file": "js\\ext-language_tools.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/js/jquery.js",
-            "file": "js\\jquery.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/js/knockout-min.js",
-            "file": "js\\knockout-min.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ts_/js/ajax.js",
-            "file": "js\\ajax.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ts_/js/bootstrap.js",
-            "file": "js\\bootstrap.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/js/showdown.min.js",
-            "file": "js\\showdown.min.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency for markdown support"
-          },
-          {
-            "uniquename": "ovs_/js/survey-creator.min.js",
-            "file": "js\\survey-creator.min.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/js/survey.jquery.min.js",
-            "file": "js\\survey.jquery.min.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/js/survey.ko.min.js",
-            "file": "js\\survey.ko.min.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/js/surveycreator.js",
-            "file": "js\\surveycreator.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/js/surveyRender.js",
-            "file": "js\\surveyRender.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ovs_/js/tsis2findingwidget.js",
-            "file": "js\\tsis2findingwidget.js",
-            "description": "ROM TSIS 2.0 Custom Finding Widget for SurveyJS"
-          },
-          {
-            "uniquename": "ts_/js/buildprovisiontext.js",
-            "file": "js\\buildprovisiontext.js",
-            "description": "Function library to build provision text"
-          },
-          {
-            "uniquename": "ts_/js/surveyRenderPrint.js",
-            "file": "js\\surveyRenderPrint.js",
-            "description": "ROM TSIS 2.0 SurveyJS Dependency"
-          },
-          {
-            "uniquename": "ts_/js/TripRibbon.js",
-            "file": "js\\TripRibbon.js",
-            "description": "ROM TSIS 2.0 Trip Ribbon Scripts"
-          },
-          {
-            "uniquename": "ts_/js/nonoversightactivity.js",
-            "file": "js\\nonoversightactivity.js",
-            "description": "Function library to build NonOversightActivity"
-          },
-          {
-            "uniquename": "ts_/js/AppLevelFunctions.js",
-            "file": "js\\AppLevelFunctions.js",
-            "description": "TSIS 2.0 AppLevel Scripts"
-          }
+            {
+                "uniquename": "ts_/js/SecurityRolePrivilegeCompare.js",
+                "file": "js\\SecurityRolePrivilegeCompare.js",
+                "description": "Scripts for Security Role Privilege Compare Sheet"
+            },
+            {
+                "uniquename": "ts_/js/Team.js",
+                "file": "js\\Team.js",
+                "description": "Scripts for Team Form"
+            },
+            {
+                "uniquename": "ts_/js/utils/SubGridFetchXmlModifier.js",
+                "file": "js\\utils\\SubGridFetchXmlModifier.js",
+                "description": "Scripts to modify a subgrid fetchxml"
+            },
+            {
+                "uniquename": "ts_/js/AttachFile.js",
+                "file": "js\\AttachFile.js",
+                "description": "Scripts to handle attaching files to records"
+            },
+            {
+                "uniquename": "ts_/js/EntityRiskRibbon.js",
+                "file": "js\\EntityRiskRibbon.js",
+                "description": "Ribbon Functions for Entity Risk Table"
+            },
+            {
+                "uniquename": "ts_/js/RiskThresholdRibbon.js",
+                "file": "js\\RiskThresholdRibbon.js",
+                "description": "Ribbon Functions for Risk Threshold Table"
+            },
+            /* Styles */
+            {
+                "uniquename": "ovs_/css/bootstrap.min.css",
+                "file": "css\\bootstrap.min.css",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/css/autocomplete.css",
+                "file": "css\\autocomplete.css",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/css/modern.css",
+                "file": "css\\modern.css",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/css/survey-creator.min.css",
+                "file": "css\\survey-creator.min.css",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/css/survey.min.css",
+                "file": "css\\survey.min.css",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/css/WorkOrderExport.css",
+                "file": "css\\WorkOrderExport.css",
+                "description": "ROM TSIS 2.0 Work Order Export Stylesheet"
+            },
+            {
+                "uniquename": "ovs_/css/prod_custom.css",
+                "file": "css\\prod_custom.css",
+                "description": "ROM TSIS 2.0 Custom Stylesheet For Production Env"
+            },
+            /* HTML */
+            {
+                "uniquename": "ts_/html/NCATFactorGuide.html",
+                "file": "html\\NCATFactorGuide.html",
+                "description": "ROM TSIS 2.0 NCAT Factor Guide"
+            },
+            {
+                "uniquename": "ovs_/html/SurveyCreator.html",
+                "file": "html\\SurveyCreator.html",
+                "description": "ROM TSIS 2.0 SurveyJS Creator"
+            },
+            {
+                "uniquename": "ovs_/html/SurveyRender.html",
+                "file": "html\\SurveyRender.html",
+                "description": "ROM TSIS 2.0 SurveyJS Renderer"
+            },
+            {
+                "uniquename": "ts_/html/FindingProvisionText.html",
+                "file": "html\\FindingProvisionText.html",
+                "description": "ROM TSIS 2.0 Web Resource to display full Provision Text on Finding records"
+            },
+            {
+                "uniquename": "ts_/html/SurveyRenderPrint.html",
+                "file": "html\\SurveyRenderPrint.html",
+                "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
+            },
+            {
+                "uniquename": "ts_/html/SurveyRenderPrint.html",
+                "file": "html\\SurveyRenderPrint.html",
+                "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
+            },
+            /* RATE Factor Guides */
+            {
+                "uniquename": "ts_/html/RATEFactorGuide_AcceptanceOfResponsibility.html",
+                "file": "html\\RATEFactorGuide_AcceptanceOfResponsibility.html",
+                "description": "Guide for RATE Factor (AcceptanceOfResponsibility)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuidePopUp_AcceptanceOfResponsibility.html",
+                "file": "html\\RATEFactorGuidePopUp_AcceptanceOfResponsibility.html",
+                "description": "Popup for RATE Factor (AcceptanceOfResponsibility)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuide_ActualPotentialHarmVulnerability.html",
+                "file": "html\\RATEFactorGuide_ActualPotentialHarmVulnerability.html",
+                "description": "Guide for RATE Factor (ActualPotentialHarmVulnerability)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuidePopUp_ActualPotentialHarmVulnerability.html",
+                "file": "html\\RATEFactorGuidePopUp_ActualPotentialHarmVulnerability.html",
+                "description": "Popup for RATE Factor (ActualPotentialHarmVulnerability)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuide_Cooperation.html",
+                "file": "html\\RATEFactorGuide_Cooperation.html",
+                "description": "Guide for RATE Factor (Cooperation)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuidePopUp_Cooperation.html",
+                "file": "html\\RATEFactorGuidePopUp_Cooperation.html",
+                "description": "Popup for RATE Factor (Cooperation)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuide_EconomicBenefit.html",
+                "file": "html\\RATEFactorGuide_EconomicBenefit.html",
+                "description": "Guide for RATE Factor (EconomicBenefit)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuidePopUp_EconomicBenefit.html",
+                "file": "html\\RATEFactorGuidePopUp_EconomicBenefit.html",
+                "description": "Popup for RATE Factor (EconomicBenefit)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuide_GeneralNonComplianceHistory.html",
+                "file": "html\\RATEFactorGuide_GeneralNonComplianceHistory.html",
+                "description": "Guide for RATE Factor (GeneralNonComplianceHistory)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuidePopUp_GeneralNonComplianceHistory.html",
+                "file": "html\\RATEFactorGuidePopUp_GeneralNonComplianceHistory.html",
+                "description": "Popup for RATE Factor (GeneralNonComplianceHistory)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuide_Intentionality.html",
+                "file": "html\\RATEFactorGuide_Intentionality.html",
+                "description": "Guide for RATE Factor (Intentionality)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuidePopUp_Intentionality.html",
+                "file": "html\\RATEFactorGuidePopUp_Intentionality.html",
+                "description": "Popup for RATE Factor (Intentionality)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuide_MitigationOfHarm.html",
+                "file": "html\\RATEFactorGuide_MitigationOfHarm.html",
+                "description": "Guide for RATE Factor (MitigationOfHarm)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuidePopUp_MitigationOfHarm.html",
+                "file": "html\\RATEFactorGuidePopUp_MitigationOfHarm.html",
+                "description": "Popup for RATE Factor (MitigationOfHarm)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuide_PreventionOfRecurrence.html",
+                "file": "html\\RATEFactorGuide_PreventionOfRecurrence.html",
+                "description": "Guide for RATE Factor (PreventionOfRecurrence)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuidePopUp_PreventionOfRecurrence.html",
+                "file": "html\\RATEFactorGuidePopUp_PreventionOfRecurrence.html",
+                "description": "Popup for RATE Factor (PreventionOfRecurrence)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuide_SpecificNonComplianceHistory.html",
+                "file": "html\\RATEFactorGuide_SpecificNonComplianceHistory.html",
+                "description": "Guide for RATE Factor (SpecificNonComplianceHistory)"
+            },
+            {
+                "uniquename": "ts_/html/RATEFactorGuidePopUp_SpecificNonComplianceHistory.html",
+                "file": "html\\RATEFactorGuidePopUp_SpecificNonComplianceHistory.html",
+                "description": "Popup for RATE Factor (SpecificNonComplianceHistory)"
+            },
+            {
+                "uniquename": "ts_/html/EmailAttachFile.html",
+                "file": "html\\EmailAttachFile.html",
+                "description": "Attach Document Centre File to Email button"
+            },
+            {
+                "uniquename": "ts_/html/EmailAttachFilePopUp.html",
+                "file": "html\\EmailAttachFilePopUp.html",
+                "description": "Popup for Email Attach File"
+            },
+            {
+                "uniquename": "ts_/html/SharePointAttachFilePopUp.html",
+                "file": "html\\SharePointAttachFilePopUp.html",
+                "description": "Popup for SharePoint Attach File"
+            },
+            {
+                "uniquename": "ts_/html/SecurityRolePrivilegeCompare.html",
+                "file": "html\\SecurityRolePrivilegeCompare.html",
+                "description": "Security Role Privilege Compare Sheet"
+            },
+            {
+                "uniquename": "ts_/html/SecurityIncidentDetailsDisplay.html",
+                "file": "html\\SecurityIncidentDetailsDisplay.html",
+                "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincident"
+            },
+            {
+                "uniquename": "ts_/html/SecurityIncidentAdditionalDetailsDisplay.html",
+                "file": "html\\SecurityIncidentAdditionalDetailsDisplay.html",
+                "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincidentadditionaldetails"
+            },
+            {
+                "uniquename": "ts_/html/LegislationOnProvisions.html",
+                "file": "html\\LegislationOnProvisions.html",
+                "description": "Display the related provisions of qm_rclegislation in the default form for qm_rclegislation"
+            },
+            /* SurveyJS dependencies */
+            {
+                "uniquename": "ovs_/js/ace.min.js",
+                "file": "js\\ace.min.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/js/autocomplete.js",
+                "file": "js\\autocomplete.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/js/ckeditor.js",
+                "file": "js\\ckeditor.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/js/ext-language_tools.js",
+                "file": "js\\ext-language_tools.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/js/jquery.js",
+                "file": "js\\jquery.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/js/knockout-min.js",
+                "file": "js\\knockout-min.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ts_/js/ajax.js",
+                "file": "js\\ajax.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ts_/js/bootstrap.js",
+                "file": "js\\bootstrap.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/js/showdown.min.js",
+                "file": "js\\showdown.min.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency for markdown support"
+            },
+            {
+                "uniquename": "ovs_/js/survey-creator.min.js",
+                "file": "js\\survey-creator.min.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/js/survey.jquery.min.js",
+                "file": "js\\survey.jquery.min.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/js/survey.ko.min.js",
+                "file": "js\\survey.ko.min.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/js/surveycreator.js",
+                "file": "js\\surveycreator.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/js/surveyRender.js",
+                "file": "js\\surveyRender.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ovs_/js/tsis2findingwidget.js",
+                "file": "js\\tsis2findingwidget.js",
+                "description": "ROM TSIS 2.0 Custom Finding Widget for SurveyJS"
+            },
+            {
+                "uniquename": "ts_/js/buildprovisiontext.js",
+                "file": "js\\buildprovisiontext.js",
+                "description": "Function library to build provision text"
+            },
+            {
+                "uniquename": "ts_/js/buildlegislationtext.js",
+                "file": "js\\buildlegislationtext.js",
+                "description": "Function library to build legislation text"
+            },
+            {
+                "uniquename": "ts_/js/surveyRenderPrint.js",
+                "file": "js\\surveyRenderPrint.js",
+                "description": "ROM TSIS 2.0 SurveyJS Dependency"
+            },
+            {
+                "uniquename": "ts_/js/TripRibbon.js",
+                "file": "js\\TripRibbon.js",
+                "description": "ROM TSIS 2.0 Trip Ribbon Scripts"
+            },
+            {
+                "uniquename": "ts_/js/nonoversightactivity.js",
+                "file": "js\\nonoversightactivity.js",
+                "description": "Function library to build NonOversightActivity"
+            },
+            {
+                "uniquename": "ts_/js/AppLevelFunctions.js",
+                "file": "js\\AppLevelFunctions.js",
+                "description": "TSIS 2.0 AppLevel Scripts"
+            }
         ]
       }
   ]
