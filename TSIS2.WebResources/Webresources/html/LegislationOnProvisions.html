@@ -23,7 +23,7 @@
                         // Loop through the child records
                         results.entities.forEach(function (childRecord) {
                             // Call buildProvisionText for each child record
-                            buildProvisionText(childRecord, langId).then(function (provisionText) {
+                            buildLegislationText(childRecord, langId).then(function (provisionText) {
                                 var span = document.createElement("span");
                                 span.innerHTML = provisionText + "<br><br>";
 
