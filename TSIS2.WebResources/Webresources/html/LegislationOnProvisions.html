@@ -18,7 +18,7 @@
                 var _qm_tylegislationsourceid_value = parentResult["_qm_tylegislationsourceid_value"];
 
                 // Retrieve child provisions
-                parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation","?$select=qm_rclegislationid,qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=_qm_tylegislationsourceid_value eq " + _qm_tylegislationsourceid_value + "&$orderby=qm_ordernbr").then(async function (results) {
+                parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation","?$select=qm_rclegislationid,qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,statecode&$filter=_qm_tylegislationsourceid_value eq " + _qm_tylegislationsourceid_value + "&$orderby=qm_ordernbr").then(async function (results) {
                     if (results.entities.length > 0) {
                         // Use Promise.all to ensure all provisions are processed before finalizing
                         await Promise.all(

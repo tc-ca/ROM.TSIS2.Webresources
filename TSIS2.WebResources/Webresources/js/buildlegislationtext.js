@@ -22,20 +22,29 @@ async function gatherLegislation(provision, lang) {
         provisionText = provision.qm_legislationetxt || "";
     }
     let provisionType = provision["_qm_tylegislationtypeid_value"];
+    let provisionStatus = provision["statecode"];
 
     //Base case. Body provisions don't have any text to display.
     if (provisionType == "b1015ef4-d729-eb11-a813-000d3af3a7a7") {
         return "";
     }
     //Base case. Headings are bold, and show the provision text.
-    if (provisionType == "1829d66a-962b-eb11-a813-000d3af3fc19") {
+    if (provisionType == "1829d66a-962b-eb11-a813-000d3af3fc19" && provisionStatus == "0") {
         return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')">${provision.qm_name}</a></strong></br>`;
+    }
+    if (provisionType == "1829d66a-962b-eb11-a813-000d3af3fc19" && provisionStatus == "1") {
+        return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')"><s>${provision.qm_name}</s></a></strong></br>`;
     }
     //Marginal notes display the legislation text. No name or label.
-    if (provisionType == "8726bb2a-497c-eb11-a812-000d3af31ad8") {
+    if (provisionType == "8726bb2a-497c-eb11-a812-000d3af31ad8" && provisionStatus == "0") {
         return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')">${provision.qm_name}</a></strong></br>`;
     }
-
+    if (provisionType == "8726bb2a-497c-eb11-a812-000d3af31ad8" && provisionStatus == "1") {
+        return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')"><s>${provision.qm_name}</s></a></strong></br>`;
+    }
+    if (provisionType !== "b1015ef4-d729-eb11-a813-000d3af3a7a7" && provisionType !== "1829d66a-962b-eb11-a813-000d3af3fc19" && provisionType !== "8726bb2a-497c-eb11-a812-000d3af31ad8" && provisionStatus == "1") {
+        return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')"><s>${provision.qm_name}</s></a></strong>: <s>${provisionText}</s></br>`;
+    }
     return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')">${provision.qm_name}</a></strong>: ${provisionText}</br>`;
 }
 
