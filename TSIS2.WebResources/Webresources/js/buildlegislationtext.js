@@ -29,11 +29,11 @@ async function gatherLegislation(provision, lang) {
     }
     //Base case. Headings are bold, and show the provision text.
     if (provisionType == "1829d66a-962b-eb11-a813-000d3af3fc19") {
-        return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')">${provisionText}</a></strong></br>`;
+        return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')">${provision.qm_name}</a></strong></br>`;
     }
     //Marginal notes display the legislation text. No name or label.
     if (provisionType == "8726bb2a-497c-eb11-a812-000d3af31ad8") {
-        return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')">${provisionText}</a></strong></br>`;
+        return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')">${provision.qm_name}</a></strong></br>`;
     }
 
     return `<strong><a href='#' onclick="navigateToProvision('${provision.qm_rclegislationid}')">${provision.qm_name}</a></strong>: ${provisionText}</br>`;
