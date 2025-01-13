@@ -1,7 +1,7 @@
 ﻿<html>
 <head>
     <title>Provision Render</title>
-    <script src="../js/buildprovisiontext.js"></script>
+    <script src="../js/buildlegislationtext.js"></script>
 </head>
 <body style="overflow-wrap: break-word;">
     <div id="div1"></div>
@@ -13,18 +13,18 @@
         var highlightedElement = null; // Variable to hold the reference to the highlighted element
 
         // Retrieve parent record to get the qm_tylegislationsourceid_value
-        parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation", "?$select=_qm_tylegislationsourceid_value&$filter=qm_rclegislationid eq " + _ParentRecordId).then(function (parentResults) {
-            if (parentResults.entities.length > 0) {
-                var _qm_tylegislationsourceid_value = parentResults.entities[0]["_qm_tylegislationsourceid_value"];
+        parent.Xrm.WebApi.online.retrieveRecord("qm_rclegislation", _ParentRecordId, "?$select=_qm_tylegislationsourceid_value").then(function (parentResult) {
+            if (parentResult) {
+                var _qm_tylegislationsourceid_value = parentResult["_qm_tylegislationsourceid_value"];
 
-                // Use the qm_tylegislationsourceid_value to retrieve child records
-                parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation", "?$select=qm_rclegislationid,qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=_qm_tylegislationsourceid_value eq " + _qm_tylegislationsourceid_value + "&$orderby=qm_ordernbr").then(function (results) {
+                // Retrieve child provisions
+                parent.Xrm.WebApi.online.retrieveMultipleRecords("qm_rclegislation","?$select=qm_rclegislationid,qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value&$filter=_qm_tylegislationsourceid_value eq " + _qm_tylegislationsourceid_value + "&$orderby=qm_ordernbr").then(async function (results) {
                     if (results.entities.length > 0) {
-                        // Loop through the child records
-                        results.entities.forEach(function (childRecord) {
-                            // Call buildProvisionText for each child record
-                            buildProvisionText(childRecord, langId).then(function (provisionText) {
-                                var span = document.createElement("span");
+                        // Use Promise.all to ensure all provisions are processed before finalizing
+                        await Promise.all(
+                            results.entities.map(async function (childRecord) {
+                                let provisionText = await buildLegislationText(childRecord, langId);
+                                let span = document.createElement("span");
                                 span.innerHTML = provisionText + "<br><br>";
 
                                 // determine if it is the legislation that we have selected
@@ -37,27 +37,23 @@
                                 }
 
                                 document.getElementById("div1").appendChild(span);
-                            }).catch(function (error) {
-                                console.error("Error building provision text:", error);
-                            });
-                        });
+                            })
+                        );
+
+                        // Scroll to the highlighted element after all provisions are rendered
+                        if (highlightedElement) {
+                            setTimeout(() => {
+                                const rect = highlightedElement.getBoundingClientRect();
+                                const elementTop = rect.top + window.scrollY; // Calculate absolute position
+                                window.scrollTo({
+                                    top: elementTop, // Scroll to top of the element
+                                    behavior: "smooth"
+                                });
+                            }, 100); // Delay to ensure rendering is complete
+                        }
                     }
                 }).catch(function (error) {
                     console.error("Error retrieving child records:", error);
-                });
-
-                // Wait for all promises to resolve
-                Promise.all(promises).then(function () {
-                    // Code to execute after all child records have been processed
-                    console.log("All child records processed.");
-                    if (highlightedElement) {
-                        const rect = highlightedElement.getBoundingClientRect();
-                        const elementTop = rect.top + window.scrollY; // Get the absolute position
-                        window.scrollTo({
-                            top: elementTop - (window.innerHeight / 2) + (highlightedElement.offsetHeight / 2), // Center the element
-                            behavior: 'smooth'
-                        });
-                    }
                 });
             }
         }).catch(function (error) {
