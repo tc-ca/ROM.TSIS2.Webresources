@@ -52,6 +52,8 @@ var ROM;
                     formContext.getAttribute("ts_entityid").setValue(parentRecordId);
                     formContext.getAttribute("ts_name").setValue(parentRecordName);
                 }
+                // Filter the lookup column
+                setFiscalYearFilteredView(formContext);
             }
         }
         EntityRisk.onLoad = onLoad;
@@ -60,5 +62,16 @@ var ROM;
             console.log("Entering EntityRisk onSave");
         }
         EntityRisk.onSave = onSave;
+        function setFiscalYearFilteredView(formContext) {
+            var viewId = '{350B79C5-0A0E-42B2-8FF7-7F83B7E9628B}';
+            var entityName = "tc_tcfiscalyear";
+            var viewDisplayName = "Filtered Fiscal Year";
+            var today = new Date();
+            var yearsAgo = today.getFullYear() - 2;
+            var yearsFromNow = today.getFullYear() + 5;
+            var fetchXml = "<fetch version=\"1.0\" mapping=\"logical\" distinct=\"true\" returntotalrecordcount=\"true\" page=\"1\" count=\"25\" no-lock=\"false\">\n                            <entity name=\"tc_tcfiscalyear\">\n                              <attribute name=\"tc_tcfiscalyearid\" />\n                              <attribute name=\"tc_name\" />\n                              <order attribute=\"tc_fiscalyearnum\" descending=\"false\" />\n                              <filter>\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"ge\" value=\"" + yearsAgo + "\" />\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"le\" value=\"" + yearsFromNow + "\" />\n                              </filter>\n                            </entity>\n                          </fetch>";
+            var layoutXml = '<grid name="resultset" object="10010" jump="tc_name" select="1" icon="1" preview="1"><row name="result" id="tc_tcfiscalyearid"><cell name="tc_name" width="200" /></row></grid>';
+            formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+        }
     })(EntityRisk = ROM.EntityRisk || (ROM.EntityRisk = {}));
 })(ROM || (ROM = {}));
