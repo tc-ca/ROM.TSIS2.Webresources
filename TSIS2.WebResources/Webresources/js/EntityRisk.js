@@ -62,6 +62,16 @@ var ROM;
             console.log("Entering EntityRisk onSave");
         }
         EntityRisk.onSave = onSave;
+        function riskRatingOnChange(eContext) {
+            var form = eContext.getFormContext();
+            console.log("riskRatingOnChange is working!!!");
+        }
+        EntityRisk.riskRatingOnChange = riskRatingOnChange;
+        function riskScoreOnChange(eContext) {
+            var form = eContext.getFormContext();
+            console.log("riskScoreOnChange is working!!!");
+        }
+        EntityRisk.riskScoreOnChange = riskScoreOnChange;
         function setFiscalYearFilteredView(formContext) {
             var viewId = '{350B79C5-0A0E-42B2-8FF7-7F83B7E9628B}';
             var entityName = "tc_tcfiscalyear";

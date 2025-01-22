@@ -66,6 +66,18 @@
         console.log("Entering EntityRisk onSave");
     }
 
+    export function riskRatingOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+
+        console.log("riskRatingOnChange is working!!!");
+    }
+
+    export function riskScoreOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+
+        console.log("riskScoreOnChange is working!!!");
+    }
+
     function setFiscalYearFilteredView(formContext: Form.ts_entityrisk.Main.Information) {
         const viewId = '{350B79C5-0A0E-42B2-8FF7-7F83B7E9628B}';
         const entityName = "tc_tcfiscalyear";
