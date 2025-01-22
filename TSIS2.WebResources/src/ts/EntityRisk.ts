@@ -55,11 +55,52 @@
                 formContext.getAttribute("ts_entityid").setValue(parentRecordId);
                 formContext.getAttribute("ts_name").setValue(parentRecordName);
             }
+
+            // Filter the lookup column
+            setFiscalYearFilteredView(formContext);
         }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
         console.log("Entering EntityRisk onSave");
+    }
+
+    export function riskRatingOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+
+        console.log("riskRatingOnChange is working!!!");
+    }
+
+    export function riskScoreOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+
+        console.log("riskScoreOnChange is working!!!");
+    }
+
+    function setFiscalYearFilteredView(formContext: Form.ts_entityrisk.Main.Information) {
+        const viewId = '{350B79C5-0A0E-42B2-8FF7-7F83B7E9628B}';
+        const entityName = "tc_tcfiscalyear";
+        const viewDisplayName = "Filtered Fiscal Year";
+
+        const today = new Date();
+        const yearsAgo = today.getFullYear() - 2;
+        const yearsFromNow = today.getFullYear() + 5;
+
+        const fetchXml = `<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false">
+                            <entity name="tc_tcfiscalyear">
+                              <attribute name="tc_tcfiscalyearid" />
+                              <attribute name="tc_name" />
+                              <order attribute="tc_fiscalyearnum" descending="false" />
+                              <filter>
+                                <condition attribute="tc_fiscalyearnum" operator="ge" value="${yearsAgo}" />
+                                <condition attribute="tc_fiscalyearnum" operator="le" value="${yearsFromNow}" />
+                              </filter>
+                            </entity>
+                          </fetch>`;
+
+        const layoutXml = '<grid name="resultset" object="10010" jump="tc_name" select="1" icon="1" preview="1"><row name="result" id="tc_tcfiscalyearid"><cell name="tc_name" width="200" /></row></grid>';
+
+        formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 }
