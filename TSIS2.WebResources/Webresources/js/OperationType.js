@@ -41,8 +41,19 @@ var ROM;
     (function (OperationType) {
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
+                var form, ownerAttribute, ownerAttributeValue;
                 return __generator(this, function (_a) {
-                    console.log("onLoad working");
+                    form = eContext.getFormContext();
+                    ownerAttribute = form.getAttribute("ownerid");
+                    ownerAttributeValue = ownerAttribute.getValue();
+                    if (ownerAttributeValue != null) {
+                        if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
+                            form.getControl("Subgrid_EntityRisk").setVisible(true);
+                        }
+                        else {
+                            form.getControl("Subgrid_EntityRisk").setVisible(false);
+                        }
+                    }
                     return [2 /*return*/];
                 });
             });
