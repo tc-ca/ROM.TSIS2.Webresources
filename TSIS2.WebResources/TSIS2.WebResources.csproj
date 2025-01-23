@@ -397,6 +397,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\CauseFinding.ts" />
     <TypeScriptCompile Include="src\ts\EntityRisk.ts" />
+    <TypeScriptCompile Include="src\ts\OperationType.ts" />
     <TypeScriptCompile Include="src\ts\Site.ts" />
     <TypeScriptCompile Include="src\ts\Plan.ts" />
     <TypeScriptCompile Include="src\ts\Account.ts" />
