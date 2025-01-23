@@ -101,6 +101,19 @@ namespace ROM.IncidentType {
                 }
             );
         }
+
+        //If owner is Aviation Security
+        const ownerAttribute = form.getAttribute("ownerid")
+        const ownerAttributeValue = ownerAttribute.getValue();
+
+        if (ownerAttributeValue != null) {
+            if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
+                form.ui.tabs.get("tab_risk").setVisible(true);
+            }
+            else {
+                form.ui.tabs.get("tab_risk").setVisible(false);
+            }
+        }
     }
 
     export function setFieldsDisabled(eContext: Xrm.ExecutionContext<any, any>) {

@@ -91,6 +91,17 @@ var ROM;
                     });
                 });
             }
+            //If owner is Aviation Security
+            var ownerAttribute = form.getAttribute("ownerid");
+            var ownerAttributeValue = ownerAttribute.getValue();
+            if (ownerAttributeValue != null) {
+                if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
+                    form.ui.tabs.get("tab_risk").setVisible(true);
+                }
+                else {
+                    form.ui.tabs.get("tab_risk").setVisible(false);
+                }
+            }
         }
         IncidentType.onLoad = onLoad;
         function setFieldsDisabled(eContext) {
