@@ -82,6 +82,15 @@ namespace ROM.FunctionalLocation {
                 }
             }
 
+            //If owner is Aviation Security
+            if (ownerAttributeValue != null) {
+                if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
+                    form.ui.tabs.get("tab_Risk").setVisible(true);
+                }
+                else {
+                    form.ui.tabs.get("tab_Risk").setVisible(false);
+                }
+            }
         }
 
         if (form.getAttribute("ts_statusstartdate").getValue() != null) {
