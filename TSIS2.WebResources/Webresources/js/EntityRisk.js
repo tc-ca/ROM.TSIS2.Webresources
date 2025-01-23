@@ -64,7 +64,43 @@ var ROM;
         EntityRisk.onSave = onSave;
         function riskRatingOnChange(eContext) {
             var form = eContext.getFormContext();
-            console.log("riskRatingOnChange is working!!!");
+            // Get the selected Risk Rating attribute
+            var riskRating = form.getAttribute("ts_riskrating");
+            var riskRatingScore = 0;
+            var riskRatingWeight = 0;
+            if (riskRating != null) {
+                var riskRatingAttributeValue = riskRating.getValue();
+                if (riskRatingAttributeValue != null && riskRatingAttributeValue.length > 0) {
+                    var riskRatingID = riskRatingAttributeValue[0].id; // Retrieve the first selected value
+                    // Retrieve the ts_riskscore value from the ts_riskrating record
+                    Xrm.WebApi.retrieveRecord("ts_riskrating", riskRatingID, "?$select=ts_riskscore,ts_riskweight")
+                        .then(function success(riskRatingRecord) {
+                        var riskScore = riskRatingRecord.ts_riskscore;
+                        var riskWeight = riskRatingRecord.ts_riskweight;
+                        // If the ts_riskscore is not null, update the form field
+                        if (riskScore !== null) {
+                            riskRatingScore = riskScore;
+                            // Populate the ts_riskscore field if it's currently null or empty
+                            var riskScoreAttribute = form.getAttribute("ts_riskscore");
+                            if (riskScoreAttribute && (riskScoreAttribute.getValue() === null || riskScoreAttribute.getValue() === 0)) {
+                                riskScoreAttribute.setValue(riskRatingScore);
+                            }
+                        }
+                        // If the ts_riskweight is not null, update the form field
+                        if (riskWeight !== null) {
+                            riskRatingWeight = riskWeight;
+                            // Populate the ts_riskweight field if it's currently null or empty
+                            var riskWeightAttribute = form.getAttribute("ts_weightedriskscore");
+                            if (riskWeightAttribute && (riskWeightAttribute.getValue() === null || riskWeightAttribute.getValue() === 0)) {
+                                riskWeightAttribute.setValue(riskRatingWeight);
+                            }
+                        }
+                    })
+                        .catch(function error(err) {
+                        console.error("Error retrieving ts_riskrating record:", err.message);
+                    });
+                }
+            }
         }
         EntityRisk.riskRatingOnChange = riskRatingOnChange;
         function riskScoreOnChange(eContext) {

@@ -67,13 +67,56 @@
     }
 
     export function riskRatingOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+        const form = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
 
-        console.log("riskRatingOnChange is working!!!");
+        // Get the selected Risk Rating attribute
+        const riskRating = form.getAttribute("ts_riskrating");
+        let riskRatingScore = 0;
+        let riskRatingWeight = 0;
+
+        if (riskRating != null) {
+            const riskRatingAttributeValue = riskRating.getValue();
+            if (riskRatingAttributeValue != null && riskRatingAttributeValue.length > 0) {
+                const riskRatingID = riskRatingAttributeValue[0].id; // Retrieve the first selected value
+
+                // Retrieve the ts_riskscore value from the ts_riskrating record
+                Xrm.WebApi.retrieveRecord("ts_riskrating", riskRatingID, "?$select=ts_riskscore,ts_riskweight")
+                    .then(function success(riskRatingRecord) {
+                        const riskScore = riskRatingRecord.ts_riskscore;
+                        const riskWeight = riskRatingRecord.ts_riskweight;
+
+                        // If the ts_riskscore is not null, update the form field
+                        if (riskScore !== null) {
+                            riskRatingScore = riskScore;
+
+                            // Populate the ts_riskscore field if it's currently null or empty
+                            const riskScoreAttribute = form.getAttribute("ts_riskscore");
+                            if (riskScoreAttribute && (riskScoreAttribute.getValue() === null || riskScoreAttribute.getValue() === 0)) {
+                                riskScoreAttribute.setValue(riskRatingScore);
+                            }
+                        }
+
+                        // If the ts_riskweight is not null, update the form field
+                        if (riskWeight !== null) {
+                            riskRatingWeight = riskWeight;
+
+                            // Populate the ts_riskweight field if it's currently null or empty
+                            const riskWeightAttribute = form.getAttribute("ts_weightedriskscore");
+                            if (riskWeightAttribute && (riskWeightAttribute.getValue() === null || riskWeightAttribute.getValue() === 0)) {
+                                riskWeightAttribute.setValue(riskRatingWeight);
+                            }
+                        }
+
+                    })
+                    .catch(function error(err) {
+                        console.error("Error retrieving ts_riskrating record:", err.message);
+                    });
+            }
+        }
     }
 
     export function riskScoreOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.ts_securityincident.Main.Information>eContext.getFormContext();
+        const form = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
 
         console.log("riskScoreOnChange is working!!!");
     }
