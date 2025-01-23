@@ -27,6 +27,7 @@ interface ts_case_Relationships {
   ts_ExistingCase?: ts_case_Result | null;
   ts_InspectionType1?: msdyn_incidenttype_Result | null;
   ts_InspectionType2?: msdyn_incidenttype_Result | null;
+  ts_OperationType?: ovs_operationtype_Result | null;
   ts_Site?: ts_site_Result | null;
   ts_case_Appointments?: Appointment_Result[] | null;
   ts_case_Emails?: Email_Result[] | null;
@@ -150,6 +151,7 @@ interface ts_case_Expand {
   ts_ExistingCase: WebExpand<ts_case_Expand, ts_case_Select, ts_case_Filter, { ts_ExistingCase: ts_case_Result }>;
   ts_InspectionType1: WebExpand<ts_case_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_InspectionType1: msdyn_incidenttype_Result }>;
   ts_InspectionType2: WebExpand<ts_case_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_InspectionType2: msdyn_incidenttype_Result }>;
+  ts_OperationType: WebExpand<ts_case_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_OperationType: ovs_operationtype_Result }>;
   ts_Site: WebExpand<ts_case_Expand, ts_site_Select, ts_site_Filter, { ts_Site: ts_site_Result }>;
   ts_case_Appointments: WebExpand<ts_case_Expand, Appointment_Select, Appointment_Filter, { ts_case_Appointments: Appointment_Result[] }>;
   ts_case_Emails: WebExpand<ts_case_Expand, Email_Select, Email_Filter, { ts_case_Emails: Email_Result[] }>;
@@ -223,6 +225,7 @@ interface ts_case_RelatedOne {
   ts_ExistingCase: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   ts_InspectionType1: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_InspectionType2: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
+  ts_OperationType: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ts_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_primarycontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
 }

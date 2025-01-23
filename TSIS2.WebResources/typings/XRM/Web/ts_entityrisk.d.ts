@@ -23,6 +23,7 @@ interface ts_EntityRisk_Relationships {
   ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation?: msdyn_FunctionalLocation_Result[] | null;
   ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype?: msdyn_incidenttype_Result[] | null;
   ts_EntityRisk_ovs_operation_ovs_operation?: ovs_operation_Result[] | null;
+  ts_EntityRisk_ovs_operationtype_ovs_operationtype?: ovs_operationtype_Result[] | null;
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
 }
 interface ts_EntityRisk extends ts_EntityRisk_Base, ts_EntityRisk_Relationships {
@@ -110,6 +111,7 @@ interface ts_EntityRisk_Expand {
   ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: WebExpand<ts_EntityRisk_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: msdyn_FunctionalLocation_Result[] }>;
   ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype: WebExpand<ts_EntityRisk_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype: msdyn_incidenttype_Result[] }>;
   ts_EntityRisk_ovs_operation_ovs_operation: WebExpand<ts_EntityRisk_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_EntityRisk_ovs_operation_ovs_operation: ovs_operation_Result[] }>;
+  ts_EntityRisk_ovs_operationtype_ovs_operationtype: WebExpand<ts_EntityRisk_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_EntityRisk_ovs_operationtype_ovs_operationtype: ovs_operationtype_Result[] }>;
   ts_FiscalYear: WebExpand<ts_EntityRisk_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
 }
 interface ts_EntityRisk_FormattedResult {
@@ -160,6 +162,7 @@ interface ts_EntityRisk_RelatedMany {
   ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_EntityRisk_ovs_operation_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_EntityRisk_ovs_operationtype_ovs_operationtype: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_entityrisks: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;

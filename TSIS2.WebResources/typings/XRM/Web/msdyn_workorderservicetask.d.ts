@@ -61,6 +61,7 @@ interface msdyn_workorderservicetask_Relationships {
   ovs_Questionnaire?: ovs_Questionnaire_Result | null;
   ovs_msdyn_workorderservicetask_ovs_finding?: ovs_Finding_Result[] | null;
   ts_AOCOperation?: ovs_operation_Result | null;
+  ts_AOCOperationType?: ovs_operationtype_Result | null;
   ts_AOCSite?: msdyn_FunctionalLocation_Result | null;
   ts_AOCSite_Site?: ts_site_Result | null;
   ts_AOCStakeholder?: Account_Result | null;
@@ -340,6 +341,7 @@ interface msdyn_workorderservicetask_Expand {
   owningteam: WebExpand<msdyn_workorderservicetask_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_AOCOperation: WebExpand<msdyn_workorderservicetask_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_AOCOperation: ovs_operation_Result }>;
+  ts_AOCOperationType: WebExpand<msdyn_workorderservicetask_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_AOCOperationType: ovs_operationtype_Result }>;
   ts_AOCSite: WebExpand<msdyn_workorderservicetask_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_AOCSite: msdyn_FunctionalLocation_Result }>;
   ts_AOCSite_Site: WebExpand<msdyn_workorderservicetask_Expand, ts_site_Select, ts_site_Filter, { ts_AOCSite_Site: ts_site_Result }>;
   ts_AOCStakeholder: WebExpand<msdyn_workorderservicetask_Expand, Account_Select, Account_Filter, { ts_AOCStakeholder: Account_Result }>;
@@ -362,6 +364,7 @@ interface msdyn_workorderservicetask_Expand {
   ts_incident_WorkOrderServiceTask1_msdyn_work: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrderServiceTask1_msdyn_work: Incident_Result[] }>;
   ts_incident_WorkOrderServiceTask2_msdyn_work: WebExpand<msdyn_workorderservicetask_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrderServiceTask2_msdyn_work: Incident_Result[] }>;
   ts_msdyn_workorderservicetask_systemuser: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { ts_msdyn_workorderservicetask_systemuser: SystemUser_Result[] }>;
+  ts_operationtypefilter: WebExpand<msdyn_workorderservicetask_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_operationtypefilter: ovs_operationtype_Result }>;
   ts_workorderservicetask_qm_rclegislation: WebExpand<msdyn_workorderservicetask_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_workorderservicetask_qm_rclegislation: qm_rclegislation_Result[] }>;
 }
 interface msdyn_workorderservicetask_FormattedResult {
@@ -488,6 +491,7 @@ interface msdyn_workorderservicetask_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_AOCOperation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_AOCOperationType: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ts_AOCSite: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_AOCSite_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_AOCStakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
@@ -507,6 +511,7 @@ interface msdyn_workorderservicetask_RelatedOne {
   ts_PassengerServices: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_RampServices: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_SecuritySearchServices: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_operationtypefilter: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
 }
 interface msdyn_workorderservicetask_RelatedMany {
   msdyn_workorderservicetask_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
