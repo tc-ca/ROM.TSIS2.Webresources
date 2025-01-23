@@ -140,15 +140,16 @@ var ROM;
                         if (regarding[0].entityType === "msdyn_workorder") {
                             workOrderId = regarding[0].id;
                             workOrderContactsFetchXML = [
-                                "<fetch>",
+                                "<fetch xmlns:generator='MarkMpn.SQL4CDS'>",
                                 "  <entity name='contact'>",
-                                "    <link-entity name='ts_contact_msdyn_workorder' from='contactid' to='contactid' intersect='true'>",
-                                "      <link-entity name='msdyn_workorder' from='msdyn_workorderid' to='msdyn_workorderid'>",
-                                "        <filter>",
-                                "          <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
-                                "        </filter>",
-                                "      </link-entity>",
+                                "    <attribute name='contactid' />",
+                                "    <attribute name='owningbusinessunit' />",
+                                "    <link-entity name='msdyn_workorder' to='owningbusinessunit' from='owningbusinessunit' alias='msdyn_workorder' link-type='inner'>",
+                                "      <filter>",
+                                "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+                                "      </filter>",
                                 "    </link-entity>",
+                                "  </entity>",
                                 "</fetch>",
                             ].join("");
                             viewContactId = '{73e123a5-2d58-4642-a298-6d7e4edc089e}';

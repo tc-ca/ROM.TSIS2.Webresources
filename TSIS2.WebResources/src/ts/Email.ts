@@ -105,17 +105,18 @@
             if (regarding[0].entityType === "msdyn_workorder") {
                 var workOrderId = regarding[0].id;
 
-                //Retrieve Contacts from WO
+                //Retrieve Contacts from related businessunit
                 let workOrderContactsFetchXML = [
-                    "<fetch>",
+                    "<fetch xmlns:generator='MarkMpn.SQL4CDS'>",
                     "  <entity name='contact'>",
-                    "    <link-entity name='ts_contact_msdyn_workorder' from='contactid' to='contactid' intersect='true'>",
-                    "      <link-entity name='msdyn_workorder' from='msdyn_workorderid' to='msdyn_workorderid'>",
-                    "        <filter>",
-                    "          <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
-                    "        </filter>",
-                    "      </link-entity>",
+                    "    <attribute name='contactid' />",
+                    "    <attribute name='owningbusinessunit' />",
+                    "    <link-entity name='msdyn_workorder' to='owningbusinessunit' from='owningbusinessunit' alias='msdyn_workorder' link-type='inner'>",
+                    "      <filter>",
+                    "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
+                    "      </filter>",
                     "    </link-entity>",
+                    "  </entity>",
                     "</fetch>",
                 ].join("");
 
