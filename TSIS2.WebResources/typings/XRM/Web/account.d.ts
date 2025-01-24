@@ -196,6 +196,7 @@ interface Account_Relationships {
   msdyn_billingaccount_account?: Account_Result | null;
   msdyn_msdyn_functionallocation_account?: msdyn_FunctionalLocation_Result[] | null;
   ts_EntityRisk_Account_Account?: ts_EntityRisk_Result[] | null;
+  ts_PrincipalOperationType?: ovs_operationtype_Result | null;
   ts_account_msdyn_workorderservicetask_AOCStakeholder?: msdyn_workorderservicetask_Result[] | null;
   ts_account_msdyn_workorderservicetask_AccessControlSecurityServices?: msdyn_workorderservicetask_Result[] | null;
   ts_account_msdyn_workorderservicetask_CargoServices?: msdyn_workorderservicetask_Result[] | null;
@@ -704,6 +705,7 @@ interface Account_Expand {
   preferredsystemuserid: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { preferredsystemuserid: SystemUser_Result }>;
   primarycontactid: WebExpand<Account_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
   ts_EntityRisk_Account_Account: WebExpand<Account_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_EntityRisk_Account_Account: ts_EntityRisk_Result[] }>;
+  ts_PrincipalOperationType: WebExpand<Account_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_PrincipalOperationType: ovs_operationtype_Result }>;
   ts_account_msdyn_workorderservicetask_AOCStakeholder: WebExpand<Account_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_account_msdyn_workorderservicetask_AOCStakeholder: msdyn_workorderservicetask_Result[] }>;
   ts_account_msdyn_workorderservicetask_AccessControlSecurityServices: WebExpand<Account_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_account_msdyn_workorderservicetask_AccessControlSecurityServices: msdyn_workorderservicetask_Result[] }>;
   ts_account_msdyn_workorderservicetask_CargoServices: WebExpand<Account_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_account_msdyn_workorderservicetask_CargoServices: msdyn_workorderservicetask_Result[] }>;
@@ -876,6 +878,7 @@ interface Account_RelatedOne {
   parentaccountid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   preferredsystemuserid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   primarycontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  ts_PrincipalOperationType: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ts_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface Account_RelatedMany {

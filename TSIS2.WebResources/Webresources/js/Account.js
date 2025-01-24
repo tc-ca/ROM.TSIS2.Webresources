@@ -17,9 +17,9 @@ var ROM;
             //If owner is ISSO, replace operations view
             var ownerAttribute = form.getAttribute("ownerid");
             if (ownerAttribute != null && ownerAttribute != undefined) {
-                var ownerAttributeValue = ownerAttribute.getValue();
-                if (ownerAttributeValue != null) {
-                    if (ownerAttributeValue[0].name == "Intermodal Surface Security Oversight (ISSO)") {
+                var ownerAttributeValue_1 = ownerAttribute.getValue();
+                if (ownerAttributeValue_1 != null) {
+                    if (ownerAttributeValue_1[0].name == "Intermodal Surface Security Oversight (ISSO)") {
                         var operationView = {
                             entityType: "savedquery",
                             id: "{f3c99b02-591d-ed11-b83e-002248ae429c}",
@@ -37,6 +37,16 @@ var ROM;
             else {
                 form.getControl("ovs_accountnameenglish").setVisible(true);
                 form.getControl("ovs_accountnamefrench").setVisible(true);
+            }
+            //If owner is Aviation Security
+            var ownerAttributeValue = ownerAttribute.getValue();
+            if (ownerAttributeValue != null) {
+                if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
+                    form.ui.tabs.get("tab_Risk").setVisible(true);
+                }
+                else {
+                    form.ui.tabs.get("tab_Risk").setVisible(false);
+                }
             }
         }
         Account.onLoad = onLoad;

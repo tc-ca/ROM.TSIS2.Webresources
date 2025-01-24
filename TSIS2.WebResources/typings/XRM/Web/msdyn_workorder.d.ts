@@ -769,6 +769,7 @@ interface msdyn_workorder_Expand {
   ovs_RevisedQuarterId: WebExpand<msdyn_workorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_RevisedQuarterId: tc_TCFiscalQuarter_Result }>;
   ovs_SecondaryInspector: WebExpand<msdyn_workorder_Expand, BookableResource_Select, BookableResource_Filter, { ovs_SecondaryInspector: BookableResource_Result }>;
   ovs_asset: WebExpand<msdyn_workorder_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ovs_asset: msdyn_customerasset_Result }>;
+  ovs_operationtypeid: WebExpand<msdyn_workorder_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ovs_operationtypeid: ovs_operationtype_Result }>;
   ownerid: WebExpand<msdyn_workorder_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<msdyn_workorder_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
@@ -1066,6 +1067,7 @@ interface msdyn_workorder_RelatedOne {
   ovs_RevisedQuarterId: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ovs_SecondaryInspector: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   ovs_asset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
+  ovs_operationtypeid: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;

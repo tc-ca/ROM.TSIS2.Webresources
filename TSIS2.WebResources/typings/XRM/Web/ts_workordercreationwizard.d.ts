@@ -109,6 +109,7 @@ interface ts_workordercreationwizard_Expand {
   ts_OperationId: WebExpand<ts_workordercreationwizard_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ts_OperationId: msdyn_customerasset_Result }>;
   ts_SiteId: WebExpand<ts_workordercreationwizard_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_SiteId: msdyn_FunctionalLocation_Result }>;
   ts_StakeholderId: WebExpand<ts_workordercreationwizard_Expand, Account_Select, Account_Filter, { ts_StakeholderId: Account_Result }>;
+  ts_ovs_operationtype: WebExpand<ts_workordercreationwizard_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_ovs_operationtype: ovs_operationtype_Result }>;
   ts_ts_workordercreationwizard_msdyn_workorde: WebExpand<ts_workordercreationwizard_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_ts_workordercreationwizard_msdyn_workorde: msdyn_workorder_Result[] }>;
 }
 interface ts_workordercreationwizard_FormattedResult {
@@ -168,6 +169,7 @@ interface ts_workordercreationwizard_RelatedOne {
   ts_OperationId: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   ts_SiteId: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_StakeholderId: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_ovs_operationtype: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
 }
 interface ts_workordercreationwizard_RelatedMany {
   ts_ts_workordercreationwizard_msdyn_workorde: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;

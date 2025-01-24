@@ -49,6 +49,7 @@ interface Team_Relationships {
   team_msdyn_workorderservicetask?: msdyn_workorderservicetask_Result[] | null;
   team_ovs_finding?: ovs_Finding_Result[] | null;
   team_ovs_operation?: ovs_operation_Result[] | null;
+  team_ovs_operationtype?: ovs_operationtype_Result[] | null;
   team_ovs_questionnaire?: ovs_Questionnaire_Result[] | null;
   team_service_appointments?: ServiceAppointment_Result[] | null;
   team_tc_tcfiscalquarter?: tc_TCFiscalQuarter_Result[] | null;
@@ -218,6 +219,7 @@ interface Team_Expand {
   team_msdyn_workorderservicetask: WebExpand<Team_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { team_msdyn_workorderservicetask: msdyn_workorderservicetask_Result[] }>;
   team_ovs_finding: WebExpand<Team_Expand, ovs_Finding_Select, ovs_Finding_Filter, { team_ovs_finding: ovs_Finding_Result[] }>;
   team_ovs_operation: WebExpand<Team_Expand, ovs_operation_Select, ovs_operation_Filter, { team_ovs_operation: ovs_operation_Result[] }>;
+  team_ovs_operationtype: WebExpand<Team_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { team_ovs_operationtype: ovs_operationtype_Result[] }>;
   team_ovs_questionnaire: WebExpand<Team_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { team_ovs_questionnaire: ovs_Questionnaire_Result[] }>;
   team_service_appointments: WebExpand<Team_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { team_service_appointments: ServiceAppointment_Result[] }>;
   team_tc_tcfiscalquarter: WebExpand<Team_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { team_tc_tcfiscalquarter: tc_TCFiscalQuarter_Result[] }>;
@@ -331,6 +333,7 @@ interface Team_RelatedMany {
   team_msdyn_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   team_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   team_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  team_ovs_operationtype: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   team_ovs_questionnaire: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
   team_service_appointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   team_tc_tcfiscalquarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;

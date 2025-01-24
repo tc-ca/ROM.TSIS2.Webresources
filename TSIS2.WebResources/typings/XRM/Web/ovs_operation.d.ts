@@ -53,6 +53,7 @@ interface ovs_operation_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ovs_operation_Relationships {
+  ovs_OperationTypeId?: ovs_operationtype_Result | null;
   ovs_operation_Appointments?: Appointment_Result[] | null;
   ovs_operation_Emails?: Email_Result[] | null;
   ovs_operation_PostFollows?: PostFollow_Result[] | null;
@@ -255,6 +256,7 @@ interface ovs_operation_Expand {
   createdonbehalfby: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
   modifiedby: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
+  ovs_OperationTypeId: WebExpand<ovs_operation_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ovs_OperationTypeId: ovs_operationtype_Result }>;
   ovs_operation_Appointments: WebExpand<ovs_operation_Expand, Appointment_Select, Appointment_Filter, { ovs_operation_Appointments: Appointment_Result[] }>;
   ovs_operation_Emails: WebExpand<ovs_operation_Expand, Email_Select, Email_Filter, { ovs_operation_Emails: Email_Result[] }>;
   ovs_operation_PostFollows: WebExpand<ovs_operation_Expand, PostFollow_Select, PostFollow_Filter, { ovs_operation_PostFollows: PostFollow_Result[] }>;
@@ -360,6 +362,7 @@ interface ovs_operation_RelatedOne {
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ovs_OperationTypeId: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
