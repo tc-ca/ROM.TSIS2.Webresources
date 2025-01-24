@@ -105,17 +105,24 @@
             if (regarding[0].entityType === "msdyn_workorder") {
                 var workOrderId = regarding[0].id;
 
-                //Retrieve Contacts from related businessunit
+                //Retrieve Contacts from related Work Order AND related businessunit
                 let workOrderContactsFetchXML = [
-                    "<fetch xmlns:generator='MarkMpn.SQL4CDS'>",
+                    "<fetch xmlns:generator='MarkMpn.SQL4CDS' distinct='true'>",
                     "  <entity name='contact'>",
                     "    <attribute name='contactid' />",
+                    "    <attribute name='fullname' />",
                     "    <attribute name='owningbusinessunit' />",
-                    "    <link-entity name='msdyn_workorder' to='owningbusinessunit' from='owningbusinessunit' alias='msdyn_workorder' link-type='inner'>",
-                    "      <filter>",
-                    "        <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
-                    "      </filter>",
+                    "    <link-entity name='ts_contact_msdyn_workorder' to='contactid' from='contactid' alias='tcwo' link-type='outer'>",
+                    "      <link-entity name='msdyn_workorder' to='msdyn_workorderid' from='msdyn_workorderid' alias='wo' link-type='outer' />",
                     "    </link-entity>",
+                    "    <link-entity name='msdyn_workorder' to='owningbusinessunit' from='owningbusinessunit' alias='wo2' link-type='outer' />",
+                    "    <filter type='or'>",
+                    "      <condition attribute='msdyn_workorderid' entityname='wo' operator='eq' value='", workOrderId, "' />",
+                    "      <condition attribute='msdyn_workorderid' entityname='wo2' operator='eq' value='", workOrderId, "' />",
+                    "    </filter>",
+                    "    <order attribute='contactid' />",
+                    "    <order attribute='fullname' />",
+                    "    <order attribute='owningbusinessunit' />",
                     "  </entity>",
                     "</fetch>",
                 ].join("");
