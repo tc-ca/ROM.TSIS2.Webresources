@@ -105,7 +105,60 @@ var ROM;
         EntityRisk.riskRatingOnChange = riskRatingOnChange;
         function riskScoreOnChange(eContext) {
             var form = eContext.getFormContext();
-            console.log("riskScoreOnChange is working!!!");
+            // Get the entered Risk Score attribute
+            var riskScore = form.getAttribute("ts_riskscore");
+            if (riskScore != null) {
+                var riskScoreAttributeValue_1 = riskScore.getValue();
+                if (riskScoreAttributeValue_1 != null) {
+                    // Define FetchXML to get all risk ranges
+                    var getRiskRatingIdFetchXML = "\n                <fetch xmlns:generator='MarkMpn.SQL4CDS'>\n                  <entity name='ts_riskrating'>\n                    <attribute name='ts_riskratingid' />\n                    <attribute name='ts_name' />\n                    <link-entity name='ts_riskrange' to='ts_riskrange' from='ts_riskrangeid' alias='ts_riskRange' link-type='inner'>\n                      <attribute name='ts_minscore' />\n                      <attribute name='ts_maxscore' />\n                    </link-entity>\n                  </entity>\n                </fetch>";
+                    var fetchXmlEncoded = "?fetchXml=" + encodeURIComponent(getRiskRatingIdFetchXML);
+                    Xrm.WebApi.retrieveMultipleRecords("ts_riskrating", fetchXmlEncoded).then(function (result) {
+                        if (result.entities.length > 0) {
+                            var riskScoreNumber = Number(riskScoreAttributeValue_1);
+                            // Go through all the risk ratings to find a match
+                            var matchingRiskRatingID = null;
+                            var matchingRiskRatingName = null;
+                            var roundedRiskScore = Math.floor(riskScoreAttributeValue_1);
+                            for (var _i = 0, _a = result.entities; _i < _a.length; _i++) {
+                                var record = _a[_i];
+                                // Fetch and convert the scores to numbers
+                                var minScore = Number(record["ts_riskRange.ts_minscore"]);
+                                var maxScore = Number(record["ts_riskRange.ts_maxscore"]);
+                                console.log("Evaluating record:");
+                                console.log("Risk Rating:", record.ts_name, "minScore:", minScore, "maxScore:", maxScore);
+                                // Check if the rounded risk score is within the range
+                                if (minScore <= roundedRiskScore && maxScore >= roundedRiskScore) {
+                                    matchingRiskRatingID = record.ts_riskratingid;
+                                    matchingRiskRatingName = record.ts_name;
+                                    break; // Stop iterating once a match is found
+                                }
+                            }
+                            // Handle the matching record
+                            if (matchingRiskRatingID) {
+                                console.log("Matching Risk Rating Found:", matchingRiskRatingName);
+                                // Set the lookup field value
+                                form.getAttribute("ts_riskrating").setValue([
+                                    {
+                                        id: matchingRiskRatingID,
+                                        name: matchingRiskRatingName,
+                                        entityType: "ts_riskrating",
+                                    },
+                                ]);
+                            }
+                            else {
+                                console.warn("No matching risk rating found for score:", roundedRiskScore);
+                                form.getAttribute("ts_riskrating").setValue(null); // Clear the lookup if no match
+                            }
+                        }
+                        else {
+                            console.log("No risk ratings found in the system.");
+                        }
+                    }, function (error) {
+                        console.error("Error retrieving risk rating:", error);
+                    });
+                }
+            }
         }
         EntityRisk.riskScoreOnChange = riskScoreOnChange;
         function setFiscalYearFilteredView(formContext) {
