@@ -140,15 +140,23 @@ var ROM;
                         if (regarding[0].entityType === "msdyn_workorder") {
                             workOrderId = regarding[0].id;
                             workOrderContactsFetchXML = [
-                                "<fetch>",
+                                "<fetch xmlns:generator='MarkMpn.SQL4CDS' distinct='true'>",
                                 "  <entity name='contact'>",
-                                "    <link-entity name='ts_contact_msdyn_workorder' from='contactid' to='contactid' intersect='true'>",
-                                "      <link-entity name='msdyn_workorder' from='msdyn_workorderid' to='msdyn_workorderid'>",
-                                "        <filter>",
-                                "          <condition attribute='msdyn_workorderid' operator='eq' value='", workOrderId, "'/>",
-                                "        </filter>",
-                                "      </link-entity>",
+                                "    <attribute name='contactid' />",
+                                "    <attribute name='fullname' />",
+                                "    <attribute name='owningbusinessunit' />",
+                                "    <link-entity name='ts_contact_msdyn_workorder' to='contactid' from='contactid' alias='tcwo' link-type='outer'>",
+                                "      <link-entity name='msdyn_workorder' to='msdyn_workorderid' from='msdyn_workorderid' alias='wo' link-type='outer' />",
                                 "    </link-entity>",
+                                "    <link-entity name='msdyn_workorder' to='owningbusinessunit' from='owningbusinessunit' alias='wo2' link-type='outer' />",
+                                "    <filter type='or'>",
+                                "      <condition attribute='msdyn_workorderid' entityname='wo' operator='eq' value='", workOrderId, "' />",
+                                "      <condition attribute='msdyn_workorderid' entityname='wo2' operator='eq' value='", workOrderId, "' />",
+                                "    </filter>",
+                                "    <order attribute='contactid' />",
+                                "    <order attribute='fullname' />",
+                                "    <order attribute='owningbusinessunit' />",
+                                "  </entity>",
                                 "</fetch>",
                             ].join("");
                             viewContactId = '{73e123a5-2d58-4642-a298-6d7e4edc089e}';
