@@ -41,6 +41,18 @@ namespace ROM.Account {
             form.getControl("ovs_accountnameenglish").setVisible(true);
             form.getControl("ovs_accountnamefrench").setVisible(true);
         }
+
+        //If owner is Aviation Security
+        const ownerAttributeValue = ownerAttribute.getValue();
+
+        if (ownerAttributeValue != null) {
+            if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
+                form.ui.tabs.get("tab_Risk").setVisible(true);
+            }
+            else {
+                form.ui.tabs.get("tab_Risk").setVisible(false);
+            }
+        }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {

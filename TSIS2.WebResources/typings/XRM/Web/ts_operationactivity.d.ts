@@ -23,6 +23,7 @@ interface ts_OperationActivity_Relationships {
   ts_LastCompletedWO?: tc_TCFiscalQuarter_Result | null;
   ts_NextPlannedWO?: tc_TCFiscalQuarter_Result | null;
   ts_Operation?: ovs_operation_Result | null;
+  ts_OperationType?: ovs_operationtype_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Site_Site?: ts_site_Result | null;
   ts_Stakeholder?: Account_Result | null;
@@ -136,6 +137,7 @@ interface ts_OperationActivity_Expand {
   ts_LastCompletedWO: WebExpand<ts_OperationActivity_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ts_LastCompletedWO: tc_TCFiscalQuarter_Result }>;
   ts_NextPlannedWO: WebExpand<ts_OperationActivity_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ts_NextPlannedWO: tc_TCFiscalQuarter_Result }>;
   ts_Operation: WebExpand<ts_OperationActivity_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_Operation: ovs_operation_Result }>;
+  ts_OperationType: WebExpand<ts_OperationActivity_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_OperationType: ovs_operationtype_Result }>;
   ts_Site: WebExpand<ts_OperationActivity_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Site_Site: WebExpand<ts_OperationActivity_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
   ts_Stakeholder: WebExpand<ts_OperationActivity_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
@@ -205,6 +207,7 @@ interface ts_OperationActivity_RelatedOne {
   ts_LastCompletedWO: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ts_NextPlannedWO: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ts_Operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_OperationType: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Site_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

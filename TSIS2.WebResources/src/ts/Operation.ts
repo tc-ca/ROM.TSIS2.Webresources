@@ -288,6 +288,19 @@ namespace ROM.Operation {
             form.getControl("ts_description").setDisabled(false);
             form.getAttribute("ts_description").setRequiredLevel("required");
         }
+
+        //If owner is Aviation Security
+        const ownerAttribute = form.getAttribute("ownerid")
+        const ownerAttributeValue = ownerAttribute.getValue();
+
+        if (ownerAttributeValue != null) {
+            if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
+                form.ui.tabs.get("plan_track").sections.get("entity_risk_section").setVisible(true);
+            }
+            else {
+                form.ui.tabs.get("plan_track").sections.get("entity_risk_section").setVisible(false);
+            }
+        }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
