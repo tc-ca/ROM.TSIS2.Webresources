@@ -161,6 +161,46 @@ var ROM;
             }
         }
         EntityRisk.riskScoreOnChange = riskScoreOnChange;
+        function fiscalYearOnChange(eContext) {
+            var _a;
+            var formContext = eContext.getFormContext();
+            // Get values from the form
+            var entityId = (_a = formContext.getAttribute("ts_entityid")) === null || _a === void 0 ? void 0 : _a.getValue();
+            var fiscalYear = formContext.getAttribute("ts_fiscalyear").getValue();
+            var fiscalYearID = "";
+            if (fiscalYear) {
+                fiscalYearID = fiscalYear[0].id.toString().replace(/{|}/g, '');
+            }
+            // Fetch existing records to check for duplicates
+            var fetchXml = "\n        <fetch>\n            <entity name=\"ts_entityrisk\">\n                <attribute name=\"ts_entityriskid\" />\n                <filter>\n                    <condition attribute=\"ts_entityid\" operator=\"eq\" value=\"" + entityId + "\" />\n                    <condition attribute=\"ts_fiscalyear\" operator=\"eq\" value=\"" + fiscalYearID + "\" />\n                </filter>\n            </entity>\n        </fetch>";
+            var encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+            var fiscalYearField = formContext.getControl("ts_fiscalyear");
+            // Get the user's language ID
+            var userLanguageId = Xrm.Utility.getGlobalContext().userSettings.languageId;
+            // Check for existing records
+            Xrm.WebApi.retrieveMultipleRecords("ts_entityrisk", encodedFetchXml).then(function (result) {
+                if (result.entities.length > 0) {
+                    // Determine the message based on the user's language
+                    var message = (userLanguageId === 1036) // French language code
+                        ? "Un Risk Score existe déjà pour cet exercice fiscal." // French message
+                        : "A Risk Score already exists for this Fiscal Year."; // English message
+                    if (fiscalYearField) {
+                        fiscalYearField.setFocus(); // Moves the cursor focus to the ts_fiscalyear field
+                        fiscalYearField.setNotification(message, "ERROR");
+                    }
+                }
+                else {
+                    if (fiscalYearField) {
+                        // If no duplicate found, clear the existing notification (if any)
+                        fiscalYearField.clearNotification();
+                    }
+                    console.log("No duplicates found.");
+                }
+            }, function (error) {
+                console.error("Error validating uniqueness:", error.message);
+            });
+        }
+        EntityRisk.fiscalYearOnChange = fiscalYearOnChange;
         function setFiscalYearFilteredView(formContext) {
             var viewId = '{350B79C5-0A0E-42B2-8FF7-7F83B7E9628B}';
             var entityName = "tc_tcfiscalyear";
