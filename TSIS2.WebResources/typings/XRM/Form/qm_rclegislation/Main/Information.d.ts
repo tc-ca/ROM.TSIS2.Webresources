@@ -38,6 +38,13 @@ declare namespace Form.qm_rclegislation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_7 extends Xrm.SectionCollectionBase {
+        get(name: "tab_7_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "createdby"): Xrm.LookupAttribute<"systemuser">;
@@ -66,6 +73,7 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "statecode"): Xrm.OptionSetAttribute<qm_rclegislation_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<qm_rclegislation_statuscode>;
       get(name: "ts_classification"): Xrm.OptionSetAttribute<ts_classification>;
+      get(name: "ts_infractiontype"): Xrm.OptionSetAttribute<ts_infractiontype>;
       get(name: "ts_nameenglish"): Xrm.Attribute<string>;
       get(name: "ts_namefrench"): Xrm.Attribute<string>;
       get(name: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
@@ -79,6 +87,7 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "Subgrid_2"): Xrm.SubGridControl<"qm_tylegislationcharacteristic">;
       get(name: "Subgrid_new_3"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "Subgrid_new_4"): Xrm.SubGridControl<"ovs_operationtype">;
+      get(name: "Subgrid_new_5"): Xrm.SubGridControl<"ts_infraction">;
       get(name: "WebResource_new_1"): Xrm.WebResourceControl;
       get(name: "causes_sub_grid"): Xrm.SubGridControl<"qm_rclegislation">;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
@@ -108,6 +117,7 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "statecode"): Xrm.OptionSetControl<qm_rclegislation_statecode>;
       get(name: "statuscode"): Xrm.OptionSetControl<qm_rclegislation_statuscode>;
       get(name: "ts_classification"): Xrm.OptionSetControl<ts_classification>;
+      get(name: "ts_infractiontype"): Xrm.OptionSetControl<ts_infractiontype>;
       get(name: "ts_nameenglish"): Xrm.StringControl;
       get(name: "ts_namefrench"): Xrm.StringControl;
       get(name: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;
@@ -122,6 +132,7 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
+      get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -155,6 +166,7 @@ declare namespace Form.qm_rclegislation.Main {
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<qm_rclegislation_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<qm_rclegislation_statuscode>;
     getAttribute(attributeName: "ts_classification"): Xrm.OptionSetAttribute<ts_classification>;
+    getAttribute(attributeName: "ts_infractiontype"): Xrm.OptionSetAttribute<ts_infractiontype>;
     getAttribute(attributeName: "ts_nameenglish"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_namefrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
@@ -163,6 +175,7 @@ declare namespace Form.qm_rclegislation.Main {
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"qm_tylegislationcharacteristic">;
     getControl(controlName: "Subgrid_new_3"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "Subgrid_new_4"): Xrm.SubGridControl<"ovs_operationtype">;
+    getControl(controlName: "Subgrid_new_5"): Xrm.SubGridControl<"ts_infraction">;
     getControl(controlName: "WebResource_new_1"): Xrm.WebResourceControl;
     getControl(controlName: "causes_sub_grid"): Xrm.SubGridControl<"qm_rclegislation">;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;
@@ -192,6 +205,7 @@ declare namespace Form.qm_rclegislation.Main {
     getControl(controlName: "statecode"): Xrm.OptionSetControl<qm_rclegislation_statecode>;
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<qm_rclegislation_statuscode>;
     getControl(controlName: "ts_classification"): Xrm.OptionSetControl<ts_classification>;
+    getControl(controlName: "ts_infractiontype"): Xrm.OptionSetControl<ts_infractiontype>;
     getControl(controlName: "ts_nameenglish"): Xrm.StringControl;
     getControl(controlName: "ts_namefrench"): Xrm.StringControl;
     getControl(controlName: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;

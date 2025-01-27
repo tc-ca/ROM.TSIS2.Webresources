@@ -85,6 +85,7 @@ interface Team_Relationships {
   team_ts_workordertimetracking?: ts_workordertimetracking_Result[] | null;
   teammembership_association?: SystemUser_Result[] | null;
   ts_enforcementaction_team_owningteam?: ts_enforcementaction_Result[] | null;
+  ts_msdyn_functionallocation_AccountableTeam_team?: msdyn_FunctionalLocation_Result[] | null;
   ts_ovs_Finding_NCATApprovingTeam_Team?: ovs_Finding_Result[] | null;
   ts_ovs_Finding_RATEApprovingTeam_Team?: ovs_Finding_Result[] | null;
   ts_ovs_operation_OPITeam_team?: ovs_operation_Result[] | null;
@@ -255,6 +256,7 @@ interface Team_Expand {
   team_ts_workordertimetracking: WebExpand<Team_Expand, ts_workordertimetracking_Select, ts_workordertimetracking_Filter, { team_ts_workordertimetracking: ts_workordertimetracking_Result[] }>;
   teammembership_association: WebExpand<Team_Expand, SystemUser_Select, SystemUser_Filter, { teammembership_association: SystemUser_Result[] }>;
   ts_enforcementaction_team_owningteam: WebExpand<Team_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_team_owningteam: ts_enforcementaction_Result[] }>;
+  ts_msdyn_functionallocation_AccountableTeam_team: WebExpand<Team_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_msdyn_functionallocation_AccountableTeam_team: msdyn_FunctionalLocation_Result[] }>;
   ts_ovs_Finding_NCATApprovingTeam_Team: WebExpand<Team_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_NCATApprovingTeam_Team: ovs_Finding_Result[] }>;
   ts_ovs_Finding_RATEApprovingTeam_Team: WebExpand<Team_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_RATEApprovingTeam_Team: ovs_Finding_Result[] }>;
   ts_ovs_operation_OPITeam_team: WebExpand<Team_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_OPITeam_team: ovs_operation_Result[] }>;
@@ -369,6 +371,7 @@ interface Team_RelatedMany {
   team_ts_workordertimetracking: WebMappingRetrieve<ts_workordertimetracking_Select,ts_workordertimetracking_Expand,ts_workordertimetracking_Filter,ts_workordertimetracking_Fixed,ts_workordertimetracking_Result,ts_workordertimetracking_FormattedResult>;
   teammembership_association: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_enforcementaction_team_owningteam: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
+  ts_msdyn_functionallocation_AccountableTeam_team: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_ovs_Finding_NCATApprovingTeam_Team: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_Finding_RATEApprovingTeam_Team: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_OPITeam_team: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
