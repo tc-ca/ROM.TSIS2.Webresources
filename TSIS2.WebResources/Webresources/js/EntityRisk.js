@@ -64,14 +64,143 @@ var ROM;
         EntityRisk.onSave = onSave;
         function riskRatingOnChange(eContext) {
             var form = eContext.getFormContext();
-            console.log("riskRatingOnChange is working!!!");
+            // Get the selected Risk Rating attribute
+            var riskRating = form.getAttribute("ts_riskrating");
+            var riskRatingScore = 0;
+            var riskRatingWeight = 0;
+            if (riskRating != null) {
+                var riskRatingAttributeValue = riskRating.getValue();
+                if (riskRatingAttributeValue != null && riskRatingAttributeValue.length > 0) {
+                    var riskRatingID = riskRatingAttributeValue[0].id; // Retrieve the first selected value
+                    // Retrieve the ts_riskscore value from the ts_riskrating record
+                    Xrm.WebApi.retrieveRecord("ts_riskrating", riskRatingID, "?$select=ts_riskscore,ts_riskweight")
+                        .then(function success(riskRatingRecord) {
+                        var riskScore = riskRatingRecord.ts_riskscore;
+                        var riskWeight = riskRatingRecord.ts_riskweight;
+                        // If the ts_riskscore is not null, update the form field
+                        if (riskScore !== null) {
+                            riskRatingScore = riskScore;
+                            // Populate the ts_riskscore field if it's currently null or empty
+                            var riskScoreAttribute = form.getAttribute("ts_riskscore");
+                            if (riskScoreAttribute && (riskScoreAttribute.getValue() === null || riskScoreAttribute.getValue() === 0)) {
+                                riskScoreAttribute.setValue(riskRatingScore);
+                            }
+                        }
+                        // If the ts_riskweight is not null, update the form field
+                        if (riskWeight !== null) {
+                            riskRatingWeight = riskWeight;
+                            // Populate the ts_riskweight field if it's currently null or empty
+                            var riskWeightAttribute = form.getAttribute("ts_weightedriskscore");
+                            if (riskWeightAttribute && (riskWeightAttribute.getValue() === null || riskWeightAttribute.getValue() === 0)) {
+                                riskWeightAttribute.setValue(riskRatingWeight);
+                            }
+                        }
+                    })
+                        .catch(function error(err) {
+                        console.error("Error retrieving ts_riskrating record:", err.message);
+                    });
+                }
+            }
         }
         EntityRisk.riskRatingOnChange = riskRatingOnChange;
         function riskScoreOnChange(eContext) {
             var form = eContext.getFormContext();
-            console.log("riskScoreOnChange is working!!!");
+            // Get the entered Risk Score attribute
+            var riskScore = form.getAttribute("ts_riskscore");
+            if (riskScore != null) {
+                var riskScoreAttributeValue_1 = riskScore.getValue();
+                if (riskScoreAttributeValue_1 != null) {
+                    // Define FetchXML to get all risk ranges
+                    var getRiskRatingIdFetchXML = "\n                <fetch xmlns:generator='MarkMpn.SQL4CDS'>\n                  <entity name='ts_riskrating'>\n                    <attribute name='ts_riskratingid' />\n                    <attribute name='ts_name' />\n                    <link-entity name='ts_riskrange' to='ts_riskrange' from='ts_riskrangeid' alias='ts_riskRange' link-type='inner'>\n                      <attribute name='ts_minscore' />\n                      <attribute name='ts_maxscore' />\n                    </link-entity>\n                  </entity>\n                </fetch>";
+                    var fetchXmlEncoded = "?fetchXml=" + encodeURIComponent(getRiskRatingIdFetchXML);
+                    Xrm.WebApi.retrieveMultipleRecords("ts_riskrating", fetchXmlEncoded).then(function (result) {
+                        if (result.entities.length > 0) {
+                            var riskScoreNumber = Number(riskScoreAttributeValue_1);
+                            // Go through all the risk ratings to find a match
+                            var matchingRiskRatingID = null;
+                            var matchingRiskRatingName = null;
+                            var roundedRiskScore = Math.floor(riskScoreAttributeValue_1);
+                            for (var _i = 0, _a = result.entities; _i < _a.length; _i++) {
+                                var record = _a[_i];
+                                // Fetch and convert the scores to numbers
+                                var minScore = Number(record["ts_riskRange.ts_minscore"]);
+                                var maxScore = Number(record["ts_riskRange.ts_maxscore"]);
+                                console.log("Evaluating record:");
+                                console.log("Risk Rating:", record.ts_name, "minScore:", minScore, "maxScore:", maxScore);
+                                // Check if the rounded risk score is within the range
+                                if (minScore <= roundedRiskScore && maxScore >= roundedRiskScore) {
+                                    matchingRiskRatingID = record.ts_riskratingid;
+                                    matchingRiskRatingName = record.ts_name;
+                                    break; // Stop iterating once a match is found
+                                }
+                            }
+                            // Handle the matching record
+                            if (matchingRiskRatingID) {
+                                console.log("Matching Risk Rating Found:", matchingRiskRatingName);
+                                // Set the lookup field value
+                                form.getAttribute("ts_riskrating").setValue([
+                                    {
+                                        id: matchingRiskRatingID,
+                                        name: matchingRiskRatingName,
+                                        entityType: "ts_riskrating",
+                                    },
+                                ]);
+                            }
+                            else {
+                                console.warn("No matching risk rating found for score:", roundedRiskScore);
+                                form.getAttribute("ts_riskrating").setValue(null); // Clear the lookup if no match
+                            }
+                        }
+                        else {
+                            console.log("No risk ratings found in the system.");
+                        }
+                    }, function (error) {
+                        console.error("Error retrieving risk rating:", error);
+                    });
+                }
+            }
         }
         EntityRisk.riskScoreOnChange = riskScoreOnChange;
+        function fiscalYearOnChange(eContext) {
+            var _a;
+            var formContext = eContext.getFormContext();
+            // Get values from the form
+            var entityId = (_a = formContext.getAttribute("ts_entityid")) === null || _a === void 0 ? void 0 : _a.getValue();
+            var fiscalYear = formContext.getAttribute("ts_fiscalyear").getValue();
+            var fiscalYearID = "";
+            if (fiscalYear) {
+                fiscalYearID = fiscalYear[0].id.toString().replace(/{|}/g, '');
+            }
+            // Fetch existing records to check for duplicates
+            var fetchXml = "\n        <fetch>\n            <entity name=\"ts_entityrisk\">\n                <attribute name=\"ts_entityriskid\" />\n                <filter>\n                    <condition attribute=\"ts_entityid\" operator=\"eq\" value=\"" + entityId + "\" />\n                    <condition attribute=\"ts_fiscalyear\" operator=\"eq\" value=\"" + fiscalYearID + "\" />\n                </filter>\n            </entity>\n        </fetch>";
+            var encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+            var fiscalYearField = formContext.getControl("ts_fiscalyear");
+            // Get the user's language ID
+            var userLanguageId = Xrm.Utility.getGlobalContext().userSettings.languageId;
+            // Check for existing records
+            Xrm.WebApi.retrieveMultipleRecords("ts_entityrisk", encodedFetchXml).then(function (result) {
+                if (result.entities.length > 0) {
+                    // Determine the message based on the user's language
+                    var message = (userLanguageId === 1036) // French language code
+                        ? "Un Risk Score existe déjà pour cet exercice fiscal." // French message
+                        : "A Risk Score already exists for this Fiscal Year."; // English message
+                    if (fiscalYearField) {
+                        fiscalYearField.setFocus(); // Moves the cursor focus to the ts_fiscalyear field
+                        fiscalYearField.setNotification(message, "ERROR");
+                    }
+                }
+                else {
+                    if (fiscalYearField) {
+                        // If no duplicate found, clear the existing notification (if any)
+                        fiscalYearField.clearNotification();
+                    }
+                    console.log("No duplicates found.");
+                }
+            }, function (error) {
+                console.error("Error validating uniqueness:", error.message);
+            });
+        }
+        EntityRisk.fiscalYearOnChange = fiscalYearOnChange;
         function setFiscalYearFilteredView(formContext) {
             var viewId = '{350B79C5-0A0E-42B2-8FF7-7F83B7E9628B}';
             var entityName = "tc_tcfiscalyear";
