@@ -190,6 +190,11 @@
             "description": "ROM TSIS 2.0 EntityRisk Form Scripts"
           },
           {
+            "uniquename": "ts_/js/OperationActivityRiskScores.js",
+            "file": "js\\OperationActivityRiskScores.js",
+            "description": "ROM TSIS 2.0 Operation Activity Risk Scores Form Scripts"
+          },
+          {
             "uniquename": "ts_/js/FunctionalLocation.js",
             "file": "js\\FunctionalLocation.js",
             "description": "ROM TSIS 2.0 Functional Location Scripts"
