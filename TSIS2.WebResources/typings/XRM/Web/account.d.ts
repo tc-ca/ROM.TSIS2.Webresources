@@ -154,6 +154,7 @@ interface Account_Base extends WebEntity {
   ts_alias3?: string | null;
   ts_alias4?: string | null;
   ts_alias5?: string | null;
+  ts_endofvalidfields?: string | null;
   ts_iatacode?: string | null;
   ts_icaocode?: string | null;
   ts_securityplantype?: ts_securityplantype | null;
@@ -445,6 +446,7 @@ interface Account_Select {
   ts_alias4: WebAttribute<Account_Select, { ts_alias4: string | null }, {  }>;
   ts_alias5: WebAttribute<Account_Select, { ts_alias5: string | null }, {  }>;
   ts_country_guid: WebAttribute<Account_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_endofvalidfields: WebAttribute<Account_Select, { ts_endofvalidfields: string | null }, {  }>;
   ts_iatacode: WebAttribute<Account_Select, { ts_iatacode: string | null }, {  }>;
   ts_icaocode: WebAttribute<Account_Select, { ts_icaocode: string | null }, {  }>;
   ts_msdyn_workorder_guid: WebAttribute<Account_Select, { ts_msdyn_workorder_guid: string | null }, { ts_msdyn_workorder_formatted?: string }>;
@@ -647,6 +649,7 @@ interface Account_Filter {
   ts_alias4: string;
   ts_alias5: string;
   ts_country_guid: XQW.Guid;
+  ts_endofvalidfields: string;
   ts_iatacode: string;
   ts_icaocode: string;
   ts_msdyn_workorder_guid: XQW.Guid;

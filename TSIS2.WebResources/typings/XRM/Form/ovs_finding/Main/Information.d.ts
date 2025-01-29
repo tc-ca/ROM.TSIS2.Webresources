@@ -86,6 +86,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_findingprovisiontextfr"): Xrm.Attribute<string>;
       get(name: "ts_findingtype"): Xrm.OptionSetAttribute<ts_findingtype>;
       get(name: "ts_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_infraction"): Xrm.LookupAttribute<"ts_infraction">;
       get(name: "ts_issueaddressedonsite"): Xrm.OptionSetAttribute<ts_yesno>;
       get(name: "ts_ncatactualorpotentialharm"): Xrm.LookupAttribute<"ts_assessmentrating">;
       get(name: "ts_ncatapprovingteam"): Xrm.LookupAttribute<"team">;
@@ -169,6 +170,7 @@ declare namespace Form.ovs_finding.Main {
       get(name: "ts_findingprovisiontextfr"): Xrm.StringControl;
       get(name: "ts_findingtype"): Xrm.OptionSetControl<ts_findingtype>;
       get(name: "ts_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_infraction"): Xrm.LookupControl<"ts_infraction">;
       get(name: "ts_issueaddressedonsite"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_ncatactualorpotentialharm"): Xrm.LookupControl<"ts_assessmentrating">;
       get(name: "ts_ncatapprovingteam"): Xrm.LookupControl<"team">;
@@ -249,6 +251,7 @@ declare namespace Form.ovs_finding.Main {
     getAttribute(attributeName: "ts_findingprovisiontextfr"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_findingtype"): Xrm.OptionSetAttribute<ts_findingtype>;
     getAttribute(attributeName: "ts_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_infraction"): Xrm.LookupAttribute<"ts_infraction">;
     getAttribute(attributeName: "ts_issueaddressedonsite"): Xrm.OptionSetAttribute<ts_yesno>;
     getAttribute(attributeName: "ts_ncatactualorpotentialharm"): Xrm.LookupAttribute<"ts_assessmentrating">;
     getAttribute(attributeName: "ts_ncatapprovingteam"): Xrm.LookupAttribute<"team">;
@@ -327,6 +330,7 @@ declare namespace Form.ovs_finding.Main {
     getControl(controlName: "ts_findingprovisiontextfr"): Xrm.StringControl;
     getControl(controlName: "ts_findingtype"): Xrm.OptionSetControl<ts_findingtype>;
     getControl(controlName: "ts_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_infraction"): Xrm.LookupControl<"ts_infraction">;
     getControl(controlName: "ts_issueaddressedonsite"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_ncatactualorpotentialharm"): Xrm.LookupControl<"ts_assessmentrating">;
     getControl(controlName: "ts_ncatapprovingteam"): Xrm.LookupControl<"team">;
