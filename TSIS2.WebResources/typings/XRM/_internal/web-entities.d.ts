@@ -952,6 +952,29 @@ interface ts_OperationActivity_Create extends ts_OperationActivity {
 }
 interface ts_OperationActivity_Update extends ts_OperationActivity {
 }
+interface ts_OperationActivityRiskScores_Base extends WebEntity {
+}
+interface ts_OperationActivityRiskScores_Fixed extends WebEntity_Fixed {
+  ts_operationactivityriskscoresid: string;
+}
+interface ts_OperationActivityRiskScores extends ts_OperationActivityRiskScores_Base, ts_OperationActivityRiskScores_Relationships {
+}
+interface ts_OperationActivityRiskScores_Relationships {
+}
+interface ts_OperationActivityRiskScores_Result extends ts_OperationActivityRiskScores_Base, ts_OperationActivityRiskScores_Relationships {
+}
+interface ts_OperationActivityRiskScores_FormattedResult {
+}
+interface ts_OperationActivityRiskScores_Select {
+}
+interface ts_OperationActivityRiskScores_Expand {
+}
+interface ts_OperationActivityRiskScores_Filter {
+}
+interface ts_OperationActivityRiskScores_Create extends ts_OperationActivityRiskScores {
+}
+interface ts_OperationActivityRiskScores_Update extends ts_OperationActivityRiskScores {
+}
 interface ts_operationcontact_Base extends WebEntity {
 }
 interface ts_operationcontact_Fixed extends WebEntity_Fixed {

@@ -27,6 +27,7 @@ interface ts_OperationActivity_Relationships {
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Site_Site?: ts_site_Result | null;
   ts_Stakeholder?: Account_Result | null;
+  ts_operationactivityriskscores_OperationActivity_ts_operationactivity?: ts_OperationActivityRiskScores_Result[] | null;
   ts_ts_planningdata_OperationActivity_ts_oper?: ts_PlanningData_Result[] | null;
 }
 interface ts_OperationActivity extends ts_OperationActivity_Base, ts_OperationActivity_Relationships {
@@ -141,6 +142,7 @@ interface ts_OperationActivity_Expand {
   ts_Site: WebExpand<ts_OperationActivity_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Site_Site: WebExpand<ts_OperationActivity_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
   ts_Stakeholder: WebExpand<ts_OperationActivity_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
+  ts_operationactivityriskscores_OperationActivity_ts_operationactivity: WebExpand<ts_OperationActivity_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_OperationActivity_ts_operationactivity: ts_OperationActivityRiskScores_Result[] }>;
   ts_ts_planningdata_OperationActivity_ts_oper: WebExpand<ts_OperationActivity_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_OperationActivity_ts_oper: ts_PlanningData_Result[] }>;
 }
 interface ts_OperationActivity_FormattedResult {
@@ -213,6 +215,7 @@ interface ts_OperationActivity_RelatedOne {
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface ts_OperationActivity_RelatedMany {
+  ts_operationactivityriskscores_OperationActivity_ts_operationactivity: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
   ts_ts_planningdata_OperationActivity_ts_oper: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

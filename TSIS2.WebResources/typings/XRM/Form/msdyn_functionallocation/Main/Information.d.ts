@@ -66,6 +66,7 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(name: "tab_3_section_3"): Xrm.PageSection;
         get(name: "tab_3_section_7"): Xrm.PageSection;
         get(name: "tab_3_section_8"): Xrm.PageSection;
+        get(name: "tab_3_section_9"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -114,6 +115,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_shortname"): Xrm.Attribute<string>;
       get(name: "msdyn_stateorprovince"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+      get(name: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
       get(name: "ts_alias1"): Xrm.Attribute<string>;
       get(name: "ts_alias2"): Xrm.Attribute<string>;
       get(name: "ts_alias3"): Xrm.Attribute<string>;
@@ -180,6 +182,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "msdyn_stateorprovince"): Xrm.StringControl;
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "notescontrol1"): Xrm.BaseControl;
+      get(name: "ts_accountableteam"): Xrm.LookupControl<"team">;
       get(name: "ts_alias1"): Xrm.StringControl;
       get(name: "ts_alias2"): Xrm.StringControl;
       get(name: "ts_alias3"): Xrm.StringControl;
@@ -248,6 +251,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getAttribute(attributeName: "msdyn_shortname"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_stateorprovince"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+    getAttribute(attributeName: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
     getAttribute(attributeName: "ts_alias1"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_alias2"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_alias3"): Xrm.Attribute<string>;
@@ -309,6 +313,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "msdyn_stateorprovince"): Xrm.StringControl;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "notescontrol1"): Xrm.BaseControl;
+    getControl(controlName: "ts_accountableteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_alias1"): Xrm.StringControl;
     getControl(controlName: "ts_alias2"): Xrm.StringControl;
     getControl(controlName: "ts_alias3"): Xrm.StringControl;

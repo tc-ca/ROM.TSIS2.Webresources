@@ -60,6 +60,7 @@ interface msdyn_FunctionalLocation_Relationships {
   msdyn_msdyn_functionallocation_incident_FunctionalLocation?: Incident_Result[] | null;
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation?: msdyn_workorder_Result[] | null;
   ovs_Finding_functionallocation_msdyn_Func?: ovs_Finding_Result[] | null;
+  ts_AccountableTeam?: Team_Result | null;
   ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation?: ts_EntityRisk_Result[] | null;
   ts_functionallocation_workorder_arrivalaerodrome?: msdyn_workorder_Result[] | null;
   ts_functionallocation_workorder_departureaerodrome?: msdyn_workorder_Result[] | null;
@@ -91,6 +92,7 @@ interface msdyn_FunctionalLocation extends msdyn_FunctionalLocation_Base, msdyn_
   msdyn_ParentFunctionalLocation_bind$msdyn_functionallocations?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  ts_AccountableTeam_bind$teams?: string | null;
   ts_Country_bind$tc_countries?: string | null;
   ts_RegionDoNotUse_bind$ts_regions?: string | null;
   ts_Region_bind$territories?: string | null;
@@ -139,6 +141,7 @@ interface msdyn_FunctionalLocation_Select {
   statecode: WebAttribute<msdyn_FunctionalLocation_Select, { statecode: msdyn_functionallocation_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<msdyn_FunctionalLocation_Select, { statuscode: msdyn_functionallocation_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<msdyn_FunctionalLocation_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_accountableteam_guid: WebAttribute<msdyn_FunctionalLocation_Select, { ts_accountableteam_guid: string | null }, { ts_accountableteam_formatted?: string }>;
   ts_alias1: WebAttribute<msdyn_FunctionalLocation_Select, { ts_alias1: string | null }, {  }>;
   ts_alias2: WebAttribute<msdyn_FunctionalLocation_Select, { ts_alias2: string | null }, {  }>;
   ts_alias3: WebAttribute<msdyn_FunctionalLocation_Select, { ts_alias3: string | null }, {  }>;
@@ -203,6 +206,7 @@ interface msdyn_FunctionalLocation_Filter {
   statecode: msdyn_functionallocation_statecode;
   statuscode: msdyn_functionallocation_statuscode;
   timezoneruleversionnumber: number;
+  ts_accountableteam_guid: XQW.Guid;
   ts_alias1: string;
   ts_alias2: string;
   ts_alias3: string;
@@ -253,6 +257,7 @@ interface msdyn_FunctionalLocation_Expand {
   ownerid: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<msdyn_FunctionalLocation_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_AccountableTeam: WebExpand<msdyn_FunctionalLocation_Expand, Team_Select, Team_Filter, { ts_AccountableTeam: Team_Result }>;
   ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: ts_EntityRisk_Result[] }>;
   ts_functionallocation_workorder_arrivalaerodrome: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_functionallocation_workorder_arrivalaerodrome: msdyn_workorder_Result[] }>;
   ts_functionallocation_workorder_departureaerodrome: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_functionallocation_workorder_departureaerodrome: msdyn_workorder_Result[] }>;
@@ -296,6 +301,7 @@ interface msdyn_FunctionalLocation_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  ts_accountableteam_formatted?: string;
   ts_class_formatted?: string;
   ts_country_formatted?: string;
   ts_mode_formatted?: string;
@@ -321,6 +327,7 @@ interface msdyn_FunctionalLocation_Result extends msdyn_FunctionalLocation_Base,
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
   owninguser_guid: string | null;
+  ts_accountableteam_guid: string | null;
   ts_country_guid: string | null;
   ts_region_guid: string | null;
   ts_regiondonotuse_guid: string | null;
@@ -338,6 +345,7 @@ interface msdyn_FunctionalLocation_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_AccountableTeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
 }
 interface msdyn_FunctionalLocation_RelatedMany {
   msdyn_FunctionalLocation_ParentFunctional: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;

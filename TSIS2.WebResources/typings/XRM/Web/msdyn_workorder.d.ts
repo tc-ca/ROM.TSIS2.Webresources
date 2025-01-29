@@ -95,6 +95,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_costexplanation?: string | null;
   ts_details?: string | null;
   ts_documenteddate?: Date | null;
+  ts_endofvalidfields?: string | null;
   ts_flightnumber?: string | null;
   ts_flighttype?: ts_flighttype | null;
   ts_ignoreupdate?: boolean | null;
@@ -433,6 +434,7 @@ interface msdyn_workorder_Select {
   ts_departureaerodrome_site_guid: WebAttribute<msdyn_workorder_Select, { ts_departureaerodrome_site_guid: string | null }, { ts_departureaerodrome_site_formatted?: string }>;
   ts_details: WebAttribute<msdyn_workorder_Select, { ts_details: string | null }, {  }>;
   ts_documenteddate: WebAttribute<msdyn_workorder_Select, { ts_documenteddate: Date | null }, { ts_documenteddate_formatted?: string }>;
+  ts_endofvalidfields: WebAttribute<msdyn_workorder_Select, { ts_endofvalidfields: string | null }, {  }>;
   ts_flightnumber: WebAttribute<msdyn_workorder_Select, { ts_flightnumber: string | null }, {  }>;
   ts_flighttype: WebAttribute<msdyn_workorder_Select, { ts_flighttype: ts_flighttype | null }, { ts_flighttype_formatted?: string }>;
   ts_functionallocation_guid: WebAttribute<msdyn_workorder_Select, { ts_functionallocation_guid: string | null }, { ts_functionallocation_formatted?: string }>;
@@ -660,6 +662,7 @@ interface msdyn_workorder_Filter {
   ts_departureaerodrome_site_guid: XQW.Guid;
   ts_details: string;
   ts_documenteddate: Date;
+  ts_endofvalidfields: string;
   ts_flightnumber: string;
   ts_flighttype: ts_flighttype;
   ts_functionallocation_guid: XQW.Guid;
