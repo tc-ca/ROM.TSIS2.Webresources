@@ -66,6 +66,7 @@ interface Team_Relationships {
   team_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
   team_ts_nonoversightactivity?: ts_nonoversightactivity_Result[] | null;
   team_ts_operationactivity?: ts_OperationActivity_Result[] | null;
+  team_ts_operationactivityriskscores?: ts_OperationActivityRiskScores_Result[] | null;
   team_ts_operationcontact?: ts_operationcontact_Result[] | null;
   team_ts_plan?: ts_Plan_Result[] | null;
   team_ts_planningdata?: ts_PlanningData_Result[] | null;
@@ -237,6 +238,7 @@ interface Team_Expand {
   team_ts_inspectionhours: WebExpand<Team_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { team_ts_inspectionhours: ts_InspectionHours_Result[] }>;
   team_ts_nonoversightactivity: WebExpand<Team_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { team_ts_nonoversightactivity: ts_nonoversightactivity_Result[] }>;
   team_ts_operationactivity: WebExpand<Team_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { team_ts_operationactivity: ts_OperationActivity_Result[] }>;
+  team_ts_operationactivityriskscores: WebExpand<Team_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { team_ts_operationactivityriskscores: ts_OperationActivityRiskScores_Result[] }>;
   team_ts_operationcontact: WebExpand<Team_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { team_ts_operationcontact: ts_operationcontact_Result[] }>;
   team_ts_plan: WebExpand<Team_Expand, ts_Plan_Select, ts_Plan_Filter, { team_ts_plan: ts_Plan_Result[] }>;
   team_ts_planningdata: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { team_ts_planningdata: ts_PlanningData_Result[] }>;
@@ -352,6 +354,7 @@ interface Team_RelatedMany {
   team_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   team_ts_nonoversightactivity: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
   team_ts_operationactivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
+  team_ts_operationactivityriskscores: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
   team_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   team_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   team_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;

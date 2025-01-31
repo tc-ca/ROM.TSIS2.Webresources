@@ -114,6 +114,7 @@ interface SystemUser_Base extends WebEntity {
   sharepointemailaddress?: string | null;
   skills?: string | null;
   stageid?: string | null;
+  systemmanagedusertype?: systemuser_systemmanagedusertype | null;
   systemuserid?: string | null;
   timezoneruleversionnumber?: number | null;
   title?: string | null;
@@ -297,6 +298,10 @@ interface SystemUser_Relationships {
   lk_ts_operationactivity_createdonbehalfby?: ts_OperationActivity_Result[] | null;
   lk_ts_operationactivity_modifiedby?: ts_OperationActivity_Result[] | null;
   lk_ts_operationactivity_modifiedonbehalfby?: ts_OperationActivity_Result[] | null;
+  lk_ts_operationactivityriskscores_createdby?: ts_OperationActivityRiskScores_Result[] | null;
+  lk_ts_operationactivityriskscores_createdonbehalfby?: ts_OperationActivityRiskScores_Result[] | null;
+  lk_ts_operationactivityriskscores_modifiedby?: ts_OperationActivityRiskScores_Result[] | null;
+  lk_ts_operationactivityriskscores_modifiedonbehalfby?: ts_OperationActivityRiskScores_Result[] | null;
   lk_ts_operationcontact_createdby?: ts_operationcontact_Result[] | null;
   lk_ts_operationcontact_createdonbehalfby?: ts_operationcontact_Result[] | null;
   lk_ts_operationcontact_modifiedby?: ts_operationcontact_Result[] | null;
@@ -430,6 +435,7 @@ interface SystemUser_Relationships {
   user_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
   user_ts_nonoversightactivity?: ts_nonoversightactivity_Result[] | null;
   user_ts_operationactivity?: ts_OperationActivity_Result[] | null;
+  user_ts_operationactivityriskscores?: ts_OperationActivityRiskScores_Result[] | null;
   user_ts_operationcontact?: ts_operationcontact_Result[] | null;
   user_ts_plan?: ts_Plan_Result[] | null;
   user_ts_planningdata?: ts_PlanningData_Result[] | null;
@@ -597,6 +603,7 @@ interface SystemUser_Select {
   siteid_guid: WebAttribute<SystemUser_Select, { siteid_guid: string | null }, { siteid_formatted?: string }>;
   skills: WebAttribute<SystemUser_Select, { skills: string | null }, {  }>;
   stageid: WebAttribute<SystemUser_Select, { stageid: string | null }, {  }>;
+  systemmanagedusertype: WebAttribute<SystemUser_Select, { systemmanagedusertype: systemuser_systemmanagedusertype | null }, { systemmanagedusertype_formatted?: string }>;
   systemuserid: WebAttribute<SystemUser_Select, { systemuserid: string | null }, {  }>;
   territoryid_guid: WebAttribute<SystemUser_Select, { territoryid_guid: string | null }, { territoryid_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<SystemUser_Select, { timezoneruleversionnumber: number | null }, {  }>;
@@ -744,6 +751,7 @@ interface SystemUser_Filter {
   siteid_guid: XQW.Guid;
   skills: string;
   stageid: XQW.Guid;
+  systemmanagedusertype: systemuser_systemmanagedusertype;
   systemuserid: XQW.Guid;
   territoryid_guid: XQW.Guid;
   timezoneruleversionnumber: number;
@@ -934,6 +942,10 @@ interface SystemUser_Expand {
   lk_ts_operationactivity_createdonbehalfby: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { lk_ts_operationactivity_createdonbehalfby: ts_OperationActivity_Result[] }>;
   lk_ts_operationactivity_modifiedby: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { lk_ts_operationactivity_modifiedby: ts_OperationActivity_Result[] }>;
   lk_ts_operationactivity_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { lk_ts_operationactivity_modifiedonbehalfby: ts_OperationActivity_Result[] }>;
+  lk_ts_operationactivityriskscores_createdby: WebExpand<SystemUser_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { lk_ts_operationactivityriskscores_createdby: ts_OperationActivityRiskScores_Result[] }>;
+  lk_ts_operationactivityriskscores_createdonbehalfby: WebExpand<SystemUser_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { lk_ts_operationactivityriskscores_createdonbehalfby: ts_OperationActivityRiskScores_Result[] }>;
+  lk_ts_operationactivityriskscores_modifiedby: WebExpand<SystemUser_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { lk_ts_operationactivityriskscores_modifiedby: ts_OperationActivityRiskScores_Result[] }>;
+  lk_ts_operationactivityriskscores_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { lk_ts_operationactivityriskscores_modifiedonbehalfby: ts_OperationActivityRiskScores_Result[] }>;
   lk_ts_operationcontact_createdby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_createdby: ts_operationcontact_Result[] }>;
   lk_ts_operationcontact_createdonbehalfby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_createdonbehalfby: ts_operationcontact_Result[] }>;
   lk_ts_operationcontact_modifiedby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_modifiedby: ts_operationcontact_Result[] }>;
@@ -1070,6 +1082,7 @@ interface SystemUser_Expand {
   user_ts_inspectionhours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { user_ts_inspectionhours: ts_InspectionHours_Result[] }>;
   user_ts_nonoversightactivity: WebExpand<SystemUser_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { user_ts_nonoversightactivity: ts_nonoversightactivity_Result[] }>;
   user_ts_operationactivity: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { user_ts_operationactivity: ts_OperationActivity_Result[] }>;
+  user_ts_operationactivityriskscores: WebExpand<SystemUser_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { user_ts_operationactivityriskscores: ts_OperationActivityRiskScores_Result[] }>;
   user_ts_operationcontact: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { user_ts_operationcontact: ts_operationcontact_Result[] }>;
   user_ts_plan: WebExpand<SystemUser_Expand, ts_Plan_Select, ts_Plan_Filter, { user_ts_plan: ts_Plan_Result[] }>;
   user_ts_planningdata: WebExpand<SystemUser_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { user_ts_planningdata: ts_PlanningData_Result[] }>;
@@ -1125,6 +1138,7 @@ interface SystemUser_FormattedResult {
   preferredphonecode_formatted?: string;
   queueid_formatted?: string;
   siteid_formatted?: string;
+  systemmanagedusertype_formatted?: string;
   territoryid_formatted?: string;
   transactioncurrencyid_formatted?: string;
   ts_inspectionhours_formatted?: string;
@@ -1330,6 +1344,10 @@ interface SystemUser_RelatedMany {
   lk_ts_operationactivity_createdonbehalfby: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   lk_ts_operationactivity_modifiedby: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   lk_ts_operationactivity_modifiedonbehalfby: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
+  lk_ts_operationactivityriskscores_createdby: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
+  lk_ts_operationactivityriskscores_createdonbehalfby: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
+  lk_ts_operationactivityriskscores_modifiedby: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
+  lk_ts_operationactivityriskscores_modifiedonbehalfby: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
   lk_ts_operationcontact_createdby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   lk_ts_operationcontact_createdonbehalfby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   lk_ts_operationcontact_modifiedby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
@@ -1462,6 +1480,7 @@ interface SystemUser_RelatedMany {
   user_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   user_ts_nonoversightactivity: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
   user_ts_operationactivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
+  user_ts_operationactivityriskscores: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
   user_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   user_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   user_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
