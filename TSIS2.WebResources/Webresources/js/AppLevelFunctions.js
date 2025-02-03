@@ -17,7 +17,7 @@ function appOnLoad() {
 
   // Hide unwanted Tables in the Site map for Production - the table entries can be located here: \Webresources\css\prod_custom.css
   if (appUrl === PROD_URL) {
-    showBanner(appUrl, message1, false);
+    //showBanner(appUrl, message1, false); //incorrect message1 displaying in prod
     loadProdCustomCSS();
   }
 
