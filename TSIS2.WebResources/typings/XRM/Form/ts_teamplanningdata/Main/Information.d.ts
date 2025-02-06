@@ -32,6 +32,13 @@ declare namespace Form.ts_teamplanningdata.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_planning_data_details extends Xrm.SectionCollectionBase {
+        get(name: "tab_6_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_workorders extends Xrm.SectionCollectionBase {
         get(name: "tab_4_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -80,6 +87,7 @@ declare namespace Form.ts_teamplanningdata.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_new_1"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "Subgrid_new_2"): Xrm.BaseControl;
+      get(name: "WebResource_TeamPlanningDataDetailsDisplay"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_ts_name"): Xrm.StringControl;
       get(name: "header_ts_residualinspectorhoursq1"): Xrm.NumberControl;
@@ -123,6 +131,7 @@ declare namespace Form.ts_teamplanningdata.Main {
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: "tab_hours"): Xrm.PageTab<Tabs.tab_hours>;
       get(name: "tab_planning_data"): Xrm.PageTab<Tabs.tab_planning_data>;
+      get(name: "tab_planning_data_details"): Xrm.PageTab<Tabs.tab_planning_data_details>;
       get(name: "tab_workorders"): Xrm.PageTab<Tabs.tab_workorders>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -165,6 +174,7 @@ declare namespace Form.ts_teamplanningdata.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_new_2"): Xrm.BaseControl;
+    getControl(controlName: "WebResource_TeamPlanningDataDetailsDisplay"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_ts_name"): Xrm.StringControl;
     getControl(controlName: "header_ts_residualinspectorhoursq1"): Xrm.NumberControl;
