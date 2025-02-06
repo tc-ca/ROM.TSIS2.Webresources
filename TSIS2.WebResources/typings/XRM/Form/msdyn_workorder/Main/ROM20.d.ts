@@ -24,7 +24,6 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "section_supporting_region"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: "workspace_section_plandetails"): Xrm.PageSection;
-        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_11"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_13"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_9"): Xrm.PageSection;
@@ -129,6 +128,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "tab_workspace_aircraftdetails"): Xrm.PageSection;
         get(name: "tab_workspace_flightdetails"): Xrm.PageSection;
         get(name: "tab_workspace_section_4"): Xrm.PageSection;
+        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_11"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;

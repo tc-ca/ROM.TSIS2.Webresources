@@ -9,6 +9,7 @@ interface ts_OperationActivityRiskScores_Base extends WebEntity {
   ts_calculatedriskscore?: number | null;
   ts_name?: string | null;
   ts_operationactivityriskscoresid?: string | null;
+  ts_riskscoretrigger?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -65,6 +66,7 @@ interface ts_OperationActivityRiskScores_Select {
   ts_operationtypeentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationtypeentityrisk_guid: string | null }, { ts_operationtypeentityrisk_formatted?: string }>;
   ts_programareaentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_programareaentityrisk_guid: string | null }, { ts_programareaentityrisk_formatted?: string }>;
   ts_riskrating_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskrating_guid: string | null }, { ts_riskrating_formatted?: string }>;
+  ts_riskscoretrigger: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscoretrigger: number | null }, {  }>;
   ts_siteentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteentityrisk_guid: string | null }, { ts_siteentityrisk_formatted?: string }>;
   ts_stakeholderentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_stakeholderentityrisk_guid: string | null }, { ts_stakeholderentityrisk_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_OperationActivityRiskScores_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -96,6 +98,7 @@ interface ts_OperationActivityRiskScores_Filter {
   ts_operationtypeentityrisk_guid: XQW.Guid;
   ts_programareaentityrisk_guid: XQW.Guid;
   ts_riskrating_guid: XQW.Guid;
+  ts_riskscoretrigger: any;
   ts_siteentityrisk_guid: XQW.Guid;
   ts_stakeholderentityrisk_guid: XQW.Guid;
   utcconversiontimezonecode: number;

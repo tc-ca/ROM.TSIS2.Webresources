@@ -599,6 +599,11 @@
             "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincident"
           },
           {
+            "uniquename": "ts_/html/TeamPlanningDataDetailsDisplay.html",
+            "file": "html\\TeamPlanningDataDetailsDisplay.html",
+            "description": "Display the nested grid for Team Planning Data"
+          },
+          {
             "uniquename": "ts_/html/SecurityIncidentAdditionalDetailsDisplay.html",
             "file": "html\\SecurityIncidentAdditionalDetailsDisplay.html",
             "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincidentadditionaldetails"

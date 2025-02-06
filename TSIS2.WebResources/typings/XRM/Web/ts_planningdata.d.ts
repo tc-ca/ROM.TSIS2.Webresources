@@ -6,6 +6,7 @@ interface ts_PlanningData_Base extends WebEntity {
   statecode?: ts_planningdata_statecode | null;
   statuscode?: ts_planningdata_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_closedondatemostrecentwo?: Date | null;
   ts_completedq1?: number | null;
   ts_completedq2?: number | null;
   ts_completedq3?: number | null;
@@ -93,6 +94,7 @@ interface ts_PlanningData_Select {
   statuscode: WebAttribute<ts_PlanningData_Select, { statuscode: ts_planningdata_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_PlanningData_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_activitytype_guid: WebAttribute<ts_PlanningData_Select, { ts_activitytype_guid: string | null }, { ts_activitytype_formatted?: string }>;
+  ts_closedondatemostrecentwo: WebAttribute<ts_PlanningData_Select, { ts_closedondatemostrecentwo: Date | null }, { ts_closedondatemostrecentwo_formatted?: string }>;
   ts_completedq1: WebAttribute<ts_PlanningData_Select, { ts_completedq1: number | null }, {  }>;
   ts_completedq2: WebAttribute<ts_PlanningData_Select, { ts_completedq2: number | null }, {  }>;
   ts_completedq3: WebAttribute<ts_PlanningData_Select, { ts_completedq3: number | null }, {  }>;
@@ -156,6 +158,7 @@ interface ts_PlanningData_Filter {
   statuscode: ts_planningdata_statuscode;
   timezoneruleversionnumber: number;
   ts_activitytype_guid: XQW.Guid;
+  ts_closedondatemostrecentwo: Date;
   ts_completedq1: number;
   ts_completedq2: number;
   ts_completedq3: number;
@@ -239,6 +242,7 @@ interface ts_PlanningData_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_activitytype_formatted?: string;
+  ts_closedondatemostrecentwo_formatted?: string;
   ts_fiscalyear_formatted?: string;
   ts_operation_formatted?: string;
   ts_operationactivity_formatted?: string;
