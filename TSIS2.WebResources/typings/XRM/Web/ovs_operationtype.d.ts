@@ -20,6 +20,7 @@ interface ovs_operationtype_Relationships {
   ovs_ovs_operationtype_ovs_operation?: ovs_operation_Result[] | null;
   ts_EntityRisk_ovs_operationtype_ovs_operationtype?: ts_EntityRisk_Result[] | null;
   ts_account_PrincipalOperationType_ovs_operat?: Account_Result[] | null;
+  ts_infraction_operationtype_ovs_operationtype?: ts_infraction_Result[] | null;
   ts_ovs_Finding_ovs_operationtype_ovs_operati?: ovs_Finding_Result[] | null;
   ts_ovs_operationtype_incident_OperationType?: Incident_Result[] | null;
   ts_ovs_operationtype_msdyn_workorderservicetask_AOCOperationType?: msdyn_workorderservicetask_Result[] | null;
@@ -111,6 +112,7 @@ interface ovs_operationtype_Expand {
   owninguser: WebExpand<ovs_operationtype_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_EntityRisk_ovs_operationtype_ovs_operationtype: WebExpand<ovs_operationtype_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_EntityRisk_ovs_operationtype_ovs_operationtype: ts_EntityRisk_Result[] }>;
   ts_account_PrincipalOperationType_ovs_operat: WebExpand<ovs_operationtype_Expand, Account_Select, Account_Filter, { ts_account_PrincipalOperationType_ovs_operat: Account_Result[] }>;
+  ts_infraction_operationtype_ovs_operationtype: WebExpand<ovs_operationtype_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_operationtype_ovs_operationtype: ts_infraction_Result[] }>;
   ts_ovs_Finding_ovs_operationtype_ovs_operati: WebExpand<ovs_operationtype_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_ovs_operationtype_ovs_operati: ovs_Finding_Result[] }>;
   ts_ovs_operationtype_incident_OperationType: WebExpand<ovs_operationtype_Expand, Incident_Select, Incident_Filter, { ts_ovs_operationtype_incident_OperationType: Incident_Result[] }>;
   ts_ovs_operationtype_msdyn_workorderservicetask_AOCOperationType: WebExpand<ovs_operationtype_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_ovs_operationtype_msdyn_workorderservicetask_AOCOperationType: msdyn_workorderservicetask_Result[] }>;
@@ -171,6 +173,7 @@ interface ovs_operationtype_RelatedMany {
   ovs_ovs_operationtype_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_EntityRisk_ovs_operationtype_ovs_operationtype: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   ts_account_PrincipalOperationType_ovs_operat: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_infraction_operationtype_ovs_operationtype: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_ovs_Finding_ovs_operationtype_ovs_operati: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operationtype_incident_OperationType: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_ovs_operationtype_msdyn_workorderservicetask_AOCOperationType: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;

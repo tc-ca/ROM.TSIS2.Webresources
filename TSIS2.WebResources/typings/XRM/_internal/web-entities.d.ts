@@ -791,6 +791,29 @@ interface ts_IncompleteWorkOrderReason_Create extends ts_IncompleteWorkOrderReas
 }
 interface ts_IncompleteWorkOrderReason_Update extends ts_IncompleteWorkOrderReason {
 }
+interface ts_infraction_Base extends WebEntity {
+}
+interface ts_infraction_Fixed extends WebEntity_Fixed {
+  ts_infractionid: string;
+}
+interface ts_infraction extends ts_infraction_Base, ts_infraction_Relationships {
+}
+interface ts_infraction_Relationships {
+}
+interface ts_infraction_Result extends ts_infraction_Base, ts_infraction_Relationships {
+}
+interface ts_infraction_FormattedResult {
+}
+interface ts_infraction_Select {
+}
+interface ts_infraction_Expand {
+}
+interface ts_infraction_Filter {
+}
+interface ts_infraction_Create extends ts_infraction {
+}
+interface ts_infraction_Update extends ts_infraction {
+}
 interface ts_InspectionHours_Base extends WebEntity {
 }
 interface ts_InspectionHours_Fixed extends WebEntity_Fixed {
