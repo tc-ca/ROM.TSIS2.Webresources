@@ -25,7 +25,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -57,7 +57,7 @@ var ROM;
                 formContext.data.entity.addOnPostSave(generateSuggestedInspections);
             }
             var planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
-            if (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) {
+            if (planStatusValue == 741130001 /* ts_planstatus.Complete */ || planStatusValue == 447390001 /* ts_planstatus.HQreview */) {
                 formContext.getControl("ts_team").setDisabled(true);
                 formContext.getControl("ts_fiscalyear").setDisabled(true);
                 formContext.getControl("header_ownerid").setDisabled(true);
@@ -105,7 +105,7 @@ var ROM;
          */
         function generateSuggestedInspections(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataTeamEstimatedTravelTimeTotal, teamPlanningDataTeamEstimatedCostTotal, planfetchXml, planData, teamRegionId_1, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, targetedInspectionPAXIncidentTypeId, targetedInspectionTDGIncidentTypeId, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, targetedInspectionPAXIncidentType, targetedInspectionTDGIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId_1, railwayLoaderOperationTypeId_1, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, operationsTargetedInspectionNeededFetchXml, operationsTargetedInspectionNeeded, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, _a, operationsTargetedInspectionNeeded_1, operation, data, inspectorHoursfetchXml, teamInspectorHours, _b, teamInspectorHours_1, inspectorHours, data, suggestedInspectionsfetchXml, suggestedInspections;
+                var formContext, planId, teamValue, teamId, teamName, planFiscalYearValue, planFiscalYearName, planFiscalYearId, teamPlanningDataPlannedQ1, teamPlanningDataPlannedQ2, teamPlanningDataPlannedQ3, teamPlanningDataPlannedQ4, teamPlanningDataPlannedTotal, teamPlanningDataTeamEstimatedDurationQ1, teamPlanningDataTeamEstimatedDurationQ2, teamPlanningDataTeamEstimatedDurationQ3, teamPlanningDataTeamEstimatedDurationQ4, teamPlanningDataTeamEstimatedDurationTotal, teamPlanningDataTeamEstimatedTravelTimeTotal, teamPlanningDataTeamEstimatedCostTotal, planfetchXml, planData, teamRegionId_1, plannedFiscalEndDate, OperationsFetchXml, operations, siteInspectionTDGIncidentTypeId, VSITDGIncidentTypeId, NonSchedule1TDGIncidentTypeId, OversightSIPAXIncidentTypeId, SIPAXIncidentTypeId, targetedInspectionPAXIncidentTypeId, targetedInspectionTDGIncidentTypeId, globalContextUrl, siteInspectionTDGIncidentType, VSITDGIncidentType, NonSchedule1TDGIncidentType, OversightSIPAXIncidentType, SIPAXIncidentType, targetedInspectionPAXIncidentType, targetedInspectionTDGIncidentType, _i, operations_1, operation, lastRiskInspection, riskInterval, riskFrequency, inspectionIsDue, inspectionCount, nextInspectionDate, i, data, railwayCarrierOperationTypeId_1, railwayLoaderOperationTypeId_1, VSIData, SiteInspectionData, SiteInspectionData, VSIData, nonSchedule1Data, nonSchedule1Data, OversightData, SiteInspectionData, SiteInspectionData, operationsTargetedInspectionNeededFetchXml, operationsTargetedInspectionNeeded, railwayCarrierOperationTypeId, railwayLoaderOperationTypeId, _a, operationsTargetedInspectionNeeded_1, operation, data, inspectorHoursfetchXml, teamInspectorHours, _b, teamInspectorHours_1, inspectorHours, data, suggestedInspectionsfetchXml, suggestedInspections;
                 return __generator(this, function (_c) {
                     switch (_c.label) {
                         case 0:
@@ -137,7 +137,7 @@ var ROM;
                             teamPlanningDataTeamEstimatedCostTotal = 0;
                             if (!(teamId != null && planFiscalYearId != null)) return [3 /*break*/, 12];
                             //Set the Plan name to a combination of the team and fiscal year
-                            formContext.getAttribute("ts_name").setValue(teamName + " " + planFiscalYearName);
+                            formContext.getAttribute("ts_name").setValue("".concat(teamName, " ").concat(planFiscalYearName));
                             planfetchXml = [
                                 "<fetch>",
                                 "  <entity name='ts_plan'>",
@@ -218,6 +218,12 @@ var ROM;
                             SIPAXIncidentTypeId = "45c59aa0-511a-ec11-b6e7-000d3a09ce95";
                             targetedInspectionPAXIncidentTypeId = "4819e8a6-c91f-ec11-b6e6-000d3af473b7";
                             targetedInspectionTDGIncidentTypeId = "3dc59aa0-511a-ec11-b6e7-000d3a09ce95";
+                            globalContextUrl = Xrm.Utility.getGlobalContext().getClientUrl();
+                            console.log("url: " + globalContextUrl);
+                            if (globalContextUrl.indexOf("romts-gsrst-training") != -1 || globalContextUrl.indexOf("romts-gsrst-tcd365") != -1) {
+                                console.log("training or prod url ");
+                                OversightSIPAXIncidentTypeId = "ef0ec777-5bca-ed11-b596-000d3af4f2f8";
+                            }
                             return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_incidenttype", siteInspectionTDGIncidentTypeId, "?$select=msdyn_name,msdyn_estimatedduration").then(function success(result) { return result; }, function (error) { console.log(error.message); })];
                         case 3:
                             siteInspectionTDGIncidentType = _c.sent();
@@ -243,7 +249,7 @@ var ROM;
                             for (_i = 0, operations_1 = operations; _i < operations_1.length; _i++) {
                                 operation = operations_1[_i];
                                 // If ts_typeofdangerousgoods does not equal No DG
-                                if (operation.ts_typeofdangerousgoods != 717750000 /* NoDangerousGoods */) {
+                                if (operation.ts_typeofdangerousgoods != 717750000 /* ts_typeofdangerousgoods.NoDangerousGoods */) {
                                     lastRiskInspection = operation.ts_dateoflastriskbasedinspection;
                                     riskInterval = operation["risk.ts_interval"];
                                     riskFrequency = operation["risk.ts_frequency"];
@@ -296,8 +302,8 @@ var ROM;
                                         railwayLoaderOperationTypeId_1 = "da56fea1-c751-eb11-a812-000d3af3ac0d";
                                         //If the Operation Type is RailwayCarrier of RailwayLoader (First bigger Flow Logic)
                                         if (operation._ovs_operationtypeid_value == railwayCarrierOperationTypeId_1 || operation._ovs_operationtypeid_value == railwayLoaderOperationTypeId_1) {
-                                            if (operation.ts_typeofdangerousgoods == 717750001 /* Schedule1DangerousGoods */ || operation.ts_typeofdangerousgoods == null) {
-                                                if (operation.ts_visualsecurityinspection == 717750001 /* Yes */) {
+                                            if (operation.ts_typeofdangerousgoods == 717750001 /* ts_typeofdangerousgoods.Schedule1DangerousGoods */ || operation.ts_typeofdangerousgoods == null) {
+                                                if (operation.ts_visualsecurityinspection == 717750001 /* ts_visualsecurityinspection.Yes */) {
                                                     VSIData = __assign({}, data);
                                                     SiteInspectionData = __assign({}, data);
                                                     //Even it's only 1 inspection create both 1 VSI and 1 Site Inspection
@@ -318,8 +324,8 @@ var ROM;
                                                     Xrm.WebApi.createRecord("ts_suggestedinspection", SiteInspectionData).then(function success(result) { }, function (error) { console.log(error.message); });
                                                 }
                                             }
-                                            else if (operation.ts_typeofdangerousgoods == 717750002 /* NonSchedule1DangerousGoods */) {
-                                                if (operation.ts_visualsecurityinspection == 717750001 /* Yes */) {
+                                            else if (operation.ts_typeofdangerousgoods == 717750002 /* ts_typeofdangerousgoods.NonSchedule1DangerousGoods */) {
+                                                if (operation.ts_visualsecurityinspection == 717750001 /* ts_visualsecurityinspection.Yes */) {
                                                     VSIData = __assign({}, data);
                                                     nonSchedule1Data = __assign({}, data);
                                                     //Even it's only 1 inspection create both 1 VSI and 1 non-Schedule 1 Site Inspection
@@ -342,7 +348,7 @@ var ROM;
                                         }
                                         //Operation Type is Passenger Company, Small Passenger Company, or Host Company (Smaller Flow Logic)
                                         else {
-                                            if (operation.ts_issecurityinspectionsite == 717750001 /* Yes */) {
+                                            if (operation.ts_issecurityinspectionsite == 717750001 /* ts_issecurityinspectionsite.Yes */) {
                                                 OversightData = __assign({}, data);
                                                 SiteInspectionData = __assign({}, data);
                                                 //Even it's only 1 inspection create both 1 Oversight and 1 Site inspection
@@ -552,7 +558,7 @@ var ROM;
             var formContext = executionContext.getFormContext();
             var planStatusValue = parent["Xrm"].Page.getAttribute("ts_planstatus").getValue();
             //Change which fields lock depending on the plan status
-            var fields = (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_estimatedtraveltime", "ts_q1", "ts_q2", "ts_q3", "ts_q4", "ts_estimatedcost", "ts_trip", "ts_notes"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
+            var fields = (planStatusValue == 741130001 /* ts_planstatus.Complete */ || planStatusValue == 447390001 /* ts_planstatus.HQreview */) ? ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold", "ts_inspector", "ts_estimatedduration", "ts_estimatedtraveltime", "ts_q1", "ts_q2", "ts_q3", "ts_q4", "ts_estimatedcost", "ts_trip", "ts_notes"] : ["ts_stakeholder", "ts_operationtype", "ts_site", "ts_activitytype", "ts_riskthreshold"];
             if (formContext) {
                 var entity = formContext.data.entity;
                 entity.attributes.forEach(function (attribute, i) {
@@ -638,7 +644,7 @@ var ROM;
         function planStatusOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
-            if (planStatusValue == 741130001 /* Complete */ || planStatusValue == 447390001 /* HQreview */) {
+            if (planStatusValue == 741130001 /* ts_planstatus.Complete */ || planStatusValue == 447390001 /* ts_planstatus.HQreview */) {
                 formContext.getControl("ts_team").setDisabled(true);
                 formContext.getControl("ts_fiscalyear").setDisabled(true);
                 formContext.getControl("header_ownerid").setDisabled(true);
