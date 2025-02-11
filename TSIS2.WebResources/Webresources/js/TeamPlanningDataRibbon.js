@@ -285,7 +285,10 @@ async function createWorkOrders(formContext) {
                             const dataQ1 = { ...workOrderData };
                             dataQ1["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q1Id + ")";
                             for (let i = 0; i < workOrdersToCreateInQ1; i++) {
-                                workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ1).then(() => {
+                                workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ1).then(result => {
+                                    // Update ts_state to Committed (717750001) to run flow: [Work Order] Add trip inspectors to access team
+                                    return Xrm.WebApi.updateRecord("msdyn_workorder", result.id, { ts_state: 717750001 });
+                                }).then(() => {
                                     currentWorkOrders++;
                                     Xrm.Utility.showProgressIndicator(createWorkOrdersProgressIndicator + " (" + currentWorkOrders + " / " + totalWorkOrders + " )");
                                 }));
@@ -298,7 +301,10 @@ async function createWorkOrders(formContext) {
                             const dataQ2 = { ...workOrderData };
                             dataQ2["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q2Id + ")";
                             for (let i = 0; i < workOrdersToCreateInQ2; i++) {
-                                workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ2).then(() => {
+                                workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ1).then(result => {
+                                    // Update ts_state to Committed (717750001) to run flow: [Work Order] Add trip inspectors to access team
+                                    return Xrm.WebApi.updateRecord("msdyn_workorder", result.id, { ts_state: 717750001 });
+                                }).then(() => {
                                     currentWorkOrders++;
                                     Xrm.Utility.showProgressIndicator(createWorkOrdersProgressIndicator + " (" + currentWorkOrders + " / " + totalWorkOrders + " )");
                                 }));
@@ -311,7 +317,10 @@ async function createWorkOrders(formContext) {
                             const dataQ3 = { ...workOrderData };
                             dataQ3["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q3Id + ")";
                             for (let i = 0; i < workOrdersToCreateInQ3; i++) {
-                                workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ3).then(() => {
+                                workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ1).then(result => {
+                                    // Update ts_state to Committed (717750001) to run flow: [Work Order] Add trip inspectors to access team
+                                    return Xrm.WebApi.updateRecord("msdyn_workorder", result.id, { ts_state: 717750001 });
+                                }).then(() => {
                                     currentWorkOrders++;
                                     Xrm.Utility.showProgressIndicator(createWorkOrdersProgressIndicator + " (" + currentWorkOrders + " / " + totalWorkOrders + " )");
                                 }));
@@ -324,7 +333,10 @@ async function createWorkOrders(formContext) {
                             const dataQ4 = { ...workOrderData };
                             dataQ4["ovs_FiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + Q4Id + ")";
                             for (let i = 0; i < workOrdersToCreateInQ4; i++) {
-                                workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ4).then(() => {
+                                workOrderCreationPromises.push(Xrm.WebApi.createRecord("msdyn_workorder", dataQ1).then(result => {
+                                    // Update ts_state to Committed (717750001) to run flow: [Work Order] Add trip inspectors to access team
+                                    return Xrm.WebApi.updateRecord("msdyn_workorder", result.id, { ts_state: 717750001 });
+                                }).then(() => {
                                     currentWorkOrders++;
                                     Xrm.Utility.showProgressIndicator(createWorkOrdersProgressIndicator + " (" + currentWorkOrders + " / " + totalWorkOrders + " )");
                                 }));
