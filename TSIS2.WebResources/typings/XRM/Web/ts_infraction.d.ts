@@ -9,10 +9,13 @@ interface ts_infraction_Base extends WebEntity {
   ts_acceptraterecommendation?: ts_yesno | null;
   ts_finalenforcementaction?: ts_finalenforcementaction | null;
   ts_infractionid?: string | null;
+  ts_infractionprovisiontexten?: string | null;
+  ts_infractionprovisiontextfr?: string | null;
   ts_infractiontype?: ts_infractiontype | null;
   ts_issueaddressedonsite?: ts_yesno | null;
   ts_name?: string | null;
   ts_noncompliancetimeframe?: ts_noncompliancetimeframe | null;
+  ts_notes?: string | null;
   ts_rateenforcementjustification?: string | null;
   ts_rateenforcementrecommendation?: ts_raterecommendations | null;
   ts_ratefinalenforcementaction?: ts_raterecommendations | null;
@@ -26,13 +29,16 @@ interface ts_infraction_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_infraction_Relationships {
+  ts_Case?: Incident_Result | null;
   ts_RATEApprovingTeam?: Team_Result | null;
   ts_RATEManager?: SystemUser_Result | null;
+  ts_WorkOrder?: msdyn_workorder_Result | null;
   ts_ovs_finding_infraction_ts_infraction?: ovs_Finding_Result[] | null;
 }
 interface ts_infraction extends ts_infraction_Base, ts_infraction_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  ts_Case_bind$incidents?: string | null;
   ts_RATEActualorPotentialHarm_bind$ts_assessmentratings?: string | null;
   ts_RATEApprovingTeam_bind$teams?: string | null;
   ts_RATEComplianceHistory_bind$ts_assessmentratings?: string | null;
@@ -45,6 +51,8 @@ interface ts_infraction extends ts_infraction_Base, ts_infraction_Relationships 
   ts_RATEMitigationofHarm_bind$ts_assessmentratings?: string | null;
   ts_RATEPreventingRecurrence_bind$ts_assessmentratings?: string | null;
   ts_RATEResponsibility_bind$ts_assessmentratings?: string | null;
+  ts_Region_bind$territories?: string | null;
+  ts_WorkOrder_bind$msdyn_workorders?: string | null;
   ts_action_bind$ts_actions?: string | null;
   ts_contact_bind$contacts?: string | null;
   ts_functionallocation_bind$msdyn_functionallocations?: string | null;
@@ -75,15 +83,19 @@ interface ts_infraction_Select {
   timezoneruleversionnumber: WebAttribute<ts_infraction_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_acceptraterecommendation: WebAttribute<ts_infraction_Select, { ts_acceptraterecommendation: ts_yesno | null }, { ts_acceptraterecommendation_formatted?: string }>;
   ts_action_guid: WebAttribute<ts_infraction_Select, { ts_action_guid: string | null }, { ts_action_formatted?: string }>;
+  ts_case_guid: WebAttribute<ts_infraction_Select, { ts_case_guid: string | null }, { ts_case_formatted?: string }>;
   ts_contact_guid: WebAttribute<ts_infraction_Select, { ts_contact_guid: string | null }, { ts_contact_formatted?: string }>;
   ts_finalenforcementaction: WebAttribute<ts_infraction_Select, { ts_finalenforcementaction: ts_finalenforcementaction | null }, { ts_finalenforcementaction_formatted?: string }>;
   ts_functionallocation_guid: WebAttribute<ts_infraction_Select, { ts_functionallocation_guid: string | null }, { ts_functionallocation_formatted?: string }>;
   ts_infractionid: WebAttribute<ts_infraction_Select, { ts_infractionid: string | null }, {  }>;
+  ts_infractionprovisiontexten: WebAttribute<ts_infraction_Select, { ts_infractionprovisiontexten: string | null }, {  }>;
+  ts_infractionprovisiontextfr: WebAttribute<ts_infraction_Select, { ts_infractionprovisiontextfr: string | null }, {  }>;
   ts_infractiontype: WebAttribute<ts_infraction_Select, { ts_infractiontype: ts_infractiontype | null }, { ts_infractiontype_formatted?: string }>;
   ts_issueaddressedonsite: WebAttribute<ts_infraction_Select, { ts_issueaddressedonsite: ts_yesno | null }, { ts_issueaddressedonsite_formatted?: string }>;
   ts_legislation_guid: WebAttribute<ts_infraction_Select, { ts_legislation_guid: string | null }, { ts_legislation_formatted?: string }>;
   ts_name: WebAttribute<ts_infraction_Select, { ts_name: string | null }, {  }>;
   ts_noncompliancetimeframe: WebAttribute<ts_infraction_Select, { ts_noncompliancetimeframe: ts_noncompliancetimeframe | null }, { ts_noncompliancetimeframe_formatted?: string }>;
+  ts_notes: WebAttribute<ts_infraction_Select, { ts_notes: string | null }, {  }>;
   ts_operation_guid: WebAttribute<ts_infraction_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
   ts_operationtype_guid: WebAttribute<ts_infraction_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
   ts_rateactualorpotentialharm_guid: WebAttribute<ts_infraction_Select, { ts_rateactualorpotentialharm_guid: string | null }, { ts_rateactualorpotentialharm_formatted?: string }>;
@@ -107,7 +119,9 @@ interface ts_infraction_Select {
   ts_ratepreviousenforcementmechanism: WebAttribute<ts_infraction_Select, { ts_ratepreviousenforcementmechanism: ts_ratespecificenforcementhistory | null }, { ts_ratepreviousenforcementmechanism_formatted?: string }>;
   ts_rateresponsibility_guid: WebAttribute<ts_infraction_Select, { ts_rateresponsibility_guid: string | null }, { ts_rateresponsibility_formatted?: string }>;
   ts_ratespecificnoncompliancehistory: WebAttribute<ts_infraction_Select, { ts_ratespecificnoncompliancehistory: ts_ratespecificcompliancehistory | null }, { ts_ratespecificnoncompliancehistory_formatted?: string }>;
+  ts_region_guid: WebAttribute<ts_infraction_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_infraction_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
+  ts_workorder_guid: WebAttribute<ts_infraction_Select, { ts_workorder_guid: string | null }, { ts_workorder_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_infraction_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_infraction_Select, { versionnumber: number | null }, {  }>;
 }
@@ -129,15 +143,19 @@ interface ts_infraction_Filter {
   timezoneruleversionnumber: number;
   ts_acceptraterecommendation: ts_yesno;
   ts_action_guid: XQW.Guid;
+  ts_case_guid: XQW.Guid;
   ts_contact_guid: XQW.Guid;
   ts_finalenforcementaction: ts_finalenforcementaction;
   ts_functionallocation_guid: XQW.Guid;
   ts_infractionid: XQW.Guid;
+  ts_infractionprovisiontexten: string;
+  ts_infractionprovisiontextfr: string;
   ts_infractiontype: ts_infractiontype;
   ts_issueaddressedonsite: ts_yesno;
   ts_legislation_guid: XQW.Guid;
   ts_name: string;
   ts_noncompliancetimeframe: ts_noncompliancetimeframe;
+  ts_notes: string;
   ts_operation_guid: XQW.Guid;
   ts_operationtype_guid: XQW.Guid;
   ts_rateactualorpotentialharm_guid: XQW.Guid;
@@ -161,7 +179,9 @@ interface ts_infraction_Filter {
   ts_ratepreviousenforcementmechanism: ts_ratespecificenforcementhistory;
   ts_rateresponsibility_guid: XQW.Guid;
   ts_ratespecificnoncompliancehistory: ts_ratespecificcompliancehistory;
+  ts_region_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
+  ts_workorder_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -173,8 +193,10 @@ interface ts_infraction_Expand {
   ownerid: WebExpand<ts_infraction_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ts_infraction_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_infraction_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_Case: WebExpand<ts_infraction_Expand, Incident_Select, Incident_Filter, { ts_Case: Incident_Result }>;
   ts_RATEApprovingTeam: WebExpand<ts_infraction_Expand, Team_Select, Team_Filter, { ts_RATEApprovingTeam: Team_Result }>;
   ts_RATEManager: WebExpand<ts_infraction_Expand, SystemUser_Select, SystemUser_Filter, { ts_RATEManager: SystemUser_Result }>;
+  ts_WorkOrder: WebExpand<ts_infraction_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder: msdyn_workorder_Result }>;
   ts_action: WebExpand<ts_infraction_Expand, ts_action_Select, ts_action_Filter, { ts_action: ts_action_Result }>;
   ts_contact: WebExpand<ts_infraction_Expand, Contact_Select, Contact_Filter, { ts_contact: Contact_Result }>;
   ts_functionallocation: WebExpand<ts_infraction_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_functionallocation: msdyn_FunctionalLocation_Result }>;
@@ -200,6 +222,7 @@ interface ts_infraction_FormattedResult {
   statuscode_formatted?: string;
   ts_acceptraterecommendation_formatted?: string;
   ts_action_formatted?: string;
+  ts_case_formatted?: string;
   ts_contact_formatted?: string;
   ts_finalenforcementaction_formatted?: string;
   ts_functionallocation_formatted?: string;
@@ -228,7 +251,9 @@ interface ts_infraction_FormattedResult {
   ts_ratepreviousenforcementmechanism_formatted?: string;
   ts_rateresponsibility_formatted?: string;
   ts_ratespecificnoncompliancehistory_formatted?: string;
+  ts_region_formatted?: string;
   ts_stakeholder_formatted?: string;
+  ts_workorder_formatted?: string;
 }
 interface ts_infraction_Result extends ts_infraction_Base, ts_infraction_Relationships {
   "@odata.etag": string;
@@ -241,6 +266,7 @@ interface ts_infraction_Result extends ts_infraction_Base, ts_infraction_Relatio
   owningteam_guid: string | null;
   owninguser_guid: string | null;
   ts_action_guid: string | null;
+  ts_case_guid: string | null;
   ts_contact_guid: string | null;
   ts_functionallocation_guid: string | null;
   ts_legislation_guid: string | null;
@@ -258,7 +284,9 @@ interface ts_infraction_Result extends ts_infraction_Base, ts_infraction_Relatio
   ts_ratemitigationofharm_guid: string | null;
   ts_ratepreventingrecurrence_guid: string | null;
   ts_rateresponsibility_guid: string | null;
+  ts_region_guid: string | null;
   ts_stakeholder_guid: string | null;
+  ts_workorder_guid: string | null;
 }
 interface ts_infraction_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -268,8 +296,10 @@ interface ts_infraction_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_Case: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_RATEApprovingTeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_RATEManager: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_action: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
