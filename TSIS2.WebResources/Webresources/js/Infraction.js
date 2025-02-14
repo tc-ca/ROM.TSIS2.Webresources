@@ -104,7 +104,7 @@ var ROM;
                                 "<fetch>",
                                 "  <entity name='ts_infraction'>",
                                 "    <filter type='and'>",
-                                "      <condition attribute='ovs_findingid' operator='eq' value='", infractionID, "'/>",
+                                "      <condition attribute='ts_infractionid' operator='eq' value='", infractionID, "'/>",
                                 "    </filter>",
                                 "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_functionallocation' alias='site'>",
                                 "      <attribute name='ts_region'/>",
