@@ -2,9 +2,476 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Multi-Level Expandable Tabulator with Parent-Level Search</title>
+    <link href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
 </head>
 <body>
+
+    <div class="search-container">
+        <input id="search-input" type="text" placeholder="Search Parent Records..." style="margin-bottom:10px; width: 250px;">
+        <button id="collapse-all" style="margin-left: 10px;">Collapse All</button>
+    </div>
+
+    <div id="mainTable"></div>
+    <div id="example-table"></div>
+    
+
+    <script type="text/javascript">
+        window.onload = loadTable;
+        const USER_LANG_FR = 1036;
+        const LOGMESSAGE = "TeamPlanningDataDetailsDisplay.html: ";
+        let planningTable = null;
+        let userLocalLanguage = "";
+
+        // English Headers:
+        let planningDataIdHeader = "Planning Data ID";
+        let siteHeader = "Site";
+        let subsiteOperationHeader = "Subsite (Operation)";
+        let operationTypeHeader = "Operation Type";
+        let stakeholderHeader = "Stakeholder";
+        let activityTypeHeader = "Activity Type";
+        let lastWorkOrderHeader = "Last Work Order";
+        let targetHeader = "Target";
+        let durationHeader = "Duration";
+        let plannedQ1Header = "Q1";
+        let plannedQ2Header = "Q2";
+        let plannedQ3Header = "Q3";
+        let plannedQ4Header = "Q4";
+        let totalHeader = "Total";
+        let varianceHeader = "Variance";
+        let justificationHeader = "Justification";
+        let planningCommentsHeader = "Planning Comments";
+
+        // French Headers:
+        let siteHeaderFr = "Site";
+        let subsiteOperationHeaderFr = "Sous-site (Opération)";
+        let operationTypeHeaderFr = "Type d'opération";
+        let stakeholderHeaderFr = "Intervenant";
+        let activityTypeHeaderFr = "Type d'activité";
+        let lastWorkOrderHeaderFr = "Dernier Ordre de travaille";
+        let targetHeaderFr = "Cible";
+        let durationHeaderFr = "Durée";
+        let plannedQ1HeaderFr = "Q1";
+        let plannedQ2HeaderFr = "Q2";
+        let plannedQ3HeaderFr = "Q3";
+        let plannedQ4HeaderFr = "Q4";
+        let totalHeaderFr = "Total";
+        let varianceHeaderFr = "Variance";
+        let justificationHeaderFr = "Justification";
+        let planningCommentsHeaderFr = "Commentaires de planification";
+
+
+        function setLanguage() {
+
+            // find out if the users language setting is set to French
+            var currentLanguage = parent.Xrm.Page.context.getUserLcid();
+
+            if (currentLanguage == USER_LANG_FR) {
+                tableAlertMessage = "Joindre des fichiers";
+                filesSelectedHeading = "Nombre de fichiers sélectionnés:";
+                selectAllButtonText = "Sélectionner tout";
+                deselectAllButtonText = "Déselectionner tout";
+                fileNameColumnHeader = "Nom du fichier";
+                fileNameColumnHeaderWidth = 710;
+                attachFileColumnHeader = "Joindre un fichier";
+                attachFileButtonText = "Joindre des fichier(s)";
+                userLocalLanguage = "fr-fr";
+                unableToGetFilesError = "Impossible d'obtenir les fichiers";
+                unableToAttachProdBFile = "Impossible de joindre un fichier protégé B";
+                warningMessage = "Récupération des fichiers de SharePoint, veuillez patienter";
+            }
+
+            console.log(LOGMESSAGE + "The user language is " + currentLanguage);
+
+            // set the button text
+            //document.getElementById('selectAll').innerHTML = selectAllButtonText;
+            //document.getElementById('deselectAll').innerHTML = deselectAllButtonText;
+            //document.getElementById('uploadFiles').innerHTML = attachFileButtonText;
+
+            // set the number of files selected header
+            //document.getElementById('numberOfFilesSelected').innerHTML = filesSelectedHeading;
+
+            // set the warning message
+        //    document.getElementById('warningMessage').innerHTML = '<strong>' + warningMessage + '</strong>';
+        }
+
+        function loadTableSimulate() {
+            // Simulated API data for debugging
+            resultsArray = [
+                { planningDataId: "P1", siteName: "Site A", operationTypeName: "Operation X", stakeholderName: "Stakeholder 1", activityTypeName: "Activity Alpha", variance: 5 },
+                { planningDataId: "P2", siteName: "Site B", operationTypeName: "Operation Y", stakeholderName: "Stakeholder 2", activityTypeName: "Activity Beta", variance: 10 }
+            ];
+
+            resultsWorkOrdersArray = [
+                { planningDataId: "P1", workOrderId: "W1", workOrderName: "WO 001", incidentTypeName: "Incident A", accountName: "Account X", functionAllocationName: "Function A" },
+                { planningDataId: "P2", workOrderId: "W2", workOrderName: "WO 002", incidentTypeName: "Incident B", accountName: "Account Y", functionAllocationName: "Function B" }
+            ];
+
+            resultsFindingsArray = [
+                { workOrderId: "W1", findingId: "F1", finding: "Finding 001", findingType: "Type 1", findingProvisionReference: "Ref-001" },
+                { workOrderId: "W2", findingId: "F2", finding: "Finding 002", findingType: "Type 2", findingProvisionReference: "Ref-002" }
+            ];
+
+            setupTable(resultsArray, resultsWorkOrdersArray, resultsFindingsArray);
+        }
+
+        function loadTable() {
+            setLanguage();
+
+            var teamPlanningDataID = parent.Xrm.Page.data.entity.getId().replace(/{|}/g, "").toLowerCase();
+
+            if (teamPlanningDataID) {
+                console.log(LOGMESSAGE + "Selected Team Planning Data is " + teamPlanningDataID);
+
+                var planningDataFetchXML = `
+                    <fetch xmlns:generator="MarkMpn.SQL4CDS">
+                      <entity name="ts_planningdata">
+                        <attribute name="ts_planningdataid" />
+                        <attribute name="ts_name" />
+                        <attribute name="ts_closedondatemostrecentwo" />
+                        <attribute name="ts_target" />
+                        <attribute name="ts_teamestimatedduration" />
+                        <attribute name="ts_plannedq1" />
+                        <attribute name="ts_plannedq2" />
+                        <attribute name="ts_plannedq3" />
+                        <attribute name="ts_plannedq4" />
+                        <attribute name="ts_plannedwo" />
+                        <attribute name="ts_variance" />
+                        <attribute name="ts_planningdetail" />
+                        <attribute name="ts_operationactivity" />
+                        <link-entity name="ts_teamplanningdata" to="ts_teamplanningdata" from="ts_teamplanningdataid" alias="ts_teamplanningdata" link-type="inner" />
+                        <link-entity name="ovs_operation" to="ts_operation" from="ovs_operationid" alias="ovs_operation" link-type="inner">
+                          <link-entity name="msdyn_functionallocation" to="ts_subsite" from="msdyn_functionallocationid" alias="msdyn_functionallocation2" link-type="outer">
+                            <attribute name="msdyn_name" />
+                          </link-entity>
+                        </link-entity>
+                        <link-entity name="msdyn_functionallocation" to="ts_site" from="msdyn_functionallocationid" alias="msdyn_functionallocation" link-type="inner">
+                          <attribute name="msdyn_name" />
+                        </link-entity>
+                        <link-entity name="ovs_operationtype" to="ts_operationtype" from="ovs_operationtypeid" alias="ovs_operationtype" link-type="inner">
+                          <attribute name="ovs_operationtypenameenglish" />
+                        </link-entity>
+                        <link-entity name="account" to="ts_stakeholder" from="accountid" alias="account" link-type="inner">
+                          <attribute name="ovs_accountnameenglish" />
+                        </link-entity>
+                        <link-entity name="msdyn_incidenttype" to="ts_activitytype" from="msdyn_incidenttypeid" alias="msdyn_incidenttype" link-type="inner">
+                          <attribute name="ovs_incidenttypenameenglish" />
+                        </link-entity>
+                        <link-entity name="ts_planningdetail" to="ts_planningdetail" from="ts_planningdetailid" alias="ts_planningdetail" link-type="outer">
+                          <attribute name="ts_detailenglish" />
+                        </link-entity>
+                        <filter>
+                          <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
+                          <condition attribute="statuscode" operator="eq" value="1" />
+                        </filter>
+                      </entity>
+                    </fetch>
+                `;
+
+                var workOrderFetchXML = `
+                    <fetch xmlns:generator="MarkMpn.SQL4CDS" distinct="true">
+                      <entity name="ts_planningdata">
+                        <attribute name="ts_planningdataid" />
+                        <link-entity name="ts_teamplanningdata" to="ts_teamplanningdata" from="ts_teamplanningdataid" alias="ts_teamplanningdata" link-type="inner">
+                          <attribute name="ts_teamplanningdataid" />
+                          <order attribute="ts_teamplanningdataid" />
+                        </link-entity>
+                        <link-entity name="ts_operationactivity" to="ts_operationactivity" from="ts_operationactivityid" alias="ts_operationactivity" link-type="inner">
+                          <attribute name="ts_operationactivityid" />
+                          <link-entity name="ovs_operation" to="ts_operation" from="ovs_operationid" alias="ovs_operation" link-type="inner">
+                            <attribute name="ovs_operationid" />
+                            <link-entity name="msdyn_workorder" to="ovs_operationid" from="ovs_operationid" alias="msdyn_workorder" link-type="inner">
+                              <attribute name="msdyn_workorderid" />
+                              <attribute name="msdyn_name" />
+                              <link-entity name="msdyn_incidenttype" to="msdyn_primaryincidenttype" from="msdyn_incidenttypeid" alias="msdyn_incidenttype" link-type="inner">
+                                <attribute name="ovs_incidenttypenameenglish" />
+                                <attribute name="msdyn_incidenttypeid" />
+                                <order attribute="msdyn_incidenttypeid" />
+                              </link-entity>
+                              <link-entity name="account" to="msdyn_serviceaccount" from="accountid" alias="account" link-type="inner">
+                                <attribute name="name" />
+                                <attribute name="accountid" />
+                                <order attribute="accountid" />
+                              </link-entity>
+                              <link-entity name="msdyn_functionallocation" to="ts_site" from="msdyn_functionallocationid" alias="msdyn_functionallocation" link-type="inner">
+                                <attribute name="ts_functionallocationnameenglish" />
+                                <attribute name="msdyn_functionallocationid" />
+                                <order attribute="msdyn_functionallocationid" />
+                              </link-entity>
+                              <order attribute="msdyn_workorderid" />
+                            </link-entity>
+                            <order attribute="ovs_operationid" />
+                          </link-entity>
+                          <order attribute="ts_operationactivityid" />
+                        </link-entity>
+                        <filter>
+                          <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
+                          <condition attribute="statuscode" operator="eq" value="1" />
+                        </filter>
+                        <order attribute="ts_planningdataid" />
+                      </entity>
+                    </fetch>
+                `;
+
+                var findingsFetchXML = `
+                    <fetch distinct="true">
+                      <entity name="msdyn_workorder">
+                        <attribute name="msdyn_workorderid" />
+                        <link-entity name="ovs_operation" from="ovs_operationid" to="ovs_operationid">
+                          <link-entity name="ts_operationactivity" from="ts_operationactivityid" to="ts_operation">
+                            <link-entity name="ts_planningdata" from="ts_operationactivity" to="ts_operationactivityid">
+                              <filter>
+                                <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
+                                <condition attribute="statuscode" operator="eq" value="1" />
+                              </filter>
+                              <link-entity name="ts_teamplanningdata" from="ts_teamplanningdataid" to="ts_teamplanningdata" />
+                            </link-entity>
+                          </link-entity>
+                        </link-entity>
+                        <link-entity name="msdyn_workorderservicetask" from="msdyn_workorder" to="msdyn_workorderid">
+                          <link-entity name="ovs_finding" from="ovs_workorderservicetaskid" to="msdyn_workorderservicetaskid">
+                            <attribute name="ovs_findingid" />
+                            <attribute name="ovs_finding" />
+                            <attribute name="ts_findingtype" />
+                            <attribute name="ts_findingtypename" />
+                            <attribute name="ovs_findingprovisionreference" />
+                          </link-entity>
+                        </link-entity>
+                        <link-entity name="msdyn_incidenttype" from="msdyn_incidenttypeid" to="msdyn_primaryincidenttype" />
+                        <link-entity name="account" from="accountid" to="msdyn_serviceaccount" />
+                        <link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" />
+                      </entity>
+                    </fetch>
+                `;
+
+                var encodedTeamPlanningDataFetchXml = encodeURIComponent(planningDataFetchXML);
+                var encodedWorkOrderFetchXml = encodeURIComponent(workOrderFetchXML);
+                var encodedFindingsFetchXml = encodeURIComponent(findingsFetchXML);
+
+                // Arrays to store results
+                var resultsArray = [];
+                var resultsWorkOrdersArray = [];
+                var resultsFindingsArray = [];
+
+                // First API call - Team Planning Data
+                parent.Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", "?fetchXml=" + encodedTeamPlanningDataFetchXml)
+                    .then(result => {
+                        result.entities.forEach(entity => {
+                            var record = {
+                                planningDataId: entity["ts_planningdataid"],
+                                operationActivityId: entity["_ts_operationactivity_value"],
+                                planningName: entity["ts_name"],
+                                closedOnDateMostRecentWO: entity["ts_closedondatemostrecentwo"],
+                                target: entity["ts_target"],
+                                teamEstimatedDuration: entity["ts_teamestimatedduration"],
+                                plannedQ1: entity["ts_plannedq1"],
+                                plannedQ2: entity["ts_plannedq2"],
+                                plannedQ3: entity["ts_plannedq3"],
+                                plannedQ4: entity["ts_plannedq4"],
+                                plannedWO: entity["ts_plannedwo"],
+                                variance: entity["ts_variance"],
+                                planningDetail: entity["ts_planningdetail"],
+                                operationSubsiteName: entity["msdyn_functionallocation2.msdyn_name"],
+                                siteName: entity["msdyn_functionallocation.msdyn_name"],
+                                operationTypeName: entity["ovs_operationtype.ovs_operationtypenameenglish"],
+                                stakeholderName: entity["account.ovs_accountnameenglish"],
+                                activityTypeName: entity["msdyn_incidenttype.ovs_incidenttypenameenglish"],
+                                planningDetailEnglish: entity["ts_planningdetail.ts_detailenglish"]
+                            };
+                            resultsArray.push(record);
+                        });
+                        console.log(LOGMESSAGE + "Team Planning Data count: " + resultsArray.length);
+
+                        // Second API call - Work Orders (only after the first API call completes)
+                        return parent.Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", "?fetchXml=" + encodedWorkOrderFetchXml);
+                    })
+                    .then(result => {
+                        result.entities.forEach(entity => {
+                            var record = {
+                                planningDataId: entity["ts_planningdataid"],
+                                planningName: entity["ts_name"],
+                                operationActivityId: entity["ts_operationactivity.ts_operationactivityid"],
+                                workOrderId: entity["msdyn_workorder.msdyn_workorderid"],
+                                workOrderName: entity["msdyn_workorder.msdyn_name"],
+                                incidentTypeName: entity["msdyn_incidenttype.ovs_incidenttypenameenglish"],
+                                accountName: entity["account.name"],
+                                functionAllocationName: entity["msdyn_functionallocation.ts_functionallocationnameenglish"],
+                            };
+                            resultsWorkOrdersArray.push(record);
+                        });
+                        console.log(LOGMESSAGE + "Work Orders count: " + resultsWorkOrdersArray.length);
+
+                        // Third API call - Findings (only after the second API call completes)
+                        return parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", "?fetchXml=" + encodedFindingsFetchXml);
+                    })
+                    .then(result => {
+                        result.entities.forEach(entity => {
+                            var record = {
+                                workOrderId: entity["msdyn_workorder.msdyn_workorderid"],
+                                findingId: entity["ovs_finding.ovs_findingid"],
+                                finding: entity["ovs_finding.ovs_finding"],
+                                findingType: entity["ovs_finding.ts_findingtype"],
+                                findingTypeName: entity["ovs_finding.ts_findingtypename"],
+                                findingProvisionReference: entity["ovs_finding.ovs_findingprovisionreference"]
+                            };
+                            resultsFindingsArray.push(record);
+                        });
+                        console.log(LOGMESSAGE + "Findings count: " + resultsFindingsArray.length);
+
+                        // Now, call setupTable() only after all three API calls are done
+                        setupTable(resultsArray, resultsWorkOrdersArray, resultsFindingsArray);
+                    })
+                    .catch(error => {
+                        console.log("Error in API call: " + error.message);
+                        window.close();
+                    });
+            }
+        }
+
+        function setupTable(resultsArray, resultsWorkOrdersArray, resultsFindingsArray) {
+            let mainTable = new Tabulator("#mainTable", {
+                data: resultsArray,
+                layout: "fitColumns",
+                height: "100%",
+                columnDefaults: { resizable: true },
+                columns: [
+                    {
+                        title: "",
+                        formatter: function (cell) {
+                            let rowData = cell.getRow().getData();
+                            let hasChildren = resultsWorkOrdersArray.some(w => w.planningDataId === rowData.planningDataId);
+
+                            return hasChildren ? `<span class="toggle-icon">➕</span>` : "";
+                        },
+                        width: 50, hozAlign: "center",
+                        cellClick: function (e, cell) {
+                            let rowData = cell.getRow().getData();
+                            let hasChildren = resultsWorkOrdersArray.some(w => w.planningDataId === rowData.planningDataId);
+
+                            if (hasChildren) toggleRow(cell.getRow());
+                        }
+                    },
+                    { title: "Name", field: "planningName", sorter: "string", headerFilter: "input" },
+                    { title: "Site", field: "siteName", sorter: "string", headerFilter: "input" },
+                    { title: "Operation Type", field: "operationTypeName", sorter: "string", headerFilter: "input" },
+                    { title: "Stakeholder", field: "stakeholderName", sorter: "string", headerFilter: "input" },
+                    { title: "Activity Type", field: "activityTypeName", sorter: "string", headerFilter: "input" },
+                    { title: "Variance", field: "variance", sorter: "number", headerFilter: "input" }
+                ],
+                rowFormatter: function (row) {
+                    let planningDataId = row.getData().planningDataId;
+
+                    // Create container for nested table
+                    let holderEl = document.createElement("div");
+                    let tableEl = document.createElement("div");
+
+                    holderEl.style.padding = "10px";
+                    holderEl.style.borderTop = "1px solid #ccc";
+                    holderEl.style.display = "none"; // Initially hidden
+                    tableEl.style.border = "1px solid #ddd";
+
+                    holderEl.appendChild(tableEl);
+                    row.getElement().appendChild(holderEl);
+
+                    // Get work orders related to this planningDataId
+                    // We want to get it by planningDataID
+                    let relatedWorkOrders = resultsWorkOrdersArray.filter(w => w.planningDataId === planningDataId);
+
+                    if (relatedWorkOrders.length > 0) {
+                        let workOrdersTable = new Tabulator(tableEl, {
+                            layout: "fitColumns",
+                            data: relatedWorkOrders,
+                            columns: [
+                                {
+                                    title: "",
+                                    formatter: function (cell, formatterParams, onRendered) {
+                                        let workOrderId = cell.getRow().getData().workOrderId;
+                                        let hasFindings = resultsFindingsArray.some(f => f.workOrderId === workOrderId);
+                                        return hasFindings ? `<span class="toggle-icon">➕</span>` : ""; // Show "+" only if there are findings
+                                    },
+                                    width: 50, hozAlign: "center",
+                                    cellClick: function (e, cell) { toggleSubRow(cell.getRow()); }
+                                },
+                                { title: "Work Order", field: "workOrderName", sorter: "string" },
+                                { title: "Incident Type", field: "incidentTypeName", sorter: "string" },
+                                { title: "Account", field: "accountName", sorter: "string" },
+                                { title: "Function Allocation", field: "functionAllocationName", sorter: "string" }
+                            ],
+                            rowFormatter: function (subRow) {
+                                let workOrderId = subRow.getData().workOrderId;
+
+                                let subHolderEl = document.createElement("div");
+                                let subTableEl = document.createElement("div");
+
+                                subHolderEl.style.padding = "5px 20px";
+                                subHolderEl.style.display = "none";
+
+                                subHolderEl.appendChild(subTableEl);
+                                subRow.getElement().appendChild(subHolderEl);
+
+                                // Get findings related to this workOrderId
+                                let relatedFindings = resultsFindingsArray.filter(f => f.workOrderId === workOrderId);
+
+                                if (relatedFindings.length > 0) {
+                                    let findingsTable = new Tabulator(subTableEl, {
+                                        layout: "fitColumns",
+                                        data: relatedFindings,
+                                        columns: [
+                                            { title: "Finding ID", field: "findingId", sorter: "string" },
+                                            { title: "Finding", field: "finding", sorter: "string" },
+                                            { title: "Finding Type", field: "findingType", sorter: "string" },
+                                            { title: "Finding Type Name", field: "findingTypeName", sorter: "string" },
+                                            { title: "Provision Reference", field: "findingProvisionReference", sorter: "string" },
+                                            { title: "Work Order ID", field: "workOrderId", sorter: "string" }
+                                        ]
+                                    });
+
+                                    // Toggle findings table on row click
+                                    subRow.getElement().addEventListener("click", function (event) {
+                                        event.stopPropagation();
+                                        subHolderEl.style.display = subHolderEl.style.display === "none" ? "block" : "none";
+                                    });
+                                }
+                            }
+                        });
+
+                        row._subTableHolder = holderEl;
+                    }
+                }
+            });
+
+            // Toggle first-level nested table (Work Orders)
+            function toggleRow(row) {
+                if (!row._subTableHolder) return;
+
+                let isExpanded = row._expanded || false;
+                row._subTableHolder.style.display = isExpanded ? "none" : "block";
+                row._expanded = !isExpanded;
+
+                let iconSpan = row.getCells()[0].getElement().querySelector(".toggle-icon");
+                if (iconSpan) {
+                    iconSpan.textContent = row._expanded ? "➖" : "➕";
+                }
+            }
+
+            // Toggle second-level nested table (Findings)
+            function toggleSubRow(row) {
+                if (!row._subTableHolder) return;
+
+                console.log("toggleSubRow triggered"); // Debugging
+
+                let isExpanded = row._expanded || false;
+                row._subTableHolder.style.display = isExpanded ? "none" : "block";
+                row._expanded = !isExpanded;
+
+                let iconSpan = row.getCells()[0].getElement().querySelector(".toggle-icon");
+                if (iconSpan) {
+                    iconSpan.textContent = row._expanded ? "➖" : "➕";
+                }
+            }
+        }
+    </script>
 
 </body>
 </html>
