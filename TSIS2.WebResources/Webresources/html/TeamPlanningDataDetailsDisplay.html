@@ -215,32 +215,43 @@
                 `;
 
                 var findingsFetchXML = `
-                    <fetch distinct="true">
-                      <entity name="msdyn_workorder">
-                        <attribute name="msdyn_workorderid" />
-                        <link-entity name="ovs_operation" from="ovs_operationid" to="ovs_operationid">
-                          <link-entity name="ts_operationactivity" from="ts_operationactivityid" to="ts_operation">
-                            <link-entity name="ts_planningdata" from="ts_operationactivity" to="ts_operationactivityid">
-                              <filter>
-                                <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
-                                <condition attribute="statuscode" operator="eq" value="1" />
-                              </filter>
-                              <link-entity name="ts_teamplanningdata" from="ts_teamplanningdataid" to="ts_teamplanningdata" />
+                    <fetch xmlns:generator="MarkMpn.SQL4CDS" distinct="true">
+                      <entity name="ts_planningdata">
+                        <link-entity name="ts_teamplanningdata" to="ts_teamplanningdata" from="ts_teamplanningdataid" alias="tp" link-type="inner" />
+                        <link-entity name="ts_operationactivity" to="ts_operationactivity" from="ts_operationactivityid" alias="oa" link-type="inner">
+                          <link-entity name="ovs_operation" to="ts_operation" from="ovs_operationid" alias="op" link-type="inner">
+                            <link-entity name="msdyn_workorder" to="ovs_operationid" from="ovs_operationid" alias="wo" link-type="inner">
+                              <attribute name="msdyn_workorderid" />
+                              <link-entity name="msdyn_workorderservicetask" to="msdyn_workorderid" from="msdyn_workorder" alias="wost" link-type="inner">
+                                <attribute name="msdyn_workorderservicetaskid" />
+                                <link-entity name="ovs_finding" to="msdyn_workorderservicetaskid" from="ovs_workorderservicetaskid" alias="f" link-type="inner">
+                                  <attribute name="ovs_findingid" />
+                                  <attribute name="ovs_finding" />
+                                  <attribute name="ts_findingtype" />
+                                  <attribute name="ovs_findingprovisionreference" />
+                                  <order attribute="ovs_findingid" />
+                                  <order attribute="ovs_finding" />
+                                  <order attribute="ts_findingtype" />
+                                  <order attribute="ovs_findingprovisionreference" />
+                                  <link-entity name="stringmap" from="attributevalue" to="ts_findingtype" alias="ftype" link-type="inner">
+                                    <attribute name="value" alias="ts_findingtype_label" />
+                                    <filter>
+                                      <condition attribute="attributename" operator="eq" value="ts_findingtype" />
+                                    </filter>
+                                  </link-entity>
+                                </link-entity>
+                              </link-entity>
+                              <link-entity name="msdyn_incidenttype" to="msdyn_primaryincidenttype" from="msdyn_incidenttypeid" alias="it" link-type="inner" />
+                              <link-entity name="account" to="msdyn_serviceaccount" from="accountid" alias="acc" link-type="inner" />
+                              <link-entity name="msdyn_functionallocation" to="ts_site" from="msdyn_functionallocationid" alias="fa" link-type="inner" />
+                              <order attribute="msdyn_workorderid" />
                             </link-entity>
                           </link-entity>
                         </link-entity>
-                        <link-entity name="msdyn_workorderservicetask" from="msdyn_workorder" to="msdyn_workorderid">
-                          <link-entity name="ovs_finding" from="ovs_workorderservicetaskid" to="msdyn_workorderservicetaskid">
-                            <attribute name="ovs_findingid" />
-                            <attribute name="ovs_finding" />
-                            <attribute name="ts_findingtype" />
-                            <attribute name="ts_findingtypename" />
-                            <attribute name="ovs_findingprovisionreference" />
-                          </link-entity>
-                        </link-entity>
-                        <link-entity name="msdyn_incidenttype" from="msdyn_incidenttypeid" to="msdyn_primaryincidenttype" />
-                        <link-entity name="account" from="accountid" to="msdyn_serviceaccount" />
-                        <link-entity name="msdyn_functionallocation" from="msdyn_functionallocationid" to="ts_site" />
+                        <filter>
+                          <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
+                          <condition attribute="statuscode" operator="eq" value="1" />
+                        </filter>
                       </entity>
                     </fetch>
                 `;
@@ -303,17 +314,16 @@
                         console.log(LOGMESSAGE + "Work Orders count: " + resultsWorkOrdersArray.length);
 
                         // Third API call - Findings (only after the second API call completes)
-                        return parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", "?fetchXml=" + encodedFindingsFetchXml);
+                        return parent.Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", "?fetchXml=" + encodedFindingsFetchXml);
                     })
                     .then(result => {
                         result.entities.forEach(entity => {
                             var record = {
-                                workOrderId: entity["msdyn_workorder.msdyn_workorderid"],
-                                findingId: entity["ovs_finding.ovs_findingid"],
-                                finding: entity["ovs_finding.ovs_finding"],
-                                findingType: entity["ovs_finding.ts_findingtype"],
-                                findingTypeName: entity["ovs_finding.ts_findingtypename"],
-                                findingProvisionReference: entity["ovs_finding.ovs_findingprovisionreference"]
+                                workOrderId: entity["wo.msdyn_workorderid"],
+                                findingId: entity["f.ovs_findingid"],
+                                finding: entity["f.ovs_finding"],
+                                findingType: entity["ts_findingtype_label"],
+                                findingProvisionReference: entity["f.ovs_findingprovisionreference"]
                             };
                             resultsFindingsArray.push(record);
                         });
@@ -421,9 +431,8 @@
                                             { title: "Finding ID", field: "findingId", sorter: "string" },
                                             { title: "Finding", field: "finding", sorter: "string" },
                                             { title: "Finding Type", field: "findingType", sorter: "string" },
-                                            { title: "Finding Type Name", field: "findingTypeName", sorter: "string" },
                                             { title: "Provision Reference", field: "findingProvisionReference", sorter: "string" },
-                                            { title: "Work Order ID", field: "workOrderId", sorter: "string" }
+                                            { title: "Work Order ID", field: "workOrderId", sorter: "string", visible:false }
                                         ]
                                     });
 
