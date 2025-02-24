@@ -424,11 +424,32 @@
                                 let relatedFindings = resultsFindingsArray.filter(f => f.workOrderId === workOrderId);
 
                                 if (relatedFindings.length > 0) {
+
+                                    // Get the current environment URL dynamically
+                                    let globalContext = parent.Xrm.Utility.getGlobalContext();
+                                    let orgUrl = globalContext.getClientUrl(); 
+
                                     let findingsTable = new Tabulator(subTableEl, {
                                         layout: "fitColumns",
                                         data: relatedFindings,
                                         columns: [
-                                            { title: "Finding ID", field: "findingId", sorter: "string" },
+
+                                            {
+                                                title: "",
+                                                field: "findingId",
+                                                sorter: "string",
+                                                formatter: function (cell, formatterParams, onRendered) {
+                                                    let findingId = cell.getValue();
+                                                    let recordUrl = `${orgUrl}/main.aspx?etn=ovs_finding&pagetype=entityrecord&id=${findingId}`;
+
+                                                    // Return a clickable link icon
+                                                    return `<a href="${recordUrl}" target="_blank" title="Open Finding">
+                                                        <img src="https://img.icons8.com/ios-glyphs/20/000000/link--v1.png" alt="🔗" style="vertical-align: middle;">
+                                                    </a>`;
+                                                },
+                                                hozAlign: "center", // Center the icon in the column
+                                                width: 50 // Adjust column width to fit the icon
+                                            },
                                             { title: "Finding", field: "finding", sorter: "string" },
                                             { title: "Finding Type", field: "findingType", sorter: "string" },
                                             { title: "Provision Reference", field: "findingProvisionReference", sorter: "string" },
@@ -438,6 +459,9 @@
 
                                     // Toggle findings table on row click
                                     subRow.getElement().addEventListener("click", function (event) {
+                                        if (event.target.closest("a")) {
+                                            return; // Do nothing if the click was on a link
+                                        }
                                         event.stopPropagation();
                                         subHolderEl.style.display = subHolderEl.style.display === "none" ? "block" : "none";
                                     });
