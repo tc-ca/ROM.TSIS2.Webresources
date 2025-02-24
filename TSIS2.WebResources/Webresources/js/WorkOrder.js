@@ -2029,6 +2029,7 @@ var ROM;
             var operationTypeValue = form.getAttribute("ovs_operationtypeid").getValue();
             if (operationTypeValue != null && operationTypeValue[0].id == "{BE8B0910-C751-EB11-A812-000D3AF3AC0D}") { //Person
                 form.getControl("ts_contact").setVisible(true);
+                form.getAttribute("ts_contact").setRequiredLevel("required");
             }
             else {
                 form.getControl("ts_contact").setVisible(false);
