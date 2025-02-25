@@ -11,9 +11,15 @@
 </head>
 <body>
 
+    <div class="container-fluid text-center">
+        <div id="loading-message" class="alert alert-info" role="alert">
+            <strong>Please wait...</strong> Loading data.
+        </div>
+    </div>
+
     <div class="container-fluid">
         <div class="row">
-            <button id="collapse-all" class="btn btn-primary">
+            <button id="collapse-all" class="btn btn-primary" style="display:none;">
                 Collapse All
             </button>
         </div>
@@ -23,7 +29,7 @@
     </div>
 
     <div id="mainTable"></div>
-    
+
     <script type="text/javascript">
         window.onload = loadTable;
         const USER_LANG_FR = 1036;
@@ -94,142 +100,145 @@
         function loadTable() {
             setLanguage();
 
+            // Show loading message
+            document.getElementById("loading-message").style.display = "block";
+
             var teamPlanningDataID = parent.Xrm.Page.data.entity.getId().replace(/{|}/g, "").toLowerCase();
 
             if (teamPlanningDataID) {
                 console.log(LOGMESSAGE + "Selected Team Planning Data is " + teamPlanningDataID);
 
                 var planningDataFetchXML = `
-                    <fetch xmlns:generator="MarkMpn.SQL4CDS">
-                      <entity name="ts_planningdata">
-                        <attribute name="ts_planningdataid" />
-                        <attribute name="ts_name" />
-                        <attribute name="ts_closedondatemostrecentwo" />
-                        <attribute name="ts_target" />
-                        <attribute name="ts_teamestimatedduration" />
-                        <attribute name="ts_plannedq1" />
-                        <attribute name="ts_plannedq2" />
-                        <attribute name="ts_plannedq3" />
-                        <attribute name="ts_plannedq4" />
-                        <attribute name="ts_plannedwo" />
-                        <attribute name="ts_variance" />
-                        <attribute name="ts_planningdetail" />
-                        <attribute name="ts_operationactivity" />
-                        <link-entity name="ts_teamplanningdata" to="ts_teamplanningdata" from="ts_teamplanningdataid" alias="ts_teamplanningdata" link-type="inner" />
-                        <link-entity name="ovs_operation" to="ts_operation" from="ovs_operationid" alias="ovs_operation" link-type="inner">
-                          <link-entity name="msdyn_functionallocation" to="ts_subsite" from="msdyn_functionallocationid" alias="msdyn_functionallocation2" link-type="outer">
-                            <attribute name="msdyn_name" />
-                          </link-entity>
-                        </link-entity>
-                        <link-entity name="msdyn_functionallocation" to="ts_site" from="msdyn_functionallocationid" alias="msdyn_functionallocation" link-type="inner">
-                          <attribute name="msdyn_name" />
-                        </link-entity>
-                        <link-entity name="ovs_operationtype" to="ts_operationtype" from="ovs_operationtypeid" alias="ovs_operationtype" link-type="inner">
-                          <attribute name="ovs_operationtypenameenglish" />
-                        </link-entity>
-                        <link-entity name="account" to="ts_stakeholder" from="accountid" alias="account" link-type="inner">
-                          <attribute name="ovs_accountnameenglish" />
-                        </link-entity>
-                        <link-entity name="msdyn_incidenttype" to="ts_activitytype" from="msdyn_incidenttypeid" alias="msdyn_incidenttype" link-type="inner">
-                          <attribute name="ovs_incidenttypenameenglish" />
-                        </link-entity>
-                        <link-entity name="ts_planningdetail" to="ts_planningdetail" from="ts_planningdetailid" alias="ts_planningdetail" link-type="outer">
-                          <attribute name="ts_detailenglish" />
-                        </link-entity>
-                        <filter>
-                          <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
-                          <condition attribute="statuscode" operator="eq" value="1" />
-                        </filter>
-                      </entity>
-                    </fetch>
-                `;
+                        <fetch xmlns:generator="MarkMpn.SQL4CDS">
+                          <entity name="ts_planningdata">
+                            <attribute name="ts_planningdataid" />
+                            <attribute name="ts_name" />
+                            <attribute name="ts_closedondatemostrecentwo" />
+                            <attribute name="ts_target" />
+                            <attribute name="ts_teamestimatedduration" />
+                            <attribute name="ts_plannedq1" />
+                            <attribute name="ts_plannedq2" />
+                            <attribute name="ts_plannedq3" />
+                            <attribute name="ts_plannedq4" />
+                            <attribute name="ts_plannedwo" />
+                            <attribute name="ts_variance" />
+                            <attribute name="ts_planningdetail" />
+                            <attribute name="ts_operationactivity" />
+                            <link-entity name="ts_teamplanningdata" to="ts_teamplanningdata" from="ts_teamplanningdataid" alias="ts_teamplanningdata" link-type="inner" />
+                            <link-entity name="ovs_operation" to="ts_operation" from="ovs_operationid" alias="ovs_operation" link-type="inner">
+                              <link-entity name="msdyn_functionallocation" to="ts_subsite" from="msdyn_functionallocationid" alias="msdyn_functionallocation2" link-type="outer">
+                                <attribute name="msdyn_name" />
+                              </link-entity>
+                            </link-entity>
+                            <link-entity name="msdyn_functionallocation" to="ts_site" from="msdyn_functionallocationid" alias="msdyn_functionallocation" link-type="inner">
+                              <attribute name="msdyn_name" />
+                            </link-entity>
+                            <link-entity name="ovs_operationtype" to="ts_operationtype" from="ovs_operationtypeid" alias="ovs_operationtype" link-type="inner">
+                              <attribute name="ovs_operationtypenameenglish" />
+                            </link-entity>
+                            <link-entity name="account" to="ts_stakeholder" from="accountid" alias="account" link-type="inner">
+                              <attribute name="ovs_accountnameenglish" />
+                            </link-entity>
+                            <link-entity name="msdyn_incidenttype" to="ts_activitytype" from="msdyn_incidenttypeid" alias="msdyn_incidenttype" link-type="inner">
+                              <attribute name="ovs_incidenttypenameenglish" />
+                            </link-entity>
+                            <link-entity name="ts_planningdetail" to="ts_planningdetail" from="ts_planningdetailid" alias="ts_planningdetail" link-type="outer">
+                              <attribute name="ts_detailenglish" />
+                            </link-entity>
+                            <filter>
+                              <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
+                              <condition attribute="statuscode" operator="eq" value="1" />
+                            </filter>
+                          </entity>
+                        </fetch>
+                    `;
 
                 var workOrderFetchXML = `
-                    <fetch xmlns:generator="MarkMpn.SQL4CDS" distinct="true">
-                      <entity name="ts_planningdata">
-                        <attribute name="ts_planningdataid" />
-                        <link-entity name="ts_teamplanningdata" to="ts_teamplanningdata" from="ts_teamplanningdataid" alias="ts_teamplanningdata" link-type="inner">
-                          <attribute name="ts_teamplanningdataid" />
-                          <order attribute="ts_teamplanningdataid" />
-                        </link-entity>
-                        <link-entity name="ts_operationactivity" to="ts_operationactivity" from="ts_operationactivityid" alias="ts_operationactivity" link-type="inner">
-                          <attribute name="ts_operationactivityid" />
-                          <link-entity name="ovs_operation" to="ts_operation" from="ovs_operationid" alias="ovs_operation" link-type="inner">
-                            <attribute name="ovs_operationid" />
-                            <link-entity name="msdyn_workorder" to="ovs_operationid" from="ovs_operationid" alias="msdyn_workorder" link-type="inner">
-                              <attribute name="msdyn_workorderid" />
-                              <attribute name="msdyn_name" />
-                              <link-entity name="msdyn_incidenttype" to="msdyn_primaryincidenttype" from="msdyn_incidenttypeid" alias="msdyn_incidenttype" link-type="inner">
-                                <attribute name="ovs_incidenttypenameenglish" />
-                                <attribute name="msdyn_incidenttypeid" />
-                                <order attribute="msdyn_incidenttypeid" />
-                              </link-entity>
-                              <link-entity name="account" to="msdyn_serviceaccount" from="accountid" alias="account" link-type="inner">
-                                <attribute name="name" />
-                                <attribute name="accountid" />
-                                <order attribute="accountid" />
-                              </link-entity>
-                              <link-entity name="msdyn_functionallocation" to="ts_site" from="msdyn_functionallocationid" alias="msdyn_functionallocation" link-type="inner">
-                                <attribute name="ts_functionallocationnameenglish" />
-                                <attribute name="msdyn_functionallocationid" />
-                                <order attribute="msdyn_functionallocationid" />
-                              </link-entity>
-                              <order attribute="msdyn_workorderid" />
+                        <fetch xmlns:generator="MarkMpn.SQL4CDS" distinct="true">
+                          <entity name="ts_planningdata">
+                            <attribute name="ts_planningdataid" />
+                            <link-entity name="ts_teamplanningdata" to="ts_teamplanningdata" from="ts_teamplanningdataid" alias="ts_teamplanningdata" link-type="inner">
+                              <attribute name="ts_teamplanningdataid" />
+                              <order attribute="ts_teamplanningdataid" />
                             </link-entity>
-                            <order attribute="ovs_operationid" />
-                          </link-entity>
-                          <order attribute="ts_operationactivityid" />
-                        </link-entity>
-                        <filter>
-                          <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
-                          <condition attribute="statuscode" operator="eq" value="1" />
-                        </filter>
-                        <order attribute="ts_planningdataid" />
-                      </entity>
-                    </fetch>
-                `;
+                            <link-entity name="ts_operationactivity" to="ts_operationactivity" from="ts_operationactivityid" alias="ts_operationactivity" link-type="inner">
+                              <attribute name="ts_operationactivityid" />
+                              <link-entity name="ovs_operation" to="ts_operation" from="ovs_operationid" alias="ovs_operation" link-type="inner">
+                                <attribute name="ovs_operationid" />
+                                <link-entity name="msdyn_workorder" to="ovs_operationid" from="ovs_operationid" alias="msdyn_workorder" link-type="inner">
+                                  <attribute name="msdyn_workorderid" />
+                                  <attribute name="msdyn_name" />
+                                  <link-entity name="msdyn_incidenttype" to="msdyn_primaryincidenttype" from="msdyn_incidenttypeid" alias="msdyn_incidenttype" link-type="inner">
+                                    <attribute name="ovs_incidenttypenameenglish" />
+                                    <attribute name="msdyn_incidenttypeid" />
+                                    <order attribute="msdyn_incidenttypeid" />
+                                  </link-entity>
+                                  <link-entity name="account" to="msdyn_serviceaccount" from="accountid" alias="account" link-type="inner">
+                                    <attribute name="name" />
+                                    <attribute name="accountid" />
+                                    <order attribute="accountid" />
+                                  </link-entity>
+                                  <link-entity name="msdyn_functionallocation" to="ts_site" from="msdyn_functionallocationid" alias="msdyn_functionallocation" link-type="inner">
+                                    <attribute name="ts_functionallocationnameenglish" />
+                                    <attribute name="msdyn_functionallocationid" />
+                                    <order attribute="msdyn_functionallocationid" />
+                                  </link-entity>
+                                  <order attribute="msdyn_workorderid" />
+                                </link-entity>
+                                <order attribute="ovs_operationid" />
+                              </link-entity>
+                              <order attribute="ts_operationactivityid" />
+                            </link-entity>
+                            <filter>
+                              <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
+                              <condition attribute="statuscode" operator="eq" value="1" />
+                            </filter>
+                            <order attribute="ts_planningdataid" />
+                          </entity>
+                        </fetch>
+                    `;
 
                 var findingsFetchXML = `
-                    <fetch xmlns:generator="MarkMpn.SQL4CDS" distinct="true">
-                      <entity name="ts_planningdata">
-                        <link-entity name="ts_teamplanningdata" to="ts_teamplanningdata" from="ts_teamplanningdataid" alias="tp" link-type="inner" />
-                        <link-entity name="ts_operationactivity" to="ts_operationactivity" from="ts_operationactivityid" alias="oa" link-type="inner">
-                          <link-entity name="ovs_operation" to="ts_operation" from="ovs_operationid" alias="op" link-type="inner">
-                            <link-entity name="msdyn_workorder" to="ovs_operationid" from="ovs_operationid" alias="wo" link-type="inner">
-                              <attribute name="msdyn_workorderid" />
-                              <link-entity name="msdyn_workorderservicetask" to="msdyn_workorderid" from="msdyn_workorder" alias="wost" link-type="inner">
-                                <attribute name="msdyn_workorderservicetaskid" />
-                                <link-entity name="ovs_finding" to="msdyn_workorderservicetaskid" from="ovs_workorderservicetaskid" alias="f" link-type="inner">
-                                  <attribute name="ovs_findingid" />
-                                  <attribute name="ovs_finding" />
-                                  <attribute name="ts_findingtype" />
-                                  <attribute name="ovs_findingprovisionreference" />
-                                  <order attribute="ovs_findingid" />
-                                  <order attribute="ovs_finding" />
-                                  <order attribute="ts_findingtype" />
-                                  <order attribute="ovs_findingprovisionreference" />
-                                  <link-entity name="stringmap" from="attributevalue" to="ts_findingtype" alias="ftype" link-type="inner">
-                                    <attribute name="value" alias="ts_findingtype_label" />
-                                    <filter>
-                                      <condition attribute="attributename" operator="eq" value="ts_findingtype" />
-                                    </filter>
+                        <fetch xmlns:generator="MarkMpn.SQL4CDS" distinct="true">
+                          <entity name="ts_planningdata">
+                            <link-entity name="ts_teamplanningdata" to="ts_teamplanningdata" from="ts_teamplanningdataid" alias="tp" link-type="inner" />
+                            <link-entity name="ts_operationactivity" to="ts_operationactivity" from="ts_operationactivityid" alias="oa" link-type="inner">
+                              <link-entity name="ovs_operation" to="ts_operation" from="ovs_operationid" alias="op" link-type="inner">
+                                <link-entity name="msdyn_workorder" to="ovs_operationid" from="ovs_operationid" alias="wo" link-type="inner">
+                                  <attribute name="msdyn_workorderid" />
+                                  <link-entity name="msdyn_workorderservicetask" to="msdyn_workorderid" from="msdyn_workorder" alias="wost" link-type="inner">
+                                    <attribute name="msdyn_workorderservicetaskid" />
+                                    <link-entity name="ovs_finding" to="msdyn_workorderservicetaskid" from="ovs_workorderservicetaskid" alias="f" link-type="inner">
+                                      <attribute name="ovs_findingid" />
+                                      <attribute name="ovs_finding" />
+                                      <attribute name="ts_findingtype" />
+                                      <attribute name="ovs_findingprovisionreference" />
+                                      <order attribute="ovs_findingid" />
+                                      <order attribute="ovs_finding" />
+                                      <order attribute="ts_findingtype" />
+                                      <order attribute="ovs_findingprovisionreference" />
+                                      <link-entity name="stringmap" from="attributevalue" to="ts_findingtype" alias="ftype" link-type="inner">
+                                        <attribute name="value" alias="ts_findingtype_label" />
+                                        <filter>
+                                          <condition attribute="attributename" operator="eq" value="ts_findingtype" />
+                                        </filter>
+                                      </link-entity>
+                                    </link-entity>
                                   </link-entity>
+                                  <link-entity name="msdyn_incidenttype" to="msdyn_primaryincidenttype" from="msdyn_incidenttypeid" alias="it" link-type="inner" />
+                                  <link-entity name="account" to="msdyn_serviceaccount" from="accountid" alias="acc" link-type="inner" />
+                                  <link-entity name="msdyn_functionallocation" to="ts_site" from="msdyn_functionallocationid" alias="fa" link-type="inner" />
+                                  <order attribute="msdyn_workorderid" />
                                 </link-entity>
                               </link-entity>
-                              <link-entity name="msdyn_incidenttype" to="msdyn_primaryincidenttype" from="msdyn_incidenttypeid" alias="it" link-type="inner" />
-                              <link-entity name="account" to="msdyn_serviceaccount" from="accountid" alias="acc" link-type="inner" />
-                              <link-entity name="msdyn_functionallocation" to="ts_site" from="msdyn_functionallocationid" alias="fa" link-type="inner" />
-                              <order attribute="msdyn_workorderid" />
                             </link-entity>
-                          </link-entity>
-                        </link-entity>
-                        <filter>
-                          <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
-                          <condition attribute="statuscode" operator="eq" value="1" />
-                        </filter>
-                      </entity>
-                    </fetch>
-                `;
+                            <filter>
+                              <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
+                              <condition attribute="statuscode" operator="eq" value="1" />
+                            </filter>
+                          </entity>
+                        </fetch>
+                    `;
 
                 var encodedTeamPlanningDataFetchXml = encodeURIComponent(planningDataFetchXML);
                 var encodedWorkOrderFetchXml = encodeURIComponent(workOrderFetchXML);
@@ -304,6 +313,12 @@
                         });
                         console.log(LOGMESSAGE + "Findings count: " + resultsFindingsArray.length);
 
+                        // Hide loading message after data is retrieved
+                        document.getElementById("loading-message").style.display = "none";
+
+                        // Show "Collapse All" button
+                        document.getElementById("collapse-all").style.display = "inline-block";
+
                         // Now, call setupTable() only after all three API calls are done
                         setupTable(resultsArray, resultsWorkOrdersArray, resultsFindingsArray);
                     })
@@ -365,7 +380,7 @@
 
                     // Get the current environment URL dynamically
                     let globalContext = parent.Xrm.Utility.getGlobalContext();
-                    let orgUrl = globalContext.getClientUrl(); 
+                    let orgUrl = globalContext.getClientUrl();
 
                     if (relatedWorkOrders.length > 0) {
                         let workOrdersTable = new Tabulator(tableEl, {
@@ -392,8 +407,8 @@
 
                                         // Return a clickable link icon
                                         return `<a href="${recordUrl}" target="_blank" title="Open Work Order">
-                                            <img src="https://img.icons8.com/ios-glyphs/20/000000/link--v1.png" alt="🔗" style="vertical-align: middle;">
-                                        </a>`;
+                                                <img src="https://img.icons8.com/ios-glyphs/20/000000/link--v1.png" alt="🔗" style="vertical-align: middle;">
+                                            </a>`;
                                     },
                                     hozAlign: "center", // Center the icon in the column
                                     width: 50 // Adjust column width to fit the icon
@@ -435,8 +450,8 @@
 
                                                     // Return a clickable link icon
                                                     return `<a href="${recordUrl}" target="_blank" title="Open Finding">
-                                                        <img src="https://img.icons8.com/ios-glyphs/20/000000/link--v1.png" alt="🔗" style="vertical-align: middle;">
-                                                    </a>`;
+                                                            <img src="https://img.icons8.com/ios-glyphs/20/000000/link--v1.png" alt="🔗" style="vertical-align: middle;">
+                                                        </a>`;
                                                 },
                                                 hozAlign: "center", // Center the icon in the column
                                                 width: 50 // Adjust column width to fit the icon
@@ -444,7 +459,7 @@
                                             { title: "Finding", field: "finding", sorter: "string" },
                                             { title: "Finding Type", field: "findingType", sorter: "string" },
                                             { title: "Provision Reference", field: "findingProvisionReference", sorter: "string" },
-                                            { title: "Work Order ID", field: "workOrderId", sorter: "string", visible:false }
+                                            { title: "Work Order ID", field: "workOrderId", sorter: "string", visible: false }
                                         ]
                                     });
 
