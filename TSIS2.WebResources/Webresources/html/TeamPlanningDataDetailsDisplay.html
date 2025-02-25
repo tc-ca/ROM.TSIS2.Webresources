@@ -4,19 +4,26 @@
     <meta charset="utf-8" />
     <title>Multi-Level Expandable Tabulator with Parent-Level Search</title>
     <link href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
 </head>
 <body>
 
-    <div class="search-container">
-        <input id="search-input" type="text" placeholder="Search Parent Records..." style="margin-bottom:10px; width: 250px;">
-        <button id="collapse-all" style="margin-left: 10px;">Collapse All</button>
+    <div class="container-fluid">
+        <div class="row">
+            <button id="collapse-all" class="btn btn-primary">
+                Collapse All
+            </button>
+        </div>
+        <div class="row" style="min-height: 20px;">
+
+        </div>
     </div>
 
     <div id="mainTable"></div>
-    <div id="example-table"></div>
     
-
     <script type="text/javascript">
         window.onload = loadTable;
         const USER_LANG_FR = 1036;
@@ -60,7 +67,6 @@
         let varianceHeaderFr = "Variance";
         let justificationHeaderFr = "Justification";
         let planningCommentsHeaderFr = "Commentaires de planification";
-
 
         function setLanguage() {
 
@@ -492,8 +498,6 @@
             // Collapse all rows when the "Collapse All" button is clicked
             document.getElementById("collapse-all").addEventListener("click", function () {
                 console.log("Collapse All clicked");
-
-                //mainTable = Tabulator.findTable("#mainTable")[0];
 
                 // Collapse all work orders (first-level rows)
                 mainTable.getRows().forEach(row => {
