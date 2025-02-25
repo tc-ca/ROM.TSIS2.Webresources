@@ -388,6 +388,10 @@
                     // We want to get it by planningDataID
                     let relatedWorkOrders = resultsWorkOrdersArray.filter(w => w.planningDataId === planningDataId);
 
+                    // Get the current environment URL dynamically
+                    let globalContext = parent.Xrm.Utility.getGlobalContext();
+                    let orgUrl = globalContext.getClientUrl(); 
+
                     if (relatedWorkOrders.length > 0) {
                         let workOrdersTable = new Tabulator(tableEl, {
                             layout: "fitColumns",
@@ -402,6 +406,22 @@
                                     },
                                     width: 50, hozAlign: "center",
                                     cellClick: function (e, cell) { toggleSubRow(cell.getRow()); }
+                                },
+                                {
+                                    title: "",
+                                    field: "workOrderId",
+                                    sorter: "string",
+                                    formatter: function (cell, formatterParams, onRendered) {
+                                        let workOrderId = cell.getRow().getData().workOrderId;
+                                        let recordUrl = `${orgUrl}/main.aspx?etn=msdyn_workorder&pagetype=entityrecord&id=${workOrderId}`;
+
+                                        // Return a clickable link icon
+                                        return `<a href="${recordUrl}" target="_blank" title="Open Work Order">
+                                            <img src="https://img.icons8.com/ios-glyphs/20/000000/link--v1.png" alt="🔗" style="vertical-align: middle;">
+                                        </a>`;
+                                    },
+                                    hozAlign: "center", // Center the icon in the column
+                                    width: 50 // Adjust column width to fit the icon
                                 },
                                 { title: "Work Order", field: "workOrderName", sorter: "string" },
                                 { title: "Incident Type", field: "incidentTypeName", sorter: "string" },
@@ -424,10 +444,6 @@
                                 let relatedFindings = resultsFindingsArray.filter(f => f.workOrderId === workOrderId);
 
                                 if (relatedFindings.length > 0) {
-
-                                    // Get the current environment URL dynamically
-                                    let globalContext = parent.Xrm.Utility.getGlobalContext();
-                                    let orgUrl = globalContext.getClientUrl(); 
 
                                     let findingsTable = new Tabulator(subTableEl, {
                                         layout: "fitColumns",
