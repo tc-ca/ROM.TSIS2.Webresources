@@ -364,6 +364,13 @@
 
 
     function setNullQuarterValueToZero(eContext: Xrm.ExecutionContext<any, any>): void {
+        console.log("setNullQuarterValueToZero: eContext value:", eContext);
+
+        if (!eContext || !eContext.getEventSource) {
+            console.error("setNullQuarterValueToZero: eContext is null or does not have getEventSource.");
+            return;
+        }
+
         let nameAttr = eContext.getEventSource();
         if (nameAttr.getName() == "ts_plannedq1" || nameAttr.getName() == "ts_plannedq2" || nameAttr.getName() == "ts_plannedq3" || nameAttr.getName() == "ts_plannedq4") {
             if (nameAttr.getValue() == null) {
