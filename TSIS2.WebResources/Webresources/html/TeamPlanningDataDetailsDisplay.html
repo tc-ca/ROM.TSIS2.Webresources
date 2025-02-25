@@ -80,18 +80,28 @@
             var currentLanguage = parent.Xrm.Page.context.getUserLcid();
 
             if (currentLanguage == USER_LANG_FR) {
-                tableAlertMessage = "Joindre des fichiers";
-                filesSelectedHeading = "Nombre de fichiers sélectionnés:";
-                selectAllButtonText = "Sélectionner tout";
-                deselectAllButtonText = "Déselectionner tout";
-                fileNameColumnHeader = "Nom du fichier";
-                fileNameColumnHeaderWidth = 710;
-                attachFileColumnHeader = "Joindre un fichier";
-                attachFileButtonText = "Joindre des fichier(s)";
-                userLocalLanguage = "fr-fr";
-                unableToGetFilesError = "Impossible d'obtenir les fichiers";
-                unableToAttachProdBFile = "Impossible de joindre un fichier protégé B";
-                warningMessage = "Récupération des fichiers de SharePoint, veuillez patienter";
+
+                // Set translated loading message
+                document.getElementById("loading-message").innerHTML = "<strong>Veuillez patienter...</strong> Chargement des données.";
+                document.getElementById("loading-message").setAttribute("title", "Les données sont en cours de chargement, veuillez patienter...");
+                document.getElementById("loading-message").setAttribute("aria-label", "Les données sont en cours de chargement, veuillez patienter...");
+
+                // Set translated Collapse All button text
+                document.getElementById("collapse-all").innerText = "Tout réduire";
+                document.getElementById("collapse-all").setAttribute("title", "Réduire toutes les lignes développées");
+                document.getElementById("collapse-all").setAttribute("aria-label", "Réduire toutes les lignes développées");
+            }
+            else {
+
+                // Set default loading message
+                document.getElementById("loading-message").innerHTML = "<strong>Please wait...</strong> Loading data.";
+                document.getElementById("loading-message").setAttribute("title", "Data is loading, please wait...");
+                document.getElementById("loading-message").setAttribute("aria-label", "Data is loading, please wait...");
+
+                // Set default Collapse All button text
+                document.getElementById("collapse-all").innerText = "Collapse All";
+                document.getElementById("collapse-all").setAttribute("title", "Collapse all expanded rows");
+                document.getElementById("collapse-all").setAttribute("aria-label", "Collapse all expanded rows");
             }
 
             console.log(LOGMESSAGE + "The user language is " + currentLanguage);
