@@ -21,8 +21,8 @@
         window.onload = loadTable;
         const USER_LANG_FR = 1036;
         const LOGMESSAGE = "TeamPlanningDataDetailsDisplay.html: ";
-        let planningTable = null;
         let userLocalLanguage = "";
+        let mainTable = null;
 
         // English Headers:
         let planningDataIdHeader = "Planning Data ID";
@@ -83,37 +83,6 @@
             }
 
             console.log(LOGMESSAGE + "The user language is " + currentLanguage);
-
-            // set the button text
-            //document.getElementById('selectAll').innerHTML = selectAllButtonText;
-            //document.getElementById('deselectAll').innerHTML = deselectAllButtonText;
-            //document.getElementById('uploadFiles').innerHTML = attachFileButtonText;
-
-            // set the number of files selected header
-            //document.getElementById('numberOfFilesSelected').innerHTML = filesSelectedHeading;
-
-            // set the warning message
-        //    document.getElementById('warningMessage').innerHTML = '<strong>' + warningMessage + '</strong>';
-        }
-
-        function loadTableSimulate() {
-            // Simulated API data for debugging
-            resultsArray = [
-                { planningDataId: "P1", siteName: "Site A", operationTypeName: "Operation X", stakeholderName: "Stakeholder 1", activityTypeName: "Activity Alpha", variance: 5 },
-                { planningDataId: "P2", siteName: "Site B", operationTypeName: "Operation Y", stakeholderName: "Stakeholder 2", activityTypeName: "Activity Beta", variance: 10 }
-            ];
-
-            resultsWorkOrdersArray = [
-                { planningDataId: "P1", workOrderId: "W1", workOrderName: "WO 001", incidentTypeName: "Incident A", accountName: "Account X", functionAllocationName: "Function A" },
-                { planningDataId: "P2", workOrderId: "W2", workOrderName: "WO 002", incidentTypeName: "Incident B", accountName: "Account Y", functionAllocationName: "Function B" }
-            ];
-
-            resultsFindingsArray = [
-                { workOrderId: "W1", findingId: "F1", finding: "Finding 001", findingType: "Type 1", findingProvisionReference: "Ref-001" },
-                { workOrderId: "W2", findingId: "F2", finding: "Finding 002", findingType: "Type 2", findingProvisionReference: "Ref-002" }
-            ];
-
-            setupTable(resultsArray, resultsWorkOrdersArray, resultsFindingsArray);
         }
 
         function loadTable() {
@@ -519,6 +488,28 @@
                     iconSpan.textContent = row._expanded ? "➖" : "➕";
                 }
             }
+
+            // Collapse all rows when the "Collapse All" button is clicked
+            document.getElementById("collapse-all").addEventListener("click", function () {
+                console.log("Collapse All clicked");
+
+                //mainTable = Tabulator.findTable("#mainTable")[0];
+
+                // Collapse all work orders (first-level rows)
+                mainTable.getRows().forEach(row => {
+                    if (row._expanded) { // If the row is expanded
+                        toggleRow(row); // Collapse it
+                    }
+                });
+
+                // Collapse all findings (nested tables in work orders)
+                document.querySelectorAll(".tabulator-row").forEach(rowEl => {
+                    let subTableHolder = rowEl.querySelector("div[style*='display: block']");
+                    if (subTableHolder) {
+                        subTableHolder.style.display = "none"; // Hide all expanded sub-tables
+                    }
+                });
+            });
         }
     </script>
 
