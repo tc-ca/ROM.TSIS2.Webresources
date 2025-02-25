@@ -37,42 +37,28 @@
         let userLocalLanguage = "";
         let mainTable = null;
 
-        // English Headers:
-        let planningDataIdHeader = "Planning Data ID";
+        // Planning Data Headers
+        let workOrdersHeader = "Work Orders";
+        let nameHeader = "Name";
         let siteHeader = "Site";
-        let subsiteOperationHeader = "Subsite (Operation)";
         let operationTypeHeader = "Operation Type";
         let stakeholderHeader = "Stakeholder";
         let activityTypeHeader = "Activity Type";
-        let lastWorkOrderHeader = "Last Work Order";
-        let targetHeader = "Target";
-        let durationHeader = "Duration";
-        let plannedQ1Header = "Q1";
-        let plannedQ2Header = "Q2";
-        let plannedQ3Header = "Q3";
-        let plannedQ4Header = "Q4";
-        let totalHeader = "Total";
         let varianceHeader = "Variance";
-        let justificationHeader = "Justification";
-        let planningCommentsHeader = "Planning Comments";
 
-        // French Headers:
-        let siteHeaderFr = "Site";
-        let subsiteOperationHeaderFr = "Sous-site (Opération)";
-        let operationTypeHeaderFr = "Type d'opération";
-        let stakeholderHeaderFr = "Intervenant";
-        let activityTypeHeaderFr = "Type d'activité";
-        let lastWorkOrderHeaderFr = "Dernier Ordre de travaille";
-        let targetHeaderFr = "Cible";
-        let durationHeaderFr = "Durée";
-        let plannedQ1HeaderFr = "Q1";
-        let plannedQ2HeaderFr = "Q2";
-        let plannedQ3HeaderFr = "Q3";
-        let plannedQ4HeaderFr = "Q4";
-        let totalHeaderFr = "Total";
-        let varianceHeaderFr = "Variance";
-        let justificationHeaderFr = "Justification";
-        let planningCommentsHeaderFr = "Commentaires de planification";
+        // Work Order Headers
+        let workOrderFindingsHeader = "Findings";
+        let workOrderViewHeader = "View";
+        let workOrderHeader = "Work Order";
+        let workOrderActivityTypeHeader = "Activity Type";
+        let workOrderStakeholderHeader = "Stakeholder";
+        let workOrderSiteHeader = "Site";
+
+        // Findings Headers
+        let findingsViewHeader = "View";
+        let findingHeader = "Finding";
+        let findingTypeHeader = "Finding Type";
+        let provisionReferenceHeader = "Provision Reference";
 
         function setLanguage() {
 
@@ -90,8 +76,31 @@
                 document.getElementById("collapse-all").innerText = "Tout réduire";
                 document.getElementById("collapse-all").setAttribute("title", "Réduire toutes les lignes développées");
                 document.getElementById("collapse-all").setAttribute("aria-label", "Réduire toutes les lignes développées");
-            }
-            else {
+
+                // Planning Data Headers
+                workOrdersHeader = "Ordres de travail";
+                nameHeader = "Nom";
+                siteHeader = "Site";
+                operationTypeHeader = "Type d'opération";
+                stakeholderHeader = "Intervenant";
+                activityTypeHeader = "Type d'activité";
+                varianceHeader = "Écart";
+
+                // Work Order Headers
+                workOrderFindingsHeader = "Constatation";
+                workOrderViewHeader = "Voir";
+                workOrderHeader = "Ordre de travail";
+                workOrderActivityTypeHeader = "Type d'activité";
+                workOrderStakeholderHeader = "Intervenant";
+                workOrderSiteHeader = "Site";
+
+                // Findings Headers
+                findingsViewHeader = "Voir";
+                findingHeader = "Constatation";
+                findingTypeHeader = "Type de constatation";
+                provisionReferenceHeader = "Référence de disposition";
+
+            }else {
 
                 // Set default loading message
                 document.getElementById("loading-message").innerHTML = "<strong>Please wait...</strong> Loading data.";
@@ -350,14 +359,14 @@
                 ],
                 columns: [
                     {
-                        title: "",
+                        title: workOrdersHeader,
                         formatter: function (cell) {
                             let rowData = cell.getRow().getData();
                             let hasChildren = resultsWorkOrdersArray.some(w => w.planningDataId === rowData.planningDataId);
 
                             return hasChildren ? `<span class="toggle-icon">➕</span>` : "";
                         },
-                        width: 50, hozAlign: "center",
+                        width: 120, hozAlign: "center",
                         cellClick: function (e, cell) {
                             let rowData = cell.getRow().getData();
                             let hasChildren = resultsWorkOrdersArray.some(w => w.planningDataId === rowData.planningDataId);
@@ -365,12 +374,12 @@
                             if (hasChildren) toggleRow(cell.getRow());
                         }
                     },
-                    { title: "Name", field: "planningName", sorter: "string", headerFilter: "input" },
-                    { title: "Site", field: "siteName", sorter: "string", headerFilter: "input" },
-                    { title: "Operation Type", field: "operationTypeName", sorter: "string", headerFilter: "input" },
-                    { title: "Stakeholder", field: "stakeholderName", sorter: "string", headerFilter: "input" },
-                    { title: "Activity Type", field: "activityTypeName", sorter: "string", headerFilter: "input" },
-                    { title: "Variance", field: "variance", sorter: "number", headerFilter: "input" }
+                    { title: nameHeader, field: "planningName", sorter: "string", headerFilter: "input" },
+                    { title: siteHeader, field: "siteName", sorter: "string", headerFilter: "input" },
+                    { title: operationTypeHeader, field: "operationTypeName", sorter: "string", headerFilter: "input" },
+                    { title: stakeholderHeader, field: "stakeholderName", sorter: "string", headerFilter: "input" },
+                    { title: activityTypeHeader, field: "activityTypeName", sorter: "string", headerFilter: "input" },
+                    { title: varianceHeader, field: "variance", sorter: "number", headerFilter: "input" }
                 ],
                 rowFormatter: function (row) {
                     let planningDataId = row.getData().planningDataId;
@@ -401,17 +410,17 @@
                             data: relatedWorkOrders,
                             columns: [
                                 {
-                                    title: "",
+                                    title: workOrderFindingsHeader,
                                     formatter: function (cell, formatterParams, onRendered) {
                                         let workOrderId = cell.getRow().getData().workOrderId;
                                         let hasFindings = resultsFindingsArray.some(f => f.workOrderId === workOrderId);
                                         return hasFindings ? `<span class="toggle-icon">➕</span>` : ""; // Show "+" only if there are findings
                                     },
-                                    width: 50, hozAlign: "center",
+                                    width: 120, hozAlign: "center",
                                     cellClick: function (e, cell) { toggleSubRow(cell.getRow()); }
                                 },
                                 {
-                                    title: "",
+                                    title: workOrderViewHeader,
                                     field: "workOrderId",
                                     sorter: "string",
                                     formatter: function (cell, formatterParams, onRendered) {
@@ -424,12 +433,12 @@
                                             </a>`;
                                     },
                                     hozAlign: "center", // Center the icon in the column
-                                    width: 50 // Adjust column width to fit the icon
+                                    width: 120 // Adjust column width to fit the icon
                                 },
-                                { title: "Work Order", field: "workOrderName", sorter: "string" },
-                                { title: "Incident Type", field: "incidentTypeName", sorter: "string" },
-                                { title: "Account", field: "accountName", sorter: "string" },
-                                { title: "Function Allocation", field: "functionAllocationName", sorter: "string" }
+                                { title: workOrderHeader, field: "workOrderName", sorter: "string" },
+                                { title: workOrderActivityTypeHeader, field: "incidentTypeName", sorter: "string" },
+                                { title: workOrderStakeholderHeader, field: "accountName", sorter: "string" },
+                                { title: workOrderSiteHeader, field: "functionAllocationName", sorter: "string" }
                             ],
                             rowFormatter: function (subRow) {
                                 let workOrderId = subRow.getData().workOrderId;
@@ -454,7 +463,7 @@
                                         columns: [
 
                                             {
-                                                title: "",
+                                                title: findingsViewHeader,
                                                 field: "findingId",
                                                 sorter: "string",
                                                 formatter: function (cell, formatterParams, onRendered) {
@@ -467,11 +476,11 @@
                                                         </a>`;
                                                 },
                                                 hozAlign: "center", // Center the icon in the column
-                                                width: 50 // Adjust column width to fit the icon
+                                                width: 120 // Adjust column width to fit the icon
                                             },
-                                            { title: "Finding", field: "finding", sorter: "string" },
-                                            { title: "Finding Type", field: "findingType", sorter: "string" },
-                                            { title: "Provision Reference", field: "findingProvisionReference", sorter: "string" },
+                                            { title: findingHeader, field: "finding", sorter: "string" },
+                                            { title: findingTypeHeader, field: "findingType", sorter: "string" },
+                                            { title: provisionReferenceHeader, field: "findingProvisionReference", sorter: "string" },
                                             { title: "Work Order ID", field: "workOrderId", sorter: "string", visible: false }
                                         ]
                                     });
