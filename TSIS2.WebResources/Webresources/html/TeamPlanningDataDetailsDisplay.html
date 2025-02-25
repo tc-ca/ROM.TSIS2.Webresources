@@ -333,8 +333,11 @@
             let mainTable = new Tabulator("#mainTable", {
                 data: resultsArray,
                 layout: "fitColumns",
-                height: "100%",
+                height: "calc(100vh - 75px)",
                 columnDefaults: { resizable: true },
+                initialSort: [
+                    { column: "planningName", dir: "asc" } // Default sorting by Name (ascending)
+                ],
                 columns: [
                     {
                         title: "",
