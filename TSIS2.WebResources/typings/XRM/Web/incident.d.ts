@@ -113,6 +113,7 @@ interface Incident_Relationships {
   ts_enforcementaction_Incident_Incident?: ts_enforcementaction_Result[] | null;
   ts_incident_ts_action_Case?: ts_action_Result[] | null;
   ts_incident_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
+  ts_infraction_Case_incident?: ts_infraction_Result[] | null;
   ts_msdyn_workorder_CaseTimeTracking_incident?: msdyn_workorder_Result[] | null;
 }
 interface Incident extends Incident_Base, Incident_Relationships {
@@ -461,6 +462,7 @@ interface Incident_Expand {
   ts_enforcementaction_Incident_Incident: WebExpand<Incident_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_Incident_Incident: ts_enforcementaction_Result[] }>;
   ts_incident_ts_action_Case: WebExpand<Incident_Expand, ts_action_Select, ts_action_Filter, { ts_incident_ts_action_Case: ts_action_Result[] }>;
   ts_incident_ts_workordercreationwizard: WebExpand<Incident_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_incident_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
+  ts_infraction_Case_incident: WebExpand<Incident_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_Case_incident: ts_infraction_Result[] }>;
   ts_msdyn_workorder_CaseTimeTracking_incident: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_CaseTimeTracking_incident: msdyn_workorder_Result[] }>;
 }
 interface Incident_FormattedResult {
@@ -642,6 +644,7 @@ interface Incident_RelatedMany {
   ts_enforcementaction_Incident_Incident: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_incident_ts_action_Case: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_incident_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
+  ts_infraction_Case_incident: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_msdyn_workorder_CaseTimeTracking_incident: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

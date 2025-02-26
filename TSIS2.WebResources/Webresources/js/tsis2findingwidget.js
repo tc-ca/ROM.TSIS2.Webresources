@@ -211,9 +211,15 @@ var widget = {
             //No Finding Types should change automatically after the survey has been marked complete
             //Only check to force a Finding Type change when the survey is incomplete, or the operation was not previously accountable.
             if (!(isComplete && operationHadValue && findingTypeDropdown.value != 717750001)) {
+                //If Operation Type id Security Incident
+                if (operation.operationTypeId == 'abf259f6-eff0-ed11-8848-000d3af4f330') {
+                    findingTypeDropdown.value = question.findingType;
+                    findingTypeDropdown.disabled = true;
+                    findingTypeDropdown.style.webkitAppearance = "none";
+                }
                 //if the operationType is not regulated, or the operationType is not one of the parent Work Order's Activity Type's operationTypes
                 //Set to Observation and Lock the dropdown
-                if (!operation.isRegulated || !activityTypeOperationTypeIdsList.includes(operation.operationTypeId)) {
+                else if (!operation.isRegulated || !activityTypeOperationTypeIdsList.includes(operation.operationTypeId)) {
                     findingTypeDropdown.value = 717750001;
                     findingTypeDropdown.disabled = true;
                     findingTypeDropdown.style.webkitAppearance = "none";

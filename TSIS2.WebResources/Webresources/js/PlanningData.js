@@ -339,6 +339,11 @@ var ROM;
         }
         PlanningData.subSubSiteOnChange = subSubSiteOnChange;
         function setNullQuarterValueToZero(eContext) {
+            console.log("setNullQuarterValueToZero: eContext value:", eContext);
+            if (!eContext || !eContext.getEventSource) {
+                console.error("setNullQuarterValueToZero: eContext is null or does not have getEventSource.");
+                return;
+            }
             var nameAttr = eContext.getEventSource();
             if (nameAttr.getName() == "ts_plannedq1" || nameAttr.getName() == "ts_plannedq2" || nameAttr.getName() == "ts_plannedq3" || nameAttr.getName() == "ts_plannedq4") {
                 if (nameAttr.getValue() == null) {

@@ -50,6 +50,7 @@ interface Email_Base extends WebEntity {
   msdyn_emailengagementinteractions?: string | null;
   msdyn_recipientlist?: string | null;
   msdyn_sentiment?: msdyn_email_msdyn_sentiment | null;
+  msdyn_sentimentreason?: msdyn_email_msdyn_sentimentreason | null;
   msft_datastate?: msft_datastate | null;
   notifications?: email_notifications | null;
   onholdtime?: number | null;
@@ -297,6 +298,7 @@ interface Email_Select {
   msdyn_emailengagementinteractions: WebAttribute<Email_Select, { msdyn_emailengagementinteractions: string | null }, {  }>;
   msdyn_recipientlist: WebAttribute<Email_Select, { msdyn_recipientlist: string | null }, {  }>;
   msdyn_sentiment: WebAttribute<Email_Select, { msdyn_sentiment: msdyn_email_msdyn_sentiment | null }, { msdyn_sentiment_formatted?: string }>;
+  msdyn_sentimentreason: WebAttribute<Email_Select, { msdyn_sentimentreason: msdyn_email_msdyn_sentimentreason | null }, { msdyn_sentimentreason_formatted?: string }>;
   msft_datastate: WebAttribute<Email_Select, { msft_datastate: msft_datastate | null }, { msft_datastate_formatted?: string }>;
   notifications: WebAttribute<Email_Select, { notifications: email_notifications | null }, { notifications_formatted?: string }>;
   onholdtime: WebAttribute<Email_Select, { onholdtime: number | null }, {  }>;
@@ -406,6 +408,7 @@ interface Email_Filter {
   msdyn_emailengagementinteractions: string;
   msdyn_recipientlist: string;
   msdyn_sentiment: msdyn_email_msdyn_sentiment;
+  msdyn_sentimentreason: msdyn_email_msdyn_sentimentreason;
   msft_datastate: msft_datastate;
   notifications: email_notifications;
   onholdtime: number;
@@ -511,6 +514,7 @@ interface Email_FormattedResult {
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
   msdyn_sentiment_formatted?: string;
+  msdyn_sentimentreason_formatted?: string;
   msft_datastate_formatted?: string;
   notifications_formatted?: string;
   overriddencreatedon_formatted?: string;

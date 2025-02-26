@@ -473,6 +473,11 @@
             "description": "ROM TSIS 2.0 Web Resource to display full Provision Text on Finding records"
           },
           {
+            "uniquename": "ts_/html/InfractionProvisionText.html",
+            "file": "html\\InfractionProvisionText.html",
+            "description": "ROM TSIS 2.0 Web Resource to display full Provision Text on Infraction records"
+          },
+          {
             "uniquename": "ts_/html/SurveyRenderPrint.html",
             "file": "html\\SurveyRenderPrint.html",
             "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
