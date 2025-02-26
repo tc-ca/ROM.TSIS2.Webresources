@@ -184,7 +184,7 @@
             if (globalContextUrl.indexOf("romts-gsrst-training") != -1 || globalContextUrl.indexOf("romts-gsrst-tcd365") != -1 ) {
                 console.log("training or prod url ");
                 // Oversight of Security Inspections (PAX)
-                OversightSIPAXIncidentTypeId = "c8c934c6-01b5-ec11-983e-000d3af4f373";
+                OversightSIPAXIncidentTypeId = "75c1830a-e9fe-ec11-82e6-000d3a09d5de";
             }
 
             //Retrieve the Activity Type records to get their Estimated Durations
