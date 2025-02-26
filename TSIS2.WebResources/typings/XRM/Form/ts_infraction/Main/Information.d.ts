@@ -22,6 +22,8 @@ declare namespace Form.ts_infraction.Main {
       get(name: "ts_contact"): Xrm.LookupAttribute<"contact">;
       get(name: "ts_finalenforcementaction"): Xrm.OptionSetAttribute<ts_finalenforcementaction>;
       get(name: "ts_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_infractionprovisiontexten"): Xrm.Attribute<string>;
+      get(name: "ts_infractionprovisiontextfr"): Xrm.Attribute<string>;
       get(name: "ts_infractiontype"): Xrm.OptionSetAttribute<ts_infractiontype>;
       get(name: "ts_issueaddressedonsite"): Xrm.OptionSetAttribute<ts_yesno>;
       get(name: "ts_legislation"): Xrm.LookupAttribute<"qm_rclegislation">;
@@ -77,6 +79,8 @@ declare namespace Form.ts_infraction.Main {
       get(name: "ts_contact"): Xrm.LookupControl<"contact">;
       get(name: "ts_finalenforcementaction"): Xrm.OptionSetControl<ts_finalenforcementaction>;
       get(name: "ts_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_infractionprovisiontexten"): Xrm.StringControl;
+      get(name: "ts_infractionprovisiontextfr"): Xrm.StringControl;
       get(name: "ts_infractiontype"): Xrm.OptionSetControl<ts_infractiontype>;
       get(name: "ts_issueaddressedonsite"): Xrm.OptionSetControl<ts_yesno>;
       get(name: "ts_legislation"): Xrm.LookupControl<"qm_rclegislation">;
@@ -127,6 +131,8 @@ declare namespace Form.ts_infraction.Main {
     getAttribute(attributeName: "ts_contact"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "ts_finalenforcementaction"): Xrm.OptionSetAttribute<ts_finalenforcementaction>;
     getAttribute(attributeName: "ts_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_infractionprovisiontexten"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_infractionprovisiontextfr"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_infractiontype"): Xrm.OptionSetAttribute<ts_infractiontype>;
     getAttribute(attributeName: "ts_issueaddressedonsite"): Xrm.OptionSetAttribute<ts_yesno>;
     getAttribute(attributeName: "ts_legislation"): Xrm.LookupAttribute<"qm_rclegislation">;
@@ -177,6 +183,8 @@ declare namespace Form.ts_infraction.Main {
     getControl(controlName: "ts_contact"): Xrm.LookupControl<"contact">;
     getControl(controlName: "ts_finalenforcementaction"): Xrm.OptionSetControl<ts_finalenforcementaction>;
     getControl(controlName: "ts_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_infractionprovisiontexten"): Xrm.StringControl;
+    getControl(controlName: "ts_infractionprovisiontextfr"): Xrm.StringControl;
     getControl(controlName: "ts_infractiontype"): Xrm.OptionSetControl<ts_infractiontype>;
     getControl(controlName: "ts_issueaddressedonsite"): Xrm.OptionSetControl<ts_yesno>;
     getControl(controlName: "ts_legislation"): Xrm.LookupControl<"qm_rclegislation">;
