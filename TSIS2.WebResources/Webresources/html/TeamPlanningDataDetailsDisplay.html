@@ -39,6 +39,7 @@
 
         // Planning Data Headers
         let workOrdersHeader = "Work Orders";
+        let planningDataViewHeader = "View";
         let nameHeader = "Name";
         let siteHeader = "Site";
         let subSiteHeader = "Subsite";
@@ -91,6 +92,7 @@
 
                 // Planning Data Headers
                 workOrdersHeader = "Ordres de travail";
+                planningDataViewHeader = "Voir";
                 nameHeader = "Nom";
                 siteHeader = "Site";
                 subSiteHeader = "Sous-site (Opération)";
@@ -387,6 +389,11 @@
         }
 
         function setupTable(resultsArray, resultsWorkOrdersArray, resultsFindingsArray) {
+
+            // Get the current environment URL dynamically
+            let globalContext = parent.Xrm.Utility.getGlobalContext();
+            let orgUrl = globalContext.getClientUrl();
+
             let mainTable = new Tabulator("#mainTable", {
                 data: resultsArray,
                 layout: "fitColumns",
@@ -411,6 +418,22 @@
 
                             if (hasChildren) toggleRow(cell.getRow());
                         }
+                    },
+                    {
+                        title: planningDataViewHeader,
+                        field: "planningDataId",
+                        sorter: "string",
+                        formatter: function (cell, formatterParams, onRendered) {
+                            let planningDataId = cell.getRow().getData().planningDataId;
+                            let recordUrl = `${orgUrl}/main.aspx?etn=ts_planningdata&pagetype=entityrecord&id=${planningDataId}`;
+
+                            // Return a clickable link icon
+                            return `<a href="${recordUrl}" target="_blank" title="Open Planning Data">
+                                                <img src="https://img.icons8.com/ios-glyphs/20/000000/link--v1.png" alt="🔗" style="vertical-align: middle;">
+                                            </a>`;
+                        },
+                        hozAlign: "center", // Center the icon in the column
+                        width: 120 // Adjust column width to fit the icon
                     },
                     { title: nameHeader, field: "planningName", sorter: "string", headerFilter: "input" },
                     { title: siteHeader, field: "siteName", sorter: "string", headerFilter: "input" },
@@ -448,10 +471,6 @@
                     // Get work orders related to this planningDataId
                     // We want to get it by planningDataID
                     let relatedWorkOrders = resultsWorkOrdersArray.filter(w => w.planningDataId === planningDataId);
-
-                    // Get the current environment URL dynamically
-                    let globalContext = parent.Xrm.Utility.getGlobalContext();
-                    let orgUrl = globalContext.getClientUrl();
 
                     if (relatedWorkOrders.length > 0) {
                         let workOrdersTable = new Tabulator(tableEl, {
