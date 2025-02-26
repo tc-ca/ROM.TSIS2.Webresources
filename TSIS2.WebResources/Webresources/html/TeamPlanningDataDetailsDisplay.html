@@ -41,10 +41,21 @@
         let workOrdersHeader = "Work Orders";
         let nameHeader = "Name";
         let siteHeader = "Site";
+        let subSiteHeader = "Subsite";
         let operationTypeHeader = "Operation Type";
         let stakeholderHeader = "Stakeholder";
         let activityTypeHeader = "Activity Type";
+        let lastWorkOrderHeader = "Last Work Order";
+        let targetHeader = "Target";
+        let durationHeader = "Duration";
+        let q1Header = "Q1";
+        let q2Header = "Q2";
+        let q3Header = "Q3";
+        let q4Header = "Q4";
+        let totalHeader = "Total";
         let varianceHeader = "Variance";
+        let justificationHeader = "Justification";
+        let planningCommentsHeader = "Planning Comments";
 
         // Work Order Headers
         let workOrderFindingsHeader = "Findings";
@@ -60,10 +71,11 @@
         let findingTypeHeader = "Finding Type";
         let provisionReferenceHeader = "Provision Reference";
 
+        // find out if the users language setting is set to French
+        var currentLanguage = parent.Xrm.Page.context.getUserLcid();
+
         function setLanguage() {
 
-            // find out if the users language setting is set to French
-            var currentLanguage = parent.Xrm.Page.context.getUserLcid();
 
             if (currentLanguage == USER_LANG_FR) {
 
@@ -81,10 +93,15 @@
                 workOrdersHeader = "Ordres de travail";
                 nameHeader = "Nom";
                 siteHeader = "Site";
+                subSiteHeader = "Sous-site (Opération)";
                 operationTypeHeader = "Type d'opération";
                 stakeholderHeader = "Intervenant";
                 activityTypeHeader = "Type d'activité";
+                lastWorkOrderHeader = "Dernier Ordre de travaille";
+                targetHeader = "Cible";
+                durationHeader = "Durée";
                 varianceHeader = "Écart";
+                planningCommentsHeader = "Commentaires de planification";
 
                 // Work Order Headers
                 workOrderFindingsHeader = "Constatation";
@@ -129,7 +146,7 @@
 
                 var planningDataFetchXML = `
                         <fetch xmlns:generator="MarkMpn.SQL4CDS">
-                          <entity name="ts_planningdata">
+                            <entity name="ts_planningdata">
                             <attribute name="ts_planningdataid" />
                             <attribute name="ts_name" />
                             <attribute name="ts_closedondatemostrecentwo" />
@@ -143,34 +160,36 @@
                             <attribute name="ts_variance" />
                             <attribute name="ts_planningdetail" />
                             <attribute name="ts_operationactivity" />
+                            <attribute name="ts_details" />
                             <link-entity name="ts_teamplanningdata" to="ts_teamplanningdata" from="ts_teamplanningdataid" alias="ts_teamplanningdata" link-type="inner" />
-                            <link-entity name="ovs_operation" to="ts_operation" from="ovs_operationid" alias="ovs_operation" link-type="inner">
-                              <link-entity name="msdyn_functionallocation" to="ts_subsite" from="msdyn_functionallocationid" alias="msdyn_functionallocation2" link-type="outer">
-                                <attribute name="msdyn_name" />
-                              </link-entity>
-                            </link-entity>
+                            <link-entity name="ovs_operation" to="ts_operation" from="ovs_operationid" alias="ovs_operation" link-type="inner" />
                             <link-entity name="msdyn_functionallocation" to="ts_site" from="msdyn_functionallocationid" alias="msdyn_functionallocation" link-type="inner">
-                              <attribute name="msdyn_name" />
+                                <attribute name="msdyn_name" />
                             </link-entity>
                             <link-entity name="ovs_operationtype" to="ts_operationtype" from="ovs_operationtypeid" alias="ovs_operationtype" link-type="inner">
-                              <attribute name="ovs_operationtypenameenglish" />
+                                <attribute name="ovs_operationtypenameenglish" />
+                                <attribute name="ovs_operationtypenamefrench" />
                             </link-entity>
                             <link-entity name="account" to="ts_stakeholder" from="accountid" alias="account" link-type="inner">
-                              <attribute name="ovs_accountnameenglish" />
+                                <attribute name="ovs_accountnameenglish" />
                             </link-entity>
                             <link-entity name="msdyn_incidenttype" to="ts_activitytype" from="msdyn_incidenttypeid" alias="msdyn_incidenttype" link-type="inner">
-                              <attribute name="ovs_incidenttypenameenglish" />
+                                <attribute name="ovs_incidenttypenameenglish" />
+                                <attribute name="ovs_incidenttypenamefrench" />
                             </link-entity>
                             <link-entity name="ts_planningdetail" to="ts_planningdetail" from="ts_planningdetailid" alias="ts_planningdetail" link-type="outer">
-                              <attribute name="ts_detailenglish" />
+                                <attribute name="ts_detailenglish" />
+                                <attribute name="ts_detailfrench" />
+                            </link-entity>
+                            <link-entity name="msdyn_functionallocation" to="ts_subsite" from="msdyn_functionallocationid" alias="msdyn_functionallocation3" link-type="outer">
+                                <attribute name="msdyn_name" />
                             </link-entity>
                             <filter>
-                              <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
-                              <condition attribute="statuscode" operator="eq" value="1" />
+                                <condition attribute="ts_teamplanningdata" operator="eq" value="${teamPlanningDataID}" />
+                                <condition attribute="statuscode" operator="eq" value="1" />
                             </filter>
-                          </entity>
-                        </fetch>
-                    `;
+                            </entity>
+                        </fetch>`;
 
                 var workOrderFetchXML = `
                         <fetch xmlns:generator="MarkMpn.SQL4CDS" distinct="true">
@@ -189,6 +208,7 @@
                                   <attribute name="msdyn_name" />
                                   <link-entity name="msdyn_incidenttype" to="msdyn_primaryincidenttype" from="msdyn_incidenttypeid" alias="msdyn_incidenttype" link-type="inner">
                                     <attribute name="ovs_incidenttypenameenglish" />
+                                    <attribute name="ovs_incidenttypenamefrench" />
                                     <attribute name="msdyn_incidenttypeid" />
                                     <order attribute="msdyn_incidenttypeid" />
                                   </link-entity>
@@ -272,10 +292,26 @@
                 parent.Xrm.WebApi.retrieveMultipleRecords("ts_planningdata", "?fetchXml=" + encodedTeamPlanningDataFetchXml)
                     .then(result => {
                         result.entities.forEach(entity => {
+
+                            var operationType = entity["ovs_operationtype.ovs_operationtypenameenglish"];
+                            var activityType = entity["msdyn_incidenttype.ovs_incidenttypenameenglish"];
+                            var justification = entity["ts_planningdetail.ts_detailenglish"];
+
+                            if (currentLanguage == USER_LANG_FR) {
+                                operationType = entity["ovs_operationtype.ovs_operationtypenamefrench"];
+                                activityType = entity["msdyn_incidenttype.ovs_incidenttypenamefrench"];
+                                justification = entity["ts_planningdetail.ts_detailfrench"];
+                            }
+
                             var record = {
                                 planningDataId: entity["ts_planningdataid"],
                                 operationActivityId: entity["_ts_operationactivity_value"],
                                 planningName: entity["ts_name"],
+                                siteName: entity["msdyn_functionallocation.msdyn_name"],
+                                subSiteName: entity["msdyn_functionallocation3.msdyn_name"],
+                                operationTypeName: operationType,
+                                stakeholderName: entity["account.ovs_accountnameenglish"],
+                                activityTypeName: activityType,
                                 closedOnDateMostRecentWO: entity["ts_closedondatemostrecentwo"],
                                 target: entity["ts_target"],
                                 teamEstimatedDuration: entity["ts_teamestimatedduration"],
@@ -285,13 +321,8 @@
                                 plannedQ4: entity["ts_plannedq4"],
                                 plannedWO: entity["ts_plannedwo"],
                                 variance: entity["ts_variance"],
-                                planningDetail: entity["ts_planningdetail"],
-                                operationSubsiteName: entity["msdyn_functionallocation2.msdyn_name"],
-                                siteName: entity["msdyn_functionallocation.msdyn_name"],
-                                operationTypeName: entity["ovs_operationtype.ovs_operationtypenameenglish"],
-                                stakeholderName: entity["account.ovs_accountnameenglish"],
-                                activityTypeName: entity["msdyn_incidenttype.ovs_incidenttypenameenglish"],
-                                planningDetailEnglish: entity["ts_planningdetail.ts_detailenglish"]
+                                justification: justification,
+                                planningComments: entity["ts_details"]
                             };
                             resultsArray.push(record);
                         });
@@ -302,13 +333,20 @@
                     })
                     .then(result => {
                         result.entities.forEach(entity => {
+
+                            var incidentType = entity["msdyn_incidenttype.ovs_incidenttypenameenglish"];
+
+                            if (currentLanguage == USER_LANG_FR) {
+                                incidentType = entity["msdyn_incidenttype.ovs_incidenttypenamefrench"];
+                            }
+
                             var record = {
                                 planningDataId: entity["ts_planningdataid"],
                                 planningName: entity["ts_name"],
                                 operationActivityId: entity["ts_operationactivity.ts_operationactivityid"],
                                 workOrderId: entity["msdyn_workorder.msdyn_workorderid"],
                                 workOrderName: entity["msdyn_workorder.msdyn_name"],
-                                incidentTypeName: entity["msdyn_incidenttype.ovs_incidenttypenameenglish"],
+                                incidentTypeName: incidentType,
                                 accountName: entity["account.name"],
                                 functionAllocationName: entity["msdyn_functionallocation.ts_functionallocationnameenglish"],
                             };
@@ -376,10 +414,21 @@
                     },
                     { title: nameHeader, field: "planningName", sorter: "string", headerFilter: "input" },
                     { title: siteHeader, field: "siteName", sorter: "string", headerFilter: "input" },
+                    { title: subSiteHeader, field: "subSiteName", sorter: "string", headerFilter: "input" },
                     { title: operationTypeHeader, field: "operationTypeName", sorter: "string", headerFilter: "input" },
                     { title: stakeholderHeader, field: "stakeholderName", sorter: "string", headerFilter: "input" },
                     { title: activityTypeHeader, field: "activityTypeName", sorter: "string", headerFilter: "input" },
-                    { title: varianceHeader, field: "variance", sorter: "number", headerFilter: "input" }
+                    { title: lastWorkOrderHeader, field: "closedOnDateMostRecentWO", sorter: "string", headerFilter: "input" },
+                    { title: targetHeader, field: "target", sorter: "number", headerFilter: "input" },
+                    { title: durationHeader, field: "teamEstimatedDuration", sorter: "number", headerFilter: "input" },
+                    { title: q1Header, field: "plannedQ1", sorter: "number", headerFilter: "input" },
+                    { title: q2Header, field: "plannedQ2", sorter: "number", headerFilter: "input" },
+                    { title: q3Header, field: "plannedQ3", sorter: "number", headerFilter: "input" },
+                    { title: q4Header, field: "plannedQ4", sorter: "number", headerFilter: "input" },
+                    { title: totalHeader, field: "plannedWO", sorter: "number", headerFilter: "input" },
+                    { title: varianceHeader, field: "variance", sorter: "number", headerFilter: "input" },
+                    { title: justificationHeader, field: "justification", sorter: "string", headerFilter: "input" },
+                    { title: planningCommentsHeader, field: "planningComments", sorter: "string", headerFilter: "input" }
                 ],
                 rowFormatter: function (row) {
                     let planningDataId = row.getData().planningDataId;
