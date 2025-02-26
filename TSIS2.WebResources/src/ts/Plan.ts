@@ -182,8 +182,9 @@
             var globalContextUrl = Xrm.Utility.getGlobalContext().getClientUrl();
             console.log("url: " + globalContextUrl);
             if (globalContextUrl.indexOf("romts-gsrst-training") != -1 || globalContextUrl.indexOf("romts-gsrst-tcd365") != -1 ) {
-                console.log("training or prod url ");                
-                OversightSIPAXIncidentTypeId = "ef0ec777-5bca-ed11-b596-000d3af4f2f8";
+                console.log("training or prod url ");
+                // Oversight of Security Inspections (PAX)
+                OversightSIPAXIncidentTypeId = "c8c934c6-01b5-ec11-983e-000d3af4f373";
             }
 
             //Retrieve the Activity Type records to get their Estimated Durations
