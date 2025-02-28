@@ -332,7 +332,6 @@ interface ovs_Finding_Expand {
   ts_finding_ts_action_finding: WebExpand<ovs_Finding_Expand, ts_action_Select, ts_action_Filter, { ts_finding_ts_action_finding: ts_action_Result[] }>;
   ts_finding_ts_causefinding_Finding: WebExpand<ovs_Finding_Expand, ts_causefinding_Select, ts_causefinding_Filter, { ts_finding_ts_causefinding_Finding: ts_causefinding_Result[] }>;
   ts_functionallocation: WebExpand<ovs_Finding_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_functionallocation: msdyn_FunctionalLocation_Result }>;
-  ts_infraction: WebExpand<ovs_Finding_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction: ts_infraction_Result }>;
   ts_operationid: WebExpand<ovs_Finding_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operationid: ovs_operation_Result }>;
   ts_ovs_operationtype: WebExpand<ovs_Finding_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_ovs_operationtype: ovs_operationtype_Result }>;
   ts_qm_rclegislation: WebExpand<ovs_Finding_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_qm_rclegislation: qm_rclegislation_Result }>;
@@ -481,7 +480,6 @@ interface ovs_Finding_RelatedOne {
   ts_actioncreated: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_enforcementactioncreated: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
-  ts_infraction: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_operationid: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_ovs_operationtype: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ts_qm_rclegislation: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;

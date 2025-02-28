@@ -188,7 +188,6 @@ interface msdyn_workorder_Relationships {
   ts_WorkOrderCreationWizardId?: ts_workordercreationwizard_Result | null;
   ts_incident_WorkOrder1_msdyn_workorder?: Incident_Result[] | null;
   ts_incident_WorkOrder2_msdyn_workorder?: Incident_Result[] | null;
-  ts_infraction_WorkOrder_msdyn_workorder?: ts_infraction_Result[] | null;
   ts_msdyn_customerasset_msdyn_workorder_msdyn?: msdyn_customerasset_Result[] | null;
   ts_msdyn_workorder_msdyn_workorder_Account?: Account_Result[] | null;
   ts_msdyn_workorder_ovs_operation_ovs_operati?: ovs_operation_Result[] | null;
@@ -800,7 +799,6 @@ interface msdyn_workorder_Expand {
   ts_departureaerodrome: WebExpand<msdyn_workorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_departureaerodrome: msdyn_FunctionalLocation_Result }>;
   ts_incident_WorkOrder1_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrder1_msdyn_workorder: Incident_Result[] }>;
   ts_incident_WorkOrder2_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrder2_msdyn_workorder: Incident_Result[] }>;
-  ts_infraction_WorkOrder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_WorkOrder_msdyn_workorder: ts_infraction_Result[] }>;
   ts_msdyn_customerasset_msdyn_workorder_msdyn: WebExpand<msdyn_workorder_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ts_msdyn_customerasset_msdyn_workorder_msdyn: msdyn_customerasset_Result[] }>;
   ts_msdyn_workorder_msdyn_workorder_Account: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ts_msdyn_workorder_msdyn_workorder_Account: Account_Result[] }>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<msdyn_workorder_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: ovs_operation_Result[] }>;
@@ -1119,7 +1117,6 @@ interface msdyn_workorder_RelatedMany {
   ts_Contact_msdyn_workorder_msdyn_workorder: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_incident_WorkOrder1_msdyn_workorder: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_WorkOrder2_msdyn_workorder: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
-  ts_infraction_WorkOrder_msdyn_workorder: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_msdyn_customerasset_msdyn_workorder_msdyn: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   ts_msdyn_workorder_msdyn_workorder_Account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;

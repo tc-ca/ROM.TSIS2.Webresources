@@ -286,10 +286,6 @@ interface SystemUser_Relationships {
   lk_ts_incompleteworkorderreason_createdonbehalfby?: ts_IncompleteWorkOrderReason_Result[] | null;
   lk_ts_incompleteworkorderreason_modifiedby?: ts_IncompleteWorkOrderReason_Result[] | null;
   lk_ts_incompleteworkorderreason_modifiedonbehalfby?: ts_IncompleteWorkOrderReason_Result[] | null;
-  lk_ts_infraction_createdby?: ts_infraction_Result[] | null;
-  lk_ts_infraction_createdonbehalfby?: ts_infraction_Result[] | null;
-  lk_ts_infraction_modifiedby?: ts_infraction_Result[] | null;
-  lk_ts_infraction_modifiedonbehalfby?: ts_infraction_Result[] | null;
   lk_ts_inspectionhours_createdby?: ts_InspectionHours_Result[] | null;
   lk_ts_inspectionhours_createdonbehalfby?: ts_InspectionHours_Result[] | null;
   lk_ts_inspectionhours_modifiedby?: ts_InspectionHours_Result[] | null;
@@ -394,7 +390,6 @@ interface SystemUser_Relationships {
   ts_enforcementaction_systemuser_owninguser?: ts_enforcementaction_Result[] | null;
   ts_incident_AdditionalInspectors1_systemuser?: Incident_Result[] | null;
   ts_incident_AdditionalInspectors2_systemuser?: Incident_Result[] | null;
-  ts_infraction_RATEManager_systemuser?: ts_infraction_Result[] | null;
   ts_msdyn_workorderservicetask_systemuser?: msdyn_workorderservicetask_Result[] | null;
   ts_ovs_Finding_NCATManager_SystemUser?: ovs_Finding_Result[] | null;
   ts_ovs_Finding_RATEManager_SystemUser?: ovs_Finding_Result[] | null;
@@ -437,7 +432,6 @@ interface SystemUser_Relationships {
   user_ts_causefinding?: ts_causefinding_Result[] | null;
   user_ts_entityrisk?: ts_EntityRisk_Result[] | null;
   user_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
-  user_ts_infraction?: ts_infraction_Result[] | null;
   user_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
   user_ts_nonoversightactivity?: ts_nonoversightactivity_Result[] | null;
   user_ts_operationactivity?: ts_OperationActivity_Result[] | null;
@@ -936,10 +930,6 @@ interface SystemUser_Expand {
   lk_ts_incompleteworkorderreason_createdonbehalfby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_createdonbehalfby: ts_IncompleteWorkOrderReason_Result[] }>;
   lk_ts_incompleteworkorderreason_modifiedby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_modifiedby: ts_IncompleteWorkOrderReason_Result[] }>;
   lk_ts_incompleteworkorderreason_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_modifiedonbehalfby: ts_IncompleteWorkOrderReason_Result[] }>;
-  lk_ts_infraction_createdby: WebExpand<SystemUser_Expand, ts_infraction_Select, ts_infraction_Filter, { lk_ts_infraction_createdby: ts_infraction_Result[] }>;
-  lk_ts_infraction_createdonbehalfby: WebExpand<SystemUser_Expand, ts_infraction_Select, ts_infraction_Filter, { lk_ts_infraction_createdonbehalfby: ts_infraction_Result[] }>;
-  lk_ts_infraction_modifiedby: WebExpand<SystemUser_Expand, ts_infraction_Select, ts_infraction_Filter, { lk_ts_infraction_modifiedby: ts_infraction_Result[] }>;
-  lk_ts_infraction_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_infraction_Select, ts_infraction_Filter, { lk_ts_infraction_modifiedonbehalfby: ts_infraction_Result[] }>;
   lk_ts_inspectionhours_createdby: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { lk_ts_inspectionhours_createdby: ts_InspectionHours_Result[] }>;
   lk_ts_inspectionhours_createdonbehalfby: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { lk_ts_inspectionhours_createdonbehalfby: ts_InspectionHours_Result[] }>;
   lk_ts_inspectionhours_modifiedby: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { lk_ts_inspectionhours_modifiedby: ts_InspectionHours_Result[] }>;
@@ -1047,7 +1037,6 @@ interface SystemUser_Expand {
   ts_enforcementaction_systemuser_owninguser: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_owninguser: ts_enforcementaction_Result[] }>;
   ts_incident_AdditionalInspectors1_systemuser: WebExpand<SystemUser_Expand, Incident_Select, Incident_Filter, { ts_incident_AdditionalInspectors1_systemuser: Incident_Result[] }>;
   ts_incident_AdditionalInspectors2_systemuser: WebExpand<SystemUser_Expand, Incident_Select, Incident_Filter, { ts_incident_AdditionalInspectors2_systemuser: Incident_Result[] }>;
-  ts_infraction_RATEManager_systemuser: WebExpand<SystemUser_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_RATEManager_systemuser: ts_infraction_Result[] }>;
   ts_msdyn_workorderservicetask_systemuser: WebExpand<SystemUser_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_msdyn_workorderservicetask_systemuser: msdyn_workorderservicetask_Result[] }>;
   ts_ovs_Finding_NCATManager_SystemUser: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_NCATManager_SystemUser: ovs_Finding_Result[] }>;
   ts_ovs_Finding_RATEManager_SystemUser: WebExpand<SystemUser_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_RATEManager_SystemUser: ovs_Finding_Result[] }>;
@@ -1090,7 +1079,6 @@ interface SystemUser_Expand {
   user_ts_causefinding: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { user_ts_causefinding: ts_causefinding_Result[] }>;
   user_ts_entityrisk: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { user_ts_entityrisk: ts_EntityRisk_Result[] }>;
   user_ts_incompleteworkorderreason: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { user_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
-  user_ts_infraction: WebExpand<SystemUser_Expand, ts_infraction_Select, ts_infraction_Filter, { user_ts_infraction: ts_infraction_Result[] }>;
   user_ts_inspectionhours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { user_ts_inspectionhours: ts_InspectionHours_Result[] }>;
   user_ts_nonoversightactivity: WebExpand<SystemUser_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { user_ts_nonoversightactivity: ts_nonoversightactivity_Result[] }>;
   user_ts_operationactivity: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { user_ts_operationactivity: ts_OperationActivity_Result[] }>;
@@ -1344,10 +1332,6 @@ interface SystemUser_RelatedMany {
   lk_ts_incompleteworkorderreason_createdonbehalfby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   lk_ts_incompleteworkorderreason_modifiedby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   lk_ts_incompleteworkorderreason_modifiedonbehalfby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
-  lk_ts_infraction_createdby: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
-  lk_ts_infraction_createdonbehalfby: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
-  lk_ts_infraction_modifiedby: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
-  lk_ts_infraction_modifiedonbehalfby: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   lk_ts_inspectionhours_createdby: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   lk_ts_inspectionhours_createdonbehalfby: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   lk_ts_inspectionhours_modifiedby: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
@@ -1451,7 +1435,6 @@ interface SystemUser_RelatedMany {
   ts_enforcementaction_systemuser_owninguser: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_incident_AdditionalInspectors1_systemuser: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_AdditionalInspectors2_systemuser: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
-  ts_infraction_RATEManager_systemuser: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_msdyn_workorderservicetask_systemuser: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ts_ovs_Finding_NCATManager_SystemUser: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_Finding_RATEManager_SystemUser: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
@@ -1494,7 +1477,6 @@ interface SystemUser_RelatedMany {
   user_ts_causefinding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   user_ts_entityrisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   user_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
-  user_ts_infraction: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   user_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
   user_ts_nonoversightactivity: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
   user_ts_operationactivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
