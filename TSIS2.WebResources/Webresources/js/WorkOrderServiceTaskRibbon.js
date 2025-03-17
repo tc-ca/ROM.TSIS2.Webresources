@@ -20,7 +20,7 @@ if (lang == 1036) {
     markCompleteServiceDateValidationTextLocalized = "Impossible de marquer la tâche de service de l'ordre de travail comme terminée car la date de début de la tâche de service est postérieure à la date d'aujourd'hui ou la date de début de la tâche de service est vide.";
     markCompleteServiceDateValidationTitleLocalized = "Impossible de marquer comme terminé";
     updateRiskAssessmentMessage = "Rappel : Veuillez mettre à jour l'évaluation des risques avant de fermer la tâches de service.";
-    
+
 } else {
     markCompleteValidationTextLocalized = "All required questions in the questionnaire must be answered before the questionnaire can be Marked Complete.";
     markCompleteValidationTitleLocalized = "Questionnaire Incomplete";
@@ -388,64 +388,15 @@ async function checkOperationRiskAssessment(formContext, survey) {
     isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
 
     if (isISSO && !isOffline) {
-        //Determine if Operation Risk Assessment has been submitted after the Work Order Service Task Start Date
-        let operationId = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationid_value").then(
-            function success(result) {
-                if (result._ovs_operationid_value != null) {
-                    return result._ovs_operationid_value;
-                }
-            }
-        );
-
-        //Show alert if this remains false
-        let activeRiskAssessmentSubmittedAfterStartDate = false;
-
-        if (operationId != null) {
-            //Retrieve Active Operation Risk Assessment submitted after the Work Order Service Task Start Date
-            let fetchXml = [
-                "<fetch>",
-                "  <entity name='ts_operationriskassessment'>",
-                "    <attribute name='ts_lastsubmissiondate' />",
-                "    <filter>",
-                "      <condition attribute='ts_operation' operator='eq' value='", operationId, "'/>",
-                "      <condition attribute='statecode' operator='eq' value='0'/>",
-                "    </filter>",
-                "  </entity>",
-                "</fetch>",
-            ].join("");
-            fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
-            activeRiskAssessmentSubmittedAfterStartDate = await Xrm.WebApi.retrieveMultipleRecords("ts_operationriskassessment", fetchXml).then(
-                function success(result) {
-                    if (result.entities.length > 0) {
-                        let riskAssessment = result.entities[0];
-                        return (riskAssessment.ts_lastsubmissiondate != null && new Date(riskAssessment.ts_lastsubmissiondate) > new Date(formContext.getAttribute("ts_servicetaskstartdate").getValue()))
-                    } else {
-                        //If no Risk Assessment can be found, ignore
-                        return true;
-                    }
-                }
-            );
-        }
-        if (!activeRiskAssessmentSubmittedAfterStartDate) {
-            //Open Dialog Message Notifying User that the Active Operation Risk Assessment has not been submitted
-            var alertStrings = {
-                text: "The Operation Risk Assessment must be submitted before the Work Order Service Task can be Marked Complete.",
-                title: "Operation Risk Assessment Not Submitted"
-            };
-            var alertOptions = { height: 200, width: 550 };
-            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
-        } else {
-            var alertStrings = {
-                text: updateRiskAssessmentMessage,
-                title: workOrderServiceTaskLocalized
-            };
-            var alertOptions = { height: 200, width: 450 };
-            //Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
-                completeConfirmation(formContext, survey);
-            //});
-        }
-    } else {
-        completeConfirmation(formContext, survey);
+        //Open Dialog Message Notifying User that the Active Operation Risk Assessment has not been submitted
+        var alertStrings = {
+            text: "The Operation Risk Assessment must be submitted before the Work Order Service Task can be Marked Complete.",
+            title: "Operation Risk Assessment Not Submitted"
+        };
+        var alertOptions = { height: 200, width: 550 };
+        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
+            completeConfirmation(formContext, survey);
+        });
     }
 }
 
@@ -546,7 +497,7 @@ async function buildCustomQuestionnaire(primaryControl) {
 var mode = '';
 function toggleQuestionnaire(primaryControl) {
 
-        // Get the web resource control on the form
+    // Get the web resource control on the form
     const wrCtrl = primaryControl.getControl('WebResource_QuestionnaireRender');
     const questionnaireDefinition = primaryControl.getAttribute('ovs_questionnairedefinition').getValue();
     const questionnaireResponse = primaryControl.getAttribute('ovs_questionnaireresponse').getValue();
@@ -554,7 +505,7 @@ function toggleQuestionnaire(primaryControl) {
     // Exit if no questionnaire exists
     if (questionnaireDefinition === null) {
         wrCtrl.setVisible(false);
-    return;
+        return;
     }
 
     // Get Questionnaire definition
@@ -749,81 +700,81 @@ async function gatherapplicableProvisionsData(provisionName) {
     return applicableProvisionsData;
 }
 
-function SendReport(primaryControl, SelectedControlSelectedItemReferences){
+function SendReport(primaryControl, SelectedControlSelectedItemReferences) {
     //If WOTask has a result of "Pass"
     Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", SelectedControlSelectedItemReferences[0].Id, "?$select=msdyn_inspectiontaskresult").then(
         function success(result) {
-           if(result.msdyn_inspectiontaskresult == 192350000){
-            var operationId = primaryControl.getAttribute("ovs_operationid").getValue()[0].id; 
-            let fetchXml = '<fetch version="1.0" mapping="logical"><entity name="contact"><attribute name="contactid" /><attribute name="fullname"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><link-entity name="ts_operationcontact" from="ts_contact" to="contactid"><link-entity name="ovs_operation" from="ovs_operationid" to="ts_operation"><filter><condition attribute="ovs_operationid" operator="eq" value="' + operationId +'"/></filter></link-entity></link-entity></entity></fetch>';
+            if (result.msdyn_inspectiontaskresult == 192350000) {
+                var operationId = primaryControl.getAttribute("ovs_operationid").getValue()[0].id;
+                let fetchXml = '<fetch version="1.0" mapping="logical"><entity name="contact"><attribute name="contactid" /><attribute name="fullname"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><link-entity name="ts_operationcontact" from="ts_contact" to="contactid"><link-entity name="ovs_operation" from="ovs_operationid" to="ts_operation"><filter><condition attribute="ovs_operationid" operator="eq" value="' + operationId + '"/></filter></link-entity></link-entity></entity></fetch>';
 
-            //Retrieve contact that are associated with the operations in the WO
-            Xrm.WebApi.retrieveMultipleRecords("contact", "?fetchXml=" + encodeURIComponent(fetchXml)).then(
-                function success(result) {
-                    //Create filter that will subsequently be used to filter the "to" field in the email form if there are multiple contacts
-                    let contactFilter = "";
-                    if(result.entities.length > 1){
-                        result.entities.forEach(function (contact) {
-                            contactFilter += '<condition attribute="contactid" operator="eq" value="' + contact.contactid + '"/>';
-                        });
-                    }
-
-                    //Send custom parameters to fill the "to" and "regardingobjetid" (partylist/lookup) fields in the email form 
-                    var pageInput = {
-                        pageType: "entityrecord",
-                        entityName: "email",
-                        data: {
-                            from: "",
-                            contactfilter_0 : contactFilter,
-                            operationid_0 : operationId, 
-                            cc: "",
-                            bcc: "",
-                            subject: "Positive report",
-                            description: "",
-                            regardingobjectid_0: SelectedControlSelectedItemReferences[0].Id,
-                            regardingobjectname_0: SelectedControlSelectedItemReferences[0].Name,
+                //Retrieve contact that are associated with the operations in the WO
+                Xrm.WebApi.retrieveMultipleRecords("contact", "?fetchXml=" + encodeURIComponent(fetchXml)).then(
+                    function success(result) {
+                        //Create filter that will subsequently be used to filter the "to" field in the email form if there are multiple contacts
+                        let contactFilter = "";
+                        if (result.entities.length > 1) {
+                            result.entities.forEach(function (contact) {
+                                contactFilter += '<condition attribute="contactid" operator="eq" value="' + contact.contactid + '"/>';
+                            });
                         }
-                    };
 
-                    //Set contact parameters only if they exist
-                    if(result.entities.length > 0){
-                        pageInput.data.contactid_0 = result.entities[0].contactid;
-                        pageInput.data.contactname_0 = result.entities[0].fullname;
-                    }
+                        //Send custom parameters to fill the "to" and "regardingobjetid" (partylist/lookup) fields in the email form 
+                        var pageInput = {
+                            pageType: "entityrecord",
+                            entityName: "email",
+                            data: {
+                                from: "",
+                                contactfilter_0: contactFilter,
+                                operationid_0: operationId,
+                                cc: "",
+                                bcc: "",
+                                subject: "Positive report",
+                                description: "",
+                                regardingobjectid_0: SelectedControlSelectedItemReferences[0].Id,
+                                regardingobjectname_0: SelectedControlSelectedItemReferences[0].Name,
+                            }
+                        };
 
-                    var navigationOptions = {
-                        target: 1,
-                        height: {
-                            value: 100, unit: "%"
-                        },
-                        width: {
-                            value: 80, unit: "%"
-                        },
-                        position: 1
-                    };
-
-                    //Open new email form
-                    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
-                        function success() {
-                            // Run code on success
-                        },
-                        function error() {
-                            // Handle errors
+                        //Set contact parameters only if they exist
+                        if (result.entities.length > 0) {
+                            pageInput.data.contactid_0 = result.entities[0].contactid;
+                            pageInput.data.contactname_0 = result.entities[0].fullname;
                         }
-                    );
-                },
-                function (error) {
-                }
-            );
-           }
-           else{
+
+                        var navigationOptions = {
+                            target: 1,
+                            height: {
+                                value: 100, unit: "%"
+                            },
+                            width: {
+                                value: 80, unit: "%"
+                            },
+                            position: 1
+                        };
+
+                        //Open new email form
+                        Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                            function success() {
+                                // Run code on success
+                            },
+                            function error() {
+                                // Handle errors
+                            }
+                        );
+                    },
+                    function (error) {
+                    }
+                );
+            }
+            else {
                 var alertStrings = {
                     text: workOrderServiceTaskResultNotPassedText,
                     title: workOrderServiceTaskResultNotPassedTitle
                 };
                 var alertOptions = { height: 200, width: 450 };
                 Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
-           }
+            }
         },
         function (error) {
         }
