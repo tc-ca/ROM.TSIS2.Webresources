@@ -397,6 +397,8 @@ async function checkOperationRiskAssessment(formContext, survey) {
         Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
             completeConfirmation(formContext, survey);
         });
+    } else {
+        completeConfirmation(formContext, survey);
     }
 }
 
