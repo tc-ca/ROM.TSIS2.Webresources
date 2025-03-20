@@ -30,3 +30,58 @@ function setSelectedNonOperational(planningDataGuids, primaryControl) {
         }
 );
 }
+
+function openOperationActivityFormInModal(selectedControlSelectedItemIds) {
+    // Ensure a single Planning Data record is selected
+    if (!selectedControlSelectedItemIds || selectedControlSelectedItemIds.length !== 1) {
+        console.error("Please select a single Planning Data record.");
+        return;
+    }
+
+    // The array contains the Planning Data record's ID
+    var planningDataId = selectedControlSelectedItemIds[0];
+    planningDataId = planningDataId.replace("{", "").replace("}", "");
+    console.log("Planning Data Record ID: " + planningDataId);
+
+    // Retrieve the Planning Data record to get the Operation Activity lookup value.
+    Xrm.WebApi.retrieveRecord("ts_planningdata", planningDataId, "?$select=_ts_operationactivity_value").then(
+        function (result) {
+            var operationActivityId = result["_ts_operationactivity_value"];
+            if (!operationActivityId) {
+                console.error("The selected Planning Data record does not have an associated Operation Activity.");
+                return;
+            }
+            operationActivityId = operationActivityId.replace("{", "").replace("}", "");
+            console.log("Operation Activity Record ID: " + operationActivityId);
+
+            // Define the page input to open the desired Operation Activity form
+            var pageInput = {
+                pageType: "entityrecord",
+                entityName: "ts_operationactivity",
+                entityId: operationActivityId,
+                formId: "dd3c2b2c-fef9-ef11-bae1-002248b2e1ca"  // Second Main Form 'Related Work Orders'
+            };
+
+            // Define options for opening the form in a modal dialog
+            var navigationOptions = {
+                target: 2,
+                position: 1,
+                width: { value: 70, unit: "%" },
+                height: { value: 80, unit: "%" }
+            };
+
+            // Open the Operation Activity form in a modal dialog
+            Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                function () {
+                    console.log("Operation Activity form opened successfully in a modal dialog.");
+                },
+                function (error) {
+                    console.error("Error opening Operation Activity form: " + error.message);
+                }
+            );
+        },
+        function (error) {
+            console.error("Error retrieving Planning Data record: " + error.message);
+        }
+    );
+}

@@ -190,6 +190,11 @@
             "description": "ROM TSIS 2.0 EntityRisk Form Scripts"
           },
           {
+            "uniquename": "ts_/js/OperationActivityRiskScores.js",
+            "file": "js\\OperationActivityRiskScores.js",
+            "description": "ROM TSIS 2.0 Operation Activity Risk Scores Form Scripts"
+          },
+          {
             "uniquename": "ts_/js/FunctionalLocation.js",
             "file": "js\\FunctionalLocation.js",
             "description": "ROM TSIS 2.0 Functional Location Scripts"
@@ -213,6 +218,11 @@
             "uniquename": "ts_/js/Operation.js",
             "file": "js\\Operation.js",
             "description": "ROM TSIS 2.0 Operation Form Scripts"
+          },
+          {
+            "uniquename": "ts_/js/OperationType.js",
+            "file": "js\\OperationType.js",
+            "description": "ROM TSIS 2.0 Operation Type Form Scripts"
           },
           {
             "uniquename": "ts_/js/OperationActivity.js",
@@ -463,6 +473,11 @@
             "description": "ROM TSIS 2.0 Web Resource to display full Provision Text on Finding records"
           },
           {
+            "uniquename": "ts_/html/InfractionProvisionText.html",
+            "file": "html\\InfractionProvisionText.html",
+            "description": "ROM TSIS 2.0 Web Resource to display full Provision Text on Infraction records"
+          },
+          {
             "uniquename": "ts_/html/SurveyRenderPrint.html",
             "file": "html\\SurveyRenderPrint.html",
             "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
@@ -589,6 +604,11 @@
             "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincident"
           },
           {
+            "uniquename": "ts_/html/TeamPlanningDataDetailsDisplay.html",
+            "file": "html\\TeamPlanningDataDetailsDisplay.html",
+            "description": "Display the nested grid for Team Planning Data"
+          },
+          {
             "uniquename": "ts_/html/SecurityIncidentAdditionalDetailsDisplay.html",
             "file": "html\\SecurityIncidentAdditionalDetailsDisplay.html",
             "description": "Display the contents of ts_incidentdetailsattachment in the default form for ts_securityincidentadditionaldetails"
@@ -678,6 +698,11 @@
             "uniquename": "ts_/js/buildprovisiontext.js",
             "file": "js\\buildprovisiontext.js",
             "description": "Function library to build provision text"
+          },
+          {
+            "uniquename": "ts_/js/buildlegislationtext.js",
+            "file": "js\\buildlegislationtext.js",
+            "description": "Function library to build legislation text"
           },
           {
             "uniquename": "ts_/js/surveyRenderPrint.js",

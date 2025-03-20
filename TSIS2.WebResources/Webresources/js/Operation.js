@@ -49,7 +49,7 @@ var ROM;
         var isROM20Form = false;
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, userRoles, formItem, userId, currentUserBusinessUnitFetchXML, isOffline;
+                var form, userRoles, formItem, userId, currentUserBusinessUnitFetchXML, isOffline, ownerAttribute, ownerAttributeValue;
                 return __generator(this, function (_a) {
                     form = eContext.getFormContext();
                     userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
@@ -167,9 +167,9 @@ var ROM;
                                 }
                                 else if (form.ui.getFormType() == 2) { //Update
                                     //We filter the form on the business unit of the owner of the record
-                                    var ownerAttribute = form.getAttribute("ownerid").getValue();
-                                    if (ownerAttribute != null) {
-                                        Xrm.WebApi.offline.retrieveRecord(ownerAttribute[0].entityType, ownerAttribute[0].id, "?$select=_businessunitid_value").then(function success(result) {
+                                    var ownerAttribute_1 = form.getAttribute("ownerid").getValue();
+                                    if (ownerAttribute_1 != null) {
+                                        Xrm.WebApi.offline.retrieveRecord(ownerAttribute_1[0].entityType, ownerAttribute_1[0].id, "?$select=_businessunitid_value").then(function success(result) {
                                             owningBusinessUnit = result._businessunitid_value;
                                             form.getControl('ovs_operationtypeid').setDisabled(false);
                                             form.getControl('ts_site').setDisabled(false);
@@ -277,9 +277,9 @@ var ROM;
                                 }
                                 else if (form.ui.getFormType() == 2) { //Update
                                     //We filter the form on the business unit of the owner of the record
-                                    var ownerAttribute = form.getAttribute("ownerid").getValue();
-                                    if (ownerAttribute != null) {
-                                        Xrm.WebApi.retrieveRecord(ownerAttribute[0].entityType, ownerAttribute[0].id, "?$select=_businessunitid_value").then(function success(result) {
+                                    var ownerAttribute_2 = form.getAttribute("ownerid").getValue();
+                                    if (ownerAttribute_2 != null) {
+                                        Xrm.WebApi.retrieveRecord(ownerAttribute_2[0].entityType, ownerAttribute_2[0].id, "?$select=_businessunitid_value").then(function success(result) {
                                             owningBusinessUnit = result._businessunitid_value;
                                             form.getControl('ovs_operationtypeid').setDisabled(false);
                                             form.getControl('ts_site').setDisabled(false);
@@ -307,6 +307,16 @@ var ROM;
                         form.getControl("ts_statusenddate").setDisabled(false);
                         form.getControl("ts_description").setDisabled(false);
                         form.getAttribute("ts_description").setRequiredLevel("required");
+                    }
+                    ownerAttribute = form.getAttribute("ownerid");
+                    ownerAttributeValue = ownerAttribute.getValue();
+                    if (ownerAttributeValue != null) {
+                        if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
+                            form.ui.tabs.get("plan_track").sections.get("entity_risk_section").setVisible(true);
+                        }
+                        else {
+                            form.ui.tabs.get("plan_track").sections.get("entity_risk_section").setVisible(false);
+                        }
                     }
                     return [2 /*return*/];
                 });

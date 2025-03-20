@@ -1081,6 +1081,19 @@ var ROM;
                                             isInspectionType = true;
                                         }
                                     }
+                                    if (workOrderOperation["ovs_operation1.ovs_operationid"] != null &&
+                                        workOrderOperation["account4.name"] != null &&
+                                        workOrderOperation["ovs_operationtype2.ts_regulated"] != null &&
+                                        workOrderOperation["ovs_operationtype2.ovs_operationtypeid"] != null &&
+                                        workOrderOperation["ovs_operationtype2.ts_regulated"] == true &&
+                                        workOrderOperation["ovs_operationtype2.ovs_operationtypeid"] == 'abf259f6-eff0-ed11-8848-000d3af4f330') {
+                                        operations.push({
+                                            id: workOrderOperation["ovs_operation1.ovs_operationid"],
+                                            name: stakeholderName + " | " + operationTypeName + " | " + siteName,
+                                            operationTypeId: workOrderOperation["ovs_operation1.ovs_operationtypeid"],
+                                            isRegulated: workOrderOperation["ovs_operationtype2.ts_regulated"]
+                                        });
+                                    }
                                     //OperatingcarrierOperation
                                     var workOrderOperatingcarrierOperationId = "";
                                     if (operationRetrievalPromises[3].entities.length > 0) {

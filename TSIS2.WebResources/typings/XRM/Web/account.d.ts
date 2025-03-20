@@ -154,6 +154,7 @@ interface Account_Base extends WebEntity {
   ts_alias3?: string | null;
   ts_alias4?: string | null;
   ts_alias5?: string | null;
+  ts_endofvalidfields?: string | null;
   ts_iatacode?: string | null;
   ts_icaocode?: string | null;
   ts_securityplantype?: ts_securityplantype | null;
@@ -196,6 +197,7 @@ interface Account_Relationships {
   msdyn_billingaccount_account?: Account_Result | null;
   msdyn_msdyn_functionallocation_account?: msdyn_FunctionalLocation_Result[] | null;
   ts_EntityRisk_Account_Account?: ts_EntityRisk_Result[] | null;
+  ts_PrincipalOperationType?: ovs_operationtype_Result | null;
   ts_account_msdyn_workorderservicetask_AOCStakeholder?: msdyn_workorderservicetask_Result[] | null;
   ts_account_msdyn_workorderservicetask_AccessControlSecurityServices?: msdyn_workorderservicetask_Result[] | null;
   ts_account_msdyn_workorderservicetask_CargoServices?: msdyn_workorderservicetask_Result[] | null;
@@ -215,6 +217,7 @@ interface Account_Relationships {
   ts_account_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
   ts_account_workorder_operatingcarrier?: msdyn_workorder_Result[] | null;
   ts_account_workorder_operatingname?: msdyn_workorder_Result[] | null;
+  ts_infraction_stakeholder_account?: ts_infraction_Result[] | null;
   ts_ovs_Finding_accountid_Account?: ovs_Finding_Result[] | null;
   ts_ovs_operation_stakeholder_account?: ovs_operation_Result[] | null;
   ts_suggestedinspection_stakeholder?: ts_SuggestedInspection_Result[] | null;
@@ -444,6 +447,7 @@ interface Account_Select {
   ts_alias4: WebAttribute<Account_Select, { ts_alias4: string | null }, {  }>;
   ts_alias5: WebAttribute<Account_Select, { ts_alias5: string | null }, {  }>;
   ts_country_guid: WebAttribute<Account_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_endofvalidfields: WebAttribute<Account_Select, { ts_endofvalidfields: string | null }, {  }>;
   ts_iatacode: WebAttribute<Account_Select, { ts_iatacode: string | null }, {  }>;
   ts_icaocode: WebAttribute<Account_Select, { ts_icaocode: string | null }, {  }>;
   ts_msdyn_workorder_guid: WebAttribute<Account_Select, { ts_msdyn_workorder_guid: string | null }, { ts_msdyn_workorder_formatted?: string }>;
@@ -646,6 +650,7 @@ interface Account_Filter {
   ts_alias4: string;
   ts_alias5: string;
   ts_country_guid: XQW.Guid;
+  ts_endofvalidfields: string;
   ts_iatacode: string;
   ts_icaocode: string;
   ts_msdyn_workorder_guid: XQW.Guid;
@@ -704,6 +709,7 @@ interface Account_Expand {
   preferredsystemuserid: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { preferredsystemuserid: SystemUser_Result }>;
   primarycontactid: WebExpand<Account_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
   ts_EntityRisk_Account_Account: WebExpand<Account_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_EntityRisk_Account_Account: ts_EntityRisk_Result[] }>;
+  ts_PrincipalOperationType: WebExpand<Account_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_PrincipalOperationType: ovs_operationtype_Result }>;
   ts_account_msdyn_workorderservicetask_AOCStakeholder: WebExpand<Account_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_account_msdyn_workorderservicetask_AOCStakeholder: msdyn_workorderservicetask_Result[] }>;
   ts_account_msdyn_workorderservicetask_AccessControlSecurityServices: WebExpand<Account_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_account_msdyn_workorderservicetask_AccessControlSecurityServices: msdyn_workorderservicetask_Result[] }>;
   ts_account_msdyn_workorderservicetask_CargoServices: WebExpand<Account_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_account_msdyn_workorderservicetask_CargoServices: msdyn_workorderservicetask_Result[] }>;
@@ -723,6 +729,7 @@ interface Account_Expand {
   ts_account_ts_workordercreationwizard: WebExpand<Account_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_account_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
   ts_account_workorder_operatingcarrier: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_account_workorder_operatingcarrier: msdyn_workorder_Result[] }>;
   ts_account_workorder_operatingname: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_account_workorder_operatingname: msdyn_workorder_Result[] }>;
+  ts_infraction_stakeholder_account: WebExpand<Account_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_stakeholder_account: ts_infraction_Result[] }>;
   ts_msdyn_workorder: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder: msdyn_workorder_Result }>;
   ts_ovs_Finding_accountid_Account: WebExpand<Account_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_accountid_Account: ovs_Finding_Result[] }>;
   ts_ovs_operation_stakeholder_account: WebExpand<Account_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_stakeholder_account: ovs_operation_Result[] }>;
@@ -876,6 +883,7 @@ interface Account_RelatedOne {
   parentaccountid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   preferredsystemuserid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   primarycontactid: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  ts_PrincipalOperationType: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ts_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface Account_RelatedMany {
@@ -926,6 +934,7 @@ interface Account_RelatedMany {
   ts_account_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_account_workorder_operatingcarrier: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_account_workorder_operatingname: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_infraction_stakeholder_account: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_ovs_Finding_accountid_Account: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_stakeholder_account: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_suggestedinspection_stakeholder: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;

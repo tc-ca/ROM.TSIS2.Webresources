@@ -6,10 +6,13 @@ interface ts_EntityRisk_Base extends WebEntity {
   statecode?: ts_entityrisk_statecode | null;
   statuscode?: ts_entityrisk_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_calculatedriskscore?: number | null;
   ts_entityid?: string | null;
   ts_entityname?: ts_entityrisk_ts_entityname | null;
   ts_entityriskid?: string | null;
   ts_name?: string | null;
+  ts_riskscore?: number | null;
+  ts_runpowerautomateflow?: boolean | null;
   ts_weightedriskscore?: number | null;
   ts_year?: string | null;
   utcconversiontimezonecode?: number | null;
@@ -20,10 +23,19 @@ interface ts_EntityRisk_Relationships {
   ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation?: msdyn_FunctionalLocation_Result[] | null;
   ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype?: msdyn_incidenttype_Result[] | null;
   ts_EntityRisk_ovs_operation_ovs_operation?: ovs_operation_Result[] | null;
+  ts_EntityRisk_ovs_operationtype_ovs_operationtype?: ovs_operationtype_Result[] | null;
+  ts_FiscalYear?: tc_TCFiscalYear_Result | null;
+  ts_operationactivityriskscores_ActivityTypeEntityRisk_ts_entityrisk?: ts_OperationActivityRiskScores_Result[] | null;
+  ts_operationactivityriskscores_OperationEntityRisk_ts_entityrisk?: ts_OperationActivityRiskScores_Result[] | null;
+  ts_operationactivityriskscores_OperationTypeEntityRisk_ts_entityrisk?: ts_OperationActivityRiskScores_Result[] | null;
+  ts_operationactivityriskscores_ProgramAreaEntityRisk_ts_entityrisk?: ts_OperationActivityRiskScores_Result[] | null;
+  ts_operationactivityriskscores_SiteEntityRisk_ts_entityrisk?: ts_OperationActivityRiskScores_Result[] | null;
+  ts_operationactivityriskscores_StakeholderEntityRisk_ts_entityrisk?: ts_OperationActivityRiskScores_Result[] | null;
 }
 interface ts_EntityRisk extends ts_EntityRisk_Base, ts_EntityRisk_Relationships {
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
+  ts_FiscalYear_bind$tc_tcfiscalyears?: string | null;
   ts_RiskFrequency_bind$ts_riskfrequencies?: string | null;
   ts_RiskRating_bind$ts_riskratings?: string | null;
 }
@@ -47,12 +59,16 @@ interface ts_EntityRisk_Select {
   statecode: WebAttribute<ts_EntityRisk_Select, { statecode: ts_entityrisk_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ts_EntityRisk_Select, { statuscode: ts_entityrisk_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_EntityRisk_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_calculatedriskscore: WebAttribute<ts_EntityRisk_Select, { ts_calculatedriskscore: number | null }, {  }>;
   ts_entityid: WebAttribute<ts_EntityRisk_Select, { ts_entityid: string | null }, {  }>;
   ts_entityname: WebAttribute<ts_EntityRisk_Select, { ts_entityname: ts_entityrisk_ts_entityname | null }, { ts_entityname_formatted?: string }>;
   ts_entityriskid: WebAttribute<ts_EntityRisk_Select, { ts_entityriskid: string | null }, {  }>;
+  ts_fiscalyear_guid: WebAttribute<ts_EntityRisk_Select, { ts_fiscalyear_guid: string | null }, { ts_fiscalyear_formatted?: string }>;
   ts_name: WebAttribute<ts_EntityRisk_Select, { ts_name: string | null }, {  }>;
   ts_riskfrequency_guid: WebAttribute<ts_EntityRisk_Select, { ts_riskfrequency_guid: string | null }, { ts_riskfrequency_formatted?: string }>;
   ts_riskrating_guid: WebAttribute<ts_EntityRisk_Select, { ts_riskrating_guid: string | null }, { ts_riskrating_formatted?: string }>;
+  ts_riskscore: WebAttribute<ts_EntityRisk_Select, { ts_riskscore: number | null }, {  }>;
+  ts_runpowerautomateflow: WebAttribute<ts_EntityRisk_Select, { ts_runpowerautomateflow: boolean | null }, {  }>;
   ts_weightedriskscore: WebAttribute<ts_EntityRisk_Select, { ts_weightedriskscore: number | null }, {  }>;
   ts_year: WebAttribute<ts_EntityRisk_Select, { ts_year: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_EntityRisk_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -74,12 +90,16 @@ interface ts_EntityRisk_Filter {
   statecode: ts_entityrisk_statecode;
   statuscode: ts_entityrisk_statuscode;
   timezoneruleversionnumber: number;
+  ts_calculatedriskscore: any;
   ts_entityid: string;
   ts_entityname: ts_entityrisk_ts_entityname;
   ts_entityriskid: XQW.Guid;
+  ts_fiscalyear_guid: XQW.Guid;
   ts_name: string;
   ts_riskfrequency_guid: XQW.Guid;
   ts_riskrating_guid: XQW.Guid;
+  ts_riskscore: any;
+  ts_runpowerautomateflow: boolean;
   ts_weightedriskscore: any;
   ts_year: string;
   utcconversiontimezonecode: number;
@@ -97,6 +117,14 @@ interface ts_EntityRisk_Expand {
   ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: WebExpand<ts_EntityRisk_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: msdyn_FunctionalLocation_Result[] }>;
   ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype: WebExpand<ts_EntityRisk_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype: msdyn_incidenttype_Result[] }>;
   ts_EntityRisk_ovs_operation_ovs_operation: WebExpand<ts_EntityRisk_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_EntityRisk_ovs_operation_ovs_operation: ovs_operation_Result[] }>;
+  ts_EntityRisk_ovs_operationtype_ovs_operationtype: WebExpand<ts_EntityRisk_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_EntityRisk_ovs_operationtype_ovs_operationtype: ovs_operationtype_Result[] }>;
+  ts_FiscalYear: WebExpand<ts_EntityRisk_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
+  ts_operationactivityriskscores_ActivityTypeEntityRisk_ts_entityrisk: WebExpand<ts_EntityRisk_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_ActivityTypeEntityRisk_ts_entityrisk: ts_OperationActivityRiskScores_Result[] }>;
+  ts_operationactivityriskscores_OperationEntityRisk_ts_entityrisk: WebExpand<ts_EntityRisk_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_OperationEntityRisk_ts_entityrisk: ts_OperationActivityRiskScores_Result[] }>;
+  ts_operationactivityriskscores_OperationTypeEntityRisk_ts_entityrisk: WebExpand<ts_EntityRisk_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_OperationTypeEntityRisk_ts_entityrisk: ts_OperationActivityRiskScores_Result[] }>;
+  ts_operationactivityriskscores_ProgramAreaEntityRisk_ts_entityrisk: WebExpand<ts_EntityRisk_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_ProgramAreaEntityRisk_ts_entityrisk: ts_OperationActivityRiskScores_Result[] }>;
+  ts_operationactivityriskscores_SiteEntityRisk_ts_entityrisk: WebExpand<ts_EntityRisk_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_SiteEntityRisk_ts_entityrisk: ts_OperationActivityRiskScores_Result[] }>;
+  ts_operationactivityriskscores_StakeholderEntityRisk_ts_entityrisk: WebExpand<ts_EntityRisk_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_StakeholderEntityRisk_ts_entityrisk: ts_OperationActivityRiskScores_Result[] }>;
 }
 interface ts_EntityRisk_FormattedResult {
   createdby_formatted?: string;
@@ -113,6 +141,7 @@ interface ts_EntityRisk_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_entityname_formatted?: string;
+  ts_fiscalyear_formatted?: string;
   ts_riskfrequency_formatted?: string;
   ts_riskrating_formatted?: string;
 }
@@ -126,6 +155,7 @@ interface ts_EntityRisk_Result extends ts_EntityRisk_Base, ts_EntityRisk_Relatio
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
   owninguser_guid: string | null;
+  ts_fiscalyear_guid: string | null;
   ts_riskfrequency_guid: string | null;
   ts_riskrating_guid: string | null;
 }
@@ -137,12 +167,20 @@ interface ts_EntityRisk_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
 }
 interface ts_EntityRisk_RelatedMany {
   ts_EntityRisk_Account_Account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ts_EntityRisk_ovs_operation_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_EntityRisk_ovs_operationtype_ovs_operationtype: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
+  ts_operationactivityriskscores_ActivityTypeEntityRisk_ts_entityrisk: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
+  ts_operationactivityriskscores_OperationEntityRisk_ts_entityrisk: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
+  ts_operationactivityriskscores_OperationTypeEntityRisk_ts_entityrisk: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
+  ts_operationactivityriskscores_ProgramAreaEntityRisk_ts_entityrisk: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
+  ts_operationactivityriskscores_SiteEntityRisk_ts_entityrisk: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
+  ts_operationactivityriskscores_StakeholderEntityRisk_ts_entityrisk: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_entityrisks: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;

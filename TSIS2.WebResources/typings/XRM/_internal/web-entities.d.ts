@@ -377,6 +377,29 @@ interface ovs_operation_Create extends ovs_operation {
 }
 interface ovs_operation_Update extends ovs_operation {
 }
+interface ovs_operationtype_Base extends WebEntity {
+}
+interface ovs_operationtype_Fixed extends WebEntity_Fixed {
+  ovs_operationtypeid: string;
+}
+interface ovs_operationtype extends ovs_operationtype_Base, ovs_operationtype_Relationships {
+}
+interface ovs_operationtype_Relationships {
+}
+interface ovs_operationtype_Result extends ovs_operationtype_Base, ovs_operationtype_Relationships {
+}
+interface ovs_operationtype_FormattedResult {
+}
+interface ovs_operationtype_Select {
+}
+interface ovs_operationtype_Expand {
+}
+interface ovs_operationtype_Filter {
+}
+interface ovs_operationtype_Create extends ovs_operationtype {
+}
+interface ovs_operationtype_Update extends ovs_operationtype {
+}
 interface ovs_Questionnaire_Base extends WebEntity {
 }
 interface ovs_Questionnaire_Fixed extends WebEntity_Fixed {
@@ -699,6 +722,29 @@ interface ts_EntityRisk_ovs_operation_Create extends ts_EntityRisk_ovs_operation
 }
 interface ts_EntityRisk_ovs_operation_Update extends ts_EntityRisk_ovs_operation {
 }
+interface ts_EntityRisk_ovs_operationtype_Base extends WebEntity {
+}
+interface ts_EntityRisk_ovs_operationtype_Fixed extends WebEntity_Fixed {
+  ts_entityrisk_ovs_operationtypeid: string;
+}
+interface ts_EntityRisk_ovs_operationtype extends ts_EntityRisk_ovs_operationtype_Base, ts_EntityRisk_ovs_operationtype_Relationships {
+}
+interface ts_EntityRisk_ovs_operationtype_Relationships {
+}
+interface ts_EntityRisk_ovs_operationtype_Result extends ts_EntityRisk_ovs_operationtype_Base, ts_EntityRisk_ovs_operationtype_Relationships {
+}
+interface ts_EntityRisk_ovs_operationtype_FormattedResult {
+}
+interface ts_EntityRisk_ovs_operationtype_Select {
+}
+interface ts_EntityRisk_ovs_operationtype_Expand {
+}
+interface ts_EntityRisk_ovs_operationtype_Filter {
+}
+interface ts_EntityRisk_ovs_operationtype_Create extends ts_EntityRisk_ovs_operationtype {
+}
+interface ts_EntityRisk_ovs_operationtype_Update extends ts_EntityRisk_ovs_operationtype {
+}
 interface ts_Incident_ts_operationcontact_Base extends WebEntity {
 }
 interface ts_Incident_ts_operationcontact_Fixed extends WebEntity_Fixed {
@@ -744,6 +790,29 @@ interface ts_IncompleteWorkOrderReason_Filter {
 interface ts_IncompleteWorkOrderReason_Create extends ts_IncompleteWorkOrderReason {
 }
 interface ts_IncompleteWorkOrderReason_Update extends ts_IncompleteWorkOrderReason {
+}
+interface ts_infraction_Base extends WebEntity {
+}
+interface ts_infraction_Fixed extends WebEntity_Fixed {
+  ts_infractionid: string;
+}
+interface ts_infraction extends ts_infraction_Base, ts_infraction_Relationships {
+}
+interface ts_infraction_Relationships {
+}
+interface ts_infraction_Result extends ts_infraction_Base, ts_infraction_Relationships {
+}
+interface ts_infraction_FormattedResult {
+}
+interface ts_infraction_Select {
+}
+interface ts_infraction_Expand {
+}
+interface ts_infraction_Filter {
+}
+interface ts_infraction_Create extends ts_infraction {
+}
+interface ts_infraction_Update extends ts_infraction {
 }
 interface ts_InspectionHours_Base extends WebEntity {
 }
@@ -906,6 +975,29 @@ interface ts_OperationActivity_Create extends ts_OperationActivity {
 }
 interface ts_OperationActivity_Update extends ts_OperationActivity {
 }
+interface ts_OperationActivityRiskScores_Base extends WebEntity {
+}
+interface ts_OperationActivityRiskScores_Fixed extends WebEntity_Fixed {
+  ts_operationactivityriskscoresid: string;
+}
+interface ts_OperationActivityRiskScores extends ts_OperationActivityRiskScores_Base, ts_OperationActivityRiskScores_Relationships {
+}
+interface ts_OperationActivityRiskScores_Relationships {
+}
+interface ts_OperationActivityRiskScores_Result extends ts_OperationActivityRiskScores_Base, ts_OperationActivityRiskScores_Relationships {
+}
+interface ts_OperationActivityRiskScores_FormattedResult {
+}
+interface ts_OperationActivityRiskScores_Select {
+}
+interface ts_OperationActivityRiskScores_Expand {
+}
+interface ts_OperationActivityRiskScores_Filter {
+}
+interface ts_OperationActivityRiskScores_Create extends ts_OperationActivityRiskScores {
+}
+interface ts_OperationActivityRiskScores_Update extends ts_OperationActivityRiskScores {
+}
 interface ts_operationcontact_Base extends WebEntity {
 }
 interface ts_operationcontact_Fixed extends WebEntity_Fixed {
@@ -951,6 +1043,29 @@ interface ts_ovs_operation_ovs_operation_Filter {
 interface ts_ovs_operation_ovs_operation_Create extends ts_ovs_operation_ovs_operation {
 }
 interface ts_ovs_operation_ovs_operation_Update extends ts_ovs_operation_ovs_operation {
+}
+interface ts_ovs_operationtypes_msdyn_incidenttypes_Base extends WebEntity {
+}
+interface ts_ovs_operationtypes_msdyn_incidenttypes_Fixed extends WebEntity_Fixed {
+  ts_ovs_operationtypes_msdyn_incidenttypesid: string;
+}
+interface ts_ovs_operationtypes_msdyn_incidenttypes extends ts_ovs_operationtypes_msdyn_incidenttypes_Base, ts_ovs_operationtypes_msdyn_incidenttypes_Relationships {
+}
+interface ts_ovs_operationtypes_msdyn_incidenttypes_Relationships {
+}
+interface ts_ovs_operationtypes_msdyn_incidenttypes_Result extends ts_ovs_operationtypes_msdyn_incidenttypes_Base, ts_ovs_operationtypes_msdyn_incidenttypes_Relationships {
+}
+interface ts_ovs_operationtypes_msdyn_incidenttypes_FormattedResult {
+}
+interface ts_ovs_operationtypes_msdyn_incidenttypes_Select {
+}
+interface ts_ovs_operationtypes_msdyn_incidenttypes_Expand {
+}
+interface ts_ovs_operationtypes_msdyn_incidenttypes_Filter {
+}
+interface ts_ovs_operationtypes_msdyn_incidenttypes_Create extends ts_ovs_operationtypes_msdyn_incidenttypes {
+}
+interface ts_ovs_operationtypes_msdyn_incidenttypes_Update extends ts_ovs_operationtypes_msdyn_incidenttypes {
 }
 interface ts_Plan_Base extends WebEntity {
 }

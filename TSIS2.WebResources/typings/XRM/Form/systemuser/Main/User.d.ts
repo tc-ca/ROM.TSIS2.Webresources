@@ -28,6 +28,8 @@ declare namespace Form.systemuser.Main {
       }
       interface Omnichannel_TAB extends Xrm.SectionCollectionBase {
         get(name: "SECTION_Skills"): Xrm.PageSection;
+        get(name: "Section_Language"): Xrm.PageSection;
+        get(name: "Section_Region"): Xrm.PageSection;
         get(name: "tab_6_section_2"): Xrm.PageSection;
         get(name: "tab_6_section_4"): Xrm.PageSection;
         get(name: "tab_6_section_5"): Xrm.PageSection;
@@ -139,9 +141,11 @@ declare namespace Form.systemuser.Main {
       get(name: "BookableResources"): Xrm.SubGridControl<"bookableresource">;
       get(name: "CapacityProfilesSubgrid"): Xrm.SubGridControl<"msdyn_capacityprofile">;
       get(name: "DirectReports"): Xrm.SubGridControl<"systemuser">;
+      get(name: "Languages"): Xrm.SubGridControl<"msdyn_agentlanguage">;
       get(name: "LiveEngagementQueues"): Xrm.SubGridControl<"queue">;
       get(name: "OmnichannelQueues"): Xrm.SubGridControl<"queue">;
       get(name: "PrivateQueuesSubGrid"): Xrm.SubGridControl<"queue">;
+      get(name: "Regions"): Xrm.SubGridControl<"msdyn_agentregion">;
       get(name: "TeamsSubGrid"): Xrm.SubGridControl<"team">;
       get(name: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "accessmode"): Xrm.OptionSetControl<systemuser_accessmode>;
@@ -285,9 +289,11 @@ declare namespace Form.systemuser.Main {
     getControl(controlName: "BookableResources"): Xrm.SubGridControl<"bookableresource">;
     getControl(controlName: "CapacityProfilesSubgrid"): Xrm.SubGridControl<"msdyn_capacityprofile">;
     getControl(controlName: "DirectReports"): Xrm.SubGridControl<"systemuser">;
+    getControl(controlName: "Languages"): Xrm.SubGridControl<"msdyn_agentlanguage">;
     getControl(controlName: "LiveEngagementQueues"): Xrm.SubGridControl<"queue">;
     getControl(controlName: "OmnichannelQueues"): Xrm.SubGridControl<"queue">;
     getControl(controlName: "PrivateQueuesSubGrid"): Xrm.SubGridControl<"queue">;
+    getControl(controlName: "Regions"): Xrm.SubGridControl<"msdyn_agentregion">;
     getControl(controlName: "TeamsSubGrid"): Xrm.SubGridControl<"team">;
     getControl(controlName: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "accessmode"): Xrm.OptionSetControl<systemuser_accessmode>;

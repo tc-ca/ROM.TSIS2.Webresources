@@ -95,6 +95,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_costexplanation?: string | null;
   ts_details?: string | null;
   ts_documenteddate?: Date | null;
+  ts_endofvalidfields?: string | null;
   ts_flightnumber?: string | null;
   ts_flighttype?: ts_flighttype | null;
   ts_ignoreupdate?: boolean | null;
@@ -187,6 +188,7 @@ interface msdyn_workorder_Relationships {
   ts_WorkOrderCreationWizardId?: ts_workordercreationwizard_Result | null;
   ts_incident_WorkOrder1_msdyn_workorder?: Incident_Result[] | null;
   ts_incident_WorkOrder2_msdyn_workorder?: Incident_Result[] | null;
+  ts_infraction_WorkOrder_msdyn_workorder?: ts_infraction_Result[] | null;
   ts_msdyn_customerasset_msdyn_workorder_msdyn?: msdyn_customerasset_Result[] | null;
   ts_msdyn_workorder_msdyn_workorder_Account?: Account_Result[] | null;
   ts_msdyn_workorder_ovs_operation_ovs_operati?: ovs_operation_Result[] | null;
@@ -433,6 +435,7 @@ interface msdyn_workorder_Select {
   ts_departureaerodrome_site_guid: WebAttribute<msdyn_workorder_Select, { ts_departureaerodrome_site_guid: string | null }, { ts_departureaerodrome_site_formatted?: string }>;
   ts_details: WebAttribute<msdyn_workorder_Select, { ts_details: string | null }, {  }>;
   ts_documenteddate: WebAttribute<msdyn_workorder_Select, { ts_documenteddate: Date | null }, { ts_documenteddate_formatted?: string }>;
+  ts_endofvalidfields: WebAttribute<msdyn_workorder_Select, { ts_endofvalidfields: string | null }, {  }>;
   ts_flightnumber: WebAttribute<msdyn_workorder_Select, { ts_flightnumber: string | null }, {  }>;
   ts_flighttype: WebAttribute<msdyn_workorder_Select, { ts_flighttype: ts_flighttype | null }, { ts_flighttype_formatted?: string }>;
   ts_functionallocation_guid: WebAttribute<msdyn_workorder_Select, { ts_functionallocation_guid: string | null }, { ts_functionallocation_formatted?: string }>;
@@ -660,6 +663,7 @@ interface msdyn_workorder_Filter {
   ts_departureaerodrome_site_guid: XQW.Guid;
   ts_details: string;
   ts_documenteddate: Date;
+  ts_endofvalidfields: string;
   ts_flightnumber: string;
   ts_flighttype: ts_flighttype;
   ts_functionallocation_guid: XQW.Guid;
@@ -769,6 +773,7 @@ interface msdyn_workorder_Expand {
   ovs_RevisedQuarterId: WebExpand<msdyn_workorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_RevisedQuarterId: tc_TCFiscalQuarter_Result }>;
   ovs_SecondaryInspector: WebExpand<msdyn_workorder_Expand, BookableResource_Select, BookableResource_Filter, { ovs_SecondaryInspector: BookableResource_Result }>;
   ovs_asset: WebExpand<msdyn_workorder_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ovs_asset: msdyn_customerasset_Result }>;
+  ovs_operationtypeid: WebExpand<msdyn_workorder_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ovs_operationtypeid: ovs_operationtype_Result }>;
   ownerid: WebExpand<msdyn_workorder_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<msdyn_workorder_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
@@ -795,6 +800,7 @@ interface msdyn_workorder_Expand {
   ts_departureaerodrome: WebExpand<msdyn_workorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_departureaerodrome: msdyn_FunctionalLocation_Result }>;
   ts_incident_WorkOrder1_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrder1_msdyn_workorder: Incident_Result[] }>;
   ts_incident_WorkOrder2_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Incident_Select, Incident_Filter, { ts_incident_WorkOrder2_msdyn_workorder: Incident_Result[] }>;
+  ts_infraction_WorkOrder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_WorkOrder_msdyn_workorder: ts_infraction_Result[] }>;
   ts_msdyn_customerasset_msdyn_workorder_msdyn: WebExpand<msdyn_workorder_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ts_msdyn_customerasset_msdyn_workorder_msdyn: msdyn_customerasset_Result[] }>;
   ts_msdyn_workorder_msdyn_workorder_Account: WebExpand<msdyn_workorder_Expand, Account_Select, Account_Filter, { ts_msdyn_workorder_msdyn_workorder_Account: Account_Result[] }>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<msdyn_workorder_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: ovs_operation_Result[] }>;
@@ -1066,6 +1072,7 @@ interface msdyn_workorder_RelatedOne {
   ovs_RevisedQuarterId: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ovs_SecondaryInspector: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   ovs_asset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
+  ovs_operationtypeid: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -1112,6 +1119,7 @@ interface msdyn_workorder_RelatedMany {
   ts_Contact_msdyn_workorder_msdyn_workorder: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_incident_WorkOrder1_msdyn_workorder: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_WorkOrder2_msdyn_workorder: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  ts_infraction_WorkOrder_msdyn_workorder: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_msdyn_customerasset_msdyn_workorder_msdyn: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   ts_msdyn_workorder_msdyn_workorder_Account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;

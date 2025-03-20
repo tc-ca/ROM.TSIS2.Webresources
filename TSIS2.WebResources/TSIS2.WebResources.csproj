@@ -145,6 +145,7 @@
     <Content Include="Webresources\html\EmailAttachFile.html" />
     <Content Include="Webresources\html\EmailAttachFilePopUp.html" />
     <Content Include="Webresources\html\FindingProvisionText.html" />
+    <Content Include="Webresources\html\InfractionProvisionText.html" />
     <Content Include="Webresources\html\LegislationOnProvisions.html" />
     <Content Include="Webresources\html\MyRegionTrip.html" />
     <Content Include="Webresources\html\NCATFactorGuide.html" />
@@ -166,9 +167,11 @@
     <Content Include="Webresources\html\SurveyCreator.html" />
     <Content Include="Webresources\html\SurveyRender.html" />
     <Content Include="Webresources\html\SurveyRenderPrint.html" />
+    <Content Include="Webresources\html\TeamPlanningDataDetailsDisplay.html" />
     <Content Include="Webresources\js\Account.js" />
     <Content Include="Webresources\js\ace.min.js" />
     <Content Include="Webresources\js\Action.js" />
+    <Content Include="Webresources\js\buildlegislationtext.js" />
     <Content Include="Webresources\js\EntityRiskRibbon.js" />
     <Content Include="Webresources\js\ajax.js" />
     <Content Include="Webresources\js\AppLevelFunctions.js" />
@@ -197,6 +200,7 @@
     <Content Include="Webresources\js\IncidentType.js" />
     <Content Include="Webresources\js\IncidentTypeServiceTask.js" />
     <Content Include="Webresources\js\IncompleteInspectionJustification.js" />
+    <Content Include="Webresources\js\InfractionRibbon.js" />
     <Content Include="Webresources\js\InspectionHours.js" />
     <Content Include="Webresources\js\jquery.js" />
     <Content Include="Webresources\js\knockout-min.js" />
@@ -206,7 +210,9 @@
     <Content Include="Webresources\js\OperationActivity.js" />
     <Content Include="Webresources\js\OperationActivityQuickCreate.js" />
     <Content Include="Webresources\js\OperationActivityRibbon.js" />
+    <Content Include="Webresources\js\OperationActivityRiskScores.js" />
     <Content Include="Webresources\js\OperationRiskAssessmentRibbon.js" />
+    <Content Include="Webresources\js\OperationType.js" />
     <Content Include="Webresources\js\Plan.js" />
     <Content Include="Webresources\js\PlanningData.js" />
     <Content Include="Webresources\js\planningDataRibbon.js" />
@@ -396,6 +402,9 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\CauseFinding.ts" />
     <TypeScriptCompile Include="src\ts\EntityRisk.ts" />
+    <TypeScriptCompile Include="src\ts\Infraction.ts" />
+    <TypeScriptCompile Include="src\ts\OperationActivityRiskScores.ts" />
+    <TypeScriptCompile Include="src\ts\OperationType.ts" />
     <TypeScriptCompile Include="src\ts\Site.ts" />
     <TypeScriptCompile Include="src\ts\Plan.ts" />
     <TypeScriptCompile Include="src\ts\Account.ts" />

@@ -21,6 +21,7 @@ interface ts_Plan_Base extends WebEntity {
   ts_plannedactivityq3?: number | null;
   ts_plannedactivityq4?: number | null;
   ts_planstatus?: ts_planstatus | null;
+  ts_rowcount?: string | null;
   ts_totalestimatedcost?: number | null;
   ts_totalestimatedcost_base?: number | null;
   ts_unplannedactivityfiscalyear?: number | null;
@@ -82,6 +83,7 @@ interface ts_Plan_Select {
   ts_plannedactivityq3: WebAttribute<ts_Plan_Select, { ts_plannedactivityq3: number | null }, {  }>;
   ts_plannedactivityq4: WebAttribute<ts_Plan_Select, { ts_plannedactivityq4: number | null }, {  }>;
   ts_planstatus: WebAttribute<ts_Plan_Select, { ts_planstatus: ts_planstatus | null }, { ts_planstatus_formatted?: string }>;
+  ts_rowcount: WebAttribute<ts_Plan_Select, { ts_rowcount: string | null }, {  }>;
   ts_team_guid: WebAttribute<ts_Plan_Select, { ts_team_guid: string | null }, { ts_team_formatted?: string }>;
   ts_totalestimatedcost: WebAttribute<ts_Plan_Select, { ts_totalestimatedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_totalestimatedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_totalestimatedcost_base: WebAttribute<ts_Plan_Select, { ts_totalestimatedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_totalestimatedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
@@ -129,6 +131,7 @@ interface ts_Plan_Filter {
   ts_plannedactivityq3: number;
   ts_plannedactivityq4: number;
   ts_planstatus: ts_planstatus;
+  ts_rowcount: string;
   ts_team_guid: XQW.Guid;
   ts_totalestimatedcost: number;
   ts_totalestimatedcost_base: number;

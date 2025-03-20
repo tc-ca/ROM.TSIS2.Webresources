@@ -6,6 +6,7 @@ interface ts_PlanningData_Base extends WebEntity {
   statecode?: ts_planningdata_statecode | null;
   statuscode?: ts_planningdata_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_closedondatemostrecentwo?: Date | null;
   ts_completedq1?: number | null;
   ts_completedq2?: number | null;
   ts_completedq3?: number | null;
@@ -45,6 +46,7 @@ interface ts_PlanningData_Relationships {
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
   ts_Operation?: ovs_operation_Result | null;
   ts_OperationActivity?: ts_OperationActivity_Result | null;
+  ts_OperationType?: ovs_operationtype_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Site_Site?: ts_site_Result | null;
   ts_Stakeholder?: Account_Result | null;
@@ -92,6 +94,7 @@ interface ts_PlanningData_Select {
   statuscode: WebAttribute<ts_PlanningData_Select, { statuscode: ts_planningdata_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_PlanningData_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_activitytype_guid: WebAttribute<ts_PlanningData_Select, { ts_activitytype_guid: string | null }, { ts_activitytype_formatted?: string }>;
+  ts_closedondatemostrecentwo: WebAttribute<ts_PlanningData_Select, { ts_closedondatemostrecentwo: Date | null }, { ts_closedondatemostrecentwo_formatted?: string }>;
   ts_completedq1: WebAttribute<ts_PlanningData_Select, { ts_completedq1: number | null }, {  }>;
   ts_completedq2: WebAttribute<ts_PlanningData_Select, { ts_completedq2: number | null }, {  }>;
   ts_completedq3: WebAttribute<ts_PlanningData_Select, { ts_completedq3: number | null }, {  }>;
@@ -155,6 +158,7 @@ interface ts_PlanningData_Filter {
   statuscode: ts_planningdata_statuscode;
   timezoneruleversionnumber: number;
   ts_activitytype_guid: XQW.Guid;
+  ts_closedondatemostrecentwo: Date;
   ts_completedq1: number;
   ts_completedq2: number;
   ts_completedq3: number;
@@ -213,6 +217,7 @@ interface ts_PlanningData_Expand {
   ts_FiscalYear: WebExpand<ts_PlanningData_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
   ts_Operation: WebExpand<ts_PlanningData_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_Operation: ovs_operation_Result }>;
   ts_OperationActivity: WebExpand<ts_PlanningData_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_OperationActivity: ts_OperationActivity_Result }>;
+  ts_OperationType: WebExpand<ts_PlanningData_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_OperationType: ovs_operationtype_Result }>;
   ts_Site: WebExpand<ts_PlanningData_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Site_Site: WebExpand<ts_PlanningData_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
   ts_Stakeholder: WebExpand<ts_PlanningData_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
@@ -237,6 +242,7 @@ interface ts_PlanningData_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_activitytype_formatted?: string;
+  ts_closedondatemostrecentwo_formatted?: string;
   ts_fiscalyear_formatted?: string;
   ts_operation_formatted?: string;
   ts_operationactivity_formatted?: string;
@@ -286,6 +292,7 @@ interface ts_PlanningData_RelatedOne {
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   ts_Operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_OperationActivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
+  ts_OperationType: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Site_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

@@ -72,6 +72,14 @@ var ROM;
                     formContext.getControl("ts_planstatus").setDisabled(false);
                 }
             }
+            // hide the Planning Data Details in PROD for now
+            var globalContextUrl = Xrm.Utility.getGlobalContext().getClientUrl();
+            if (globalContextUrl == 'https://romts-gsrst-tcd365.crm3.dynamics.com') {
+                var planningDataDetailsTab = formContext.ui.tabs.get("tab_planning_data_details");
+                if (planningDataDetailsTab) {
+                    planningDataDetailsTab.setVisible(false);
+                }
+            }
         }
         TeamPlanningData.onLoad = onLoad;
         function onSave(eContext) {

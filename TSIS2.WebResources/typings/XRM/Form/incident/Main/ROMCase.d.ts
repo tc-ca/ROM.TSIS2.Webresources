@@ -109,6 +109,13 @@ declare namespace Form.incident.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_17 extends Xrm.SectionCollectionBase {
+        get(name: "tab_17_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_findings extends Xrm.SectionCollectionBase {
         get(name: "tab_11_section_1"): Xrm.PageSection;
         get(name: "tab_findings_section_5"): Xrm.PageSection;
@@ -212,6 +219,7 @@ declare namespace Form.incident.Main {
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_4"): Xrm.SubGridControl<"contact">;
       get(name: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
+      get(name: "Subgrid_new_5"): Xrm.SubGridControl<"ts_infraction">;
       get(name: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -311,6 +319,7 @@ declare namespace Form.incident.Main {
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
       get(name: "tab_13"): Xrm.PageTab<Tabs.tab_13>;
       get(name: "tab_14"): Xrm.PageTab<Tabs.tab_14>;
+      get(name: "tab_17"): Xrm.PageTab<Tabs.tab_17>;
       get(name: "tab_findings"): Xrm.PageTab<Tabs.tab_findings>;
       get(name: "tab_timetracking"): Xrm.PageTab<Tabs.tab_timetracking>;
       get(name: "tags_tab"): Xrm.PageTab<Tabs.tags_tab>;
@@ -394,6 +403,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_4"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
+    getControl(controlName: "Subgrid_new_5"): Xrm.SubGridControl<"ts_infraction">;
     getControl(controlName: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;

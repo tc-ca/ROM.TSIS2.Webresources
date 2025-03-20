@@ -82,6 +82,17 @@ namespace ROM.FunctionalLocation {
                 }
             }
 
+            //If owner is Aviation Security
+            if (ownerAttributeValue != null) {
+                if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
+                    form.ui.tabs.get("tab_Risk").setVisible(true);
+                    form.getControl("ts_accountableteam").setVisible(true);
+                    form.getAttribute("ts_accountableteam").setRequiredLevel("required");
+                }
+                else {
+                    form.ui.tabs.get("tab_Risk").setVisible(false);
+                }
+            }
         }
 
         if (form.getAttribute("ts_statusstartdate").getValue() != null) {
@@ -256,5 +267,29 @@ namespace ROM.FunctionalLocation {
             });
         });
         return hasRole;
+    }
+
+    export function onOwnerChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
+
+        // Get the owner field value
+        const ownerAttributeValue = form.getAttribute("ownerid").getValue();
+
+        // If owner is Aviation Security, make the ts_accountableteam field required and visible
+        if (ownerAttributeValue != null) {
+            if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
+                form.getControl("ts_accountableteam").setVisible(true);
+                form.getAttribute("ts_accountableteam").setRequiredLevel("required");
+            } else {
+                form.getControl("ts_accountableteam").setVisible(false);
+                form.getAttribute("ts_accountableteam").setRequiredLevel("none");
+            }
+        }
+        else {
+            // If owner is null, hide and unrequire the ts_accountableteam field
+            form.getControl("ts_accountableteam").setVisible(false);
+            form.getAttribute("ts_accountableteam").setRequiredLevel("none");
+            form.getAttribute("ts_accountableteam").setValue(null);
+        }
     }
 }

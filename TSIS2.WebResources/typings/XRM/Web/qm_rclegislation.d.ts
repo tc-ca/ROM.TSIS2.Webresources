@@ -37,7 +37,9 @@ interface qm_rclegislation_Relationships {
   qm_rclegislation_connections1?: Connection_Result[] | null;
   qm_rclegislation_connections2?: Connection_Result[] | null;
   qm_rclegislation_enablingprovision?: qm_rclegislation_Result[] | null;
+  ts_infraction_legislation_qm_rclegislation?: ts_infraction_Result[] | null;
   ts_ovs_operation_qm_rclegislation_qm_rclegis?: ovs_operation_Result[] | null;
+  ts_ovs_operationtype_qm_rclegislation_qm_rcl?: ovs_operationtype_Result[] | null;
   ts_qm_rclegislation_qm_rclegislation_ovs_Fin?: ovs_Finding_Result[] | null;
   ts_qm_rclegislation_ts_causefinding_Provision?: ts_causefinding_Result[] | null;
   ts_related_causes?: qm_rclegislation_Result[] | null;
@@ -154,7 +156,9 @@ interface qm_rclegislation_Expand {
   qm_rclegislation_connections1: WebExpand<qm_rclegislation_Expand, Connection_Select, Connection_Filter, { qm_rclegislation_connections1: Connection_Result[] }>;
   qm_rclegislation_connections2: WebExpand<qm_rclegislation_Expand, Connection_Select, Connection_Filter, { qm_rclegislation_connections2: Connection_Result[] }>;
   qm_rclegislation_enablingprovision: WebExpand<qm_rclegislation_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { qm_rclegislation_enablingprovision: qm_rclegislation_Result[] }>;
+  ts_infraction_legislation_qm_rclegislation: WebExpand<qm_rclegislation_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_legislation_qm_rclegislation: ts_infraction_Result[] }>;
   ts_ovs_operation_qm_rclegislation_qm_rclegis: WebExpand<qm_rclegislation_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation_qm_rclegislation_qm_rclegis: ovs_operation_Result[] }>;
+  ts_ovs_operationtype_qm_rclegislation_qm_rcl: WebExpand<qm_rclegislation_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_ovs_operationtype_qm_rclegislation_qm_rcl: ovs_operationtype_Result[] }>;
   ts_qm_rclegislation_qm_rclegislation_ovs_Fin: WebExpand<qm_rclegislation_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_qm_rclegislation_qm_rclegislation_ovs_Fin: ovs_Finding_Result[] }>;
   ts_qm_rclegislation_ts_causefinding_Provision: WebExpand<qm_rclegislation_Expand, ts_causefinding_Select, ts_causefinding_Filter, { ts_qm_rclegislation_ts_causefinding_Provision: ts_causefinding_Result[] }>;
   ts_related_causes: WebExpand<qm_rclegislation_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_related_causes: qm_rclegislation_Result[] }>;
@@ -211,7 +215,9 @@ interface qm_rclegislation_RelatedMany {
   qm_rclegislation_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   qm_rclegislation_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   qm_rclegislation_enablingprovision: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
+  ts_infraction_legislation_qm_rclegislation: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_ovs_operation_qm_rclegislation_qm_rclegis: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_ovs_operationtype_qm_rclegislation_qm_rcl: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ts_qm_rclegislation_qm_rclegislation_ovs_Fin: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_qm_rclegislation_ts_causefinding_Provision: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   ts_related_causes: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;

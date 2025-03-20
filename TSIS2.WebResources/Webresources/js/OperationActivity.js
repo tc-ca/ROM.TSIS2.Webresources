@@ -18,6 +18,10 @@ var ROM;
                     }
                 }
             }
+            //If not business admin lock all fields
+            if (!isAdmin()) {
+                setAllFieldsDisabled(eContext);
+            }
         }
         OperationActivity.onLoad = onLoad;
         function setRelatedWorkOrdersFetchXML(form, fetchXml) {
@@ -31,5 +35,23 @@ var ROM;
             }
         }
         OperationActivity.setRelatedWorkOrdersFetchXML = setRelatedWorkOrdersFetchXML;
+        function setAllFieldsDisabled(eContext) {
+            var formContext = eContext.getFormContext();
+            formContext.ui.controls.forEach(function (control, i) {
+                if (control && control.getDisabled && !control.getDisabled()) {
+                    control.setDisabled(true);
+                }
+            });
+        }
+        function isAdmin() {
+            var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+            var isAdmin = false;
+            userRoles.forEach(function (role) {
+                if (role.name == "System Administrator" || role.name == "ROM - Business Admin") {
+                    isAdmin = true;
+                }
+            });
+            return isAdmin;
+        }
     })(OperationActivity = ROM.OperationActivity || (ROM.OperationActivity = {}));
 })(ROM || (ROM = {}));

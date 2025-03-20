@@ -383,6 +383,7 @@ interface ts_securityincident_Expand {
   ts_Subsite: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsite: msdyn_FunctionalLocation_Result }>;
   ts_Subsite_Site: WebExpand<ts_securityincident_Expand, ts_site_Select, ts_site_Filter, { ts_Subsite_Site: ts_site_Result }>;
   ts_closedby: WebExpand<ts_securityincident_Expand, SystemUser_Select, SystemUser_Filter, { ts_closedby: SystemUser_Result }>;
+  ts_operationtype: WebExpand<ts_securityincident_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_operationtype: ovs_operationtype_Result }>;
   ts_securityincident_Appointments: WebExpand<ts_securityincident_Expand, Appointment_Select, Appointment_Filter, { ts_securityincident_Appointments: Appointment_Result[] }>;
   ts_securityincident_Emails: WebExpand<ts_securityincident_Expand, Email_Select, Email_Filter, { ts_securityincident_Emails: Email_Result[] }>;
   ts_securityincident_PostFollows: WebExpand<ts_securityincident_Expand, PostFollow_Select, PostFollow_Filter, { ts_securityincident_PostFollows: PostFollow_Result[] }>;
@@ -507,6 +508,7 @@ interface ts_securityincident_RelatedOne {
   ts_Subsite: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Subsite_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_closedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_operationtype: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
 }
 interface ts_securityincident_RelatedMany {
   ts_Contact_ts_securityincident_ts_securityin: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;

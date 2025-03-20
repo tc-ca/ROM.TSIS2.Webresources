@@ -53,6 +53,7 @@ interface ovs_operation_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ovs_operation_Relationships {
+  ovs_OperationTypeId?: ovs_operationtype_Result | null;
   ovs_operation_Appointments?: Appointment_Result[] | null;
   ovs_operation_Emails?: Email_Result[] | null;
   ovs_operation_PostFollows?: PostFollow_Result[] | null;
@@ -67,6 +68,7 @@ interface ovs_operation_Relationships {
   ts_Subsite_Site?: ts_site_Result | null;
   ts_Subsubsite?: msdyn_FunctionalLocation_Result | null;
   ts_Subsubsite_Site?: ts_site_Result | null;
+  ts_infraction_operation_ovs_operation?: ts_infraction_Result[] | null;
   ts_msdyn_workorder_ovs_operation_ovs_operati?: msdyn_workorder_Result[] | null;
   ts_operation_msdyn_workorder_OperatingCarrierOperation?: msdyn_workorder_Result[] | null;
   ts_operation_ts_operationcontact_operation?: ts_operationcontact_Result[] | null;
@@ -255,6 +257,7 @@ interface ovs_operation_Expand {
   createdonbehalfby: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
   modifiedby: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
+  ovs_OperationTypeId: WebExpand<ovs_operation_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ovs_OperationTypeId: ovs_operationtype_Result }>;
   ovs_operation_Appointments: WebExpand<ovs_operation_Expand, Appointment_Select, Appointment_Filter, { ovs_operation_Appointments: Appointment_Result[] }>;
   ovs_operation_Emails: WebExpand<ovs_operation_Expand, Email_Select, Email_Filter, { ovs_operation_Emails: Email_Result[] }>;
   ovs_operation_PostFollows: WebExpand<ovs_operation_Expand, PostFollow_Select, PostFollow_Filter, { ovs_operation_PostFollows: PostFollow_Result[] }>;
@@ -272,6 +275,7 @@ interface ovs_operation_Expand {
   ts_Subsite_Site: WebExpand<ovs_operation_Expand, ts_site_Select, ts_site_Filter, { ts_Subsite_Site: ts_site_Result }>;
   ts_Subsubsite: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsubsite: msdyn_FunctionalLocation_Result }>;
   ts_Subsubsite_Site: WebExpand<ovs_operation_Expand, ts_site_Select, ts_site_Filter, { ts_Subsubsite_Site: ts_site_Result }>;
+  ts_infraction_operation_ovs_operation: WebExpand<ovs_operation_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_operation_ovs_operation: ts_infraction_Result[] }>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: msdyn_workorder_Result[] }>;
   ts_operation_msdyn_workorder_OperatingCarrierOperation: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_operation_msdyn_workorder_OperatingCarrierOperation: msdyn_workorder_Result[] }>;
   ts_operation_ts_operationcontact_operation: WebExpand<ovs_operation_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_operation_ts_operationcontact_operation: ts_operationcontact_Result[] }>;
@@ -360,6 +364,7 @@ interface ovs_operation_RelatedOne {
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ovs_OperationTypeId: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -383,6 +388,7 @@ interface ovs_operation_RelatedMany {
   ovs_operation_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ovs_ovs_operation_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_EntityRisk_ovs_operation_ovs_operation: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  ts_infraction_operation_ovs_operation: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_operation_msdyn_workorder_OperatingCarrierOperation: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_operation_ts_operationcontact_operation: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
