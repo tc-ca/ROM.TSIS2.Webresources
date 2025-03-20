@@ -33,6 +33,7 @@ interface ts_infraction_Relationships {
   ts_RATEApprovingTeam?: Team_Result | null;
   ts_RATEManager?: SystemUser_Result | null;
   ts_WorkOrder?: msdyn_workorder_Result | null;
+  ts_infraction_ts_infraction_ts_action?: ts_action_Result[] | null;
   ts_ovs_finding_infraction_ts_infraction?: ovs_Finding_Result[] | null;
 }
 interface ts_infraction extends ts_infraction_Base, ts_infraction_Relationships {
@@ -53,7 +54,7 @@ interface ts_infraction extends ts_infraction_Base, ts_infraction_Relationships 
   ts_RATEResponsibility_bind$ts_assessmentratings?: string | null;
   ts_Region_bind$territories?: string | null;
   ts_WorkOrder_bind$msdyn_workorders?: string | null;
-  ts_action_bind$ts_actions?: string | null;
+  ts_actioncreated_bind$ts_actions?: string | null;
   ts_contact_bind$contacts?: string | null;
   ts_functionallocation_bind$msdyn_functionallocations?: string | null;
   ts_legislation_bind$qm_rclegislations?: string | null;
@@ -82,7 +83,7 @@ interface ts_infraction_Select {
   statuscode: WebAttribute<ts_infraction_Select, { statuscode: ts_infraction_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_infraction_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_acceptraterecommendation: WebAttribute<ts_infraction_Select, { ts_acceptraterecommendation: ts_yesno | null }, { ts_acceptraterecommendation_formatted?: string }>;
-  ts_action_guid: WebAttribute<ts_infraction_Select, { ts_action_guid: string | null }, { ts_action_formatted?: string }>;
+  ts_actioncreated_guid: WebAttribute<ts_infraction_Select, { ts_actioncreated_guid: string | null }, { ts_actioncreated_formatted?: string }>;
   ts_case_guid: WebAttribute<ts_infraction_Select, { ts_case_guid: string | null }, { ts_case_formatted?: string }>;
   ts_contact_guid: WebAttribute<ts_infraction_Select, { ts_contact_guid: string | null }, { ts_contact_formatted?: string }>;
   ts_finalenforcementaction: WebAttribute<ts_infraction_Select, { ts_finalenforcementaction: ts_finalenforcementaction | null }, { ts_finalenforcementaction_formatted?: string }>;
@@ -142,7 +143,7 @@ interface ts_infraction_Filter {
   statuscode: ts_infraction_statuscode;
   timezoneruleversionnumber: number;
   ts_acceptraterecommendation: ts_yesno;
-  ts_action_guid: XQW.Guid;
+  ts_actioncreated_guid: XQW.Guid;
   ts_case_guid: XQW.Guid;
   ts_contact_guid: XQW.Guid;
   ts_finalenforcementaction: ts_finalenforcementaction;
@@ -197,9 +198,10 @@ interface ts_infraction_Expand {
   ts_RATEApprovingTeam: WebExpand<ts_infraction_Expand, Team_Select, Team_Filter, { ts_RATEApprovingTeam: Team_Result }>;
   ts_RATEManager: WebExpand<ts_infraction_Expand, SystemUser_Select, SystemUser_Filter, { ts_RATEManager: SystemUser_Result }>;
   ts_WorkOrder: WebExpand<ts_infraction_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder: msdyn_workorder_Result }>;
-  ts_action: WebExpand<ts_infraction_Expand, ts_action_Select, ts_action_Filter, { ts_action: ts_action_Result }>;
+  ts_actioncreated: WebExpand<ts_infraction_Expand, ts_action_Select, ts_action_Filter, { ts_actioncreated: ts_action_Result }>;
   ts_contact: WebExpand<ts_infraction_Expand, Contact_Select, Contact_Filter, { ts_contact: Contact_Result }>;
   ts_functionallocation: WebExpand<ts_infraction_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_functionallocation: msdyn_FunctionalLocation_Result }>;
+  ts_infraction_ts_infraction_ts_action: WebExpand<ts_infraction_Expand, ts_action_Select, ts_action_Filter, { ts_infraction_ts_infraction_ts_action: ts_action_Result[] }>;
   ts_legislation: WebExpand<ts_infraction_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_legislation: qm_rclegislation_Result }>;
   ts_operation: WebExpand<ts_infraction_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operation: ovs_operation_Result }>;
   ts_operationtype: WebExpand<ts_infraction_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_operationtype: ovs_operationtype_Result }>;
@@ -221,7 +223,7 @@ interface ts_infraction_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_acceptraterecommendation_formatted?: string;
-  ts_action_formatted?: string;
+  ts_actioncreated_formatted?: string;
   ts_case_formatted?: string;
   ts_contact_formatted?: string;
   ts_finalenforcementaction_formatted?: string;
@@ -265,7 +267,7 @@ interface ts_infraction_Result extends ts_infraction_Base, ts_infraction_Relatio
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
   owninguser_guid: string | null;
-  ts_action_guid: string | null;
+  ts_actioncreated_guid: string | null;
   ts_case_guid: string | null;
   ts_contact_guid: string | null;
   ts_functionallocation_guid: string | null;
@@ -300,7 +302,7 @@ interface ts_infraction_RelatedOne {
   ts_RATEApprovingTeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_RATEManager: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
-  ts_action: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
+  ts_actioncreated: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_legislation: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
@@ -309,6 +311,7 @@ interface ts_infraction_RelatedOne {
   ts_stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface ts_infraction_RelatedMany {
+  ts_infraction_ts_infraction_ts_action: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_ovs_finding_infraction_ts_infraction: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

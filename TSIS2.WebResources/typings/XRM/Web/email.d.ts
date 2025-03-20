@@ -56,6 +56,7 @@ interface Email_Base extends WebEntity {
   onholdtime?: number | null;
   opencount?: number | null;
   overriddencreatedon?: Date | null;
+  parentsensitivitylabelid?: string | null;
   postponeemailprocessinguntil?: Date | null;
   prioritycode?: email_prioritycode | null;
   processid?: string | null;
@@ -67,6 +68,7 @@ interface Email_Base extends WebEntity {
   scheduledend?: Date | null;
   scheduledstart?: Date | null;
   sender?: string | null;
+  sensitivitylabelinfo?: string | null;
   senton?: Date | null;
   sortdate?: Date | null;
   stageid?: string | null;
@@ -309,6 +311,7 @@ interface Email_Select {
   owningteam_guid: WebAttribute<Email_Select, { owningteam_guid: string | null }, { owningteam_formatted?: string }>;
   owninguser_guid: WebAttribute<Email_Select, { owninguser_guid: string | null }, { owninguser_formatted?: string }>;
   parentactivityid_guid: WebAttribute<Email_Select, { parentactivityid_guid: string | null }, { parentactivityid_formatted?: string }>;
+  parentsensitivitylabelid: WebAttribute<Email_Select, { parentsensitivitylabelid: string | null }, {  }>;
   postponeemailprocessinguntil: WebAttribute<Email_Select, { postponeemailprocessinguntil: Date | null }, { postponeemailprocessinguntil_formatted?: string }>;
   prioritycode: WebAttribute<Email_Select, { prioritycode: email_prioritycode | null }, { prioritycode_formatted?: string }>;
   processid: WebAttribute<Email_Select, { processid: string | null }, {  }>;
@@ -325,6 +328,7 @@ interface Email_Select {
   sender: WebAttribute<Email_Select, { sender: string | null }, {  }>;
   sendermailboxid_guid: WebAttribute<Email_Select, { sendermailboxid_guid: string | null }, { sendermailboxid_formatted?: string }>;
   sendersaccount_guid: WebAttribute<Email_Select, { sendersaccount_guid: string | null }, { sendersaccount_formatted?: string }>;
+  sensitivitylabelinfo: WebAttribute<Email_Select, { sensitivitylabelinfo: string | null }, {  }>;
   senton: WebAttribute<Email_Select, { senton: Date | null }, { senton_formatted?: string }>;
   serviceid_guid: WebAttribute<Email_Select, { serviceid_guid: string | null }, { serviceid_formatted?: string }>;
   slaid_guid: WebAttribute<Email_Select, { slaid_guid: string | null }, { slaid_formatted?: string }>;
@@ -419,6 +423,7 @@ interface Email_Filter {
   owningteam_guid: XQW.Guid;
   owninguser_guid: XQW.Guid;
   parentactivityid_guid: XQW.Guid;
+  parentsensitivitylabelid: XQW.Guid;
   postponeemailprocessinguntil: Date;
   prioritycode: email_prioritycode;
   processid: XQW.Guid;
@@ -435,6 +440,7 @@ interface Email_Filter {
   sender: string;
   sendermailboxid_guid: XQW.Guid;
   sendersaccount_guid: XQW.Guid;
+  sensitivitylabelinfo: string;
   senton: Date;
   serviceid_guid: XQW.Guid;
   slaid_guid: XQW.Guid;

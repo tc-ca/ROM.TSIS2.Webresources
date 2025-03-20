@@ -187,6 +187,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record1id_ovs_operation_bind$ovs_operations?: string | null;
   record1id_phonecall_bind$phonecalls?: string | null;
   record1id_position_bind$positions?: string | null;
+  record1id_ppp_file_bind$ppp_files?: string | null;
   record1id_pricelevel_bind$pricelevels?: string | null;
   record1id_processsession_bind$processsessions?: string | null;
   record1id_product_bind$products?: string | null;
@@ -334,6 +335,7 @@ interface Connection extends Connection_Base, Connection_Relationships {
   record2id_ovs_operation_bind$ovs_operations?: string | null;
   record2id_phonecall_bind$phonecalls?: string | null;
   record2id_position_bind$positions?: string | null;
+  record2id_ppp_file_bind$ppp_files?: string | null;
   record2id_pricelevel_bind$pricelevels?: string | null;
   record2id_processsession_bind$processsessions?: string | null;
   record2id_product_bind$products?: string | null;

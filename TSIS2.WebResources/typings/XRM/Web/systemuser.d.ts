@@ -72,6 +72,7 @@ interface SystemUser_Base extends WebEntity {
   internalemailaddress?: string | null;
   invitestatuscode?: systemuser_invitestatuscode | null;
   isactivedirectoryuser?: boolean | null;
+  isallowedbyipfirewall?: boolean | null;
   isdisabled?: boolean | null;
   isemailaddressapprovedbyo365admin?: boolean | null;
   isintegrationuser?: boolean | null;
@@ -282,6 +283,10 @@ interface SystemUser_Relationships {
   lk_ts_entityrisk_createdonbehalfby?: ts_EntityRisk_Result[] | null;
   lk_ts_entityrisk_modifiedby?: ts_EntityRisk_Result[] | null;
   lk_ts_entityrisk_modifiedonbehalfby?: ts_EntityRisk_Result[] | null;
+  lk_ts_entityriskfrequency_createdby?: ts_EntityRiskFrequency_Result[] | null;
+  lk_ts_entityriskfrequency_createdonbehalfby?: ts_EntityRiskFrequency_Result[] | null;
+  lk_ts_entityriskfrequency_modifiedby?: ts_EntityRiskFrequency_Result[] | null;
+  lk_ts_entityriskfrequency_modifiedonbehalfby?: ts_EntityRiskFrequency_Result[] | null;
   lk_ts_incompleteworkorderreason_createdby?: ts_IncompleteWorkOrderReason_Result[] | null;
   lk_ts_incompleteworkorderreason_createdonbehalfby?: ts_IncompleteWorkOrderReason_Result[] | null;
   lk_ts_incompleteworkorderreason_modifiedby?: ts_IncompleteWorkOrderReason_Result[] | null;
@@ -436,6 +441,7 @@ interface SystemUser_Relationships {
   user_ts_case?: ts_case_Result[] | null;
   user_ts_causefinding?: ts_causefinding_Result[] | null;
   user_ts_entityrisk?: ts_EntityRisk_Result[] | null;
+  user_ts_entityriskfrequency?: ts_EntityRiskFrequency_Result[] | null;
   user_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
   user_ts_infraction?: ts_infraction_Result[] | null;
   user_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
@@ -559,6 +565,7 @@ interface SystemUser_Select {
   internalemailaddress: WebAttribute<SystemUser_Select, { internalemailaddress: string | null }, {  }>;
   invitestatuscode: WebAttribute<SystemUser_Select, { invitestatuscode: systemuser_invitestatuscode | null }, { invitestatuscode_formatted?: string }>;
   isactivedirectoryuser: WebAttribute<SystemUser_Select, { isactivedirectoryuser: boolean | null }, {  }>;
+  isallowedbyipfirewall: WebAttribute<SystemUser_Select, { isallowedbyipfirewall: boolean | null }, {  }>;
   isdisabled: WebAttribute<SystemUser_Select, { isdisabled: boolean | null }, {  }>;
   isemailaddressapprovedbyo365admin: WebAttribute<SystemUser_Select, { isemailaddressapprovedbyo365admin: boolean | null }, {  }>;
   isintegrationuser: WebAttribute<SystemUser_Select, { isintegrationuser: boolean | null }, {  }>;
@@ -707,6 +714,7 @@ interface SystemUser_Filter {
   internalemailaddress: string;
   invitestatuscode: systemuser_invitestatuscode;
   isactivedirectoryuser: boolean;
+  isallowedbyipfirewall: boolean;
   isdisabled: boolean;
   isemailaddressapprovedbyo365admin: boolean;
   isintegrationuser: boolean;
@@ -932,6 +940,10 @@ interface SystemUser_Expand {
   lk_ts_entityrisk_createdonbehalfby: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { lk_ts_entityrisk_createdonbehalfby: ts_EntityRisk_Result[] }>;
   lk_ts_entityrisk_modifiedby: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { lk_ts_entityrisk_modifiedby: ts_EntityRisk_Result[] }>;
   lk_ts_entityrisk_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { lk_ts_entityrisk_modifiedonbehalfby: ts_EntityRisk_Result[] }>;
+  lk_ts_entityriskfrequency_createdby: WebExpand<SystemUser_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { lk_ts_entityriskfrequency_createdby: ts_EntityRiskFrequency_Result[] }>;
+  lk_ts_entityriskfrequency_createdonbehalfby: WebExpand<SystemUser_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { lk_ts_entityriskfrequency_createdonbehalfby: ts_EntityRiskFrequency_Result[] }>;
+  lk_ts_entityriskfrequency_modifiedby: WebExpand<SystemUser_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { lk_ts_entityriskfrequency_modifiedby: ts_EntityRiskFrequency_Result[] }>;
+  lk_ts_entityriskfrequency_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { lk_ts_entityriskfrequency_modifiedonbehalfby: ts_EntityRiskFrequency_Result[] }>;
   lk_ts_incompleteworkorderreason_createdby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_createdby: ts_IncompleteWorkOrderReason_Result[] }>;
   lk_ts_incompleteworkorderreason_createdonbehalfby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_createdonbehalfby: ts_IncompleteWorkOrderReason_Result[] }>;
   lk_ts_incompleteworkorderreason_modifiedby: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { lk_ts_incompleteworkorderreason_modifiedby: ts_IncompleteWorkOrderReason_Result[] }>;
@@ -1089,6 +1101,7 @@ interface SystemUser_Expand {
   user_ts_case: WebExpand<SystemUser_Expand, ts_case_Select, ts_case_Filter, { user_ts_case: ts_case_Result[] }>;
   user_ts_causefinding: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { user_ts_causefinding: ts_causefinding_Result[] }>;
   user_ts_entityrisk: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { user_ts_entityrisk: ts_EntityRisk_Result[] }>;
+  user_ts_entityriskfrequency: WebExpand<SystemUser_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { user_ts_entityriskfrequency: ts_EntityRiskFrequency_Result[] }>;
   user_ts_incompleteworkorderreason: WebExpand<SystemUser_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { user_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
   user_ts_infraction: WebExpand<SystemUser_Expand, ts_infraction_Select, ts_infraction_Filter, { user_ts_infraction: ts_infraction_Result[] }>;
   user_ts_inspectionhours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { user_ts_inspectionhours: ts_InspectionHours_Result[] }>;
@@ -1340,6 +1353,10 @@ interface SystemUser_RelatedMany {
   lk_ts_entityrisk_createdonbehalfby: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   lk_ts_entityrisk_modifiedby: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   lk_ts_entityrisk_modifiedonbehalfby: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  lk_ts_entityriskfrequency_createdby: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
+  lk_ts_entityriskfrequency_createdonbehalfby: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
+  lk_ts_entityriskfrequency_modifiedby: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
+  lk_ts_entityriskfrequency_modifiedonbehalfby: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
   lk_ts_incompleteworkorderreason_createdby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   lk_ts_incompleteworkorderreason_createdonbehalfby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   lk_ts_incompleteworkorderreason_modifiedby: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
@@ -1493,6 +1510,7 @@ interface SystemUser_RelatedMany {
   user_ts_case: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   user_ts_causefinding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   user_ts_entityrisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  user_ts_entityriskfrequency: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
   user_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   user_ts_infraction: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   user_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;

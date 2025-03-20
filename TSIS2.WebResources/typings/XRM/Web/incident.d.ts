@@ -33,6 +33,7 @@ interface Incident_Base extends WebEntity {
   merged?: boolean | null;
   messagetypecode?: socialactivity_postmessagetype | null;
   modifiedon?: Date | null;
+  msdyn_casesentiment?: msdyn_case_msdyn_casesentiment | null;
   msdyn_casesurveyinviteurl?: string | null;
   msdyn_copilotengaged?: boolean | null;
   msdyn_precreateattachmentsid?: string | null;
@@ -212,6 +213,7 @@ interface Incident_Select {
   modifiedbyexternalparty_guid: WebAttribute<Incident_Select, { modifiedbyexternalparty_guid: string | null }, { modifiedbyexternalparty_formatted?: string }>;
   modifiedon: WebAttribute<Incident_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Incident_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msdyn_casesentiment: WebAttribute<Incident_Select, { msdyn_casesentiment: msdyn_case_msdyn_casesentiment | null }, { msdyn_casesentiment_formatted?: string }>;
   msdyn_casesurveyinviteurl: WebAttribute<Incident_Select, { msdyn_casesurveyinviteurl: string | null }, {  }>;
   msdyn_copilotengaged: WebAttribute<Incident_Select, { msdyn_copilotengaged: boolean | null }, {  }>;
   msdyn_functionallocation_guid: WebAttribute<Incident_Select, { msdyn_functionallocation_guid: string | null }, { msdyn_functionallocation_formatted?: string }>;
@@ -338,6 +340,7 @@ interface Incident_Filter {
   modifiedbyexternalparty_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msdyn_casesentiment: msdyn_case_msdyn_casesentiment;
   msdyn_casesurveyinviteurl: string;
   msdyn_copilotengaged: boolean;
   msdyn_functionallocation_guid: XQW.Guid;
@@ -495,6 +498,7 @@ interface Incident_FormattedResult {
   modifiedbyexternalparty_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msdyn_casesentiment_formatted?: string;
   msdyn_functionallocation_formatted?: string;
   msdyn_incidenttype_formatted?: string;
   msdyn_iotalert_formatted?: string;

@@ -745,6 +745,29 @@ interface ts_EntityRisk_ovs_operationtype_Create extends ts_EntityRisk_ovs_opera
 }
 interface ts_EntityRisk_ovs_operationtype_Update extends ts_EntityRisk_ovs_operationtype {
 }
+interface ts_EntityRiskFrequency_Base extends WebEntity {
+}
+interface ts_EntityRiskFrequency_Fixed extends WebEntity_Fixed {
+  ts_entityriskfrequencyid: string;
+}
+interface ts_EntityRiskFrequency extends ts_EntityRiskFrequency_Base, ts_EntityRiskFrequency_Relationships {
+}
+interface ts_EntityRiskFrequency_Relationships {
+}
+interface ts_EntityRiskFrequency_Result extends ts_EntityRiskFrequency_Base, ts_EntityRiskFrequency_Relationships {
+}
+interface ts_EntityRiskFrequency_FormattedResult {
+}
+interface ts_EntityRiskFrequency_Select {
+}
+interface ts_EntityRiskFrequency_Expand {
+}
+interface ts_EntityRiskFrequency_Filter {
+}
+interface ts_EntityRiskFrequency_Create extends ts_EntityRiskFrequency {
+}
+interface ts_EntityRiskFrequency_Update extends ts_EntityRiskFrequency {
+}
 interface ts_Incident_ts_operationcontact_Base extends WebEntity {
 }
 interface ts_Incident_ts_operationcontact_Fixed extends WebEntity_Fixed {

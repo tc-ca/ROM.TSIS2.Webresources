@@ -30,8 +30,8 @@ interface ts_action_Relationships {
   ts_action_PostFollows?: PostFollow_Result[] | null;
   ts_action_connections1?: Connection_Result[] | null;
   ts_action_connections2?: Connection_Result[] | null;
-  ts_infraction_action_ts_action?: ts_infraction_Result[] | null;
   ts_ts_action_ovs_finding?: ovs_Finding_Result[] | null;
+  ts_ts_action_ts_infraction?: ts_infraction_Result[] | null;
 }
 interface ts_action extends ts_action_Base, ts_action_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -40,6 +40,7 @@ interface ts_action extends ts_action_Base, ts_action_Relationships {
   ts_Case_bind$incidents?: string | null;
   ts_contact_bind$contacts?: string | null;
   ts_finding_bind$ovs_findings?: string | null;
+  ts_infraction_bind$ts_infractions?: string | null;
   ts_stakeholder_bind$accounts?: string | null;
 }
 interface ts_action_Create extends ts_action {
@@ -76,6 +77,7 @@ interface ts_action_Select {
   ts_details: WebAttribute<ts_action_Select, { ts_details: string | null }, {  }>;
   ts_duedate: WebAttribute<ts_action_Select, { ts_duedate: Date | null }, { ts_duedate_formatted?: string }>;
   ts_finding_guid: WebAttribute<ts_action_Select, { ts_finding_guid: string | null }, { ts_finding_formatted?: string }>;
+  ts_infraction_guid: WebAttribute<ts_action_Select, { ts_infraction_guid: string | null }, { ts_infraction_formatted?: string }>;
   ts_location: WebAttribute<ts_action_Select, { ts_location: string | null }, {  }>;
   ts_name: WebAttribute<ts_action_Select, { ts_name: string | null }, {  }>;
   ts_priority: WebAttribute<ts_action_Select, { ts_priority: msdyn_playbookactivity_priority | null }, { ts_priority_formatted?: string }>;
@@ -114,6 +116,7 @@ interface ts_action_Filter {
   ts_details: string;
   ts_duedate: Date;
   ts_finding_guid: XQW.Guid;
+  ts_infraction_guid: XQW.Guid;
   ts_location: string;
   ts_name: string;
   ts_priority: msdyn_playbookactivity_priority;
@@ -137,9 +140,10 @@ interface ts_action_Expand {
   ts_action_connections2: WebExpand<ts_action_Expand, Connection_Select, Connection_Filter, { ts_action_connections2: Connection_Result[] }>;
   ts_contact: WebExpand<ts_action_Expand, Contact_Select, Contact_Filter, { ts_contact: Contact_Result }>;
   ts_finding: WebExpand<ts_action_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_finding: ovs_Finding_Result }>;
-  ts_infraction_action_ts_action: WebExpand<ts_action_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_action_ts_action: ts_infraction_Result[] }>;
+  ts_infraction: WebExpand<ts_action_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction: ts_infraction_Result }>;
   ts_stakeholder: WebExpand<ts_action_Expand, Account_Select, Account_Filter, { ts_stakeholder: Account_Result }>;
   ts_ts_action_ovs_finding: WebExpand<ts_action_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ts_action_ovs_finding: ovs_Finding_Result[] }>;
+  ts_ts_action_ts_infraction: WebExpand<ts_action_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_ts_action_ts_infraction: ts_infraction_Result[] }>;
 }
 interface ts_action_FormattedResult {
   createdby_formatted?: string;
@@ -166,6 +170,7 @@ interface ts_action_FormattedResult {
   ts_deliverymethod_formatted?: string;
   ts_duedate_formatted?: string;
   ts_finding_formatted?: string;
+  ts_infraction_formatted?: string;
   ts_priority_formatted?: string;
   ts_stakeholder_formatted?: string;
   ts_timedate_formatted?: string;
@@ -184,6 +189,7 @@ interface ts_action_Result extends ts_action_Base, ts_action_Relationships {
   ts_case_guid: string | null;
   ts_contact_guid: string | null;
   ts_finding_guid: string | null;
+  ts_infraction_guid: string | null;
   ts_stakeholder_guid: string | null;
 }
 interface ts_action_RelatedOne {
@@ -197,6 +203,7 @@ interface ts_action_RelatedOne {
   ts_Case: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_infraction: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface ts_action_RelatedMany {
@@ -204,8 +211,8 @@ interface ts_action_RelatedMany {
   ts_action_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   ts_action_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ts_action_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
-  ts_infraction_action_ts_action: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_ts_action_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_ts_action_ts_infraction: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_actions: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
