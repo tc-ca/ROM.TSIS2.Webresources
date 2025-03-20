@@ -190,6 +190,11 @@
             "description": "ROM TSIS 2.0 EntityRisk Form Scripts"
           },
           {
+            "uniquename": "ts_/js/EntityRiskFrequency.js",
+            "file": "js\\EntityRiskFrequency.js",
+            "description": "ROM TSIS 2.0 Entity Risk Frequency Form Scripts"
+          },
+          {
             "uniquename": "ts_/js/OperationActivityRiskScores.js",
             "file": "js\\OperationActivityRiskScores.js",
             "description": "ROM TSIS 2.0 Operation Activity Risk Scores Form Scripts"
