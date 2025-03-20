@@ -22,6 +22,7 @@ interface tc_TCFiscalYear_Relationships {
   ovs_tc_tcfiscalyear_bookableresourcebooking?: BookableResourceBooking_Result[] | null;
   tc_TCFiscalQuarter_TCFiscalYear?: tc_TCFiscalQuarter_Result[] | null;
   ts_entityrisk_FiscalYear_tc_tcfiscalyear?: ts_EntityRisk_Result[] | null;
+  ts_entityriskfrequency_FiscalYear_tc_tcfiscalyear?: ts_EntityRiskFrequency_Result[] | null;
   ts_operationactivityriskscores_FiscalYear_tc_tcfiscalyear?: ts_OperationActivityRiskScores_Result[] | null;
   ts_plan_fiscalyear?: ts_Plan_Result[] | null;
   ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear?: ts_nonoversightactivity_Result[] | null;
@@ -103,6 +104,7 @@ interface tc_TCFiscalYear_Expand {
   owninguser: WebExpand<tc_TCFiscalYear_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   tc_TCFiscalQuarter_TCFiscalYear: WebExpand<tc_TCFiscalYear_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { tc_TCFiscalQuarter_TCFiscalYear: tc_TCFiscalQuarter_Result[] }>;
   ts_entityrisk_FiscalYear_tc_tcfiscalyear: WebExpand<tc_TCFiscalYear_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_entityrisk_FiscalYear_tc_tcfiscalyear: ts_EntityRisk_Result[] }>;
+  ts_entityriskfrequency_FiscalYear_tc_tcfiscalyear: WebExpand<tc_TCFiscalYear_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { ts_entityriskfrequency_FiscalYear_tc_tcfiscalyear: ts_EntityRiskFrequency_Result[] }>;
   ts_operationactivityriskscores_FiscalYear_tc_tcfiscalyear: WebExpand<tc_TCFiscalYear_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_FiscalYear_tc_tcfiscalyear: ts_OperationActivityRiskScores_Result[] }>;
   ts_plan_fiscalyear: WebExpand<tc_TCFiscalYear_Expand, ts_Plan_Select, ts_Plan_Filter, { ts_plan_fiscalyear: ts_Plan_Result[] }>;
   ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear: WebExpand<tc_TCFiscalYear_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear: ts_nonoversightactivity_Result[] }>;
@@ -153,6 +155,7 @@ interface tc_TCFiscalYear_RelatedMany {
   ovs_tc_tcfiscalyear_bookableresourcebooking: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;
   tc_TCFiscalQuarter_TCFiscalYear: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ts_entityrisk_FiscalYear_tc_tcfiscalyear: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  ts_entityriskfrequency_FiscalYear_tc_tcfiscalyear: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
   ts_operationactivityriskscores_FiscalYear_tc_tcfiscalyear: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
   ts_plan_fiscalyear: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;

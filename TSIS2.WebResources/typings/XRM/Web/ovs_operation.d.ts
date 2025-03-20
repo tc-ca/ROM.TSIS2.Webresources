@@ -68,6 +68,7 @@ interface ovs_operation_Relationships {
   ts_Subsite_Site?: ts_site_Result | null;
   ts_Subsubsite?: msdyn_FunctionalLocation_Result | null;
   ts_Subsubsite_Site?: ts_site_Result | null;
+  ts_entityriskfrequency_Operation_ovs_operation?: ts_EntityRiskFrequency_Result[] | null;
   ts_infraction_operation_ovs_operation?: ts_infraction_Result[] | null;
   ts_msdyn_workorder_ovs_operation_ovs_operati?: msdyn_workorder_Result[] | null;
   ts_operation_msdyn_workorder_OperatingCarrierOperation?: msdyn_workorder_Result[] | null;
@@ -275,6 +276,7 @@ interface ovs_operation_Expand {
   ts_Subsite_Site: WebExpand<ovs_operation_Expand, ts_site_Select, ts_site_Filter, { ts_Subsite_Site: ts_site_Result }>;
   ts_Subsubsite: WebExpand<ovs_operation_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Subsubsite: msdyn_FunctionalLocation_Result }>;
   ts_Subsubsite_Site: WebExpand<ovs_operation_Expand, ts_site_Select, ts_site_Filter, { ts_Subsubsite_Site: ts_site_Result }>;
+  ts_entityriskfrequency_Operation_ovs_operation: WebExpand<ovs_operation_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { ts_entityriskfrequency_Operation_ovs_operation: ts_EntityRiskFrequency_Result[] }>;
   ts_infraction_operation_ovs_operation: WebExpand<ovs_operation_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_operation_ovs_operation: ts_infraction_Result[] }>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_ovs_operation_ovs_operati: msdyn_workorder_Result[] }>;
   ts_operation_msdyn_workorder_OperatingCarrierOperation: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_operation_msdyn_workorder_OperatingCarrierOperation: msdyn_workorder_Result[] }>;
@@ -388,6 +390,7 @@ interface ovs_operation_RelatedMany {
   ovs_operation_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ovs_ovs_operation_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_EntityRisk_ovs_operation_ovs_operation: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  ts_entityriskfrequency_Operation_ovs_operation: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
   ts_infraction_operation_ovs_operation: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_msdyn_workorder_ovs_operation_ovs_operati: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_operation_msdyn_workorder_OperatingCarrierOperation: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;

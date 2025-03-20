@@ -1,5 +1,5 @@
 declare namespace Form.ts_operationactivity.Main {
-  namespace Information {
+  namespace RelatedWorkOrders {
     namespace Tabs {
       interface related_wos_tab extends Xrm.SectionCollectionBase {
         get(name: "tab_2_section_1"): Xrm.PageSection;
@@ -15,22 +15,9 @@ declare namespace Form.ts_operationactivity.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_general extends Xrm.SectionCollectionBase {
-        get(name: "_section_58"): Xrm.PageSection;
-        get(name: "null_section_4"): Xrm.PageSection;
-        get(name: "null_section_5"): Xrm.PageSection;
-        get(name: "null_section_7"): Xrm.PageSection;
-        get(name: "section_team"): Xrm.PageSection;
-        get(name: "{9b6a8eee-e8e2-41fc-874c-bd79e2bad5f5}_section_5"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
-      get(name: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
       get(name: "ts_activity"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_closedondatemostrecentwo"): Xrm.DateAttribute;
       get(name: "ts_name"): Xrm.Attribute<string>;
@@ -53,9 +40,9 @@ declare namespace Form.ts_operationactivity.Main {
       get(name: "header_ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
       get(name: "header_ts_plannedstatus"): Xrm.OptionSetControl<ts_planningstatus>;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-      get(name: "ts_accountableteam"): Xrm.LookupControl<"team">;
       get(name: "ts_activity"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_closedondatemostrecentwo"): Xrm.DateControl;
+      get(name: "ts_closedondatemostrecentwo1"): Xrm.DateControl;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ts_programarea"): Xrm.LookupControl<"ts_programarea">;
@@ -70,16 +57,14 @@ declare namespace Form.ts_operationactivity.Main {
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "related_wos_tab"): Xrm.PageTab<Tabs.related_wos_tab>;
       get(name: "risk_scores_tab"): Xrm.PageTab<Tabs.risk_scores_tab>;
-      get(name: "tab_general"): Xrm.PageTab<Tabs.tab_general>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
+  interface RelatedWorkOrders extends Xrm.PageBase<RelatedWorkOrders.Attributes,RelatedWorkOrders.Tabs,RelatedWorkOrders.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
-    getAttribute(attributeName: "ts_accountableteam"): Xrm.LookupAttribute<"team">;
     getAttribute(attributeName: "ts_activity"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_closedondatemostrecentwo"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
@@ -97,9 +82,9 @@ declare namespace Form.ts_operationactivity.Main {
     getControl(controlName: "header_ts_operationalstatus"): Xrm.OptionSetControl<ts_operationalstatus>;
     getControl(controlName: "header_ts_plannedstatus"): Xrm.OptionSetControl<ts_planningstatus>;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-    getControl(controlName: "ts_accountableteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_activity"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_closedondatemostrecentwo"): Xrm.DateControl;
+    getControl(controlName: "ts_closedondatemostrecentwo1"): Xrm.DateControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ts_programarea"): Xrm.LookupControl<"ts_programarea">;
