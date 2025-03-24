@@ -117,6 +117,7 @@ interface Email_Relationships {
   regardingobjectid_ts_teamplanningdata_email?: ts_TeamPlanningData_Result | null;
 }
 interface Email extends Email_Base, Email_Relationships {
+  SensitivityLabelId_Email_bind$sensitivitylabels?: string | null;
   ownerid_email_bind$systemusers?: string | null;
   ownerid_email_bind$teams?: string | null;
   regardingobjectid_account_email_bind$accounts?: string | null;
@@ -328,6 +329,7 @@ interface Email_Select {
   sender: WebAttribute<Email_Select, { sender: string | null }, {  }>;
   sendermailboxid_guid: WebAttribute<Email_Select, { sendermailboxid_guid: string | null }, { sendermailboxid_formatted?: string }>;
   sendersaccount_guid: WebAttribute<Email_Select, { sendersaccount_guid: string | null }, { sendersaccount_formatted?: string }>;
+  sensitivitylabelid_guid: WebAttribute<Email_Select, { sensitivitylabelid_guid: string | null }, { sensitivitylabelid_formatted?: string }>;
   sensitivitylabelinfo: WebAttribute<Email_Select, { sensitivitylabelinfo: string | null }, {  }>;
   senton: WebAttribute<Email_Select, { senton: Date | null }, { senton_formatted?: string }>;
   serviceid_guid: WebAttribute<Email_Select, { serviceid_guid: string | null }, { serviceid_formatted?: string }>;
@@ -440,6 +442,7 @@ interface Email_Filter {
   sender: string;
   sendermailboxid_guid: XQW.Guid;
   sendersaccount_guid: XQW.Guid;
+  sensitivitylabelid_guid: XQW.Guid;
   sensitivitylabelinfo: string;
   senton: Date;
   serviceid_guid: XQW.Guid;
@@ -538,6 +541,7 @@ interface Email_FormattedResult {
   scheduledstart_formatted?: string;
   sendermailboxid_formatted?: string;
   sendersaccount_formatted?: string;
+  sensitivitylabelid_formatted?: string;
   senton_formatted?: string;
   serviceid_formatted?: string;
   slaid_formatted?: string;
@@ -571,6 +575,7 @@ interface Email_Result extends Email_Base, Email_Relationships {
   related_guid: string | null;
   sendermailboxid_guid: string | null;
   sendersaccount_guid: string | null;
+  sensitivitylabelid_guid: string | null;
   serviceid_guid: string | null;
   slaid_guid: string | null;
   slainvokedid_guid: string | null;

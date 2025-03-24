@@ -7,6 +7,7 @@ interface ts_EntityRiskFrequency_Base extends WebEntity {
   statuscode?: ts_entityriskfrequency_statuscode | null;
   timezoneruleversionnumber?: number | null;
   ts_englishname?: string | null;
+  ts_entityname?: ts_entityriskfrequency_ts_entityname | null;
   ts_entityriskfrequencyid?: string | null;
   ts_frenchname?: string | null;
   ts_generateduniquekey?: string | null;
@@ -56,6 +57,7 @@ interface ts_EntityRiskFrequency_Select {
   timezoneruleversionnumber: WebAttribute<ts_EntityRiskFrequency_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_activitytype_guid: WebAttribute<ts_EntityRiskFrequency_Select, { ts_activitytype_guid: string | null }, { ts_activitytype_formatted?: string }>;
   ts_englishname: WebAttribute<ts_EntityRiskFrequency_Select, { ts_englishname: string | null }, {  }>;
+  ts_entityname: WebAttribute<ts_EntityRiskFrequency_Select, { ts_entityname: ts_entityriskfrequency_ts_entityname | null }, { ts_entityname_formatted?: string }>;
   ts_entityriskfrequencyid: WebAttribute<ts_EntityRiskFrequency_Select, { ts_entityriskfrequencyid: string | null }, {  }>;
   ts_fiscalyear_guid: WebAttribute<ts_EntityRiskFrequency_Select, { ts_fiscalyear_guid: string | null }, { ts_fiscalyear_formatted?: string }>;
   ts_frenchname: WebAttribute<ts_EntityRiskFrequency_Select, { ts_frenchname: string | null }, {  }>;
@@ -88,6 +90,7 @@ interface ts_EntityRiskFrequency_Filter {
   timezoneruleversionnumber: number;
   ts_activitytype_guid: XQW.Guid;
   ts_englishname: string;
+  ts_entityname: ts_entityriskfrequency_ts_entityname;
   ts_entityriskfrequencyid: XQW.Guid;
   ts_fiscalyear_guid: XQW.Guid;
   ts_frenchname: string;
@@ -132,6 +135,7 @@ interface ts_EntityRiskFrequency_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_activitytype_formatted?: string;
+  ts_entityname_formatted?: string;
   ts_fiscalyear_formatted?: string;
   ts_operation_formatted?: string;
   ts_operationtype_formatted?: string;
