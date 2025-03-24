@@ -45,6 +45,7 @@ interface ts_OperationActivity extends ts_OperationActivity_Base, ts_OperationAc
   ts_Site_Site_bind$ts_sites?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_Stakeholder_bind$accounts?: string | null;
+  ts_accountableteam_bind$teams?: string | null;
 }
 interface ts_OperationActivity_Create extends ts_OperationActivity {
 }
@@ -66,6 +67,7 @@ interface ts_OperationActivity_Select {
   statecode: WebAttribute<ts_OperationActivity_Select, { statecode: ts_operationactivity_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ts_OperationActivity_Select, { statuscode: ts_operationactivity_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_OperationActivity_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_accountableteam_guid: WebAttribute<ts_OperationActivity_Select, { ts_accountableteam_guid: string | null }, { ts_accountableteam_formatted?: string }>;
   ts_activity_guid: WebAttribute<ts_OperationActivity_Select, { ts_activity_guid: string | null }, { ts_activity_formatted?: string }>;
   ts_closedondatemostrecentwo: WebAttribute<ts_OperationActivity_Select, { ts_closedondatemostrecentwo: Date | null }, { ts_closedondatemostrecentwo_formatted?: string }>;
   ts_closedondateoflastworkorder: WebAttribute<ts_OperationActivity_Select, { ts_closedondateoflastworkorder: Date | null }, { ts_closedondateoflastworkorder_formatted?: string }>;
@@ -105,6 +107,7 @@ interface ts_OperationActivity_Filter {
   statecode: ts_operationactivity_statecode;
   statuscode: ts_operationactivity_statuscode;
   timezoneruleversionnumber: number;
+  ts_accountableteam_guid: XQW.Guid;
   ts_activity_guid: XQW.Guid;
   ts_closedondatemostrecentwo: Date;
   ts_closedondateoflastworkorder: Date;
@@ -145,6 +148,7 @@ interface ts_OperationActivity_Expand {
   ts_Site: WebExpand<ts_OperationActivity_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Site_Site: WebExpand<ts_OperationActivity_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
   ts_Stakeholder: WebExpand<ts_OperationActivity_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
+  ts_accountableteam: WebExpand<ts_OperationActivity_Expand, Team_Select, Team_Filter, { ts_accountableteam: Team_Result }>;
   ts_operationactivityriskscores_OperationActivity_ts_operationactivity: WebExpand<ts_OperationActivity_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_OperationActivity_ts_operationactivity: ts_OperationActivityRiskScores_Result[] }>;
   ts_ts_planningdata_OperationActivity_ts_oper: WebExpand<ts_OperationActivity_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_OperationActivity_ts_oper: ts_PlanningData_Result[] }>;
 }
@@ -162,6 +166,7 @@ interface ts_OperationActivity_FormattedResult {
   owninguser_formatted?: string;
   statecode_formatted?: string;
   statuscode_formatted?: string;
+  ts_accountableteam_formatted?: string;
   ts_activity_formatted?: string;
   ts_closedondatemostrecentwo_formatted?: string;
   ts_closedondateoflastworkorder_formatted?: string;
@@ -188,6 +193,7 @@ interface ts_OperationActivity_Result extends ts_OperationActivity_Base, ts_Oper
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
   owninguser_guid: string | null;
+  ts_accountableteam_guid: string | null;
   ts_activity_guid: string | null;
   ts_duedate_guid: string | null;
   ts_lastcompletedwo_guid: string | null;
@@ -217,6 +223,7 @@ interface ts_OperationActivity_RelatedOne {
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Site_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_accountableteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
 }
 interface ts_OperationActivity_RelatedMany {
   ts_operationactivityriskscores_OperationActivity_ts_operationactivity: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;

@@ -110,7 +110,7 @@ declare namespace Form.incident.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface tab_17 extends Xrm.SectionCollectionBase {
-        get(name: "tab_17_section_1"): Xrm.PageSection;
+        get(name: "tab_12_section11"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -219,7 +219,6 @@ declare namespace Form.incident.Main {
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_4"): Xrm.SubGridControl<"contact">;
       get(name: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
-      get(name: "Subgrid_new_5"): Xrm.SubGridControl<"ts_infraction">;
       get(name: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -275,6 +274,7 @@ declare namespace Form.incident.Main {
       get(name: "sentimentvalue"): Xrm.NumberControl;
       get(name: "socialprofileid"): Xrm.LookupControl<"socialprofile">;
       get(name: "subgrid_findings"): Xrm.SubGridControl<"ovs_finding">;
+      get(name: "subgrid_infractions"): Xrm.SubGridControl<"ts_infraction">;
       get(name: "subjectid"): Xrm.LookupControl<"subject">;
       get(name: "ticketnumber"): Xrm.StringControl;
       get(name: "title"): Xrm.StringControl;
@@ -403,7 +403,6 @@ declare namespace Form.incident.Main {
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_4"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
-    getControl(controlName: "Subgrid_new_5"): Xrm.SubGridControl<"ts_infraction">;
     getControl(controlName: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -459,6 +458,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "sentimentvalue"): Xrm.NumberControl;
     getControl(controlName: "socialprofileid"): Xrm.LookupControl<"socialprofile">;
     getControl(controlName: "subgrid_findings"): Xrm.SubGridControl<"ovs_finding">;
+    getControl(controlName: "subgrid_infractions"): Xrm.SubGridControl<"ts_infraction">;
     getControl(controlName: "subjectid"): Xrm.LookupControl<"subject">;
     getControl(controlName: "ticketnumber"): Xrm.StringControl;
     getControl(controlName: "title"): Xrm.StringControl;

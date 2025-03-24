@@ -60,7 +60,7 @@ declare namespace Form.ts_infraction.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_new_2"): Xrm.SubGridControl<"ovs_finding">;
-      get(name: "Subgrid_new_3"): Xrm.SubGridControl<"ts_action">;
+      get(name: "Subgrid_new_3"): Xrm.SubGridControl<"ts_actioninfraction">;
       get(name: "WebResource_InfractionProvisionText"): Xrm.WebResourceControl;
       get(name: "WebResource_RATEFactorGuide_AcceptanceOfResponsibility"): Xrm.WebResourceControl;
       get(name: "WebResource_RATEFactorGuide_ActualPotentialHarmVulnerability"): Xrm.WebResourceControl;
@@ -164,7 +164,7 @@ declare namespace Form.ts_infraction.Main {
     getAttribute(attributeName: "ts_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_2"): Xrm.SubGridControl<"ovs_finding">;
-    getControl(controlName: "Subgrid_new_3"): Xrm.SubGridControl<"ts_action">;
+    getControl(controlName: "Subgrid_new_3"): Xrm.SubGridControl<"ts_actioninfraction">;
     getControl(controlName: "WebResource_InfractionProvisionText"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_RATEFactorGuide_AcceptanceOfResponsibility"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_RATEFactorGuide_ActualPotentialHarmVulnerability"): Xrm.WebResourceControl;

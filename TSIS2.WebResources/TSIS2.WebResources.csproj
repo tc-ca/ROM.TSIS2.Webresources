@@ -172,6 +172,7 @@
     <Content Include="Webresources\js\ace.min.js" />
     <Content Include="Webresources\js\Action.js" />
     <Content Include="Webresources\js\buildlegislationtext.js" />
+    <Content Include="Webresources\js\EntityRiskFrequency.js" />
     <Content Include="Webresources\js\EntityRiskRibbon.js" />
     <Content Include="Webresources\js\ajax.js" />
     <Content Include="Webresources\js\AppLevelFunctions.js" />
@@ -402,6 +403,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\CauseFinding.ts" />
     <TypeScriptCompile Include="src\ts\EntityRisk.ts" />
+    <TypeScriptCompile Include="src\ts\EntityRiskFrequency.ts" />
     <TypeScriptCompile Include="src\ts\Infraction.ts" />
     <TypeScriptCompile Include="src\ts\OperationActivityRiskScores.ts" />
     <TypeScriptCompile Include="src\ts\OperationType.ts" />

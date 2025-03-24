@@ -217,6 +217,7 @@ interface Account_Relationships {
   ts_account_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
   ts_account_workorder_operatingcarrier?: msdyn_workorder_Result[] | null;
   ts_account_workorder_operatingname?: msdyn_workorder_Result[] | null;
+  ts_entityriskfrequency_Stakeholder_account?: ts_EntityRiskFrequency_Result[] | null;
   ts_infraction_stakeholder_account?: ts_infraction_Result[] | null;
   ts_ovs_Finding_accountid_Account?: ovs_Finding_Result[] | null;
   ts_ovs_operation_stakeholder_account?: ovs_operation_Result[] | null;
@@ -729,6 +730,7 @@ interface Account_Expand {
   ts_account_ts_workordercreationwizard: WebExpand<Account_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { ts_account_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
   ts_account_workorder_operatingcarrier: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_account_workorder_operatingcarrier: msdyn_workorder_Result[] }>;
   ts_account_workorder_operatingname: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_account_workorder_operatingname: msdyn_workorder_Result[] }>;
+  ts_entityriskfrequency_Stakeholder_account: WebExpand<Account_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { ts_entityriskfrequency_Stakeholder_account: ts_EntityRiskFrequency_Result[] }>;
   ts_infraction_stakeholder_account: WebExpand<Account_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_stakeholder_account: ts_infraction_Result[] }>;
   ts_msdyn_workorder: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder: msdyn_workorder_Result }>;
   ts_ovs_Finding_accountid_Account: WebExpand<Account_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_accountid_Account: ovs_Finding_Result[] }>;
@@ -934,6 +936,7 @@ interface Account_RelatedMany {
   ts_account_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   ts_account_workorder_operatingcarrier: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_account_workorder_operatingname: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_entityriskfrequency_Stakeholder_account: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
   ts_infraction_stakeholder_account: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_ovs_Finding_accountid_Account: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_operation_stakeholder_account: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
