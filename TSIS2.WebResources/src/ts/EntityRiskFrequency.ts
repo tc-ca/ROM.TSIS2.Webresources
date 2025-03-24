@@ -20,6 +20,33 @@
             formContext.getControl("ts_stakeholder").setVisible(false);
         }
 
+        // if we are on an existing form
+        if (formContext.ui.getFormType() == 2) {
+
+            if (formContext.getAttribute("ts_activitytype").getValue() === null) {
+                formContext.getControl("ts_activitytype").setVisible(false);
+            }
+
+            if (formContext.getAttribute("ts_operation").getValue() === null) {
+                formContext.getControl("ts_operation").setVisible(false);
+            }
+
+            if (formContext.getAttribute("ts_operationtype").getValue() === null) {
+                formContext.getControl("ts_operationtype").setVisible(false);
+            }
+
+            if (formContext.getAttribute("ts_programarea").getValue() === null) {
+                formContext.getControl("ts_programarea").setVisible(false);
+            }
+
+            if (formContext.getAttribute("ts_site").getValue() === null) {
+                formContext.getControl("ts_site").setVisible(false);
+            }
+
+            if (formContext.getAttribute("ts_stakeholder").getValue() === null) {
+                formContext.getControl("ts_stakeholder").setVisible(false);
+            }
+        }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
