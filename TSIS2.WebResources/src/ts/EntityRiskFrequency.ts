@@ -24,8 +24,6 @@
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_entityriskfrequency.Main.Information>eContext.getFormContext();
 
-        generateUniqueKey(formContext);
-
         console.log("Entering onSave");
     }
 
@@ -140,6 +138,24 @@
         }
     }
 
+    export function entityOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.ts_entityriskfrequency.Main.Information>eContext.getFormContext();
+
+        // Get the attribute that triggered the event
+        const eventSource = eContext.getEventSource();
+
+        // Ensure eventSource is not null
+        if (!eventSource) {
+            console.error("Event source is null");
+            return;
+        }
+
+        // Get the selected lookup
+        const fieldName = eventSource.getName();
+
+        checkGeneratedUniqueKey(formContext, fieldName);
+    }
+
     function setFiscalYearFilteredView(formContext: Form.ts_entityriskfrequency.Main.Information) {
         const viewId = '{350B79C5-0A0E-42B2-8FF7-7F63B7E9628B}';
         const entityName = "tc_tcfiscalyear";
@@ -166,42 +182,41 @@
         formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 
-    function generateUniqueKey(formContext: Form.ts_entityriskfrequency.Main.Information) {
+    function checkGeneratedUniqueKey(formContext: Form.ts_entityriskfrequency.Main.Information,fieldName: string) {
 
         let generatedUniqueKey = "";
         let fiscalYear = formContext.getAttribute("ts_fiscalyear").getValue();
-        let selectedEntity = formContext.getAttribute("ts_entityname").getValue();
 
         // Ensure fiscalYear and entityName are not null
-        if (fiscalYear === null || selectedEntity === null) return;
+        if (fiscalYear === null || fieldName === null) return;
 
         let fiscalYearName = fiscalYear[0].name;
         let entityGuid = "";
 
-        switch (selectedEntity) {
-            case 741130000:
+        switch (fieldName) {
+            case "ts_activitytype":
                 console.log("Activity Type selected");
 
                 let activityType = formContext.getAttribute("ts_activitytype").getValue();
 
                 if (activityType != null) {
                     entityGuid = activityType[0].id;
-                } 
+                }
 
                 break;
 
-            case 741130001:
+            case "ts_operation":
                 console.log("Operation selected");
 
                 let operation = formContext.getAttribute("ts_operation").getValue();
 
                 if (operation != null) {
                     entityGuid = operation[0].id;
-                } 
+                }
 
                 break;
 
-            case 741130002:
+            case "ts_operationtype":
                 console.log("Operation Type selected");
 
                 let operationType = formContext.getAttribute("ts_operationtype").getValue();
@@ -212,7 +227,7 @@
 
                 break;
 
-            case 741130003:
+            case "ts_programarea":
                 console.log("Program Area selected");
 
                 let programArea = formContext.getAttribute("ts_programarea").getValue();
@@ -223,7 +238,7 @@
 
                 break;
 
-            case 741130004:
+            case "ts_site":
                 console.log("Site selected");
 
                 let site = formContext.getAttribute("ts_site").getValue();
@@ -234,7 +249,7 @@
 
                 break;
 
-            case 741130005:
+            case "ts_stakeholder":
                 console.log("Stakeholder selected");
 
                 let stakeholder = formContext.getAttribute("ts_stakeholder").getValue();
@@ -246,7 +261,7 @@
                 break;
 
             default:
-                console.log("Entity Name drop down selection - Unknown selection");
+                console.log("FieldName - Unknown selection");
                 // Optional: Handle cases where the selection is not recognized
                 break;
 
@@ -255,5 +270,45 @@
         // Generate the unique key
         generatedUniqueKey = fiscalYearName + ":" + entityGuid;
         formContext.getAttribute("ts_generateduniquekey").setValue(generatedUniqueKey);
+
+        // Fetch existing records to check for duplicates
+        const fetchXml = `
+        <fetch>
+          <entity name="ts_entityriskfrequency">
+            <attribute name="ts_generateduniquekey" />
+            <filter>
+              <condition attribute="ts_generateduniquekey" operator="eq" value="${generatedUniqueKey}" />
+            </filter>
+          </entity>
+        </fetch>`;
+
+        const encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+
+        // Get the user's language ID
+        const userLanguageId = Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+        // Check for existing records
+        Xrm.WebApi.retrieveMultipleRecords("ts_entityriskfrequency", encodedFetchXml).then(
+            function (result) {
+                if (result.entities.length > 0) {
+
+                    // Determine the message based on the user's language
+                    const message = (userLanguageId === 1036) // French language code
+                        ? "Une fréquence de risque existe déjà pour cet exercice financier." // French message
+                        : "A Risk Frequency already exists for this Fiscal Year."; // English message
+
+                    formContext.ui.setFormNotification(message, "WARNING", "duplicateNotification");
+
+                } else {
+
+                    formContext.ui.clearFormNotification("duplicateNotification");
+
+                    console.log("No duplicates found.");
+                }
+            },
+            function (error) {
+                console.error("Error validating uniqueness:", error.message);
+            }
+        );
     }
 }
