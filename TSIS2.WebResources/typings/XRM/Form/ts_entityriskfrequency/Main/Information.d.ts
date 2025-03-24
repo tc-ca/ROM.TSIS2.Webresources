@@ -7,6 +7,7 @@ declare namespace Form.ts_entityriskfrequency.Main {
       get(name: "statecode"): Xrm.OptionSetAttribute<ts_entityriskfrequency_statecode>;
       get(name: "ts_activitytype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
       get(name: "ts_englishname"): Xrm.Attribute<string>;
+      get(name: "ts_entityname"): Xrm.OptionSetAttribute<ts_entityriskfrequency_ts_entityname>;
       get(name: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ts_frenchname"): Xrm.Attribute<string>;
       get(name: "ts_generateduniquekey"): Xrm.Attribute<string>;
@@ -28,6 +29,7 @@ declare namespace Form.ts_entityriskfrequency.Main {
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_activitytype"): Xrm.LookupControl<"msdyn_incidenttype">;
       get(name: "ts_englishname"): Xrm.StringControl;
+      get(name: "ts_entityname"): Xrm.OptionSetControl<ts_entityriskfrequency_ts_entityname>;
       get(name: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ts_frenchname"): Xrm.StringControl;
       get(name: "ts_generateduniquekey"): Xrm.StringControl;
@@ -55,6 +57,7 @@ declare namespace Form.ts_entityriskfrequency.Main {
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ts_entityriskfrequency_statecode>;
     getAttribute(attributeName: "ts_activitytype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
     getAttribute(attributeName: "ts_englishname"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_entityname"): Xrm.OptionSetAttribute<ts_entityriskfrequency_ts_entityname>;
     getAttribute(attributeName: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ts_frenchname"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_generateduniquekey"): Xrm.Attribute<string>;
@@ -71,6 +74,7 @@ declare namespace Form.ts_entityriskfrequency.Main {
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_activitytype"): Xrm.LookupControl<"msdyn_incidenttype">;
     getControl(controlName: "ts_englishname"): Xrm.StringControl;
+    getControl(controlName: "ts_entityname"): Xrm.OptionSetControl<ts_entityriskfrequency_ts_entityname>;
     getControl(controlName: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ts_frenchname"): Xrm.StringControl;
     getControl(controlName: "ts_generateduniquekey"): Xrm.StringControl;
