@@ -1,32 +1,37 @@
 ﻿//For this to work offline, RetrieveMultiple must be avoided
 //To get around this, we can get the guids of the related Response records through the subgrid and retrieve each individually
-function recalculateRiskScore(formContext) {
+async function recalculateRiskScore(formContext) {
     Xrm.Utility.showProgressIndicator();
     let RiskScoreSet = false;
     let DiscretionaryScoreSet = false;
     let calculationLog = "";
+    let operationriskassessmentId = Xrm.Page.data.entity.getId();
 
     //Calculate and set Risk Score
-    const RiskResponseGrid = formContext.getControl("Subgrid_Risk_Criteria_Responses");
-    const RiskResponseRows = RiskResponseGrid.getGrid().getRows();
+    //const RiskResponseGrid = formContext.getControl("Subgrid_Risk_Criteria_Responses");
+    //const RiskResponseRows = RiskResponseGrid.getGrid().getRows();
     const RiskCriteriaRetrievals = [];
-    for (let i = 0; i < RiskResponseRows.getLength(); i++) {
-        let RiskResponseRow = RiskResponseRows.get(i).getData();
-        RiskCriteriaRetrievals.push(Xrm.WebApi.retrieveRecord("ts_riskcriteriaresponse", RiskResponseRow._entity._entityId.guid, "?$select=ts_riskcriteriaoption,ts_name&$expand=ts_riskcriteriaoption($select=ts_weight,ts_name)").then(
-            function success(result) {
-                if (result.ts_riskcriteriaoption != null) {
-                    if (result.ts_riskcriteriaoption.ts_weight != isNaN) {
-                        calculationLog += `Risk Criteria "${result.ts_name}" with option "${result.ts_riskcriteriaoption.ts_name}" has a weight of ${result.ts_riskcriteriaoption.ts_weight} \n`;
-                        return result.ts_riskcriteriaoption.ts_weight
+    let RiskResponseRows = await Xrm.WebApi.retrieveMultipleRecords("ts_riskcriteriaresponse", "?$select=ts_riskcriteriaresponseid&$filter=_ts_operationriskassessment_value eq " + operationriskassessmentId);
+
+    if (RiskResponseRows.entities.length > 0) {
+        for (let i = 0; i < RiskResponseRows.entities.length; i++) {
+            //let RiskResponseRow = RiskResponseRows.get(i).getData();
+            RiskCriteriaRetrievals.push(Xrm.WebApi.retrieveRecord("ts_riskcriteriaresponse", RiskResponseRows.entities[i].ts_riskcriteriaresponseid, "?$select=ts_riskcriteriaoption,ts_name&$expand=ts_riskcriteriaoption($select=ts_weight,ts_name)").then(
+                function success(result) {
+                    if (result.ts_riskcriteriaoption != null) {
+                        if (result.ts_riskcriteriaoption.ts_weight != isNaN) {
+                            calculationLog += `Risk Criteria "${result.ts_name}" with option "${result.ts_riskcriteriaoption.ts_name}" has a weight of ${result.ts_riskcriteriaoption.ts_weight} \n`;
+                            return result.ts_riskcriteriaoption.ts_weight
+                        }
+                    } else {
+                        calculationLog += `Risk Criteria "${result.ts_name}" has no option selected \n`;
+                        return 0;
                     }
-                } else {
-                    calculationLog += `Risk Criteria "${result.ts_name}" has no option selected \n`;
-                    return 0;
+
+
                 }
-                
-                
-            }
-        ));
+            ));
+        }
     }
     Promise.all(RiskCriteriaRetrievals).then((weights) => {
         let totalWeight = weights.reduce((sum, ele) => sum + ele);
@@ -44,27 +49,31 @@ function recalculateRiskScore(formContext) {
     });
 
     //Calculate and set Discretionary Score
-    const DiscretionaryGrid = formContext.getControl("Subgrid_Discretionary_Factor_Responses");
-    const DiscretionaryRows = DiscretionaryGrid.getGrid().getRows();
+    //const DiscretionaryGrid = formContext.getControl("Subgrid_Discretionary_Factor_Responses");
+    //const DiscretionaryRows = DiscretionaryGrid.getGrid().getRows();
+    let DiscretionaryRows = await Xrm.WebApi.retrieveMultipleRecords("ts_discretionaryfactorresponse", "?$select=ts_discretionaryfactorresponseid&$filter=_ts_operationriskassessment_value eq " + operationriskassessmentId);
+
     const DiscretionaryRetrievals = [];
-    for (let i = 0; i < DiscretionaryRows.getLength(); i++) {
-        let DiscretionaryResponseRow = DiscretionaryRows.get(i).getData();
-        DiscretionaryRetrievals.push(Xrm.WebApi.retrieveRecord("ts_discretionaryfactorresponse", DiscretionaryResponseRow._entity._entityId.guid, "?$select=ts_discretionaryfactoroption,ts_name&$expand=ts_discretionaryfactoroption($select=ts_weight,ts_name),ts_discretionaryfactorgrouping($select=ts_scorerangeminimum,ts_scorerangemaximum, ts_name)").then(
-            function success(result) {
-                if (result.ts_discretionaryfactoroption != null && result.ts_discretionaryfactoroption != null) {
-                    calculationLog += `Discretionary Factor "${result.ts_name}" with option "${result.ts_discretionaryfactoroption.ts_name}" in group of "${result.ts_discretionaryfactorgrouping.ts_name}" (Min: ${result.ts_discretionaryfactorgrouping.ts_scorerangeminimum}, Max ${result.ts_discretionaryfactorgrouping.ts_scorerangemaximum}) has a weight of ${result.ts_discretionaryfactoroption.ts_weight} \n`;
-                    return {
-                        groupingName: result.ts_discretionaryfactorgrouping.ts_name,
-                        groupingId: result.ts_discretionaryfactorgrouping.ts_discretionaryfactorgroupingid,
-                        groupingMin: result.ts_discretionaryfactorgrouping.ts_scorerangeminimum,
-                        groupingMax: result.ts_discretionaryfactorgrouping.ts_scorerangemaximum,
-                        weight: result.ts_discretionaryfactoroption.ts_weight
+    if (DiscretionaryRows.entities.length > 0) {
+        for (let i = 0; i < DiscretionaryRows.entities.length; i++) {
+            //let DiscretionaryResponseRow = DiscretionaryRows.get(i).getData();
+            DiscretionaryRetrievals.push(Xrm.WebApi.retrieveRecord("ts_discretionaryfactorresponse", DiscretionaryRows.entities[i].ts_discretionaryfactorresponseid, "?$select=ts_discretionaryfactoroption,ts_name&$expand=ts_discretionaryfactoroption($select=ts_weight,ts_name),ts_discretionaryfactorgrouping($select=ts_scorerangeminimum,ts_scorerangemaximum, ts_name)").then(
+                function success(result) {
+                    if (result.ts_discretionaryfactoroption != null && result.ts_discretionaryfactoroption != null) {
+                        calculationLog += `Discretionary Factor "${result.ts_name}" with option "${result.ts_discretionaryfactoroption.ts_name}" in group of "${result.ts_discretionaryfactorgrouping.ts_name}" (Min: ${result.ts_discretionaryfactorgrouping.ts_scorerangeminimum}, Max ${result.ts_discretionaryfactorgrouping.ts_scorerangemaximum}) has a weight of ${result.ts_discretionaryfactoroption.ts_weight} \n`;
+                        return {
+                            groupingName: result.ts_discretionaryfactorgrouping.ts_name,
+                            groupingId: result.ts_discretionaryfactorgrouping.ts_discretionaryfactorgroupingid,
+                            groupingMin: result.ts_discretionaryfactorgrouping.ts_scorerangeminimum,
+                            groupingMax: result.ts_discretionaryfactorgrouping.ts_scorerangemaximum,
+                            weight: result.ts_discretionaryfactoroption.ts_weight
+                        }
+                    } else {
+                        calculationLog += `Discretionary Factor "${result.ts_name}" has no option selected \n`;
                     }
-                } else {
-                    calculationLog += `Discretionary Factor "${result.ts_name}" has no option selected \n`;
                 }
-            }
-        ));
+            ));
+        }
     }
     Promise.all(DiscretionaryRetrievals).then((discretionaryResponses) => {
         let totalScore = 0;
