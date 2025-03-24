@@ -26,6 +26,16 @@ var ROM;
             console.log("Entering onSave");
         }
         EntityRiskFrequency.onSave = onSave;
+        function fiscalYearOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            getSelectedLookupValue(formContext, eContext);
+        }
+        EntityRiskFrequency.fiscalYearOnChange = fiscalYearOnChange;
+        function riskFrequencyOnChange(eContext) {
+            var formContext = eContext.getFormContext();
+            getSelectedLookupValue(formContext, eContext);
+        }
+        EntityRiskFrequency.riskFrequencyOnChange = riskFrequencyOnChange;
         function entityNameOnChange(eContext) {
             var formContext = eContext.getFormContext();
             // Get values from the form
@@ -34,6 +44,12 @@ var ROM;
             if (selectedEntity === null)
                 return;
             // Show the specific lookup based on the entity selected
+            formContext.getAttribute("ts_activitytype").setValue(null);
+            formContext.getAttribute("ts_operation").setValue(null);
+            formContext.getAttribute("ts_operationtype").setValue(null);
+            formContext.getAttribute("ts_programarea").setValue(null);
+            formContext.getAttribute("ts_site").setValue(null);
+            formContext.getAttribute("ts_stakeholder").setValue(null);
             formContext.getAttribute("ts_activitytype").setRequiredLevel("none");
             formContext.getAttribute("ts_operation").setRequiredLevel("none");
             formContext.getAttribute("ts_operationtype").setRequiredLevel("none");
@@ -110,16 +126,7 @@ var ROM;
         EntityRiskFrequency.entityNameOnChange = entityNameOnChange;
         function entityOnChange(eContext) {
             var formContext = eContext.getFormContext();
-            // Get the attribute that triggered the event
-            var eventSource = eContext.getEventSource();
-            // Ensure eventSource is not null
-            if (!eventSource) {
-                console.error("Event source is null");
-                return;
-            }
-            // Get the selected lookup
-            var fieldName = eventSource.getName();
-            checkGeneratedUniqueKey(formContext, fieldName);
+            getSelectedLookupValue(formContext, eContext);
         }
         EntityRiskFrequency.entityOnChange = entityOnChange;
         function setFiscalYearFilteredView(formContext) {
@@ -132,6 +139,48 @@ var ROM;
             var fetchXml = "<fetch version=\"1.0\" mapping=\"logical\" distinct=\"true\" returntotalrecordcount=\"true\" page=\"1\" count=\"25\" no-lock=\"false\">\n                            <entity name=\"tc_tcfiscalyear\">\n                              <attribute name=\"tc_tcfiscalyearid\" />\n                              <attribute name=\"tc_name\" />\n                              <order attribute=\"tc_fiscalyearnum\" descending=\"false\" />\n                              <filter>\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"ge\" value=\"" + yearsAgo + "\" />\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"le\" value=\"" + yearsFromNow + "\" />\n                              </filter>\n                            </entity>\n                          </fetch>";
             var layoutXml = '<grid name="resultset" object="10010" jump="tc_name" select="1" icon="1" preview="1"><row name="result" id="tc_tcfiscalyearid"><cell name="tc_name" width="200" /></row></grid>';
             formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+        }
+        function getSelectedLookupValue(formContext, eContext) {
+            // Get the attribute that triggered the event
+            var eventSource = eContext.getEventSource();
+            // Ensure eventSource is not null
+            if (!eventSource) {
+                console.error("Event source is null");
+                return;
+            }
+            // Get the selected lookup
+            var fieldName = eventSource.getName();
+            // if this is being called from the onChange event of the fiscal year or risk frequency fields
+            if (fieldName === "ts_fiscalyear" || fieldName === "ts_riskfrequency") {
+                var activityType = formContext.getAttribute("ts_activitytype").getValue();
+                var operation = formContext.getAttribute("ts_operation").getValue();
+                var operationType = formContext.getAttribute("ts_operationtype").getValue();
+                var programArea = formContext.getAttribute("ts_programarea").getValue();
+                var site = formContext.getAttribute("ts_site").getValue();
+                var stakeholder = formContext.getAttribute("ts_stakeholder").getValue();
+                if (activityType != null) {
+                    fieldName = "ts_activitytype";
+                }
+                else if (operation != null) {
+                    fieldName = "ts_operation";
+                }
+                else if (operationType != null) {
+                    fieldName = "ts_operationtype";
+                }
+                else if (programArea != null) {
+                    fieldName = "ts_programarea";
+                }
+                else if (site != null) {
+                    fieldName = "ts_site";
+                }
+                else if (stakeholder != null) {
+                    fieldName = "ts_stakeholder";
+                }
+                else {
+                    fieldName = null;
+                }
+            }
+            checkGeneratedUniqueKey(formContext, fieldName);
         }
         function checkGeneratedUniqueKey(formContext, fieldName) {
             var generatedUniqueKey = "";
@@ -197,6 +246,7 @@ var ROM;
             var encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
             // Get the user's language ID
             var userLanguageId = Xrm.Utility.getGlobalContext().userSettings.languageId;
+            var fiscalYearField = formContext.getControl("ts_fiscalyear");
             // Check for existing records
             Xrm.WebApi.retrieveMultipleRecords("ts_entityriskfrequency", encodedFetchXml).then(function (result) {
                 if (result.entities.length > 0) {
@@ -204,10 +254,16 @@ var ROM;
                     var message = (userLanguageId === 1036) // French language code
                         ? "Une fréquence de risque existe déjà pour cet exercice financier." // French message
                         : "A Risk Frequency already exists for this Fiscal Year."; // English message
-                    formContext.ui.setFormNotification(message, "WARNING", "duplicateNotification");
+                    if (fiscalYearField) {
+                        fiscalYearField.setFocus(); // Moves the cursor focus to the ts_fiscalyear field
+                        fiscalYearField.setNotification(message, "ERROR");
+                    }
                 }
                 else {
-                    formContext.ui.clearFormNotification("duplicateNotification");
+                    if (fiscalYearField) {
+                        // If no duplicate found, clear the existing notification (if any)
+                        fiscalYearField.clearNotification();
+                    }
                     console.log("No duplicates found.");
                 }
             }, function (error) {

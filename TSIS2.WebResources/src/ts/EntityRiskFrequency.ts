@@ -19,12 +19,25 @@
             formContext.getControl("ts_site").setVisible(false);
             formContext.getControl("ts_stakeholder").setVisible(false);
         }
+
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_entityriskfrequency.Main.Information>eContext.getFormContext();
 
         console.log("Entering onSave");
+    }
+
+    export function fiscalYearOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.ts_entityriskfrequency.Main.Information>eContext.getFormContext();
+
+        getSelectedLookupValue(formContext, eContext);
+    }
+
+    export function riskFrequencyOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.ts_entityriskfrequency.Main.Information>eContext.getFormContext();
+
+        getSelectedLookupValue(formContext, eContext);
     }
 
     export function entityNameOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -37,6 +50,13 @@
         if (selectedEntity === null) return;
 
         // Show the specific lookup based on the entity selected
+
+        formContext.getAttribute("ts_activitytype").setValue(null);
+        formContext.getAttribute("ts_operation").setValue(null);
+        formContext.getAttribute("ts_operationtype").setValue(null);
+        formContext.getAttribute("ts_programarea").setValue(null);
+        formContext.getAttribute("ts_site").setValue(null);
+        formContext.getAttribute("ts_stakeholder").setValue(null);
 
         formContext.getAttribute("ts_activitytype").setRequiredLevel("none");
         formContext.getAttribute("ts_operation").setRequiredLevel("none");
@@ -141,19 +161,7 @@
     export function entityOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_entityriskfrequency.Main.Information>eContext.getFormContext();
 
-        // Get the attribute that triggered the event
-        const eventSource = eContext.getEventSource();
-
-        // Ensure eventSource is not null
-        if (!eventSource) {
-            console.error("Event source is null");
-            return;
-        }
-
-        // Get the selected lookup
-        const fieldName = eventSource.getName();
-
-        checkGeneratedUniqueKey(formContext, fieldName);
+        getSelectedLookupValue(formContext, eContext);
     }
 
     function setFiscalYearFilteredView(formContext: Form.ts_entityriskfrequency.Main.Information) {
@@ -180,6 +188,55 @@
         const layoutXml = '<grid name="resultset" object="10010" jump="tc_name" select="1" icon="1" preview="1"><row name="result" id="tc_tcfiscalyearid"><cell name="tc_name" width="200" /></row></grid>';
 
         formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+    }
+
+    function getSelectedLookupValue(formContext: Form.ts_entityriskfrequency.Main.Information, eContext: Xrm.ExecutionContext<any, any>) {
+
+        // Get the attribute that triggered the event
+        const eventSource = eContext.getEventSource();
+
+        // Ensure eventSource is not null
+        if (!eventSource) {
+            console.error("Event source is null");
+            return;
+        }
+
+        // Get the selected lookup
+        let fieldName = eventSource.getName();
+
+        // if this is being called from the onChange event of the fiscal year or risk frequency fields
+        if (fieldName === "ts_fiscalyear" || fieldName === "ts_riskfrequency" ) {
+            let activityType = formContext.getAttribute("ts_activitytype").getValue();
+            let operation = formContext.getAttribute("ts_operation").getValue();
+            let operationType = formContext.getAttribute("ts_operationtype").getValue();
+            let programArea = formContext.getAttribute("ts_programarea").getValue();
+            let site = formContext.getAttribute("ts_site").getValue();
+            let stakeholder = formContext.getAttribute("ts_stakeholder").getValue();
+
+            if (activityType != null) {
+                fieldName = "ts_activitytype";
+            }
+            else if (operation != null) {
+                fieldName = "ts_operation";
+            }
+            else if (operationType != null) {
+                fieldName = "ts_operationtype";
+            }
+            else if (programArea != null) {
+                fieldName = "ts_programarea";
+            }
+            else if (site != null) {
+                fieldName = "ts_site";
+            }
+            else if (stakeholder != null) {
+                fieldName = "ts_stakeholder";
+            }
+            else {
+                fieldName = null;
+            }
+        }
+
+        checkGeneratedUniqueKey(formContext, fieldName);
     }
 
     function checkGeneratedUniqueKey(formContext: Form.ts_entityriskfrequency.Main.Information,fieldName: string) {
@@ -287,6 +344,8 @@
         // Get the user's language ID
         const userLanguageId = Xrm.Utility.getGlobalContext().userSettings.languageId;
 
+        const fiscalYearField = formContext.getControl("ts_fiscalyear");
+
         // Check for existing records
         Xrm.WebApi.retrieveMultipleRecords("ts_entityriskfrequency", encodedFetchXml).then(
             function (result) {
@@ -297,11 +356,18 @@
                         ? "Une fréquence de risque existe déjà pour cet exercice financier." // French message
                         : "A Risk Frequency already exists for this Fiscal Year."; // English message
 
-                    formContext.ui.setFormNotification(message, "WARNING", "duplicateNotification");
+                    if (fiscalYearField) {
+                        fiscalYearField.setFocus(); // Moves the cursor focus to the ts_fiscalyear field
+                        fiscalYearField.setNotification(message, "ERROR");
+                    }
 
                 } else {
 
-                    formContext.ui.clearFormNotification("duplicateNotification");
+                    if (fiscalYearField) {
+
+                        // If no duplicate found, clear the existing notification (if any)
+                        fiscalYearField.clearNotification();
+                    }
 
                     console.log("No duplicates found.");
                 }
