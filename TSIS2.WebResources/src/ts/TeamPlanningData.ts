@@ -167,7 +167,7 @@
             "    <attribute name='ts_operationactivityid'/>",
             "    <filter>",
             "      <condition attribute='statecode' operator='eq' value='0'/>",
-            "      <condition attribute='ts_accountableteam' operator = 'eq' value = '", teamId, "' /> ",
+            "      <condition attribute='ts_accountableteam' operator = 'eq' value = '", teamId, "'/> ",
             "    </filter>",
             "    <link-entity name='msdyn_incidenttype' from='msdyn_incidenttypeid' to='ts_activity'>",
             "      <attribute name='ovs_incidenttypenameenglish'/>",
