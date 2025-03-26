@@ -107,7 +107,7 @@ var ROM;
         EnforcementAction.typeOnChange = typeOnChange;
         function additionalDetailsVisibility(formContext) {
             var typeAttributeValue = formContext.getAttribute("ts_typeofenforcementaction").getValue();
-            if (typeAttributeValue != null && typeAttributeValue == 717750000 /* VerbalWarning */) {
+            if (typeAttributeValue != null && typeAttributeValue == 717750000 /* ts_type.VerbalWarning */) {
                 formContext.ui.tabs.get("general").sections.get("additional_details").setVisible(true);
                 formContext.getControl("ts_verbalwarninggivento").setVisible(true);
                 formContext.getControl("ts_individualposition").setVisible(true);
@@ -124,7 +124,7 @@ var ROM;
                 formContext.getAttribute("ts_writtenwarningsentto").setRequiredLevel("none");
                 formContext.getAttribute("ts_writtenwarningdeliverymethod").setRequiredLevel("none");
             }
-            else if (typeAttributeValue != null && typeAttributeValue == 717750001 /* WrittenWarning */) {
+            else if (typeAttributeValue != null && typeAttributeValue == 717750001 /* ts_type.WrittenWarning */) {
                 formContext.ui.tabs.get("general").sections.get("additional_details").setVisible(true);
                 formContext.getControl("ts_writtenwarningsentto").setVisible(true);
                 formContext.getControl("ts_individualposition").setVisible(true);
