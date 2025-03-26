@@ -21,7 +21,7 @@ function appOnLoad() {
     loadProdCustomCSS();
   }
 
-  showBanner(appUrl, message2, true);
+  //showBanner(appUrl, message2, true);
   loadDynamicNotifications(appUrl);
 }
 
