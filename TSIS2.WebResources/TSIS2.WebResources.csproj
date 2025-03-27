@@ -248,6 +248,7 @@
     <Content Include="Webresources\js\TeamPlanningDataRibbon.js" />
     <Content Include="Webresources\js\TeamPlanningInspectorHours.js" />
     <Content Include="Webresources\js\tsis2findingwidget.js" />
+    <Content Include="Webresources\js\UserRegistration.js" />
     <Content Include="Webresources\js\WorkOrder.js" />
     <Content Include="Webresources\js\WorkOrderCreationWizard.js" />
     <Content Include="Webresources\js\WorkOrderQuickCreate.js" />
@@ -444,6 +445,7 @@
     <TypeScriptCompile Include="src\ts\TeamPlanningData.ts" />
     <TypeScriptCompile Include="src\ts\TeamPlanningInspectorHours.ts" />
     <TypeScriptCompile Include="src\ts\Trip.ts" />
+    <TypeScriptCompile Include="src\ts\UserRegistration.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderCreationWizard.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderQuickCreate.ts" />
