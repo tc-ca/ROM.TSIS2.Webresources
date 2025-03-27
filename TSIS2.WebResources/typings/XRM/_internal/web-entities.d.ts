@@ -1389,6 +1389,29 @@ interface ts_trip_Create extends ts_trip {
 }
 interface ts_trip_Update extends ts_trip {
 }
+interface ts_UserRegistration_Base extends WebEntity {
+}
+interface ts_UserRegistration_Fixed extends WebEntity_Fixed {
+  ts_userregistrationid: string;
+}
+interface ts_UserRegistration extends ts_UserRegistration_Base, ts_UserRegistration_Relationships {
+}
+interface ts_UserRegistration_Relationships {
+}
+interface ts_UserRegistration_Result extends ts_UserRegistration_Base, ts_UserRegistration_Relationships {
+}
+interface ts_UserRegistration_FormattedResult {
+}
+interface ts_UserRegistration_Select {
+}
+interface ts_UserRegistration_Expand {
+}
+interface ts_UserRegistration_Filter {
+}
+interface ts_UserRegistration_Create extends ts_UserRegistration {
+}
+interface ts_UserRegistration_Update extends ts_UserRegistration {
+}
 interface ts_workordercreationwizard_Base extends WebEntity {
 }
 interface ts_workordercreationwizard_Fixed extends WebEntity_Fixed {

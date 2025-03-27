@@ -371,6 +371,10 @@ interface SystemUser_Relationships {
   lk_ts_trip_createdonbehalfby?: ts_trip_Result[] | null;
   lk_ts_trip_modifiedby?: ts_trip_Result[] | null;
   lk_ts_trip_modifiedonbehalfby?: ts_trip_Result[] | null;
+  lk_ts_userregistration_createdby?: ts_UserRegistration_Result[] | null;
+  lk_ts_userregistration_createdonbehalfby?: ts_UserRegistration_Result[] | null;
+  lk_ts_userregistration_modifiedby?: ts_UserRegistration_Result[] | null;
+  lk_ts_userregistration_modifiedonbehalfby?: ts_UserRegistration_Result[] | null;
   lk_ts_workordercreationwizard_createdby?: ts_workordercreationwizard_Result[] | null;
   lk_ts_workordercreationwizard_createdonbehalfby?: ts_workordercreationwizard_Result[] | null;
   lk_ts_workordercreationwizard_modifiedby?: ts_workordercreationwizard_Result[] | null;
@@ -463,6 +467,7 @@ interface SystemUser_Relationships {
   user_ts_teamplanningdata?: ts_TeamPlanningData_Result[] | null;
   user_ts_teamplanninginspectorhours?: ts_TeamPlanningInspectorHours_Result[] | null;
   user_ts_trip?: ts_trip_Result[] | null;
+  user_ts_userregistration?: ts_UserRegistration_Result[] | null;
   user_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
   user_ts_workordertimetracking?: ts_workordertimetracking_Result[] | null;
 }
@@ -1028,6 +1033,10 @@ interface SystemUser_Expand {
   lk_ts_trip_createdonbehalfby: WebExpand<SystemUser_Expand, ts_trip_Select, ts_trip_Filter, { lk_ts_trip_createdonbehalfby: ts_trip_Result[] }>;
   lk_ts_trip_modifiedby: WebExpand<SystemUser_Expand, ts_trip_Select, ts_trip_Filter, { lk_ts_trip_modifiedby: ts_trip_Result[] }>;
   lk_ts_trip_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_trip_Select, ts_trip_Filter, { lk_ts_trip_modifiedonbehalfby: ts_trip_Result[] }>;
+  lk_ts_userregistration_createdby: WebExpand<SystemUser_Expand, ts_UserRegistration_Select, ts_UserRegistration_Filter, { lk_ts_userregistration_createdby: ts_UserRegistration_Result[] }>;
+  lk_ts_userregistration_createdonbehalfby: WebExpand<SystemUser_Expand, ts_UserRegistration_Select, ts_UserRegistration_Filter, { lk_ts_userregistration_createdonbehalfby: ts_UserRegistration_Result[] }>;
+  lk_ts_userregistration_modifiedby: WebExpand<SystemUser_Expand, ts_UserRegistration_Select, ts_UserRegistration_Filter, { lk_ts_userregistration_modifiedby: ts_UserRegistration_Result[] }>;
+  lk_ts_userregistration_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_UserRegistration_Select, ts_UserRegistration_Filter, { lk_ts_userregistration_modifiedonbehalfby: ts_UserRegistration_Result[] }>;
   lk_ts_workordercreationwizard_createdby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_createdby: ts_workordercreationwizard_Result[] }>;
   lk_ts_workordercreationwizard_createdonbehalfby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_createdonbehalfby: ts_workordercreationwizard_Result[] }>;
   lk_ts_workordercreationwizard_modifiedby: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { lk_ts_workordercreationwizard_modifiedby: ts_workordercreationwizard_Result[] }>;
@@ -1123,6 +1132,7 @@ interface SystemUser_Expand {
   user_ts_teamplanningdata: WebExpand<SystemUser_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { user_ts_teamplanningdata: ts_TeamPlanningData_Result[] }>;
   user_ts_teamplanninginspectorhours: WebExpand<SystemUser_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { user_ts_teamplanninginspectorhours: ts_TeamPlanningInspectorHours_Result[] }>;
   user_ts_trip: WebExpand<SystemUser_Expand, ts_trip_Select, ts_trip_Filter, { user_ts_trip: ts_trip_Result[] }>;
+  user_ts_userregistration: WebExpand<SystemUser_Expand, ts_UserRegistration_Select, ts_UserRegistration_Filter, { user_ts_userregistration: ts_UserRegistration_Result[] }>;
   user_ts_workordercreationwizard: WebExpand<SystemUser_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { user_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
   user_ts_workordertimetracking: WebExpand<SystemUser_Expand, ts_workordertimetracking_Select, ts_workordertimetracking_Filter, { user_ts_workordertimetracking: ts_workordertimetracking_Result[] }>;
 }
@@ -1441,6 +1451,10 @@ interface SystemUser_RelatedMany {
   lk_ts_trip_createdonbehalfby: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   lk_ts_trip_modifiedby: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   lk_ts_trip_modifiedonbehalfby: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
+  lk_ts_userregistration_createdby: WebMappingRetrieve<ts_UserRegistration_Select,ts_UserRegistration_Expand,ts_UserRegistration_Filter,ts_UserRegistration_Fixed,ts_UserRegistration_Result,ts_UserRegistration_FormattedResult>;
+  lk_ts_userregistration_createdonbehalfby: WebMappingRetrieve<ts_UserRegistration_Select,ts_UserRegistration_Expand,ts_UserRegistration_Filter,ts_UserRegistration_Fixed,ts_UserRegistration_Result,ts_UserRegistration_FormattedResult>;
+  lk_ts_userregistration_modifiedby: WebMappingRetrieve<ts_UserRegistration_Select,ts_UserRegistration_Expand,ts_UserRegistration_Filter,ts_UserRegistration_Fixed,ts_UserRegistration_Result,ts_UserRegistration_FormattedResult>;
+  lk_ts_userregistration_modifiedonbehalfby: WebMappingRetrieve<ts_UserRegistration_Select,ts_UserRegistration_Expand,ts_UserRegistration_Filter,ts_UserRegistration_Fixed,ts_UserRegistration_Result,ts_UserRegistration_FormattedResult>;
   lk_ts_workordercreationwizard_createdby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   lk_ts_workordercreationwizard_createdonbehalfby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   lk_ts_workordercreationwizard_modifiedby: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
@@ -1532,6 +1546,7 @@ interface SystemUser_RelatedMany {
   user_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   user_ts_teamplanninginspectorhours: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
   user_ts_trip: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
+  user_ts_userregistration: WebMappingRetrieve<ts_UserRegistration_Select,ts_UserRegistration_Expand,ts_UserRegistration_Filter,ts_UserRegistration_Fixed,ts_UserRegistration_Result,ts_UserRegistration_FormattedResult>;
   user_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   user_ts_workordertimetracking: WebMappingRetrieve<ts_workordertimetracking_Select,ts_workordertimetracking_Expand,ts_workordertimetracking_Filter,ts_workordertimetracking_Fixed,ts_workordertimetracking_Result,ts_workordertimetracking_FormattedResult>;
 }
