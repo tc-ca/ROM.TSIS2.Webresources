@@ -17,6 +17,7 @@
     let teamPlanningSupportRegionTimeTotal = 0;
     let teamPlanningDataTeamEstimatedCostTotal = 0;
 
+    let estimateDurationIsNull = false;
     const teamValue = formContext.data.entity.attributes.get("ts_team").getValue();
     const fiscalyearValue = formContext.data.entity.attributes.get("ts_fiscalyear").getValue();
     if (teamValue != null && fiscalyearValue != null) {
@@ -138,11 +139,16 @@
             //else if (suggestedInspection["ts_estimatedtraveltime"] != null) {
             //    estimatedTravelTime = Math.round(suggestedInspection["ts_estimatedtraveltime"]);
             //}
-
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ1 -= q1 * (suggestedInspection.ts_estimatedduration);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ2 -= q2 * (suggestedInspection.ts_estimatedduration);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ3 -= q3 * (suggestedInspection.ts_estimatedduration);
-            planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ4 -= q4 * (suggestedInspection.ts_estimatedduration);
+            if (suggestedInspection.ts_estimatedduration != null) {
+                planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ1 -= q1 * (suggestedInspection.ts_estimatedduration);
+                planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ2 -= q2 * (suggestedInspection.ts_estimatedduration);
+                planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ3 -= q3 * (suggestedInspection.ts_estimatedduration);
+                planInspectorHours[suggestedInspection._ts_inspector_value].remainingHoursQ4 -= q4 * (suggestedInspection.ts_estimatedduration);
+            }
+            else {
+                console.log("Estimated duration is null");
+                estimateDurationIsNull = true;
+            }
         }
     }
 
@@ -174,11 +180,17 @@
         teamPlanningDataPlannedQ3 += inspection.ts_q3;
         teamPlanningDataPlannedQ4 += inspection.ts_q4;
         teamPlanningDataPlannedTotal += inspection.ts_q1 + inspection.ts_q2 + inspection.ts_q3 + inspection.ts_q4;
-        teamPlanningDataTeamEstimatedDurationQ1 += inspection.ts_estimatedduration * inspection.ts_q1;
-        teamPlanningDataTeamEstimatedDurationQ2 += inspection.ts_estimatedduration * inspection.ts_q2;
-        teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
-        teamPlanningDataTeamEstimatedDurationQ4 += inspection.ts_estimatedduration * inspection.ts_q4;
-        teamPlanningDataTeamEstimatedDurationTotal += inspection.ts_estimatedduration;
+        if (inspection.ts_estimatedduration != null) {
+            teamPlanningDataTeamEstimatedDurationQ1 += inspection.ts_estimatedduration * inspection.ts_q1;
+            teamPlanningDataTeamEstimatedDurationQ2 += inspection.ts_estimatedduration * inspection.ts_q2;
+            teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
+            teamPlanningDataTeamEstimatedDurationQ4 += inspection.ts_estimatedduration * inspection.ts_q4;
+            teamPlanningDataTeamEstimatedDurationTotal += inspection.ts_estimatedduration;
+        }
+        else {
+            console.log("Estimated duration is null");
+            estimateDurationIsNull = true;
+        }
         //if (inspection["plantrip.ts_estimatedtraveltime"] != null && inspection["_ts_trip_value"]  != null) {
         //    if (tripIds.indexOf(inspection["_ts_trip_value"] ) == -1) {
         //        teamPlanningDataTeamEstimatedTravelTimeTotal += inspection["plantrip.ts_estimatedtraveltime"];
@@ -199,36 +211,49 @@
         }
     });
 
-    var teamUnplannedHours = 0;
-    if (formContext.getAttribute("ts_unplannedhoursq1").getValue() != null) {
-        teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq1").getValue();
+    let contunueProcess = true;
+    if (estimateDurationIsNull) {
+        var confirmStrings = { text: "Value is missing under Suggested Inspection in the Estimated Duration field. Click Ok to continue, or Cancel to stop." };
+        var confirmOptions = { height: 200, width: 450 };
+        await Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
+            function (success) {
+                if (!success.confirmed) 
+                    contunueProcess = false;
+            });
     }
-    if (formContext.getAttribute("ts_unplannedhoursq2").getValue() != null) {
-        teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq2").getValue();
-    }
-    if (formContext.getAttribute("ts_unplannedhoursq3").getValue() != null) {
-        teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq3").getValue();
-    }
-    if (formContext.getAttribute("ts_unplannedhoursq4").getValue() != null) {
-        teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq4").getValue();
-    }
-    formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
-    formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
-    formContext.getAttribute("ts_plannedactivityq3").setValue(teamPlanningDataPlannedQ3);
-    formContext.getAttribute("ts_plannedactivityq4").setValue(teamPlanningDataPlannedQ4);
-    formContext.getAttribute("ts_plannedactivityfiscalyear").setValue(teamPlanningDataPlannedTotal);
 
-    formContext.getAttribute("ts_estimateddurationq1").setValue(teamPlanningDataTeamEstimatedDurationQ1);
-    formContext.getAttribute("ts_estimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
-    formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
-    formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
-    formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal + teamPlanningSupportRegionTimeTotal + teamUnplannedHours);
+    if (contunueProcess) {
+        var teamUnplannedHours = 0;
+        if (formContext.getAttribute("ts_unplannedhoursq1").getValue() != null) {
+            teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq1").getValue();
+        }
+        if (formContext.getAttribute("ts_unplannedhoursq2").getValue() != null) {
+            teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq2").getValue();
+        }
+        if (formContext.getAttribute("ts_unplannedhoursq3").getValue() != null) {
+            teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq3").getValue();
+        }
+        if (formContext.getAttribute("ts_unplannedhoursq4").getValue() != null) {
+            teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq4").getValue();
+        }
+        formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
+        formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
+        formContext.getAttribute("ts_plannedactivityq3").setValue(teamPlanningDataPlannedQ3);
+        formContext.getAttribute("ts_plannedactivityq4").setValue(teamPlanningDataPlannedQ4);
+        formContext.getAttribute("ts_plannedactivityfiscalyear").setValue(teamPlanningDataPlannedTotal);
 
-    formContext.getAttribute("ts_totalestimatedcost").setValue(teamPlanningDataTeamEstimatedCostTotal);
+        formContext.getAttribute("ts_estimateddurationq1").setValue(teamPlanningDataTeamEstimatedDurationQ1);
+        formContext.getAttribute("ts_estimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
+        formContext.getAttribute("ts_estimateddurationq3").setValue(teamPlanningDataTeamEstimatedDurationQ3);
+        formContext.getAttribute("ts_estimateddurationq4").setValue(teamPlanningDataTeamEstimatedDurationQ4);
+        formContext.getAttribute("ts_estimateddurationfiscalyear").setValue(teamPlanningDataTeamEstimatedDurationTotal + teamPlanningSupportRegionTimeTotal + teamUnplannedHours);
 
-    //wait until all updates have finished
-    await Promise.all(updatePromises);
-    formContext.data.entity.save();
+        formContext.getAttribute("ts_totalestimatedcost").setValue(teamPlanningDataTeamEstimatedCostTotal);
+
+        //wait until all updates have finished
+        await Promise.all(updatePromises);
+        formContext.data.entity.save();
+    }
     Xrm.Page.getControl("suggested_inspectorhours_grid").refresh();
     Xrm.Utility.closeProgressIndicator();
 }
