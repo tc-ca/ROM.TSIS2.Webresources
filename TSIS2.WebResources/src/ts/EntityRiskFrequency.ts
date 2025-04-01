@@ -59,6 +59,8 @@
         const formContext = <Form.ts_entityriskfrequency.Main.Information>eContext.getFormContext();
 
         getSelectedLookupValue(formContext, eContext);
+
+        setEnglishandFrenchName(formContext);
     }
 
     export function riskFrequencyOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -185,10 +187,13 @@
         }
     }
 
+    // This function is called when the value of the Activity Type, Operation, Operation Type, Program Area, Site, or Stakeholder lookup fields change
     export function entityOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_entityriskfrequency.Main.Information>eContext.getFormContext();
 
         getSelectedLookupValue(formContext, eContext);
+
+        setEnglishandFrenchName(formContext);
     }
 
     function setFiscalYearFilteredView(formContext: Form.ts_entityriskfrequency.Main.Information) {
@@ -266,6 +271,276 @@
         checkGeneratedUniqueKey(formContext, fieldName);
     }
 
+    // This function is used to retrieve the English and French display names for the selected entity and set the ts_englishname and ts_frenchname fields along with the Fiscal Year
+    function setEnglishandFrenchName(formContext: Form.ts_entityriskfrequency.Main.Information) {
+
+        // get the selection from ts_entityname
+        let selectedEntity = formContext.getAttribute("ts_entityname").getValue();
+
+        // Ensure selectedEntity is not null
+        if (selectedEntity === null) return;
+
+        // get the user's language ID
+        const userLanguageId = Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+        let fetchXml = "";
+        let selectedTable = "";
+        let encodedFetchXml = "";
+
+        switch (selectedEntity) {
+            case 741130000:
+                console.log("Activity Type selected");
+
+                // get the selected value of ts_activitytype
+                let activityType = formContext.getAttribute("ts_activitytype").getValue();
+
+                // Ensure activityType is not null
+                if (activityType === null) return;
+
+                selectedTable = "msdyn_incidenttype";
+
+                // Fetch the selected activity type record
+                fetchXml = `<fetch>
+                              <entity name="msdyn_incidenttype">
+                                <attribute name="ovs_incidenttypenameenglish" />
+                                <attribute name="ovs_incidenttypenamefrench" />
+                                <filter>
+                                  <condition attribute="msdyn_incidenttypeid" operator="eq" value="${activityType[0].id}" />
+                                </filter>
+                              </entity>
+                            </fetch>`;
+
+                break;
+
+            case 741130001:
+                console.log("Operation selected");
+
+                // get the selected value of ts_operation
+                let operation = formContext.getAttribute("ts_operation").getValue();
+
+                // Ensure operation is not null
+                if (operation === null) return;
+
+                selectedTable = "ovs_operation";
+
+                // Fetch the selected operation record
+                fetchXml = `<fetch>
+                              <entity name="ovs_operation">
+                                <attribute name="ovs_name" />
+                                <filter>
+                                  <condition attribute="ovs_operationid" operator="eq" value="${operation[0].id}" />
+                                </filter>
+                              </entity>
+                            </fetch>`;
+
+                break;
+
+            case 741130002:
+                console.log("Operation Type selected");
+
+                // get the selected value of ts_operationtype
+                let operationType = formContext.getAttribute("ts_operationtype").getValue();
+
+                // Ensure operationType is not null
+                if (operationType === null) return;
+
+                selectedTable = "ovs_operationtype";
+
+                // Fetch the selected operationtype record
+                fetchXml = `<fetch>
+                              <entity name="ovs_operationtype">
+                                <attribute name="ovs_operationtypenameenglish" />
+                                <attribute name="ovs_operationtypenamefrench" />
+                                <filter>
+                                  <condition attribute="ovs_operationtypeid" operator="eq" value="${operationType[0].id}" />
+                                </filter>
+                              </entity>
+                            </fetch>`;
+
+                break;
+
+            case 741130003:
+                console.log("Program Area selected");
+
+                // get the selected value of ts_programarea
+                let programArea = formContext.getAttribute("ts_programarea").getValue();
+
+                // Ensure programArea is not null
+                if (programArea === null) return;
+
+                selectedTable = "ts_programarea";
+
+                // Fetch the selected Program Area record
+                fetchXml = `<fetch>
+                              <entity name="ts_programarea">
+                                <attribute name="ts_programareaen" />
+                                <attribute name="ts_programareafr" />
+                                <filter>
+                                  <condition attribute="ts_programareaid" operator="eq" value="${programArea[0].id}" />
+                                </filter>
+                              </entity>
+                            </fetch>`;
+
+                break;
+
+            case 741130004:
+                console.log("Site selected");
+
+                // get the selected value of ts_site
+                let site = formContext.getAttribute("ts_site").getValue();
+
+                // Ensure site is not null
+                if (site === null) return;
+
+                selectedTable = "msdyn_functionallocation";
+
+                // Fetch the selected site record
+                fetchXml = `<fetch>
+                              <entity name="msdyn_functionallocation">
+                                <attribute name="msdyn_name" />
+                                <filter>
+                                  <condition attribute="msdyn_functionallocationid" operator="eq" value="${site[0].id}" />
+                                </filter>
+                              </entity>
+                            </fetch>`;
+
+                break;
+
+            case 741130005:
+                console.log("Stakeholder selected");
+
+                // get the selected value of ts_stakeholder
+                let stakeholder = formContext.getAttribute("ts_stakeholder").getValue();
+
+                // Ensure stakeholder is not null
+                if (stakeholder === null) return;
+
+                selectedTable = "account";
+
+                // Fetch the selected site record
+                fetchXml = `<fetch>
+                              <entity name="account">
+                                <attribute name="name" />
+                                <filter>
+                                  <condition attribute="accountid" operator="eq" value="${stakeholder[0].id}" />
+                                </filter>
+                              </entity>
+                            </fetch>`;
+
+                break;
+
+            default:
+                console.log("Entity Name drop down selection - Unknown selection");
+                // Optional: Handle cases where the selection is not recognized
+                break;
+
+        }
+
+        // make sure the fetchXml is not empty
+        if (fetchXml === "") return;
+
+        encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+
+        Xrm.WebApi.retrieveMultipleRecords(selectedTable, encodedFetchXml).then(
+            function (result) {
+                if (result.entities.length > 0) {
+                    console.log("Record found");
+
+                    const record = result.entities[0];
+
+                    let displayNameEnglish = "";
+                    let displayNameFrench = "";
+
+                    switch (selectedEntity) {
+                        case 741130000: // Activity Type
+                            displayNameEnglish = record["ovs_incidenttypenameenglish"];
+                            displayNameFrench = record["ovs_incidenttypenamefrench"];
+                            break;
+                        case 741130001: // Operation
+                            displayNameEnglish = record["ovs_name"];
+                            displayNameFrench = record["ovs_name"];
+                            break;
+                        case 741130002: // Operation Type
+                            displayNameEnglish = record["ovs_operationtypenameenglish"];
+                            displayNameFrench = record["ovs_operationtypenamefrench"];
+                            break;
+                        case 741130003: // Program Area
+                            displayNameEnglish = record["ts_programareaen"];
+                            displayNameFrench = record["ts_programareafr"];
+                            break;
+                        case 741130004: // Site
+                            displayNameEnglish = record["msdyn_name"];
+                            displayNameFrench = record["msdyn_name"];
+                            break;
+                        case 741130005: // Stakeholder
+                            displayNameEnglish = record["name"];
+                            displayNameFrench = record["name"];
+                            break;
+                    }
+
+                    console.log("Retrieved English display name:", displayNameEnglish);
+                    console.log("Retrieved French display name:", displayNameFrench);
+
+                    // Make sure displayNameEnglish is not empty
+                    if (displayNameEnglish === "") return;
+
+                    // Get the selected Fiscal Year
+                    let fiscalYear = formContext.getAttribute("ts_fiscalyear").getValue();
+
+                    // Ensure fiscalYear is not null
+                    if (fiscalYear === null) return;
+
+                    // Get the Fiscal Year
+                    fetchXml = `<fetch>
+                              <entity name="tc_tcfiscalyear">
+                                <attribute name="tc_fiscalyearlonglbl" />
+                                <filter>
+                                  <condition attribute="tc_tcfiscalyearid" operator="eq" value="${fiscalYear[0].id}" />
+                                </filter>
+                              </entity>
+                            </fetch>`;
+
+                    encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+
+                    Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalyear", encodedFetchXml).then(
+                        function (result) {
+                            if (result.entities.length > 0) {
+                                console.log("Record found");
+
+                                const record = result.entities[0];
+
+                                let fiscalYear = record["tc_fiscalyearlonglbl"];
+
+                                console.log("Retrieved fiscal year:", fiscalYear);
+
+                                // if the fiscal year is not null
+                                if (fiscalYear !== null) {
+
+                                    // Set the English display name
+                                    formContext.getAttribute("ts_englishname").setValue(displayNameEnglish + " - " + fiscalYear);
+
+                                    // Set the French display name
+                                    formContext.getAttribute("ts_frenchname").setValue(displayNameFrench + " - " + fiscalYear);
+                                }
+
+                            } else {
+                                console.log("Record not found");
+                            }
+                        },
+                        function (error) {
+                            console.error("Error retrieving record:", error.message);
+                        }
+                    );
+
+                } else {
+                    console.log("Record not found");
+                }
+            },
+            function (error) {
+                console.error("Error retrieving record:", error.message);
+            }
+        );
+    }
     function checkGeneratedUniqueKey(formContext: Form.ts_entityriskfrequency.Main.Information,fieldName: string) {
 
         let generatedUniqueKey = "";
