@@ -16,8 +16,13 @@
     //let teamPlanningDataTeamEstimatedTravelTimeTotal = 0;
     let teamPlanningSupportRegionTimeTotal = 0;
     let teamPlanningDataTeamEstimatedCostTotal = 0;
-
+    let supportRegionInspectionActivitiesCount = 0;
+    let supportRegionInspectionQ1Count = 0;
+    let supportRegionInspectionQ2Count = 0;
+    let supportRegionInspectionQ3Count = 0;
+    let supportRegionInspectionQ4Count = 0;
     let estimateDurationIsNull = false;
+
     const teamValue = formContext.data.entity.attributes.get("ts_team").getValue();
     const fiscalyearValue = formContext.data.entity.attributes.get("ts_fiscalyear").getValue();
     if (teamValue != null && fiscalyearValue != null) {
@@ -32,13 +37,14 @@
             <attribute name='ts_hours' />
             <filter type='and'>
               <condition attribute='ts_region' operator='eq' uitype='territory' value='` + teamRegion["_ts_territory_value"] + `' />
+              <condition attribute='ts_suggestedinspection' operator='not-null' />
+              <condition attribute='ts_fiscalyear' operator='eq' uitype='tc_tcfiscalyear' value='` + fiscalyearValue[0].id + `' />
             </filter>
-            <link-entity name='ts_suggestedinspection' from='ts_suggestedinspectionid' to='ts_suggestedinspection' link-type='inner' alias='am'>
-              <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='an'>
-                <filter type='and'>
-                  <condition attribute='ts_fiscalyear' operator='eq' uitype='tc_tcfiscalyear' value='` + fiscalyearValue[0].id + `' />
-                </filter>
-              </link-entity>
+            <link-entity name='ts_suggestedinspection' from='ts_suggestedinspectionid' to='ts_suggestedinspection' link-type='inner' alias='si'>
+			  <attribute name='ts_q1'/>
+			  <attribute name='ts_q2'/>
+			  <attribute name='ts_q3'/>
+			  <attribute name='ts_q4'/>
             </link-entity>
           </entity>
         </fetch>`;
@@ -47,8 +53,21 @@
             return result.entities;
         });
         for (let supportRegionHour of supportRegionHours) {
+            supportRegionInspectionActivitiesCount++;
             if (supportRegionHour["ts_hours"] != null) {
                 teamPlanningSupportRegionTimeTotal += supportRegionHour["ts_hours"];
+            }
+            if (supportRegionHour["si.ts_q1"] != null) {
+                supportRegionInspectionQ1Count += supportRegionHour["si.ts_q1"];
+            }
+            if (supportRegionHour["si.ts_q2"] != null) {
+                supportRegionInspectionQ2Count += supportRegionHour["si.ts_q2"];
+            }
+            if (supportRegionHour["si.ts_q3"] != null) {
+                supportRegionInspectionQ3Count += supportRegionHour["si.ts_q3"];
+            }
+            if (supportRegionHour["si.ts_q4"] != null) {
+                supportRegionInspectionQ4Count += supportRegionHour["si.ts_q4"];
             }
         }
     }
@@ -236,11 +255,11 @@
         if (formContext.getAttribute("ts_unplannedhoursq4").getValue() != null) {
             teamUnplannedHours += formContext.getAttribute("ts_unplannedhoursq4").getValue();
         }
-        formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1);
-        formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2);
-        formContext.getAttribute("ts_plannedactivityq3").setValue(teamPlanningDataPlannedQ3);
-        formContext.getAttribute("ts_plannedactivityq4").setValue(teamPlanningDataPlannedQ4);
-        formContext.getAttribute("ts_plannedactivityfiscalyear").setValue(teamPlanningDataPlannedTotal);
+        formContext.getAttribute("ts_plannedactivityq1").setValue(teamPlanningDataPlannedQ1 + supportRegionInspectionQ1Count);
+        formContext.getAttribute("ts_plannedactivityq2").setValue(teamPlanningDataPlannedQ2 + supportRegionInspectionQ2Count);
+        formContext.getAttribute("ts_plannedactivityq3").setValue(teamPlanningDataPlannedQ3 + supportRegionInspectionQ3Count);
+        formContext.getAttribute("ts_plannedactivityq4").setValue(teamPlanningDataPlannedQ4 + supportRegionInspectionQ4Count);
+        formContext.getAttribute("ts_plannedactivityfiscalyear").setValue(teamPlanningDataPlannedTotal + supportRegionInspectionActivitiesCount);
 
         formContext.getAttribute("ts_estimateddurationq1").setValue(teamPlanningDataTeamEstimatedDurationQ1);
         formContext.getAttribute("ts_estimateddurationq2").setValue(teamPlanningDataTeamEstimatedDurationQ2);
