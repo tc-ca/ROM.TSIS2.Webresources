@@ -35,16 +35,6 @@
             }
 
         }
-
-        // hide the Planning Data Details in PROD for now
-        var globalContextUrl = Xrm.Utility.getGlobalContext().getClientUrl();
-        if (globalContextUrl == 'https://romts-gsrst-tcd365.crm3.dynamics.com') {
-            const planningDataDetailsTab = formContext.ui.tabs.get("tab_planning_data_details");
-
-            if (planningDataDetailsTab) {
-                planningDataDetailsTab.setVisible(false);
-            }
-        }
     }
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext: any = eContext.getFormContext();
