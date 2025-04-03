@@ -522,7 +522,7 @@ var ROM;
                                 teamPlanningDataTeamEstimatedDurationQ2 += inspection.ts_estimatedduration * inspection.ts_q2;
                                 teamPlanningDataTeamEstimatedDurationQ3 += inspection.ts_estimatedduration * inspection.ts_q3;
                                 teamPlanningDataTeamEstimatedDurationQ4 += inspection.ts_estimatedduration * inspection.ts_q4;
-                                teamPlanningDataTeamEstimatedDurationTotal += inspection.ts_estimatedduration;
+                                teamPlanningDataTeamEstimatedDurationTotal = teamPlanningDataTeamEstimatedDurationQ1 + teamPlanningDataTeamEstimatedDurationQ2 + teamPlanningDataTeamEstimatedDurationQ3 + teamPlanningDataTeamEstimatedDurationQ4;
                                 if (inspection["plantrip.ts_estimatedtraveltime"] != null) {
                                     teamPlanningDataTeamEstimatedTravelTimeTotal += inspection["plantrip.ts_estimatedtraveltime"];
                                 }
