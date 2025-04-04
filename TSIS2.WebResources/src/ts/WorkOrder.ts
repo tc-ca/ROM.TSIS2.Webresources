@@ -56,7 +56,17 @@ namespace ROM.WorkOrder {
                 }
             }
         });
-
+        
+        getUserTeam(userId).then(function (userTeams) {
+            if (userTeams != null && userTeams.entities.length > 0) {
+                for (var i = 0; i < userTeams.entities.length; i++) {
+                    if (userTeams.entities[i]["name"].indexOf("International - Inspectors") > 0) {
+                        form.getControl("ovs_rational").setDisabled(false);
+                        break;
+                    }
+                }
+            }
+        });
 
         //Keep track of the current system status, to be used when cancelling a status change.
         currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
@@ -2481,5 +2491,29 @@ namespace ROM.WorkOrder {
         }
     }
 
+    function getUserTeam(userId) {
+        const fetchXml = [
+            "<fetch distinct='false' mapping='logical'>",
+            "  <entity name='team'>",
+            "    <attribute name='name' />",
+            "    <attribute name='teamid' />",
+            "    <filter type='and'>",
+            "      <condition attribute='teamtype' operator='ne' value='1' />",
+            "    </filter>",
+            "    <link-entity name='teammembership' intersect='true' visible='false' to='teamid' from='teamid'>",
+            "      <link-entity name='systemuser' from='systemuserid' to='systemuserid' alias='bb'>",
+            "        <filter type='and'>",
+            "          <condition attribute='systemuserid' operator='eq' value='",
+            userId,
+            "' />",
+            "        </filter>",
+            "      </link-entity>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+
+        return Xrm.WebApi.retrieveMultipleRecords("team", "?fetchXml=" + encodeURIComponent(fetchXml));
+    }
 }
 
