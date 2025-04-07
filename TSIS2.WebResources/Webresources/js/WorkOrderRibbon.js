@@ -660,3 +660,24 @@ function copyServiceTask(formContext) {
         );
 }
 
+function isTeamOrPlanContext(primaryControl) {
+    // Determines if subgrid is on ts_teamplanningdata or ts_plan [Shows Commit button, configure in ribbon workbench under rule: ts.msdyn_workorder.isPlanORTeamPlanningDataSubgrid]
+    try {
+        var formContext;
+
+        // Fallback if primaryControl is undefined
+        if (primaryControl && typeof primaryControl.getFormContext === "function") {
+            formContext = primaryControl.getFormContext();
+        } else if (typeof Xrm !== "undefined" && Xrm.Page) {
+            formContext = Xrm.Page;
+        } else {
+            return false; // No context available
+        }
+
+        var entityName = formContext.data?.entity?.getEntityName?.();
+        return (entityName === "ts_teamplanningdata" || entityName === "ts_plan");
+    } catch (e) {
+        console.error("Ribbon Rule Error:", e);
+        return false;
+    }
+}
