@@ -661,6 +661,7 @@ function copyServiceTask(formContext) {
 }
 
 function isTeamOrPlanContext(primaryControl) {
+    // Determines if subgrid is ts_teamplanningdata or ts_plan [Shows Commit button, configure in ribbon workbench under rule: ts.msdyn_workorder.isPlanORTeamPlanningDataSubgrid]
     try {
         var formContext;
 
