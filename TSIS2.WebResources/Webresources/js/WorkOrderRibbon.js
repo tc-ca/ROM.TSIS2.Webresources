@@ -660,3 +660,23 @@ function copyServiceTask(formContext) {
         );
 }
 
+function isTeamOrPlanContext(primaryControl) {
+    try {
+        var formContext;
+
+        // Fallback if primaryControl is undefined
+        if (primaryControl && typeof primaryControl.getFormContext === "function") {
+            formContext = primaryControl.getFormContext();
+        } else if (typeof Xrm !== "undefined" && Xrm.Page) {
+            formContext = Xrm.Page;
+        } else {
+            return false; // No context available
+        }
+
+        var entityName = formContext.data?.entity?.getEntityName?.();
+        return (entityName === "ts_teamplanningdata" || entityName === "ts_plan");
+    } catch (e) {
+        console.error("Ribbon Rule Error:", e);
+        return false;
+    }
+}
