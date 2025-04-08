@@ -231,8 +231,12 @@
     });
 
     let contunueProcess = true;
+    const lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
     if (estimateDurationIsNull) {
-        var confirmStrings = { text: "Value is missing under Suggested Inspection in the Estimated Duration field. Click Ok to continue, or Cancel to stop." };
+        var confirmStrings = { text: "All suggested inspections require an estimated duration." };
+        if (lang == 1036) {
+            confirmStrings = { text: "Toutes les inspections suggérées nécessitent une estimation de la durée." };
+        }
         var confirmOptions = { height: 200, width: 450 };
         await Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
             function (success) {
