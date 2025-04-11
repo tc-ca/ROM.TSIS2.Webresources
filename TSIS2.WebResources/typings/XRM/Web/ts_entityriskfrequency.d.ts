@@ -22,6 +22,7 @@ interface ts_EntityRiskFrequency_Relationships {
   ts_OperationType?: ovs_operationtype_Result | null;
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Stakeholder?: Account_Result | null;
+  ts_operationactivityriskscores_EntityRiskFrequency_ts_entityriskfrequency?: ts_OperationActivityRiskScores_Result[] | null;
 }
 interface ts_EntityRiskFrequency extends ts_EntityRiskFrequency_Base, ts_EntityRiskFrequency_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -119,6 +120,7 @@ interface ts_EntityRiskFrequency_Expand {
   ts_OperationType: WebExpand<ts_EntityRiskFrequency_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_OperationType: ovs_operationtype_Result }>;
   ts_Site: WebExpand<ts_EntityRiskFrequency_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Stakeholder: WebExpand<ts_EntityRiskFrequency_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
+  ts_operationactivityriskscores_EntityRiskFrequency_ts_entityriskfrequency: WebExpand<ts_EntityRiskFrequency_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_EntityRiskFrequency_ts_entityriskfrequency: ts_OperationActivityRiskScores_Result[] }>;
 }
 interface ts_EntityRiskFrequency_FormattedResult {
   createdby_formatted?: string;
@@ -179,6 +181,7 @@ interface ts_EntityRiskFrequency_RelatedOne {
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface ts_EntityRiskFrequency_RelatedMany {
+  ts_operationactivityriskscores_EntityRiskFrequency_ts_entityriskfrequency: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_entityriskfrequencies: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;

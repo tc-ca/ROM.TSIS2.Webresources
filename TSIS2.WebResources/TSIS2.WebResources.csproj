@@ -919,10 +919,12 @@
     <EmbeddedResource Include="Webresources\resx\AddAdditionalInspectors.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AddAdditionalInspectors.1036.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\AddAdditionalInspectors.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AddAdditionalInspectors.1033.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\AttachFile.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>

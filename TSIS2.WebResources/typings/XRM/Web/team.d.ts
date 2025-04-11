@@ -70,6 +70,7 @@ interface Team_Relationships {
   team_ts_operationactivity?: ts_OperationActivity_Result[] | null;
   team_ts_operationactivityriskscores?: ts_OperationActivityRiskScores_Result[] | null;
   team_ts_operationcontact?: ts_operationcontact_Result[] | null;
+  team_ts_operationriskassessment?: ts_operationriskassessment_Result[] | null;
   team_ts_plan?: ts_Plan_Result[] | null;
   team_ts_planningdata?: ts_PlanningData_Result[] | null;
   team_ts_planningsettings?: ts_planningsettings_Result[] | null;
@@ -247,6 +248,7 @@ interface Team_Expand {
   team_ts_operationactivity: WebExpand<Team_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { team_ts_operationactivity: ts_OperationActivity_Result[] }>;
   team_ts_operationactivityriskscores: WebExpand<Team_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { team_ts_operationactivityriskscores: ts_OperationActivityRiskScores_Result[] }>;
   team_ts_operationcontact: WebExpand<Team_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { team_ts_operationcontact: ts_operationcontact_Result[] }>;
+  team_ts_operationriskassessment: WebExpand<Team_Expand, ts_operationriskassessment_Select, ts_operationriskassessment_Filter, { team_ts_operationriskassessment: ts_operationriskassessment_Result[] }>;
   team_ts_plan: WebExpand<Team_Expand, ts_Plan_Select, ts_Plan_Filter, { team_ts_plan: ts_Plan_Result[] }>;
   team_ts_planningdata: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { team_ts_planningdata: ts_PlanningData_Result[] }>;
   team_ts_planningsettings: WebExpand<Team_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { team_ts_planningsettings: ts_planningsettings_Result[] }>;
@@ -368,6 +370,7 @@ interface Team_RelatedMany {
   team_ts_operationactivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   team_ts_operationactivityriskscores: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
   team_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
+  team_ts_operationriskassessment: WebMappingRetrieve<ts_operationriskassessment_Select,ts_operationriskassessment_Expand,ts_operationriskassessment_Filter,ts_operationriskassessment_Fixed,ts_operationriskassessment_Result,ts_operationriskassessment_FormattedResult>;
   team_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   team_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   team_ts_planningsettings: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;

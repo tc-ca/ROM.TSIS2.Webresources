@@ -1044,6 +1044,29 @@ interface ts_operationcontact_Create extends ts_operationcontact {
 }
 interface ts_operationcontact_Update extends ts_operationcontact {
 }
+interface ts_operationriskassessment_Base extends WebEntity {
+}
+interface ts_operationriskassessment_Fixed extends WebEntity_Fixed {
+  ts_operationriskassessmentid: string;
+}
+interface ts_operationriskassessment extends ts_operationriskassessment_Base, ts_operationriskassessment_Relationships {
+}
+interface ts_operationriskassessment_Relationships {
+}
+interface ts_operationriskassessment_Result extends ts_operationriskassessment_Base, ts_operationriskassessment_Relationships {
+}
+interface ts_operationriskassessment_FormattedResult {
+}
+interface ts_operationriskassessment_Select {
+}
+interface ts_operationriskassessment_Expand {
+}
+interface ts_operationriskassessment_Filter {
+}
+interface ts_operationriskassessment_Create extends ts_operationriskassessment {
+}
+interface ts_operationriskassessment_Update extends ts_operationriskassessment {
+}
 interface ts_ovs_operation_ovs_operation_Base extends WebEntity {
 }
 interface ts_ovs_operation_ovs_operation_Fixed extends WebEntity_Fixed {
