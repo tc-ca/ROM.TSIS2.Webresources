@@ -15,6 +15,7 @@ interface ts_OperationActivityRiskScores_Base extends WebEntity {
 }
 interface ts_OperationActivityRiskScores_Relationships {
   ts_ActivityTypeEntityRisk?: ts_EntityRisk_Result | null;
+  ts_EntityRiskFrequency?: ts_EntityRiskFrequency_Result | null;
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
   ts_OperationActivity?: ts_OperationActivity_Result | null;
   ts_OperationEntityRisk?: ts_EntityRisk_Result | null;
@@ -27,11 +28,13 @@ interface ts_OperationActivityRiskScores extends ts_OperationActivityRiskScores_
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   ts_ActivityTypeEntityRisk_bind$ts_entityrisks?: string | null;
+  ts_EntityRiskFrequency_bind$ts_entityriskfrequencies?: string | null;
   ts_FiscalYear_bind$tc_tcfiscalyears?: string | null;
   ts_OperationActivity_bind$ts_operationactivities?: string | null;
   ts_OperationEntityRisk_bind$ts_entityrisks?: string | null;
   ts_OperationTypeEntityRisk_bind$ts_entityrisks?: string | null;
   ts_ProgramAreaEntityRisk_bind$ts_entityrisks?: string | null;
+  ts_RiskFrequency_bind$ts_riskfrequencies?: string | null;
   ts_RiskRating_bind$ts_riskratings?: string | null;
   ts_SiteEntityRisk_bind$ts_entityrisks?: string | null;
   ts_StakeholderEntityRisk_bind$ts_entityrisks?: string | null;
@@ -58,6 +61,7 @@ interface ts_OperationActivityRiskScores_Select {
   timezoneruleversionnumber: WebAttribute<ts_OperationActivityRiskScores_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_activitytypeentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_activitytypeentityrisk_guid: string | null }, { ts_activitytypeentityrisk_formatted?: string }>;
   ts_calculatedriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_calculatedriskscore: number | null }, {  }>;
+  ts_entityriskfrequency_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_entityriskfrequency_guid: string | null }, { ts_entityriskfrequency_formatted?: string }>;
   ts_fiscalyear_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_fiscalyear_guid: string | null }, { ts_fiscalyear_formatted?: string }>;
   ts_name: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_name: string | null }, {  }>;
   ts_operationactivity_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationactivity_guid: string | null }, { ts_operationactivity_formatted?: string }>;
@@ -65,6 +69,7 @@ interface ts_OperationActivityRiskScores_Select {
   ts_operationentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationentityrisk_guid: string | null }, { ts_operationentityrisk_formatted?: string }>;
   ts_operationtypeentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationtypeentityrisk_guid: string | null }, { ts_operationtypeentityrisk_formatted?: string }>;
   ts_programareaentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_programareaentityrisk_guid: string | null }, { ts_programareaentityrisk_formatted?: string }>;
+  ts_riskfrequency_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskfrequency_guid: string | null }, { ts_riskfrequency_formatted?: string }>;
   ts_riskrating_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskrating_guid: string | null }, { ts_riskrating_formatted?: string }>;
   ts_riskscoretrigger: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscoretrigger: number | null }, {  }>;
   ts_siteentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteentityrisk_guid: string | null }, { ts_siteentityrisk_formatted?: string }>;
@@ -90,6 +95,7 @@ interface ts_OperationActivityRiskScores_Filter {
   timezoneruleversionnumber: number;
   ts_activitytypeentityrisk_guid: XQW.Guid;
   ts_calculatedriskscore: any;
+  ts_entityriskfrequency_guid: XQW.Guid;
   ts_fiscalyear_guid: XQW.Guid;
   ts_name: string;
   ts_operationactivity_guid: XQW.Guid;
@@ -97,6 +103,7 @@ interface ts_OperationActivityRiskScores_Filter {
   ts_operationentityrisk_guid: XQW.Guid;
   ts_operationtypeentityrisk_guid: XQW.Guid;
   ts_programareaentityrisk_guid: XQW.Guid;
+  ts_riskfrequency_guid: XQW.Guid;
   ts_riskrating_guid: XQW.Guid;
   ts_riskscoretrigger: any;
   ts_siteentityrisk_guid: XQW.Guid;
@@ -113,6 +120,7 @@ interface ts_OperationActivityRiskScores_Expand {
   owningteam: WebExpand<ts_OperationActivityRiskScores_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_OperationActivityRiskScores_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_ActivityTypeEntityRisk: WebExpand<ts_OperationActivityRiskScores_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_ActivityTypeEntityRisk: ts_EntityRisk_Result }>;
+  ts_EntityRiskFrequency: WebExpand<ts_OperationActivityRiskScores_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { ts_EntityRiskFrequency: ts_EntityRiskFrequency_Result }>;
   ts_FiscalYear: WebExpand<ts_OperationActivityRiskScores_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
   ts_OperationActivity: WebExpand<ts_OperationActivityRiskScores_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_OperationActivity: ts_OperationActivity_Result }>;
   ts_OperationEntityRisk: WebExpand<ts_OperationActivityRiskScores_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_OperationEntityRisk: ts_EntityRisk_Result }>;
@@ -136,11 +144,13 @@ interface ts_OperationActivityRiskScores_FormattedResult {
   statecode_formatted?: string;
   statuscode_formatted?: string;
   ts_activitytypeentityrisk_formatted?: string;
+  ts_entityriskfrequency_formatted?: string;
   ts_fiscalyear_formatted?: string;
   ts_operationactivity_formatted?: string;
   ts_operationentityrisk_formatted?: string;
   ts_operationtypeentityrisk_formatted?: string;
   ts_programareaentityrisk_formatted?: string;
+  ts_riskfrequency_formatted?: string;
   ts_riskrating_formatted?: string;
   ts_siteentityrisk_formatted?: string;
   ts_stakeholderentityrisk_formatted?: string;
@@ -156,11 +166,13 @@ interface ts_OperationActivityRiskScores_Result extends ts_OperationActivityRisk
   owningteam_guid: string | null;
   owninguser_guid: string | null;
   ts_activitytypeentityrisk_guid: string | null;
+  ts_entityriskfrequency_guid: string | null;
   ts_fiscalyear_guid: string | null;
   ts_operationactivity_guid: string | null;
   ts_operationentityrisk_guid: string | null;
   ts_operationtypeentityrisk_guid: string | null;
   ts_programareaentityrisk_guid: string | null;
+  ts_riskfrequency_guid: string | null;
   ts_riskrating_guid: string | null;
   ts_siteentityrisk_guid: string | null;
   ts_stakeholderentityrisk_guid: string | null;
@@ -174,6 +186,7 @@ interface ts_OperationActivityRiskScores_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_ActivityTypeEntityRisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  ts_EntityRiskFrequency: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   ts_OperationActivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_OperationEntityRisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;

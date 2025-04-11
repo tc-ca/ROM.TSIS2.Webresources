@@ -56,7 +56,7 @@ namespace ROM.WorkOrder {
                 }
             }
         });
-        
+
         getUserTeam(userId).then(function (userTeams) {
             if (userTeams != null && userTeams.entities.length > 0) {
                 for (var i = 0; i < userTeams.entities.length; i++) {
@@ -367,8 +367,40 @@ namespace ROM.WorkOrder {
             }
         }
 
+        //Restrict edit rights for Report Details to WO Owner and Additional Inspectors
+        var subgridAdditionalInspectors = form.getControl("AdditionalInspectors");
+        if (subgridAdditionalInspectors) {
+            subgridAdditionalInspectors.addOnLoad(function () {
+                restrictEditRightReportDetails(eContext, subgridAdditionalInspectors);
+            });
+        }
+
         unlockRecordLogFieldsIfUserIsSystemAdmin(form);
         RemoveOptionCancel(eContext);
+    }
+    function restrictEditRightReportDetails(executionContext, subgridAdditionalInspectors) {
+        //Process Additional Inspectors Subgrid
+        var additionalInspectorIds: string[] = [];
+        if (subgridAdditionalInspectors && subgridAdditionalInspectors.getGrid()) {
+            var rows = subgridAdditionalInspectors.getGrid().getRows();
+            var length = rows.getLength();
+            rows.forEach(function (row) {
+                var entity = row.getData().getEntity();
+                var id = entity.getId();
+                additionalInspectorIds.push(id);
+            });
+        } else {
+            console.log("Subgrid not loaded or not found.");
+        }
+        //Disabled Report Details if user is not a owner or additional inspector
+        let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>executionContext.getFormContext();
+        const ownerAttribute = form.getAttribute("ownerid").getValue();
+        if (ownerAttribute && ownerAttribute[0].id) {
+            if (!(userId == ownerAttribute[0].id || (additionalInspectorIds.includes(userId)))) {
+                form.getControl("ts_reportdetails").setDisabled(true);
+            }
+        }
     }
 
     function RemoveOptionCancel(eContext) {
@@ -854,7 +886,7 @@ namespace ROM.WorkOrder {
                             console.log("inside Filter: " + targetFilter);
                             form.getControl("ts_canceledinspectionjustification").addCustomFilter(targetFilter, "ts_canceledinspectionjustification");
                         });
-                        
+
                     }, function (error) {
                         showErrorMessageAlert(error);
                     });
@@ -865,7 +897,7 @@ namespace ROM.WorkOrder {
             throw new Error((e as any).Message);
         }
     }
-    
+
     export function subSiteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
 

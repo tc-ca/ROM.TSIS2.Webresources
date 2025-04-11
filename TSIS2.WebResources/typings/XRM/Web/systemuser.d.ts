@@ -315,6 +315,10 @@ interface SystemUser_Relationships {
   lk_ts_operationcontact_createdonbehalfby?: ts_operationcontact_Result[] | null;
   lk_ts_operationcontact_modifiedby?: ts_operationcontact_Result[] | null;
   lk_ts_operationcontact_modifiedonbehalfby?: ts_operationcontact_Result[] | null;
+  lk_ts_operationriskassessment_createdby?: ts_operationriskassessment_Result[] | null;
+  lk_ts_operationriskassessment_createdonbehalfby?: ts_operationriskassessment_Result[] | null;
+  lk_ts_operationriskassessment_modifiedby?: ts_operationriskassessment_Result[] | null;
+  lk_ts_operationriskassessment_modifiedonbehalfby?: ts_operationriskassessment_Result[] | null;
   lk_ts_plan_createdby?: ts_Plan_Result[] | null;
   lk_ts_plan_createdonbehalfby?: ts_Plan_Result[] | null;
   lk_ts_plan_modifiedby?: ts_Plan_Result[] | null;
@@ -453,6 +457,7 @@ interface SystemUser_Relationships {
   user_ts_operationactivity?: ts_OperationActivity_Result[] | null;
   user_ts_operationactivityriskscores?: ts_OperationActivityRiskScores_Result[] | null;
   user_ts_operationcontact?: ts_operationcontact_Result[] | null;
+  user_ts_operationriskassessment?: ts_operationriskassessment_Result[] | null;
   user_ts_plan?: ts_Plan_Result[] | null;
   user_ts_planningdata?: ts_PlanningData_Result[] | null;
   user_ts_planningsettings?: ts_planningsettings_Result[] | null;
@@ -977,6 +982,10 @@ interface SystemUser_Expand {
   lk_ts_operationcontact_createdonbehalfby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_createdonbehalfby: ts_operationcontact_Result[] }>;
   lk_ts_operationcontact_modifiedby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_modifiedby: ts_operationcontact_Result[] }>;
   lk_ts_operationcontact_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_modifiedonbehalfby: ts_operationcontact_Result[] }>;
+  lk_ts_operationriskassessment_createdby: WebExpand<SystemUser_Expand, ts_operationriskassessment_Select, ts_operationriskassessment_Filter, { lk_ts_operationriskassessment_createdby: ts_operationriskassessment_Result[] }>;
+  lk_ts_operationriskassessment_createdonbehalfby: WebExpand<SystemUser_Expand, ts_operationriskassessment_Select, ts_operationriskassessment_Filter, { lk_ts_operationriskassessment_createdonbehalfby: ts_operationriskassessment_Result[] }>;
+  lk_ts_operationriskassessment_modifiedby: WebExpand<SystemUser_Expand, ts_operationriskassessment_Select, ts_operationriskassessment_Filter, { lk_ts_operationriskassessment_modifiedby: ts_operationriskassessment_Result[] }>;
+  lk_ts_operationriskassessment_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_operationriskassessment_Select, ts_operationriskassessment_Filter, { lk_ts_operationriskassessment_modifiedonbehalfby: ts_operationriskassessment_Result[] }>;
   lk_ts_plan_createdby: WebExpand<SystemUser_Expand, ts_Plan_Select, ts_Plan_Filter, { lk_ts_plan_createdby: ts_Plan_Result[] }>;
   lk_ts_plan_createdonbehalfby: WebExpand<SystemUser_Expand, ts_Plan_Select, ts_Plan_Filter, { lk_ts_plan_createdonbehalfby: ts_Plan_Result[] }>;
   lk_ts_plan_modifiedby: WebExpand<SystemUser_Expand, ts_Plan_Select, ts_Plan_Filter, { lk_ts_plan_modifiedby: ts_Plan_Result[] }>;
@@ -1118,6 +1127,7 @@ interface SystemUser_Expand {
   user_ts_operationactivity: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { user_ts_operationactivity: ts_OperationActivity_Result[] }>;
   user_ts_operationactivityriskscores: WebExpand<SystemUser_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { user_ts_operationactivityriskscores: ts_OperationActivityRiskScores_Result[] }>;
   user_ts_operationcontact: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { user_ts_operationcontact: ts_operationcontact_Result[] }>;
+  user_ts_operationriskassessment: WebExpand<SystemUser_Expand, ts_operationriskassessment_Select, ts_operationriskassessment_Filter, { user_ts_operationriskassessment: ts_operationriskassessment_Result[] }>;
   user_ts_plan: WebExpand<SystemUser_Expand, ts_Plan_Select, ts_Plan_Filter, { user_ts_plan: ts_Plan_Result[] }>;
   user_ts_planningdata: WebExpand<SystemUser_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { user_ts_planningdata: ts_PlanningData_Result[] }>;
   user_ts_planningsettings: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { user_ts_planningsettings: ts_planningsettings_Result[] }>;
@@ -1395,6 +1405,10 @@ interface SystemUser_RelatedMany {
   lk_ts_operationcontact_createdonbehalfby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   lk_ts_operationcontact_modifiedby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   lk_ts_operationcontact_modifiedonbehalfby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
+  lk_ts_operationriskassessment_createdby: WebMappingRetrieve<ts_operationriskassessment_Select,ts_operationriskassessment_Expand,ts_operationriskassessment_Filter,ts_operationriskassessment_Fixed,ts_operationriskassessment_Result,ts_operationriskassessment_FormattedResult>;
+  lk_ts_operationriskassessment_createdonbehalfby: WebMappingRetrieve<ts_operationriskassessment_Select,ts_operationriskassessment_Expand,ts_operationriskassessment_Filter,ts_operationriskassessment_Fixed,ts_operationriskassessment_Result,ts_operationriskassessment_FormattedResult>;
+  lk_ts_operationriskassessment_modifiedby: WebMappingRetrieve<ts_operationriskassessment_Select,ts_operationriskassessment_Expand,ts_operationriskassessment_Filter,ts_operationriskassessment_Fixed,ts_operationriskassessment_Result,ts_operationriskassessment_FormattedResult>;
+  lk_ts_operationriskassessment_modifiedonbehalfby: WebMappingRetrieve<ts_operationriskassessment_Select,ts_operationriskassessment_Expand,ts_operationriskassessment_Filter,ts_operationriskassessment_Fixed,ts_operationriskassessment_Result,ts_operationriskassessment_FormattedResult>;
   lk_ts_plan_createdby: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   lk_ts_plan_createdonbehalfby: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   lk_ts_plan_modifiedby: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
@@ -1532,6 +1546,7 @@ interface SystemUser_RelatedMany {
   user_ts_operationactivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   user_ts_operationactivityriskscores: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
   user_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
+  user_ts_operationriskassessment: WebMappingRetrieve<ts_operationriskassessment_Select,ts_operationriskassessment_Expand,ts_operationriskassessment_Filter,ts_operationriskassessment_Fixed,ts_operationriskassessment_Result,ts_operationriskassessment_FormattedResult>;
   user_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   user_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   user_ts_planningsettings: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
