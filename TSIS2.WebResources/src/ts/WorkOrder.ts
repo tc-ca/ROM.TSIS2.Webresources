@@ -44,6 +44,16 @@ namespace ROM.WorkOrder {
                 form.getControl("ts_details").setVisible(false);
                 form.getControl("ts_overtime").setVisible(false);
                 form.getControl("ts_overtimerequired").setVisible(false);
+
+            }
+            else if (userBusinessUnitName.startsWith("Aviation")) {
+                form.getControl("ts_details").setVisible(true);
+                form.getControl("msdyn_instructions").setVisible(true);
+                form.getControl("ts_accountableteam").setVisible(true);
+                form.getControl("ts_plannedcost").setVisible(false);
+                form.getControl("ts_actualcost").setVisible(false);
+                form.getControl("ts_costexplanation").setVisible(false);
+                form.getControl("ts_cantcompleteinspection").setVisible(false);
             }
             //Set disabled false for quarter fields if ISSO
             else {
