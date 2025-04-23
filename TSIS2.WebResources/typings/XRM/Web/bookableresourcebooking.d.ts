@@ -18,6 +18,7 @@ interface BookableResourceBooking_Base extends WebEntity {
   msdyn_effort?: number | null;
   msdyn_estimatedarrivaltime?: Date | null;
   msdyn_estimatedtravelduration?: number | null;
+  msdyn_globalobjectid?: string | null;
   msdyn_internalflags?: string | null;
   msdyn_latitude?: number | null;
   msdyn_longitude?: number | null;
@@ -35,6 +36,8 @@ interface BookableResourceBooking_Base extends WebEntity {
   msdyn_totaldurationinprogress?: number | null;
   msdyn_traveltimecalculationtype?: msdyn_traveltimetype | null;
   msdyn_traveltimerescheduling?: boolean | null;
+  msdyn_tzaendtime?: Date | null;
+  msdyn_tzastarttime?: Date | null;
   msdyn_ursinternalflags?: string | null;
   msdyn_worklocation?: msdyn_worklocation | null;
   name?: string | null;
@@ -125,6 +128,7 @@ interface BookableResourceBooking_Select {
   msdyn_effort: WebAttribute<BookableResourceBooking_Select, { msdyn_effort: number | null }, {  }>;
   msdyn_estimatedarrivaltime: WebAttribute<BookableResourceBooking_Select, { msdyn_estimatedarrivaltime: Date | null }, { msdyn_estimatedarrivaltime_formatted?: string }>;
   msdyn_estimatedtravelduration: WebAttribute<BookableResourceBooking_Select, { msdyn_estimatedtravelduration: number | null }, {  }>;
+  msdyn_globalobjectid: WebAttribute<BookableResourceBooking_Select, { msdyn_globalobjectid: string | null }, {  }>;
   msdyn_internalflags: WebAttribute<BookableResourceBooking_Select, { msdyn_internalflags: string | null }, {  }>;
   msdyn_latitude: WebAttribute<BookableResourceBooking_Select, { msdyn_latitude: number | null }, {  }>;
   msdyn_longitude: WebAttribute<BookableResourceBooking_Select, { msdyn_longitude: number | null }, {  }>;
@@ -147,6 +151,8 @@ interface BookableResourceBooking_Select {
   msdyn_totaldurationinprogress: WebAttribute<BookableResourceBooking_Select, { msdyn_totaldurationinprogress: number | null }, {  }>;
   msdyn_traveltimecalculationtype: WebAttribute<BookableResourceBooking_Select, { msdyn_traveltimecalculationtype: msdyn_traveltimetype | null }, { msdyn_traveltimecalculationtype_formatted?: string }>;
   msdyn_traveltimerescheduling: WebAttribute<BookableResourceBooking_Select, { msdyn_traveltimerescheduling: boolean | null }, {  }>;
+  msdyn_tzaendtime: WebAttribute<BookableResourceBooking_Select, { msdyn_tzaendtime: Date | null }, { msdyn_tzaendtime_formatted?: string }>;
+  msdyn_tzastarttime: WebAttribute<BookableResourceBooking_Select, { msdyn_tzastarttime: Date | null }, { msdyn_tzastarttime_formatted?: string }>;
   msdyn_ursinternalflags: WebAttribute<BookableResourceBooking_Select, { msdyn_ursinternalflags: string | null }, {  }>;
   msdyn_worklocation: WebAttribute<BookableResourceBooking_Select, { msdyn_worklocation: msdyn_worklocation | null }, { msdyn_worklocation_formatted?: string }>;
   msdyn_workorder_guid: WebAttribute<BookableResourceBooking_Select, { msdyn_workorder_guid: string | null }, { msdyn_workorder_formatted?: string }>;
@@ -201,6 +207,7 @@ interface BookableResourceBooking_Filter {
   msdyn_effort: any;
   msdyn_estimatedarrivaltime: Date;
   msdyn_estimatedtravelduration: number;
+  msdyn_globalobjectid: string;
   msdyn_internalflags: string;
   msdyn_latitude: number;
   msdyn_longitude: number;
@@ -223,6 +230,8 @@ interface BookableResourceBooking_Filter {
   msdyn_totaldurationinprogress: number;
   msdyn_traveltimecalculationtype: msdyn_traveltimetype;
   msdyn_traveltimerescheduling: boolean;
+  msdyn_tzaendtime: Date;
+  msdyn_tzastarttime: Date;
   msdyn_ursinternalflags: string;
   msdyn_worklocation: msdyn_worklocation;
   msdyn_workorder_guid: XQW.Guid;
@@ -269,6 +278,7 @@ interface BookableResourceBooking_Expand {
   ovs_PlannedFiscalYearId: WebExpand<BookableResourceBooking_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ovs_PlannedFiscalYearId: tc_TCFiscalYear_Result }>;
   ovs_RevisedQuarter: WebExpand<BookableResourceBooking_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ovs_RevisedQuarter: tc_TCFiscalQuarter_Result }>;
   ownerid: WebExpand<BookableResourceBooking_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningbusinessunit: WebExpand<BookableResourceBooking_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<BookableResourceBooking_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<BookableResourceBooking_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
 }
@@ -301,6 +311,8 @@ interface BookableResourceBooking_FormattedResult {
   msdyn_totalcost_base_formatted?: string;
   msdyn_totalcost_formatted?: string;
   msdyn_traveltimecalculationtype_formatted?: string;
+  msdyn_tzaendtime_formatted?: string;
+  msdyn_tzastarttime_formatted?: string;
   msdyn_worklocation_formatted?: string;
   msdyn_workorder_formatted?: string;
   overriddencreatedon_formatted?: string;
@@ -361,6 +373,7 @@ interface BookableResourceBooking_RelatedOne {
   ovs_PlannedFiscalYearId: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   ovs_RevisedQuarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }

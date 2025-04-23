@@ -39,6 +39,7 @@ interface ovs_operation_Base extends WebEntity {
   ts_ron?: boolean | null;
   ts_securityinspectiondetails?: ts_securityinspectiondetails | null;
   ts_specializedpperequired?: boolean | null;
+  ts_stakeholdertcscp?: string | null;
   ts_stationtype?: ts_stationtype | null;
   ts_statusenddate?: Date | null;
   ts_statusstartdate?: Date | null;
@@ -57,6 +58,7 @@ interface ovs_operation_Relationships {
   ovs_operation_Appointments?: Appointment_Result[] | null;
   ovs_operation_Emails?: Email_Result[] | null;
   ovs_operation_PostFollows?: PostFollow_Result[] | null;
+  ovs_operation_Posts?: Post_Result[] | null;
   ovs_operation_ServiceAppointments?: ServiceAppointment_Result[] | null;
   ovs_operation_connections1?: Connection_Result[] | null;
   ovs_operation_connections2?: Connection_Result[] | null;
@@ -162,6 +164,7 @@ interface ovs_operation_Select {
   ts_site_site_guid: WebAttribute<ovs_operation_Select, { ts_site_site_guid: string | null }, { ts_site_site_formatted?: string }>;
   ts_specializedpperequired: WebAttribute<ovs_operation_Select, { ts_specializedpperequired: boolean | null }, {  }>;
   ts_stakeholder_guid: WebAttribute<ovs_operation_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
+  ts_stakeholdertcscp: WebAttribute<ovs_operation_Select, { ts_stakeholdertcscp: string | null }, {  }>;
   ts_stationtype: WebAttribute<ovs_operation_Select, { ts_stationtype: ts_stationtype | null }, { ts_stationtype_formatted?: string }>;
   ts_statusenddate: WebAttribute<ovs_operation_Select, { ts_statusenddate: Date | null }, { ts_statusenddate_formatted?: string }>;
   ts_statusstartdate: WebAttribute<ovs_operation_Select, { ts_statusstartdate: Date | null }, { ts_statusstartdate_formatted?: string }>;
@@ -237,6 +240,7 @@ interface ovs_operation_Filter {
   ts_site_site_guid: XQW.Guid;
   ts_specializedpperequired: boolean;
   ts_stakeholder_guid: XQW.Guid;
+  ts_stakeholdertcscp: string;
   ts_stationtype: ts_stationtype;
   ts_statusenddate: Date;
   ts_statusstartdate: Date;
@@ -263,12 +267,14 @@ interface ovs_operation_Expand {
   ovs_operation_Appointments: WebExpand<ovs_operation_Expand, Appointment_Select, Appointment_Filter, { ovs_operation_Appointments: Appointment_Result[] }>;
   ovs_operation_Emails: WebExpand<ovs_operation_Expand, Email_Select, Email_Filter, { ovs_operation_Emails: Email_Result[] }>;
   ovs_operation_PostFollows: WebExpand<ovs_operation_Expand, PostFollow_Select, PostFollow_Filter, { ovs_operation_PostFollows: PostFollow_Result[] }>;
+  ovs_operation_Posts: WebExpand<ovs_operation_Expand, Post_Select, Post_Filter, { ovs_operation_Posts: Post_Result[] }>;
   ovs_operation_ServiceAppointments: WebExpand<ovs_operation_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ovs_operation_ServiceAppointments: ServiceAppointment_Result[] }>;
   ovs_operation_connections1: WebExpand<ovs_operation_Expand, Connection_Select, Connection_Filter, { ovs_operation_connections1: Connection_Result[] }>;
   ovs_operation_connections2: WebExpand<ovs_operation_Expand, Connection_Select, Connection_Filter, { ovs_operation_connections2: Connection_Result[] }>;
   ovs_operation_ts_enforcementactions: WebExpand<ovs_operation_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ovs_operation_ts_enforcementactions: ts_enforcementaction_Result[] }>;
   ovs_ovs_operation_msdyn_workorder: WebExpand<ovs_operation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_ovs_operation_msdyn_workorder: msdyn_workorder_Result[] }>;
   ownerid: WebExpand<ovs_operation_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningbusinessunit: WebExpand<ovs_operation_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<ovs_operation_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ovs_operation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_EntityRisk_ovs_operation_ovs_operation: WebExpand<ovs_operation_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_EntityRisk_ovs_operation_ovs_operation: ts_EntityRisk_Result[] }>;
@@ -370,6 +376,7 @@ interface ovs_operation_RelatedOne {
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ovs_OperationTypeId: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_OPITeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
@@ -386,6 +393,7 @@ interface ovs_operation_RelatedMany {
   ovs_operation_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   ovs_operation_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   ovs_operation_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
+  ovs_operation_Posts: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   ovs_operation_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   ovs_operation_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ovs_operation_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;

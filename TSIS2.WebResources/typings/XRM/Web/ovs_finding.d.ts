@@ -52,6 +52,7 @@ interface ovs_Finding_Relationships {
   ovs_CaseId?: Incident_Result | null;
   ovs_WorkOrderServiceTaskId?: msdyn_workorderservicetask_Result | null;
   ovs_finding_PostFollows?: PostFollow_Result[] | null;
+  ovs_finding_Posts?: Post_Result[] | null;
   ovs_finding_connections1?: Connection_Result[] | null;
   ovs_finding_connections2?: Connection_Result[] | null;
   ts_ActionFinding_ovs_Finding_ovs_Finding?: ts_ActionFinding_Result[] | null;
@@ -312,9 +313,11 @@ interface ovs_Finding_Expand {
   ovs_CaseId: WebExpand<ovs_Finding_Expand, Incident_Select, Incident_Filter, { ovs_CaseId: Incident_Result }>;
   ovs_WorkOrderServiceTaskId: WebExpand<ovs_Finding_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ovs_WorkOrderServiceTaskId: msdyn_workorderservicetask_Result }>;
   ovs_finding_PostFollows: WebExpand<ovs_Finding_Expand, PostFollow_Select, PostFollow_Filter, { ovs_finding_PostFollows: PostFollow_Result[] }>;
+  ovs_finding_Posts: WebExpand<ovs_Finding_Expand, Post_Select, Post_Filter, { ovs_finding_Posts: Post_Result[] }>;
   ovs_finding_connections1: WebExpand<ovs_Finding_Expand, Connection_Select, Connection_Filter, { ovs_finding_connections1: Connection_Result[] }>;
   ovs_finding_connections2: WebExpand<ovs_Finding_Expand, Connection_Select, Connection_Filter, { ovs_finding_connections2: Connection_Result[] }>;
   ownerid: WebExpand<ovs_Finding_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningbusinessunit: WebExpand<ovs_Finding_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<ovs_Finding_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_ActionFinding_ovs_Finding_ovs_Finding: WebExpand<ovs_Finding_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { ts_ActionFinding_ovs_Finding_ovs_Finding: ts_ActionFinding_Result[] }>;
@@ -467,6 +470,7 @@ interface ovs_Finding_RelatedOne {
   ovs_CaseId: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ovs_WorkOrderServiceTaskId: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_Contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
@@ -488,6 +492,7 @@ interface ovs_Finding_RelatedOne {
 }
 interface ovs_Finding_RelatedMany {
   ovs_finding_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
+  ovs_finding_Posts: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   ovs_finding_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ovs_finding_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ts_ActionFinding_ovs_Finding_ovs_Finding: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;

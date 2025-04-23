@@ -25,6 +25,7 @@ interface Team_Base extends WebEntity {
 }
 interface Team_Relationships {
   OwningTeam_postfollows?: PostFollow_Result[] | null;
+  msdyn_businessunit_Team_team?: BusinessUnit_Result[] | null;
   regardingobjectid_account?: Account_Result | null;
   regardingobjectid_msdyn_workorder?: msdyn_workorder_Result | null;
   team_accounts?: Account_Result[] | null;
@@ -199,10 +200,12 @@ interface Team_Filter {
 interface Team_Expand {
   OwningTeam_postfollows: WebExpand<Team_Expand, PostFollow_Select, PostFollow_Filter, { OwningTeam_postfollows: PostFollow_Result[] }>;
   administratorid: WebExpand<Team_Expand, SystemUser_Select, SystemUser_Filter, { administratorid: SystemUser_Result }>;
+  businessunitid: WebExpand<Team_Expand, BusinessUnit_Select, BusinessUnit_Filter, { businessunitid: BusinessUnit_Result }>;
   createdby: WebExpand<Team_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
   createdonbehalfby: WebExpand<Team_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
   modifiedby: WebExpand<Team_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<Team_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
+  msdyn_businessunit_Team_team: WebExpand<Team_Expand, BusinessUnit_Select, BusinessUnit_Filter, { msdyn_businessunit_Team_team: BusinessUnit_Result[] }>;
   regardingobjectid_account: WebExpand<Team_Expand, Account_Select, Account_Filter, { regardingobjectid_account: Account_Result }>;
   regardingobjectid_msdyn_workorder: WebExpand<Team_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder: msdyn_workorder_Result }>;
   team_accounts: WebExpand<Team_Expand, Account_Select, Account_Filter, { team_accounts: Account_Result[] }>;
@@ -318,6 +321,7 @@ interface Team_Result extends Team_Base, Team_Relationships {
 }
 interface Team_RelatedOne {
   administratorid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  businessunitid: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -327,6 +331,7 @@ interface Team_RelatedOne {
 }
 interface Team_RelatedMany {
   OwningTeam_postfollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
+  msdyn_businessunit_Team_team: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   team_accounts: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   team_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   team_bookableresource: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
