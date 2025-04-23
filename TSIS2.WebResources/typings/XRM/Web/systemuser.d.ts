@@ -155,6 +155,10 @@ interface SystemUser_Relationships {
   lk_bookingstatus_createdonbehalfby?: BookingStatus_Result[] | null;
   lk_bookingstatus_modifiedby?: BookingStatus_Result[] | null;
   lk_bookingstatus_modifiedonbehalfby?: BookingStatus_Result[] | null;
+  lk_businessunit_createdonbehalfby?: BusinessUnit_Result[] | null;
+  lk_businessunit_modifiedonbehalfby?: BusinessUnit_Result[] | null;
+  lk_businessunitbase_createdby?: BusinessUnit_Result[] | null;
+  lk_businessunitbase_modifiedby?: BusinessUnit_Result[] | null;
   lk_connectionbase_createdonbehalfby?: Connection_Result[] | null;
   lk_connectionbase_modifiedonbehalfby?: Connection_Result[] | null;
   lk_contact_createdonbehalfby?: Contact_Result[] | null;
@@ -225,6 +229,10 @@ interface SystemUser_Relationships {
   lk_ovs_questionnaire_createdonbehalfby?: ovs_Questionnaire_Result[] | null;
   lk_ovs_questionnaire_modifiedby?: ovs_Questionnaire_Result[] | null;
   lk_ovs_questionnaire_modifiedonbehalfby?: ovs_Questionnaire_Result[] | null;
+  lk_post_createdby?: Post_Result[] | null;
+  lk_post_createdonbehalfby?: Post_Result[] | null;
+  lk_post_modifiedby?: Post_Result[] | null;
+  lk_post_modifiedonbehalfby?: Post_Result[] | null;
   lk_postfollow_createdonbehalfby?: PostFollow_Result[] | null;
   lk_qm_rclegislation_createdby?: qm_rclegislation_Result[] | null;
   lk_qm_rclegislation_createdonbehalfby?: qm_rclegislation_Result[] | null;
@@ -395,6 +403,7 @@ interface SystemUser_Relationships {
   system_user_incidents?: Incident_Result[] | null;
   system_user_service_appointments?: ServiceAppointment_Result[] | null;
   systemuser_PostFollows?: PostFollow_Result[] | null;
+  systemuser_Posts?: Post_Result[] | null;
   systemuser_bookableresource_UserId?: BookableResource_Result[] | null;
   systemuser_connections1?: Connection_Result[] | null;
   systemuser_connections2?: Connection_Result[] | null;
@@ -796,6 +805,7 @@ interface SystemUser_Filter {
 }
 interface SystemUser_Expand {
   SystemUser_Email_EmailSender: WebExpand<SystemUser_Expand, Email_Select, Email_Filter, { SystemUser_Email_EmailSender: Email_Result[] }>;
+  businessunitid: WebExpand<SystemUser_Expand, BusinessUnit_Select, BusinessUnit_Filter, { businessunitid: BusinessUnit_Result }>;
   contact_owning_user: WebExpand<SystemUser_Expand, Contact_Select, Contact_Filter, { contact_owning_user: Contact_Result[] }>;
   createdby: WebExpand<SystemUser_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
   createdby_connection: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { createdby_connection: Connection_Result[] }>;
@@ -822,6 +832,10 @@ interface SystemUser_Expand {
   lk_bookingstatus_createdonbehalfby: WebExpand<SystemUser_Expand, BookingStatus_Select, BookingStatus_Filter, { lk_bookingstatus_createdonbehalfby: BookingStatus_Result[] }>;
   lk_bookingstatus_modifiedby: WebExpand<SystemUser_Expand, BookingStatus_Select, BookingStatus_Filter, { lk_bookingstatus_modifiedby: BookingStatus_Result[] }>;
   lk_bookingstatus_modifiedonbehalfby: WebExpand<SystemUser_Expand, BookingStatus_Select, BookingStatus_Filter, { lk_bookingstatus_modifiedonbehalfby: BookingStatus_Result[] }>;
+  lk_businessunit_createdonbehalfby: WebExpand<SystemUser_Expand, BusinessUnit_Select, BusinessUnit_Filter, { lk_businessunit_createdonbehalfby: BusinessUnit_Result[] }>;
+  lk_businessunit_modifiedonbehalfby: WebExpand<SystemUser_Expand, BusinessUnit_Select, BusinessUnit_Filter, { lk_businessunit_modifiedonbehalfby: BusinessUnit_Result[] }>;
+  lk_businessunitbase_createdby: WebExpand<SystemUser_Expand, BusinessUnit_Select, BusinessUnit_Filter, { lk_businessunitbase_createdby: BusinessUnit_Result[] }>;
+  lk_businessunitbase_modifiedby: WebExpand<SystemUser_Expand, BusinessUnit_Select, BusinessUnit_Filter, { lk_businessunitbase_modifiedby: BusinessUnit_Result[] }>;
   lk_connectionbase_createdonbehalfby: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { lk_connectionbase_createdonbehalfby: Connection_Result[] }>;
   lk_connectionbase_modifiedonbehalfby: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { lk_connectionbase_modifiedonbehalfby: Connection_Result[] }>;
   lk_contact_createdonbehalfby: WebExpand<SystemUser_Expand, Contact_Select, Contact_Filter, { lk_contact_createdonbehalfby: Contact_Result[] }>;
@@ -892,6 +906,10 @@ interface SystemUser_Expand {
   lk_ovs_questionnaire_createdonbehalfby: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { lk_ovs_questionnaire_createdonbehalfby: ovs_Questionnaire_Result[] }>;
   lk_ovs_questionnaire_modifiedby: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { lk_ovs_questionnaire_modifiedby: ovs_Questionnaire_Result[] }>;
   lk_ovs_questionnaire_modifiedonbehalfby: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { lk_ovs_questionnaire_modifiedonbehalfby: ovs_Questionnaire_Result[] }>;
+  lk_post_createdby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_createdby: Post_Result[] }>;
+  lk_post_createdonbehalfby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_createdonbehalfby: Post_Result[] }>;
+  lk_post_modifiedby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_modifiedby: Post_Result[] }>;
+  lk_post_modifiedonbehalfby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_modifiedonbehalfby: Post_Result[] }>;
   lk_postfollow_createdonbehalfby: WebExpand<SystemUser_Expand, PostFollow_Select, PostFollow_Filter, { lk_postfollow_createdonbehalfby: PostFollow_Result[] }>;
   lk_qm_rclegislation_createdby: WebExpand<SystemUser_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { lk_qm_rclegislation_createdby: qm_rclegislation_Result[] }>;
   lk_qm_rclegislation_createdonbehalfby: WebExpand<SystemUser_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { lk_qm_rclegislation_createdonbehalfby: qm_rclegislation_Result[] }>;
@@ -1065,6 +1083,7 @@ interface SystemUser_Expand {
   system_user_incidents: WebExpand<SystemUser_Expand, Incident_Select, Incident_Filter, { system_user_incidents: Incident_Result[] }>;
   system_user_service_appointments: WebExpand<SystemUser_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { system_user_service_appointments: ServiceAppointment_Result[] }>;
   systemuser_PostFollows: WebExpand<SystemUser_Expand, PostFollow_Select, PostFollow_Filter, { systemuser_PostFollows: PostFollow_Result[] }>;
+  systemuser_Posts: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { systemuser_Posts: Post_Result[] }>;
   systemuser_bookableresource_UserId: WebExpand<SystemUser_Expand, BookableResource_Select, BookableResource_Filter, { systemuser_bookableresource_UserId: BookableResource_Result[] }>;
   systemuser_connections1: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections1: Connection_Result[] }>;
   systemuser_connections2: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections2: Connection_Result[] }>;
@@ -1212,6 +1231,7 @@ interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
   ts_territory_guid: string | null;
 }
 interface SystemUser_RelatedOne {
+  businessunitid: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -1245,6 +1265,10 @@ interface SystemUser_RelatedMany {
   lk_bookingstatus_createdonbehalfby: WebMappingRetrieve<BookingStatus_Select,BookingStatus_Expand,BookingStatus_Filter,BookingStatus_Fixed,BookingStatus_Result,BookingStatus_FormattedResult>;
   lk_bookingstatus_modifiedby: WebMappingRetrieve<BookingStatus_Select,BookingStatus_Expand,BookingStatus_Filter,BookingStatus_Fixed,BookingStatus_Result,BookingStatus_FormattedResult>;
   lk_bookingstatus_modifiedonbehalfby: WebMappingRetrieve<BookingStatus_Select,BookingStatus_Expand,BookingStatus_Filter,BookingStatus_Fixed,BookingStatus_Result,BookingStatus_FormattedResult>;
+  lk_businessunit_createdonbehalfby: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
+  lk_businessunit_modifiedonbehalfby: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
+  lk_businessunitbase_createdby: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
+  lk_businessunitbase_modifiedby: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   lk_connectionbase_createdonbehalfby: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   lk_connectionbase_modifiedonbehalfby: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   lk_contact_createdonbehalfby: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
@@ -1315,6 +1339,10 @@ interface SystemUser_RelatedMany {
   lk_ovs_questionnaire_createdonbehalfby: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
   lk_ovs_questionnaire_modifiedby: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
   lk_ovs_questionnaire_modifiedonbehalfby: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
+  lk_post_createdby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
+  lk_post_createdonbehalfby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
+  lk_post_modifiedby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
+  lk_post_modifiedonbehalfby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   lk_postfollow_createdonbehalfby: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   lk_qm_rclegislation_createdby: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
   lk_qm_rclegislation_createdonbehalfby: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
@@ -1485,6 +1513,7 @@ interface SystemUser_RelatedMany {
   system_user_incidents: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   system_user_service_appointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   systemuser_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
+  systemuser_Posts: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   systemuser_bookableresource_UserId: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   systemuser_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   systemuser_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
