@@ -6,27 +6,27 @@ namespace ROM.FunctionalLocation {
         if (ownerAttribute != null && ownerAttribute != undefined) {
 
             const ownerAttributeValue = ownerAttribute.getValue();
-            
-            if (ownerAttributeValue != null && ownerAttributeValue != undefined && ownerAttributeValue[0].entityType=="systemuser") {
+
+            if (ownerAttributeValue != null && ownerAttributeValue != undefined && ownerAttributeValue[0].entityType == "systemuser") {
                 var targetId = ownerAttributeValue[0].id.replace(/[{}]/g, "");
                 console.log("Type: " + ownerAttributeValue[0].entityType);
                 var isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
                 if (isOffline) {
-                    form.ui.setFormNotification( "Offline: get system user ", "INFO", "offline-operation");
+                    form.ui.setFormNotification("Offline: get system user ", "INFO", "offline-operation");
                     Xrm.WebApi.offline.retrieveRecord("systemuser", targetId, "?$select=_businessunitid_value").then(
                         function success(result) {
                             Xrm.WebApi.offline.retrieveRecord("businessunit", result._businessunitid_value, "?$select=name").then(
                                 function success(result) {
                                     form.getAttribute("ts_businessunit").setValue(result.name);
-                                    form.ui.setFormNotification( "Offline: get BU ", "INFO", "offline-operation");
+                                    form.ui.setFormNotification("Offline: get BU ", "INFO", "offline-operation");
                                 },
-                                function (error) {                                    
-                                    form.ui.setFormNotification( "Offline: ERROR  "+ JSON.stringify(error), "ERROR", "offline-error");   
+                                function (error) {
+                                    form.ui.setFormNotification("Offline: ERROR  " + JSON.stringify(error), "ERROR", "offline-error");
                                 }
                             );
                         },
                         function (error) {
-                            form.ui.setFormNotification( "Offline: ERROR  "+ JSON.stringify(error), "ERROR", "offline-error");                            
+                            form.ui.setFormNotification("Offline: ERROR  " + JSON.stringify(error), "ERROR", "offline-error");
                         }
                     );
                 }
@@ -38,12 +38,12 @@ namespace ROM.FunctionalLocation {
                                     form.getAttribute("ts_businessunit").setValue(result.name);
                                 },
                                 function (error) {
-                                    form.ui.setFormNotification( "Online: ERROR get BU - "+ JSON.stringify(error), "ERROR", "online-error");   
+                                    form.ui.setFormNotification("Online: ERROR get BU - " + JSON.stringify(error), "ERROR", "online-error");
                                 }
                             );
                         },
                         function (error) {
-                            form.ui.setFormNotification( "Online: ERROR  get user - "+ JSON.stringify(error), "ERROR", "online-error");  
+                            form.ui.setFormNotification("Online: ERROR  get user - " + JSON.stringify(error), "ERROR", "online-error");
                         }
                     );
                 }
@@ -108,6 +108,34 @@ namespace ROM.FunctionalLocation {
             form.getControl("msdyn_name").setDisabled(true);
             form.getControl("ts_functionallocationnameenglish").setDisabled(true);
             form.getControl("ts_functionallocationnamefrench").setDisabled(true);
+        }
+    }
+
+    export function IATACodeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
+        const iataValue = form.getAttribute("ts_iatacode").getValue();
+
+        form.getControl("ts_iatacode").clearNotification("iata_length_error");
+
+        if (iataValue != null) {
+            if (iataValue.length !== 3) {
+                form.getControl("ts_iatacode").setNotification("IATA code must be exactly 3 characters.", "iata_length_error");
+                eContext.getEventArgs() && eContext.getEventArgs().preventDefault();
+            }
+        }
+    }
+
+    export function ICAOCodeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
+        const icaoValue = form.getAttribute("ts_icaocode").getValue();
+
+        form.getControl("ts_icaocode").clearNotification("icao_length_error");
+
+        if (icaoValue != null) {
+            if (icaoValue.length !== 4) {
+                form.getControl("ts_icaocode").setNotification("ICAO code must be exactly 4 characters.", "icao_length_error");
+                eContext.getEventArgs() && eContext.getEventArgs().preventDefault();
+            }
         }
     }
 
