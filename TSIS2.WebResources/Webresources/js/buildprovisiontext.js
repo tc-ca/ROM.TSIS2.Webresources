@@ -93,12 +93,12 @@ async function getParentProvision(provision) {
 }
 
 async function getSiblingProvisions(provision) {
-    var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,qm_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision._qm_rcparentlegislationid_value}'`);
+    var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,ts_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision._qm_rcparentlegislationid_value}'`);
     return sortProvisions(results.entities);
 }
 
 async function getChildrenProvisions(provision) {
-    var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,qm_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision.qm_rclegislationid}'`);
+    var results = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,ts_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision.qm_rclegislationid}'`);
     return sortProvisions(results.entities);
 }
 
@@ -110,14 +110,14 @@ function sortProvisions(provisionArray) {
 
     //Split the provisions based on if they have an order number to sort with
     provisionArray.forEach(provision => {
-        if (provision.qm_ordernbr != null) {
+        if (provision.ts_ordernbr != null) {
             hasOrderNumber.push(provision);
         } else {
             noOrderNumber.push(provision);
         }
     });
     //Sort the provisions with order numbers
-    hasOrderNumber.sort(function (a, b) { return a.qm_ordernbr - b.qm_ordernbr });
+    hasOrderNumber.sort(function (a, b) { return a.ts_ordernbr - b.ts_ordernbr });
     //Add the unsorted provisions to the end of the sorted array
     sortedProvisions = hasOrderNumber.concat(noOrderNumber);
     return sortedProvisions;
