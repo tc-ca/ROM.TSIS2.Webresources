@@ -28,7 +28,7 @@ async function retrieveProvisionNames() {
     //Initialize array to collect retrieved provisions
     var provisions = [];
     //Retrieve first 5000 provisions that are not non-imperative
-    let result = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,qm_ordernbr&$filter=(_ts_provisioncategory_value ne 18adfa7f-33f5-eb11-94ef-000d3af36036)`);
+    let result = await parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$select=qm_name,ts_ordernbr&$filter=(_ts_provisioncategory_value ne 18adfa7f-33f5-eb11-94ef-000d3af36036)`);
     //Add results to provisions array
     provisions = provisions.concat(result.entities);
     //result.nextLink is a URL to the next page of 5000 provisions 
@@ -46,7 +46,7 @@ async function retrieveProvisionNames() {
         nextLink = nextLinkResult.nextLink;
     }
     //Sort the provisions by order numbers
-    provisions.sort(function (a, b) { return a.qm_ordernbr - b.qm_ordernbr });
+    provisions.sort(function (a, b) { return a.ts_ordernbr - b.ts_ordernbr });
     let provisionNames = [];
     //Populate an array of just the provision names
     for (provision of provisions) {
