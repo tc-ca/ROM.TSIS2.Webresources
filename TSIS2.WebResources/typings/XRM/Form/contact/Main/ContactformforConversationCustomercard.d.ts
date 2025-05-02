@@ -22,7 +22,6 @@ declare namespace Form.contact.Main {
       get(name: "name"): Xrm.Attribute<string> | null;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "parentaccountid"): Xrm.LookupAttribute<"account"> | null;
-      get(name: "parentcustomerid"): Xrm.Attribute<any>;
       get(name: "spousesname"): Xrm.Attribute<string> | null;
       get(name: "telephone1"): Xrm.Attribute<string> | null;
       get(name: "websiteurl"): Xrm.Attribute<string> | null;
@@ -47,7 +46,7 @@ declare namespace Form.contact.Main {
       get(name: "header_process_spousesname"): Xrm.StringControl | null;
       get(name: "header_process_telephone1"): Xrm.StringControl | null;
       get(name: "header_process_websiteurl"): Xrm.StringControl | null;
-      get(name: "parentcustomerid"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "parentcustomerid"): Xrm.BaseControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -74,7 +73,6 @@ declare namespace Form.contact.Main {
     getAttribute(attributeName: "name"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "parentaccountid"): Xrm.LookupAttribute<"account"> | null;
-    getAttribute(attributeName: "parentcustomerid"): Xrm.Attribute<any>;
     getAttribute(attributeName: "spousesname"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "telephone1"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string> | null;
@@ -94,7 +92,7 @@ declare namespace Form.contact.Main {
     getControl(controlName: "header_process_spousesname"): Xrm.StringControl | null;
     getControl(controlName: "header_process_telephone1"): Xrm.StringControl | null;
     getControl(controlName: "header_process_websiteurl"): Xrm.StringControl | null;
-    getControl(controlName: "parentcustomerid"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "parentcustomerid"): Xrm.BaseControl;
     getControl(controlName: string): undefined;
   }
 }

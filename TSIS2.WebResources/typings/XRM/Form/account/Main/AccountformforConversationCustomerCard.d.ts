@@ -10,7 +10,7 @@ declare namespace Form.account.Main {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
-      get(name: "name"): Xrm.Attribute<any>;
+      get(name: "name"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -20,7 +20,7 @@ declare namespace Form.account.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "header_name"): Xrm.StringControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-      get(name: "name"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "name"): Xrm.BaseControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -35,12 +35,12 @@ declare namespace Form.account.Main {
     }
   }
   interface AccountformforConversationCustomerCard extends Xrm.PageBase<AccountformforConversationCustomerCard.Attributes,AccountformforConversationCustomerCard.Tabs,AccountformforConversationCustomerCard.Controls> {
-    getAttribute(attributeName: "name"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_name"): Xrm.StringControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-    getControl(controlName: "name"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "name"): Xrm.BaseControl;
     getControl(controlName: string): undefined;
   }
 }

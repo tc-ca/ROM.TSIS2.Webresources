@@ -67,7 +67,6 @@ interface Appointment_Relationships {
   msdyn_appointment_bookableresourcebooking?: BookableResourceBooking_Result[] | null;
   ownerid_appointment?: Team_Result | null;
   ownerid_appointment1?: SystemUser_Result | null;
-  owningbusinessunit_appointment?: BusinessUnit_Result | null;
   owningteam_appointment?: Team_Result | null;
   owninguser_appointment?: SystemUser_Result | null;
   regardingobjectid_account_appointment?: Account_Result | null;
@@ -356,7 +355,6 @@ interface Appointment_Expand {
   modifiedonbehalfby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_appointment: SystemUser_Result }>;
   msdyn_appointment_bookableresourcebooking: WebExpand<Appointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_appointment_bookableresourcebooking: BookableResourceBooking_Result[] }>;
   ownerid_appointment: WebExpand<Appointment_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid_appointment: SystemUser_Result } & { ownerid_appointment: Team_Result }>;
-  owningbusinessunit_appointment: WebExpand<Appointment_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit_appointment: BusinessUnit_Result }>;
   owningteam_appointment: WebExpand<Appointment_Expand, Team_Select, Team_Filter, { owningteam_appointment: Team_Result }>;
   owninguser_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_appointment: SystemUser_Result }>;
   regardingobjectid_account_appointment: WebExpand<Appointment_Expand, Account_Select, Account_Filter, { regardingobjectid_account_appointment: Account_Result }>;
@@ -436,7 +434,6 @@ interface Appointment_RelatedOne {
   modifiedonbehalfby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid_appointment: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ownerid_appointment1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
-  owningbusinessunit_appointment: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam_appointment: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   regardingobjectid_account_appointment: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

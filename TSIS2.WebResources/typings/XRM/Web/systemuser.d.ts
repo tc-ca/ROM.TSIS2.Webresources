@@ -155,10 +155,6 @@ interface SystemUser_Relationships {
   lk_bookingstatus_createdonbehalfby?: BookingStatus_Result[] | null;
   lk_bookingstatus_modifiedby?: BookingStatus_Result[] | null;
   lk_bookingstatus_modifiedonbehalfby?: BookingStatus_Result[] | null;
-  lk_businessunit_createdonbehalfby?: BusinessUnit_Result[] | null;
-  lk_businessunit_modifiedonbehalfby?: BusinessUnit_Result[] | null;
-  lk_businessunitbase_createdby?: BusinessUnit_Result[] | null;
-  lk_businessunitbase_modifiedby?: BusinessUnit_Result[] | null;
   lk_connectionbase_createdonbehalfby?: Connection_Result[] | null;
   lk_connectionbase_modifiedonbehalfby?: Connection_Result[] | null;
   lk_contact_createdonbehalfby?: Contact_Result[] | null;
@@ -229,10 +225,6 @@ interface SystemUser_Relationships {
   lk_ovs_questionnaire_createdonbehalfby?: ovs_Questionnaire_Result[] | null;
   lk_ovs_questionnaire_modifiedby?: ovs_Questionnaire_Result[] | null;
   lk_ovs_questionnaire_modifiedonbehalfby?: ovs_Questionnaire_Result[] | null;
-  lk_post_createdby?: Post_Result[] | null;
-  lk_post_createdonbehalfby?: Post_Result[] | null;
-  lk_post_modifiedby?: Post_Result[] | null;
-  lk_post_modifiedonbehalfby?: Post_Result[] | null;
   lk_postfollow_createdonbehalfby?: PostFollow_Result[] | null;
   lk_qm_rclegislation_createdby?: qm_rclegislation_Result[] | null;
   lk_qm_rclegislation_createdonbehalfby?: qm_rclegislation_Result[] | null;
@@ -323,10 +315,6 @@ interface SystemUser_Relationships {
   lk_ts_operationcontact_createdonbehalfby?: ts_operationcontact_Result[] | null;
   lk_ts_operationcontact_modifiedby?: ts_operationcontact_Result[] | null;
   lk_ts_operationcontact_modifiedonbehalfby?: ts_operationcontact_Result[] | null;
-  lk_ts_operationriskassessment_createdby?: ts_operationriskassessment_Result[] | null;
-  lk_ts_operationriskassessment_createdonbehalfby?: ts_operationriskassessment_Result[] | null;
-  lk_ts_operationriskassessment_modifiedby?: ts_operationriskassessment_Result[] | null;
-  lk_ts_operationriskassessment_modifiedonbehalfby?: ts_operationriskassessment_Result[] | null;
   lk_ts_plan_createdby?: ts_Plan_Result[] | null;
   lk_ts_plan_createdonbehalfby?: ts_Plan_Result[] | null;
   lk_ts_plan_modifiedby?: ts_Plan_Result[] | null;
@@ -403,7 +391,6 @@ interface SystemUser_Relationships {
   system_user_incidents?: Incident_Result[] | null;
   system_user_service_appointments?: ServiceAppointment_Result[] | null;
   systemuser_PostFollows?: PostFollow_Result[] | null;
-  systemuser_Posts?: Post_Result[] | null;
   systemuser_bookableresource_UserId?: BookableResource_Result[] | null;
   systemuser_connections1?: Connection_Result[] | null;
   systemuser_connections2?: Connection_Result[] | null;
@@ -466,7 +453,6 @@ interface SystemUser_Relationships {
   user_ts_operationactivity?: ts_OperationActivity_Result[] | null;
   user_ts_operationactivityriskscores?: ts_OperationActivityRiskScores_Result[] | null;
   user_ts_operationcontact?: ts_operationcontact_Result[] | null;
-  user_ts_operationriskassessment?: ts_operationriskassessment_Result[] | null;
   user_ts_plan?: ts_Plan_Result[] | null;
   user_ts_planningdata?: ts_PlanningData_Result[] | null;
   user_ts_planningsettings?: ts_planningsettings_Result[] | null;
@@ -805,7 +791,6 @@ interface SystemUser_Filter {
 }
 interface SystemUser_Expand {
   SystemUser_Email_EmailSender: WebExpand<SystemUser_Expand, Email_Select, Email_Filter, { SystemUser_Email_EmailSender: Email_Result[] }>;
-  businessunitid: WebExpand<SystemUser_Expand, BusinessUnit_Select, BusinessUnit_Filter, { businessunitid: BusinessUnit_Result }>;
   contact_owning_user: WebExpand<SystemUser_Expand, Contact_Select, Contact_Filter, { contact_owning_user: Contact_Result[] }>;
   createdby: WebExpand<SystemUser_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
   createdby_connection: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { createdby_connection: Connection_Result[] }>;
@@ -832,10 +817,6 @@ interface SystemUser_Expand {
   lk_bookingstatus_createdonbehalfby: WebExpand<SystemUser_Expand, BookingStatus_Select, BookingStatus_Filter, { lk_bookingstatus_createdonbehalfby: BookingStatus_Result[] }>;
   lk_bookingstatus_modifiedby: WebExpand<SystemUser_Expand, BookingStatus_Select, BookingStatus_Filter, { lk_bookingstatus_modifiedby: BookingStatus_Result[] }>;
   lk_bookingstatus_modifiedonbehalfby: WebExpand<SystemUser_Expand, BookingStatus_Select, BookingStatus_Filter, { lk_bookingstatus_modifiedonbehalfby: BookingStatus_Result[] }>;
-  lk_businessunit_createdonbehalfby: WebExpand<SystemUser_Expand, BusinessUnit_Select, BusinessUnit_Filter, { lk_businessunit_createdonbehalfby: BusinessUnit_Result[] }>;
-  lk_businessunit_modifiedonbehalfby: WebExpand<SystemUser_Expand, BusinessUnit_Select, BusinessUnit_Filter, { lk_businessunit_modifiedonbehalfby: BusinessUnit_Result[] }>;
-  lk_businessunitbase_createdby: WebExpand<SystemUser_Expand, BusinessUnit_Select, BusinessUnit_Filter, { lk_businessunitbase_createdby: BusinessUnit_Result[] }>;
-  lk_businessunitbase_modifiedby: WebExpand<SystemUser_Expand, BusinessUnit_Select, BusinessUnit_Filter, { lk_businessunitbase_modifiedby: BusinessUnit_Result[] }>;
   lk_connectionbase_createdonbehalfby: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { lk_connectionbase_createdonbehalfby: Connection_Result[] }>;
   lk_connectionbase_modifiedonbehalfby: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { lk_connectionbase_modifiedonbehalfby: Connection_Result[] }>;
   lk_contact_createdonbehalfby: WebExpand<SystemUser_Expand, Contact_Select, Contact_Filter, { lk_contact_createdonbehalfby: Contact_Result[] }>;
@@ -906,10 +887,6 @@ interface SystemUser_Expand {
   lk_ovs_questionnaire_createdonbehalfby: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { lk_ovs_questionnaire_createdonbehalfby: ovs_Questionnaire_Result[] }>;
   lk_ovs_questionnaire_modifiedby: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { lk_ovs_questionnaire_modifiedby: ovs_Questionnaire_Result[] }>;
   lk_ovs_questionnaire_modifiedonbehalfby: WebExpand<SystemUser_Expand, ovs_Questionnaire_Select, ovs_Questionnaire_Filter, { lk_ovs_questionnaire_modifiedonbehalfby: ovs_Questionnaire_Result[] }>;
-  lk_post_createdby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_createdby: Post_Result[] }>;
-  lk_post_createdonbehalfby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_createdonbehalfby: Post_Result[] }>;
-  lk_post_modifiedby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_modifiedby: Post_Result[] }>;
-  lk_post_modifiedonbehalfby: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { lk_post_modifiedonbehalfby: Post_Result[] }>;
   lk_postfollow_createdonbehalfby: WebExpand<SystemUser_Expand, PostFollow_Select, PostFollow_Filter, { lk_postfollow_createdonbehalfby: PostFollow_Result[] }>;
   lk_qm_rclegislation_createdby: WebExpand<SystemUser_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { lk_qm_rclegislation_createdby: qm_rclegislation_Result[] }>;
   lk_qm_rclegislation_createdonbehalfby: WebExpand<SystemUser_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { lk_qm_rclegislation_createdonbehalfby: qm_rclegislation_Result[] }>;
@@ -1000,10 +977,6 @@ interface SystemUser_Expand {
   lk_ts_operationcontact_createdonbehalfby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_createdonbehalfby: ts_operationcontact_Result[] }>;
   lk_ts_operationcontact_modifiedby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_modifiedby: ts_operationcontact_Result[] }>;
   lk_ts_operationcontact_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { lk_ts_operationcontact_modifiedonbehalfby: ts_operationcontact_Result[] }>;
-  lk_ts_operationriskassessment_createdby: WebExpand<SystemUser_Expand, ts_operationriskassessment_Select, ts_operationriskassessment_Filter, { lk_ts_operationriskassessment_createdby: ts_operationriskassessment_Result[] }>;
-  lk_ts_operationriskassessment_createdonbehalfby: WebExpand<SystemUser_Expand, ts_operationriskassessment_Select, ts_operationriskassessment_Filter, { lk_ts_operationriskassessment_createdonbehalfby: ts_operationriskassessment_Result[] }>;
-  lk_ts_operationriskassessment_modifiedby: WebExpand<SystemUser_Expand, ts_operationriskassessment_Select, ts_operationriskassessment_Filter, { lk_ts_operationriskassessment_modifiedby: ts_operationriskassessment_Result[] }>;
-  lk_ts_operationriskassessment_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_operationriskassessment_Select, ts_operationriskassessment_Filter, { lk_ts_operationriskassessment_modifiedonbehalfby: ts_operationriskassessment_Result[] }>;
   lk_ts_plan_createdby: WebExpand<SystemUser_Expand, ts_Plan_Select, ts_Plan_Filter, { lk_ts_plan_createdby: ts_Plan_Result[] }>;
   lk_ts_plan_createdonbehalfby: WebExpand<SystemUser_Expand, ts_Plan_Select, ts_Plan_Filter, { lk_ts_plan_createdonbehalfby: ts_Plan_Result[] }>;
   lk_ts_plan_modifiedby: WebExpand<SystemUser_Expand, ts_Plan_Select, ts_Plan_Filter, { lk_ts_plan_modifiedby: ts_Plan_Result[] }>;
@@ -1083,7 +1056,6 @@ interface SystemUser_Expand {
   system_user_incidents: WebExpand<SystemUser_Expand, Incident_Select, Incident_Filter, { system_user_incidents: Incident_Result[] }>;
   system_user_service_appointments: WebExpand<SystemUser_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { system_user_service_appointments: ServiceAppointment_Result[] }>;
   systemuser_PostFollows: WebExpand<SystemUser_Expand, PostFollow_Select, PostFollow_Filter, { systemuser_PostFollows: PostFollow_Result[] }>;
-  systemuser_Posts: WebExpand<SystemUser_Expand, Post_Select, Post_Filter, { systemuser_Posts: Post_Result[] }>;
   systemuser_bookableresource_UserId: WebExpand<SystemUser_Expand, BookableResource_Select, BookableResource_Filter, { systemuser_bookableresource_UserId: BookableResource_Result[] }>;
   systemuser_connections1: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections1: Connection_Result[] }>;
   systemuser_connections2: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections2: Connection_Result[] }>;
@@ -1146,7 +1118,6 @@ interface SystemUser_Expand {
   user_ts_operationactivity: WebExpand<SystemUser_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { user_ts_operationactivity: ts_OperationActivity_Result[] }>;
   user_ts_operationactivityriskscores: WebExpand<SystemUser_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { user_ts_operationactivityriskscores: ts_OperationActivityRiskScores_Result[] }>;
   user_ts_operationcontact: WebExpand<SystemUser_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { user_ts_operationcontact: ts_operationcontact_Result[] }>;
-  user_ts_operationriskassessment: WebExpand<SystemUser_Expand, ts_operationriskassessment_Select, ts_operationriskassessment_Filter, { user_ts_operationriskassessment: ts_operationriskassessment_Result[] }>;
   user_ts_plan: WebExpand<SystemUser_Expand, ts_Plan_Select, ts_Plan_Filter, { user_ts_plan: ts_Plan_Result[] }>;
   user_ts_planningdata: WebExpand<SystemUser_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { user_ts_planningdata: ts_PlanningData_Result[] }>;
   user_ts_planningsettings: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { user_ts_planningsettings: ts_planningsettings_Result[] }>;
@@ -1231,7 +1202,6 @@ interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
   ts_territory_guid: string | null;
 }
 interface SystemUser_RelatedOne {
-  businessunitid: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -1265,10 +1235,6 @@ interface SystemUser_RelatedMany {
   lk_bookingstatus_createdonbehalfby: WebMappingRetrieve<BookingStatus_Select,BookingStatus_Expand,BookingStatus_Filter,BookingStatus_Fixed,BookingStatus_Result,BookingStatus_FormattedResult>;
   lk_bookingstatus_modifiedby: WebMappingRetrieve<BookingStatus_Select,BookingStatus_Expand,BookingStatus_Filter,BookingStatus_Fixed,BookingStatus_Result,BookingStatus_FormattedResult>;
   lk_bookingstatus_modifiedonbehalfby: WebMappingRetrieve<BookingStatus_Select,BookingStatus_Expand,BookingStatus_Filter,BookingStatus_Fixed,BookingStatus_Result,BookingStatus_FormattedResult>;
-  lk_businessunit_createdonbehalfby: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
-  lk_businessunit_modifiedonbehalfby: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
-  lk_businessunitbase_createdby: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
-  lk_businessunitbase_modifiedby: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   lk_connectionbase_createdonbehalfby: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   lk_connectionbase_modifiedonbehalfby: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   lk_contact_createdonbehalfby: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
@@ -1339,10 +1305,6 @@ interface SystemUser_RelatedMany {
   lk_ovs_questionnaire_createdonbehalfby: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
   lk_ovs_questionnaire_modifiedby: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
   lk_ovs_questionnaire_modifiedonbehalfby: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;
-  lk_post_createdby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
-  lk_post_createdonbehalfby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
-  lk_post_modifiedby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
-  lk_post_modifiedonbehalfby: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   lk_postfollow_createdonbehalfby: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   lk_qm_rclegislation_createdby: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
   lk_qm_rclegislation_createdonbehalfby: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
@@ -1433,10 +1395,6 @@ interface SystemUser_RelatedMany {
   lk_ts_operationcontact_createdonbehalfby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   lk_ts_operationcontact_modifiedby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   lk_ts_operationcontact_modifiedonbehalfby: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
-  lk_ts_operationriskassessment_createdby: WebMappingRetrieve<ts_operationriskassessment_Select,ts_operationriskassessment_Expand,ts_operationriskassessment_Filter,ts_operationriskassessment_Fixed,ts_operationriskassessment_Result,ts_operationriskassessment_FormattedResult>;
-  lk_ts_operationriskassessment_createdonbehalfby: WebMappingRetrieve<ts_operationriskassessment_Select,ts_operationriskassessment_Expand,ts_operationriskassessment_Filter,ts_operationriskassessment_Fixed,ts_operationriskassessment_Result,ts_operationriskassessment_FormattedResult>;
-  lk_ts_operationriskassessment_modifiedby: WebMappingRetrieve<ts_operationriskassessment_Select,ts_operationriskassessment_Expand,ts_operationriskassessment_Filter,ts_operationriskassessment_Fixed,ts_operationriskassessment_Result,ts_operationriskassessment_FormattedResult>;
-  lk_ts_operationriskassessment_modifiedonbehalfby: WebMappingRetrieve<ts_operationriskassessment_Select,ts_operationriskassessment_Expand,ts_operationriskassessment_Filter,ts_operationriskassessment_Fixed,ts_operationriskassessment_Result,ts_operationriskassessment_FormattedResult>;
   lk_ts_plan_createdby: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   lk_ts_plan_createdonbehalfby: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   lk_ts_plan_modifiedby: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
@@ -1513,7 +1471,6 @@ interface SystemUser_RelatedMany {
   system_user_incidents: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   system_user_service_appointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   systemuser_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
-  systemuser_Posts: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   systemuser_bookableresource_UserId: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
   systemuser_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   systemuser_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
@@ -1575,7 +1532,6 @@ interface SystemUser_RelatedMany {
   user_ts_operationactivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   user_ts_operationactivityriskscores: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
   user_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
-  user_ts_operationriskassessment: WebMappingRetrieve<ts_operationriskassessment_Select,ts_operationriskassessment_Expand,ts_operationriskassessment_Filter,ts_operationriskassessment_Fixed,ts_operationriskassessment_Result,ts_operationriskassessment_FormattedResult>;
   user_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   user_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   user_ts_planningsettings: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;

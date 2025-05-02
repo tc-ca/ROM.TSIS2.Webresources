@@ -64,7 +64,6 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "qm_legislationftxt"): Xrm.Attribute<string>;
       get(name: "qm_legislationlbl"): Xrm.Attribute<string>;
       get(name: "qm_name"): Xrm.Attribute<string>;
-      get(name: "qm_ordernbr"): Xrm.NumberAttribute;
       get(name: "qm_rcparentlegislationid"): Xrm.LookupAttribute<"qm_rclegislation">;
       get(name: "qm_tylegislationsourceid"): Xrm.LookupAttribute<"qm_tylegislationsource">;
       get(name: "qm_tylegislationtypeid"): Xrm.LookupAttribute<"qm_tylegislationtype">;
@@ -76,6 +75,7 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "ts_infractiontype"): Xrm.OptionSetAttribute<ts_infractiontype>;
       get(name: "ts_nameenglish"): Xrm.Attribute<string>;
       get(name: "ts_namefrench"): Xrm.Attribute<string>;
+      get(name: "ts_ordernbr"): Xrm.NumberAttribute;
       get(name: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -107,7 +107,6 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "qm_legislationftxt"): Xrm.StringControl;
       get(name: "qm_legislationlbl"): Xrm.StringControl;
       get(name: "qm_name"): Xrm.StringControl;
-      get(name: "qm_ordernbr"): Xrm.NumberControl;
       get(name: "qm_rcparentlegislationid"): Xrm.LookupControl<"qm_rclegislation">;
       get(name: "qm_tylegislationsourceid"): Xrm.LookupControl<"qm_tylegislationsource">;
       get(name: "qm_tylegislationtypeid"): Xrm.LookupControl<"qm_tylegislationtype">;
@@ -120,6 +119,7 @@ declare namespace Form.qm_rclegislation.Main {
       get(name: "ts_infractiontype"): Xrm.OptionSetControl<ts_infractiontype>;
       get(name: "ts_nameenglish"): Xrm.StringControl;
       get(name: "ts_namefrench"): Xrm.StringControl;
+      get(name: "ts_ordernbr"): Xrm.NumberControl;
       get(name: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -157,7 +157,6 @@ declare namespace Form.qm_rclegislation.Main {
     getAttribute(attributeName: "qm_legislationftxt"): Xrm.Attribute<string>;
     getAttribute(attributeName: "qm_legislationlbl"): Xrm.Attribute<string>;
     getAttribute(attributeName: "qm_name"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "qm_ordernbr"): Xrm.NumberAttribute;
     getAttribute(attributeName: "qm_rcparentlegislationid"): Xrm.LookupAttribute<"qm_rclegislation">;
     getAttribute(attributeName: "qm_tylegislationsourceid"): Xrm.LookupAttribute<"qm_tylegislationsource">;
     getAttribute(attributeName: "qm_tylegislationtypeid"): Xrm.LookupAttribute<"qm_tylegislationtype">;
@@ -169,6 +168,7 @@ declare namespace Form.qm_rclegislation.Main {
     getAttribute(attributeName: "ts_infractiontype"): Xrm.OptionSetAttribute<ts_infractiontype>;
     getAttribute(attributeName: "ts_nameenglish"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_namefrench"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_ordernbr"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_provisioncategory"): Xrm.LookupAttribute<"ts_provisioncategory">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"qm_rclegislation">;
@@ -195,7 +195,6 @@ declare namespace Form.qm_rclegislation.Main {
     getControl(controlName: "qm_legislationftxt"): Xrm.StringControl;
     getControl(controlName: "qm_legislationlbl"): Xrm.StringControl;
     getControl(controlName: "qm_name"): Xrm.StringControl;
-    getControl(controlName: "qm_ordernbr"): Xrm.NumberControl;
     getControl(controlName: "qm_rcparentlegislationid"): Xrm.LookupControl<"qm_rclegislation">;
     getControl(controlName: "qm_tylegislationsourceid"): Xrm.LookupControl<"qm_tylegislationsource">;
     getControl(controlName: "qm_tylegislationtypeid"): Xrm.LookupControl<"qm_tylegislationtype">;
@@ -208,6 +207,7 @@ declare namespace Form.qm_rclegislation.Main {
     getControl(controlName: "ts_infractiontype"): Xrm.OptionSetControl<ts_infractiontype>;
     getControl(controlName: "ts_nameenglish"): Xrm.StringControl;
     getControl(controlName: "ts_namefrench"): Xrm.StringControl;
+    getControl(controlName: "ts_ordernbr"): Xrm.NumberControl;
     getControl(controlName: "ts_provisioncategory"): Xrm.LookupControl<"ts_provisioncategory">;
     getControl(controlName: string): undefined;
   }
