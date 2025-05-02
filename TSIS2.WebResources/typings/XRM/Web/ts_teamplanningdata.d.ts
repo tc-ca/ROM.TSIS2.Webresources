@@ -46,7 +46,6 @@ interface ts_TeamPlanningData_Relationships {
   ts_teamplanningdata_Appointments?: Appointment_Result[] | null;
   ts_teamplanningdata_Emails?: Email_Result[] | null;
   ts_teamplanningdata_PostFollows?: PostFollow_Result[] | null;
-  ts_teamplanningdata_Posts?: Post_Result[] | null;
   ts_teamplanningdata_ServiceAppointments?: ServiceAppointment_Result[] | null;
   ts_teamplanningdata_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   ts_teamplanninginspectorhours_TeamPlannin?: ts_TeamPlanningInspectorHours_Result[] | null;
@@ -173,7 +172,6 @@ interface ts_TeamPlanningData_Expand {
   modifiedby: WebExpand<ts_TeamPlanningData_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ts_TeamPlanningData_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ownerid: WebExpand<ts_TeamPlanningData_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
-  owningbusinessunit: WebExpand<ts_TeamPlanningData_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<ts_TeamPlanningData_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_TeamPlanningData_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_FiscalYear: WebExpand<ts_TeamPlanningData_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
@@ -181,7 +179,6 @@ interface ts_TeamPlanningData_Expand {
   ts_teamplanningdata_Appointments: WebExpand<ts_TeamPlanningData_Expand, Appointment_Select, Appointment_Filter, { ts_teamplanningdata_Appointments: Appointment_Result[] }>;
   ts_teamplanningdata_Emails: WebExpand<ts_TeamPlanningData_Expand, Email_Select, Email_Filter, { ts_teamplanningdata_Emails: Email_Result[] }>;
   ts_teamplanningdata_PostFollows: WebExpand<ts_TeamPlanningData_Expand, PostFollow_Select, PostFollow_Filter, { ts_teamplanningdata_PostFollows: PostFollow_Result[] }>;
-  ts_teamplanningdata_Posts: WebExpand<ts_TeamPlanningData_Expand, Post_Select, Post_Filter, { ts_teamplanningdata_Posts: Post_Result[] }>;
   ts_teamplanningdata_ServiceAppointments: WebExpand<ts_TeamPlanningData_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ts_teamplanningdata_ServiceAppointments: ServiceAppointment_Result[] }>;
   ts_teamplanningdata_ts_enforcementactions: WebExpand<ts_TeamPlanningData_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_teamplanningdata_ts_enforcementactions: ts_enforcementaction_Result[] }>;
   ts_teamplanninginspectorhours_TeamPlannin: WebExpand<ts_TeamPlanningData_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { ts_teamplanninginspectorhours_TeamPlannin: ts_TeamPlanningInspectorHours_Result[] }>;
@@ -225,7 +222,6 @@ interface ts_TeamPlanningData_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
@@ -235,7 +231,6 @@ interface ts_TeamPlanningData_RelatedMany {
   ts_teamplanningdata_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   ts_teamplanningdata_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   ts_teamplanningdata_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
-  ts_teamplanningdata_Posts: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   ts_teamplanningdata_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   ts_teamplanningdata_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_teamplanninginspectorhours_TeamPlannin: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;

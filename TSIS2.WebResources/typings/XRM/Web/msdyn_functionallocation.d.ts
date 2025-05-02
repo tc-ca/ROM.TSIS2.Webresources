@@ -52,7 +52,6 @@ interface msdyn_FunctionalLocation_Relationships {
   msdyn_functionallocation_Appointments?: Appointment_Result[] | null;
   msdyn_functionallocation_Emails?: Email_Result[] | null;
   msdyn_functionallocation_PostFollows?: PostFollow_Result[] | null;
-  msdyn_functionallocation_Posts?: Post_Result[] | null;
   msdyn_functionallocation_ServiceAppointments?: ServiceAppointment_Result[] | null;
   msdyn_functionallocation_connections1?: Connection_Result[] | null;
   msdyn_functionallocation_connections2?: Connection_Result[] | null;
@@ -249,7 +248,6 @@ interface msdyn_FunctionalLocation_Expand {
   msdyn_functionallocation_Appointments: WebExpand<msdyn_FunctionalLocation_Expand, Appointment_Select, Appointment_Filter, { msdyn_functionallocation_Appointments: Appointment_Result[] }>;
   msdyn_functionallocation_Emails: WebExpand<msdyn_FunctionalLocation_Expand, Email_Select, Email_Filter, { msdyn_functionallocation_Emails: Email_Result[] }>;
   msdyn_functionallocation_PostFollows: WebExpand<msdyn_FunctionalLocation_Expand, PostFollow_Select, PostFollow_Filter, { msdyn_functionallocation_PostFollows: PostFollow_Result[] }>;
-  msdyn_functionallocation_Posts: WebExpand<msdyn_FunctionalLocation_Expand, Post_Select, Post_Filter, { msdyn_functionallocation_Posts: Post_Result[] }>;
   msdyn_functionallocation_ServiceAppointments: WebExpand<msdyn_FunctionalLocation_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_functionallocation_ServiceAppointments: ServiceAppointment_Result[] }>;
   msdyn_functionallocation_connections1: WebExpand<msdyn_FunctionalLocation_Expand, Connection_Select, Connection_Filter, { msdyn_functionallocation_connections1: Connection_Result[] }>;
   msdyn_functionallocation_connections2: WebExpand<msdyn_FunctionalLocation_Expand, Connection_Select, Connection_Filter, { msdyn_functionallocation_connections2: Connection_Result[] }>;
@@ -259,7 +257,6 @@ interface msdyn_FunctionalLocation_Expand {
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: msdyn_workorder_Result[] }>;
   ovs_Finding_functionallocation_msdyn_Func: WebExpand<msdyn_FunctionalLocation_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ovs_Finding_functionallocation_msdyn_Func: ovs_Finding_Result[] }>;
   ownerid: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
-  owningbusinessunit: WebExpand<msdyn_FunctionalLocation_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<msdyn_FunctionalLocation_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_AccountableTeam: WebExpand<msdyn_FunctionalLocation_Expand, Team_Select, Team_Filter, { ts_AccountableTeam: Team_Result }>;
@@ -350,7 +347,6 @@ interface msdyn_FunctionalLocation_RelatedOne {
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_ParentFunctionalLocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_AccountableTeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
@@ -361,7 +357,6 @@ interface msdyn_FunctionalLocation_RelatedMany {
   msdyn_functionallocation_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   msdyn_functionallocation_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   msdyn_functionallocation_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
-  msdyn_functionallocation_Posts: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   msdyn_functionallocation_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   msdyn_functionallocation_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_functionallocation_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;

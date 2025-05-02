@@ -35,6 +35,7 @@ declare namespace Form.msdyn_workorder.Main {
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_11"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_12"): Xrm.PageSection;
+        get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_14"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_9"): Xrm.PageSection;
         get(name: string): undefined;
@@ -254,6 +255,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_scheduledtimeofdeparture"): Xrm.DateAttribute;
       get(name: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_stakeholdertcscp"): Xrm.Attribute<string>;
       get(name: "ts_state"): Xrm.OptionSetAttribute<ts_planningstate>;
       get(name: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_teamplanningdata"): Xrm.LookupAttribute<"ts_teamplanningdata">;
@@ -448,6 +450,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
       get(name: "ts_securityincident1"): Xrm.LookupControl<"ts_securityincident">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_stakeholdertcscp"): Xrm.StringControl;
       get(name: "ts_state"): Xrm.OptionSetControl<ts_planningstate>;
       get(name: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_teamplanningdata"): Xrm.LookupControl<"ts_teamplanningdata">;
@@ -621,6 +624,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_scheduledtimeofdeparture"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_stakeholdertcscp"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_state"): Xrm.OptionSetAttribute<ts_planningstate>;
     getAttribute(attributeName: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_teamplanningdata"): Xrm.LookupAttribute<"ts_teamplanningdata">;
@@ -810,6 +814,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
     getControl(controlName: "ts_securityincident1"): Xrm.LookupControl<"ts_securityincident">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_stakeholdertcscp"): Xrm.StringControl;
     getControl(controlName: "ts_state"): Xrm.OptionSetControl<ts_planningstate>;
     getControl(controlName: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_teamplanningdata"): Xrm.LookupControl<"ts_teamplanningdata">;

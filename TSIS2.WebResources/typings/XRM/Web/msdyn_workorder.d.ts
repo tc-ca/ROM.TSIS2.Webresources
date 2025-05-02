@@ -125,6 +125,7 @@ interface msdyn_workorder_Base extends WebEntity {
   ts_riskscore?: number | null;
   ts_scheduledtimeofarrival?: Date | null;
   ts_scheduledtimeofdeparture?: Date | null;
+  ts_stakeholdertcscp?: string | null;
   ts_state?: ts_planningstate | null;
   ts_totalconductoversight?: number | null;
   ts_totalconductoversight_date?: Date | null;
@@ -155,7 +156,6 @@ interface msdyn_workorder_Relationships {
   msdyn_workorder_Appointments?: Appointment_Result[] | null;
   msdyn_workorder_Emails?: Email_Result[] | null;
   msdyn_workorder_PostFollows?: PostFollow_Result[] | null;
-  msdyn_workorder_Posts?: Post_Result[] | null;
   msdyn_workorder_ServiceAppointments?: ServiceAppointment_Result[] | null;
   msdyn_workorder_Teams?: Team_Result[] | null;
   msdyn_workorder_connections1?: Connection_Result[] | null;
@@ -483,6 +483,7 @@ interface msdyn_workorder_Select {
   ts_serviceterritorynew_guid: WebAttribute<msdyn_workorder_Select, { ts_serviceterritorynew_guid: string | null }, { ts_serviceterritorynew_formatted?: string }>;
   ts_site_guid: WebAttribute<msdyn_workorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_site_site_guid: WebAttribute<msdyn_workorder_Select, { ts_site_site_guid: string | null }, { ts_site_site_formatted?: string }>;
+  ts_stakeholdertcscp: WebAttribute<msdyn_workorder_Select, { ts_stakeholdertcscp: string | null }, {  }>;
   ts_state: WebAttribute<msdyn_workorder_Select, { ts_state: ts_planningstate | null }, { ts_state_formatted?: string }>;
   ts_subsubsite_guid: WebAttribute<msdyn_workorder_Select, { ts_subsubsite_guid: string | null }, { ts_subsubsite_formatted?: string }>;
   ts_subsubsite_site_guid: WebAttribute<msdyn_workorder_Select, { ts_subsubsite_site_guid: string | null }, { ts_subsubsite_site_formatted?: string }>;
@@ -711,6 +712,7 @@ interface msdyn_workorder_Filter {
   ts_serviceterritorynew_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
   ts_site_site_guid: XQW.Guid;
+  ts_stakeholdertcscp: string;
   ts_state: ts_planningstate;
   ts_subsubsite_guid: XQW.Guid;
   ts_subsubsite_site_guid: XQW.Guid;
@@ -760,7 +762,6 @@ interface msdyn_workorder_Expand {
   msdyn_workorder_Appointments: WebExpand<msdyn_workorder_Expand, Appointment_Select, Appointment_Filter, { msdyn_workorder_Appointments: Appointment_Result[] }>;
   msdyn_workorder_Emails: WebExpand<msdyn_workorder_Expand, Email_Select, Email_Filter, { msdyn_workorder_Emails: Email_Result[] }>;
   msdyn_workorder_PostFollows: WebExpand<msdyn_workorder_Expand, PostFollow_Select, PostFollow_Filter, { msdyn_workorder_PostFollows: PostFollow_Result[] }>;
-  msdyn_workorder_Posts: WebExpand<msdyn_workorder_Expand, Post_Select, Post_Filter, { msdyn_workorder_Posts: Post_Result[] }>;
   msdyn_workorder_ServiceAppointments: WebExpand<msdyn_workorder_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_workorder_ServiceAppointments: ServiceAppointment_Result[] }>;
   msdyn_workorder_Teams: WebExpand<msdyn_workorder_Expand, Team_Select, Team_Filter, { msdyn_workorder_Teams: Team_Result[] }>;
   msdyn_workorder_connections1: WebExpand<msdyn_workorder_Expand, Connection_Select, Connection_Filter, { msdyn_workorder_connections1: Connection_Result[] }>;
@@ -777,7 +778,6 @@ interface msdyn_workorder_Expand {
   ovs_asset: WebExpand<msdyn_workorder_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { ovs_asset: msdyn_customerasset_Result }>;
   ovs_operationtypeid: WebExpand<msdyn_workorder_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ovs_operationtypeid: ovs_operationtype_Result }>;
   ownerid: WebExpand<msdyn_workorder_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
-  owningbusinessunit: WebExpand<msdyn_workorder_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<msdyn_workorder_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_workorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   qm_ReportContactId: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { qm_ReportContactId: Contact_Result }>;
@@ -1077,7 +1077,6 @@ interface msdyn_workorder_RelatedOne {
   ovs_asset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   ovs_operationtypeid: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   qm_ReportContactId: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
@@ -1115,7 +1114,6 @@ interface msdyn_workorder_RelatedMany {
   msdyn_workorder_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   msdyn_workorder_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   msdyn_workorder_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
-  msdyn_workorder_Posts: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   msdyn_workorder_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   msdyn_workorder_Teams: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   msdyn_workorder_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;

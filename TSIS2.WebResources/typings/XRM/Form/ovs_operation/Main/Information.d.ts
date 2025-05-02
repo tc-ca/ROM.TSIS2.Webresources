@@ -58,6 +58,7 @@ declare namespace Form.ovs_operation.Main {
         get(name: "_section_156"): Xrm.PageSection;
         get(name: "section_8"): Xrm.PageSection;
         get(name: "section_riskrating"): Xrm.PageSection;
+        get(name: "tab_general_section_7"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -118,6 +119,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
+      get(name: "ts_stakeholdertcscp"): Xrm.Attribute<string>;
       get(name: "ts_stationtype"): Xrm.OptionSetAttribute<ts_stationtype>;
       get(name: "ts_statusenddate"): Xrm.DateAttribute;
       get(name: "ts_statusstartdate"): Xrm.DateAttribute;
@@ -187,6 +189,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
+      get(name: "ts_stakeholdertcscp"): Xrm.StringControl;
       get(name: "ts_stationtype"): Xrm.OptionSetControl<ts_stationtype>;
       get(name: "ts_statusenddate"): Xrm.DateControl;
       get(name: "ts_statusstartdate"): Xrm.DateControl;
@@ -258,6 +261,7 @@ declare namespace Form.ovs_operation.Main {
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_specializedpperequired"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
+    getAttribute(attributeName: "ts_stakeholdertcscp"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_stationtype"): Xrm.OptionSetAttribute<ts_stationtype>;
     getAttribute(attributeName: "ts_statusenddate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_statusstartdate"): Xrm.DateAttribute;
@@ -322,6 +326,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_specializedpperequired"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
+    getControl(controlName: "ts_stakeholdertcscp"): Xrm.StringControl;
     getControl(controlName: "ts_stationtype"): Xrm.OptionSetControl<ts_stationtype>;
     getControl(controlName: "ts_statusenddate"): Xrm.DateControl;
     getControl(controlName: "ts_statusstartdate"): Xrm.DateControl;

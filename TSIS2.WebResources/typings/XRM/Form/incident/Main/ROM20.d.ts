@@ -79,6 +79,7 @@ declare namespace Form.incident.Main {
         get(name: "Applicable SLA(STANDARD)"): Xrm.PageSection;
         get(name: "Details"): Xrm.PageSection;
         get(name: "general_section_7"): Xrm.PageSection;
+        get(name: "general_section_8"): Xrm.PageSection;
         get(name: "general_section_Notes"): Xrm.PageSection;
         get(name: "tab_13_section_4"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
@@ -215,6 +216,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_overtime"): Xrm.NumberAttribute;
       get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
       get(name: "ts_quarteroftraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
+      get(name: "ts_stakeholdertcscp"): Xrm.Attribute<string>;
       get(name: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
       get(name: "ts_traveltime"): Xrm.NumberAttribute;
       get(name: "ts_workorder1"): Xrm.LookupAttribute<"msdyn_workorder">;
@@ -316,6 +318,7 @@ declare namespace Form.incident.Main {
       get(name: "ts_overtime"): Xrm.NumberControl;
       get(name: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;
       get(name: "ts_quarteroftraveltime"): Xrm.OptionSetControl<ts_quarter>;
+      get(name: "ts_stakeholdertcscp"): Xrm.StringControl;
       get(name: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
       get(name: "ts_traveltime"): Xrm.NumberControl;
       get(name: "ts_workorder1"): Xrm.LookupControl<"msdyn_workorder">;
@@ -409,6 +412,7 @@ declare namespace Form.incident.Main {
     getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetAttribute<ts_quarter>;
     getAttribute(attributeName: "ts_quarteroftraveltime"): Xrm.OptionSetAttribute<ts_quarter>;
+    getAttribute(attributeName: "ts_stakeholdertcscp"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_tradenameid"): Xrm.LookupAttribute<"ts_tradename">;
     getAttribute(attributeName: "ts_traveltime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_workorder1"): Xrm.LookupAttribute<"msdyn_workorder">;
@@ -505,6 +509,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "ts_overtime"): Xrm.NumberControl;
     getControl(controlName: "ts_quarterofreportinganddocumentation"): Xrm.OptionSetControl<ts_quarter>;
     getControl(controlName: "ts_quarteroftraveltime"): Xrm.OptionSetControl<ts_quarter>;
+    getControl(controlName: "ts_stakeholdertcscp"): Xrm.StringControl;
     getControl(controlName: "ts_tradenameid"): Xrm.LookupControl<"ts_tradename">;
     getControl(controlName: "ts_traveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_workorder1"): Xrm.LookupControl<"msdyn_workorder">;
