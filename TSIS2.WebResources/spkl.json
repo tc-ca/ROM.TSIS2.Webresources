@@ -200,6 +200,11 @@
             "description": "ROM TSIS 2.0 Operation Activity Risk Scores Form Scripts"
           },
           {
+            "uniquename": "ts_/js/OperationActivityRiskScoresRibbon.js",
+            "file": "js\\OperationActivityRiskScoresRibbon.js",
+            "description": "Operation Activity Risk Scores Ribbon Button Scripts"
+          },
+          {
             "uniquename": "ts_/js/UserRegistration.js",
             "file": "js\\UserRegistration.js",
             "description": "ROM TSIS 2.0 User Registration Form Scripts"

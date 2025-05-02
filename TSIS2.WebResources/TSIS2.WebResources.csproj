@@ -212,6 +212,7 @@
     <Content Include="Webresources\js\OperationActivityQuickCreate.js" />
     <Content Include="Webresources\js\OperationActivityRibbon.js" />
     <Content Include="Webresources\js\OperationActivityRiskScores.js" />
+    <Content Include="Webresources\js\OperationActivityRiskScoresRibbon.js" />
     <Content Include="Webresources\js\OperationRiskAssessmentRibbon.js" />
     <Content Include="Webresources\js\OperationType.js" />
     <Content Include="Webresources\js\Plan.js" />
