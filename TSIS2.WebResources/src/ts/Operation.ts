@@ -19,6 +19,7 @@ namespace ROM.Operation {
                 form.getControl("ts_dateoflastsecurityplanreview").setDisabled(false);
                 form.getControl("ts_dateoflastcomprehensiveinspection").setDisabled(false);
                 form.getControl("ts_dateoflastriskbasedinspection").setDisabled(false);
+                form.getControl("ts_stakeholdertcscp").setDisabled(false);
             }
         });
 
