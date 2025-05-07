@@ -6,6 +6,9 @@ var ROM;
         var langColumn = Xrm.Utility.getGlobalContext().userSettings.languageId === 1033 ? "ts_securityincidenttypenameenglish" : "ts_securityincidenttypenamefrench";
         function onLoad(eContext) {
             var formContext = eContext.getFormContext();
+            if (formContext.ui.getFormType() == 1 || formContext.ui.getFormType() == 2) {
+                showTCOMWarningMessage(formContext);
+            }
             if (showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext)) {
                 formContext.getAttribute("ownerid").setValue();
             }
@@ -49,8 +52,8 @@ var ROM;
                     var ownerAttributeValue = ownerAttribute.getValue();
                     if (nameAttributeValue && ownerAttributeValue) {
                         var fetchData = {
-                            "securityIncidentTypeName": "".concat(nameAttributeValue),
-                            "ownerId": "".concat((_b = ownerAttribute.getValue()) === null || _b === void 0 ? void 0 : _b[0].id)
+                            "securityIncidentTypeName": "" + nameAttributeValue,
+                            "ownerId": "" + ((_b = ownerAttribute.getValue()) === null || _b === void 0 ? void 0 : _b[0].id)
                         };
                         var fetchXml = [
                             "<fetch version='1.0' mapping='logical' distinct='true'>",
@@ -79,5 +82,11 @@ var ROM;
             return false;
         }
         SecurityIncidentType.checkIfExistingRecordExistWithSameNameAndBU = checkIfExistingRecordExistWithSameNameAndBU;
+        function showTCOMWarningMessage(formContext) {
+            var message = Xrm.Utility.getGlobalContext().userSettings.languageId === 1033
+                ? "Please advise TCOMs before creating or changing this record."
+                : "Veuillez informer les TCOM avant de créer ou de modifier cet enregistrement.";
+            formContext.ui.setFormNotification(message, "WARNING", "tcom_warning");
+        }
     })(SecurityIncidentType = ROM.SecurityIncidentType || (ROM.SecurityIncidentType = {}));
 })(ROM || (ROM = {}));
