@@ -1,9 +1,14 @@
 namespace ROM.SecurityIncidentType {
     let langColumn = Xrm.Utility.getGlobalContext().userSettings.languageId === 1033 ? "ts_securityincidenttypenameenglish" : "ts_securityincidenttypenamefrench";
+
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_securityincidenttype.Main.Information>eContext.getFormContext();
 
-        if(showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext)){
+        if (formContext.ui.getFormType() == 1 || formContext.ui.getFormType() == 2) {
+            showTCOMWarningMessage(formContext);
+        }
+
+        if (showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext)) {
             formContext.getAttribute("ownerid").setValue();
         }
         if (formContext.ui.getFormType() == 1) {
@@ -16,11 +21,11 @@ namespace ROM.SecurityIncidentType {
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_securityincidenttype.Main.Information>eContext.getFormContext();
-        if(
+        if (
             checkIfExistingRecordExistWithSameNameAndBU(form, "ts_name") ||
             checkIfExistingRecordExistWithSameNameAndBU(form, "ts_securityincidenttypenameenglish") ||
-            checkIfExistingRecordExistWithSameNameAndBU(form, "ts_securityincidenttypenamefrench")){
-                eContext.getEventArgs().preventDefault();
+            checkIfExistingRecordExistWithSameNameAndBU(form, "ts_securityincidenttypenamefrench")) {
+            eContext.getEventArgs().preventDefault();
         }
     }
 
@@ -39,13 +44,13 @@ namespace ROM.SecurityIncidentType {
 
     export function checkIfExistingRecordExistWithSameNameAndBU(formContext: Form.ts_securityincidenttype.Main.Information, field: string): boolean {
         let securityIncidentAttribute = formContext.getAttribute(field);
-        if(securityIncidentAttribute !== undefined){
+        if (securityIncidentAttribute !== undefined) {
             let ownerAttribute = formContext.getAttribute("ownerid");
             if (securityIncidentAttribute && ownerAttribute) {
 
                 let nameAttributeValue = (securityIncidentAttribute as Xrm.Attribute<string>).getValue()?.trim();
                 let ownerAttributeValue = (ownerAttribute as Xrm.Attribute<string>).getValue();
-                if(nameAttributeValue && ownerAttributeValue){
+                if (nameAttributeValue && ownerAttributeValue) {
 
                     let fetchData = {
                         "securityIncidentTypeName": `${nameAttributeValue}`,
@@ -55,30 +60,38 @@ namespace ROM.SecurityIncidentType {
                         "<fetch version='1.0' mapping='logical' distinct='true'>",
                         "  <entity name='ts_securityincidenttype'>",
                         "    <filter type='and'>",
-                        "      <condition attribute='", (field === 'ts_name' ? langColumn : field) ,"' operator='eq' value='", fetchData.securityIncidentTypeName, "'/>",
+                        "      <condition attribute='", (field === 'ts_name' ? langColumn : field), "' operator='eq' value='", fetchData.securityIncidentTypeName, "'/>",
                         "      <condition attribute='ownerid' operator='eq' value='", fetchData.ownerId, "'/>",
                         "      <condition attribute='ts_securityincidenttypeid' operator='neq' value='", formContext.data.entity.getId(), "'/>",
                         "    </filter>",
                         "  </entity>",
                         "</fetch>"
-                        ].join("");
-        
+                    ].join("");
+
                     Xrm.WebApi.retrieveMultipleRecords('ts_securityincidenttype', "?fetchXml=" + fetchXml).then(
                         function success(result) {
-                            if(result.entities.length > 0){
+                            if (result.entities.length > 0) {
                                 const warningMessage = Xrm.Utility.getResourceString("ts_/resx/SecurityIncidentType", "WarningMessageText");
                                 (formContext.getControl(field) as any).setNotification(warningMessage, "error");
                                 return true;
                             }
-                            else{
+                            else {
                                 (formContext.getControl(field) as any).clearNotification("error");
                             }
                         }
-                    ); 
+                    );
                 }
             }
         }
         return false;
+    }
+
+    function showTCOMWarningMessage(formContext: Form.ts_securityincidenttype.Main.Information): void {
+        const message = Xrm.Utility.getGlobalContext().userSettings.languageId === 1033
+            ? "Please advise TCOMs before creating or changing this record."
+            : "Veuillez informer les TCOM avant de créer ou de modifier cet enregistrement.";
+
+        formContext.ui.setFormNotification(message, "WARNING", "tcom_warning");
     }
 }
 
