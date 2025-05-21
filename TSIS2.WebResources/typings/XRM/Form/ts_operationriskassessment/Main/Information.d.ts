@@ -1,6 +1,13 @@
 declare namespace Form.ts_operationriskassessment.Main {
   namespace Information {
     namespace Tabs {
+      interface tab_2 extends Xrm.SectionCollectionBase {
+        get(name: "tab_2_section_3"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -37,6 +44,7 @@ declare namespace Form.ts_operationriskassessment.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;

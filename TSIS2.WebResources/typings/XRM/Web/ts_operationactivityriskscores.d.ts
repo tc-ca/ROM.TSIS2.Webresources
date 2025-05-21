@@ -9,6 +9,7 @@ interface ts_OperationActivityRiskScores_Base extends WebEntity {
   ts_calculatedriskscore?: number | null;
   ts_name?: string | null;
   ts_operationactivityriskscoresid?: string | null;
+  ts_riskscoreribbontrigger?: Date | null;
   ts_riskscoretrigger?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
@@ -71,6 +72,7 @@ interface ts_OperationActivityRiskScores_Select {
   ts_programareaentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_programareaentityrisk_guid: string | null }, { ts_programareaentityrisk_formatted?: string }>;
   ts_riskfrequency_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskfrequency_guid: string | null }, { ts_riskfrequency_formatted?: string }>;
   ts_riskrating_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskrating_guid: string | null }, { ts_riskrating_formatted?: string }>;
+  ts_riskscoreribbontrigger: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscoreribbontrigger: Date | null }, { ts_riskscoreribbontrigger_formatted?: string }>;
   ts_riskscoretrigger: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscoretrigger: number | null }, {  }>;
   ts_siteentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteentityrisk_guid: string | null }, { ts_siteentityrisk_formatted?: string }>;
   ts_stakeholderentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_stakeholderentityrisk_guid: string | null }, { ts_stakeholderentityrisk_formatted?: string }>;
@@ -105,6 +107,7 @@ interface ts_OperationActivityRiskScores_Filter {
   ts_programareaentityrisk_guid: XQW.Guid;
   ts_riskfrequency_guid: XQW.Guid;
   ts_riskrating_guid: XQW.Guid;
+  ts_riskscoreribbontrigger: Date;
   ts_riskscoretrigger: any;
   ts_siteentityrisk_guid: XQW.Guid;
   ts_stakeholderentityrisk_guid: XQW.Guid;
@@ -152,6 +155,7 @@ interface ts_OperationActivityRiskScores_FormattedResult {
   ts_programareaentityrisk_formatted?: string;
   ts_riskfrequency_formatted?: string;
   ts_riskrating_formatted?: string;
+  ts_riskscoreribbontrigger_formatted?: string;
   ts_siteentityrisk_formatted?: string;
   ts_stakeholderentityrisk_formatted?: string;
 }

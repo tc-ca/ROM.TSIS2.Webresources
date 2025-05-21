@@ -584,6 +584,52 @@ interface ts_causefinding_Create extends ts_causefinding {
 }
 interface ts_causefinding_Update extends ts_causefinding {
 }
+interface ts_dutyinspectors_Base extends WebEntity {
+}
+interface ts_dutyinspectors_Fixed extends WebEntity_Fixed {
+  ts_dutyinspectorsid: string;
+}
+interface ts_dutyinspectors extends ts_dutyinspectors_Base, ts_dutyinspectors_Relationships {
+}
+interface ts_dutyinspectors_Relationships {
+}
+interface ts_dutyinspectors_Result extends ts_dutyinspectors_Base, ts_dutyinspectors_Relationships {
+}
+interface ts_dutyinspectors_FormattedResult {
+}
+interface ts_dutyinspectors_Select {
+}
+interface ts_dutyinspectors_Expand {
+}
+interface ts_dutyinspectors_Filter {
+}
+interface ts_dutyinspectors_Create extends ts_dutyinspectors {
+}
+interface ts_dutyinspectors_Update extends ts_dutyinspectors {
+}
+interface ts_DutyInspectorSchedule_Base extends WebEntity {
+}
+interface ts_DutyInspectorSchedule_Fixed extends WebEntity_Fixed {
+  ts_dutyinspectorscheduleid: string;
+}
+interface ts_DutyInspectorSchedule extends ts_DutyInspectorSchedule_Base, ts_DutyInspectorSchedule_Relationships {
+}
+interface ts_DutyInspectorSchedule_Relationships {
+}
+interface ts_DutyInspectorSchedule_Result extends ts_DutyInspectorSchedule_Base, ts_DutyInspectorSchedule_Relationships {
+}
+interface ts_DutyInspectorSchedule_FormattedResult {
+}
+interface ts_DutyInspectorSchedule_Select {
+}
+interface ts_DutyInspectorSchedule_Expand {
+}
+interface ts_DutyInspectorSchedule_Filter {
+}
+interface ts_DutyInspectorSchedule_Create extends ts_DutyInspectorSchedule {
+}
+interface ts_DutyInspectorSchedule_Update extends ts_DutyInspectorSchedule {
+}
 interface ts_enforcementaction_Base extends WebEntity {
 }
 interface ts_enforcementaction_Fixed extends WebEntity_Fixed {
