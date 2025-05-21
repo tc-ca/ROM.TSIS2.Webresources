@@ -28,6 +28,7 @@ namespace ROM.SecurityIncident {
         if (modeAttributeValue == ts_securityincidentmode.AviationSecurity) {
             setDefaultView(formContext);
             formContext.getControl("ts_overtime").setVisible(true);
+            formContext.getControl("ts_dutyinspector").setVisible(true);
         }
 
         // only show the Security Incident Details if we actually have an attachment

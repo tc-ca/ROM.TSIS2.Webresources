@@ -87,6 +87,7 @@ interface ts_securityincident_Relationships {
   ts_Destination_Site?: ts_site_Result | null;
   ts_DiversionAerodrome?: msdyn_FunctionalLocation_Result | null;
   ts_DiversionAerodrome_Site?: ts_site_Result | null;
+  ts_DutyInspector?: SystemUser_Result | null;
   ts_Origin?: msdyn_FunctionalLocation_Result | null;
   ts_Origin_Site?: ts_site_Result | null;
   ts_ReportingCompany?: Account_Result | null;
@@ -113,6 +114,7 @@ interface ts_securityincident extends ts_securityincident_Base, ts_securityincid
   ts_Destination_bind$msdyn_functionallocations?: string | null;
   ts_DiversionAerodrome_Site_bind$ts_sites?: string | null;
   ts_DiversionAerodrome_bind$msdyn_functionallocations?: string | null;
+  ts_DutyInspector_bind$systemusers?: string | null;
   ts_Origin_Site_bind$ts_sites?: string | null;
   ts_Origin_bind$msdyn_functionallocations?: string | null;
   ts_RegionNew_bind$ts_regions?: string | null;
@@ -172,6 +174,7 @@ interface ts_securityincident_Select {
   ts_details: WebAttribute<ts_securityincident_Select, { ts_details: string | null }, {  }>;
   ts_diversionaerodrome_guid: WebAttribute<ts_securityincident_Select, { ts_diversionaerodrome_guid: string | null }, { ts_diversionaerodrome_formatted?: string }>;
   ts_diversionaerodrome_site_guid: WebAttribute<ts_securityincident_Select, { ts_diversionaerodrome_site_guid: string | null }, { ts_diversionaerodrome_site_formatted?: string }>;
+  ts_dutyinspector_guid: WebAttribute<ts_securityincident_Select, { ts_dutyinspector_guid: string | null }, { ts_dutyinspector_formatted?: string }>;
   ts_email: WebAttribute<ts_securityincident_Select, { ts_email: string | null }, {  }>;
   ts_estimatedarrivaltime: WebAttribute<ts_securityincident_Select, { ts_estimatedarrivaltime: Date | null }, { ts_estimatedarrivaltime_formatted?: string }>;
   ts_flightnumber: WebAttribute<ts_securityincident_Select, { ts_flightnumber: string | null }, {  }>;
@@ -284,6 +287,7 @@ interface ts_securityincident_Filter {
   ts_details: string;
   ts_diversionaerodrome_guid: XQW.Guid;
   ts_diversionaerodrome_site_guid: XQW.Guid;
+  ts_dutyinspector_guid: XQW.Guid;
   ts_email: string;
   ts_estimatedarrivaltime: Date;
   ts_flightnumber: string;
@@ -373,6 +377,7 @@ interface ts_securityincident_Expand {
   ts_Destination_Site: WebExpand<ts_securityincident_Expand, ts_site_Select, ts_site_Filter, { ts_Destination_Site: ts_site_Result }>;
   ts_DiversionAerodrome: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_DiversionAerodrome: msdyn_FunctionalLocation_Result }>;
   ts_DiversionAerodrome_Site: WebExpand<ts_securityincident_Expand, ts_site_Select, ts_site_Filter, { ts_DiversionAerodrome_Site: ts_site_Result }>;
+  ts_DutyInspector: WebExpand<ts_securityincident_Expand, SystemUser_Select, SystemUser_Filter, { ts_DutyInspector: SystemUser_Result }>;
   ts_Origin: WebExpand<ts_securityincident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Origin: msdyn_FunctionalLocation_Result }>;
   ts_Origin_Site: WebExpand<ts_securityincident_Expand, ts_site_Select, ts_site_Filter, { ts_Origin_Site: ts_site_Result }>;
   ts_ReportingCompany: WebExpand<ts_securityincident_Expand, Account_Select, Account_Filter, { ts_ReportingCompany: Account_Result }>;
@@ -418,6 +423,7 @@ interface ts_securityincident_FormattedResult {
   ts_destination_site_formatted?: string;
   ts_diversionaerodrome_formatted?: string;
   ts_diversionaerodrome_site_formatted?: string;
+  ts_dutyinspector_formatted?: string;
   ts_estimatedarrivaltime_formatted?: string;
   ts_incidentdatetime_formatted?: string;
   ts_incidentdatetimeadjust_formatted?: string;
@@ -468,6 +474,7 @@ interface ts_securityincident_Result extends ts_securityincident_Base, ts_securi
   ts_destination_site_guid: string | null;
   ts_diversionaerodrome_guid: string | null;
   ts_diversionaerodrome_site_guid: string | null;
+  ts_dutyinspector_guid: string | null;
   ts_operationtype_guid: string | null;
   ts_origin_guid: string | null;
   ts_origin_site_guid: string | null;
@@ -498,6 +505,7 @@ interface ts_securityincident_RelatedOne {
   ts_Destination_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_DiversionAerodrome: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_DiversionAerodrome_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
+  ts_DutyInspector: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_Origin: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Origin_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_ReportingCompany: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

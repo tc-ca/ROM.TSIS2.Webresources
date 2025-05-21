@@ -11,6 +11,7 @@ interface ovs_operationtype_Base extends WebEntity {
   statuscode?: ovs_operationtype_statuscode | null;
   timezoneruleversionnumber?: number | null;
   ts_regulated?: boolean | null;
+  ts_riskapplication?: ts_ovs_operationtype_ts_riskapplication | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -69,6 +70,7 @@ interface ovs_operationtype_Select {
   ts_operationtyperiskrating_guid: WebAttribute<ovs_operationtype_Select, { ts_operationtyperiskrating_guid: string | null }, { ts_operationtyperiskrating_formatted?: string }>;
   ts_ovs_lob_guid: WebAttribute<ovs_operationtype_Select, { ts_ovs_lob_guid: string | null }, { ts_ovs_lob_formatted?: string }>;
   ts_regulated: WebAttribute<ovs_operationtype_Select, { ts_regulated: boolean | null }, {  }>;
+  ts_riskapplication: WebAttribute<ovs_operationtype_Select, { ts_riskapplication: ts_ovs_operationtype_ts_riskapplication | null }, { ts_riskapplication_formatted?: string }>;
   ts_riskcriteria_guid: WebAttribute<ovs_operationtype_Select, { ts_riskcriteria_guid: string | null }, { ts_riskcriteria_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ovs_operationtype_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ovs_operationtype_Select, { versionnumber: number | null }, {  }>;
@@ -96,6 +98,7 @@ interface ovs_operationtype_Filter {
   ts_operationtyperiskrating_guid: XQW.Guid;
   ts_ovs_lob_guid: XQW.Guid;
   ts_regulated: boolean;
+  ts_riskapplication: ts_ovs_operationtype_ts_riskapplication;
   ts_riskcriteria_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
@@ -144,6 +147,7 @@ interface ovs_operationtype_FormattedResult {
   statuscode_formatted?: string;
   ts_operationtyperiskrating_formatted?: string;
   ts_ovs_lob_formatted?: string;
+  ts_riskapplication_formatted?: string;
   ts_riskcriteria_formatted?: string;
 }
 interface ovs_operationtype_Result extends ovs_operationtype_Base, ovs_operationtype_Relationships {

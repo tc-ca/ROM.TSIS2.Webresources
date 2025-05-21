@@ -93,6 +93,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_delaystooperation"): Xrm.OptionSetAttribute<ts_delaystooperation>;
       get(name: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_diversionaerodrome"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_dutyinspector"): Xrm.LookupAttribute<"systemuser">;
       get(name: "ts_email"): Xrm.Attribute<string>;
       get(name: "ts_estimatedarrivaltime"): Xrm.DateAttribute;
       get(name: "ts_flightnumber"): Xrm.Attribute<string>;
@@ -195,6 +196,7 @@ declare namespace Form.ts_securityincident.Main {
       get(name: "ts_delaystooperation"): Xrm.OptionSetControl<ts_delaystooperation>;
       get(name: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_diversionaerodrome"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_dutyinspector"): Xrm.LookupControl<"systemuser">;
       get(name: "ts_email"): Xrm.StringControl;
       get(name: "ts_estimatedarrivaltime"): Xrm.DateControl;
       get(name: "ts_flightnumber"): Xrm.StringControl;
@@ -304,6 +306,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: "ts_delaystooperation"): Xrm.OptionSetAttribute<ts_delaystooperation>;
     getAttribute(attributeName: "ts_destination"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_diversionaerodrome"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_dutyinspector"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "ts_email"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_estimatedarrivaltime"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_flightnumber"): Xrm.Attribute<string>;
@@ -401,6 +404,7 @@ declare namespace Form.ts_securityincident.Main {
     getControl(controlName: "ts_delaystooperation"): Xrm.OptionSetControl<ts_delaystooperation>;
     getControl(controlName: "ts_destination"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_diversionaerodrome"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_dutyinspector"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "ts_email"): Xrm.StringControl;
     getControl(controlName: "ts_estimatedarrivaltime"): Xrm.DateControl;
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
