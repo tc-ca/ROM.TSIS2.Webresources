@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -42,6 +42,8 @@ var ROM;
         function onLoad(eContext) {
             var form = eContext.getFormContext();
             ToggleQuestionnaire(eContext);
+            //Do not remove this line, this is used for debugging offline mode
+            console.log("Questionnaire Response Form Loaded - OFFLINE MODE");
             //Banner warning message displayed if Questionnaire Response has already been appended to a work order
             var warningMessage = Xrm.Utility.getResourceString("ovs_/resx/QuestionnaireResponse", "WorkOrderBannerMessage");
             //if the work order is not null, display the message, otherwise don't show it
@@ -84,6 +86,10 @@ var ROM;
                                 surveyLocale = getSurveyLocal();
                                 win.InitialContext(eContext);
                                 win.isComplete = false;
+                                // Set to null if the questionnaire response is empty or undefined to prevent errors
+                                if (questionnaireResponse === "" || questionnaireResponse === undefined) {
+                                    questionnaireResponse = null;
+                                }
                                 win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
                                 return [2 /*return*/];
                             });
@@ -112,7 +118,7 @@ var ROM;
                 // remove the curly braces from the GUID
                 var selectedQuestionnaireIdGUID = selectedQuestionnaireId[0].id.replace(/[{}]/g, '');
                 // get the Activity Types
-                var activityTypeFetchXML = "\n                <fetch xmlns:generator=\"MarkMpn.SQL4CDS\" distinct=\"true\">\n                  <entity name=\"msdyn_incidenttype\">\n                    <attribute name=\"msdyn_incidenttypeid\" />\n                    <attribute name=\"msdyn_name\" />\n                    <link-entity name=\"msdyn_incidenttypeservicetask\" to=\"msdyn_incidenttypeid\" from=\"msdyn_incidenttype\" alias=\"msdyn_incidenttypeservicetask\" link-type=\"inner\">\n                      <link-entity name=\"msdyn_servicetasktype\" to=\"msdyn_tasktype\" from=\"msdyn_servicetasktypeid\" alias=\"msdyn_servicetasktype\" link-type=\"inner\">\n                        <link-entity name=\"ovs_questionnaire\" to=\"ovs_questionnaire\" from=\"ovs_questionnaireid\" alias=\"ovs_questionnaire\" link-type=\"inner\">\n                          <attribute name=\"ovs_questionnaireid\" />\n                          <filter>\n                            <condition attribute=\"ovs_questionnaireid\" operator=\"eq\" value=\"".concat(selectedQuestionnaireIdGUID, "\" />\n                          </filter>\n                        </link-entity>\n                      </link-entity>\n                    </link-entity>\n                  </entity>\n                </fetch>\n            ");
+                var activityTypeFetchXML = "\n                <fetch xmlns:generator=\"MarkMpn.SQL4CDS\" distinct=\"true\">\n                  <entity name=\"msdyn_incidenttype\">\n                    <attribute name=\"msdyn_incidenttypeid\" />\n                    <attribute name=\"msdyn_name\" />\n                    <link-entity name=\"msdyn_incidenttypeservicetask\" to=\"msdyn_incidenttypeid\" from=\"msdyn_incidenttype\" alias=\"msdyn_incidenttypeservicetask\" link-type=\"inner\">\n                      <link-entity name=\"msdyn_servicetasktype\" to=\"msdyn_tasktype\" from=\"msdyn_servicetasktypeid\" alias=\"msdyn_servicetasktype\" link-type=\"inner\">\n                        <link-entity name=\"ovs_questionnaire\" to=\"ovs_questionnaire\" from=\"ovs_questionnaireid\" alias=\"ovs_questionnaire\" link-type=\"inner\">\n                          <attribute name=\"ovs_questionnaireid\" />\n                          <filter>\n                            <condition attribute=\"ovs_questionnaireid\" operator=\"eq\" value=\"" + selectedQuestionnaireIdGUID + "\" />\n                          </filter>\n                        </link-entity>\n                      </link-entity>\n                    </link-entity>\n                  </entity>\n                </fetch>\n            ";
                 //Now filter the lookup
                 var viewId = '{5D6A532B-172B-469E-993F-F6C6CF8C2E9F}';
                 var entityName = "msdyn_incidenttype";

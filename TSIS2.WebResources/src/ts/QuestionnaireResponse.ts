@@ -3,6 +3,9 @@
         const form = <Form.ts_questionnaireresponse.Main.Information>eContext.getFormContext();
         ToggleQuestionnaire(eContext);
 
+        //Do not remove this line, this is used for debugging offline mode
+        console.log("Questionnaire Response Form Loaded - OFFLINE MODE");
+
         //Banner warning message displayed if Questionnaire Response has already been appended to a work order
         const warningMessage = Xrm.Utility.getResourceString("ovs_/resx/QuestionnaireResponse", "WorkOrderBannerMessage");
 
@@ -11,12 +14,12 @@
 
         if (tsworkorder != null) {
 
-            //Show banner message
-            form.ui.setFormNotification(warningMessage, "WARNING", "WorkOrderBannerMessage");
+        //Show banner message
+        form.ui.setFormNotification(warningMessage, "WARNING", "WorkOrderBannerMessage");
         }
         else {
-            //clear banner if the field is null
-            form.ui.clearFormNotification("1");
+        //clear banner if the field is null
+        form.ui.clearFormNotification("1");
         }
 
         setActivityTypeFilteredView(form);
@@ -47,6 +50,12 @@
             const surveyLocale = getSurveyLocal();
             win.InitialContext(eContext);
             win.isComplete = false;
+
+            // Set to null if the questionnaire response is empty or undefined to prevent errors
+            if (questionnaireResponse === "" || questionnaireResponse === undefined) {
+                questionnaireResponse = null;
+            }
+
             win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
         });
     }
