@@ -65,7 +65,8 @@
         const formContext = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
         console.log("Entering EntityRisk onSave");
     }
-
+    /* 
+    //Risk Rating removed from Entity Risk form
     export function riskRatingOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
 
@@ -114,7 +115,7 @@
             }
         }
     }
-
+    
     export function riskScoreOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
 
@@ -196,7 +197,7 @@
             }
         }
     }
-
+    */
     export function fiscalYearOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
 
