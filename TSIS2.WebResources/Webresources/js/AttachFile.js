@@ -23,13 +23,16 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
     recordTagId = PrimaryControl.data.entity.getId().replace("{", "").replace("}", "");
 
+    const PROD_URL = "https://romts-gsrst-tcd365.crm3.dynamics.com";
+    const appUrl = Xrm.Utility.getGlobalContext().getClientUrl();
+
     //Get the FetchXml to use
     let recordOwnerFetchXML = getFetchXmlForRecordOwner(PrimaryTypeEntityName, recordTagId);
 
     let encodedRecordOwnerFetchXML = encodeURIComponent(recordOwnerFetchXML);
 
     //Set the meta-data tags to be sent to the canvas page app
-    setEntitySpecificValues(PrimaryTypeEntityName,fileUploadData);
+    setEntitySpecificValues(PrimaryTypeEntityName, fileUploadData);
 
     //Default Invalid owner message
     let invalidOwnerMessageEnglish = "The record has an invalid owner.  It must belong to Aviation Security or Intermodal Surface Security Oversight.";
@@ -65,7 +68,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
                                         // get the sharePointQuery to use in the canvas app
                                         getSharePointQuery(PrimaryTypeEntityName, fileUploadData, recordTagId)
-                                            .then(() => { 
+                                            .then(() => {
 
                                                 // get the users Manager email address
                                                 getUsersManager(fileUploadData)
@@ -78,11 +81,8 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
                                                         const urlParams = new URLSearchParams(queryString);
 
-                                                        // check if it's a specific user
-                                                        let isSpecificUser = Xrm.Utility.getGlobalContext().userSettings.userId;
-
-                                                        if (isSpecificUser == '{7DFAC6D6-994B-EC11-8F8E-000D3AE9A369}') {
-
+                                                        // check if it's PROD
+                                                        if (appUrl !== PROD_URL) {
                                                             // get the users Email address
                                                             getUsersEmail(fileUploadData)
                                                                 .then(() => {
@@ -97,7 +97,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                                                             // navigate to the canvas app
                                                             navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery, fileUploadData.usersManagerEmail);
                                                         }
-                                                });
+                                                    });
                                             });
                                     });
                             }
@@ -106,7 +106,7 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                                 // For everything else, navigate to the canvas app
                                 navigateToCanvasApp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery, fileUploadData.usersManagerEmail);
                             }
-                    });
+                        });
                 }
                 else {
                     // display the error message
@@ -167,7 +167,7 @@ function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEngl
         name: "ts_fileupload_2bf02", //Unique name of Custom page
         recordId: jsonString
     };
-    
+
     // Note: remember for height take into consideration the size of the heading of the dialog pop up
     var navigationOptions = {
         target: 2,
@@ -178,15 +178,15 @@ function navigateToCanvasApp(recordTagId, recordOwner, lang, recordTableNameEngl
     };
     Xrm.Navigation.navigateTo(pageInput, navigationOptions)
         .then(
-            //function () {
-            //    // Called when the dialog closes
-            //    formContext.data.refresh();
-            //}
-        ).catch(
-            function (error) {
-                // Handle error
-            }
-        );
+        //function () {
+        //    // Called when the dialog closes
+        //    formContext.data.refresh();
+        //}
+    ).catch(
+        function (error) {
+            // Handle error
+        }
+    );
 }
 
 // Separate method to navigate to SharePointAttachFilePopUp.html
