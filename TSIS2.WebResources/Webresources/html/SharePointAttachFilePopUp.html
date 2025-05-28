@@ -22,6 +22,11 @@
         .filepond--item {
             width: calc(50% - 0.5em);
         }
+
+        .btn:hover {
+            background-color: #323B42 !important;
+        }
+
     </style>
 
     <!-- Package used for the table - Tabulator -->
@@ -32,20 +37,20 @@
 <body onload="loadForm()">
 
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6">
-                <button id="clearAttachments" class="btn btn-default" style="margin-left: 10px; margin-top:10px" onclick="clearAttachments()"></button>
-            </div>
-            <div class="col-sm-6">
-                <button id="uploadAttachments" class="btn btn-default" style="margin-left: 10px; margin-top:10px" onclick="uploadAttachments()">Upload files</button>
+        <div class="row" style="margin-top: 10px; margin-bottom: 10px">
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <label style="margin-top: 10px; margin-left: -10px">Add an attachment</label>
+                    <button id="clearAttachments" class="btn btn-default" style="background-color: #637685; color: white; border-radius: 10px; float: right; margin-right: -10px" onclick="clearAttachments()"></button>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12 ">
-                <input id="my-filepond" type="file" class="filepond" name="filepond" multiple>
+                <input id="my-filepond" type="file" class="filepond" style="margin-top: 20px" name="filepond" multiple>
             </div>
         </div>
-        <div class="row" style="margin-top:120px">
+        <div class="row" style="margin-top:150px">
             <div class="col-sm-12">
                 <div class="form-group">
                     <label for="fileDescription">Description:</label>
@@ -61,6 +66,11 @@
                         <!-- Options will be populated here -->
                     </select>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <button id="uploadAttachments" class="btn btn-default" style="background-color: #637685; color: white; border-radius: 10px " onclick="uploadAttachments()">Upload</button>
             </div>
         </div>
     </div>
@@ -241,17 +251,17 @@
             let variableValue = "";
 
             const fetchXML = `
-                        <fetch>
-                            <entity name="environmentvariablevalue">
-                                <attribute name="value" />
-                                <link-entity name="environmentvariabledefinition" to="environmentvariabledefinitionid" from="environmentvariabledefinitionid" alias="environmentvariabledefinition" link-type="inner">
-                                    <filter>
-                                        <condition attribute="schemaname" operator="eq" value="${variableName}" />
-                                    </filter>
-                                </link-entity>
-                            </entity>
-                        </fetch>
-                    `;
+                                                <fetch>
+                                                    <entity name="environmentvariablevalue">
+                                                        <attribute name="value" />
+                                                        <link-entity name="environmentvariabledefinition" to="environmentvariabledefinitionid" from="environmentvariabledefinitionid" alias="environmentvariabledefinition" link-type="inner">
+                                                            <filter>
+                                                                <condition attribute="schemaname" operator="eq" value="${variableName}" />
+                                                            </filter>
+                                                        </link-entity>
+                                                    </entity>
+                                                </fetch>
+                                            `;
 
             const encodedFetchXml = encodeURIComponent(fetchXML);
 
@@ -334,11 +344,11 @@
                         sortedCategoriesList = categoriesList.sort((a, b) => a.Title.localeCompare(b.Title));
                     }
 
-                    
+
                     const dropdown = document.getElementById('fileCategories');
 
                     // Clear existing options
-                    dropdown.innerHTML = ''; 
+                    dropdown.innerHTML = '';
 
                     var firstLoop = true;
 
@@ -407,7 +417,7 @@
                         "Content-Type": "application/json",
                         "FlowKey": flowKey
                     }
-                    ,body: JSON.stringify(data)
+                    , body: JSON.stringify(data)
                 });
 
                 if (response.ok) {
