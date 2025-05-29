@@ -288,4 +288,54 @@
 
         formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
+
+    export function showOperationActivityRiskScore(eContext: Xrm.ExecutionContext<any, any>): void {
+
+        const formContext = eContext.getFormContext() as Form.ts_entityrisk.Main.Information;
+        const entityValue = formContext.getAttribute("ts_entityname")?.getValue();
+
+        const activityType = formContext.getControl("ActivityType");
+        const operation = formContext.getControl("Operation");
+        const operationType = formContext.getControl("OperationType");
+        const programArea = formContext.getControl("ProgramArea");
+        const site = formContext.getControl("Site");
+        const stakeholder = formContext.getControl("Stakeholder");
+
+        // Hide all subgrids initially
+        activityType?.setVisible(false);
+        operation?.setVisible(false);
+        operationType?.setVisible(false);
+        programArea?.setVisible(false);
+        site?.setVisible(false);
+        stakeholder?.setVisible(false);
+
+        if (entityValue === null || entityValue === undefined) {
+            return;
+        }
+
+        // Show only the relevant subgrid based on the selected choice value
+        switch (entityValue) {
+            case 741130005: // Activity Type
+                activityType?.setVisible(true);
+                break;
+            case 741130001: // Operation
+                operation?.setVisible(true);
+                break;
+            case 741130002: // Operation Type
+                operationType?.setVisible(true);
+                break;
+            case 741130000: // Program Area
+                programArea?.setVisible(true);
+                break;
+            case 741130003: // Site
+                site?.setVisible(true);
+                break;
+            case 741130004: // Stakeholder
+                stakeholder?.setVisible(true);
+                break;
+            default:
+                // Unknown value, do nothing
+                break;
+        }
+    }
 }
