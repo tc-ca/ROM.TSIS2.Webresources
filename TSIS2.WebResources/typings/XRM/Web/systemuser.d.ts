@@ -279,10 +279,6 @@ interface SystemUser_Relationships {
   lk_ts_causefinding_createdonbehalfby?: ts_causefinding_Result[] | null;
   lk_ts_causefinding_modifiedby?: ts_causefinding_Result[] | null;
   lk_ts_causefinding_modifiedonbehalfby?: ts_causefinding_Result[] | null;
-  lk_ts_dutyinspectors_createdby?: ts_dutyinspectors_Result[] | null;
-  lk_ts_dutyinspectors_createdonbehalfby?: ts_dutyinspectors_Result[] | null;
-  lk_ts_dutyinspectors_modifiedby?: ts_dutyinspectors_Result[] | null;
-  lk_ts_dutyinspectors_modifiedonbehalfby?: ts_dutyinspectors_Result[] | null;
   lk_ts_dutyinspectorschedule_createdby?: ts_DutyInspectorSchedule_Result[] | null;
   lk_ts_dutyinspectorschedule_createdonbehalfby?: ts_DutyInspectorSchedule_Result[] | null;
   lk_ts_dutyinspectorschedule_modifiedby?: ts_DutyInspectorSchedule_Result[] | null;
@@ -408,7 +404,6 @@ interface SystemUser_Relationships {
   systemuser_connections2?: Connection_Result[] | null;
   teammembership_association?: Team_Result[] | null;
   ts_InspectionHours?: ts_InspectionHours_Result | null;
-  ts_dutyinspectors_Inspector_systemuser?: ts_dutyinspectors_Result[] | null;
   ts_enforcementaction_systemuser_createdby?: ts_enforcementaction_Result[] | null;
   ts_enforcementaction_systemuser_createdonbehalfby?: ts_enforcementaction_Result[] | null;
   ts_enforcementaction_systemuser_modifiedby?: ts_enforcementaction_Result[] | null;
@@ -458,7 +453,6 @@ interface SystemUser_Relationships {
   user_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
   user_ts_case?: ts_case_Result[] | null;
   user_ts_causefinding?: ts_causefinding_Result[] | null;
-  user_ts_dutyinspectors?: ts_dutyinspectors_Result[] | null;
   user_ts_dutyinspectorschedule?: ts_DutyInspectorSchedule_Result[] | null;
   user_ts_entityrisk?: ts_EntityRisk_Result[] | null;
   user_ts_entityriskfrequency?: ts_EntityRiskFrequency_Result[] | null;
@@ -958,10 +952,6 @@ interface SystemUser_Expand {
   lk_ts_causefinding_createdonbehalfby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_createdonbehalfby: ts_causefinding_Result[] }>;
   lk_ts_causefinding_modifiedby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_modifiedby: ts_causefinding_Result[] }>;
   lk_ts_causefinding_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_modifiedonbehalfby: ts_causefinding_Result[] }>;
-  lk_ts_dutyinspectors_createdby: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { lk_ts_dutyinspectors_createdby: ts_dutyinspectors_Result[] }>;
-  lk_ts_dutyinspectors_createdonbehalfby: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { lk_ts_dutyinspectors_createdonbehalfby: ts_dutyinspectors_Result[] }>;
-  lk_ts_dutyinspectors_modifiedby: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { lk_ts_dutyinspectors_modifiedby: ts_dutyinspectors_Result[] }>;
-  lk_ts_dutyinspectors_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { lk_ts_dutyinspectors_modifiedonbehalfby: ts_dutyinspectors_Result[] }>;
   lk_ts_dutyinspectorschedule_createdby: WebExpand<SystemUser_Expand, ts_DutyInspectorSchedule_Select, ts_DutyInspectorSchedule_Filter, { lk_ts_dutyinspectorschedule_createdby: ts_DutyInspectorSchedule_Result[] }>;
   lk_ts_dutyinspectorschedule_createdonbehalfby: WebExpand<SystemUser_Expand, ts_DutyInspectorSchedule_Select, ts_DutyInspectorSchedule_Filter, { lk_ts_dutyinspectorschedule_createdonbehalfby: ts_DutyInspectorSchedule_Result[] }>;
   lk_ts_dutyinspectorschedule_modifiedby: WebExpand<SystemUser_Expand, ts_DutyInspectorSchedule_Select, ts_DutyInspectorSchedule_Filter, { lk_ts_dutyinspectorschedule_modifiedby: ts_DutyInspectorSchedule_Result[] }>;
@@ -1090,7 +1080,6 @@ interface SystemUser_Expand {
   systemuser_connections2: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections2: Connection_Result[] }>;
   teammembership_association: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { teammembership_association: Team_Result[] }>;
   ts_InspectionHours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { ts_InspectionHours: ts_InspectionHours_Result }>;
-  ts_dutyinspectors_Inspector_systemuser: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { ts_dutyinspectors_Inspector_systemuser: ts_dutyinspectors_Result[] }>;
   ts_enforcementaction_systemuser_createdby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdby: ts_enforcementaction_Result[] }>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdonbehalfby: ts_enforcementaction_Result[] }>;
   ts_enforcementaction_systemuser_modifiedby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_modifiedby: ts_enforcementaction_Result[] }>;
@@ -1140,7 +1129,6 @@ interface SystemUser_Expand {
   user_ts_canceledinspectionjustification: WebExpand<SystemUser_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { user_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
   user_ts_case: WebExpand<SystemUser_Expand, ts_case_Select, ts_case_Filter, { user_ts_case: ts_case_Result[] }>;
   user_ts_causefinding: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { user_ts_causefinding: ts_causefinding_Result[] }>;
-  user_ts_dutyinspectors: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { user_ts_dutyinspectors: ts_dutyinspectors_Result[] }>;
   user_ts_dutyinspectorschedule: WebExpand<SystemUser_Expand, ts_DutyInspectorSchedule_Select, ts_DutyInspectorSchedule_Filter, { user_ts_dutyinspectorschedule: ts_DutyInspectorSchedule_Result[] }>;
   user_ts_entityrisk: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { user_ts_entityrisk: ts_EntityRisk_Result[] }>;
   user_ts_entityriskfrequency: WebExpand<SystemUser_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { user_ts_entityriskfrequency: ts_EntityRiskFrequency_Result[] }>;
@@ -1393,10 +1381,6 @@ interface SystemUser_RelatedMany {
   lk_ts_causefinding_createdonbehalfby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   lk_ts_causefinding_modifiedby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   lk_ts_causefinding_modifiedonbehalfby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
-  lk_ts_dutyinspectors_createdby: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
-  lk_ts_dutyinspectors_createdonbehalfby: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
-  lk_ts_dutyinspectors_modifiedby: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
-  lk_ts_dutyinspectors_modifiedonbehalfby: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
   lk_ts_dutyinspectorschedule_createdby: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;
   lk_ts_dutyinspectorschedule_createdonbehalfby: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;
   lk_ts_dutyinspectorschedule_modifiedby: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;
@@ -1521,7 +1505,6 @@ interface SystemUser_RelatedMany {
   systemuser_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   systemuser_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   teammembership_association: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
-  ts_dutyinspectors_Inspector_systemuser: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
   ts_enforcementaction_systemuser_createdby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_modifiedby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
@@ -1571,7 +1554,6 @@ interface SystemUser_RelatedMany {
   user_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   user_ts_case: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   user_ts_causefinding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
-  user_ts_dutyinspectors: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
   user_ts_dutyinspectorschedule: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;
   user_ts_entityrisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   user_ts_entityriskfrequency: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;

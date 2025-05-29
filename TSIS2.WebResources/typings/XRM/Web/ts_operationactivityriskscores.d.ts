@@ -9,6 +9,9 @@ interface ts_OperationActivityRiskScores_Base extends WebEntity {
   ts_calculatedriskscore?: number | null;
   ts_name?: string | null;
   ts_operationactivityriskscoresid?: string | null;
+  ts_riskapplication?: boolean | null;
+  ts_riskapplicationscore?: number | null;
+  ts_riskscore?: number | null;
   ts_riskscoreribbontrigger?: Date | null;
   ts_riskscoretrigger?: number | null;
   utcconversiontimezonecode?: number | null;
@@ -70,8 +73,11 @@ interface ts_OperationActivityRiskScores_Select {
   ts_operationentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationentityrisk_guid: string | null }, { ts_operationentityrisk_formatted?: string }>;
   ts_operationtypeentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationtypeentityrisk_guid: string | null }, { ts_operationtypeentityrisk_formatted?: string }>;
   ts_programareaentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_programareaentityrisk_guid: string | null }, { ts_programareaentityrisk_formatted?: string }>;
+  ts_riskapplication: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskapplication: boolean | null }, {  }>;
+  ts_riskapplicationscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskapplicationscore: number | null }, {  }>;
   ts_riskfrequency_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskfrequency_guid: string | null }, { ts_riskfrequency_formatted?: string }>;
   ts_riskrating_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskrating_guid: string | null }, { ts_riskrating_formatted?: string }>;
+  ts_riskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscore: number | null }, {  }>;
   ts_riskscoreribbontrigger: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscoreribbontrigger: Date | null }, { ts_riskscoreribbontrigger_formatted?: string }>;
   ts_riskscoretrigger: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscoretrigger: number | null }, {  }>;
   ts_siteentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteentityrisk_guid: string | null }, { ts_siteentityrisk_formatted?: string }>;
@@ -105,8 +111,11 @@ interface ts_OperationActivityRiskScores_Filter {
   ts_operationentityrisk_guid: XQW.Guid;
   ts_operationtypeentityrisk_guid: XQW.Guid;
   ts_programareaentityrisk_guid: XQW.Guid;
+  ts_riskapplication: boolean;
+  ts_riskapplicationscore: any;
   ts_riskfrequency_guid: XQW.Guid;
   ts_riskrating_guid: XQW.Guid;
+  ts_riskscore: any;
   ts_riskscoreribbontrigger: Date;
   ts_riskscoretrigger: any;
   ts_siteentityrisk_guid: XQW.Guid;

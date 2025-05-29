@@ -10,7 +10,6 @@ declare namespace Form.ts_entityrisk.Main {
       get(name: "ts_entityname"): Xrm.OptionSetAttribute<ts_entityrisk_ts_entityname>;
       get(name: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ts_name"): Xrm.Attribute<string>;
-      get(name: "ts_riskrating"): Xrm.LookupAttribute<"ts_riskrating">;
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_weightedriskscore"): Xrm.NumberAttribute;
       get(name: string): undefined;
@@ -19,6 +18,12 @@ declare namespace Form.ts_entityrisk.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "ActivityType"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
+      get(name: "Operation"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
+      get(name: "OperationType"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
+      get(name: "ProgramArea"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
+      get(name: "Site"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
+      get(name: "Stakeholder"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_statecode"): Xrm.OptionSetControl<ts_entityrisk_statecode>;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -27,7 +32,6 @@ declare namespace Form.ts_entityrisk.Main {
       get(name: "ts_entityname"): Xrm.OptionSetControl<ts_entityrisk_ts_entityname>;
       get(name: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ts_name"): Xrm.StringControl;
-      get(name: "ts_riskrating"): Xrm.LookupControl<"ts_riskrating">;
       get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_weightedriskscore"): Xrm.NumberControl;
       get(name: string): undefined;
@@ -50,10 +54,15 @@ declare namespace Form.ts_entityrisk.Main {
     getAttribute(attributeName: "ts_entityname"): Xrm.OptionSetAttribute<ts_entityrisk_ts_entityname>;
     getAttribute(attributeName: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ts_riskrating"): Xrm.LookupAttribute<"ts_riskrating">;
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_weightedriskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "ActivityType"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
+    getControl(controlName: "Operation"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
+    getControl(controlName: "OperationType"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
+    getControl(controlName: "ProgramArea"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
+    getControl(controlName: "Site"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
+    getControl(controlName: "Stakeholder"): Xrm.SubGridControl<"ts_operationactivityriskscores">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_statecode"): Xrm.OptionSetControl<ts_entityrisk_statecode>;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -62,7 +71,6 @@ declare namespace Form.ts_entityrisk.Main {
     getControl(controlName: "ts_entityname"): Xrm.OptionSetControl<ts_entityrisk_ts_entityname>;
     getControl(controlName: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
-    getControl(controlName: "ts_riskrating"): Xrm.LookupControl<"ts_riskrating">;
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_weightedriskscore"): Xrm.NumberControl;
     getControl(controlName: string): undefined;
