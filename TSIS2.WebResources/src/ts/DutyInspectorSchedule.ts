@@ -5,6 +5,9 @@
         let fiscalYear = form.getAttribute("ts_fiscalyear").getValue();
         let fiscalYearId, regionId;
         let regionName, fiscalYearName;
+        var eventArgs = eContext.getEventArgs();
+
+        eventArgs.preventDefault();
 
         if (fiscalYear != null && region != null) {
             fiscalYearId = fiscalYear[0].id.slice(1, -1);
@@ -24,5 +27,11 @@
             }
         );
         form.getAttribute("ts_name").setValue(regionName + " - " + fiscalYearName);
+
+        // Let the form fully reset, then save
+        setTimeout(function () {
+            // Save again now that value is set
+            form.data.save();
+        }, 500); // slight delay to avoid conflict
     }
 }
