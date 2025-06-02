@@ -21,6 +21,7 @@ declare namespace Form.ts_questionnaireversion.Main {
       get(name: "ts_questionnairedefinitionhistory3"): Xrm.Attribute<string>;
       get(name: "ts_questionnairedefinitionhistory4"): Xrm.Attribute<string>;
       get(name: "ts_questionnairedefinitionhistory5"): Xrm.Attribute<string>;
+      get(name: "ts_questionnairedefinitionsaveoverride"): Xrm.OptionSetAttribute<boolean>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -39,6 +40,7 @@ declare namespace Form.ts_questionnaireversion.Main {
       get(name: "ts_questionnairedefinitionhistory3"): Xrm.StringControl;
       get(name: "ts_questionnairedefinitionhistory4"): Xrm.StringControl;
       get(name: "ts_questionnairedefinitionhistory5"): Xrm.StringControl;
+      get(name: "ts_questionnairedefinitionsaveoverride"): Xrm.OptionSetControl<boolean>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -64,6 +66,7 @@ declare namespace Form.ts_questionnaireversion.Main {
     getAttribute(attributeName: "ts_questionnairedefinitionhistory3"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_questionnairedefinitionhistory4"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_questionnairedefinitionhistory5"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_questionnairedefinitionsaveoverride"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "WebResource_QuestionnaireCreator"): Xrm.WebResourceControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -77,6 +80,7 @@ declare namespace Form.ts_questionnaireversion.Main {
     getControl(controlName: "ts_questionnairedefinitionhistory3"): Xrm.StringControl;
     getControl(controlName: "ts_questionnairedefinitionhistory4"): Xrm.StringControl;
     getControl(controlName: "ts_questionnairedefinitionhistory5"): Xrm.StringControl;
+    getControl(controlName: "ts_questionnairedefinitionsaveoverride"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: string): undefined;
   }
 }

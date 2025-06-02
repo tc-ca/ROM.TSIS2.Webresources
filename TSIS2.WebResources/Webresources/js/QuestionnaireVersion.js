@@ -20,8 +20,15 @@ var ROM;
             var Form = eContext.getFormContext();
             // Get the web resource control on the form
             var wrCtrl = Form.getControl('WebResource_QuestionnaireCreator');
-            // Get the web resource inner content window
-            SaveQuestionnaireDefinition(Form, wrCtrl);
+            var saveOverride = Form.getAttribute('ts_questionnairedefinitionsaveoverride').getValue();
+            // Check if the save override is set to true - this is used by a business admin to update the Questionnaire Definition JSON manually.
+            if (saveOverride === true) {
+                Form.getAttribute('ts_questionnairedefinitionsaveoverride').setValue(false);
+            }
+            else {
+                // Get the web resource inner content window
+                SaveQuestionnaireDefinition(Form, wrCtrl);
+            }
         }
         QuestionnaireVersion.onSave = onSave;
         function InitiateSurvey(wrCtrl, surveyDefinition) {
