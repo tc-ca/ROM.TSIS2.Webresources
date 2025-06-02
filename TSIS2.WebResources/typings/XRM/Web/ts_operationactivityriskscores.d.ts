@@ -6,14 +6,20 @@ interface ts_OperationActivityRiskScores_Base extends WebEntity {
   statecode?: ts_operationactivityriskscores_statecode | null;
   statuscode?: ts_operationactivityriskscores_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_activitytyperiskscore?: number | null;
   ts_calculatedriskscore?: number | null;
   ts_name?: string | null;
   ts_operationactivityriskscoresid?: string | null;
+  ts_operationriskscore?: number | null;
+  ts_operationtyperiskscore?: number | null;
+  ts_programareariskscore?: number | null;
   ts_riskapplication?: boolean | null;
   ts_riskapplicationscore?: number | null;
   ts_riskscore?: number | null;
   ts_riskscoreribbontrigger?: Date | null;
   ts_riskscoretrigger?: number | null;
+  ts_siteriskscore?: number | null;
+  ts_stakeholderriskscore?: number | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -64,6 +70,7 @@ interface ts_OperationActivityRiskScores_Select {
   statuscode: WebAttribute<ts_OperationActivityRiskScores_Select, { statuscode: ts_operationactivityriskscores_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_OperationActivityRiskScores_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_activitytypeentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_activitytypeentityrisk_guid: string | null }, { ts_activitytypeentityrisk_formatted?: string }>;
+  ts_activitytyperiskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_activitytyperiskscore: number | null }, {  }>;
   ts_calculatedriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_calculatedriskscore: number | null }, {  }>;
   ts_entityriskfrequency_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_entityriskfrequency_guid: string | null }, { ts_entityriskfrequency_formatted?: string }>;
   ts_fiscalyear_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_fiscalyear_guid: string | null }, { ts_fiscalyear_formatted?: string }>;
@@ -71,8 +78,11 @@ interface ts_OperationActivityRiskScores_Select {
   ts_operationactivity_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationactivity_guid: string | null }, { ts_operationactivity_formatted?: string }>;
   ts_operationactivityriskscoresid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationactivityriskscoresid: string | null }, {  }>;
   ts_operationentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationentityrisk_guid: string | null }, { ts_operationentityrisk_formatted?: string }>;
+  ts_operationriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationriskscore: number | null }, {  }>;
   ts_operationtypeentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationtypeentityrisk_guid: string | null }, { ts_operationtypeentityrisk_formatted?: string }>;
+  ts_operationtyperiskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationtyperiskscore: number | null }, {  }>;
   ts_programareaentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_programareaentityrisk_guid: string | null }, { ts_programareaentityrisk_formatted?: string }>;
+  ts_programareariskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_programareariskscore: number | null }, {  }>;
   ts_riskapplication: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskapplication: boolean | null }, {  }>;
   ts_riskapplicationscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskapplicationscore: number | null }, {  }>;
   ts_riskfrequency_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskfrequency_guid: string | null }, { ts_riskfrequency_formatted?: string }>;
@@ -81,7 +91,9 @@ interface ts_OperationActivityRiskScores_Select {
   ts_riskscoreribbontrigger: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscoreribbontrigger: Date | null }, { ts_riskscoreribbontrigger_formatted?: string }>;
   ts_riskscoretrigger: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscoretrigger: number | null }, {  }>;
   ts_siteentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteentityrisk_guid: string | null }, { ts_siteentityrisk_formatted?: string }>;
+  ts_siteriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteriskscore: number | null }, {  }>;
   ts_stakeholderentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_stakeholderentityrisk_guid: string | null }, { ts_stakeholderentityrisk_formatted?: string }>;
+  ts_stakeholderriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_stakeholderriskscore: number | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_OperationActivityRiskScores_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_OperationActivityRiskScores_Select, { versionnumber: number | null }, {  }>;
 }
@@ -102,6 +114,7 @@ interface ts_OperationActivityRiskScores_Filter {
   statuscode: ts_operationactivityriskscores_statuscode;
   timezoneruleversionnumber: number;
   ts_activitytypeentityrisk_guid: XQW.Guid;
+  ts_activitytyperiskscore: any;
   ts_calculatedriskscore: any;
   ts_entityriskfrequency_guid: XQW.Guid;
   ts_fiscalyear_guid: XQW.Guid;
@@ -109,8 +122,11 @@ interface ts_OperationActivityRiskScores_Filter {
   ts_operationactivity_guid: XQW.Guid;
   ts_operationactivityriskscoresid: XQW.Guid;
   ts_operationentityrisk_guid: XQW.Guid;
+  ts_operationriskscore: any;
   ts_operationtypeentityrisk_guid: XQW.Guid;
+  ts_operationtyperiskscore: any;
   ts_programareaentityrisk_guid: XQW.Guid;
+  ts_programareariskscore: any;
   ts_riskapplication: boolean;
   ts_riskapplicationscore: any;
   ts_riskfrequency_guid: XQW.Guid;
@@ -119,7 +135,9 @@ interface ts_OperationActivityRiskScores_Filter {
   ts_riskscoreribbontrigger: Date;
   ts_riskscoretrigger: any;
   ts_siteentityrisk_guid: XQW.Guid;
+  ts_siteriskscore: any;
   ts_stakeholderentityrisk_guid: XQW.Guid;
+  ts_stakeholderriskscore: any;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
