@@ -19,8 +19,17 @@
         // Get the web resource control on the form
         const wrCtrl = Form.getControl('WebResource_QuestionnaireCreator');
 
-        // Get the web resource inner content window
-        SaveQuestionnaireDefinition(Form, wrCtrl);
+
+        let saveOverride = Form.getAttribute('ts_questionnairedefinitionsaveoverride').getValue(); 
+
+        // Check if the save override is set to true - this is used by a business admin to update the Questionnaire Definition JSON manually.
+        if (saveOverride === true) {
+            Form.getAttribute('ts_questionnairedefinitionsaveoverride').setValue(false);
+        }
+        else {
+            // Get the web resource inner content window
+            SaveQuestionnaireDefinition(Form, wrCtrl);
+        }
     }
 
     function InitiateSurvey(wrCtrl, surveyDefinition) {

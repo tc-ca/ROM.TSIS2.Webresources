@@ -17,6 +17,7 @@ interface ts_questionnaireversion_Base extends WebEntity {
   ts_questionnairedefinitionhistory3?: string | null;
   ts_questionnairedefinitionhistory4?: string | null;
   ts_questionnairedefinitionhistory5?: string | null;
+  ts_questionnairedefinitionsaveoverride?: boolean | null;
   ts_questionnaireversionid?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
@@ -60,6 +61,7 @@ interface ts_questionnaireversion_Select {
   ts_questionnairedefinitionhistory3: WebAttribute<ts_questionnaireversion_Select, { ts_questionnairedefinitionhistory3: string | null }, {  }>;
   ts_questionnairedefinitionhistory4: WebAttribute<ts_questionnaireversion_Select, { ts_questionnairedefinitionhistory4: string | null }, {  }>;
   ts_questionnairedefinitionhistory5: WebAttribute<ts_questionnaireversion_Select, { ts_questionnairedefinitionhistory5: string | null }, {  }>;
+  ts_questionnairedefinitionsaveoverride: WebAttribute<ts_questionnaireversion_Select, { ts_questionnairedefinitionsaveoverride: boolean | null }, {  }>;
   ts_questionnaireversionid: WebAttribute<ts_questionnaireversion_Select, { ts_questionnaireversionid: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_questionnaireversion_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_questionnaireversion_Select, { versionnumber: number | null }, {  }>;
@@ -92,6 +94,7 @@ interface ts_questionnaireversion_Filter {
   ts_questionnairedefinitionhistory3: string;
   ts_questionnairedefinitionhistory4: string;
   ts_questionnairedefinitionhistory5: string;
+  ts_questionnairedefinitionsaveoverride: boolean;
   ts_questionnaireversionid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;

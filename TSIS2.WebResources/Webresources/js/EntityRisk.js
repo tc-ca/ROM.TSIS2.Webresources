@@ -246,5 +246,51 @@ var ROM;
             var layoutXml = '<grid name="resultset" object="10010" jump="tc_name" select="1" icon="1" preview="1"><row name="result" id="tc_tcfiscalyearid"><cell name="tc_name" width="200" /></row></grid>';
             formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
+        function showOperationActivityRiskScore(eContext) {
+            var _a;
+            var formContext = eContext.getFormContext();
+            var entityValue = (_a = formContext.getAttribute("ts_entityname")) === null || _a === void 0 ? void 0 : _a.getValue();
+            var activityType = formContext.getControl("ActivityType");
+            var operation = formContext.getControl("Operation");
+            var operationType = formContext.getControl("OperationType");
+            var programArea = formContext.getControl("ProgramArea");
+            var site = formContext.getControl("Site");
+            var stakeholder = formContext.getControl("Stakeholder");
+            // Hide all subgrids initially
+            activityType === null || activityType === void 0 ? void 0 : activityType.setVisible(false);
+            operation === null || operation === void 0 ? void 0 : operation.setVisible(false);
+            operationType === null || operationType === void 0 ? void 0 : operationType.setVisible(false);
+            programArea === null || programArea === void 0 ? void 0 : programArea.setVisible(false);
+            site === null || site === void 0 ? void 0 : site.setVisible(false);
+            stakeholder === null || stakeholder === void 0 ? void 0 : stakeholder.setVisible(false);
+            if (entityValue === null || entityValue === undefined) {
+                return;
+            }
+            // Show only the relevant subgrid based on the selected choice value
+            switch (entityValue) {
+                case 741130005: // Activity Type
+                    activityType === null || activityType === void 0 ? void 0 : activityType.setVisible(true);
+                    break;
+                case 741130001: // Operation
+                    operation === null || operation === void 0 ? void 0 : operation.setVisible(true);
+                    break;
+                case 741130002: // Operation Type
+                    operationType === null || operationType === void 0 ? void 0 : operationType.setVisible(true);
+                    break;
+                case 741130000: // Program Area
+                    programArea === null || programArea === void 0 ? void 0 : programArea.setVisible(true);
+                    break;
+                case 741130003: // Site
+                    site === null || site === void 0 ? void 0 : site.setVisible(true);
+                    break;
+                case 741130004: // Stakeholder
+                    stakeholder === null || stakeholder === void 0 ? void 0 : stakeholder.setVisible(true);
+                    break;
+                default:
+                    // Unknown value, do nothing
+                    break;
+            }
+        }
+        EntityRisk.showOperationActivityRiskScore = showOperationActivityRiskScore;
     })(EntityRisk = ROM.EntityRisk || (ROM.EntityRisk = {}));
 })(ROM || (ROM = {}));
