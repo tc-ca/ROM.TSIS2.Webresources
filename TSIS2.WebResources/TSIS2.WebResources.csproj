@@ -411,6 +411,7 @@
     <TypeScriptCompile Include="src\ts\Infraction.ts" />
     <TypeScriptCompile Include="src\ts\OperationActivityRiskScores.ts" />
     <TypeScriptCompile Include="src\ts\OperationType.ts" />
+    <TypeScriptCompile Include="src\ts\PrescribedFrequencyOverride.ts" />
     <TypeScriptCompile Include="src\ts\Site.ts" />
     <TypeScriptCompile Include="src\ts\Plan.ts" />
     <TypeScriptCompile Include="src\ts\Account.ts" />
