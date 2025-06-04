@@ -80,6 +80,7 @@ interface msdyn_incidenttype_Relationships {
   ts_incident_InspectionType1_msdyn_incidentty?: Incident_Result[] | null;
   ts_incident_InspectionType2_msdyn_incidentty?: Incident_Result[] | null;
   ts_ovs_operationtypes_msdyn_incidenttypes?: ovs_operationtype_Result[] | null;
+  ts_prescribedfrequencyoverride_ActivityType_msdyn_incidenttype?: ts_PrescribedFrequencyOverride_Result[] | null;
   ts_questionnaireresponse_ActivityType_msdyn_incidenttype?: ts_questionnaireresponse_Result[] | null;
   ts_suggestedinspection_activitytype?: ts_SuggestedInspection_Result[] | null;
   ts_ts_case_InspectionType1_msdyn_incidentty?: ts_case_Result[] | null;
@@ -290,6 +291,7 @@ interface msdyn_incidenttype_Expand {
   ts_incident_InspectionType2_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { ts_incident_InspectionType2_msdyn_incidentty: Incident_Result[] }>;
   ts_ovs_operation: WebExpand<msdyn_incidenttype_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation: ovs_operation_Result }>;
   ts_ovs_operationtypes_msdyn_incidenttypes: WebExpand<msdyn_incidenttype_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_ovs_operationtypes_msdyn_incidenttypes: ovs_operationtype_Result[] }>;
+  ts_prescribedfrequencyoverride_ActivityType_msdyn_incidenttype: WebExpand<msdyn_incidenttype_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { ts_prescribedfrequencyoverride_ActivityType_msdyn_incidenttype: ts_PrescribedFrequencyOverride_Result[] }>;
   ts_questionnaireresponse_ActivityType_msdyn_incidenttype: WebExpand<msdyn_incidenttype_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { ts_questionnaireresponse_ActivityType_msdyn_incidenttype: ts_questionnaireresponse_Result[] }>;
   ts_suggestedinspection_activitytype: WebExpand<msdyn_incidenttype_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection_activitytype: ts_SuggestedInspection_Result[] }>;
   ts_ts_case_InspectionType1_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, ts_case_Select, ts_case_Filter, { ts_ts_case_InspectionType1_msdyn_incidentty: ts_case_Result[] }>;
@@ -358,6 +360,7 @@ interface msdyn_incidenttype_RelatedMany {
   ts_incident_InspectionType1_msdyn_incidentty: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_InspectionType2_msdyn_incidentty: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_ovs_operationtypes_msdyn_incidenttypes: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
+  ts_prescribedfrequencyoverride_ActivityType_msdyn_incidenttype: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
   ts_questionnaireresponse_ActivityType_msdyn_incidenttype: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
   ts_suggestedinspection_activitytype: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   ts_ts_case_InspectionType1_msdyn_incidentty: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
