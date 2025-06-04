@@ -435,6 +435,11 @@
             "file": "js\\RiskThresholdRibbon.js",
             "description": "Ribbon Functions for Risk Threshold Table"
           },
+          {
+            "uniquename": "ts_/js/PrescribedFrequencyOverride.js",
+            "file": "js\\PrescribedFrequencyOverride.js",
+            "description": "ROM TSIS 2.0 PrescribedFrequencyOverride Form Scripts"
+          },
           /* Styles */
           {
             "uniquename": "ovs_/css/bootstrap.min.css",
