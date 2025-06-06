@@ -11,6 +11,7 @@ interface ts_OperationActivityRiskScores_Base extends WebEntity {
   ts_name?: string | null;
   ts_operationactivityriskscoresid?: string | null;
   ts_operationriskscore?: number | null;
+  ts_operationtyperiskid?: string | null;
   ts_operationtyperiskscore?: number | null;
   ts_programareariskscore?: number | null;
   ts_riskapplication?: boolean | null;
@@ -82,6 +83,7 @@ interface ts_OperationActivityRiskScores_Select {
   ts_operationentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationentityrisk_guid: string | null }, { ts_operationentityrisk_formatted?: string }>;
   ts_operationriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationriskscore: number | null }, {  }>;
   ts_operationtypeentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationtypeentityrisk_guid: string | null }, { ts_operationtypeentityrisk_formatted?: string }>;
+  ts_operationtyperiskid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationtyperiskid: string | null }, {  }>;
   ts_operationtyperiskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationtyperiskscore: number | null }, {  }>;
   ts_prescribedfrequencyoverride_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_prescribedfrequencyoverride_guid: string | null }, { ts_prescribedfrequencyoverride_formatted?: string }>;
   ts_programareaentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_programareaentityrisk_guid: string | null }, { ts_programareaentityrisk_formatted?: string }>;
@@ -127,6 +129,7 @@ interface ts_OperationActivityRiskScores_Filter {
   ts_operationentityrisk_guid: XQW.Guid;
   ts_operationriskscore: any;
   ts_operationtypeentityrisk_guid: XQW.Guid;
+  ts_operationtyperiskid: string;
   ts_operationtyperiskscore: any;
   ts_prescribedfrequencyoverride_guid: XQW.Guid;
   ts_programareaentityrisk_guid: XQW.Guid;
