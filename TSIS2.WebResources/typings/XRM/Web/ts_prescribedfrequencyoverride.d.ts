@@ -6,6 +6,8 @@ interface ts_PrescribedFrequencyOverride_Base extends WebEntity {
   statecode?: ts_prescribedfrequencyoverride_statecode | null;
   statuscode?: ts_prescribedfrequencyoverride_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_englishname?: string | null;
+  ts_frenchname?: string | null;
   ts_name?: string | null;
   ts_prescribedfrequencyoverrideid?: string | null;
   utcconversiontimezonecode?: number | null;
@@ -14,6 +16,7 @@ interface ts_PrescribedFrequencyOverride_Base extends WebEntity {
 interface ts_PrescribedFrequencyOverride_Relationships {
   ts_ActivityType?: msdyn_incidenttype_Result | null;
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
+  ts_operationactivityriskscores_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride?: ts_OperationActivityRiskScores_Result[] | null;
 }
 interface ts_PrescribedFrequencyOverride extends ts_PrescribedFrequencyOverride_Base, ts_PrescribedFrequencyOverride_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -43,7 +46,9 @@ interface ts_PrescribedFrequencyOverride_Select {
   statuscode: WebAttribute<ts_PrescribedFrequencyOverride_Select, { statuscode: ts_prescribedfrequencyoverride_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_PrescribedFrequencyOverride_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_activitytype_guid: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_activitytype_guid: string | null }, { ts_activitytype_formatted?: string }>;
+  ts_englishname: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_englishname: string | null }, {  }>;
   ts_fiscalyear_guid: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_fiscalyear_guid: string | null }, { ts_fiscalyear_formatted?: string }>;
+  ts_frenchname: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_frenchname: string | null }, {  }>;
   ts_name: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_name: string | null }, {  }>;
   ts_prescribedfrequencyoverrideid: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_prescribedfrequencyoverrideid: string | null }, {  }>;
   ts_riskfrequency_guid: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_riskfrequency_guid: string | null }, { ts_riskfrequency_formatted?: string }>;
@@ -67,7 +72,9 @@ interface ts_PrescribedFrequencyOverride_Filter {
   statuscode: ts_prescribedfrequencyoverride_statuscode;
   timezoneruleversionnumber: number;
   ts_activitytype_guid: XQW.Guid;
+  ts_englishname: string;
   ts_fiscalyear_guid: XQW.Guid;
+  ts_frenchname: string;
   ts_name: string;
   ts_prescribedfrequencyoverrideid: XQW.Guid;
   ts_riskfrequency_guid: XQW.Guid;
@@ -84,6 +91,7 @@ interface ts_PrescribedFrequencyOverride_Expand {
   owninguser: WebExpand<ts_PrescribedFrequencyOverride_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_ActivityType: WebExpand<ts_PrescribedFrequencyOverride_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_ActivityType: msdyn_incidenttype_Result }>;
   ts_FiscalYear: WebExpand<ts_PrescribedFrequencyOverride_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
+  ts_operationactivityriskscores_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride: WebExpand<ts_PrescribedFrequencyOverride_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride: ts_OperationActivityRiskScores_Result[] }>;
 }
 interface ts_PrescribedFrequencyOverride_FormattedResult {
   createdby_formatted?: string;
@@ -129,6 +137,7 @@ interface ts_PrescribedFrequencyOverride_RelatedOne {
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
 }
 interface ts_PrescribedFrequencyOverride_RelatedMany {
+  ts_operationactivityriskscores_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_prescribedfrequencyoverrides: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
