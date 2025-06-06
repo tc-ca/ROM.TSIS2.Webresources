@@ -19,6 +19,8 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
     const fileUploadData = new FileUploadData();
 
+    console.log("OpenFileUploadPage called with PrimaryTypeEntityName: " + PrimaryTypeEntityName);
+
     let recordTagId = "";
 
     recordTagId = PrimaryControl.data.entity.getId().replace("{", "").replace("}", "");
