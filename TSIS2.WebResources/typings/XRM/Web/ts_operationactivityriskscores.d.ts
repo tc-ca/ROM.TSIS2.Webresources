@@ -11,6 +11,7 @@ interface ts_OperationActivityRiskScores_Base extends WebEntity {
   ts_name?: string | null;
   ts_operationactivityriskscoresid?: string | null;
   ts_operationriskscore?: number | null;
+  ts_operationtyperiskid?: string | null;
   ts_operationtyperiskscore?: number | null;
   ts_programareariskscore?: number | null;
   ts_riskapplication?: boolean | null;
@@ -30,6 +31,7 @@ interface ts_OperationActivityRiskScores_Relationships {
   ts_OperationActivity?: ts_OperationActivity_Result | null;
   ts_OperationEntityRisk?: ts_EntityRisk_Result | null;
   ts_OperationTypeEntityRisk?: ts_EntityRisk_Result | null;
+  ts_PrescribedFrequencyOverride?: ts_PrescribedFrequencyOverride_Result | null;
   ts_ProgramAreaEntityRisk?: ts_EntityRisk_Result | null;
   ts_SiteEntityRisk?: ts_EntityRisk_Result | null;
   ts_StakeholderEntityRisk?: ts_EntityRisk_Result | null;
@@ -43,6 +45,7 @@ interface ts_OperationActivityRiskScores extends ts_OperationActivityRiskScores_
   ts_OperationActivity_bind$ts_operationactivities?: string | null;
   ts_OperationEntityRisk_bind$ts_entityrisks?: string | null;
   ts_OperationTypeEntityRisk_bind$ts_entityrisks?: string | null;
+  ts_PrescribedFrequencyOverride_bind$ts_prescribedfrequencyoverrides?: string | null;
   ts_ProgramAreaEntityRisk_bind$ts_entityrisks?: string | null;
   ts_RiskFrequency_bind$ts_riskfrequencies?: string | null;
   ts_RiskRating_bind$ts_riskratings?: string | null;
@@ -80,7 +83,9 @@ interface ts_OperationActivityRiskScores_Select {
   ts_operationentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationentityrisk_guid: string | null }, { ts_operationentityrisk_formatted?: string }>;
   ts_operationriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationriskscore: number | null }, {  }>;
   ts_operationtypeentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationtypeentityrisk_guid: string | null }, { ts_operationtypeentityrisk_formatted?: string }>;
+  ts_operationtyperiskid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationtyperiskid: string | null }, {  }>;
   ts_operationtyperiskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_operationtyperiskscore: number | null }, {  }>;
+  ts_prescribedfrequencyoverride_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_prescribedfrequencyoverride_guid: string | null }, { ts_prescribedfrequencyoverride_formatted?: string }>;
   ts_programareaentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_programareaentityrisk_guid: string | null }, { ts_programareaentityrisk_formatted?: string }>;
   ts_programareariskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_programareariskscore: number | null }, {  }>;
   ts_riskapplication: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskapplication: boolean | null }, {  }>;
@@ -124,7 +129,9 @@ interface ts_OperationActivityRiskScores_Filter {
   ts_operationentityrisk_guid: XQW.Guid;
   ts_operationriskscore: any;
   ts_operationtypeentityrisk_guid: XQW.Guid;
+  ts_operationtyperiskid: string;
   ts_operationtyperiskscore: any;
+  ts_prescribedfrequencyoverride_guid: XQW.Guid;
   ts_programareaentityrisk_guid: XQW.Guid;
   ts_programareariskscore: any;
   ts_riskapplication: boolean;
@@ -155,6 +162,7 @@ interface ts_OperationActivityRiskScores_Expand {
   ts_OperationActivity: WebExpand<ts_OperationActivityRiskScores_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_OperationActivity: ts_OperationActivity_Result }>;
   ts_OperationEntityRisk: WebExpand<ts_OperationActivityRiskScores_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_OperationEntityRisk: ts_EntityRisk_Result }>;
   ts_OperationTypeEntityRisk: WebExpand<ts_OperationActivityRiskScores_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_OperationTypeEntityRisk: ts_EntityRisk_Result }>;
+  ts_PrescribedFrequencyOverride: WebExpand<ts_OperationActivityRiskScores_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { ts_PrescribedFrequencyOverride: ts_PrescribedFrequencyOverride_Result }>;
   ts_ProgramAreaEntityRisk: WebExpand<ts_OperationActivityRiskScores_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_ProgramAreaEntityRisk: ts_EntityRisk_Result }>;
   ts_SiteEntityRisk: WebExpand<ts_OperationActivityRiskScores_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_SiteEntityRisk: ts_EntityRisk_Result }>;
   ts_StakeholderEntityRisk: WebExpand<ts_OperationActivityRiskScores_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_StakeholderEntityRisk: ts_EntityRisk_Result }>;
@@ -179,6 +187,7 @@ interface ts_OperationActivityRiskScores_FormattedResult {
   ts_operationactivity_formatted?: string;
   ts_operationentityrisk_formatted?: string;
   ts_operationtypeentityrisk_formatted?: string;
+  ts_prescribedfrequencyoverride_formatted?: string;
   ts_programareaentityrisk_formatted?: string;
   ts_riskfrequency_formatted?: string;
   ts_riskrating_formatted?: string;
@@ -202,6 +211,7 @@ interface ts_OperationActivityRiskScores_Result extends ts_OperationActivityRisk
   ts_operationactivity_guid: string | null;
   ts_operationentityrisk_guid: string | null;
   ts_operationtypeentityrisk_guid: string | null;
+  ts_prescribedfrequencyoverride_guid: string | null;
   ts_programareaentityrisk_guid: string | null;
   ts_riskfrequency_guid: string | null;
   ts_riskrating_guid: string | null;
@@ -222,6 +232,7 @@ interface ts_OperationActivityRiskScores_RelatedOne {
   ts_OperationActivity: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_OperationEntityRisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   ts_OperationTypeEntityRisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  ts_PrescribedFrequencyOverride: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
   ts_ProgramAreaEntityRisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   ts_SiteEntityRisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   ts_StakeholderEntityRisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
