@@ -6,7 +6,7 @@ var ROM;
         function fiscalYearOnChange(eContext) {
             var _a;
             var formContext = eContext.getFormContext();
-            // Get values from the form
+            // Get the activity type value from the form
             var activityTypeLookup = (_a = formContext.getAttribute("ts_activitytype")) === null || _a === void 0 ? void 0 : _a.getValue();
             var activityTypeId = "";
             if (activityTypeLookup && activityTypeLookup.length > 0) {

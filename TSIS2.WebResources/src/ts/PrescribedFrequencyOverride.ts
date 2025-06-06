@@ -2,7 +2,7 @@
     export function fiscalYearOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_prescribedfrequencyoverride.Main.Information>eContext.getFormContext();
 
-        // Get values from the form
+        // Get the activity type value from the form
         const activityTypeLookup = formContext.getAttribute("ts_activitytype")?.getValue();
         let activityTypeId = "";
 
@@ -23,8 +23,6 @@
         } else {
             console.warn("Fiscal Year is not set.");
         }
-
-        
 
         // Fetch existing records to check for duplicates
         const fetchXml = `
