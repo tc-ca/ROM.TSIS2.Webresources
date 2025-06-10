@@ -126,7 +126,7 @@ declare const enum connection_record2objecttypecode {
   SequenceTarget = 10700,
   AssignmentRule = 10704,
   AssignmentMap = 10707,
-  File_2 = 10724,
+  File = 10724,
   Suggestion = 10752,
   Interview = 10853,
   EnforcementAction = 10882,
@@ -146,5 +146,5 @@ declare const enum connection_record2objecttypecode {
   Shortcut = 11513,
   Website = 11525,
   CaseNew = 11775,
-  File = 11964,
+  File_2 = 11964,
 }

@@ -10,6 +10,9 @@ declare namespace Form.ts_prescribedfrequencyoverride.Main {
       get(name: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ts_frenchname"): Xrm.Attribute<string>;
       get(name: "ts_name"): Xrm.Attribute<string>;
+      get(name: "ts_prescribedfrequencyclass2"): Xrm.LookupAttribute<"ts_riskfrequency">;
+      get(name: "ts_prescribedfrequencyclass3"): Xrm.LookupAttribute<"ts_riskfrequency">;
+      get(name: "ts_prescribedfrequencyclassselection"): Xrm.MultiSelectOptionSetAttribute<ts_prescribedfrequencyclassselection>;
       get(name: "ts_riskfrequency"): Xrm.LookupAttribute<"ts_riskfrequency">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -25,6 +28,9 @@ declare namespace Form.ts_prescribedfrequencyoverride.Main {
       get(name: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ts_frenchname"): Xrm.StringControl;
       get(name: "ts_name"): Xrm.StringControl;
+      get(name: "ts_prescribedfrequencyclass2"): Xrm.LookupControl<"ts_riskfrequency">;
+      get(name: "ts_prescribedfrequencyclass3"): Xrm.LookupControl<"ts_riskfrequency">;
+      get(name: "ts_prescribedfrequencyclassselection"): Xrm.MultiSelectOptionSetControl<ts_prescribedfrequencyclassselection>;
       get(name: "ts_riskfrequency"): Xrm.LookupControl<"ts_riskfrequency">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -46,6 +52,9 @@ declare namespace Form.ts_prescribedfrequencyoverride.Main {
     getAttribute(attributeName: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ts_frenchname"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_prescribedfrequencyclass2"): Xrm.LookupAttribute<"ts_riskfrequency">;
+    getAttribute(attributeName: "ts_prescribedfrequencyclass3"): Xrm.LookupAttribute<"ts_riskfrequency">;
+    getAttribute(attributeName: "ts_prescribedfrequencyclassselection"): Xrm.MultiSelectOptionSetAttribute<ts_prescribedfrequencyclassselection>;
     getAttribute(attributeName: "ts_riskfrequency"): Xrm.LookupAttribute<"ts_riskfrequency">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -56,6 +65,9 @@ declare namespace Form.ts_prescribedfrequencyoverride.Main {
     getControl(controlName: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ts_frenchname"): Xrm.StringControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;
+    getControl(controlName: "ts_prescribedfrequencyclass2"): Xrm.LookupControl<"ts_riskfrequency">;
+    getControl(controlName: "ts_prescribedfrequencyclass3"): Xrm.LookupControl<"ts_riskfrequency">;
+    getControl(controlName: "ts_prescribedfrequencyclassselection"): Xrm.MultiSelectOptionSetControl<ts_prescribedfrequencyclassselection>;
     getControl(controlName: "ts_riskfrequency"): Xrm.LookupControl<"ts_riskfrequency">;
     getControl(controlName: string): undefined;
   }

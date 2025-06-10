@@ -9,6 +9,7 @@ interface ts_PrescribedFrequencyOverride_Base extends WebEntity {
   ts_englishname?: string | null;
   ts_frenchname?: string | null;
   ts_name?: string | null;
+  ts_prescribedfrequencyclassselection?: ts_prescribedfrequencyclassselection | null;
   ts_prescribedfrequencyoverrideid?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
@@ -23,6 +24,8 @@ interface ts_PrescribedFrequencyOverride extends ts_PrescribedFrequencyOverride_
   ownerid_bind$teams?: string | null;
   ts_ActivityType_bind$msdyn_incidenttypes?: string | null;
   ts_FiscalYear_bind$tc_tcfiscalyears?: string | null;
+  ts_PrescribedFrequencyClass2_bind$ts_riskfrequencies?: string | null;
+  ts_PrescribedFrequencyClass3_bind$ts_riskfrequencies?: string | null;
   ts_RiskFrequency_bind$ts_riskfrequencies?: string | null;
 }
 interface ts_PrescribedFrequencyOverride_Create extends ts_PrescribedFrequencyOverride {
@@ -50,6 +53,9 @@ interface ts_PrescribedFrequencyOverride_Select {
   ts_fiscalyear_guid: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_fiscalyear_guid: string | null }, { ts_fiscalyear_formatted?: string }>;
   ts_frenchname: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_frenchname: string | null }, {  }>;
   ts_name: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_name: string | null }, {  }>;
+  ts_prescribedfrequencyclass2_guid: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_prescribedfrequencyclass2_guid: string | null }, { ts_prescribedfrequencyclass2_formatted?: string }>;
+  ts_prescribedfrequencyclass3_guid: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_prescribedfrequencyclass3_guid: string | null }, { ts_prescribedfrequencyclass3_formatted?: string }>;
+  ts_prescribedfrequencyclassselection: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_prescribedfrequencyclassselection: ts_prescribedfrequencyclassselection | null }, { ts_prescribedfrequencyclassselection_formatted?: string }>;
   ts_prescribedfrequencyoverrideid: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_prescribedfrequencyoverrideid: string | null }, {  }>;
   ts_riskfrequency_guid: WebAttribute<ts_PrescribedFrequencyOverride_Select, { ts_riskfrequency_guid: string | null }, { ts_riskfrequency_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_PrescribedFrequencyOverride_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -76,6 +82,9 @@ interface ts_PrescribedFrequencyOverride_Filter {
   ts_fiscalyear_guid: XQW.Guid;
   ts_frenchname: string;
   ts_name: string;
+  ts_prescribedfrequencyclass2_guid: XQW.Guid;
+  ts_prescribedfrequencyclass3_guid: XQW.Guid;
+  ts_prescribedfrequencyclassselection: ts_prescribedfrequencyclassselection;
   ts_prescribedfrequencyoverrideid: XQW.Guid;
   ts_riskfrequency_guid: XQW.Guid;
   utcconversiontimezonecode: number;
@@ -109,6 +118,9 @@ interface ts_PrescribedFrequencyOverride_FormattedResult {
   statuscode_formatted?: string;
   ts_activitytype_formatted?: string;
   ts_fiscalyear_formatted?: string;
+  ts_prescribedfrequencyclass2_formatted?: string;
+  ts_prescribedfrequencyclass3_formatted?: string;
+  ts_prescribedfrequencyclassselection_formatted?: string;
   ts_riskfrequency_formatted?: string;
 }
 interface ts_PrescribedFrequencyOverride_Result extends ts_PrescribedFrequencyOverride_Base, ts_PrescribedFrequencyOverride_Relationships {
@@ -123,6 +135,8 @@ interface ts_PrescribedFrequencyOverride_Result extends ts_PrescribedFrequencyOv
   owninguser_guid: string | null;
   ts_activitytype_guid: string | null;
   ts_fiscalyear_guid: string | null;
+  ts_prescribedfrequencyclass2_guid: string | null;
+  ts_prescribedfrequencyclass3_guid: string | null;
   ts_riskfrequency_guid: string | null;
 }
 interface ts_PrescribedFrequencyOverride_RelatedOne {
