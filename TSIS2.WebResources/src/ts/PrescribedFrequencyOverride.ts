@@ -82,12 +82,35 @@
 
     }
 
-    export function activityTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export function classSelection(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_prescribedfrequencyoverride.Main.Information>eContext.getFormContext();
 
-        // This function is used to retrieve the selected lookup value and set the English and French names based on the selected activity type and fiscal year
-        setEnglishandFrenchName(formContext);
+        const classSelection = formContext.getAttribute("ts_prescribedfrequencyclassselection")?.getValue() || [];
+        console.log("Selected Class:", classSelection);
 
+        // Map class codes to their corresponding fields
+        const classMappings: { [key: number]: string } = {
+            741130001: 'ts_riskfrequency',
+            741130002: 'ts_prescribedfrequencyclass2',
+            741130003: 'ts_prescribedfrequencyclass3'
+        };
+
+        // Loop through all possible class codes
+        Object.entries(classMappings).forEach(([codeStr, fieldName]) => {
+            const code = parseInt(codeStr, 10);
+            const control = formContext.getControl(fieldName);
+            const attribute = formContext.getAttribute(fieldName);
+
+            if (classSelection.includes(code)) {
+                (control as any)?.setVisible(true);
+                (attribute as any)?.setRequiredLevel("required");
+            } else {
+                // Clear the field, hide it, and remove requirement
+                (attribute as any)?.setValue(null);
+                (control as any)?.setVisible(false);
+                (attribute as any)?.setRequiredLevel("none");
+            }
+        });
     }
 
     // This function is used to retrieve the English and French display names for the selected entity and set the ts_englishname and ts_frenchname fields along with the Fiscal Year

@@ -57,12 +57,37 @@ var ROM;
             });
         }
         PrescribedFrequencyOverride.fiscalYearOnChange = fiscalYearOnChange;
-        function activityTypeOnChange(eContext) {
+        function classSelection(eContext) {
+            var _a;
             var formContext = eContext.getFormContext();
-            // This function is used to retrieve the selected lookup value and set the English and French names based on the selected activity type and fiscal year
-            setEnglishandFrenchName(formContext);
+            var classSelection = ((_a = formContext.getAttribute("ts_prescribedfrequencyclassselection")) === null || _a === void 0 ? void 0 : _a.getValue()) || [];
+            console.log("Selected Class:", classSelection);
+            // Map class codes to their corresponding fields
+            var classMappings = {
+                741130001: 'ts_riskfrequency',
+                741130002: 'ts_prescribedfrequencyclass2',
+                741130003: 'ts_prescribedfrequencyclass3'
+            };
+            // Loop through all possible class codes
+            Object.entries(classMappings).forEach(function (_a) {
+                var _b, _c, _d, _e, _f;
+                var codeStr = _a[0], fieldName = _a[1];
+                var code = parseInt(codeStr, 10);
+                var control = formContext.getControl(fieldName);
+                var attribute = formContext.getAttribute(fieldName);
+                if (classSelection.includes(code)) {
+                    (_b = control) === null || _b === void 0 ? void 0 : _b.setVisible(true);
+                    (_c = attribute) === null || _c === void 0 ? void 0 : _c.setRequiredLevel("required");
+                }
+                else {
+                    // Clear the field, hide it, and remove requirement
+                    (_d = attribute) === null || _d === void 0 ? void 0 : _d.setValue(null);
+                    (_e = control) === null || _e === void 0 ? void 0 : _e.setVisible(false);
+                    (_f = attribute) === null || _f === void 0 ? void 0 : _f.setRequiredLevel("none");
+                }
+            });
         }
-        PrescribedFrequencyOverride.activityTypeOnChange = activityTypeOnChange;
+        PrescribedFrequencyOverride.classSelection = classSelection;
         // This function is used to retrieve the English and French display names for the selected entity and set the ts_englishname and ts_frenchname fields along with the Fiscal Year
         function setEnglishandFrenchName(formContext) {
             // get the selection from ts_entityname
