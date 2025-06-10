@@ -46,6 +46,7 @@ interface Email_Base extends WebEntity {
   messageiddupcheck?: string | null;
   mimetype?: string | null;
   modifiedon?: Date | null;
+  msdyn_autofill_type?: msdyn_email_msdyn_autofill_type | null;
   msdyn_copilotengaged?: boolean | null;
   msdyn_emailengagementinteractions?: string | null;
   msdyn_recipientlist?: string | null;
@@ -297,6 +298,7 @@ interface Email_Select {
   modifiedby_guid: WebAttribute<Email_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
   modifiedon: WebAttribute<Email_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Email_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msdyn_autofill_type: WebAttribute<Email_Select, { msdyn_autofill_type: msdyn_email_msdyn_autofill_type | null }, { msdyn_autofill_type_formatted?: string }>;
   msdyn_copilotengaged: WebAttribute<Email_Select, { msdyn_copilotengaged: boolean | null }, {  }>;
   msdyn_emailengagementinteractions: WebAttribute<Email_Select, { msdyn_emailengagementinteractions: string | null }, {  }>;
   msdyn_recipientlist: WebAttribute<Email_Select, { msdyn_recipientlist: string | null }, {  }>;
@@ -410,6 +412,7 @@ interface Email_Filter {
   modifiedby_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msdyn_autofill_type: msdyn_email_msdyn_autofill_type;
   msdyn_copilotengaged: boolean;
   msdyn_emailengagementinteractions: string;
   msdyn_recipientlist: string;
@@ -522,6 +525,7 @@ interface Email_FormattedResult {
   modifiedby_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msdyn_autofill_type_formatted?: string;
   msdyn_sentiment_formatted?: string;
   msdyn_sentimentreason_formatted?: string;
   msft_datastate_formatted?: string;

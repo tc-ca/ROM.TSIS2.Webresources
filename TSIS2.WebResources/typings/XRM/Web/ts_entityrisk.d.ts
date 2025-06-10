@@ -13,6 +13,12 @@ interface ts_EntityRisk_Base extends WebEntity {
   ts_name?: string | null;
   ts_riskscore?: number | null;
   ts_runpowerautomateflow?: boolean | null;
+  ts_usesriskapplicationactivitytype?: boolean | null;
+  ts_usesriskapplicationoperation?: boolean | null;
+  ts_usesriskapplicationoperationtype?: boolean | null;
+  ts_usesriskapplicationprogramarea?: boolean | null;
+  ts_usesriskapplicationsite?: boolean | null;
+  ts_usesriskapplicationstakeholder?: boolean | null;
   ts_weightedriskscore?: number | null;
   ts_year?: string | null;
   utcconversiontimezonecode?: number | null;
@@ -25,6 +31,7 @@ interface ts_EntityRisk_Relationships {
   ts_EntityRisk_ovs_operation_ovs_operation?: ovs_operation_Result[] | null;
   ts_EntityRisk_ovs_operationtype_ovs_operationtype?: ovs_operationtype_Result[] | null;
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
+  ts_RiskApplicationOperationType?: ovs_operationtype_Result | null;
   ts_operationactivityriskscores_ActivityTypeEntityRisk_ts_entityrisk?: ts_OperationActivityRiskScores_Result[] | null;
   ts_operationactivityriskscores_OperationEntityRisk_ts_entityrisk?: ts_OperationActivityRiskScores_Result[] | null;
   ts_operationactivityriskscores_OperationTypeEntityRisk_ts_entityrisk?: ts_OperationActivityRiskScores_Result[] | null;
@@ -36,6 +43,7 @@ interface ts_EntityRisk extends ts_EntityRisk_Base, ts_EntityRisk_Relationships 
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   ts_FiscalYear_bind$tc_tcfiscalyears?: string | null;
+  ts_RiskApplicationOperationType_bind$ovs_operationtypes?: string | null;
   ts_RiskFrequency_bind$ts_riskfrequencies?: string | null;
   ts_RiskRating_bind$ts_riskratings?: string | null;
 }
@@ -65,10 +73,17 @@ interface ts_EntityRisk_Select {
   ts_entityriskid: WebAttribute<ts_EntityRisk_Select, { ts_entityriskid: string | null }, {  }>;
   ts_fiscalyear_guid: WebAttribute<ts_EntityRisk_Select, { ts_fiscalyear_guid: string | null }, { ts_fiscalyear_formatted?: string }>;
   ts_name: WebAttribute<ts_EntityRisk_Select, { ts_name: string | null }, {  }>;
+  ts_riskapplicationoperationtype_guid: WebAttribute<ts_EntityRisk_Select, { ts_riskapplicationoperationtype_guid: string | null }, { ts_riskapplicationoperationtype_formatted?: string }>;
   ts_riskfrequency_guid: WebAttribute<ts_EntityRisk_Select, { ts_riskfrequency_guid: string | null }, { ts_riskfrequency_formatted?: string }>;
   ts_riskrating_guid: WebAttribute<ts_EntityRisk_Select, { ts_riskrating_guid: string | null }, { ts_riskrating_formatted?: string }>;
   ts_riskscore: WebAttribute<ts_EntityRisk_Select, { ts_riskscore: number | null }, {  }>;
   ts_runpowerautomateflow: WebAttribute<ts_EntityRisk_Select, { ts_runpowerautomateflow: boolean | null }, {  }>;
+  ts_usesriskapplicationactivitytype: WebAttribute<ts_EntityRisk_Select, { ts_usesriskapplicationactivitytype: boolean | null }, {  }>;
+  ts_usesriskapplicationoperation: WebAttribute<ts_EntityRisk_Select, { ts_usesriskapplicationoperation: boolean | null }, {  }>;
+  ts_usesriskapplicationoperationtype: WebAttribute<ts_EntityRisk_Select, { ts_usesriskapplicationoperationtype: boolean | null }, {  }>;
+  ts_usesriskapplicationprogramarea: WebAttribute<ts_EntityRisk_Select, { ts_usesriskapplicationprogramarea: boolean | null }, {  }>;
+  ts_usesriskapplicationsite: WebAttribute<ts_EntityRisk_Select, { ts_usesriskapplicationsite: boolean | null }, {  }>;
+  ts_usesriskapplicationstakeholder: WebAttribute<ts_EntityRisk_Select, { ts_usesriskapplicationstakeholder: boolean | null }, {  }>;
   ts_weightedriskscore: WebAttribute<ts_EntityRisk_Select, { ts_weightedriskscore: number | null }, {  }>;
   ts_year: WebAttribute<ts_EntityRisk_Select, { ts_year: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_EntityRisk_Select, { utcconversiontimezonecode: number | null }, {  }>;
@@ -96,10 +111,17 @@ interface ts_EntityRisk_Filter {
   ts_entityriskid: XQW.Guid;
   ts_fiscalyear_guid: XQW.Guid;
   ts_name: string;
+  ts_riskapplicationoperationtype_guid: XQW.Guid;
   ts_riskfrequency_guid: XQW.Guid;
   ts_riskrating_guid: XQW.Guid;
   ts_riskscore: any;
   ts_runpowerautomateflow: boolean;
+  ts_usesriskapplicationactivitytype: boolean;
+  ts_usesriskapplicationoperation: boolean;
+  ts_usesriskapplicationoperationtype: boolean;
+  ts_usesriskapplicationprogramarea: boolean;
+  ts_usesriskapplicationsite: boolean;
+  ts_usesriskapplicationstakeholder: boolean;
   ts_weightedriskscore: any;
   ts_year: string;
   utcconversiontimezonecode: number;
@@ -119,6 +141,7 @@ interface ts_EntityRisk_Expand {
   ts_EntityRisk_ovs_operation_ovs_operation: WebExpand<ts_EntityRisk_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_EntityRisk_ovs_operation_ovs_operation: ovs_operation_Result[] }>;
   ts_EntityRisk_ovs_operationtype_ovs_operationtype: WebExpand<ts_EntityRisk_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_EntityRisk_ovs_operationtype_ovs_operationtype: ovs_operationtype_Result[] }>;
   ts_FiscalYear: WebExpand<ts_EntityRisk_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
+  ts_RiskApplicationOperationType: WebExpand<ts_EntityRisk_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_RiskApplicationOperationType: ovs_operationtype_Result }>;
   ts_operationactivityriskscores_ActivityTypeEntityRisk_ts_entityrisk: WebExpand<ts_EntityRisk_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_ActivityTypeEntityRisk_ts_entityrisk: ts_OperationActivityRiskScores_Result[] }>;
   ts_operationactivityriskscores_OperationEntityRisk_ts_entityrisk: WebExpand<ts_EntityRisk_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_OperationEntityRisk_ts_entityrisk: ts_OperationActivityRiskScores_Result[] }>;
   ts_operationactivityriskscores_OperationTypeEntityRisk_ts_entityrisk: WebExpand<ts_EntityRisk_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_OperationTypeEntityRisk_ts_entityrisk: ts_OperationActivityRiskScores_Result[] }>;
@@ -142,6 +165,7 @@ interface ts_EntityRisk_FormattedResult {
   statuscode_formatted?: string;
   ts_entityname_formatted?: string;
   ts_fiscalyear_formatted?: string;
+  ts_riskapplicationoperationtype_formatted?: string;
   ts_riskfrequency_formatted?: string;
   ts_riskrating_formatted?: string;
 }
@@ -156,6 +180,7 @@ interface ts_EntityRisk_Result extends ts_EntityRisk_Base, ts_EntityRisk_Relatio
   owningteam_guid: string | null;
   owninguser_guid: string | null;
   ts_fiscalyear_guid: string | null;
+  ts_riskapplicationoperationtype_guid: string | null;
   ts_riskfrequency_guid: string | null;
   ts_riskrating_guid: string | null;
 }
@@ -168,6 +193,7 @@ interface ts_EntityRisk_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  ts_RiskApplicationOperationType: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
 }
 interface ts_EntityRisk_RelatedMany {
   ts_EntityRisk_Account_Account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

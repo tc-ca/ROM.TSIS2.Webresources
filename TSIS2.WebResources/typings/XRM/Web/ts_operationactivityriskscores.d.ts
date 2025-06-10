@@ -21,6 +21,7 @@ interface ts_OperationActivityRiskScores_Base extends WebEntity {
   ts_riskscoretrigger?: number | null;
   ts_siteriskscore?: number | null;
   ts_stakeholderriskscore?: number | null;
+  ts_usesriskapplication?: boolean | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -99,6 +100,7 @@ interface ts_OperationActivityRiskScores_Select {
   ts_siteriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteriskscore: number | null }, {  }>;
   ts_stakeholderentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_stakeholderentityrisk_guid: string | null }, { ts_stakeholderentityrisk_formatted?: string }>;
   ts_stakeholderriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_stakeholderriskscore: number | null }, {  }>;
+  ts_usesriskapplication: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_usesriskapplication: boolean | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_OperationActivityRiskScores_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_OperationActivityRiskScores_Select, { versionnumber: number | null }, {  }>;
 }
@@ -145,6 +147,7 @@ interface ts_OperationActivityRiskScores_Filter {
   ts_siteriskscore: any;
   ts_stakeholderentityrisk_guid: XQW.Guid;
   ts_stakeholderriskscore: any;
+  ts_usesriskapplication: boolean;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
