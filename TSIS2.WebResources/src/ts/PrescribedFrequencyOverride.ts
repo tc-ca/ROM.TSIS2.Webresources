@@ -113,6 +113,14 @@
         });
     }
 
+    export function activityTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const formContext = <Form.ts_prescribedfrequencyoverride.Main.Information>eContext.getFormContext();
+
+        // This function is used to retrieve the selected lookup value and set the English and French names based on the selected activity type and fiscal year
+        setEnglishandFrenchName(formContext);
+    }
+
+
     // This function is used to retrieve the English and French display names for the selected entity and set the ts_englishname and ts_frenchname fields along with the Fiscal Year
     function setEnglishandFrenchName(formContext: Form.ts_prescribedfrequencyoverride.Main.Information) {
 
