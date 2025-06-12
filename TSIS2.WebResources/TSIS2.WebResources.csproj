@@ -150,6 +150,7 @@
     <Content Include="Webresources\html\MyRegionTrip.html" />
     <Content Include="Webresources\html\NCATFactorGuide.html" />
     <Content Include="Webresources\html\OperationActivityRelatedWOView.html" />
+    <Content Include="Webresources\html\SiteAssessmentGuidance.html" />
     <Content Include="Webresources\html\PPEGuide.html" />
     <Content Include="Webresources\html\ProvisionRender.html" />
     <Content Include="Webresources\html\RATEFactor1Guide.html" />
