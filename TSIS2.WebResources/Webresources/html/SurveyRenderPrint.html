@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Print Questionnaire</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <script src="../../ovs_/js/jquery.js"></script>
     <script src="../../ovs_/js/survey.jquery.min.js"></script>
     <script src="../../ovs_/js/showdown.min.js"></script>
@@ -10,31 +10,38 @@
     <script src="../../ts_/js/surveyjs-widgets.min.js"></script>
     <script src="../../ovs_/js/tsis2findingwidget.js"></script>
 
-    <link rel="stylesheet" href="../../ovs_/css/survey.min.css">
+    <link rel="stylesheet" href="../../ovs_/css/survey.min.css" />
     <style>
-        @media print {
-            .sv_row {
-                display: block;
-                page-break-inside: avoid;
-            }
-
-            .sv_main .sv_container .sv_body .sv_p_root table.sv_q_matrix td {
-                text-align: left;
-            }
-
-            textarea.form-control.inspectorComments {
-                height: 10em;
-            }
-
-            span.character-count {
-                display: none;
-            }
+      @media print {
+        .sv_row {
+          display: block;
+          page-break-inside: avoid;
         }
-    </style>
-</head>
 
-<body style="overflow-wrap: break-word;">
+        .sv_main .sv_container .sv_body .sv_p_root table.sv_q_matrix td {
+          text-align: left;
+        }
+
+        textarea.form-control.inspectorComments {
+          height: 10em;
+        }
+
+        span.character-count {
+          display: none;
+        }
+      }
+      .printed-textarea {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        border: 1px solid #ccc;
+        padding: 5px;
+        min-height: 50px;
+      }
+    </style>
+  </head>
+
+  <body style="overflow-wrap: break-word">
     <div id="workOrderServiceTaskDetails"></div>
-    <div id="surveyElementPrint" style="display:block;width:100%;"></div>
-</body>
+    <div id="surveyElementPrint" style="display: block; width: 100%"></div>
+  </body>
 </html>
