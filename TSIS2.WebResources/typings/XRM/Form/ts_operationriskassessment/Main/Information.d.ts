@@ -2,7 +2,10 @@ declare namespace Form.ts_operationriskassessment.Main {
   namespace Information {
     namespace Tabs {
       interface tab_2 extends Xrm.SectionCollectionBase {
+        get(name: "_section_778"): Xrm.PageSection;
         get(name: "tab_2_section_3"): Xrm.PageSection;
+        get(name: "tab_2_section_4"): Xrm.PageSection;
+        get(name: "tab_2_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -20,6 +23,7 @@ declare namespace Form.ts_operationriskassessment.Main {
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_riskthresholdenglish"): Xrm.Attribute<string>;
       get(name: "ts_riskthresholdfrench"): Xrm.Attribute<string>;
+      get(name: "ts_siteassessmentguidance"): Xrm.Attribute<any>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -28,6 +32,7 @@ declare namespace Form.ts_operationriskassessment.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_Discretionary_Factor_Responses"): Xrm.BaseControl;
       get(name: "Subgrid_Risk_Criteria_Responses"): Xrm.BaseControl;
+      get(name: "WebResource_new_1"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_calculationlog"): Xrm.StringControl;
       get(name: "ts_discretionaryscore"): Xrm.NumberControl;
@@ -38,6 +43,7 @@ declare namespace Form.ts_operationriskassessment.Main {
       get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_riskthresholdenglish"): Xrm.StringControl;
       get(name: "ts_riskthresholdfrench"): Xrm.StringControl;
+      get(name: "ts_siteassessmentguidance"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -62,9 +68,11 @@ declare namespace Form.ts_operationriskassessment.Main {
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_riskthresholdenglish"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_riskthresholdfrench"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_siteassessmentguidance"): Xrm.Attribute<any>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_Discretionary_Factor_Responses"): Xrm.BaseControl;
     getControl(controlName: "Subgrid_Risk_Criteria_Responses"): Xrm.BaseControl;
+    getControl(controlName: "WebResource_new_1"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_calculationlog"): Xrm.StringControl;
     getControl(controlName: "ts_discretionaryscore"): Xrm.NumberControl;
@@ -75,6 +83,7 @@ declare namespace Form.ts_operationriskassessment.Main {
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_riskthresholdenglish"): Xrm.StringControl;
     getControl(controlName: "ts_riskthresholdfrench"): Xrm.StringControl;
+    getControl(controlName: "ts_siteassessmentguidance"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: string): undefined;
   }
 }

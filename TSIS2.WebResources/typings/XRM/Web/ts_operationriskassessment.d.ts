@@ -16,6 +16,7 @@ interface ts_operationriskassessment_Base extends WebEntity {
   ts_riskscore?: number | null;
   ts_riskthresholdenglish?: string | null;
   ts_riskthresholdfrench?: string | null;
+  ts_siteassessmentguidance?: boolean | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -58,6 +59,7 @@ interface ts_operationriskassessment_Select {
   ts_riskscore: WebAttribute<ts_operationriskassessment_Select, { ts_riskscore: number | null }, {  }>;
   ts_riskthresholdenglish: WebAttribute<ts_operationriskassessment_Select, { ts_riskthresholdenglish: string | null }, {  }>;
   ts_riskthresholdfrench: WebAttribute<ts_operationriskassessment_Select, { ts_riskthresholdfrench: string | null }, {  }>;
+  ts_siteassessmentguidance: WebAttribute<ts_operationriskassessment_Select, { ts_siteassessmentguidance: boolean | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_operationriskassessment_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_operationriskassessment_Select, { versionnumber: number | null }, {  }>;
 }
@@ -88,6 +90,7 @@ interface ts_operationriskassessment_Filter {
   ts_riskscore: number;
   ts_riskthresholdenglish: string;
   ts_riskthresholdfrench: string;
+  ts_siteassessmentguidance: boolean;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }

@@ -19,6 +19,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       interface f1tab_details extends Xrm.SectionCollectionBase {
         get(name: "KnowledgeArticleSection"): Xrm.PageSection;
         get(name: "f1tab_details_section_4"): Xrm.PageSection;
+        get(name: "f1tab_details_section_5"): Xrm.PageSection;
         get(name: "tab_3_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -165,6 +166,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "KnowledgeArticle_IncidentType"): Xrm.SubGridControl<"knowledgearticle">;
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operationtype">;
       get(name: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
+      get(name: "Subgrid_new_2"): Xrm.SubGridControl<"ts_prescribedfrequencyoverride">;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_incidenttype_statecode>;
       get(name: "incidentproductssubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeproduct">;
       get(name: "incidentservicessubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeservice">;
@@ -329,6 +331,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "KnowledgeArticle_IncidentType"): Xrm.SubGridControl<"knowledgearticle">;
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operationtype">;
     getControl(controlName: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
+    getControl(controlName: "Subgrid_new_2"): Xrm.SubGridControl<"ts_prescribedfrequencyoverride">;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_incidenttype_statecode>;
     getControl(controlName: "incidentproductssubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeproduct">;
     getControl(controlName: "incidentservicessubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeservice">;

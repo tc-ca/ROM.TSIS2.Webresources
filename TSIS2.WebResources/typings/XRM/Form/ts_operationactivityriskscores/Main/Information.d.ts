@@ -22,7 +22,6 @@ declare namespace Form.ts_operationactivityriskscores.Main {
       get(name: "ts_riskapplicationscore"): Xrm.NumberAttribute;
       get(name: "ts_riskfrequency"): Xrm.LookupAttribute<"ts_riskfrequency">;
       get(name: "ts_riskrating"): Xrm.LookupAttribute<"ts_riskrating">;
-      get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_siteentityrisk"): Xrm.LookupAttribute<"ts_entityrisk">;
       get(name: "ts_siteriskscore"): Xrm.NumberAttribute;
       get(name: "ts_stakeholderentityrisk"): Xrm.LookupAttribute<"ts_entityrisk">;
@@ -38,6 +37,7 @@ declare namespace Form.ts_operationactivityriskscores.Main {
       get(name: "ts_activitytypeentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
       get(name: "ts_activitytyperiskscore"): Xrm.NumberControl;
       get(name: "ts_calculatedriskscore"): Xrm.NumberControl;
+      get(name: "ts_calculatedriskscore1"): Xrm.NumberControl;
       get(name: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_operationactivity"): Xrm.LookupControl<"ts_operationactivity">;
@@ -52,7 +52,6 @@ declare namespace Form.ts_operationactivityriskscores.Main {
       get(name: "ts_riskapplicationscore"): Xrm.NumberControl;
       get(name: "ts_riskfrequency"): Xrm.LookupControl<"ts_riskfrequency">;
       get(name: "ts_riskrating"): Xrm.LookupControl<"ts_riskrating">;
-      get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_siteentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
       get(name: "ts_siteriskscore"): Xrm.NumberControl;
       get(name: "ts_stakeholderentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
@@ -89,7 +88,6 @@ declare namespace Form.ts_operationactivityriskscores.Main {
     getAttribute(attributeName: "ts_riskapplicationscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_riskfrequency"): Xrm.LookupAttribute<"ts_riskfrequency">;
     getAttribute(attributeName: "ts_riskrating"): Xrm.LookupAttribute<"ts_riskrating">;
-    getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_siteentityrisk"): Xrm.LookupAttribute<"ts_entityrisk">;
     getAttribute(attributeName: "ts_siteriskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_stakeholderentityrisk"): Xrm.LookupAttribute<"ts_entityrisk">;
@@ -100,6 +98,7 @@ declare namespace Form.ts_operationactivityriskscores.Main {
     getControl(controlName: "ts_activitytypeentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
     getControl(controlName: "ts_activitytyperiskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_calculatedriskscore"): Xrm.NumberControl;
+    getControl(controlName: "ts_calculatedriskscore1"): Xrm.NumberControl;
     getControl(controlName: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_operationactivity"): Xrm.LookupControl<"ts_operationactivity">;
@@ -114,7 +113,6 @@ declare namespace Form.ts_operationactivityriskscores.Main {
     getControl(controlName: "ts_riskapplicationscore"): Xrm.NumberControl;
     getControl(controlName: "ts_riskfrequency"): Xrm.LookupControl<"ts_riskfrequency">;
     getControl(controlName: "ts_riskrating"): Xrm.LookupControl<"ts_riskrating">;
-    getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_siteentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
     getControl(controlName: "ts_siteriskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_stakeholderentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
