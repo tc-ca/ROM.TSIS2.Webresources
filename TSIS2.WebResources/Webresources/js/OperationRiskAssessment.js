@@ -16,7 +16,7 @@ var ROM;
             var siteAssessmentGuidance = (_a = form.getAttribute("ts_siteassessmentguidance")) === null || _a === void 0 ? void 0 : _a.getValue();
             console.log("Site Assessment Guidance Value: ", siteAssessmentGuidance);
             // Show the section named "tab_2_section_5" if siteAssessmentGuidance is "Yes" 
-            if (siteAssessmentGuidance === true) {
+            if (siteAssessmentGuidance === false) {
                 form.ui.tabs.get("tab_2").sections.get("tab_2_section_5").setVisible(false);
             }
             else {
