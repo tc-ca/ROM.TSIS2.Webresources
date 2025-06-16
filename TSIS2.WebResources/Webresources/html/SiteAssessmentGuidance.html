@@ -4,23 +4,21 @@
     <meta charset="UTF-8" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
-        if (parent.Xrm != undefined) {
-            if (parent.Xrm.Utility.getGlobalContext().userSettings.languageId == 1033) {
-                $(document).ready(function () {
-                    $("[lang=fr]").hide();
-                });
+        $(document).ready(function () {
+            const languageId = parent?.Xrm?.Utility?.getGlobalContext()?.userSettings?.languageId;
+            if (languageId === 1033) {
+                $("[lang=fr]").hide();
+                $("[lang=en]").show();
             } else {
-                $(document).ready(function () {
-                    $("[lang=en]").hide();
-                });
+                $("[lang=en]").hide();
+                $("[lang=fr]").show();
             }
-        }
+        });
     </script>
     <style>
         body {
             font-family: "Segoe UI", Arial, sans-serif;
             font-size: 14px;
-            font-style: normal;
         }
 
         .title {
@@ -44,195 +42,121 @@
             display: none;
             overflow: hidden;
         }
-    </style>
 
+        ul, ol {
+            list-style-position: inside;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="category">
-        <button type="button" class="title">
-            <span lang="en">Basic PPE </span>
-            <span lang="fr">EPI de base</span>
-        </button>
-        <div class="tips">
-            <ul>
-                <li>
-                    <span lang="en">
-                        Type II hard hat
-                    </span>
-                    <span lang="fr">
-                        Casque de protection de type II
-                    </span>
-                </li>
-                <li>
-                    <span lang="en">Safety eyewear – CSA approved Class 1A safety glasses with side shields and UV protection or Class 2B goggles with UV protection, as needed for the task.</span>
-                    <span lang="fr">Lunette de sécurité - conforme au CSA 1A avec protection latérales et protection contre rayon UV ou lunette de sécurité classe 2B avec protection contre rayon UV, selon les besoins de la tâche.</span>
-                </li>
-                <li>
-                    <span lang="en">Ear protection. Hearing Protection Devices should comply with the Canadian Standards Association (CSA) Z94.2-02 Hearing Protection Devices – Performance, Selection, Care and Use. </span>
-                    <span lang="fr">Protecteur auditif Les appareils de protection auditive doivent être conformes à la norme Z94.2-02 de l'Association canadienne de normalisation (CSA) intitulée Appareils de protection auditive - Performance, sélection, entretien et utilisation.</span>
-                </li>
-                <li>
-                    <span lang="en">High visibility flame resistant reflective safety vest compliant with the Canadian Standards Association (CSA). Minimum Class 2, Level 2 flame resistant (unless Class 3 is specified by the host site). Tear-away capability recommended (and may be required by some sites) </span>
-                    <span lang="fr">Gilet de sécurité haute visibilité jaune.  Conforme au CSA, minimum classe 2, niveau 2 ignifuge (sauf si la classe 3 est spécifiée par le site hôte). La possibilité d'arrachage est recommandée (et peut être exigée par certains sites).</span>
-                </li>
-                <li>
-                    <span lang="en">Work gloves, as appropriate for the inspection</span>
-                    <span lang="fr">Gants de travail d’usage général, en fonction de l’inspection.</span>
-                </li>
-                <li>
-                    <span lang="en">CSA-compliant steel-toed safety boots</span>
-                    <span lang="fr">Bottes de sécurité à bout en acier conformes à la norme CSA</span>
-                </li>
-                <li>
-                    <span lang="en">Insect Repellent</span>
-                    <span lang="fr">Chasse moustique</span>
-                </li>
-                <li>
-                    <span lang="en">Sunscreen</span>
-                    <span lang="fr">Crème solaire</span>
-                </li>
-                <li>
-                    <span lang="en">Garbage Bags </span>
-                    <span lang="fr">Sacs à ordure</span>
-                </li>
-                <li>
-                    <span lang="en">Disposable latex or nitrile gloves  </span>
-                    <span lang="fr">Gants jetables en latex ou en nitrile</span>
-                </li>
-                <li>
-                    <span lang="en">Hand sanitizer with minimum 60% alcohol content. </span>
-                    <span lang="fr">Un désinfectant pour les mains contenant au moins 60 % d'alcool.</span>
-                </li>
-                <li>
-                    <span lang="en">Disinfectant (virucidal) wipes</span>
-                    <span lang="fr">Chiffons disinfectants (virucides)</span>
-                </li>
-                <li>
-                    <span lang="en">First Aid Kit</span>
-                    <span lang="fr">Trousse de premiers soins</span>
-                </li>
-                <li>
-                    <span lang="en">Communication devices (e.g. cell phone, satellite phone and portable cell phone power bank. Regions may provide for AC, DC, solar and/or hand crank cell phone chargers, portable cell phone power bank, and portable cell phone signal booster for RMS.</span>
-                    <span lang="fr">Dispositifs de communication (par exemple, téléphone cellulaire, téléphone satellite et batterie de téléphone cellulaire portable). Les régions peuvent fournir des chargeurs de téléphone cellulaire à courant alternatif, à courant continu, solaires et/ou à manivelle, une banque d'énergie pour téléphone cellulaire portable et un amplificateur de signal pour téléphone cellulaire portable pour RMS.</span>
-                </li>
-                <li>
-                    <span lang="en">GPS and/or recent maps and compass</span>
-                    <span lang="fr">GPS et/ou cartes récentes et boussole</span>
-                </li>
-            </ul>
+    <div class="categories">
+        <!-- Updated sections for each theme with English and French names -->
+        <div class="category">
+            <button type="button" class="title" data-guidance-id="1">
+                <span lang="en">Theme 1</span>
+                <span lang="fr">Theme 1 (fr)</span>
+            </button>
+            <div class="tips" id="guidanceContent1" style="min-height:200px;">Loading guidance...</div>
         </div>
-    </div>
-    <br />
-    <div class="category">
-        <button type="button" class="title">
-            <span lang="en">Weather Related PPE - Extreme Hot / Cold</span>
-            <span lang="fr">EPI liés aux conditions météorologiques - Chaleur et froid extrêmes</span>
-        </button>
-        <div class="tips">
-            <ul>
-                <li>
-                    <span lang="en">Wind and water repellant outer layer, designed to allow transfer of moisture to the air. For some sites this may need to be flame-resistant (FR) meeting NFPA 2112 or 1977.</span>
-                    <span lang="fr">Couche extérieure imperméable au vent et à l'eau, conçue pour permettre le transfert de l'humidité vers l'air. Pour certains sites, il peut être nécessaire que cette couche soit ignifuge, conformément à la norme NFPA 2112 ou 1977.</span>
-                </li>
-                <li>
-                    <span lang="en">Insulating middle layers (polyester-fleece or wool). Select wool or other non-meltable if worn under FR garment.</span>
-                    <span lang="fr">Couches intermédiaires isolantes (fibre de polyester ou laine). Choisissez de la laine ou un autre matériau non susceptible de fondre si vous le portez sous un vêtement non feu.</span>
-                </li>
-                <li>
-                    <span lang="en">Light-weight moisture-wicking inner-layer (e.g. polyester, polypropylene or wool) in direct contact with the skin. Select wool, if worn under FR. Cotton is acceptable under FR, but not recommended for cold weather.</span>
-                    <span lang="fr">Couche intérieure légère qui chasse l'humidité (par exemple, polyester, polypropylène ou laine) en contact direct avec la peau. Choisissez la laine si vous portez un vêtement ignifuge. Le coton est acceptable en cas de protection contre les flammes, mais n'est pas recommandé par temps froid.</span>
-                </li>
-                <li>
-                    <span lang="en">Rainwear (depending on forecast) FR when needed.</span>
-                    <span lang="fr">Vêtements de pluie (selon les prévisions) ignifuges si nécessaire.</span>
-                </li>
-                <li>
-                    <span lang="en">Wind/water-repellant thermal gloves or mittens (FR if needed) with non-meltable inner liner option, e.g. wool or silk.</span>
-                    <span lang="fr">Gants ou mitaines thermiques imperméables au vent/à l'eau (ignifuge si nécessaire) avec option de doublure intérieure non fondante, par exemple en laine ou en soie.</span>
-                </li>
-                <li>
-                    <span lang="en">Thermal insulated and water-proof safety boots – CSA approved Grade 1 (green triangle label), with metal-free safety toe and plate, ankle coverage, defined heal, slip resistant outsole, preferably with winter cleats. Winter-rated to the temperature of use. </span>
-                    <span lang="fr">Bottes de sécurité isolées thermiquement et imperméables - certifiées CSA Grade 1 (étiquette triangulaire verte), avec bout et plaque de sécurité sans métal, protection de la cheville, talon défini, semelle extérieure antidérapante, de préférence avec des crampons d'hiver. Classées pour l'hiver en fonction de la température utilization.</span>
-                </li>
-                <li>
-                    <span lang="en">Insulated snow pants adequate for weather conditions or cold weather FR coveralls when required</span>
-                    <span lang="fr">Pantalon de neige isolé adapté aux conditions météorologiques ou combinaison ignifuge pour temps froid, si nécessaire.</span>
-                </li>
-                <li>
-                    <span lang="en">Proper winter hat and neck warmer or standard balaclava where FR and hardhat are not required.</span>
-                    <span lang="fr">Une tuque et un cache-cou appropriés ou une cagoule standard lorsque la protection contre les incendies et le casque de sécurité ne sont pas requis.</span>
-                </li>
-                <li>
-                    <span lang="en">Change of clothes and extra waterproof layer</span>
-                    <span lang="fr">Vêtements de rechange et couche imperméable supplémentaire</span>
-                </li>
-                <li>
-                    <span lang="en">Emergency blanket / thermal sleeping bag</span>
-                    <span lang="fr">Couverture d'urgence / sac de couchage thermique</span>
-                </li>
-                <li>
-                    <span lang="en">Heat packs to warm hands and feet</span>
-                    <span lang="fr">Pochettes de chaleur (heats packs) pour réchauffer les mains et les pieds</span>
-                </li>
-                <li>
-                    <span lang="en">Loose fitting, light clothing with maximal skin coverage.</span>
-                    <span lang="fr">Vêtements souples et légers avec une couverture maximale de la peau.</span>
-                </li>
-                <li>
-                    <span lang="en">UV protective eyewear (minimum 90% UV protection) - (e.g. for driving or where safety eyewear is not required).</span>
-                    <span lang="fr">Lunettes de protection contre les rayons ultra-violets (protection minimale de 90 % des UV) - (par exemple, pour la conduite ou lorsque les lunettes de sécurité ne sont pas nécessaires).</span>
-                </li>
-                <li>
-                    <span lang="en">Sufficient cool water to keep hydrated and to soak towel or sock to wear around neck for cooling</span>
-                    <span lang="fr">Suffisamment d'eau fraîche pour rester hydraté et pour tremper une serviette ou une chaussette à porter autour du cou pour se rafraîchir.</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <br />
-    <div class="category">
-        <button type="button" class="title">
-            <span lang="en">Fire Retardant PPE</span>
-            <span lang="fr">EPI ignifuge</span>
-        </button>
-        <div class="tips">
-            <ul>
-                <li>
-                    <span lang="en">FR Overalls (Summer)</span>
-                    <span lang="fr">Combinaison de travail ignifuges (été)</span>
-                </li>
-                <li>
-                    <span lang="en">FR Overalls (Winter)</span>
-                    <span lang="fr">Combinaison de travail ignifuges (hiver)</span>
-                </li>
-                <li>
-                    <span lang="en">FR Under wear (top & bottom)</span>
-                    <span lang="fr">Sous-vêtement ignifuge (haut et bas)</span>
-                </li>
-                <li>
-                    <span lang="en">FR gloves</span>
-                    <span lang="fr">Gants en cuir ignifuges</span>
-                </li>
-            </ul>
+        <div style="height: 16px"></div>
 
+        <div class="category">
+            <button type="button" class="title" data-guidance-id="2">
+                <span lang="en">Theme 2</span>
+                <span lang="fr">Theme 2 (fr)</span>
+            </button>
+            <div class="tips" id="guidanceContent2" style="min-height:200px;">Loading guidance...</div>
+        </div>
+        <div style="height: 16px"></div>
+
+        <div class="category">
+            <button type="button" class="title" data-guidance-id="3">
+                <span lang="en">Theme 3</span>
+                <span lang="fr">Theme 3 (fr)</span>
+            </button>
+            <div class="tips" id="guidanceContent3" style="min-height:200px;">Loading guidance...</div>
+        </div>
+        <div style="height: 16px"></div>
+
+        <div class="category">
+            <button type="button" class="title" data-guidance-id="4">
+                <span lang="en">Theme 4</span>
+                <span lang="fr">Theme 4 (fr)</span>
+            </button>
+            <div class="tips" id="guidanceContent4" style="min-height:200px;">Loading guidance...</div>
         </div>
     </div>
-    <script language="javascript">
-        var title = document.getElementsByClassName("title");
-        var i;
 
-        for (i = 0; i < title.length; i++) {
-            title[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var tips = this.nextElementSibling;
-                if (tips.style.display === "block") {
-                    tips.style.display = "none";
+    <script>
+        document.querySelector(".categories").addEventListener("click", function (event) {
+            const button = event.target.closest(".title");
+            if (button) {
+                button.classList.toggle("active");
+                const guidanceId = button.getAttribute("data-guidance-id");
+                const tips = document.getElementById(`guidanceContent${guidanceId}`);
+                tips.style.display = (tips.style.display === "block") ? "none" : "block";
+            }
+        });
+
+        const isEnglish = parent?.Xrm?.Utility?.getGlobalContext()?.userSettings?.languageId === 1033;
+
+        const guidanceId = "456c80fe-c04a-f011-877a-002248adfc3b"; // Replace with dynamic ID if needed
+
+        const fetchXml = `
+                <fetch top='1'>
+                    <entity name='ts_siteassessmentguidance'>
+                        <attribute name='ts_guidancetexten1' />
+                        <attribute name='ts_guidancetextfr1' />
+                        <attribute name='ts_guidancetexten2' />
+                        <attribute name='ts_guidancetextfr2' />
+                        <attribute name='ts_guidancetexten3' />
+                        <attribute name='ts_guidancetextfr3' />
+                        <attribute name='ts_guidancetexten4' />
+                        <attribute name='ts_guidancetextfr4' />
+                        <filter>
+                            <condition attribute='ts_siteassessmentguidanceid' operator='eq' value='${guidanceId}' />
+                        </filter>
+                    </entity>
+                </fetch>
+            `;
+
+        parent.Xrm.WebApi.retrieveMultipleRecords("ts_siteassessmentguidance", `?fetchXml=${encodeURIComponent(fetchXml)}`)
+            .then(function (result) {
+                if (result.entities.length > 0) {
+                    const guidance = result.entities[0];
+
+                    const fieldNames = [
+                        isEnglish ? "ts_guidancetexten1" : "ts_guidancetextfr1",
+                        isEnglish ? "ts_guidancetexten2" : "ts_guidancetextfr2",
+                        isEnglish ? "ts_guidancetexten3" : "ts_guidancetextfr3",
+                        isEnglish ? "ts_guidancetexten4" : "ts_guidancetextfr4"
+                    ];
+
+                    fieldNames.forEach((fieldName, idx) => {
+                        const html = guidance[fieldName] || "No guidance available.";
+                        const contentElement = document.getElementById(`guidanceContent${idx + 1}`);
+                        contentElement.innerHTML = html;
+                    });
                 } else {
-                    tips.style.display = "block";
+                    document.querySelectorAll(".tips").forEach(tips => {
+                        tips.innerText = "No guidance data found.";
+                    });
                 }
+            })
+            .catch(function (err) {
+                console.error("Error fetching guidance data:", err.message);
+                document.querySelectorAll(".tips").forEach(tips => {
+                    tips.innerText = `Error loading guidance: ${err.message}`;
+                });
             });
-        }
     </script>
 </body>
 </html>

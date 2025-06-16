@@ -26,6 +26,7 @@ declare namespace Form.ts_operationactivityriskscores.Main {
       get(name: "ts_siteriskscore"): Xrm.NumberAttribute;
       get(name: "ts_stakeholderentityrisk"): Xrm.LookupAttribute<"ts_entityrisk">;
       get(name: "ts_stakeholderriskscore"): Xrm.NumberAttribute;
+      get(name: "ts_usesriskapplication"): Xrm.OptionSetAttribute<boolean>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -56,6 +57,7 @@ declare namespace Form.ts_operationactivityriskscores.Main {
       get(name: "ts_siteriskscore"): Xrm.NumberControl;
       get(name: "ts_stakeholderentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
       get(name: "ts_stakeholderriskscore"): Xrm.NumberControl;
+      get(name: "ts_usesriskapplication"): Xrm.OptionSetControl<boolean>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -92,6 +94,7 @@ declare namespace Form.ts_operationactivityriskscores.Main {
     getAttribute(attributeName: "ts_siteriskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_stakeholderentityrisk"): Xrm.LookupAttribute<"ts_entityrisk">;
     getAttribute(attributeName: "ts_stakeholderriskscore"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_usesriskapplication"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_statecode"): Xrm.OptionSetControl<ts_operationactivityriskscores_statecode>;
@@ -117,6 +120,7 @@ declare namespace Form.ts_operationactivityriskscores.Main {
     getControl(controlName: "ts_siteriskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_stakeholderentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
     getControl(controlName: "ts_stakeholderriskscore"): Xrm.NumberControl;
+    getControl(controlName: "ts_usesriskapplication"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: string): undefined;
   }
 }

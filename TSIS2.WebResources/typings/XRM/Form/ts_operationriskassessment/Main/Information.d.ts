@@ -3,8 +3,7 @@ declare namespace Form.ts_operationriskassessment.Main {
     namespace Tabs {
       interface tab_2 extends Xrm.SectionCollectionBase {
         get(name: "_section_778"): Xrm.PageSection;
-        get(name: "tab_2_section_3"): Xrm.PageSection;
-        get(name: "tab_2_section_4"): Xrm.PageSection;
+        get(name: "tab_2_section_5"): Xrm.PageSection;
         get(name: "tab_2_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -32,7 +31,7 @@ declare namespace Form.ts_operationriskassessment.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_Discretionary_Factor_Responses"): Xrm.BaseControl;
       get(name: "Subgrid_Risk_Criteria_Responses"): Xrm.BaseControl;
-      get(name: "WebResource_new_1"): Xrm.WebResourceControl;
+      get(name: "WebResource_siteAssessmentGuide"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_calculationlog"): Xrm.StringControl;
       get(name: "ts_discretionaryscore"): Xrm.NumberControl;
@@ -72,7 +71,7 @@ declare namespace Form.ts_operationriskassessment.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_Discretionary_Factor_Responses"): Xrm.BaseControl;
     getControl(controlName: "Subgrid_Risk_Criteria_Responses"): Xrm.BaseControl;
-    getControl(controlName: "WebResource_new_1"): Xrm.WebResourceControl;
+    getControl(controlName: "WebResource_siteAssessmentGuide"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_calculationlog"): Xrm.StringControl;
     getControl(controlName: "ts_discretionaryscore"): Xrm.NumberControl;
