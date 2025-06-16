@@ -10,14 +10,15 @@ namespace ROM.OperationRiskAssessment {
 
     export function hideSiteAssessmentGuidance(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_operationriskassessment.Main.Information>eContext.getFormContext();
-        const siteAssessmentGuidance = form.getAttribute("ts_siteassessmentguidance")?.getValue();
+        let siteAssessmentGuidance = form.getAttribute("ts_siteassessmentguidance")?.getValue();
+        let webResourceSiteAssessmentGuidance = form.getControl("WebResource_siteAssessmentGuide");
         console.log("Site Assessment Guidance Value: ", siteAssessmentGuidance);
 
-        // Show the section named "tab_2_section_5" if siteAssessmentGuidance is "Yes" 
-        if (siteAssessmentGuidance === false) {
-            form.ui.tabs.get("tab_2").sections.get("tab_2_section_5").setVisible(false);
+        // Show webresource if siteAssessmentGuidance is "Yes" 
+        if (siteAssessmentGuidance === true) {
+            webResourceSiteAssessmentGuidance.setVisible(true);
         } else {
-            form.ui.tabs.get("tab_2").sections.get("tab_2_section_5").setVisible(true);
+            webResourceSiteAssessmentGuidance.setVisible(false);
         }
     }
 }
