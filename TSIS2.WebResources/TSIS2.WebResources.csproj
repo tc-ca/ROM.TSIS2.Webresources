@@ -944,6 +944,7 @@
     <EmbeddedResource Include="Webresources\resx\CanceledInspectionJustification.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CanceledInspectionJustification.1033.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\CanceledInspectionJustification.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -960,10 +961,12 @@
     <EmbeddedResource Include="Webresources\resx\BookableResourceBooking.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BookableResourceBooking.1033.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\BookableResourceBooking.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BookableResourceBooking.1036.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\IncompleteInspectionJustification.1033.resx">
       <Generator>ResXFileCodeGenerator</Generator>

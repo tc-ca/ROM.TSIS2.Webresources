@@ -56,19 +56,18 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
                 modifyRecordOwner(PrimaryTypeEntityName, fileUploadData.recordOwner, fileUploadData.recordName, siteNameEnglish, fileUploadData);
 
                 if (fileUploadData.validOwner == true) {
-                    if (fileUploadData.usesGroupFiles == true) {
-                        // check if it's PROD
-                        if (appUrl !== PROD_URL) {
-                            // get the users Email address
-                            getUsersEmail(fileUploadData)
-                                .then(() => {
+                    //if (fileUploadData.usesGroupFiles == true) {
+                    // check if it's PROD
+                    if (appUrl !== PROD_URL) {
+                        // get the users Email address
+                        getUsersEmail(fileUploadData)
+                            .then(() => {
+                                // navigate to SharePointAttachFilePopUp.html
+                                navigateToSharePointAttachFilePopUp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery, fileUploadData.usersManagerEmail, fileUploadData.usersEmail);
 
-                                    // navigate to SharePointAttachFilePopUp.html
-                                    navigateToSharePointAttachFilePopUp(recordTagId, fileUploadData.recordOwner, lang, fileUploadData.recordTableNameEnglish, fileUploadData.recordTableNameFrench, fileUploadData.recordName, PrimaryTypeEntityName, fileUploadData.mainHeadingFrench, fileUploadData.mainHeadingEnglish, fileUploadData.usesGroupFiles, fileUploadData.sharePointFileID, fileUploadData.sharePointFileGroupID, fileUploadData.sharePointQuery, fileUploadData.usersManagerEmail, fileUploadData.usersEmail);
-
-                                });
-                        }
+                            });
                     }
+                    // }
                 }
                 else {
                     // display the error message
@@ -489,4 +488,5 @@ function getUsersEmail(fileUploadData) {
         );
     });
 }
+
 
