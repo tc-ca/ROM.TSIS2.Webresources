@@ -108,7 +108,7 @@
 
         const isEnglish = parent?.Xrm?.Utility?.getGlobalContext()?.userSettings?.languageId === 1033;
 
-        const guidanceId = "456c80fe-c04a-f011-877a-002248adfc3b"; // Replace with dynamic ID if needed
+        const guidanceId = "Site Assessment Guidance";
 
         const fetchXml = `
                 <fetch top='1'>
@@ -122,7 +122,7 @@
                         <attribute name='ts_guidancetexten4' />
                         <attribute name='ts_guidancetextfr4' />
                         <filter>
-                            <condition attribute='ts_siteassessmentguidanceid' operator='eq' value='${guidanceId}' />
+                            <condition attribute='ts_name' operator='eq' value='${guidanceId}' />
                         </filter>
                     </entity>
                 </fetch>
