@@ -26,7 +26,6 @@
         .btn:hover {
             background-color: #323B42 !important;
         }
-
     </style>
 
     <!-- Package used for the table - Tabulator -->
@@ -251,17 +250,17 @@
             let variableValue = "";
 
             const fetchXML = `
-                                                <fetch>
-                                                    <entity name="environmentvariablevalue">
-                                                        <attribute name="value" />
-                                                        <link-entity name="environmentvariabledefinition" to="environmentvariabledefinitionid" from="environmentvariabledefinitionid" alias="environmentvariabledefinition" link-type="inner">
-                                                            <filter>
-                                                                <condition attribute="schemaname" operator="eq" value="${variableName}" />
-                                                            </filter>
-                                                        </link-entity>
-                                                    </entity>
-                                                </fetch>
-                                            `;
+                                                                <fetch>
+                                                                    <entity name="environmentvariablevalue">
+                                                                        <attribute name="value" />
+                                                                        <link-entity name="environmentvariabledefinition" to="environmentvariabledefinitionid" from="environmentvariabledefinitionid" alias="environmentvariabledefinition" link-type="inner">
+                                                                            <filter>
+                                                                                <condition attribute="schemaname" operator="eq" value="${variableName}" />
+                                                                            </filter>
+                                                                        </link-entity>
+                                                                    </entity>
+                                                                </fetch>
+                                                            `;
 
             const encodedFetchXml = encodeURIComponent(fetchXML);
 
@@ -423,6 +422,9 @@
                 if (response.ok) {
                     const result = await response.status;
                     console.log('Success:', result);
+                    const json = await response.json();
+                    createdTsFileIds = json.ts_file;
+                    updateTsFile(createdTsFileIds);
                     return true;
                 } else {
                     console.error('Error:', response.statusText);
@@ -456,6 +458,168 @@
             }
         }
 
+        async function updateTsFile(fileIDs) {
+            let fileData;
+            for (const fileId of fileIDs) {
+                switch (tableSchemaName) {
+                    case "msdyn_workorder":
+                        fileData = {
+                            "ts_msdyn_workorder@odata.bind": `/msdyn_workorders(${recordId})`
+                        };
+                        var fetchXmlWOST = '<fetch> <entity name="msdyn_workorderservicetask"><attribute name="msdyn_name" /><filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + recordId + '" /> </filter> </entity> </fetch>';
+                        fetchXML = "?fetchXml=" + encodeURIComponent(fetchXmlWOST);
+                        await parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchXML).then(function success(result) {
+                            if (result.entities.length > 0) {
+                                let relatedServiceTasks = [];
+                                result.entities.forEach(task => {
+                                    relatedServiceTasks.push({
+                                        entityType: "msdyn_workorderservicetask",
+                                        id: task.msdyn_workorderservicetaskid
+                                    });
+                                   
+                                });
+                                associateRelatedRecords("ts_Files_msdyn_workorderservicetasks", relatedServiceTasks, fileId);
+                            }
+                        });
+
+                        var fetchCase = '<fetch><entity name = "incident" ><attribute name="incidentid"/><link-entity name="msdyn_workorder" from="msdyn_servicerequest" to="incidentid" link-type="inner" alias="ag"><filter type="and"><condition attribute="msdyn_workorderid" operator="eq" value="' + recordId + '" /></filter></link-entity></entity></fetch>';
+                        fetchXML = "?fetchXml=" + encodeURIComponent(fetchCase);
+                        await parent.Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(function success(result) {
+                            if (result.entities.length > 0) {
+                                let relatedCases = [];
+                                result.entities.forEach(incident => {
+                                    relatedCases.push({
+                                        entityType: "incident",
+                                        id: incident.incidentid
+                                    });
+                                    fileData["ts_Incident@odata.bind"] = `/incidents(${result.entities[0].incidentid})`;
+                                    
+                                });
+                                associateRelatedRecords("ts_Files_Incidents", relatedCases, fileId);
+                            }
+                        });
+                       
+                        break;
+                    case "msdyn_workorderservicetask":
+                        fileData = {
+                            "ts_workorderservicetask@odata.bind": `/msdyn_workorderservicetasks(${recordId})`
+                        };
+                        var fetchWO = '<fetch><entity name="msdyn_workorder"><link-entity name="msdyn_workorderservicetask" from="msdyn_workorder" to="msdyn_workorderid" link-type="inner"><filter type="and"><condition attribute="msdyn_workorderservicetaskid" operator="eq" value="' + recordId + '"/></filter></link-entity></entity></fetch >';
+                        fetchXML = "?fetchXml=" + encodeURIComponent(fetchWO);
+                        await parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
+                            if (result.entities.length > 0) {
+                                let relatedWOs = [];
+                                result.entities.forEach(workorder => {
+                                    relatedWOs.push({
+                                        entityType: "msdyn_workorder",
+                                        id: workorder.msdyn_workorderid
+                                    });
+
+                                });
+                                associateRelatedRecords("ts_Files_msdyn_workorders", relatedWOs, fileId);
+                            }
+                        });
+                        var fetchCase = '<fetch><entity name = "incident" ><attribute name="incidentid"/><link-entity name="msdyn_workorderservicetask" from="ovs_caseid" to="incidentid" link-type="inner"><filter type="and"><condition attribute="msdyn_workorderservicetaskid" operator="eq" value="' + recordId + '" /></filter></link-entity></entity></fetch>';
+                        fetchXML = "?fetchXml=" + encodeURIComponent(fetchCase);
+                        await parent.Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(function success(result) {
+                            if (result.entities.length > 0) {
+                                let relatedCases = [];
+                                result.entities.forEach(incident => {
+                                    relatedCases.push({
+                                        entityType: "incident",
+                                        id: incident.incidentid
+                                    });
+                                    fileData["ts_Incident@odata.bind"] = `/incidents(${result.entities[0].incidentid})`;
+
+                                });
+                                associateRelatedRecords("ts_Files_Incidents", relatedCases, fileId);
+                            }
+                        });
+                        break;
+                    case "incident":
+                        fileData = {
+                            "ts_Incident@odata.bind": `/incidents(${recordId})`
+                        };
+                        var fetchWO = '<fetch><entity name="msdyn_workorder"><filter type="and"><condition attribute = "msdyn_servicerequest" operator = "eq" value = "' + recordId + '" /></filter></entity></fetch >';
+                        fetchXML = "?fetchXml=" + encodeURIComponent(fetchWO);
+                        await parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
+                            if (result.entities.length > 0) {
+                                let relatedWOs = [];
+                                result.entities.forEach(workorder => {
+                                    relatedWOs.push({
+                                        entityType: "msdyn_workorder",
+                                        id: workorder.msdyn_workorderid
+                                    });                                   
+
+                                });
+                                associateRelatedRecords("ts_Files_msdyn_workorders", relatedWOs, fileId);
+                            }
+                        });
+
+                        break;
+                    case "account":
+                        fileData = {
+                            "ts_Stakeholder@odata.bind": `/accounts(${recordId})`
+                        };
+                        break;
+                    case "ovs_operation":
+                        fileData = {
+                            "ts_ovs_operation@odata.bind": `/ovs_operations(${recordId})`
+                        };
+                        break;
+                    case "msdyn_functionallocation":
+                        fileData = {
+                            "ts_Site@odata.bind": `/msdyn_functionallocations(${recordId})`
+                        };
+                        break;
+                    case "ts_securityincident":
+                        fileData = {
+                            "ts_SecurityIncident@odata.bind": `/ts_securityincidents(${recordId})`
+                        };
+                        break;
+                    case "ts_exemption":
+                        fileData = {
+                            "ts_Exemption@odata.bind": `/ts_exemptions(${recordId})`
+                        };
+                        break;
+                    case "ts_action":
+                        fileData = {
+                            "ts_Action@odata.bind": `/ts_actions(${recordId})`
+                        };
+                        break;
+                }
+                console.log(fileData);
+                await parent.Xrm.WebApi.updateRecord("ts_file", fileId, fileData);
+
+            }
+        }
+        function associateRelatedRecords(relationshipName, relatedEntities, fileId) {
+            const manyToManyAssociateRequest = {
+                getMetadata: () => ({
+                    boundParameter: null,
+                    parameterTypes: {},
+                    operationType: 2,
+                    operationName: "Associate"
+                }),
+
+                relationship: relationshipName,
+
+                target: {
+                    entityType: "ts_file",
+                    id: fileId
+                },
+
+                relatedEntities: relatedEntities
+            }
+            parent.Xrm.WebApi.online.execute(manyToManyAssociateRequest).then(
+                (success) => {
+                    console.log("Success", success);
+                },
+                (error) => {
+                    console.log("Error", error);
+                }
+            )
+        }
     </script>
 </body>
 </html>
