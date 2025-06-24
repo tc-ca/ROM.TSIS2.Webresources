@@ -86,6 +86,21 @@ var ROM;
                     (_f = attribute) === null || _f === void 0 ? void 0 : _f.setRequiredLevel("none");
                 }
             });
+            // Make ts_activitytype field read only
+            var activityTypeField = formContext.getControl("ts_activitytype");
+            if (activityTypeField) {
+                activityTypeField.setDisabled(true);
+            }
+            // Check if the from is in edit mode
+            if (formContext.ui.getFormType() === 2 /* Update */) {
+                // If the form is in edit mode, set the ts_fiscalyear field to read only
+                var fiscalYearField = formContext.getControl("ts_fiscalyear");
+                if (fiscalYearField) {
+                    fiscalYearField.setDisabled(true);
+                }
+            }
+            // Filter the lookup column
+            setFiscalYearFilteredView(formContext);
         }
         PrescribedFrequencyOverride.classSelection = classSelection;
         function activityTypeOnChange(eContext) {
@@ -165,6 +180,17 @@ var ROM;
             }, function (error) {
                 console.error("Error retrieving record:", error.message);
             });
+        }
+        function setFiscalYearFilteredView(formContext) {
+            var viewId = '{350B79C5-0A0E-42B9-8FF7-7F83B7E9628B}';
+            var entityName = "tc_tcfiscalyear";
+            var viewDisplayName = "Filtered Fiscal Year";
+            var today = new Date();
+            var yearsAgo = today.getFullYear() - 2;
+            var yearsFromNow = today.getFullYear() + 5;
+            var fetchXml = "<fetch version=\"1.0\" mapping=\"logical\" distinct=\"true\" returntotalrecordcount=\"true\" page=\"1\" count=\"25\" no-lock=\"false\">\n                            <entity name=\"tc_tcfiscalyear\">\n                              <attribute name=\"tc_tcfiscalyearid\" />\n                              <attribute name=\"tc_name\" />\n                              <order attribute=\"tc_fiscalyearnum\" descending=\"false\" />\n                              <filter>\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"ge\" value=\"" + yearsAgo + "\" />\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"le\" value=\"" + yearsFromNow + "\" />\n                              </filter>\n                            </entity>\n                          </fetch>";
+            var layoutXml = '<grid name="resultset" object="10010" jump="tc_name" select="1" icon="1" preview="1"><row name="result" id="tc_tcfiscalyearid"><cell name="tc_name" width="200" /></row></grid>';
+            formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
     })(PrescribedFrequencyOverride = ROM.PrescribedFrequencyOverride || (ROM.PrescribedFrequencyOverride = {}));
 })(ROM || (ROM = {}));
