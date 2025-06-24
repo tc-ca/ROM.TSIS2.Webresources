@@ -111,6 +111,27 @@
                 (attribute as any)?.setRequiredLevel("none");
             }
         });
+
+        // Make ts_activitytype field read only
+        const activityTypeField = formContext.getControl("ts_activitytype");
+
+        if (activityTypeField) {
+            activityTypeField.setDisabled(true);
+        }
+
+        // Check if the from is in edit mode
+        if (formContext.ui.getFormType() === Xrm.FormType.Update) {
+
+            // If the form is in edit mode, set the ts_fiscalyear field to read only
+            const fiscalYearField = formContext.getControl("ts_fiscalyear");
+
+            if (fiscalYearField) {
+                fiscalYearField.setDisabled(true);
+            }
+        }
+
+        // Filter the lookup column
+        setFiscalYearFilteredView(formContext);
     }
 
     export function activityTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -237,4 +258,31 @@
             }
         );
     }
+
+    function setFiscalYearFilteredView(formContext: Form.ts_prescribedfrequencyoverride.Main.Information) {
+        const viewId = '{350B79C5-0A0E-42B9-8FF7-7F83B7E9628B}';
+        const entityName = "tc_tcfiscalyear";
+        const viewDisplayName = "Filtered Fiscal Year";
+
+        const today = new Date();
+        const yearsAgo = today.getFullYear() - 2;
+        const yearsFromNow = today.getFullYear() + 5;
+
+        const fetchXml = `<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false">
+                            <entity name="tc_tcfiscalyear">
+                              <attribute name="tc_tcfiscalyearid" />
+                              <attribute name="tc_name" />
+                              <order attribute="tc_fiscalyearnum" descending="false" />
+                              <filter>
+                                <condition attribute="tc_fiscalyearnum" operator="ge" value="${yearsAgo}" />
+                                <condition attribute="tc_fiscalyearnum" operator="le" value="${yearsFromNow}" />
+                              </filter>
+                            </entity>
+                          </fetch>`;
+
+        const layoutXml = '<grid name="resultset" object="10010" jump="tc_name" select="1" icon="1" preview="1"><row name="result" id="tc_tcfiscalyearid"><cell name="tc_name" width="200" /></row></grid>';
+
+        formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+    }
+
 }
