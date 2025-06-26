@@ -6,17 +6,21 @@ interface ts_operationriskassessment_Base extends WebEntity {
   statecode?: ts_operationriskassessment_statecode | null;
   statuscode?: ts_operationriskassessment_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_accesscontrol?: string | null;
   ts_calculationlog?: string | null;
   ts_discretionaryscore?: number | null;
   ts_lastsubmissiondate?: Date | null;
   ts_name?: string | null;
   ts_operationriskassessmentid?: string | null;
+  ts_perimetersecurity?: string | null;
   ts_riskcriteriaoptionsimport?: string | null;
   ts_riskcriteriascore?: number | null;
   ts_riskscore?: number | null;
   ts_riskthresholdenglish?: string | null;
   ts_riskthresholdfrench?: string | null;
+  ts_securityvulnerabilities?: string | null;
   ts_siteassessmentguidance?: boolean | null;
+  ts_siteinformationandoperatingprofile?: string | null;
   utcconversiontimezonecode?: number | null;
   versionnumber?: number | null;
 }
@@ -48,18 +52,22 @@ interface ts_operationriskassessment_Select {
   statecode: WebAttribute<ts_operationriskassessment_Select, { statecode: ts_operationriskassessment_statecode | null }, { statecode_formatted?: string }>;
   statuscode: WebAttribute<ts_operationriskassessment_Select, { statuscode: ts_operationriskassessment_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_operationriskassessment_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  ts_accesscontrol: WebAttribute<ts_operationriskassessment_Select, { ts_accesscontrol: string | null }, {  }>;
   ts_calculationlog: WebAttribute<ts_operationriskassessment_Select, { ts_calculationlog: string | null }, {  }>;
   ts_discretionaryscore: WebAttribute<ts_operationriskassessment_Select, { ts_discretionaryscore: number | null }, {  }>;
   ts_lastsubmissiondate: WebAttribute<ts_operationriskassessment_Select, { ts_lastsubmissiondate: Date | null }, { ts_lastsubmissiondate_formatted?: string }>;
   ts_name: WebAttribute<ts_operationriskassessment_Select, { ts_name: string | null }, {  }>;
   ts_operation_guid: WebAttribute<ts_operationriskassessment_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
   ts_operationriskassessmentid: WebAttribute<ts_operationriskassessment_Select, { ts_operationriskassessmentid: string | null }, {  }>;
+  ts_perimetersecurity: WebAttribute<ts_operationriskassessment_Select, { ts_perimetersecurity: string | null }, {  }>;
   ts_riskcriteriaoptionsimport: WebAttribute<ts_operationriskassessment_Select, { ts_riskcriteriaoptionsimport: string | null }, {  }>;
   ts_riskcriteriascore: WebAttribute<ts_operationriskassessment_Select, { ts_riskcriteriascore: number | null }, {  }>;
   ts_riskscore: WebAttribute<ts_operationriskassessment_Select, { ts_riskscore: number | null }, {  }>;
   ts_riskthresholdenglish: WebAttribute<ts_operationriskassessment_Select, { ts_riskthresholdenglish: string | null }, {  }>;
   ts_riskthresholdfrench: WebAttribute<ts_operationriskassessment_Select, { ts_riskthresholdfrench: string | null }, {  }>;
+  ts_securityvulnerabilities: WebAttribute<ts_operationriskassessment_Select, { ts_securityvulnerabilities: string | null }, {  }>;
   ts_siteassessmentguidance: WebAttribute<ts_operationriskassessment_Select, { ts_siteassessmentguidance: boolean | null }, {  }>;
+  ts_siteinformationandoperatingprofile: WebAttribute<ts_operationriskassessment_Select, { ts_siteinformationandoperatingprofile: string | null }, {  }>;
   utcconversiontimezonecode: WebAttribute<ts_operationriskassessment_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_operationriskassessment_Select, { versionnumber: number | null }, {  }>;
 }
@@ -79,18 +87,22 @@ interface ts_operationriskassessment_Filter {
   statecode: ts_operationriskassessment_statecode;
   statuscode: ts_operationriskassessment_statuscode;
   timezoneruleversionnumber: number;
+  ts_accesscontrol: string;
   ts_calculationlog: string;
   ts_discretionaryscore: number;
   ts_lastsubmissiondate: Date;
   ts_name: string;
   ts_operation_guid: XQW.Guid;
   ts_operationriskassessmentid: XQW.Guid;
+  ts_perimetersecurity: string;
   ts_riskcriteriaoptionsimport: string;
   ts_riskcriteriascore: number;
   ts_riskscore: number;
   ts_riskthresholdenglish: string;
   ts_riskthresholdfrench: string;
+  ts_securityvulnerabilities: string;
   ts_siteassessmentguidance: boolean;
+  ts_siteinformationandoperatingprofile: string;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }

@@ -4,6 +4,7 @@ var ROM;
     var EntityRisk;
     (function (EntityRisk) {
         function onLoad(eContext) {
+            var _a;
             var formContext = eContext.getFormContext();
             console.log("Entering EntityRisk onLoad");
             // if we are on the new form
@@ -55,11 +56,40 @@ var ROM;
                 // Filter the lookup column
                 setFiscalYearFilteredView(formContext);
             }
+            // Check if we are in the edit form
+            if (formContext.ui.getFormType() == 2 /* Update */) {
+                // check if ts_prescribedfrequencyoverride is empty
+                var prescribedFrequencyOverride = (_a = formContext.getAttribute("ts_prescribedfrequencyoverride")) === null || _a === void 0 ? void 0 : _a.getValue();
+                if (prescribedFrequencyOverride === null || prescribedFrequencyOverride === undefined) {
+                    // Hide the Prescribed Frequency Override field
+                    var prescribedFrequencyOverrideControl = formContext.getControl("ts_prescribedfrequencyoverride");
+                    if (prescribedFrequencyOverrideControl) {
+                        prescribedFrequencyOverrideControl.setVisible(false);
+                    }
+                }
+            }
         }
         EntityRisk.onLoad = onLoad;
         function onSave(eContext) {
+            var _a, _b, _c;
             var formContext = eContext.getFormContext();
             console.log("Entering EntityRisk onSave");
+            // Check if the form is being saved as a new record
+            if (formContext.ui.getFormType() === 1 /* Create */) {
+                // Get the selected Entity Name
+                var entityName = (_a = formContext.getAttribute("ts_entityname")) === null || _a === void 0 ? void 0 : _a.getValue();
+                // If the Entity Name is Activity Type
+                if (entityName === 741130005 /* ActivityType */) {
+                    // Get the Fiscal Year value
+                    var fiscalYear = (_b = formContext.getAttribute("ts_fiscalyear")) === null || _b === void 0 ? void 0 : _b.getValue();
+                    // Get the Entity ID value
+                    var entityId = (_c = formContext.getAttribute("ts_entityid")) === null || _c === void 0 ? void 0 : _c.getValue();
+                    // If both Fiscal Year and Entity ID are not null 
+                    if (fiscalYear !== null && fiscalYear !== undefined && entityId !== null && entityId !== undefined) {
+                        console.log("Entity Risk created with Fiscal Year and Entity ID.");
+                    }
+                }
+            }
         }
         EntityRisk.onSave = onSave;
         /*

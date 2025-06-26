@@ -59,11 +59,50 @@
             // Filter the lookup column
             setFiscalYearFilteredView(formContext);
         }
+
+        // Check if we are in the edit form
+        if (formContext.ui.getFormType() == Xrm.FormType.Update) {
+
+            // check if ts_prescribedfrequencyoverride is empty
+            const prescribedFrequencyOverride = formContext.getAttribute("ts_prescribedfrequencyoverride")?.getValue();
+
+            if (prescribedFrequencyOverride === null || prescribedFrequencyOverride === undefined) {
+
+                // Hide the Prescribed Frequency Override field
+                const prescribedFrequencyOverrideControl = formContext.getControl("ts_prescribedfrequencyoverride");
+
+                if (prescribedFrequencyOverrideControl) {
+                    prescribedFrequencyOverrideControl.setVisible(false);
+                }
+            }
+        }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
         console.log("Entering EntityRisk onSave");
+
+        // Check if the form is being saved as a new record
+        if (formContext.ui.getFormType() === Xrm.FormType.Create) {
+
+            // Get the selected Entity Name
+            const entityName = formContext.getAttribute("ts_entityname")?.getValue();
+
+            // If the Entity Name is Activity Type
+            if (entityName === ts_entityrisk_ts_entityname.ActivityType) {
+
+                // Get the Fiscal Year value
+                const fiscalYear = formContext.getAttribute("ts_fiscalyear")?.getValue();
+
+                // Get the Entity ID value
+                const entityId = formContext.getAttribute("ts_entityid")?.getValue();
+
+                // If both Fiscal Year and Entity ID are not null 
+                if (fiscalYear !== null && fiscalYear !== undefined && entityId !== null && entityId !== undefined) {
+                    console.log("Entity Risk created with Fiscal Year and Entity ID.");
+                } 
+            }
+        }
     }
     /* 
     //Risk Rating removed from Entity Risk form

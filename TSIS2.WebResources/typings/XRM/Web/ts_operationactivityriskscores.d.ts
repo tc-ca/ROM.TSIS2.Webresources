@@ -18,6 +18,7 @@ interface ts_OperationActivityRiskScores_Base extends WebEntity {
   ts_riskapplicationscore?: number | null;
   ts_riskscore?: number | null;
   ts_riskscoreribbontrigger?: Date | null;
+  ts_riskscorestored?: number | null;
   ts_riskscoretrigger?: number | null;
   ts_siteriskscore?: number | null;
   ts_stakeholderriskscore?: number | null;
@@ -95,6 +96,7 @@ interface ts_OperationActivityRiskScores_Select {
   ts_riskrating_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskrating_guid: string | null }, { ts_riskrating_formatted?: string }>;
   ts_riskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscore: number | null }, {  }>;
   ts_riskscoreribbontrigger: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscoreribbontrigger: Date | null }, { ts_riskscoreribbontrigger_formatted?: string }>;
+  ts_riskscorestored: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscorestored: number | null }, {  }>;
   ts_riskscoretrigger: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscoretrigger: number | null }, {  }>;
   ts_siteentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteentityrisk_guid: string | null }, { ts_siteentityrisk_formatted?: string }>;
   ts_siteriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteriskscore: number | null }, {  }>;
@@ -142,6 +144,7 @@ interface ts_OperationActivityRiskScores_Filter {
   ts_riskrating_guid: XQW.Guid;
   ts_riskscore: any;
   ts_riskscoreribbontrigger: Date;
+  ts_riskscorestored: any;
   ts_riskscoretrigger: any;
   ts_siteentityrisk_guid: XQW.Guid;
   ts_siteriskscore: any;

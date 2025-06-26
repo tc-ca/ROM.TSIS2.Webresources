@@ -17,6 +17,7 @@ interface ts_PrescribedFrequencyOverride_Base extends WebEntity {
 interface ts_PrescribedFrequencyOverride_Relationships {
   ts_ActivityType?: msdyn_incidenttype_Result | null;
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
+  ts_entityrisk_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride?: ts_EntityRisk_Result[] | null;
   ts_operationactivityriskscores_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride?: ts_OperationActivityRiskScores_Result[] | null;
 }
 interface ts_PrescribedFrequencyOverride extends ts_PrescribedFrequencyOverride_Base, ts_PrescribedFrequencyOverride_Relationships {
@@ -100,6 +101,7 @@ interface ts_PrescribedFrequencyOverride_Expand {
   owninguser: WebExpand<ts_PrescribedFrequencyOverride_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_ActivityType: WebExpand<ts_PrescribedFrequencyOverride_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_ActivityType: msdyn_incidenttype_Result }>;
   ts_FiscalYear: WebExpand<ts_PrescribedFrequencyOverride_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
+  ts_entityrisk_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride: WebExpand<ts_PrescribedFrequencyOverride_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_entityrisk_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride: ts_EntityRisk_Result[] }>;
   ts_operationactivityriskscores_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride: WebExpand<ts_PrescribedFrequencyOverride_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride: ts_OperationActivityRiskScores_Result[] }>;
 }
 interface ts_PrescribedFrequencyOverride_FormattedResult {
@@ -151,6 +153,7 @@ interface ts_PrescribedFrequencyOverride_RelatedOne {
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
 }
 interface ts_PrescribedFrequencyOverride_RelatedMany {
+  ts_entityrisk_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   ts_operationactivityriskscores_PrescribedFrequencyOverride_ts_prescribedfrequencyoverride: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

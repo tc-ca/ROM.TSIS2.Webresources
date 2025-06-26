@@ -21,6 +21,8 @@ interface Team_Base extends WebEntity {
   teamid?: string | null;
   teamtype?: team_type | null;
   traversedpath?: string | null;
+  ts_sharepointfolderid?: string | null;
+  ts_sharepointfoldername?: string | null;
   versionnumber?: number | null;
 }
 interface Team_Relationships {
@@ -157,6 +159,8 @@ interface Team_Select {
   transactioncurrencyid_guid: WebAttribute<Team_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Team_Select, { traversedpath: string | null }, {  }>;
   ts_regiondonouse_guid: WebAttribute<Team_Select, { ts_regiondonouse_guid: string | null }, { ts_regiondonouse_formatted?: string }>;
+  ts_sharepointfolderid: WebAttribute<Team_Select, { ts_sharepointfolderid: string | null }, {  }>;
+  ts_sharepointfoldername: WebAttribute<Team_Select, { ts_sharepointfoldername: string | null }, {  }>;
   ts_territory_guid: WebAttribute<Team_Select, { ts_territory_guid: string | null }, { ts_territory_formatted?: string }>;
   versionnumber: WebAttribute<Team_Select, { versionnumber: number | null }, {  }>;
 }
@@ -195,6 +199,8 @@ interface Team_Filter {
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
   ts_regiondonouse_guid: XQW.Guid;
+  ts_sharepointfolderid: string;
+  ts_sharepointfoldername: string;
   ts_territory_guid: XQW.Guid;
   versionnumber: number;
 }

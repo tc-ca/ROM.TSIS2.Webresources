@@ -58,6 +58,7 @@ declare namespace Form.ts_operationactivityriskscores.Main {
       get(name: "ts_stakeholderentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
       get(name: "ts_stakeholderriskscore"): Xrm.NumberControl;
       get(name: "ts_usesriskapplication"): Xrm.OptionSetControl<boolean>;
+      get(name: "ts_usesriskapplication1"): Xrm.OptionSetControl<boolean>;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -121,6 +122,7 @@ declare namespace Form.ts_operationactivityriskscores.Main {
     getControl(controlName: "ts_stakeholderentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
     getControl(controlName: "ts_stakeholderriskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_usesriskapplication"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "ts_usesriskapplication1"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: string): undefined;
   }
 }

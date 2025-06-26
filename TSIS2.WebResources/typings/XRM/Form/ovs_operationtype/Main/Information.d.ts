@@ -21,7 +21,6 @@ declare namespace Form.ovs_operationtype.Main {
       get(name: "ovs_operationtypenameenglish"): Xrm.Attribute<string>;
       get(name: "ovs_operationtypenamefrench"): Xrm.Attribute<string>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
-      get(name: "ts_operationtyperiskrating"): Xrm.LookupAttribute<"ts_riskrating">;
       get(name: "ts_regulated"): Xrm.Attribute<any>;
       get(name: "ts_riskapplication"): Xrm.MultiSelectOptionSetAttribute<ts_ovs_operationtype_ts_riskapplication>;
       get(name: string): undefined;
@@ -38,7 +37,6 @@ declare namespace Form.ovs_operationtype.Main {
       get(name: "ovs_operationtypenameenglish"): Xrm.StringControl;
       get(name: "ovs_operationtypenamefrench"): Xrm.StringControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-      get(name: "ts_operationtyperiskrating"): Xrm.LookupControl<"ts_riskrating">;
       get(name: "ts_regulated"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_riskapplication"): Xrm.MultiSelectOptionSetControl<ts_ovs_operationtype_ts_riskapplication>;
       get(name: string): undefined;
@@ -60,7 +58,6 @@ declare namespace Form.ovs_operationtype.Main {
     getAttribute(attributeName: "ovs_operationtypenameenglish"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ovs_operationtypenamefrench"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
-    getAttribute(attributeName: "ts_operationtyperiskrating"): Xrm.LookupAttribute<"ts_riskrating">;
     getAttribute(attributeName: "ts_regulated"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ts_riskapplication"): Xrm.MultiSelectOptionSetAttribute<ts_ovs_operationtype_ts_riskapplication>;
     getAttribute(attributeName: string): undefined;
@@ -72,7 +69,6 @@ declare namespace Form.ovs_operationtype.Main {
     getControl(controlName: "ovs_operationtypenameenglish"): Xrm.StringControl;
     getControl(controlName: "ovs_operationtypenamefrench"): Xrm.StringControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-    getControl(controlName: "ts_operationtyperiskrating"): Xrm.LookupControl<"ts_riskrating">;
     getControl(controlName: "ts_regulated"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_riskapplication"): Xrm.MultiSelectOptionSetControl<ts_ovs_operationtype_ts_riskapplication>;
     getControl(controlName: string): undefined;
