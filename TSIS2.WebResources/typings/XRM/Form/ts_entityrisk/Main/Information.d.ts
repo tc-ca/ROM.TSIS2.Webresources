@@ -10,6 +10,7 @@ declare namespace Form.ts_entityrisk.Main {
       get(name: "ts_entityname"): Xrm.OptionSetAttribute<ts_entityrisk_ts_entityname>;
       get(name: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ts_name"): Xrm.Attribute<string>;
+      get(name: "ts_prescribedfrequencyoverride"): Xrm.LookupAttribute<"ts_prescribedfrequencyoverride">;
       get(name: "ts_riskapplicationoperationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_usesriskapplicationactivitytype"): Xrm.OptionSetAttribute<boolean>;
@@ -39,6 +40,7 @@ declare namespace Form.ts_entityrisk.Main {
       get(name: "ts_entityname"): Xrm.OptionSetControl<ts_entityrisk_ts_entityname>;
       get(name: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ts_name"): Xrm.StringControl;
+      get(name: "ts_prescribedfrequencyoverride"): Xrm.LookupControl<"ts_prescribedfrequencyoverride">;
       get(name: "ts_riskapplicationoperationtype"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_usesriskapplicationactivitytype"): Xrm.OptionSetControl<boolean>;
@@ -68,6 +70,7 @@ declare namespace Form.ts_entityrisk.Main {
     getAttribute(attributeName: "ts_entityname"): Xrm.OptionSetAttribute<ts_entityrisk_ts_entityname>;
     getAttribute(attributeName: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_prescribedfrequencyoverride"): Xrm.LookupAttribute<"ts_prescribedfrequencyoverride">;
     getAttribute(attributeName: "ts_riskapplicationoperationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_usesriskapplicationactivitytype"): Xrm.OptionSetAttribute<boolean>;
@@ -92,6 +95,7 @@ declare namespace Form.ts_entityrisk.Main {
     getControl(controlName: "ts_entityname"): Xrm.OptionSetControl<ts_entityrisk_ts_entityname>;
     getControl(controlName: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
+    getControl(controlName: "ts_prescribedfrequencyoverride"): Xrm.LookupControl<"ts_prescribedfrequencyoverride">;
     getControl(controlName: "ts_riskapplicationoperationtype"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_usesriskapplicationactivitytype"): Xrm.OptionSetControl<boolean>;

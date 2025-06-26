@@ -13,16 +13,20 @@ declare namespace Form.ts_operationriskassessment.Main {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+      get(name: "ts_accesscontrol"): Xrm.Attribute<string>;
       get(name: "ts_calculationlog"): Xrm.Attribute<string>;
       get(name: "ts_discretionaryscore"): Xrm.NumberAttribute;
       get(name: "ts_lastsubmissiondate"): Xrm.DateAttribute;
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
+      get(name: "ts_perimetersecurity"): Xrm.Attribute<string>;
       get(name: "ts_riskcriteriascore"): Xrm.NumberAttribute;
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
       get(name: "ts_riskthresholdenglish"): Xrm.Attribute<string>;
       get(name: "ts_riskthresholdfrench"): Xrm.Attribute<string>;
+      get(name: "ts_securityvulnerabilities"): Xrm.Attribute<string>;
       get(name: "ts_siteassessmentguidance"): Xrm.Attribute<any>;
+      get(name: "ts_siteinformationandoperatingprofile"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -33,16 +37,20 @@ declare namespace Form.ts_operationriskassessment.Main {
       get(name: "Subgrid_Risk_Criteria_Responses"): Xrm.BaseControl;
       get(name: "WebResource_siteAssessmentGuide"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "ts_accesscontrol"): Xrm.StringControl;
       get(name: "ts_calculationlog"): Xrm.StringControl;
       get(name: "ts_discretionaryscore"): Xrm.NumberControl;
       get(name: "ts_lastsubmissiondate"): Xrm.DateControl;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
+      get(name: "ts_perimetersecurity"): Xrm.StringControl;
       get(name: "ts_riskcriteriascore"): Xrm.NumberControl;
       get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_riskthresholdenglish"): Xrm.StringControl;
       get(name: "ts_riskthresholdfrench"): Xrm.StringControl;
+      get(name: "ts_securityvulnerabilities"): Xrm.StringControl;
       get(name: "ts_siteassessmentguidance"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_siteinformationandoperatingprofile"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -58,31 +66,39 @@ declare namespace Form.ts_operationriskassessment.Main {
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+    getAttribute(attributeName: "ts_accesscontrol"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_calculationlog"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_discretionaryscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_lastsubmissiondate"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
+    getAttribute(attributeName: "ts_perimetersecurity"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_riskcriteriascore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_riskthresholdenglish"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_riskthresholdfrench"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_securityvulnerabilities"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_siteassessmentguidance"): Xrm.Attribute<any>;
+    getAttribute(attributeName: "ts_siteinformationandoperatingprofile"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_Discretionary_Factor_Responses"): Xrm.BaseControl;
     getControl(controlName: "Subgrid_Risk_Criteria_Responses"): Xrm.BaseControl;
     getControl(controlName: "WebResource_siteAssessmentGuide"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "ts_accesscontrol"): Xrm.StringControl;
     getControl(controlName: "ts_calculationlog"): Xrm.StringControl;
     getControl(controlName: "ts_discretionaryscore"): Xrm.NumberControl;
     getControl(controlName: "ts_lastsubmissiondate"): Xrm.DateControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
+    getControl(controlName: "ts_perimetersecurity"): Xrm.StringControl;
     getControl(controlName: "ts_riskcriteriascore"): Xrm.NumberControl;
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_riskthresholdenglish"): Xrm.StringControl;
     getControl(controlName: "ts_riskthresholdfrench"): Xrm.StringControl;
+    getControl(controlName: "ts_securityvulnerabilities"): Xrm.StringControl;
     getControl(controlName: "ts_siteassessmentguidance"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_siteinformationandoperatingprofile"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
 }

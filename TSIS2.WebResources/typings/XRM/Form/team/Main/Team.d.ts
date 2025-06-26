@@ -12,6 +12,7 @@ declare namespace Form.team.Main {
         get(name: "Description"): Xrm.PageSection;
         get(name: "General"): Xrm.PageSection;
         get(name: "TeamMembers"): Xrm.PageSection;
+        get(name: "general_section_5"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -48,6 +49,8 @@ declare namespace Form.team.Main {
       get(name: "name"): Xrm.Attribute<string>;
       get(name: "queueid"): Xrm.LookupAttribute<"queue">;
       get(name: "teamtype"): Xrm.OptionSetAttribute<team_type>;
+      get(name: "ts_sharepointfolderid"): Xrm.Attribute<string>;
+      get(name: "ts_sharepointfoldername"): Xrm.Attribute<string>;
       get(name: "ts_territory"): Xrm.LookupAttribute<"territory">;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -68,6 +71,8 @@ declare namespace Form.team.Main {
       get(name: "name"): Xrm.StringControl;
       get(name: "plans_grid"): Xrm.SubGridControl<"ts_plan">;
       get(name: "teamtype"): Xrm.OptionSetControl<team_type>;
+      get(name: "ts_sharepointfolderid"): Xrm.StringControl;
+      get(name: "ts_sharepointfoldername"): Xrm.StringControl;
       get(name: "ts_territory"): Xrm.LookupControl<"territory">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
@@ -95,6 +100,8 @@ declare namespace Form.team.Main {
     getAttribute(attributeName: "name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "queueid"): Xrm.LookupAttribute<"queue">;
     getAttribute(attributeName: "teamtype"): Xrm.OptionSetAttribute<team_type>;
+    getAttribute(attributeName: "ts_sharepointfolderid"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_sharepointfoldername"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_territory"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Members"): Xrm.SubGridControl<"systemuser">;
@@ -110,6 +117,8 @@ declare namespace Form.team.Main {
     getControl(controlName: "name"): Xrm.StringControl;
     getControl(controlName: "plans_grid"): Xrm.SubGridControl<"ts_plan">;
     getControl(controlName: "teamtype"): Xrm.OptionSetControl<team_type>;
+    getControl(controlName: "ts_sharepointfolderid"): Xrm.StringControl;
+    getControl(controlName: "ts_sharepointfoldername"): Xrm.StringControl;
     getControl(controlName: "ts_territory"): Xrm.LookupControl<"territory">;
     getControl(controlName: string): undefined;
   }

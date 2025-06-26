@@ -1205,29 +1205,6 @@ interface ts_planningsettings_Create extends ts_planningsettings {
 }
 interface ts_planningsettings_Update extends ts_planningsettings {
 }
-interface ts_PrescribedFrequencyOverride_Base extends WebEntity {
-}
-interface ts_PrescribedFrequencyOverride_Fixed extends WebEntity_Fixed {
-  ts_prescribedfrequencyoverrideid: string;
-}
-interface ts_PrescribedFrequencyOverride extends ts_PrescribedFrequencyOverride_Base, ts_PrescribedFrequencyOverride_Relationships {
-}
-interface ts_PrescribedFrequencyOverride_Relationships {
-}
-interface ts_PrescribedFrequencyOverride_Result extends ts_PrescribedFrequencyOverride_Base, ts_PrescribedFrequencyOverride_Relationships {
-}
-interface ts_PrescribedFrequencyOverride_FormattedResult {
-}
-interface ts_PrescribedFrequencyOverride_Select {
-}
-interface ts_PrescribedFrequencyOverride_Expand {
-}
-interface ts_PrescribedFrequencyOverride_Filter {
-}
-interface ts_PrescribedFrequencyOverride_Create extends ts_PrescribedFrequencyOverride {
-}
-interface ts_PrescribedFrequencyOverride_Update extends ts_PrescribedFrequencyOverride {
-}
 interface ts_questionnaireresponse_Base extends WebEntity {
 }
 interface ts_questionnaireresponse_Fixed extends WebEntity_Fixed {

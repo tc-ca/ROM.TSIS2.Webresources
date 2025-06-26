@@ -167,6 +167,7 @@ declare namespace Form.msdyn_incidenttype.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ovs_operationtype">;
       get(name: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
       get(name: "Subgrid_new_2"): Xrm.SubGridControl<"ts_prescribedfrequencyoverride">;
+      get(name: "Subgrid_new_3"): Xrm.SubGridControl<"ts_prescribedfrequencyoverride">;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_incidenttype_statecode>;
       get(name: "incidentproductssubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeproduct">;
       get(name: "incidentservicessubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeservice">;
@@ -332,6 +333,7 @@ declare namespace Form.msdyn_incidenttype.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ovs_operationtype">;
     getControl(controlName: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
     getControl(controlName: "Subgrid_new_2"): Xrm.SubGridControl<"ts_prescribedfrequencyoverride">;
+    getControl(controlName: "Subgrid_new_3"): Xrm.SubGridControl<"ts_prescribedfrequencyoverride">;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_incidenttype_statecode>;
     getControl(controlName: "incidentproductssubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeproduct">;
     getControl(controlName: "incidentservicessubgrid"): Xrm.SubGridControl<"msdyn_incidenttypeservice">;

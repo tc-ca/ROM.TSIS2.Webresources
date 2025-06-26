@@ -21,6 +21,8 @@ interface Team_Base extends WebEntity {
   teamid?: string | null;
   teamtype?: team_type | null;
   traversedpath?: string | null;
+  ts_sharepointfolderid?: string | null;
+  ts_sharepointfoldername?: string | null;
   versionnumber?: number | null;
 }
 interface Team_Relationships {
@@ -75,7 +77,6 @@ interface Team_Relationships {
   team_ts_plan?: ts_Plan_Result[] | null;
   team_ts_planningdata?: ts_PlanningData_Result[] | null;
   team_ts_planningsettings?: ts_planningsettings_Result[] | null;
-  team_ts_prescribedfrequencyoverride?: ts_PrescribedFrequencyOverride_Result[] | null;
   team_ts_questionnaireresponse?: ts_questionnaireresponse_Result[] | null;
   team_ts_questionnaireversion?: ts_questionnaireversion_Result[] | null;
   team_ts_riskcategory?: ts_RiskCategory_Result[] | null;
@@ -157,6 +158,8 @@ interface Team_Select {
   transactioncurrencyid_guid: WebAttribute<Team_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
   traversedpath: WebAttribute<Team_Select, { traversedpath: string | null }, {  }>;
   ts_regiondonouse_guid: WebAttribute<Team_Select, { ts_regiondonouse_guid: string | null }, { ts_regiondonouse_formatted?: string }>;
+  ts_sharepointfolderid: WebAttribute<Team_Select, { ts_sharepointfolderid: string | null }, {  }>;
+  ts_sharepointfoldername: WebAttribute<Team_Select, { ts_sharepointfoldername: string | null }, {  }>;
   ts_territory_guid: WebAttribute<Team_Select, { ts_territory_guid: string | null }, { ts_territory_formatted?: string }>;
   versionnumber: WebAttribute<Team_Select, { versionnumber: number | null }, {  }>;
 }
@@ -195,6 +198,8 @@ interface Team_Filter {
   transactioncurrencyid_guid: XQW.Guid;
   traversedpath: string;
   ts_regiondonouse_guid: XQW.Guid;
+  ts_sharepointfolderid: string;
+  ts_sharepointfoldername: string;
   ts_territory_guid: XQW.Guid;
   versionnumber: number;
 }
@@ -255,7 +260,6 @@ interface Team_Expand {
   team_ts_plan: WebExpand<Team_Expand, ts_Plan_Select, ts_Plan_Filter, { team_ts_plan: ts_Plan_Result[] }>;
   team_ts_planningdata: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { team_ts_planningdata: ts_PlanningData_Result[] }>;
   team_ts_planningsettings: WebExpand<Team_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { team_ts_planningsettings: ts_planningsettings_Result[] }>;
-  team_ts_prescribedfrequencyoverride: WebExpand<Team_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { team_ts_prescribedfrequencyoverride: ts_PrescribedFrequencyOverride_Result[] }>;
   team_ts_questionnaireresponse: WebExpand<Team_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { team_ts_questionnaireresponse: ts_questionnaireresponse_Result[] }>;
   team_ts_questionnaireversion: WebExpand<Team_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { team_ts_questionnaireversion: ts_questionnaireversion_Result[] }>;
   team_ts_riskcategory: WebExpand<Team_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { team_ts_riskcategory: ts_RiskCategory_Result[] }>;
@@ -379,7 +383,6 @@ interface Team_RelatedMany {
   team_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   team_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   team_ts_planningsettings: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
-  team_ts_prescribedfrequencyoverride: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
   team_ts_questionnaireresponse: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
   team_ts_questionnaireversion: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   team_ts_riskcategory: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
