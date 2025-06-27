@@ -43,9 +43,6 @@
 
                 // Set the Entity ID
                 formContext.getAttribute("ts_entityid").setValue(parentRecordId);
-
-                // Set the Name
-                formContext.getAttribute("ts_name").setValue(parentRecordName);
             }
             else {
                 console.log("ERROR unable to retrieve any parent record information");
@@ -81,164 +78,12 @@
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
         console.log("Entering EntityRisk onSave");
-
-        // Check if the form is being saved as a new record
-        if (formContext.ui.getFormType() === Xrm.FormType.Create) {
-
-            // Get the selected Entity Name
-            const entityName = formContext.getAttribute("ts_entityname")?.getValue();
-
-            // If the Entity Name is Activity Type
-            if (entityName === ts_entityrisk_ts_entityname.ActivityType) {
-
-                // Get the Fiscal Year value
-                const fiscalYear = formContext.getAttribute("ts_fiscalyear")?.getValue();
-
-                // Get the Entity ID value
-                const entityId = formContext.getAttribute("ts_entityid")?.getValue();
-
-                // If both Fiscal Year and Entity ID are not null 
-                if (fiscalYear !== null && fiscalYear !== undefined && entityId !== null && entityId !== undefined) {
-                    console.log("Entity Risk created with Fiscal Year and Entity ID.");
-                } 
-            }
-        }
     }
-    /* 
-    //Risk Rating removed from Entity Risk form
-    export function riskRatingOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
-
-        // Get the selected Risk Rating attribute
-        const riskRating = form.getAttribute("ts_riskrating");
-        let riskRatingScore = 0;
-        let riskRatingWeight = 0;
-
-        if (riskRating != null) {
-            const riskRatingAttributeValue = riskRating.getValue();
-            if (riskRatingAttributeValue != null && riskRatingAttributeValue.length > 0) {
-                const riskRatingID = riskRatingAttributeValue[0].id; // Retrieve the first selected value
-
-                // Retrieve the ts_riskscore value from the ts_riskrating record
-                Xrm.WebApi.retrieveRecord("ts_riskrating", riskRatingID, "?$select=ts_riskscore,ts_riskweight")
-                    .then(function success(riskRatingRecord) {
-                        const riskScore = riskRatingRecord.ts_riskscore;
-                        const riskWeight = riskRatingRecord.ts_riskweight;
-
-                        // If the ts_riskscore is not null, update the form field
-                        if (riskScore !== null) {
-                            riskRatingScore = riskScore;
-
-                            // Populate the ts_riskscore field if it's currently null or empty
-                            const riskScoreAttribute = form.getAttribute("ts_riskscore");
-                            if (riskScoreAttribute && (riskScoreAttribute.getValue() === null || riskScoreAttribute.getValue() === 0)) {
-                                riskScoreAttribute.setValue(riskRatingScore);
-                            }
-                        }
-
-                        // If the ts_riskweight is not null, update the form field
-                        if (riskWeight !== null) {
-                            riskRatingWeight = riskWeight;
-
-                            // Populate the ts_riskweight field if it's currently null or empty
-                            const riskWeightAttribute = form.getAttribute("ts_weightedriskscore");
-                            if (riskWeightAttribute && (riskWeightAttribute.getValue() === null || riskWeightAttribute.getValue() === 0)) {
-                                riskWeightAttribute.setValue(riskRatingWeight);
-                            }
-                        }
-
-                    })
-                    .catch(function error(err) {
-                        console.error("Error retrieving ts_riskrating record:", err.message);
-                    });
-            }
-        }
-    }
-    
-    export function riskScoreOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
-
-        // Get the entered Risk Score attribute
-        const riskScore = form.getAttribute("ts_riskscore");
-
-        if (riskScore != null) {
-            const riskScoreAttributeValue = riskScore.getValue();
-
-            if (riskScoreAttributeValue != null) {
-                // Define FetchXML to get all risk ranges
-                let getRiskRatingIdFetchXML = `
-                <fetch xmlns:generator='MarkMpn.SQL4CDS'>
-                  <entity name='ts_riskrating'>
-                    <attribute name='ts_riskratingid' />
-                    <attribute name='ts_name' />
-                    <link-entity name='ts_riskrange' to='ts_riskrange' from='ts_riskrangeid' alias='ts_riskRange' link-type='inner'>
-                      <attribute name='ts_minscore' />
-                      <attribute name='ts_maxscore' />
-                    </link-entity>
-                  </entity>
-                </fetch>`;
-
-                const fetchXmlEncoded = "?fetchXml=" + encodeURIComponent(getRiskRatingIdFetchXML);
-
-                Xrm.WebApi.retrieveMultipleRecords("ts_riskrating", fetchXmlEncoded).then(
-                    function (result) {
-                        if (result.entities.length > 0) {
-
-                            let riskScoreNumber = Number(riskScoreAttributeValue);
-
-                            // Go through all the risk ratings to find a match
-                            let matchingRiskRatingID = null; 
-                            let matchingRiskRatingName = null;
-
-                            const roundedRiskScore = Math.floor(riskScoreAttributeValue);
-
-                            for (const record of result.entities) {
-                                // Fetch and convert the scores to numbers
-                                const minScore = Number(record["ts_riskRange.ts_minscore"]);
-                                const maxScore = Number(record["ts_riskRange.ts_maxscore"]);
-
-                                console.log("Evaluating record:");
-                                console.log("Risk Rating:", record.ts_name, "minScore:", minScore, "maxScore:", maxScore);
-
-                                // Check if the rounded risk score is within the range
-                                if (minScore <= roundedRiskScore && maxScore >= roundedRiskScore) {
-                                    matchingRiskRatingID = record.ts_riskratingid;
-                                    matchingRiskRatingName = record.ts_name;
-                                    break; // Stop iterating once a match is found
-                                }
-                            }
-
-                            // Handle the matching record
-                            if (matchingRiskRatingID) {
-
-                                console.log("Matching Risk Rating Found:", matchingRiskRatingName);
-
-                                // Set the lookup field value
-                                form.getAttribute("ts_riskrating").setValue([
-                                    {
-                                        id: matchingRiskRatingID,
-                                        name: matchingRiskRatingName,
-                                        entityType: "ts_riskrating",
-                                    },
-                                ]);
-                            } else {
-                                console.warn("No matching risk rating found for score:", roundedRiskScore);
-                                form.getAttribute("ts_riskrating").setValue(null); // Clear the lookup if no match
-                            }
-                        } else {
-                            console.log("No risk ratings found in the system.");
-                        }
-                    },
-                    function (error) {
-                        console.error("Error retrieving risk rating:", error);
-                    }
-                );
-            }
-        }
-    }
-    */
     export function fiscalYearOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const formContext = <Form.ts_entityrisk.Main.Information>eContext.getFormContext();
+
+        const globalContext = Xrm.Utility.getGlobalContext() as any;
+        const queryParams = globalContext.getQueryStringParameters();
 
         // Get values from the form
         let entityId = formContext.getAttribute("ts_entityid")?.getValue();
@@ -300,6 +145,119 @@
                 console.error("Error validating uniqueness:", error.message);
             }
         );
+
+        // Check if the form is being saved as a new record
+        if (formContext.ui.getFormType() === Xrm.FormType.Create) {
+
+            // Get the Fiscal Year Name
+            const parentRecordName = queryParams["parentrecordname"];
+            const fiscalYear = formContext.getAttribute("ts_fiscalyear")?.getValue();
+            const fiscalYearName = fiscalYear && fiscalYear.length > 0 ? fiscalYear[0].name : null;
+
+            // Set the Name
+            formContext.getAttribute("ts_name").setValue(parentRecordName + " " + fiscalYearName);
+
+            // Get the selected Entity Name
+            const entityName = formContext.getAttribute("ts_entityname")?.getValue();
+
+            // If the Entity Name is Activity Type
+            if (entityName === ts_entityrisk_ts_entityname.ActivityType) {
+
+                // Get the Fiscal Year value
+                const fiscalYear = formContext.getAttribute("ts_fiscalyear")?.getValue();
+
+                // If Fiscal Year is not null or undefined, get the ID
+                const fiscalYearId = fiscalYear && fiscalYear.length > 0 ? fiscalYear[0].id.replace(/[{}]/g, "") : null;
+
+                // Get the Entity ID value
+                const entityId = formContext.getAttribute("ts_entityid")?.getValue();
+
+                // If both Fiscal Year and Entity ID are not null 
+                if (fiscalYear !== null && fiscalYear !== undefined && entityId !== null && entityId !== undefined) {
+                    console.log("Entity Risk created with Fiscal Year and Entity ID.");
+
+                    // Fetch XML for getting the ts_prescribedfrequencyoverrideid
+                    const fetchXmlPrescribedFrequencyOverrideId = `
+                        <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                          <entity name='ts_prescribedfrequencyoverride'>
+                            <attribute name='ts_prescribedfrequencyoverrideid' />
+                            <attribute name='ts_name' />
+                            <link-entity name='msdyn_incidenttype' to='ts_activitytype' from='msdyn_incidenttypeid' alias='msdyn_incidenttype' link-type='inner'>
+                              <filter>
+                                <condition attribute='msdyn_incidenttypeid' operator='eq' value='${entityId}' />
+                              </filter>
+                            </link-entity>
+                            <filter>
+                              <condition attribute='ts_fiscalyear' operator='eq' value='${fiscalYearId}' />
+                            </filter>
+                          </entity>
+                        </fetch>
+                    `;
+
+
+                    const fetchXmlEncoded = "?fetchXml=" + encodeURIComponent(fetchXmlPrescribedFrequencyOverrideId);
+
+                    // Retrieve the ts_prescribedfrequencyoverrideid
+                    Xrm.WebApi.retrieveMultipleRecords("ts_prescribedfrequencyoverride", fetchXmlEncoded).then(
+                        function (result) {
+                            if (result.entities.length > 0) {
+
+                                // Initialize the variable to store the ID
+                                let prescribedFrequencyOverrideId: string = "";
+
+                                // Initialize the variable to store the name
+                                let prescribedFrequencyOverrideName: string = "";
+
+                                // Get the first record's ts_prescribedfrequencyoverrideid
+                                for (const record of result.entities) {
+
+                                    prescribedFrequencyOverrideId = record["ts_prescribedfrequencyoverrideid"];
+                                    prescribedFrequencyOverrideName = record["ts_name"];
+
+                                    console.log("Prescribed Frequency Override ID:", prescribedFrequencyOverrideId);
+                                }
+
+                                // Set the Prescribed Frequency Override lookup field
+                                let lookup = new Array();
+
+                                lookup[0] = new Object();
+                                lookup[0].id = "{" + prescribedFrequencyOverrideId + "}";
+                                lookup[0].name = prescribedFrequencyOverrideName;
+                                lookup[0].entityType = "ts_prescribedfrequencyoverride";
+
+                                formContext.getAttribute("ts_prescribedfrequencyoverride").setValue(lookup);
+
+                                // Show the Prescribed Frequency Override field
+                                const prescribedFrequencyOverrideControl = formContext.getControl("ts_prescribedfrequencyoverride");
+                                if (prescribedFrequencyOverrideControl) {
+                                    prescribedFrequencyOverrideControl.setVisible(true);
+                                    prescribedFrequencyOverrideControl.setDisabled(true); // Disable the field
+                                }
+
+
+                            } else {
+                                console.log("No Prescribed Frequency Override ID found.");
+                            }
+                        },
+                        function (error) {
+                            console.error("Error retrieving Prescribed Frequency Override ID:", error);
+                        }
+                    );
+
+                }
+                else {
+                    console.log("No Prescribed Frequency Override ID found.");
+
+                    // Hide the Prescribed Frequency Override field
+                    const prescribedFrequencyOverrideControl = formContext.getControl("ts_prescribedfrequencyoverride");
+                    if (prescribedFrequencyOverrideControl) {
+                        formContext.getAttribute("ts_prescribedfrequencyoverride").setValue(null);
+                        prescribedFrequencyOverrideControl.setVisible(false);
+                        prescribedFrequencyOverrideControl.setDisabled(true);
+                    }
+                }
+            }
+        }
     }
 
     function setFiscalYearFilteredView(formContext: Form.ts_entityrisk.Main.Information) {
