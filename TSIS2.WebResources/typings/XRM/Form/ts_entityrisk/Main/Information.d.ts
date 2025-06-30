@@ -13,6 +13,7 @@ declare namespace Form.ts_entityrisk.Main {
       get(name: "ts_prescribedfrequencyoverride"): Xrm.LookupAttribute<"ts_prescribedfrequencyoverride">;
       get(name: "ts_riskapplicationoperationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
+      get(name: "ts_siteclass"): Xrm.Attribute<string>;
       get(name: "ts_usesriskapplicationactivitytype"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_usesriskapplicationoperation"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_usesriskapplicationoperationtype"): Xrm.OptionSetAttribute<boolean>;
@@ -43,6 +44,7 @@ declare namespace Form.ts_entityrisk.Main {
       get(name: "ts_prescribedfrequencyoverride"): Xrm.LookupControl<"ts_prescribedfrequencyoverride">;
       get(name: "ts_riskapplicationoperationtype"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_riskscore"): Xrm.NumberControl;
+      get(name: "ts_siteclass"): Xrm.StringControl;
       get(name: "ts_usesriskapplicationactivitytype"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_usesriskapplicationoperation"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_usesriskapplicationoperationtype"): Xrm.OptionSetControl<boolean>;
@@ -73,6 +75,7 @@ declare namespace Form.ts_entityrisk.Main {
     getAttribute(attributeName: "ts_prescribedfrequencyoverride"): Xrm.LookupAttribute<"ts_prescribedfrequencyoverride">;
     getAttribute(attributeName: "ts_riskapplicationoperationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
+    getAttribute(attributeName: "ts_siteclass"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_usesriskapplicationactivitytype"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_usesriskapplicationoperation"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_usesriskapplicationoperationtype"): Xrm.OptionSetAttribute<boolean>;
@@ -98,6 +101,7 @@ declare namespace Form.ts_entityrisk.Main {
     getControl(controlName: "ts_prescribedfrequencyoverride"): Xrm.LookupControl<"ts_prescribedfrequencyoverride">;
     getControl(controlName: "ts_riskapplicationoperationtype"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
+    getControl(controlName: "ts_siteclass"): Xrm.StringControl;
     getControl(controlName: "ts_usesriskapplicationactivitytype"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_usesriskapplicationoperation"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_usesriskapplicationoperationtype"): Xrm.OptionSetControl<boolean>;
