@@ -73,6 +73,50 @@
                 }
             }
         }
+
+        // Check if this is for a Site
+        const entityName = formContext.getAttribute("ts_entityname")?.getValue();
+
+        // Check if Site Class is already set
+        const siteClass = formContext.getAttribute("ts_siteclass")?.getValue();
+
+        if (entityName === ts_entityrisk_ts_entityname.Site) {
+
+            if (!siteClass) {
+                // Get the ID of the Site
+                const siteId = formContext.getAttribute("ts_entityid")?.getValue();
+
+                // If the Site ID is not null or undefined
+                if (siteId !== null && siteId !== undefined) {
+
+                    // Fetch the Site Class
+                    Xrm.WebApi.retrieveRecord("msdyn_functionallocation", siteId, "?$select=ts_class").then(
+                        function (siteRecord) {
+
+                            // Set the Site Class
+                            const siteClassLabel = siteRecord["ts_class@OData.Community.Display.V1.FormattedValue"];
+
+                            if (siteClassLabel !== null && siteClassLabel !== undefined) {
+                                formContext.getAttribute("ts_siteclass").setValue(siteClassLabel);
+                            } else {
+                                console.log("Site Class is not set for this Site.");
+                            }
+                        },
+                        function (error) {
+                            console.error("Error retrieving Site Class:", error.message);
+                        }
+                    );
+                }
+            }
+        }
+        else {
+
+            // If not a Site, hide the Site Class field
+            const siteClassControl = formContext.getControl("ts_siteclass");
+            if (siteClassControl) {
+                siteClassControl.setVisible(false);
+            }
+        }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
