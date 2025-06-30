@@ -13,6 +13,7 @@ interface ts_EntityRisk_Base extends WebEntity {
   ts_name?: string | null;
   ts_riskscore?: number | null;
   ts_runpowerautomateflow?: boolean | null;
+  ts_siteclass?: string | null;
   ts_usesriskapplicationactivitytype?: boolean | null;
   ts_usesriskapplicationoperation?: boolean | null;
   ts_usesriskapplicationoperationtype?: boolean | null;
@@ -81,6 +82,7 @@ interface ts_EntityRisk_Select {
   ts_riskrating_guid: WebAttribute<ts_EntityRisk_Select, { ts_riskrating_guid: string | null }, { ts_riskrating_formatted?: string }>;
   ts_riskscore: WebAttribute<ts_EntityRisk_Select, { ts_riskscore: number | null }, {  }>;
   ts_runpowerautomateflow: WebAttribute<ts_EntityRisk_Select, { ts_runpowerautomateflow: boolean | null }, {  }>;
+  ts_siteclass: WebAttribute<ts_EntityRisk_Select, { ts_siteclass: string | null }, {  }>;
   ts_usesriskapplicationactivitytype: WebAttribute<ts_EntityRisk_Select, { ts_usesriskapplicationactivitytype: boolean | null }, {  }>;
   ts_usesriskapplicationoperation: WebAttribute<ts_EntityRisk_Select, { ts_usesriskapplicationoperation: boolean | null }, {  }>;
   ts_usesriskapplicationoperationtype: WebAttribute<ts_EntityRisk_Select, { ts_usesriskapplicationoperationtype: boolean | null }, {  }>;
@@ -120,6 +122,7 @@ interface ts_EntityRisk_Filter {
   ts_riskrating_guid: XQW.Guid;
   ts_riskscore: any;
   ts_runpowerautomateflow: boolean;
+  ts_siteclass: string;
   ts_usesriskapplicationactivitytype: boolean;
   ts_usesriskapplicationoperation: boolean;
   ts_usesriskapplicationoperationtype: boolean;
