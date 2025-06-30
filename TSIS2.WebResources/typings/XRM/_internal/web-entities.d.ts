@@ -1504,6 +1504,29 @@ interface ts_workordercreationwizard_Create extends ts_workordercreationwizard {
 }
 interface ts_workordercreationwizard_Update extends ts_workordercreationwizard {
 }
+interface ts_WorkOrderServiceTaskWorkspace_Base extends WebEntity {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Fixed extends WebEntity_Fixed {
+  ts_workorderservicetaskworkspaceid: string;
+}
+interface ts_WorkOrderServiceTaskWorkspace extends ts_WorkOrderServiceTaskWorkspace_Base, ts_WorkOrderServiceTaskWorkspace_Relationships {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Relationships {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Result extends ts_WorkOrderServiceTaskWorkspace_Base, ts_WorkOrderServiceTaskWorkspace_Relationships {
+}
+interface ts_WorkOrderServiceTaskWorkspace_FormattedResult {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Select {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Expand {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Filter {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Create extends ts_WorkOrderServiceTaskWorkspace {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Update extends ts_WorkOrderServiceTaskWorkspace {
+}
 interface tc_TCFiscalQuarter_Base extends WebEntity {
 }
 interface tc_TCFiscalQuarter_Fixed extends WebEntity_Fixed {
