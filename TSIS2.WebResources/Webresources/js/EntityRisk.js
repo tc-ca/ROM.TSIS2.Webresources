@@ -4,7 +4,7 @@ var ROM;
     var EntityRisk;
     (function (EntityRisk) {
         function onLoad(eContext) {
-            var _a;
+            var _a, _b, _c, _d;
             var formContext = eContext.getFormContext();
             console.log("Entering EntityRisk onLoad");
             // if we are on the new form
@@ -64,6 +64,39 @@ var ROM;
                     if (prescribedFrequencyOverrideControl) {
                         prescribedFrequencyOverrideControl.setVisible(false);
                     }
+                }
+            }
+            // Check if this is for a Site
+            var entityName = (_b = formContext.getAttribute("ts_entityname")) === null || _b === void 0 ? void 0 : _b.getValue();
+            // Check if Site Class is already set
+            var siteClass = (_c = formContext.getAttribute("ts_siteclass")) === null || _c === void 0 ? void 0 : _c.getValue();
+            if (entityName === 741130003 /* Site */) {
+                if (!siteClass) {
+                    // Get the ID of the Site
+                    var siteId = (_d = formContext.getAttribute("ts_entityid")) === null || _d === void 0 ? void 0 : _d.getValue();
+                    // If the Site ID is not null or undefined
+                    if (siteId !== null && siteId !== undefined) {
+                        // Fetch the Site Class
+                        Xrm.WebApi.retrieveRecord("msdyn_functionallocation", siteId, "?$select=ts_class").then(function (siteRecord) {
+                            // Set the Site Class
+                            var siteClassLabel = siteRecord["ts_class@OData.Community.Display.V1.FormattedValue"];
+                            if (siteClassLabel !== null && siteClassLabel !== undefined) {
+                                formContext.getAttribute("ts_siteclass").setValue(siteClassLabel);
+                            }
+                            else {
+                                console.log("Site Class is not set for this Site.");
+                            }
+                        }, function (error) {
+                            console.error("Error retrieving Site Class:", error.message);
+                        });
+                    }
+                }
+            }
+            else {
+                // If not a Site, hide the Site Class field
+                var siteClassControl = formContext.getControl("ts_siteclass");
+                if (siteClassControl) {
+                    siteClassControl.setVisible(false);
                 }
             }
         }
