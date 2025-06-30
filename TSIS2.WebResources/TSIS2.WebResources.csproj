@@ -457,6 +457,7 @@
     <TypeScriptCompile Include="src\ts\WorkOrderQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\Aircraft.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderServiceTask.ts" />
+    <TypeScriptCompile Include="src\ts\WorkOrderServiceTaskWorkspace.ts" />
     <TypeScriptCompile Include="typings\XRM\dg.xrmquery.web.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\InteractionCentricDashboard\AccountsDashboard.d.ts" />
     <TypeScriptCompile Include="typings\XRM\Form\account\Main\Account.d.ts" />
