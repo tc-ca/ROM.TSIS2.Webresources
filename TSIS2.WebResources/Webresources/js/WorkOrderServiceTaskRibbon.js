@@ -889,7 +889,7 @@ function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
     parent.Xrm.WebApi.retrieveMultipleRecords("ts_workorderservicetaskworkspace", `?fetchXml=${encodeURIComponent(fetchXml)}`)
         .then(function (result) {
             if (result.entities.length > 0) {
-                const relatedWorkOrderServiceTaskId = result.entities[0].ts_wostsupplementaryrecordid;
+                const relatedWorkOrderServiceTaskId = result.entities[0].ts_workorderservicetaskworkspaceid;
                 // Open the related Work Order Service Task form in a modal window
                 var pageInput = {
                     pageType: "entityrecord",
