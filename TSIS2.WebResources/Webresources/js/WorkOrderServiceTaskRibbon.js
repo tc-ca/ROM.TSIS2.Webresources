@@ -871,3 +871,50 @@ async function createQualityControlServiceTask(primaryControl) {
     primaryControl.getControl("workorderservicetasksgrid").refresh();
   });
 }
+function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
+
+    // Get guid of current work order service task
+    var workOrderServiceTaskId = primaryControl.data.entity.getId().replace("{", "").replace("}", "");
+    const fetchXml = `
+        <fetch>
+          <entity name='ts_workorderservicetaskworkspace'>
+            <all-attributes />
+              <filter>
+                <condition attribute='ts_workorderservicetask' operator='eq' value='${workOrderServiceTaskId}' />
+              </filter>
+          </entity>
+        </fetch>
+    `;
+
+    parent.Xrm.WebApi.retrieveMultipleRecords("ts_workorderservicetaskworkspace", `?fetchXml=${encodeURIComponent(fetchXml)}`)
+        .then(function (result) {
+            if (result.entities.length > 0) {
+                const relatedWorkOrderServiceTaskId = result.entities[0].ts_wostsupplementaryrecordid;
+                // Open the related Work Order Service Task form in a modal window
+                var pageInput = {
+                    pageType: "entityrecord",
+                    entityName: "ts_workorderservicetaskworkspace",
+                    entityId: relatedWorkOrderServiceTaskId
+                };
+                var navigationOptions = {
+                    target: 2, // Modal dialog
+                    width: { value: 70, unit: "%" },
+                    height: { value: 70, unit: "%" },
+                    position: 1 // Center
+                };
+                Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                    function success() {
+                        // Optionally handle after close
+                    },
+                    function error(error) {
+                        console.error("Error opening modal window: ", error.message);
+                    }
+                );
+            } else {
+                console.error("No related Work Order Task Workspace found.");
+            }
+        })
+        .catch(function (error) {
+            console.error("Fetch error: ", error.message);
+        });
+}
