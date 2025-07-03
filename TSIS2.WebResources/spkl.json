@@ -440,6 +440,11 @@
                 "file": "js\\PrescribedFrequencyOverride.js",
                 "description": "ROM TSIS 2.0 PrescribedFrequencyOverride Form Scripts"
             },
+            {
+                "uniquename": "ts_/js/WorkOrderServiceTaskWorkspace.js",
+                "file": "js\\WorkOrderServiceTaskWorkspace.js",
+                "description": "Work Order Serice Task Workspace for Work Order Service Task table"
+            },
             /* Styles */
             {
                 "uniquename": "ovs_/css/bootstrap.min.css",

@@ -41,6 +41,10 @@ var ROM;
     (function (WorkOrderServiceTask) {
         // EVENTS
         var mode = '';
+        var DEV_URL = "https://romts-gsrst-dev-tcd365.crm3.dynamics.com";
+        var QA_URL = "https://romts-gsrst-qa-tcd365.crm3.dynamics.com";
+        var INT_URL = "https://romts-gsrst-integration-tcd365.crm3.dynamics.com";
+        var appUrl = Xrm.Utility.getGlobalContext().getClientUrl();
         var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
         var enterStartDateToProceedText = "Enter a start date to proceed";
         var enterTaskTypeToProccedText = "Enter a task type to proceed";
@@ -157,6 +161,54 @@ var ROM;
             UpdateQuestionnaireDefinition(eContext);
         }
         WorkOrderServiceTask.taskTypeOnChange = taskTypeOnChange;
+        function onLoadServiceTaskStartDate(eContext) {
+            var _a;
+            if (appUrl === DEV_URL || appUrl === QA_URL || appUrl === INT_URL) {
+                var formContext_1 = eContext.getFormContext();
+                var serviceTaskStartDateAttr = formContext_1.getAttribute("ts_servicetaskstartdate");
+                var serviceTaskStartDate = serviceTaskStartDateAttr ? serviceTaskStartDateAttr.getValue() : null;
+                if (serviceTaskStartDate === null) {
+                    var entityId = formContext_1.data.entity.getId();
+                    var entityIdClean = entityId.replace(/{|}/g, ""); // Remove curly braces
+                    var entityName = (_a = formContext_1.getAttribute("msdyn_name")) === null || _a === void 0 ? void 0 : _a.getValue();
+                    var pageInput = {
+                        pageType: "entityrecord",
+                        entityName: "ts_workorderservicetaskworkspace",
+                        formType: 2,
+                        useQuickCreateForm: true,
+                        data: {
+                            ts_name: entityName,
+                            "ts_workorderservicetask@odata.bind": "/msdyn_workorderservicetasks(" + entityIdClean + ")"
+                        },
+                        createFromEntity: {
+                            entityType: "msdyn_workorderservicetask",
+                            id: entityId,
+                            name: entityName
+                        }
+                    };
+                    var navigationOptions = {
+                        target: 2,
+                        width: { value: 70, unit: "%" },
+                        height: { value: 70, unit: "%" },
+                        position: 1 // Center
+                    };
+                    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(function success() {
+                        // Refresh the form after modal closes (refreshes the main form on which this script is running)
+                        formContext_1.data.refresh();
+                    }, function error(error) {
+                        console.error("Error opening modal window: ", error.message);
+                    });
+                }
+                else {
+                    return; // If the start date is already set, do nothing
+                }
+            }
+            else {
+                //don't run the code in training, acc, prod
+                return;
+            }
+        }
+        WorkOrderServiceTask.onLoadServiceTaskStartDate = onLoadServiceTaskStartDate;
         function applyMandatoryFieldFromTaskType(eContext) {
             var fc = eContext.getFormContext();
             var taskTypeValue = fc.getAttribute("msdyn_tasktype").getValue();

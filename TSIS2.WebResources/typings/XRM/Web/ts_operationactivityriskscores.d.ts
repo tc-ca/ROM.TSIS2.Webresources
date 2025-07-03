@@ -6,6 +6,7 @@ interface ts_OperationActivityRiskScores_Base extends WebEntity {
   statecode?: ts_operationactivityriskscores_statecode | null;
   statuscode?: ts_operationactivityriskscores_statuscode | null;
   timezoneruleversionnumber?: number | null;
+  ts_activitytyperiskid?: string | null;
   ts_activitytyperiskscore?: number | null;
   ts_calculatedriskscore?: number | null;
   ts_name?: string | null;
@@ -20,6 +21,7 @@ interface ts_OperationActivityRiskScores_Base extends WebEntity {
   ts_riskscoreribbontrigger?: Date | null;
   ts_riskscorestored?: number | null;
   ts_riskscoretrigger?: number | null;
+  ts_siteriskclass?: string | null;
   ts_siteriskscore?: number | null;
   ts_stakeholderriskscore?: number | null;
   ts_usesprescribedfrequencyoverride?: boolean | null;
@@ -76,6 +78,7 @@ interface ts_OperationActivityRiskScores_Select {
   statuscode: WebAttribute<ts_OperationActivityRiskScores_Select, { statuscode: ts_operationactivityriskscores_statuscode | null }, { statuscode_formatted?: string }>;
   timezoneruleversionnumber: WebAttribute<ts_OperationActivityRiskScores_Select, { timezoneruleversionnumber: number | null }, {  }>;
   ts_activitytypeentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_activitytypeentityrisk_guid: string | null }, { ts_activitytypeentityrisk_formatted?: string }>;
+  ts_activitytyperiskid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_activitytyperiskid: string | null }, {  }>;
   ts_activitytyperiskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_activitytyperiskscore: number | null }, {  }>;
   ts_calculatedriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_calculatedriskscore: number | null }, {  }>;
   ts_entityriskfrequency_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_entityriskfrequency_guid: string | null }, { ts_entityriskfrequency_formatted?: string }>;
@@ -100,6 +103,7 @@ interface ts_OperationActivityRiskScores_Select {
   ts_riskscorestored: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscorestored: number | null }, {  }>;
   ts_riskscoretrigger: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_riskscoretrigger: number | null }, {  }>;
   ts_siteentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteentityrisk_guid: string | null }, { ts_siteentityrisk_formatted?: string }>;
+  ts_siteriskclass: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteriskclass: string | null }, {  }>;
   ts_siteriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_siteriskscore: number | null }, {  }>;
   ts_stakeholderentityrisk_guid: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_stakeholderentityrisk_guid: string | null }, { ts_stakeholderentityrisk_formatted?: string }>;
   ts_stakeholderriskscore: WebAttribute<ts_OperationActivityRiskScores_Select, { ts_stakeholderriskscore: number | null }, {  }>;
@@ -125,6 +129,7 @@ interface ts_OperationActivityRiskScores_Filter {
   statuscode: ts_operationactivityriskscores_statuscode;
   timezoneruleversionnumber: number;
   ts_activitytypeentityrisk_guid: XQW.Guid;
+  ts_activitytyperiskid: string;
   ts_activitytyperiskscore: any;
   ts_calculatedriskscore: any;
   ts_entityriskfrequency_guid: XQW.Guid;
@@ -149,6 +154,7 @@ interface ts_OperationActivityRiskScores_Filter {
   ts_riskscorestored: any;
   ts_riskscoretrigger: any;
   ts_siteentityrisk_guid: XQW.Guid;
+  ts_siteriskclass: string;
   ts_siteriskscore: any;
   ts_stakeholderentityrisk_guid: XQW.Guid;
   ts_stakeholderriskscore: any;
