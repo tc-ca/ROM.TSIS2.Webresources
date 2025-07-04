@@ -62,7 +62,17 @@
                 <div class="form-group">
                     <label for="fileCategories">Category:</label>
                     <select class="form-control" id="fileCategories">
-                        <!-- Options will be populated here -->
+                        <!--Options will be populated here-->
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="fileCategories">SharePoint Folder:</label>
+                    <select class="form-control" id="sharePointFolders">
+                        <!--Options will be populated here-->
                     </select>
                 </div>
             </div>
@@ -73,7 +83,6 @@
             </div>
         </div>
     </div>
-
     <!-- JavaScript Code-->
     <script type="text/javascript">
         let recordId = "";
@@ -89,6 +98,7 @@
         let userLanguage = 1033;
         let usersManagerEmail = "";
         let usersEmail = "";
+        let sharePointFolderID = "";
 
         // Label Text
         let noFilesText = "";
@@ -99,6 +109,7 @@
         // User Input
         let selectedFileCategory = null;
         let descriptionInputText = null;
+        let selectedFolder = null;
 
         // Define FilePond globally
         let pond;
@@ -133,7 +144,8 @@
                     useGroupFiles = jsonData.useGroupFiles;
                     userLanguage = jsonData.userLanguage;
                     usersManagerEmail = jsonData.usersManagerEmail;
-                    usersEmail = jsonData.usersEmail
+                    usersEmail = jsonData.usersEmail;
+                    sharePointFolderID = jsonData.sharePointFolderID;
 
                     // Set the language for all the labels
                     setLanguage();
@@ -144,6 +156,9 @@
                     // Get File Categories
                     getFileCategories();
 
+                    // Get SharePoint Folders
+                    getSharePointFolders();
+
                     // Setup the listener for the Categories drop down
                     const dropdown = document.getElementById('fileCategories');
 
@@ -151,6 +166,15 @@
 
                         const selectedOption = dropdown.options[dropdown.selectedIndex];
                         selectedFileCategory = selectedOption.value;
+                    });
+
+                    // Setup the listener for the SharePoint Folders drop down
+                    const dropdownSharePointFolders = document.getElementById('sharePointFolders');
+
+                    dropdownSharePointFolders.addEventListener('change', function () {
+
+                        const selectedOption = dropdownSharePointFolders.options[dropdownSharePointFolders.selectedIndex];
+                        selectedFolder = selectedOption.value;
                     });
                 }
                 else {
@@ -250,17 +274,17 @@
             let variableValue = "";
 
             const fetchXML = `
-                                                                <fetch>
-                                                                    <entity name="environmentvariablevalue">
-                                                                        <attribute name="value" />
-                                                                        <link-entity name="environmentvariabledefinition" to="environmentvariabledefinitionid" from="environmentvariabledefinitionid" alias="environmentvariabledefinition" link-type="inner">
-                                                                            <filter>
-                                                                                <condition attribute="schemaname" operator="eq" value="${variableName}" />
-                                                                            </filter>
-                                                                        </link-entity>
-                                                                    </entity>
-                                                                </fetch>
-                                                            `;
+                                                                                <fetch>
+                                                                                    <entity name="environmentvariablevalue">
+                                                                                        <attribute name="value" />
+                                                                                        <link-entity name="environmentvariabledefinition" to="environmentvariabledefinitionid" from="environmentvariabledefinitionid" alias="environmentvariabledefinition" link-type="inner">
+                                                                                            <filter>
+                                                                                                <condition attribute="schemaname" operator="eq" value="${variableName}" />
+                                                                                            </filter>
+                                                                                        </link-entity>
+                                                                                    </entity>
+                                                                                </fetch>
+                                                                            `;
 
             const encodedFetchXml = encodeURIComponent(fetchXML);
 
@@ -406,7 +430,9 @@
                 CategoryID: selectedFileCategory.toString(),
                 SharePointFileID: sharePointFileID,
                 ManagerEmail: usersManagerEmail,
-                UserEmail: usersEmail
+                UserEmail: usersEmail,
+                SharePointFolderID: selectedFolder.toString()
+
             };
 
             try {
@@ -476,7 +502,7 @@
                                         entityType: "msdyn_workorderservicetask",
                                         id: task.msdyn_workorderservicetaskid
                                     });
-                                   
+
                                 });
                                 associateRelatedRecords("ts_Files_msdyn_workorderservicetasks", relatedServiceTasks, fileId);
                             }
@@ -493,12 +519,12 @@
                                         id: incident.incidentid
                                     });
                                     fileData["ts_Incident@odata.bind"] = `/incidents(${result.entities[0].incidentid})`;
-                                    
+
                                 });
                                 associateRelatedRecords("ts_Files_Incidents", relatedCases, fileId);
                             }
                         });
-                       
+
                         break;
                     case "msdyn_workorderservicetask":
                         fileData = {
@@ -549,7 +575,7 @@
                                     relatedWOs.push({
                                         entityType: "msdyn_workorder",
                                         id: workorder.msdyn_workorderid
-                                    });                                   
+                                    });
 
                                 });
                                 associateRelatedRecords("ts_Files_msdyn_workorders", relatedWOs, fileId);
@@ -620,6 +646,61 @@
                 }
             )
         }
+        async function getSharePointFolders() {
+            const fetchXmlTeams = [
+                "<fetch>",
+                "  <entity name='team'>",
+                "    <order attribute='name' descending='false' />",
+                "    <filter type='and'>",
+                "      <condition attribute='ts_territory' operator='not-null' />",
+                "      <condition attribute='teamtype' operator='eq' value='0' />",
+                "    </filter>",
+                "    <link-entity name='teammembership' from='teamid' to='teamid' visible='false' intersect='true'>",
+                "      <link-entity name='systemuser' from='systemuserid' to='systemuserid' alias='ai'>",
+                "        <filter type='and'>",
+                "          <condition attribute='domainname' operator='eq' value='", usersEmail, "' />",
+                "        </filter>",
+                "      </link-entity>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>"
+            ].join("");
+
+            const fetchXml = "?fetchXml=" + encodeURIComponent(fetchXmlTeams);
+            let folderOptions = [];
+            const result = await parent.Xrm.WebApi.retrieveMultipleRecords("team", fetchXml);
+                if (result.entities.length > 0) {
+                    folderOptions = result.entities.map(item => ({
+                        ID: item.ts_sharepointfolderid,
+                        Title: item.ts_sharepointfoldername
+                    }));
+                    
+                }              
+            
+            const dropdown = document.getElementById('sharePointFolders');
+
+            // Clear existing options
+            dropdown.innerHTML = '';
+
+            var firstLoop = true;
+
+            // populate the drop down
+            folderOptions.forEach(folder => {
+                const option = document.createElement('option');
+                option.value = folder.ID;
+                option.textContent = folder.Title;
+                dropdown.appendChild(option);
+
+                // select the first item
+                if (firstLoop) {
+                    selectedFolder = folder.ID;
+                }
+
+                firstLoop = false;
+            });
+
+        }
     </script>
+
 </body>
 </html>
