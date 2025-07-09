@@ -156,8 +156,8 @@ namespace ROM.WorkOrderServiceTask {
 
                 const navigationOptions: Xrm.NavigationOptions = {
                     target: 2, // Modal dialog
-                    width: { value: 70, unit: "%" },
-                    height: { value: 70, unit: "%" },
+                    width: { value: 80, unit: "%" },
+                    height: { value: 80, unit: "%" },
                     position: 1 // Center
                 };
 
