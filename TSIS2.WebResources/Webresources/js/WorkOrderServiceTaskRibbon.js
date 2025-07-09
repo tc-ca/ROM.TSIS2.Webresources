@@ -898,8 +898,8 @@ function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
                 };
                 var navigationOptions = {
                     target: 2, // Modal dialog
-                    width: { value: 70, unit: "%" },
-                    height: { value: 70, unit: "%" },
+                    width: { value: 80, unit: "%" },
+                    height: { value: 80, unit: "%" },
                     position: 1 // Center
                 };
                 Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
