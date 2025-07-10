@@ -1,10 +1,10 @@
-declare namespace Form.ts_workorderservicetaskworkspace.Quick {
+declare namespace Form.ts_file.Quick {
   namespace Information {
     namespace Tabs {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
-      get(name: "ts_name"): Xrm.Attribute<string>;
+      get(name: "ts_file"): Xrm.Attribute<string>;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
@@ -12,7 +12,7 @@ declare namespace Form.ts_workorderservicetaskworkspace.Quick {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-      get(name: "ts_name"): Xrm.StringControl;
+      get(name: "ts_file"): Xrm.StringControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -27,10 +27,10 @@ declare namespace Form.ts_workorderservicetaskworkspace.Quick {
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
-    getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_file"): Xrm.Attribute<string>;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
-    getControl(controlName: "ts_name"): Xrm.StringControl;
+    getControl(controlName: "ts_file"): Xrm.StringControl;
     getControl(controlName: string): undefined;
   }
 }

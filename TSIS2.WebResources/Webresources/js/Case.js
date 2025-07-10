@@ -42,7 +42,7 @@ var ROM;
                 }
             }
             // Lock some fields if there are associated WOs
-            var fetchXML = "<fetch> <entity name=\"ts_case\" > <attribute name=\"incidentid\" /> <filter> <condition attribute=\"incidentid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\" /> </filter> <link-entity name=\"ts_workorder\" from=\"msdyn_servicerequest\" to=\"incidentid\" /> </entity> </fetch>";
+            var fetchXML = "<fetch> <entity name=\"ts_case\" > <attribute name=\"incidentid\" /> <filter> <condition attribute=\"incidentid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\" /> </filter> <link-entity name=\"ts_workorder\" from=\"msdyn_servicerequest\" to=\"incidentid\" /> </entity> </fetch>");
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {

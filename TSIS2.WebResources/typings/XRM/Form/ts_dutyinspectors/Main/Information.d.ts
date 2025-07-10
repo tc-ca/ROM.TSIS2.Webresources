@@ -1,22 +1,20 @@
-declare namespace Form.ts_workorderservicetaskworkspace.Main {
+declare namespace Form.ts_dutyinspectors.Main {
   namespace Information {
     namespace Tabs {
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+      get(name: "ts_inspector"): Xrm.LookupAttribute<"systemuser">;
       get(name: "ts_name"): Xrm.Attribute<string>;
-      get(name: "ts_workorderservicetask"): Xrm.LookupAttribute<"msdyn_workorderservicetask">;
-      get(name: "ts_workorderservicetaskstartdate"): Xrm.DateAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
       get(index: number): Xrm.Attribute<any>;
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+      get(name: "ts_inspector"): Xrm.LookupControl<"systemuser">;
       get(name: "ts_name"): Xrm.StringControl;
-      get(name: "ts_workorderservicetask"): Xrm.LookupControl<"msdyn_workorderservicetask">;
-      get(name: "ts_workorderservicetaskstartdate"): Xrm.DateControl;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -31,14 +29,12 @@ declare namespace Form.ts_workorderservicetaskworkspace.Main {
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
+    getAttribute(attributeName: "ts_inspector"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "ts_workorderservicetask"): Xrm.LookupAttribute<"msdyn_workorderservicetask">;
-    getAttribute(attributeName: "ts_workorderservicetaskstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
+    getControl(controlName: "ts_inspector"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "ts_name"): Xrm.StringControl;
-    getControl(controlName: "ts_workorderservicetask"): Xrm.LookupControl<"msdyn_workorderservicetask">;
-    getControl(controlName: "ts_workorderservicetaskstartdate"): Xrm.DateControl;
     getControl(controlName: string): undefined;
   }
 }

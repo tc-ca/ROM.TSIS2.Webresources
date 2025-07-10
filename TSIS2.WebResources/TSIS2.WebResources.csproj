@@ -410,6 +410,7 @@
     <TypeScriptCompile Include="src\ts\DutyInspectorSchedule.ts" />
     <TypeScriptCompile Include="src\ts\EntityRisk.ts" />
     <TypeScriptCompile Include="src\ts\EntityRiskFrequency.ts" />
+    <TypeScriptCompile Include="src\ts\File.ts" />
     <TypeScriptCompile Include="src\ts\Infraction.ts" />
     <TypeScriptCompile Include="src\ts\OperationActivityRiskScores.ts" />
     <TypeScriptCompile Include="src\ts\OperationType.ts" />

@@ -160,7 +160,7 @@ var ROM;
             var today = new Date();
             var yearsAgo = today.getFullYear() - 2;
             var yearsFromNow = today.getFullYear() + 5;
-            var fetchXml = "<fetch version=\"1.0\" mapping=\"logical\" distinct=\"true\" returntotalrecordcount=\"true\" page=\"1\" count=\"25\" no-lock=\"false\">\n                            <entity name=\"tc_tcfiscalyear\">\n                              <attribute name=\"tc_tcfiscalyearid\" />\n                              <attribute name=\"tc_name\" />\n                              <order attribute=\"tc_fiscalyearnum\" descending=\"false\" />\n                              <filter>\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"ge\" value=\"" + yearsAgo + "\" />\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"le\" value=\"" + yearsFromNow + "\" />\n                              </filter>\n                            </entity>\n                          </fetch>";
+            var fetchXml = "<fetch version=\"1.0\" mapping=\"logical\" distinct=\"true\" returntotalrecordcount=\"true\" page=\"1\" count=\"25\" no-lock=\"false\">\n                            <entity name=\"tc_tcfiscalyear\">\n                              <attribute name=\"tc_tcfiscalyearid\" />\n                              <attribute name=\"tc_name\" />\n                              <order attribute=\"tc_fiscalyearnum\" descending=\"false\" />\n                              <filter>\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"ge\" value=\"".concat(yearsAgo, "\" />\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"le\" value=\"").concat(yearsFromNow, "\" />\n                              </filter>\n                            </entity>\n                          </fetch>");
             var layoutXml = '<grid name="resultset" object="10010" jump="tc_name" select="1" icon="1" preview="1"><row name="result" id="tc_tcfiscalyearid"><cell name="tc_name" width="200" /></row></grid>';
             formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
@@ -228,7 +228,7 @@ var ROM;
                         return;
                     selectedTable = "msdyn_incidenttype";
                     // Fetch the selected activity type record
-                    fetchXml = "<fetch>\n                              <entity name=\"msdyn_incidenttype\">\n                                <attribute name=\"ovs_incidenttypenameenglish\" />\n                                <attribute name=\"ovs_incidenttypenamefrench\" />\n                                <filter>\n                                  <condition attribute=\"msdyn_incidenttypeid\" operator=\"eq\" value=\"" + activityType[0].id + "\" />\n                                </filter>\n                              </entity>\n                            </fetch>";
+                    fetchXml = "<fetch>\n                              <entity name=\"msdyn_incidenttype\">\n                                <attribute name=\"ovs_incidenttypenameenglish\" />\n                                <attribute name=\"ovs_incidenttypenamefrench\" />\n                                <filter>\n                                  <condition attribute=\"msdyn_incidenttypeid\" operator=\"eq\" value=\"".concat(activityType[0].id, "\" />\n                                </filter>\n                              </entity>\n                            </fetch>");
                     break;
                 case 741130001:
                     console.log("Operation selected");
@@ -239,7 +239,7 @@ var ROM;
                         return;
                     selectedTable = "ovs_operation";
                     // Fetch the selected operation record
-                    fetchXml = "<fetch>\n                              <entity name=\"ovs_operation\">\n                                <attribute name=\"ovs_name\" />\n                                <filter>\n                                  <condition attribute=\"ovs_operationid\" operator=\"eq\" value=\"" + operation[0].id + "\" />\n                                </filter>\n                              </entity>\n                            </fetch>";
+                    fetchXml = "<fetch>\n                              <entity name=\"ovs_operation\">\n                                <attribute name=\"ovs_name\" />\n                                <filter>\n                                  <condition attribute=\"ovs_operationid\" operator=\"eq\" value=\"".concat(operation[0].id, "\" />\n                                </filter>\n                              </entity>\n                            </fetch>");
                     break;
                 case 741130002:
                     console.log("Operation Type selected");
@@ -250,7 +250,7 @@ var ROM;
                         return;
                     selectedTable = "ovs_operationtype";
                     // Fetch the selected operationtype record
-                    fetchXml = "<fetch>\n                              <entity name=\"ovs_operationtype\">\n                                <attribute name=\"ovs_operationtypenameenglish\" />\n                                <attribute name=\"ovs_operationtypenamefrench\" />\n                                <filter>\n                                  <condition attribute=\"ovs_operationtypeid\" operator=\"eq\" value=\"" + operationType[0].id + "\" />\n                                </filter>\n                              </entity>\n                            </fetch>";
+                    fetchXml = "<fetch>\n                              <entity name=\"ovs_operationtype\">\n                                <attribute name=\"ovs_operationtypenameenglish\" />\n                                <attribute name=\"ovs_operationtypenamefrench\" />\n                                <filter>\n                                  <condition attribute=\"ovs_operationtypeid\" operator=\"eq\" value=\"".concat(operationType[0].id, "\" />\n                                </filter>\n                              </entity>\n                            </fetch>");
                     break;
                 case 741130003:
                     console.log("Program Area selected");
@@ -261,7 +261,7 @@ var ROM;
                         return;
                     selectedTable = "ts_programarea";
                     // Fetch the selected Program Area record
-                    fetchXml = "<fetch>\n                              <entity name=\"ts_programarea\">\n                                <attribute name=\"ts_programareaen\" />\n                                <attribute name=\"ts_programareafr\" />\n                                <filter>\n                                  <condition attribute=\"ts_programareaid\" operator=\"eq\" value=\"" + programArea[0].id + "\" />\n                                </filter>\n                              </entity>\n                            </fetch>";
+                    fetchXml = "<fetch>\n                              <entity name=\"ts_programarea\">\n                                <attribute name=\"ts_programareaen\" />\n                                <attribute name=\"ts_programareafr\" />\n                                <filter>\n                                  <condition attribute=\"ts_programareaid\" operator=\"eq\" value=\"".concat(programArea[0].id, "\" />\n                                </filter>\n                              </entity>\n                            </fetch>");
                     break;
                 case 741130004:
                     console.log("Site selected");
@@ -272,7 +272,7 @@ var ROM;
                         return;
                     selectedTable = "msdyn_functionallocation";
                     // Fetch the selected site record
-                    fetchXml = "<fetch>\n                              <entity name=\"msdyn_functionallocation\">\n                                <attribute name=\"msdyn_name\" />\n                                <filter>\n                                  <condition attribute=\"msdyn_functionallocationid\" operator=\"eq\" value=\"" + site[0].id + "\" />\n                                </filter>\n                              </entity>\n                            </fetch>";
+                    fetchXml = "<fetch>\n                              <entity name=\"msdyn_functionallocation\">\n                                <attribute name=\"msdyn_name\" />\n                                <filter>\n                                  <condition attribute=\"msdyn_functionallocationid\" operator=\"eq\" value=\"".concat(site[0].id, "\" />\n                                </filter>\n                              </entity>\n                            </fetch>");
                     break;
                 case 741130005:
                     console.log("Stakeholder selected");
@@ -283,7 +283,7 @@ var ROM;
                         return;
                     selectedTable = "account";
                     // Fetch the selected site record
-                    fetchXml = "<fetch>\n                              <entity name=\"account\">\n                                <attribute name=\"name\" />\n                                <filter>\n                                  <condition attribute=\"accountid\" operator=\"eq\" value=\"" + stakeholder[0].id + "\" />\n                                </filter>\n                              </entity>\n                            </fetch>";
+                    fetchXml = "<fetch>\n                              <entity name=\"account\">\n                                <attribute name=\"name\" />\n                                <filter>\n                                  <condition attribute=\"accountid\" operator=\"eq\" value=\"".concat(stakeholder[0].id, "\" />\n                                </filter>\n                              </entity>\n                            </fetch>");
                     break;
                 default:
                     console.log("Entity Name drop down selection - Unknown selection");
@@ -337,7 +337,7 @@ var ROM;
                     if (fiscalYear === null)
                         return;
                     // Get the Fiscal Year
-                    fetchXml = "<fetch>\n                              <entity name=\"tc_tcfiscalyear\">\n                                <attribute name=\"tc_fiscalyearlonglbl\" />\n                                <filter>\n                                  <condition attribute=\"tc_tcfiscalyearid\" operator=\"eq\" value=\"" + fiscalYear[0].id + "\" />\n                                </filter>\n                              </entity>\n                            </fetch>";
+                    fetchXml = "<fetch>\n                              <entity name=\"tc_tcfiscalyear\">\n                                <attribute name=\"tc_fiscalyearlonglbl\" />\n                                <filter>\n                                  <condition attribute=\"tc_tcfiscalyearid\" operator=\"eq\" value=\"".concat(fiscalYear[0].id, "\" />\n                                </filter>\n                              </entity>\n                            </fetch>");
                     encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
                     Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalyear", encodedFetchXml).then(function (result) {
                         if (result.entities.length > 0) {
@@ -427,7 +427,7 @@ var ROM;
             generatedUniqueKey = fiscalYearName + ":" + entityGuid;
             formContext.getAttribute("ts_generateduniquekey").setValue(generatedUniqueKey);
             // Fetch existing records to check for duplicates
-            var fetchXml = "\n        <fetch>\n          <entity name=\"ts_entityriskfrequency\">\n            <attribute name=\"ts_generateduniquekey\" />\n            <filter>\n              <condition attribute=\"ts_generateduniquekey\" operator=\"eq\" value=\"" + generatedUniqueKey + "\" />\n            </filter>\n          </entity>\n        </fetch>";
+            var fetchXml = "\n        <fetch>\n          <entity name=\"ts_entityriskfrequency\">\n            <attribute name=\"ts_generateduniquekey\" />\n            <filter>\n              <condition attribute=\"ts_generateduniquekey\" operator=\"eq\" value=\"".concat(generatedUniqueKey, "\" />\n            </filter>\n          </entity>\n        </fetch>");
             var encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
             // Get the user's language ID
             var userLanguageId = Xrm.Utility.getGlobalContext().userSettings.languageId;

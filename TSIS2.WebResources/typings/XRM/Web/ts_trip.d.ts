@@ -29,6 +29,7 @@ interface ts_trip_Base extends WebEntity {
 interface ts_trip_Relationships {
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
   ts_trip_msdyn_workorder_trip?: msdyn_workorder_Result[] | null;
+  ts_ts_file_ts_trip?: ts_File_Result[] | null;
   ts_ts_trip_ts_suggestedinspection_Trip?: ts_SuggestedInspection_Result[] | null;
 }
 interface ts_trip extends ts_trip_Base, ts_trip_Relationships {
@@ -132,6 +133,7 @@ interface ts_trip_Expand {
   ts_FiscalYear: WebExpand<ts_trip_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
   ts_plannedfiscalquarter: WebExpand<ts_trip_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ts_plannedfiscalquarter: tc_TCFiscalQuarter_Result }>;
   ts_trip_msdyn_workorder_trip: WebExpand<ts_trip_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_trip_msdyn_workorder_trip: msdyn_workorder_Result[] }>;
+  ts_ts_file_ts_trip: WebExpand<ts_trip_Expand, ts_File_Select, ts_File_Filter, { ts_ts_file_ts_trip: ts_File_Result[] }>;
   ts_ts_trip_ts_suggestedinspection_Trip: WebExpand<ts_trip_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_ts_trip_ts_suggestedinspection_Trip: ts_SuggestedInspection_Result[] }>;
 }
 interface ts_trip_FormattedResult {
@@ -188,6 +190,7 @@ interface ts_trip_RelatedOne {
 }
 interface ts_trip_RelatedMany {
   ts_trip_msdyn_workorder_trip: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_ts_file_ts_trip: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_ts_trip_ts_suggestedinspection_Trip: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

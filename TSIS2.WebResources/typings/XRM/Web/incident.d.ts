@@ -102,6 +102,8 @@ interface Incident_Relationships {
   ts_AdditionalInspectors1?: SystemUser_Result | null;
   ts_AdditionalInspectors2?: SystemUser_Result | null;
   ts_Contact_Incident_Incident?: Contact_Result[] | null;
+  ts_File_Incident_Incident?: ts_File_Result[] | null;
+  ts_Files_Incidents?: ts_File_Result[] | null;
   ts_Incident_Incident_ts_operationcontact?: ts_operationcontact_Result[] | null;
   ts_Incident_ts_operationcontact_ts_operation?: ts_operationcontact_Result[] | null;
   ts_InspectionType1?: msdyn_incidenttype_Result | null;
@@ -455,6 +457,8 @@ interface Incident_Expand {
   ts_AdditionalInspectors1: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { ts_AdditionalInspectors1: SystemUser_Result }>;
   ts_AdditionalInspectors2: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { ts_AdditionalInspectors2: SystemUser_Result }>;
   ts_Contact_Incident_Incident: WebExpand<Incident_Expand, Contact_Select, Contact_Filter, { ts_Contact_Incident_Incident: Contact_Result[] }>;
+  ts_File_Incident_Incident: WebExpand<Incident_Expand, ts_File_Select, ts_File_Filter, { ts_File_Incident_Incident: ts_File_Result[] }>;
+  ts_Files_Incidents: WebExpand<Incident_Expand, ts_File_Select, ts_File_Filter, { ts_Files_Incidents: ts_File_Result[] }>;
   ts_Incident_Incident_ts_operationcontact: WebExpand<Incident_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_Incident_Incident_ts_operationcontact: ts_operationcontact_Result[] }>;
   ts_Incident_ts_operationcontact_ts_operation: WebExpand<Incident_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_Incident_ts_operationcontact_ts_operation: ts_operationcontact_Result[] }>;
   ts_InspectionType1: WebExpand<Incident_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_InspectionType1: msdyn_incidenttype_Result }>;
@@ -646,6 +650,8 @@ interface Incident_RelatedMany {
   ovs_incident_msdyn_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ovs_incident_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_Contact_Incident_Incident: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  ts_File_Incident_Incident: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
+  ts_Files_Incidents: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_Incident_Incident_ts_operationcontact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_Incident_ts_operationcontact_ts_operation: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_enforcementaction_Incident_Incident: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;

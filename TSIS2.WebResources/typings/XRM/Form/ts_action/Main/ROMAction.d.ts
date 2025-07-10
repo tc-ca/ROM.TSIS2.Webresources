@@ -22,6 +22,13 @@ declare namespace Form.ts_action.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_4 extends Xrm.SectionCollectionBase {
+        get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
@@ -44,6 +51,7 @@ declare namespace Form.ts_action.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "Subgrid_new_1"): Xrm.SubGridControl<"ts_file">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_ts_case"): Xrm.LookupControl<"incident">;
       get(name: "notescontrol"): Xrm.BaseControl;
@@ -69,6 +77,7 @@ declare namespace Form.ts_action.Main {
       get(name: "{bfc78551-5c7f-414d-a2bf-259d45828fc9}"): Xrm.PageTab<Tabs.bfc785515c7f414da2bf259d45828fc9>;
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
+      get(name: "tab_4"): Xrm.PageTab<Tabs.tab_4>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -91,6 +100,7 @@ declare namespace Form.ts_action.Main {
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_timedate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_ts_case"): Xrm.LookupControl<"incident">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;

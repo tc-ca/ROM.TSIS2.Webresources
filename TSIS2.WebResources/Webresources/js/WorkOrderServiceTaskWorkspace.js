@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -120,7 +120,7 @@ var ROM;
                                 return [2 /*return*/];
                             }
                             dateString = serviceTaskStartDate.toISOString().slice(0, 10);
-                            fetchXml = "\n                <fetch top='1'>\n                  <entity name='ts_questionnaireversion'>\n                    <attribute name='ts_questionnairedefinition' />\n                    <attribute name='ts_name' />\n                    <attribute name='ts_effectivestartdate' />\n                    <attribute name='ts_effectiveenddate' />\n                    <filter type='and'>\n                      <condition attribute='ts_effectivestartdate' operator='on-or-before' value='" + dateString + "' />\n                      <filter type='or'>\n                        <condition attribute='ts_effectiveenddate' operator='on-or-after' value='" + dateString + "' />\n                        <condition attribute='ts_effectiveenddate' operator='null' />\n                      </filter>\n                      <condition attribute='ts_ovs_questionnaire' operator='eq' value='" + questionnaireId + "' />\n                    </filter>\n                  </entity>\n                </fetch>";
+                            fetchXml = "\n                <fetch top='1'>\n                  <entity name='ts_questionnaireversion'>\n                    <attribute name='ts_questionnairedefinition' />\n                    <attribute name='ts_name' />\n                    <attribute name='ts_effectivestartdate' />\n                    <attribute name='ts_effectiveenddate' />\n                    <filter type='and'>\n                      <condition attribute='ts_effectivestartdate' operator='on-or-before' value='".concat(dateString, "' />\n                      <filter type='or'>\n                        <condition attribute='ts_effectiveenddate' operator='on-or-after' value='").concat(dateString, "' />\n                        <condition attribute='ts_effectiveenddate' operator='null' />\n                      </filter>\n                      <condition attribute='ts_ovs_questionnaire' operator='eq' value='").concat(questionnaireId, "' />\n                    </filter>\n                  </entity>\n                </fetch>");
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("ts_questionnaireversion", "?fetchXml=" + encodeURIComponent(fetchXml))];
                         case 4:
                             result = _e.sent();
@@ -134,7 +134,7 @@ var ROM;
                         case 5:
                             error_1 = _e.sent();
                             console.error(error_1);
-                            Xrm.Navigation.openAlertDialog({ text: "Error: " + error_1.message });
+                            Xrm.Navigation.openAlertDialog({ text: "Error: ".concat(error_1.message) });
                             return [3 /*break*/, 6];
                         case 6: return [2 /*return*/];
                     }
