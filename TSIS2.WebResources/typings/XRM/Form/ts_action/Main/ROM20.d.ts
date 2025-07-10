@@ -63,6 +63,7 @@ declare namespace Form.ts_action.Main {
       get(name: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
       get(name: "Subgrid_new_2"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "Subgrid_new_3"): Xrm.SubGridControl<"incident">;
+      get(name: "Subgrid_new_4"): Xrm.SubGridControl<"ts_file">;
       get(name: "header_createdon"): Xrm.DateControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_statecode"): Xrm.OptionSetControl<ts_action_statecode>;
@@ -122,6 +123,7 @@ declare namespace Form.ts_action.Main {
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "Subgrid_new_2"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "Subgrid_new_3"): Xrm.SubGridControl<"incident">;
+    getControl(controlName: "Subgrid_new_4"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "header_createdon"): Xrm.DateControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_statecode"): Xrm.OptionSetControl<ts_action_statecode>;

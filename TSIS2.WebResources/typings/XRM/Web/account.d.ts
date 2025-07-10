@@ -197,6 +197,8 @@ interface Account_Relationships {
   msdyn_billingaccount_account?: Account_Result | null;
   msdyn_msdyn_functionallocation_account?: msdyn_FunctionalLocation_Result[] | null;
   ts_EntityRisk_Account_Account?: ts_EntityRisk_Result[] | null;
+  ts_File_Stakeholder_Account?: ts_File_Result[] | null;
+  ts_Files_Accounts?: ts_File_Result[] | null;
   ts_PrincipalOperationType?: ovs_operationtype_Result | null;
   ts_account_msdyn_workorderservicetask_AOCStakeholder?: msdyn_workorderservicetask_Result[] | null;
   ts_account_msdyn_workorderservicetask_AccessControlSecurityServices?: msdyn_workorderservicetask_Result[] | null;
@@ -710,6 +712,8 @@ interface Account_Expand {
   preferredsystemuserid: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { preferredsystemuserid: SystemUser_Result }>;
   primarycontactid: WebExpand<Account_Expand, Contact_Select, Contact_Filter, { primarycontactid: Contact_Result }>;
   ts_EntityRisk_Account_Account: WebExpand<Account_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_EntityRisk_Account_Account: ts_EntityRisk_Result[] }>;
+  ts_File_Stakeholder_Account: WebExpand<Account_Expand, ts_File_Select, ts_File_Filter, { ts_File_Stakeholder_Account: ts_File_Result[] }>;
+  ts_Files_Accounts: WebExpand<Account_Expand, ts_File_Select, ts_File_Filter, { ts_Files_Accounts: ts_File_Result[] }>;
   ts_PrincipalOperationType: WebExpand<Account_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_PrincipalOperationType: ovs_operationtype_Result }>;
   ts_account_msdyn_workorderservicetask_AOCStakeholder: WebExpand<Account_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_account_msdyn_workorderservicetask_AOCStakeholder: msdyn_workorderservicetask_Result[] }>;
   ts_account_msdyn_workorderservicetask_AccessControlSecurityServices: WebExpand<Account_Expand, msdyn_workorderservicetask_Select, msdyn_workorderservicetask_Filter, { ts_account_msdyn_workorderservicetask_AccessControlSecurityServices: msdyn_workorderservicetask_Result[] }>;
@@ -917,6 +921,8 @@ interface Account_RelatedMany {
   msdyn_account_msdyn_workorder_ServiceAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_msdyn_functionallocation_account: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_EntityRisk_Account_Account: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  ts_File_Stakeholder_Account: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
+  ts_Files_Accounts: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_account_msdyn_workorderservicetask_AOCStakeholder: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ts_account_msdyn_workorderservicetask_AccessControlSecurityServices: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
   ts_account_msdyn_workorderservicetask_CargoServices: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
