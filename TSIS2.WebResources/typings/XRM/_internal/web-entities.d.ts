@@ -584,29 +584,6 @@ interface ts_causefinding_Create extends ts_causefinding {
 }
 interface ts_causefinding_Update extends ts_causefinding {
 }
-interface ts_dutyinspectors_Base extends WebEntity {
-}
-interface ts_dutyinspectors_Fixed extends WebEntity_Fixed {
-  ts_dutyinspectorsid: string;
-}
-interface ts_dutyinspectors extends ts_dutyinspectors_Base, ts_dutyinspectors_Relationships {
-}
-interface ts_dutyinspectors_Relationships {
-}
-interface ts_dutyinspectors_Result extends ts_dutyinspectors_Base, ts_dutyinspectors_Relationships {
-}
-interface ts_dutyinspectors_FormattedResult {
-}
-interface ts_dutyinspectors_Select {
-}
-interface ts_dutyinspectors_Expand {
-}
-interface ts_dutyinspectors_Filter {
-}
-interface ts_dutyinspectors_Create extends ts_dutyinspectors {
-}
-interface ts_dutyinspectors_Update extends ts_dutyinspectors {
-}
 interface ts_DutyInspectorSchedule_Base extends WebEntity {
 }
 interface ts_DutyInspectorSchedule_Fixed extends WebEntity_Fixed {
@@ -1435,6 +1412,29 @@ interface ts_planningsettings_Create extends ts_planningsettings {
 }
 interface ts_planningsettings_Update extends ts_planningsettings {
 }
+interface ts_PrescribedFrequencyOverride_Base extends WebEntity {
+}
+interface ts_PrescribedFrequencyOverride_Fixed extends WebEntity_Fixed {
+  ts_prescribedfrequencyoverrideid: string;
+}
+interface ts_PrescribedFrequencyOverride extends ts_PrescribedFrequencyOverride_Base, ts_PrescribedFrequencyOverride_Relationships {
+}
+interface ts_PrescribedFrequencyOverride_Relationships {
+}
+interface ts_PrescribedFrequencyOverride_Result extends ts_PrescribedFrequencyOverride_Base, ts_PrescribedFrequencyOverride_Relationships {
+}
+interface ts_PrescribedFrequencyOverride_FormattedResult {
+}
+interface ts_PrescribedFrequencyOverride_Select {
+}
+interface ts_PrescribedFrequencyOverride_Expand {
+}
+interface ts_PrescribedFrequencyOverride_Filter {
+}
+interface ts_PrescribedFrequencyOverride_Create extends ts_PrescribedFrequencyOverride {
+}
+interface ts_PrescribedFrequencyOverride_Update extends ts_PrescribedFrequencyOverride {
+}
 interface ts_questionnaireresponse_Base extends WebEntity {
 }
 interface ts_questionnaireresponse_Fixed extends WebEntity_Fixed {
@@ -1756,6 +1756,29 @@ interface ts_workordercreationwizard_Filter {
 interface ts_workordercreationwizard_Create extends ts_workordercreationwizard {
 }
 interface ts_workordercreationwizard_Update extends ts_workordercreationwizard {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Base extends WebEntity {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Fixed extends WebEntity_Fixed {
+  ts_workorderservicetaskworkspaceid: string;
+}
+interface ts_WorkOrderServiceTaskWorkspace extends ts_WorkOrderServiceTaskWorkspace_Base, ts_WorkOrderServiceTaskWorkspace_Relationships {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Relationships {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Result extends ts_WorkOrderServiceTaskWorkspace_Base, ts_WorkOrderServiceTaskWorkspace_Relationships {
+}
+interface ts_WorkOrderServiceTaskWorkspace_FormattedResult {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Select {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Expand {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Filter {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Create extends ts_WorkOrderServiceTaskWorkspace {
+}
+interface ts_WorkOrderServiceTaskWorkspace_Update extends ts_WorkOrderServiceTaskWorkspace {
 }
 interface tc_TCFiscalQuarter_Base extends WebEntity {
 }
