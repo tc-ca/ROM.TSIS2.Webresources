@@ -301,7 +301,20 @@ function getFetchXmlForRecordOwner(tableName, recordTagId) {
                   </entity>
                 </fetch>
             `;
-
+        case "ts_trip":
+            return `
+              <fetch xmlns:generator='MarkMpn.SQL4CDS'>
+                <entity name='ts_trip'>
+                    <attribute name='ts_name' alias='recordName' />
+                    <filter>
+                        <condition attribute='ts_tripid' operator='eq' value='${recordTagId}' />
+                    </filter>
+                    <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit' link-type='inner' alias='bu'>
+                        <attribute name='name' alias='recordOwner' />
+                    </link-entity>
+                </entity>
+              </fetch>
+            `;
         // Add more cases for other entity types as needed
     }
 }
@@ -372,6 +385,13 @@ function setEntitySpecificValues(entityName, fileUploadData) {
             fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents d'action";
             fileUploadData.usesGroupFiles = false;
             break;
+        case "ts_trip":
+            fileUploadData.recordTableNameEnglish = "Trip";
+            fileUploadData.recordTableNameFrench = "Voyage";
+            fileUploadData.mainHeadingEnglish = "Add File(s) to Trip Documents";
+            fileUploadData.mainHeadingFrench = "Ajouter un/des fichier(s) aux documents du voyage";
+            fileUploadData.usesGroupFiles = false;
+            break;
     }
 }
 
@@ -440,6 +460,14 @@ function modifyRecordOwner(entityName, myRecordOwner, myRecordName, mySiteNameEn
             }
             else {
                 fileUploadData.recordOwner = "";
+            }
+            break;
+
+        case "ts_trip":
+            if (myRecordOwner.includes(avsecOwner)) {
+                fileUploadData.recordOwner = avsecOwner;
+            } else if (myRecordOwner.includes(issoOwner)) {
+                fileUploadData.recordOwner = issoOwner;
             }
             break;
     }
