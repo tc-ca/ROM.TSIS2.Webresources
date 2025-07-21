@@ -274,17 +274,17 @@
             let variableValue = "";
 
             const fetchXML = `
-                                                                                <fetch>
-                                                                                    <entity name="environmentvariablevalue">
-                                                                                        <attribute name="value" />
-                                                                                        <link-entity name="environmentvariabledefinition" to="environmentvariabledefinitionid" from="environmentvariabledefinitionid" alias="environmentvariabledefinition" link-type="inner">
-                                                                                            <filter>
-                                                                                                <condition attribute="schemaname" operator="eq" value="${variableName}" />
-                                                                                            </filter>
-                                                                                        </link-entity>
-                                                                                    </entity>
-                                                                                </fetch>
-                                                                            `;
+                                                                                    <fetch>
+                                                                                        <entity name="environmentvariablevalue">
+                                                                                            <attribute name="value" />
+                                                                                            <link-entity name="environmentvariabledefinition" to="environmentvariabledefinitionid" from="environmentvariabledefinitionid" alias="environmentvariabledefinition" link-type="inner">
+                                                                                                <filter>
+                                                                                                    <condition attribute="schemaname" operator="eq" value="${variableName}" />
+                                                                                                </filter>
+                                                                                            </link-entity>
+                                                                                        </entity>
+                                                                                    </fetch>
+                                                                                `;
 
             const encodedFetchXml = encodeURIComponent(fetchXML);
 
@@ -490,7 +490,7 @@
                 switch (tableSchemaName) {
                     case "msdyn_workorder":
                         fileData = {
-                            "ts_msdyn_workorder@odata.bind": `/msdyn_workorders(${recordId})`
+                            "ts_formintegrationid": "WO " + tableRecordName
                         };
                         var fetchXmlWOST = '<fetch> <entity name="msdyn_workorderservicetask"><attribute name="msdyn_name" /><filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + recordId + '" /> </filter> </entity> </fetch>';
                         fetchXML = "?fetchXml=" + encodeURIComponent(fetchXmlWOST);
@@ -524,11 +524,11 @@
                                 associateRelatedRecords("ts_Files_Incidents", relatedCases, fileId);
                             }
                         });
-
+                        associateManyToManyRecord("ts_Files_msdyn_workorders", "ts_files", fileId, "msdyn_workorders", recordId);
                         break;
                     case "msdyn_workorderservicetask":
                         fileData = {
-                            "ts_workorderservicetask@odata.bind": `/msdyn_workorderservicetasks(${recordId})`
+                            "ts_formintegrationid": "WOST " + tableRecordName
                         };
                         var fetchWO = '<fetch><entity name="msdyn_workorder"><link-entity name="msdyn_workorderservicetask" from="msdyn_workorder" to="msdyn_workorderid" link-type="inner"><filter type="and"><condition attribute="msdyn_workorderservicetaskid" operator="eq" value="' + recordId + '"/></filter></link-entity></entity></fetch >';
                         fetchXML = "?fetchXml=" + encodeURIComponent(fetchWO);
@@ -561,10 +561,11 @@
                                 associateRelatedRecords("ts_Files_Incidents", relatedCases, fileId);
                             }
                         });
+                        associateManyToManyRecord("ts_Files_msdyn_workorderservicetasks", "ts_files", fileId, "msdyn_workorderservicetasks", recordId);
                         break;
                     case "incident":
                         fileData = {
-                            "ts_Incident@odata.bind": `/incidents(${recordId})`
+                            "ts_formintegrationid": "CASE " + tableRecordName
                         };
                         var fetchWO = '<fetch><entity name="msdyn_workorder"><filter type="and"><condition attribute = "msdyn_servicerequest" operator = "eq" value = "' + recordId + '" /></filter></entity></fetch >';
                         fetchXML = "?fetchXml=" + encodeURIComponent(fetchWO);
@@ -581,22 +582,16 @@
                                 associateRelatedRecords("ts_Files_msdyn_workorders", relatedWOs, fileId);
                             }
                         });
-
+                        associateManyToManyRecord("ts_Files_Incidents", "ts_files", fileId, "incidents", recordId);
                         break;
                     case "account":
-                        fileData = {
-                            "ts_Stakeholder@odata.bind": `/accounts(${recordId})`
-                        };
+                        associateManyToManyRecord("ts_Files_Accounts", "ts_files", fileId, "accounts", recordId);
                         break;
                     case "ovs_operation":
-                        fileData = {
-                            "ts_ovs_operation@odata.bind": `/ovs_operations(${recordId})`
-                        };
+                        associateManyToManyRecord("ts_Files_ovs_operations", "ts_files", fileId, "ovs_operations", recordId);
                         break;
                     case "msdyn_functionallocation":
-                        fileData = {
-                            "ts_Site@odata.bind": `/msdyn_functionallocations(${recordId})`
-                        };
+                        associateManyToManyRecord("ts_Files_msdyn_FunctionalLocations", "ts_files", fileId, "msdyn_functionallocations", recordId);
                         break;
                     case "ts_securityincident":
                         fileData = {
@@ -613,12 +608,44 @@
                             "ts_Action@odata.bind": `/ts_actions(${recordId})`
                         };
                         break;
+                    case "ts_trip":
+                        associateManyToManyRecord("ts_ts_file_ts_trip", "ts_files", fileId, "ts_trips", recordId);
                 }
                 console.log(fileData);
                 await parent.Xrm.WebApi.updateRecord("ts_file", fileId, fileData);
 
             }
         }
+
+        function associateManyToManyRecord(relationshipName, sourceEntityName, sourceId, targetEntityName, targetId) {
+            const url = `/api/data/v9.2/${sourceEntityName}(${sourceId})/${relationshipName}/$ref`;
+
+            const body = {
+                "@odata.id": parent.Xrm.Utility.getGlobalContext().getClientUrl() + `/api/data/v9.2/${targetEntityName}(${targetId})`
+            };
+
+            const req = new XMLHttpRequest();
+            req.open("POST", url, true);
+            req.setRequestHeader("OData-MaxVersion", "4.0");
+            req.setRequestHeader("OData-Version", "4.0");
+            req.setRequestHeader("Accept", "application/json");
+            req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            req.setRequestHeader("Prefer", "return=representation");
+
+            req.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    req.onreadystatechange = null;
+                    if (this.status === 204) {
+                        console.log("Successfully associated records.");
+                    } else {
+                        console.error("Error associating records: ", this.statusText, this.responseText);
+                    }
+                }
+            };
+
+            req.send(JSON.stringify(body));
+        }
+
         function associateRelatedRecords(relationshipName, relatedEntities, fileId) {
             const manyToManyAssociateRequest = {
                 getMetadata: () => ({
@@ -669,14 +696,14 @@
             const fetchXml = "?fetchXml=" + encodeURIComponent(fetchXmlTeams);
             let folderOptions = [];
             const result = await parent.Xrm.WebApi.retrieveMultipleRecords("team", fetchXml);
-                if (result.entities.length > 0) {
-                    folderOptions = result.entities.map(item => ({
-                        ID: item.ts_sharepointfolderid,
-                        Title: item.ts_sharepointfoldername
-                    }));
-                    
-                }              
-            
+            if (result.entities.length > 0) {
+                folderOptions = result.entities.map(item => ({
+                    ID: item.ts_sharepointfolderid,
+                    Title: item.ts_sharepointfoldername
+                }));
+
+            }
+
             const dropdown = document.getElementById('sharePointFolders');
 
             // Clear existing options
