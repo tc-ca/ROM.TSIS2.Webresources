@@ -872,7 +872,7 @@ async function createQualityControlServiceTask(primaryControl) {
   });
 }
 function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
-
+    
     // Get guid of current work order service task
     var workOrderServiceTaskId = primaryControl.data.entity.getId().replace("{", "").replace("}", "");
     const fetchXml = `
@@ -905,6 +905,8 @@ function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
                 Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
                     function success() {
                         // Optionally handle after close
+                        console.log("Modal window closed successfully.");
+                        primaryControl.data.refresh();
                     },
                     function error(error) {
                         console.error("Error opening modal window: ", error.message);

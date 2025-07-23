@@ -583,7 +583,7 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
             responseAttributeLogicalName = "ts_questionnaireanswers";
         }
     }
-    //If we're on the questionnaireresponse table, the field to save the value in is different from the WOST form
+    //If we're on the work order service task workspace table, the field to save the value in is different from the WOST form
     if (window.parentFormContext != null) {
         if (window.parentFormContext._entityName == "ts_workorderservicetaskworkspace") {
             responseAttributeLogicalName = "ts_questionnaireresponse";
