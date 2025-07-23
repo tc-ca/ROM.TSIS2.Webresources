@@ -95,7 +95,9 @@ interface SystemUser_Base extends WebEntity {
   msdyn_capacity?: number | null;
   msdyn_gdproptout?: boolean | null;
   msdyn_gridwrappercontrolfield?: string | null;
+  msdyn_ischatintentenabled?: boolean | null;
   msdyn_isexpertenabledforswarm?: boolean | null;
+  msdyn_isvoiceintentenabled?: boolean | null;
   msdyn_owningenvironmentid?: string | null;
   msdyn_usertype?: msdyn_systemuser_msdyn_usertype | null;
   nickname?: string | null;
@@ -416,6 +418,7 @@ interface SystemUser_Relationships {
   systemuser_connections2?: Connection_Result[] | null;
   teammembership_association?: Team_Result[] | null;
   ts_InspectionHours?: ts_InspectionHours_Result | null;
+  ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
   ts_enforcementaction_systemuser_createdby?: ts_enforcementaction_Result[] | null;
   ts_enforcementaction_systemuser_createdonbehalfby?: ts_enforcementaction_Result[] | null;
   ts_enforcementaction_systemuser_modifiedby?: ts_enforcementaction_Result[] | null;
@@ -623,7 +626,9 @@ interface SystemUser_Select {
   msdyn_defaultpresenceiduser_guid: WebAttribute<SystemUser_Select, { msdyn_defaultpresenceiduser_guid: string | null }, { msdyn_defaultpresenceiduser_formatted?: string }>;
   msdyn_gdproptout: WebAttribute<SystemUser_Select, { msdyn_gdproptout: boolean | null }, {  }>;
   msdyn_gridwrappercontrolfield: WebAttribute<SystemUser_Select, { msdyn_gridwrappercontrolfield: string | null }, {  }>;
+  msdyn_ischatintentenabled: WebAttribute<SystemUser_Select, { msdyn_ischatintentenabled: boolean | null }, {  }>;
   msdyn_isexpertenabledforswarm: WebAttribute<SystemUser_Select, { msdyn_isexpertenabledforswarm: boolean | null }, {  }>;
+  msdyn_isvoiceintentenabled: WebAttribute<SystemUser_Select, { msdyn_isvoiceintentenabled: boolean | null }, {  }>;
   msdyn_owningenvironmentid: WebAttribute<SystemUser_Select, { msdyn_owningenvironmentid: string | null }, {  }>;
   msdyn_usertype: WebAttribute<SystemUser_Select, { msdyn_usertype: msdyn_systemuser_msdyn_usertype | null }, { msdyn_usertype_formatted?: string }>;
   nickname: WebAttribute<SystemUser_Select, { nickname: string | null }, {  }>;
@@ -772,7 +777,9 @@ interface SystemUser_Filter {
   msdyn_defaultpresenceiduser_guid: XQW.Guid;
   msdyn_gdproptout: boolean;
   msdyn_gridwrappercontrolfield: string;
+  msdyn_ischatintentenabled: boolean;
   msdyn_isexpertenabledforswarm: boolean;
+  msdyn_isvoiceintentenabled: boolean;
   msdyn_owningenvironmentid: string;
   msdyn_usertype: msdyn_systemuser_msdyn_usertype;
   nickname: string;
@@ -1107,6 +1114,7 @@ interface SystemUser_Expand {
   systemuser_connections2: WebExpand<SystemUser_Expand, Connection_Select, Connection_Filter, { systemuser_connections2: Connection_Result[] }>;
   teammembership_association: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { teammembership_association: Team_Result[] }>;
   ts_InspectionHours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { ts_InspectionHours: ts_InspectionHours_Result }>;
+  ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser: WebExpand<SystemUser_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
   ts_enforcementaction_systemuser_createdby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdby: ts_enforcementaction_Result[] }>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdonbehalfby: ts_enforcementaction_Result[] }>;
   ts_enforcementaction_systemuser_modifiedby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_modifiedby: ts_enforcementaction_Result[] }>;
@@ -1547,6 +1555,7 @@ interface SystemUser_RelatedMany {
   systemuser_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   systemuser_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   teammembership_association: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
   ts_enforcementaction_systemuser_createdby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_modifiedby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;

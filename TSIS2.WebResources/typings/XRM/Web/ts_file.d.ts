@@ -38,6 +38,7 @@ interface ts_File_Relationships {
   ts_Site?: msdyn_FunctionalLocation_Result | null;
   ts_Site_Site?: ts_site_Result | null;
   ts_Stakeholder?: Account_Result | null;
+  ts_Trip?: ts_trip_Result | null;
   ts_file_connections1?: Connection_Result[] | null;
   ts_file_connections2?: Connection_Result[] | null;
   ts_ovs_Finding_File_ts_File?: ovs_Finding_Result[] | null;
@@ -56,6 +57,7 @@ interface ts_File extends ts_File_Base, ts_File_Relationships {
   ts_Site_Site_bind$ts_sites?: string | null;
   ts_Site_bind$msdyn_functionallocations?: string | null;
   ts_Stakeholder_bind$accounts?: string | null;
+  ts_Trip_bind$ts_trips?: string | null;
   ts_filecategory_bind$ts_filecategories?: string | null;
   ts_filesubcategory_bind$ts_filesubcategories?: string | null;
   ts_msdyn_workorder_bind$msdyn_workorders?: string | null;
@@ -106,6 +108,7 @@ interface ts_File_Select {
   ts_site_guid: WebAttribute<ts_File_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_site_site_guid: WebAttribute<ts_File_Select, { ts_site_site_guid: string | null }, { ts_site_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_File_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
+  ts_trip_guid: WebAttribute<ts_File_Select, { ts_trip_guid: string | null }, { ts_trip_formatted?: string }>;
   ts_uploadedtosharepoint: WebAttribute<ts_File_Select, { ts_uploadedtosharepoint: boolean | null }, {  }>;
   ts_visibletootherprograms: WebAttribute<ts_File_Select, { ts_visibletootherprograms: boolean | null }, {  }>;
   ts_workorderservicetask_guid: WebAttribute<ts_File_Select, { ts_workorderservicetask_guid: string | null }, { ts_workorderservicetask_formatted?: string }>;
@@ -152,6 +155,7 @@ interface ts_File_Filter {
   ts_site_guid: XQW.Guid;
   ts_site_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;
+  ts_trip_guid: XQW.Guid;
   ts_uploadedtosharepoint: boolean;
   ts_visibletootherprograms: boolean;
   ts_workorderservicetask_guid: XQW.Guid;
@@ -180,6 +184,7 @@ interface ts_File_Expand {
   ts_Site: WebExpand<ts_File_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Site: msdyn_FunctionalLocation_Result }>;
   ts_Site_Site: WebExpand<ts_File_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
   ts_Stakeholder: WebExpand<ts_File_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
+  ts_Trip: WebExpand<ts_File_Expand, ts_trip_Select, ts_trip_Filter, { ts_Trip: ts_trip_Result }>;
   ts_file_connections1: WebExpand<ts_File_Expand, Connection_Select, Connection_Filter, { ts_file_connections1: Connection_Result[] }>;
   ts_file_connections2: WebExpand<ts_File_Expand, Connection_Select, Connection_Filter, { ts_file_connections2: Connection_Result[] }>;
   ts_msdyn_workorder: WebExpand<ts_File_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder: msdyn_workorder_Result }>;
@@ -220,6 +225,7 @@ interface ts_File_FormattedResult {
   ts_site_formatted?: string;
   ts_site_site_formatted?: string;
   ts_stakeholder_formatted?: string;
+  ts_trip_formatted?: string;
   ts_workorderservicetask_formatted?: string;
 }
 interface ts_File_Result extends ts_File_Base, ts_File_Relationships {
@@ -244,6 +250,7 @@ interface ts_File_Result extends ts_File_Base, ts_File_Relationships {
   ts_site_guid: string | null;
   ts_site_site_guid: string | null;
   ts_stakeholder_guid: string | null;
+  ts_trip_guid: string | null;
   ts_workorderservicetask_guid: string | null;
 }
 interface ts_File_RelatedOne {
@@ -261,6 +268,7 @@ interface ts_File_RelatedOne {
   ts_Site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_Site_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_Trip: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   ts_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_workorderservicetask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
