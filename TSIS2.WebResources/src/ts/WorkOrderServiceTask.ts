@@ -137,7 +137,14 @@ namespace ROM.WorkOrderServiceTask {
                 const entityId = formContext.data.entity.getId();
                 const entityIdClean = entityId.replace(/{|}/g, ""); // Remove curly braces
                 const entityName = formContext.getAttribute("msdyn_name")?.getValue();
-
+                const workOrderLookup = formContext.getAttribute("msdyn_workorder")?.getValue();
+                const workOrderId = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].id.replace(/{|}/g, "") : null;
+                const workOrderName = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].name : null;
+                const taskTypeLookup = formContext.getAttribute("msdyn_tasktype")?.getValue();
+                const taskTypeId = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].id.replace(/{|}/g, "") : null;
+                const taskTypeName = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].name : null;
+                console.log("taskTypeId: ", taskTypeId);
+                console.log("workOrderId: ", workOrderId);
                 const pageInput: any = {
                     pageType: "entityrecord",
                     entityName: "ts_workorderservicetaskworkspace",
@@ -145,7 +152,17 @@ namespace ROM.WorkOrderServiceTask {
                     useQuickCreateForm: true,
                     data: {
                         ts_name: entityName,
-                        "ts_workorderservicetask@odata.bind": `/msdyn_workorderservicetasks(${entityIdClean})`
+                        "ts_workorderservicetask@odata.bind": `/msdyn_workorderservicetasks(${entityIdClean})`,
+                        ts_workorder: {
+                            id: workOrderId,
+                            name: workOrderName,
+                            entityType: "msdyn_workorder"
+                        },
+                        ts_tasktype: {
+                            id: taskTypeId,
+                            name: taskTypeName,
+                            entityType: "msdyn_servicetasktype"
+                        }
                     },
                     createFromEntity: {
                         entityType: "msdyn_workorderservicetask",
