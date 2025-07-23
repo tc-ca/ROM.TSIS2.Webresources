@@ -132,6 +132,7 @@ interface Incident extends Incident_Base, Incident_Relationships {
   masterid_bind$incidents?: string | null;
   msdyn_FunctionalLocation_bind$msdyn_functionallocations?: string | null;
   msdyn_IoTAlert_bind$msdyn_iotalerts?: string | null;
+  msdyn_aiagentstatus_bind$msdyn_aiagentstatuses?: string | null;
   msdyn_incidenttype_bind$msdyn_incidenttypes?: string | null;
   ovs_Region_bind$territories?: string | null;
   ownerid_bind$systemusers?: string | null;
@@ -216,6 +217,7 @@ interface Incident_Select {
   modifiedbyexternalparty_guid: WebAttribute<Incident_Select, { modifiedbyexternalparty_guid: string | null }, { modifiedbyexternalparty_formatted?: string }>;
   modifiedon: WebAttribute<Incident_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Incident_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msdyn_aiagentstatus_guid: WebAttribute<Incident_Select, { msdyn_aiagentstatus_guid: string | null }, { msdyn_aiagentstatus_formatted?: string }>;
   msdyn_casesentiment: WebAttribute<Incident_Select, { msdyn_casesentiment: msdyn_case_msdyn_casesentiment | null }, { msdyn_casesentiment_formatted?: string }>;
   msdyn_casesurveyinviteurl: WebAttribute<Incident_Select, { msdyn_casesurveyinviteurl: string | null }, {  }>;
   msdyn_copilotengaged: WebAttribute<Incident_Select, { msdyn_copilotengaged: boolean | null }, {  }>;
@@ -344,6 +346,7 @@ interface Incident_Filter {
   modifiedbyexternalparty_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msdyn_aiagentstatus_guid: XQW.Guid;
   msdyn_casesentiment: msdyn_case_msdyn_casesentiment;
   msdyn_casesurveyinviteurl: string;
   msdyn_copilotengaged: boolean;
@@ -505,6 +508,7 @@ interface Incident_FormattedResult {
   modifiedbyexternalparty_formatted?: string;
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
+  msdyn_aiagentstatus_formatted?: string;
   msdyn_casesentiment_formatted?: string;
   msdyn_functionallocation_formatted?: string;
   msdyn_incidenttype_formatted?: string;
@@ -572,6 +576,7 @@ interface Incident_Result extends Incident_Base, Incident_Relationships {
   modifiedby_guid: string | null;
   modifiedbyexternalparty_guid: string | null;
   modifiedonbehalfby_guid: string | null;
+  msdyn_aiagentstatus_guid: string | null;
   msdyn_functionallocation_guid: string | null;
   msdyn_incidenttype_guid: string | null;
   msdyn_iotalert_guid: string | null;

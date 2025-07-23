@@ -25,6 +25,7 @@ interface ovs_Questionnaire_Relationships {
   ovs_msdyn_servicetasktype_Questionnaire_ovs_Q?: msdyn_servicetasktype_Result[] | null;
   ts_ovs_questionnaire_ovs_questionnaire?: ts_questionnaireversion_Result[] | null;
   ts_questionnaireresponse_questionnaire_ovs_q?: ts_questionnaireresponse_Result[] | null;
+  ts_workorderservicetaskworkspace_Questionnaire_ovs_questionnaire?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
 }
 interface ovs_Questionnaire extends ovs_Questionnaire_Base, ovs_Questionnaire_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -105,6 +106,7 @@ interface ovs_Questionnaire_Expand {
   owninguser: WebExpand<ovs_Questionnaire_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_ovs_questionnaire_ovs_questionnaire: WebExpand<ovs_Questionnaire_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { ts_ovs_questionnaire_ovs_questionnaire: ts_questionnaireversion_Result[] }>;
   ts_questionnaireresponse_questionnaire_ovs_q: WebExpand<ovs_Questionnaire_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { ts_questionnaireresponse_questionnaire_ovs_q: ts_questionnaireresponse_Result[] }>;
+  ts_workorderservicetaskworkspace_Questionnaire_ovs_questionnaire: WebExpand<ovs_Questionnaire_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_workorderservicetaskworkspace_Questionnaire_ovs_questionnaire: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
 }
 interface ovs_Questionnaire_FormattedResult {
   createdby_formatted?: string;
@@ -150,6 +152,7 @@ interface ovs_Questionnaire_RelatedMany {
   ovs_msdyn_servicetasktype_Questionnaire_ovs_Q: WebMappingRetrieve<msdyn_servicetasktype_Select,msdyn_servicetasktype_Expand,msdyn_servicetasktype_Filter,msdyn_servicetasktype_Fixed,msdyn_servicetasktype_Result,msdyn_servicetasktype_FormattedResult>;
   ts_ovs_questionnaire_ovs_questionnaire: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   ts_questionnaireresponse_questionnaire_ovs_q: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
+  ts_workorderservicetaskworkspace_Questionnaire_ovs_questionnaire: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ovs_questionnaires: WebMappingRetrieve<ovs_Questionnaire_Select,ovs_Questionnaire_Expand,ovs_Questionnaire_Filter,ovs_Questionnaire_Fixed,ovs_Questionnaire_Result,ovs_Questionnaire_FormattedResult>;

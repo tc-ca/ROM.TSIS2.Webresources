@@ -904,7 +904,9 @@ function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
                 };
                 Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
                     function success() {
-                        // Optionally handle after close
+                        // Refresh the work order service task after the modal window is closed
+                        console.log("Modal window closed successfully.");
+                        primaryControl.data.refresh();
                     },
                     function error(error) {
                         console.error("Error opening modal window: ", error.message);
