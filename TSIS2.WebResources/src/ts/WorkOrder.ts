@@ -54,6 +54,11 @@ namespace ROM.WorkOrder {
                 form.getControl("ts_actualcost").setVisible(false);
                 form.getControl("ts_costexplanation").setVisible(false);
                 form.getControl("ts_cantcompleteinspection").setVisible(false);
+
+                // Hide overtime toggle for AvSec users in ROM20 form
+                if (isROM20Form) {
+                    form.getControl("ts_overtimerequired").setVisible(false);
+                }
             }
             //Set disabled false for quarter fields if ISSO
             else {
