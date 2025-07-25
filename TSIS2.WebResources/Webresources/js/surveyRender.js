@@ -687,7 +687,9 @@ function InitializeSurveyRender(surveyDefinition, surveyResponse, surveyLocale, 
   survey.onComplete.add(function (survey, options) {
     // When survey is completed, parse the resulting JSON and save it to ovs_questionnaireresponse
     var data = JSON.stringify(survey.data, null, 3);
-    window.parentFormContext.getAttribute(responseAttributeLogicalName).setValue(data.trim());
+    if (window.parentFormContext != null) {
+      window.parentFormContext.getAttribute(responseAttributeLogicalName).setValue(data.trim());
+    }
 
     // In order to keep the survey in place without showing a thank you or blank page
     // Set the state to running, keep the data and go to the first page
