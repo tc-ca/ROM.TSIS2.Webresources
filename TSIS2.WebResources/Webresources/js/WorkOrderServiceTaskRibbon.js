@@ -449,7 +449,11 @@ function completeConfirmation(formContext, survey) {
       //Set Service Task End Date to current date
       formContext.getAttribute("ts_servicetaskenddate").setValue(new Date());
       formContext.data.save().then(function success(result) {
-        formContext.ui.close();
+        // Only close the form if it's opened in a modal/popup
+        // Check if document body has the ms-Fabric--isFocusHidden class (indicates modal dialog)
+        if (document.body.classList.contains("ms-Fabric--isFocusHidden")) {
+          formContext.ui.close();
+        }
       });
     }
   });
@@ -466,7 +470,11 @@ function UnlockWorkOrderServiceTask(primaryControl) {
   const formContext = primaryControl;
   formContext.getAttribute("statuscode").setValue(1);
   formContext.data.save().then(function success(result) {
-    formContext.ui.close();
+    // Only close the form if it's opened in a modal/popup
+    // Check if document body has the ms-Fabric--isFocusHidden class (indicates modal dialog)
+    if (document.body.classList.contains("ms-Fabric--isFocusHidden")) {
+      formContext.ui.close();
+    }
   });
 }
 
@@ -872,10 +880,9 @@ async function createQualityControlServiceTask(primaryControl) {
   });
 }
 function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
-
-    // Get guid of current work order service task
-    var workOrderServiceTaskId = primaryControl.data.entity.getId().replace("{", "").replace("}", "");
-    const fetchXml = `
+  // Get guid of current work order service task
+  var workOrderServiceTaskId = primaryControl.data.entity.getId().replace("{", "").replace("}", "");
+  const fetchXml = `
         <fetch>
           <entity name='ts_workorderservicetaskworkspace'>
             <all-attributes />
@@ -886,37 +893,40 @@ function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
         </fetch>
     `;
 
-    parent.Xrm.WebApi.retrieveMultipleRecords("ts_workorderservicetaskworkspace", `?fetchXml=${encodeURIComponent(fetchXml)}`)
-        .then(function (result) {
-            if (result.entities.length > 0) {
-                const relatedWorkOrderServiceTaskId = result.entities[0].ts_workorderservicetaskworkspaceid;
-                // Open the related Work Order Service Task form in a modal window
-                var pageInput = {
-                    pageType: "entityrecord",
-                    entityName: "ts_workorderservicetaskworkspace",
-                    entityId: relatedWorkOrderServiceTaskId
-                };
-                var navigationOptions = {
-                    target: 2, // Modal dialog
-                    width: { value: 80, unit: "%" },
-                    height: { value: 80, unit: "%" },
-                    position: 1 // Center
-                };
-                Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
-                    function success() {
-                        // Refresh the work order service task after the modal window is closed
-                        console.log("Modal window closed successfully.");
-                        primaryControl.data.refresh();
-                    },
-                    function error(error) {
-                        console.error("Error opening modal window: ", error.message);
-                    }
-                );
-            } else {
-                console.error("No related Work Order Task Workspace found.");
-            }
-        })
-        .catch(function (error) {
-            console.error("Fetch error: ", error.message);
-        });
+  parent.Xrm.WebApi.retrieveMultipleRecords(
+    "ts_workorderservicetaskworkspace",
+    `?fetchXml=${encodeURIComponent(fetchXml)}`
+  )
+    .then(function (result) {
+      if (result.entities.length > 0) {
+        const relatedWorkOrderServiceTaskId = result.entities[0].ts_workorderservicetaskworkspaceid;
+        // Open the related Work Order Service Task form in a modal window
+        var pageInput = {
+          pageType: "entityrecord",
+          entityName: "ts_workorderservicetaskworkspace",
+          entityId: relatedWorkOrderServiceTaskId,
+        };
+        var navigationOptions = {
+          target: 2, // Modal dialog
+          width: { value: 80, unit: "%" },
+          height: { value: 80, unit: "%" },
+          position: 1, // Center
+        };
+        Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+          function success() {
+            // Refresh the work order service task after the modal window is closed
+            console.log("Modal window closed successfully.");
+            primaryControl.data.refresh();
+          },
+          function error(error) {
+            console.error("Error opening modal window: ", error.message);
+          }
+        );
+      } else {
+        console.error("No related Work Order Task Workspace found.");
+      }
+    })
+    .catch(function (error) {
+      console.error("Fetch error: ", error.message);
+    });
 }
