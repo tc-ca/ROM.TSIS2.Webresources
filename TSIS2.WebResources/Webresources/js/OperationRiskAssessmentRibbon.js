@@ -185,13 +185,11 @@ function submitRiskScore(formContext) {
 
 function setRiskThreshold(formContext, riskScore) {
   const operationId = formContext.getAttribute("ts_operation").getValue()[0].id;
-  console.log("AAAAAAAAAAAAAAAAAAAA");
   if (!riskScore || !operationId) return Promise.resolve(); // Skip if missing data
   return Xrm.WebApi.retrieveRecord("ovs_operation", operationId, "?$select=_ovs_operationtypeid_value")
     .then(function (operation) {
       console.log(operation);
       if (!operation._ovs_operationtypeid_value) {
-        console.log("BBBBBBBBB pas dop");
         return Promise.resolve(); // Skip if no operation type
       }
 
@@ -209,7 +207,6 @@ function setRiskThreshold(formContext, riskScore) {
       </fetch>`;
 
       const encodedFetchXml = encodeURIComponent(fetchXml);
-      console.log("CCCCCCCCCCCCC pas dop");
       return Xrm.WebApi.retrieveMultipleRecords("ts_riskcategory", "?fetchXml=" + encodedFetchXml);
     })
     .then(function (riskCategories) {
