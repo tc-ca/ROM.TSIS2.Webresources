@@ -462,13 +462,13 @@ function completeConfirmation(formContext, survey) {
 //    formContext.getAttribute("statuscode").setValue(1);
 //}
 
-//function UnlockWorkOrderServiceTask(primaryControl) {
-//    const formContext = primaryControl;
-//    formContext.getAttribute("statuscode").setValue(1);
-//    formContext.data.save().then(function success(result) {
-//        formContext.ui.close();
-//    });
-//}
+function UnlockWorkOrderServiceTask(primaryControl) {
+    const formContext = primaryControl;
+    formContext.getAttribute("statuscode").setValue(1);
+    formContext.data.save().then(function success(result) {
+        formContext.ui.close();
+    });
+}
 
 //function hide() {
 //    return false;
