@@ -239,6 +239,7 @@
     <Content Include="Webresources\js\SecurityIncidentRibbon.js" />
     <Content Include="Webresources\js\ServiceTaskType.js" />
     <Content Include="Webresources\js\showdown.min.js" />
+    <Content Include="Webresources\js\WorkOrderServiceTaskWorkspaceRibbon.js" />
     <Content Include="Webresources\js\SuggestedInspection.js" />
     <Content Include="Webresources\js\survey-creator.min.js" />
     <Content Include="Webresources\js\survey.jquery.min.js" />
