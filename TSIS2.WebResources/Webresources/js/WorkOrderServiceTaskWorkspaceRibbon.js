@@ -185,172 +185,172 @@ function isStatusReasonNew(primaryControl) {
 //    };
 //}
 
-////Retrieves parent Work Order's Operations and parent Work Order's ActivityType's OperationTypes
-//async function retrieveWorkOrderOperationData(primaryControl) {
-//    //Get parent work order's id
-//    var workOrderAttribute = primaryControl.getAttribute("ts_workorder").getValue();
-//    var workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
-//    //Array to be populated with opertations associated with parent work order before initializing the survey
-//    let operations = [];
-//    let activityTypeOperationTypeIds = [];
+//Retrieves parent Work Order's Operations and parent Work Order's ActivityType's OperationTypes
+async function retrieveWorkOrderOperationData(primaryControl) {
+    //Get parent work order's id
+    var workOrderAttribute = primaryControl.getAttribute("ts_workorder").getValue();
+    var workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
+    //Array to be populated with opertations associated with parent work order before initializing the survey
+    let operations = [];
+    let activityTypeOperationTypeIds = [];
 
-//    var parentWorkOrderOperationFetchXml = [
-//        "<fetch top='50'>",
-//        "  <entity name='msdyn_workorder'>",
-//        "    <attribute name='ovs_operationid' />",
-//        "    <attribute name='msdyn_serviceaccount' />",
-//        "    <filter>",
-//        "      <condition attribute='msdyn_workorderid' operator='eq' value='",
-//        workOrderId,
-//        "'/>",
-//        "    </filter>",
-//        "    <link-entity name='ovs_operation' from='ovs_operationid' to='ovs_operationid' link-type='inner'>",
-//        "      <attribute name='ovs_operationtypeid' />",
-//        "      <attribute name='ovs_operationid' />",
-//        "      <attribute name='ovs_name' />",
-//        "      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
-//        "        <attribute name='ts_regulated' />",
-//        "        <attribute name='ovs_operationtypeid' /> ",
-//        "        <attribute name='ovs_operationtypenameenglish' />",
-//        "        <attribute name='ovs_operationtypenamefrench' />",
-//        "      </link-entity>",
-//        "      <link-entity name = 'msdyn_functionallocation' from = 'msdyn_functionallocationid' to = 'ts_site' > ",
-//        "        <attribute name='ts_functionallocationnamefrench' />",
-//        "        <attribute name='ts_functionallocationnameenglish' />",
-//        "      </link-entity>",
-//        "    </link-entity>",
-//        "    <link-entity name='account' from='accountid' to='msdyn_serviceaccount'>",
-//        "      <attribute name='name' />",
-//        "    </link-entity>",
-//        "  </entity>",
-//        "</fetch>",
-//    ].join("");
-//    parentWorkOrderOperationFetchXml = "?fetchXml=" + encodeURIComponent(parentWorkOrderOperationFetchXml);
-//    //Retrieve the operation in the ovs_operationid field of the parent work order
-//    let operationPromise1 = Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", parentWorkOrderOperationFetchXml);
+    var parentWorkOrderOperationFetchXml = [
+        "<fetch top='50'>",
+        "  <entity name='msdyn_workorder'>",
+        "    <attribute name='ovs_operationid' />",
+        "    <attribute name='msdyn_serviceaccount' />",
+        "    <filter>",
+        "      <condition attribute='msdyn_workorderid' operator='eq' value='",
+        workOrderId,
+        "'/>",
+        "    </filter>",
+        "    <link-entity name='ovs_operation' from='ovs_operationid' to='ovs_operationid' link-type='inner'>",
+        "      <attribute name='ovs_operationtypeid' />",
+        "      <attribute name='ovs_operationid' />",
+        "      <attribute name='ovs_name' />",
+        "      <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
+        "        <attribute name='ts_regulated' />",
+        "        <attribute name='ovs_operationtypeid' /> ",
+        "        <attribute name='ovs_operationtypenameenglish' />",
+        "        <attribute name='ovs_operationtypenamefrench' />",
+        "      </link-entity>",
+        "      <link-entity name = 'msdyn_functionallocation' from = 'msdyn_functionallocationid' to = 'ts_site' > ",
+        "        <attribute name='ts_functionallocationnamefrench' />",
+        "        <attribute name='ts_functionallocationnameenglish' />",
+        "      </link-entity>",
+        "    </link-entity>",
+        "    <link-entity name='account' from='accountid' to='msdyn_serviceaccount'>",
+        "      <attribute name='name' />",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>",
+    ].join("");
+    parentWorkOrderOperationFetchXml = "?fetchXml=" + encodeURIComponent(parentWorkOrderOperationFetchXml);
+    //Retrieve the operation in the ovs_operationid field of the parent work order
+    let operationPromise1 = Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", parentWorkOrderOperationFetchXml);
 
-//    var parentWorkOrderRelatedOperationFetchXml = [
-//        "<fetch top='50'>",
-//        "  <entity name='ovs_operation'>",
-//        "    <attribute name='ts_stakeholder' />",
-//        "    <attribute name='ovs_operationid' />",
-//        "    <attribute name='ovs_name' />",
-//        "    <link-entity name='ts_msdyn_workorder_ovs_operation' from='ovs_operationid' to='ovs_operationid' intersect='true'>",
-//        "      <filter>",
-//        "        <condition attribute='msdyn_workorderid' operator='eq' value='",
-//        workOrderId,
-//        "'/>",
-//        "      </filter>",
-//        "    </link-entity>",
-//        "    <link-entity name='account' from='accountid' to='ts_stakeholder'>",
-//        "      <attribute name='name' />",
-//        "    </link-entity>",
-//        "    <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
-//        "      <attribute name='ts_regulated' />",
-//        "      <attribute name='ovs_operationtypeid' /> ",
-//        "      <attribute name='ovs_operationtypenameenglish' />",
-//        "      <attribute name='ovs_operationtypenamefrench' />",
-//        "    </link-entity>",
-//        "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
-//        "      <attribute name='ts_functionallocationnamefrench' />",
-//        "      <attribute name='ts_functionallocationnameenglish' />",
-//        "    </link-entity>",
-//        "  </entity>",
-//        "</fetch>",
-//    ].join("");
-//    parentWorkOrderRelatedOperationFetchXml = "?fetchXml=" + encodeURIComponent(parentWorkOrderRelatedOperationFetchXml);
-//    //Retrieve operations associated to the parent Work Order
-//    let operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("ovs_operation", parentWorkOrderRelatedOperationFetchXml);
+    var parentWorkOrderRelatedOperationFetchXml = [
+        "<fetch top='50'>",
+        "  <entity name='ovs_operation'>",
+        "    <attribute name='ts_stakeholder' />",
+        "    <attribute name='ovs_operationid' />",
+        "    <attribute name='ovs_name' />",
+        "    <link-entity name='ts_msdyn_workorder_ovs_operation' from='ovs_operationid' to='ovs_operationid' intersect='true'>",
+        "      <filter>",
+        "        <condition attribute='msdyn_workorderid' operator='eq' value='",
+        workOrderId,
+        "'/>",
+        "      </filter>",
+        "    </link-entity>",
+        "    <link-entity name='account' from='accountid' to='ts_stakeholder'>",
+        "      <attribute name='name' />",
+        "    </link-entity>",
+        "    <link-entity name='ovs_operationtype' from='ovs_operationtypeid' to='ovs_operationtypeid'>",
+        "      <attribute name='ts_regulated' />",
+        "      <attribute name='ovs_operationtypeid' /> ",
+        "      <attribute name='ovs_operationtypenameenglish' />",
+        "      <attribute name='ovs_operationtypenamefrench' />",
+        "    </link-entity>",
+        "    <link-entity name='msdyn_functionallocation' from='msdyn_functionallocationid' to='ts_site'>",
+        "      <attribute name='ts_functionallocationnamefrench' />",
+        "      <attribute name='ts_functionallocationnameenglish' />",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>",
+    ].join("");
+    parentWorkOrderRelatedOperationFetchXml = "?fetchXml=" + encodeURIComponent(parentWorkOrderRelatedOperationFetchXml);
+    //Retrieve operations associated to the parent Work Order
+    let operationPromise2 = Xrm.WebApi.retrieveMultipleRecords("ovs_operation", parentWorkOrderRelatedOperationFetchXml);
 
-//    var activityTypeOperationTypesFetchXML = [
-//        "<fetch top='50'>",
-//        "  <entity name='ovs_operationtype'>",
-//        "    <attribute name='ovs_operationtypeid' />",
-//        "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
-//        "      <link-entity name='msdyn_incidenttype' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' intersect='true'>",
-//        "        <link-entity name='msdyn_workorder' from='msdyn_primaryincidenttype' to='msdyn_incidenttypeid'>",
-//        "          <filter>",
-//        "            <condition attribute='msdyn_workorderid' operator='eq' value='",
-//        workOrderId,
-//        "'/>",
-//        "          </filter>",
-//        "        </link-entity>",
-//        "      </link-entity>",
-//        "    </link-entity>",
-//        "  </entity>",
-//        "</fetch>",
-//    ].join("");
-//    activityTypeOperationTypesFetchXML = "?fetchXml=" + encodeURIComponent(activityTypeOperationTypesFetchXML);
-//    //Retrieve operationTypes of parent Work Order's ActivityType
-//    let activityTypeOperationTypesPromise = Xrm.WebApi.retrieveMultipleRecords(
-//        "ovs_operationtype",
-//        activityTypeOperationTypesFetchXML
-//    );
+    var activityTypeOperationTypesFetchXML = [
+        "<fetch top='50'>",
+        "  <entity name='ovs_operationtype'>",
+        "    <attribute name='ovs_operationtypeid' />",
+        "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
+        "      <link-entity name='msdyn_incidenttype' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' intersect='true'>",
+        "        <link-entity name='msdyn_workorder' from='msdyn_primaryincidenttype' to='msdyn_incidenttypeid'>",
+        "          <filter>",
+        "            <condition attribute='msdyn_workorderid' operator='eq' value='",
+        workOrderId,
+        "'/>",
+        "          </filter>",
+        "        </link-entity>",
+        "      </link-entity>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>",
+    ].join("");
+    activityTypeOperationTypesFetchXML = "?fetchXml=" + encodeURIComponent(activityTypeOperationTypesFetchXML);
+    //Retrieve operationTypes of parent Work Order's ActivityType
+    let activityTypeOperationTypesPromise = Xrm.WebApi.retrieveMultipleRecords(
+        "ovs_operationtype",
+        activityTypeOperationTypesFetchXML
+    );
 
-//    await Promise.all([operationPromise1, operationPromise2, activityTypeOperationTypesPromise]).then(
-//        (operationRetrievalPromises) => {
-//            //Add the work order operation operationid, name, operationTypeId, and regulated boolean to the operations array
-//            var workOrderOperation = operationRetrievalPromises[0].entities[0];
-//            let stakeholderName = workOrderOperation["account4.name"];
-//            let operationTypeName =
-//                lang == 1036
-//                    ? workOrderOperation["ovs_operationtype2.ovs_operationtypenamefrench"]
-//                    : workOrderOperation["ovs_operationtype2.ovs_operationtypenameenglish"];
-//            let siteName =
-//                lang == 1036
-//                    ? workOrderOperation["msdyn_functionallocation3.ts_functionallocationnamefrench"]
-//                    : workOrderOperation["msdyn_functionallocation3.ts_functionallocationnameenglish"];
-//            if (
-//                workOrderOperation["ovs_operation1.ovs_operationid"] != null &&
-//                workOrderOperation["account4.name"] != null &&
-//                workOrderOperation["ovs_operationtype2.ts_regulated"] != null
-//            ) {
-//                operations.push({
-//                    id: workOrderOperation["ovs_operation1.ovs_operationid"],
-//                    name: stakeholderName + " | " + operationTypeName + " | " + siteName,
-//                    operationTypeId: workOrderOperation["ovs_operation1.ovs_operationtypeid"],
-//                    isRegulated: workOrderOperation["ovs_operationtype2.ts_regulated"],
-//                });
-//            }
+    await Promise.all([operationPromise1, operationPromise2, activityTypeOperationTypesPromise]).then(
+        (operationRetrievalPromises) => {
+            //Add the work order operation operationid, name, operationTypeId, and regulated boolean to the operations array
+            var workOrderOperation = operationRetrievalPromises[0].entities[0];
+            let stakeholderName = workOrderOperation["account4.name"];
+            let operationTypeName =
+                lang == 1036
+                    ? workOrderOperation["ovs_operationtype2.ovs_operationtypenamefrench"]
+                    : workOrderOperation["ovs_operationtype2.ovs_operationtypenameenglish"];
+            let siteName =
+                lang == 1036
+                    ? workOrderOperation["msdyn_functionallocation3.ts_functionallocationnamefrench"]
+                    : workOrderOperation["msdyn_functionallocation3.ts_functionallocationnameenglish"];
+            if (
+                workOrderOperation["ovs_operation1.ovs_operationid"] != null &&
+                workOrderOperation["account4.name"] != null &&
+                workOrderOperation["ovs_operationtype2.ts_regulated"] != null
+            ) {
+                operations.push({
+                    id: workOrderOperation["ovs_operation1.ovs_operationid"],
+                    name: stakeholderName + " | " + operationTypeName + " | " + siteName,
+                    operationTypeId: workOrderOperation["ovs_operation1.ovs_operationtypeid"],
+                    isRegulated: workOrderOperation["ovs_operationtype2.ts_regulated"],
+                });
+            }
 
-//            //Add the operationid, name, operationTypeId, and regulated boolean of the work order's N:N operations to the operations array
-//            operationRetrievalPromises[1].entities.forEach(function (operation) {
-//                let stakeholderName = operation["account2.name"];
-//                let operationTypeName =
-//                    lang == 1036
-//                        ? operation["ovs_operationtype3.ovs_operationtypenamefrench"]
-//                        : operation["ovs_operationtype3.ovs_operationtypenameenglish"];
-//                let siteName =
-//                    lang == 1036
-//                        ? operation["msdyn_functionallocation4.ts_functionallocationnamefrench"]
-//                        : operation["msdyn_functionallocation4.ts_functionallocationnameenglish"];
-//                if (
-//                    operation.ovs_operationid != null &&
-//                    operation["account2.name"] != null &&
-//                    operation["ovs_operationtype3.ts_regulated"] != null
-//                ) {
-//                    operations.push({
-//                        id: operation["ovs_operationid"],
-//                        name: stakeholderName + " | " + operationTypeName + " | " + siteName,
-//                        operationTypeId: operation["ovs_operationtype3.ovs_operationtypeid"],
-//                        isRegulated: operation["ovs_operationtype3.ts_regulated"],
-//                    });
-//                }
-//            });
+            //Add the operationid, name, operationTypeId, and regulated boolean of the work order's N:N operations to the operations array
+            operationRetrievalPromises[1].entities.forEach(function (operation) {
+                let stakeholderName = operation["account2.name"];
+                let operationTypeName =
+                    lang == 1036
+                        ? operation["ovs_operationtype3.ovs_operationtypenamefrench"]
+                        : operation["ovs_operationtype3.ovs_operationtypenameenglish"];
+                let siteName =
+                    lang == 1036
+                        ? operation["msdyn_functionallocation4.ts_functionallocationnamefrench"]
+                        : operation["msdyn_functionallocation4.ts_functionallocationnameenglish"];
+                if (
+                    operation.ovs_operationid != null &&
+                    operation["account2.name"] != null &&
+                    operation["ovs_operationtype3.ts_regulated"] != null
+                ) {
+                    operations.push({
+                        id: operation["ovs_operationid"],
+                        name: stakeholderName + " | " + operationTypeName + " | " + siteName,
+                        operationTypeId: operation["ovs_operationtype3.ovs_operationtypeid"],
+                        isRegulated: operation["ovs_operationtype3.ts_regulated"],
+                    });
+                }
+            });
 
-//            //collect each operationType Id
-//            operationRetrievalPromises[2].entities.forEach(function (operationType) {
-//                activityTypeOperationTypeIds.push(operationType["ovs_operationtypeid"]);
-//            });
-//        }
-//    );
+            //collect each operationType Id
+            operationRetrievalPromises[2].entities.forEach(function (operationType) {
+                activityTypeOperationTypeIds.push(operationType["ovs_operationtypeid"]);
+            });
+        }
+    );
 
-//    //Return object containing retrieved operation data
-//    return {
-//        operations: operations,
-//        activityTypeOperationTypeIds: activityTypeOperationTypeIds,
-//    };
-//}
+    //Return object containing retrieved operation data
+    return {
+        operations: operations,
+        activityTypeOperationTypeIds: activityTypeOperationTypeIds,
+    };
+}
 
 async function surveyHasErrors(primaryControl) {
     const formContext = primaryControl;
@@ -480,264 +480,264 @@ function UnlockWorkOrderServiceTask(primaryControl) {
 //    "Non-compliance": 717750002,
 //};
 
-//async function buildCustomQuestionnaire(primaryControl) {
-//    var provisionPromise = await retrieveProvisions(primaryControl);
-//    var provisions = provisionPromise.entities;
-//    if (provisions == null) return;
-//    var customSurveyDefinition = await generateCustomSurveyDefinition(provisions);
+async function buildCustomQuestionnaire(primaryControl) {
+    var provisionPromise = await retrieveProvisions(primaryControl);
+    var provisions = provisionPromise.entities;
+    if (provisions == null) return;
+    var customSurveyDefinition = await generateCustomSurveyDefinition(provisions);
 
-//    var oldDefinition = JSON.parse(primaryControl.getAttribute("ts_questionnairedefinition").getValue());
-//    var oldResponse = JSON.parse(primaryControl.getAttribute("ts_questionnaireresponse").getValue());
-//    var newResponse = {};
+    var oldDefinition = JSON.parse(primaryControl.getAttribute("ts_questionnairedefinition").getValue());
+    var oldResponse = JSON.parse(primaryControl.getAttribute("ts_questionnaireresponse").getValue());
+    var newResponse = {};
 
-//    //If there's an old response, reuse values from identical provisions
-//    if (oldResponse != null) {
-//        //Iterate through provisions, check if a radiogroup question key exists for it in the old response
-//        for (provision of provisions) {
-//            let provisionName = provision.qm_name;
-//            //If the same radiogroup question existed in the old response, keep the old values
-//            if (provisionName + "-radiogroup" in oldResponse) {
-//                let findingTypeValue = oldResponse[provisionName + "-radiogroup"];
-//                newResponse[provisionName + "-radiogroup"] = findingTypeValue;
+    //If there's an old response, reuse values from identical provisions
+    if (oldResponse != null) {
+        //Iterate through provisions, check if a radiogroup question key exists for it in the old response
+        for (provision of provisions) {
+            let provisionName = provision.qm_name;
+            //If the same radiogroup question existed in the old response, keep the old values
+            if (provisionName + "-radiogroup" in oldResponse) {
+                let findingTypeValue = oldResponse[provisionName + "-radiogroup"];
+                newResponse[provisionName + "-radiogroup"] = findingTypeValue;
 
-//                //Check if any finding questions in the custom survey definition can use old values
-//                for (oldQuestion of oldDefinition.pages[0].elements) {
-//                    //If a finding question used the same provision and has the same findingType
-//                    if (
-//                        oldQuestion.type == "finding" &&
-//                        oldQuestion.provision == provisionName &&
-//                        oldQuestion.findingType == findingTypes[findingTypeValue]
-//                    ) {
-//                        //Retrieve the value in the old response
-//                        let oldFindingQuestionValue = oldResponse[oldQuestion.name];
-//                        //Determine the question name used in the new definition, make it use the same name as before then set its value in the new response
-//                        //The name for the finding widgets must remain the same and unique to maintain the connection with any finding records created
-//                        for (newQuestion of customSurveyDefinition.pages[0].elements) {
-//                            if (newQuestion.provision == provisionName && newQuestion.findingType == findingTypes[findingTypeValue]) {
-//                                newQuestion.name = oldQuestion.name;
-//                                newQuestion.nameID = oldQuestion.nameID;
-//                                newResponse[oldQuestion.name] = oldFindingQuestionValue;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    primaryControl.getAttribute("ts_questionnairedefinition").setValue(JSON.stringify(customSurveyDefinition));
-//    primaryControl.getAttribute("ts_questionnaireresponse").setValue(JSON.stringify(newResponse));
-//    toggleQuestionnaire(primaryControl);
-//}
+                //Check if any finding questions in the custom survey definition can use old values
+                for (oldQuestion of oldDefinition.pages[0].elements) {
+                    //If a finding question used the same provision and has the same findingType
+                    if (
+                        oldQuestion.type == "finding" &&
+                        oldQuestion.provision == provisionName &&
+                        oldQuestion.findingType == findingTypes[findingTypeValue]
+                    ) {
+                        //Retrieve the value in the old response
+                        let oldFindingQuestionValue = oldResponse[oldQuestion.name];
+                        //Determine the question name used in the new definition, make it use the same name as before then set its value in the new response
+                        //The name for the finding widgets must remain the same and unique to maintain the connection with any finding records created
+                        for (newQuestion of customSurveyDefinition.pages[0].elements) {
+                            if (newQuestion.provision == provisionName && newQuestion.findingType == findingTypes[findingTypeValue]) {
+                                newQuestion.name = oldQuestion.name;
+                                newQuestion.nameID = oldQuestion.nameID;
+                                newResponse[oldQuestion.name] = oldFindingQuestionValue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    primaryControl.getAttribute("ts_questionnairedefinition").setValue(JSON.stringify(customSurveyDefinition));
+    primaryControl.getAttribute("ts_questionnaireresponse").setValue(JSON.stringify(newResponse));
+    toggleQuestionnaire(primaryControl);
+}
 
-//var mode = "";
-//function toggleQuestionnaire(primaryControl) {
-//    // Get the web resource control on the form
-//    const wrCtrl = primaryControl.getControl("WebResource_QuestionnaireRender");
-//    const questionnaireDefinition = primaryControl.getAttribute("ts_questionnairedefinition").getValue();
-//    const questionnaireResponse = primaryControl.getAttribute("ts_questionnaireresponse").getValue();
+var mode = "";
+function toggleQuestionnaire(primaryControl) {
+    // Get the web resource control on the form
+    const wrCtrl = primaryControl.getControl("WebResource_QuestionnaireRender");
+    const questionnaireDefinition = primaryControl.getAttribute("ts_questionnairedefinition").getValue();
+    const questionnaireResponse = primaryControl.getAttribute("ts_questionnaireresponse").getValue();
 
-//    // Exit if no questionnaire exists
-//    if (questionnaireDefinition === null) {
-//        wrCtrl.setVisible(false);
-//        return;
-//    }
+    // Exit if no questionnaire exists
+    if (questionnaireDefinition === null) {
+        wrCtrl.setVisible(false);
+        return;
+    }
 
-//    // Get Questionnaire definition
-//    wrCtrl.setVisible(true);
-//    initiateSurvey(primaryControl, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
-//}
+    // Get Questionnaire definition
+    wrCtrl.setVisible(true);
+    initiateSurvey(primaryControl, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
+}
 
-//function initiateSurvey(primaryControl, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
-//    wrCtrl.setVisible(true);
-//    wrCtrl.getContentWindow().then(async function (win) {
-//        const surveyLocale = ROM.WorkOrderServiceTask.getSurveyLocal();
-//        win.InitialFormContext(primaryControl);
-//        let operationData = await retrieveWorkOrderOperationData(primaryControl);
-//        win.isComplete = primaryControl.getAttribute("ts_percentcomplete").getValue() == 100.0;
-//        win.operationList = operationData.operations;
-//        win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
-//        win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
-//    });
-//}
+function initiateSurvey(primaryControl, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
+    wrCtrl.setVisible(true);
+    wrCtrl.getContentWindow().then(async function (win) {
+        const surveyLocale = ROM.WorkOrderServiceTask.getSurveyLocal();
+        win.InitialFormContext(primaryControl);
+        let operationData = await retrieveWorkOrderOperationData(primaryControl);
+        win.isComplete = primaryControl.getAttribute("ts_percentcomplete").getValue() == 100.0;
+        win.operationList = operationData.operations;
+        win.activityTypeOperationTypeIdsList = operationData.activityTypeOperationTypeIds;
+        win.InitializeSurveyRender(questionnaireDefinition, questionnaireResponse, surveyLocale, mode);
+    });
+}
 
-////Opens a tab to display the full provision text of each custom questionnaire provision
-//async function previewProvisionText(primaryControl) {
-//    var provisionPromise = await retrieveProvisions(primaryControl);
-//    var provisions = provisionPromise.entities;
-//    if (provisions == null) return;
+//Opens a tab to display the full provision text of each custom questionnaire provision
+async function previewProvisionText(primaryControl) {
+    var provisionPromise = await retrieveProvisions(primaryControl);
+    var provisions = provisionPromise.entities;
+    if (provisions == null) return;
 
-//    var lang = "1033";
-//    if (parent.Xrm != null) {
-//        lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
-//    }
+    var lang = "1033";
+    if (parent.Xrm != null) {
+        lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+    }
 
-//    var provisionText = "";
-//    //Build provision text for each provision, concatenate together with line breaks between.
-//    for (var provision of provisions) {
-//        provisionText += (await buildProvisionText(provision, lang)) + "<br><br>";
-//    }
+    var provisionText = "";
+    //Build provision text for each provision, concatenate together with line breaks between.
+    for (var provision of provisions) {
+        provisionText += (await buildProvisionText(provision, lang)) + "<br><br>";
+    }
 
-//    var provisionTextWindow = window.open("", "Preview Provision Text");
-//    provisionTextWindow.document.write("<head><title>Provision Text</title></head><body></body>");
-//    var provisionTextSpan = provisionTextWindow.document.createElement("span");
-//    provisionTextSpan.innerHTML = provisionText;
-//    provisionTextWindow.document.body.appendChild(provisionTextSpan);
-//}
+    var provisionTextWindow = window.open("", "Preview Provision Text");
+    provisionTextWindow.document.write("<head><title>Provision Text</title></head><body></body>");
+    var provisionTextSpan = provisionTextWindow.document.createElement("span");
+    provisionTextSpan.innerHTML = provisionText;
+    provisionTextWindow.document.body.appendChild(provisionTextSpan);
+}
 
 //function InitialContext(executionContext) {
 //    window.parentExecutionContext = executionContext;
 //    window.parentFormContext = executionContext.getFormContext();
 //}
 
-//async function retrieveProvisions(primaryControl) {
-//    //Retrieve Provisions from WOST
-//    var workOrderServiceTaskId = primaryControl.data.entity.getId().replace("{", "").replace("}", "");
-//    var fetchXml = [
-//        "<fetch>",
-//        "  <entity name='qm_rclegislation'>",
-//        "    <all-attributes />",
-//        "    <link-entity name='ts_workorderservicetask_qm_rclegislation' from='qm_rclegislationid' to='qm_rclegislationid' intersect='true'>",
-//        "      <filter>",
-//        "        <condition attribute='msdyn_workorderservicetaskid' operator='eq' value='",
-//        workOrderServiceTaskId,
-//        "'/>",
-//        "      </filter>",
-//        "    </link-entity>",
-//        "  </entity>",
-//        "</fetch>",
-//    ].join("");
-//    fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+async function retrieveProvisions(primaryControl) {
+    //Retrieve Provisions from WOST Workspace
+    var workOrderServiceTaskId = primaryControl.data.entity.getId().replace("{", "").replace("}", "");
+    var fetchXml = [
+        "<fetch>",
+        "  <entity name='qm_rclegislation'>",
+        "    <all-attributes />",
+        "    <link-entity name='ts_workorderservicetaskworkspace_qm_rcl' from='qm_rclegislationid' to='qm_rclegislationid' intersect='true'>",
+        "      <filter>",
+        "        <condition attribute='ts_workorderservicetaskworkspaceid' operator='eq' value='",
+        workOrderServiceTaskId,
+        "'/>",
+        "      </filter>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>",
+    ].join("");
+    fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
 
-//    return Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", fetchXml);
-//}
-////Generates a custom survey definition for the given provisions
-//async function generateCustomSurveyDefinition(provisions) {
-//    var survey = {
-//        pages: [
-//            {
-//                name: "page1",
-//                elements: [],
-//            },
-//        ],
-//    };
-//    var questionArray = [];
-//    for (var provision of provisions) {
-//        var provisionName = provision.qm_name;
-//        var provisionTextEn = await buildProvisionText(provision, "1033");
-//        var provisionTextFr = await buildProvisionText(provision, "1036");
-//        var radioQuestionName = provisionName + "-radiogroup";
-//        let applicableProvisionsData = await gatherapplicableProvisionsData(provisionName);
+    return Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", fetchXml);
+}
+//Generates a custom survey definition for the given provisions
+async function generateCustomSurveyDefinition(provisions) {
+    var survey = {
+        pages: [
+            {
+                name: "page1",
+                elements: [],
+            },
+        ],
+    };
+    var questionArray = [];
+    for (var provision of provisions) {
+        var provisionName = provision.qm_name;
+        var provisionTextEn = await buildProvisionText(provision, "1033");
+        var provisionTextFr = await buildProvisionText(provision, "1036");
+        var radioQuestionName = provisionName + "-radiogroup";
+        let applicableProvisionsData = await gatherapplicableProvisionsData(provisionName);
 
-//        //Create radiogroup question
-//        var radioQuestion = {
-//            type: "radiogroup",
-//            name: radioQuestionName,
-//            title: provisionName,
-//            description: {
-//                default: provisionTextEn,
-//                fr: provisionTextFr,
-//            },
-//            applicableProvisionsData: [applicableProvisionsData],
-//            isRequired: true,
-//            choices: [
-//                {
-//                    value: "No Finding",
-//                    text: {
-//                        default: "No Finding",
-//                        fr: "Sans constatation",
-//                    },
-//                },
-//                {
-//                    value: "Observation",
-//                    text: {
-//                        default: "Observation",
-//                        fr: "Observation",
-//                    },
-//                },
-//                {
-//                    value: "Non-compliance",
-//                    text: {
-//                        default: "Non-compliance",
-//                        fr: "Non-conformité",
-//                    },
-//                },
-//            ],
-//        };
-//        questionArray.push(radioQuestion);
-//        let uniqueNum = Date.now();
-//        //Create Observation Finding
-//        var observationFinding = {
-//            type: "finding",
-//            name: "finding-sq_" + uniqueNum,
-//            visibleIf: `{${radioQuestionName}} = 'Observation'`,
-//            title: provisionName,
-//            description: {
-//                default: provisionTextEn,
-//                fr: provisionTextFr,
-//            },
-//            provision: provisionName,
-//            reference: provisionName,
-//            nameID: "sq_" + uniqueNum,
-//            findingType: 717750001,
-//            provisionData: {
-//                legislationid: provision.qm_rclegislationid,
-//                provisioncategoryid: provision._ts_provisioncategory_value,
-//            },
-//        };
-//        questionArray.push(observationFinding);
-//        uniqueNum = Date.now() + 1;
-//        //Create Non-Compliance Finding
-//        var nonComplianceFinding = {
-//            type: "finding",
-//            name: "finding-sq_" + uniqueNum,
-//            visibleIf: `{${radioQuestionName}} = 'Non-compliance'`,
-//            title: provisionName,
-//            description: {
-//                default: provisionTextEn,
-//                fr: provisionTextFr,
-//            },
-//            isRequired: true,
-//            provision: provisionName,
-//            reference: provisionName,
-//            nameID: "sq_" + uniqueNum,
-//            findingType: 717750002,
-//            provisionData: {
-//                legislationid: provision.qm_rclegislationid,
-//                provisioncategoryid: provision._ts_provisioncategory_value,
-//            },
-//        };
-//        questionArray.push(nonComplianceFinding);
-//    }
-//    survey.pages[0].elements = questionArray;
-//    return survey;
-//}
+        //Create radiogroup question
+        var radioQuestion = {
+            type: "radiogroup",
+            name: radioQuestionName,
+            title: provisionName,
+            description: {
+                default: provisionTextEn,
+                fr: provisionTextFr,
+            },
+            applicableProvisionsData: [applicableProvisionsData],
+            isRequired: true,
+            choices: [
+                {
+                    value: "No Finding",
+                    text: {
+                        default: "No Finding",
+                        fr: "Sans constatation",
+                    },
+                },
+                {
+                    value: "Observation",
+                    text: {
+                        default: "Observation",
+                        fr: "Observation",
+                    },
+                },
+                {
+                    value: "Non-compliance",
+                    text: {
+                        default: "Non-compliance",
+                        fr: "Non-conformité",
+                    },
+                },
+            ],
+        };
+        questionArray.push(radioQuestion);
+        let uniqueNum = Date.now();
+        //Create Observation Finding
+        var observationFinding = {
+            type: "finding",
+            name: "finding-sq_" + uniqueNum,
+            visibleIf: `{${radioQuestionName}} = 'Observation'`,
+            title: provisionName,
+            description: {
+                default: provisionTextEn,
+                fr: provisionTextFr,
+            },
+            provision: provisionName,
+            reference: provisionName,
+            nameID: "sq_" + uniqueNum,
+            findingType: 717750001,
+            provisionData: {
+                legislationid: provision.qm_rclegislationid,
+                provisioncategoryid: provision._ts_provisioncategory_value,
+            },
+        };
+        questionArray.push(observationFinding);
+        uniqueNum = Date.now() + 1;
+        //Create Non-Compliance Finding
+        var nonComplianceFinding = {
+            type: "finding",
+            name: "finding-sq_" + uniqueNum,
+            visibleIf: `{${radioQuestionName}} = 'Non-compliance'`,
+            title: provisionName,
+            description: {
+                default: provisionTextEn,
+                fr: provisionTextFr,
+            },
+            isRequired: true,
+            provision: provisionName,
+            reference: provisionName,
+            nameID: "sq_" + uniqueNum,
+            findingType: 717750002,
+            provisionData: {
+                legislationid: provision.qm_rclegislationid,
+                provisioncategoryid: provision._ts_provisioncategory_value,
+            },
+        };
+        questionArray.push(nonComplianceFinding);
+    }
+    survey.pages[0].elements = questionArray;
+    return survey;
+}
 
-////Takes a provision name and returns an object with the provision data needed in the applicableProvisionsData property for that provision
-//async function gatherapplicableProvisionsData(provisionName) {
-//    let applicableProvisionsData = await parent.Xrm.WebApi.retrieveMultipleRecords(
-//        "qm_rclegislation",
-//        `?$filter=(ts_nameenglish eq '${provisionName}' or ts_namefrench eq '${provisionName}')`
-//    ).then(
-//        async function success(result) {
-//            if (result.entities.length > 0) {
-//                let provision = result.entities[0];
-//                let provisionData = {
-//                    provisionId: provision.qm_rclegislationid,
-//                    provisionNameEn: provision.ts_nameenglish,
-//                    provisionNameFr: provision.ts_namefrench,
-//                    provisionTextEn: await buildProvisionText(provision, 1033),
-//                    provisionTextFr: await buildProvisionText(provision, 1036),
-//                };
-//                return provisionData;
-//            }
-//        },
-//        function (error) {
-//            console.log(error.message);
-//            // handle error conditions
-//        }
-//    );
-//    return applicableProvisionsData;
-//}
+//Takes a provision name and returns an object with the provision data needed in the applicableProvisionsData property for that provision
+async function gatherapplicableProvisionsData(provisionName) {
+    let applicableProvisionsData = await parent.Xrm.WebApi.retrieveMultipleRecords(
+        "qm_rclegislation",
+        `?$filter=(ts_nameenglish eq '${provisionName}' or ts_namefrench eq '${provisionName}')`
+    ).then(
+        async function success(result) {
+            if (result.entities.length > 0) {
+                let provision = result.entities[0];
+                let provisionData = {
+                    provisionId: provision.qm_rclegislationid,
+                    provisionNameEn: provision.ts_nameenglish,
+                    provisionNameFr: provision.ts_namefrench,
+                    provisionTextEn: await buildProvisionText(provision, 1033),
+                    provisionTextFr: await buildProvisionText(provision, 1036),
+                };
+                return provisionData;
+            }
+        },
+        function (error) {
+            console.log(error.message);
+            // handle error conditions
+        }
+    );
+    return applicableProvisionsData;
+}
 
 //function SendReport(primaryControl, SelectedControlSelectedItemReferences) {
 //    //If WOTask has a result of "Pass"
