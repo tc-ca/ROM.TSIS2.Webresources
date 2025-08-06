@@ -4,11 +4,11 @@ declare namespace Form.ts_workorderservicetaskworkspace.Main {
       interface tab_Oversight extends Xrm.SectionCollectionBase {
         get(name: "tab_11_section_1"): Xrm.PageSection;
         get(name: "tab_Oversight_AirCarrier"): Xrm.PageSection;
+        get(name: "tab_Oversight_Aircraft"): Xrm.PageSection;
         get(name: "tab_Oversight_Flight"): Xrm.PageSection;
         get(name: "tab_Oversight_Location"): Xrm.PageSection;
         get(name: "tab_Oversight_Other"): Xrm.PageSection;
         get(name: "tab_Oversight_ServiceProviders"): Xrm.PageSection;
-        get(name: "tab_Oversight_section_6"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
