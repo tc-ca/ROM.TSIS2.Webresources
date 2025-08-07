@@ -474,11 +474,11 @@ function UnlockWorkOrderServiceTask(primaryControl) {
 //    return false;
 //}
 
-//var findingTypes = {
-//    "No Finding": 717750000,
-//    Observation: 717750001,
-//    "Non-compliance": 717750002,
-//};
+var findingTypes = {
+    "No Finding": 717750000,
+    Observation: 717750001,
+    "Non-compliance": 717750002,
+};
 
 async function buildCustomQuestionnaire(primaryControl) {
     var provisionPromise = await retrieveProvisions(primaryControl);
