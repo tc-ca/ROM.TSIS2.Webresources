@@ -112,6 +112,27 @@
         applyMandatoryFieldFromTaskType(eContext);
         UpdateQuestionnaireDefinition(eContext);
     }
+    function applyMandatoryFieldFromTaskType(eContext) {
+        var fc = eContext.getFormContext();
+        var taskTypeValue = fc.getAttribute("ts_tasktype").getValue();
+        console.log("Retrieved values: check type ");
+        if (taskTypeValue != null && taskTypeValue != undefined && taskTypeValue[0].entityType == "msdyn_servicetasktype") {
+
+            Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeValue[0].id, "?$select=ts_mandatory").then(
+                function success(result) {
+
+                    console.log("Retrieved values: ts_mandatory: " + result.ts_mandatory);
+                    if (result.ts_mandatory != null && result.ts_mandatory) {
+                        fc.getAttribute("ts_mandatory").setValue(true);
+                    }
+                    else { fc.getAttribute("ts_mandatory").setValue(false); }
+                },
+                function (error) {
+                    console.log(error.message);
+                }
+            );
+        }
+    }
 
     function ToggleQuestionnaire(eContext: Xrm.ExecutionContext<any, any>): void {
         console.log("Entering ToggleQuestionnaire ");
@@ -132,41 +153,6 @@
         wrCtrl.setVisible(true);
         InitiateSurvey(eContext, wrCtrl, questionnaireDefinition, questionnaireResponse, mode);
     }
-    function filterLegislationSource(eContext: Xrm.ExecutionContext<any, any>) {
-        const formContext = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
-        const workOrderValue = formContext.getAttribute("ts_workorder").getValue();
-        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
-        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid&$expand=ovs_operationtypeid($expand=owningbusinessunit($select=name))").then(function (workOrder) {
-            if (workOrder != null && workOrder.ovs_operationtypeid != null && workOrder.ovs_operationtypeid.owningbusinessunit.name != null) {
-                if (workOrder.ovs_operationtypeid.owningbusinessunit.name.startsWith("Aviation")) {
-                    //Change Legislation Source filter to use
-                    const viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F662}';
-                    const entityName = "qm_tylegislationsource";
-                    var fetchXml = [
-                        "<fetch>",
-                        "  <entity name='qm_tylegislationsource'>",
-                        "    <link-entity name='ts_tylegislationsource_ovs_operationtype' from='qm_tylegislationsourceid' to='qm_tylegislationsourceid' intersect='true'>",
-                        "      <filter>",
-                        "        <condition attribute='ovs_operationtypeid' operator='eq' value='", workOrder.ovs_operationtypeid.ovs_operationtypeid, "' uitype='ts_tylegislationsource_ovs_operationtype'/>",
-                        "      </filter>",
-                        "    </link-entity>",
-                        "  </entity>",
-                        "</fetch>"
-                    ].join("");
-                    const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="qm_tylegislationsourceid"><cell name="qm_name" width="200" /></row></grid>';
-                    formContext.getControl("ts_legislationsourcefilter").addCustomView(viewId, entityName, "", fetchXml, layoutXml, true);
-                }
-            }
-        });
-    }
-    async function workOrderIsDraft(eContext: Xrm.ExecutionContext<any, any>) {
-        const form = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
-        const workOrderValue = form.getAttribute("ts_workorder").getValue();
-        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
-        const workOrder = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ts_state");
-        return workOrder.ts_state == ts_planningstate.Draft;
-    }
-
     async function UpdateQuestionnaireDefinition(eContext: Xrm.ExecutionContext<any, any>) {
         const Form = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
         const serviceTaskStartDate = Form.getAttribute("ts_workorderservicetaskstartdate").getValue();
@@ -421,6 +407,207 @@
                 });
         }
     }
+    function showHideFieldsByIncidentType(form: Form.ts_workorderservicetaskworkspace.Main.Information,): void {
+        const workOrderValue = form.getAttribute("ts_workorder").getValue();
+        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
+        const fieldsMap = [
+            ['ts_vlocation', 'ts_location'],
+            ['ts_vflightnumber', 'ts_flightnumber'],
+            ['ts_vorigin', 'ts_origin'],
+            ['ts_vdestination', 'ts_destination'],
+            ['ts_vflightcategory', 'ts_flightcategory'],
+            ['ts_vflighttype', 'ts_flighttype'],
+            ['ts_vreportdetails', 'ts_reportdetails'],
+            ['ts_vpaxcheckedin', 'ts_paxonboard'],
+            ['ts_vpaxboarded', 'ts_paxboarded'],
+            ['ts_vcbcheckedin', 'ts_cbonboard'],
+            ['ts_vcbloaded', 'ts_cbloaded'],
+            ['ts_vscheduledtime', 'ts_scheduledtime'],
+            ['ts_vactualtime', 'ts_actualtime'],
+            ['ts_vregistration', 'ts_aircraftmark'],
+            ['ts_vmanufacturer', 'ts_aircraftmanufacturer'],
+            ['ts_vmodel', 'ts_aircraftmodel'],
+            ['ts_vbrandname', 'ts_brandname'],
+            ['ts_vaocoperation', 'ts_aocoperation'],
+            ['ts_vaocstakeholder', 'ts_aocstakeholder'],
+            ['ts_vaocoperationtype', 'ts_aocoperationtype'],
+            ['ts_vaocsite', 'ts_aocsite'],
+            ['ts_vpassengerservices', 'ts_passengerservices'],
+            ['ts_vrampservices', 'ts_rampservices'],
+            ['ts_vcargoservices', 'ts_cargoservices'],
+            ['ts_vcateringservices', 'ts_cateringservices'],
+            ['ts_vgroomingservices', 'ts_groomingservices'],
+            ['ts_vsecuritysearchservices', 'ts_securitysearchservices'],
+            ['ts_vaccesscontrolsecurityservices', 'ts_accesscontrolsecurityservices'],
+            ['ts_vothersecurityservices', 'ts_othersecurityservices']
+        ];
+        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value&$expand=msdyn_primaryincidenttype ").then(
+            function success(result) {
+                fieldsMap.forEach(function (item, index) {
+                    let isVisiable = false;
+                    if (result["msdyn_primaryincidenttype"][item[0]] == true) {
+                        isVisiable = true;
+                    }
+
+                    var control = form.getControl(item[1]);
+                    if (control != null) {
+                        (<any>control).setVisible(isVisiable);
+                    }
+                });
+            },
+            function error(error) {
+                Xrm.Navigation.openAlertDialog({ text: error.message });
+            });
+    }
+    function showHideFieldsByOperationType(form: Form.ts_workorderservicetaskworkspace.Main.Information, operationTypeId, operationTypeOwnerId): void {
+        if (operationTypeOwnerId != "e2e3910d-a41f-ec11-b6e6-0022483cb5c7") {  //Owner is AvSec
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_AirCarrier').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(false);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Other').setVisible(false);
+        }
+        else {
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_AirCarrier').setVisible(true);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(true);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(true);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(true);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(true);
+            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Other').setVisible(true);
+        }
+    }
+    function setAOCSiteFilteredView(form: Form.ts_workorderservicetaskworkspace.Main.Information, regionAttributeId: string, stakeholderTypeAttributeId: string, operationTypeAttributeId): void {
+        const viewId = '{6E57251F-F695-4076-9498-49AB892154B7}';
+        const entityName = "msdyn_functionallocation";
+        const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
+        const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter>' + '</filter><filter><condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '"/></filter><filter><condition attribute="ts_sitestatus" operator="ne" value="717750001" /></filter><order attribute="msdyn_name" descending="false"/><link-entity name="ovs_operation" from="ts_site" to="msdyn_functionallocationid"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value=" ' + operationTypeAttributeId + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderTypeAttributeId + '"/><condition attribute="ts_operationalstatus" operator="eq" value="717750000"/></filter></link-entity></entity></fetch>';
+        const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+        form.getControl("ts_aocsite").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+    }
+    export function AOCOperationOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
+        const aocOperation = form.getAttribute("ts_aocoperation").getValue();
+        if (aocOperation != null) {
+            Xrm.WebApi.retrieveRecord("ovs_operation", aocOperation[0].id, "?$select=_ts_stakeholder_value,_ovs_operationtypeid_value,_ts_site_value ").then(
+                function success(result) {
+                    var lookup = new Array();
+                    lookup[0] = new Object();
+                    if (result._ovs_operationtypeid_value != null) {
+                        lookup[0].id = result._ovs_operationtypeid_value
+                        lookup[0].name = result["_ovs_operationtypeid_value@OData.Community.Display.V1.FormattedValue"]
+                        lookup[0].entityType = result["_ovs_operationtypeid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                        form.getAttribute("ts_aocoperationtype").setValue(lookup);
+                    }
+                    lookup = new Array();
+                    lookup[0] = new Object();
+                    if (result._ts_stakeholder_value != null) {
+                        lookup[0].id = result._ts_stakeholder_value
+                        lookup[0].name = result["_ts_stakeholder_value@OData.Community.Display.V1.FormattedValue"]
+                        lookup[0].entityType = result["_ts_stakeholder_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                        form.getAttribute("ts_aocstakeholder").setValue(lookup);
+                    }
+                    lookup = new Array();
+                    lookup[0] = new Object();
+                    if (result._ts_site_value != null) {
+                        lookup[0].id = result._ts_site_value
+                        lookup[0].name = result["_ts_site_value@OData.Community.Display.V1.FormattedValue"]
+                        lookup[0].entityType = result["_ts_site_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                        form.getAttribute("ts_aocsite").setValue(lookup);
+                    }
+                },
+                function error(error) {
+                    Xrm.Navigation.openAlertDialog({ text: error.message });
+                });
+        }
+        else {
+            form.getAttribute("ts_aocoperationtype").setValue(null);
+            form.getAttribute("ts_aocstakeholder").setValue(null);
+            form.getAttribute("ts_aocsite").setValue(null);
+        }
+    }
+    export function onAOCFieldsOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
+        const aocStakeholder = form.getAttribute("ts_aocstakeholder").getValue();
+        const aocOperationtype = form.getAttribute("ts_aocoperationtype").getValue();
+        if (aocStakeholder != null && aocOperationtype != null) {
+            setAOCSiteFilteredView(form, aocRegion, aocStakeholder[0].id, aocOperationtype[0].id);
+        }
+    }
+    export function aircraftManufacturerOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
+
+        const aircraftmanufacturer = form.getAttribute("ts_aircraftmanufacturer").getValue();
+        var options = form.getControl("ts_aircraftmodel").getOptions();
+        for (var i = 0; i < options.length; i++)
+            form.getControl("ts_aircraftmodel").removeOption(options[i].value);
+        form.getControl("ts_aircraftmodelother").setVisible(false);
+        form.getControl("ts_aircraftmodel").setVisible(true);
+        if (aircraftmanufacturer == ts_aircraftmanufacturer.Boeing) {
+            for (var i = 1; i <= 11; i++) {
+                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            }
+        }
+        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Airbus) {
+            for (var i = 12; i <= 22; i++) {
+                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            }
+        }
+        else if (aircraftmanufacturer == ts_aircraftmanufacturer.DeHavilland) {
+            for (var i = 23; i <= 24; i++) {
+                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            }
+        }
+        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Bombardier) {
+            for (var i = 25; i <= 25; i++) {
+                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            }
+        }
+        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Embraer) {
+            for (var i = 26; i <= 29; i++) {
+                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            }
+        }
+        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Other) {
+            form.getControl("ts_aircraftmodelother").setVisible(true);
+            form.getControl("ts_aircraftmodel").setVisible(false);
+        }
+    }
+    function filterLegislationSource(eContext: Xrm.ExecutionContext<any, any>) {
+        const formContext = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
+        const workOrderValue = formContext.getAttribute("ts_workorder").getValue();
+        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
+        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid&$expand=ovs_operationtypeid($expand=owningbusinessunit($select=name))").then(function (workOrder) {
+            if (workOrder != null && workOrder.ovs_operationtypeid != null && workOrder.ovs_operationtypeid.owningbusinessunit.name != null) {
+                if (workOrder.ovs_operationtypeid.owningbusinessunit.name.startsWith("Aviation")) {
+                    //Change Legislation Source filter to use
+                    const viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F662}';
+                    const entityName = "qm_tylegislationsource";
+                    var fetchXml = [
+                        "<fetch>",
+                        "  <entity name='qm_tylegislationsource'>",
+                        "    <link-entity name='ts_tylegislationsource_ovs_operationtype' from='qm_tylegislationsourceid' to='qm_tylegislationsourceid' intersect='true'>",
+                        "      <filter>",
+                        "        <condition attribute='ovs_operationtypeid' operator='eq' value='", workOrder.ovs_operationtypeid.ovs_operationtypeid, "' uitype='ts_tylegislationsource_ovs_operationtype'/>",
+                        "      </filter>",
+                        "    </link-entity>",
+                        "  </entity>",
+                        "</fetch>"
+                    ].join("");
+                    const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="qm_tylegislationsourceid"><cell name="qm_name" width="200" /></row></grid>';
+                    formContext.getControl("ts_legislationsourcefilter").addCustomView(viewId, entityName, "", fetchXml, layoutXml, true);
+                }
+            }
+        });
+    }
+
+    async function workOrderIsDraft(eContext: Xrm.ExecutionContext<any, any>) {
+        const form = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
+        const workOrderValue = form.getAttribute("ts_workorder").getValue();
+        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
+        const workOrder = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ts_state");
+        return workOrder.ts_state == ts_planningstate.Draft;
+    }
     export function getSurveyLocal(): string {
         const languageCode = Xrm.Utility.getGlobalContext().userSettings.languageId;
         let surveyLocale = 'en';
@@ -623,7 +810,6 @@
         );
 
     }
-
     function fetchXMLCallStep3(eContext, win) {
         var workOrderAttribute = eContext.getFormContext().getAttribute('ts_workorder').getValue();
         var workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
@@ -1030,7 +1216,6 @@
         });
         return hasRole;
     }
-
     function CompleteQuestionnaire(wrCtrl) {
         // Get the web resource inner content window
         wrCtrl.getContentWindow().then(function (win) {
@@ -1046,142 +1231,5 @@
             }
         });
     }
-    function applyMandatoryFieldFromTaskType(eContext) {
-        var fc = eContext.getFormContext();
-        var taskTypeValue = fc.getAttribute("ts_tasktype").getValue();
-        console.log("Retrieved values: check type ");
-        if (taskTypeValue != null && taskTypeValue != undefined && taskTypeValue[0].entityType == "msdyn_servicetasktype") {
-
-            Xrm.WebApi.retrieveRecord("msdyn_servicetasktype", taskTypeValue[0].id, "?$select=ts_mandatory").then(
-                function success(result) {
-
-                    console.log("Retrieved values: ts_mandatory: " + result.ts_mandatory);
-                    if (result.ts_mandatory != null && result.ts_mandatory) {
-                        fc.getAttribute("ts_mandatory").setValue(true);
-                    }
-                    else { fc.getAttribute("ts_mandatory").setValue(false); }
-                },
-                function (error) {
-                    console.log(error.message);
-                }
-            );
-        }
-    }
-    function showHideFieldsByOperationType(form: Form.ts_workorderservicetaskworkspace.Main.Information, operationTypeId, operationTypeOwnerId): void {
-        if (operationTypeOwnerId != "e2e3910d-a41f-ec11-b6e6-0022483cb5c7") {  //Owner is AvSec
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_AirCarrier').setVisible(false);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(false);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(false);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(false);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(false);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Other').setVisible(false);
-        }
-        else {
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_AirCarrier').setVisible(true);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(true);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(true);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Aircraft').setVisible(true);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Flight').setVisible(true);
-            form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Other').setVisible(true);
-        }
-    }
-    function setAOCSiteFilteredView(form: Form.ts_workorderservicetaskworkspace.Main.Information, regionAttributeId: string, stakeholderTypeAttributeId: string, operationTypeAttributeId): void {
-        const viewId = '{6E57251F-F695-4076-9498-49AB892154B7}';
-        const entityName = "msdyn_functionallocation";
-        const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
-        const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter>' + '</filter><filter><condition attribute="ts_region" operator="eq" value="' + regionAttributeId + '"/></filter><filter><condition attribute="ts_sitestatus" operator="ne" value="717750001" /></filter><order attribute="msdyn_name" descending="false"/><link-entity name="ovs_operation" from="ts_site" to="msdyn_functionallocationid"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value=" ' + operationTypeAttributeId + '"/><condition attribute="ts_stakeholder" operator="eq" value="' + stakeholderTypeAttributeId + '"/><condition attribute="ts_operationalstatus" operator="eq" value="717750000"/></filter></link-entity></entity></fetch>';
-        const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-        form.getControl("ts_aocsite").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
-    }
-    function showHideFieldsByIncidentType(form: Form.ts_workorderservicetaskworkspace.Main.Information,): void {
-        const workOrderValue = form.getAttribute("ts_workorder").getValue();
-        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
-        const fieldsMap = [
-            ['ts_vlocation', 'ts_location'],
-            ['ts_vflightnumber', 'ts_flightnumber'],
-            ['ts_vorigin', 'ts_origin'],
-            ['ts_vdestination', 'ts_destination'],
-            ['ts_vflightcategory', 'ts_flightcategory'],
-            ['ts_vflighttype', 'ts_flighttype'],
-            ['ts_vreportdetails', 'ts_reportdetails'],
-            ['ts_vpaxcheckedin', 'ts_paxonboard'],
-            ['ts_vpaxboarded', 'ts_paxboarded'],
-            ['ts_vcbcheckedin', 'ts_cbonboard'],
-            ['ts_vcbloaded', 'ts_cbloaded'],
-            ['ts_vscheduledtime', 'ts_scheduledtime'],
-            ['ts_vactualtime', 'ts_actualtime'],
-            ['ts_vregistration', 'ts_aircraftmark'],
-            ['ts_vmanufacturer', 'ts_aircraftmanufacturer'],
-            ['ts_vmodel', 'ts_aircraftmodel'],
-            ['ts_vbrandname', 'ts_brandname'],
-            ['ts_vaocoperation', 'ts_aocoperation'],
-            ['ts_vaocstakeholder', 'ts_aocstakeholder'],
-            ['ts_vaocoperationtype', 'ts_aocoperationtype'],
-            ['ts_vaocsite', 'ts_aocsite'],
-            ['ts_vpassengerservices', 'ts_passengerservices'],
-            ['ts_vrampservices', 'ts_rampservices'],
-            ['ts_vcargoservices', 'ts_cargoservices'],
-            ['ts_vcateringservices', 'ts_cateringservices'],
-            ['ts_vgroomingservices', 'ts_groomingservices'],
-            ['ts_vsecuritysearchservices', 'ts_securitysearchservices'],
-            ['ts_vaccesscontrolsecurityservices', 'ts_accesscontrolsecurityservices'],
-            ['ts_vothersecurityservices', 'ts_othersecurityservices']
-        ];
-        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_primaryincidenttype_value&$expand=msdyn_primaryincidenttype ").then(
-            function success(result) {
-                fieldsMap.forEach(function (item, index) {
-                    let isVisiable = false;
-                    if (result["msdyn_primaryincidenttype"][item[0]] == true) {
-                        isVisiable = true;
-                    }
-
-                    var control = form.getControl(item[1]);
-                    if (control != null) {
-                        (<any>control).setVisible(isVisiable);
-                    }
-                });
-            },
-            function error(error) {
-                Xrm.Navigation.openAlertDialog({ text: error.message });
-            });
-    }
-    export function aircraftManufacturerOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
-
-        const aircraftmanufacturer = form.getAttribute("ts_aircraftmanufacturer").getValue();
-        var options = form.getControl("ts_aircraftmodel").getOptions();
-        for (var i = 0; i < options.length; i++)
-            form.getControl("ts_aircraftmodel").removeOption(options[i].value);
-        form.getControl("ts_aircraftmodelother").setVisible(false);
-        form.getControl("ts_aircraftmodel").setVisible(true);
-        if (aircraftmanufacturer == ts_aircraftmanufacturer.Boeing) {
-            for (var i = 1; i <= 11; i++) {
-                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
-            }
-        }
-        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Airbus) {
-            for (var i = 12; i <= 22; i++) {
-                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
-            }
-        }
-        else if (aircraftmanufacturer == ts_aircraftmanufacturer.DeHavilland) {
-            for (var i = 23; i <= 24; i++) {
-                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
-            }
-        }
-        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Bombardier) {
-            for (var i = 25; i <= 25; i++) {
-                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
-            }
-        }
-        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Embraer) {
-            for (var i = 26; i <= 29; i++) {
-                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
-            }
-        }
-        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Other) {
-            form.getControl("ts_aircraftmodelother").setVisible(true);
-            form.getControl("ts_aircraftmodel").setVisible(false);
-        }
-    }
+    
 }
