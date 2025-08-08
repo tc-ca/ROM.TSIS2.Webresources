@@ -180,8 +180,8 @@ namespace ROM.WorkOrderServiceTask {
 
                 Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
                     function success() {
-                        // Refresh the form after modal closes (refreshes the main form on which this script is running)
-                        formContext.data.refresh();
+                        // Close the current msdyn_workorderservicetask form
+                        formContext.ui.close();
                     },
                     function error(error) {
                         console.error("Error opening modal window: ", error.message);
