@@ -535,43 +535,45 @@
         }
     }
     export function aircraftManufacturerOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
+        setTimeout(() => {
+            const form = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
 
-        const aircraftmanufacturer = form.getAttribute("ts_aircraftmanufacturer").getValue();
-        var options = form.getControl("ts_aircraftmodel").getOptions();
-        for (var i = 0; i < options.length; i++)
-            form.getControl("ts_aircraftmodel").removeOption(options[i].value);
-        form.getControl("ts_aircraftmodelother").setVisible(false);
-        form.getControl("ts_aircraftmodel").setVisible(true);
-        if (aircraftmanufacturer == ts_aircraftmanufacturer.Boeing) {
-            for (var i = 1; i <= 11; i++) {
-                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            const aircraftmanufacturer = form.getAttribute("ts_aircraftmanufacturer").getValue();
+            var options = form.getControl("ts_aircraftmodel").getOptions();
+            for (var i = 0; i < options.length; i++)
+                form.getControl("ts_aircraftmodel").removeOption(options[i].value);
+            form.getControl("ts_aircraftmodelother").setVisible(false);
+            form.getControl("ts_aircraftmodel").setVisible(true);
+            if (aircraftmanufacturer == ts_aircraftmanufacturer.Boeing) {
+                for (var i = 1; i <= 11; i++) {
+                    form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+                }
             }
-        }
-        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Airbus) {
-            for (var i = 12; i <= 22; i++) {
-                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            else if (aircraftmanufacturer == ts_aircraftmanufacturer.Airbus) {
+                for (var i = 12; i <= 22; i++) {
+                    form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+                }
             }
-        }
-        else if (aircraftmanufacturer == ts_aircraftmanufacturer.DeHavilland) {
-            for (var i = 23; i <= 24; i++) {
-                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            else if (aircraftmanufacturer == ts_aircraftmanufacturer.DeHavilland) {
+                for (var i = 23; i <= 24; i++) {
+                    form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+                }
             }
-        }
-        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Bombardier) {
-            for (var i = 25; i <= 25; i++) {
-                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            else if (aircraftmanufacturer == ts_aircraftmanufacturer.Bombardier) {
+                for (var i = 25; i <= 25; i++) {
+                    form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+                }
             }
-        }
-        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Embraer) {
-            for (var i = 26; i <= 29; i++) {
-                form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+            else if (aircraftmanufacturer == ts_aircraftmanufacturer.Embraer) {
+                for (var i = 26; i <= 29; i++) {
+                    form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
+                }
             }
-        }
-        else if (aircraftmanufacturer == ts_aircraftmanufacturer.Other) {
-            form.getControl("ts_aircraftmodelother").setVisible(true);
-            form.getControl("ts_aircraftmodel").setVisible(false);
-        }
+            else if (aircraftmanufacturer == ts_aircraftmanufacturer.Other) {
+                form.getControl("ts_aircraftmodelother").setVisible(true);
+                form.getControl("ts_aircraftmodel").setVisible(false);
+            }
+        }, 500);
     }
     function filterLegislationSource(eContext: Xrm.ExecutionContext<any, any>) {
         const formContext = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
