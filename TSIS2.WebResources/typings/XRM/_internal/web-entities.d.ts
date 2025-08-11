@@ -1826,6 +1826,29 @@ interface PostFollow_Create extends PostFollow {
 }
 interface PostFollow_Update extends PostFollow {
 }
+interface Contact_Base extends WebEntity {
+}
+interface Contact_Fixed extends WebEntity_Fixed {
+  contactid: string;
+}
+interface Contact extends Contact_Base, Contact_Relationships {
+}
+interface Contact_Relationships {
+}
+interface Contact_Result extends Contact_Base, Contact_Relationships {
+}
+interface Contact_FormattedResult {
+}
+interface Contact_Select {
+}
+interface Contact_Expand {
+}
+interface Contact_Filter {
+}
+interface Contact_Create extends Contact {
+}
+interface Contact_Update extends Contact {
+}
 interface BulkOperationLog_Base extends WebEntity {
 }
 interface BulkOperationLog_Fixed extends WebEntity_Fixed {
@@ -1871,29 +1894,6 @@ interface Connection_Filter {
 interface Connection_Create extends Connection {
 }
 interface Connection_Update extends Connection {
-}
-interface Contact_Base extends WebEntity {
-}
-interface Contact_Fixed extends WebEntity_Fixed {
-  contactid: string;
-}
-interface Contact extends Contact_Base, Contact_Relationships {
-}
-interface Contact_Relationships {
-}
-interface Contact_Result extends Contact_Base, Contact_Relationships {
-}
-interface Contact_FormattedResult {
-}
-interface Contact_Select {
-}
-interface Contact_Expand {
-}
-interface Contact_Filter {
-}
-interface Contact_Create extends Contact {
-}
-interface Contact_Update extends Contact {
 }
 interface ts_workordertimetracking_Base extends WebEntity {
 }

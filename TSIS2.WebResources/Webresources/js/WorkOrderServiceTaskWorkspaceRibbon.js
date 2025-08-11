@@ -474,11 +474,11 @@ function UnlockWorkOrderServiceTask(primaryControl) {
 //    return false;
 //}
 
-//var findingTypes = {
-//    "No Finding": 717750000,
-//    Observation: 717750001,
-//    "Non-compliance": 717750002,
-//};
+var findingTypes = {
+    "No Finding": 717750000,
+    Observation: 717750001,
+    "Non-compliance": 717750002,
+};
 
 async function buildCustomQuestionnaire(primaryControl) {
     var provisionPromise = await retrieveProvisions(primaryControl);
@@ -550,7 +550,7 @@ function toggleQuestionnaire(primaryControl) {
 function initiateSurvey(primaryControl, wrCtrl, questionnaireDefinition, questionnaireResponse, mode) {
     wrCtrl.setVisible(true);
     wrCtrl.getContentWindow().then(async function (win) {
-        const surveyLocale = ROM.WorkOrderServiceTask.getSurveyLocal();
+        const surveyLocale = ROM.WorkOrderServiceTaskWorkspace.getSurveyLocal();
         win.InitialFormContext(primaryControl);
         let operationData = await retrieveWorkOrderOperationData(primaryControl);
         win.isComplete = primaryControl.getAttribute("ts_percentcomplete").getValue() == 100.0;

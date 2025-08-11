@@ -13,7 +13,7 @@ async function addExistingLegislationsToEntity(primaryControl, selectedControl) 
         var viewIds = "";
         var legislationsAlreadyAssociatedCondition = filterExistingLegislations(formContext, entitySetName, recordId, selectedControl);
 
-        if (entityName == "msdyn_workorderservicetask") { //work order service task form
+        if (entityName == "msdyn_workorderservicetask" || entityName == "ts_workorderservicetaskworkspace") { //work order service task form
 
             defaultViewId = "ec7c9e9c-131b-ec11-b6e7-000d3ae8f87e";
 
@@ -152,10 +152,18 @@ function setLegislationLookupControl(formContext, selectedControl, entitySetName
 async function filterOperationTypeLegislations(formContext) {
     var operationTypeCondition = "";
 
+     // Try to get workOrderValue from msdyn_workorder, fallback to ts_workorder if not present
+    let workOrderValue = null;
     if (formContext.getAttribute("msdyn_workorder") != null) {
-        const workOrderValue = formContext.getAttribute("msdyn_workorder").getValue();
-        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
+        workOrderValue = formContext.getAttribute("msdyn_workorder").getValue();
+    }
+    if ((!workOrderValue || workOrderValue.length === 0) && formContext.getAttribute("ts_workorder") != null) {
+        workOrderValue = formContext.getAttribute("ts_workorder").getValue();
+    }
 
+    const workOrderId = workOrderValue && workOrderValue.length > 0 ? workOrderValue[0].id : "";
+
+    if (workOrderId) {
         var workOrder = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid&$expand=ovs_operationtypeid($expand=owningbusinessunit($select=name))");
         if (workOrder != null && workOrder.ovs_operationtypeid != null) {
             var operationTypeId = workOrder.ovs_operationtypeid.ovs_operationtypeid;
@@ -254,7 +262,10 @@ function setWorkOrderServiceTaskLookupControl(formContext, selectedControl, enti
 
 //Returns true if the current form is the Work Order Service Task SurveyJS Form
 function isCurrentFormSurveyJSForm(primaryControl) {
-    const surveyJSFormId = "af78c3e5-c009-4256-854f-f61a6d4b15fc";
+    const surveyJSFormIds = [
+        "af78c3e5-c009-4256-854f-f61a6d4b15fc",
+        "a269d88a-9b57-446f-a9c7-63a8ca9db4c8"
+    ];
     const currentFormId = primaryControl.ui.formSelector.getCurrentItem().getId();
-    return (currentFormId === surveyJSFormId);
+    return surveyJSFormIds.includes(currentFormId);
 }

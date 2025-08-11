@@ -407,7 +407,23 @@ async function getApplicableExemptions(provisionNameEn) {
 
 //Returns all fields needed to check if an exemption applies to a work order
 async function getWorkOrderExemptionFilterFields() {
-  const workOrderId = window.parentFormContext.getAttribute("msdyn_workorder").getValue()[0].id;
+  let workOrderId = null;
+  if (
+    window.parentFormContext.getAttribute("msdyn_workorder") &&
+    window.parentFormContext.getAttribute("msdyn_workorder").getValue() &&
+    window.parentFormContext.getAttribute("msdyn_workorder").getValue()[0] &&
+    window.parentFormContext.getAttribute("msdyn_workorder").getValue()[0].id
+  ) {
+    workOrderId = window.parentFormContext.getAttribute("msdyn_workorder").getValue()[0].id;
+  } else if (
+    window.parentFormContext.getAttribute("ts_workorder") &&
+    window.parentFormContext.getAttribute("ts_workorder").getValue() &&
+    window.parentFormContext.getAttribute("ts_workorder").getValue()[0] &&
+    window.parentFormContext.getAttribute("ts_workorder").getValue()[0].id
+  ) {
+    workOrderId = window.parentFormContext.getAttribute("ts_workorder").getValue()[0].id;
+  }
+  //const workOrderId = window.parentFormContext.getAttribute("msdyn_workorder").getValue()[0].id;
   const flightType = window.parentFormContext.getAttribute("ts_flighttype").getValue();
   const flightCategory = window.parentFormContext.getAttribute("ts_flightcategory").getValue();
   if (workOrderId == null) return;

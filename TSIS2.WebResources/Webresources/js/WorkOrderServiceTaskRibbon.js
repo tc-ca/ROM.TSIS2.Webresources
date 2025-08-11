@@ -896,6 +896,9 @@ function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
     .then(function (result) {
       if (result.entities.length > 0) {
         const relatedWorkOrderServiceTaskId = result.entities[0].ts_workorderservicetaskworkspaceid;
+        // Close the current msdyn_workorderservicetask form
+        primaryControl.ui.close();
+
         // Open the related Work Order Service Task form in a modal window
         var pageInput = {
           pageType: "entityrecord",
@@ -910,12 +913,10 @@ function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
         };
         Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
           function success() {
-            // Refresh the work order service task after the modal window is closed
-            console.log("Modal window closed successfully.");
-            primaryControl.data.refresh();
+            console.log("Workspace opened successfully.");
           },
           function error(error) {
-            console.error("Error opening modal window: ", error.message);
+            console.error("Error opening workspace: ", error.message);
           }
         );
       } else {

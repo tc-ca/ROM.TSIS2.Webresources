@@ -426,6 +426,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_othercanceledjustification"): Xrm.StringControl;
       get(name: "ts_overtime"): Xrm.NumberControl;
       get(name: "ts_overtimerequired"): Xrm.Control<Xrm.Attribute<any>>;
+      get(name: "ts_overtimerequired1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_paxboarded"): Xrm.NumberControl;
       get(name: "ts_paxcheckedin"): Xrm.NumberControl;
       get(name: "ts_plannedcost"): Xrm.NumberControl;
@@ -779,6 +780,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_othercanceledjustification"): Xrm.StringControl;
     getControl(controlName: "ts_overtime"): Xrm.NumberControl;
     getControl(controlName: "ts_overtimerequired"): Xrm.Control<Xrm.Attribute<any>>;
+    getControl(controlName: "ts_overtimerequired1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_paxboarded"): Xrm.NumberControl;
     getControl(controlName: "ts_paxcheckedin"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedcost"): Xrm.NumberControl;
