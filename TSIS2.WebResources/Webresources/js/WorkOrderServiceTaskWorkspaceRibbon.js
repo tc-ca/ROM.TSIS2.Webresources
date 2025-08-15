@@ -871,3 +871,79 @@ async function getWorkOrderOperationTypeBusinessUnitName(workOrderId) {
 //        primaryControl.getControl("workorderservicetasksgrid").refresh();
 //    });
 //}
+function openRelatedWorkOrderServiceTask(primaryControl) {
+    // Called from ts_workorderservicetaskworkspace ribbon to open its related msdyn_workorderservicetask
+    try {
+        var workspaceId = primaryControl.data.entity.getId().replace(/[{}]/g, "");
+        if (!workspaceId) {
+            console.error("Workspace Id not found.");
+            return;
+        }
+
+        // 1. Use the lookup on the form if present
+        var wostLookupAttr = primaryControl.getAttribute("ts_workorderservicetask");
+        if (wostLookupAttr) {
+            var lookupVal = wostLookupAttr.getValue();
+            if (lookupVal && lookupVal.length > 0) {
+                openWost(lookupVal[0].id);
+                return;
+            }
+        }
+
+        // 2. Fallback: Retrieve the workspace record and get the lookup value
+        Xrm.WebApi
+            .retrieveRecord(
+                "ts_workorderservicetaskworkspace",
+                workspaceId,
+                "?$select=ts_workorderservicetaskworkspaceid,_ts_workorderservicetask_value&$expand=ts_workorderservicetask($select=msdyn_workorderservicetaskid,msdyn_name)"
+            )
+            .then(function (result) {
+                var relatedId =
+                    result._ts_workorderservicetask_value ||
+                    (result.ts_workorderservicetask
+                        ? result.ts_workorderservicetask.msdyn_workorderservicetaskid
+                        : null);
+
+                if (!relatedId) {
+                    console.error("No related Work Order Service Task found on workspace " + workspaceId);
+                    return;
+                }
+                openWost(relatedId);
+            })
+            .catch(function (error) {
+                console.error("Error retrieving workspace record: " + error.message);
+            });
+
+        function openWost(wostId) {
+            wostId = wostId.replace(/[{}]/g, "");
+            // Set flag to tell WOST form not to auto-open (avoid loop)
+            try {
+                sessionStorage.setItem("ROM.SkipWorkspaceAutoOpen." + wostId, "1");
+            } catch (e) {
+                console.warn("Could not set skip flag: " + e.message);
+            }
+            primaryControl.ui.close();
+            var pageInput = {
+                pageType: "entityrecord",
+                entityName: "msdyn_workorderservicetask",
+                entityId: wostId
+            };
+            var navigationOptions = {
+                target: 2,
+                width: { value: 80, unit: "%" },
+                height: { value: 80, unit: "%" },
+                position: 1
+            };
+            Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                function () {
+                    console.log("Work Order Service Task opened: " + wostId);
+                },
+                function (err) {
+                    console.error("Failed to open Work Order Service Task: " + err.message);
+                }
+            );
+        }
+    } catch (e) {
+        console.error("openRelatedWorkOrderServiceTask unexpected error: " + e.message);
+    }
+}
