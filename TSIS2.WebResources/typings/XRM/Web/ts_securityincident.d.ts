@@ -105,7 +105,6 @@ interface ts_securityincident_Relationships {
   ts_securityincident_connections2?: Connection_Result[] | null;
   ts_securityincident_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   ts_ts_securityincident_msdyn_workorder_SecurityIncident?: msdyn_workorder_Result[] | null;
-  ts_ts_securityincident_ts_file_SecurityIncident?: ts_File_Result[] | null;
 }
 interface ts_securityincident extends ts_securityincident_Base, ts_securityincident_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -398,7 +397,6 @@ interface ts_securityincident_Expand {
   ts_securityincident_connections2: WebExpand<ts_securityincident_Expand, Connection_Select, Connection_Filter, { ts_securityincident_connections2: Connection_Result[] }>;
   ts_securityincident_ts_enforcementactions: WebExpand<ts_securityincident_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_securityincident_ts_enforcementactions: ts_enforcementaction_Result[] }>;
   ts_ts_securityincident_msdyn_workorder_SecurityIncident: WebExpand<ts_securityincident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_ts_securityincident_msdyn_workorder_SecurityIncident: msdyn_workorder_Result[] }>;
-  ts_ts_securityincident_ts_file_SecurityIncident: WebExpand<ts_securityincident_Expand, ts_File_Select, ts_File_Filter, { ts_ts_securityincident_ts_file_SecurityIncident: ts_File_Result[] }>;
 }
 interface ts_securityincident_FormattedResult {
   createdby_formatted?: string;
@@ -530,7 +528,6 @@ interface ts_securityincident_RelatedMany {
   ts_securityincident_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ts_securityincident_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_ts_securityincident_msdyn_workorder_SecurityIncident: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
-  ts_ts_securityincident_ts_file_SecurityIncident: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_securityincidents: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;

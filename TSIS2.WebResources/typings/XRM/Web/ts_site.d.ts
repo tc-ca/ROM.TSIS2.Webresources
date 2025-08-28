@@ -51,7 +51,6 @@ interface ts_site_Relationships {
   ts_site_Emails?: Email_Result[] | null;
   ts_site_ServiceAppointments?: ServiceAppointment_Result[] | null;
   ts_site_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
-  ts_site_ts_file?: ts_File_Result[] | null;
   ts_ts_site_incident_Site?: Incident_Result[] | null;
   ts_ts_site_msdyn_workorder_ArrivalAerodrome?: msdyn_workorder_Result[] | null;
   ts_ts_site_msdyn_workorder_DepartureAerodrome_Site?: msdyn_workorder_Result[] | null;
@@ -68,7 +67,6 @@ interface ts_site_Relationships {
   ts_ts_site_ovs_operation_Subsite_Site?: ovs_operation_Result[] | null;
   ts_ts_site_ovs_operation_Subsubsite_Site?: ovs_operation_Result[] | null;
   ts_ts_site_ts_case_Site?: ts_case_Result[] | null;
-  ts_ts_site_ts_file_Site_Site?: ts_File_Result[] | null;
   ts_ts_site_ts_operationactivity_Site_Site?: ts_OperationActivity_Result[] | null;
   ts_ts_site_ts_planningdata_Site_Site?: ts_PlanningData_Result[] | null;
   ts_ts_site_ts_securityincident_Destination_Site?: ts_securityincident_Result[] | null;
@@ -228,7 +226,6 @@ interface ts_site_Expand {
   ts_site_Emails: WebExpand<ts_site_Expand, Email_Select, Email_Filter, { ts_site_Emails: Email_Result[] }>;
   ts_site_ServiceAppointments: WebExpand<ts_site_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ts_site_ServiceAppointments: ServiceAppointment_Result[] }>;
   ts_site_ts_enforcementactions: WebExpand<ts_site_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_site_ts_enforcementactions: ts_enforcementaction_Result[] }>;
-  ts_site_ts_file: WebExpand<ts_site_Expand, ts_File_Select, ts_File_Filter, { ts_site_ts_file: ts_File_Result[] }>;
   ts_ts_site_incident_Site: WebExpand<ts_site_Expand, Incident_Select, Incident_Filter, { ts_ts_site_incident_Site: Incident_Result[] }>;
   ts_ts_site_msdyn_workorder_ArrivalAerodrome: WebExpand<ts_site_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_ts_site_msdyn_workorder_ArrivalAerodrome: msdyn_workorder_Result[] }>;
   ts_ts_site_msdyn_workorder_DepartureAerodrome_Site: WebExpand<ts_site_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_ts_site_msdyn_workorder_DepartureAerodrome_Site: msdyn_workorder_Result[] }>;
@@ -245,7 +242,6 @@ interface ts_site_Expand {
   ts_ts_site_ovs_operation_Subsite_Site: WebExpand<ts_site_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ts_site_ovs_operation_Subsite_Site: ovs_operation_Result[] }>;
   ts_ts_site_ovs_operation_Subsubsite_Site: WebExpand<ts_site_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ts_site_ovs_operation_Subsubsite_Site: ovs_operation_Result[] }>;
   ts_ts_site_ts_case_Site: WebExpand<ts_site_Expand, ts_case_Select, ts_case_Filter, { ts_ts_site_ts_case_Site: ts_case_Result[] }>;
-  ts_ts_site_ts_file_Site_Site: WebExpand<ts_site_Expand, ts_File_Select, ts_File_Filter, { ts_ts_site_ts_file_Site_Site: ts_File_Result[] }>;
   ts_ts_site_ts_operationactivity_Site_Site: WebExpand<ts_site_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_site_ts_operationactivity_Site_Site: ts_OperationActivity_Result[] }>;
   ts_ts_site_ts_planningdata_Site_Site: WebExpand<ts_site_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_site_ts_planningdata_Site_Site: ts_PlanningData_Result[] }>;
   ts_ts_site_ts_securityincident_Destination_Site: WebExpand<ts_site_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_ts_site_ts_securityincident_Destination_Site: ts_securityincident_Result[] }>;
@@ -315,7 +311,6 @@ interface ts_site_RelatedMany {
   ts_site_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   ts_site_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   ts_site_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
-  ts_site_ts_file: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_ts_site_incident_Site: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_ts_site_msdyn_workorder_ArrivalAerodrome: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ts_site_msdyn_workorder_DepartureAerodrome_Site: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
@@ -332,7 +327,6 @@ interface ts_site_RelatedMany {
   ts_ts_site_ovs_operation_Subsite_Site: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_ts_site_ovs_operation_Subsubsite_Site: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
   ts_ts_site_ts_case_Site: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
-  ts_ts_site_ts_file_Site_Site: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_ts_site_ts_operationactivity_Site_Site: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_site_ts_planningdata_Site_Site: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_ts_site_ts_securityincident_Destination_Site: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;

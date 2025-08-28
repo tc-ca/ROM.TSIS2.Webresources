@@ -39,7 +39,6 @@ interface Connection_Relationships {
   record1id_ts_action?: ts_action_Result | null;
   record1id_ts_case?: ts_case_Result | null;
   record1id_ts_enforcementaction?: ts_enforcementaction_Result | null;
-  record1id_ts_file?: ts_File_Result | null;
   record1id_ts_securityincident?: ts_securityincident_Result | null;
   record2id_account?: Account_Result | null;
   record2id_appointment?: Appointment_Result | null;
@@ -60,7 +59,6 @@ interface Connection_Relationships {
   record2id_ts_action?: ts_action_Result | null;
   record2id_ts_case?: ts_case_Result | null;
   record2id_ts_enforcementaction?: ts_enforcementaction_Result | null;
-  record2id_ts_file?: ts_File_Result | null;
   record2id_ts_securityincident?: ts_securityincident_Result | null;
 }
 interface Connection extends Connection_Base, Connection_Relationships {
@@ -464,7 +462,6 @@ interface Connection_Expand {
   record1id_ts_action: WebExpand<Connection_Expand, ts_action_Select, ts_action_Filter, { record1id_ts_action: ts_action_Result }>;
   record1id_ts_case: WebExpand<Connection_Expand, ts_case_Select, ts_case_Filter, { record1id_ts_case: ts_case_Result }>;
   record1id_ts_enforcementaction: WebExpand<Connection_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { record1id_ts_enforcementaction: ts_enforcementaction_Result }>;
-  record1id_ts_file: WebExpand<Connection_Expand, ts_File_Select, ts_File_Filter, { record1id_ts_file: ts_File_Result }>;
   record1id_ts_securityincident: WebExpand<Connection_Expand, ts_securityincident_Select, ts_securityincident_Filter, { record1id_ts_securityincident: ts_securityincident_Result }>;
   record2id_account: WebExpand<Connection_Expand, Account_Select, Account_Filter, { record2id_account: Account_Result }>;
   record2id_appointment: WebExpand<Connection_Expand, Appointment_Select, Appointment_Filter, { record2id_appointment: Appointment_Result }>;
@@ -485,7 +482,6 @@ interface Connection_Expand {
   record2id_ts_action: WebExpand<Connection_Expand, ts_action_Select, ts_action_Filter, { record2id_ts_action: ts_action_Result }>;
   record2id_ts_case: WebExpand<Connection_Expand, ts_case_Select, ts_case_Filter, { record2id_ts_case: ts_case_Result }>;
   record2id_ts_enforcementaction: WebExpand<Connection_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { record2id_ts_enforcementaction: ts_enforcementaction_Result }>;
-  record2id_ts_file: WebExpand<Connection_Expand, ts_File_Select, ts_File_Filter, { record2id_ts_file: ts_File_Result }>;
   record2id_ts_securityincident: WebExpand<Connection_Expand, ts_securityincident_Select, ts_securityincident_Filter, { record2id_ts_securityincident: ts_securityincident_Result }>;
   relatedconnectionid: WebExpand<Connection_Expand, Connection_Select, Connection_Filter, { relatedconnectionid: Connection_Result }>;
 }
@@ -557,7 +553,6 @@ interface Connection_RelatedOne {
   record1id_ts_action: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   record1id_ts_case: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   record1id_ts_enforcementaction: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
-  record1id_ts_file: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   record1id_ts_securityincident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   record2id_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   record2id_appointment: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
@@ -578,7 +573,6 @@ interface Connection_RelatedOne {
   record2id_ts_action: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   record2id_ts_case: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   record2id_ts_enforcementaction: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
-  record2id_ts_file: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   record2id_ts_securityincident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   relatedconnectionid: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
 }

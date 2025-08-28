@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        const USER_LANG_FR = 1036;
+
+        function setButtonLabel() {
+            console.info("Entering setButtonLabel()"); 
+            var currentLanguage = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+            var text = (currentLanguage === USER_LANG_FR)
+                ? "Recalculer la cote de risque"
+                : "Recalculate Risk Rating";
+
+            document.getElementById("btnText").innerText = text;
+        }
+
+        function RecalculateRiskRating() {
+            // logic when button is clicked
+            console.info("Entering RecalculateRiskRating()"); 
+        }
+
+        // Run as soon as the page loads
+        setButtonLabel();    
+    </script>
+    <button id="riskBtn" type="button" class="btn btn-default btn-lg" onclick="RecalculateRiskRating()">
+        <span class="glyphicon glyphicon-refresh"></span>
+        <span id="btnText"></span>
+    </button>
+</body>
+</html>
