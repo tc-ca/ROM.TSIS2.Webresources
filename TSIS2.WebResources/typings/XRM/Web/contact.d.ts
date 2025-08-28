@@ -245,6 +245,7 @@ interface Contact_Relationships {
   ts_contact_ts_case_primarycontactid?: ts_case_Result[] | null;
   ts_contact_ts_operationcontact_contact?: ts_operationcontact_Result[] | null;
   ts_infraction_contact_contact?: ts_infraction_Result[] | null;
+  ts_trip_Contact_Contact?: ts_trip_Result[] | null;
   ts_ts_enforcementaction_Verbalwarninggivento?: ts_enforcementaction_Result[] | null;
   ts_ts_enforcementaction_Writtenwarningsentto?: ts_enforcementaction_Result[] | null;
 }
@@ -791,6 +792,7 @@ interface Contact_Expand {
   ts_contact_ts_case_primarycontactid: WebExpand<Contact_Expand, ts_case_Select, ts_case_Filter, { ts_contact_ts_case_primarycontactid: ts_case_Result[] }>;
   ts_contact_ts_operationcontact_contact: WebExpand<Contact_Expand, ts_operationcontact_Select, ts_operationcontact_Filter, { ts_contact_ts_operationcontact_contact: ts_operationcontact_Result[] }>;
   ts_infraction_contact_contact: WebExpand<Contact_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_contact_contact: ts_infraction_Result[] }>;
+  ts_trip_Contact_Contact: WebExpand<Contact_Expand, ts_trip_Select, ts_trip_Filter, { ts_trip_Contact_Contact: ts_trip_Result[] }>;
   ts_ts_enforcementaction_Verbalwarninggivento: WebExpand<Contact_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Verbalwarninggivento: ts_enforcementaction_Result[] }>;
   ts_ts_enforcementaction_Writtenwarningsentto: WebExpand<Contact_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Writtenwarningsentto: ts_enforcementaction_Result[] }>;
 }
@@ -950,6 +952,7 @@ interface Contact_RelatedMany {
   ts_contact_ts_case_primarycontactid: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   ts_contact_ts_operationcontact_contact: WebMappingRetrieve<ts_operationcontact_Select,ts_operationcontact_Expand,ts_operationcontact_Filter,ts_operationcontact_Fixed,ts_operationcontact_Result,ts_operationcontact_FormattedResult>;
   ts_infraction_contact_contact: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
+  ts_trip_Contact_Contact: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   ts_ts_enforcementaction_Verbalwarninggivento: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_ts_enforcementaction_Writtenwarningsentto: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
 }

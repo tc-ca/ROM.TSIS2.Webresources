@@ -28,9 +28,8 @@ interface ts_trip_Base extends WebEntity {
 }
 interface ts_trip_Relationships {
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
-  ts_file_Trip_ts_trip?: ts_File_Result[] | null;
+  ts_trip_Contact_Contact?: Contact_Result[] | null;
   ts_trip_msdyn_workorder_trip?: msdyn_workorder_Result[] | null;
-  ts_ts_file_ts_trip?: ts_File_Result[] | null;
   ts_ts_trip_ts_suggestedinspection_Trip?: ts_SuggestedInspection_Result[] | null;
 }
 interface ts_trip extends ts_trip_Base, ts_trip_Relationships {
@@ -132,10 +131,9 @@ interface ts_trip_Expand {
   owningteam: WebExpand<ts_trip_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_trip_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_FiscalYear: WebExpand<ts_trip_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
-  ts_file_Trip_ts_trip: WebExpand<ts_trip_Expand, ts_File_Select, ts_File_Filter, { ts_file_Trip_ts_trip: ts_File_Result[] }>;
   ts_plannedfiscalquarter: WebExpand<ts_trip_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ts_plannedfiscalquarter: tc_TCFiscalQuarter_Result }>;
+  ts_trip_Contact_Contact: WebExpand<ts_trip_Expand, Contact_Select, Contact_Filter, { ts_trip_Contact_Contact: Contact_Result[] }>;
   ts_trip_msdyn_workorder_trip: WebExpand<ts_trip_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_trip_msdyn_workorder_trip: msdyn_workorder_Result[] }>;
-  ts_ts_file_ts_trip: WebExpand<ts_trip_Expand, ts_File_Select, ts_File_Filter, { ts_ts_file_ts_trip: ts_File_Result[] }>;
   ts_ts_trip_ts_suggestedinspection_Trip: WebExpand<ts_trip_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_ts_trip_ts_suggestedinspection_Trip: ts_SuggestedInspection_Result[] }>;
 }
 interface ts_trip_FormattedResult {
@@ -191,9 +189,8 @@ interface ts_trip_RelatedOne {
   ts_plannedfiscalquarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
 }
 interface ts_trip_RelatedMany {
-  ts_file_Trip_ts_trip: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
+  ts_trip_Contact_Contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_trip_msdyn_workorder_trip: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
-  ts_ts_file_ts_trip: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_ts_trip_ts_suggestedinspection_Trip: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

@@ -61,6 +61,7 @@ interface Email_Base extends WebEntity {
   postponeemailprocessinguntil?: Date | null;
   prioritycode?: email_prioritycode | null;
   processid?: string | null;
+  purviewrights?: string | null;
   readreceiptrequested?: boolean | null;
   reminderactioncardid?: string | null;
   replycount?: number | null;
@@ -318,6 +319,7 @@ interface Email_Select {
   postponeemailprocessinguntil: WebAttribute<Email_Select, { postponeemailprocessinguntil: Date | null }, { postponeemailprocessinguntil_formatted?: string }>;
   prioritycode: WebAttribute<Email_Select, { prioritycode: email_prioritycode | null }, { prioritycode_formatted?: string }>;
   processid: WebAttribute<Email_Select, { processid: string | null }, {  }>;
+  purviewrights: WebAttribute<Email_Select, { purviewrights: string | null }, {  }>;
   readreceiptrequested: WebAttribute<Email_Select, { readreceiptrequested: boolean | null }, {  }>;
   receivingmailboxid_guid: WebAttribute<Email_Select, { receivingmailboxid_guid: string | null }, { receivingmailboxid_formatted?: string }>;
   regardingobjectid_guid: WebAttribute<Email_Select, { regardingobjectid_guid: string | null }, { regardingobjectid_formatted?: string }>;
@@ -432,6 +434,7 @@ interface Email_Filter {
   postponeemailprocessinguntil: Date;
   prioritycode: email_prioritycode;
   processid: XQW.Guid;
+  purviewrights: string;
   readreceiptrequested: boolean;
   receivingmailboxid_guid: XQW.Guid;
   regardingobjectid_guid: XQW.Guid;

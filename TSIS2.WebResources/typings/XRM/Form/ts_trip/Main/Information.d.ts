@@ -9,6 +9,13 @@ declare namespace Form.ts_trip.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_contacts extends Xrm.SectionCollectionBase {
+        get(name: "tab_3_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "modifiedby"): Xrm.LookupAttribute<"systemuser">;
@@ -33,6 +40,7 @@ declare namespace Form.ts_trip.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Inspections"): Xrm.SubGridControl<"ts_tripinspection">;
       get(name: "Inspectors"): Xrm.SubGridControl<"ts_tripinspector">;
+      get(name: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
       get(name: "TripFiles"): Xrm.SubGridControl<"ts_file">;
       get(name: "modifiedby"): Xrm.LookupControl<"systemuser">;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -56,6 +64,7 @@ declare namespace Form.ts_trip.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
+      get(name: "tab_contacts"): Xrm.PageTab<Tabs.tab_contacts>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -80,6 +89,7 @@ declare namespace Form.ts_trip.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Inspections"): Xrm.SubGridControl<"ts_tripinspection">;
     getControl(controlName: "Inspectors"): Xrm.SubGridControl<"ts_tripinspector">;
+    getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "TripFiles"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "modifiedby"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
