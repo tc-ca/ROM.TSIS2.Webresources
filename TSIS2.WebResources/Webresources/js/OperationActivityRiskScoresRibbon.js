@@ -1,4 +1,6 @@
-﻿function ReCalculateRiskScore(PrimaryControl) {
+﻿// this code is not in use since the user will use the new button added to the form instead of the ribbon button
+
+function ReCalculateRiskScore(PrimaryControl) {
     console.log("Entering ReCalculateRiskScore()");
 
     // Make sure PrimaryControl is not null

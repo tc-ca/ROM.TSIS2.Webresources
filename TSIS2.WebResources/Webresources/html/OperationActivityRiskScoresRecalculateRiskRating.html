@@ -8,30 +8,143 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <script type="text/javascript">
-        const USER_LANG_FR = 1036;
-
-        function setButtonLabel() {
-            console.info("Entering setButtonLabel()"); 
-            var currentLanguage = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
-            var text = (currentLanguage === USER_LANG_FR)
-                ? "Recalculer la cote de risque"
-                : "Recalculate Risk Rating";
-
-            document.getElementById("btnText").innerText = text;
-        }
-
-        function RecalculateRiskRating() {
-            // logic when button is clicked
-            console.info("Entering RecalculateRiskRating()"); 
-        }
-
-        // Run as soon as the page loads
-        setButtonLabel();    
-    </script>
     <button id="riskBtn" type="button" class="btn btn-default btn-lg" onclick="RecalculateRiskRating()">
         <span class="glyphicon glyphicon-refresh"></span>
         <span id="btnText"></span>
     </button>
+    <script type="text/javascript">
+        const USER_LANG_FR = 1036;
+
+        let originalText = "";
+        let processingText = "";
+        let countdownTimer = null;
+
+        function setButtonLabel() {
+            console.info("Entering setButtonLabel()");
+            var currentLanguage = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+            originalText = (currentLanguage === USER_LANG_FR)
+                ? "Recalculer la cote de risque"
+                : "Recalculate Risk Rating";
+
+            processingText = (currentLanguage === USER_LANG_FR)
+                ? "Traitement..."
+                : "Processing...";
+
+            document.getElementById("btnText").innerText = originalText;
+
+            // Hide button if form is read-only
+            try {
+                var formContext = parent.Xrm.Page;
+                if (formContext && formContext.ui) {
+                    var formType = formContext.ui.getFormType();
+                    // 3 = Read-Only, 4 = Disabled
+                    if (formType === 3 || formType === 4) {
+                        document.getElementById("riskBtn").style.display = "none";
+                        console.info("Button hidden because form is read-only.");
+                    }
+                }
+            } catch (e) {
+                console.error("Could not check form type: " + e.message);
+            }
+        }
+
+        function showOverlay(lock) { 
+            const doc = parent.document; 
+            let overlay = doc.getElementById("formLockOverlay"); 
+
+            if (lock) { 
+                if (!overlay) { 
+                    overlay = doc.createElement("div"); 
+                    overlay.id = "formLockOverlay"; 
+                    overlay.style.position = "fixed"; 
+                    overlay.style.top = 0; 
+                    overlay.style.left = 0; 
+                    overlay.style.width = "100%"; 
+                    overlay.style.height = "100%"; 
+                    overlay.style.background = "rgba(255,255,255,0.6)"; 
+                    overlay.style.zIndex = 9999; 
+                    overlay.style.cursor = "wait"; 
+                    overlay.innerHTML = 
+                        "<div style='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:16px Segoe UI, Arial; text-align:center;'>" +
+                        "</div>";
+                    doc.body.appendChild(overlay); 
+                }
+            } else if (overlay) { 
+                overlay.remove(); 
+            }
+        } 
+
+        function ReCalculateRiskScore() {                                   
+            console.log("Entering ReCalculateRiskScore()");                 
+            var formContext = parent.Xrm.Page;                              
+            if (!formContext) {                                             
+                console.error("ReCalculateRiskScore() - formContext is null."); 
+                return;                                                     
+            }                                                               
+            var recordId = formContext.data.entity.getId();                 
+            var entityName = formContext.data.entity.getEntityName();       
+            if (!recordId || recordId === "") {                             
+                console.error("ReCalculateRiskScore() - recordId is not valid."); 
+                return;                                                     
+            }                                                               
+            recordId = recordId.replace("{", "").replace("}", "");          
+            parent.Xrm.WebApi.updateRecord(                                 
+                entityName,                                                 
+                recordId,                                                   
+                { "ts_riskscoreribbontrigger": new Date().toISOString() }   
+            ).then(function success(result) {                                
+                console.log("Risk score trigger updated successfully. Record ID: " + result.id); 
+            }, function error(error) {                                       
+                console.error("Error updating risk score trigger: " + error.message); 
+            });                                                              
+        }  
+
+        function RecalculateRiskRating() {
+            // logic when button is clicked
+            console.info("Entering RecalculateRiskRating()");
+
+            var btn = document.getElementById("riskBtn");
+            var textSpan = document.getElementById("btnText");
+
+            // Lock UI immediately
+            showOverlay(true); 
+
+            //Trigger the Dataverse update right away(while timer runs)
+            ReCalculateRiskScore();   
+
+            // Start countdown
+            let secondsLeft = 30;
+            textSpan.innerText = processingText + " " + secondsLeft;
+
+            if (countdownTimer) clearInterval(countdownTimer);  // clear any old timer
+
+            countdownTimer = setInterval(function () {
+                secondsLeft--;
+                if (secondsLeft > 0) {
+                    textSpan.innerText = processingText + " " + secondsLeft;
+                } else {
+                    clearInterval(countdownTimer);
+                    countdownTimer = null;
+
+                    showOverlay(false);
+
+                    // Restore button
+                    textSpan.innerText = originalText;
+                    console.info("Button re-enabled after 30s");
+
+                    // Refresh the form
+                    if (parent.Xrm && parent.Xrm.Page && parent.Xrm.Page.data) {
+                        parent.Xrm.Page.data.refresh(false).then(
+                            function () { console.info("Form refreshed successfully"); },
+                            function (err) { console.error("Error refreshing form: " + err.message); }
+                        );
+                    }
+                }
+            }, 1000);
+        }
+
+        // Run as soon as the page loads
+        setButtonLabel();
+    </script>
 </body>
 </html>
