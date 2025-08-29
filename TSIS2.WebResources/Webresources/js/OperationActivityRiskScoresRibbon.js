@@ -1,4 +1,6 @@
-﻿function ReCalculateRiskScore(PrimaryControl) {
+﻿// this code is not in use since the user will use the new button added to the form instead of the ribbon button
+
+function ReCalculateRiskScore(PrimaryControl) {
     console.log("Entering ReCalculateRiskScore()");
 
     // Make sure PrimaryControl is not null
@@ -33,4 +35,91 @@
             });
         }
     }
+}
+
+// --- global flag the Enable Rule will read
+var OARisk_RecalcEnabled = true;
+
+/**
+ * Enable Rule for the button.
+ * Only checks the cooldown flag (ignores saved state).
+ */
+function OARisk_IsRecalcEnabled(primaryControl) {
+    return OARisk_RecalcEnabled;
+}
+
+/**
+ * Command Action for the button.
+ * Debounces clicks with a short cooldown.
+ */
+function OARisk_ReCalculateRiskScore(primaryControl) {
+    var formContext = primaryControl;
+
+    if (!OARisk_RecalcEnabled) {
+        Xrm.Navigation.openAlertDialog({ text: "Please wait a few seconds before clicking again." });
+        return;
+    }
+
+    // start cooldown immediately
+    OARisk_RecalcEnabled = false;
+    _oa_refreshRibbon(formContext);
+
+    var idRaw = formContext.data.entity.getId();
+    if (!idRaw) {
+        _oa_notify("Please save the record before recalculating.");
+        _oa_endCooldown(formContext, /*immediate*/ true);
+        return;
+    }
+
+    var recordId = idRaw.replace(/[{}]/g, "");
+    var entityName = formContext.data.entity.getEntityName();
+
+    if (Xrm.Utility && Xrm.Utility.showProgressIndicator) {
+        Xrm.Utility.showProgressIndicator("Queuing risk recalculation…");
+    }
+
+    var payload = {
+        ts_riskscoreribbontrigger: new Date().toISOString()
+    };
+
+    Xrm.WebApi.updateRecord(entityName, recordId, payload)
+        .then(function () {
+            _oa_notify("Risk rating recalculation has been queued.");
+            _oa_endCooldown(formContext, /*immediate*/ false);
+        })
+        .catch(function (err) {
+            _oa_error("Error updating trigger: " + err.message);
+            _oa_endCooldown(formContext, /*immediate*/ true);
+        })
+        .finally(function () {
+            if (Xrm.Utility && Xrm.Utility.closeProgressIndicator) {
+                Xrm.Utility.closeProgressIndicator();
+            }
+        });
+}
+
+// --- helpers ---------------------------------------------------------------
+
+function _oa_endCooldown(formContext, immediate) {
+    var delayMs = immediate ? 0 : 5000; // adjust cooldown here
+    setTimeout(function () {
+        OARisk_RecalcEnabled = true;
+        _oa_refreshRibbon(formContext);
+    }, delayMs);
+}
+
+function _oa_refreshRibbon(formContext) {
+    if (formContext && formContext.ui && formContext.ui.refreshRibbon) {
+        formContext.ui.refreshRibbon();
+    } else if (Xrm.Ribbon && Xrm.Ribbon.refreshCommandBars) {
+        Xrm.Ribbon.refreshCommandBars();
+    }
+}
+
+function _oa_notify(text) {
+    Xrm.Navigation.openAlertDialog({ text: text });
+}
+
+function _oa_error(text) {
+    Xrm.Navigation.openErrorDialog({ message: text });
 }

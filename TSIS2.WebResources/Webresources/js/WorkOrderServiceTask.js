@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -162,15 +162,48 @@ var ROM;
         }
         WorkOrderServiceTask.taskTypeOnChange = taskTypeOnChange;
         function onLoadServiceTaskStartDate(eContext) {
-            var _a;
+            // Skip auto workspace navigation if we came from the workspace ribbon (sessionStorage flag)
+            try {
+                var formContext = eContext.getFormContext();
+                var currentId = formContext.data.entity.getId().replace(/[{}]/g, "");
+                var flagKey = "ROM.SkipWorkspaceAutoOpen." + currentId;
+                if (sessionStorage.getItem(flagKey) === "1") {
+                    sessionStorage.removeItem(flagKey);
+                    return; // Do NOT auto-open or create workspace
+                }
+            }
+            catch (e) {
+                console.warn("Skip flag check failed: " + e.message);
+            }
             if (appUrl === DEV_URL || appUrl === QA_URL || appUrl === INT_URL) {
                 var formContext_1 = eContext.getFormContext();
                 var serviceTaskStartDateAttr = formContext_1.getAttribute("ts_servicetaskstartdate");
-                var serviceTaskStartDate = serviceTaskStartDateAttr ? serviceTaskStartDateAttr.getValue() : null;
-                if (serviceTaskStartDate === null) {
-                    var entityId = formContext_1.data.entity.getId();
-                    var entityIdClean = entityId.replace(/{|}/g, ""); // Remove curly braces
+                var serviceTaskStartDate_1 = serviceTaskStartDateAttr ? serviceTaskStartDateAttr.getValue() : null;
+                var entityId_1 = formContext_1.data.entity.getId();
+                var entityIdClean_1 = entityId_1.replace(/{|}/g, "");
+                var openExistingWorkspaceDialog_1 = function (workspaceId) {
+                    var pageInput = {
+                        pageType: "entityrecord",
+                        entityName: "ts_workorderservicetaskworkspace",
+                        entityId: workspaceId
+                    };
+                    var navigationOptions = {
+                        target: 2,
+                        width: { value: 80, unit: "%" },
+                        height: { value: 80, unit: "%" },
+                        position: 1
+                    };
+                    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(function () { return formContext_1.ui.close(); }, function (error) { return console.error("Error opening existing workspace modal: ", error.message); });
+                };
+                var openWorkspaceCreateDialog_1 = function () {
+                    var _a, _b, _c;
                     var entityName = (_a = formContext_1.getAttribute("msdyn_name")) === null || _a === void 0 ? void 0 : _a.getValue();
+                    var workOrderLookup = (_b = formContext_1.getAttribute("msdyn_workorder")) === null || _b === void 0 ? void 0 : _b.getValue();
+                    var workOrderId = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].id.replace(/{|}/g, "") : null;
+                    var workOrderName = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].name : null;
+                    var taskTypeLookup = (_c = formContext_1.getAttribute("msdyn_tasktype")) === null || _c === void 0 ? void 0 : _c.getValue();
+                    var taskTypeId = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].id.replace(/{|}/g, "") : null;
+                    var taskTypeName = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].name : null;
                     var pageInput = {
                         pageType: "entityrecord",
                         entityName: "ts_workorderservicetaskworkspace",
@@ -178,11 +211,21 @@ var ROM;
                         useQuickCreateForm: true,
                         data: {
                             ts_name: entityName,
-                            "ts_workorderservicetask@odata.bind": "/msdyn_workorderservicetasks(".concat(entityIdClean, ")")
+                            "ts_workorderservicetask@odata.bind": "/msdyn_workorderservicetasks(" + entityIdClean_1 + ")",
+                            ts_workorder: workOrderId ? {
+                                id: workOrderId,
+                                name: workOrderName,
+                                entityType: "msdyn_workorder"
+                            } : undefined,
+                            ts_tasktype: taskTypeId ? {
+                                id: taskTypeId,
+                                name: taskTypeName,
+                                entityType: "msdyn_servicetasktype"
+                            } : undefined
                         },
                         createFromEntity: {
                             entityType: "msdyn_workorderservicetask",
-                            id: entityId,
+                            id: entityId_1,
                             name: entityName
                         }
                     };
@@ -190,21 +233,42 @@ var ROM;
                         target: 2,
                         width: { value: 80, unit: "%" },
                         height: { value: 80, unit: "%" },
-                        position: 1 // Center
+                        position: 1
                     };
-                    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(function success() {
-                        // Refresh the form after modal closes (refreshes the main form on which this script is running)
-                        formContext_1.data.refresh();
-                    }, function error(error) {
-                        console.error("Error opening modal window: ", error.message);
-                    });
-                }
-                else {
-                    return; // If the start date is already set, do nothing
-                }
+                    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(function () { return formContext_1.ui.close(); }, function (error) { return console.error("Error opening create workspace modal: ", error.message); });
+                };
+                // Always check first if a related workspace already exists (default case: open it)
+                var fetchExisting = [
+                    "<fetch top='1'>",
+                    "  <entity name='ts_workorderservicetaskworkspace'>",
+                    "    <attribute name='ts_workorderservicetaskworkspaceid' />",
+                    "    <order attribute='createdon' descending='true' />",
+                    "    <filter>",
+                    "      <condition attribute='ts_workorderservicetask' operator='eq' value='", entityIdClean_1, "'/>",
+                    "    </filter>",
+                    "  </entity>",
+                    "</fetch>"
+                ].join("");
+                Xrm.WebApi.retrieveMultipleRecords("ts_workorderservicetaskworkspace", "?fetchXml=" + encodeURIComponent(fetchExisting))
+                    .then(function (result) {
+                    if (result.entities && result.entities.length > 0) {
+                        // Existing workspace: open it regardless of start date value
+                        openExistingWorkspaceDialog_1(result.entities[0].ts_workorderservicetaskworkspaceid);
+                        return;
+                    }
+                    // No existing workspace: create new workspace only if start date is null
+                    if (serviceTaskStartDate_1 === null) {
+                        // Create when start date is null
+                        openWorkspaceCreateDialog_1();
+                    }
+                    else {
+                        // Offline Mode: Create when start date has value but no workspace exists
+                        openWorkspaceCreateDialog_1();
+                    }
+                })
+                    .catch(function (err) { return console.error("Error querying existing workspace: ", err.message); });
             }
             else {
-                //don't run the code in training, acc, prod
                 return;
             }
         }
@@ -376,7 +440,7 @@ var ROM;
             // Get formContext
             var Form = eContext.getFormContext();
             var percentComplete = Form.getAttribute("msdyn_percentcomplete").getValue();
-            if (percentComplete != 100.00 && Form.getAttribute("statecode").getValue() == 0 /* msdyn_workorderservicetask_statecode.Active */) {
+            if (percentComplete != 100.00 && Form.getAttribute("statecode").getValue() == 0 /* Active */) {
                 //Set percentComplete to 50.00
                 Form.getAttribute("msdyn_percentcomplete").setValue(50.00);
                 //Set Status Reason to In-Progress
@@ -402,7 +466,7 @@ var ROM;
                 var viewId = '{ae0d8547-6871-4854-91ba-03b0c619dbe1}';
                 var entityName = "msdyn_servicetasktype";
                 var viewDisplayName = (lang == 1036) ? "Type de tâche relative au service" : "Service Task Types";
-                var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\"> <entity name=\"msdyn_servicetasktype\"> <attribute name=\"msdyn_name\" /> <attribute name=\"createdon\" /> <attribute name=\"msdyn_estimatedduration\" /> <attribute name=\"msdyn_description\" /> <attribute name=\"msdyn_servicetasktypeid\" /> <order attribute=\"msdyn_name\" descending=\"false\" /> <link-entity name=\"msdyn_incidenttypeservicetask\" from=\"msdyn_tasktype\" to=\"msdyn_servicetasktypeid\" link-type=\"inner\" alias=\"ae\"> <link-entity name=\"msdyn_incidenttype\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttype\" link-type=\"inner\" alias=\"af\"> <filter type=\"and\"> <condition attribute=\"msdyn_defaultworkordertype\" operator=\"eq\" value=\"".concat(result._msdyn_workordertype_value, "\" /> </filter> <link-entity name=\"ts_ovs_operationtypes_msdyn_incidenttypes\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttypeid\" visible=\"false\" intersect=\"true\"> <link-entity name=\"ovs_operationtype\" from=\"ovs_operationtypeid\" to=\"ovs_operationtypeid\" alias=\"ag\"> <filter type=\"and\"> <condition attribute=\"ovs_operationtypeid\" operator=\"eq\" value=\"").concat(result._ovs_operationtypeid_value, "\" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>");
+                var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\"> <entity name=\"msdyn_servicetasktype\"> <attribute name=\"msdyn_name\" /> <attribute name=\"createdon\" /> <attribute name=\"msdyn_estimatedduration\" /> <attribute name=\"msdyn_description\" /> <attribute name=\"msdyn_servicetasktypeid\" /> <order attribute=\"msdyn_name\" descending=\"false\" /> <link-entity name=\"msdyn_incidenttypeservicetask\" from=\"msdyn_tasktype\" to=\"msdyn_servicetasktypeid\" link-type=\"inner\" alias=\"ae\"> <link-entity name=\"msdyn_incidenttype\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttype\" link-type=\"inner\" alias=\"af\"> <filter type=\"and\"> <condition attribute=\"msdyn_defaultworkordertype\" operator=\"eq\" value=\"" + result._msdyn_workordertype_value + "\" /> </filter> <link-entity name=\"ts_ovs_operationtypes_msdyn_incidenttypes\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttypeid\" visible=\"false\" intersect=\"true\"> <link-entity name=\"ovs_operationtype\" from=\"ovs_operationtypeid\" to=\"ovs_operationtypeid\" alias=\"ag\"> <filter type=\"and\"> <condition attribute=\"ovs_operationtypeid\" operator=\"eq\" value=\"" + result._ovs_operationtypeid_value + "\" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>";
                 var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_servicetasktype"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("msdyn_tasktype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 showHideFieldsByOperationType(form, result._ovs_operationtypeid_value, result.ovs_operationtypeid._ownerid_value);
@@ -458,16 +522,16 @@ var ROM;
                         distinationCountry = result2._ts_country_value;
                         if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
                             // Domestic
-                            form.getAttribute("ts_flightcategory").setValue(741130000 /* ts_flightcategory.Domestic */);
+                            form.getAttribute("ts_flightcategory").setValue(741130000 /* Domestic */);
                         }
                         else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
                             || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
                             //International
-                            form.getAttribute("ts_flightcategory").setValue(741130001 /* ts_flightcategory.International */);
+                            form.getAttribute("ts_flightcategory").setValue(741130001 /* International */);
                         }
                         else {
                             //Transborder
-                            form.getAttribute("ts_flightcategory").setValue(741130002 /* ts_flightcategory.Transborder */);
+                            form.getAttribute("ts_flightcategory").setValue(741130002 /* Transborder */);
                         }
                     }, function error(error) {
                         Xrm.Navigation.openAlertDialog({ text: error.message });
@@ -610,32 +674,32 @@ var ROM;
                 form.getControl("ts_aircraftmodel").removeOption(options[i].value);
             form.getControl("ts_aircraftmodelother").setVisible(false);
             form.getControl("ts_aircraftmodel").setVisible(true);
-            if (aircraftmanufacturer == 741130000 /* ts_aircraftmanufacturer.Boeing */) {
+            if (aircraftmanufacturer == 741130000 /* Boeing */) {
                 for (var i = 1; i <= 11; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130001 /* ts_aircraftmanufacturer.Airbus */) {
+            else if (aircraftmanufacturer == 741130001 /* Airbus */) {
                 for (var i = 12; i <= 22; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130002 /* ts_aircraftmanufacturer.DeHavilland */) {
+            else if (aircraftmanufacturer == 741130002 /* DeHavilland */) {
                 for (var i = 23; i <= 24; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130003 /* ts_aircraftmanufacturer.Bombardier */) {
+            else if (aircraftmanufacturer == 741130003 /* Bombardier */) {
                 for (var i = 25; i <= 25; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130004 /* ts_aircraftmanufacturer.Embraer */) {
+            else if (aircraftmanufacturer == 741130004 /* Embraer */) {
                 for (var i = 26; i <= 29; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130005 /* ts_aircraftmanufacturer.Other */) {
+            else if (aircraftmanufacturer == 741130005 /* Other */) {
                 form.getControl("ts_aircraftmodelother").setVisible(true);
                 form.getControl("ts_aircraftmodel").setVisible(false);
             }
@@ -680,7 +744,7 @@ var ROM;
                             return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ts_state")];
                         case 1:
                             workOrder = _a.sent();
-                            return [2 /*return*/, workOrder.ts_state == 717750000 /* ts_planningstate.Draft */];
+                            return [2 /*return*/, workOrder.ts_state == 717750000 /* Draft */];
                     }
                 });
             });

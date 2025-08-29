@@ -52,8 +52,8 @@ var ROM;
                     var ownerAttributeValue = ownerAttribute.getValue();
                     if (nameAttributeValue && ownerAttributeValue) {
                         var fetchData = {
-                            "securityIncidentTypeName": "".concat(nameAttributeValue),
-                            "ownerId": "".concat((_b = ownerAttribute.getValue()) === null || _b === void 0 ? void 0 : _b[0].id)
+                            "securityIncidentTypeName": "" + nameAttributeValue,
+                            "ownerId": "" + ((_b = ownerAttribute.getValue()) === null || _b === void 0 ? void 0 : _b[0].id)
                         };
                         var fetchXml = [
                             "<fetch version='1.0' mapping='logical' distinct='true'>",

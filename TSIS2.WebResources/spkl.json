@@ -619,9 +619,14 @@
                 "description": "Attach Document Centre File to Email button"
             },
             {
-                "uniquename": "ts_/html/EmailAttachFilePopUp.html",
-                "file": "html\\EmailAttachFilePopUp.html",
-                "description": "Popup for Email Attach File"
+              "uniquename": "ts_/html/EmailAttachFilePopUp.html",
+              "file": "html\\EmailAttachFilePopUp.html",
+              "description": "Popup for Email Attach File"
+            },
+            {
+              "uniquename": "ts_/html/OperationActivityRiskScoresRecalculateRiskRating.html",
+              "file": "html\\OperationActivityRiskScoresRecalculateRiskRating.html",
+              "description": "The form button to Recalculate the Risk Rating"
             },
             {
                 "uniquename": "ts_/html/SharePointAttachFilePopUp.html",

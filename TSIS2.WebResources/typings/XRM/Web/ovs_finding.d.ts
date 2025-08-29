@@ -56,8 +56,6 @@ interface ovs_Finding_Relationships {
   ovs_finding_connections2?: Connection_Result[] | null;
   ts_ActionFinding_ovs_Finding_ovs_Finding?: ts_ActionFinding_Result[] | null;
   ts_Contact?: Contact_Result | null;
-  ts_File?: ts_File_Result | null;
-  ts_File_Finding_ovs_Finding?: ts_File_Result[] | null;
   ts_NCATApprovingTeam?: Team_Result | null;
   ts_NCATManager?: SystemUser_Result | null;
   ts_RATEApprovingTeam?: Team_Result | null;
@@ -67,7 +65,6 @@ interface ovs_Finding_Relationships {
   ts_WorkOrder?: msdyn_workorder_Result | null;
   ts_finding_ts_action_finding?: ts_action_Result[] | null;
   ts_finding_ts_causefinding_Finding?: ts_causefinding_Result[] | null;
-  ts_ovs_Finding_ts_File_ts_File?: ts_File_Result[] | null;
 }
 interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ovs_CaseId_bind$incidents?: string | null;
@@ -101,6 +98,7 @@ interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ts_Region_bind$territories?: string | null;
   ts_Site_Site_bind$ts_sites?: string | null;
   ts_VerbalWarningGivenTo_bind$contacts?: string | null;
+  ts_WorkOrderServiceTaskWorkspace_bind$ts_workorderservicetaskworkspaces?: string | null;
   ts_WorkOrder_bind$msdyn_workorders?: string | null;
   ts_accountid_bind$accounts?: string | null;
   ts_actioncreated_bind$ts_actions?: string | null;
@@ -208,6 +206,7 @@ interface ovs_Finding_Select {
   ts_site_site_guid: WebAttribute<ovs_Finding_Select, { ts_site_site_guid: string | null }, { ts_site_site_formatted?: string }>;
   ts_verbalwarninggivento_guid: WebAttribute<ovs_Finding_Select, { ts_verbalwarninggivento_guid: string | null }, { ts_verbalwarninggivento_formatted?: string }>;
   ts_workorder_guid: WebAttribute<ovs_Finding_Select, { ts_workorder_guid: string | null }, { ts_workorder_formatted?: string }>;
+  ts_workorderservicetaskworkspace_guid: WebAttribute<ovs_Finding_Select, { ts_workorderservicetaskworkspace_guid: string | null }, { ts_workorderservicetaskworkspace_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ovs_Finding_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ovs_Finding_Select, { versionnumber: number | null }, {  }>;
 }
@@ -304,6 +303,7 @@ interface ovs_Finding_Filter {
   ts_site_site_guid: XQW.Guid;
   ts_verbalwarninggivento_guid: XQW.Guid;
   ts_workorder_guid: XQW.Guid;
+  ts_workorderservicetaskworkspace_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -322,8 +322,6 @@ interface ovs_Finding_Expand {
   owninguser: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_ActionFinding_ovs_Finding_ovs_Finding: WebExpand<ovs_Finding_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { ts_ActionFinding_ovs_Finding_ovs_Finding: ts_ActionFinding_Result[] }>;
   ts_Contact: WebExpand<ovs_Finding_Expand, Contact_Select, Contact_Filter, { ts_Contact: Contact_Result }>;
-  ts_File: WebExpand<ovs_Finding_Expand, ts_File_Select, ts_File_Filter, { ts_File: ts_File_Result }>;
-  ts_File_Finding_ovs_Finding: WebExpand<ovs_Finding_Expand, ts_File_Select, ts_File_Filter, { ts_File_Finding_ovs_Finding: ts_File_Result[] }>;
   ts_NCATApprovingTeam: WebExpand<ovs_Finding_Expand, Team_Select, Team_Filter, { ts_NCATApprovingTeam: Team_Result }>;
   ts_NCATManager: WebExpand<ovs_Finding_Expand, SystemUser_Select, SystemUser_Filter, { ts_NCATManager: SystemUser_Result }>;
   ts_RATEApprovingTeam: WebExpand<ovs_Finding_Expand, Team_Select, Team_Filter, { ts_RATEApprovingTeam: Team_Result }>;
@@ -339,7 +337,6 @@ interface ovs_Finding_Expand {
   ts_functionallocation: WebExpand<ovs_Finding_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_functionallocation: msdyn_FunctionalLocation_Result }>;
   ts_infraction: WebExpand<ovs_Finding_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction: ts_infraction_Result }>;
   ts_operationid: WebExpand<ovs_Finding_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operationid: ovs_operation_Result }>;
-  ts_ovs_Finding_ts_File_ts_File: WebExpand<ovs_Finding_Expand, ts_File_Select, ts_File_Filter, { ts_ovs_Finding_ts_File_ts_File: ts_File_Result[] }>;
   ts_ovs_operationtype: WebExpand<ovs_Finding_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_ovs_operationtype: ovs_operationtype_Result }>;
   ts_qm_rclegislation: WebExpand<ovs_Finding_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_qm_rclegislation: qm_rclegislation_Result }>;
 }
@@ -415,6 +412,7 @@ interface ovs_Finding_FormattedResult {
   ts_site_site_formatted?: string;
   ts_verbalwarninggivento_formatted?: string;
   ts_workorder_formatted?: string;
+  ts_workorderservicetaskworkspace_formatted?: string;
 }
 interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships {
   "@odata.etag": string;
@@ -464,6 +462,7 @@ interface ovs_Finding_Result extends ovs_Finding_Base, ovs_Finding_Relationships
   ts_site_site_guid: string | null;
   ts_verbalwarninggivento_guid: string | null;
   ts_workorder_guid: string | null;
+  ts_workorderservicetaskworkspace_guid: string | null;
 }
 interface ovs_Finding_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -476,7 +475,6 @@ interface ovs_Finding_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_Contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
-  ts_File: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_NCATApprovingTeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_NCATManager: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_RATEApprovingTeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
@@ -498,10 +496,8 @@ interface ovs_Finding_RelatedMany {
   ovs_finding_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ovs_finding_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ts_ActionFinding_ovs_Finding_ovs_Finding: WebMappingRetrieve<ts_ActionFinding_Select,ts_ActionFinding_Expand,ts_ActionFinding_Filter,ts_ActionFinding_Fixed,ts_ActionFinding_Result,ts_ActionFinding_FormattedResult>;
-  ts_File_Finding_ovs_Finding: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_finding_ts_action_finding: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_finding_ts_causefinding_Finding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
-  ts_ovs_Finding_ts_File_ts_File: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ovs_findings: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
