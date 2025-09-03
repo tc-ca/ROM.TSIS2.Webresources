@@ -927,3 +927,44 @@ function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
       console.error("Fetch error: ", error.message);
     });
 }
+
+async function createQCServiceTask(primaryControl) {
+    Xrm.Utility.showProgressIndicator();
+
+    try {
+        const workOrderId = primaryControl.data.entity.getId().replace(/[{}]/g, "");
+        console.log("Work Order ID:", workOrderId);
+
+        const request = {
+            entity: {   // Bound parameter
+                entityType: "msdyn_workorder",
+                id: workOrderId
+            },
+            getMetadata: function () {
+                return {
+                    boundParameter: "entity", // tells Web API this is bound
+                    operationName: "ts_CreateQualityControlServiceTask",
+                    operationType: 0, // Action
+                    parameterTypes: {
+                        entity: { typeName: "msdyn_workorder", structuralProperty: 5 }
+                    }
+                };
+            }
+        };
+
+        const response = await Xrm.WebApi.online.execute(request);
+
+        if (!response.ok) {
+            const text = await response.text();
+            throw new Error(text || "Custom API call failed.");
+        }
+
+        // Refresh the subgrid to show the newly created task
+        primaryControl.getControl("workorderservicetasksgrid").refresh();
+
+    } catch (e) {
+        Xrm.Navigation.openAlertDialog({ title: "Error", text: e.message || e.toString() });
+    } finally {
+        Xrm.Utility.closeProgressIndicator();
+    }
+}
