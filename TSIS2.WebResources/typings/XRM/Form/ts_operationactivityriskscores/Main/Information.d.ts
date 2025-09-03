@@ -36,6 +36,7 @@ declare namespace Form.ts_operationactivityriskscores.Main {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
+      get(name: "WebResource_OperationActivityRiskScoresRecalculateRiskRating"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_statecode"): Xrm.OptionSetControl<ts_operationactivityriskscores_statecode>;
       get(name: "ts_activitytypeentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
@@ -106,6 +107,7 @@ declare namespace Form.ts_operationactivityriskscores.Main {
     getAttribute(attributeName: "ts_usesprescribedfrequencyoverride"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_usesriskapplication"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: string): undefined;
+    getControl(controlName: "WebResource_OperationActivityRiskScoresRecalculateRiskRating"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_statecode"): Xrm.OptionSetControl<ts_operationactivityriskscores_statecode>;
     getControl(controlName: "ts_activitytypeentityrisk"): Xrm.LookupControl<"ts_entityrisk">;
