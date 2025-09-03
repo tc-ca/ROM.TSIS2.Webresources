@@ -251,9 +251,16 @@ var ROM;
                 ].join("");
                 Xrm.WebApi.retrieveMultipleRecords("ts_workorderservicetaskworkspace", "?fetchXml=" + encodeURIComponent(fetchExisting))
                     .then(function (result) {
+                    var _a;
                     if (result.entities && result.entities.length > 0) {
                         // Existing workspace: open it regardless of start date value
                         openExistingWorkspaceDialog_1(result.entities[0].ts_workorderservicetaskworkspaceid);
+                        return;
+                    }
+                    // If no related workspace AND status is In Progress or Complete, stay on WOST (do not open/create workspace)
+                    var statusReason = (_a = formContext_1.getAttribute("statuscode")) === null || _a === void 0 ? void 0 : _a.getValue();
+                    var isInProgressOrComplete = statusReason === 918640004 /* In Progress */ || statusReason === 918640002 /* Complete */;
+                    if (isInProgressOrComplete) {
                         return;
                     }
                     // No existing workspace: create new workspace only if start date is null
