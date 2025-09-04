@@ -235,6 +235,13 @@ namespace ROM.WorkOrderServiceTask {
                         return;
                     }
 
+                    // If no related workspace AND status is In Progress or Complete, stay on WOST (do not open/create workspace)
+                    const statusReason = (formContext.getAttribute as any)("statuscode")?.getValue();
+                    const isInProgressOrComplete = statusReason === 918640004 /* In Progress */ || statusReason === 918640002 /* Complete */;
+                    if (isInProgressOrComplete) {
+                        return;
+                    }
+
                     // No existing workspace: create new workspace only if start date is null
                     if (serviceTaskStartDate === null) {
                         // Create when start date is null

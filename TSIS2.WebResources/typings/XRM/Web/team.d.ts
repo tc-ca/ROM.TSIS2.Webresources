@@ -66,6 +66,7 @@ interface Team_Relationships {
   team_ts_dutyinspectorschedule?: ts_DutyInspectorSchedule_Result[] | null;
   team_ts_entityrisk?: ts_EntityRisk_Result[] | null;
   team_ts_entityriskfrequency?: ts_EntityRiskFrequency_Result[] | null;
+  team_ts_file?: ts_File_Result[] | null;
   team_ts_incompleteworkorderreason?: ts_IncompleteWorkOrderReason_Result[] | null;
   team_ts_infraction?: ts_infraction_Result[] | null;
   team_ts_inspectionhours?: ts_InspectionHours_Result[] | null;
@@ -91,8 +92,10 @@ interface Team_Relationships {
   team_ts_trip?: ts_trip_Result[] | null;
   team_ts_userregistration?: ts_UserRegistration_Result[] | null;
   team_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
+  team_ts_workorderservicetaskworkspace?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
   team_ts_workordertimetracking?: ts_workordertimetracking_Result[] | null;
   teammembership_association?: SystemUser_Result[] | null;
+  ts_File_Team_Team?: ts_File_Result[] | null;
   ts_enforcementaction_team_owningteam?: ts_enforcementaction_Result[] | null;
   ts_infraction_RATEApprovingTeam_team?: ts_infraction_Result[] | null;
   ts_msdyn_functionallocation_AccountableTeam_team?: msdyn_FunctionalLocation_Result[] | null;
@@ -250,6 +253,7 @@ interface Team_Expand {
   team_ts_dutyinspectorschedule: WebExpand<Team_Expand, ts_DutyInspectorSchedule_Select, ts_DutyInspectorSchedule_Filter, { team_ts_dutyinspectorschedule: ts_DutyInspectorSchedule_Result[] }>;
   team_ts_entityrisk: WebExpand<Team_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { team_ts_entityrisk: ts_EntityRisk_Result[] }>;
   team_ts_entityriskfrequency: WebExpand<Team_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { team_ts_entityriskfrequency: ts_EntityRiskFrequency_Result[] }>;
+  team_ts_file: WebExpand<Team_Expand, ts_File_Select, ts_File_Filter, { team_ts_file: ts_File_Result[] }>;
   team_ts_incompleteworkorderreason: WebExpand<Team_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { team_ts_incompleteworkorderreason: ts_IncompleteWorkOrderReason_Result[] }>;
   team_ts_infraction: WebExpand<Team_Expand, ts_infraction_Select, ts_infraction_Filter, { team_ts_infraction: ts_infraction_Result[] }>;
   team_ts_inspectionhours: WebExpand<Team_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { team_ts_inspectionhours: ts_InspectionHours_Result[] }>;
@@ -275,8 +279,10 @@ interface Team_Expand {
   team_ts_trip: WebExpand<Team_Expand, ts_trip_Select, ts_trip_Filter, { team_ts_trip: ts_trip_Result[] }>;
   team_ts_userregistration: WebExpand<Team_Expand, ts_UserRegistration_Select, ts_UserRegistration_Filter, { team_ts_userregistration: ts_UserRegistration_Result[] }>;
   team_ts_workordercreationwizard: WebExpand<Team_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { team_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
+  team_ts_workorderservicetaskworkspace: WebExpand<Team_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { team_ts_workorderservicetaskworkspace: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
   team_ts_workordertimetracking: WebExpand<Team_Expand, ts_workordertimetracking_Select, ts_workordertimetracking_Filter, { team_ts_workordertimetracking: ts_workordertimetracking_Result[] }>;
   teammembership_association: WebExpand<Team_Expand, SystemUser_Select, SystemUser_Filter, { teammembership_association: SystemUser_Result[] }>;
+  ts_File_Team_Team: WebExpand<Team_Expand, ts_File_Select, ts_File_Filter, { ts_File_Team_Team: ts_File_Result[] }>;
   ts_enforcementaction_team_owningteam: WebExpand<Team_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_team_owningteam: ts_enforcementaction_Result[] }>;
   ts_infraction_RATEApprovingTeam_team: WebExpand<Team_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_RATEApprovingTeam_team: ts_infraction_Result[] }>;
   ts_msdyn_functionallocation_AccountableTeam_team: WebExpand<Team_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_msdyn_functionallocation_AccountableTeam_team: msdyn_FunctionalLocation_Result[] }>;
@@ -374,6 +380,7 @@ interface Team_RelatedMany {
   team_ts_dutyinspectorschedule: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;
   team_ts_entityrisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   team_ts_entityriskfrequency: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
+  team_ts_file: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   team_ts_incompleteworkorderreason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   team_ts_infraction: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   team_ts_inspectionhours: WebMappingRetrieve<ts_InspectionHours_Select,ts_InspectionHours_Expand,ts_InspectionHours_Filter,ts_InspectionHours_Fixed,ts_InspectionHours_Result,ts_InspectionHours_FormattedResult>;
@@ -399,8 +406,10 @@ interface Team_RelatedMany {
   team_ts_trip: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   team_ts_userregistration: WebMappingRetrieve<ts_UserRegistration_Select,ts_UserRegistration_Expand,ts_UserRegistration_Filter,ts_UserRegistration_Fixed,ts_UserRegistration_Result,ts_UserRegistration_FormattedResult>;
   team_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
+  team_ts_workorderservicetaskworkspace: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
   team_ts_workordertimetracking: WebMappingRetrieve<ts_workordertimetracking_Select,ts_workordertimetracking_Expand,ts_workordertimetracking_Filter,ts_workordertimetracking_Fixed,ts_workordertimetracking_Result,ts_workordertimetracking_FormattedResult>;
   teammembership_association: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_File_Team_Team: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_enforcementaction_team_owningteam: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_infraction_RATEApprovingTeam_team: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_msdyn_functionallocation_AccountableTeam_team: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
