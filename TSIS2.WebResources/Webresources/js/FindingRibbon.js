@@ -320,7 +320,7 @@ async function isTCBusinessUnit() {
     return userBusinessUnitName.entities[0].name.startsWith("Transport");
 }
 
-function FindingsReport(findingGUIDs, primaryControl) {
+async function FindingsReport(findingGUIDs, primaryControl) {
     const gridContext = primaryControl.getControl("subgrid_findings");
     const findingRows = gridContext.getGrid().getSelectedRows();
 
@@ -334,18 +334,68 @@ function FindingsReport(findingGUIDs, primaryControl) {
     }
 
     const caseId = primaryControl.data.entity.getId().slice(1, -1);
+    console.log("Case ID:", caseId);
     //If a finding is Protected B, set the findings report sensitivity level to Protected B. Else Unclassified.
     const sensitivityLevel = (aFindingIsProtectedB) ? 717750001 : 717750000;
 
-    let CaseNumber = primaryControl.getAttribute("ticketnumber").getValue();
-
-    //Create new findings report record
-    var data =
-    {
-        "ts_name": CaseNumber + " Findings Report",
-        "ts_Case@odata.bind": `/incidents(${caseId})`,
-        "ts_sensitivitylevel": sensitivityLevel
+    // Try to get ticketnumber from current form first
+    let CaseNumber;
+    try {
+        let ticketNumberAttr = primaryControl.getAttribute("ticketnumber");
+        if (ticketNumberAttr != null && ticketNumberAttr.getValue() != null) {
+            CaseNumber = ticketNumberAttr.getValue();
+            console.log("Found ticketnumber on form:", CaseNumber);
+            //Create new findings report record
+            var data =
+            {
+                "ts_name": CaseNumber + " Findings Report",
+                "ts_Case@odata.bind": `/incidents(${caseId})`,
+                "ts_sensitivitylevel": sensitivityLevel
+            }
+        } else {
+            console.log("ticketnumber attribute exists on form but is null");
+        }
+    } catch (error) {
+        console.log("ticketnumber attribute doesn't exist on form:", error);
     }
+
+    // If CaseNumber is still null/undefined, retrieve it from the workorderservicetask record
+    if (CaseNumber == null) {
+        try {
+            // First get the workorderservicetask record to get the ovs_caseid
+            const workOrderServiceTaskRecord = await Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", caseId, "?$select=_ovs_caseid_value");
+            console.log("WorkOrderServiceTask record:", workOrderServiceTaskRecord);
+
+            if (workOrderServiceTaskRecord != null && workOrderServiceTaskRecord._ovs_caseid_value != null) {
+                // Now get the incident record using the ovs_caseid to get the ticketnumber
+                const incidentId = workOrderServiceTaskRecord._ovs_caseid_value;
+                console.log("Found incident ID from workorderservicetask:", incidentId);
+
+                const incidentRecord = await Xrm.WebApi.retrieveRecord("incident", incidentId, "?$select=ticketnumber");
+                if (incidentRecord != null && incidentRecord.ticketnumber != null) {
+                    CaseNumber = incidentRecord.ticketnumber;
+                    console.log("Retrieved ticketnumber from incident record:", CaseNumber);
+                    //Create new findings report record
+                    var data =
+                    {
+                        "ts_name": CaseNumber + " Findings Report",
+                        "ts_Case@odata.bind": `/incidents(${incidentId})`,
+                        "ts_sensitivitylevel": sensitivityLevel
+                    }
+                } else {
+                    console.log("incident record exists but ticketnumber is null");
+                    CaseNumber = "Unknown Case"; // Default fallback
+                }
+            } else {
+                console.log("workorderservicetask record exists but ovs_caseid is null");
+                CaseNumber = "Unknown Case"; // Default fallback
+            }
+        } catch (error) {
+            console.log("Error retrieving case info from workorderservicetask/incident record:", error);
+            CaseNumber = "Unknown Case"; // Default fallback
+        }
+    }
+
     Xrm.WebApi.createRecord("ts_findingsreport", data).then(
 
         function (newFindingsReport) {
