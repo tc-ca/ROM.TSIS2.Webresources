@@ -333,69 +333,75 @@ async function FindingsReport(findingGUIDs, primaryControl) {
         return;
     }
 
-    const caseId = primaryControl.data.entity.getId().slice(1, -1);
-    console.log("Case ID:", caseId);
-    //If a finding is Protected B, set the findings report sensitivity level to Protected B. Else Unclassified.
-    const sensitivityLevel = (aFindingIsProtectedB) ? 717750001 : 717750000;
+    // Resolve the related Incident (Case) Id regardless of source entity
+    const sourceId = primaryControl.data.entity.getId().slice(1, -1);
+    const sourceEntity = primaryControl.data.entity.getEntityName();
+    let caseId = null;
 
-    // Try to get ticketnumber from current form first
-    let CaseNumber;
-    try {
-        let ticketNumberAttr = primaryControl.getAttribute("ticketnumber");
-        if (ticketNumberAttr != null && ticketNumberAttr.getValue() != null) {
-            CaseNumber = ticketNumberAttr.getValue();
-            console.log("Found ticketnumber on form:", CaseNumber);
-            //Create new findings report record
-            var data =
-            {
-                "ts_name": CaseNumber + " Findings Report",
-                "ts_Case@odata.bind": `/incidents(${caseId})`,
-                "ts_sensitivitylevel": sensitivityLevel
-            }
-        } else {
-            console.log("ticketnumber attribute exists on form but is null");
-        }
-    } catch (error) {
-        console.log("ticketnumber attribute doesn't exist on form:", error);
-    }
-
-    // If CaseNumber is still null/undefined, retrieve it from the workorderservicetask record
-    if (CaseNumber == null) {
+    if (sourceEntity === "incident") {
+        caseId = sourceId;
+    } else if (sourceEntity === "msdyn_workorderservicetask" || sourceEntity === "ts_workorderservicetaskworkspace") {
         try {
-            // First get the workorderservicetask record to get the ovs_caseid
-            const workOrderServiceTaskRecord = await Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", caseId, "?$select=_ovs_caseid_value");
-            console.log("WorkOrderServiceTask record:", workOrderServiceTaskRecord);
-
-            if (workOrderServiceTaskRecord != null && workOrderServiceTaskRecord._ovs_caseid_value != null) {
-                // Now get the incident record using the ovs_caseid to get the ticketnumber
-                const incidentId = workOrderServiceTaskRecord._ovs_caseid_value;
-                console.log("Found incident ID from workorderservicetask:", incidentId);
-
-                const incidentRecord = await Xrm.WebApi.retrieveRecord("incident", incidentId, "?$select=ticketnumber");
-                if (incidentRecord != null && incidentRecord.ticketnumber != null) {
-                    CaseNumber = incidentRecord.ticketnumber;
-                    console.log("Retrieved ticketnumber from incident record:", CaseNumber);
-                    //Create new findings report record
-                    var data =
-                    {
-                        "ts_name": CaseNumber + " Findings Report",
-                        "ts_Case@odata.bind": `/incidents(${incidentId})`,
-                        "ts_sensitivitylevel": sensitivityLevel
-                    }
-                } else {
-                    console.log("incident record exists but ticketnumber is null");
-                    CaseNumber = "Unknown Case"; // Default fallback
-                }
+            // Select the lookup (schema name) so the _ovs_caseid_value is returned.
+            const wost = await Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", sourceId, "?$select=_ovs_caseid_value");
+            if (wost && wost._ovs_caseid_value) {
+                caseId = wost._ovs_caseid_value;
             } else {
-                console.log("workorderservicetask record exists but ovs_caseid is null");
-                CaseNumber = "Unknown Case"; // Default fallback
+                console.log("Work Order Service Task has no related Case (ovs_caseid). Id:", sourceId);
             }
-        } catch (error) {
-            console.log("Error retrieving case info from workorderservicetask/incident record:", error);
-            CaseNumber = "Unknown Case"; // Default fallback
+        } catch (e) {
+            console.log("Failed to retrieve Work Order Service Task for Case resolution:", e);
+        }
+    } else {
+        // If invoked from some other entity, assume it IS the incident (legacy behavior)
+        caseId = sourceId;
+    }
+
+    if (!caseId) {
+        showAlertDialog("Unable to resolve the related Case. Findings Report cannot be created.", "Case Resolution Error");
+        return;
+    }
+
+    // Resolve CaseNumber (ticketnumber)
+    let CaseNumber = null;
+
+    // Try form attribute first (only if current form is incident or surfaces ticketnumber)
+    try {
+        const ticketAttr = primaryControl.getAttribute && primaryControl.getAttribute("ticketnumber");
+        if (ticketAttr && ticketAttr.getValue()) {
+            CaseNumber = ticketAttr.getValue();
+        }
+    } catch (e) {
+        console.log("ticketnumber attribute lookup failed:", e);
+    }
+
+    // If still null, fetch the incident ticketnumber
+    if (!CaseNumber) {
+        try {
+            const incident = await Xrm.WebApi.retrieveRecord("incident", caseId, "?$select=ticketnumber");
+            if (incident && incident.ticketnumber) {
+                CaseNumber = incident.ticketnumber;
+            }
+        } catch (e) {
+            console.log("Failed to retrieve incident ticketnumber:", e);
         }
     }
 
+    if (!CaseNumber) {
+        CaseNumber = "Unknown Case";
+    }
+
+    // Determine sensitivity
+    const sensitivityLevel = aFindingIsProtectedB ? 717750001 : 717750000;
+
+    // Build data
+    const data = {
+        "ts_name": `${CaseNumber} Findings Report`,
+        "ts_Case@odata.bind": `/incidents(${caseId})`,
+        "ts_sensitivitylevel": sensitivityLevel
+    };
+
+    // 5. Create Findings Report
     Xrm.WebApi.createRecord("ts_findingsreport", data).then(
 
         function (newFindingsReport) {
@@ -634,7 +640,34 @@ async function createEnforcementAction(findingGUIDs, primaryControl) {
         showAlertDialog(createActionValidationTextLocalized, createActionValidationTitleLocalized);
         return;
     }
-    const caseId = primaryControl.data.entity.getId().slice(1, -1);
+    const caseIdPrimary = primaryControl.data.entity.getId().slice(1, -1);
+    const currentEntityName = primaryControl.data.entity.getEntityName();
+    console.log("Current Entity Name:", currentEntityName);
+    let caseId = null;
+
+    if (currentEntityName === "incident") {
+        caseId = caseIdPrimary; // already an Incident
+    } else if (currentEntityName === "msdyn_workorderservicetask") {
+        try {
+            // Retrieve the underlying Work Order Service Task to get the related Case (Incident)
+            const woServiceTask = await Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", caseIdPrimary, "?$select=_ovs_caseid_value");
+            if (woServiceTask && woServiceTask._ovs_caseid_value) {
+                caseId = woServiceTask._ovs_caseid_value; // this is the Incident Id
+            } else {
+                console.log("Work Order Service Task record found but _ovs_caseid_value is null. Id: " + caseIdPrimary);
+            }
+        } catch (e) {
+            console.log("Error retrieving msdyn_workorderservicetask for workspace id " + caseIdPrimary, e);
+        }
+    } else {
+        // Fallback to previous behavior if another entity uses this ribbon (retain primary id)
+        caseId = caseIdPrimary;
+    }
+
+    if (!caseId) {
+        showAlertDialog("Unable to resolve related Case. Action cannot be created.", "Case Resolution Error");
+        return;
+    }
     var stakeholderId = "";
     const caseRecord = await Xrm.WebApi.retrieveRecord("incident", caseId, "?$select=_customerid_value");
     if (caseRecord != null && caseRecord._customerid_value != null) {
