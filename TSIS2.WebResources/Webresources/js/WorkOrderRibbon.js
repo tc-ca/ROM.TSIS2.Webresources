@@ -681,3 +681,14 @@ function isTeamOrPlanContext(primaryControl) {
         return false;
     }
 }
+
+function openUnplannedWorkOrderForm() {
+
+    // Open Unplanned Work Order form
+    Xrm.Navigation.openForm({
+        entityName: "ts_unplannedworkorder",
+        useQuickCreateForm: false,
+        formId: "f3f01c33-c5b2-4835-a141-db032f3869a6"
+
+    });
+}

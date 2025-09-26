@@ -373,6 +373,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ScoreThresholds.1036.resx</DependentUpon>
     </Compile>
+    <Compile Include="Webresources\resx\UnplannedWorkOrder.1033.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnplannedWorkOrder.1033.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Webresources\resx\UnplannedWorkOrder.1036.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnplannedWorkOrder.1036.resx</DependentUpon>
+    </Compile>
     <Compile Include="Webresources\resx\WorkOrder.1036.Designer.cs">
       <DependentUpon>WorkOrder.1036.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -454,6 +464,7 @@
     <TypeScriptCompile Include="src\ts\TeamPlanningData.ts" />
     <TypeScriptCompile Include="src\ts\TeamPlanningInspectorHours.ts" />
     <TypeScriptCompile Include="src\ts\Trip.ts" />
+    <TypeScriptCompile Include="src\ts\UnplannedWorkOrder.ts" />
     <TypeScriptCompile Include="src\ts\UserRegistration.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderCreationWizard.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrder.ts" />
@@ -1005,6 +1016,14 @@
     <EmbeddedResource Include="Webresources\resx\ScoreThresholds.1036.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ScoreThresholds.1036.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\UnplannedWorkOrder.1033.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UnplannedWorkOrder.1033.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Webresources\resx\UnplannedWorkOrder.1036.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UnplannedWorkOrder.1036.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Webresources\resx\WorkOrder.1036.resx">
       <Generator>ResXFileCodeGenerator</Generator>
