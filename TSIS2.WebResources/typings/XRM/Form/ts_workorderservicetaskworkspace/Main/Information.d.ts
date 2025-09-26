@@ -8,6 +8,20 @@ declare namespace Form.ts_workorderservicetaskworkspace.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface tab_5 extends Xrm.SectionCollectionBase {
+        get(name: "Enforcement_Action_section"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface tab_9 extends Xrm.SectionCollectionBase {
+        get(name: "tab_9_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_Oversight extends Xrm.SectionCollectionBase {
         get(name: "tab_11_section_1"): Xrm.PageSection;
         get(name: "tab_Oversight_AirCarrier"): Xrm.PageSection;
@@ -94,6 +108,7 @@ declare namespace Form.ts_workorderservicetaskworkspace.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Access_Users"): Xrm.SubGridControl<"systemuser">;
       get(name: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
+      get(name: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<ts_workorderservicetaskworkspace_statecode>;
@@ -149,6 +164,8 @@ declare namespace Form.ts_workorderservicetaskworkspace.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
+      get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
+      get(name: "tab_9"): Xrm.PageTab<Tabs.tab_9>;
       get(name: "tab_Oversight"): Xrm.PageTab<Tabs.tab_Oversight>;
       get(name: "tab_questionnaire"): Xrm.PageTab<Tabs.tab_questionnaire>;
       get(name: "tab_summary"): Xrm.PageTab<Tabs.tab_summary>;
@@ -209,6 +226,7 @@ declare namespace Form.ts_workorderservicetaskworkspace.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Access_Users"): Xrm.SubGridControl<"systemuser">;
     getControl(controlName: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
+    getControl(controlName: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ts_workorderservicetaskworkspace_statecode>;

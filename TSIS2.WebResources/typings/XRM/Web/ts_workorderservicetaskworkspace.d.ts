@@ -36,6 +36,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_WorkOrderServiceTaskWorkspace_Relationships {
+  crc77_Incident?: Incident_Result | null;
   ts_AOCOperation?: ovs_operation_Result | null;
   ts_AOCOperationType?: ovs_operationtype_Result | null;
   ts_AOCSite?: msdyn_FunctionalLocation_Result | null;
@@ -57,8 +58,10 @@ interface ts_WorkOrderServiceTaskWorkspace_Relationships {
   ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser?: SystemUser_Result[] | null;
   ts_WorkOrderServiceTaskWorkspace_qm_rclegislation_qm_rclegislation?: qm_rclegislation_Result[] | null;
   ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ovs_Finding?: ovs_Finding_Result[] | null;
+  ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ts_action?: ts_action_Result[] | null;
 }
 interface ts_WorkOrderServiceTaskWorkspace extends ts_WorkOrderServiceTaskWorkspace_Base, ts_WorkOrderServiceTaskWorkspace_Relationships {
+  crc77_Incident_bind$incidents?: string | null;
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   ts_AOCOperationType_bind$ovs_operationtypes?: string | null;
@@ -87,6 +90,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Create extends ts_WorkOrderServiceTas
 interface ts_WorkOrderServiceTaskWorkspace_Update extends ts_WorkOrderServiceTaskWorkspace {
 }
 interface ts_WorkOrderServiceTaskWorkspace_Select {
+  crc77_incident_guid: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { crc77_incident_guid: string | null }, { crc77_incident_formatted?: string }>;
   createdby_guid: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { createdby_guid: string | null }, { createdby_formatted?: string }>;
   createdon: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { createdon: Date | null }, { createdon_formatted?: string }>;
   createdonbehalfby_guid: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { createdonbehalfby_guid: string | null }, { createdonbehalfby_formatted?: string }>;
@@ -152,6 +156,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Select {
   versionnumber: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { versionnumber: number | null }, {  }>;
 }
 interface ts_WorkOrderServiceTaskWorkspace_Filter {
+  crc77_incident_guid: XQW.Guid;
   createdby_guid: XQW.Guid;
   createdon: Date;
   createdonbehalfby_guid: XQW.Guid;
@@ -217,6 +222,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Filter {
   versionnumber: number;
 }
 interface ts_WorkOrderServiceTaskWorkspace_Expand {
+  crc77_Incident: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, Incident_Select, Incident_Filter, { crc77_Incident: Incident_Result }>;
   createdby: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
   createdonbehalfby: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
   modifiedby: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
@@ -245,8 +251,10 @@ interface ts_WorkOrderServiceTaskWorkspace_Expand {
   ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, SystemUser_Select, SystemUser_Filter, { ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser: SystemUser_Result[] }>;
   ts_WorkOrderServiceTaskWorkspace_qm_rclegislation_qm_rclegislation: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_WorkOrderServiceTaskWorkspace_qm_rclegislation_qm_rclegislation: qm_rclegislation_Result[] }>;
   ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ovs_Finding: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ovs_Finding: ovs_Finding_Result[] }>;
+  ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ts_action: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, ts_action_Select, ts_action_Filter, { ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ts_action: ts_action_Result[] }>;
 }
 interface ts_WorkOrderServiceTaskWorkspace_FormattedResult {
+  crc77_incident_formatted?: string;
   createdby_formatted?: string;
   createdon_formatted?: string;
   createdonbehalfby_formatted?: string;
@@ -292,6 +300,7 @@ interface ts_WorkOrderServiceTaskWorkspace_FormattedResult {
 }
 interface ts_WorkOrderServiceTaskWorkspace_Result extends ts_WorkOrderServiceTaskWorkspace_Base, ts_WorkOrderServiceTaskWorkspace_Relationships {
   "@odata.etag": string;
+  crc77_incident_guid: string | null;
   createdby_guid: string | null;
   createdonbehalfby_guid: string | null;
   modifiedby_guid: string | null;
@@ -322,6 +331,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Result extends ts_WorkOrderServiceTas
   ts_workorderservicetask_guid: string | null;
 }
 interface ts_WorkOrderServiceTaskWorkspace_RelatedOne {
+  crc77_Incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -352,6 +362,7 @@ interface ts_WorkOrderServiceTaskWorkspace_RelatedMany {
   ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_WorkOrderServiceTaskWorkspace_qm_rclegislation_qm_rclegislation: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
   ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ovs_Finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
+  ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ts_action: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_workorderservicetaskworkspaces: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;

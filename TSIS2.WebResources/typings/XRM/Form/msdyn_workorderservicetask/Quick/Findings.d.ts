@@ -16,7 +16,7 @@ declare namespace Form.msdyn_workorderservicetask.Quick {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
+      get(name: "subgrid_findings"): Xrm.SubGridControl<"ovs_finding">;
       get(name: string): undefined;
       get(): Xrm.BaseControl[];
       get(index: number): Xrm.BaseControl;
@@ -32,7 +32,7 @@ declare namespace Form.msdyn_workorderservicetask.Quick {
   }
   interface Findings extends Xrm.PageBase<Findings.Attributes,Findings.Tabs,Findings.Controls> {
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
+    getControl(controlName: "subgrid_findings"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: string): undefined;
   }
 }

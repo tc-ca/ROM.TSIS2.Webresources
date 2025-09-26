@@ -27,6 +27,7 @@ interface ts_action_Base extends WebEntity {
 interface ts_action_Relationships {
   ts_ActionFinding_ts_action_ts_action?: ts_ActionFinding_Result[] | null;
   ts_Case?: Incident_Result | null;
+  ts_WorkOrderServiceTaskWorkspace?: ts_WorkOrderServiceTaskWorkspace_Result | null;
   ts_action_PostFollows?: PostFollow_Result[] | null;
   ts_action_connections1?: Connection_Result[] | null;
   ts_action_connections2?: Connection_Result[] | null;
@@ -39,6 +40,7 @@ interface ts_action extends ts_action_Base, ts_action_Relationships {
   ownerid_bind$teams?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_Case_bind$incidents?: string | null;
+  ts_WorkOrderServiceTaskWorkspace_bind$ts_workorderservicetaskworkspaces?: string | null;
   ts_contact_bind$contacts?: string | null;
   ts_finding_bind$ovs_findings?: string | null;
   ts_infraction_bind$ts_infractions?: string | null;
@@ -84,6 +86,7 @@ interface ts_action_Select {
   ts_priority: WebAttribute<ts_action_Select, { ts_priority: msdyn_playbookactivity_priority | null }, { ts_priority_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_action_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   ts_timedate: WebAttribute<ts_action_Select, { ts_timedate: Date | null }, { ts_timedate_formatted?: string }>;
+  ts_workorderservicetaskworkspace_guid: WebAttribute<ts_action_Select, { ts_workorderservicetaskworkspace_guid: string | null }, { ts_workorderservicetaskworkspace_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_action_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_action_Select, { versionnumber: number | null }, {  }>;
 }
@@ -123,6 +126,7 @@ interface ts_action_Filter {
   ts_priority: msdyn_playbookactivity_priority;
   ts_stakeholder_guid: XQW.Guid;
   ts_timedate: Date;
+  ts_workorderservicetaskworkspace_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -136,6 +140,7 @@ interface ts_action_Expand {
   owninguser: WebExpand<ts_action_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_ActionFinding_ts_action_ts_action: WebExpand<ts_action_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { ts_ActionFinding_ts_action_ts_action: ts_ActionFinding_Result[] }>;
   ts_Case: WebExpand<ts_action_Expand, Incident_Select, Incident_Filter, { ts_Case: Incident_Result }>;
+  ts_WorkOrderServiceTaskWorkspace: WebExpand<ts_action_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_WorkOrderServiceTaskWorkspace: ts_WorkOrderServiceTaskWorkspace_Result }>;
   ts_action_PostFollows: WebExpand<ts_action_Expand, PostFollow_Select, PostFollow_Filter, { ts_action_PostFollows: PostFollow_Result[] }>;
   ts_action_connections1: WebExpand<ts_action_Expand, Connection_Select, Connection_Filter, { ts_action_connections1: Connection_Result[] }>;
   ts_action_connections2: WebExpand<ts_action_Expand, Connection_Select, Connection_Filter, { ts_action_connections2: Connection_Result[] }>;
@@ -176,6 +181,7 @@ interface ts_action_FormattedResult {
   ts_priority_formatted?: string;
   ts_stakeholder_formatted?: string;
   ts_timedate_formatted?: string;
+  ts_workorderservicetaskworkspace_formatted?: string;
 }
 interface ts_action_Result extends ts_action_Base, ts_action_Relationships {
   "@odata.etag": string;
@@ -193,6 +199,7 @@ interface ts_action_Result extends ts_action_Base, ts_action_Relationships {
   ts_finding_guid: string | null;
   ts_infraction_guid: string | null;
   ts_stakeholder_guid: string | null;
+  ts_workorderservicetaskworkspace_guid: string | null;
 }
 interface ts_action_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
@@ -203,6 +210,7 @@ interface ts_action_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_Case: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  ts_WorkOrderServiceTaskWorkspace: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
   ts_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_infraction: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;

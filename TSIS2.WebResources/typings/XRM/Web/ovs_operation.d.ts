@@ -85,6 +85,7 @@ interface ovs_operation_Relationships {
   ts_suggestedinspection_operation?: ts_SuggestedInspection_Result[] | null;
   ts_ts_operationactivity_Operation_ovs_operat?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_Operation_ovs_operation?: ts_PlanningData_Result[] | null;
+  ts_unplannedworkorder_operation_ovs_operation?: ts_unplannedworkorder_Result[] | null;
   ts_workorderservicetaskworkspace_AOCOperation_ovs_operation?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
 }
 interface ovs_operation extends ovs_operation_Base, ovs_operation_Relationships {
@@ -303,6 +304,7 @@ interface ovs_operation_Expand {
   ts_suggestedinspection_operation: WebExpand<ovs_operation_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection_operation: ts_SuggestedInspection_Result[] }>;
   ts_ts_operationactivity_Operation_ovs_operat: WebExpand<ovs_operation_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Operation_ovs_operat: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_Operation_ovs_operation: WebExpand<ovs_operation_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Operation_ovs_operation: ts_PlanningData_Result[] }>;
+  ts_unplannedworkorder_operation_ovs_operation: WebExpand<ovs_operation_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_operation_ovs_operation: ts_unplannedworkorder_Result[] }>;
   ts_workorderservicetaskworkspace_AOCOperation_ovs_operation: WebExpand<ovs_operation_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_workorderservicetaskworkspace_AOCOperation_ovs_operation: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
 }
 interface ovs_operation_FormattedResult {
@@ -417,6 +419,7 @@ interface ovs_operation_RelatedMany {
   ts_suggestedinspection_operation: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   ts_ts_operationactivity_Operation_ovs_operat: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_Operation_ovs_operation: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
+  ts_unplannedworkorder_operation_ovs_operation: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
   ts_workorderservicetaskworkspace_AOCOperation_ovs_operation: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
 }
 interface WebEntitiesRetrieve {

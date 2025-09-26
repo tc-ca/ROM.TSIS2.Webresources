@@ -29,6 +29,7 @@ interface Team_Relationships {
   OwningTeam_postfollows?: PostFollow_Result[] | null;
   regardingobjectid_account?: Account_Result | null;
   regardingobjectid_msdyn_workorder?: msdyn_workorder_Result | null;
+  regardingobjectid_ts_unplannedworkorder?: ts_unplannedworkorder_Result | null;
   team_accounts?: Account_Result[] | null;
   team_appointment?: Appointment_Result[] | null;
   team_bookableresource?: BookableResource_Result[] | null;
@@ -63,6 +64,7 @@ interface Team_Relationships {
   team_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
   team_ts_case?: ts_case_Result[] | null;
   team_ts_causefinding?: ts_causefinding_Result[] | null;
+  team_ts_dutyinspectors?: ts_dutyinspectors_Result[] | null;
   team_ts_dutyinspectorschedule?: ts_DutyInspectorSchedule_Result[] | null;
   team_ts_entityrisk?: ts_EntityRisk_Result[] | null;
   team_ts_entityriskfrequency?: ts_EntityRiskFrequency_Result[] | null;
@@ -78,7 +80,6 @@ interface Team_Relationships {
   team_ts_plan?: ts_Plan_Result[] | null;
   team_ts_planningdata?: ts_PlanningData_Result[] | null;
   team_ts_planningsettings?: ts_planningsettings_Result[] | null;
-  team_ts_prescribedfrequencyoverride?: ts_PrescribedFrequencyOverride_Result[] | null;
   team_ts_questionnaireresponse?: ts_questionnaireresponse_Result[] | null;
   team_ts_questionnaireversion?: ts_questionnaireversion_Result[] | null;
   team_ts_riskcategory?: ts_RiskCategory_Result[] | null;
@@ -90,6 +91,7 @@ interface Team_Relationships {
   team_ts_teamplanningdata?: ts_TeamPlanningData_Result[] | null;
   team_ts_teamplanninginspectorhours?: ts_TeamPlanningInspectorHours_Result[] | null;
   team_ts_trip?: ts_trip_Result[] | null;
+  team_ts_unplannedworkorder?: ts_unplannedworkorder_Result[] | null;
   team_ts_userregistration?: ts_UserRegistration_Result[] | null;
   team_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
   team_ts_workorderservicetaskworkspace?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
@@ -107,6 +109,7 @@ interface Team_Relationships {
   ts_team_msdyn_workorder_AccountableTeam?: msdyn_workorder_Result[] | null;
   ts_ts_planningdata_Team_team?: ts_PlanningData_Result[] | null;
   ts_ts_teamplanningdata_Team_team?: ts_TeamPlanningData_Result[] | null;
+  ts_unplannedworkorder_accountableteam_team?: ts_unplannedworkorder_Result[] | null;
 }
 interface Team extends Team_Base, Team_Relationships {
   administratorid_bind$systemusers?: string | null;
@@ -124,6 +127,7 @@ interface Team_Create extends Team {
   regardingobjectid_knowledgearticle_bind$knowledgearticles?: string | null;
   regardingobjectid_msdyn_workorder_bind$msdyn_workorders?: string | null;
   regardingobjectid_opportunity_bind$opportunities?: string | null;
+  regardingobjectid_ts_unplannedworkorder_bind$ts_unplannedworkorders?: string | null;
 }
 interface Team_Update extends Team {
 }
@@ -216,6 +220,7 @@ interface Team_Expand {
   modifiedonbehalfby: WebExpand<Team_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   regardingobjectid_account: WebExpand<Team_Expand, Account_Select, Account_Filter, { regardingobjectid_account: Account_Result }>;
   regardingobjectid_msdyn_workorder: WebExpand<Team_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { regardingobjectid_msdyn_workorder: msdyn_workorder_Result }>;
+  regardingobjectid_ts_unplannedworkorder: WebExpand<Team_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { regardingobjectid_ts_unplannedworkorder: ts_unplannedworkorder_Result }>;
   team_accounts: WebExpand<Team_Expand, Account_Select, Account_Filter, { team_accounts: Account_Result[] }>;
   team_appointment: WebExpand<Team_Expand, Appointment_Select, Appointment_Filter, { team_appointment: Appointment_Result[] }>;
   team_bookableresource: WebExpand<Team_Expand, BookableResource_Select, BookableResource_Filter, { team_bookableresource: BookableResource_Result[] }>;
@@ -250,6 +255,7 @@ interface Team_Expand {
   team_ts_canceledinspectionjustification: WebExpand<Team_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { team_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
   team_ts_case: WebExpand<Team_Expand, ts_case_Select, ts_case_Filter, { team_ts_case: ts_case_Result[] }>;
   team_ts_causefinding: WebExpand<Team_Expand, ts_causefinding_Select, ts_causefinding_Filter, { team_ts_causefinding: ts_causefinding_Result[] }>;
+  team_ts_dutyinspectors: WebExpand<Team_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { team_ts_dutyinspectors: ts_dutyinspectors_Result[] }>;
   team_ts_dutyinspectorschedule: WebExpand<Team_Expand, ts_DutyInspectorSchedule_Select, ts_DutyInspectorSchedule_Filter, { team_ts_dutyinspectorschedule: ts_DutyInspectorSchedule_Result[] }>;
   team_ts_entityrisk: WebExpand<Team_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { team_ts_entityrisk: ts_EntityRisk_Result[] }>;
   team_ts_entityriskfrequency: WebExpand<Team_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { team_ts_entityriskfrequency: ts_EntityRiskFrequency_Result[] }>;
@@ -265,7 +271,6 @@ interface Team_Expand {
   team_ts_plan: WebExpand<Team_Expand, ts_Plan_Select, ts_Plan_Filter, { team_ts_plan: ts_Plan_Result[] }>;
   team_ts_planningdata: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { team_ts_planningdata: ts_PlanningData_Result[] }>;
   team_ts_planningsettings: WebExpand<Team_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { team_ts_planningsettings: ts_planningsettings_Result[] }>;
-  team_ts_prescribedfrequencyoverride: WebExpand<Team_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { team_ts_prescribedfrequencyoverride: ts_PrescribedFrequencyOverride_Result[] }>;
   team_ts_questionnaireresponse: WebExpand<Team_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { team_ts_questionnaireresponse: ts_questionnaireresponse_Result[] }>;
   team_ts_questionnaireversion: WebExpand<Team_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { team_ts_questionnaireversion: ts_questionnaireversion_Result[] }>;
   team_ts_riskcategory: WebExpand<Team_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { team_ts_riskcategory: ts_RiskCategory_Result[] }>;
@@ -277,6 +282,7 @@ interface Team_Expand {
   team_ts_teamplanningdata: WebExpand<Team_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { team_ts_teamplanningdata: ts_TeamPlanningData_Result[] }>;
   team_ts_teamplanninginspectorhours: WebExpand<Team_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { team_ts_teamplanninginspectorhours: ts_TeamPlanningInspectorHours_Result[] }>;
   team_ts_trip: WebExpand<Team_Expand, ts_trip_Select, ts_trip_Filter, { team_ts_trip: ts_trip_Result[] }>;
+  team_ts_unplannedworkorder: WebExpand<Team_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { team_ts_unplannedworkorder: ts_unplannedworkorder_Result[] }>;
   team_ts_userregistration: WebExpand<Team_Expand, ts_UserRegistration_Select, ts_UserRegistration_Filter, { team_ts_userregistration: ts_UserRegistration_Result[] }>;
   team_ts_workordercreationwizard: WebExpand<Team_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { team_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
   team_ts_workorderservicetaskworkspace: WebExpand<Team_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { team_ts_workorderservicetaskworkspace: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
@@ -294,6 +300,7 @@ interface Team_Expand {
   ts_team_msdyn_workorder_AccountableTeam: WebExpand<Team_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_team_msdyn_workorder_AccountableTeam: msdyn_workorder_Result[] }>;
   ts_ts_planningdata_Team_team: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Team_team: ts_PlanningData_Result[] }>;
   ts_ts_teamplanningdata_Team_team: WebExpand<Team_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { ts_ts_teamplanningdata_Team_team: ts_TeamPlanningData_Result[] }>;
+  ts_unplannedworkorder_accountableteam_team: WebExpand<Team_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_accountableteam_team: ts_unplannedworkorder_Result[] }>;
 }
 interface Team_FormattedResult {
   administratorid_formatted?: string;
@@ -340,6 +347,7 @@ interface Team_RelatedOne {
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   regardingobjectid_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   regardingobjectid_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  regardingobjectid_ts_unplannedworkorder: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface Team_RelatedMany {
   OwningTeam_postfollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
@@ -377,6 +385,7 @@ interface Team_RelatedMany {
   team_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   team_ts_case: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   team_ts_causefinding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
+  team_ts_dutyinspectors: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
   team_ts_dutyinspectorschedule: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;
   team_ts_entityrisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   team_ts_entityriskfrequency: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
@@ -392,7 +401,6 @@ interface Team_RelatedMany {
   team_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   team_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   team_ts_planningsettings: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
-  team_ts_prescribedfrequencyoverride: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
   team_ts_questionnaireresponse: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
   team_ts_questionnaireversion: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   team_ts_riskcategory: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
@@ -404,6 +412,7 @@ interface Team_RelatedMany {
   team_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   team_ts_teamplanninginspectorhours: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
   team_ts_trip: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
+  team_ts_unplannedworkorder: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
   team_ts_userregistration: WebMappingRetrieve<ts_UserRegistration_Select,ts_UserRegistration_Expand,ts_UserRegistration_Filter,ts_UserRegistration_Fixed,ts_UserRegistration_Result,ts_UserRegistration_FormattedResult>;
   team_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;
   team_ts_workorderservicetaskworkspace: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
@@ -421,6 +430,7 @@ interface Team_RelatedMany {
   ts_team_msdyn_workorder_AccountableTeam: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ts_planningdata_Team_team: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_ts_teamplanningdata_Team_team: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
+  ts_unplannedworkorder_accountableteam_team: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   teams: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
