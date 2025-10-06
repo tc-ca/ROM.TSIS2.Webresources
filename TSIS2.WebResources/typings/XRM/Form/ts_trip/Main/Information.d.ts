@@ -1,6 +1,21 @@
 declare namespace Form.ts_trip.Main {
   namespace Information {
     namespace Tabs {
+      interface Trip_General extends Xrm.SectionCollectionBase {
+        get(name: "Region"): Xrm.PageSection;
+        get(name: "Trip_General_section_3"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface Trip_Interations extends Xrm.SectionCollectionBase {
+        get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_2 extends Xrm.SectionCollectionBase {
         get(name: "tab_2_section_1"): Xrm.PageSection;
         get(name: "tab_2_section_2"): Xrm.PageSection;
@@ -30,6 +45,7 @@ declare namespace Form.ts_trip.Main {
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_plannedcost"): Xrm.NumberAttribute;
       get(name: "ts_plannedfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
+      get(name: "ts_program"): Xrm.OptionSetAttribute<ts_program>;
       get(name: "ts_region"): Xrm.LookupAttribute<"territory">;
       get(name: "ts_traveltime"): Xrm.NumberAttribute;
       get(name: string): undefined;
@@ -42,7 +58,10 @@ declare namespace Form.ts_trip.Main {
       get(name: "Inspectors"): Xrm.SubGridControl<"ts_tripinspector">;
       get(name: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
       get(name: "TripFiles"): Xrm.SubGridControl<"ts_file">;
+      get(name: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
+      get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "modifiedby"): Xrm.LookupControl<"systemuser">;
+      get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_actualcost"): Xrm.NumberControl;
       get(name: "ts_costexplanation"): Xrm.StringControl;
@@ -55,6 +74,7 @@ declare namespace Form.ts_trip.Main {
       get(name: "ts_name1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "ts_plannedcost"): Xrm.NumberControl;
       get(name: "ts_plannedfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
+      get(name: "ts_program"): Xrm.OptionSetControl<ts_program>;
       get(name: "ts_region"): Xrm.LookupControl<"territory">;
       get(name: "ts_traveltime"): Xrm.NumberControl;
       get(name: string): undefined;
@@ -63,6 +83,8 @@ declare namespace Form.ts_trip.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "Trip_General"): Xrm.PageTab<Tabs.Trip_General>;
+      get(name: "Trip_Interations"): Xrm.PageTab<Tabs.Trip_Interations>;
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
       get(name: "tab_contacts"): Xrm.PageTab<Tabs.tab_contacts>;
       get(name: string): undefined;
@@ -84,6 +106,7 @@ declare namespace Form.ts_trip.Main {
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_plannedcost"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_plannedfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
+    getAttribute(attributeName: "ts_program"): Xrm.OptionSetAttribute<ts_program>;
     getAttribute(attributeName: "ts_region"): Xrm.LookupAttribute<"territory">;
     getAttribute(attributeName: "ts_traveltime"): Xrm.NumberAttribute;
     getAttribute(attributeName: string): undefined;
@@ -91,7 +114,10 @@ declare namespace Form.ts_trip.Main {
     getControl(controlName: "Inspectors"): Xrm.SubGridControl<"ts_tripinspector">;
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "TripFiles"): Xrm.SubGridControl<"ts_file">;
+    getControl(controlName: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
+    getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "modifiedby"): Xrm.LookupControl<"systemuser">;
+    getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_actualcost"): Xrm.NumberControl;
     getControl(controlName: "ts_costexplanation"): Xrm.StringControl;
@@ -104,6 +130,7 @@ declare namespace Form.ts_trip.Main {
     getControl(controlName: "ts_name1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "ts_plannedcost"): Xrm.NumberControl;
     getControl(controlName: "ts_plannedfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
+    getControl(controlName: "ts_program"): Xrm.OptionSetControl<ts_program>;
     getControl(controlName: "ts_region"): Xrm.LookupControl<"territory">;
     getControl(controlName: "ts_traveltime"): Xrm.NumberControl;
     getControl(controlName: string): undefined;

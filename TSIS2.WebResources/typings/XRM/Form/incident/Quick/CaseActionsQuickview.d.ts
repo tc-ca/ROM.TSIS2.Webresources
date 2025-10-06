@@ -2,7 +2,7 @@ declare namespace Form.incident.Quick {
   namespace CaseActionsQuickview {
     namespace Tabs {
       interface tab_1 extends Xrm.SectionCollectionBase {
-        get(name: "tab_1_column_1_section_1"): Xrm.PageSection;
+        get(name: "Enforcement_Action_section"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -22,7 +22,7 @@ declare namespace Form.incident.Quick {
       get(chooser: (item: Xrm.Attribute<any>, index: number) => boolean): Xrm.Attribute<any>[];
     }
     interface Controls extends Xrm.ControlCollectionBase {
-      get(name: "Subgrid_new_1"): Xrm.SubGridControl<"ts_action">;
+      get(name: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
       get(name: "header_process_customerid"): Xrm.LookupControl<"account" | "contact"> | null;
       get(name: "header_process_customerid_1"): Xrm.LookupControl<"account" | "contact"> | null;
       get(name: "header_process_customerid_2"): Xrm.LookupControl<"account" | "contact"> | null;
@@ -60,7 +60,7 @@ declare namespace Form.incident.Quick {
     getAttribute(attributeName: "primarycontactid"): Xrm.LookupAttribute<"contact"> | null;
     getAttribute(attributeName: "title"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: string): undefined;
-    getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"ts_action">;
+    getControl(controlName: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
     getControl(controlName: "header_process_customerid"): Xrm.LookupControl<"account" | "contact"> | null;
     getControl(controlName: "header_process_customerid_1"): Xrm.LookupControl<"account" | "contact"> | null;
     getControl(controlName: "header_process_customerid_2"): Xrm.LookupControl<"account" | "contact"> | null;

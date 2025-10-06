@@ -584,29 +584,6 @@ interface ts_causefinding_Create extends ts_causefinding {
 }
 interface ts_causefinding_Update extends ts_causefinding {
 }
-interface ts_dutyinspectors_Base extends WebEntity {
-}
-interface ts_dutyinspectors_Fixed extends WebEntity_Fixed {
-  ts_dutyinspectorsid: string;
-}
-interface ts_dutyinspectors extends ts_dutyinspectors_Base, ts_dutyinspectors_Relationships {
-}
-interface ts_dutyinspectors_Relationships {
-}
-interface ts_dutyinspectors_Result extends ts_dutyinspectors_Base, ts_dutyinspectors_Relationships {
-}
-interface ts_dutyinspectors_FormattedResult {
-}
-interface ts_dutyinspectors_Select {
-}
-interface ts_dutyinspectors_Expand {
-}
-interface ts_dutyinspectors_Filter {
-}
-interface ts_dutyinspectors_Create extends ts_dutyinspectors {
-}
-interface ts_dutyinspectors_Update extends ts_dutyinspectors {
-}
 interface ts_DutyInspectorSchedule_Base extends WebEntity {
 }
 interface ts_DutyInspectorSchedule_Fixed extends WebEntity_Fixed {
@@ -813,190 +790,6 @@ interface ts_EntityRiskFrequency_Filter {
 interface ts_EntityRiskFrequency_Create extends ts_EntityRiskFrequency {
 }
 interface ts_EntityRiskFrequency_Update extends ts_EntityRiskFrequency {
-}
-interface ts_File_Base extends WebEntity {
-}
-interface ts_File_Fixed extends WebEntity_Fixed {
-  ts_fileid: string;
-}
-interface ts_File extends ts_File_Base, ts_File_Relationships {
-}
-interface ts_File_Relationships {
-}
-interface ts_File_Result extends ts_File_Base, ts_File_Relationships {
-}
-interface ts_File_FormattedResult {
-}
-interface ts_File_Select {
-}
-interface ts_File_Expand {
-}
-interface ts_File_Filter {
-}
-interface ts_File_Create extends ts_File {
-}
-interface ts_File_Update extends ts_File {
-}
-interface ts_File_Team_Base extends WebEntity {
-}
-interface ts_File_Team_Fixed extends WebEntity_Fixed {
-  ts_file_teamid: string;
-}
-interface ts_File_Team extends ts_File_Team_Base, ts_File_Team_Relationships {
-}
-interface ts_File_Team_Relationships {
-}
-interface ts_File_Team_Result extends ts_File_Team_Base, ts_File_Team_Relationships {
-}
-interface ts_File_Team_FormattedResult {
-}
-interface ts_File_Team_Select {
-}
-interface ts_File_Team_Expand {
-}
-interface ts_File_Team_Filter {
-}
-interface ts_File_Team_Create extends ts_File_Team {
-}
-interface ts_File_Team_Update extends ts_File_Team {
-}
-interface ts_Files_Accounts_Base extends WebEntity {
-}
-interface ts_Files_Accounts_Fixed extends WebEntity_Fixed {
-  ts_files_accountsid: string;
-}
-interface ts_Files_Accounts extends ts_Files_Accounts_Base, ts_Files_Accounts_Relationships {
-}
-interface ts_Files_Accounts_Relationships {
-}
-interface ts_Files_Accounts_Result extends ts_Files_Accounts_Base, ts_Files_Accounts_Relationships {
-}
-interface ts_Files_Accounts_FormattedResult {
-}
-interface ts_Files_Accounts_Select {
-}
-interface ts_Files_Accounts_Expand {
-}
-interface ts_Files_Accounts_Filter {
-}
-interface ts_Files_Accounts_Create extends ts_Files_Accounts {
-}
-interface ts_Files_Accounts_Update extends ts_Files_Accounts {
-}
-interface ts_Files_Incidents_Base extends WebEntity {
-}
-interface ts_Files_Incidents_Fixed extends WebEntity_Fixed {
-  ts_files_incidentsid: string;
-}
-interface ts_Files_Incidents extends ts_Files_Incidents_Base, ts_Files_Incidents_Relationships {
-}
-interface ts_Files_Incidents_Relationships {
-}
-interface ts_Files_Incidents_Result extends ts_Files_Incidents_Base, ts_Files_Incidents_Relationships {
-}
-interface ts_Files_Incidents_FormattedResult {
-}
-interface ts_Files_Incidents_Select {
-}
-interface ts_Files_Incidents_Expand {
-}
-interface ts_Files_Incidents_Filter {
-}
-interface ts_Files_Incidents_Create extends ts_Files_Incidents {
-}
-interface ts_Files_Incidents_Update extends ts_Files_Incidents {
-}
-interface ts_Files_msdyn_FunctionalLocations_Base extends WebEntity {
-}
-interface ts_Files_msdyn_FunctionalLocations_Fixed extends WebEntity_Fixed {
-  ts_files_msdyn_functionallocationsid: string;
-}
-interface ts_Files_msdyn_FunctionalLocations extends ts_Files_msdyn_FunctionalLocations_Base, ts_Files_msdyn_FunctionalLocations_Relationships {
-}
-interface ts_Files_msdyn_FunctionalLocations_Relationships {
-}
-interface ts_Files_msdyn_FunctionalLocations_Result extends ts_Files_msdyn_FunctionalLocations_Base, ts_Files_msdyn_FunctionalLocations_Relationships {
-}
-interface ts_Files_msdyn_FunctionalLocations_FormattedResult {
-}
-interface ts_Files_msdyn_FunctionalLocations_Select {
-}
-interface ts_Files_msdyn_FunctionalLocations_Expand {
-}
-interface ts_Files_msdyn_FunctionalLocations_Filter {
-}
-interface ts_Files_msdyn_FunctionalLocations_Create extends ts_Files_msdyn_FunctionalLocations {
-}
-interface ts_Files_msdyn_FunctionalLocations_Update extends ts_Files_msdyn_FunctionalLocations {
-}
-interface ts_Files_msdyn_workorders_Base extends WebEntity {
-}
-interface ts_Files_msdyn_workorders_Fixed extends WebEntity_Fixed {
-  ts_files_msdyn_workordersid: string;
-}
-interface ts_Files_msdyn_workorders extends ts_Files_msdyn_workorders_Base, ts_Files_msdyn_workorders_Relationships {
-}
-interface ts_Files_msdyn_workorders_Relationships {
-}
-interface ts_Files_msdyn_workorders_Result extends ts_Files_msdyn_workorders_Base, ts_Files_msdyn_workorders_Relationships {
-}
-interface ts_Files_msdyn_workorders_FormattedResult {
-}
-interface ts_Files_msdyn_workorders_Select {
-}
-interface ts_Files_msdyn_workorders_Expand {
-}
-interface ts_Files_msdyn_workorders_Filter {
-}
-interface ts_Files_msdyn_workorders_Create extends ts_Files_msdyn_workorders {
-}
-interface ts_Files_msdyn_workorders_Update extends ts_Files_msdyn_workorders {
-}
-interface ts_Files_msdyn_workorderservicetasks_Base extends WebEntity {
-}
-interface ts_Files_msdyn_workorderservicetasks_Fixed extends WebEntity_Fixed {
-  ts_files_msdyn_workorderservicetasksid: string;
-}
-interface ts_Files_msdyn_workorderservicetasks extends ts_Files_msdyn_workorderservicetasks_Base, ts_Files_msdyn_workorderservicetasks_Relationships {
-}
-interface ts_Files_msdyn_workorderservicetasks_Relationships {
-}
-interface ts_Files_msdyn_workorderservicetasks_Result extends ts_Files_msdyn_workorderservicetasks_Base, ts_Files_msdyn_workorderservicetasks_Relationships {
-}
-interface ts_Files_msdyn_workorderservicetasks_FormattedResult {
-}
-interface ts_Files_msdyn_workorderservicetasks_Select {
-}
-interface ts_Files_msdyn_workorderservicetasks_Expand {
-}
-interface ts_Files_msdyn_workorderservicetasks_Filter {
-}
-interface ts_Files_msdyn_workorderservicetasks_Create extends ts_Files_msdyn_workorderservicetasks {
-}
-interface ts_Files_msdyn_workorderservicetasks_Update extends ts_Files_msdyn_workorderservicetasks {
-}
-interface ts_Files_ovs_operations_Base extends WebEntity {
-}
-interface ts_Files_ovs_operations_Fixed extends WebEntity_Fixed {
-  ts_files_ovs_operationsid: string;
-}
-interface ts_Files_ovs_operations extends ts_Files_ovs_operations_Base, ts_Files_ovs_operations_Relationships {
-}
-interface ts_Files_ovs_operations_Relationships {
-}
-interface ts_Files_ovs_operations_Result extends ts_Files_ovs_operations_Base, ts_Files_ovs_operations_Relationships {
-}
-interface ts_Files_ovs_operations_FormattedResult {
-}
-interface ts_Files_ovs_operations_Select {
-}
-interface ts_Files_ovs_operations_Expand {
-}
-interface ts_Files_ovs_operations_Filter {
-}
-interface ts_Files_ovs_operations_Create extends ts_Files_ovs_operations {
-}
-interface ts_Files_ovs_operations_Update extends ts_Files_ovs_operations {
 }
 interface ts_Incident_ts_operationcontact_Base extends WebEntity {
 }
@@ -1297,29 +1090,6 @@ interface ts_operationriskassessment_Create extends ts_operationriskassessment {
 }
 interface ts_operationriskassessment_Update extends ts_operationriskassessment {
 }
-interface ts_ovs_Finding_ts_File_Base extends WebEntity {
-}
-interface ts_ovs_Finding_ts_File_Fixed extends WebEntity_Fixed {
-  ts_ovs_finding_ts_fileid: string;
-}
-interface ts_ovs_Finding_ts_File extends ts_ovs_Finding_ts_File_Base, ts_ovs_Finding_ts_File_Relationships {
-}
-interface ts_ovs_Finding_ts_File_Relationships {
-}
-interface ts_ovs_Finding_ts_File_Result extends ts_ovs_Finding_ts_File_Base, ts_ovs_Finding_ts_File_Relationships {
-}
-interface ts_ovs_Finding_ts_File_FormattedResult {
-}
-interface ts_ovs_Finding_ts_File_Select {
-}
-interface ts_ovs_Finding_ts_File_Expand {
-}
-interface ts_ovs_Finding_ts_File_Filter {
-}
-interface ts_ovs_Finding_ts_File_Create extends ts_ovs_Finding_ts_File {
-}
-interface ts_ovs_Finding_ts_File_Update extends ts_ovs_Finding_ts_File {
-}
 interface ts_ovs_operation_ovs_operation_Base extends WebEntity {
 }
 interface ts_ovs_operation_ovs_operation_Fixed extends WebEntity_Fixed {
@@ -1434,6 +1204,29 @@ interface ts_planningsettings_Filter {
 interface ts_planningsettings_Create extends ts_planningsettings {
 }
 interface ts_planningsettings_Update extends ts_planningsettings {
+}
+interface ts_PrescribedFrequencyOverride_Base extends WebEntity {
+}
+interface ts_PrescribedFrequencyOverride_Fixed extends WebEntity_Fixed {
+  ts_prescribedfrequencyoverrideid: string;
+}
+interface ts_PrescribedFrequencyOverride extends ts_PrescribedFrequencyOverride_Base, ts_PrescribedFrequencyOverride_Relationships {
+}
+interface ts_PrescribedFrequencyOverride_Relationships {
+}
+interface ts_PrescribedFrequencyOverride_Result extends ts_PrescribedFrequencyOverride_Base, ts_PrescribedFrequencyOverride_Relationships {
+}
+interface ts_PrescribedFrequencyOverride_FormattedResult {
+}
+interface ts_PrescribedFrequencyOverride_Select {
+}
+interface ts_PrescribedFrequencyOverride_Expand {
+}
+interface ts_PrescribedFrequencyOverride_Filter {
+}
+interface ts_PrescribedFrequencyOverride_Create extends ts_PrescribedFrequencyOverride {
+}
+interface ts_PrescribedFrequencyOverride_Update extends ts_PrescribedFrequencyOverride {
 }
 interface ts_questionnaireresponse_Base extends WebEntity {
 }
@@ -1573,29 +1366,6 @@ interface ts_site_Create extends ts_site {
 }
 interface ts_site_Update extends ts_site {
 }
-interface ts_site_ts_file_Base extends WebEntity {
-}
-interface ts_site_ts_file_Fixed extends WebEntity_Fixed {
-  ts_site_ts_fileid: string;
-}
-interface ts_site_ts_file extends ts_site_ts_file_Base, ts_site_ts_file_Relationships {
-}
-interface ts_site_ts_file_Relationships {
-}
-interface ts_site_ts_file_Result extends ts_site_ts_file_Base, ts_site_ts_file_Relationships {
-}
-interface ts_site_ts_file_FormattedResult {
-}
-interface ts_site_ts_file_Select {
-}
-interface ts_site_ts_file_Expand {
-}
-interface ts_site_ts_file_Filter {
-}
-interface ts_site_ts_file_Create extends ts_site_ts_file {
-}
-interface ts_site_ts_file_Update extends ts_site_ts_file {
-}
 interface ts_SuggestedInspection_Base extends WebEntity {
 }
 interface ts_SuggestedInspection_Fixed extends WebEntity_Fixed {
@@ -1687,52 +1457,6 @@ interface ts_trip_Filter {
 interface ts_trip_Create extends ts_trip {
 }
 interface ts_trip_Update extends ts_trip {
-}
-interface ts_ts_file_ts_trip_Base extends WebEntity {
-}
-interface ts_ts_file_ts_trip_Fixed extends WebEntity_Fixed {
-  ts_ts_file_ts_tripid: string;
-}
-interface ts_ts_file_ts_trip extends ts_ts_file_ts_trip_Base, ts_ts_file_ts_trip_Relationships {
-}
-interface ts_ts_file_ts_trip_Relationships {
-}
-interface ts_ts_file_ts_trip_Result extends ts_ts_file_ts_trip_Base, ts_ts_file_ts_trip_Relationships {
-}
-interface ts_ts_file_ts_trip_FormattedResult {
-}
-interface ts_ts_file_ts_trip_Select {
-}
-interface ts_ts_file_ts_trip_Expand {
-}
-interface ts_ts_file_ts_trip_Filter {
-}
-interface ts_ts_file_ts_trip_Create extends ts_ts_file_ts_trip {
-}
-interface ts_ts_file_ts_trip_Update extends ts_ts_file_ts_trip {
-}
-interface ts_unplannedworkorder_Base extends WebEntity {
-}
-interface ts_unplannedworkorder_Fixed extends WebEntity_Fixed {
-  ts_unplannedworkorderid: string;
-}
-interface ts_unplannedworkorder extends ts_unplannedworkorder_Base, ts_unplannedworkorder_Relationships {
-}
-interface ts_unplannedworkorder_Relationships {
-}
-interface ts_unplannedworkorder_Result extends ts_unplannedworkorder_Base, ts_unplannedworkorder_Relationships {
-}
-interface ts_unplannedworkorder_FormattedResult {
-}
-interface ts_unplannedworkorder_Select {
-}
-interface ts_unplannedworkorder_Expand {
-}
-interface ts_unplannedworkorder_Filter {
-}
-interface ts_unplannedworkorder_Create extends ts_unplannedworkorder {
-}
-interface ts_unplannedworkorder_Update extends ts_unplannedworkorder {
 }
 interface ts_UserRegistration_Base extends WebEntity {
 }

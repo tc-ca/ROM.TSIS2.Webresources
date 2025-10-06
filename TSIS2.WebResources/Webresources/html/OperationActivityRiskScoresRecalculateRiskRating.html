@@ -17,6 +17,7 @@
 
         let originalText = "";
         let processingText = "";
+        let bannerText = "";
         let countdownTimer = null;
 
         function setButtonLabel() {
@@ -29,6 +30,14 @@
             processingText = (currentLanguage === USER_LANG_FR)
                 ? "Traitement..."
                 : "Processing...";
+
+            bannerText = (currentLanguage === USER_LANG_FR)
+                ? "La cote de risque a été recalculée avec succès."
+                : "Risk rating recalculated successfully.";
+
+            bannerErrorText = (currentLanguage === USER_LANG_FR)
+                ? "La cote de risque n'a pas été recalculée avec succès."
+                : "Risk rating not recalculated successfully.";
 
             document.getElementById("btnText").innerText = originalText;
 
@@ -135,8 +144,24 @@
                     // Refresh the form
                     if (parent.Xrm && parent.Xrm.Page && parent.Xrm.Page.data) {
                         parent.Xrm.Page.data.refresh(false).then(
-                            function () { console.info("Form refreshed successfully"); },
-                            function (err) { console.error("Error refreshing form: " + err.message); }
+                            function () {
+                                console.info("Form refreshed successfully");
+
+                                parent.Xrm.Page.ui.setFormNotification(
+                                    bannerText, 
+                                    "INFO",                                
+                                    "riskRecalcSuccess"                       
+                                );
+                            },
+                            function (err) {
+                                console.error("Error refreshing form: " + err.message);
+
+                                parent.Xrm.Page.ui.setFormNotification(
+                                    bannerErrorText, 
+                                    "ERROR",                                
+                                    "riskRecalcSuccess"                       
+                                );
+                            }
                         );
                     }
                 }

@@ -17,6 +17,7 @@ declare namespace Form.ts_workorderservicetaskworkspace.Main {
       }
       interface tab_9 extends Xrm.SectionCollectionBase {
         get(name: "tab_9_section_1"): Xrm.PageSection;
+        get(name: "tab_9_section_3"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -53,6 +54,7 @@ declare namespace Form.ts_workorderservicetaskworkspace.Main {
       }
     }
     interface Attributes extends Xrm.AttributeCollectionBase {
+      get(name: "crc77_incident"): Xrm.Attribute<any>;
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetAttribute<ts_workorderservicetaskworkspace_statecode>;
       get(name: "statuscode"): Xrm.OptionSetAttribute<ts_workorderservicetaskworkspace_statuscode>;
@@ -108,8 +110,8 @@ declare namespace Form.ts_workorderservicetaskworkspace.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Access_Users"): Xrm.SubGridControl<"systemuser">;
       get(name: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
-      get(name: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
+      get(name: "crc77_incident"): Xrm.LookupControl<"incident">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "statecode"): Xrm.OptionSetControl<ts_workorderservicetaskworkspace_statecode>;
       get(name: "statuscode"): Xrm.OptionSetControl<ts_workorderservicetaskworkspace_statuscode>;
@@ -176,6 +178,7 @@ declare namespace Form.ts_workorderservicetaskworkspace.Main {
     }
   }
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
+    getAttribute(attributeName: "crc77_incident"): Xrm.Attribute<any>;
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "statecode"): Xrm.OptionSetAttribute<ts_workorderservicetaskworkspace_statecode>;
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<ts_workorderservicetaskworkspace_statuscode>;
@@ -226,8 +229,8 @@ declare namespace Form.ts_workorderservicetaskworkspace.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Access_Users"): Xrm.SubGridControl<"systemuser">;
     getControl(controlName: "CustomQuestionnaireProvisions"): Xrm.SubGridControl<"qm_rclegislation">;
-    getControl(controlName: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
+    getControl(controlName: "crc77_incident"): Xrm.LookupControl<"incident">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "statecode"): Xrm.OptionSetControl<ts_workorderservicetaskworkspace_statecode>;
     getControl(controlName: "statuscode"): Xrm.OptionSetControl<ts_workorderservicetaskworkspace_statuscode>;
