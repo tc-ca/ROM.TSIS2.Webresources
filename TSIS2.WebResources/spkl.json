@@ -765,9 +765,14 @@
                 "description": "Function library to build NonOversightActivity"
             },
             {
-                "uniquename": "ts_/js/AppLevelFunctions.js",
-                "file": "js\\AppLevelFunctions.js",
-                "description": "TSIS 2.0 AppLevel Scripts"
+              "uniquename": "ts_/js/AppLevelFunctions.js",
+              "file": "js\\AppLevelFunctions.js",
+              "description": "TSIS 2.0 AppLevel Scripts"
+            },
+            {
+              "uniquename": "ts_/js/Trip.js",
+              "file": "js\\Trip.js",
+              "description": "Trip Scripts"
             }
         ]
       }
