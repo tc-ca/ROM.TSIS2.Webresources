@@ -85,6 +85,7 @@ interface msdyn_workorderservicetask_Relationships {
   ts_incident_WorkOrderServiceTask2_msdyn_work?: Incident_Result[] | null;
   ts_msdyn_workorderservicetask_systemuser?: SystemUser_Result[] | null;
   ts_workorderservicetask_qm_rclegislation?: qm_rclegislation_Result[] | null;
+  ts_workorderservicetaskworkspace_WorkOrderServiceTask_msdyn_workorderservicetask?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
 }
 interface msdyn_workorderservicetask extends msdyn_workorderservicetask_Base, msdyn_workorderservicetask_Relationships {
   msdyn_Inspection_bind$msdyn_inspections?: string | null;
@@ -366,6 +367,7 @@ interface msdyn_workorderservicetask_Expand {
   ts_msdyn_workorderservicetask_systemuser: WebExpand<msdyn_workorderservicetask_Expand, SystemUser_Select, SystemUser_Filter, { ts_msdyn_workorderservicetask_systemuser: SystemUser_Result[] }>;
   ts_operationtypefilter: WebExpand<msdyn_workorderservicetask_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_operationtypefilter: ovs_operationtype_Result }>;
   ts_workorderservicetask_qm_rclegislation: WebExpand<msdyn_workorderservicetask_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_workorderservicetask_qm_rclegislation: qm_rclegislation_Result[] }>;
+  ts_workorderservicetaskworkspace_WorkOrderServiceTask_msdyn_workorderservicetask: WebExpand<msdyn_workorderservicetask_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_workorderservicetaskworkspace_WorkOrderServiceTask_msdyn_workorderservicetask: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
 }
 interface msdyn_workorderservicetask_FormattedResult {
   createdby_formatted?: string;
@@ -525,6 +527,7 @@ interface msdyn_workorderservicetask_RelatedMany {
   ts_incident_WorkOrderServiceTask2_msdyn_work: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_msdyn_workorderservicetask_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_workorderservicetask_qm_rclegislation: WebMappingRetrieve<qm_rclegislation_Select,qm_rclegislation_Expand,qm_rclegislation_Filter,qm_rclegislation_Fixed,qm_rclegislation_Result,qm_rclegislation_FormattedResult>;
+  ts_workorderservicetaskworkspace_WorkOrderServiceTask_msdyn_workorderservicetask: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_workorderservicetasks: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;

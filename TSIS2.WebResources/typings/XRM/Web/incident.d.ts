@@ -84,6 +84,7 @@ interface Incident_Relationships {
   Incident_Emails?: Email_Result[] | null;
   Incident_IncidentResolutions?: IncidentResolution_Result[] | null;
   Incident_ServiceAppointments?: ServiceAppointment_Result[] | null;
+  crc77_ts_WorkOrderServiceTaskWorkspace_Incident_Incident?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
   customerid_account?: Account_Result | null;
   customerid_contact?: Contact_Result | null;
   incident_PostFollows?: PostFollow_Result[] | null;
@@ -427,6 +428,7 @@ interface Incident_Expand {
   Incident_Emails: WebExpand<Incident_Expand, Email_Select, Email_Filter, { Incident_Emails: Email_Result[] }>;
   Incident_IncidentResolutions: WebExpand<Incident_Expand, IncidentResolution_Select, IncidentResolution_Filter, { Incident_IncidentResolutions: IncidentResolution_Result[] }>;
   Incident_ServiceAppointments: WebExpand<Incident_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { Incident_ServiceAppointments: ServiceAppointment_Result[] }>;
+  crc77_ts_WorkOrderServiceTaskWorkspace_Incident_Incident: WebExpand<Incident_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { crc77_ts_WorkOrderServiceTaskWorkspace_Incident_Incident: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
   createdby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
   createdonbehalfby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
   customerid_account: WebExpand<Incident_Expand, Account_Select, Account_Filter, { customerid_account: Account_Result }>;
@@ -638,6 +640,7 @@ interface Incident_RelatedMany {
   Incident_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   Incident_IncidentResolutions: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   Incident_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
+  crc77_ts_WorkOrderServiceTaskWorkspace_Incident_Incident: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
   incident_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   incident_activity_parties: WebMappingRetrieve<ActivityParty_Select,ActivityParty_Expand,ActivityParty_Filter,ActivityParty_Fixed,ActivityParty_Result,ActivityParty_FormattedResult>;
   incident_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;

@@ -63,6 +63,7 @@ interface ovs_Finding_Relationships {
   ts_Site_Site?: ts_site_Result | null;
   ts_VerbalWarningGivenTo?: Contact_Result | null;
   ts_WorkOrder?: msdyn_workorder_Result | null;
+  ts_WorkOrderServiceTaskWorkspace?: ts_WorkOrderServiceTaskWorkspace_Result | null;
   ts_finding_ts_action_finding?: ts_action_Result[] | null;
   ts_finding_ts_causefinding_Finding?: ts_causefinding_Result[] | null;
 }
@@ -329,6 +330,7 @@ interface ovs_Finding_Expand {
   ts_Site_Site: WebExpand<ovs_Finding_Expand, ts_site_Select, ts_site_Filter, { ts_Site_Site: ts_site_Result }>;
   ts_VerbalWarningGivenTo: WebExpand<ovs_Finding_Expand, Contact_Select, Contact_Filter, { ts_VerbalWarningGivenTo: Contact_Result }>;
   ts_WorkOrder: WebExpand<ovs_Finding_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder: msdyn_workorder_Result }>;
+  ts_WorkOrderServiceTaskWorkspace: WebExpand<ovs_Finding_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_WorkOrderServiceTaskWorkspace: ts_WorkOrderServiceTaskWorkspace_Result }>;
   ts_accountid: WebExpand<ovs_Finding_Expand, Account_Select, Account_Filter, { ts_accountid: Account_Result }>;
   ts_actioncreated: WebExpand<ovs_Finding_Expand, ts_action_Select, ts_action_Filter, { ts_actioncreated: ts_action_Result }>;
   ts_enforcementactioncreated: WebExpand<ovs_Finding_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementactioncreated: ts_enforcementaction_Result }>;
@@ -482,6 +484,7 @@ interface ovs_Finding_RelatedOne {
   ts_Site_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_VerbalWarningGivenTo: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_WorkOrderServiceTaskWorkspace: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
   ts_accountid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_actioncreated: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_enforcementactioncreated: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
