@@ -176,8 +176,6 @@ interface msdyn_workorder_Relationships {
   ts_Contact?: Contact_Result | null;
   ts_Contact_msdyn_workorder_msdyn_workorder?: Contact_Result[] | null;
   ts_DepartureAerodrome_Site?: ts_site_Result | null;
-  ts_File_msdyn_workorder_msdyn_workorder?: ts_File_Result[] | null;
-  ts_Files_msdyn_workorders?: ts_File_Result[] | null;
   ts_FunctionalLocation?: ts_site_Result | null;
   ts_IncompleteWorkOrderReason?: ts_IncompleteWorkOrderReason_Result | null;
   ts_OperatingCarrierOperation?: ovs_operation_Result | null;
@@ -200,7 +198,6 @@ interface msdyn_workorder_Relationships {
   ts_ovs_Finding_WorkOrder_msdyn_workorder?: ovs_Finding_Result[] | null;
   ts_questionnaireresponse_WorkOrder_msdyn_workorder?: ts_questionnaireresponse_Result[] | null;
   ts_workorder_ts_workordertimetracking_WorkOrder?: ts_workordertimetracking_Result[] | null;
-  ts_workorderservicetaskworkspace_WorkOrder_msdyn_workorder?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
 }
 interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relationships {
   msdyn_FunctionalLocation_bind$msdyn_functionallocations?: string | null;
@@ -790,8 +787,6 @@ interface msdyn_workorder_Expand {
   ts_Contact: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { ts_Contact: Contact_Result }>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, Contact_Select, Contact_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: Contact_Result[] }>;
   ts_DepartureAerodrome_Site: WebExpand<msdyn_workorder_Expand, ts_site_Select, ts_site_Filter, { ts_DepartureAerodrome_Site: ts_site_Result }>;
-  ts_File_msdyn_workorder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ts_File_Select, ts_File_Filter, { ts_File_msdyn_workorder_msdyn_workorder: ts_File_Result[] }>;
-  ts_Files_msdyn_workorders: WebExpand<msdyn_workorder_Expand, ts_File_Select, ts_File_Filter, { ts_Files_msdyn_workorders: ts_File_Result[] }>;
   ts_FunctionalLocation: WebExpand<msdyn_workorder_Expand, ts_site_Select, ts_site_Filter, { ts_FunctionalLocation: ts_site_Result }>;
   ts_IncompleteWorkOrderReason: WebExpand<msdyn_workorder_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { ts_IncompleteWorkOrderReason: ts_IncompleteWorkOrderReason_Result }>;
   ts_OperatingCarrierOperation: WebExpand<msdyn_workorder_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_OperatingCarrierOperation: ovs_operation_Result }>;
@@ -824,7 +819,6 @@ interface msdyn_workorder_Expand {
   ts_suggestedinspection: WebExpand<msdyn_workorder_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection: ts_SuggestedInspection_Result }>;
   ts_trip: WebExpand<msdyn_workorder_Expand, ts_trip_Select, ts_trip_Filter, { ts_trip: ts_trip_Result }>;
   ts_workorder_ts_workordertimetracking_WorkOrder: WebExpand<msdyn_workorder_Expand, ts_workordertimetracking_Select, ts_workordertimetracking_Filter, { ts_workorder_ts_workordertimetracking_WorkOrder: ts_workordertimetracking_Result[] }>;
-  ts_workorderservicetaskworkspace_WorkOrder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_workorderservicetaskworkspace_WorkOrder_msdyn_workorder: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
 }
 interface msdyn_workorder_FormattedResult {
   createdby_formatted?: string;
@@ -1126,8 +1120,6 @@ interface msdyn_workorder_RelatedMany {
   msdyn_workorder_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_workorder_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
-  ts_File_msdyn_workorder_msdyn_workorder: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
-  ts_Files_msdyn_workorders: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_incident_WorkOrder1_msdyn_workorder: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_WorkOrder2_msdyn_workorder: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_infraction_WorkOrder_msdyn_workorder: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
@@ -1139,7 +1131,6 @@ interface msdyn_workorder_RelatedMany {
   ts_ovs_Finding_WorkOrder_msdyn_workorder: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_questionnaireresponse_WorkOrder_msdyn_workorder: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
   ts_workorder_ts_workordertimetracking_WorkOrder: WebMappingRetrieve<ts_workordertimetracking_Select,ts_workordertimetracking_Expand,ts_workordertimetracking_Filter,ts_workordertimetracking_Fixed,ts_workordertimetracking_Result,ts_workordertimetracking_FormattedResult>;
-  ts_workorderservicetaskworkspace_WorkOrder_msdyn_workorder: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_workorders: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;

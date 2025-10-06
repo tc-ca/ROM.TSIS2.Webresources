@@ -27,11 +27,9 @@ interface ts_action_Base extends WebEntity {
 interface ts_action_Relationships {
   ts_ActionFinding_ts_action_ts_action?: ts_ActionFinding_Result[] | null;
   ts_Case?: Incident_Result | null;
-  ts_WorkOrderServiceTaskWorkspace?: ts_WorkOrderServiceTaskWorkspace_Result | null;
   ts_action_PostFollows?: PostFollow_Result[] | null;
   ts_action_connections1?: Connection_Result[] | null;
   ts_action_connections2?: Connection_Result[] | null;
-  ts_file_Action_ts_action?: ts_File_Result[] | null;
   ts_ts_action_ovs_finding?: ovs_Finding_Result[] | null;
   ts_ts_action_ts_infraction?: ts_infraction_Result[] | null;
 }
@@ -140,12 +138,10 @@ interface ts_action_Expand {
   owninguser: WebExpand<ts_action_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_ActionFinding_ts_action_ts_action: WebExpand<ts_action_Expand, ts_ActionFinding_Select, ts_ActionFinding_Filter, { ts_ActionFinding_ts_action_ts_action: ts_ActionFinding_Result[] }>;
   ts_Case: WebExpand<ts_action_Expand, Incident_Select, Incident_Filter, { ts_Case: Incident_Result }>;
-  ts_WorkOrderServiceTaskWorkspace: WebExpand<ts_action_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_WorkOrderServiceTaskWorkspace: ts_WorkOrderServiceTaskWorkspace_Result }>;
   ts_action_PostFollows: WebExpand<ts_action_Expand, PostFollow_Select, PostFollow_Filter, { ts_action_PostFollows: PostFollow_Result[] }>;
   ts_action_connections1: WebExpand<ts_action_Expand, Connection_Select, Connection_Filter, { ts_action_connections1: Connection_Result[] }>;
   ts_action_connections2: WebExpand<ts_action_Expand, Connection_Select, Connection_Filter, { ts_action_connections2: Connection_Result[] }>;
   ts_contact: WebExpand<ts_action_Expand, Contact_Select, Contact_Filter, { ts_contact: Contact_Result }>;
-  ts_file_Action_ts_action: WebExpand<ts_action_Expand, ts_File_Select, ts_File_Filter, { ts_file_Action_ts_action: ts_File_Result[] }>;
   ts_finding: WebExpand<ts_action_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_finding: ovs_Finding_Result }>;
   ts_infraction: WebExpand<ts_action_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction: ts_infraction_Result }>;
   ts_stakeholder: WebExpand<ts_action_Expand, Account_Select, Account_Filter, { ts_stakeholder: Account_Result }>;
@@ -210,7 +206,6 @@ interface ts_action_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_Case: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
-  ts_WorkOrderServiceTaskWorkspace: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
   ts_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_infraction: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
@@ -221,7 +216,6 @@ interface ts_action_RelatedMany {
   ts_action_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   ts_action_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ts_action_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
-  ts_file_Action_ts_action: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_ts_action_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ts_action_ts_infraction: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
 }

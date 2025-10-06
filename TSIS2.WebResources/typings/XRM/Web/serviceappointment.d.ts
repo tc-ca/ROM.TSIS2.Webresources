@@ -71,6 +71,7 @@ interface ServiceAppointment_Relationships {
   regardingobjectid_ts_securityincident_serviceappointment?: ts_securityincident_Result | null;
   regardingobjectid_ts_site_serviceappointment?: ts_site_Result | null;
   regardingobjectid_ts_teamplanningdata_serviceappointment?: ts_TeamPlanningData_Result | null;
+  regardingobjectid_ts_trip_serviceappointment?: ts_trip_Result | null;
   serviceappointment_activity_parties?: ActivityParty_Result[] | null;
   serviceappointment_connections1?: Connection_Result[] | null;
   serviceappointment_connections2?: Connection_Result[] | null;
@@ -177,6 +178,7 @@ interface ServiceAppointment extends ServiceAppointment_Base, ServiceAppointment
   regardingobjectid_ts_securityincident_serviceappointment_bind$ts_securityincidents?: string | null;
   regardingobjectid_ts_site_serviceappointment_bind$ts_sites?: string | null;
   regardingobjectid_ts_teamplanningdata_serviceappointment_bind$ts_teamplanningdatas?: string | null;
+  regardingobjectid_ts_trip_serviceappointment_bind$ts_trips?: string | null;
   serviceid_serviceappointment_bind$services?: string | null;
   siteid_bind$sites?: string | null;
   transactioncurrencyid_serviceappointment_bind$transactioncurrencies?: string | null;
@@ -360,6 +362,7 @@ interface ServiceAppointment_Expand {
   regardingobjectid_ts_securityincident_serviceappointment: WebExpand<ServiceAppointment_Expand, ts_securityincident_Select, ts_securityincident_Filter, { regardingobjectid_ts_securityincident_serviceappointment: ts_securityincident_Result }>;
   regardingobjectid_ts_site_serviceappointment: WebExpand<ServiceAppointment_Expand, ts_site_Select, ts_site_Filter, { regardingobjectid_ts_site_serviceappointment: ts_site_Result }>;
   regardingobjectid_ts_teamplanningdata_serviceappointment: WebExpand<ServiceAppointment_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata_serviceappointment: ts_TeamPlanningData_Result }>;
+  regardingobjectid_ts_trip_serviceappointment: WebExpand<ServiceAppointment_Expand, ts_trip_Select, ts_trip_Filter, { regardingobjectid_ts_trip_serviceappointment: ts_trip_Result }>;
   serviceappointment_activity_parties: WebExpand<ServiceAppointment_Expand, ActivityParty_Select, ActivityParty_Filter, { serviceappointment_activity_parties: ActivityParty_Result[] }>;
   serviceappointment_connections1: WebExpand<ServiceAppointment_Expand, Connection_Select, Connection_Filter, { serviceappointment_connections1: Connection_Result[] }>;
   serviceappointment_connections2: WebExpand<ServiceAppointment_Expand, Connection_Select, Connection_Filter, { serviceappointment_connections2: Connection_Result[] }>;
@@ -462,6 +465,7 @@ interface ServiceAppointment_RelatedOne {
   regardingobjectid_ts_securityincident_serviceappointment: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   regardingobjectid_ts_site_serviceappointment: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   regardingobjectid_ts_teamplanningdata_serviceappointment: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
+  regardingobjectid_ts_trip_serviceappointment: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
 }
 interface ServiceAppointment_RelatedMany {
   msdyn_serviceappointment_bookableresourcebooking_serviceappointment: WebMappingRetrieve<BookableResourceBooking_Select,BookableResourceBooking_Expand,BookableResourceBooking_Filter,BookableResourceBooking_Fixed,BookableResourceBooking_Result,BookableResourceBooking_FormattedResult>;

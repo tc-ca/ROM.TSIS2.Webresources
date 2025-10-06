@@ -36,8 +36,6 @@ interface ovs_operationtype_Relationships {
   ts_ts_operationactivity_OperationType_ovs_op?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_OperationType_ovs_operati?: ts_PlanningData_Result[] | null;
   ts_ts_riskcategory_OperationType_ovs_operati?: ts_RiskCategory_Result[] | null;
-  ts_unplannedworkorder_operationtype_ovs_operationtype?: ts_unplannedworkorder_Result[] | null;
-  ts_workorderservicetaskworkspace_AOCOperationType_ovs_operationtype?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
 }
 interface ovs_operationtype extends ovs_operationtype_Base, ovs_operationtype_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -134,8 +132,6 @@ interface ovs_operationtype_Expand {
   ts_ts_operationactivity_OperationType_ovs_op: WebExpand<ovs_operationtype_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_OperationType_ovs_op: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_OperationType_ovs_operati: WebExpand<ovs_operationtype_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_OperationType_ovs_operati: ts_PlanningData_Result[] }>;
   ts_ts_riskcategory_OperationType_ovs_operati: WebExpand<ovs_operationtype_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { ts_ts_riskcategory_OperationType_ovs_operati: ts_RiskCategory_Result[] }>;
-  ts_unplannedworkorder_operationtype_ovs_operationtype: WebExpand<ovs_operationtype_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_operationtype_ovs_operationtype: ts_unplannedworkorder_Result[] }>;
-  ts_workorderservicetaskworkspace_AOCOperationType_ovs_operationtype: WebExpand<ovs_operationtype_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_workorderservicetaskworkspace_AOCOperationType_ovs_operationtype: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
 }
 interface ovs_operationtype_FormattedResult {
   createdby_formatted?: string;
@@ -200,8 +196,6 @@ interface ovs_operationtype_RelatedMany {
   ts_ts_operationactivity_OperationType_ovs_op: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_OperationType_ovs_operati: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_ts_riskcategory_OperationType_ovs_operati: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;
-  ts_unplannedworkorder_operationtype_ovs_operationtype: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
-  ts_workorderservicetaskworkspace_AOCOperationType_ovs_operationtype: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ovs_operationtypes: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;

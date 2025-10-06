@@ -82,6 +82,7 @@ interface Appointment_Relationships {
   regardingobjectid_ts_securityincident_appointment?: ts_securityincident_Result | null;
   regardingobjectid_ts_site_appointment?: ts_site_Result | null;
   regardingobjectid_ts_teamplanningdata_appointment?: ts_TeamPlanningData_Result | null;
+  regardingobjectid_ts_trip_appointment?: ts_trip_Result | null;
 }
 interface Appointment extends Appointment_Base, Appointment_Relationships {
   ownerid_appointment_bind$systemusers?: string | null;
@@ -188,6 +189,7 @@ interface Appointment extends Appointment_Base, Appointment_Relationships {
   regardingobjectid_ts_securityincident_appointment_bind$ts_securityincidents?: string | null;
   regardingobjectid_ts_site_appointment_bind$ts_sites?: string | null;
   regardingobjectid_ts_teamplanningdata_appointment_bind$ts_teamplanningdatas?: string | null;
+  regardingobjectid_ts_trip_appointment_bind$ts_trips?: string | null;
   serviceid_appointment_bind$services?: string | null;
   sla_appointment_sla_bind$slas?: string | null;
   stageid_processstage_bind$processstages?: string | null;
@@ -370,6 +372,7 @@ interface Appointment_Expand {
   regardingobjectid_ts_securityincident_appointment: WebExpand<Appointment_Expand, ts_securityincident_Select, ts_securityincident_Filter, { regardingobjectid_ts_securityincident_appointment: ts_securityincident_Result }>;
   regardingobjectid_ts_site_appointment: WebExpand<Appointment_Expand, ts_site_Select, ts_site_Filter, { regardingobjectid_ts_site_appointment: ts_site_Result }>;
   regardingobjectid_ts_teamplanningdata_appointment: WebExpand<Appointment_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata_appointment: ts_TeamPlanningData_Result }>;
+  regardingobjectid_ts_trip_appointment: WebExpand<Appointment_Expand, ts_trip_Select, ts_trip_Filter, { regardingobjectid_ts_trip_appointment: ts_trip_Result }>;
 }
 interface Appointment_FormattedResult {
   actualend_formatted?: string;
@@ -449,6 +452,7 @@ interface Appointment_RelatedOne {
   regardingobjectid_ts_securityincident_appointment: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   regardingobjectid_ts_site_appointment: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   regardingobjectid_ts_teamplanningdata_appointment: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
+  regardingobjectid_ts_trip_appointment: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
 }
 interface Appointment_RelatedMany {
   appointment_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
