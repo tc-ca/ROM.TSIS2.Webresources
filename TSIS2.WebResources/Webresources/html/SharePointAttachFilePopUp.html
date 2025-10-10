@@ -558,9 +558,9 @@
                                         entityType: "msdyn_workorder",
                                         id: workorder.msdyn_workorderid
                                     });
-
+                                    fileData["ts_msdyn_workorder@odata.bind"] = `/msdyn_workorders(${result.entities[0].msdyn_workorderid})`;
                                 });
-                                associateRelatedRecords("ts_Files_msdyn_workorders", relatedWOs, fileId);
+                               // associateRelatedRecords("ts_Files_msdyn_workorders", relatedWOs, fileId);
                             }
                         });
                         var fetchCase = '<fetch><entity name = "incident" ><attribute name="incidentid"/><link-entity name="msdyn_workorderservicetask" from="ovs_caseid" to="incidentid" link-type="inner"><filter type="and"><condition attribute="msdyn_workorderservicetaskid" operator="eq" value="' + recordId + '" /></filter></link-entity></entity></fetch>';
