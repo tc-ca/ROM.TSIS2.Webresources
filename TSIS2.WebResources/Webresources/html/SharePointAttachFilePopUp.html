@@ -26,6 +26,38 @@
         .btn:hover {
             background-color: #323B42 !important;
         }
+        .modal {
+            display: none; /* hidden by default */
+            position: absolute;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* centers inside form */
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 16px;
+            padding: 20px;
+        }
+
+            .modal-content p {
+                margin: 0;
+            }
     </style>
 
     <!-- Package used for the table - Tabulator -->
@@ -36,6 +68,11 @@
 <body onload="loadForm()">
 
     <div class="container-fluid">
+        <div id="uploadModal" class="modal">
+            <div class="modal-content">
+                <p id="modalMessage">Please wait</p>
+            </div>
+        </div>
         <div class="row" style="margin-top: 10px; margin-bottom: 10px">
             <div class="col-sm-12">
                 <div class="col-sm-6">
@@ -105,6 +142,9 @@
         let clearAttachmentsButtonText = "";
         let fileCategoryListText = "";
         let descriptionText = "";
+        let uploadLoading = "";
+        let uploadConfirmation = "";
+
 
         // User Input
         let selectedFileCategory = null;
@@ -195,6 +235,9 @@
                 clearAttachmentsButtonText = "Effacer les pièces jointes";
                 descriptionText = "Description";
                 fileCategoryListText = "Catégorie";
+                uploadLoading = "Veuillez patienter";
+                uploadConfirmation = "Téléversement terminé";
+
             }
             // Set English labels by default
             else {
@@ -202,6 +245,8 @@
                 clearAttachmentsButtonText = "Clear Attachments";
                 descriptionText = "Description";
                 fileCategoryListText = "Category";
+                uploadLoading = "Please wait";
+                uploadConfirmation = "Upload complete";
             }
 
             // Set the button text
@@ -432,6 +477,14 @@
         }
 
         async function runSharePointUploadFilesToDocumentLibraryFlow(flowKey, flowURL, jsonFileContent) {
+            const modal = document.getElementById("uploadModal");
+            const modalMessage = document.getElementById("modalMessage");
+            const container = document.querySelector(".container-fluid");
+
+            modal.style.display = "block";
+            modalMessage.textContent = uploadLoading;
+            container.classList.add("disabled");
+
             if (!flowKey || !flowURL) {
                 console.log('Flow Key or Flow URL is null');
                 return false;
@@ -469,6 +522,11 @@
                     const json = await response.json();
                     createdTsFileIds = json.ts_file;
                     updateTsFile(createdTsFileIds);
+                    modalMessage.textContent = uploadConfirmation;
+                    setTimeout(() => {
+                        modal.style.display = "none";
+                        container.classList.remove("disabled");
+                    }, 2000);
                     return true;
                 } else {
                     console.error('Error:', response.statusText);
