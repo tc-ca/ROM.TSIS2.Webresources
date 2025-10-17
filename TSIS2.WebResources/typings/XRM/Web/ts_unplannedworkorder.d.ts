@@ -1,0 +1,311 @@
+interface ts_unplannedworkorder_Base extends WebEntity {
+  createdon?: Date | null;
+  exchangerate?: number | null;
+  importsequencenumber?: number | null;
+  modifiedon?: Date | null;
+  overriddencreatedon?: Date | null;
+  statecode?: ts_unplannedworkorder_statecode | null;
+  statuscode?: ts_unplannedworkorder_statuscode | null;
+  timezoneruleversionnumber?: number | null;
+  transactioncurrencyid_guid?: string | null;
+  ts_actualcost?: number | null;
+  ts_actualcost_base?: number | null;
+  ts_aircraftclassification?: ts_aircraftclassification | null;
+  ts_businessowner?: string | null;
+  ts_cantcompleteinspection?: boolean | null;
+  ts_completedquarter?: ts_unplannedworkorder_ts_completedquarter | null;
+  ts_costexplanation?: string | null;
+  ts_details?: string | null;
+  ts_instructions?: string | null;
+  ts_name?: string | null;
+  ts_overtime?: number | null;
+  ts_overtimerequired?: boolean | null;
+  ts_plannedcost?: number | null;
+  ts_plannedcost_base?: number | null;
+  ts_primaryincidentdescription?: string | null;
+  ts_primaryincidentestimatedduration?: number | null;
+  ts_recordstatus?: msdyn_wosystemstatus | null;
+  ts_state?: ts_planningstate | null;
+  ts_unplannedworkorderid?: string | null;
+  ts_worklocation?: msdyn_worklocation | null;
+  utcconversiontimezonecode?: number | null;
+  versionnumber?: number | null;
+}
+interface ts_unplannedworkorder_Relationships {
+  ts_WorkOrder?: msdyn_workorder_Result | null;
+  ts_unplannedworkorder_Teams?: Team_Result[] | null;
+  ts_unplannedworkorder_connections1?: Connection_Result[] | null;
+  ts_unplannedworkorder_connections2?: Connection_Result[] | null;
+}
+interface ts_unplannedworkorder extends ts_unplannedworkorder_Base, ts_unplannedworkorder_Relationships {
+  ownerid_bind$systemusers?: string | null;
+  ownerid_bind$teams?: string | null;
+  transactioncurrencyid_bind$transactioncurrencies?: string | null;
+  ts_TradeName_bind$ts_tradenames?: string | null;
+  ts_WorkOrder_bind$msdyn_workorders?: string | null;
+  ts_accountableteam_bind$teams?: string | null;
+  ts_contact_bind$contacts?: string | null;
+  ts_country_bind$tc_countries?: string | null;
+  ts_functionallocation_bind$msdyn_functionallocations?: string | null;
+  ts_operation_bind$ovs_operations?: string | null;
+  ts_operationtype_bind$ovs_operationtypes?: string | null;
+  ts_primaryincidenttype_bind$msdyn_incidenttypes?: string | null;
+  ts_rational_bind$ovs_tyrationals?: string | null;
+  ts_region_bind$territories?: string | null;
+  ts_revisedquarterid_bind$tc_tcfiscalquarters?: string | null;
+  ts_servicerequest_bind$incidents?: string | null;
+  ts_site_bind$msdyn_functionallocations?: string | null;
+  ts_stakeholder_bind$accounts?: string | null;
+  ts_subsubsite_bind$msdyn_functionallocations?: string | null;
+  ts_workordertype_bind$msdyn_workordertypes?: string | null;
+}
+interface ts_unplannedworkorder_Create extends ts_unplannedworkorder {
+}
+interface ts_unplannedworkorder_Update extends ts_unplannedworkorder {
+}
+interface ts_unplannedworkorder_Select {
+  createdby_guid: WebAttribute<ts_unplannedworkorder_Select, { createdby_guid: string | null }, { createdby_formatted?: string }>;
+  createdon: WebAttribute<ts_unplannedworkorder_Select, { createdon: Date | null }, { createdon_formatted?: string }>;
+  createdonbehalfby_guid: WebAttribute<ts_unplannedworkorder_Select, { createdonbehalfby_guid: string | null }, { createdonbehalfby_formatted?: string }>;
+  exchangerate: WebAttribute<ts_unplannedworkorder_Select, { exchangerate: number | null }, {  }>;
+  importsequencenumber: WebAttribute<ts_unplannedworkorder_Select, { importsequencenumber: number | null }, {  }>;
+  modifiedby_guid: WebAttribute<ts_unplannedworkorder_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
+  modifiedon: WebAttribute<ts_unplannedworkorder_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
+  modifiedonbehalfby_guid: WebAttribute<ts_unplannedworkorder_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  overriddencreatedon: WebAttribute<ts_unplannedworkorder_Select, { overriddencreatedon: Date | null }, { overriddencreatedon_formatted?: string }>;
+  ownerid_guid: WebAttribute<ts_unplannedworkorder_Select, { ownerid_guid: string | null }, { ownerid_formatted?: string }>;
+  owningbusinessunit_guid: WebAttribute<ts_unplannedworkorder_Select, { owningbusinessunit_guid: string | null }, { owningbusinessunit_formatted?: string }>;
+  owningteam_guid: WebAttribute<ts_unplannedworkorder_Select, { owningteam_guid: string | null }, { owningteam_formatted?: string }>;
+  owninguser_guid: WebAttribute<ts_unplannedworkorder_Select, { owninguser_guid: string | null }, { owninguser_formatted?: string }>;
+  statecode: WebAttribute<ts_unplannedworkorder_Select, { statecode: ts_unplannedworkorder_statecode | null }, { statecode_formatted?: string }>;
+  statuscode: WebAttribute<ts_unplannedworkorder_Select, { statuscode: ts_unplannedworkorder_statuscode | null }, { statuscode_formatted?: string }>;
+  timezoneruleversionnumber: WebAttribute<ts_unplannedworkorder_Select, { timezoneruleversionnumber: number | null }, {  }>;
+  transactioncurrencyid_guid: WebAttribute<ts_unplannedworkorder_Select, { transactioncurrencyid_guid: string | null }, { transactioncurrencyid_formatted?: string }>;
+  ts_accountableteam_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_accountableteam_guid: string | null }, { ts_accountableteam_formatted?: string }>;
+  ts_actualcost: WebAttribute<ts_unplannedworkorder_Select, { ts_actualcost: number | null; transactioncurrencyid_guid: string | null }, { ts_actualcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_actualcost_base: WebAttribute<ts_unplannedworkorder_Select, { ts_actualcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_actualcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_aircraftclassification: WebAttribute<ts_unplannedworkorder_Select, { ts_aircraftclassification: ts_aircraftclassification | null }, { ts_aircraftclassification_formatted?: string }>;
+  ts_businessowner: WebAttribute<ts_unplannedworkorder_Select, { ts_businessowner: string | null }, {  }>;
+  ts_cantcompleteinspection: WebAttribute<ts_unplannedworkorder_Select, { ts_cantcompleteinspection: boolean | null }, {  }>;
+  ts_completedquarter: WebAttribute<ts_unplannedworkorder_Select, { ts_completedquarter: ts_unplannedworkorder_ts_completedquarter | null }, { ts_completedquarter_formatted?: string }>;
+  ts_contact_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_contact_guid: string | null }, { ts_contact_formatted?: string }>;
+  ts_costexplanation: WebAttribute<ts_unplannedworkorder_Select, { ts_costexplanation: string | null }, {  }>;
+  ts_country_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
+  ts_details: WebAttribute<ts_unplannedworkorder_Select, { ts_details: string | null }, {  }>;
+  ts_functionallocation_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_functionallocation_guid: string | null }, { ts_functionallocation_formatted?: string }>;
+  ts_instructions: WebAttribute<ts_unplannedworkorder_Select, { ts_instructions: string | null }, {  }>;
+  ts_name: WebAttribute<ts_unplannedworkorder_Select, { ts_name: string | null }, {  }>;
+  ts_operation_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
+  ts_operationtype_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
+  ts_overtime: WebAttribute<ts_unplannedworkorder_Select, { ts_overtime: number | null }, {  }>;
+  ts_overtimerequired: WebAttribute<ts_unplannedworkorder_Select, { ts_overtimerequired: boolean | null }, {  }>;
+  ts_plannedcost: WebAttribute<ts_unplannedworkorder_Select, { ts_plannedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_plannedcost_base: WebAttribute<ts_unplannedworkorder_Select, { ts_plannedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_primaryincidentdescription: WebAttribute<ts_unplannedworkorder_Select, { ts_primaryincidentdescription: string | null }, {  }>;
+  ts_primaryincidentestimatedduration: WebAttribute<ts_unplannedworkorder_Select, { ts_primaryincidentestimatedduration: number | null }, {  }>;
+  ts_primaryincidenttype_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_primaryincidenttype_guid: string | null }, { ts_primaryincidenttype_formatted?: string }>;
+  ts_rational_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_rational_guid: string | null }, { ts_rational_formatted?: string }>;
+  ts_recordstatus: WebAttribute<ts_unplannedworkorder_Select, { ts_recordstatus: msdyn_wosystemstatus | null }, { ts_recordstatus_formatted?: string }>;
+  ts_region_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_region_guid: string | null }, { ts_region_formatted?: string }>;
+  ts_revisedquarterid_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_revisedquarterid_guid: string | null }, { ts_revisedquarterid_formatted?: string }>;
+  ts_servicerequest_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_servicerequest_guid: string | null }, { ts_servicerequest_formatted?: string }>;
+  ts_site_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
+  ts_stakeholder_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
+  ts_state: WebAttribute<ts_unplannedworkorder_Select, { ts_state: ts_planningstate | null }, { ts_state_formatted?: string }>;
+  ts_subsubsite_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_subsubsite_guid: string | null }, { ts_subsubsite_formatted?: string }>;
+  ts_tradename_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_tradename_guid: string | null }, { ts_tradename_formatted?: string }>;
+  ts_unplannedworkorderid: WebAttribute<ts_unplannedworkorder_Select, { ts_unplannedworkorderid: string | null }, {  }>;
+  ts_worklocation: WebAttribute<ts_unplannedworkorder_Select, { ts_worklocation: msdyn_worklocation | null }, { ts_worklocation_formatted?: string }>;
+  ts_workorder_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_workorder_guid: string | null }, { ts_workorder_formatted?: string }>;
+  ts_workordertype_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_workordertype_guid: string | null }, { ts_workordertype_formatted?: string }>;
+  utcconversiontimezonecode: WebAttribute<ts_unplannedworkorder_Select, { utcconversiontimezonecode: number | null }, {  }>;
+  versionnumber: WebAttribute<ts_unplannedworkorder_Select, { versionnumber: number | null }, {  }>;
+}
+interface ts_unplannedworkorder_Filter {
+  createdby_guid: XQW.Guid;
+  createdon: Date;
+  createdonbehalfby_guid: XQW.Guid;
+  exchangerate: any;
+  importsequencenumber: number;
+  modifiedby_guid: XQW.Guid;
+  modifiedon: Date;
+  modifiedonbehalfby_guid: XQW.Guid;
+  overriddencreatedon: Date;
+  ownerid_guid: XQW.Guid;
+  owningbusinessunit_guid: XQW.Guid;
+  owningteam_guid: XQW.Guid;
+  owninguser_guid: XQW.Guid;
+  statecode: ts_unplannedworkorder_statecode;
+  statuscode: ts_unplannedworkorder_statuscode;
+  timezoneruleversionnumber: number;
+  transactioncurrencyid_guid: XQW.Guid;
+  ts_accountableteam_guid: XQW.Guid;
+  ts_actualcost: number;
+  ts_actualcost_base: number;
+  ts_aircraftclassification: ts_aircraftclassification;
+  ts_businessowner: string;
+  ts_cantcompleteinspection: boolean;
+  ts_completedquarter: ts_unplannedworkorder_ts_completedquarter;
+  ts_contact_guid: XQW.Guid;
+  ts_costexplanation: string;
+  ts_country_guid: XQW.Guid;
+  ts_details: string;
+  ts_functionallocation_guid: XQW.Guid;
+  ts_instructions: string;
+  ts_name: string;
+  ts_operation_guid: XQW.Guid;
+  ts_operationtype_guid: XQW.Guid;
+  ts_overtime: any;
+  ts_overtimerequired: boolean;
+  ts_plannedcost: number;
+  ts_plannedcost_base: number;
+  ts_primaryincidentdescription: string;
+  ts_primaryincidentestimatedduration: number;
+  ts_primaryincidenttype_guid: XQW.Guid;
+  ts_rational_guid: XQW.Guid;
+  ts_recordstatus: msdyn_wosystemstatus;
+  ts_region_guid: XQW.Guid;
+  ts_revisedquarterid_guid: XQW.Guid;
+  ts_servicerequest_guid: XQW.Guid;
+  ts_site_guid: XQW.Guid;
+  ts_stakeholder_guid: XQW.Guid;
+  ts_state: ts_planningstate;
+  ts_subsubsite_guid: XQW.Guid;
+  ts_tradename_guid: XQW.Guid;
+  ts_unplannedworkorderid: XQW.Guid;
+  ts_worklocation: msdyn_worklocation;
+  ts_workorder_guid: XQW.Guid;
+  ts_workordertype_guid: XQW.Guid;
+  utcconversiontimezonecode: number;
+  versionnumber: number;
+}
+interface ts_unplannedworkorder_Expand {
+  createdby: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
+  createdonbehalfby: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
+  modifiedby: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
+  modifiedonbehalfby: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
+  ownerid: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningteam: WebExpand<ts_unplannedworkorder_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
+  owninguser: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_WorkOrder: WebExpand<ts_unplannedworkorder_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder: msdyn_workorder_Result }>;
+  ts_accountableteam: WebExpand<ts_unplannedworkorder_Expand, Team_Select, Team_Filter, { ts_accountableteam: Team_Result }>;
+  ts_contact: WebExpand<ts_unplannedworkorder_Expand, Contact_Select, Contact_Filter, { ts_contact: Contact_Result }>;
+  ts_functionallocation: WebExpand<ts_unplannedworkorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_functionallocation: msdyn_FunctionalLocation_Result }>;
+  ts_operation: WebExpand<ts_unplannedworkorder_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operation: ovs_operation_Result }>;
+  ts_operationtype: WebExpand<ts_unplannedworkorder_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_operationtype: ovs_operationtype_Result }>;
+  ts_primaryincidenttype: WebExpand<ts_unplannedworkorder_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { ts_primaryincidenttype: msdyn_incidenttype_Result }>;
+  ts_revisedquarterid: WebExpand<ts_unplannedworkorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ts_revisedquarterid: tc_TCFiscalQuarter_Result }>;
+  ts_servicerequest: WebExpand<ts_unplannedworkorder_Expand, Incident_Select, Incident_Filter, { ts_servicerequest: Incident_Result }>;
+  ts_site: WebExpand<ts_unplannedworkorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_site: msdyn_FunctionalLocation_Result }>;
+  ts_stakeholder: WebExpand<ts_unplannedworkorder_Expand, Account_Select, Account_Filter, { ts_stakeholder: Account_Result }>;
+  ts_subsubsite: WebExpand<ts_unplannedworkorder_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_subsubsite: msdyn_FunctionalLocation_Result }>;
+  ts_unplannedworkorder_Teams: WebExpand<ts_unplannedworkorder_Expand, Team_Select, Team_Filter, { ts_unplannedworkorder_Teams: Team_Result[] }>;
+  ts_unplannedworkorder_connections1: WebExpand<ts_unplannedworkorder_Expand, Connection_Select, Connection_Filter, { ts_unplannedworkorder_connections1: Connection_Result[] }>;
+  ts_unplannedworkorder_connections2: WebExpand<ts_unplannedworkorder_Expand, Connection_Select, Connection_Filter, { ts_unplannedworkorder_connections2: Connection_Result[] }>;
+}
+interface ts_unplannedworkorder_FormattedResult {
+  createdby_formatted?: string;
+  createdon_formatted?: string;
+  createdonbehalfby_formatted?: string;
+  modifiedby_formatted?: string;
+  modifiedon_formatted?: string;
+  modifiedonbehalfby_formatted?: string;
+  overriddencreatedon_formatted?: string;
+  ownerid_formatted?: string;
+  owningbusinessunit_formatted?: string;
+  owningteam_formatted?: string;
+  owninguser_formatted?: string;
+  statecode_formatted?: string;
+  statuscode_formatted?: string;
+  transactioncurrencyid_formatted?: string;
+  ts_accountableteam_formatted?: string;
+  ts_actualcost_base_formatted?: string;
+  ts_actualcost_formatted?: string;
+  ts_aircraftclassification_formatted?: string;
+  ts_completedquarter_formatted?: string;
+  ts_contact_formatted?: string;
+  ts_country_formatted?: string;
+  ts_functionallocation_formatted?: string;
+  ts_operation_formatted?: string;
+  ts_operationtype_formatted?: string;
+  ts_plannedcost_base_formatted?: string;
+  ts_plannedcost_formatted?: string;
+  ts_primaryincidenttype_formatted?: string;
+  ts_rational_formatted?: string;
+  ts_recordstatus_formatted?: string;
+  ts_region_formatted?: string;
+  ts_revisedquarterid_formatted?: string;
+  ts_servicerequest_formatted?: string;
+  ts_site_formatted?: string;
+  ts_stakeholder_formatted?: string;
+  ts_state_formatted?: string;
+  ts_subsubsite_formatted?: string;
+  ts_tradename_formatted?: string;
+  ts_worklocation_formatted?: string;
+  ts_workorder_formatted?: string;
+  ts_workordertype_formatted?: string;
+}
+interface ts_unplannedworkorder_Result extends ts_unplannedworkorder_Base, ts_unplannedworkorder_Relationships {
+  "@odata.etag": string;
+  createdby_guid: string | null;
+  createdonbehalfby_guid: string | null;
+  modifiedby_guid: string | null;
+  modifiedonbehalfby_guid: string | null;
+  ownerid_guid: string | null;
+  owningbusinessunit_guid: string | null;
+  owningteam_guid: string | null;
+  owninguser_guid: string | null;
+  transactioncurrencyid_guid: string | null;
+  ts_accountableteam_guid: string | null;
+  ts_contact_guid: string | null;
+  ts_country_guid: string | null;
+  ts_functionallocation_guid: string | null;
+  ts_operation_guid: string | null;
+  ts_operationtype_guid: string | null;
+  ts_primaryincidenttype_guid: string | null;
+  ts_rational_guid: string | null;
+  ts_region_guid: string | null;
+  ts_revisedquarterid_guid: string | null;
+  ts_servicerequest_guid: string | null;
+  ts_site_guid: string | null;
+  ts_stakeholder_guid: string | null;
+  ts_subsubsite_guid: string | null;
+  ts_tradename_guid: string | null;
+  ts_workorder_guid: string | null;
+  ts_workordertype_guid: string | null;
+}
+interface ts_unplannedworkorder_RelatedOne {
+  createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_accountableteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  ts_contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
+  ts_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
+  ts_operationtype: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
+  ts_primaryincidenttype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
+  ts_revisedquarterid: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
+  ts_servicerequest: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
+  ts_site: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
+  ts_subsubsite: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+}
+interface ts_unplannedworkorder_RelatedMany {
+  ts_unplannedworkorder_Teams: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  ts_unplannedworkorder_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+  ts_unplannedworkorder_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
+}
+interface WebEntitiesRetrieve {
+  ts_unplannedworkorders: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
+}
+interface WebEntitiesRelated {
+  ts_unplannedworkorders: WebMappingRelated<ts_unplannedworkorder_RelatedOne,ts_unplannedworkorder_RelatedMany>;
+}
+interface WebEntitiesCUDA {
+  ts_unplannedworkorders: WebMappingCUDA<ts_unplannedworkorder_Create,ts_unplannedworkorder_Update,ts_unplannedworkorder_Select>;
+}

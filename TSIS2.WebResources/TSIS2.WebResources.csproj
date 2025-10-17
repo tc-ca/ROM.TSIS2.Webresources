@@ -464,6 +464,7 @@
     <TypeScriptCompile Include="src\ts\TeamPlanningData.ts" />
     <TypeScriptCompile Include="src\ts\TeamPlanningInspectorHours.ts" />
     <TypeScriptCompile Include="src\ts\Trip.ts" />
+    <TypeScriptCompile Include="src\ts\TripInspectorQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\UnplannedWorkOrder.ts" />
     <TypeScriptCompile Include="src\ts\UserRegistration.ts" />
     <TypeScriptCompile Include="src\ts\WorkOrderCreationWizard.ts" />
