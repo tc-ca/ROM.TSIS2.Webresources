@@ -248,6 +248,7 @@ interface Contact_Relationships {
   ts_trip_Contact_Contact?: ts_trip_Result[] | null;
   ts_ts_enforcementaction_Verbalwarninggivento?: ts_enforcementaction_Result[] | null;
   ts_ts_enforcementaction_Writtenwarningsentto?: ts_enforcementaction_Result[] | null;
+  ts_unplannedworkorder_contact_contact?: ts_unplannedworkorder_Result[] | null;
 }
 interface Contact extends Contact_Base, Contact_Relationships {
   defaultpricelevelid_bind$pricelevels?: string | null;
@@ -795,6 +796,7 @@ interface Contact_Expand {
   ts_trip_Contact_Contact: WebExpand<Contact_Expand, ts_trip_Select, ts_trip_Filter, { ts_trip_Contact_Contact: ts_trip_Result[] }>;
   ts_ts_enforcementaction_Verbalwarninggivento: WebExpand<Contact_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Verbalwarninggivento: ts_enforcementaction_Result[] }>;
   ts_ts_enforcementaction_Writtenwarningsentto: WebExpand<Contact_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_ts_enforcementaction_Writtenwarningsentto: ts_enforcementaction_Result[] }>;
+  ts_unplannedworkorder_contact_contact: WebExpand<Contact_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_contact_contact: ts_unplannedworkorder_Result[] }>;
 }
 interface Contact_FormattedResult {
   accountid_formatted?: string;
@@ -955,6 +957,7 @@ interface Contact_RelatedMany {
   ts_trip_Contact_Contact: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   ts_ts_enforcementaction_Verbalwarninggivento: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_ts_enforcementaction_Writtenwarningsentto: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
+  ts_unplannedworkorder_contact_contact: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   contacts: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
