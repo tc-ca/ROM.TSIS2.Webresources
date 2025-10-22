@@ -624,6 +624,11 @@
               "description": "Popup for Email Attach File"
             },
             {
+              "uniquename": "ts_/html/NewDocumentCenterNotice.html",
+              "file": "html\\NewDocumentCenterNotice.html",
+              "description": "Display the message: Click the 'Documents' button at the top to add files via SharePoint."
+            },
+            {
               "uniquename": "ts_/html/OperationActivityRiskScoresRecalculateRiskRating.html",
               "file": "html\\OperationActivityRiskScoresRecalculateRiskRating.html",
               "description": "The form button to Recalculate the Risk Rating"

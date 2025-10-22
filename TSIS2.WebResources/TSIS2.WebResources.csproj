@@ -149,6 +149,7 @@
     <Content Include="Webresources\html\LegislationOnProvisions.html" />
     <Content Include="Webresources\html\MyRegionTrip.html" />
     <Content Include="Webresources\html\NCATFactorGuide.html" />
+    <Content Include="Webresources\html\NewDocumentCenterNotice.html" />
     <Content Include="Webresources\html\OperationActivityRelatedWOView.html" />
     <Content Include="Webresources\html\OperationActivityRiskScoresRecalculateRiskRating.html" />
     <Content Include="Webresources\html\SiteAssessmentGuidance.html" />
