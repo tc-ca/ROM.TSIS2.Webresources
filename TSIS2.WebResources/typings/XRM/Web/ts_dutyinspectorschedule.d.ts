@@ -13,7 +13,6 @@ interface ts_DutyInspectorSchedule_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_DutyInspectorSchedule_Relationships {
-  ts_DutyInspectorSchedule_ts_DutyInspectorSchedule_ts_dutyinspectors?: ts_dutyinspectors_Result[] | null;
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
 }
 interface ts_DutyInspectorSchedule extends ts_DutyInspectorSchedule_Base, ts_DutyInspectorSchedule_Relationships {
@@ -82,7 +81,6 @@ interface ts_DutyInspectorSchedule_Expand {
   ownerid: WebExpand<ts_DutyInspectorSchedule_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ts_DutyInspectorSchedule_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_DutyInspectorSchedule_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
-  ts_DutyInspectorSchedule_ts_DutyInspectorSchedule_ts_dutyinspectors: WebExpand<ts_DutyInspectorSchedule_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { ts_DutyInspectorSchedule_ts_DutyInspectorSchedule_ts_dutyinspectors: ts_dutyinspectors_Result[] }>;
   ts_FiscalYear: WebExpand<ts_DutyInspectorSchedule_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
 }
 interface ts_DutyInspectorSchedule_FormattedResult {
@@ -127,7 +125,6 @@ interface ts_DutyInspectorSchedule_RelatedOne {
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
 }
 interface ts_DutyInspectorSchedule_RelatedMany {
-  ts_DutyInspectorSchedule_ts_DutyInspectorSchedule_ts_dutyinspectors: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_dutyinspectorschedules: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;

@@ -10,7 +10,8 @@ declare namespace Form.ts_trip.Main {
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
       interface Trip_Interations extends Xrm.SectionCollectionBase {
-        get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: "tab_5_section_1"): Xrm.PageSection;
+        get(name: "tab_5_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -19,13 +20,6 @@ declare namespace Form.ts_trip.Main {
       interface tab_2 extends Xrm.SectionCollectionBase {
         get(name: "tab_2_section_1"): Xrm.PageSection;
         get(name: "tab_2_section_2"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_contacts extends Xrm.SectionCollectionBase {
-        get(name: "tab_3_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -56,7 +50,7 @@ declare namespace Form.ts_trip.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Inspections"): Xrm.SubGridControl<"ts_tripinspection">;
       get(name: "Inspectors"): Xrm.SubGridControl<"ts_tripinspector">;
-      get(name: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
+      get(name: "Subgrid_new_2"): Xrm.SubGridControl<"contact">;
       get(name: "TripFiles"): Xrm.SubGridControl<"ts_file">;
       get(name: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
@@ -86,7 +80,6 @@ declare namespace Form.ts_trip.Main {
       get(name: "Trip_General"): Xrm.PageTab<Tabs.Trip_General>;
       get(name: "Trip_Interations"): Xrm.PageTab<Tabs.Trip_Interations>;
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
-      get(name: "tab_contacts"): Xrm.PageTab<Tabs.tab_contacts>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -112,7 +105,7 @@ declare namespace Form.ts_trip.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Inspections"): Xrm.SubGridControl<"ts_tripinspection">;
     getControl(controlName: "Inspectors"): Xrm.SubGridControl<"ts_tripinspector">;
-    getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
+    getControl(controlName: "Subgrid_new_2"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "TripFiles"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
