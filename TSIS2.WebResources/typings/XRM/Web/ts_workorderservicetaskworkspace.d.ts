@@ -15,6 +15,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Base extends WebEntity {
   ts_brandname?: ts_aircarrierbrandname | null;
   ts_cbloaded?: string | null;
   ts_cbonboard?: string | null;
+  ts_documenteddate?: Date | null;
   ts_flightcategory?: ts_flightcategory | null;
   ts_flightnumber?: string | null;
   ts_flighttype?: ts_flighttype | null;
@@ -28,6 +29,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Base extends WebEntity {
   ts_questionnairedefinition?: string | null;
   ts_questionnaireresponse?: string | null;
   ts_reportdetails?: string | null;
+  ts_result?: msdyn_inspectionresult | null;
   ts_scheduledtime?: Date | null;
   ts_workorderservicetaskenddate?: Date | null;
   ts_workorderservicetaskstartdate?: Date | null;
@@ -123,6 +125,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Select {
   ts_cbloaded: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_cbloaded: string | null }, {  }>;
   ts_cbonboard: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_cbonboard: string | null }, {  }>;
   ts_destination_guid: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_destination_guid: string | null }, { ts_destination_formatted?: string }>;
+  ts_documenteddate: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_documenteddate: Date | null }, { ts_documenteddate_formatted?: string }>;
   ts_flightcategory: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_flightcategory: ts_flightcategory | null }, { ts_flightcategory_formatted?: string }>;
   ts_flightnumber: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_flightnumber: string | null }, {  }>;
   ts_flighttype: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_flighttype: ts_flighttype | null }, { ts_flighttype_formatted?: string }>;
@@ -144,6 +147,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Select {
   ts_questionnaireresponse: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_questionnaireresponse: string | null }, {  }>;
   ts_rampservices_guid: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_rampservices_guid: string | null }, { ts_rampservices_formatted?: string }>;
   ts_reportdetails: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_reportdetails: string | null }, {  }>;
+  ts_result: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_result: msdyn_inspectionresult | null }, { ts_result_formatted?: string }>;
   ts_scheduledtime: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_scheduledtime: Date | null }, { ts_scheduledtime_formatted?: string }>;
   ts_securitysearchservices_guid: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_securitysearchservices_guid: string | null }, { ts_securitysearchservices_formatted?: string }>;
   ts_tasktype_guid: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_tasktype_guid: string | null }, { ts_tasktype_formatted?: string }>;
@@ -189,6 +193,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Filter {
   ts_cbloaded: string;
   ts_cbonboard: string;
   ts_destination_guid: XQW.Guid;
+  ts_documenteddate: Date;
   ts_flightcategory: ts_flightcategory;
   ts_flightnumber: string;
   ts_flighttype: ts_flighttype;
@@ -210,6 +215,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Filter {
   ts_questionnaireresponse: string;
   ts_rampservices_guid: XQW.Guid;
   ts_reportdetails: string;
+  ts_result: msdyn_inspectionresult;
   ts_scheduledtime: Date;
   ts_securitysearchservices_guid: XQW.Guid;
   ts_tasktype_guid: XQW.Guid;
@@ -280,6 +286,7 @@ interface ts_WorkOrderServiceTaskWorkspace_FormattedResult {
   ts_cargoservices_formatted?: string;
   ts_cateringservices_formatted?: string;
   ts_destination_formatted?: string;
+  ts_documenteddate_formatted?: string;
   ts_flightcategory_formatted?: string;
   ts_flighttype_formatted?: string;
   ts_groomingservices_formatted?: string;
@@ -290,6 +297,7 @@ interface ts_WorkOrderServiceTaskWorkspace_FormattedResult {
   ts_passengerservices_formatted?: string;
   ts_questionnaire_formatted?: string;
   ts_rampservices_formatted?: string;
+  ts_result_formatted?: string;
   ts_scheduledtime_formatted?: string;
   ts_securitysearchservices_formatted?: string;
   ts_tasktype_formatted?: string;
