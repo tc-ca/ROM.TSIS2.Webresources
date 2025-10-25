@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -46,6 +46,7 @@ var ROM;
         var currentStatus;
         var scheduledQuarterAttributeValueChanged = false;
         var isROM20Form = false;
+        var UNPLANNED_CATEGORY_ID = "47f438c7-c104-eb11-a813-000d3af3a7a7";
         // EVENTS
         function onLoad(eContext) {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
@@ -199,7 +200,7 @@ var ROM;
                     else {
                         var lookup = new Array();
                         lookup[0] = new Object();
-                        lookup[0].id = "{47F438C7-C104-EB11-A813-000D3AF3A7A7}";
+                        lookup[0].id = "{" + UNPLANNED_CATEGORY_ID + "}";
                         lookup[0].name = "Unplanned";
                         lookup[0].entityType = "ovs_tyrational";
                         form.getAttribute("ts_rational").setValue(lookup); //Unplanned
@@ -298,7 +299,7 @@ var ROM;
                     break;
             }
             // Lock some fields if there exist a Case that has this WO associated to it
-            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>");
+            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>";
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
@@ -376,6 +377,7 @@ var ROM;
             }
             //  unlockRecordLogFieldsIfUserIsSystemAdmin(form);
             RemoveOptionCancel(eContext);
+            showRationaleField(form, UNPLANNED_CATEGORY_ID);
         }
         UnplannedWorkOrder.onLoad = onLoad;
         function restrictEditRightReportDetails(executionContext, subgridAdditionalInspectors) {
@@ -426,7 +428,7 @@ var ROM;
             var form = eContext.getFormContext();
             var systemStatus = form.getAttribute("ts_recordstatus").getValue();
             var workOrderServiceTaskData;
-            if (systemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
+            if (systemStatus == 690970004 /* ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
                 workOrderServiceTaskData =
                     {
                         "statecode": 1,
@@ -1847,7 +1849,7 @@ var ROM;
                             var wost = _a[_i];
                             if (wost.statecode == 0) {
                                 workOrderHasActiveWost = true;
-                                if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
+                                if (wost.statuscode == 918640005 /* New */)
                                     workOrderHasNewWost = true;
                             }
                         }
@@ -1906,7 +1908,7 @@ var ROM;
                         var wost = _a[_i];
                         if (wost.statecode == 0) {
                             workOrderHasActiveWost = true;
-                            if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
+                            if (wost.statuscode == 918640005 /* New */)
                                 workOrderHasNewWost = true;
                         }
                     }
@@ -1919,19 +1921,6 @@ var ROM;
                 }
             });
         }
-        function userHasRole(rolesName) {
-            var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-            var hasRole = false;
-            var roles = rolesName.split("|");
-            roles.forEach(function (roleItem) {
-                userRoles.forEach(function (userRoleItem) {
-                    if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase())
-                        hasRole = true;
-                });
-            });
-            return hasRole;
-        }
-        UnplannedWorkOrder.userHasRole = userHasRole;
         //export function cantCompleteInspectionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         //    const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
         //    let cantCompleteInspection = form.getAttribute("ts_cantcompleteinspection").getValue();
@@ -2106,7 +2095,7 @@ var ROM;
         }
         function isAvSecBusinessUnit() {
             return __awaiter(this, void 0, void 0, function () {
-                var userId, currentUserBusinessUnitFetchXML, userBusinessUnitName;
+                var userId, currentUserBusinessUnitFetchXML, userBusinessUnit, userBusinessUnitId;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -2114,7 +2103,6 @@ var ROM;
                             currentUserBusinessUnitFetchXML = [
                                 "<fetch top='50'>",
                                 "  <entity name='businessunit'>",
-                                "    <attribute name='name' />",
                                 "    <attribute name='businessunitid' />",
                                 "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
                                 "      <filter>",
@@ -2127,8 +2115,10 @@ var ROM;
                             currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML)];
                         case 1:
-                            userBusinessUnitName = _a.sent();
-                            return [2 /*return*/, userBusinessUnitName.entities[0].name.startsWith("Aviation")];
+                            userBusinessUnit = _a.sent();
+                            userBusinessUnitId = userBusinessUnit.entities[0].businessunitid;
+                            return [4 /*yield*/, isAvSecBU(userBusinessUnitId)];
+                        case 2: return [2 /*return*/, _a.sent()];
                     }
                 });
             });
@@ -2262,7 +2252,7 @@ var ROM;
                     if (operationTypeAttributeValue[0].id.toLowerCase() == "{8b614ef0-c651-eb11-a812-000d3af3ac0d}") { //Air Carrier (Passenger)
                         form.getControl("ts_aircraftclassification").setVisible(true);
                         if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
-                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* ts_aircraftclassification.PassengerPAX */);
+                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* PassengerPAX */);
                         }
                         //if (isROM20Form) {
                         //    formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_flightdetails").setVisible(true);
@@ -2314,16 +2304,16 @@ var ROM;
                         distinationCountry = result2._ts_country_value;
                         if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
                             // Domestic
-                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* ts_airserviceclassification.Domestic */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* Domestic */);
                         }
                         else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
                             || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
                             //International
-                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* ts_airserviceclassification.International */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* International */);
                         }
                         else {
                             //Transborder
-                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* ts_airserviceclassification.Transborder */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* Transborder */);
                         }
                     }, function error(error) {
                         Xrm.Navigation.openAlertDialog({ text: error.message });
@@ -2356,6 +2346,92 @@ var ROM;
                 "</fetch>",
             ].join("");
             return Xrm.WebApi.retrieveMultipleRecords("team", "?fetchXml=" + encodeURIComponent(fetchXml));
+        }
+        /**
+        * Handler for the OnChange event of the Rationale lookup.
+        *
+        * @param {Xrm.ExecutionContext<any, any>} eContext The execution context passed by the form.
+        *
+        * @returns {void}
+        */
+        function rationaleOnChange(eContext) {
+            var form = eContext.getFormContext();
+            showWorkOrderJustificationField(form);
+        }
+        UnplannedWorkOrder.rationaleOnChange = rationaleOnChange;
+        /**
+          * Shows and makes required the Rationale lookup control when a Category indicates "Unplanned".
+          *
+          * @param {Form.msdyn_workorder.Main.ROMOversightActivity} form The Work Order form context (ROM Oversight Activity).
+          * @param {string} unplannedCategoryGUID GUID for the "Unplanned" category.
+          *
+          * @returns {void}
+          */
+        function showRationaleField(form, unplannedCategoryGUID) {
+            var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+            var categoryAttribute = form.getAttribute("ts_rational");
+            if (!categoryAttribute) {
+                return;
+            }
+            var categoryValue = categoryAttribute.getValue();
+            var show = false;
+            if (Array.isArray(categoryValue) && categoryValue.length > 0) {
+                var item = categoryValue[0];
+                var rawId = item.id || "";
+                var id = rawId.replace(/[{}]/g, "").toLowerCase();
+                if (id === unplannedCategoryGUID.toLowerCase()) {
+                    show = true;
+                }
+            }
+            var rationaleControl = form.getControl("ts_reason");
+            var rationaleAttribute = form.getAttribute("ts_reason");
+            if (rationaleControl) {
+                rationaleControl.setVisible(show);
+            }
+            if (rationaleAttribute) {
+                rationaleAttribute.setRequiredLevel(show ? "required" : "none");
+                showWorkOrderJustificationField(form);
+                // If hiding, clear value to avoid stale required-value mismatch
+                if (!show) {
+                    rationaleAttribute.setValue(null);
+                }
+            }
+        }
+        /**
+         * Shows and makes required the Work Order Justification field when the current
+         * Rationale lookup value is equal to the HQ Direction GUID.
+         *
+         * @param {Form.msdyn_workorder.Main.ROMOversightActivity} form The Work Order form context (ROM Oversight Activity).
+         *
+         * @returns {void}
+         */
+        function showWorkOrderJustificationField(form) {
+            var rationaleAttribute = form.getAttribute("ts_reason");
+            if (!rationaleAttribute) {
+                return;
+            }
+            var rationaleValue = rationaleAttribute.getValue();
+            var justificationControl = form.getControl("ts_workorderjustification");
+            var justificationAttribute = form.getAttribute("ts_workorderjustification");
+            var HQ_DIRECTION_RATIONALE_GUID = "b323090c-1cb5-f011-bbd2-7ced8da5b15f";
+            var show = false;
+            if (Array.isArray(rationaleValue) && rationaleValue.length > 0) {
+                var item = rationaleValue[0];
+                var rawId = item.id || "";
+                var id = rawId.replace(/[{}]/g, "").toLowerCase();
+                if (id === HQ_DIRECTION_RATIONALE_GUID.toLowerCase()) {
+                    show = true;
+                }
+            }
+            if (justificationControl) {
+                justificationControl.setVisible(show);
+            }
+            if (justificationAttribute) {
+                justificationAttribute.setRequiredLevel(show ? "required" : "none");
+                if (!show) {
+                    justificationAttribute.setValue(null);
+                }
+            }
         }
     })(UnplannedWorkOrder = ROM.UnplannedWorkOrder || (ROM.UnplannedWorkOrder = {}));
 })(ROM || (ROM = {}));

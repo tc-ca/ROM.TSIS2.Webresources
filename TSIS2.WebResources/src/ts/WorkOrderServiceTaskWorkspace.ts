@@ -1205,17 +1205,6 @@
             }
         }
     }
-    function userHasRole(rolesName) {
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-        var hasRole = false;
-        var roles = rolesName.split("|");
-        roles.forEach(function (roleItem) {
-            userRoles.forEach(function (userRoleItem) {
-                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
-            });
-        });
-        return hasRole;
-    }
     function CompleteQuestionnaire(wrCtrl) {
         // Get the web resource inner content window
         wrCtrl.getContentWindow().then(function (win) {
@@ -1231,5 +1220,5 @@
             }
         });
     }
-    
+
 }

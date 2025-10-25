@@ -640,5 +640,3 @@ namespace ROM.Operation {
         }
     }
 }
-
-declare function setOwnerToUserBusinessUnit(formContext: any): void;

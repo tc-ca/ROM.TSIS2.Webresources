@@ -1,4 +1,40 @@
 ﻿"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 var ROM;
 (function (ROM) {
     var EnforcementAction;
@@ -32,39 +68,59 @@ var ROM;
             ].join("");
             currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
             Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-                var userBusinessUnitName = result.entities[0].name;
-                if (userBusinessUnitName.startsWith("Intermodal")) {
-                    formContext.getControl("ts_details").setVisible(true);
-                    //Don't need that for now (PBI 242536)
-                    //formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(true);
-                    //if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
-                    //    formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
-                    //    formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
-                    //}
-                    //Hide fields for ISSO if type of enforcement action is set to "Referral to REU"
-                    if (referralToREUEnforcementAction) {
-                        hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
-                    }
-                }
-                else {
-                    if (referralToREUEnforcementAction) {
-                        //Check the case BU in case the inspector is an AvSec dual inspector 
-                        var caseAttribute = formContext.getAttribute("regardingobjectid");
-                        if (caseAttribute != null) {
-                            var caseAttributeValue = caseAttribute.getValue();
-                            if (caseAttributeValue != null) {
-                                var caseId = caseAttributeValue[0].id;
-                                Xrm.WebApi.retrieveRecord('incident', caseId, "?$select=_owningbusinessunit_value").then(function success(incident) {
-                                    Xrm.WebApi.retrieveRecord('businessunit', incident._owningbusinessunit_value, "?$select=name").then(function success(businessUnit) {
-                                        if (businessUnit.name.startsWith("Intermodal")) {
-                                            hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
+                return __awaiter(this, void 0, void 0, function () {
+                    var userBusinessUnitId, inISSOBU, caseAttribute, caseAttributeValue, caseId;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                userBusinessUnitId = result.entities[0].businessunitid;
+                                return [4 /*yield*/, isISSOBU(userBusinessUnitId)];
+                            case 1:
+                                inISSOBU = _a.sent();
+                                if (inISSOBU) {
+                                    formContext.getControl("ts_details").setVisible(true);
+                                    //Don't need that for now (PBI 242536)
+                                    //formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(true);
+                                    //if (formContext.getAttribute("ts_elevatedenforcementactionrequired").getValue()) {
+                                    //    formContext.getControl("ts_justificationelevatedenforcementaction").setVisible(true);
+                                    //    formContext.getAttribute("ts_justificationelevatedenforcementaction").setRequiredLevel("required");
+                                    //}
+                                    //Hide fields for ISSO if type of enforcement action is set to "Referral to REU"
+                                    if (referralToREUEnforcementAction) {
+                                        hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
+                                    }
+                                }
+                                else {
+                                    if (referralToREUEnforcementAction) {
+                                        caseAttribute = formContext.getAttribute("regardingobjectid");
+                                        if (caseAttribute != null) {
+                                            caseAttributeValue = caseAttribute.getValue();
+                                            if (caseAttributeValue != null) {
+                                                caseId = caseAttributeValue[0].id;
+                                                Xrm.WebApi.retrieveRecord('incident', caseId, "?$select=_owningbusinessunit_value").then(function success(incident) {
+                                                    return __awaiter(this, void 0, void 0, function () {
+                                                        var isISSO;
+                                                        return __generator(this, function (_a) {
+                                                            switch (_a.label) {
+                                                                case 0: return [4 /*yield*/, isISSOBU(incident._owningbusinessunit_value)];
+                                                                case 1:
+                                                                    isISSO = _a.sent();
+                                                                    if (isISSO) {
+                                                                        hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
+                                                                    }
+                                                                    return [2 /*return*/];
+                                                            }
+                                                        });
+                                                    });
+                                                });
+                                            }
                                         }
-                                    });
-                                });
-                            }
+                                    }
+                                }
+                                return [2 /*return*/];
                         }
-                    }
-                }
+                    });
+                });
             });
             additionalDetailsVisibility(formContext);
             //Since Operation contact was removed from ROM (app designer)
@@ -107,7 +163,7 @@ var ROM;
         EnforcementAction.typeOnChange = typeOnChange;
         function additionalDetailsVisibility(formContext) {
             var typeAttributeValue = formContext.getAttribute("ts_typeofenforcementaction").getValue();
-            if (typeAttributeValue != null && typeAttributeValue == 717750000 /* ts_type.VerbalWarning */) {
+            if (typeAttributeValue != null && typeAttributeValue == 717750000 /* VerbalWarning */) {
                 formContext.ui.tabs.get("general").sections.get("additional_details").setVisible(true);
                 formContext.getControl("ts_verbalwarninggivento").setVisible(true);
                 formContext.getControl("ts_individualposition").setVisible(true);
@@ -124,7 +180,7 @@ var ROM;
                 formContext.getAttribute("ts_writtenwarningsentto").setRequiredLevel("none");
                 formContext.getAttribute("ts_writtenwarningdeliverymethod").setRequiredLevel("none");
             }
-            else if (typeAttributeValue != null && typeAttributeValue == 717750001 /* ts_type.WrittenWarning */) {
+            else if (typeAttributeValue != null && typeAttributeValue == 717750001 /* WrittenWarning */) {
                 formContext.ui.tabs.get("general").sections.get("additional_details").setVisible(true);
                 formContext.getControl("ts_writtenwarningsentto").setVisible(true);
                 formContext.getControl("ts_individualposition").setVisible(true);

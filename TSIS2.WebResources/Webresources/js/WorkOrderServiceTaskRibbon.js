@@ -414,8 +414,9 @@ async function checkOperationRiskAssessment(formContext, survey) {
   const workOrderAttribute = formContext.getAttribute("msdyn_workorder").getValue();
   const workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
 
-  let businessUnitName = await getWorkOrderOperationTypeBusinessUnitName(workOrderId);
-  let isISSO = businessUnitName.includes("Intermodal");
+  let businessUnitId = await getWorkOrderOperationTypeBusinessUnitId(workOrderId);
+  const issoBuGuid = await getEnvironmentVariableValue("ts_IntermodalSurfaceSecurityOversightBU");
+  let isISSO = businessUnitId && issoBuGuid && businessUnitId.toLowerCase() === issoBuGuid.toLowerCase();
 
   isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
 
@@ -831,7 +832,7 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences) {
   return false;
 }
 
-async function getWorkOrderOperationTypeBusinessUnitName(workOrderId) {
+async function getWorkOrderOperationTypeBusinessUnitId(workOrderId) {
   //retrieve Work Order with workOrderId
   let workOrder = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationid_value");
   const OperationId = workOrder._ovs_operationid_value;
@@ -840,16 +841,21 @@ async function getWorkOrderOperationTypeBusinessUnitName(workOrderId) {
   let operationType = await Xrm.WebApi.retrieveRecord(
     "ovs_operationtype",
     operationTypeId,
-    "?$select=owningbusinessunit&$expand=owningbusinessunit($select=name)"
+    "?$select=owningbusinessunit&$expand=owningbusinessunit($select=businessunitid)"
   );
-  return operationType.owningbusinessunit.name;
+  return operationType.owningbusinessunit.businessunitid;
 }
 
 async function isAvSecWorkOrder(primaryControl) {
   const workOrderId = primaryControl.data.entity.getId();
   if (workOrderId != null) {
-    let workOrderBusinessUnitName = await getWorkOrderOperationTypeBusinessUnitName(workOrderId);
-    return workOrderBusinessUnitName.includes("Aviation");
+    let workOrderBusinessUnitId = await getWorkOrderOperationTypeBusinessUnitId(workOrderId);
+    const aviationBuGuid = await getEnvironmentVariableValue("ts_AviationSecurityDirectorate_BusinessUnitGUID");
+    return (
+      workOrderBusinessUnitId &&
+      aviationBuGuid &&
+      workOrderBusinessUnitId.toLowerCase() === aviationBuGuid.toLowerCase()
+    );
   }
 }
 
@@ -929,42 +935,42 @@ function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
 }
 
 async function createQCServiceTask(primaryControl) {
-    Xrm.Utility.showProgressIndicator();
+  Xrm.Utility.showProgressIndicator();
 
-    try {
-        const workOrderId = primaryControl.data.entity.getId().replace(/[{}]/g, "");
-        console.log("Work Order ID:", workOrderId);
+  try {
+    const workOrderId = primaryControl.data.entity.getId().replace(/[{}]/g, "");
+    console.log("Work Order ID:", workOrderId);
 
-        const request = {
-            entity: {   // Bound parameter
-                entityType: "msdyn_workorder",
-                id: workOrderId
-            },
-            getMetadata: function () {
-                return {
-                    boundParameter: "entity", // tells Web API this is bound
-                    operationName: "ts_CreateQualityControlServiceTask",
-                    operationType: 0, // Action
-                    parameterTypes: {
-                        entity: { typeName: "msdyn_workorder", structuralProperty: 5 }
-                    }
-                };
-            }
+    const request = {
+      entity: {
+        // Bound parameter
+        entityType: "msdyn_workorder",
+        id: workOrderId,
+      },
+      getMetadata: function () {
+        return {
+          boundParameter: "entity", // tells Web API this is bound
+          operationName: "ts_CreateQualityControlServiceTask",
+          operationType: 0, // Action
+          parameterTypes: {
+            entity: { typeName: "msdyn_workorder", structuralProperty: 5 },
+          },
         };
+      },
+    };
 
-        const response = await Xrm.WebApi.online.execute(request);
+    const response = await Xrm.WebApi.online.execute(request);
 
-        if (!response.ok) {
-            const text = await response.text();
-            throw new Error(text || "Custom API call failed.");
-        }
-
-        // Refresh the subgrid to show the newly created task
-        primaryControl.getControl("workorderservicetasksgrid").refresh();
-
-    } catch (e) {
-        Xrm.Navigation.openAlertDialog({ title: "Error", text: e.message || e.toString() });
-    } finally {
-        Xrm.Utility.closeProgressIndicator();
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(text || "Custom API call failed.");
     }
+
+    // Refresh the subgrid to show the newly created task
+    primaryControl.getControl("workorderservicetasksgrid").refresh();
+  } catch (e) {
+    Xrm.Navigation.openAlertDialog({ title: "Error", text: e.message || e.toString() });
+  } finally {
+    Xrm.Utility.closeProgressIndicator();
+  }
 }
