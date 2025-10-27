@@ -704,15 +704,15 @@ function openUnplannedWorkOrderForm() {
 function editUnplannedWorkOrder(primaryControl) {
     const formContext = primaryControl;
     const currentWorkOrderId = formContext.data.entity.getId().replace(/({|})/g, '');
+    var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 
     // Retrieve the related ts_unplannedworkorder using the ts_workorder relationship field
     Xrm.WebApi.retrieveMultipleRecords("ts_unplannedworkorder", `?$select=ts_unplannedworkorderid&$filter=_ts_workorder_value eq '${currentWorkOrderId}'`).then(
         function success(result) {
             if (result.entities.length > 0) {
-                // Found related unplanned work order, open it in a modal
+                // Find and open related unplanned work order in a modal window
                 const unplannedWorkOrderId = result.entities[0].ts_unplannedworkorderid;
 
-                // Use the same pattern as your working TypeScript function
                 const pageInput = {
                     pageType: "entityrecord",
                     entityName: "ts_unplannedworkorder",
@@ -731,7 +731,7 @@ function editUnplannedWorkOrder(primaryControl) {
                 Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
                     function success(result) {
                         console.log("Modal opened successfully");
-                        // Optionally refresh the form after modal closes
+                        // Refresh the form after modal closes
                         formContext.data.refresh();
                     },
                     function error(err) {
@@ -740,12 +740,12 @@ function editUnplannedWorkOrder(primaryControl) {
                     }
                 );
             } else {
-                // No related unplanned work order found
+                // No related unplanned work order found, show alert
                 var alertStrings = {
-                    text: (workorderRibbon_lang == 1036) ?
+                    text: (lang == 1036) ?
                         "Aucun ordre de travail non planifié associé trouvé pour cet ordre de travail." :
                         "No related unplanned work order found for this work order.",
-                    title: (workorderRibbon_lang == 1036) ? "Aucun enregistrement trouvé" : "No Record Found"
+                    title: (lang == 1036) ? "Aucun enregistrement trouvé" : "No Record Found"
                 };
                 var alertOptions = { height: 120, width: 350 };
                 Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
