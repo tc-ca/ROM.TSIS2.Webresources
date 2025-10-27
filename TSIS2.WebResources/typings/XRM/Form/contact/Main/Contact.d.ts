@@ -1,11 +1,19 @@
 declare namespace Form.contact.Main {
   namespace Contact {
     namespace Tabs {
+      interface CONSENT_PREFERENCES_TAB extends Xrm.SectionCollectionBase {
+        get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface DETAILS_TAB extends Xrm.SectionCollectionBase {
         get(name: "CONTACT_PREFERENCES"): Xrm.PageSection;
         get(name: "PERSONAL INFORMATION"): Xrm.PageSection;
         get(name: "PERSONAL_NOTES_SECTION"): Xrm.PageSection;
         get(name: "billing information"): Xrm.PageSection;
+        get(name: "contactabilitysection"): Xrm.PageSection;
         get(name: "marketing information"): Xrm.PageSection;
         get(name: "shipping information"): Xrm.PageSection;
         get(name: string): undefined;
@@ -102,6 +110,8 @@ declare namespace Form.contact.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "ActionCards"): Xrm.BaseControl;
+      get(name: "ContactabilityControl"): Xrm.BaseControl;
+      get(name: "ContactabilityGridControl"): Xrm.BaseControl;
       get(name: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
       get(name: "TalkingPoints"): Xrm.BaseControl;
       get(name: "address1_composite"): Xrm.StringControl | null;
@@ -177,6 +187,7 @@ declare namespace Form.contact.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "CONSENT_PREFERENCES_TAB"): Xrm.PageTab<Tabs.CONSENT_PREFERENCES_TAB>;
       get(name: "DETAILS_TAB"): Xrm.PageTab<Tabs.DETAILS_TAB>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: "documents_sharepoint"): Xrm.PageTab<Tabs.documents_sharepoint>;
@@ -239,6 +250,8 @@ declare namespace Form.contact.Main {
     getAttribute(attributeName: "websiteurl"): Xrm.Attribute<string> | null;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "ActionCards"): Xrm.BaseControl;
+    getControl(controlName: "ContactabilityControl"): Xrm.BaseControl;
+    getControl(controlName: "ContactabilityGridControl"): Xrm.BaseControl;
     getControl(controlName: "DocumentsSubGrid"): Xrm.SubGridControl<"sharepointdocument">;
     getControl(controlName: "TalkingPoints"): Xrm.BaseControl;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;

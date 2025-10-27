@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -129,7 +129,7 @@ var ROM;
                                 //If there's a recommended enforcement action and the finding is not complete yet, then the accept rate recommendation field should be unlocked
                                 var enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
                                 var recordStatus = formContext.getAttribute("statuscode").getValue();
-                                if (enforcementRecommendation != null && recordStatus != 741130003 /* Complete */) {
+                                if (enforcementRecommendation != null && recordStatus != 741130003 /* ts_infraction_statuscode.Complete */) {
                                     formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
                                 }
                                 //If they have accepted or rejected the RATE recommendation previously, then the RATE factors should be locked.
@@ -138,7 +138,7 @@ var ROM;
                                     lockRATEFactors(eContext);
                                 }
                                 //If they did not accept the rate recommendation, show proposal sections and fields
-                                if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == 717750001 /* No */) {
+                                if (formContext.getAttribute("ts_acceptraterecommendation").getValue() == 717750001 /* ts_yesno.No */) {
                                     formContext.ui.tabs.get("tab_RATE").sections.get("RATE_proposed_section").setVisible(true);
                                     setPostRATERecommendationSelectionFieldsVisibility(eContext);
                                     RATEManagerDecisionOnChange(eContext);
@@ -148,7 +148,7 @@ var ROM;
                         }
                         RATESpecificComplianceHistoryOnChange(eContext);
                         setApprovingTeamsViews(formContext);
-                        if (formContext.getAttribute("statuscode").getValue() == 741130003 /* Complete */) {
+                        if (formContext.getAttribute("statuscode").getValue() == 741130003 /* ts_infraction_statuscode.Complete */) {
                             disableFormFields(formContext);
                         }
                         showHideNonComplianceTimeframe(formContext);
@@ -171,17 +171,17 @@ var ROM;
             var statusCodeAttribute = formContext.getAttribute("statuscode");
             var statusCodeValue = statusCodeAttribute.getValue();
             onLoad(eContext);
-            if (statusCodeValue == 741130003 /* Complete */)
+            if (statusCodeValue == 741130003 /* ts_infraction_statuscode.Complete */)
                 return;
             var acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
-            var rejectedRecommendation = acceptRATERecommendation == 717750001 /* No */;
+            var rejectedRecommendation = acceptRATERecommendation == 717750001 /* ts_yesno.No */;
             var RATEManager = formContext.getAttribute("ts_ratemanager").getValue();
             var hasManagerFieldPopulated = RATEManager != null;
             if (rejectedRecommendation && hasManagerFieldPopulated) {
-                statusCodeAttribute.setValue(741130001 /* Pending */);
+                statusCodeAttribute.setValue(741130001 /* ts_infraction_statuscode.Pending */);
             }
             else {
-                statusCodeAttribute.setValue(741130002 /* InProgress */);
+                statusCodeAttribute.setValue(741130002 /* ts_infraction_statuscode.InProgress */);
             }
         }
         Infraction.onSave = onSave;
@@ -222,7 +222,7 @@ var ROM;
                             complianceHistory = formContext.getAttribute("ts_ratespecificnoncompliancehistory").getValue();
                             enforcementHistory = formContext.getAttribute("ts_ratepreviousenforcementmechanism").getValue();
                             //If any of the rate factors don't have a value, reset any fields that require an enforcement recommendation
-                            if (rateSpecificComplianceHistory == null || factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null || factor8Value == null || ((complianceHistory != null && complianceHistory != 717750000 /* _0documentedpreviousidenticalorsimilarnoncompliances */) && enforcementHistory == null)) {
+                            if (rateSpecificComplianceHistory == null || factor1Value == null || factor2Value == null || factor3Value == null || factor4Value == null || factor5Value == null || factor6Value == null || factor7Value == null || factor8Value == null || ((complianceHistory != null && complianceHistory != 717750000 /* ts_ratespecificcompliancehistory._0documentedpreviousidenticalorsimilarnoncompliances */) && enforcementHistory == null)) {
                                 formContext.getAttribute("ts_rateenforcementrecommendation").setValue(null);
                                 formContext.getAttribute("ts_acceptraterecommendation").setValue(null);
                                 RATEHideProposedSection(eContext);
@@ -245,8 +245,8 @@ var ROM;
                             factor7AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor7AssessmentRatingId, "?$select=ts_weight");
                             factor8AssessmentRatingPromise = Xrm.WebApi.retrieveRecord("ts_assessmentrating", factor8AssessmentRatingId, "?$select=ts_weight");
                             if (enforcementHistory == null)
-                                enforcementHistory = 717750000 /* Nil */;
-                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_rateenforcementaction&$filter=ts_assessmenttool eq " + 717750001 /* RATE */ + " and ts_rateenforcementhistory eq " + enforcementHistory);
+                                enforcementHistory = 717750000 /* ts_ratespecificenforcementhistory.Nil */;
+                            thresholdsPromise = Xrm.WebApi.retrieveMultipleRecords("ts_assessmentscorethredshots", "?$select=ts_minimum,ts_maximum,ts_rateenforcementaction&$filter=ts_assessmenttool eq ".concat(717750001 /* ts_assessmenttool.RATE */, " and ts_rateenforcementhistory eq ").concat(enforcementHistory));
                             //Wait for all factors the retrieve, then calculate and set the enforcement recommendation
                             return [4 /*yield*/, Promise.all([factor1AssessmentRatingPromise, factor2AssessmentRatingPromise, factor3AssessmentRatingPromise, factor4AssessmentRatingPromise, factor5AssessmentRatingPromise, factor6AssessmentRatingPromise, factor7AssessmentRatingPromise, factor8AssessmentRatingPromise, thresholdsPromise]).then(function (factorPromises) {
                                     var totalWeight = 0;
@@ -290,7 +290,7 @@ var ROM;
                 var confirmStrings = { text: factorLockMessageBodyLocalizedText, title: factorLockMessageTitleLocalizedText };
                 Xrm.Navigation.openConfirmDialog(confirmStrings).then(function (success) {
                     if (success.confirmed) {
-                        if (acceptRATERecommendation == 717750000 /* Yes */) {
+                        if (acceptRATERecommendation == 717750000 /* ts_yesno.Yes */) {
                             //Set RATE Final Enforcement Action to the Enforcement Recommendation
                             var enforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
                             formContext.getAttribute("ts_finalenforcementaction").setValue(RATEEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(enforcementRecommendation));
@@ -316,7 +316,7 @@ var ROM;
             var formContext = eContext.getFormContext();
             var RATEEnforcementRecommendation = formContext.getAttribute("ts_rateenforcementrecommendation").getValue();
             var status = formContext.getAttribute("statuscode").getValue();
-            if (RATEEnforcementRecommendation != null && status != 741130003 /* Complete */) {
+            if (RATEEnforcementRecommendation != null && status != 741130003 /* ts_infraction_statuscode.Complete */) {
                 //Enable Accept RATE Recommendation
                 formContext.getControl("ts_acceptraterecommendation").setDisabled(false);
             }
@@ -331,7 +331,7 @@ var ROM;
         function RATESpecificComplianceHistoryOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var specificComplianceHistory = formContext.getAttribute("ts_ratespecificnoncompliancehistory").getValue();
-            if (specificComplianceHistory != null && specificComplianceHistory != 717750000 /* _0documentedpreviousidenticalorsimilarnoncompliances */) {
+            if (specificComplianceHistory != null && specificComplianceHistory != 717750000 /* ts_ratespecificcompliancehistory._0documentedpreviousidenticalorsimilarnoncompliances */) {
                 formContext.getControl("ts_ratepreviousenforcementmechanism").setVisible(true);
             }
             else {
@@ -366,7 +366,7 @@ var ROM;
         function RATEManagerDecisionOnChange(eContext) {
             var formContext = eContext.getFormContext();
             var RATEManagerDecision = formContext.getAttribute("ts_ratemanagerdecision").getValue();
-            if (RATEManagerDecision == 717750000 /* AcceptInspectorRecommendation */) {
+            if (RATEManagerDecision == 717750000 /* ts_ratemanagerdecision.AcceptInspectorRecommendation */) {
                 formContext.getAttribute("ts_finalenforcementaction").setValue(RATEEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(formContext.getAttribute("ts_rateinspectorrecommendation").getValue()));
                 formContext.getAttribute("ts_ratemanageralternativerecommendation").setRequiredLevel("none");
                 formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(false);
@@ -374,7 +374,7 @@ var ROM;
                 formContext.getAttribute("ts_ratemanagerenforcementjustification").setRequiredLevel("required");
                 formContext.getControl("ts_ratemanagerenforcementjustification").setDisabled(false);
             }
-            else if (RATEManagerDecision == 717750001 /* AcceptRATERecommendation */) {
+            else if (RATEManagerDecision == 717750001 /* ts_ratemanagerdecision.AcceptRATERecommendation */) {
                 formContext.getAttribute("ts_finalenforcementaction").setValue(RATEEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(formContext.getAttribute("ts_rateenforcementrecommendation").getValue()));
                 formContext.getAttribute("ts_ratemanageralternativerecommendation").setRequiredLevel("none");
                 formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(false);
@@ -382,7 +382,7 @@ var ROM;
                 formContext.getAttribute("ts_ratemanagerenforcementjustification").setRequiredLevel("required");
                 formContext.getControl("ts_ratemanagerenforcementjustification").setDisabled(false);
             }
-            else if (RATEManagerDecision == 717750002 /* ProvideAlternativeRecommendation */) {
+            else if (RATEManagerDecision == 717750002 /* ts_ratemanagerdecision.ProvideAlternativeRecommendation */) {
                 formContext.getAttribute("ts_ratemanageralternativerecommendation").setRequiredLevel("required");
                 formContext.getControl("ts_ratemanageralternativerecommendation").setVisible(true);
                 formContext.getAttribute("ts_finalenforcementaction").setValue(RATEEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(formContext.getAttribute("ts_ratemanageralternativerecommendation").getValue()));
@@ -436,7 +436,7 @@ var ROM;
                 var entityNameApprovingManagers = "systemuser";
                 var viewDisplayNameApprovingManagers = "FilteredApprovingManagers";
                 //Approving managers in the same region as the case with the ISSO Business Unit
-                var fetchXmlApprovingManagersRATE = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"" + RATEApprovingTeam[0].id + "\"/></filter></link-entity></entity></fetch>";
+                var fetchXmlApprovingManagersRATE = "<fetch distinct=\"true\" page=\"1\" no-lock=\"false\"><entity name=\"systemuser\"><attribute name=\"systemuserid\"/><attribute name=\"fullname\"/><link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" intersect=\"true\"><filter><condition attribute=\"teamid\" operator=\"eq\" value=\"".concat(RATEApprovingTeam[0].id, "\"/></filter></link-entity></entity></fetch>");
                 var layoutXmlApprovingManagers = '<grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1"><row name="result" id="systemuserid"><cell name="fullname" width="300" /></row></grid>';
                 formContext.getControl("ts_ratemanager").addCustomView(viewIdApprovingManagerRATE, entityNameApprovingManagers, viewDisplayNameApprovingManagers, fetchXmlApprovingManagersRATE, layoutXmlApprovingManagers, true);
                 formContext.getControl("ts_ratemanager").setDisabled(false);
@@ -458,7 +458,7 @@ var ROM;
             var nonComplianceTimeframeControl = formContext.getControl("ts_noncompliancetimeframe");
             if (addressedOnSiteAttribute != null && nonComplianceTimeframeAttribute != null) {
                 var addressedOnSiteValue = addressedOnSiteAttribute.getValue();
-                if (addressedOnSiteValue == 717750001 /* No */) {
+                if (addressedOnSiteValue == 717750001 /* ts_yesno.No */) {
                     //Show timeframe field
                     nonComplianceTimeframeControl.setVisible(true);
                 }
@@ -512,12 +512,12 @@ var ROM;
         function setPostRATERecommendationSelectionFieldsVisibility(eContext) {
             var formContext = eContext.getFormContext();
             var acceptRATERecommendation = formContext.getAttribute("ts_acceptraterecommendation").getValue();
-            if (acceptRATERecommendation == 717750001 /* No */ || acceptRATERecommendation == 717750000 /* Yes */) {
+            if (acceptRATERecommendation == 717750001 /* ts_yesno.No */ || acceptRATERecommendation == 717750000 /* ts_yesno.Yes */) {
                 lockRATEFactors(eContext);
                 formContext.getControl("ts_acceptraterecommendation").setDisabled(true);
             }
             //If they did not accept the RATE recommendation
-            if (acceptRATERecommendation == 717750001 /* No */) {
+            if (acceptRATERecommendation == 717750001 /* ts_yesno.No */) {
                 //Show RATE Approving Manager
                 formContext.getControl("ts_ratemanager").setVisible(true);
                 formContext.getControl("ts_ratemanager").setDisabled(false);
@@ -596,22 +596,22 @@ var ROM;
         //Takes a RATE Enforcement Action Choice Value and returns the corresponding Final Enforcement Action Choice Value
         function RATEEnforcementActionChoiceValueToFinalEnforcementActionChoiceValue(NCATValue) {
             switch (NCATValue) {
-                case 717750000 /* Nil */:
-                    return 717750000 /* Nil */;
-                case 717750001 /* VerbalWarning */:
-                    return 717750001 /* VerbalWarning */;
-                case 717750002 /* WrittenWarning */:
-                    return 717750002 /* WrittenWarning */;
-                case 717750003 /* AMPLevel120ofMaximum */:
-                    return 717750003 /* AMPLevel120ofMaximum */;
-                case 717750004 /* AMPLevel250ofMaximum */:
-                    return 717750004 /* AMPLevel250ofMaximum */;
-                case 717750005 /* AMPLevel3100ofMaximum */:
-                    return 717750005 /* AMPLevel3100ofMaximum */;
-                case 717750006 /* SuspensionofCAD */:
-                    return 717750006 /* SuspensionofCAD */;
-                case 717750007 /* CancellationofCAD */:
-                    return 717750007 /* CancellationofCAD */;
+                case 717750000 /* ts_raterecommendations.Nil */:
+                    return 717750000 /* ts_finalenforcementaction.Nil */;
+                case 717750001 /* ts_raterecommendations.VerbalWarning */:
+                    return 717750001 /* ts_finalenforcementaction.VerbalWarning */;
+                case 717750002 /* ts_raterecommendations.WrittenWarning */:
+                    return 717750002 /* ts_finalenforcementaction.WrittenWarning */;
+                case 717750003 /* ts_raterecommendations.AMPLevel120ofMaximum */:
+                    return 717750003 /* ts_finalenforcementaction.AMPLevel120ofMaximum */;
+                case 717750004 /* ts_raterecommendations.AMPLevel250ofMaximum */:
+                    return 717750004 /* ts_finalenforcementaction.AMPLevel250ofMaximum */;
+                case 717750005 /* ts_raterecommendations.AMPLevel3100ofMaximum */:
+                    return 717750005 /* ts_finalenforcementaction.AMPLevel3100ofMaximum */;
+                case 717750006 /* ts_raterecommendations.SuspensionofCAD */:
+                    return 717750006 /* ts_finalenforcementaction.SuspensionofCAD */;
+                case 717750007 /* ts_raterecommendations.CancellationofCAD */:
+                    return 717750007 /* ts_finalenforcementaction.CancellationofCAD */;
                 default:
                     return 0;
             }

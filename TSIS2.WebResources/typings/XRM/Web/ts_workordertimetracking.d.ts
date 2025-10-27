@@ -18,6 +18,7 @@ interface ts_workordertimetracking_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_workordertimetracking_Relationships {
+  ts_UnplannedWorkOrder?: ts_unplannedworkorder_Result | null;
   ts_WorkOrder?: msdyn_workorder_Result | null;
 }
 interface ts_workordertimetracking extends ts_workordertimetracking_Base, ts_workordertimetracking_Relationships {
@@ -25,6 +26,7 @@ interface ts_workordertimetracking extends ts_workordertimetracking_Base, ts_wor
   ownerid_bind$teams?: string | null;
   ts_RegionNew_bind$ts_regions?: string | null;
   ts_Region_bind$territories?: string | null;
+  ts_UnplannedWorkOrder_bind$ts_unplannedworkorders?: string | null;
   ts_WorkOrder_bind$msdyn_workorders?: string | null;
 }
 interface ts_workordertimetracking_Create extends ts_workordertimetracking {
@@ -55,6 +57,7 @@ interface ts_workordertimetracking_Select {
   ts_regionnew_guid: WebAttribute<ts_workordertimetracking_Select, { ts_regionnew_guid: string | null }, { ts_regionnew_formatted?: string }>;
   ts_reportinganddocumentation: WebAttribute<ts_workordertimetracking_Select, { ts_reportinganddocumentation: number | null }, {  }>;
   ts_totaltime: WebAttribute<ts_workordertimetracking_Select, { ts_totaltime: number | null }, {  }>;
+  ts_unplannedworkorder_guid: WebAttribute<ts_workordertimetracking_Select, { ts_unplannedworkorder_guid: string | null }, { ts_unplannedworkorder_formatted?: string }>;
   ts_workorder_guid: WebAttribute<ts_workordertimetracking_Select, { ts_workorder_guid: string | null }, { ts_workorder_formatted?: string }>;
   ts_workordertimetrackingid: WebAttribute<ts_workordertimetracking_Select, { ts_workordertimetrackingid: string | null }, {  }>;
   ts_wotraveltime: WebAttribute<ts_workordertimetracking_Select, { ts_wotraveltime: number | null }, {  }>;
@@ -85,6 +88,7 @@ interface ts_workordertimetracking_Filter {
   ts_regionnew_guid: XQW.Guid;
   ts_reportinganddocumentation: any;
   ts_totaltime: number;
+  ts_unplannedworkorder_guid: XQW.Guid;
   ts_workorder_guid: XQW.Guid;
   ts_workordertimetrackingid: XQW.Guid;
   ts_wotraveltime: any;
@@ -99,6 +103,7 @@ interface ts_workordertimetracking_Expand {
   ownerid: WebExpand<ts_workordertimetracking_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<ts_workordertimetracking_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_workordertimetracking_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_UnplannedWorkOrder: WebExpand<ts_workordertimetracking_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_UnplannedWorkOrder: ts_unplannedworkorder_Result }>;
   ts_WorkOrder: WebExpand<ts_workordertimetracking_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder: msdyn_workorder_Result }>;
 }
 interface ts_workordertimetracking_FormattedResult {
@@ -117,6 +122,7 @@ interface ts_workordertimetracking_FormattedResult {
   statuscode_formatted?: string;
   ts_region_formatted?: string;
   ts_regionnew_formatted?: string;
+  ts_unplannedworkorder_formatted?: string;
   ts_workorder_formatted?: string;
 }
 interface ts_workordertimetracking_Result extends ts_workordertimetracking_Base, ts_workordertimetracking_Relationships {
@@ -131,6 +137,7 @@ interface ts_workordertimetracking_Result extends ts_workordertimetracking_Base,
   owninguser_guid: string | null;
   ts_region_guid: string | null;
   ts_regionnew_guid: string | null;
+  ts_unplannedworkorder_guid: string | null;
   ts_workorder_guid: string | null;
 }
 interface ts_workordertimetracking_RelatedOne {
@@ -141,6 +148,7 @@ interface ts_workordertimetracking_RelatedOne {
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_UnplannedWorkOrder: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
   ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
 }
 interface ts_workordertimetracking_RelatedMany {
