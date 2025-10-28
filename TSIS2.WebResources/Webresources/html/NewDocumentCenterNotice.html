@@ -2,9 +2,29 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>New Document Center Notice</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    Click the 'Documents' button at the top to add files via SharePoint.
+    <script type="text/javascript">
+        const USER_LANG_FR = 1036;
+
+        // find out if the users language setting is set to French
+        var currentLanguage = parent.Xrm.Page.context.getUserLcid();
+
+        $(document).ready(function () {
+            if (currentLanguage === USER_LANG_FR) {
+                $('#sharepoint-message').html("<strong>Cliquez sur le bouton 'Documents' en haut pour ajouter des fichiers via SharePoint.</strong>");
+            }
+        });
+    </script>
+
+    <div class="container-fluid text-center">
+        <div id="sharepoint-message" role="alert">
+            <h4>Click the 'Documents' button at the top to add files via SharePoint.</h4>
+        </div>
+    </div>
 </body>
 </html>
