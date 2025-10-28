@@ -22,7 +22,6 @@ interface PostFollow_Relationships {
   regardingobjectid_ts_action?: ts_action_Result | null;
   regardingobjectid_ts_securityincident?: ts_securityincident_Result | null;
   regardingobjectid_ts_teamplanningdata?: ts_TeamPlanningData_Result | null;
-  regardingobjectid_ts_unplannedworkorder?: ts_unplannedworkorder_Result | null;
 }
 interface PostFollow extends PostFollow_Base, PostFollow_Relationships {
 }
@@ -111,7 +110,6 @@ interface PostFollow_Expand {
   regardingobjectid_ts_action: WebExpand<PostFollow_Expand, ts_action_Select, ts_action_Filter, { regardingobjectid_ts_action: ts_action_Result }>;
   regardingobjectid_ts_securityincident: WebExpand<PostFollow_Expand, ts_securityincident_Select, ts_securityincident_Filter, { regardingobjectid_ts_securityincident: ts_securityincident_Result }>;
   regardingobjectid_ts_teamplanningdata: WebExpand<PostFollow_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata: ts_TeamPlanningData_Result }>;
-  regardingobjectid_ts_unplannedworkorder: WebExpand<PostFollow_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { regardingobjectid_ts_unplannedworkorder: ts_unplannedworkorder_Result }>;
 }
 interface PostFollow_FormattedResult {
   createdby_formatted?: string;
@@ -152,7 +150,6 @@ interface PostFollow_RelatedOne {
   regardingobjectid_ts_action: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   regardingobjectid_ts_securityincident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   regardingobjectid_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
-  regardingobjectid_ts_unplannedworkorder: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface PostFollow_RelatedMany {
 }
