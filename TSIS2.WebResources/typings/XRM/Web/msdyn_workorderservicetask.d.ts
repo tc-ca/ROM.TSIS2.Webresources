@@ -73,8 +73,6 @@ interface msdyn_workorderservicetask_Relationships {
   ts_CateringServices?: Account_Result | null;
   ts_DepartureAerodrome_Site?: ts_site_Result | null;
   ts_Destination?: msdyn_FunctionalLocation_Result | null;
-  ts_File_workorderservicetask_msdyn_workor?: ts_File_Result[] | null;
-  ts_Files_msdyn_workorderservicetasks?: ts_File_Result[] | null;
   ts_Gate?: msdyn_FunctionalLocation_Result | null;
   ts_Gate_Site?: ts_site_Result | null;
   ts_GroomingServices?: Account_Result | null;
@@ -356,8 +354,6 @@ interface msdyn_workorderservicetask_Expand {
   ts_CateringServices: WebExpand<msdyn_workorderservicetask_Expand, Account_Select, Account_Filter, { ts_CateringServices: Account_Result }>;
   ts_DepartureAerodrome_Site: WebExpand<msdyn_workorderservicetask_Expand, ts_site_Select, ts_site_Filter, { ts_DepartureAerodrome_Site: ts_site_Result }>;
   ts_Destination: WebExpand<msdyn_workorderservicetask_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Destination: msdyn_FunctionalLocation_Result }>;
-  ts_File_workorderservicetask_msdyn_workor: WebExpand<msdyn_workorderservicetask_Expand, ts_File_Select, ts_File_Filter, { ts_File_workorderservicetask_msdyn_workor: ts_File_Result[] }>;
-  ts_Files_msdyn_workorderservicetasks: WebExpand<msdyn_workorderservicetask_Expand, ts_File_Select, ts_File_Filter, { ts_Files_msdyn_workorderservicetasks: ts_File_Result[] }>;
   ts_Gate: WebExpand<msdyn_workorderservicetask_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_Gate: msdyn_FunctionalLocation_Result }>;
   ts_Gate_Site: WebExpand<msdyn_workorderservicetask_Expand, ts_site_Select, ts_site_Filter, { ts_Gate_Site: ts_site_Result }>;
   ts_GroomingServices: WebExpand<msdyn_workorderservicetask_Expand, Account_Select, Account_Filter, { ts_GroomingServices: Account_Result }>;
@@ -527,8 +523,6 @@ interface msdyn_workorderservicetask_RelatedMany {
   msdyn_workorderservicetask_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_workorderservicetask_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ovs_msdyn_workorderservicetask_ovs_finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
-  ts_File_workorderservicetask_msdyn_workor: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
-  ts_Files_msdyn_workorderservicetasks: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_incident_WorkOrderServiceTask1_msdyn_work: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_WorkOrderServiceTask2_msdyn_work: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_msdyn_workorderservicetask_systemuser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;

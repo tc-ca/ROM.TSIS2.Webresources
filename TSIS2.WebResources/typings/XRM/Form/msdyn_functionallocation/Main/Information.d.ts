@@ -157,6 +157,7 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
+      get(name: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_address2"): Xrm.StringControl;
@@ -288,6 +289,7 @@ declare namespace Form.msdyn_functionallocation.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"msdyn_functionallocation">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
+    getControl(controlName: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "msdyn_address1"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_address2"): Xrm.StringControl;
