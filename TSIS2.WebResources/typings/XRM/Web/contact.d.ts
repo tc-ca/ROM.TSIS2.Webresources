@@ -239,6 +239,7 @@ interface Contact_Relationships {
   ts_Contact_Incident_Incident?: Incident_Result[] | null;
   ts_Contact_msdyn_workorder_msdyn_workorder?: msdyn_workorder_Result[] | null;
   ts_Contact_ts_securityincident_ts_securityin?: ts_securityincident_Result[] | null;
+  ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder?: ts_unplannedworkorder_Result[] | null;
   ts_contact_msdyn_workorder_Contact?: msdyn_workorder_Result[] | null;
   ts_contact_ovs_finding_Contact?: ovs_Finding_Result[] | null;
   ts_contact_ts_action_contact?: ts_action_Result[] | null;
@@ -787,6 +788,7 @@ interface Contact_Expand {
   ts_Contact_Incident_Incident: WebExpand<Contact_Expand, Incident_Select, Incident_Filter, { ts_Contact_Incident_Incident: Incident_Result[] }>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_Contact_msdyn_workorder_msdyn_workorder: msdyn_workorder_Result[] }>;
   ts_Contact_ts_securityincident_ts_securityin: WebExpand<Contact_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_Contact_ts_securityincident_ts_securityin: ts_securityincident_Result[] }>;
+  ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder: WebExpand<Contact_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder: ts_unplannedworkorder_Result[] }>;
   ts_contact_msdyn_workorder_Contact: WebExpand<Contact_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_contact_msdyn_workorder_Contact: msdyn_workorder_Result[] }>;
   ts_contact_ovs_finding_Contact: WebExpand<Contact_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_contact_ovs_finding_Contact: ovs_Finding_Result[] }>;
   ts_contact_ts_action_contact: WebExpand<Contact_Expand, ts_action_Select, ts_action_Filter, { ts_contact_ts_action_contact: ts_action_Result[] }>;
@@ -948,6 +950,7 @@ interface Contact_RelatedMany {
   ts_Contact_Incident_Incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_Contact_msdyn_workorder_msdyn_workorder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_Contact_ts_securityincident_ts_securityin: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
+  ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
   ts_contact_msdyn_workorder_Contact: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_contact_ovs_finding_Contact: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_contact_ts_action_contact: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;

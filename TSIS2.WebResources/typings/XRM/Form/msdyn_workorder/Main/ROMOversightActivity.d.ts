@@ -268,6 +268,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_trip"): Xrm.LookupAttribute<"ts_trip">;
       get(name: "ts_woreportinganddocumentation"): Xrm.NumberAttribute;
       get(name: "ts_workorderenddate"): Xrm.DateAttribute;
+      get(name: "ts_workorderjustification"): Xrm.LookupAttribute<"ts_justification">;
       get(name: "ts_workorderstartdate"): Xrm.DateAttribute;
       get(name: string): undefined;
       get(): Xrm.Attribute<any>[];
@@ -465,6 +466,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_trip2"): Xrm.LookupControl<"ts_trip">;
       get(name: "ts_woreportinganddocumentation"): Xrm.NumberControl;
       get(name: "ts_workorderenddate"): Xrm.DateControl;
+      get(name: "ts_workorderjustification"): Xrm.LookupControl<"ts_justification">;
       get(name: "ts_workorderstartdate"): Xrm.DateControl;
       get(name: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
       get(name: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;
@@ -637,6 +639,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_trip"): Xrm.LookupAttribute<"ts_trip">;
     getAttribute(attributeName: "ts_woreportinganddocumentation"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_workorderenddate"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_workorderjustification"): Xrm.LookupAttribute<"ts_justification">;
     getAttribute(attributeName: "ts_workorderstartdate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "AdditionalInspectors"): Xrm.SubGridControl<"systemuser">;
@@ -829,6 +832,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_trip2"): Xrm.LookupControl<"ts_trip">;
     getControl(controlName: "ts_woreportinganddocumentation"): Xrm.NumberControl;
     getControl(controlName: "ts_workorderenddate"): Xrm.DateControl;
+    getControl(controlName: "ts_workorderjustification"): Xrm.LookupControl<"ts_justification">;
     getControl(controlName: "ts_workorderstartdate"): Xrm.DateControl;
     getControl(controlName: "workorderproductsgrid"): Xrm.SubGridControl<"msdyn_workorderproduct">;
     getControl(controlName: "workorderservicesgrid"): Xrm.SubGridControl<"msdyn_workorderservice">;

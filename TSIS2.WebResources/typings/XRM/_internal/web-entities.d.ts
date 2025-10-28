@@ -1343,6 +1343,29 @@ interface ts_ovs_operation_ovs_operation_Create extends ts_ovs_operation_ovs_ope
 }
 interface ts_ovs_operation_ovs_operation_Update extends ts_ovs_operation_ovs_operation {
 }
+interface ts_ovs_operation_ts_unplannedworkorder_Base extends WebEntity {
+}
+interface ts_ovs_operation_ts_unplannedworkorder_Fixed extends WebEntity_Fixed {
+  ts_ovs_operation_ts_unplannedworkorderid: string;
+}
+interface ts_ovs_operation_ts_unplannedworkorder extends ts_ovs_operation_ts_unplannedworkorder_Base, ts_ovs_operation_ts_unplannedworkorder_Relationships {
+}
+interface ts_ovs_operation_ts_unplannedworkorder_Relationships {
+}
+interface ts_ovs_operation_ts_unplannedworkorder_Result extends ts_ovs_operation_ts_unplannedworkorder_Base, ts_ovs_operation_ts_unplannedworkorder_Relationships {
+}
+interface ts_ovs_operation_ts_unplannedworkorder_FormattedResult {
+}
+interface ts_ovs_operation_ts_unplannedworkorder_Select {
+}
+interface ts_ovs_operation_ts_unplannedworkorder_Expand {
+}
+interface ts_ovs_operation_ts_unplannedworkorder_Filter {
+}
+interface ts_ovs_operation_ts_unplannedworkorder_Create extends ts_ovs_operation_ts_unplannedworkorder {
+}
+interface ts_ovs_operation_ts_unplannedworkorder_Update extends ts_ovs_operation_ts_unplannedworkorder {
+}
 interface ts_ovs_operationtypes_msdyn_incidenttypes_Base extends WebEntity {
 }
 interface ts_ovs_operationtypes_msdyn_incidenttypes_Fixed extends WebEntity_Fixed {

@@ -368,12 +368,12 @@ var ROM;
             //    }
             //}
             //Restrict edit rights for Report Details to WO Owner and Additional Inspectors
-            //var subgridAdditionalInspectors = form.getControl("AdditionalInspectors");
-            //if (subgridAdditionalInspectors) {
-            //    subgridAdditionalInspectors.addOnLoad(function () {
-            //        restrictEditRightReportDetails(eContext, subgridAdditionalInspectors);
-            //    });
-            //}
+            var subgridAdditionalInspectors = form.getControl("AdditionalInspectors");
+            if (subgridAdditionalInspectors) {
+                subgridAdditionalInspectors.addOnLoad(function () {
+                    restrictEditRightReportDetails(eContext, subgridAdditionalInspectors);
+                });
+            }
             //  unlockRecordLogFieldsIfUserIsSystemAdmin(form);
             RemoveOptionCancel(eContext);
         }
@@ -1314,23 +1314,22 @@ var ROM;
         //        form.getControl("ts_site").setDisabled(false);
         //    }
         //}
-        function stateCodeOnChange(eContext) {
-            var form = eContext.getFormContext();
-            var stateCode = form.getAttribute("statecode").getValue();
-            //If statecode changed to Active
-            if (stateCode == 0) {
-                var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
-                //If systemStatus is currently Closed
-                if (systemStatus == 690970004 || systemStatus == 690970005) {
-                    // taken out because we don't use 'Completed' as a WO System Status
-                    //Change systemstatus to Open - Completed
-                    //form.getAttribute("msdyn_systemstatus").setValue(690970003);
-                    //Prevent User from discarding status change
-                    form.data.save();
-                }
-            }
-        }
-        UnplannedWorkOrder.stateCodeOnChange = stateCodeOnChange;
+        //export function stateCodeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        //    const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+        //    var stateCode = form.getAttribute("statecode").getValue();
+        //    //If statecode changed to Active
+        //    if (stateCode == 0) {
+        //        var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
+        //        //If systemStatus is currently Closed
+        //        if (systemStatus == 690970004 || systemStatus == 690970005) {
+        //            // taken out because we don't use 'Completed' as a WO System Status
+        //            //Change systemstatus to Open - Completed
+        //            //form.getAttribute("msdyn_systemstatus").setValue(690970003);
+        //            //Prevent User from discarding status change
+        //            form.data.save();
+        //        }
+        //    }
+        //}
         //export function updateCaseView(eContext: Xrm.ExecutionContext<any, any>): void {
         //    try {
         //        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
@@ -1421,19 +1420,20 @@ var ROM;
         //        }
         //    );
         //}
-        //export function scheduledQuarterOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        //    const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
-        //    const revisedQuarterAttributeValue = form.getAttribute("ovs_revisedquarterid").getValue();
-        //    scheduledQuarterAttributeValueChanged = true;
-        //    //if (revisedQuarterAttributeValue != null) {
-        //    //    form.getControl("ts_scheduledquarterjustification").setVisible(true);
-        //    //    form.getControl("ts_justificationcomment").setVisible(true);
-        //    //}
-        //    //else {
-        //    //    form.getControl("ts_scheduledquarterjustification").setVisible(false);
-        //    //    form.getControl("ts_justificationcomment").setVisible(false);
-        //    //}
-        //}
+        function scheduledQuarterOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var revisedQuarterAttributeValue = form.getAttribute("ts_revisedquarterid").getValue();
+            scheduledQuarterAttributeValueChanged = true;
+            if (revisedQuarterAttributeValue != null) {
+                form.getControl("ts_scheduledquarterjustification").setVisible(true);
+                form.getControl("ts_scheduledquarterjustificationcomment").setVisible(true);
+            }
+            else {
+                form.getControl("ts_scheduledquarterjustification").setVisible(false);
+                form.getControl("ts_scheduledquarterjustificationcomment").setVisible(false);
+            }
+        }
+        UnplannedWorkOrder.scheduledQuarterOnChange = scheduledQuarterOnChange;
         ////Sets the Scheduled Quarter filter to show quarters in the planned fiscal year and the year after
         //export function setScheduledQuarterFilter(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
         //    //Get name of planned fiscal year

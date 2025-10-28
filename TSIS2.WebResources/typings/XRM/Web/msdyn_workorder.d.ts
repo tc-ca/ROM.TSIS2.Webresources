@@ -269,6 +269,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ts_Subsubsite_bind$msdyn_functionallocations?: string | null;
   ts_TeamPlanningData_bind$ts_teamplanningdatas?: string | null;
   ts_WorkOrderCreationWizardId_bind$ts_workordercreationwizards?: string | null;
+  ts_WorkOrderJustification_bind$ts_justifications?: string | null;
   ts_arrivalaerodrome_bind$msdyn_functionallocations?: string | null;
   ts_canceledinspectionjustification_bind$ts_canceledinspectionjustifications?: string | null;
   ts_departureaerodrome_bind$msdyn_functionallocations?: string | null;
@@ -511,6 +512,7 @@ interface msdyn_workorder_Select {
   ts_woreportinganddocumentation: WebAttribute<msdyn_workorder_Select, { ts_woreportinganddocumentation: number | null }, {  }>;
   ts_workordercreationwizardid_guid: WebAttribute<msdyn_workorder_Select, { ts_workordercreationwizardid_guid: string | null }, { ts_workordercreationwizardid_formatted?: string }>;
   ts_workorderenddate: WebAttribute<msdyn_workorder_Select, { ts_workorderenddate: Date | null }, { ts_workorderenddate_formatted?: string }>;
+  ts_workorderjustification_guid: WebAttribute<msdyn_workorder_Select, { ts_workorderjustification_guid: string | null }, { ts_workorderjustification_formatted?: string }>;
   ts_workorderstartdate: WebAttribute<msdyn_workorder_Select, { ts_workorderstartdate: Date | null }, { ts_workorderstartdate_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<msdyn_workorder_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<msdyn_workorder_Select, { versionnumber: number | null }, {  }>;
@@ -740,6 +742,7 @@ interface msdyn_workorder_Filter {
   ts_woreportinganddocumentation: any;
   ts_workordercreationwizardid_guid: XQW.Guid;
   ts_workorderenddate: Date;
+  ts_workorderjustification_guid: XQW.Guid;
   ts_workorderstartdate: Date;
   utcconversiontimezonecode: number;
   versionnumber: number;
@@ -971,6 +974,7 @@ interface msdyn_workorder_FormattedResult {
   ts_trip_formatted?: string;
   ts_workordercreationwizardid_formatted?: string;
   ts_workorderenddate_formatted?: string;
+  ts_workorderjustification_formatted?: string;
   ts_workorderstartdate_formatted?: string;
 }
 interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_Relationships {
@@ -1057,6 +1061,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ts_tradenameid_guid: string | null;
   ts_trip_guid: string | null;
   ts_workordercreationwizardid_guid: string | null;
+  ts_workorderjustification_guid: string | null;
 }
 interface msdyn_workorder_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;

@@ -701,3 +701,59 @@ function openUnplannedWorkOrderForm() {
 
     });
 }
+function editUnplannedWorkOrder(primaryControl) {
+    const formContext = primaryControl;
+    const currentWorkOrderId = formContext.data.entity.getId().replace(/({|})/g, '');
+    var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+    // Retrieve the related ts_unplannedworkorder using the ts_workorder relationship field
+    Xrm.WebApi.retrieveMultipleRecords("ts_unplannedworkorder", `?$select=ts_unplannedworkorderid&$filter=_ts_workorder_value eq '${currentWorkOrderId}'`).then(
+        function success(result) {
+            if (result.entities.length > 0) {
+                // Find and open related unplanned work order in a modal window
+                const unplannedWorkOrderId = result.entities[0].ts_unplannedworkorderid;
+
+                const pageInput = {
+                    pageType: "entityrecord",
+                    entityName: "ts_unplannedworkorder",
+                    entityId: unplannedWorkOrderId,
+                    formType: 2,
+                    useQuickCreateForm: true
+                };
+
+                const navigationOptions = {
+                    target: 2,
+                    width: { value: 80, unit: "%" },
+                    height: { value: 80, unit: "%" },
+                    position: 1
+                };
+
+                Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                    function success(result) {
+                        console.log("Modal opened successfully");
+                        // Refresh the form after modal closes
+                        formContext.data.refresh();
+                    },
+                    function error(err) {
+                        console.error("Error opening modal:", err);
+                        showErrorMessageAlert(err);
+                    }
+                );
+            } else {
+                // No related unplanned work order found, show alert
+                var alertStrings = {
+                    text: (lang == 1036) ?
+                        "Aucun ordre de travail non planifié associé trouvé pour cet ordre de travail." :
+                        "No related unplanned work order found for this work order.",
+                    title: (lang == 1036) ? "Aucun enregistrement trouvé" : "No Record Found"
+                };
+                var alertOptions = { height: 120, width: 350 };
+                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+            }
+        },
+        function error(err) {
+            console.error("Error retrieving unplanned work order:", err);
+            showErrorMessageAlert(err);
+        }
+    );
+}
