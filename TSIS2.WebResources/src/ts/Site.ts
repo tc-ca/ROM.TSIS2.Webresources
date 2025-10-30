@@ -2,6 +2,8 @@ namespace ROM.Site {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_site.Main.Information>eContext.getFormContext();
 
+        console.log("Site Form OnLoad");
+
         const ownerAttribute = form.getAttribute("ownerid")
         if (ownerAttribute != null && ownerAttribute != undefined) {
 
