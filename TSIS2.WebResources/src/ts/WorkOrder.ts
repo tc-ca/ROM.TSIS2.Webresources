@@ -24,12 +24,10 @@ namespace ROM.WorkOrder {
 
         //Set comment field visible if AvSec
         //Set Overtime field visible for AvSec
-        let userBusinessUnitName;
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
             "<fetch top='50'>",
             "  <entity name='businessunit'>",
-            "    <attribute name='name' />",
             "    <attribute name='businessunitid' />",
             "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
             "      <filter>",
@@ -40,15 +38,16 @@ namespace ROM.WorkOrder {
             "</fetch>",
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
-            userBusinessUnitName = businessunit.entities[0].name;
-            if (!userBusinessUnitName.startsWith("Aviation")) {
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(async function (businessunit) {
+            const userBusinessUnitId = businessunit.entities[0].businessunitid;
+            const inAvSecBU = await isAvSecBU(userBusinessUnitId);
+            if (!inAvSecBU) {
                 form.getControl("ts_details").setVisible(false);
                 form.getControl("ts_overtime").setVisible(false);
                 form.getControl("ts_overtimerequired").setVisible(true);
 
             }
-            else if (userBusinessUnitName.startsWith("Aviation")) {
+            else if (inAvSecBU) {
                 form.getControl("ts_details").setVisible(true);
                 form.getControl("msdyn_instructions").setVisible(true);
                 form.getControl("ts_accountableteam").setVisible(true);
@@ -2308,7 +2307,6 @@ namespace ROM.WorkOrder {
         let currentUserBusinessUnitFetchXML = [
             "<fetch top='50'>",
             "  <entity name='businessunit'>",
-            "    <attribute name='name' />",
             "    <attribute name='businessunitid' />",
             "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
             "      <filter>",
@@ -2319,8 +2317,9 @@ namespace ROM.WorkOrder {
             "</fetch>",
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-        let userBusinessUnitName = await Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML);
-        return userBusinessUnitName.entities[0].name.startsWith("Aviation");
+        let userBusinessUnit = await Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML);
+        const userBusinessUnitId = userBusinessUnit.entities[0].businessunitid;
+        return await isAvSecBU(userBusinessUnitId);
     }
 
     function setFiscalQuarter(form: Form.msdyn_workorder.Main.ROMOversightActivity) {

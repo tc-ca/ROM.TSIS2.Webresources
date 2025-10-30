@@ -98,7 +98,7 @@ namespace ROM.SecurityIncident {
         const modeAttributeValue = modeAttribute.getValue()
 
         ShowHideFieldsOnMode(eContext, modeAttributeValue, false);
-      
+
         form.getAttribute("ts_securityincidenttype").setValue(null);
 
         ShowHideFieldsOnMode(eContext, modeAttributeValue, false);
@@ -511,15 +511,14 @@ namespace ROM.SecurityIncident {
 
     function setAllFieldsDisabledInTab(formContext, tabname) {
         var tab = formContext.ui.tabs.get(tabname);
-        if (tab != null) 
-        {
+        if (tab != null) {
             var tabSections = tab.sections.get();
             for (var i in tabSections) {
                 var secName = tabSections[i].getName();
-                setAllFieldsDisabledInSection(formContext,secName);
+                setAllFieldsDisabledInSection(formContext, secName);
             }
         }
-     }   
+    }
 
     function setAllFieldsDisabledInSection(formContext, sectionName) {
         var ctrlName = formContext.ui.controls.get();
@@ -532,7 +531,7 @@ namespace ROM.SecurityIncident {
                 }
             }
         }
-    }  
+    }
 
     function setDefaultView(form: Form.ts_securityincident.Main.Information) {
         form.getControl("ts_aircarrier").setDefaultView("d06d7b47-80bf-ed11-83ff-0022483c5061");
@@ -541,17 +540,6 @@ namespace ROM.SecurityIncident {
         form.getControl("ts_diversionaerodrome").setDefaultView("3507a249-81bf-ed11-83ff-0022483d7716");
     }
 
-    export function userHasRole(rolesName) {
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-        var hasRole = false;
-        var roles = rolesName.split("|");
-        roles.forEach(function (roleItem) {
-            userRoles.forEach(function (userRoleItem) {
-                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
-            });
-        });
-        return hasRole;
-    }
 
     function unlockRecordLogFieldsIfUserIsSystemAdmin(formContext) {
         if (userHasRole("System Administrator")) {

@@ -67,6 +67,7 @@ interface Appointment_Relationships {
   msdyn_appointment_bookableresourcebooking?: BookableResourceBooking_Result[] | null;
   ownerid_appointment?: Team_Result | null;
   ownerid_appointment1?: SystemUser_Result | null;
+  owningbusinessunit_appointment?: BusinessUnit_Result | null;
   owningteam_appointment?: Team_Result | null;
   owninguser_appointment?: SystemUser_Result | null;
   regardingobjectid_account_appointment?: Account_Result | null;
@@ -83,6 +84,7 @@ interface Appointment_Relationships {
   regardingobjectid_ts_site_appointment?: ts_site_Result | null;
   regardingobjectid_ts_teamplanningdata_appointment?: ts_TeamPlanningData_Result | null;
   regardingobjectid_ts_trip_appointment?: ts_trip_Result | null;
+  regardingobjectid_ts_unplannedworkorder_appointment?: ts_unplannedworkorder_Result | null;
 }
 interface Appointment extends Appointment_Base, Appointment_Relationships {
   ownerid_appointment_bind$systemusers?: string | null;
@@ -358,6 +360,7 @@ interface Appointment_Expand {
   modifiedonbehalfby_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_appointment: SystemUser_Result }>;
   msdyn_appointment_bookableresourcebooking: WebExpand<Appointment_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { msdyn_appointment_bookableresourcebooking: BookableResourceBooking_Result[] }>;
   ownerid_appointment: WebExpand<Appointment_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid_appointment: SystemUser_Result } & { ownerid_appointment: Team_Result }>;
+  owningbusinessunit_appointment: WebExpand<Appointment_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit_appointment: BusinessUnit_Result }>;
   owningteam_appointment: WebExpand<Appointment_Expand, Team_Select, Team_Filter, { owningteam_appointment: Team_Result }>;
   owninguser_appointment: WebExpand<Appointment_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_appointment: SystemUser_Result }>;
   regardingobjectid_account_appointment: WebExpand<Appointment_Expand, Account_Select, Account_Filter, { regardingobjectid_account_appointment: Account_Result }>;
@@ -374,6 +377,7 @@ interface Appointment_Expand {
   regardingobjectid_ts_site_appointment: WebExpand<Appointment_Expand, ts_site_Select, ts_site_Filter, { regardingobjectid_ts_site_appointment: ts_site_Result }>;
   regardingobjectid_ts_teamplanningdata_appointment: WebExpand<Appointment_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata_appointment: ts_TeamPlanningData_Result }>;
   regardingobjectid_ts_trip_appointment: WebExpand<Appointment_Expand, ts_trip_Select, ts_trip_Filter, { regardingobjectid_ts_trip_appointment: ts_trip_Result }>;
+  regardingobjectid_ts_unplannedworkorder_appointment: WebExpand<Appointment_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { regardingobjectid_ts_unplannedworkorder_appointment: ts_unplannedworkorder_Result }>;
 }
 interface Appointment_FormattedResult {
   actualend_formatted?: string;
@@ -438,6 +442,7 @@ interface Appointment_RelatedOne {
   modifiedonbehalfby_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid_appointment: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ownerid_appointment1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owningbusinessunit_appointment: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam_appointment: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser_appointment: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   regardingobjectid_account_appointment: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
@@ -454,6 +459,7 @@ interface Appointment_RelatedOne {
   regardingobjectid_ts_site_appointment: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   regardingobjectid_ts_teamplanningdata_appointment: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   regardingobjectid_ts_trip_appointment: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
+  regardingobjectid_ts_unplannedworkorder_appointment: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface Appointment_RelatedMany {
   appointment_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;

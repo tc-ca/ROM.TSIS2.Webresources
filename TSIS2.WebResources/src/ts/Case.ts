@@ -76,11 +76,14 @@ namespace ROM.Case {
             "</fetch>",
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
-            userBusinessUnitName = businessunit.entities[0].name;
-            if (userBusinessUnitName.startsWith("Aviation")) {
-                //form.ui.tabs.get("tab_findings").sections.get("tab_findings_section_aef").setVisible(false);
-                //form.getControl("ts_overtime").setVisible(true);
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(async function (businessunit) {
+
+            const userBusinessUnitId = businessunit.entities[0].businessunitid;
+            const inAvSecBU = await isAvSecBU(userBusinessUnitId);
+
+            if (inAvSecBU) {
+                // form.ui.tabs.get("tab_findings").sections.get("tab_findings_section_aef").setVisible(false);
+                // form.getControl("ts_overtime").setVisible(true);
             }
         });
 
@@ -101,17 +104,17 @@ namespace ROM.Case {
 
         //Hide quarter fields for ISSO
         let operationTypeFetchXML = [
-        "<fetch top='50'>",
+            "<fetch top='50'>",
             "<entity name='ts_workorder'>",
-                "<attribute name='msdyn_name'/>",
-                "<attribute name='ovs_operationtypeid'/>",
-                     "<link-entity name='incident' from='incidentid' to='msdyn_servicerequest'>",
-                         "<filter>",
-                             "<condition attribute='incidentid' operator='eq' value='",form.data.entity.getId(),"'/>",
-                         "</filter>",
-                     "</link-entity>",
+            "<attribute name='msdyn_name'/>",
+            "<attribute name='ovs_operationtypeid'/>",
+            "<link-entity name='incident' from='incidentid' to='msdyn_servicerequest'>",
+            "<filter>",
+            "<condition attribute='incidentid' operator='eq' value='", form.data.entity.getId(), "'/>",
+            "</filter>",
+            "</link-entity>",
             "</entity>",
-        "</fetch>"
+            "</fetch>"
         ].join("");
 
         operationTypeFetchXML = "?fetchXml=" + operationTypeFetchXML;
@@ -140,7 +143,7 @@ namespace ROM.Case {
                     },
                     function (error) {
                     }
-                );               
+                );
             },
             function (error) {
             }
@@ -466,7 +469,7 @@ namespace ROM.Case {
         //         });
         //     }
 
-            //form.getControl("ts_workorderservicetask1").setDisabled(false);
+        //form.getControl("ts_workorderservicetask1").setDisabled(false);
         //     //form.getControl("ts_additionalinspectors1").setDisabled(false);
 
         // } else {

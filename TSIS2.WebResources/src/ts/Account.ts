@@ -1,5 +1,5 @@
 namespace ROM.Account {
-    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function onLoad(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
 
         const addressControl = form.getControl("address1_composite_compositionLinkControl_address1_country");
@@ -20,12 +20,13 @@ namespace ROM.Account {
         if (ownerAttribute != null && ownerAttribute != undefined) {
             const ownerAttributeValue = ownerAttribute.getValue();
             if (ownerAttributeValue != null) {
-                if (ownerAttributeValue[0].name == "Intermodal Surface Security Oversight (ISSO)") {
+                const isISSOOwner = await isOwnedByISSO(ownerAttributeValue);
+                if (isISSOOwner) {
                     let operationView =
                     {
                         entityType: "savedquery",
                         id: "{f3c99b02-591d-ed11-b83e-002248ae429c}",
-                        name: "Active Operations ISSO (Stakeholder)"
+                        name: "Active Operations"
                     }
                     form.getControl("Operations").getViewSelector().setCurrentView(operationView);
                 }
@@ -43,16 +44,10 @@ namespace ROM.Account {
         }
 
         //If owner is Aviation Security
-        const ownerAttributeValue = ownerAttribute.getValue();
+        const ownerValue = form.getAttribute("ownerid").getValue();
+        var isAvSec = await isOwnedByAvSec(ownerValue);
+        form.ui.tabs.get("tab_Risk").setVisible(isAvSec);
 
-        if (ownerAttributeValue != null) {
-            if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
-                form.ui.tabs.get("tab_Risk").setVisible(true);
-            }
-            else {
-                form.ui.tabs.get("tab_Risk").setVisible(false);
-            }
-        }
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -175,15 +170,4 @@ namespace ROM.Account {
 
     }
 
-    export function userHasRole(rolesName) {
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-        var hasRole = false;
-        var roles = rolesName.split("|");
-        roles.forEach(function (roleItem) {
-            userRoles.forEach(function (userRoleItem) {
-                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
-            });
-        });
-        return hasRole;
-    }
 }

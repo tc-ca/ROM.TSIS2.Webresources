@@ -62,7 +62,7 @@
         const operationTypeAttribute = form.getAttribute("ts_operationtype");
         const stakeholderAttribute = form.getAttribute("ts_stakeholder");
         const siteAttribute = form.getAttribute("ts_site");
-        
+
         if (siteAttribute != null && siteAttribute != undefined) {
             // Clear out operation and subsite value if not already empty
             if (form.getAttribute("ts_operation").getValue() != null) form.getAttribute("ts_operation").setValue(null);
@@ -173,7 +173,7 @@
                 );
                 */
             }
-            else { 
+            else {
                 //form.getAttribute("ts_subsite").setValue(null);
                 //form.getControl('ts_subsite').setVisible(false);
                 //form.getAttribute("ts_subsite").setRequiredLevel("none");
@@ -391,15 +391,4 @@
         });
     }
 
-    function userHasRole(rolesName) {
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-        var hasRole = false;
-        var roles = rolesName.split("|");
-        roles.forEach(function (roleItem) {
-            userRoles.forEach(function (userRoleItem) {
-                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
-            });
-        });
-        return hasRole;
-    }
 }

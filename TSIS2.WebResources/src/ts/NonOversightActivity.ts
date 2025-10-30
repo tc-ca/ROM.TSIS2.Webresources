@@ -22,9 +22,11 @@ namespace ROM.NonOversightActivity {
             "</fetch>",
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
-            userBusinessUnitName = businessunit.entities[0].name;
-            if (userBusinessUnitName.startsWith("Aviation")) {               
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(async function (businessunit) {
+            const userBusinessUnitId = businessunit.entities[0].businessunitid;
+            const inAvSecBU = await isAvSecBU(userBusinessUnitId);
+
+            if (inAvSecBU) {
                 form.getControl("ts_overtime").setVisible(true);
             }
         });
@@ -85,18 +87,23 @@ namespace ROM.NonOversightActivity {
         }
     }
 
-    export function programOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function programOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const form = <Form.ts_nonoversightactivity.Main.Information>eContext.getFormContext();
         let program = form.getAttribute('ts_program').getValue();
         if (program != null && program.length > 0) {
-            if (program[0].name?.startsWith('Intermodal')) {
+            const programId = program[0].id.replace(/[{}]/g, "").toLowerCase();
+            const isISSO = await isISSOBU(programId);
+            if (isISSO) {
                 form.getControl("ts_category").setDefaultView("e2efe0d1-0812-ee11-8f6e-0022483d7716");  //ISSO
             }
-            else if (program[0].name?.startsWith('Transport')) {
-                form.getControl("ts_category").setDefaultView("7b5c2ae7-3714-ee11-9cbe-0022483c5061");  //All
-            }
             else {
-                form.getControl("ts_category").setDefaultView("9956908f-0912-ee11-8f6e-0022483d7716");  //AvSec
+                const isAvSec = await isAvSecBU(programId);
+                if (isAvSec) {
+                    form.getControl("ts_category").setDefaultView("9956908f-0912-ee11-8f6e-0022483d7716");  //AvSec
+                }
+                else {
+                    form.getControl("ts_category").setDefaultView("7b5c2ae7-3714-ee11-9cbe-0022483c5061");  //All (Transport or other)
+                }
             }
         }
     }

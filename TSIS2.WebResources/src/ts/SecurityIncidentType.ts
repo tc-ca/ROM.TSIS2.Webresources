@@ -94,6 +94,3 @@ namespace ROM.SecurityIncidentType {
         formContext.ui.setFormNotification(message, "WARNING", "tcom_warning");
     }
 }
-
-declare function setOwnerToUserBusinessUnit(formContext: any): void;
-declare function showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext: any): boolean;

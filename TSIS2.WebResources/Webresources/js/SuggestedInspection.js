@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -40,90 +40,123 @@ var ROM;
     var SuggestedInspection;
     (function (SuggestedInspection) {
         function onLoad(eContext) {
-            var form = eContext.getFormContext();
-            setOperationTypeFilteredView(form);
-            setStakeholderFilteredView(form);
-            setSiteFilteredView(form);
-            setActivityTypeFilteredView(form);
-            filterTrips(form);
-            var operationTypeValue = form.getAttribute("ts_operationtype").getValue();
-            var stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
-            var siteValue = form.getAttribute("ts_site").getValue();
-            var activityTypeValue = form.getAttribute("ts_activitytype").getValue();
-            var operationValue = form.getAttribute("ts_operation").getValue();
-            if (operationTypeValue != null) {
-                form.getControl("ts_stakeholder").setDisabled(false);
-            }
-            if (stakeholderValue != null) {
-                form.getControl("ts_stakeholder").setDisabled(false);
-                form.getControl("ts_site").setDisabled(false);
-            }
-            if (siteValue != null) {
-                form.getControl("ts_site").setDisabled(false);
-                form.getControl("ts_activitytype").setDisabled(false);
-            }
-            if (activityTypeValue != null) {
-                form.getControl("ts_activitytype").setDisabled(false);
-            }
-            if (form.getAttribute("ts_q1").getValue() == null) {
-                form.getAttribute("ts_q1").setValue(0);
-            }
-            if (form.getAttribute("ts_q2").getValue() == null) {
-                form.getAttribute("ts_q2").setValue(0);
-            }
-            if (form.getAttribute("ts_q3").getValue() == null) {
-                form.getAttribute("ts_q3").setValue(0);
-            }
-            if (form.getAttribute("ts_q4").getValue() == null) {
-                form.getAttribute("ts_q4").setValue(0);
-            }
+            return __awaiter(this, void 0, void 0, function () {
+                var form, operationTypeValue, stakeholderValue, siteValue, activityTypeValue, operationValue;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            form = eContext.getFormContext();
+                            return [4 /*yield*/, setOperationTypeFilteredView(form)];
+                        case 1:
+                            _a.sent();
+                            setStakeholderFilteredView(form);
+                            setSiteFilteredView(form);
+                            setActivityTypeFilteredView(form);
+                            filterTrips(form);
+                            operationTypeValue = form.getAttribute("ts_operationtype").getValue();
+                            stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
+                            siteValue = form.getAttribute("ts_site").getValue();
+                            activityTypeValue = form.getAttribute("ts_activitytype").getValue();
+                            operationValue = form.getAttribute("ts_operation").getValue();
+                            if (operationTypeValue != null) {
+                                form.getControl("ts_stakeholder").setDisabled(false);
+                            }
+                            if (stakeholderValue != null) {
+                                form.getControl("ts_stakeholder").setDisabled(false);
+                                form.getControl("ts_site").setDisabled(false);
+                            }
+                            if (siteValue != null) {
+                                form.getControl("ts_site").setDisabled(false);
+                                form.getControl("ts_activitytype").setDisabled(false);
+                            }
+                            if (activityTypeValue != null) {
+                                form.getControl("ts_activitytype").setDisabled(false);
+                            }
+                            if (form.getAttribute("ts_q1").getValue() == null) {
+                                form.getAttribute("ts_q1").setValue(0);
+                            }
+                            if (form.getAttribute("ts_q2").getValue() == null) {
+                                form.getAttribute("ts_q2").setValue(0);
+                            }
+                            if (form.getAttribute("ts_q3").getValue() == null) {
+                                form.getAttribute("ts_q3").setValue(0);
+                            }
+                            if (form.getAttribute("ts_q4").getValue() == null) {
+                                form.getAttribute("ts_q4").setValue(0);
+                            }
+                            return [2 /*return*/];
+                    }
+                });
+            });
         }
         SuggestedInspection.onLoad = onLoad;
         function operationTypeOnChange(eContext) {
-            var form = eContext.getFormContext();
-            var operationTypeValue = form.getAttribute("ts_operationtype").getValue();
-            if (operationTypeValue == null) {
-                //Clear and lock all dependent fields
-                form.getAttribute("ts_stakeholder").setValue(null);
-                form.getAttribute("ts_site").setValue(null);
-                form.getAttribute("ts_operation").setValue(null);
-                form.getAttribute("ts_activitytype").setValue(null);
-                form.getAttribute("ts_riskthreshold").setValue(null);
-                form.getControl("ts_stakeholder").setDisabled(true);
-                form.getControl("ts_site").setDisabled(true);
-                form.getControl("ts_operation").setDisabled(true);
-                form.getControl("ts_activitytype").setDisabled(true);
-                form.getControl("ts_riskthreshold").setDisabled(true);
-                setOperationTypeFilteredView(form);
-            }
-            else {
-                //Unlock next field
-                form.getControl("ts_stakeholder").setDisabled(false);
-                setStakeholderFilteredView(form);
-            }
+            return __awaiter(this, void 0, void 0, function () {
+                var form, operationTypeValue;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            form = eContext.getFormContext();
+                            operationTypeValue = form.getAttribute("ts_operationtype").getValue();
+                            if (!(operationTypeValue == null)) return [3 /*break*/, 2];
+                            //Clear and lock all dependent fields
+                            form.getAttribute("ts_stakeholder").setValue(null);
+                            form.getAttribute("ts_site").setValue(null);
+                            form.getAttribute("ts_operation").setValue(null);
+                            form.getAttribute("ts_activitytype").setValue(null);
+                            form.getAttribute("ts_riskthreshold").setValue(null);
+                            form.getControl("ts_stakeholder").setDisabled(true);
+                            form.getControl("ts_site").setDisabled(true);
+                            form.getControl("ts_operation").setDisabled(true);
+                            form.getControl("ts_activitytype").setDisabled(true);
+                            form.getControl("ts_riskthreshold").setDisabled(true);
+                            return [4 /*yield*/, setOperationTypeFilteredView(form)];
+                        case 1:
+                            _a.sent();
+                            return [3 /*break*/, 3];
+                        case 2:
+                            //Unlock next field
+                            form.getControl("ts_stakeholder").setDisabled(false);
+                            setStakeholderFilteredView(form);
+                            _a.label = 3;
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            });
         }
         SuggestedInspection.operationTypeOnChange = operationTypeOnChange;
         function stakeholderOnChange(eContext) {
-            var form = eContext.getFormContext();
-            var stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
-            if (stakeholderValue == null) {
-                //Clear and lock all dependent fields
-                form.getAttribute("ts_site").setValue(null);
-                form.getAttribute("ts_operation").setValue(null);
-                form.getAttribute("ts_activitytype").setValue(null);
-                form.getAttribute("ts_riskthreshold").setValue(null);
-                form.getControl("ts_site").setDisabled(true);
-                form.getControl("ts_operation").setDisabled(true);
-                form.getControl("ts_activitytype").setDisabled(true);
-                form.getControl("ts_riskthreshold").setDisabled(true);
-                setOperationTypeFilteredView(form);
-                setStakeholderFilteredView(form);
-            }
-            else {
-                //Unlock next field
-                form.getControl("ts_site").setDisabled(false);
-                setSiteFilteredView(form);
-            }
+            return __awaiter(this, void 0, void 0, function () {
+                var form, stakeholderValue;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            form = eContext.getFormContext();
+                            stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
+                            if (!(stakeholderValue == null)) return [3 /*break*/, 2];
+                            //Clear and lock all dependent fields
+                            form.getAttribute("ts_site").setValue(null);
+                            form.getAttribute("ts_operation").setValue(null);
+                            form.getAttribute("ts_activitytype").setValue(null);
+                            form.getAttribute("ts_riskthreshold").setValue(null);
+                            form.getControl("ts_site").setDisabled(true);
+                            form.getControl("ts_operation").setDisabled(true);
+                            form.getControl("ts_activitytype").setDisabled(true);
+                            form.getControl("ts_riskthreshold").setDisabled(true);
+                            return [4 /*yield*/, setOperationTypeFilteredView(form)];
+                        case 1:
+                            _a.sent();
+                            setStakeholderFilteredView(form);
+                            return [3 /*break*/, 3];
+                        case 2:
+                            //Unlock next field
+                            form.getControl("ts_site").setDisabled(false);
+                            setSiteFilteredView(form);
+                            _a.label = 3;
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            });
         }
         SuggestedInspection.stakeholderOnChange = stakeholderOnChange;
         function siteOnChange(eContext) {
@@ -232,38 +265,61 @@ var ROM;
         }
         SuggestedInspection.activityTypeOnChange = activityTypeOnChange;
         function setOperationTypeFilteredView(form) {
-            var viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE99}';
-            var entityName = "ovs_operationtype";
-            //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
-            var viewDisplayName = "Operation Types";
-            //Active Operation Types with Inspection Incident Types that belong to ISSO
-            var fetchXml = [
-                "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>",
-                "  <entity name='ovs_operationtype'>",
-                "    <attribute name='createdon'/>",
-                "    <attribute name='ovs_name'/>",
-                "    <attribute name='ovs_operationtypeid'/>",
-                "    <filter>",
-                "      <condition attribute='statecode' operator='eq' value='0'/>",
-                "    </filter>",
-                "    <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit' alias='businessunit'>",
-                "      <filter>",
-                "        <condition attribute='name' operator='begins-with' value='Intermodal'/>",
-                "      </filter>",
-                "    </link-entity>",
-                "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
-                "      <link-entity name='msdyn_incidenttype' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' alias='incidenttype'>",
-                "        <filter>",
-                "          <condition attribute='msdyn_defaultworkordertype' operator='eq' value='b1ee680a-7cf7-ea11-a815-000d3af3a7a7'/>",
-                "          <condition attribute='statecode' operator='eq' value='0'/>",
-                "        </filter>",
-                "      </link-entity>",
-                "    </link-entity>",
-                "  </entity>",
-                "</fetch>"
-            ].join("");
-            var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
-            form.getControl("ts_operationtype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+            return __awaiter(this, void 0, void 0, function () {
+                var viewId, entityName, viewDisplayName, issoBUGUIDs, issoBUFilterConditions, i, fetchXml, layoutXml;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE99}';
+                            entityName = "ovs_operationtype";
+                            viewDisplayName = "Operation Types";
+                            return [4 /*yield*/, getISSOBUGUIDs()];
+                        case 1:
+                            issoBUGUIDs = _a.sent();
+                            issoBUFilterConditions = '';
+                            if (issoBUGUIDs.length > 0) {
+                                if (issoBUGUIDs.length === 1) {
+                                    issoBUFilterConditions = "<condition attribute=\"businessunitid\" operator=\"eq\" value=\"" + issoBUGUIDs[0] + "\"/>";
+                                }
+                                else {
+                                    issoBUFilterConditions = '<filter type="or">';
+                                    for (i = 0; i < issoBUGUIDs.length; i++) {
+                                        issoBUFilterConditions += "<condition attribute=\"businessunitid\" operator=\"eq\" value=\"" + issoBUGUIDs[i] + "\"/>";
+                                    }
+                                    issoBUFilterConditions += '</filter>';
+                                }
+                            }
+                            fetchXml = [
+                                "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>",
+                                "  <entity name='ovs_operationtype'>",
+                                "    <attribute name='createdon'/>",
+                                "    <attribute name='ovs_name'/>",
+                                "    <attribute name='ovs_operationtypeid'/>",
+                                "    <filter>",
+                                "      <condition attribute='statecode' operator='eq' value='0'/>",
+                                "    </filter>",
+                                "    <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit' alias='businessunit'>",
+                                "      <filter>",
+                                "        ", issoBUFilterConditions, "",
+                                "      </filter>",
+                                "    </link-entity>",
+                                "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",
+                                "      <link-entity name='msdyn_incidenttype' from='msdyn_incidenttypeid' to='msdyn_incidenttypeid' alias='incidenttype'>",
+                                "        <filter>",
+                                "          <condition attribute='msdyn_defaultworkordertype' operator='eq' value='b1ee680a-7cf7-ea11-a815-000d3af3a7a7'/>",
+                                "          <condition attribute='statecode' operator='eq' value='0'/>",
+                                "        </filter>",
+                                "      </link-entity>",
+                                "    </link-entity>",
+                                "  </entity>",
+                                "</fetch>"
+                            ].join("");
+                            layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
+                            form.getControl("ts_operationtype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                            return [2 /*return*/];
+                    }
+                });
+            });
         }
         function setStakeholderFilteredView(form) {
             var operationTypeValue = form.getAttribute("ts_operationtype").getValue();

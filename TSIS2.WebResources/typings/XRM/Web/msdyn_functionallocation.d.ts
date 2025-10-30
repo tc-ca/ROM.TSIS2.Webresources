@@ -52,6 +52,7 @@ interface msdyn_FunctionalLocation_Relationships {
   msdyn_functionallocation_Appointments?: Appointment_Result[] | null;
   msdyn_functionallocation_Emails?: Email_Result[] | null;
   msdyn_functionallocation_PostFollows?: PostFollow_Result[] | null;
+  msdyn_functionallocation_Posts?: Post_Result[] | null;
   msdyn_functionallocation_ServiceAppointments?: ServiceAppointment_Result[] | null;
   msdyn_functionallocation_connections1?: Connection_Result[] | null;
   msdyn_functionallocation_connections2?: Connection_Result[] | null;
@@ -62,6 +63,8 @@ interface msdyn_FunctionalLocation_Relationships {
   ovs_Finding_functionallocation_msdyn_Func?: ovs_Finding_Result[] | null;
   ts_AccountableTeam?: Team_Result | null;
   ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation?: ts_EntityRisk_Result[] | null;
+  ts_File_Site_msdyn_FunctionalLocation?: ts_File_Result[] | null;
+  ts_Files_msdyn_FunctionalLocations?: ts_File_Result[] | null;
   ts_entityriskfrequency_Site_msdyn_functionallocation?: ts_EntityRiskFrequency_Result[] | null;
   ts_functionallocation_workorder_arrivalaerodrome?: msdyn_workorder_Result[] | null;
   ts_functionallocation_workorder_departureaerodrome?: msdyn_workorder_Result[] | null;
@@ -88,6 +91,9 @@ interface msdyn_FunctionalLocation_Relationships {
   ts_ts_operationactivity_Site_msdyn_functiona?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_Site_msdyn_functionalloca?: ts_PlanningData_Result[] | null;
   ts_ts_securityincident_DiversionAerodrome_ms?: ts_securityincident_Result[] | null;
+  ts_unplannedworkorder_functionallocation_msdyn_functionallocation?: ts_unplannedworkorder_Result[] | null;
+  ts_unplannedworkorder_site_msdyn_functionallocation?: ts_unplannedworkorder_Result[] | null;
+  ts_unplannedworkorder_subsubsite_msdyn_functionallocation?: ts_unplannedworkorder_Result[] | null;
   ts_workorderservicetaskworkspace_AOCSite_msdyn_functionallocation?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
   ts_workorderservicetaskworkspace_Destination_msdyn_functionallocation?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
   ts_workorderservicetaskworkspace_Origin_msdyn_functionallocation?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
@@ -251,6 +257,7 @@ interface msdyn_FunctionalLocation_Expand {
   msdyn_functionallocation_Appointments: WebExpand<msdyn_FunctionalLocation_Expand, Appointment_Select, Appointment_Filter, { msdyn_functionallocation_Appointments: Appointment_Result[] }>;
   msdyn_functionallocation_Emails: WebExpand<msdyn_FunctionalLocation_Expand, Email_Select, Email_Filter, { msdyn_functionallocation_Emails: Email_Result[] }>;
   msdyn_functionallocation_PostFollows: WebExpand<msdyn_FunctionalLocation_Expand, PostFollow_Select, PostFollow_Filter, { msdyn_functionallocation_PostFollows: PostFollow_Result[] }>;
+  msdyn_functionallocation_Posts: WebExpand<msdyn_FunctionalLocation_Expand, Post_Select, Post_Filter, { msdyn_functionallocation_Posts: Post_Result[] }>;
   msdyn_functionallocation_ServiceAppointments: WebExpand<msdyn_FunctionalLocation_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { msdyn_functionallocation_ServiceAppointments: ServiceAppointment_Result[] }>;
   msdyn_functionallocation_connections1: WebExpand<msdyn_FunctionalLocation_Expand, Connection_Select, Connection_Filter, { msdyn_functionallocation_connections1: Connection_Result[] }>;
   msdyn_functionallocation_connections2: WebExpand<msdyn_FunctionalLocation_Expand, Connection_Select, Connection_Filter, { msdyn_functionallocation_connections2: Connection_Result[] }>;
@@ -260,10 +267,13 @@ interface msdyn_FunctionalLocation_Expand {
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: msdyn_workorder_Result[] }>;
   ovs_Finding_functionallocation_msdyn_Func: WebExpand<msdyn_FunctionalLocation_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ovs_Finding_functionallocation_msdyn_Func: ovs_Finding_Result[] }>;
   ownerid: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningbusinessunit: WebExpand<msdyn_FunctionalLocation_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<msdyn_FunctionalLocation_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_FunctionalLocation_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_AccountableTeam: WebExpand<msdyn_FunctionalLocation_Expand, Team_Select, Team_Filter, { ts_AccountableTeam: Team_Result }>;
   ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: ts_EntityRisk_Result[] }>;
+  ts_File_Site_msdyn_FunctionalLocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_File_Select, ts_File_Filter, { ts_File_Site_msdyn_FunctionalLocation: ts_File_Result[] }>;
+  ts_Files_msdyn_FunctionalLocations: WebExpand<msdyn_FunctionalLocation_Expand, ts_File_Select, ts_File_Filter, { ts_Files_msdyn_FunctionalLocations: ts_File_Result[] }>;
   ts_entityriskfrequency_Site_msdyn_functionallocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { ts_entityriskfrequency_Site_msdyn_functionallocation: ts_EntityRiskFrequency_Result[] }>;
   ts_functionallocation_workorder_arrivalaerodrome: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_functionallocation_workorder_arrivalaerodrome: msdyn_workorder_Result[] }>;
   ts_functionallocation_workorder_departureaerodrome: WebExpand<msdyn_FunctionalLocation_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_functionallocation_workorder_departureaerodrome: msdyn_workorder_Result[] }>;
@@ -290,6 +300,9 @@ interface msdyn_FunctionalLocation_Expand {
   ts_ts_operationactivity_Site_msdyn_functiona: WebExpand<msdyn_FunctionalLocation_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Site_msdyn_functiona: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_Site_msdyn_functionalloca: WebExpand<msdyn_FunctionalLocation_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Site_msdyn_functionalloca: ts_PlanningData_Result[] }>;
   ts_ts_securityincident_DiversionAerodrome_ms: WebExpand<msdyn_FunctionalLocation_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_ts_securityincident_DiversionAerodrome_ms: ts_securityincident_Result[] }>;
+  ts_unplannedworkorder_functionallocation_msdyn_functionallocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_functionallocation_msdyn_functionallocation: ts_unplannedworkorder_Result[] }>;
+  ts_unplannedworkorder_site_msdyn_functionallocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_site_msdyn_functionallocation: ts_unplannedworkorder_Result[] }>;
+  ts_unplannedworkorder_subsubsite_msdyn_functionallocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_subsubsite_msdyn_functionallocation: ts_unplannedworkorder_Result[] }>;
   ts_workorderservicetaskworkspace_AOCSite_msdyn_functionallocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_workorderservicetaskworkspace_AOCSite_msdyn_functionallocation: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
   ts_workorderservicetaskworkspace_Destination_msdyn_functionallocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_workorderservicetaskworkspace_Destination_msdyn_functionallocation: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
   ts_workorderservicetaskworkspace_Origin_msdyn_functionallocation: WebExpand<msdyn_FunctionalLocation_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_workorderservicetaskworkspace_Origin_msdyn_functionallocation: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
@@ -353,6 +366,7 @@ interface msdyn_FunctionalLocation_RelatedOne {
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_ParentFunctionalLocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_AccountableTeam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
@@ -363,6 +377,7 @@ interface msdyn_FunctionalLocation_RelatedMany {
   msdyn_functionallocation_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   msdyn_functionallocation_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   msdyn_functionallocation_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
+  msdyn_functionallocation_Posts: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   msdyn_functionallocation_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   msdyn_functionallocation_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   msdyn_functionallocation_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
@@ -372,6 +387,8 @@ interface msdyn_FunctionalLocation_RelatedMany {
   msdyn_msdyn_functionallocation_msdyn_workorder_FunctionalLocation: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ovs_Finding_functionallocation_msdyn_Func: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_EntityRisk_msdyn_FunctionalLocation_msdyn_FunctionalLocation: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
+  ts_File_Site_msdyn_FunctionalLocation: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
+  ts_Files_msdyn_FunctionalLocations: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_entityriskfrequency_Site_msdyn_functionallocation: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
   ts_functionallocation_workorder_arrivalaerodrome: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_functionallocation_workorder_departureaerodrome: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
@@ -398,6 +415,9 @@ interface msdyn_FunctionalLocation_RelatedMany {
   ts_ts_operationactivity_Site_msdyn_functiona: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_Site_msdyn_functionalloca: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_ts_securityincident_DiversionAerodrome_ms: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
+  ts_unplannedworkorder_functionallocation_msdyn_functionallocation: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
+  ts_unplannedworkorder_site_msdyn_functionallocation: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
+  ts_unplannedworkorder_subsubsite_msdyn_functionallocation: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
   ts_workorderservicetaskworkspace_AOCSite_msdyn_functionallocation: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
   ts_workorderservicetaskworkspace_Destination_msdyn_functionallocation: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
   ts_workorderservicetaskworkspace_Origin_msdyn_functionallocation: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;

@@ -22,6 +22,7 @@ interface PostFollow_Relationships {
   regardingobjectid_ts_action?: ts_action_Result | null;
   regardingobjectid_ts_securityincident?: ts_securityincident_Result | null;
   regardingobjectid_ts_teamplanningdata?: ts_TeamPlanningData_Result | null;
+  regardingobjectid_ts_unplannedworkorder?: ts_unplannedworkorder_Result | null;
 }
 interface PostFollow extends PostFollow_Base, PostFollow_Relationships {
 }
@@ -96,6 +97,7 @@ interface PostFollow_Expand {
   createdby: WebExpand<PostFollow_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
   createdonbehalfby: WebExpand<PostFollow_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
   ownerid: WebExpand<PostFollow_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningbusinessunit: WebExpand<PostFollow_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<PostFollow_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<PostFollow_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   regardingobjectid_account: WebExpand<PostFollow_Expand, Account_Select, Account_Filter, { regardingobjectid_account: Account_Result }>;
@@ -110,6 +112,7 @@ interface PostFollow_Expand {
   regardingobjectid_ts_action: WebExpand<PostFollow_Expand, ts_action_Select, ts_action_Filter, { regardingobjectid_ts_action: ts_action_Result }>;
   regardingobjectid_ts_securityincident: WebExpand<PostFollow_Expand, ts_securityincident_Select, ts_securityincident_Filter, { regardingobjectid_ts_securityincident: ts_securityincident_Result }>;
   regardingobjectid_ts_teamplanningdata: WebExpand<PostFollow_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata: ts_TeamPlanningData_Result }>;
+  regardingobjectid_ts_unplannedworkorder: WebExpand<PostFollow_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { regardingobjectid_ts_unplannedworkorder: ts_unplannedworkorder_Result }>;
 }
 interface PostFollow_FormattedResult {
   createdby_formatted?: string;
@@ -136,6 +139,7 @@ interface PostFollow_RelatedOne {
   createdby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   createdonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   regardingobjectid_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
@@ -150,6 +154,7 @@ interface PostFollow_RelatedOne {
   regardingobjectid_ts_action: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   regardingobjectid_ts_securityincident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   regardingobjectid_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
+  regardingobjectid_ts_unplannedworkorder: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface PostFollow_RelatedMany {
 }
