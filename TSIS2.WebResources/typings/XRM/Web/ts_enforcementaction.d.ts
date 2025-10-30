@@ -60,6 +60,7 @@ interface ts_enforcementaction_Relationships {
   modifiedonbehalfby_ts_enforcementaction?: SystemUser_Result | null;
   ownerid_ts_enforcementaction?: Team_Result | null;
   ownerid_ts_enforcementaction1?: SystemUser_Result | null;
+  owningbusinessunit_ts_enforcementaction?: BusinessUnit_Result | null;
   owningteam_ts_enforcementaction?: Team_Result | null;
   owninguser_ts_enforcementaction?: SystemUser_Result | null;
   regardingobjectid_account_ts_enforcementaction?: Account_Result | null;
@@ -76,6 +77,7 @@ interface ts_enforcementaction_Relationships {
   regardingobjectid_ts_site_ts_enforcementaction?: ts_site_Result | null;
   regardingobjectid_ts_teamplanningdata_ts_enforcementaction?: ts_TeamPlanningData_Result | null;
   regardingobjectid_ts_trip_ts_enforcementaction?: ts_trip_Result | null;
+  regardingobjectid_ts_unplannedworkorder_ts_enforcementaction?: ts_unplannedworkorder_Result | null;
   ts_Incident_ts_enforcementaction?: Incident_Result | null;
   ts_Individualcompany_ts_enforcementaction?: Account_Result | null;
   ts_Verbalwarninggivento_ts_enforcementaction?: Contact_Result | null;
@@ -378,6 +380,7 @@ interface ts_enforcementaction_Expand {
   modifiedby_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby_ts_enforcementaction: SystemUser_Result }>;
   modifiedonbehalfby_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_ts_enforcementaction: SystemUser_Result }>;
   ownerid_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid_ts_enforcementaction: SystemUser_Result } & { ownerid_ts_enforcementaction: Team_Result }>;
+  owningbusinessunit_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit_ts_enforcementaction: BusinessUnit_Result }>;
   owningteam_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, Team_Select, Team_Filter, { owningteam_ts_enforcementaction: Team_Result }>;
   owninguser_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_ts_enforcementaction: SystemUser_Result }>;
   regardingobjectid_account_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, Account_Select, Account_Filter, { regardingobjectid_account_ts_enforcementaction: Account_Result }>;
@@ -394,6 +397,7 @@ interface ts_enforcementaction_Expand {
   regardingobjectid_ts_site_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, ts_site_Select, ts_site_Filter, { regardingobjectid_ts_site_ts_enforcementaction: ts_site_Result }>;
   regardingobjectid_ts_teamplanningdata_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata_ts_enforcementaction: ts_TeamPlanningData_Result }>;
   regardingobjectid_ts_trip_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, ts_trip_Select, ts_trip_Filter, { regardingobjectid_ts_trip_ts_enforcementaction: ts_trip_Result }>;
+  regardingobjectid_ts_unplannedworkorder_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { regardingobjectid_ts_unplannedworkorder_ts_enforcementaction: ts_unplannedworkorder_Result }>;
   ts_Incident_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, Incident_Select, Incident_Filter, { ts_Incident_ts_enforcementaction: Incident_Result }>;
   ts_Individualcompany_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, Account_Select, Account_Filter, { ts_Individualcompany_ts_enforcementaction: Account_Result }>;
   ts_Verbalwarninggivento_ts_enforcementaction: WebExpand<ts_enforcementaction_Expand, Contact_Select, Contact_Filter, { ts_Verbalwarninggivento_ts_enforcementaction: Contact_Result }>;
@@ -495,6 +499,7 @@ interface ts_enforcementaction_RelatedOne {
   modifiedonbehalfby_ts_enforcementaction: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid_ts_enforcementaction: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ownerid_ts_enforcementaction1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owningbusinessunit_ts_enforcementaction: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam_ts_enforcementaction: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser_ts_enforcementaction: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   regardingobjectid_account_ts_enforcementaction: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
@@ -511,6 +516,7 @@ interface ts_enforcementaction_RelatedOne {
   regardingobjectid_ts_site_ts_enforcementaction: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   regardingobjectid_ts_teamplanningdata_ts_enforcementaction: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   regardingobjectid_ts_trip_ts_enforcementaction: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
+  regardingobjectid_ts_unplannedworkorder_ts_enforcementaction: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
   ts_Incident_ts_enforcementaction: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_Individualcompany_ts_enforcementaction: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ts_Verbalwarninggivento_ts_enforcementaction: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;

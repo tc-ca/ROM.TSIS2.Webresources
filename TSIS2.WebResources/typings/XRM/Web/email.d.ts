@@ -102,6 +102,7 @@ interface Email_Relationships {
   modifiedonbehalfby_email?: SystemUser_Result | null;
   ownerid_email?: Team_Result | null;
   ownerid_email1?: SystemUser_Result | null;
+  owningbusinessunit_email?: BusinessUnit_Result | null;
   owningteam_email?: Team_Result | null;
   owninguser_email?: SystemUser_Result | null;
   regardingobjectid_account_email?: Account_Result | null;
@@ -118,6 +119,7 @@ interface Email_Relationships {
   regardingobjectid_ts_site_email?: ts_site_Result | null;
   regardingobjectid_ts_teamplanningdata_email?: ts_TeamPlanningData_Result | null;
   regardingobjectid_ts_trip_email?: ts_trip_Result | null;
+  regardingobjectid_ts_unplannedworkorder_email?: ts_unplannedworkorder_Result | null;
 }
 interface Email extends Email_Base, Email_Relationships {
   SensitivityLabelId_Email_bind$sensitivitylabels?: string | null;
@@ -490,6 +492,7 @@ interface Email_Expand {
   modifiedby_email: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby_email: SystemUser_Result }>;
   modifiedonbehalfby_email: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_email: SystemUser_Result }>;
   ownerid_email: WebExpand<Email_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid_email: SystemUser_Result } & { ownerid_email: Team_Result }>;
+  owningbusinessunit_email: WebExpand<Email_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit_email: BusinessUnit_Result }>;
   owningteam_email: WebExpand<Email_Expand, Team_Select, Team_Filter, { owningteam_email: Team_Result }>;
   owninguser_email: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_email: SystemUser_Result }>;
   parentactivityid: WebExpand<Email_Expand, Email_Select, Email_Filter, { parentactivityid: Email_Result }>;
@@ -507,6 +510,7 @@ interface Email_Expand {
   regardingobjectid_ts_site_email: WebExpand<Email_Expand, ts_site_Select, ts_site_Filter, { regardingobjectid_ts_site_email: ts_site_Result }>;
   regardingobjectid_ts_teamplanningdata_email: WebExpand<Email_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata_email: ts_TeamPlanningData_Result }>;
   regardingobjectid_ts_trip_email: WebExpand<Email_Expand, ts_trip_Select, ts_trip_Filter, { regardingobjectid_ts_trip_email: ts_trip_Result }>;
+  regardingobjectid_ts_unplannedworkorder_email: WebExpand<Email_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { regardingobjectid_ts_unplannedworkorder_email: ts_unplannedworkorder_Result }>;
   sendersaccount: WebExpand<Email_Expand, Account_Select, Account_Filter, { sendersaccount: Account_Result }>;
 }
 interface Email_FormattedResult {
@@ -606,6 +610,7 @@ interface Email_RelatedOne {
   modifiedonbehalfby_email: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid_email: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ownerid_email1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owningbusinessunit_email: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam_email: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser_email: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   parentactivityid: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
@@ -623,6 +628,7 @@ interface Email_RelatedOne {
   regardingobjectid_ts_site_email: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   regardingobjectid_ts_teamplanningdata_email: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   regardingobjectid_ts_trip_email: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
+  regardingobjectid_ts_unplannedworkorder_email: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
   sendersaccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface Email_RelatedMany {

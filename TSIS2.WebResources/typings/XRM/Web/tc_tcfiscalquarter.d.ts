@@ -29,6 +29,7 @@ interface tc_TCFiscalQuarter_Relationships {
   ts_ts_operationactivity_DueDate_tc_tcfiscalq?: ts_OperationActivity_Result[] | null;
   ts_ts_operationactivity_LastCompletedWO_tc_t?: ts_OperationActivity_Result[] | null;
   ts_ts_operationactivity_NextPlannedWO_tc_tcf?: ts_OperationActivity_Result[] | null;
+  ts_unplannedworkorder_revisedquarterid_tc_tcfiscalquarter?: ts_unplannedworkorder_Result[] | null;
 }
 interface tc_TCFiscalQuarter extends tc_TCFiscalQuarter_Base, tc_TCFiscalQuarter_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -108,6 +109,7 @@ interface tc_TCFiscalQuarter_Expand {
   ovs_msdyn_workorder_FiscalQuarter_tc_TCFiscal: WebExpand<tc_TCFiscalQuarter_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_msdyn_workorder_FiscalQuarter_tc_TCFiscal: msdyn_workorder_Result[] }>;
   ovs_tc_tcfiscalquarter_msdyn_workorder: WebExpand<tc_TCFiscalQuarter_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_tc_tcfiscalquarter_msdyn_workorder: msdyn_workorder_Result[] }>;
   ownerid: WebExpand<tc_TCFiscalQuarter_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningbusinessunit: WebExpand<tc_TCFiscalQuarter_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<tc_TCFiscalQuarter_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<tc_TCFiscalQuarter_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   tc_TCFiscalYearId: WebExpand<tc_TCFiscalQuarter_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { tc_TCFiscalYearId: tc_TCFiscalYear_Result }>;
@@ -115,6 +117,7 @@ interface tc_TCFiscalQuarter_Expand {
   ts_ts_operationactivity_DueDate_tc_tcfiscalq: WebExpand<tc_TCFiscalQuarter_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_DueDate_tc_tcfiscalq: ts_OperationActivity_Result[] }>;
   ts_ts_operationactivity_LastCompletedWO_tc_t: WebExpand<tc_TCFiscalQuarter_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_LastCompletedWO_tc_t: ts_OperationActivity_Result[] }>;
   ts_ts_operationactivity_NextPlannedWO_tc_tcf: WebExpand<tc_TCFiscalQuarter_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_NextPlannedWO_tc_tcf: ts_OperationActivity_Result[] }>;
+  ts_unplannedworkorder_revisedquarterid_tc_tcfiscalquarter: WebExpand<tc_TCFiscalQuarter_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_revisedquarterid_tc_tcfiscalquarter: ts_unplannedworkorder_Result[] }>;
 }
 interface tc_TCFiscalQuarter_FormattedResult {
   createdby_formatted?: string;
@@ -152,6 +155,7 @@ interface tc_TCFiscalQuarter_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   tc_TCFiscalYearId: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
@@ -166,6 +170,7 @@ interface tc_TCFiscalQuarter_RelatedMany {
   ts_ts_operationactivity_DueDate_tc_tcfiscalq: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_operationactivity_LastCompletedWO_tc_t: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_operationactivity_NextPlannedWO_tc_tcf: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
+  ts_unplannedworkorder_revisedquarterid_tc_tcfiscalquarter: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   tc_tcfiscalquarters: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
