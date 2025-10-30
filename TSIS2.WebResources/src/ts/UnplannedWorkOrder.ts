@@ -6,6 +6,7 @@ namespace ROM.UnplannedWorkOrder {
     var currentStatus;
     var scheduledQuarterAttributeValueChanged = false;
     var isROM20Form = false;
+    var UNPLANNED_CATEGORY_ID = "47f438c7-c104-eb11-a813-000d3af3a7a7";
     // EVENTS
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
@@ -182,7 +183,7 @@ namespace ROM.UnplannedWorkOrder {
                 } else {
                     var lookup = new Array();
                     lookup[0] = new Object();
-                    lookup[0].id = "{47F438C7-C104-EB11-A813-000D3AF3A7A7}"
+                    lookup[0].id = `{${UNPLANNED_CATEGORY_ID}}`;
                     lookup[0].name = "Unplanned";
                     lookup[0].entityType = "ovs_tyrational";
                     form.getAttribute("ts_rational").setValue(lookup); //Unplanned
@@ -393,6 +394,8 @@ namespace ROM.UnplannedWorkOrder {
 
       //  unlockRecordLogFieldsIfUserIsSystemAdmin(form);
         RemoveOptionCancel(eContext);
+
+        showRationaleField(form, UNPLANNED_CATEGORY_ID);
     }
     function restrictEditRightReportDetails(executionContext, subgridAdditionalInspectors) {
         //Process Additional Inspectors Subgrid
@@ -2563,6 +2566,115 @@ namespace ROM.UnplannedWorkOrder {
         ].join("");
 
         return Xrm.WebApi.retrieveMultipleRecords("team", "?fetchXml=" + encodeURIComponent(fetchXml));
+    }
+
+    /**
+    * Handler for the OnChange event of the Rationale lookup.
+    *
+    * @param {Xrm.ExecutionContext<any, any>} eContext The execution context passed by the form.
+    *
+    * @returns {void}
+    */
+    export function rationaleOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
+
+        showWorkOrderJustificationField(form);
+    }
+
+    /**
+      * Shows and makes required the Rationale lookup control when a Category indicates "Unplanned".
+      *
+      * @param {Form.msdyn_workorder.Main.ROMOversightActivity} form The Work Order form context (ROM Oversight Activity).
+      * @param {string} unplannedCategoryGUID GUID for the "Unplanned" category.
+      *
+      * @returns {void}
+      */
+    function showRationaleField(form: Form.ts_unplannedworkorder.Main.Information, unplannedCategoryGUID: string): void {
+        const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+        const categoryAttribute = form.getAttribute("ts_rational");
+        if (!categoryAttribute) {
+            return;
+        }
+
+        const categoryValue = categoryAttribute.getValue();
+
+        let show = false;
+
+        if (Array.isArray(categoryValue) && categoryValue.length > 0) {
+            const item = categoryValue[0];
+            const rawId = item.id || "";
+            const id = rawId.replace(/[{}]/g, "").toLowerCase();
+
+            if (id === unplannedCategoryGUID.toLowerCase()) {
+                show = true;
+            }
+        }
+
+        const rationaleControl = form.getControl("ts_reason");
+        const rationaleAttribute = form.getAttribute("ts_reason");
+
+
+        if (rationaleControl) {
+
+            rationaleControl.setVisible(show);
+        }
+
+        if (rationaleAttribute) {
+            rationaleAttribute.setRequiredLevel(show ? "required" : "none");
+            showWorkOrderJustificationField(form);
+
+            // If hiding, clear value to avoid stale required-value mismatch
+            if (!show) {
+                rationaleAttribute.setValue(null);
+            }
+        }
+    }
+
+    /**
+     * Shows and makes required the Work Order Justification field when the current
+     * Rationale lookup value is equal to the HQ Direction GUID.
+     *
+     * @param {Form.msdyn_workorder.Main.ROMOversightActivity} form The Work Order form context (ROM Oversight Activity).
+     *
+     * @returns {void}
+     */
+    function showWorkOrderJustificationField(form: Form.ts_unplannedworkorder.Main.Information): void {
+
+        const rationaleAttribute = form.getAttribute("ts_reason");
+        if (!rationaleAttribute) {
+            return;
+        }
+
+        const rationaleValue = rationaleAttribute.getValue();
+
+        const justificationControl = form.getControl("ts_workorderjustification");
+        const justificationAttribute = form.getAttribute("ts_workorderjustification");
+
+        const HQ_DIRECTION_RATIONALE_GUID = "b323090c-1cb5-f011-bbd2-7ced8da5b15f";
+
+        let show = false;
+
+        if (Array.isArray(rationaleValue) && rationaleValue.length > 0) {
+            const item = rationaleValue[0];
+            const rawId = item.id || "";
+            const id = rawId.replace(/[{}]/g, "").toLowerCase();
+
+            if (id === HQ_DIRECTION_RATIONALE_GUID.toLowerCase()) {
+                show = true;
+            }
+        }
+
+        if (justificationControl) {
+            justificationControl.setVisible(show);
+        }
+
+        if (justificationAttribute) {
+            justificationAttribute.setRequiredLevel(show ? "required" : "none");
+
+            if (!show) {
+                justificationAttribute.setValue(null);
+            }
+        }
     }
 }
 
