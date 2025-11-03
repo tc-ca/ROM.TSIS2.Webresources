@@ -390,7 +390,6 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
 
     const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
     const currentWorkOrderRecordOwnerId = Xrm.Page.ui.formContext.getAttribute("ownerid").getValue()[0].id;
-    const currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, '');
     const teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa";
     // Determine the incident type (fallback from msdyn_primaryincidenttype (WO) to ts_primaryincidenttype (Unplanned WO))
     let incidentTypeId = null;
