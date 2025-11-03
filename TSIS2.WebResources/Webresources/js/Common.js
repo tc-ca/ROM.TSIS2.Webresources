@@ -279,4 +279,74 @@ function isUserInTeam(userId, teamId) {
                 reject(err);
             });
     });
+
 }
+
+/**
+* Get the value of an environment variable
+* @param {string} variableName - Schema name of the environment variable
+* @param {function} callback - Function to call with the value
+*/
+function getEnvironmentVariableByName(variableName, callback) {
+    var fetchXML = `
+        <fetch top="1">
+            <entity name="environmentvariablevalue">
+                <attribute name="value" />
+                <link-entity name="environmentvariabledefinition" 
+                             to="environmentvariabledefinitionid" 
+                             from="environmentvariabledefinitionid" 
+                             alias="definition">
+                    <filter>
+                        <condition attribute="schemaname" operator="eq" value="${variableName}" />
+                    </filter>
+                </link-entity>
+            </entity>
+        </fetch>
+    `;
+
+    var encodedFetchXml = encodeURIComponent(fetchXML);
+
+    Xrm.WebApi.retrieveMultipleRecords("environmentvariablevalue", "?fetchXml=" + encodedFetchXml)
+        .then(function (result) {
+            if (result.entities.length > 0 && result.entities[0].value !== undefined) {
+                callback(result.entities[0].value);
+            } else {
+                console.warn(`Environment variable '${variableName}' not found or has no value.`);
+                callback(null);
+            }
+        })
+        .catch(function (error) {
+            console.error("Error retrieving environment variable '" + variableName + "': " + error.message);
+            callback(null);
+        });
+}
+
+/**
+ * Toggle a section in a tab based on the environment variable ts_TurnoffDocumentCentre
+ * @param {Xrm.ExecutionContext} executionContext - Form execution context
+ * @param {string} tabName - Name of the tab to toggle
+ * @param {string} sectionName - Name of the section to toggle
+ */
+function toggleDocumentCenter(executionContext, tabName, sectionName) {
+    var form = executionContext.getFormContext();
+
+    getEnvironmentVariableByName("ts_TurnoffDocumentCentre", function (value) {
+        var section = form.ui.tabs.get(tabName)?.sections.get(sectionName);
+        if (!section) {
+            console.warn(`Tab or section not found: ${tabName}, ${sectionName}`);
+            return;
+        }
+
+        if (value === "yes") {
+            section.setVisible(false);
+            console.log("Turn off the Document Centre");
+        } else if (value === "no") {
+            section.setVisible(true);
+            form.getControl("WebResource_NewDocumentCenterNotice")?.setVisible(false);
+            console.log("Don't turn off the Document Centre");
+        } else {
+            console.log("Variable not found or invalid");
+        }
+    });
+}
+

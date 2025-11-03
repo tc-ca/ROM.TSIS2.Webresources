@@ -2,20 +2,6 @@ namespace ROM.FunctionalLocation {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
 
-        // get the environment variable value
-        getEnvironmentVariableByName("ts_TurnoffDocumentCentre", function (value) {
-            if (value == "yes") {
-                form.ui.tabs.get("tab_6").sections.get("tab_6_section_2").setVisible(false);
-                console.log("Turn off the Document Centre");
-            } else if (value == "no") {
-                form.ui.tabs.get("tab_6").sections.get("tab_6_section_2").setVisible(true);
-                form.getControl("WebResource_NewDocumentCenterNotice").setVisible(false);
-                console.log("Don't turn off the Document Centre");
-            } else {
-                console.log("Variable not found or invalid");
-            }
-        });
-
         const ownerAttribute = form.getAttribute("ownerid")
         if (ownerAttribute != null && ownerAttribute != undefined) {
 
@@ -333,40 +319,5 @@ namespace ROM.FunctionalLocation {
             form.getAttribute("ts_accountableteam").setRequiredLevel("none");
             form.getAttribute("ts_accountableteam").setValue(null);
         }
-    }
-
-    export function getEnvironmentVariableByName(variableName: string, callback: (value: string | null) => void): void {
-        const fetchXML = `
-        <fetch top="1">
-            <entity name="environmentvariablevalue">
-                <attribute name="value" />
-                <link-entity name="environmentvariabledefinition" 
-                             to="environmentvariabledefinitionid" 
-                             from="environmentvariabledefinitionid" 
-                             alias="definition">
-                    <filter>
-                        <condition attribute="schemaname" operator="eq" value="${variableName}" />
-                    </filter>
-                </link-entity>
-            </entity>
-        </fetch>
-    `;
-
-        const encodedFetchXml = encodeURIComponent(fetchXML);
-
-        Xrm.WebApi.retrieveMultipleRecords("environmentvariablevalue", "?fetchXml=" + encodedFetchXml)
-            .then(function (result) {
-                if (result.entities.length > 0 && result.entities[0].value !== undefined) {
-                    const raw = result.entities[0].value;
-                    callback(raw);
-                } else {
-                    console.warn(`Environment variable '${variableName}' not found or has no value.`);
-                    callback(null);
-                }
-            })
-            .catch(function (error) {
-                console.error("Error retrieving environment variable '" + variableName + "': " + error.message);
-                callback(null);
-            });
     }
 }
