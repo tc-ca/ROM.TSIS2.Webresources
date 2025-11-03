@@ -75,6 +75,14 @@ declare namespace Form.incident.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface case_document_tab extends Xrm.SectionCollectionBase {
+        get(name: "case_document_section"): Xrm.PageSection;
+        get(name: "tab_14_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface general extends Xrm.SectionCollectionBase {
         get(name: "Applicable SLA(STANDARD)"): Xrm.PageSection;
         get(name: "Details"): Xrm.PageSection;
@@ -97,14 +105,6 @@ declare namespace Form.incident.Main {
       interface tab_13 extends Xrm.SectionCollectionBase {
         get(name: "_section_349"): Xrm.PageSection;
         get(name: "tab_13_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_14 extends Xrm.SectionCollectionBase {
-        get(name: "tab_14_section_1"): Xrm.PageSection;
-        get(name: "tab_14_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -221,6 +221,7 @@ declare namespace Form.incident.Main {
       get(name: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
       get(name: "Subgrid_4"): Xrm.SubGridControl<"contact">;
       get(name: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
+      get(name: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
       get(name: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
       get(name: "blockedprofile"): Xrm.OptionSetControl<boolean>;
       get(name: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;
@@ -318,10 +319,10 @@ declare namespace Form.incident.Main {
       get(name: "FieldService"): Xrm.PageTab<Tabs.FieldService>;
       get(name: "KBARTICLE_TAB"): Xrm.PageTab<Tabs.KBARTICLE_TAB>;
       get(name: "SOCIALDETAILS_TAB"): Xrm.PageTab<Tabs.SOCIALDETAILS_TAB>;
+      get(name: "case_document_tab"): Xrm.PageTab<Tabs.case_document_tab>;
       get(name: "general"): Xrm.PageTab<Tabs.general>;
       get(name: "tab_10"): Xrm.PageTab<Tabs.tab_10>;
       get(name: "tab_13"): Xrm.PageTab<Tabs.tab_13>;
-      get(name: "tab_14"): Xrm.PageTab<Tabs.tab_14>;
       get(name: "tab_17"): Xrm.PageTab<Tabs.tab_17>;
       get(name: "tab_findings"): Xrm.PageTab<Tabs.tab_findings>;
       get(name: "tab_timetracking"): Xrm.PageTab<Tabs.tab_timetracking>;
@@ -407,6 +408,7 @@ declare namespace Form.incident.Main {
     getControl(controlName: "Subgrid_3"): Xrm.SubGridControl<"ts_file">;
     getControl(controlName: "Subgrid_4"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "Subgrid_EnforcementAction"): Xrm.SubGridControl<"ts_action">;
+    getControl(controlName: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
     getControl(controlName: "assets_tab"): Xrm.SubGridControl<"msdyn_customerasset">;
     getControl(controlName: "blockedprofile"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "caseorigincode"): Xrm.OptionSetControl<incident_caseorigincode>;

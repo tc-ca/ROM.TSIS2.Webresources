@@ -51,6 +51,14 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface functional_location_document_tab extends Xrm.SectionCollectionBase {
+        get(name: "functional_location_document_section"): Xrm.PageSection;
+        get(name: "tab_6_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface properties_tab extends Xrm.SectionCollectionBase {
         get(name: "tab_4_section_1"): Xrm.PageSection;
         get(name: string): undefined;
@@ -67,14 +75,6 @@ declare namespace Form.msdyn_functionallocation.Main {
         get(name: "tab_3_section_7"): Xrm.PageSection;
         get(name: "tab_3_section_8"): Xrm.PageSection;
         get(name: "tab_3_section_9"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_6 extends Xrm.SectionCollectionBase {
-        get(name: "tab_6_section_1"): Xrm.PageSection;
-        get(name: "tab_6_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -221,9 +221,9 @@ declare namespace Form.msdyn_functionallocation.Main {
       get(name: "NotesTab"): Xrm.PageTab<Tabs.NotesTab>;
       get(name: "Operations"): Xrm.PageTab<Tabs.Operations>;
       get(name: "Work Orders"): Xrm.PageTab<Tabs.WorkOrders>;
+      get(name: "functional_location_document_tab"): Xrm.PageTab<Tabs.functional_location_document_tab>;
       get(name: "properties_tab"): Xrm.PageTab<Tabs.properties_tab>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
-      get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_Risk"): Xrm.PageTab<Tabs.tab_Risk>;
       get(name: "tab_sitevisit"): Xrm.PageTab<Tabs.tab_sitevisit>;
       get(name: string): undefined;

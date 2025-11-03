@@ -17,9 +17,9 @@ declare namespace Form.ts_trip.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_2 extends Xrm.SectionCollectionBase {
+      interface trip_document_tab extends Xrm.SectionCollectionBase {
         get(name: "tab_2_section_1"): Xrm.PageSection;
-        get(name: "tab_2_section_2"): Xrm.PageSection;
+        get(name: "trip_document_section"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -52,6 +52,7 @@ declare namespace Form.ts_trip.Main {
       get(name: "Inspectors"): Xrm.SubGridControl<"ts_tripinspector">;
       get(name: "Subgrid_new_2"): Xrm.SubGridControl<"contact">;
       get(name: "TripFiles"): Xrm.SubGridControl<"ts_file">;
+      get(name: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
       get(name: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "modifiedby"): Xrm.LookupControl<"systemuser">;
@@ -79,7 +80,7 @@ declare namespace Form.ts_trip.Main {
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "Trip_General"): Xrm.PageTab<Tabs.Trip_General>;
       get(name: "Trip_Interations"): Xrm.PageTab<Tabs.Trip_Interations>;
-      get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
+      get(name: "trip_document_tab"): Xrm.PageTab<Tabs.trip_document_tab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -107,6 +108,7 @@ declare namespace Form.ts_trip.Main {
     getControl(controlName: "Inspectors"): Xrm.SubGridControl<"ts_tripinspector">;
     getControl(controlName: "Subgrid_new_2"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "TripFiles"): Xrm.SubGridControl<"ts_file">;
+    getControl(controlName: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
     getControl(controlName: "Work_Orders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "modifiedby"): Xrm.LookupControl<"systemuser">;

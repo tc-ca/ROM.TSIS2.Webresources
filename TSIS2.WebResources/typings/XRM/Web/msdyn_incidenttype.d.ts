@@ -87,6 +87,7 @@ interface msdyn_incidenttype_Relationships {
   ts_ts_case_InspectionType2_msdyn_incidentty?: ts_case_Result[] | null;
   ts_ts_operationactivity_Activity_msdyn_incid?: ts_OperationActivity_Result[] | null;
   ts_ts_planningdata_ActivityType_msdyn_incide?: ts_PlanningData_Result[] | null;
+  ts_unplannedworkorder_primaryincidenttype_msdyn_incidenttype?: ts_unplannedworkorder_Result[] | null;
 }
 interface msdyn_incidenttype extends msdyn_incidenttype_Base, msdyn_incidenttype_Relationships {
   msdyn_Trade_bind$msdyn_trades?: string | null;
@@ -298,6 +299,7 @@ interface msdyn_incidenttype_Expand {
   ts_ts_case_InspectionType2_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, ts_case_Select, ts_case_Filter, { ts_ts_case_InspectionType2_msdyn_incidentty: ts_case_Result[] }>;
   ts_ts_operationactivity_Activity_msdyn_incid: WebExpand<msdyn_incidenttype_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_ts_operationactivity_Activity_msdyn_incid: ts_OperationActivity_Result[] }>;
   ts_ts_planningdata_ActivityType_msdyn_incide: WebExpand<msdyn_incidenttype_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_ActivityType_msdyn_incide: ts_PlanningData_Result[] }>;
+  ts_unplannedworkorder_primaryincidenttype_msdyn_incidenttype: WebExpand<msdyn_incidenttype_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_primaryincidenttype_msdyn_incidenttype: ts_unplannedworkorder_Result[] }>;
 }
 interface msdyn_incidenttype_FormattedResult {
   createdby_formatted?: string;
@@ -367,6 +369,7 @@ interface msdyn_incidenttype_RelatedMany {
   ts_ts_case_InspectionType2_msdyn_incidentty: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   ts_ts_operationactivity_Activity_msdyn_incid: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ts_planningdata_ActivityType_msdyn_incide: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
+  ts_unplannedworkorder_primaryincidenttype_msdyn_incidenttype: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   msdyn_incidenttypes: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;

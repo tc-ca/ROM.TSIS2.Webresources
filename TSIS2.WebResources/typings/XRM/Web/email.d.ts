@@ -118,6 +118,7 @@ interface Email_Relationships {
   regardingobjectid_ts_site_email?: ts_site_Result | null;
   regardingobjectid_ts_teamplanningdata_email?: ts_TeamPlanningData_Result | null;
   regardingobjectid_ts_trip_email?: ts_trip_Result | null;
+  regardingobjectid_ts_unplannedworkorder_email?: ts_unplannedworkorder_Result | null;
 }
 interface Email extends Email_Base, Email_Relationships {
   SensitivityLabelId_Email_bind$sensitivitylabels?: string | null;
@@ -507,6 +508,7 @@ interface Email_Expand {
   regardingobjectid_ts_site_email: WebExpand<Email_Expand, ts_site_Select, ts_site_Filter, { regardingobjectid_ts_site_email: ts_site_Result }>;
   regardingobjectid_ts_teamplanningdata_email: WebExpand<Email_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { regardingobjectid_ts_teamplanningdata_email: ts_TeamPlanningData_Result }>;
   regardingobjectid_ts_trip_email: WebExpand<Email_Expand, ts_trip_Select, ts_trip_Filter, { regardingobjectid_ts_trip_email: ts_trip_Result }>;
+  regardingobjectid_ts_unplannedworkorder_email: WebExpand<Email_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { regardingobjectid_ts_unplannedworkorder_email: ts_unplannedworkorder_Result }>;
   sendersaccount: WebExpand<Email_Expand, Account_Select, Account_Filter, { sendersaccount: Account_Result }>;
 }
 interface Email_FormattedResult {
@@ -623,6 +625,7 @@ interface Email_RelatedOne {
   regardingobjectid_ts_site_email: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   regardingobjectid_ts_teamplanningdata_email: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   regardingobjectid_ts_trip_email: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
+  regardingobjectid_ts_unplannedworkorder_email: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
   sendersaccount: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface Email_RelatedMany {

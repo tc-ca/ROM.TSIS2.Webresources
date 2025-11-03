@@ -13,6 +13,14 @@ declare namespace Form.ts_securityincident.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
+      interface security_incident_document_tab extends Xrm.SectionCollectionBase {
+        get(name: "security_incident_document_section"): Xrm.PageSection;
+        get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface tab_2 extends Xrm.SectionCollectionBase {
         get(name: "tab_2_section_1"): Xrm.PageSection;
         get(name: "tab_2_section_4"): Xrm.PageSection;
@@ -23,14 +31,6 @@ declare namespace Form.ts_securityincident.Main {
       }
       interface tab_3 extends Xrm.SectionCollectionBase {
         get(name: "tab_3_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_4 extends Xrm.SectionCollectionBase {
-        get(name: "tab_4_section_1"): Xrm.PageSection;
-        get(name: "tab_4_section_2"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -156,6 +156,7 @@ declare namespace Form.ts_securityincident.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
       get(name: "Subgrid_ts_securityincidentadditionaldetails"): Xrm.SubGridControl<"ts_securityincidentadditionaldetails">;
+      get(name: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
       get(name: "WebResource_SecurityIncidentDetailsDisplay"): Xrm.WebResourceControl;
       get(name: "createdby"): Xrm.LookupControl<"systemuser">;
       get(name: "createdon"): Xrm.DateControl;
@@ -256,9 +257,9 @@ declare namespace Form.ts_securityincident.Main {
     }
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "{99b37896-4f52-4179-8296-3cc0e6722411}"): Xrm.PageTab<Tabs._99b378964f52417982963cc0e6722411>;
+      get(name: "security_incident_document_tab"): Xrm.PageTab<Tabs.security_incident_document_tab>;
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
-      get(name: "tab_4"): Xrm.PageTab<Tabs.tab_4>;
       get(name: "tab_recordlog"): Xrm.PageTab<Tabs.tab_recordlog>;
       get(name: "tab_time_tracking"): Xrm.PageTab<Tabs.tab_time_tracking>;
       get(name: "tab_ts_securityincidentadditionaldetails"): Xrm.PageTab<Tabs.tab_ts_securityincidentadditionaldetails>;
@@ -361,6 +362,7 @@ declare namespace Form.ts_securityincident.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"contact">;
     getControl(controlName: "Subgrid_ts_securityincidentadditionaldetails"): Xrm.SubGridControl<"ts_securityincidentadditionaldetails">;
+    getControl(controlName: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_SecurityIncidentDetailsDisplay"): Xrm.WebResourceControl;
     getControl(controlName: "createdby"): Xrm.LookupControl<"systemuser">;
     getControl(controlName: "createdon"): Xrm.DateControl;
