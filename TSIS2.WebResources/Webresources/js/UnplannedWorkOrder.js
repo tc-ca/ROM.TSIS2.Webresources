@@ -46,6 +46,7 @@ var ROM;
         var currentStatus;
         var scheduledQuarterAttributeValueChanged = false;
         var isROM20Form = false;
+        var UNPLANNED_CATEGORY_ID = "47f438c7-c104-eb11-a813-000d3af3a7a7";
         // EVENTS
         function onLoad(eContext) {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
@@ -57,6 +58,7 @@ var ROM;
             var headerOwnerControl = form.getControl("header_ownerid");
             var formItem = form.ui.formSelector.getCurrentItem().getId();
             isROM20Form = formItem.toLowerCase() == "a629bb8a-da93-4e58-b777-3f338a46d4d8";
+            currentSystemStatus = form.getAttribute("header_ts_recordstatus").getValue();
             //Set comment field visible if AvSec
             //Set Overtime field visible for AvSec
             var userBusinessUnitName;
@@ -66,7 +68,7 @@ var ROM;
                 "  <entity name='businessunit'>",
                 "    <attribute name='name' />",
                 "    <attribute name='businessunitid' />",
-                "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
+                "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>",
                 "      <filter>",
                 "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
                 "      </filter>",
@@ -94,6 +96,11 @@ var ROM;
                     if (isROM20Form) {
                         form.getControl("ts_overtimerequired").setVisible(false);
                     }
+                    if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */ || currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+                        if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
+                            form.getControl("header_ts_recordstatus").setDisabled(true);
+                        }
+                    }
                 }
                 //Set disabled false for quarter fields if ISSO
                 //else {
@@ -117,7 +124,6 @@ var ROM;
                 }
             });
             //Keep track of the current system status, to be used when cancelling a status change.
-            currentSystemStatus = form.getAttribute("ts_recordstatus").getValue();
             currentStatus = form.getAttribute("ts_state").getValue();
             form.getControl("ts_worklocation").removeOption(690970001); //Remove Facility Work Location Option
             //updateCaseView(eContext);
@@ -199,7 +205,7 @@ var ROM;
                     else {
                         var lookup = new Array();
                         lookup[0] = new Object();
-                        lookup[0].id = "{47F438C7-C104-EB11-A813-000D3AF3A7A7}";
+                        lookup[0].id = "{".concat(UNPLANNED_CATEGORY_ID, "}");
                         lookup[0].name = "Unplanned";
                         lookup[0].entityType = "ovs_tyrational";
                         form.getAttribute("ts_rational").setValue(lookup); //Unplanned
@@ -376,6 +382,7 @@ var ROM;
             }
             //  unlockRecordLogFieldsIfUserIsSystemAdmin(form);
             RemoveOptionCancel(eContext);
+            showRationaleField(form, UNPLANNED_CATEGORY_ID);
         }
         UnplannedWorkOrder.onLoad = onLoad;
         function restrictEditRightReportDetails(executionContext, subgridAdditionalInspectors) {
@@ -2356,6 +2363,92 @@ var ROM;
                 "</fetch>",
             ].join("");
             return Xrm.WebApi.retrieveMultipleRecords("team", "?fetchXml=" + encodeURIComponent(fetchXml));
+        }
+        /**
+        * Handler for the OnChange event of the Rationale lookup.
+        *
+        * @param {Xrm.ExecutionContext<any, any>} eContext The execution context passed by the form.
+        *
+        * @returns {void}
+        */
+        function rationaleOnChange(eContext) {
+            var form = eContext.getFormContext();
+            showWorkOrderJustificationField(form);
+        }
+        UnplannedWorkOrder.rationaleOnChange = rationaleOnChange;
+        /**
+          * Shows and makes required the Rationale lookup control when a Category indicates "Unplanned".
+          *
+          * @param {Form.msdyn_workorder.Main.ROMOversightActivity} form The Work Order form context (ROM Oversight Activity).
+          * @param {string} unplannedCategoryGUID GUID for the "Unplanned" category.
+          *
+          * @returns {void}
+          */
+        function showRationaleField(form, unplannedCategoryGUID) {
+            var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+            var categoryAttribute = form.getAttribute("ts_rational");
+            if (!categoryAttribute) {
+                return;
+            }
+            var categoryValue = categoryAttribute.getValue();
+            var show = false;
+            if (Array.isArray(categoryValue) && categoryValue.length > 0) {
+                var item = categoryValue[0];
+                var rawId = item.id || "";
+                var id = rawId.replace(/[{}]/g, "").toLowerCase();
+                if (id === unplannedCategoryGUID.toLowerCase()) {
+                    show = true;
+                }
+            }
+            var rationaleControl = form.getControl("ts_reason");
+            var rationaleAttribute = form.getAttribute("ts_reason");
+            if (rationaleControl) {
+                rationaleControl.setVisible(show);
+            }
+            if (rationaleAttribute) {
+                rationaleAttribute.setRequiredLevel(show ? "required" : "none");
+                showWorkOrderJustificationField(form);
+                // If hiding, clear value to avoid stale required-value mismatch
+                if (!show) {
+                    rationaleAttribute.setValue(null);
+                }
+            }
+        }
+        /**
+         * Shows and makes required the Work Order Justification field when the current
+         * Rationale lookup value is equal to the HQ Direction GUID.
+         *
+         * @param {Form.msdyn_workorder.Main.ROMOversightActivity} form The Work Order form context (ROM Oversight Activity).
+         *
+         * @returns {void}
+         */
+        function showWorkOrderJustificationField(form) {
+            var rationaleAttribute = form.getAttribute("ts_reason");
+            if (!rationaleAttribute) {
+                return;
+            }
+            var rationaleValue = rationaleAttribute.getValue();
+            var justificationControl = form.getControl("ts_workorderjustification");
+            var justificationAttribute = form.getAttribute("ts_workorderjustification");
+            var HQ_DIRECTION_RATIONALE_GUID = "b323090c-1cb5-f011-bbd2-7ced8da5b15f";
+            var show = false;
+            if (Array.isArray(rationaleValue) && rationaleValue.length > 0) {
+                var item = rationaleValue[0];
+                var rawId = item.id || "";
+                var id = rawId.replace(/[{}]/g, "").toLowerCase();
+                if (id === HQ_DIRECTION_RATIONALE_GUID.toLowerCase()) {
+                    show = true;
+                }
+            }
+            if (justificationControl) {
+                justificationControl.setVisible(show);
+            }
+            if (justificationAttribute) {
+                justificationAttribute.setRequiredLevel(show ? "required" : "none");
+                if (!show) {
+                    justificationAttribute.setValue(null);
+                }
+            }
         }
     })(UnplannedWorkOrder = ROM.UnplannedWorkOrder || (ROM.UnplannedWorkOrder = {}));
 })(ROM || (ROM = {}));
