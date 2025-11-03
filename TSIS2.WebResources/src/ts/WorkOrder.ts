@@ -22,6 +22,8 @@ namespace ROM.WorkOrder {
         var formItem = form.ui.formSelector.getCurrentItem().getId();
         isROM20Form = formItem.toLowerCase() == "a629bb8a-da93-4e58-b777-3f338a46d4d8";
 
+        currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
+
         //Set comment field visible if AvSec
         //Set Overtime field visible for AvSec
         let userBusinessUnitName;
@@ -61,6 +63,12 @@ namespace ROM.WorkOrder {
                 if (isROM20Form) {
                     form.getControl("ts_overtimerequired").setVisible(false);
                 }
+
+                if (currentSystemStatus == msdyn_wosystemstatus.Closed || currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
+                    if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
+                        form.getControl("msdyn_systemstatus").setDisabled(true);
+                    }
+                }
             }
             //Set disabled false for quarter fields if ISSO
             else {
@@ -86,7 +94,6 @@ namespace ROM.WorkOrder {
         });
 
         //Keep track of the current system status, to be used when cancelling a status change.
-        currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
         currentStatus = form.getAttribute("ts_state").getValue();
         form.getControl("msdyn_worklocation").removeOption(690970001);  //Remove Facility Work Location Option
         updateCaseView(eContext);
