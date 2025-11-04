@@ -1,6 +1,14 @@
 declare namespace Form.ts_action.Main {
   namespace ROMAction {
     namespace Tabs {
+      interface action_document_tab extends Xrm.SectionCollectionBase {
+        get(name: "action_document_section"): Xrm.PageSection;
+        get(name: "tab_4_section_1"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
       interface bfc785515c7f414da2bf259d45828fc9 extends Xrm.SectionCollectionBase {
         get(name: "{f4242373-e883-4dd1-bdfd-aa3a4f78c523}"): Xrm.PageSection;
         get(name: string): undefined;
@@ -17,13 +25,6 @@ declare namespace Form.ts_action.Main {
       }
       interface tab_3 extends Xrm.SectionCollectionBase {
         get(name: "tab_3_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
-      interface tab_4 extends Xrm.SectionCollectionBase {
-        get(name: "tab_4_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -52,6 +53,7 @@ declare namespace Form.ts_action.Main {
     }
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "Subgrid_new_1"): Xrm.SubGridControl<"ts_file">;
+      get(name: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "header_ts_case"): Xrm.LookupControl<"incident">;
       get(name: "notescontrol"): Xrm.BaseControl;
@@ -74,10 +76,10 @@ declare namespace Form.ts_action.Main {
       get(chooser: (item: Xrm.BaseControl, index: number) => boolean): Xrm.BaseControl[];
     }
     interface Tabs extends Xrm.TabCollectionBase {
+      get(name: "action_document_tab"): Xrm.PageTab<Tabs.action_document_tab>;
       get(name: "{bfc78551-5c7f-414d-a2bf-259d45828fc9}"): Xrm.PageTab<Tabs.bfc785515c7f414da2bf259d45828fc9>;
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
-      get(name: "tab_4"): Xrm.PageTab<Tabs.tab_4>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -101,6 +103,7 @@ declare namespace Form.ts_action.Main {
     getAttribute(attributeName: "ts_timedate"): Xrm.DateAttribute;
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "Subgrid_new_1"): Xrm.SubGridControl<"ts_file">;
+    getControl(controlName: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "header_ts_case"): Xrm.LookupControl<"incident">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;

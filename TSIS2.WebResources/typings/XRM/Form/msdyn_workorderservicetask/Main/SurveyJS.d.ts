@@ -64,14 +64,6 @@ declare namespace Form.msdyn_workorderservicetask.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_files extends Xrm.SectionCollectionBase {
-        get(name: "tab_12_section_1"): Xrm.PageSection;
-        get(name: "tab_files_section_2"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
       interface tab_questionnaire extends Xrm.SectionCollectionBase {
         get(name: "InspectionFormSection"): Xrm.PageSection;
         get(name: "QuestionnaireFormSection"): Xrm.PageSection;
@@ -86,6 +78,14 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       interface tab_summary extends Xrm.SectionCollectionBase {
         get(name: "tab_newsummary_section_1"): Xrm.PageSection;
         get(name: "tab_summary_section_accesscontrol"): Xrm.PageSection;
+        get(name: string): undefined;
+        get(): Xrm.PageSection[];
+        get(index: number): Xrm.PageSection;
+        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
+      }
+      interface work_order_service_task_document_tab extends Xrm.SectionCollectionBase {
+        get(name: "tab_12_section_1"): Xrm.PageSection;
+        get(name: "work_order_service_task_document_section"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -164,6 +164,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
       get(name: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
       get(name: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
+      get(name: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
       get(name: "WebResource_Provisions"): Xrm.WebResourceControl;
       get(name: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
       get(name: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
@@ -247,9 +248,9 @@ declare namespace Form.msdyn_workorderservicetask.Main {
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
       get(name: "tab_9"): Xrm.PageTab<Tabs.tab_9>;
       get(name: "tab_Oversight"): Xrm.PageTab<Tabs.tab_Oversight>;
-      get(name: "tab_files"): Xrm.PageTab<Tabs.tab_files>;
       get(name: "tab_questionnaire"): Xrm.PageTab<Tabs.tab_questionnaire>;
       get(name: "tab_summary"): Xrm.PageTab<Tabs.tab_summary>;
+      get(name: "work_order_service_task_document_tab"): Xrm.PageTab<Tabs.work_order_service_task_document_tab>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
@@ -323,6 +324,7 @@ declare namespace Form.msdyn_workorderservicetask.Main {
     getControl(controlName: "Provisions"): Xrm.SubGridControl<"ovs_workorderservicetaskprovision">;
     getControl(controlName: "Subgrid_Findings"): Xrm.SubGridControl<"ovs_finding">;
     getControl(controlName: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
+    getControl(controlName: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_Provisions"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_QuestionnaireRender"): Xrm.WebResourceControl;
     getControl(controlName: "footer_statecode"): Xrm.OptionSetControl<msdyn_workorderservicetask_statecode>;
