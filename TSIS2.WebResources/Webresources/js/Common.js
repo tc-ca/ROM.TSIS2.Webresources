@@ -354,14 +354,68 @@ async function isOwnedBy(ownerValue, schemaNames) {
 }
 
 async function isOwnedByAvSec(ownerValue) {
-  return isOwnedBy(ownerValue, [
-    TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC,
-    TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL,
-  ]);
+  if (!ownerValue || !ownerValue[0]) return false;
+
+  var owner = ownerValue[0];
+  var entityType = owner.entityType;
+
+  // Check if owner is a team
+  if (entityType === "team") {
+    return isOwnedBy(ownerValue, [
+      TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC,
+      TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL,
+    ]);
+  }
+
+  // Check if owner is a systemuser
+  if (entityType === "systemuser") {
+    var userId = owner.id ? owner.id.replace(/[{}]/g, "") : null;
+    if (!userId) return false;
+
+    try {
+      var user = await Xrm.WebApi.retrieveRecord("systemuser", userId, "?$select=_businessunitid_value");
+      var buId = user._businessunitid_value;
+      if (!buId) return false;
+
+      return await isAvSecBU(buId);
+    } catch (error) {
+      console.error("Error checking systemuser owner for AvSec:", error);
+      return false;
+    }
+  }
+
+  return false;
 }
 
 async function isOwnedByISSO(ownerValue) {
-  return isOwnedBy(ownerValue, [TEAM_SCHEMA_NAMES.ISSO_TEAM]);
+  if (!ownerValue || !ownerValue[0]) return false;
+
+  var owner = ownerValue[0];
+  var entityType = owner.entityType;
+
+  // Check if owner is a team
+  if (entityType === "team") {
+    return isOwnedBy(ownerValue, [TEAM_SCHEMA_NAMES.ISSO_TEAM]);
+  }
+
+  // Check if owner is a systemuser
+  if (entityType === "systemuser") {
+    var userId = owner.id ? owner.id.replace(/[{}]/g, "") : null;
+    if (!userId) return false;
+
+    try {
+      var user = await Xrm.WebApi.retrieveRecord("systemuser", userId, "?$select=_businessunitid_value");
+      var buId = user._businessunitid_value;
+      if (!buId) return false;
+
+      return await isISSOBU(buId);
+    } catch (error) {
+      console.error("Error checking systemuser owner for ISSO:", error);
+      return false;
+    }
+  }
+
+  return false;
 }
 
 // Generic function to check if a BU ID matches any of the provided environment variable schema names
