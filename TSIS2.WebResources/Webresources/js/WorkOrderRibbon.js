@@ -390,9 +390,24 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
 
     const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
     const currentWorkOrderRecordOwnerId = Xrm.Page.ui.formContext.getAttribute("ownerid").getValue()[0].id;
-    const currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, '');
     const teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa";
-    const incidentTypeId = Xrm.Page.ui.formContext.getAttribute("msdyn_primaryincidenttype").getValue()[0].id;
+    // Determine the incident type (fallback from msdyn_primaryincidenttype (WO) to ts_primaryincidenttype (Unplanned WO))
+    let incidentTypeId = null;
+    let currentWorkOrderRecordId = null;
+    const primaryIncidentAttr = formContext.getAttribute("msdyn_primaryincidenttype");
+    if (primaryIncidentAttr && primaryIncidentAttr.getValue() && primaryIncidentAttr.getValue().length > 0) {
+        incidentTypeId = primaryIncidentAttr.getValue()[0].id.replace(/({|})/g, '');
+        currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, '');
+    } else {
+        const fallbackIncidentAttr = formContext.getAttribute("ts_primaryincidenttype");
+        if (fallbackIncidentAttr && fallbackIncidentAttr.getValue() && fallbackIncidentAttr.getValue().length > 0) {
+            incidentTypeId = fallbackIncidentAttr.getValue()[0].id.replace(/({|})/g, '');
+            const tsNameAttr = formContext.getAttribute("ts_workorder");
+            if (tsNameAttr && tsNameAttr.getValue() && tsNameAttr.getValue().length > 0) {
+                currentWorkOrderRecordId = tsNameAttr.getValue()[0].id.replace(/({|})/g, '');
+            }
+        }
+    }
 
     //Identify WO (ISSO or AvSec) with the activity type field
     var incidentTypeOwnerFetchXML = [
