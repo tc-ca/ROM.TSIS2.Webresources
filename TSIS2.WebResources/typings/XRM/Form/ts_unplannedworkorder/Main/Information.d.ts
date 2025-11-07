@@ -39,6 +39,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "statuscode"): Xrm.OptionSetAttribute<ts_unplannedworkorder_statuscode>;
       get(name: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
       get(name: "ts_businessowner"): Xrm.Attribute<string>;
+      get(name: "ts_cancelledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
       get(name: "ts_comments"): Xrm.Attribute<string>;
       get(name: "ts_contact"): Xrm.LookupAttribute<"contact">;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
@@ -98,6 +99,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
       get(name: "ts_businessowner"): Xrm.StringControl;
+      get(name: "ts_cancelledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
       get(name: "ts_comments"): Xrm.StringControl;
       get(name: "ts_contact"): Xrm.LookupControl<"contact">;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
@@ -163,6 +165,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<ts_unplannedworkorder_statuscode>;
     getAttribute(attributeName: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
     getAttribute(attributeName: "ts_businessowner"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_cancelledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
     getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_contact"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
@@ -217,6 +220,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
     getControl(controlName: "ts_businessowner"): Xrm.StringControl;
+    getControl(controlName: "ts_cancelledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
     getControl(controlName: "ts_comments"): Xrm.StringControl;
     getControl(controlName: "ts_contact"): Xrm.LookupControl<"contact">;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;

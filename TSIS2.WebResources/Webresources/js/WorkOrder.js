@@ -381,6 +381,10 @@ var ROM;
                     restrictEditRightReportDetails(eContext, subgridAdditionalInspectors);
                 });
             }
+            //Lock Cancelled Inspection Justification field if WO is cancelled        
+            if (currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+                form.getControl("ts_canceledinspectionjustification").setDisabled(true);
+            }
             unlockRecordLogFieldsIfUserIsSystemAdmin(form);
             RemoveOptionCancel(eContext);
             showRationaleField(form, UNPLANNED_CATEGORY_ID);

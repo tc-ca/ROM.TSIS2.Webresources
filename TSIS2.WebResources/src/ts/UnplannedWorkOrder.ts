@@ -21,7 +21,7 @@ namespace ROM.UnplannedWorkOrder {
         var formItem = form.ui.formSelector.getCurrentItem().getId();
         isROM20Form = formItem.toLowerCase() == "a629bb8a-da93-4e58-b777-3f338a46d4d8";
 
-        currentSystemStatus = form.getAttribute("header_ts_recordstatus").getValue();
+        currentSystemStatus = form.getAttribute("ts_recordstatus").getValue();
 
         //Set comment field visible if AvSec
         //Set Overtime field visible for AvSec
@@ -45,7 +45,7 @@ namespace ROM.UnplannedWorkOrder {
             userBusinessUnitName = businessunit.entities[0].name;
             if (!userBusinessUnitName.startsWith("Aviation")) {
                 form.getControl("ts_details").setVisible(false);
-/*                form.getControl("ts_overtime").setVisible(false);*/
+                /*                form.getControl("ts_overtime").setVisible(false);*/
                 form.getControl("ts_overtimerequired").setVisible(true);
 
             }
@@ -176,7 +176,7 @@ namespace ROM.UnplannedWorkOrder {
                 //}
 
                 // Set default values
-      //          setDefaultFiscalYear(form);
+                //          setDefaultFiscalYear(form);
                 setRegion(form);
 
                 //If the new work order is coming from a case, set default rational to planned
@@ -195,7 +195,7 @@ namespace ROM.UnplannedWorkOrder {
                     lookup[0].entityType = "ovs_tyrational";
                     form.getAttribute("ts_rational").setValue(lookup); //Unplanned
 
-    //                setFiscalQuarter(form);
+                    //                setFiscalQuarter(form);
                 }
 
                 // Disable all operation related fields
@@ -258,7 +258,7 @@ namespace ROM.UnplannedWorkOrder {
                     }
                 }
 
-               // setActivityTypeDisabled(eContext);
+                // setActivityTypeDisabled(eContext);
 
                 //if (currentSystemStatus == 690970004 || currentSystemStatus == msdyn_wosystemstatus.Closed) {
                 //    if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
@@ -399,7 +399,12 @@ namespace ROM.UnplannedWorkOrder {
             });
         }
 
-      //  unlockRecordLogFieldsIfUserIsSystemAdmin(form);
+        //Lock Cancelled Inspection Justification field if WO is cancelled        
+        if (currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
+            form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
+        }
+
+        //  unlockRecordLogFieldsIfUserIsSystemAdmin(form);
         RemoveOptionCancel(eContext);
 
         showRationaleField(form, UNPLANNED_CATEGORY_ID);
@@ -455,6 +460,7 @@ namespace ROM.UnplannedWorkOrder {
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
         const systemStatus = form.getAttribute("ts_recordstatus").getValue();
+        const cancelledInspectionJustification = form.getAttribute("ts_cancelledinspectionjustification").getValue();
 
         var workOrderServiceTaskData;
 
@@ -466,17 +472,22 @@ namespace ROM.UnplannedWorkOrder {
             };
 
             //Close/Open associated work order service task(s)
-         //   closeWorkOrderServiceTasks(form, workOrderServiceTaskData);
+            //   closeWorkOrderServiceTasks(form, workOrderServiceTaskData);
 
             //Set inactive views
-         //   setWorkOrderServiceTasksView(form, false);
+            //   setWorkOrderServiceTasksView(form, false);
         }
 
         //Check if the Work Order is past the Planned Fiscal Quarter
-      //  setCantCompleteinspectionVisibility(form);
+        //  setCantCompleteinspectionVisibility(form);
 
         //Post a note on ScheduledQuarter Change
-     //  postNoteOnScheduledQuarterChange(form);
+        //  postNoteOnScheduledQuarterChange(form);
+        
+        if (cancelledInspectionJustification != null) {
+            form.getAttribute("ts_recordstatus").setValue(msdyn_wosystemstatus.Cancelled);
+            form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
+        }
     }
 
     export function workOrderTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -743,19 +754,19 @@ namespace ROM.UnplannedWorkOrder {
                     //setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
                 }
                 showHideContact(form);
-            //} else if (isFromCase) {
-            //    populateOperationField(eContext);
-            //} else if (isFromSecurityIncident) {
-            //    //const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
-            //    //const regionAttributeValue = regionAttribute.getValue();
-            //    //const operationTypeAttributeValue = operationTypeAttribute.getValue();
-            //    //if (regionAttributeValue != null && regionAttributeValue != undefined &&
-            //    //    operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
-            //    //    workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined) {
-            //    //    var countryCondition = getCountryFetchXmlCondition(form);
-            //    //    setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
-            //    //}
-            //    //form.getControl("ts_site").setDisabled(false);
+                //} else if (isFromCase) {
+                //    populateOperationField(eContext);
+                //} else if (isFromSecurityIncident) {
+                //    //const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
+                //    //const regionAttributeValue = regionAttribute.getValue();
+                //    //const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                //    //if (regionAttributeValue != null && regionAttributeValue != undefined &&
+                //    //    operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
+                //    //    workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined) {
+                //    //    var countryCondition = getCountryFetchXmlCondition(form);
+                //    //    setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
+                //    //}
+                //    //form.getControl("ts_site").setDisabled(false);
                 populateOperationField(eContext);
                 //
             }
@@ -2460,7 +2471,7 @@ namespace ROM.UnplannedWorkOrder {
 
     function showHideFiedsByOperationType(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
-     //   const formROM2 = <Form.msdyn_workorder.Main.ROM20>eContext.getFormContext();
+        //   const formROM2 = <Form.msdyn_workorder.Main.ROM20>eContext.getFormContext();
         const operationTypeAttribute = form.getAttribute("ts_operationtype");
         if (operationTypeAttribute != null) {
             const operationTypeAttributeValue = operationTypeAttribute.getValue();

@@ -399,6 +399,11 @@ namespace ROM.WorkOrder {
             });
         }
 
+        //Lock Cancelled Inspection Justification field if WO is cancelled        
+        if (currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
+            form.getControl("ts_canceledinspectionjustification").setDisabled(true);
+        }
+
         unlockRecordLogFieldsIfUserIsSystemAdmin(form);
         RemoveOptionCancel(eContext);
 

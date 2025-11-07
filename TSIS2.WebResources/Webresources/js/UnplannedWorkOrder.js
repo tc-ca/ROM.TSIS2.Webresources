@@ -58,7 +58,7 @@ var ROM;
             var headerOwnerControl = form.getControl("header_ownerid");
             var formItem = form.ui.formSelector.getCurrentItem().getId();
             isROM20Form = formItem.toLowerCase() == "a629bb8a-da93-4e58-b777-3f338a46d4d8";
-            currentSystemStatus = form.getAttribute("header_ts_recordstatus").getValue();
+            currentSystemStatus = form.getAttribute("ts_recordstatus").getValue();
             //Set comment field visible if AvSec
             //Set Overtime field visible for AvSec
             var userBusinessUnitName;
@@ -380,6 +380,10 @@ var ROM;
                     restrictEditRightReportDetails(eContext, subgridAdditionalInspectors);
                 });
             }
+            //Lock Cancelled Inspection Justification field if WO is cancelled        
+            if (currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+                form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
+            }
             //  unlockRecordLogFieldsIfUserIsSystemAdmin(form);
             RemoveOptionCancel(eContext);
             showRationaleField(form, UNPLANNED_CATEGORY_ID);
@@ -432,6 +436,7 @@ var ROM;
         function onSave(eContext) {
             var form = eContext.getFormContext();
             var systemStatus = form.getAttribute("ts_recordstatus").getValue();
+            var cancelledInspectionJustification = form.getAttribute("ts_cancelledinspectionjustification").getValue();
             var workOrderServiceTaskData;
             if (systemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
                 workOrderServiceTaskData =
@@ -448,6 +453,10 @@ var ROM;
             //  setCantCompleteinspectionVisibility(form);
             //Post a note on ScheduledQuarter Change
             //  postNoteOnScheduledQuarterChange(form);
+            if (cancelledInspectionJustification != null) {
+                form.getAttribute("ts_recordstatus").setValue(690970005 /* msdyn_wosystemstatus.Cancelled */);
+                form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
+            }
         }
         UnplannedWorkOrder.onSave = onSave;
         function workOrderTypeOnChange(eContext) {
