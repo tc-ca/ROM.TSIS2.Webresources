@@ -88,12 +88,12 @@ var ROM;
             var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
             if (statusStartDateValue != null) {
                 if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_sitestatus").setValue(717750001 /* NonOperational */);
+                    form.getAttribute("ts_sitestatus").setValue(717750001 /* ts_sitestatus.NonOperational */);
                 }
             }
             if (statusEndDateValue != null) {
                 if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_sitestatus").setValue(717750000 /* Operational */);
+                    form.getAttribute("ts_sitestatus").setValue(717750000 /* ts_sitestatus.Operational */);
                 }
             }
         }
@@ -195,7 +195,7 @@ var ROM;
         //Shows the Risk Score field only when the Class is 2 or 3
         function riskScoreVisibility(form) {
             var siteClass = form.getAttribute("ts_class").getValue();
-            if (siteClass == 717750002 /* _2 */ || siteClass == 717750003 /* _3 */) {
+            if (siteClass == 717750002 /* ts_ts_site_ts_class._2 */ || siteClass == 717750003 /* ts_ts_site_ts_class._3 */) {
                 form.getControl("ts_riskscore").setVisible(true);
                 form.getControl("ts_lpdtounitedstates").setVisible(true);
             }
