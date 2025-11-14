@@ -419,6 +419,7 @@ function exportWorkOrder(primaryControl) {
 }
 
 function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, selectedControl) {
+<<<<<<< HEAD
   const formContext = primaryControl;
 
   const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
@@ -471,6 +472,57 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
     } else if (incidentTypeOwnerId && issoBuGuid && incidentTypeOwnerId.toLowerCase() === issoBuGuid.toLowerCase()) {
       inspectorTeamConditions = '<condition entityname="aa" attribute="name" operator="eq" value="ISSO%Inspectors" />';
     }
+=======
+    const formContext = primaryControl;
+
+    const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+    const currentWorkOrderRecordOwnerId = Xrm.Page.ui.formContext.getAttribute("ownerid").getValue()[0].id;
+    const teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa";
+    // Determine the incident type (fallback from msdyn_primaryincidenttype (WO) to ts_primaryincidenttype (Unplanned WO))
+    let incidentTypeId = null;
+    let currentWorkOrderRecordId = null;
+    const primaryIncidentAttr = formContext.getAttribute("msdyn_primaryincidenttype");
+    if (primaryIncidentAttr && primaryIncidentAttr.getValue() && primaryIncidentAttr.getValue().length > 0) {
+        incidentTypeId = primaryIncidentAttr.getValue()[0].id.replace(/({|})/g, '');
+        currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, '');
+    } else {
+        const fallbackIncidentAttr = formContext.getAttribute("ts_primaryincidenttype");
+        if (fallbackIncidentAttr && fallbackIncidentAttr.getValue() && fallbackIncidentAttr.getValue().length > 0) {
+            incidentTypeId = fallbackIncidentAttr.getValue()[0].id.replace(/({|})/g, '');
+            const tsNameAttr = formContext.getAttribute("ts_workorder");
+            if (tsNameAttr && tsNameAttr.getValue() && tsNameAttr.getValue().length > 0) {
+                currentWorkOrderRecordId = tsNameAttr.getValue()[0].id.replace(/({|})/g, '');
+            }
+        }
+    }
+
+    //Identify WO (ISSO or AvSec) with the activity type field
+    var incidentTypeOwnerFetchXML = [
+        "<fetch top='1'>",
+        "  <entity name='msdyn_incidenttype'>",
+        "    <filter>",
+        "      <condition attribute='msdyn_incidenttypeid' operator='eq' value='", incidentTypeId, "'/>",
+        "    </filter>",
+        "    <link-entity name='team' from='teamid' to='ownerid' alias='team'>",
+        "      <attribute name='name'/>",
+        "    </link-entity>",
+        "  </entity>",
+        "</fetch>"
+    ].join("");
+    incidentTypeOwnerFetchXML = "?fetchXml=" + encodeURIComponent(incidentTypeOwnerFetchXML);
+
+    Xrm.WebApi.retrieveMultipleRecords("msdyn_incidenttype", incidentTypeOwnerFetchXML).then(function (result) {
+        const incidentTypeOwnerName = result.entities[0]["team.name"];
+
+
+        let inspectorTeamConditions = "";
+        if (incidentTypeOwnerName.startsWith("Aviation")) {
+            inspectorTeamConditions = '<condition entityname="aa" attribute="name" operator="like" value="Aviation%Inspectors" />';
+        }
+        else if (incidentTypeOwnerName.startsWith("Intermodal")) {
+            inspectorTeamConditions = '<condition entityname="aa" attribute="name" operator="eq" value="ISSO%Inspectors" />';
+        }
+>>>>>>> origin/main
 
     let alreadyExistingUsersInAccessTeamCondition;
     const alreadyExistingUsersInAccessTeamFetchXML = `<fetch><entity name="systemuser"><attribute name="systemuserid"/><link-entity name="teammembership" from="systemuserid" to="systemuserid" link-type="inner" intersect="true"><link-entity name="team" from="teamid" to="teamid" link-type="inner"><link-entity name="teamtemplate" from="teamtemplateid" to="teamtemplateid" link-type="inner"><attribute name="teamtemplateid"/><filter><condition attribute="teamtemplateid" operator="eq" value="${teamTemplateId}"/></filter></link-entity><link-entity name="principalobjectaccess" from="principalid" to="teamid" link-type="inner"><link-entity name="msdyn_workorder" from="msdyn_workorderid" to="objectid" link-type="inner"><attribute name="msdyn_workorderid"/><filter><condition attribute="msdyn_workorderid" operator="eq" value="${currentWorkOrderRecordId}"/></filter></link-entity></link-entity></link-entity></link-entity></entity></fetch>`;

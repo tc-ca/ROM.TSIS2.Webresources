@@ -257,6 +257,10 @@ namespace ROM.UnplannedWorkOrder {
                         setSiteFilteredView(form, regionAttributeValue[0].id, countryCondition, "", stakeholderAttributeValue[0].id, "", operationTypeAttributeValue[0].id);
                     }
                 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
                 // setActivityTypeDisabled(eContext);
 
                 //if (currentSystemStatus == 690970004 || currentSystemStatus == msdyn_wosystemstatus.Closed) {
@@ -398,7 +402,11 @@ namespace ROM.UnplannedWorkOrder {
             });
         }
 
+<<<<<<< HEAD
         //Lock Cancelled Inspection Justification field if WO is cancelled
+=======
+        //Lock Cancelled Inspection Justification field if WO is cancelled        
+>>>>>>> origin/main
         if (currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
             form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
         }
@@ -482,7 +490,11 @@ namespace ROM.UnplannedWorkOrder {
 
         //Post a note on ScheduledQuarter Change
         //  postNoteOnScheduledQuarterChange(form);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/main
         if (cancelledInspectionJustification != null) {
             form.getAttribute("ts_recordstatus").setValue(msdyn_wosystemstatus.Cancelled);
             form.getControl("ts_cancelledinspectionjustification").setDisabled(true);

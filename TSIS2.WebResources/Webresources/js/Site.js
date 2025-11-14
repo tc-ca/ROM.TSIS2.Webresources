@@ -124,6 +124,7 @@ var __generator =
   };
 var ROM;
 (function (ROM) {
+<<<<<<< HEAD
   var Site;
   (function (Site) {
     function onLoad(eContext) {
@@ -176,6 +177,32 @@ var ROM;
                     },
                     function (error) {
                       form.ui.setFormNotification("Offline: ERROR  " + JSON.stringify(error), "ERROR", "offline-error");
+=======
+    var Site;
+    (function (Site) {
+        function onLoad(eContext) {
+            var form = eContext.getFormContext();
+            console.log("Site Form OnLoad");
+            var ownerAttribute = form.getAttribute("ownerid");
+            if (ownerAttribute != null && ownerAttribute != undefined) {
+                var ownerAttributeValue = ownerAttribute.getValue();
+                if (ownerAttributeValue != null && ownerAttributeValue != undefined && ownerAttributeValue[0].entityType == "systemuser") {
+                    var targetId = ownerAttributeValue[0].id.replace(/[{}]/g, "");
+                    console.log("Type: " + ownerAttributeValue[0].entityType);
+                    var isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
+                    if (isOffline) {
+                        form.ui.setFormNotification("Offline: get system user ", "INFO", "offline-operation");
+                        Xrm.WebApi.offline.retrieveRecord("systemuser", targetId, "?$select=_businessunitid_value").then(function success(result) {
+                            Xrm.WebApi.offline.retrieveRecord("businessunit", result._businessunitid_value, "?$select=name").then(function success(result) {
+                                form.getAttribute("ts_businessunit").setValue(result.name);
+                                form.ui.setFormNotification("Offline: get BU ", "INFO", "offline-operation");
+                            }, function (error) {
+                                form.ui.setFormNotification("Offline: ERROR  " + JSON.stringify(error), "ERROR", "offline-error");
+                            });
+                        }, function (error) {
+                            form.ui.setFormNotification("Offline: ERROR  " + JSON.stringify(error), "ERROR", "offline-error");
+                        });
+>>>>>>> origin/main
                     }
                   );
                 } else {

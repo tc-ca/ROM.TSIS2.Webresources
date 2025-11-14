@@ -60,7 +60,10 @@ interface ts_unplannedworkorder_Relationships {
   ts_unplannedworkorder_Appointments?: Appointment_Result[] | null;
   ts_unplannedworkorder_Emails?: Email_Result[] | null;
   ts_unplannedworkorder_PostFollows?: PostFollow_Result[] | null;
+<<<<<<< HEAD
   ts_unplannedworkorder_Posts?: Post_Result[] | null;
+=======
+>>>>>>> origin/main
   ts_unplannedworkorder_ServiceAppointments?: ServiceAppointment_Result[] | null;
   ts_unplannedworkorder_Teams?: Team_Result[] | null;
   ts_unplannedworkorder_UnplannedWorkOrder_ts_workordertimetracking?: ts_workordertimetracking_Result[] | null;
@@ -272,7 +275,10 @@ interface ts_unplannedworkorder_Expand {
   modifiedby: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ownerid: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+<<<<<<< HEAD
   owningbusinessunit: WebExpand<ts_unplannedworkorder_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
+=======
+>>>>>>> origin/main
   owningteam: WebExpand<ts_unplannedworkorder_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_CancelledInspectionJustification: WebExpand<ts_unplannedworkorder_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { ts_CancelledInspectionJustification: ts_canceledinspectionjustification_Result }>;
@@ -295,7 +301,10 @@ interface ts_unplannedworkorder_Expand {
   ts_unplannedworkorder_Appointments: WebExpand<ts_unplannedworkorder_Expand, Appointment_Select, Appointment_Filter, { ts_unplannedworkorder_Appointments: Appointment_Result[] }>;
   ts_unplannedworkorder_Emails: WebExpand<ts_unplannedworkorder_Expand, Email_Select, Email_Filter, { ts_unplannedworkorder_Emails: Email_Result[] }>;
   ts_unplannedworkorder_PostFollows: WebExpand<ts_unplannedworkorder_Expand, PostFollow_Select, PostFollow_Filter, { ts_unplannedworkorder_PostFollows: PostFollow_Result[] }>;
+<<<<<<< HEAD
   ts_unplannedworkorder_Posts: WebExpand<ts_unplannedworkorder_Expand, Post_Select, Post_Filter, { ts_unplannedworkorder_Posts: Post_Result[] }>;
+=======
+>>>>>>> origin/main
   ts_unplannedworkorder_ServiceAppointments: WebExpand<ts_unplannedworkorder_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ts_unplannedworkorder_ServiceAppointments: ServiceAppointment_Result[] }>;
   ts_unplannedworkorder_Teams: WebExpand<ts_unplannedworkorder_Expand, Team_Select, Team_Filter, { ts_unplannedworkorder_Teams: Team_Result[] }>;
   ts_unplannedworkorder_UnplannedWorkOrder_ts_workordertimetracking: WebExpand<ts_unplannedworkorder_Expand, ts_workordertimetracking_Select, ts_workordertimetracking_Filter, { ts_unplannedworkorder_UnplannedWorkOrder_ts_workordertimetracking: ts_workordertimetracking_Result[] }>;
@@ -396,7 +405,10 @@ interface ts_unplannedworkorder_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+<<<<<<< HEAD
   owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
+=======
+>>>>>>> origin/main
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_CancelledInspectionJustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
@@ -421,7 +433,10 @@ interface ts_unplannedworkorder_RelatedMany {
   ts_unplannedworkorder_Appointments: WebMappingRetrieve<Appointment_Select,Appointment_Expand,Appointment_Filter,Appointment_Fixed,Appointment_Result,Appointment_FormattedResult>;
   ts_unplannedworkorder_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   ts_unplannedworkorder_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
+<<<<<<< HEAD
   ts_unplannedworkorder_Posts: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
+=======
+>>>>>>> origin/main
   ts_unplannedworkorder_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
   ts_unplannedworkorder_Teams: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_unplannedworkorder_UnplannedWorkOrder_ts_workordertimetracking: WebMappingRetrieve<ts_workordertimetracking_Select,ts_workordertimetracking_Expand,ts_workordertimetracking_Filter,ts_workordertimetracking_Fixed,ts_workordertimetracking_Result,ts_workordertimetracking_FormattedResult>;

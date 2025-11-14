@@ -97,7 +97,11 @@ var ROM;
                     if (isROM20Form) {
                         form.getControl("ts_overtimerequired").setVisible(false);
                     }
+<<<<<<< HEAD
                     if (currentSystemStatus == 741130000 /* Closed */ || currentSystemStatus == 690970005 /* Cancelled */) {
+=======
+                    if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */ || currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+>>>>>>> origin/main
                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
                             form.getControl("header_ts_recordstatus").setDisabled(true);
                         }
@@ -206,7 +210,11 @@ var ROM;
                     else {
                         var lookup = new Array();
                         lookup[0] = new Object();
+<<<<<<< HEAD
                         lookup[0].id = "{" + UNPLANNED_CATEGORY_ID + "}";
+=======
+                        lookup[0].id = "{".concat(UNPLANNED_CATEGORY_ID, "}");
+>>>>>>> origin/main
                         lookup[0].name = "Unplanned";
                         lookup[0].entityType = "ovs_tyrational";
                         form.getAttribute("ts_rational").setValue(lookup); //Unplanned
@@ -383,7 +391,11 @@ var ROM;
                 });
             }
             //Lock Cancelled Inspection Justification field if WO is cancelled        
+<<<<<<< HEAD
             if (currentSystemStatus == 690970005 /* Cancelled */) {
+=======
+            if (currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+>>>>>>> origin/main
                 form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
             }
             //  unlockRecordLogFieldsIfUserIsSystemAdmin(form);
@@ -459,6 +471,10 @@ var ROM;
                 form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
             }
             //  postNoteOnScheduledQuarterChange(form);
+            if (cancelledInspectionJustification != null) {
+                form.getAttribute("ts_recordstatus").setValue(690970005 /* msdyn_wosystemstatus.Cancelled */);
+                form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
+            }
         }
         UnplannedWorkOrder.onSave = onSave;
         function workOrderTypeOnChange(eContext) {

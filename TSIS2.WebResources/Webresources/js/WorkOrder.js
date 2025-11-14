@@ -76,6 +76,7 @@ var ROM;
             ].join("");
             currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
             Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
+<<<<<<< HEAD
                 return __awaiter(this, void 0, void 0, function () {
                     var userBusinessUnitId, inAvSecBU;
                     return __generator(this, function (_a) {
@@ -123,6 +124,43 @@ var ROM;
                         }
                     });
                 });
+=======
+                userBusinessUnitName = businessunit.entities[0].name;
+                if (!userBusinessUnitName.startsWith("Aviation")) {
+                    form.getControl("ts_details").setVisible(false);
+                    form.getControl("ts_overtime").setVisible(false);
+                    form.getControl("ts_overtimerequired").setVisible(true);
+                }
+                else if (userBusinessUnitName.startsWith("Aviation")) {
+                    form.getControl("ts_details").setVisible(true);
+                    form.getControl("msdyn_instructions").setVisible(true);
+                    form.getControl("ts_accountableteam").setVisible(true);
+                    form.getControl("ts_plannedcost").setVisible(false);
+                    form.getControl("ts_actualcost").setVisible(false);
+                    form.getControl("ts_costexplanation").setVisible(false);
+                    form.getControl("ts_cantcompleteinspection").setVisible(false);
+                    // Hide overtime toggle for AvSec users in ROM20 form
+                    if (isROM20Form) {
+                        form.getControl("ts_overtimerequired").setVisible(false);
+                    }
+                    if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */ || currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+                        if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
+                            form.getControl("msdyn_systemstatus").setDisabled(true);
+                        }
+                    }
+                }
+                //Set disabled false for quarter fields if ISSO
+                else {
+                    if (userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager|ROM - Inspector")) {
+                        form.getControl("ts_completedquarter").setDisabled(false);
+                        form.getControl("ovs_revisedquarterid").setDisabled(false);
+                    }
+                    else {
+                        form.getControl("ts_completedquarter").setDisabled(true);
+                        form.getControl("ovs_revisedquarterid").setDisabled(true);
+                    }
+                }
+>>>>>>> origin/main
             });
             getUserTeam(userId).then(function (userTeams) {
                 if (userTeams != null && userTeams.entities.length > 0) {
@@ -216,7 +254,11 @@ var ROM;
                     else {
                         var lookup = new Array();
                         lookup[0] = new Object();
+<<<<<<< HEAD
                         lookup[0].id = "{" + UNPLANNED_CATEGORY_ID + "}";
+=======
+                        lookup[0].id = "{".concat(UNPLANNED_CATEGORY_ID, "}");
+>>>>>>> origin/main
                         lookup[0].name = "Unplanned";
                         lookup[0].entityType = "ovs_tyrational";
                         form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
@@ -392,7 +434,11 @@ var ROM;
                 });
             }
             //Lock Cancelled Inspection Justification field if WO is cancelled        
+<<<<<<< HEAD
             if (currentSystemStatus == 690970005 /* Cancelled */) {
+=======
+            if (currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+>>>>>>> origin/main
                 form.getControl("ts_canceledinspectionjustification").setDisabled(true);
             }
             unlockRecordLogFieldsIfUserIsSystemAdmin(form);
