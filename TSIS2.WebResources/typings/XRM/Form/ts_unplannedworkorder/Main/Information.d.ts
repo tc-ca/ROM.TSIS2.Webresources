@@ -39,6 +39,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "statuscode"): Xrm.OptionSetAttribute<ts_unplannedworkorder_statuscode>;
       get(name: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
       get(name: "ts_businessowner"): Xrm.Attribute<string>;
+      get(name: "ts_cancelledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
       get(name: "ts_comments"): Xrm.Attribute<string>;
       get(name: "ts_contact"): Xrm.LookupAttribute<"contact">;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
@@ -77,6 +78,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_wopreparationtime"): Xrm.NumberAttribute;
       get(name: "ts_woreportinganddocumentation"): Xrm.NumberAttribute;
       get(name: "ts_worklocation"): Xrm.OptionSetAttribute<msdyn_worklocation>;
+      get(name: "ts_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: "ts_workorderjustification"): Xrm.LookupAttribute<"ts_justification">;
       get(name: "ts_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
       get(name: "ts_wotraveltime"): Xrm.NumberAttribute;
@@ -97,6 +99,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
       get(name: "ts_businessowner"): Xrm.StringControl;
+      get(name: "ts_cancelledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
       get(name: "ts_comments"): Xrm.StringControl;
       get(name: "ts_contact"): Xrm.LookupControl<"contact">;
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
@@ -136,6 +139,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_wopreparationtime"): Xrm.NumberControl;
       get(name: "ts_woreportinganddocumentation"): Xrm.NumberControl;
       get(name: "ts_worklocation"): Xrm.OptionSetControl<msdyn_worklocation>;
+      get(name: "ts_workorder"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: "ts_workorderjustification"): Xrm.LookupControl<"ts_justification">;
       get(name: "ts_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
       get(name: "ts_wotraveltime"): Xrm.NumberControl;
@@ -161,6 +165,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getAttribute(attributeName: "statuscode"): Xrm.OptionSetAttribute<ts_unplannedworkorder_statuscode>;
     getAttribute(attributeName: "ts_aircraftclassification"): Xrm.OptionSetAttribute<ts_aircraftclassification>;
     getAttribute(attributeName: "ts_businessowner"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_cancelledinspectionjustification"): Xrm.LookupAttribute<"ts_canceledinspectionjustification">;
     getAttribute(attributeName: "ts_comments"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_contact"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
@@ -199,6 +204,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getAttribute(attributeName: "ts_wopreparationtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_woreportinganddocumentation"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_worklocation"): Xrm.OptionSetAttribute<msdyn_worklocation>;
+    getAttribute(attributeName: "ts_workorder"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: "ts_workorderjustification"): Xrm.LookupAttribute<"ts_justification">;
     getAttribute(attributeName: "ts_workordertype"): Xrm.LookupAttribute<"msdyn_workordertype">;
     getAttribute(attributeName: "ts_wotraveltime"): Xrm.NumberAttribute;
@@ -214,6 +220,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
     getControl(controlName: "ts_businessowner"): Xrm.StringControl;
+    getControl(controlName: "ts_cancelledinspectionjustification"): Xrm.LookupControl<"ts_canceledinspectionjustification">;
     getControl(controlName: "ts_comments"): Xrm.StringControl;
     getControl(controlName: "ts_contact"): Xrm.LookupControl<"contact">;
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
@@ -253,6 +260,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "ts_wopreparationtime"): Xrm.NumberControl;
     getControl(controlName: "ts_woreportinganddocumentation"): Xrm.NumberControl;
     getControl(controlName: "ts_worklocation"): Xrm.OptionSetControl<msdyn_worklocation>;
+    getControl(controlName: "ts_workorder"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: "ts_workorderjustification"): Xrm.LookupControl<"ts_justification">;
     getControl(controlName: "ts_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
     getControl(controlName: "ts_wotraveltime"): Xrm.NumberControl;

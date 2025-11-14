@@ -16,17 +16,17 @@ declare namespace Form.ovs_operation.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface plan_track extends Xrm.SectionCollectionBase {
-        get(name: "entity_risk_section"): Xrm.PageSection;
-        get(name: "tab_10_section_1"): Xrm.PageSection;
+      interface operation_document_tab extends Xrm.SectionCollectionBase {
+        get(name: "operation_document_section"): Xrm.PageSection;
+        get(name: "tab_5_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_5 extends Xrm.SectionCollectionBase {
-        get(name: "tab_5_section_1"): Xrm.PageSection;
-        get(name: "tab_5_section_2"): Xrm.PageSection;
+      interface plan_track extends Xrm.SectionCollectionBase {
+        get(name: "entity_risk_section"): Xrm.PageSection;
+        get(name: "tab_10_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
         get(index: number): Xrm.PageSection;
@@ -142,6 +142,7 @@ declare namespace Form.ovs_operation.Main {
       get(name: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
       get(name: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
       get(name: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
+      get(name: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
       get(name: "WebResource_PPEGuide"): Xrm.WebResourceControl;
       get(name: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;
@@ -210,8 +211,8 @@ declare namespace Form.ovs_operation.Main {
     interface Tabs extends Xrm.TabCollectionBase {
       get(name: "WorkOrders"): Xrm.PageTab<Tabs.WorkOrders>;
       get(name: "operation_activity_tab"): Xrm.PageTab<Tabs.operation_activity_tab>;
+      get(name: "operation_document_tab"): Xrm.PageTab<Tabs.operation_document_tab>;
       get(name: "plan_track"): Xrm.PageTab<Tabs.plan_track>;
-      get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
       get(name: "tab_7"): Xrm.PageTab<Tabs.tab_7>;
       get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
       get(name: "tab_9"): Xrm.PageTab<Tabs.tab_9>;
@@ -279,6 +280,7 @@ declare namespace Form.ovs_operation.Main {
     getControl(controlName: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
     getControl(controlName: "Subgrid_OperationRiskAssessments"): Xrm.SubGridControl<"ts_operationriskassessment">;
     getControl(controlName: "Subgrid_Operation_Contacts"): Xrm.SubGridControl<"ts_operationcontact">;
+    getControl(controlName: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
     getControl(controlName: "WebResource_PPEGuide"): Xrm.WebResourceControl;
     getControl(controlName: "WorkOrders"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "header_ovs_operationtypeid"): Xrm.LookupControl<"ovs_operationtype">;

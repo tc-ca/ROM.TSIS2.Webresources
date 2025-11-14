@@ -46,6 +46,7 @@ var ROM;
                     switch (_a.label) {
                         case 0:
                             form = eContext.getFormContext();
+                            console.log("Site Form OnLoad");
                             ownerAttribute = form.getAttribute("ownerid");
                             if (!(ownerAttribute != null && ownerAttribute != undefined)) return [3 /*break*/, 2];
                             ownerAttributeValue = ownerAttribute.getValue();

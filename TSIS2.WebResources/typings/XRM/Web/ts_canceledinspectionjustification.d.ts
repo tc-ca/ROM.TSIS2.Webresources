@@ -15,6 +15,7 @@ interface ts_canceledinspectionjustification_Base extends WebEntity {
 }
 interface ts_canceledinspectionjustification_Relationships {
   ts_msdyn_workorder_canceledinspectionjustifi?: msdyn_workorder_Result[] | null;
+  ts_unplannedworkorder_CancelledInspectionJustification_ts_canceledinspectionjustification?: ts_unplannedworkorder_Result[] | null;
 }
 interface ts_canceledinspectionjustification extends ts_canceledinspectionjustification_Base, ts_canceledinspectionjustification_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -80,6 +81,7 @@ interface ts_canceledinspectionjustification_Expand {
   owningteam: WebExpand<ts_canceledinspectionjustification_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_canceledinspectionjustification_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_msdyn_workorder_canceledinspectionjustifi: WebExpand<ts_canceledinspectionjustification_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_canceledinspectionjustifi: msdyn_workorder_Result[] }>;
+  ts_unplannedworkorder_CancelledInspectionJustification_ts_canceledinspectionjustification: WebExpand<ts_canceledinspectionjustification_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_CancelledInspectionJustification_ts_canceledinspectionjustification: ts_unplannedworkorder_Result[] }>;
 }
 interface ts_canceledinspectionjustification_FormattedResult {
   createdby_formatted?: string;
@@ -119,6 +121,7 @@ interface ts_canceledinspectionjustification_RelatedOne {
 }
 interface ts_canceledinspectionjustification_RelatedMany {
   ts_msdyn_workorder_canceledinspectionjustifi: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  ts_unplannedworkorder_CancelledInspectionJustification_ts_canceledinspectionjustification: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_canceledinspectionjustifications: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;

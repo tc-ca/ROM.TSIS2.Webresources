@@ -51,6 +51,7 @@ interface ts_unplannedworkorder_Base extends WebEntity {
   versionnumber?: number | null;
 }
 interface ts_unplannedworkorder_Relationships {
+  ts_CancelledInspectionJustification?: ts_canceledinspectionjustification_Result | null;
   ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder?: Contact_Result[] | null;
   ts_SecurityIncident?: ts_securityincident_Result | null;
   ts_Trip?: ts_trip_Result | null;
@@ -71,6 +72,7 @@ interface ts_unplannedworkorder extends ts_unplannedworkorder_Base, ts_unplanned
   ownerid_bind$systemusers?: string | null;
   ownerid_bind$teams?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
+  ts_CancelledInspectionJustification_bind$ts_canceledinspectionjustifications?: string | null;
   ts_ScheduledQuarterJustification_bind$ts_justifications?: string | null;
   ts_SecurityIncident_bind$ts_securityincidents?: string | null;
   ts_TradeName_bind$ts_tradenames?: string | null;
@@ -121,6 +123,7 @@ interface ts_unplannedworkorder_Select {
   ts_actualcost_base: WebAttribute<ts_unplannedworkorder_Select, { ts_actualcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_actualcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_aircraftclassification: WebAttribute<ts_unplannedworkorder_Select, { ts_aircraftclassification: ts_aircraftclassification | null }, { ts_aircraftclassification_formatted?: string }>;
   ts_businessowner: WebAttribute<ts_unplannedworkorder_Select, { ts_businessowner: string | null }, {  }>;
+  ts_cancelledinspectionjustification_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_cancelledinspectionjustification_guid: string | null }, { ts_cancelledinspectionjustification_formatted?: string }>;
   ts_cantcompleteinspection: WebAttribute<ts_unplannedworkorder_Select, { ts_cantcompleteinspection: boolean | null }, {  }>;
   ts_comments: WebAttribute<ts_unplannedworkorder_Select, { ts_comments: string | null }, {  }>;
   ts_completedquarter: WebAttribute<ts_unplannedworkorder_Select, { ts_completedquarter: ts_unplannedworkorder_ts_completedquarter | null }, { ts_completedquarter_formatted?: string }>;
@@ -203,6 +206,7 @@ interface ts_unplannedworkorder_Filter {
   ts_actualcost_base: number;
   ts_aircraftclassification: ts_aircraftclassification;
   ts_businessowner: string;
+  ts_cancelledinspectionjustification_guid: XQW.Guid;
   ts_cantcompleteinspection: boolean;
   ts_comments: string;
   ts_completedquarter: ts_unplannedworkorder_ts_completedquarter;
@@ -271,6 +275,7 @@ interface ts_unplannedworkorder_Expand {
   owningbusinessunit: WebExpand<ts_unplannedworkorder_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<ts_unplannedworkorder_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
+  ts_CancelledInspectionJustification: WebExpand<ts_unplannedworkorder_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { ts_CancelledInspectionJustification: ts_canceledinspectionjustification_Result }>;
   ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder: WebExpand<ts_unplannedworkorder_Expand, Contact_Select, Contact_Filter, { ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder: Contact_Result[] }>;
   ts_SecurityIncident: WebExpand<ts_unplannedworkorder_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_SecurityIncident: ts_securityincident_Result }>;
   ts_Trip: WebExpand<ts_unplannedworkorder_Expand, ts_trip_Select, ts_trip_Filter, { ts_Trip: ts_trip_Result }>;
@@ -317,6 +322,7 @@ interface ts_unplannedworkorder_FormattedResult {
   ts_actualcost_base_formatted?: string;
   ts_actualcost_formatted?: string;
   ts_aircraftclassification_formatted?: string;
+  ts_cancelledinspectionjustification_formatted?: string;
   ts_completedquarter_formatted?: string;
   ts_contact_formatted?: string;
   ts_country_formatted?: string;
@@ -361,6 +367,7 @@ interface ts_unplannedworkorder_Result extends ts_unplannedworkorder_Base, ts_un
   owninguser_guid: string | null;
   transactioncurrencyid_guid: string | null;
   ts_accountableteam_guid: string | null;
+  ts_cancelledinspectionjustification_guid: string | null;
   ts_contact_guid: string | null;
   ts_country_guid: string | null;
   ts_functionallocation_guid: string | null;
@@ -392,6 +399,7 @@ interface ts_unplannedworkorder_RelatedOne {
   owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  ts_CancelledInspectionJustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   ts_SecurityIncident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   ts_Trip: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
