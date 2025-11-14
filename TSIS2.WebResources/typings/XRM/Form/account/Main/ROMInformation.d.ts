@@ -67,8 +67,8 @@ declare namespace Form.account.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_8 extends Xrm.SectionCollectionBase {
-        get(name: "_section_477"): Xrm.PageSection;
+      interface shareholder_document_tab extends Xrm.SectionCollectionBase {
+        get(name: "shareholder_document_section"): Xrm.PageSection;
         get(name: "tab_8_section_1"): Xrm.PageSection;
         get(name: string): undefined;
         get(): Xrm.PageSection[];
@@ -153,6 +153,7 @@ declare namespace Form.account.Main {
       get(name: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
       get(name: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
       get(name: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
+      get(name: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
       get(name: "address1_composite"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
       get(name: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;
@@ -218,7 +219,7 @@ declare namespace Form.account.Main {
       get(name: "Operations"): Xrm.PageTab<Tabs.Operations>;
       get(name: "SUMMARY_TAB"): Xrm.PageTab<Tabs.SUMMARY_TAB>;
       get(name: "Work Orders"): Xrm.PageTab<Tabs.WorkOrders>;
-      get(name: "tab_8"): Xrm.PageTab<Tabs.tab_8>;
+      get(name: "shareholder_document_tab"): Xrm.PageTab<Tabs.shareholder_document_tab>;
       get(name: "tab_Risk"): Xrm.PageTab<Tabs.tab_Risk>;
       get(name: "tab_contacts"): Xrm.PageTab<Tabs.tab_contacts>;
       get(name: string): undefined;
@@ -285,6 +286,7 @@ declare namespace Form.account.Main {
     getControl(controlName: "Subgrid_1"): Xrm.SubGridControl<"ts_tradename">;
     getControl(controlName: "Subgrid_2"): Xrm.SubGridControl<"msdyn_workorder">;
     getControl(controlName: "Subgrid_EntityRisk"): Xrm.SubGridControl<"ts_entityrisk">;
+    getControl(controlName: "WebResource_NewDocumentCenterNotice"): Xrm.WebResourceControl;
     getControl(controlName: "address1_composite"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_city"): Xrm.StringControl | null;
     getControl(controlName: "address1_composite_compositionLinkControl_address1_country"): Xrm.StringControl | null;

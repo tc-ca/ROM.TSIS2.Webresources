@@ -21,6 +21,8 @@ namespace ROM.UnplannedWorkOrder {
         var formItem = form.ui.formSelector.getCurrentItem().getId();
         isROM20Form = formItem.toLowerCase() == "a629bb8a-da93-4e58-b777-3f338a46d4d8";
 
+        currentSystemStatus = form.getAttribute("ts_recordstatus").getValue();
+
         //Set comment field visible if AvSec
         //Set Overtime field visible for AvSec
         let userBusinessUnitName;
@@ -30,7 +32,7 @@ namespace ROM.UnplannedWorkOrder {
             "  <entity name='businessunit'>",
             "    <attribute name='name' />",
             "    <attribute name='businessunitid' />",
-            "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
+            "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>",
             "      <filter>",
             "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
             "      </filter>",
@@ -60,6 +62,12 @@ namespace ROM.UnplannedWorkOrder {
                 if (isROM20Form) {
                     form.getControl("ts_overtimerequired").setVisible(false);
                 }
+
+                if (currentSystemStatus == msdyn_wosystemstatus.Closed || currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
+                    if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
+                        form.getControl("header_ts_recordstatus").setDisabled(true);
+                    }
+                }
             }
             //Set disabled false for quarter fields if ISSO
             //else {
@@ -85,7 +93,6 @@ namespace ROM.UnplannedWorkOrder {
         });
 
         //Keep track of the current system status, to be used when cancelling a status change.
-        currentSystemStatus = form.getAttribute("ts_recordstatus").getValue();
         currentStatus = form.getAttribute("ts_state").getValue();
         form.getControl("ts_worklocation").removeOption(690970001);  //Remove Facility Work Location Option
         //updateCaseView(eContext);
@@ -391,6 +398,11 @@ namespace ROM.UnplannedWorkOrder {
             });
         }
 
+        //Lock Cancelled Inspection Justification field if WO is cancelled
+        if (currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
+            form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
+        }
+
         //  unlockRecordLogFieldsIfUserIsSystemAdmin(form);
         RemoveOptionCancel(eContext);
 
@@ -447,6 +459,7 @@ namespace ROM.UnplannedWorkOrder {
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
         const systemStatus = form.getAttribute("ts_recordstatus").getValue();
+        const cancelledInspectionJustification = form.getAttribute("ts_cancelledinspectionjustification").getValue();
 
         var workOrderServiceTaskData;
 
@@ -469,6 +482,11 @@ namespace ROM.UnplannedWorkOrder {
 
         //Post a note on ScheduledQuarter Change
         //  postNoteOnScheduledQuarterChange(form);
+
+        if (cancelledInspectionJustification != null) {
+            form.getAttribute("ts_recordstatus").setValue(msdyn_wosystemstatus.Cancelled);
+            form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
+        }
     }
 
     export function workOrderTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {

@@ -41,21 +41,6 @@ var ROM;
     (function (FunctionalLocation) {
         function onLoad(eContext) {
             var form = eContext.getFormContext();
-            // get the environment variable value
-            getEnvironmentVariableByName("ts_TurnoffDocumentCentre", function (value) {
-                if (value == "yes") {
-                    form.ui.tabs.get("tab_6").sections.get("tab_6_section_2").setVisible(false);
-                    console.log("Turn off the Document Centre");
-                }
-                else if (value == "no") {
-                    form.ui.tabs.get("tab_6").sections.get("tab_6_section_2").setVisible(true);
-                    form.getControl("WebResource_NewDocumentCenterNotice").setVisible(false);
-                    console.log("Don't turn off the Document Centre");
-                }
-                else {
-                    console.log("Variable not found or invalid");
-                }
-            });
             var ownerAttribute = form.getAttribute("ownerid");
             if (ownerAttribute != null && ownerAttribute != undefined) {
                 var ownerAttributeValue_1 = ownerAttribute.getValue();
@@ -200,12 +185,12 @@ var ROM;
             var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
             if (statusStartDateValue != null) {
                 if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_sitestatus").setValue(717750001 /* NonOperational */);
+                    form.getAttribute("ts_sitestatus").setValue(717750001 /* ts_sitestatus.NonOperational */);
                 }
             }
             if (statusEndDateValue != null) {
                 if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_sitestatus").setValue(717750000 /* Operational */);
+                    form.getAttribute("ts_sitestatus").setValue(717750000 /* ts_sitestatus.Operational */);
                 }
             }
         }
@@ -307,7 +292,7 @@ var ROM;
         //Shows the Risk Score field only when the Class is 2 or 3
         function riskScoreVisibility(form) {
             var siteClass = form.getAttribute("ts_class").getValue();
-            if (siteClass == 717750002 /* _2 */ || siteClass == 717750003 /* _3 */) {
+            if (siteClass == 717750002 /* ts_msdyn_functionallocation_ts_class._2 */ || siteClass == 717750003 /* ts_msdyn_functionallocation_ts_class._3 */) {
                 form.getControl("ts_riskscore").setVisible(true);
                 form.getControl("ts_lpdtounitedstates").setVisible(true);
             }
@@ -363,25 +348,5 @@ var ROM;
             }
         }
         FunctionalLocation.onOwnerChange = onOwnerChange;
-        function getEnvironmentVariableByName(variableName, callback) {
-            var fetchXML = "\n        <fetch top=\"1\">\n            <entity name=\"environmentvariablevalue\">\n                <attribute name=\"value\" />\n                <link-entity name=\"environmentvariabledefinition\" \n                             to=\"environmentvariabledefinitionid\" \n                             from=\"environmentvariabledefinitionid\" \n                             alias=\"definition\">\n                    <filter>\n                        <condition attribute=\"schemaname\" operator=\"eq\" value=\"" + variableName + "\" />\n                    </filter>\n                </link-entity>\n            </entity>\n        </fetch>\n    ";
-            var encodedFetchXml = encodeURIComponent(fetchXML);
-            Xrm.WebApi.retrieveMultipleRecords("environmentvariablevalue", "?fetchXml=" + encodedFetchXml)
-                .then(function (result) {
-                if (result.entities.length > 0 && result.entities[0].value !== undefined) {
-                    var raw = result.entities[0].value;
-                    callback(raw);
-                }
-                else {
-                    console.warn("Environment variable '" + variableName + "' not found or has no value.");
-                    callback(null);
-                }
-            })
-                .catch(function (error) {
-                console.error("Error retrieving environment variable '" + variableName + "': " + error.message);
-                callback(null);
-            });
-        }
-        FunctionalLocation.getEnvironmentVariableByName = getEnvironmentVariableByName;
     })(FunctionalLocation = ROM.FunctionalLocation || (ROM.FunctionalLocation = {}));
 })(ROM || (ROM = {}));

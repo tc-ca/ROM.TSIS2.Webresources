@@ -58,6 +58,7 @@ var ROM;
             var headerOwnerControl = form.getControl("header_ownerid");
             var formItem = form.ui.formSelector.getCurrentItem().getId();
             isROM20Form = formItem.toLowerCase() == "a629bb8a-da93-4e58-b777-3f338a46d4d8";
+            currentSystemStatus = form.getAttribute("ts_recordstatus").getValue();
             //Set comment field visible if AvSec
             //Set Overtime field visible for AvSec
             var userBusinessUnitName;
@@ -67,7 +68,7 @@ var ROM;
                 "  <entity name='businessunit'>",
                 "    <attribute name='name' />",
                 "    <attribute name='businessunitid' />",
-                "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
+                "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>",
                 "      <filter>",
                 "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
                 "      </filter>",
@@ -80,6 +81,7 @@ var ROM;
                 userBusinessUnitName = businessunit.entities[0].name;
                 if (!userBusinessUnitName.startsWith("Aviation")) {
                     form.getControl("ts_details").setVisible(false);
+                    /*                form.getControl("ts_overtime").setVisible(false);*/
                     /*                form.getControl("ts_overtime").setVisible(false);*/
                     form.getControl("ts_overtimerequired").setVisible(true);
                 }
@@ -94,6 +96,11 @@ var ROM;
                     // Hide overtime toggle for AvSec users in ROM20 form
                     if (isROM20Form) {
                         form.getControl("ts_overtimerequired").setVisible(false);
+                    }
+                    if (currentSystemStatus == 741130000 /* Closed */ || currentSystemStatus == 690970005 /* Cancelled */) {
+                        if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
+                            form.getControl("header_ts_recordstatus").setDisabled(true);
+                        }
                     }
                 }
                 //Set disabled false for quarter fields if ISSO
@@ -118,7 +125,6 @@ var ROM;
                 }
             });
             //Keep track of the current system status, to be used when cancelling a status change.
-            currentSystemStatus = form.getAttribute("ts_recordstatus").getValue();
             currentStatus = form.getAttribute("ts_state").getValue();
             form.getControl("ts_worklocation").removeOption(690970001); //Remove Facility Work Location Option
             //updateCaseView(eContext);
@@ -204,6 +210,7 @@ var ROM;
                         lookup[0].name = "Unplanned";
                         lookup[0].entityType = "ovs_tyrational";
                         form.getAttribute("ts_rational").setValue(lookup); //Unplanned
+                        //                setFiscalQuarter(form);
                         //                setFiscalQuarter(form);
                     }
                     // Disable all operation related fields
@@ -375,6 +382,10 @@ var ROM;
                     restrictEditRightReportDetails(eContext, subgridAdditionalInspectors);
                 });
             }
+            //Lock Cancelled Inspection Justification field if WO is cancelled        
+            if (currentSystemStatus == 690970005 /* Cancelled */) {
+                form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
+            }
             //  unlockRecordLogFieldsIfUserIsSystemAdmin(form);
             RemoveOptionCancel(eContext);
             showRationaleField(form, UNPLANNED_CATEGORY_ID);
@@ -427,6 +438,7 @@ var ROM;
         function onSave(eContext) {
             var form = eContext.getFormContext();
             var systemStatus = form.getAttribute("ts_recordstatus").getValue();
+            var cancelledInspectionJustification = form.getAttribute("ts_cancelledinspectionjustification").getValue();
             var workOrderServiceTaskData;
             if (systemStatus == 690970004 /* ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
                 workOrderServiceTaskData =
@@ -442,6 +454,10 @@ var ROM;
             //Check if the Work Order is past the Planned Fiscal Quarter
             //  setCantCompleteinspectionVisibility(form);
             //Post a note on ScheduledQuarter Change
+            if (cancelledInspectionJustification != null) {
+                form.getAttribute("ts_recordstatus").setValue(690970005 /* Cancelled */);
+                form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
+            }
             //  postNoteOnScheduledQuarterChange(form);
         }
         UnplannedWorkOrder.onSave = onSave;
@@ -707,6 +723,19 @@ var ROM;
                         //setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
                     }
                     showHideContact(form);
+                    //} else if (isFromCase) {
+                    //    populateOperationField(eContext);
+                    //} else if (isFromSecurityIncident) {
+                    //    //const workOrderTypeAttributeValue = workOrderTypeAttribute.getValue();
+                    //    //const regionAttributeValue = regionAttribute.getValue();
+                    //    //const operationTypeAttributeValue = operationTypeAttribute.getValue();
+                    //    //if (regionAttributeValue != null && regionAttributeValue != undefined &&
+                    //    //    operationTypeAttributeValue != null && operationTypeAttributeValue != undefined &&
+                    //    //    workOrderTypeAttributeValue != null && workOrderTypeAttributeValue != undefined) {
+                    //    //    var countryCondition = getCountryFetchXmlCondition(form);
+                    //    //    setTradeViewFilteredView(form, regionAttributeValue[0].id, countryCondition, workOrderTypeAttributeValue[0].id, "", "", operationTypeAttributeValue[0].id);
+                    //    //}
+                    //    //form.getControl("ts_site").setDisabled(false);
                     //} else if (isFromCase) {
                     //    populateOperationField(eContext);
                     //} else if (isFromSecurityIncident) {

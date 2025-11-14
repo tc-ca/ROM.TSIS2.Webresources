@@ -26,11 +26,11 @@ function userHasRole(rolesName) {
   return hasRole;
 }
 
-//Used to lock specific fields in editable grids
+// Used to lock specific fields in editable grids
 function lockFields(executionContext, fields) {
   let formContext = executionContext.getFormContext();
   let planStatusValue = parent.Xrm.Page.getAttribute("ts_planstatus").getValue();
-  //If Team Plannig Data set to Complete or HQReview block additional fields
+  // If Team Planning Data set to Complete or HQReview block additional fields
   if (planStatusValue == 741130001 || planStatusValue == 447390001) {
     fields.push(
       "ts_teamestimatedduration",
@@ -45,7 +45,7 @@ function lockFields(executionContext, fields) {
 
   if (formContext) {
     let entity = formContext.data.entity;
-    entity.attributes.forEach(function (attribute, i) {
+    entity.attributes.forEach(function (attribute) {
       if (fields.indexOf(attribute.getName()) > -1) {
         let attributeToDisable = attribute.controls.get(0);
         attributeToDisable.setDisabled(true);
@@ -53,16 +53,17 @@ function lockFields(executionContext, fields) {
     });
   }
 }
-//Used to lock specific fields in editable grids
+
+// Used to lock specific fields in editable grids
 function lockFieldsInspectorHoursEditableGrid(executionContext) {
   let formContext = executionContext.getFormContext();
   fields = ["ts_varianceq1", "ts_varianceq2", "ts_varianceq3", "ts_varianceq4"];
   let planStatusValue = parent.Xrm.Page.getAttribute("ts_planstatus").getValue();
-  //If Team Plannig Data set to Complete or HQReview block fields
+  // If Team Planning Data set to Complete or HQReview block fields
   if (planStatusValue == 741130001 || planStatusValue == 447390001) {
     if (formContext) {
       let entity = formContext.data.entity;
-      entity.attributes.forEach(function (attribute, i) {
+      entity.attributes.forEach(function (attribute) {
         if (fields.indexOf(attribute.getName()) > -1) {
           let attributeToDisable = attribute.controls.get(0);
           attributeToDisable.setDisabled(true);
@@ -72,13 +73,13 @@ function lockFieldsInspectorHoursEditableGrid(executionContext) {
   }
 }
 
-//Used to lock specific fields in editable grids
+// Used to lock specific fields in editable grids
 function lockFieldsDutyInspectorsEditableGrid(executionContext) {
   let formContext = executionContext.getFormContext();
   fields = ["ts_startdate", "ts_enddate"];
   if (formContext) {
     let entity = formContext.data.entity;
-    entity.attributes.forEach(function (attribute, i) {
+    entity.attributes.forEach(function (attribute) {
       if (fields.indexOf(attribute.getName()) > -1) {
         let attributeToDisable = attribute.controls.get(0);
         attributeToDisable.setDisabled(true);
@@ -86,11 +87,13 @@ function lockFieldsDutyInspectorsEditableGrid(executionContext) {
     });
   }
 }
+
 function showButtonBasedOnPlanStatus(primaryControl) {
   var formContext = primaryControl;
   let planStatusValue = formContext.getAttribute("ts_planstatus").getValue();
   return !(planStatusValue == 741130001 || planStatusValue == 447390001);
 }
+
 function isFormTypeCreate() {
   return Xrm.Page.ui.getFormType() == 1;
 }
@@ -145,6 +148,7 @@ function openLookupModalDialogSecurityIncidentForm(executionContext) {
   formContext.getControl("ts_region").addOnLookupTagClick(onLookupClick);
   formContext.getControl("ts_site").addOnLookupTagClick(onLookupClick);
 }
+
 function onLookupClick(executionContext) {
   executionContext.getEventArgs().preventDefault();
   var record = executionContext.getEventArgs().getTagValue();
@@ -220,8 +224,8 @@ function setOwnerToUserBusinessUnit(formContext) {
             ownerAttribute.setValue([
               {
                 entityType: "team",
-                name: `${team.entities[0].name}`,
-                id: `${team.entities[0].teamid}`,
+                name: "" + team.entities[0].name + "",
+                id: "" + team.entities[0].teamid + "",
               },
             ]);
           }
@@ -292,7 +296,7 @@ function isUserInTeam(userId, teamId) {
     "</fetch>",
   ].join("");
 
-  return new Promise((resolve, reject) => {
+  return new Promise(function (resolve, reject) {
     Xrm.WebApi.retrieveMultipleRecords("team", "?fetchXml=" + encodeURIComponent(fetchXml))
       .then(function success(result) {
         resolve(result.entities.length > 0);
@@ -524,4 +528,37 @@ async function getISSOBUName() {
     }
   }
   return "Intermodal Surface Security Oversight";
+}
+
+/**
+ * Toggle a section in a tab based on the environment variable ts_TurnoffDocumentCentre
+ * @param {Xrm.ExecutionContext} executionContext - Form execution context
+ * @param {string} tabName - Name of the tab to toggle
+ * @param {string} sectionName - Name of the section to toggle
+ */
+async function toggleDocumentCenter(executionContext, tabName, sectionName) {
+  var form = executionContext.getFormContext();
+
+  var value = await getEnvironmentVariableValue("ts_TurnoffDocumentCentre");
+
+  var tab = form.ui.tabs.get(tabName);
+  var section = tab && tab.sections.get(sectionName);
+  if (!section) {
+    console.warn("Tab or section not found: " + tabName + ", " + sectionName);
+    return;
+  }
+
+  if (value === "yes") {
+    section.setVisible(false);
+    console.log("Turn off the Document Centre");
+  } else if (value === "no") {
+    section.setVisible(true);
+    var noticeControl = form.getControl("WebResource_NewDocumentCenterNotice");
+    if (noticeControl) {
+      noticeControl.setVisible(false);
+    }
+    console.log("Don't turn off the Document Centre");
+  } else {
+    console.log("Variable not found or invalid");
+  }
 }

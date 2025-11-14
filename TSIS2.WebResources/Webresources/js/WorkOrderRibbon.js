@@ -42,8 +42,8 @@ if (workorderRibbon_lang == 1036) {
  * @returns {boolean} - True if the current form matches the target form
  */
 function showAddExistingButton(primaryControl, targetFormId) {
-    const currentFormId = primaryControl.ui.formSelector.getCurrentItem().getId();
-    return currentFormId === targetFormId;
+  const currentFormId = primaryControl.ui.formSelector.getCurrentItem().getId();
+  return currentFormId === targetFormId;
 }
 function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, selectedControl) {
   const formContext = primaryControl;
@@ -423,9 +423,24 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
 
   const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
   const currentWorkOrderRecordOwnerId = Xrm.Page.ui.formContext.getAttribute("ownerid").getValue()[0].id;
-  const currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, "");
   const teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa";
-  const incidentTypeId = Xrm.Page.ui.formContext.getAttribute("msdyn_primaryincidenttype").getValue()[0].id;
+  // Determine the incident type (fallback from msdyn_primaryincidenttype (WO) to ts_primaryincidenttype (Unplanned WO))
+  let incidentTypeId = null;
+  let currentWorkOrderRecordId = null;
+  const primaryIncidentAttr = formContext.getAttribute("msdyn_primaryincidenttype");
+  if (primaryIncidentAttr && primaryIncidentAttr.getValue() && primaryIncidentAttr.getValue().length > 0) {
+    incidentTypeId = primaryIncidentAttr.getValue()[0].id.replace(/({|})/g, "");
+    currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, "");
+  } else {
+    const fallbackIncidentAttr = formContext.getAttribute("ts_primaryincidenttype");
+    if (fallbackIncidentAttr && fallbackIncidentAttr.getValue() && fallbackIncidentAttr.getValue().length > 0) {
+      incidentTypeId = fallbackIncidentAttr.getValue()[0].id.replace(/({|})/g, "");
+      const tsNameAttr = formContext.getAttribute("ts_workorder");
+      if (tsNameAttr && tsNameAttr.getValue() && tsNameAttr.getValue().length > 0) {
+        currentWorkOrderRecordId = tsNameAttr.getValue()[0].id.replace(/({|})/g, "");
+      }
+    }
+  }
 
   //Identify WO (ISSO or AvSec) with the activity type field
   var incidentTypeOwnerFetchXML = [
@@ -737,72 +752,87 @@ function isTeamOrPlanContext(primaryControl) {
     } else {
       return false; // No context available
     }
-<<<<<<< Updated upstream
+
+    var entityName = null;
+    if (formContext.data && formContext.data.entity) {
+      if (typeof formContext.data.entity.getEntityName === "function") {
+        entityName = formContext.data.entity.getEntityName();
+      } else if (formContext.data.entity.entityName) {
+        entityName = formContext.data.entity.entityName;
+      }
+    }
+
+    return entityName === "ts_teamplanningdata" || entityName === "ts_plan";
+  } catch (e) {
+    return false;
+  }
 }
 
 function openUnplannedWorkOrderForm() {
-
-    // Open Unplanned Work Order form
-    Xrm.Navigation.openForm({
-        entityName: "ts_unplannedworkorder",
-        useQuickCreateForm: false,
-        formId: "f3f01c33-c5b2-4835-a141-db032f3869a6"
-
-    });
+  // Open Unplanned Work Order form
+  Xrm.Navigation.openForm({
+    entityName: "ts_unplannedworkorder",
+    useQuickCreateForm: false,
+    formId: "f3f01c33-c5b2-4835-a141-db032f3869a6",
+  });
 }
 function editUnplannedWorkOrder(primaryControl) {
-    const formContext = primaryControl;
-    const currentWorkOrderId = formContext.data.entity.getId().replace(/({|})/g, '');
-    var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
+  const formContext = primaryControl;
+  const currentWorkOrderId = formContext.data.entity.getId().replace(/({|})/g, "");
+  var lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
 
-    // Retrieve the related ts_unplannedworkorder using the ts_workorder relationship field
-    Xrm.WebApi.retrieveMultipleRecords("ts_unplannedworkorder", `?$select=ts_unplannedworkorderid&$filter=_ts_workorder_value eq '${currentWorkOrderId}'`).then(
-        function success(result) {
-            if (result.entities.length > 0) {
-                // Find and open related unplanned work order in a modal window
-                const unplannedWorkOrderId = result.entities[0].ts_unplannedworkorderid;
+  // Retrieve the related ts_unplannedworkorder using the ts_workorder relationship field
+  Xrm.WebApi.retrieveMultipleRecords(
+    "ts_unplannedworkorder",
+    `?$select=ts_unplannedworkorderid&$filter=_ts_workorder_value eq '${currentWorkOrderId}'`
+  ).then(
+    function success(result) {
+      if (result.entities.length > 0) {
+        // Find and open related unplanned work order in a modal window
+        const unplannedWorkOrderId = result.entities[0].ts_unplannedworkorderid;
 
-                const pageInput = {
-                    pageType: "entityrecord",
-                    entityName: "ts_unplannedworkorder",
-                    entityId: unplannedWorkOrderId,
-                    formType: 2,
-                    useQuickCreateForm: true
-                };
+        const pageInput = {
+          pageType: "entityrecord",
+          entityName: "ts_unplannedworkorder",
+          entityId: unplannedWorkOrderId,
+          formType: 2,
+          useQuickCreateForm: true,
+        };
 
-                const navigationOptions = {
-                    target: 2,
-                    width: { value: 80, unit: "%" },
-                    height: { value: 80, unit: "%" },
-                    position: 1
-                };
+        const navigationOptions = {
+          target: 2,
+          width: { value: 80, unit: "%" },
+          height: { value: 80, unit: "%" },
+          position: 1,
+        };
 
-                Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
-                    function success(result) {
-                        console.log("Modal opened successfully");
-                        // Refresh the form after modal closes
-                        formContext.data.refresh();
-                    },
-                    function error(err) {
-                        console.error("Error opening modal:", err);
-                        showErrorMessageAlert(err);
-                    }
-                );
-            } else {
-                // No related unplanned work order found, show alert
-                var alertStrings = {
-                    text: (lang == 1036) ?
-                        "Aucun ordre de travail non planifié associé trouvé pour cet ordre de travail." :
-                        "No related unplanned work order found for this work order.",
-                    title: (lang == 1036) ? "Aucun enregistrement trouvé" : "No Record Found"
-                };
-                var alertOptions = { height: 120, width: 350 };
-                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
-            }
-        },
-        function error(err) {
-            console.error("Error retrieving unplanned work order:", err);
+        Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+          function success(result) {
+            console.log("Modal opened successfully");
+            // Refresh the form after modal closes
+            formContext.data.refresh();
+          },
+          function error(err) {
+            console.error("Error opening modal:", err);
             showErrorMessageAlert(err);
-        }
-    );
+          }
+        );
+      } else {
+        // No related unplanned work order found, show alert
+        var alertStrings = {
+          text:
+            lang == 1036
+              ? "Aucun ordre de travail non planifié associé trouvé pour cet ordre de travail."
+              : "No related unplanned work order found for this work order.",
+          title: lang == 1036 ? "Aucun enregistrement trouvé" : "No Record Found",
+        };
+        var alertOptions = { height: 120, width: 350 };
+        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+      }
+    },
+    function error(err) {
+      console.error("Error retrieving unplanned work order:", err);
+      showErrorMessageAlert(err);
+    }
+  );
 }
