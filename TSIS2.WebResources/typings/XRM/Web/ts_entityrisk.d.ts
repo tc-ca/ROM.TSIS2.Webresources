@@ -32,6 +32,7 @@ interface ts_EntityRisk_Relationships {
   ts_EntityRisk_ovs_operation_ovs_operation?: ovs_operation_Result[] | null;
   ts_EntityRisk_ovs_operationtype_ovs_operationtype?: ovs_operationtype_Result[] | null;
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
+  ts_PrescribedFrequencyOverride?: ts_PrescribedFrequencyOverride_Result | null;
   ts_RiskApplicationOperationType?: ovs_operationtype_Result | null;
   ts_operationactivityriskscores_ActivityTypeEntityRisk_ts_entityrisk?: ts_OperationActivityRiskScores_Result[] | null;
   ts_operationactivityriskscores_OperationEntityRisk_ts_entityrisk?: ts_OperationActivityRiskScores_Result[] | null;
@@ -139,6 +140,7 @@ interface ts_EntityRisk_Expand {
   modifiedby: WebExpand<ts_EntityRisk_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ts_EntityRisk_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ownerid: WebExpand<ts_EntityRisk_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningbusinessunit: WebExpand<ts_EntityRisk_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<ts_EntityRisk_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_EntityRisk_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_EntityRisk_Account_Account: WebExpand<ts_EntityRisk_Expand, Account_Select, Account_Filter, { ts_EntityRisk_Account_Account: Account_Result[] }>;
@@ -147,6 +149,7 @@ interface ts_EntityRisk_Expand {
   ts_EntityRisk_ovs_operation_ovs_operation: WebExpand<ts_EntityRisk_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_EntityRisk_ovs_operation_ovs_operation: ovs_operation_Result[] }>;
   ts_EntityRisk_ovs_operationtype_ovs_operationtype: WebExpand<ts_EntityRisk_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_EntityRisk_ovs_operationtype_ovs_operationtype: ovs_operationtype_Result[] }>;
   ts_FiscalYear: WebExpand<ts_EntityRisk_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
+  ts_PrescribedFrequencyOverride: WebExpand<ts_EntityRisk_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { ts_PrescribedFrequencyOverride: ts_PrescribedFrequencyOverride_Result }>;
   ts_RiskApplicationOperationType: WebExpand<ts_EntityRisk_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_RiskApplicationOperationType: ovs_operationtype_Result }>;
   ts_operationactivityriskscores_ActivityTypeEntityRisk_ts_entityrisk: WebExpand<ts_EntityRisk_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_ActivityTypeEntityRisk_ts_entityrisk: ts_OperationActivityRiskScores_Result[] }>;
   ts_operationactivityriskscores_OperationEntityRisk_ts_entityrisk: WebExpand<ts_EntityRisk_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_OperationEntityRisk_ts_entityrisk: ts_OperationActivityRiskScores_Result[] }>;
@@ -198,9 +201,11 @@ interface ts_EntityRisk_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  ts_PrescribedFrequencyOverride: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
   ts_RiskApplicationOperationType: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
 }
 interface ts_EntityRisk_RelatedMany {

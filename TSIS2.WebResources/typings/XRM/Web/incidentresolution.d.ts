@@ -57,6 +57,7 @@ interface IncidentResolution_Relationships {
   modifiedonbehalfby_incidentresolution?: SystemUser_Result | null;
   ownerid_incidentresolution?: Team_Result | null;
   ownerid_incidentresolution1?: SystemUser_Result | null;
+  owningbusinessunit_incidentresolution?: BusinessUnit_Result | null;
   owningteam_incidentresolution?: Team_Result | null;
   owninguser_incidentresolution?: SystemUser_Result | null;
   regardingobjectid_account_incidentresolution?: Account_Result | null;
@@ -251,6 +252,7 @@ interface IncidentResolution_Expand {
   modifiedby_incidentresolution: WebExpand<IncidentResolution_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby_incidentresolution: SystemUser_Result }>;
   modifiedonbehalfby_incidentresolution: WebExpand<IncidentResolution_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_incidentresolution: SystemUser_Result }>;
   ownerid_incidentresolution: WebExpand<IncidentResolution_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid_incidentresolution: SystemUser_Result } & { ownerid_incidentresolution: Team_Result }>;
+  owningbusinessunit_incidentresolution: WebExpand<IncidentResolution_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit_incidentresolution: BusinessUnit_Result }>;
   owningteam_incidentresolution: WebExpand<IncidentResolution_Expand, Team_Select, Team_Filter, { owningteam_incidentresolution: Team_Result }>;
   owninguser_incidentresolution: WebExpand<IncidentResolution_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_incidentresolution: SystemUser_Result }>;
   regardingobjectid_account_incidentresolution: WebExpand<IncidentResolution_Expand, Account_Select, Account_Filter, { regardingobjectid_account_incidentresolution: Account_Result }>;
@@ -343,6 +345,7 @@ interface IncidentResolution_RelatedOne {
   modifiedonbehalfby_incidentresolution: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid_incidentresolution: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ownerid_incidentresolution1: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
+  owningbusinessunit_incidentresolution: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam_incidentresolution: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser_incidentresolution: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   regardingobjectid_account_incidentresolution: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;

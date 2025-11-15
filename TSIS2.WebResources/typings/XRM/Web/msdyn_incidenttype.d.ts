@@ -80,6 +80,7 @@ interface msdyn_incidenttype_Relationships {
   ts_incident_InspectionType1_msdyn_incidentty?: Incident_Result[] | null;
   ts_incident_InspectionType2_msdyn_incidentty?: Incident_Result[] | null;
   ts_ovs_operationtypes_msdyn_incidenttypes?: ovs_operationtype_Result[] | null;
+  ts_prescribedfrequencyoverride_ActivityType_msdyn_incidenttype?: ts_PrescribedFrequencyOverride_Result[] | null;
   ts_questionnaireresponse_ActivityType_msdyn_incidenttype?: ts_questionnaireresponse_Result[] | null;
   ts_suggestedinspection_activitytype?: ts_SuggestedInspection_Result[] | null;
   ts_ts_case_InspectionType1_msdyn_incidentty?: ts_case_Result[] | null;
@@ -283,6 +284,7 @@ interface msdyn_incidenttype_Expand {
   msdyn_msdyn_incidenttype_msdyn_incidenttypeservicetask_IncidentType: WebExpand<msdyn_incidenttype_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { msdyn_msdyn_incidenttype_msdyn_incidenttypeservicetask_IncidentType: msdyn_incidenttypeservicetask_Result[] }>;
   msdyn_msdyn_incidenttype_msdyn_workorder_PrimaryIncidentType: WebExpand<msdyn_incidenttype_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_msdyn_incidenttype_msdyn_workorder_PrimaryIncidentType: msdyn_workorder_Result[] }>;
   ownerid: WebExpand<msdyn_incidenttype_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningbusinessunit: WebExpand<msdyn_incidenttype_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<msdyn_incidenttype_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<msdyn_incidenttype_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype: WebExpand<msdyn_incidenttype_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { ts_EntityRisk_msdyn_incidenttype_msdyn_incidenttype: ts_EntityRisk_Result[] }>;
@@ -291,6 +293,7 @@ interface msdyn_incidenttype_Expand {
   ts_incident_InspectionType2_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, Incident_Select, Incident_Filter, { ts_incident_InspectionType2_msdyn_incidentty: Incident_Result[] }>;
   ts_ovs_operation: WebExpand<msdyn_incidenttype_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_ovs_operation: ovs_operation_Result }>;
   ts_ovs_operationtypes_msdyn_incidenttypes: WebExpand<msdyn_incidenttype_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_ovs_operationtypes_msdyn_incidenttypes: ovs_operationtype_Result[] }>;
+  ts_prescribedfrequencyoverride_ActivityType_msdyn_incidenttype: WebExpand<msdyn_incidenttype_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { ts_prescribedfrequencyoverride_ActivityType_msdyn_incidenttype: ts_PrescribedFrequencyOverride_Result[] }>;
   ts_questionnaireresponse_ActivityType_msdyn_incidenttype: WebExpand<msdyn_incidenttype_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { ts_questionnaireresponse_ActivityType_msdyn_incidenttype: ts_questionnaireresponse_Result[] }>;
   ts_suggestedinspection_activitytype: WebExpand<msdyn_incidenttype_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_suggestedinspection_activitytype: ts_SuggestedInspection_Result[] }>;
   ts_ts_case_InspectionType1_msdyn_incidentty: WebExpand<msdyn_incidenttype_Expand, ts_case_Select, ts_case_Filter, { ts_ts_case_InspectionType1_msdyn_incidentty: ts_case_Result[] }>;
@@ -345,6 +348,7 @@ interface msdyn_incidenttype_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_ovs_operation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;
@@ -360,6 +364,7 @@ interface msdyn_incidenttype_RelatedMany {
   ts_incident_InspectionType1_msdyn_incidentty: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_incident_InspectionType2_msdyn_incidentty: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_ovs_operationtypes_msdyn_incidenttypes: WebMappingRetrieve<ovs_operationtype_Select,ovs_operationtype_Expand,ovs_operationtype_Filter,ovs_operationtype_Fixed,ovs_operationtype_Result,ovs_operationtype_FormattedResult>;
+  ts_prescribedfrequencyoverride_ActivityType_msdyn_incidenttype: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
   ts_questionnaireresponse_ActivityType_msdyn_incidenttype: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
   ts_suggestedinspection_activitytype: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
   ts_ts_case_InspectionType1_msdyn_incidentty: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;

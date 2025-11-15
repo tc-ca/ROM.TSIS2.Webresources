@@ -176,6 +176,7 @@ interface Account_Relationships {
   SourceAccount_BulkOperationLogs?: BulkOperationLog_Result[] | null;
   account_IncidentResolutions?: IncidentResolution_Result[] | null;
   account_PostFollows?: PostFollow_Result[] | null;
+  account_Posts?: Post_Result[] | null;
   account_Teams?: Team_Result[] | null;
   account_activity_parties?: ActivityParty_Result[] | null;
   account_bookableresource_AccountId?: BookableResource_Result[] | null;
@@ -195,6 +196,7 @@ interface Account_Relationships {
   msdyn_account_msdyn_workorder_BillingAccount?: msdyn_workorder_Result[] | null;
   msdyn_account_msdyn_workorder_ServiceAccount?: msdyn_workorder_Result[] | null;
   msdyn_billingaccount_account?: Account_Result | null;
+  msdyn_dcaengageagentresult_regarding_account?: msdyn_dcaengageagentresult_Result[] | null;
   msdyn_msdyn_functionallocation_account?: msdyn_FunctionalLocation_Result[] | null;
   ts_EntityRisk_Account_Account?: ts_EntityRisk_Result[] | null;
   ts_File_Stakeholder_Account?: ts_File_Result[] | null;
@@ -688,6 +690,7 @@ interface Account_Expand {
   SourceAccount_BulkOperationLogs: WebExpand<Account_Expand, BulkOperationLog_Select, BulkOperationLog_Filter, { SourceAccount_BulkOperationLogs: BulkOperationLog_Result[] }>;
   account_IncidentResolutions: WebExpand<Account_Expand, IncidentResolution_Select, IncidentResolution_Filter, { account_IncidentResolutions: IncidentResolution_Result[] }>;
   account_PostFollows: WebExpand<Account_Expand, PostFollow_Select, PostFollow_Filter, { account_PostFollows: PostFollow_Result[] }>;
+  account_Posts: WebExpand<Account_Expand, Post_Select, Post_Filter, { account_Posts: Post_Result[] }>;
   account_Teams: WebExpand<Account_Expand, Team_Select, Team_Filter, { account_Teams: Team_Result[] }>;
   account_activity_parties: WebExpand<Account_Expand, ActivityParty_Select, ActivityParty_Filter, { account_activity_parties: ActivityParty_Result[] }>;
   account_bookableresource_AccountId: WebExpand<Account_Expand, BookableResource_Select, BookableResource_Filter, { account_bookableresource_AccountId: BookableResource_Result[] }>;
@@ -714,8 +717,10 @@ interface Account_Expand {
   msdyn_account_msdyn_workorder_ServiceAccount: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_account_msdyn_workorder_ServiceAccount: msdyn_workorder_Result[] }>;
   msdyn_accountkpiid: WebExpand<Account_Expand, msdyn_accountkpiitem_Select, msdyn_accountkpiitem_Filter, { msdyn_accountkpiid: msdyn_accountkpiitem_Result }>;
   msdyn_billingaccount_account: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_billingaccount_account: Account_Result }>;
+  msdyn_dcaengageagentresult_regarding_account: WebExpand<Account_Expand, msdyn_dcaengageagentresult_Select, msdyn_dcaengageagentresult_Filter, { msdyn_dcaengageagentresult_regarding_account: msdyn_dcaengageagentresult_Result[] }>;
   msdyn_msdyn_functionallocation_account: WebExpand<Account_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_msdyn_functionallocation_account: msdyn_FunctionalLocation_Result[] }>;
   ownerid: WebExpand<Account_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningbusinessunit: WebExpand<Account_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<Account_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<Account_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   parentaccountid: WebExpand<Account_Expand, Account_Select, Account_Filter, { parentaccountid: Account_Result }>;
@@ -904,6 +909,7 @@ interface Account_RelatedOne {
   msdyn_accountkpiid: WebMappingRetrieve<msdyn_accountkpiitem_Select,msdyn_accountkpiitem_Expand,msdyn_accountkpiitem_Filter,msdyn_accountkpiitem_Fixed,msdyn_accountkpiitem_Result,msdyn_accountkpiitem_FormattedResult>;
   msdyn_billingaccount_account: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   parentaccountid: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
@@ -922,6 +928,7 @@ interface Account_RelatedMany {
   SourceAccount_BulkOperationLogs: WebMappingRetrieve<BulkOperationLog_Select,BulkOperationLog_Expand,BulkOperationLog_Filter,BulkOperationLog_Fixed,BulkOperationLog_Result,BulkOperationLog_FormattedResult>;
   account_IncidentResolutions: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   account_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
+  account_Posts: WebMappingRetrieve<Post_Select,Post_Expand,Post_Filter,Post_Fixed,Post_Result,Post_FormattedResult>;
   account_Teams: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   account_activity_parties: WebMappingRetrieve<ActivityParty_Select,ActivityParty_Expand,ActivityParty_Filter,ActivityParty_Fixed,ActivityParty_Result,ActivityParty_FormattedResult>;
   account_bookableresource_AccountId: WebMappingRetrieve<BookableResource_Select,BookableResource_Expand,BookableResource_Filter,BookableResource_Fixed,BookableResource_Result,BookableResource_FormattedResult>;
@@ -939,6 +946,7 @@ interface Account_RelatedMany {
   msdyn_account_msdyn_customerasset_Account: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_account_msdyn_workorder_BillingAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  msdyn_dcaengageagentresult_regarding_account: WebMappingRetrieve<msdyn_dcaengageagentresult_Select,msdyn_dcaengageagentresult_Expand,msdyn_dcaengageagentresult_Filter,msdyn_dcaengageagentresult_Fixed,msdyn_dcaengageagentresult_Result,msdyn_dcaengageagentresult_FormattedResult>;
   msdyn_msdyn_functionallocation_account: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_EntityRisk_Account_Account: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   ts_File_Stakeholder_Account: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;

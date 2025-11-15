@@ -26,6 +26,7 @@ interface tc_TCFiscalYear_Relationships {
   ts_entityriskfrequency_FiscalYear_tc_tcfiscalyear?: ts_EntityRiskFrequency_Result[] | null;
   ts_operationactivityriskscores_FiscalYear_tc_tcfiscalyear?: ts_OperationActivityRiskScores_Result[] | null;
   ts_plan_fiscalyear?: ts_Plan_Result[] | null;
+  ts_prescribedfrequencyoverride_FiscalYear_tc_tcfiscalyear?: ts_PrescribedFrequencyOverride_Result[] | null;
   ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear?: ts_nonoversightactivity_Result[] | null;
   ts_tc_tcfiscalyear_ts_trip_FiscalYear?: ts_trip_Result[] | null;
   ts_ts_planningdata_FiscalYear_tc_tcfiscalyea?: ts_PlanningData_Result[] | null;
@@ -101,6 +102,7 @@ interface tc_TCFiscalYear_Expand {
   ovs_msdyn_workorder_FiscalYear_tc_TCFiscalYea: WebExpand<tc_TCFiscalYear_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ovs_msdyn_workorder_FiscalYear_tc_TCFiscalYea: msdyn_workorder_Result[] }>;
   ovs_tc_tcfiscalyear_bookableresourcebooking: WebExpand<tc_TCFiscalYear_Expand, BookableResourceBooking_Select, BookableResourceBooking_Filter, { ovs_tc_tcfiscalyear_bookableresourcebooking: BookableResourceBooking_Result[] }>;
   ownerid: WebExpand<tc_TCFiscalYear_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningbusinessunit: WebExpand<tc_TCFiscalYear_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<tc_TCFiscalYear_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<tc_TCFiscalYear_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   tc_TCFiscalQuarter_TCFiscalYear: WebExpand<tc_TCFiscalYear_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { tc_TCFiscalQuarter_TCFiscalYear: tc_TCFiscalQuarter_Result[] }>;
@@ -109,6 +111,7 @@ interface tc_TCFiscalYear_Expand {
   ts_entityriskfrequency_FiscalYear_tc_tcfiscalyear: WebExpand<tc_TCFiscalYear_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { ts_entityriskfrequency_FiscalYear_tc_tcfiscalyear: ts_EntityRiskFrequency_Result[] }>;
   ts_operationactivityriskscores_FiscalYear_tc_tcfiscalyear: WebExpand<tc_TCFiscalYear_Expand, ts_OperationActivityRiskScores_Select, ts_OperationActivityRiskScores_Filter, { ts_operationactivityriskscores_FiscalYear_tc_tcfiscalyear: ts_OperationActivityRiskScores_Result[] }>;
   ts_plan_fiscalyear: WebExpand<tc_TCFiscalYear_Expand, ts_Plan_Select, ts_Plan_Filter, { ts_plan_fiscalyear: ts_Plan_Result[] }>;
+  ts_prescribedfrequencyoverride_FiscalYear_tc_tcfiscalyear: WebExpand<tc_TCFiscalYear_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { ts_prescribedfrequencyoverride_FiscalYear_tc_tcfiscalyear: ts_PrescribedFrequencyOverride_Result[] }>;
   ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear: WebExpand<tc_TCFiscalYear_Expand, ts_nonoversightactivity_Select, ts_nonoversightactivity_Filter, { ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear: ts_nonoversightactivity_Result[] }>;
   ts_tc_tcfiscalyear_ts_trip_FiscalYear: WebExpand<tc_TCFiscalYear_Expand, ts_trip_Select, ts_trip_Filter, { ts_tc_tcfiscalyear_ts_trip_FiscalYear: ts_trip_Result[] }>;
   ts_ts_planningdata_FiscalYear_tc_tcfiscalyea: WebExpand<tc_TCFiscalYear_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_FiscalYear_tc_tcfiscalyea: ts_PlanningData_Result[] }>;
@@ -149,6 +152,7 @@ interface tc_TCFiscalYear_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
 }
@@ -161,6 +165,7 @@ interface tc_TCFiscalYear_RelatedMany {
   ts_entityriskfrequency_FiscalYear_tc_tcfiscalyear: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
   ts_operationactivityriskscores_FiscalYear_tc_tcfiscalyear: WebMappingRetrieve<ts_OperationActivityRiskScores_Select,ts_OperationActivityRiskScores_Expand,ts_OperationActivityRiskScores_Filter,ts_OperationActivityRiskScores_Fixed,ts_OperationActivityRiskScores_Result,ts_OperationActivityRiskScores_FormattedResult>;
   ts_plan_fiscalyear: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
+  ts_prescribedfrequencyoverride_FiscalYear_tc_tcfiscalyear: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
   ts_tc_tcfiscalyear_ts_nonoversightactivity_FiscalYear: WebMappingRetrieve<ts_nonoversightactivity_Select,ts_nonoversightactivity_Expand,ts_nonoversightactivity_Filter,ts_nonoversightactivity_Fixed,ts_nonoversightactivity_Result,ts_nonoversightactivity_FormattedResult>;
   ts_tc_tcfiscalyear_ts_trip_FiscalYear: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   ts_ts_planningdata_FiscalYear_tc_tcfiscalyea: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
