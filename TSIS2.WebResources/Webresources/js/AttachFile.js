@@ -23,8 +23,8 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
     recordTagId = PrimaryControl.data.entity.getId().replace("{", "").replace("}", "");
 
-    const PROD_URL = "https://romts-gsrst-tcd365.crm3.dynamics.com";
-    const appUrl = Xrm.Utility.getGlobalContext().getClientUrl();
+    //const PROD_URL = "https://romts-gsrst-tcd365.crm3.dynamics.com";
+    //const appUrl = Xrm.Utility.getGlobalContext().getClientUrl();
 
     //Get the FetchXml to use
     let recordOwnerFetchXML = getFetchXmlForRecordOwner(PrimaryTypeEntityName, recordTagId);
@@ -38,6 +38,9 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
     let invalidOwnerMessageEnglish = "The record has an invalid owner.  It must belong to Aviation Security or Intermodal Surface Security Oversight.";
 
     let invalidOwnerMessageFrench = "L'enregistrement a un propriétaire invalide. Il doit appartenir à Aviation Security ou Intermodal Surface Security Oversight.";
+
+    // Wait for securityToken and flowURL to be retrieved
+    var turnOffDocumentCentre = await getEnvironmentVariableByName("ts_TurnoffDocumentCentre");
 
     parent.Xrm.WebApi.retrieveMultipleRecords(PrimaryTypeEntityName, "?fetchXml=" + encodedRecordOwnerFetchXML).then(
         function success(result) {
@@ -57,8 +60,8 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
                 if (fileUploadData.validOwner == true) {
                     //if (fileUploadData.usesGroupFiles == true) {
-                    // check if it's PROD
-                    if (appUrl !== PROD_URL) {
+                 
+                    if (turnOffDocumentCentre) {
                         // get the users Email address
                         getUsersEmail(fileUploadData)
                             .then(() => {
@@ -515,6 +518,43 @@ function getUsersEmail(fileUploadData) {
             }
         );
     });
+}
+
+async function getEnvironmentVariableByName(variableName) {
+    let variableValue = "";
+
+    const fetchXML = `
+                                                                                        <fetch>
+                                                                                            <entity name="environmentvariablevalue">
+                                                                                                <attribute name="value" />
+                                                                                                <link-entity name="environmentvariabledefinition" to="environmentvariabledefinitionid" from="environmentvariabledefinitionid" alias="environmentvariabledefinition" link-type="inner">
+                                                                                                    <filter>
+                                                                                                        <condition attribute="schemaname" operator="eq" value="${variableName}" />
+                                                                                                    </filter>
+                                                                                                </link-entity>
+                                                                                            </entity>
+                                                                                        </fetch>
+                                                                                    `;
+
+    const encodedFetchXml = encodeURIComponent(fetchXML);
+
+    while (true) {
+        try {
+            const result = await parent.Xrm.WebApi.retrieveMultipleRecords("environmentvariablevalue", "?fetchXml=" + encodedFetchXml);
+            if (result.entities.length > 0) {
+                variableValue = result.entities[0].value;
+                return variableValue;
+            } else {
+                console.log(`Environment variable ${variableName} not found.`);
+                return variableValue;
+            }
+        } catch (error) {
+            console.error("Error retrieving environment variable: " + error.message);
+            throw error;
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 500)); // wait for 500ms before next check
+    }
 }
 
 
