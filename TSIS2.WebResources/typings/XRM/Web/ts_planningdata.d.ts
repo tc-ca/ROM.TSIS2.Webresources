@@ -20,6 +20,7 @@ interface ts_PlanningData_Base extends WebEntity {
   ts_englishname?: string | null;
   ts_frenchname?: string | null;
   ts_generationlog?: string | null;
+  ts_is5yearplanning?: boolean | null;
   ts_keephidden?: boolean | null;
   ts_name?: string | null;
   ts_nullnumber?: number | null;
@@ -109,6 +110,7 @@ interface ts_PlanningData_Select {
   ts_fiscalyear_guid: WebAttribute<ts_PlanningData_Select, { ts_fiscalyear_guid: string | null }, { ts_fiscalyear_formatted?: string }>;
   ts_frenchname: WebAttribute<ts_PlanningData_Select, { ts_frenchname: string | null }, {  }>;
   ts_generationlog: WebAttribute<ts_PlanningData_Select, { ts_generationlog: string | null }, {  }>;
+  ts_is5yearplanning: WebAttribute<ts_PlanningData_Select, { ts_is5yearplanning: boolean | null }, {  }>;
   ts_keephidden: WebAttribute<ts_PlanningData_Select, { ts_keephidden: boolean | null }, {  }>;
   ts_name: WebAttribute<ts_PlanningData_Select, { ts_name: string | null }, {  }>;
   ts_nullnumber: WebAttribute<ts_PlanningData_Select, { ts_nullnumber: number | null }, {  }>;
@@ -173,6 +175,7 @@ interface ts_PlanningData_Filter {
   ts_fiscalyear_guid: XQW.Guid;
   ts_frenchname: string;
   ts_generationlog: string;
+  ts_is5yearplanning: boolean;
   ts_keephidden: boolean;
   ts_name: string;
   ts_nullnumber: number;

@@ -65,6 +65,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
       get(name: "ts_servicerequest"): Xrm.LookupAttribute<"incident">;
       get(name: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+      get(name: "ts_skipplugin"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
       get(name: "ts_state"): Xrm.OptionSetAttribute<ts_planningstate>;
       get(name: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -126,6 +127,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
       get(name: "ts_servicerequest"): Xrm.LookupControl<"incident">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+      get(name: "ts_skipplugin"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
       get(name: "ts_state"): Xrm.OptionSetControl<ts_planningstate>;
       get(name: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;
@@ -191,6 +193,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getAttribute(attributeName: "ts_securityincident"): Xrm.LookupAttribute<"ts_securityincident">;
     getAttribute(attributeName: "ts_servicerequest"): Xrm.LookupAttribute<"incident">;
     getAttribute(attributeName: "ts_site"): Xrm.LookupAttribute<"msdyn_functionallocation">;
+    getAttribute(attributeName: "ts_skipplugin"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_stakeholder"): Xrm.LookupAttribute<"account">;
     getAttribute(attributeName: "ts_state"): Xrm.OptionSetAttribute<ts_planningstate>;
     getAttribute(attributeName: "ts_subsubsite"): Xrm.LookupAttribute<"msdyn_functionallocation">;
@@ -247,6 +250,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
     getControl(controlName: "ts_servicerequest"): Xrm.LookupControl<"incident">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
+    getControl(controlName: "ts_skipplugin"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
     getControl(controlName: "ts_state"): Xrm.OptionSetControl<ts_planningstate>;
     getControl(controlName: "ts_subsubsite"): Xrm.LookupControl<"msdyn_functionallocation">;

@@ -146,6 +146,6 @@ declare const enum connection_record2objecttypecode {
   Shortcut = 11513,
   Website = 11525,
   CaseNew = 11775,
-  UnplannedWorkOrder = 11814,
+  WorkOrderWorkspace = 11814,
   File = 11964,
 }
