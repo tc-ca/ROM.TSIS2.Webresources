@@ -28,6 +28,7 @@ interface ts_unplannedworkorder_Base extends WebEntity {
   ts_recordstatus?: msdyn_wosystemstatus | null;
   ts_reportdetails?: string | null;
   ts_scheduledquarterjustificationcomment?: string | null;
+  ts_skipplugin?: boolean | null;
   ts_state?: ts_planningstate | null;
   ts_totalconductoversight?: number | null;
   ts_totalconductoversight_date?: Date | null;
@@ -153,6 +154,7 @@ interface ts_unplannedworkorder_Select {
   ts_securityincident_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_securityincident_guid: string | null }, { ts_securityincident_formatted?: string }>;
   ts_servicerequest_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_servicerequest_guid: string | null }, { ts_servicerequest_formatted?: string }>;
   ts_site_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
+  ts_skipplugin: WebAttribute<ts_unplannedworkorder_Select, { ts_skipplugin: boolean | null }, {  }>;
   ts_stakeholder_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
   ts_state: WebAttribute<ts_unplannedworkorder_Select, { ts_state: ts_planningstate | null }, { ts_state_formatted?: string }>;
   ts_subsubsite_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_subsubsite_guid: string | null }, { ts_subsubsite_formatted?: string }>;
@@ -236,6 +238,7 @@ interface ts_unplannedworkorder_Filter {
   ts_securityincident_guid: XQW.Guid;
   ts_servicerequest_guid: XQW.Guid;
   ts_site_guid: XQW.Guid;
+  ts_skipplugin: boolean;
   ts_stakeholder_guid: XQW.Guid;
   ts_state: ts_planningstate;
   ts_subsubsite_guid: XQW.Guid;

@@ -16,6 +16,7 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_dueq4"): Xrm.NumberAttribute;
       get(name: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ts_generationlog"): Xrm.Attribute<string>;
+      get(name: "ts_is5yearplanning"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_keephidden"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
@@ -59,6 +60,7 @@ declare namespace Form.ts_planningdata.Main {
       get(name: "ts_dueq4"): Xrm.NumberControl;
       get(name: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ts_generationlog"): Xrm.StringControl;
+      get(name: "ts_is5yearplanning"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_keephidden"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
@@ -110,6 +112,7 @@ declare namespace Form.ts_planningdata.Main {
     getAttribute(attributeName: "ts_dueq4"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_fiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ts_generationlog"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_is5yearplanning"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_keephidden"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
@@ -148,6 +151,7 @@ declare namespace Form.ts_planningdata.Main {
     getControl(controlName: "ts_dueq4"): Xrm.NumberControl;
     getControl(controlName: "ts_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ts_generationlog"): Xrm.StringControl;
+    getControl(controlName: "ts_is5yearplanning"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_keephidden"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
