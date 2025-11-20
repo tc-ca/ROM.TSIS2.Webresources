@@ -5,11 +5,11 @@
         const form = <Form.ts_canceledinspectionjustification.Main.Information>eContext.getFormContext();
 
         const warningMessage = Xrm.Utility.getResourceString("ts_/resx/CanceledInspectionJustification", "WarningMessageText");
-      
+
         form.ui.setFormNotification(warningMessage, "WARNING", "WarningMessage");
         //If Create new
-        if (form.ui.getFormType()==1)
-               form.getAttribute("ownerid").setValue(null);
+        if (form.ui.getFormType() == 1)
+            form.getAttribute("ownerid").setValue(null);
 
     }
 
@@ -19,4 +19,3 @@
     }
 }
 
-declare function showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext: any): boolean;

@@ -27,44 +27,39 @@ namespace ROM.IncidentQuickCreate {
                 currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
 
                 Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(
-                    function (businessunit) { 
-                        let team;
-                        if(businessunit.entities[0].name.startsWith('Aviation')){
-                            team = {
-                                "name": "Aviation Security",
-                                "entityType": "team"
-                            };
-                        }
-                        else if(businessunit.entities[0].name.startsWith('Intermodal')){
-                            team = {
-                                "name": "Intermodal Surface Security Oversight (ISSO)",
-                                "entityType": "team"
-                            };
+                    async function (businessunit) {
+                        if (!businessunit.entities.length || !businessunit.entities[0].businessunitid) return;
+
+                        const userBuId = businessunit.entities[0].businessunitid;
+                        const isAvSec = await isAvSecBU(userBuId);
+                        const isISSO = !isAvSec ? await isISSOBU(userBuId) : false;
+
+                        let teamSchemaName: string | undefined;
+                        if (isAvSec) {
+                            teamSchemaName = TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC;
+                        } else if (isISSO) {
+                            teamSchemaName = TEAM_SCHEMA_NAMES.ISSO_TEAM;
                         }
 
-                        var teamfetchXml = [
-                            "<fetch>",
-                            "  <entity name='team'>",
-                            "    <attribute name='name'/>",
-                            "    <attribute name='teamid'/>",
-                            "    <filter>",
-                            "      <condition attribute='name' operator='eq' value='", team.name, "'/>",
-                            "    </filter>",
-                            "  </entity>",
-                            "</fetch>"
-                        ].join("");
-            
-                        teamfetchXml = "?fetchXml=" + encodeURIComponent(teamfetchXml);
-            
-                        Xrm.WebApi.retrieveMultipleRecords('team', teamfetchXml).then(
-                            function success(result) {
-                                team.id = result.entities[0].teamid;
-                                form.getAttribute('ownerid').setValue([team]);
+                        if (teamSchemaName) {
+                            const teamId = await getEnvironmentVariableValue(teamSchemaName);
+                            if (teamId) {
+                                // Simpler: fetch the team directly by its ID
+                                const teamRec = await Xrm.WebApi.retrieveRecord("team", teamId, "?$select=name");
+                                if (!teamRec) return;
+
+                                const team: Xrm.EntityReference<"team"> = {
+                                    id: teamId,
+                                    name: teamRec.name || "",
+                                    entityType: "team"
+                                };
+
+                                form.getAttribute("ownerid").setValue([team]);
                             }
-                        );
+                        }
                     }
                 );
-            break;
+                break;
         }
     }
 
@@ -82,7 +77,7 @@ namespace ROM.IncidentQuickCreate {
                         form.getControl("ts_country").setVisible(true);
                     }
                 }
-                else{
+                else {
                     form.getControl("ts_country").setVisible(false);
                 }
             }
@@ -115,10 +110,10 @@ namespace ROM.IncidentQuickCreate {
                             lookup[0].name = territoryName;
                             lookup[0].entityType = territoryLogicalName;
                             form.getAttribute('ovs_region').setValue(lookup);
-                            if(lookup[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}"){ //International
+                            if (lookup[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
                                 form.getControl("ts_country").setVisible(true);
                             }
-                            else{
+                            else {
                                 regionOnChange(eContext);
                             }
                         },
@@ -139,4 +134,4 @@ namespace ROM.IncidentQuickCreate {
         );
     }
 
-  }
+}

@@ -414,23 +414,94 @@ async function checkOperationRiskAssessment(formContext, survey) {
   const workOrderAttribute = formContext.getAttribute("msdyn_workorder").getValue();
   const workOrderId = workOrderAttribute != null ? workOrderAttribute[0].id : "";
 
-  let businessUnitName = await getWorkOrderOperationTypeBusinessUnitName(workOrderId);
-  let isISSO = businessUnitName.includes("Intermodal");
+  let businessUnitId = await getWorkOrderOperationTypeBusinessUnitId(workOrderId);
+  let isISSO = businessUnitId ? await isISSOBU(businessUnitId) : false;
 
   isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
 
-  if (isISSO && !isOffline) {
-    //Open Dialog Message Notifying User that the Active Operation Risk Assessment has not been submitted
-    var alertStrings = {
+  // If not ISSO or we're offline, do not block completion based on risk assessment
+  if (!isISSO || isOffline) {
+    completeConfirmation(formContext, survey);
+    return;
+  }
+
+  // ISSO + online: enforce that a submitted Operation Risk Assessment exists
+  const hasSubmittedORA = await hasSubmittedOperationRiskAssessmentForWorkOrder(workOrderId);
+
+  if (!hasSubmittedORA) {
+    const alertStrings = {
       text: "The Operation Risk Assessment must be submitted before the Work Order Service Task can be Marked Complete.",
       title: "Operation Risk Assessment Not Submitted",
     };
-    var alertOptions = { height: 200, width: 550 };
-    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
-      completeConfirmation(formContext, survey);
-    });
-  } else {
-    completeConfirmation(formContext, survey);
+    const alertOptions = { height: 200, width: 550 };
+    await Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+    // HARD STOP: do not proceed to completion when the requirement is not met
+    return;
+  }
+
+  completeConfirmation(formContext, survey);
+}
+
+/**
+ * Returns true if there is at least one **submitted** Operation Risk Assessment
+ * for the given Work Order (linked via `ts_operation`).
+ * "Submitted" is interpreted as:
+ *   - `ts_lastsubmissiondate` not null
+ *   - statecode = Active (0)
+ *   - statuscode = Active (1)
+ *
+ * @param {string} workOrderId - GUID (with or without braces) of the msdyn_workorder
+ * @returns {Promise<boolean>}
+ */
+async function hasSubmittedOperationRiskAssessmentForWorkOrder(workOrderId) {
+  if (!workOrderId) return false;
+
+  try {
+    // Normalize ID just in case
+    var normalizedWorkOrderId = workOrderId.replace(/[{}]/g, "");
+
+    // Retrieve the related operation for this work order
+    var workOrder = await Xrm.WebApi.retrieveRecord(
+      "msdyn_workorder",
+      normalizedWorkOrderId,
+      "?$select=_ovs_operationid_value"
+    );
+
+    var operationId = workOrder && workOrder._ovs_operationid_value;
+    if (!operationId) {
+      return false;
+    }
+
+    var fetchXml = [
+      "<fetch top='1'>",
+      "  <entity name='ts_operationriskassessment'>",
+      "    <attribute name='ts_operationriskassessmentid' />",
+      "    <filter>",
+      "      <condition attribute='ts_operation' operator='eq' value='",
+      operationId,
+      "'/>",
+      "      <condition attribute='ts_lastsubmissiondate' operator='not-null' />",
+      "      <condition attribute='statecode' operator='eq' value='0' />",
+      "      <condition attribute='statuscode' operator='eq' value='1' />",
+      "    </filter>",
+      "  </entity>",
+      "</fetch>",
+    ].join("");
+
+    fetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+
+    var result = await Xrm.WebApi.retrieveMultipleRecords(
+      "ts_operationriskassessment",
+      fetchXml
+    );
+
+    return result.entities && result.entities.length > 0;
+  } catch (e) {
+    console.error(
+      "Error checking submitted Operation Risk Assessment for work order:",
+      e
+    );
+    return false;
   }
 }
 
@@ -831,7 +902,7 @@ function SendReport(primaryControl, SelectedControlSelectedItemReferences) {
   return false;
 }
 
-async function getWorkOrderOperationTypeBusinessUnitName(workOrderId) {
+async function getWorkOrderOperationTypeBusinessUnitId(workOrderId) {
   //retrieve Work Order with workOrderId
   let workOrder = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_ovs_operationid_value");
   const OperationId = workOrder._ovs_operationid_value;
@@ -840,16 +911,16 @@ async function getWorkOrderOperationTypeBusinessUnitName(workOrderId) {
   let operationType = await Xrm.WebApi.retrieveRecord(
     "ovs_operationtype",
     operationTypeId,
-    "?$select=owningbusinessunit&$expand=owningbusinessunit($select=name)"
+    "?$select=owningbusinessunit&$expand=owningbusinessunit($select=businessunitid)"
   );
-  return operationType.owningbusinessunit.name;
+  return operationType.owningbusinessunit.businessunitid;
 }
 
 async function isAvSecWorkOrder(primaryControl) {
   const workOrderId = primaryControl.data.entity.getId();
   if (workOrderId != null) {
-    let workOrderBusinessUnitName = await getWorkOrderOperationTypeBusinessUnitName(workOrderId);
-    return workOrderBusinessUnitName.includes("Aviation");
+    let workOrderBusinessUnitId = await getWorkOrderOperationTypeBusinessUnitId(workOrderId);
+    return workOrderBusinessUnitId ? await isAvSecBU(workOrderBusinessUnitId) : false;
   }
 }
 
@@ -929,42 +1000,42 @@ function openRelatedWorkOrderServiceTaskWorkspace(primaryControl) {
 }
 
 async function createQCServiceTask(primaryControl) {
-    Xrm.Utility.showProgressIndicator();
+  Xrm.Utility.showProgressIndicator();
 
-    try {
-        const workOrderId = primaryControl.data.entity.getId().replace(/[{}]/g, "");
-        console.log("Work Order ID:", workOrderId);
+  try {
+    const workOrderId = primaryControl.data.entity.getId().replace(/[{}]/g, "");
+    console.log("Work Order ID:", workOrderId);
 
-        const request = {
-            entity: {   // Bound parameter
-                entityType: "msdyn_workorder",
-                id: workOrderId
-            },
-            getMetadata: function () {
-                return {
-                    boundParameter: "entity", // tells Web API this is bound
-                    operationName: "ts_CreateQualityControlServiceTask",
-                    operationType: 0, // Action
-                    parameterTypes: {
-                        entity: { typeName: "msdyn_workorder", structuralProperty: 5 }
-                    }
-                };
-            }
+    const request = {
+      entity: {
+        // Bound parameter
+        entityType: "msdyn_workorder",
+        id: workOrderId,
+      },
+      getMetadata: function () {
+        return {
+          boundParameter: "entity", // tells Web API this is bound
+          operationName: "ts_CreateQualityControlServiceTask",
+          operationType: 0, // Action
+          parameterTypes: {
+            entity: { typeName: "msdyn_workorder", structuralProperty: 5 },
+          },
         };
+      },
+    };
 
-        const response = await Xrm.WebApi.online.execute(request);
+    const response = await Xrm.WebApi.online.execute(request);
 
-        if (!response.ok) {
-            const text = await response.text();
-            throw new Error(text || "Custom API call failed.");
-        }
-
-        // Refresh the subgrid to show the newly created task
-        primaryControl.getControl("workorderservicetasksgrid").refresh();
-
-    } catch (e) {
-        Xrm.Navigation.openAlertDialog({ title: "Error", text: e.message || e.toString() });
-    } finally {
-        Xrm.Utility.closeProgressIndicator();
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(text || "Custom API call failed.");
     }
+
+    // Refresh the subgrid to show the newly created task
+    primaryControl.getControl("workorderservicetasksgrid").refresh();
+  } catch (e) {
+    Xrm.Navigation.openAlertDialog({ title: "Error", text: e.message || e.toString() });
+  } finally {
+    Xrm.Utility.closeProgressIndicator();
+  }
 }

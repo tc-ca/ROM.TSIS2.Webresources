@@ -1,5 +1,6 @@
 namespace ROM.Operation {
     let userBusinessUnitName;
+    let userBusinessUnitId;
     let formOpenedInCreateModeWithSiteFilled = false;
     //Stakeholder owning business unit used to filter other fields
     let owningBusinessUnit;
@@ -51,8 +52,9 @@ namespace ROM.Operation {
 
         var isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
         if (isOffline) {
-            Xrm.WebApi.offline.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+            Xrm.WebApi.offline.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(async function (result) {
                 userBusinessUnitName = result.entities[0].name;
+                userBusinessUnitId = result.entities[0].businessunitid;
                 businessUnitCondition = '<condition attribute="owningbusinessunit" operator="eq" value="' + result.entities[0].businessunitid + '" />';
 
                 form.getAttribute("ts_ppeguide").setValue(false);
@@ -138,15 +140,15 @@ namespace ROM.Operation {
                         let ownerAttribute = form.getAttribute("ownerid").getValue();
                         if (ownerAttribute != null) {
                             Xrm.WebApi.offline.retrieveRecord(ownerAttribute[0].entityType, ownerAttribute[0].id, "?$select=_businessunitid_value").then(
-                                function success(result) {
+                                async function success(result) {
                                     owningBusinessUnit = result._businessunitid_value;
                                     form.getControl('ovs_operationtypeid').setDisabled(false);
                                     form.getControl('ts_site').setDisabled(false);
 
-                                    setStakeholderFilteredView(form)
-                                    setOperationTypeFilteredView(form);
-                                    setSiteFilteredView(form);
-                                    setSubSiteFilteredView(form);
+                                    await setStakeholderFilteredView(form)
+                                    await setOperationTypeFilteredView(form);
+                                    await setSiteFilteredView(form);
+                                    await setSubSiteFilteredView(form);
                                     setSubSubSiteFilteredView(form);
                                 }
                             );
@@ -166,8 +168,9 @@ namespace ROM.Operation {
             });
         }
         else {
-            Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+            Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(async function (result) {
                 userBusinessUnitName = result.entities[0].name;
+                userBusinessUnitId = result.entities[0].businessunitid;
                 businessUnitCondition = '<condition attribute="owningbusinessunit" operator="eq" value="' + result.entities[0].businessunitid + '" />';
 
                 form.getAttribute("ts_ppeguide").setValue(false);
@@ -256,15 +259,15 @@ namespace ROM.Operation {
                         let ownerAttribute = form.getAttribute("ownerid").getValue();
                         if (ownerAttribute != null) {
                             Xrm.WebApi.retrieveRecord(ownerAttribute[0].entityType, ownerAttribute[0].id, "?$select=_businessunitid_value").then(
-                                function success(result) {
+                                async function success(result) {
                                     owningBusinessUnit = result._businessunitid_value;
                                     form.getControl('ovs_operationtypeid').setDisabled(false);
                                     form.getControl('ts_site').setDisabled(false);
 
-                                    setStakeholderFilteredView(form)
-                                    setOperationTypeFilteredView(form);
-                                    setSiteFilteredView(form);
-                                    setSubSiteFilteredView(form);
+                                    await setStakeholderFilteredView(form)
+                                    await setOperationTypeFilteredView(form);
+                                    await setSiteFilteredView(form);
+                                    await setSubSiteFilteredView(form);
                                     setSubSubSiteFilteredView(form);
                                 }
                             );
@@ -294,13 +297,11 @@ namespace ROM.Operation {
         const ownerAttribute = form.getAttribute("ownerid")
         const ownerAttributeValue = ownerAttribute.getValue();
 
-        if (ownerAttributeValue != null) {
-            if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
-                form.ui.tabs.get("plan_track").sections.get("entity_risk_section").setVisible(true);
-            }
-            else {
-                form.ui.tabs.get("plan_track").sections.get("entity_risk_section").setVisible(false);
-            }
+        if (ownerAttributeValue != null && ownerAttributeValue[0]) {
+            const isAvSec = await isOwnedByAvSec(ownerAttributeValue);
+            form.ui.tabs.get("plan_track").sections.get("entity_risk_section").setVisible(isAvSec);
+        } else {
+            form.ui.tabs.get("plan_track").sections.get("entity_risk_section").setVisible(false);
         }
     }
 
@@ -320,22 +321,24 @@ namespace ROM.Operation {
         }
     }
 
-    function setStakeholderFilteredView(form: Form.ovs_operation.Main.Information): void {
+    async function setStakeholderFilteredView(form: Form.ovs_operation.Main.Information): Promise<void> {
         form.getControl('ts_stakeholder').setDisabled(false);
         const viewId = '{3BC6D613-1CBD-48DC-86C3-33830D34EF7D}';
         const entityName = "account";
         const viewDisplayName = "Filtered Stakeholders";
-        const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="account"><attribute name="statecode"/><attribute name="name"/><attribute name="accountnumber"/><attribute name="primarycontactid"/><attribute name="address1_city"/><attribute name="telephone1"/><attribute name="emailaddress1"/><attribute name="accountid"/><attribute name="fax"/><attribute name="address1_name"/><attribute name="address1_fax"/><order attribute="name" descending="false"/><attribute name="ovs_legalname"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><filter type = "or"><condition attribute="ts_stakeholderstatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter></entity></fetch>';
+        const isTC = userBusinessUnitId ? await isUserInTCBU(userBusinessUnitId) : false;
+        const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="account"><attribute name="statecode"/><attribute name="name"/><attribute name="accountnumber"/><attribute name="primarycontactid"/><attribute name="address1_city"/><attribute name="telephone1"/><attribute name="emailaddress1"/><attribute name="accountid"/><attribute name="fax"/><attribute name="address1_name"/><attribute name="address1_fax"/><order attribute="name" descending="false"/><attribute name="ovs_legalname"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><filter type = "or"><condition attribute="ts_stakeholderstatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!isTC ? businessUnitCondition : "") + '</filter></entity></fetch>';
         const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
         form.getControl("ts_stakeholder").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
     }
 
-    function setOperationTypeFilteredView(form: Form.ovs_operation.Main.Information): void {
+    async function setOperationTypeFilteredView(form: Form.ovs_operation.Main.Information): Promise<void> {
         form.getControl('ovs_operationtypeid').setDisabled(false);
         const viewId = '{1BC6D613-1CBD-48DC-86C3-77830D34EF7D}';
         const entityName = "ovs_operationtype";
         const viewDisplayName = "Filtered Operation Types";
-        const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="ownerid"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><filter type = "or"><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter><order attribute="ovs_name" descending="false"/></entity></fetch>';
+        const isTC = userBusinessUnitId ? await isUserInTCBU(userBusinessUnitId) : false;
+        const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="ownerid"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><filter type = "or"><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!isTC ? businessUnitCondition : "") + '</filter><order attribute="ovs_name" descending="false"/></entity></fetch>';
         const layoutXml = '<grid name="resultset" object="10010" jump="ovs_name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
         form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
     }
@@ -348,10 +351,10 @@ namespace ROM.Operation {
             var isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
             if (isOffline) {
                 Xrm.WebApi.offline.retrieveRecord('account', stakeholderValue[0].id, "?$select=_owningbusinessunit_value").then(
-                    function success(result) {
+                    async function success(result) {
                         owningBusinessUnit = result._owningbusinessunit_value;
                         if (!formOpenedInCreateModeWithSiteFilled) {
-                            setOperationTypeFilteredView(form);
+                            await setOperationTypeFilteredView(form);
                         }
                     },
                     function (error) { }
@@ -359,10 +362,10 @@ namespace ROM.Operation {
             }
             else {
                 Xrm.WebApi.retrieveRecord('account', stakeholderValue[0].id, "?$select=_owningbusinessunit_value").then(
-                    function success(result) {
+                    async function success(result) {
                         owningBusinessUnit = result._owningbusinessunit_value;
                         if (!formOpenedInCreateModeWithSiteFilled) {
-                            setOperationTypeFilteredView(form);
+                            await setOperationTypeFilteredView(form);
                         }
                     },
                     function (error) { }
@@ -389,7 +392,7 @@ namespace ROM.Operation {
         }
     }
 
-    function setSiteFilteredView(form: Form.ovs_operation.Main.Information): void {
+    async function setSiteFilteredView(form: Form.ovs_operation.Main.Information): Promise<void> {
         const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
         const operationTypeAttributeValue = operationTypeAttribute.getValue();
 
@@ -399,7 +402,8 @@ namespace ROM.Operation {
             const viewId = '{26A950A2-BD89-4B6D-AB80-5074DF8AD580}';
             const entityName = "msdyn_functionallocation";
             const viewDisplayName = "Filtered Sites";
-            const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><filter type = "or"><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter></entity></fetch>';
+            const isTC = userBusinessUnitId ? await isUserInTCBU(userBusinessUnitId) : false;
+            const activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><filter type = "or"><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!isTC ? businessUnitCondition : "") + '</filter></entity></fetch>';
             console.log("setSiteFilteredView:  " + activityTypeFetchXml);
             const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
@@ -414,20 +418,20 @@ namespace ROM.Operation {
             var isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
             if (isOffline) {
                 Xrm.WebApi.offline.retrieveRecord('msdyn_functionallocation', functionalLocationValue[0].id, "?$select=_owningbusinessunit_value").then(
-                    function success(result) {
+                    async function success(result) {
                         owningBusinessUnit = result._owningbusinessunit_value;
-                        setOperationTypeFilteredView(form);
-                        setStakeholderFilteredView(form);
+                        await setOperationTypeFilteredView(form);
+                        await setStakeholderFilteredView(form);
                     },
                     function (error) { }
                 );
             }
             else {
                 Xrm.WebApi.retrieveRecord('msdyn_functionallocation', functionalLocationValue[0].id, "?$select=_owningbusinessunit_value").then(
-                    function success(result) {
+                    async function success(result) {
                         owningBusinessUnit = result._owningbusinessunit_value;
-                        setOperationTypeFilteredView(form);
-                        setStakeholderFilteredView(form);
+                        await setOperationTypeFilteredView(form);
+                        await setStakeholderFilteredView(form);
                     },
                     function (error) { }
                 );
@@ -435,13 +439,13 @@ namespace ROM.Operation {
         }
     }
 
-    export function operationTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function operationTypeOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
         const operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
 
         if (!formOpenedInCreateModeWithSiteFilled && form.ui.getFormType() != 2) {
             if (operationTypeAttribute != null) {
-                setSiteFilteredView(form);
+                await setSiteFilteredView(form);
             }
             else {
                 form.getControl('ts_site').setDisabled(true);
@@ -450,21 +454,21 @@ namespace ROM.Operation {
 
     }
 
-    export function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function siteOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         console.log("siteOnChange");
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
 
         var opValue = form.getAttribute("ovs_operationtypeid").getValue();
         var siteValue = form.getAttribute("ts_site").getValue();
         if (opValue != null && opValue != undefined && siteValue == null) {
-            setSiteFilteredView(form);
+            await setSiteFilteredView(form);
         }
         else {
-            setSubSiteFilteredView(form);
+            await setSubSiteFilteredView(form);
         }
     }
 
-    function setSubSiteFilteredView(form: Form.ovs_operation.Main.Information): void {
+    async function setSubSiteFilteredView(form: Form.ovs_operation.Main.Information): Promise<void> {
         const siteAttribute = form.getAttribute("ts_site");
         const siteAttributeValue = siteAttribute.getValue();
         console.log("setSubSiteFilteredView");
@@ -474,7 +478,8 @@ namespace ROM.Operation {
             const viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
             const entityName = "msdyn_functionallocation";
             const viewDisplayName = "Filtered Sites";
-            const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+            const isTC = userBusinessUnitId ? await isUserInTCBU(userBusinessUnitId) : false;
+            const activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!isTC ? businessUnitCondition : "") + '</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
             const layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
             console.log("setSubSiteFilteredView: " + activityTypeFetchXml);
 
@@ -483,14 +488,14 @@ namespace ROM.Operation {
         }
     }
 
-    export function subsiteOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function subsiteOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         console.log("subsiteOnChange");
         const form = <Form.ovs_operation.Main.Information>eContext.getFormContext();
 
         var siteValue = form.getAttribute("ts_site").getValue();
         var subSiteValue = form.getAttribute("ts_subsite").getValue();
         if (siteValue != null && siteValue != undefined && subSiteValue == null) {
-            setSubSiteFilteredView(form);
+            await setSubSiteFilteredView(form);
         }
         else {
             setSubSubSiteFilteredView(form);
@@ -640,5 +645,3 @@ namespace ROM.Operation {
         }
     }
 }
-
-declare function setOwnerToUserBusinessUnit(formContext: any): void;

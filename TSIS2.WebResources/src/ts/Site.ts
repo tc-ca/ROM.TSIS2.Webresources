@@ -1,5 +1,5 @@
 namespace ROM.Site {
-    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function onLoad(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const form = <Form.ts_site.Main.Information>eContext.getFormContext();
 
         console.log("Site Form OnLoad");
@@ -8,27 +8,27 @@ namespace ROM.Site {
         if (ownerAttribute != null && ownerAttribute != undefined) {
 
             const ownerAttributeValue = ownerAttribute.getValue();
-            
-            if (ownerAttributeValue != null && ownerAttributeValue != undefined && ownerAttributeValue[0].entityType=="systemuser") {
+
+            if (ownerAttributeValue != null && ownerAttributeValue != undefined && ownerAttributeValue[0].entityType == "systemuser") {
                 var targetId = ownerAttributeValue[0].id.replace(/[{}]/g, "");
                 console.log("Type: " + ownerAttributeValue[0].entityType);
                 var isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
                 if (isOffline) {
-                    form.ui.setFormNotification( "Offline: get system user ", "INFO", "offline-operation");
+                    form.ui.setFormNotification("Offline: get system user ", "INFO", "offline-operation");
                     Xrm.WebApi.offline.retrieveRecord("systemuser", targetId, "?$select=_businessunitid_value").then(
                         function success(result) {
                             Xrm.WebApi.offline.retrieveRecord("businessunit", result._businessunitid_value, "?$select=name").then(
                                 function success(result) {
                                     form.getAttribute("ts_businessunit").setValue(result.name);
-                                    form.ui.setFormNotification( "Offline: get BU ", "INFO", "offline-operation");
+                                    form.ui.setFormNotification("Offline: get BU ", "INFO", "offline-operation");
                                 },
-                                function (error) {                                    
-                                    form.ui.setFormNotification( "Offline: ERROR  "+ JSON.stringify(error), "ERROR", "offline-error");   
+                                function (error) {
+                                    form.ui.setFormNotification("Offline: ERROR  " + JSON.stringify(error), "ERROR", "offline-error");
                                 }
                             );
                         },
                         function (error) {
-                            form.ui.setFormNotification( "Offline: ERROR  "+ JSON.stringify(error), "ERROR", "offline-error");                            
+                            form.ui.setFormNotification("Offline: ERROR  " + JSON.stringify(error), "ERROR", "offline-error");
                         }
                     );
                 }
@@ -40,12 +40,12 @@ namespace ROM.Site {
                                     form.getAttribute("ts_businessunit").setValue(result.name);
                                 },
                                 function (error) {
-                                    form.ui.setFormNotification( "Online: ERROR get BU - "+ JSON.stringify(error), "ERROR", "online-error");   
+                                    form.ui.setFormNotification("Online: ERROR get BU - " + JSON.stringify(error), "ERROR", "online-error");
                                 }
                             );
                         },
                         function (error) {
-                            form.ui.setFormNotification( "Online: ERROR  get user - "+ JSON.stringify(error), "ERROR", "online-error");  
+                            form.ui.setFormNotification("Online: ERROR  get user - " + JSON.stringify(error), "ERROR", "online-error");
                         }
                     );
                 }
@@ -71,7 +71,8 @@ namespace ROM.Site {
 
             //If owner is ISSO, replace operations view
             if (ownerAttributeValue != null) {
-                if (ownerAttributeValue[0].name == "Intermodal Surface Security Oversight (ISSO)") {
+                const isISSOOwner = await isOwnedByISSO(ownerAttributeValue);
+                if (isISSOOwner) {
                     let operationView =
                     {
                         entityType: "savedquery",
@@ -246,15 +247,4 @@ namespace ROM.Site {
         riskScoreVisibility(form);
     }
 
-    export function userHasRole(rolesName) {
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-        var hasRole = false;
-        var roles = rolesName.split("|");
-        roles.forEach(function (roleItem) {
-            userRoles.forEach(function (userRoleItem) {
-                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
-            });
-        });
-        return hasRole;
-    }
 }

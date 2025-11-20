@@ -76,9 +76,12 @@ namespace ROM.Incident {
             "</fetch>",
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
-            userBusinessUnitName = businessunit.entities[0].name;
-            if (userBusinessUnitName.startsWith("Aviation")) {
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(async function (businessunit) {
+
+            const userBusinessUnitId = businessunit.entities[0].businessunitid;
+            const inAvSecBU = await isAvSecBU(userBusinessUnitId);
+
+            if (inAvSecBU) {
                 form.ui.tabs.get("tab_findings").sections.get("tab_findings_section_aef").setVisible(false);
                 form.getControl("ts_overtime").setVisible(true);
             }
@@ -132,8 +135,11 @@ namespace ROM.Incident {
                 ].join("");
                 operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
                 Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(
-                    function success(resultBusinessUnit) {
-                        if (!resultBusinessUnit.entities[0].name.startsWith("Avia")) {
+                    async function success(resultBusinessUnit) {
+                        const operationBuId = resultBusinessUnit.entities[0].businessunitid;
+                        const inAvSecBU = await isAvSecBU(operationBuId);
+
+                        if (!inAvSecBU) {
                             form.getControl("ts_quarterofreportinganddocumentation").setVisible(false);
                             form.getControl("ts_quarteroftraveltime").setVisible(false);
                         }

@@ -472,7 +472,8 @@ namespace ROM.WorkOrderServiceTask {
                 const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_servicetasktype"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("msdyn_tasktype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
 
-                showHideFieldsByOperationType(form, result._ovs_operationtypeid_value, result.ovs_operationtypeid._ownerid_value);
+                const ownerId = getOwnerIdFromRecord(result.ovs_operationtypeid);
+                showHideFieldsByOperationType(form, result._ovs_operationtypeid_value, ownerId);
                 aocRegion = result._ts_region_value;
 
                 if (form.getAttribute("ts_aocoperation").getValue() == null && result._ovs_operationtypeid_value == "8b614ef0-c651-eb11-a812-000d3af3ac0d") {  //Air Carrier (Passenger)
@@ -610,8 +611,9 @@ namespace ROM.WorkOrderServiceTask {
             });
     }
 
-    function showHideFieldsByOperationType(form: Form.msdyn_workorderservicetask.Main.SurveyJS, operationTypeId, operationTypeOwnerId): void {
-        if (operationTypeOwnerId != "e2e3910d-a41f-ec11-b6e6-0022483cb5c7") {  //Owner is AvSec
+    async function showHideFieldsByOperationType(form: Form.msdyn_workorderservicetask.Main.SurveyJS, operationTypeId, operationTypeOwnerId): Promise<void> {
+        const isAvSec = await isOwnedByAvSec(operationTypeOwnerId);
+        if (!isAvSec) {
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_AirCarrier').setVisible(false);
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(false);
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(false);
@@ -730,13 +732,15 @@ namespace ROM.WorkOrderServiceTask {
         }
     }
 
-    function filterLegislationSource(eContext: Xrm.ExecutionContext<any, any>) {
+    async function filterLegislationSource(eContext: Xrm.ExecutionContext<any, any>) {
         const formContext = <Form.msdyn_workorderservicetask.Main.SurveyJS>eContext.getFormContext();
         const workOrderValue = formContext.getAttribute("msdyn_workorder").getValue();
         const workOrderId = workOrderValue ? workOrderValue[0].id : "";
-        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid&$expand=ovs_operationtypeid($expand=owningbusinessunit($select=name))").then(function (workOrder) {
-            if (workOrder != null && workOrder.ovs_operationtypeid != null && workOrder.ovs_operationtypeid.owningbusinessunit.name != null) {
-                if (workOrder.ovs_operationtypeid.owningbusinessunit.name.startsWith("Aviation")) {
+        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid&$expand=ovs_operationtypeid($expand=owningbusinessunit($select=businessunitid))").then(async function (workOrder) {
+            if (workOrder != null && workOrder.ovs_operationtypeid != null && workOrder.ovs_operationtypeid.owningbusinessunit != null) {
+                const buId = workOrder.ovs_operationtypeid.owningbusinessunit.businessunitid;
+                const isAvSec = await isAvSecBU(buId);
+                if (isAvSec) {
                     //Change Legislation Source filter to use
                     const viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F662}';
                     const entityName = "qm_tylegislationsource";

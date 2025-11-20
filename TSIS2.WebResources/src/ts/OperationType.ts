@@ -6,13 +6,11 @@
         const ownerAttribute = form.getAttribute("ownerid")
         const ownerAttributeValue = ownerAttribute.getValue();
 
-        if (ownerAttributeValue != null) {
-            if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
-                form.getControl("Subgrid_EntityRisk").setVisible(true);
-            }
-            else {
-                form.getControl("Subgrid_EntityRisk").setVisible(false);
-            }
+        if (ownerAttributeValue != null && ownerAttributeValue[0]) {
+            const isAvSec = await isOwnedByAvSec(ownerAttributeValue);
+            form.getControl("Subgrid_EntityRisk").setVisible(isAvSec);
+        } else {
+            form.getControl("Subgrid_EntityRisk").setVisible(false);
         }
 
     }

@@ -181,7 +181,7 @@
             const targetedInspectionTDGIncidentTypeId = "3dc59aa0-511a-ec11-b6e7-000d3a09ce95";
             var globalContextUrl = Xrm.Utility.getGlobalContext().getClientUrl();
             console.log("url: " + globalContextUrl);
-            if (globalContextUrl.indexOf("romts-gsrst-training") != -1 || globalContextUrl.indexOf("romts-gsrst-tcd365") != -1 ) {
+            if (globalContextUrl.indexOf("romts-gsrst-training") != -1 || globalContextUrl.indexOf("romts-gsrst-tcd365") != -1) {
                 console.log("training or prod url ");
                 // Oversight of Security Inspections (PAX)
                 OversightSIPAXIncidentTypeId = "75c1830a-e9fe-ec11-82e6-000d3a09d5de";
@@ -598,17 +598,6 @@
         return nextInspectionDate;
     }
 
-    function userHasRole(rolesName) {
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-        var hasRole = false;
-        var roles = rolesName.split("|");
-        roles.forEach(function (roleItem) {
-            userRoles.forEach(function (userRoleItem) {
-                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
-            });
-        });
-        return hasRole;
-    }
 
     export function planStatusOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         const formContext = <Form.ts_plan.Main.Information>eContext.getFormContext();

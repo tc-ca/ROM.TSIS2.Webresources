@@ -1,9 +1,10 @@
 namespace ROM.IncidentType {
+
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_incidenttype.Main.Information>eContext.getFormContext();
 
         //If creating a record
-        if(form.ui.getFormType() == 1){
+        if (form.ui.getFormType() == 1) {
             form.getAttribute('ownerid').setValue();
             let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
 
@@ -12,10 +13,6 @@ namespace ROM.IncidentType {
                 "  <entity name='businessunit'>",
                 "    <attribute name='name' />",
                 "    <attribute name='businessunitid' />",
-                "    <filter type='or'>",
-                "      <condition attribute='name' operator='like' value='Aviation%' />",
-                "      <condition attribute='name' operator='like' value='Intermodal%' />",
-                "    </filter>",
                 "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
                 "      <filter>",
                 "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
@@ -27,77 +24,61 @@ namespace ROM.IncidentType {
             currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
 
             Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(
-                function (businessunit) {
-                    if(businessunit.entities.length > 0){
-                        let team;
-                        if(businessunit.entities[0].name.startsWith('Aviation')){
-                            team = {
-                                "name": "Aviation Security",
-                                "entityType": "team"
+                async function (businessunit) {
+                    if (!businessunit.entities.length || !businessunit.entities[0].businessunitid) return;
+
+                    const userBuId = businessunit.entities[0].businessunitid;
+                    const isTC = await isTCBU(userBuId);
+                    if (isTC) return;
+
+                    const isAvSec = await isAvSecBU(userBuId);
+                    const isISSO = !isAvSec ? await isISSOBU(userBuId) : false;
+
+                    let teamSchemaName: string | undefined;
+                    if (isAvSec) {
+                        teamSchemaName = TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC;
+                    } else if (isISSO) {
+                        teamSchemaName = TEAM_SCHEMA_NAMES.ISSO_TEAM;
+                    }
+
+                    if (teamSchemaName) {
+                        const teamId = await getEnvironmentVariableValue(teamSchemaName);
+                        if (teamId) {
+                            const teamRec = await Xrm.WebApi.retrieveRecord("team", teamId, "?$select=name");
+                            if (!teamRec) return;
+
+                            const team: Xrm.EntityReference<"team"> = {
+                                id: teamId,
+                                name: teamRec.name || "",
+                                entityType: "team"
                             };
+
+                            form.getAttribute('ownerid').setValue([team]);
                         }
-                        else if(businessunit.entities[0].name.startsWith('Intermodal')){
-                            team = {
-                                "name": "Intermodal Surface Security Oversight (ISSO)",
-                                "entityType": "team"
-                              };
-                        }
-    
-                        var teamfetchXml = [
-                            "<fetch>",
-                            "  <entity name='team'>",
-                            "    <attribute name='name'/>",
-                            "    <attribute name='teamid'/>",
-                            "    <filter>",
-                            "      <condition attribute='name' operator='eq' value='", team.name, "'/>",
-                            "    </filter>",
-                            "  </entity>",
-                            "</fetch>"
-                        ].join("");
-            
-                        teamfetchXml = "?fetchXml=" + encodeURIComponent(teamfetchXml);
-            
-                        Xrm.WebApi.retrieveMultipleRecords('team', teamfetchXml).then(
-                            function success(result) {
-                                team.id = result.entities[0].teamid;
-                                form.getAttribute('ownerid').setValue([team]);
-                            }
-                        );
-                    }   
+                    }
                 }
             );
         }
 
         //If viewing a record
-        if(form.ui.getFormType() == 2 || form.ui.getFormType() == 3 || form.ui.getFormType() == 4){
+        if (form.ui.getFormType() == 2 || form.ui.getFormType() == 3 || form.ui.getFormType() == 4) {
             Xrm.WebApi.retrieveRecord('msdyn_incidenttype', form.data.entity.getId(), "?$select=_owningbusinessunit_value").then(
-                function success(incidenttype) {
-                    let businessUnitfetchXml = [
-                        "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' returntotalrecordcount='true' no-lock='false'>",
-                        "  <entity name='businessunit'>",
-                        "    <attribute name='name'/>",
-                        "    <attribute name='businessunitid'/>",
-                        "    <filter>",
-                        "      <condition attribute='businessunitid' operator='eq' value='", incidenttype._owningbusinessunit_value, "'/>",
-                        "    </filter>",
-                        "  </entity>",
-                        "</fetch>"
-                    ].join("");
-                    businessUnitfetchXml = "?fetchXml=" + businessUnitfetchXml;
+                async function success(incidenttype) {
+                    const owningBuId = incidenttype._owningbusinessunit_value;
+                    if (!owningBuId) return;
 
-                    Xrm.WebApi.retrieveMultipleRecords("businessunit", businessUnitfetchXml).then(function (result) {
-                        if (result.entities[0].name.startsWith("Aviation")) {
-                            form.ui.tabs.get("operation_activity_tab").setVisible(true);
-                            form.getControl("ts_programarea").setVisible(true);
-                            form.getControl("ts_programactivityriskrating").setVisible(true);
-                            let formUI: any = form.ui;
-                            formUI.quickForms.get("ProgramAreaRiskRatingQV").setVisible(true);
-                        }
-                        else {
-                            let formUI: any = form.ui;
-                            formUI.quickForms.get("ProgramAreaRiskRatingQV").setVisible(false);
-                        }
-                    });                     
+                    const isOwningBuAvSec = await isAvSecBU(owningBuId);
+                    if (isOwningBuAvSec) {
+                        form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                        form.getControl("ts_programarea").setVisible(true);
+                        form.getControl("ts_programactivityriskrating").setVisible(true);
+                        let formUI: any = form.ui;
+                        formUI.quickForms.get("ProgramAreaRiskRatingQV").setVisible(true);
+                    }
+                    else {
+                        let formUI: any = form.ui;
+                        formUI.quickForms.get("ProgramAreaRiskRatingQV").setVisible(false);
+                    }
                 }
             );
         }
@@ -107,12 +88,9 @@ namespace ROM.IncidentType {
         const ownerAttributeValue = ownerAttribute.getValue();
 
         if (ownerAttributeValue != null) {
-            if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
-                form.ui.tabs.get("tab_risk").setVisible(true);
-            }
-            else {
-                form.ui.tabs.get("tab_risk").setVisible(false);
-            }
+            isOwnedByAvSec(ownerAttributeValue).then(isAvSecOwner => {
+                form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
+            });
         }
     }
 
@@ -123,7 +101,7 @@ namespace ROM.IncidentType {
             let arrFields = ["ts_operation", "ts_activity"];
             let objEntity = formContext.data.entity;
             objEntity.attributes.forEach(
-                function (attribute, i) { 
+                function (attribute, i) {
                     if (arrFields.indexOf(attribute.getName()) > -1) {
                         let attributeToDisable = attribute.controls.get(0);
                         attributeToDisable.setDisabled(true);

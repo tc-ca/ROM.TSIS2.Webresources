@@ -1,16 +1,18 @@
 namespace ROM.SecurityIncidentType {
     let langColumn = Xrm.Utility.getGlobalContext().userSettings.languageId === 1033 ? "ts_securityincidenttypenameenglish" : "ts_securityincidenttypenamefrench";
 
-    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function onLoad(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const formContext = <Form.ts_securityincidenttype.Main.Information>eContext.getFormContext();
 
         if (formContext.ui.getFormType() == 1 || formContext.ui.getFormType() == 2) {
             showTCOMWarningMessage(formContext);
         }
 
-        if (showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext)) {
-            formContext.getAttribute("ownerid").setValue();
+        const shouldClearOwner = await showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext);
+        if (shouldClearOwner) {
+            formContext.getAttribute("ownerid").setValue(null);
         }
+
         if (formContext.ui.getFormType() == 1) {
             setOwnerToUserBusinessUnit(formContext);
         }
@@ -29,9 +31,11 @@ namespace ROM.SecurityIncidentType {
         }
     }
 
-    export function ownerOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function ownerOnChange(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const form = <Form.ts_securityincidenttype.Main.Information>eContext.getFormContext();
-        showFieldWarningMessageIfOwnerIsNotISSONorAvSec(form)
+
+        await showFieldWarningMessageIfOwnerIsNotISSONorAvSec(form);
+
         checkIfExistingRecordExistWithSameNameAndBU(form, "ts_name")
         checkIfExistingRecordExistWithSameNameAndBU(form, "ts_securityincidenttypenameenglish")
         checkIfExistingRecordExistWithSameNameAndBU(form, "ts_securityincidenttypenamefrench")
@@ -94,6 +98,3 @@ namespace ROM.SecurityIncidentType {
         formContext.ui.setFormNotification(message, "WARNING", "tcom_warning");
     }
 }
-
-declare function setOwnerToUserBusinessUnit(formContext: any): void;
-declare function showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext: any): boolean;
