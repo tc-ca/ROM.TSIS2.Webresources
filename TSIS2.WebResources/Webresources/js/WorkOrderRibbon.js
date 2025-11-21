@@ -778,7 +778,7 @@ function editUnplannedWorkOrder(primaryControl) {
 function createWorkOrderWorkspaceFromWorkOrder(formContext, currentWorkOrderId, lang) {
     // Retrieve work order data to transfer fields
     Xrm.WebApi.retrieveRecord("msdyn_workorder", currentWorkOrderId,
-        "?$select=msdyn_name,_msdyn_workordertype_value,_ts_region_value,_ts_country_value,_ovs_operationtypeid_value,ts_aircraftclassification,_ts_tradenameid_value,_msdyn_serviceaccount_value,_ts_contact_value,_ts_site_value,_msdyn_functionallocation_value,_ts_subsubsite_value,_ts_reason_value,_ts_workorderjustification_value,_ovs_operationid_value,msdyn_worklocation,_ovs_rational_value,ts_businessowner,_msdyn_primaryincidenttype_value,msdyn_primaryincidentdescription,msdyn_primaryincidentestimatedduration,ts_overtimerequired,ts_reportdetails,_ts_canceledinspectionjustification_value,_ovs_revisedquarterid_value,_ts_scheduledquarterjustification_value,ts_justificationcomment,ts_details,msdyn_instructions,ts_preparationtime,ts_woreportinganddocumentation,ts_comments,ts_overtime,ts_conductingoversight,ts_traveltime,_msdyn_servicerequest_value,_ts_securityincident_value,_ts_trip_value"
+        "?$select=msdyn_name,_msdyn_workordertype_value,_ts_region_value,_ts_country_value,_ovs_operationtypeid_value,ts_aircraftclassification,_ts_tradenameid_value,_msdyn_serviceaccount_value,_ts_contact_value,_ts_site_value,_msdyn_functionallocation_value,_ts_subsubsite_value,_ts_reason_value,_ts_workorderjustification_value,_ovs_operationid_value,msdyn_worklocation,_ovs_rational_value,ts_businessowner,_msdyn_primaryincidenttype_value,msdyn_primaryincidentdescription,msdyn_primaryincidentestimatedduration,ts_overtimerequired,ts_reportdetails,_ts_canceledinspectionjustification_value,_ovs_revisedquarterid_value,_ts_scheduledquarterjustification_value,ts_justificationcomment,ts_details,msdyn_instructions,ts_preparationtime,ts_woreportinganddocumentation,ts_comments,ts_overtime,ts_conductingoversight,ts_traveltime,_msdyn_servicerequest_value,_ts_securityincident_value,_ts_trip_value,msdyn_systemstatus"
     ).then(
         function success(workOrder) {
             // Prepare data for creating the unplanned work order record
@@ -909,6 +909,10 @@ function createWorkOrderWorkspaceFromWorkOrder(formContext, currentWorkOrderId, 
             }
             if (workOrder.ts_traveltime) {
                 unplannedWorkOrderData.ts_wotraveltime = workOrder.ts_traveltime;
+            }
+            // System Status
+            if (workOrder.msdyn_systemstatus) {
+                unplannedWorkOrderData.ts_recordstatus = workOrder.msdyn_systemstatus;
             }
             // Create the unplanned work order record
             Xrm.WebApi.createRecord("ts_unplannedworkorder", unplannedWorkOrderData).then(
