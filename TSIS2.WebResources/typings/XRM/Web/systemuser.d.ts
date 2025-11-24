@@ -189,6 +189,10 @@ interface SystemUser_Relationships {
   lk_msdyn_customerassetcategory_createdonbehalfby?: msdyn_customerassetcategory_Result[] | null;
   lk_msdyn_customerassetcategory_modifiedby?: msdyn_customerassetcategory_Result[] | null;
   lk_msdyn_customerassetcategory_modifiedonbehalfby?: msdyn_customerassetcategory_Result[] | null;
+  lk_msdyn_dcaengageagentresult_createdby?: msdyn_dcaengageagentresult_Result[] | null;
+  lk_msdyn_dcaengageagentresult_createdonbehalfby?: msdyn_dcaengageagentresult_Result[] | null;
+  lk_msdyn_dcaengageagentresult_modifiedby?: msdyn_dcaengageagentresult_Result[] | null;
+  lk_msdyn_dcaengageagentresult_modifiedonbehalfby?: msdyn_dcaengageagentresult_Result[] | null;
   lk_msdyn_functionallocation_createdby?: msdyn_FunctionalLocation_Result[] | null;
   lk_msdyn_functionallocation_createdonbehalfby?: msdyn_FunctionalLocation_Result[] | null;
   lk_msdyn_functionallocation_modifiedby?: msdyn_FunctionalLocation_Result[] | null;
@@ -283,10 +287,6 @@ interface SystemUser_Relationships {
   lk_ts_causefinding_createdonbehalfby?: ts_causefinding_Result[] | null;
   lk_ts_causefinding_modifiedby?: ts_causefinding_Result[] | null;
   lk_ts_causefinding_modifiedonbehalfby?: ts_causefinding_Result[] | null;
-  lk_ts_dutyinspectors_createdby?: ts_dutyinspectors_Result[] | null;
-  lk_ts_dutyinspectors_createdonbehalfby?: ts_dutyinspectors_Result[] | null;
-  lk_ts_dutyinspectors_modifiedby?: ts_dutyinspectors_Result[] | null;
-  lk_ts_dutyinspectors_modifiedonbehalfby?: ts_dutyinspectors_Result[] | null;
   lk_ts_dutyinspectorschedule_createdby?: ts_DutyInspectorSchedule_Result[] | null;
   lk_ts_dutyinspectorschedule_createdonbehalfby?: ts_DutyInspectorSchedule_Result[] | null;
   lk_ts_dutyinspectorschedule_modifiedby?: ts_DutyInspectorSchedule_Result[] | null;
@@ -347,6 +347,10 @@ interface SystemUser_Relationships {
   lk_ts_planningsettings_createdonbehalfby?: ts_planningsettings_Result[] | null;
   lk_ts_planningsettings_modifiedby?: ts_planningsettings_Result[] | null;
   lk_ts_planningsettings_modifiedonbehalfby?: ts_planningsettings_Result[] | null;
+  lk_ts_prescribedfrequencyoverride_createdby?: ts_PrescribedFrequencyOverride_Result[] | null;
+  lk_ts_prescribedfrequencyoverride_createdonbehalfby?: ts_PrescribedFrequencyOverride_Result[] | null;
+  lk_ts_prescribedfrequencyoverride_modifiedby?: ts_PrescribedFrequencyOverride_Result[] | null;
+  lk_ts_prescribedfrequencyoverride_modifiedonbehalfby?: ts_PrescribedFrequencyOverride_Result[] | null;
   lk_ts_questionnaireresponse_createdby?: ts_questionnaireresponse_Result[] | null;
   lk_ts_questionnaireresponse_createdonbehalfby?: ts_questionnaireresponse_Result[] | null;
   lk_ts_questionnaireresponse_modifiedby?: ts_questionnaireresponse_Result[] | null;
@@ -429,7 +433,6 @@ interface SystemUser_Relationships {
   teammembership_association?: Team_Result[] | null;
   ts_InspectionHours?: ts_InspectionHours_Result | null;
   ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
-  ts_dutyinspectors_Inspector_systemuser?: ts_dutyinspectors_Result[] | null;
   ts_enforcementaction_systemuser_createdby?: ts_enforcementaction_Result[] | null;
   ts_enforcementaction_systemuser_createdonbehalfby?: ts_enforcementaction_Result[] | null;
   ts_enforcementaction_systemuser_modifiedby?: ts_enforcementaction_Result[] | null;
@@ -459,6 +462,7 @@ interface SystemUser_Relationships {
   user_incidentresolution?: IncidentResolution_Result[] | null;
   user_msdyn_customerasset?: msdyn_customerasset_Result[] | null;
   user_msdyn_customerassetcategory?: msdyn_customerassetcategory_Result[] | null;
+  user_msdyn_dcaengageagentresult?: msdyn_dcaengageagentresult_Result[] | null;
   user_msdyn_functionallocation?: msdyn_FunctionalLocation_Result[] | null;
   user_msdyn_incidenttype?: msdyn_incidenttype_Result[] | null;
   user_msdyn_incidenttypeservicetask?: msdyn_incidenttypeservicetask_Result[] | null;
@@ -480,7 +484,6 @@ interface SystemUser_Relationships {
   user_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
   user_ts_case?: ts_case_Result[] | null;
   user_ts_causefinding?: ts_causefinding_Result[] | null;
-  user_ts_dutyinspectors?: ts_dutyinspectors_Result[] | null;
   user_ts_dutyinspectorschedule?: ts_DutyInspectorSchedule_Result[] | null;
   user_ts_entityrisk?: ts_EntityRisk_Result[] | null;
   user_ts_entityriskfrequency?: ts_EntityRiskFrequency_Result[] | null;
@@ -496,6 +499,7 @@ interface SystemUser_Relationships {
   user_ts_plan?: ts_Plan_Result[] | null;
   user_ts_planningdata?: ts_PlanningData_Result[] | null;
   user_ts_planningsettings?: ts_planningsettings_Result[] | null;
+  user_ts_prescribedfrequencyoverride?: ts_PrescribedFrequencyOverride_Result[] | null;
   user_ts_questionnaireresponse?: ts_questionnaireresponse_Result[] | null;
   user_ts_questionnaireversion?: ts_questionnaireversion_Result[] | null;
   user_ts_riskcategory?: ts_RiskCategory_Result[] | null;
@@ -898,6 +902,10 @@ interface SystemUser_Expand {
   lk_msdyn_customerassetcategory_createdonbehalfby: WebExpand<SystemUser_Expand, msdyn_customerassetcategory_Select, msdyn_customerassetcategory_Filter, { lk_msdyn_customerassetcategory_createdonbehalfby: msdyn_customerassetcategory_Result[] }>;
   lk_msdyn_customerassetcategory_modifiedby: WebExpand<SystemUser_Expand, msdyn_customerassetcategory_Select, msdyn_customerassetcategory_Filter, { lk_msdyn_customerassetcategory_modifiedby: msdyn_customerassetcategory_Result[] }>;
   lk_msdyn_customerassetcategory_modifiedonbehalfby: WebExpand<SystemUser_Expand, msdyn_customerassetcategory_Select, msdyn_customerassetcategory_Filter, { lk_msdyn_customerassetcategory_modifiedonbehalfby: msdyn_customerassetcategory_Result[] }>;
+  lk_msdyn_dcaengageagentresult_createdby: WebExpand<SystemUser_Expand, msdyn_dcaengageagentresult_Select, msdyn_dcaengageagentresult_Filter, { lk_msdyn_dcaengageagentresult_createdby: msdyn_dcaengageagentresult_Result[] }>;
+  lk_msdyn_dcaengageagentresult_createdonbehalfby: WebExpand<SystemUser_Expand, msdyn_dcaengageagentresult_Select, msdyn_dcaengageagentresult_Filter, { lk_msdyn_dcaengageagentresult_createdonbehalfby: msdyn_dcaengageagentresult_Result[] }>;
+  lk_msdyn_dcaengageagentresult_modifiedby: WebExpand<SystemUser_Expand, msdyn_dcaengageagentresult_Select, msdyn_dcaengageagentresult_Filter, { lk_msdyn_dcaengageagentresult_modifiedby: msdyn_dcaengageagentresult_Result[] }>;
+  lk_msdyn_dcaengageagentresult_modifiedonbehalfby: WebExpand<SystemUser_Expand, msdyn_dcaengageagentresult_Select, msdyn_dcaengageagentresult_Filter, { lk_msdyn_dcaengageagentresult_modifiedonbehalfby: msdyn_dcaengageagentresult_Result[] }>;
   lk_msdyn_functionallocation_createdby: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { lk_msdyn_functionallocation_createdby: msdyn_FunctionalLocation_Result[] }>;
   lk_msdyn_functionallocation_createdonbehalfby: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { lk_msdyn_functionallocation_createdonbehalfby: msdyn_FunctionalLocation_Result[] }>;
   lk_msdyn_functionallocation_modifiedby: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { lk_msdyn_functionallocation_modifiedby: msdyn_FunctionalLocation_Result[] }>;
@@ -992,10 +1000,6 @@ interface SystemUser_Expand {
   lk_ts_causefinding_createdonbehalfby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_createdonbehalfby: ts_causefinding_Result[] }>;
   lk_ts_causefinding_modifiedby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_modifiedby: ts_causefinding_Result[] }>;
   lk_ts_causefinding_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { lk_ts_causefinding_modifiedonbehalfby: ts_causefinding_Result[] }>;
-  lk_ts_dutyinspectors_createdby: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { lk_ts_dutyinspectors_createdby: ts_dutyinspectors_Result[] }>;
-  lk_ts_dutyinspectors_createdonbehalfby: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { lk_ts_dutyinspectors_createdonbehalfby: ts_dutyinspectors_Result[] }>;
-  lk_ts_dutyinspectors_modifiedby: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { lk_ts_dutyinspectors_modifiedby: ts_dutyinspectors_Result[] }>;
-  lk_ts_dutyinspectors_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { lk_ts_dutyinspectors_modifiedonbehalfby: ts_dutyinspectors_Result[] }>;
   lk_ts_dutyinspectorschedule_createdby: WebExpand<SystemUser_Expand, ts_DutyInspectorSchedule_Select, ts_DutyInspectorSchedule_Filter, { lk_ts_dutyinspectorschedule_createdby: ts_DutyInspectorSchedule_Result[] }>;
   lk_ts_dutyinspectorschedule_createdonbehalfby: WebExpand<SystemUser_Expand, ts_DutyInspectorSchedule_Select, ts_DutyInspectorSchedule_Filter, { lk_ts_dutyinspectorschedule_createdonbehalfby: ts_DutyInspectorSchedule_Result[] }>;
   lk_ts_dutyinspectorschedule_modifiedby: WebExpand<SystemUser_Expand, ts_DutyInspectorSchedule_Select, ts_DutyInspectorSchedule_Filter, { lk_ts_dutyinspectorschedule_modifiedby: ts_DutyInspectorSchedule_Result[] }>;
@@ -1056,6 +1060,10 @@ interface SystemUser_Expand {
   lk_ts_planningsettings_createdonbehalfby: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { lk_ts_planningsettings_createdonbehalfby: ts_planningsettings_Result[] }>;
   lk_ts_planningsettings_modifiedby: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { lk_ts_planningsettings_modifiedby: ts_planningsettings_Result[] }>;
   lk_ts_planningsettings_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { lk_ts_planningsettings_modifiedonbehalfby: ts_planningsettings_Result[] }>;
+  lk_ts_prescribedfrequencyoverride_createdby: WebExpand<SystemUser_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { lk_ts_prescribedfrequencyoverride_createdby: ts_PrescribedFrequencyOverride_Result[] }>;
+  lk_ts_prescribedfrequencyoverride_createdonbehalfby: WebExpand<SystemUser_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { lk_ts_prescribedfrequencyoverride_createdonbehalfby: ts_PrescribedFrequencyOverride_Result[] }>;
+  lk_ts_prescribedfrequencyoverride_modifiedby: WebExpand<SystemUser_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { lk_ts_prescribedfrequencyoverride_modifiedby: ts_PrescribedFrequencyOverride_Result[] }>;
+  lk_ts_prescribedfrequencyoverride_modifiedonbehalfby: WebExpand<SystemUser_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { lk_ts_prescribedfrequencyoverride_modifiedonbehalfby: ts_PrescribedFrequencyOverride_Result[] }>;
   lk_ts_questionnaireresponse_createdby: WebExpand<SystemUser_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { lk_ts_questionnaireresponse_createdby: ts_questionnaireresponse_Result[] }>;
   lk_ts_questionnaireresponse_createdonbehalfby: WebExpand<SystemUser_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { lk_ts_questionnaireresponse_createdonbehalfby: ts_questionnaireresponse_Result[] }>;
   lk_ts_questionnaireresponse_modifiedby: WebExpand<SystemUser_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { lk_ts_questionnaireresponse_modifiedby: ts_questionnaireresponse_Result[] }>;
@@ -1141,7 +1149,6 @@ interface SystemUser_Expand {
   teammembership_association: WebExpand<SystemUser_Expand, Team_Select, Team_Filter, { teammembership_association: Team_Result[] }>;
   ts_InspectionHours: WebExpand<SystemUser_Expand, ts_InspectionHours_Select, ts_InspectionHours_Filter, { ts_InspectionHours: ts_InspectionHours_Result }>;
   ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser: WebExpand<SystemUser_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
-  ts_dutyinspectors_Inspector_systemuser: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { ts_dutyinspectors_Inspector_systemuser: ts_dutyinspectors_Result[] }>;
   ts_enforcementaction_systemuser_createdby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdby: ts_enforcementaction_Result[] }>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_createdonbehalfby: ts_enforcementaction_Result[] }>;
   ts_enforcementaction_systemuser_modifiedby: WebExpand<SystemUser_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_systemuser_modifiedby: ts_enforcementaction_Result[] }>;
@@ -1171,6 +1178,7 @@ interface SystemUser_Expand {
   user_incidentresolution: WebExpand<SystemUser_Expand, IncidentResolution_Select, IncidentResolution_Filter, { user_incidentresolution: IncidentResolution_Result[] }>;
   user_msdyn_customerasset: WebExpand<SystemUser_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { user_msdyn_customerasset: msdyn_customerasset_Result[] }>;
   user_msdyn_customerassetcategory: WebExpand<SystemUser_Expand, msdyn_customerassetcategory_Select, msdyn_customerassetcategory_Filter, { user_msdyn_customerassetcategory: msdyn_customerassetcategory_Result[] }>;
+  user_msdyn_dcaengageagentresult: WebExpand<SystemUser_Expand, msdyn_dcaengageagentresult_Select, msdyn_dcaengageagentresult_Filter, { user_msdyn_dcaengageagentresult: msdyn_dcaengageagentresult_Result[] }>;
   user_msdyn_functionallocation: WebExpand<SystemUser_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { user_msdyn_functionallocation: msdyn_FunctionalLocation_Result[] }>;
   user_msdyn_incidenttype: WebExpand<SystemUser_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { user_msdyn_incidenttype: msdyn_incidenttype_Result[] }>;
   user_msdyn_incidenttypeservicetask: WebExpand<SystemUser_Expand, msdyn_incidenttypeservicetask_Select, msdyn_incidenttypeservicetask_Filter, { user_msdyn_incidenttypeservicetask: msdyn_incidenttypeservicetask_Result[] }>;
@@ -1192,7 +1200,6 @@ interface SystemUser_Expand {
   user_ts_canceledinspectionjustification: WebExpand<SystemUser_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { user_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
   user_ts_case: WebExpand<SystemUser_Expand, ts_case_Select, ts_case_Filter, { user_ts_case: ts_case_Result[] }>;
   user_ts_causefinding: WebExpand<SystemUser_Expand, ts_causefinding_Select, ts_causefinding_Filter, { user_ts_causefinding: ts_causefinding_Result[] }>;
-  user_ts_dutyinspectors: WebExpand<SystemUser_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { user_ts_dutyinspectors: ts_dutyinspectors_Result[] }>;
   user_ts_dutyinspectorschedule: WebExpand<SystemUser_Expand, ts_DutyInspectorSchedule_Select, ts_DutyInspectorSchedule_Filter, { user_ts_dutyinspectorschedule: ts_DutyInspectorSchedule_Result[] }>;
   user_ts_entityrisk: WebExpand<SystemUser_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { user_ts_entityrisk: ts_EntityRisk_Result[] }>;
   user_ts_entityriskfrequency: WebExpand<SystemUser_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { user_ts_entityriskfrequency: ts_EntityRiskFrequency_Result[] }>;
@@ -1208,6 +1215,7 @@ interface SystemUser_Expand {
   user_ts_plan: WebExpand<SystemUser_Expand, ts_Plan_Select, ts_Plan_Filter, { user_ts_plan: ts_Plan_Result[] }>;
   user_ts_planningdata: WebExpand<SystemUser_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { user_ts_planningdata: ts_PlanningData_Result[] }>;
   user_ts_planningsettings: WebExpand<SystemUser_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { user_ts_planningsettings: ts_planningsettings_Result[] }>;
+  user_ts_prescribedfrequencyoverride: WebExpand<SystemUser_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { user_ts_prescribedfrequencyoverride: ts_PrescribedFrequencyOverride_Result[] }>;
   user_ts_questionnaireresponse: WebExpand<SystemUser_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { user_ts_questionnaireresponse: ts_questionnaireresponse_Result[] }>;
   user_ts_questionnaireversion: WebExpand<SystemUser_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { user_ts_questionnaireversion: ts_questionnaireversion_Result[] }>;
   user_ts_riskcategory: WebExpand<SystemUser_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { user_ts_riskcategory: ts_RiskCategory_Result[] }>;
@@ -1355,6 +1363,10 @@ interface SystemUser_RelatedMany {
   lk_msdyn_customerassetcategory_createdonbehalfby: WebMappingRetrieve<msdyn_customerassetcategory_Select,msdyn_customerassetcategory_Expand,msdyn_customerassetcategory_Filter,msdyn_customerassetcategory_Fixed,msdyn_customerassetcategory_Result,msdyn_customerassetcategory_FormattedResult>;
   lk_msdyn_customerassetcategory_modifiedby: WebMappingRetrieve<msdyn_customerassetcategory_Select,msdyn_customerassetcategory_Expand,msdyn_customerassetcategory_Filter,msdyn_customerassetcategory_Fixed,msdyn_customerassetcategory_Result,msdyn_customerassetcategory_FormattedResult>;
   lk_msdyn_customerassetcategory_modifiedonbehalfby: WebMappingRetrieve<msdyn_customerassetcategory_Select,msdyn_customerassetcategory_Expand,msdyn_customerassetcategory_Filter,msdyn_customerassetcategory_Fixed,msdyn_customerassetcategory_Result,msdyn_customerassetcategory_FormattedResult>;
+  lk_msdyn_dcaengageagentresult_createdby: WebMappingRetrieve<msdyn_dcaengageagentresult_Select,msdyn_dcaengageagentresult_Expand,msdyn_dcaengageagentresult_Filter,msdyn_dcaengageagentresult_Fixed,msdyn_dcaengageagentresult_Result,msdyn_dcaengageagentresult_FormattedResult>;
+  lk_msdyn_dcaengageagentresult_createdonbehalfby: WebMappingRetrieve<msdyn_dcaengageagentresult_Select,msdyn_dcaengageagentresult_Expand,msdyn_dcaengageagentresult_Filter,msdyn_dcaengageagentresult_Fixed,msdyn_dcaengageagentresult_Result,msdyn_dcaengageagentresult_FormattedResult>;
+  lk_msdyn_dcaengageagentresult_modifiedby: WebMappingRetrieve<msdyn_dcaengageagentresult_Select,msdyn_dcaengageagentresult_Expand,msdyn_dcaengageagentresult_Filter,msdyn_dcaengageagentresult_Fixed,msdyn_dcaengageagentresult_Result,msdyn_dcaengageagentresult_FormattedResult>;
+  lk_msdyn_dcaengageagentresult_modifiedonbehalfby: WebMappingRetrieve<msdyn_dcaengageagentresult_Select,msdyn_dcaengageagentresult_Expand,msdyn_dcaengageagentresult_Filter,msdyn_dcaengageagentresult_Fixed,msdyn_dcaengageagentresult_Result,msdyn_dcaengageagentresult_FormattedResult>;
   lk_msdyn_functionallocation_createdby: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   lk_msdyn_functionallocation_createdonbehalfby: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   lk_msdyn_functionallocation_modifiedby: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
@@ -1449,10 +1461,6 @@ interface SystemUser_RelatedMany {
   lk_ts_causefinding_createdonbehalfby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   lk_ts_causefinding_modifiedby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
   lk_ts_causefinding_modifiedonbehalfby: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
-  lk_ts_dutyinspectors_createdby: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
-  lk_ts_dutyinspectors_createdonbehalfby: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
-  lk_ts_dutyinspectors_modifiedby: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
-  lk_ts_dutyinspectors_modifiedonbehalfby: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
   lk_ts_dutyinspectorschedule_createdby: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;
   lk_ts_dutyinspectorschedule_createdonbehalfby: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;
   lk_ts_dutyinspectorschedule_modifiedby: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;
@@ -1513,6 +1521,10 @@ interface SystemUser_RelatedMany {
   lk_ts_planningsettings_createdonbehalfby: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
   lk_ts_planningsettings_modifiedby: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
   lk_ts_planningsettings_modifiedonbehalfby: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
+  lk_ts_prescribedfrequencyoverride_createdby: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
+  lk_ts_prescribedfrequencyoverride_createdonbehalfby: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
+  lk_ts_prescribedfrequencyoverride_modifiedby: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
+  lk_ts_prescribedfrequencyoverride_modifiedonbehalfby: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
   lk_ts_questionnaireresponse_createdby: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
   lk_ts_questionnaireresponse_createdonbehalfby: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
   lk_ts_questionnaireresponse_modifiedby: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
@@ -1594,7 +1606,6 @@ interface SystemUser_RelatedMany {
   systemuser_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   teammembership_association: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
-  ts_dutyinspectors_Inspector_systemuser: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
   ts_enforcementaction_systemuser_createdby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_createdonbehalfby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_enforcementaction_systemuser_modifiedby: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
@@ -1624,6 +1635,7 @@ interface SystemUser_RelatedMany {
   user_incidentresolution: WebMappingRetrieve<IncidentResolution_Select,IncidentResolution_Expand,IncidentResolution_Filter,IncidentResolution_Fixed,IncidentResolution_Result,IncidentResolution_FormattedResult>;
   user_msdyn_customerasset: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   user_msdyn_customerassetcategory: WebMappingRetrieve<msdyn_customerassetcategory_Select,msdyn_customerassetcategory_Expand,msdyn_customerassetcategory_Filter,msdyn_customerassetcategory_Fixed,msdyn_customerassetcategory_Result,msdyn_customerassetcategory_FormattedResult>;
+  user_msdyn_dcaengageagentresult: WebMappingRetrieve<msdyn_dcaengageagentresult_Select,msdyn_dcaengageagentresult_Expand,msdyn_dcaengageagentresult_Filter,msdyn_dcaengageagentresult_Fixed,msdyn_dcaengageagentresult_Result,msdyn_dcaengageagentresult_FormattedResult>;
   user_msdyn_functionallocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   user_msdyn_incidenttype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   user_msdyn_incidenttypeservicetask: WebMappingRetrieve<msdyn_incidenttypeservicetask_Select,msdyn_incidenttypeservicetask_Expand,msdyn_incidenttypeservicetask_Filter,msdyn_incidenttypeservicetask_Fixed,msdyn_incidenttypeservicetask_Result,msdyn_incidenttypeservicetask_FormattedResult>;
@@ -1645,7 +1657,6 @@ interface SystemUser_RelatedMany {
   user_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   user_ts_case: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   user_ts_causefinding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
-  user_ts_dutyinspectors: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
   user_ts_dutyinspectorschedule: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;
   user_ts_entityrisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   user_ts_entityriskfrequency: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
@@ -1661,6 +1672,7 @@ interface SystemUser_RelatedMany {
   user_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   user_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   user_ts_planningsettings: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
+  user_ts_prescribedfrequencyoverride: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
   user_ts_questionnaireresponse: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
   user_ts_questionnaireversion: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   user_ts_riskcategory: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;

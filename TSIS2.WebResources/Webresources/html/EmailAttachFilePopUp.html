@@ -583,7 +583,9 @@
             // get the ID of the selected email
             var queryString = window.location.search;
             var urlParams = new URLSearchParams(queryString);
-            var emailID = urlParams.get('data')
+            var emailID = urlParams.get('data');
+
+            var turnOffDocumentCentre = await getEnvironmentVariableByName("ts_TurnoffDocumentCentre");
 
             // go through each selected file and upload it as an attachment to the email
             {
@@ -600,12 +602,12 @@
                     emailId: emailID,
                     fileIds: fileIds
                 };
-                ////if not PROD
-                if (parent.Xrm.Utility.getGlobalContext().getClientUrl() != "https://romts-gsrst-tcd365.crm3.dynamics.com") {
+
+                if (turnOffDocumentCentre) {
                     emailUploadAttachments(data);
                 }
 
-                if (parent.Xrm.Utility.getGlobalContext().getClientUrl() === "https://romts-gsrst-tcd365.crm3.dynamics.com") {
+                if (!turnOffDocumentCentre) {
 
                     // call the API and get the encoding for each file
                     for (var i = 0; i < selectedFiles.length; i++) {
@@ -639,7 +641,7 @@
                     }
                 }
 
-                if (parent.Xrm.Utility.getGlobalContext().getClientUrl() != "https://romts-gsrst-tcd365.crm3.dynamics.com") {
+                if (turnOffDocumentCentre) {
 
                     // call the API and get the encoding for each SharePoint file
                     for (var i = 0; i < selectedFiles.length; i++) {

@@ -195,6 +195,7 @@ interface Account_Relationships {
   msdyn_account_msdyn_workorder_BillingAccount?: msdyn_workorder_Result[] | null;
   msdyn_account_msdyn_workorder_ServiceAccount?: msdyn_workorder_Result[] | null;
   msdyn_billingaccount_account?: Account_Result | null;
+  msdyn_dcaengageagentresult_regarding_account?: msdyn_dcaengageagentresult_Result[] | null;
   msdyn_msdyn_functionallocation_account?: msdyn_FunctionalLocation_Result[] | null;
   ts_EntityRisk_Account_Account?: ts_EntityRisk_Result[] | null;
   ts_File_Stakeholder_Account?: ts_File_Result[] | null;
@@ -714,6 +715,7 @@ interface Account_Expand {
   msdyn_account_msdyn_workorder_ServiceAccount: WebExpand<Account_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_account_msdyn_workorder_ServiceAccount: msdyn_workorder_Result[] }>;
   msdyn_accountkpiid: WebExpand<Account_Expand, msdyn_accountkpiitem_Select, msdyn_accountkpiitem_Filter, { msdyn_accountkpiid: msdyn_accountkpiitem_Result }>;
   msdyn_billingaccount_account: WebExpand<Account_Expand, Account_Select, Account_Filter, { msdyn_billingaccount_account: Account_Result }>;
+  msdyn_dcaengageagentresult_regarding_account: WebExpand<Account_Expand, msdyn_dcaengageagentresult_Select, msdyn_dcaengageagentresult_Filter, { msdyn_dcaengageagentresult_regarding_account: msdyn_dcaengageagentresult_Result[] }>;
   msdyn_msdyn_functionallocation_account: WebExpand<Account_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_msdyn_functionallocation_account: msdyn_FunctionalLocation_Result[] }>;
   ownerid: WebExpand<Account_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
   owningteam: WebExpand<Account_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
@@ -939,6 +941,7 @@ interface Account_RelatedMany {
   msdyn_account_msdyn_customerasset_Account: WebMappingRetrieve<msdyn_customerasset_Select,msdyn_customerasset_Expand,msdyn_customerasset_Filter,msdyn_customerasset_Fixed,msdyn_customerasset_Result,msdyn_customerasset_FormattedResult>;
   msdyn_account_msdyn_workorder_BillingAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   msdyn_account_msdyn_workorder_ServiceAccount: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
+  msdyn_dcaengageagentresult_regarding_account: WebMappingRetrieve<msdyn_dcaengageagentresult_Select,msdyn_dcaengageagentresult_Expand,msdyn_dcaengageagentresult_Filter,msdyn_dcaengageagentresult_Fixed,msdyn_dcaengageagentresult_Result,msdyn_dcaengageagentresult_FormattedResult>;
   msdyn_msdyn_functionallocation_account: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
   ts_EntityRisk_Account_Account: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   ts_File_Stakeholder_Account: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
