@@ -1,34 +1,61 @@
-ï»¿async function callFlow(primaryControl) {
+async function callFlow(primaryControl) {
     await primaryControl.data.save();
     const findingsReportId = primaryControl.data.entity.getId().slice(1, -1); //Remove curly braces.
     const sensitivityLabelValue = primaryControl.getAttribute("ts_sensitivitylevel").getValue();
     const language = primaryControl.getAttribute("ts_language").getValue();
 
+    let sensitivityLabelEn = "";
+    let sensitivityLabelFr = "";
+
     if (sensitivityLabelValue == 717750000) {
         sensitivityLabelEn = "UNCLASSIFIED";
-        sensitivityLabelFr = "NON CLASSIFIÃ‰"
+        sensitivityLabelFr = "NON CLASSIFIÉ"
     } else if (sensitivityLabelValue == 717750001) {
         sensitivityLabelEn = "PROTECTED B";
-        sensitivityLabelFr = "PROTÃ‰GÃ‰ B";
+        sensitivityLabelFr = "PROTÉGÉ B";
     }
     let sensitivityLevel = (language == 717750000) ? sensitivityLabelEn : sensitivityLabelFr;
 
     let userLanguage = Xrm.Utility.getGlobalContext().userSettings.languageId;
 
-    let flowRunningDialogTitle = (userLanguage == 1036) ? "Le rapport est en cours de gÃ©nÃ©ration" : "Report is being generated";
-    let flowRunningDialogText = (userLanguage == 1036) ? "Le rapport PDF est en cours de gÃ©nÃ©ration et sera momentanÃ©ment joint au dossier." : "The Report PDF is being generated and will be attached to the Case momentarily.";
-
-    var params = {
-        "FindingsReportId": findingsReportId,
-        "SensitivityLevel": sensitivityLevel,
-        "UserLanguage": userLanguage
-    }
+    let flowRunningDialogTitle = (userLanguage == 1036) ? "Le rapport est en cours de génération" : "Report is being generated";
+    let flowRunningDialogText = (userLanguage == 1036) ? "Le rapport PDF est en cours de génération et sera momentanément joint au dossier." : "The Report PDF is being generated and will be attached to the Case momentarily.";
 
     var url = await GetEnvironmentVariableValue("ts_FindingsReportFlowURL");
-    var req = new XMLHttpRequest();
-    req.open("POST", url, true);
-    req.setRequestHeader('Content-Type', 'application/json');
-    req.send(JSON.stringify(params));
+    var flowKey = await GetEnvironmentVariableValue("ts_SharePointFlowKey");
+
+    // Check if url is valid before proceeding
+    if (!url) {
+        console.error("Flow URL is not available");
+        return;
+    }
+
+    const data = {
+        FindingsReportId: findingsReportId,
+        SensitivityLevel: sensitivityLevel,
+        UserLanguage: userLanguage
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "FlowKey": flowKey
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            console.log('Success: Report generation flow triggered');
+        } else {
+            console.error('Error:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error sending request to flow:', error);
+        return;
+    }
+
     var alertStrings = { confirmButtonLabel: "OK", text: flowRunningDialogText, title: flowRunningDialogTitle };
     var alertOptions = { height: 120, width: 260 };
     Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(

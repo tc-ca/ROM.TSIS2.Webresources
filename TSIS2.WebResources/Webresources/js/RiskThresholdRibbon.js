@@ -1,4 +1,4 @@
-﻿async function updateOperationsFlow() {
+async function updateOperationsFlow() {
     const lang = parent.Xrm.Utility.getGlobalContext().userSettings.languageId;
     let confirmStrings;
     if (lang == 1033) {
@@ -16,10 +16,35 @@
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(async function (success) {
         if (success.confirmed) {
             var url = await GetEnvironmentVariableValue("ts_UpdateOperationsRiskThresholdFlowUrl");
-            var req = new XMLHttpRequest();
-            req.open("POST", url, true);
-            req.setRequestHeader('Content-Type', 'application/json');
-            req.send(JSON.stringify({}));
+            var flowKey = await GetEnvironmentVariableValue("ts_SharePointFlowKey");
+
+            // Check if url is valid before proceeding
+            if (!url) {
+                console.error("Flow URL is not available");
+                return;
+            }
+
+            const data = {};
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "FlowKey": flowKey
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    console.log('Success: Update Operations Risk Threshold flow triggered');
+                } else {
+                    console.error('Error:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error sending request to flow:', error);
+                return;
+            }
         }
     });
 }
