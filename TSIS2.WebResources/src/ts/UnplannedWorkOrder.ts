@@ -442,7 +442,7 @@ namespace ROM.UnplannedWorkOrder {
         var securityRoles = userSettings.roles;
 
         if (!CheckRolesBeforeCancel(securityRoles)) {
-            formContext.getControl("ts_recordstatus").removeOption(690970005);
+            formContext.getControl("header_ts_recordstatus").removeOption(690970005);
         }
     }
 

@@ -14,7 +14,7 @@
     this.usersEmail = "";
 }
 
-function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryControlId) {
+async function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryControlId) {
     const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
 
     const fileUploadData = new FileUploadData();
@@ -23,8 +23,6 @@ function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, PrimaryContro
 
     recordTagId = PrimaryControl.data.entity.getId().replace("{", "").replace("}", "");
 
-    //const PROD_URL = "https://romts-gsrst-tcd365.crm3.dynamics.com";
-    //const appUrl = Xrm.Utility.getGlobalContext().getClientUrl();
 
     //Get the FetchXml to use
     let recordOwnerFetchXML = getFetchXmlForRecordOwner(PrimaryTypeEntityName, recordTagId);
