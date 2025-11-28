@@ -761,6 +761,9 @@ function openUnplannedWorkOrderForm() {
     entityName: "ts_unplannedworkorder",
     useQuickCreateForm: false,
     formId: "f3f01c33-c5b2-4835-a141-db032f3869a6",
+    data: {
+            ts_openworkorderoncreation: true
+        }
   });
 }
 function editUnplannedWorkOrder(primaryControl) {
