@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -40,13 +40,45 @@ var ROM;
     var FunctionalLocation;
     (function (FunctionalLocation) {
         function onLoad(eContext) {
+            var _this = this;
             var form = eContext.getFormContext();
+            // Show only Summary and Work Orders tabs, hide all others
+            (function () { return __awaiter(_this, void 0, void 0, function () {
+                var isMember, tabs, tabsToShow_1, err_1;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            _a.trys.push([0, 2, , 3]);
+                            return [4 /*yield*/, isCurrentUserInRailSafetyTeam()];
+                        case 1:
+                            isMember = _a.sent();
+                            if (!isMember)
+                                return [2 /*return*/]; // only apply hiding for Rail Safety users
+                            tabs = form.ui.tabs.get();
+                            tabsToShow_1 = ["tab_3", "Work Orders"];
+                            tabs.forEach(function (tab) {
+                                try {
+                                    var tabName = tab.getName();
+                                    tab.setVisible(tabsToShow_1.includes(tabName));
+                                }
+                                catch (e) {
+                                    // Tab error, skip
+                                }
+                            });
+                            return [3 /*break*/, 3];
+                        case 2:
+                            err_1 = _a.sent();
+                            console.error("Error applying Rail Safety tab visibility:", err_1);
+                            return [3 /*break*/, 3];
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            }); })();
             var ownerAttribute = form.getAttribute("ownerid");
             if (ownerAttribute != null && ownerAttribute != undefined) {
                 var ownerAttributeValue_1 = ownerAttribute.getValue();
                 if (ownerAttributeValue_1 != null && ownerAttributeValue_1 != undefined && ownerAttributeValue_1[0].entityType == "systemuser") {
                     var targetId = ownerAttributeValue_1[0].id.replace(/[{}]/g, "");
-                    console.log("Type: " + ownerAttributeValue_1[0].entityType);
                     var isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
                     if (isOffline) {
                         form.ui.setFormNotification("Offline: get system user ", "INFO", "offline-operation");
@@ -72,6 +104,10 @@ var ROM;
                             form.ui.setFormNotification("Online: ERROR  get user - " + JSON.stringify(error), "ERROR", "online-error");
                         });
                     }
+                }
+                // Detect if the record is owned by the Rail Safety Team
+                if (ownerAttributeValue_1 != null && ownerAttributeValue_1 != undefined && ownerAttributeValue_1[0].entityType == "team") {
+                    checkIfOwnedByRailSafetyTeam(ownerAttributeValue_1[0].id);
                 }
                 //If site type is aerodrome, show ICAO and IATA fields
                 //If Region is not International, show Class field
@@ -147,6 +183,10 @@ var ROM;
             }
             riskScoreVisibility(form);
             siteTypesVisibility(eContext);
+            // Check if user should be assigned to Rail Safety Team on load
+            checkAndSetRailSafetyTeamOwnerOnLoad(form).catch(function (error) {
+                console.error("Error in checkAndSetRailSafetyTeamOwnerOnLoad:", error);
+            });
             //Lock for non Admin users
             if (!userHasRole("System Administrator|ROM - Business Admin")) {
                 form.getControl("msdyn_name").setDisabled(true);
@@ -155,6 +195,35 @@ var ROM;
             }
         }
         FunctionalLocation.onLoad = onLoad;
+        // Check if record is owned by Rail Safety Team
+        function checkIfOwnedByRailSafetyTeam(ownerId) {
+            return __awaiter(this, void 0, void 0, function () {
+                var railSafetyTeamGuid, cleanOwnerId, cleanRailSafetyTeamGuid, error_1;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            _a.trys.push([0, 2, , 3]);
+                            return [4 /*yield*/, GetEnvironmentVariableValue("ts_RailSafetyTeamGUID")];
+                        case 1:
+                            railSafetyTeamGuid = _a.sent();
+                            if (!railSafetyTeamGuid) {
+                                return [2 /*return*/];
+                            }
+                            cleanOwnerId = ownerId.replace(/[{}]/g, "").toLowerCase();
+                            cleanRailSafetyTeamGuid = railSafetyTeamGuid.replace(/[{}]/g, "").toLowerCase();
+                            if (cleanOwnerId === cleanRailSafetyTeamGuid) {
+                                console.log("This record belongs to Rail Safety");
+                            }
+                            return [3 /*break*/, 3];
+                        case 2:
+                            error_1 = _a.sent();
+                            console.error("Error checking Rail Safety Team ownership:", error_1);
+                            return [3 /*break*/, 3];
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            });
+        }
         function IATACodeOnChange(eContext) {
             var form = eContext.getFormContext();
             var iataValue = form.getAttribute("ts_iatacode").getValue();
@@ -180,21 +249,207 @@ var ROM;
         }
         FunctionalLocation.ICAOCodeOnChange = ICAOCodeOnChange;
         function onSave(eContext) {
-            var form = eContext.getFormContext();
-            var statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
-            var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
-            if (statusStartDateValue != null) {
-                if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_sitestatus").setValue(717750001 /* NonOperational */);
-                }
-            }
-            if (statusEndDateValue != null) {
-                if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_sitestatus").setValue(717750000 /* Operational */);
-                }
-            }
+            return __awaiter(this, void 0, void 0, function () {
+                var form, statusStartDateValue, statusEndDateValue;
+                return __generator(this, function (_a) {
+                    form = eContext.getFormContext();
+                    statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
+                    statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
+                    if (statusStartDateValue != null) {
+                        if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
+                            form.getAttribute("ts_sitestatus").setValue(717750001 /* ts_sitestatus.NonOperational */);
+                        }
+                    }
+                    if (statusEndDateValue != null) {
+                        if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
+                            form.getAttribute("ts_sitestatus").setValue(717750000 /* ts_sitestatus.Operational */);
+                        }
+                    }
+                    return [2 /*return*/];
+                });
+            });
         }
         FunctionalLocation.onSave = onSave;
+        // Helper: Is current user member of Rail Safety team
+        function isCurrentUserInRailSafetyTeam(teamId) {
+            return __awaiter(this, void 0, void 0, function () {
+                var railSafetyTeamGuid, _a, userId, e_1;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            _b.trys.push([0, 5, , 6]);
+                            if (!(teamId !== null && teamId !== void 0)) return [3 /*break*/, 1];
+                            _a = teamId;
+                            return [3 /*break*/, 3];
+                        case 1: return [4 /*yield*/, GetEnvironmentVariableValue("ts_RailSafetyTeamGUID")];
+                        case 2:
+                            _a = _b.sent();
+                            _b.label = 3;
+                        case 3:
+                            railSafetyTeamGuid = _a;
+                            if (!railSafetyTeamGuid)
+                                return [2 /*return*/, false];
+                            userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
+                            return [4 /*yield*/, checkUserTeamMembership(userId, railSafetyTeamGuid)];
+                        case 4: return [2 /*return*/, _b.sent()];
+                        case 5:
+                            e_1 = _b.sent();
+                            console.error("Error checking current user Rail Safety membership:", e_1);
+                            return [2 /*return*/, false];
+                        case 6: return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        // Set owner to Rail Safety Team if user is member (called on form load)
+        function checkAndSetRailSafetyTeamOwnerOnLoad(form) {
+            return __awaiter(this, void 0, void 0, function () {
+                var railSafetyTeamGuid, currentOwner, currentOwnerId, cleanRailSafetyTeamGuid, isUserInRailSafetyTeam, teamName, teamLookup, ownerIdAttr, saveError_1, error_2;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            _a.trys.push([0, 8, , 9]);
+                            return [4 /*yield*/, GetEnvironmentVariableValue("ts_RailSafetyTeamGUID")];
+                        case 1:
+                            railSafetyTeamGuid = _a.sent();
+                            if (!railSafetyTeamGuid) {
+                                return [2 /*return*/];
+                            }
+                            currentOwner = form.getAttribute("ownerid").getValue();
+                            // Check if already owned by Rail Safety Team
+                            if (currentOwner != null && currentOwner[0].entityType === "team") {
+                                currentOwnerId = currentOwner[0].id.replace(/[{}]/g, "").toLowerCase();
+                                cleanRailSafetyTeamGuid = railSafetyTeamGuid.replace(/[{}]/g, "").toLowerCase();
+                                if (currentOwnerId === cleanRailSafetyTeamGuid) {
+                                    return [2 /*return*/];
+                                }
+                            }
+                            return [4 /*yield*/, isCurrentUserInRailSafetyTeam(railSafetyTeamGuid)];
+                        case 2:
+                            isUserInRailSafetyTeam = _a.sent();
+                            if (!isUserInRailSafetyTeam)
+                                return [2 /*return*/];
+                            return [4 /*yield*/, getTeamName(railSafetyTeamGuid)];
+                        case 3:
+                            teamName = (_a.sent()) || "";
+                            teamLookup = [
+                                {
+                                    id: railSafetyTeamGuid,
+                                    entityType: "team",
+                                    name: teamName
+                                }
+                            ];
+                            ownerIdAttr = form.getAttribute("ownerid");
+                            if (!(ownerIdAttr != null)) return [3 /*break*/, 7];
+                            ownerIdAttr.setValue(teamLookup);
+                            _a.label = 4;
+                        case 4:
+                            _a.trys.push([4, 6, , 7]);
+                            return [4 /*yield*/, form.data.save()];
+                        case 5:
+                            _a.sent();
+                            return [3 /*break*/, 7];
+                        case 6:
+                            saveError_1 = _a.sent();
+                            console.error("Error saving Rail Safety Team owner:", saveError_1);
+                            return [3 /*break*/, 7];
+                        case 7: return [3 /*break*/, 9];
+                        case 8:
+                            error_2 = _a.sent();
+                            console.error("Error in checkAndSetRailSafetyTeamOwnerOnLoad:", error_2);
+                            return [3 /*break*/, 9];
+                        case 9: return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        // Helper: Check if user is member of specific team
+        function checkUserTeamMembership(userId, teamId) {
+            return __awaiter(this, void 0, void 0, function () {
+                var cleanUserId, cleanTeamId, fetchXml, encodedFetchXml, result, isMember, error_3;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            _a.trys.push([0, 2, , 3]);
+                            cleanUserId = userId.replace(/[{}]/g, "");
+                            cleanTeamId = teamId.replace(/[{}]/g, "");
+                            fetchXml = [
+                                "<fetch top='1'>",
+                                "  <entity name='teammembership'>",
+                                "    <attribute name='teammembershipid'/>",
+                                "    <filter type='and'>",
+                                "      <condition attribute='systemuserid' operator='eq' value='", cleanUserId, "'/>",
+                                "      <condition attribute='teamid' operator='eq' value='", cleanTeamId, "'/>",
+                                "    </filter>",
+                                "  </entity>",
+                                "</fetch>"
+                            ].join("");
+                            encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("teammembership", encodedFetchXml)];
+                        case 1:
+                            result = _a.sent();
+                            isMember = result.entities.length > 0;
+                            return [2 /*return*/, isMember];
+                        case 2:
+                            error_3 = _a.sent();
+                            return [2 /*return*/, false];
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        // Helper: Get environment variable value
+        function GetEnvironmentVariableValue(name) {
+            return __awaiter(this, void 0, void 0, function () {
+                var query, results, variable, value, error_4;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            _a.trys.push([0, 2, , 3]);
+                            query = "?$filter=schemaname eq '".concat(name, "'&$select=environmentvariabledefinitionid&$expand=environmentvariabledefinition_environmentvariablevalue($select=value)");
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("environmentvariabledefinition", query)];
+                        case 1:
+                            results = _a.sent();
+                            if (!results || !results.entities || results.entities.length < 1) {
+                                return [2 /*return*/, null];
+                            }
+                            variable = results.entities[0];
+                            if (!variable.environmentvariabledefinition_environmentvariablevalue ||
+                                variable.environmentvariabledefinition_environmentvariablevalue.length < 1) {
+                                return [2 /*return*/, null];
+                            }
+                            value = variable.environmentvariabledefinition_environmentvariablevalue[0].value;
+                            return [2 /*return*/, value];
+                        case 2:
+                            error_4 = _a.sent();
+                            return [2 /*return*/, null];
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        // Helper: Get team name by team ID
+        function getTeamName(teamId) {
+            return __awaiter(this, void 0, void 0, function () {
+                var cleanTeamId, result, teamName, error_5;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            _a.trys.push([0, 2, , 3]);
+                            cleanTeamId = teamId.replace(/[{}]/g, "");
+                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("team", cleanTeamId, "?$select=name")];
+                        case 1:
+                            result = _a.sent();
+                            teamName = result.name;
+                            return [2 /*return*/, teamName];
+                        case 2:
+                            error_5 = _a.sent();
+                            return [2 /*return*/, null];
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            });
+        }
         function siteTypeOnChange(eContext) {
             try {
                 var form = eContext.getFormContext();
@@ -292,7 +547,7 @@ var ROM;
         //Shows the Risk Score field only when the Class is 2 or 3
         function riskScoreVisibility(form) {
             var siteClass = form.getAttribute("ts_class").getValue();
-            if (siteClass == 717750002 /* _2 */ || siteClass == 717750003 /* _3 */) {
+            if (siteClass == 717750002 /* ts_msdyn_functionallocation_ts_class._2 */ || siteClass == 717750003 /* ts_msdyn_functionallocation_ts_class._3 */) {
                 form.getControl("ts_riskscore").setVisible(true);
                 form.getControl("ts_lpdtounitedstates").setVisible(true);
             }
