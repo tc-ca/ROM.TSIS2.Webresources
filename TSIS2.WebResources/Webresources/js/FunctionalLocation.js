@@ -89,7 +89,7 @@ var ROM;
                         });
                     }
                 }
-                // PBI: Detect if the record is owned by the Rail Safety Team
+                // Detect if the record is owned by the Rail Safety Team
                 if (ownerAttributeValue_1 != null && ownerAttributeValue_1 != undefined && ownerAttributeValue_1[0].entityType == "team") {
                     checkIfOwnedByRailSafetyTeam(ownerAttributeValue_1[0].id);
                 }
@@ -167,7 +167,7 @@ var ROM;
             }
             riskScoreVisibility(form);
             siteTypesVisibility(eContext);
-            // PBI: Check if user should be assigned to Rail Safety Team on load
+            // Check if user should be assigned to Rail Safety Team on load
             checkAndSetRailSafetyTeamOwnerOnLoad(form).catch(function (error) {
                 console.error("Error in checkAndSetRailSafetyTeamOwnerOnLoad:", error);
             });
@@ -179,7 +179,7 @@ var ROM;
             }
         }
         FunctionalLocation.onLoad = onLoad;
-        // PBI: Check if record is owned by Rail Safety Team
+        // Check if record is owned by Rail Safety Team
         function checkIfOwnedByRailSafetyTeam(ownerId) {
             return __awaiter(this, void 0, void 0, function () {
                 var railSafetyTeamGuid, cleanOwnerId, cleanRailSafetyTeamGuid, error_1;
@@ -254,7 +254,7 @@ var ROM;
             });
         }
         FunctionalLocation.onSave = onSave;
-        // PBI: Set owner to Rail Safety Team if user is member (called on form load)
+        // Set owner to Rail Safety Team if user is member (called on form load)
         function checkAndSetRailSafetyTeamOwnerOnLoad(form) {
             return __awaiter(this, void 0, void 0, function () {
                 var railSafetyTeamGuid, currentOwner, currentOwnerId, cleanRailSafetyTeamGuid, userId, isUserInRailSafetyTeam, teamName, teamLookup, ownerIdAttr, error_2;

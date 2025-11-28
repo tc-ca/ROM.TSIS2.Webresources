@@ -65,7 +65,7 @@ namespace ROM.FunctionalLocation {
                 }
             }
 
-            // PBI: Detect if the record is owned by the Rail Safety Team
+            // Detect if the record is owned by the Rail Safety Team
             if (ownerAttributeValue != null && ownerAttributeValue != undefined && ownerAttributeValue[0].entityType == "team") {
                 checkIfOwnedByRailSafetyTeam(ownerAttributeValue[0].id);
             }
@@ -130,7 +130,7 @@ namespace ROM.FunctionalLocation {
         riskScoreVisibility(form);
         siteTypesVisibility(eContext);
 
-        // PBI: Check if user should be assigned to Rail Safety Team on load
+        // Check if user should be assigned to Rail Safety Team on load
         checkAndSetRailSafetyTeamOwnerOnLoad(form).catch((error) => {
             console.error("Error in checkAndSetRailSafetyTeamOwnerOnLoad:", error);
         });
@@ -143,7 +143,7 @@ namespace ROM.FunctionalLocation {
         }
     }
 
-    // PBI: Check if record is owned by Rail Safety Team
+    // Check if record is owned by Rail Safety Team
     async function checkIfOwnedByRailSafetyTeam(ownerId: string): Promise<void> {
         try {
             const railSafetyTeamGuid = await GetEnvironmentVariableValue("ts_RailSafetyTeamGUID");
@@ -208,7 +208,7 @@ namespace ROM.FunctionalLocation {
         }
     }
 
-    // PBI: Set owner to Rail Safety Team if user is member (called on form load)
+    // Set owner to Rail Safety Team if user is member (called on form load)
     async function checkAndSetRailSafetyTeamOwnerOnLoad(form: Form.msdyn_functionallocation.Main.Information): Promise<void> {
         try {
             const railSafetyTeamGuid = await GetEnvironmentVariableValue("ts_RailSafetyTeamGUID");
