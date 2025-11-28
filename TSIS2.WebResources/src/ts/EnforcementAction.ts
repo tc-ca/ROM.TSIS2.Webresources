@@ -31,9 +31,10 @@ namespace ROM.EnforcementAction {
             "</fetch>",
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-            let userBusinessUnitName = result.entities[0].name;
-            if (userBusinessUnitName.startsWith("Intermodal")) {
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(async function (result) {
+            let userBusinessUnitId = result.entities[0].businessunitid;
+            const inISSOBU = await isISSOBU(userBusinessUnitId)
+            if (inISSOBU) {
                 formContext.getControl("ts_details").setVisible(true);
                 //Don't need that for now (PBI 242536)
                 //formContext.getControl("ts_elevatedenforcementactionrequired").setVisible(true);
@@ -57,14 +58,11 @@ namespace ROM.EnforcementAction {
                             const caseId = caseAttributeValue[0].id;
 
                             Xrm.WebApi.retrieveRecord('incident', caseId, "?$select=_owningbusinessunit_value").then(
-                                function success(incident) {
-                                    Xrm.WebApi.retrieveRecord('businessunit', incident._owningbusinessunit_value, "?$select=name").then(
-                                        function success(businessUnit) {
-                                            if (businessUnit.name.startsWith("Intermodal")) {
-                                                hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
-                                            }
-                                        }
-                                    );
+                                async function success(incident) {
+                                    const isISSO = await isISSOBU(incident._owningbusinessunit_value);
+                                    if (isISSO) {
+                                        hideFieldsWhenTypeOfEnforcementActionSetToReferralToREUForISSO(formContext);
+                                    }
                                 },
                             );
                         }

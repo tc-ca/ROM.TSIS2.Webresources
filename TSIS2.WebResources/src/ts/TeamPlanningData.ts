@@ -199,7 +199,7 @@
                 let planningDataTarget = 0;
                 let planningDataEstimatedDuration = 0;
                 let planningDataQuarters = [0, 0, 0, 0];
-              
+
                 //Check if anything is missing from the FetchXML. Log it in the generationLog. Flag that there's missing data.
                 if (operationActivity["_ts_stakeholder_value"] == null) {
                     generationLog += "Missing Stakeholder \n";
@@ -453,20 +453,9 @@
             formContext.getAttribute("ts_totalhoursq3").setValue(quarterTotal);
             formContext.getAttribute("ts_totalhoursq4").setValue(quarterTotal);
         }
-        
+
     }
 
-    export function userHasRole(rolesName) {
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-        var hasRole = false;
-        var roles = rolesName.split("|");
-        roles.forEach(function (roleItem) {
-            userRoles.forEach(function (userRoleItem) {
-                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
-            });
-        });
-        return hasRole;
-    }
 
     export function planStatusOnChange(eContext: Xrm.ExecutionContext<any, any>) {
         const formContext = <Form.ts_teamplanningdata.Main.Information>eContext.getFormContext();
@@ -488,7 +477,7 @@
                 formContext.getControl("ts_planstatus").setDisabled(true);
             }
         }
-       else {
+        else {
             formContext.getControl("ts_totalhoursq1").setDisabled(false);
             formContext.getControl("ts_totalhoursq2").setDisabled(false);
             formContext.getControl("ts_totalhoursq3").setDisabled(false);

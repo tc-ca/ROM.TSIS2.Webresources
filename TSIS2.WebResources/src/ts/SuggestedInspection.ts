@@ -1,7 +1,7 @@
 ﻿namespace ROM.SuggestedInspection {
-    export function onLoad(eContext) {
+    export async function onLoad(eContext) {
         const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
-        setOperationTypeFilteredView(form);
+        await setOperationTypeFilteredView(form);
         setStakeholderFilteredView(form);
         setSiteFilteredView(form);
         setActivityTypeFilteredView(form);
@@ -48,7 +48,7 @@
         }
     }
 
-    export function operationTypeOnChange(eContext) {
+    export async function operationTypeOnChange(eContext) {
         const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
 
         const operationTypeValue = form.getAttribute("ts_operationtype").getValue();
@@ -66,7 +66,7 @@
             form.getControl("ts_activitytype").setDisabled(true);
             form.getControl("ts_riskthreshold").setDisabled(true);
 
-            setOperationTypeFilteredView(form);
+            await setOperationTypeFilteredView(form);
         } else {
             //Unlock next field
             form.getControl("ts_stakeholder").setDisabled(false);
@@ -74,7 +74,7 @@
         }
     }
 
-    export function stakeholderOnChange(eContext) {
+    export async function stakeholderOnChange(eContext) {
         const form = <Form.ts_suggestedinspection.Main.Information>eContext.getFormContext();
 
         const stakeholderValue = form.getAttribute("ts_stakeholder").getValue();
@@ -90,7 +90,7 @@
             form.getControl("ts_activitytype").setDisabled(true);
             form.getControl("ts_riskthreshold").setDisabled(true);
 
-            setOperationTypeFilteredView(form);
+            await setOperationTypeFilteredView(form);
             setStakeholderFilteredView(form);
         } else {
             //Unlock next field
@@ -182,7 +182,7 @@
                     }
                 }
             }
-            
+
         }
     }
 
@@ -204,13 +204,30 @@
         }
     }
 
-    function setOperationTypeFilteredView(form: Form.ts_suggestedinspection.Main.Information): void {
+    async function setOperationTypeFilteredView(form: Form.ts_suggestedinspection.Main.Information): Promise<void> {
         const viewId = '{8982C38D-8BB4-4C95-BD05-493398FEAE99}';
         const entityName = "ovs_operationtype";
         //const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredOperationTypes");
         const viewDisplayName = "Operation Types";
 
-        //Active Operation Types with Inspection Incident Types that belong to ISSO
+        // Retrieve ISSO Business Unit GUIDs
+        const issoBUGUIDs = await getISSOBUGUIDs();
+
+        // Build filter conditions for ISSO BUs
+        let issoBUFilterConditions = '';
+        if (issoBUGUIDs.length > 0) {
+            if (issoBUGUIDs.length === 1) {
+                issoBUFilterConditions = `<condition attribute="businessunitid" operator="eq" value="${issoBUGUIDs[0]}"/>`;
+            } else {
+                issoBUFilterConditions = '<filter type="or">';
+                for (let i = 0; i < issoBUGUIDs.length; i++) {
+                    issoBUFilterConditions += `<condition attribute="businessunitid" operator="eq" value="${issoBUGUIDs[i]}"/>`;
+                }
+                issoBUFilterConditions += '</filter>';
+            }
+        }
+
+        //Active Operation Types with Inspection Incident Types that belong to ISSO (GUID-based)
         const fetchXml = [
             "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>",
             "  <entity name='ovs_operationtype'>",
@@ -222,7 +239,7 @@
             "    </filter>",
             "    <link-entity name='businessunit' from='businessunitid' to='owningbusinessunit' alias='businessunit'>",
             "      <filter>",
-            "        <condition attribute='name' operator='begins-with' value='Intermodal'/>",
+            "        ", issoBUFilterConditions, "",
             "      </filter>",
             "    </link-entity>",
             "    <link-entity name='ts_ovs_operationtypes_msdyn_incidenttypes' from='ovs_operationtypeid' to='ovs_operationtypeid' intersect='true'>",

@@ -68,7 +68,7 @@
                 ].join("");
                 operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(operationTypeOwningBusinessUnitFetchXML);
 
-                Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function (operationTypeBusinessUnit) {
+                Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(async function (operationTypeBusinessUnit) {
                     operationTypeOwningBusinessUnit = operationTypeBusinessUnit.entities[0].name;
                     if (operationTypeAttributeValue != null) {
                         const infractionID = formContext.data.entity.getId();
@@ -85,7 +85,7 @@
                             "</fetch>"
                         ].join("");
                         infractionFetchXml = "?fetchXml=" + encodeURIComponent(infractionFetchXml);
-                        Xrm.WebApi.retrieveMultipleRecords("ts_infraction", infractionFetchXml).then(function (result) {
+                        Xrm.WebApi.retrieveMultipleRecords("ts_infraction", infractionFetchXml).then(async function (result) {
                             const currentInfraction = result.entities[0];
                             const regionId = currentInfraction["site.ts_region"];
 
@@ -126,7 +126,7 @@
                         // }
                     }
                     RATESpecificComplianceHistoryOnChange(eContext);
-                    setApprovingTeamsViews(formContext);
+                    await setApprovingTeamsViews(formContext);
 
                     if (formContext.getAttribute("statuscode").getValue() == ts_infraction_statuscode.Complete) {
                         disableFormFields(formContext);
@@ -496,19 +496,72 @@
     }
 
     //Sets the lookup views for the Approving Teams fields
-    function setApprovingTeamsViews(form: Form.ts_infraction.Main.Information): void {
+    //Infraction has no NCAT fields, so the NCAT-related code is unused, might need to be removed in a future cleanup.
+    async function setApprovingTeamsViews(form: Form.ts_infraction.Main.Information): Promise<void> {
         const viewIdApprovingTeamNCAT = '{3c259fee-0541-4cac-8d20-7b30ee397ca7}';
         const viewIdApprovingTeamRATE = '{3c259fee-0541-4cac-8d20-7b30ee394a73}';
         const entityNameApprovingTeams = "team";
         const viewDisplayNameApprovingTeams = "FilteredApprovingTeams";
 
-        //Approving teams with the ISSO Business Unit
-        const fetchXmlApprovingTeamsNCAT = `<fetch output-format="xml-platform" mapping="logical" no-lock="false"><entity name="team"><attribute name="name"/><attribute name="businessunitid"/><attribute name="teamid"/><attribute name="teamtype"/><filter type="and"><condition attribute="teamtype" operator="eq" value="0"/><condition attribute="ts_territory" operator="not-null"/></filter><order attribute="name" descending="false"/><link-entity name="businessunit" from="businessunitid" to="businessunitid"><filter><condition attribute="name" operator="like" value="Intermodal%"/></filter></link-entity></entity></fetch>`;
+        // Retrieve ISSO Business Unit GUIDs
+        const issoBUGUIDs = await getISSOBUGUIDs();
 
-        //Approving managers with the AvSec Business Unit
-        const fetchXmlApprovingTeamsRATE = `<fetch output-format="xml-platform" mapping="logical" no-lock="false"><entity name="team"><attribute name="name"/><attribute name="businessunitid"/><attribute name="teamid"/><attribute name="teamtype"/><filter type="and"><condition attribute="teamtype" operator="eq" value="0"/><condition attribute="ts_territory" operator="not-null"/></filter><order attribute="name" descending="false"/><link-entity name="businessunit" from="businessunitid" to="businessunitid"><filter><condition attribute="name" operator="like" value="Aviation%"/></filter></link-entity></entity></fetch>`;
+        // Retrieve AvSec Business Unit GUIDs
+        const avSecBUGUIDs = await getAvSecBUGUIDs();
+
+        // Build filter conditions for ISSO BUs
+        let issoBUFilterConditions = '';
+        if (issoBUGUIDs.length > 0) {
+            if (issoBUGUIDs.length === 1) {
+                issoBUFilterConditions = `<condition attribute="businessunitid" operator="eq" value="${issoBUGUIDs[0]}"/>`;
+            } else {
+                issoBUFilterConditions = '<filter type="or">';
+                for (let i = 0; i < issoBUGUIDs.length; i++) {
+                    issoBUFilterConditions += `<condition attribute="businessunitid" operator="eq" value="${issoBUGUIDs[i]}"/>`;
+                }
+                issoBUFilterConditions += '</filter>';
+            }
+        } else {
+            // No ISSO BU GUIDs found - use a condition that will never match to prevent invalid FetchXML
+            issoBUFilterConditions = `<condition attribute="businessunitid" operator="eq" value="00000000-0000-0000-0000-000000000000"/>`;
+        }
+
+        // Build filter conditions for AvSec BUs
+        let avSecBUFilterConditions = '';
+        if (avSecBUGUIDs.length > 0) {
+            if (avSecBUGUIDs.length === 1) {
+                avSecBUFilterConditions = `<condition attribute="businessunitid" operator="eq" value="${avSecBUGUIDs[0]}"/>`;
+            } else {
+                avSecBUFilterConditions = '<filter type="or">';
+                for (let i = 0; i < avSecBUGUIDs.length; i++) {
+                    avSecBUFilterConditions += `<condition attribute="businessunitid" operator="eq" value="${avSecBUGUIDs[i]}"/>`;
+                }
+                avSecBUFilterConditions += '</filter>';
+            }
+        } else {
+            // No AvSec BU GUIDs found - use a condition that will never match to prevent invalid FetchXML
+            avSecBUFilterConditions = `<condition attribute="businessunitid" operator="eq" value="00000000-0000-0000-0000-000000000000"/>`;
+        }
+
+        //Approving teams with the ISSO Business Unit (GUID-based)
+        const fetchXmlApprovingTeamsNCAT = `<fetch output-format="xml-platform" mapping="logical" no-lock="false"><entity name="team"><attribute name="name"/><attribute name="businessunitid"/><attribute name="teamid"/><attribute name="teamtype"/><filter type="and"><condition attribute="teamtype" operator="eq" value="0"/><condition attribute="ts_territory" operator="not-null"/></filter><order attribute="name" descending="false"/><link-entity name="businessunit" from="businessunitid" to="businessunitid"><filter>${issoBUFilterConditions}</filter></link-entity></entity></fetch>`;
+
+        //Approving managers with the AvSec Business Unit (GUID-based)
+        const fetchXmlApprovingTeamsRATE = `<fetch output-format="xml-platform" mapping="logical" no-lock="false"><entity name="team"><attribute name="name"/><attribute name="businessunitid"/><attribute name="teamid"/><attribute name="teamtype"/><filter type="and"><condition attribute="teamtype" operator="eq" value="0"/><condition attribute="ts_territory" operator="not-null"/></filter><order attribute="name" descending="false"/><link-entity name="businessunit" from="businessunitid" to="businessunitid"><filter>${avSecBUFilterConditions}</filter></link-entity></entity></fetch>`;
 
         const layoutXmlApprovingTeams = '<grid name="resultset" object="8" jump="name" select="1" icon="1" preview="1"><row name="result" id="businessunitid"><cell name="name" width="300" /></row></grid>';
+
+        // Apply the AvSec BU-based custom view to the RATE Approving Team lookup
+        form.getControl("ts_rateapprovingteam").addCustomView(
+            viewIdApprovingTeamRATE,
+            entityNameApprovingTeams,
+            viewDisplayNameApprovingTeams,
+            fetchXmlApprovingTeamsRATE,
+            layoutXmlApprovingTeams,
+            true
+        );
+        // Set it as the default view so the lookup uses it
+        form.getControl("ts_rateapprovingteam").setDefaultView(viewIdApprovingTeamRATE);
     }
 
     function setPostRATERecommendationSelectionFieldsVisibility(eContext: Xrm.ExecutionContext<any, any>): void {

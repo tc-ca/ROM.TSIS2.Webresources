@@ -27,15 +27,21 @@ namespace ROM.IncidentQuickCreate {
                 currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
 
                 Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(
-                    function (businessunit) { 
+                    function (businessunit) {
                         let team;
-                        if(businessunit.entities[0].name.startsWith('Aviation')){
+                        // TODO: Need to verify which Aviation Security team we should use for team name lookup.
+                        // There are multiple teams with similar names:
+                        //   - "Aviation Security" (hardcoded name used here) - in "Aviation Security Directorate - Domestic" business unit (e2e3910d-a41f-ec11-b6e6-0022483cb5c7)
+                        //   - "Aviation Security Directorate - Domestic" - in "Aviation Security Directorate - Domestic" business unit (8444831b-bead-eb11-8236-000d3ae8b866)
+                        //   - "Aviation Security Directorate" - in "Aviation Security Directorate" business unit (3b8513c3-b426-ec11-b6e6-000d3af4f86f)
+                        // We need to determine which team name is correct for this use case.
+                        if (businessunit.entities[0].name.startsWith('Aviation')) {
                             team = {
                                 "name": "Aviation Security",
                                 "entityType": "team"
                             };
                         }
-                        else if(businessunit.entities[0].name.startsWith('Intermodal')){
+                        else if (businessunit.entities[0].name.startsWith('Intermodal')) {
                             team = {
                                 "name": "Intermodal Surface Security Oversight (ISSO)",
                                 "entityType": "team"
@@ -53,9 +59,9 @@ namespace ROM.IncidentQuickCreate {
                             "  </entity>",
                             "</fetch>"
                         ].join("");
-            
+
                         teamfetchXml = "?fetchXml=" + encodeURIComponent(teamfetchXml);
-            
+
                         Xrm.WebApi.retrieveMultipleRecords('team', teamfetchXml).then(
                             function success(result) {
                                 team.id = result.entities[0].teamid;
@@ -64,7 +70,7 @@ namespace ROM.IncidentQuickCreate {
                         );
                     }
                 );
-            break;
+                break;
         }
     }
 
@@ -82,7 +88,7 @@ namespace ROM.IncidentQuickCreate {
                         form.getControl("ts_country").setVisible(true);
                     }
                 }
-                else{
+                else {
                     form.getControl("ts_country").setVisible(false);
                 }
             }
@@ -115,10 +121,10 @@ namespace ROM.IncidentQuickCreate {
                             lookup[0].name = territoryName;
                             lookup[0].entityType = territoryLogicalName;
                             form.getAttribute('ovs_region').setValue(lookup);
-                            if(lookup[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}"){ //International
+                            if (lookup[0].id == "{3BF0FA88-150F-EB11-A813-000D3AF3A7A7}") { //International
                                 form.getControl("ts_country").setVisible(true);
                             }
-                            else{
+                            else {
                                 regionOnChange(eContext);
                             }
                         },
@@ -139,4 +145,4 @@ namespace ROM.IncidentQuickCreate {
         );
     }
 
-  }
+}
