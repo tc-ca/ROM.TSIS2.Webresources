@@ -95,6 +95,7 @@ namespace ROM.Action {
     }
 
     async function isISSOAction(caseId): Promise<boolean> {
+        let isISSO = false;
         let caseOwningBUFetchXML = [
             "<fetch version='1.0' mapping='logical' returntotalrecordcount='true' no-lock='false'>",
             "  <entity name='incident'>",
@@ -108,13 +109,12 @@ namespace ROM.Action {
 
         caseOwningBUFetchXML = "?fetchXml=" + encodeURIComponent(caseOwningBUFetchXML);
         const incident = await Xrm.WebApi.retrieveMultipleRecords('incident', caseOwningBUFetchXML);
-        if (incident.entities.length > 0) {
-            const businessunit = await Xrm.WebApi.retrieveRecord('businessunit', incident.entities[0]._owningbusinessunit_value, '?$select=name');
-            if (businessunit.name.startsWith("Intermodal")) {
-                isISSO = true;
-            }
 
+        if (incident.entities.length > 0) {
+            const buId = incident.entities[0]._owningbusinessunit_value;
+            isISSO = await isISSOBU(buId);
         }
+
         return isISSO;
     }
 
@@ -619,4 +619,3 @@ namespace ROM.Action {
         }
     }
 }
-

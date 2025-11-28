@@ -338,3 +338,8 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb 
+
+# Local Config Files
+.cursor/
+.vscode/
+TSIS2.WebResources/spkl/deploy-changed.ps1
